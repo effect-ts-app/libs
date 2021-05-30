@@ -1,12 +1,12 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "0.14.4",
+    "version": "0.14.5",
     "main": "./index.js",
     "license": "MIT",
     "dependencies": {
-        "@effect-ts/core": "^0.39.5",
-        "@effect-ts/monocle": "^0.32.0",
-        "@effect-ts/schema": "^0.7.4",
+        "@effect-ts/core": "^0.40.0",
+        "@effect-ts/monocle": "^0.33.0",
+        "@effect-ts/schema": "^0.8.1",
         "abort-controller": "^3.0.0",
         "path-parser": "^6.1.0",
         "short-uuid": "^4.2.0",

@@ -17,10 +17,6 @@ import * as O from "@effect-ts/core/Option"
 
 import { constant, flow, Lazy, pipe } from "./Function"
 import { curry } from "./utils"
-console.log("patrick was here")
-
-
-
 
 export const encaseEither = <E, A>(ei: Ei.Either<E, A>) => fromEither(() => ei)
 export const chainEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>

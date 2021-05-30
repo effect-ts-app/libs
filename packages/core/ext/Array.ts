@@ -9,13 +9,10 @@ export const findIndexOrElse_ = flow(
   O.getOrElse(() => -1)
 )
 
-console.log("patrick was here")
-
-
-
 export function findIndexOrElse<A>(predicate: Predicate<A>): (as: Array<A>) => number {
   return (as) => findIndexOrElse_(as, predicate)
 }
+
 export function modifyAtOrOriginal_<A>(as: A.Array<A>, i: number, f: (a: A) => A) {
   return A.modifyAt_(as, i, f)["|>"](O.getOrElse(() => as))
 }

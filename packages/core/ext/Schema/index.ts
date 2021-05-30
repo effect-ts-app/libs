@@ -549,6 +549,14 @@ export function makeContramappedSet<
 
 export const constArray = constant(A.empty)
 
+export type ParserInputFromSchemaProperties<T> = T extends {
+  Api: { props: infer Props }
+}
+  ? Props extends S.PropertyRecord
+    ? S.ParserInputFromProperties<Props>
+    : never
+  : never
+
 export * from "./_api"
 // customized Model
 export { Model } from "./Model"
