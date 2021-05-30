@@ -1,0 +1,6 @@
+export * as disk from "./diskdb"
+export * as mem from "./memdb"
+export * as mongo from "./mongodb"
+export * from "./shared"
+export * as SDB from "./simpledb"
+export * as redis from "./redisdb"

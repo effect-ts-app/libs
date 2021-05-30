@@ -1,0 +1,10 @@
+*.test.js
+*.test.d.ts
+./src
+tsconfig.json
+tslint.json
+**/*.ts
+!**/*.d.ts
+*.tsx
+.eslintrc.js
+coverage/

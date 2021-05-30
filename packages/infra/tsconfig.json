@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "lib": [
+            "es2020",
+            "DOM"
+        ],
+        "outDir": "../",
+        "noEmit": false,
+        "moduleResolution": "node",
+        "module": "CommonJS",
+        "incremental": false
+    },
+    "include": [
+        "./"
+    ]
+}
