@@ -6,5 +6,7 @@ packages/**/*.js
 packages/**/*.js.map
 packages/**/*.d.ts
 !**/jest.config.js
+!**/.eslintrc.js
+!**/.prettierrc.js
 
 tsconfig.tsbuildinfo
