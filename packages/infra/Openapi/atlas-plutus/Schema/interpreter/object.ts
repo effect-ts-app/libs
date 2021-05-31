@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { pipe } from "@effect-ts/core/Function"
 import type { ObjectURI } from "@effect-ts/morphic/Algebra/Object"
 import { interpreter } from "@effect-ts/morphic/HKT"

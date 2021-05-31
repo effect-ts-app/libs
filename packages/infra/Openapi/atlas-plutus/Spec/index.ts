@@ -1,9 +1,10 @@
-import {
-  InternalServerError,
-  MalformedRequestError,
-  NotFoundError,
-  UnauthorizedError,
-} from "../Errors"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type * as T from "@effect-ts/core/Effect"
+import type { _R, UnionToIntersection } from "@effect-ts/core/Utils"
+import type * as MO from "@effect-ts/morphic"
 
 import type {
   InternalServerErrorE,
@@ -11,10 +12,13 @@ import type {
   NotFoundErrorE,
   UnauthorizedErrorE,
 } from "../Errors"
+import {
+  InternalServerError,
+  MalformedRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../Errors"
 import type { ResponseCode } from "./code"
-import type * as T from "@effect-ts/core/Effect"
-import type { _R, UnionToIntersection } from "@effect-ts/core/Utils"
-import type * as MO from "@effect-ts/morphic"
 
 export type Type<E, A> = MO.M<{}, E, A>
 

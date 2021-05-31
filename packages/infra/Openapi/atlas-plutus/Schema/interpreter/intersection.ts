@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import { identity, pipe } from "@effect-ts/core/Function"
+import type { IntersectionURI } from "@effect-ts/morphic/Algebra/Intersection"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
 import * as X from "../base"
-
-import type { IntersectionURI } from "@effect-ts/morphic/Algebra/Intersection"
 
 export const SchemaIntersectionInterpreter = interpreter<
   X.SchemaURI,

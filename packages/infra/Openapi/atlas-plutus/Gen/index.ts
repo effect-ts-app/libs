@@ -1,3 +1,6 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as T from "@effect-ts/core/Effect"
 import { makeRef } from "@effect-ts/core/Effect/Ref"
 import type { _R, UnionToIntersection } from "@effect-ts/core/Utils"
@@ -14,7 +17,6 @@ import type {
   Parameter,
   RequestBody,
   Response,
-  Type,
 } from "../Spec"
 
 export interface OpenApiSpec {
@@ -75,7 +77,7 @@ export function generate<X extends Api<any, any>>(
 
         for (const code of Object.keys(methodSpec.responses)) {
           const responseSpec: Response<any> = methodSpec.responses[code]
-          const content: Type<any, any> = responseSpec.content
+          const { content } = responseSpec
 
           const contentSchema = yield* _(withRef(schema(content)))
 

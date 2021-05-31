@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type * as T from "@effect-ts/core/Effect"
 import type { Has } from "@effect-ts/core/Has"
 import type { M, Summoner } from "@effect-ts/morphic/Batteries/summoner"
@@ -10,7 +12,6 @@ import type {
 } from "@effect-ts/morphic/Batteries/usage/summoner"
 
 import type { JSONSchema, SubSchema } from "../JsonSchema"
-
 import type { References, SchemaURI } from "./base"
 import { modelSchemaInterpreter } from "./interpreter"
 

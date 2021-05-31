@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { pipe } from "@effect-ts/core/Function"
 import type { RefinedURI } from "@effect-ts/morphic/Algebra/Refined"
 import { interpreter } from "@effect-ts/morphic/HKT"
