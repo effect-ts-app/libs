@@ -5,7 +5,7 @@ import * as T from "@effect-ts/core/Effect"
 import * as O from "@effect-ts/core/Option"
 import * as Ex from "@effect-ts/express"
 import * as EO from "@effect-ts-app/core/EffectOption"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 import { Methods } from "@effect-ts-app/core/Schema"
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
@@ -101,7 +101,7 @@ export function makeRouteDescriptor<
 //   r: RequestHandler2<R, Path, Method, ReqA, ResA>,
 //   mw?: Middleware2<R, ReqA, ResA, R2, PR>
 // ) {
-//   //r.Request = S.adaptRequest(r.Request as any) as any
+//   //r.Request = MO.adaptRequest(r.Request as any) as any
 
 //   let h = undefined
 //   if (mw) {
@@ -335,10 +335,10 @@ export function makeFromSchema<ResA>(
   e: RouteDescriptor<any, any, any, any, any, any, ResA, any>
 ) {
   const jsonSchema_ = OpenApi.for
-  const jsonSchema = <E, A>(r: S.ReqRes<E, A>) => jsonSchema_(r)
+  const jsonSchema = <E, A>(r: MO.ReqRes<E, A>) => jsonSchema_(r)
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
-  const Res = r ? S.extractSchema(r) : S.Void
+  const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO: use the path vs body etc serialisation also in the Client.
   const makeReqQuerySchema = EO.fromNullable(Req.Query)["|>"](
     EO.chainEffect(jsonSchema)
@@ -385,7 +385,7 @@ export function makeFromSchema<ResA>(
     }),
     T.map((_) => {
       //console.log("$$$ REQ", _.req)
-      const isEmpty = !e.handler.Response || e.handler.Response === S.Void
+      const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
       return {
         path: e.path,
         method: e.method.toLowerCase(),

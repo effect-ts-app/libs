@@ -9,7 +9,7 @@ import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
-import * as S from "./_schema"
+import * as MO from "./_schema"
 import { AnyError, schemaField, SchemaForModel } from "./_schema"
 
 export const GET = "GET"
@@ -50,7 +50,7 @@ export type StringRecord = Record<string, string>
 
 export type AnyRecord = Record<string, any>
 
-export type AnyRecordSchema = S.Schema<
+export type AnyRecordSchema = MO.Schema<
   unknown,
   AnyError,
   any,
@@ -59,7 +59,7 @@ export type AnyRecordSchema = S.Schema<
   AnyRecord,
   any
 >
-export type StringRecordSchema = S.Schema<
+export type StringRecordSchema = MO.Schema<
   unknown,
   AnyError,
   any,
@@ -75,7 +75,7 @@ export interface QueryRequest<
   Path extends StringRecordSchema | undefined,
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
-  Self extends S.SchemaAny
+  Self extends MO.SchemaAny
 > extends Model<M, Self> {
   Body: undefined
   Path: Path
@@ -106,29 +106,29 @@ export interface BodyRequest<
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<M, Self extends S.SchemaAny>
+export interface Model<M, Self extends MO.SchemaAny>
   extends Model2<M, Self, SchemaForModel<M, Self>> {}
-export interface Model2<M, Self extends S.SchemaAny, SelfM extends S.SchemaAny>
-  extends S.Schema<
-    S.ParserInputOf<Self>,
-    S.NamedE<string, S.ParserErrorOf<Self>>,
+export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
+  extends MO.Schema<
+    MO.ParserInputOf<Self>,
+    MO.NamedE<string, MO.ParserErrorOf<Self>>,
     M,
-    S.ConstructorInputOf<Self>,
-    S.NamedE<string, S.ConstructorErrorOf<Self>>,
-    S.EncodedOf<Self>,
-    S.ApiOf<Self>
+    MO.ConstructorInputOf<Self>,
+    MO.NamedE<string, MO.ConstructorErrorOf<Self>>,
+    MO.EncodedOf<Self>,
+    MO.ApiOf<Self>
   > {
-  new (_: Compute<S.ConstructorInputOf<Self>>): Compute<S.ParsedShapeOf<Self>>
-  [S.schemaField]: Self
+  new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
+  [MO.schemaField]: Self
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<M, M> // added
   readonly lenses: RecordSchemaToLenses<M, Self>
 
-  readonly Parser: S.ParserFor<SelfM>
-  readonly Constructor: S.ConstructorFor<SelfM>
-  readonly Encoder: S.EncoderFor<SelfM>
-  readonly Guard: S.GuardFor<SelfM>
-  readonly Arbitrary: S.ArbitraryFor<SelfM>
+  readonly Parser: MO.ParserFor<SelfM>
+  readonly Constructor: MO.ConstructorFor<SelfM>
+  readonly Encoder: MO.EncoderFor<SelfM>
+  readonly Guard: MO.GuardFor<SelfM>
+  readonly Arbitrary: MO.ArbitraryFor<SelfM>
 }
 
 type RequestString = "Request" | "default" | `${string}Request`
@@ -156,13 +156,13 @@ export function extractRequest<TModule extends Record<string, any>>(
   return Request
 }
 
-export const reqId = S.makeAnnotation()
+export const reqId = MO.makeAnnotation()
 
-type OrAny<T> = T extends S.SchemaAny ? T : S.SchemaAny
-//type OrUndefined<T> = T extends S.SchemaAny ? undefined : S.SchemaAny
+type OrAny<T> = T extends MO.SchemaAny ? T : MO.SchemaAny
+//type OrUndefined<T> = T extends MO.SchemaAny ? undefined : MO.SchemaAny
 
 // TODO: Somehow ensure that Self and M are related..
-//type Ensure<M, Self extends S.SchemaAny> = M extends S.ParsedShapeOf<Self> ? M : never
+//type Ensure<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StringRecordSchema>(
     method: ReadMethods,
@@ -170,7 +170,7 @@ export function QueryRequest<M>(__name?: string) {
     _: {
       headers?: Headers
     }
-  ): QueryRequest<M, undefined, undefined, Headers, S.SchemaAny>
+  ): QueryRequest<M, undefined, undefined, Headers, MO.SchemaAny>
   function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
     method: ReadMethods,
     path: string,
@@ -191,16 +191,16 @@ export function QueryRequest<M>(__name?: string) {
     }
   ): QueryRequest<M, undefined, Query, Headers, Query>
   function a<
-    QueryParserError extends S.SchemaError<any>,
+    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends S.SchemaError<any>,
+    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
-    PathParserError extends S.SchemaError<any>,
+    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends S.SchemaError<any>,
+    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -209,7 +209,7 @@ export function QueryRequest<M>(__name?: string) {
     path: string,
     _: {
       headers?: Headers
-      path: S.Schema<
+      path: MO.Schema<
         unknown,
         PathParserError,
         PathParsedShape,
@@ -218,7 +218,7 @@ export function QueryRequest<M>(__name?: string) {
         PathEncoded,
         PathApi
       >
-      query: S.Schema<
+      query: MO.Schema<
         unknown,
         QueryParserError,
         QueryParsedShape,
@@ -230,7 +230,7 @@ export function QueryRequest<M>(__name?: string) {
     }
   ): QueryRequest<
     M,
-    S.Schema<
+    MO.Schema<
       unknown,
       PathParserError,
       PathParsedShape,
@@ -239,7 +239,7 @@ export function QueryRequest<M>(__name?: string) {
       PathEncoded,
       PathApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       QueryParserError,
       QueryParsedShape,
@@ -249,13 +249,15 @@ export function QueryRequest<M>(__name?: string) {
       QueryApi
     >,
     Headers,
-    S.Schema<
+    MO.Schema<
       unknown,
-      S.IntersectionE<S.MemberE<0, QueryParserError> | S.MemberE<1, PathParserError>>,
+      MO.IntersectionE<
+        MO.MemberE<0, QueryParserError> | MO.MemberE<1, PathParserError>
+      >,
       QueryParsedShape & PathParsedShape,
       QueryConstructorInput & PathConstructorInput,
-      S.IntersectionE<
-        S.MemberE<0, QueryConstructorError> | S.MemberE<1, PathConstructorError>
+      MO.IntersectionE<
+        MO.MemberE<0, QueryConstructorError> | MO.MemberE<1, PathConstructorError>
       >,
       QueryEncoded & PathEncoded,
       {}
@@ -278,14 +280,14 @@ export function QueryRequest<M>(__name?: string) {
     Path,
     Query,
     Headers,
-    OrAny<Erase<typeof _.path & typeof _.query, S.SchemaAny>>
+    OrAny<Erase<typeof _.path & typeof _.query, MO.SchemaAny>>
   > {
-    const self: S.SchemaAny = S.props({
+    const self: MO.SchemaAny = MO.props({
       ..._.query?.Api.props,
       ..._.path?.Api.props,
     })
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(self["|>"](S.annotate(reqId, {}))) {
+    return class extends ModelSpecial<M>(__name)(self["|>"](MO.annotate(reqId, {}))) {
       static Path = _.path
       static Query = _.query
       static Headers = _.headers
@@ -304,7 +306,7 @@ export function BodyRequest<M>(__name?: string) {
     _: {
       headers?: Headers
     }
-  ): BodyRequest<M, undefined, undefined, undefined, Headers, S.SchemaAny>
+  ): BodyRequest<M, undefined, undefined, undefined, Headers, MO.SchemaAny>
   function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
     method: WriteMethods,
     path: string,
@@ -322,16 +324,16 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<M, undefined, Body, undefined, Headers, Body>
   function a<
-    BodyParserError extends S.SchemaError<any>,
+    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends S.SchemaError<any>,
+    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    QueryParserError extends S.SchemaError<any>,
+    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends S.SchemaError<any>,
+    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
     Headers extends StringRecordSchema
@@ -340,7 +342,7 @@ export function BodyRequest<M>(__name?: string) {
     path: string,
     _: {
       headers?: Headers
-      body: S.Schema<
+      body: MO.Schema<
         unknown,
         BodyParserError,
         BodyParsedShape,
@@ -349,7 +351,7 @@ export function BodyRequest<M>(__name?: string) {
         BodyEncoded,
         BodyApi
       >
-      query: S.Schema<
+      query: MO.Schema<
         unknown,
         QueryParserError,
         QueryParsedShape,
@@ -362,7 +364,7 @@ export function BodyRequest<M>(__name?: string) {
   ): BodyRequest<
     M,
     undefined,
-    S.Schema<
+    MO.Schema<
       unknown,
       BodyParserError,
       BodyParsedShape,
@@ -371,7 +373,7 @@ export function BodyRequest<M>(__name?: string) {
       BodyEncoded,
       BodyApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       QueryParserError,
       QueryParsedShape,
@@ -381,29 +383,31 @@ export function BodyRequest<M>(__name?: string) {
       QueryApi
     >,
     Headers,
-    S.Schema<
+    MO.Schema<
       unknown,
-      S.IntersectionE<S.MemberE<0, BodyParserError> | S.MemberE<1, QueryParserError>>,
+      MO.IntersectionE<
+        MO.MemberE<0, BodyParserError> | MO.MemberE<1, QueryParserError>
+      >,
       BodyParsedShape & QueryParsedShape,
       BodyConstructorInput & QueryConstructorInput,
-      S.IntersectionE<
-        S.MemberE<0, BodyConstructorError> | S.MemberE<1, QueryConstructorError>
+      MO.IntersectionE<
+        MO.MemberE<0, BodyConstructorError> | MO.MemberE<1, QueryConstructorError>
       >,
       BodyEncoded & QueryEncoded,
       {}
     >
   >
   function a<
-    QueryParserError extends S.SchemaError<any>,
+    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends S.SchemaError<any>,
+    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
-    PathParserError extends S.SchemaError<any>,
+    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends S.SchemaError<any>,
+    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -412,7 +416,7 @@ export function BodyRequest<M>(__name?: string) {
     path: string,
     _: {
       headers?: Headers
-      path: S.Schema<
+      path: MO.Schema<
         unknown,
         PathParserError,
         PathParsedShape,
@@ -421,7 +425,7 @@ export function BodyRequest<M>(__name?: string) {
         PathEncoded,
         PathApi
       >
-      query: S.Schema<
+      query: MO.Schema<
         unknown,
         QueryParserError,
         QueryParsedShape,
@@ -433,7 +437,7 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<
     M,
-    S.Schema<
+    MO.Schema<
       unknown,
       PathParserError,
       PathParsedShape,
@@ -442,7 +446,7 @@ export function BodyRequest<M>(__name?: string) {
       PathEncoded,
       PathApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       QueryParserError,
       QueryParsedShape,
@@ -453,29 +457,31 @@ export function BodyRequest<M>(__name?: string) {
     >,
     undefined,
     Headers,
-    S.Schema<
+    MO.Schema<
       unknown,
-      S.IntersectionE<S.MemberE<0, QueryParserError> | S.MemberE<1, PathParserError>>,
+      MO.IntersectionE<
+        MO.MemberE<0, QueryParserError> | MO.MemberE<1, PathParserError>
+      >,
       QueryParsedShape & PathParsedShape,
       QueryConstructorInput & PathConstructorInput,
-      S.IntersectionE<
-        S.MemberE<0, QueryConstructorError> | S.MemberE<1, PathConstructorError>
+      MO.IntersectionE<
+        MO.MemberE<0, QueryConstructorError> | MO.MemberE<1, PathConstructorError>
       >,
       QueryEncoded & PathEncoded,
       {}
     >
   >
   function a<
-    BodyParserError extends S.SchemaError<any>,
+    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends S.SchemaError<any>,
+    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    PathParserError extends S.SchemaError<any>,
+    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends S.SchemaError<any>,
+    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -484,7 +490,7 @@ export function BodyRequest<M>(__name?: string) {
     path: string,
     _: {
       headers?: Headers
-      path: S.Schema<
+      path: MO.Schema<
         unknown,
         PathParserError,
         PathParsedShape,
@@ -493,7 +499,7 @@ export function BodyRequest<M>(__name?: string) {
         PathEncoded,
         PathApi
       >
-      body: S.Schema<
+      body: MO.Schema<
         unknown,
         BodyParserError,
         BodyParsedShape,
@@ -505,7 +511,7 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<
     M,
-    S.Schema<
+    MO.Schema<
       unknown,
       PathParserError,
       PathParsedShape,
@@ -514,7 +520,7 @@ export function BodyRequest<M>(__name?: string) {
       PathEncoded,
       PathApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       BodyParserError,
       BodyParsedShape,
@@ -525,35 +531,35 @@ export function BodyRequest<M>(__name?: string) {
     >,
     undefined,
     Headers,
-    S.Schema<
+    MO.Schema<
       unknown,
-      S.IntersectionE<S.MemberE<0, BodyParserError> | S.MemberE<1, PathParserError>>,
+      MO.IntersectionE<MO.MemberE<0, BodyParserError> | MO.MemberE<1, PathParserError>>,
       BodyParsedShape & PathParsedShape,
       BodyConstructorInput & PathConstructorInput,
-      S.IntersectionE<
-        S.MemberE<0, BodyConstructorError> | S.MemberE<1, PathConstructorError>
+      MO.IntersectionE<
+        MO.MemberE<0, BodyConstructorError> | MO.MemberE<1, PathConstructorError>
       >,
       BodyEncoded & PathEncoded,
       {}
     >
   >
   function a<
-    BodyParserError extends S.SchemaError<any>,
+    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends S.SchemaError<any>,
+    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    PathParserError extends S.SchemaError<any>,
+    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends S.SchemaError<any>,
+    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
-    QueryParserError extends S.SchemaError<any>,
+    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends S.SchemaError<any>,
+    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
     Headers extends StringRecordSchema
@@ -562,7 +568,7 @@ export function BodyRequest<M>(__name?: string) {
     path: string,
     _: {
       headers?: Headers
-      path: S.Schema<
+      path: MO.Schema<
         unknown,
         PathParserError,
         PathParsedShape,
@@ -571,7 +577,7 @@ export function BodyRequest<M>(__name?: string) {
         PathEncoded,
         PathApi
       >
-      body: S.Schema<
+      body: MO.Schema<
         unknown,
         BodyParserError,
         BodyParsedShape,
@@ -580,7 +586,7 @@ export function BodyRequest<M>(__name?: string) {
         BodyEncoded,
         BodyApi
       >
-      query: S.Schema<
+      query: MO.Schema<
         unknown,
         QueryParserError,
         QueryParsedShape,
@@ -592,7 +598,7 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<
     M,
-    S.Schema<
+    MO.Schema<
       unknown,
       PathParserError,
       PathParsedShape,
@@ -601,7 +607,7 @@ export function BodyRequest<M>(__name?: string) {
       PathEncoded,
       PathApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       BodyParserError,
       BodyParsedShape,
@@ -610,7 +616,7 @@ export function BodyRequest<M>(__name?: string) {
       BodyEncoded,
       BodyApi
     >,
-    S.Schema<
+    MO.Schema<
       unknown,
       QueryParserError,
       QueryParsedShape,
@@ -620,19 +626,19 @@ export function BodyRequest<M>(__name?: string) {
       QueryApi
     >,
     Headers,
-    S.Schema<
+    MO.Schema<
       unknown,
-      S.IntersectionE<
-        | S.MemberE<0, BodyParserError>
-        | S.MemberE<1, PathParserError>
-        | S.MemberE<2, QueryParserError>
+      MO.IntersectionE<
+        | MO.MemberE<0, BodyParserError>
+        | MO.MemberE<1, PathParserError>
+        | MO.MemberE<2, QueryParserError>
       >,
       BodyParsedShape & PathParsedShape & QueryParsedShape,
       BodyConstructorInput & PathConstructorInput & QueryConstructorInput,
-      S.IntersectionE<
-        | S.MemberE<0, BodyConstructorError>
-        | S.MemberE<1, PathConstructorError>
-        | S.MemberE<2, QueryConstructorError>
+      MO.IntersectionE<
+        | MO.MemberE<0, BodyConstructorError>
+        | MO.MemberE<1, PathConstructorError>
+        | MO.MemberE<2, QueryConstructorError>
       >,
       BodyEncoded & PathEncoded & QueryEncoded,
       {}
@@ -658,15 +664,15 @@ export function BodyRequest<M>(__name?: string) {
     Body,
     Query,
     Headers,
-    OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, S.SchemaAny>>
+    OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, MO.SchemaAny>>
   > {
-    const self: S.SchemaAny = S.props({
+    const self: MO.SchemaAny = MO.props({
       ..._.body?.Api.props,
       ..._.query?.Api.props,
       ..._.path?.Api.props,
     })
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(self["|>"](S.annotate(reqId, {}))) {
+    return class extends ModelSpecial<M>(__name)(self["|>"](MO.annotate(reqId, {}))) {
       static Path = _.path
       static Body = _.body
       static Query = _.query
@@ -681,7 +687,7 @@ export function BodyRequest<M>(__name?: string) {
 
 export interface Request<
   M,
-  Self extends S.SchemaAny,
+  Self extends MO.SchemaAny,
   Path extends string,
   Method extends Methods
 > extends Model<M, Self> {
@@ -699,7 +705,7 @@ export type PathParams<Path extends string> =
     ? PathParams<`:${Rest}`>
     : never
 
-export type IfPathPropsProvided<Path extends string, B extends S.PropertyRecord, C> =
+export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord, C> =
   // Must test the PathParams inside here, as when they evaluate to never, the whole type would otherwise automatically resolve to never
   PathParams<Path> extends never
     ? C
@@ -708,9 +714,9 @@ export type IfPathPropsProvided<Path extends string, B extends S.PropertyRecord,
     : ["You must specify the properties that you expect in the path", never]
 
 export function Model<M>(__name?: string) {
-  return <Props extends S.PropertyRecord = {}>(
+  return <Props extends MO.PropertyRecord = {}>(
     props: Props
-  ): Model<M, S.SchemaProperties<Props>> => ModelSpecial<M>(__name)(S.props(props))
+  ): Model<M, MO.SchemaProperties<Props>> => ModelSpecial<M>(__name)(MO.props(props))
 }
 
 /**
@@ -720,20 +726,20 @@ export function ReqProps<M>() {
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord = {}
+    Props extends MO.PropertyRecord = {}
   >(method: Method, path: Path): BuildRequest<Props, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord
+    Props extends MO.PropertyRecord
   >(method: Method, path: Path, props: Props): BuildRequest<Props, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord
+    Props extends MO.PropertyRecord
   >(method: Method, path: Path, props?: Props) {
     const req = Req<M>()
-    const r = props ? req(method, path, S.props(props)) : req(method, path)
+    const r = props ? req(method, path, MO.props(props)) : req(method, path)
     return r
   }
 
@@ -806,18 +812,18 @@ export function MethodReqProps2_<Method extends Methods, Path extends string>(
   path: Path
 ) {
   return <M>(__name?: string) => {
-    function a<Props extends S.PropertyRecord = {}>(): BuildRequest<
+    function a<Props extends MO.PropertyRecord = {}>(): BuildRequest<
       Props,
       Path,
       Method,
       M
     >
-    function a<Props extends S.PropertyRecord>(
+    function a<Props extends MO.PropertyRecord>(
       props: Props
     ): BuildRequest<Props, Path, Method, M>
-    function a<Props extends S.PropertyRecord>(props?: Props) {
+    function a<Props extends MO.PropertyRecord>(props?: Props) {
       const req = Req<M>(__name)
-      const r = props ? req(method, path, S.props(props)) : req(method, path)
+      const r = props ? req(method, path, MO.props(props)) : req(method, path)
       return r
     }
 
@@ -827,19 +833,19 @@ export function MethodReqProps2_<Method extends Methods, Path extends string>(
 
 export function MethodReqProps<Method extends Methods>(method: Method) {
   return <M>() => {
-    function a<Path extends string, Props extends S.PropertyRecord = {}>(
+    function a<Path extends string, Props extends MO.PropertyRecord = {}>(
       path: Path
     ): BuildRequest<Props, Path, Method, M>
-    function a<Path extends string, Props extends S.PropertyRecord>(
+    function a<Path extends string, Props extends MO.PropertyRecord>(
       path: Path,
       props: Props
     ): BuildRequest<Props, Path, Method, M>
-    function a<Path extends string, Props extends S.PropertyRecord>(
+    function a<Path extends string, Props extends MO.PropertyRecord>(
       path: Path,
       props?: Props
     ) {
       const req = Req<M>()
-      const r = props ? req(method, path, S.props(props)) : req(method, path)
+      const r = props ? req(method, path, MO.props(props)) : req(method, path)
       return r
     }
 
@@ -852,7 +858,7 @@ export function MethodReq_<Method extends Methods, Path extends string>(
   path: Path
 ) {
   return <M>(__name?: string) =>
-    <Props extends S.PropertyRecord>(self: S.SchemaProperties<Props>) => {
+    <Props extends MO.PropertyRecord>(self: MO.SchemaProperties<Props>) => {
       const req = Req<M>(__name)
       return req(method, path, self)
     }
@@ -865,26 +871,26 @@ export function Req<M>(__name?: string) {
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord = {}
+    Props extends MO.PropertyRecord = {}
   >(method: Method, path: Path): BuildRequest<Props, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord
+    Props extends MO.PropertyRecord
   >(
     method: Method,
     path: Path,
-    self: S.SchemaProperties<Props>
+    self: MO.SchemaProperties<Props>
   ): BuildRequest<Props, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    Props extends S.PropertyRecord
-  >(method: Method, path: Path, self?: S.SchemaProperties<Props>) {
+    Props extends MO.PropertyRecord
+  >(method: Method, path: Path, self?: MO.SchemaProperties<Props>) {
     return makeRequest<Props, Path, Method, M>(
       method,
       path,
-      self ?? (S.props({}) as any)
+      self ?? (MO.props({}) as any)
     )
   }
   return a
@@ -897,7 +903,7 @@ export function parsePathParams<Path extends string>(path: Path) {
 }
 
 type BuildRequest<
-  Props extends S.PropertyRecord,
+  Props extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods,
   M
@@ -907,31 +913,31 @@ type BuildRequest<
   Method extends "GET" | "DELETE"
     ? QueryRequest<
         M,
-        S.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        S.SchemaProperties<Omit<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
         undefined,
-        S.SchemaProperties<Props>
+        MO.SchemaProperties<Props>
       >
     : BodyRequest<
         M,
-        S.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        S.SchemaProperties<Omit<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
         undefined,
         undefined,
-        S.SchemaProperties<Props>
+        MO.SchemaProperties<Props>
       >
 >
 
 // NOTE: This ignores the original schema after building the new
 export function makeRequest<
-  Props extends S.PropertyRecord,
+  Props extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods,
   M
 >(
   method: Method,
   path: Path,
-  self: S.SchemaProperties<Props>,
+  self: MO.SchemaProperties<Props>,
   __name?: string
 ): BuildRequest<Props, Path, Method, M> {
   const params = parsePathParams(path)
@@ -947,10 +953,10 @@ export function makeRequest<
 
   const dest = method === "GET" || method === "DELETE" ? "query" : "body"
   const newSchema = {
-    path: pathProps ? S.props(pathProps) : undefined,
+    path: pathProps ? MO.props(pathProps) : undefined,
     // TODO: query props must be parsed "from string"
 
-    [dest]: S.props(remainProps),
+    [dest]: MO.props(remainProps),
   }
   if (method === "GET" || method === "DELETE") {
     return class extends QueryRequest<M>(__name)(
@@ -967,23 +973,23 @@ export function makeRequest<
 }
 
 export function adaptRequest<
-  Props extends S.PropertyRecord,
+  Props extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods,
   M
->(req: Request<M, S.SchemaProperties<Props>, Path, Method>) {
-  return makeRequest<Props, Path, Method, M>(req.method, req.path, req[S.schemaField])
+>(req: Request<M, MO.SchemaProperties<Props>, Path, Method>) {
+  return makeRequest<Props, Path, Method, M>(req.method, req.path, req[MO.schemaField])
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
   [K in keyof ParsedShapeOf<Self>]: Lens.Lens<T, ParsedShapeOf<Self>[K]>
 }
 
-export type PropsToLenses<T, Props extends S.PropertyRecord> = {
-  [K in keyof Props]: Lens.Lens<T, S.ParsedShapeOf<Props[K]["_schema"]>>
+export type PropsToLenses<T, Props extends MO.PropertyRecord> = {
+  [K in keyof Props]: Lens.Lens<T, MO.ParsedShapeOf<Props[K]["_schema"]>>
 }
 export function lensFromProps<T>() {
-  return <Props extends S.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
+  return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
       prev[cur] = id["|>"](Lens.prop(cur as any))
@@ -992,10 +998,10 @@ export function lensFromProps<T>() {
   }
 }
 
-function setSchema<Self extends S.SchemaProperties<any>>(schemed: any, self: Self) {
-  schemed[S.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Model = self
+function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Self) {
+  schemed[MO.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Model = self
 
-  // Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
+  // Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
   //   value: self,
   // })
 
@@ -1014,39 +1020,39 @@ function setSchema<Self extends S.SchemaProperties<any>>(schemed: any, self: Sel
   })
 
   Object.defineProperty(schemed, "Parser", {
-    value: S.Parser.for(self),
+    value: MO.Parser.for(self),
     configurable: true,
   })
 
   Object.defineProperty(schemed, "Constructor", {
-    value: S.Constructor.for(self),
+    value: MO.Constructor.for(self),
     configurable: true,
   })
 
   Object.defineProperty(schemed, "Encoder", {
-    value: S.Encoder.for(self),
+    value: MO.Encoder.for(self),
     configurable: true,
   })
 
   Object.defineProperty(schemed, "Guard", {
-    value: S.Guard.for(self),
+    value: MO.Guard.for(self),
     configurable: true,
   })
 
   Object.defineProperty(schemed, "Arbitrary", {
-    value: S.Arbitrary.for(self),
+    value: MO.Arbitrary.for(self),
     configurable: true,
   })
 
   Object.defineProperty(schemed, "annotate", {
-    value: <Meta>(identifier: S.Annotation<Meta>, meta: Meta) =>
-      new S.SchemaAnnotated(self, identifier, meta),
+    value: <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
+      new MO.SchemaAnnotated(self, identifier, meta),
     configurable: true,
   })
 }
 
 export type Meta = { description?: string; summary?: string }
-export const metaIdentifier = S.makeAnnotation<Meta>()
+export const metaIdentifier = MO.makeAnnotation<Meta>()
 export const metaC = (meta: Meta) => {
   return function (cls: any) {
     setSchema(cls, cls[schemaField].annotate(metaIdentifier, meta))
@@ -1058,15 +1064,15 @@ export const metaC = (meta: Meta) => {
  * Automatically assign the name of the Class to the Schema.
  */
 export function namedC(cls: any) {
-  setSchema(cls, cls[schemaField]["|>"](S.named(cls.name)))
+  setSchema(cls, cls[schemaField]["|>"](MO.named(cls.name)))
   return cls
 }
 
 // We don't want Copy interface from the official implementation
 export function ModelSpecial<M>(__name?: string) {
-  return <Self extends S.SchemaAny>(self: Self): Model<M, Self> => {
-    const schema = __name ? self["|>"](S.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
-    const of_ = S.Constructor.for(schema)["|>"](unsafe)
+  return <Self extends MO.SchemaAny>(self: Self): Model<M, Self> => {
+    const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
+    const of_ = MO.Constructor.for(schema)["|>"](unsafe)
     const fromFields = (fields: any, target: any) => {
       for (const k of Object.keys(fields)) {
         target[k] = fields[k]
@@ -1078,24 +1084,24 @@ export function ModelSpecial<M>(__name?: string) {
       static [nModelBrand] = nModelBrand
 
       static [schemaField] = schema
-      static [S.SchemaContinuationSymbol] = schema
+      static [MO.SchemaContinuationSymbol] = schema
       static Model = schema
       static Api = schema.Api
       static [">>>"] = schema[">>>"]
 
-      static Parser = S.Parser.for(schema)
-      static Encoder = S.Encoder.for(schema)
-      static Constructor = S.Constructor.for(schema)
-      static Guard = S.Guard.for(schema)
-      static Arbitrary = S.Arbitrary.for(schema)
+      static Parser = MO.Parser.for(schema)
+      static Encoder = MO.Encoder.for(schema)
+      static Constructor = MO.Constructor.for(schema)
+      static Guard = MO.Guard.for(schema)
+      static Arbitrary = MO.Arbitrary.for(schema)
 
       static lens = Lens.id<any>()
       static lenses = lensFromProps()(schema.Api.props)
 
-      static annotate = <Meta>(identifier: S.Annotation<Meta>, meta: Meta) =>
-        new S.SchemaAnnotated(self, identifier, meta)
+      static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
+        new MO.SchemaAnnotated(self, identifier, meta)
 
-      constructor(inp?: S.ConstructorInputOf<Self>) {
+      constructor(inp?: MO.ConstructorInputOf<Self>) {
         if (inp) {
           fromFields(of_(inp), this)
         }
@@ -1145,9 +1151,9 @@ export function ModelSpecial<M>(__name?: string) {
     }
   }
 }
-export type ReqRes<E, A> = S.Schema<
+export type ReqRes<E, A> = MO.Schema<
   unknown, //ParserInput,
-  any, // S.AnyError //ParserError,
+  any, // MO.AnyError //ParserError,
   A, //ParsedShape,
   any, //ConstructorInput,
   any, //ConstructorError,
@@ -1156,7 +1162,7 @@ export type ReqRes<E, A> = S.Schema<
 >
 export type ReqResSchemed<E, A> = {
   new (...args: any[]): any
-  Encoder: S.Encoder.Encoder<A, E>
+  Encoder: MO.Encoder.Encoder<A, E>
   Model: ReqRes<E, A>
 }
 

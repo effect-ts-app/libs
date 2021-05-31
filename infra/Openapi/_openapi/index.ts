@@ -34,7 +34,7 @@ import {
   UUIDFromStringIdentifier,
 } from "@effect-ts-app/core/Schema"
 
-import * as S from "../_schema"
+import * as MO from "../_schema"
 import {
   AllOfSchema,
   ArraySchema,
@@ -50,14 +50,14 @@ import {
 
 export type Gen = T.UIO<JSONSchema>
 
-export const interpreters: ((schema: S.SchemaAny) => O.Option<Gen>)[] = [
-  O.partial((_miss) => (schema: S.SchemaAny): Gen => {
-    // if (schema instanceof S.SchemaOpenApi) {
+export const interpreters: ((schema: MO.SchemaAny) => O.Option<Gen>)[] = [
+  O.partial((_miss) => (schema: MO.SchemaAny): Gen => {
+    // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
     // }
 
-    // if (schema instanceof S.SchemaRecur) {
+    // if (schema instanceof MO.SchemaRecur) {
     //   if (interpreterCache.has(schema)) {
     //     return interpreterCache.get(schema)
     //   }
@@ -80,7 +80,7 @@ export const interpreters: ((schema: S.SchemaAny) => O.Option<Gen>)[] = [
 ]
 
 // TODO: Cache
-type Meta = S.Meta & {
+type Meta = MO.Meta & {
   title?: string
   noRef?: boolean
   openapiRef?: string
@@ -88,28 +88,28 @@ type Meta = S.Meta & {
   maxLength?: number
 }
 
-function processId(schema: S.SchemaAny, meta: Meta = {}): any {
+function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   if (!schema) {
     throw new Error("schema undefined")
   }
   return T.gen(function* ($) {
-    if (schema instanceof S.SchemaRefinement) {
+    if (schema instanceof MO.SchemaRefinement) {
       return yield* $(processId(schema.self, meta))
     }
-    //   if (schema instanceof S.SchemaPipe) {
+    //   if (schema instanceof MO.SchemaPipe) {
     //     return processId(schema.that, meta)
     //   }
-    //   if (schema instanceof S.SchemaConstructor) {
+    //   if (schema instanceof MO.SchemaConstructor) {
     //     return processId(schema.self, meta)
     //   }
 
     //console.log("$$$", schema.annotation)
 
-    // if (schema instanceof S.SchemaOpenApi) {
+    // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   meta = { ...meta, ...cfg }
     // }
-    if (schema instanceof S.SchemaNamed) {
+    if (schema instanceof MO.SchemaNamed) {
       meta = { title: schema.name, ...meta }
     }
 
@@ -117,7 +117,7 @@ function processId(schema: S.SchemaAny, meta: Meta = {}): any {
       // TODO: proper narrow the types
       const schemaMeta = schema.meta as any
       switch (schema.annotation) {
-        case S.reqId: {
+        case MO.reqId: {
           meta = { noRef: true, ...meta }
           break
         }
@@ -218,7 +218,7 @@ function processId(schema: S.SchemaAny, meta: Meta = {}): any {
           const properties: Record<string, any> = {}
           const required = []
           for (const k in schemaMeta.props) {
-            const p: S.AnyProperty = schemaMeta.props[k]
+            const p: MO.AnyProperty = schemaMeta.props[k]
             properties[k] = yield* $(processId(p["_schema"]))
             if (p["_optional"] === "required") {
               required.push(k)
@@ -283,14 +283,14 @@ const cache = new WeakMap()
 
 function for_<
   ParserInput,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  schema: S.Schema<
+  schema: MO.Schema<
     ParserInput,
     ParserError,
     ParsedShape,

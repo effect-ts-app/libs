@@ -1,6 +1,6 @@
 import * as T from "@effect-ts/core/Effect"
 import * as O from "@effect-ts/core/Option"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 import { SchemaAny } from "@effect-ts-app/core/Schema"
 
 class BaseError {
@@ -31,18 +31,18 @@ export interface DBRecord<TKey extends string> {
   id: TKey
 }
 
-export class SerializedDBRecord extends S.Model<SerializedDBRecord>()({
-  version: S.prop(S.string),
-  timestamp: S.prop(S.date),
-  data: S.prop(S.string),
+export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
+  version: MO.prop(MO.string),
+  timestamp: MO.prop(MO.date),
+  data: MO.prop(MO.string),
 }) {}
 
 // unknown -> string -> SDB?
 export function makeSerialisedDBRecord(s: SchemaAny) {
-  return S.props({
-    version: S.prop(S.number),
-    timestamp: S.prop(S.date),
-    data: S.prop(s),
+  return MO.props({
+    version: MO.prop(MO.number),
+    timestamp: MO.prop(MO.date),
+    data: MO.prop(s),
   })
 }
 

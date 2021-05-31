@@ -10,7 +10,7 @@ import { Compute } from "../Compute"
 import { constant, Lazy, pipe } from "../Function"
 import { typedKeysOf } from "../utils"
 import { set, setIdentifier } from "./_api"
-import * as S from "./_schema"
+import * as MO from "./_schema"
 import { UUID } from "./_schema"
 
 export * from "./utils"
@@ -46,7 +46,7 @@ export function partialConstructor_<
 
 // TODO: morph the schema instead.
 export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
-  [S.schemaField]: S.Schema<any, any, ParsedShape, ConstructorInput, any, any, any>
+  [MO.schemaField]: MO.Schema<any, any, ParsedShape, ConstructorInput, any, any, any>
   new (inp: ConstructorInput): ParsedShape
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
@@ -64,7 +64,7 @@ export function derivePartialConstructor_<
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
   model: {
-    [S.schemaField]: S.Schema<any, any, ParsedShape, ConstructorInput, any, any, any>
+    [MO.schemaField]: MO.Schema<any, any, ParsedShape, ConstructorInput, any, any, any>
     new (inp: ConstructorInput): ParsedShape
   },
   // TODO: Prevent over provide
@@ -81,7 +81,7 @@ export type GetPartialConstructor<A extends (...args: any) => any> = Parameters<
 >[0]
 
 export function makeUuid() {
-  return v4() as S.UUID
+  return v4() as MO.UUID
 }
 
 type LazyPartial<T> = {
@@ -90,14 +90,14 @@ type LazyPartial<T> = {
 
 export function withDefaultConstructorFields<
   ParserInput,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  self: S.Schema<
+  self: MO.Schema<
     ParserInput,
     ParserError,
     ParsedShape,
@@ -110,7 +110,7 @@ export function withDefaultConstructorFields<
   // TODO: but allow NO OTHERS!
   return <Changes extends LazyPartial<ConstructorInput>>(
     kvs: Changes
-  ): S.Schema<
+  ): MO.Schema<
     ParserInput,
     ParserError,
     ParsedShape,
@@ -121,10 +121,10 @@ export function withDefaultConstructorFields<
     Encoded,
     Api
   > => {
-    const constructSelf = S.Constructor.for(self)
+    const constructSelf = MO.Constructor.for(self)
     return pipe(
       self,
-      S.constructor((u: any) =>
+      MO.constructor((u: any) =>
         constructSelf({
           ...u,
           ...Object.keys(kvs).reduce((prev, cur) => {
@@ -144,11 +144,14 @@ export function makeCurrentDate() {
   return new Date()
 }
 export function defaultConstructor<
-  Self extends S.SchemaUPI,
+  Self extends MO.SchemaUPI,
   As extends O.Option<PropertyKey>,
-  Def extends O.Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
->(p: S.Property<Self, "required", As, Def>) {
-  return (makeDefault: () => S.ParsedShapeOf<Self>) => p.def(makeDefault, "constructor")
+  Def extends O.Option<
+    ["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]
+  >
+>(p: MO.Property<Self, "required", As, Def>) {
+  return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
+    p.def(makeDefault, "constructor")
 }
 
 type SupportedDefaults =
@@ -161,46 +164,46 @@ type SupportedDefaults =
   | UUID
 
 export function findAnnotation<A>(
-  schema: S.SchemaAny,
-  id: S.Annotation<A>
+  schema: MO.SchemaAny,
+  id: MO.Annotation<A>
 ): A | undefined {
-  if (S.isAnnotated(schema, id)) {
+  if (MO.isAnnotated(schema, id)) {
     return schema.meta
   }
 
-  if (S.hasContinuation(schema)) {
-    return findAnnotation(schema[S.SchemaContinuationSymbol], id)
+  if (MO.hasContinuation(schema)) {
+    return findAnnotation(schema[MO.SchemaContinuationSymbol], id)
   }
 
   return undefined
 }
 
-export type SupportedDefaultsSchema = S.Schema<
+export type SupportedDefaultsSchema = MO.Schema<
   unknown,
-  S.AnyError,
+  MO.AnyError,
   SupportedDefaults,
   any,
-  S.AnyError,
+  MO.AnyError,
   any,
   any
 >
-export type DefaultProperty = S.Property<any, any, any, any>
+export type DefaultProperty = MO.Property<any, any, any, any>
 
 export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
 
-type ParsedShapeOfBla<X extends S.Schema<any, any, any, any, any, any, any>> =
-  X extends S.Schema<any, any, infer Y, any, any, any, any> ? Y : never
+type ParsedShapeOfBla<X extends MO.Schema<any, any, any, any, any, any, any>> =
+  X extends MO.Schema<any, any, infer Y, any, any, any, any> ? Y : never
 
 // TODO does not properly filter on SupportedDefaults :S
 type AllWithDefault<Props extends DefaultPropertyRecord> = {
   [K in keyof Props]: WithDefault<
-    S.ParserErrorOf<Props[K]["_schema"]>,
+    MO.ParserErrorOf<Props[K]["_schema"]>,
     // TODO
     ParsedShapeOfBla<Props[K]["_schema"]>,
-    S.ConstructorInputOf<Props[K]["_schema"]>,
-    S.ConstructorErrorOf<Props[K]["_schema"]>,
-    S.EncodedOf<Props[K]["_schema"]>,
-    S.ApiOf<Props[K]["_schema"]>,
+    MO.ConstructorInputOf<Props[K]["_schema"]>,
+    MO.ConstructorErrorOf<Props[K]["_schema"]>,
+    MO.EncodedOf<Props[K]["_schema"]>,
+    MO.ApiOf<Props[K]["_schema"]>,
     Props[K]["_as"]
   >
 }
@@ -215,15 +218,15 @@ export function allWithDefault<Props extends DefaultPropertyRecord>(
 }
 
 export type WithDefault<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
   As extends O.Option<PropertyKey>
-> = S.Property<
-  S.Schema<
+> = MO.Property<
+  MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -238,18 +241,18 @@ export type WithDefault<
 >
 
 export function withDefault<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
   As extends O.Option<PropertyKey>,
   Def extends O.Option<
     [
       "parser" | "constructor" | "both",
-      () => S.ParsedShapeOf<
-        S.Schema<
+      () => MO.ParsedShapeOf<
+        MO.Schema<
           unknown,
           ParserError,
           ParsedShape,
@@ -262,8 +265,8 @@ export function withDefault<
     ]
   >
 >(
-  p: S.Property<
-    S.Schema<
+  p: MO.Property<
+    MO.Schema<
       unknown,
       ParserError,
       ParsedShape,
@@ -285,43 +288,43 @@ export function withDefault<
   Api,
   As
 > {
-  if (findAnnotation(p._schema, S.dateIdentifier)) {
+  if (findAnnotation(p._schema, MO.dateIdentifier)) {
     return p.def(makeCurrentDate as any, "constructor")
   }
-  if (findAnnotation(p._schema, S.nullableIdentifier)) {
+  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return p.def(() => O.none as any, "constructor")
   }
-  if (findAnnotation(p._schema, S.arrayIdentifier)) {
+  if (findAnnotation(p._schema, MO.arrayIdentifier)) {
     return p.def(() => [] as any, "constructor")
   }
   if (findAnnotation(p._schema, setIdentifier)) {
     return p.def(() => new Set() as any, "constructor")
   }
-  if (findAnnotation(p._schema, S.boolIdentifier)) {
+  if (findAnnotation(p._schema, MO.boolIdentifier)) {
     return p.def(() => false as any, "constructor")
   }
-  if (findAnnotation(p._schema, S.UUIDIdentifier)) {
+  if (findAnnotation(p._schema, MO.UUIDIdentifier)) {
     return p.def(makeUuid as any, "constructor")
   }
   throw new Error("Not supported")
 }
 
-function defProp<Self extends S.SchemaUPI>(
+function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
-  makeDefault: () => S.ParsedShapeOf<Self>
+  makeDefault: () => MO.ParsedShapeOf<Self>
 ) {
-  return S.prop(schema).def(makeDefault, "constructor")
+  return MO.prop(schema).def(makeDefault, "constructor")
 }
 
 export function defaultProp<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  schema: S.Schema<
+  schema: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -331,8 +334,8 @@ export function defaultProp<
     Api
   >,
   makeDefault: () => ParsedShape
-): S.Property<
-  S.Schema<
+): MO.Property<
+  MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -346,14 +349,14 @@ export function defaultProp<
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  schema: S.Schema<
+  schema: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -362,8 +365,8 @@ export function defaultProp<
     Encoded,
     Api
   >
-): S.Property<
-  S.Schema<
+): MO.Property<
+  MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -377,29 +380,29 @@ export function defaultProp<
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp(
-  schema: S.Schema<unknown, S.AnyError, any, any, S.AnyError, any, any>,
+  schema: MO.Schema<unknown, MO.AnyError, any, any, MO.AnyError, any, any>,
   makeDefault?: () => any
 ) {
-  return makeDefault ? defProp(schema, makeDefault) : S.prop(schema)["|>"](withDefault)
+  return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema)["|>"](withDefault)
 }
 
-export function include<Props extends Record<string, S.AnyProperty>>(props: Props) {
-  return <NewProps extends Record<string, S.AnyProperty>>(
+export function include<Props extends Record<string, MO.AnyProperty>>(props: Props) {
+  return <NewProps extends Record<string, MO.AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => include_(props, fnc)
 }
 
 export function include_<
-  Props extends Record<string, S.AnyProperty>,
-  NewProps extends Record<string, S.AnyProperty>
+  Props extends Record<string, MO.AnyProperty>,
+  NewProps extends Record<string, MO.AnyProperty>
 >(props: Props, fnc: (props: Props) => NewProps) {
   return fnc(props)
 }
 
-export function makeOptional<NER extends Record<string, S.AnyProperty>>(
+export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: S.Property<
+  [K in keyof NER]: MO.Property<
     NER[K]["_schema"],
     "optional",
     NER[K]["_as"],
@@ -412,10 +415,10 @@ export function makeOptional<NER extends Record<string, S.AnyProperty>>(
   }, {} as any)
 }
 
-export function makeRequired<NER extends Record<string, S.AnyProperty>>(
+export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: S.Property<
+  [K in keyof NER]: MO.Property<
     NER[K]["_schema"],
     "required",
     NER[K]["_as"],
@@ -434,15 +437,15 @@ export function createUnorder<T>(): Ord.Ord<T> {
   }
 }
 export function makeSet<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: S.Schema<
+  type: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -460,16 +463,16 @@ export function makeSet<
 }
 
 export function makeUnorderedContramappedStringSet<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
   MA extends string
 >(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: S.Schema<
+  type: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -485,9 +488,9 @@ export function makeUnorderedContramappedStringSet<
 
 export function makeUnorderedStringSet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: S.Schema<
+  type: MO.Schema<
     unknown, //ParserInput,
-    any, // S.AnyError //ParserError,
+    any, // MO.AnyError //ParserError,
     A,
     any, //ConstructorInput,
     any, //ConstructorError,
@@ -499,15 +502,15 @@ export function makeUnorderedStringSet<A extends string>(
 }
 
 export function makeUnorderedSet<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: S.Schema<
+  type: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -522,16 +525,16 @@ export function makeUnorderedSet<
 }
 
 export function makeContramappedSet<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
   MA
 >(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: S.Schema<
+  type: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -552,8 +555,8 @@ export const constArray = constant(A.empty)
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }
 }
-  ? Props extends S.PropertyRecord
-    ? S.ParserInputFromProperties<Props>
+  ? Props extends MO.PropertyRecord
+    ? MO.ParserInputFromProperties<Props>
     : never
   : never
 

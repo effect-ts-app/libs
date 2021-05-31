@@ -4,7 +4,7 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts/schema"
+import * as MO from "@effect-ts/schema"
 import { augmentRecord } from "@effect-ts/schema/_utils"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
 import * as Encoder from "@effect-ts/schema/Encoder"
@@ -12,22 +12,22 @@ import * as Guard from "@effect-ts/schema/Guard"
 import * as Parser from "@effect-ts/schema/Parser"
 import * as Th from "@effect-ts/schema/These"
 
-export const dictionaryIdentifier = S.makeAnnotation<{}>()
+export const dictionaryIdentifier = MO.makeAnnotation<{}>()
 
-export type ParserErrorFromDictionary = S.CompositionE<
-  S.PrevE<S.LeafE<S.UnknownRecordE>> | S.NextE<S.LeafE<S.ParseObjectE>>
+export type ParserErrorFromDictionary = MO.CompositionE<
+  MO.PrevE<MO.LeafE<MO.UnknownRecordE>> | MO.NextE<MO.LeafE<MO.ParseObjectE>>
 > // TODO
 
 export function dictionary<
   ParserInput,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  self: S.Schema<
+  self: MO.Schema<
     ParserInput,
     ParserError,
     ParsedShape,
@@ -36,7 +36,7 @@ export function dictionary<
     Encoded,
     Api
   >
-): S.DefaultSchema<
+): MO.DefaultSchema<
   unknown,
   ParserErrorFromDictionary,
   Dictionary<ParsedShape>,
@@ -55,11 +55,11 @@ export function dictionary<
   ): Th.These<ParserErrorFromDictionary, Dictionary<ParsedShape>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        MO.compositionE(Chunk.single(MO.prevE(MO.leafE(MO.unknownRecordE(_)))))
       )
     }
     let errors =
-      Chunk.empty<S.OptionalKeyE<string, unknown> | S.RequiredKeyE<string, unknown>>()
+      Chunk.empty<MO.OptionalKeyE<string, unknown> | MO.RequiredKeyE<string, unknown>>()
 
     let isError = false
 
@@ -72,7 +72,7 @@ export function dictionary<
       const res = parse(_[key])
 
       if (res.effect._tag === "Left") {
-        errors = Chunk.append_(errors, S.requiredKeyE(key, res.effect.left))
+        errors = Chunk.append_(errors, MO.requiredKeyE(key, res.effect.left))
         isError = true
       } else {
         // @ts-expect-error doc
@@ -81,7 +81,7 @@ export function dictionary<
         const warnings = res.effect.right.get(1)
 
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, S.requiredKeyE(key, warnings.value))
+          errors = Chunk.append_(errors, MO.requiredKeyE(key, warnings.value))
         }
       }
     }
@@ -94,7 +94,7 @@ export function dictionary<
       return Th.succeed(result as Dictionary<ParsedShape>)
     }
 
-    const error_ = S.compositionE(Chunk.single(S.nextE(S.structE(errors))))
+    const error_ = MO.compositionE(Chunk.single(MO.nextE(MO.structE(errors))))
     const error = error_
 
     if (isError) {
@@ -112,18 +112,18 @@ export function dictionary<
     !Object.keys(u).every((x) => typeof x === "string" && Object.values(u).every(guard))
 
   return pipe(
-    S.refinement(refine, (v) => S.leafE(S.parseObjectE(v))),
-    S.constructor((s: Dictionary<ParsedShape>) => Th.succeed(s)),
-    S.arbitrary((_) => _.dictionary<ParsedShape>(_.string(), arb(_))),
-    S.parser(parser),
-    S.encoder((_) =>
+    MO.refinement(refine, (v) => MO.leafE(MO.parseObjectE(v))),
+    MO.constructor((s: Dictionary<ParsedShape>) => Th.succeed(s)),
+    MO.arbitrary((_) => _.dictionary<ParsedShape>(_.string(), arb(_))),
+    MO.parser(parser),
+    MO.encoder((_) =>
       Object.keys(_).reduce((prev, cur) => {
         prev[cur] = encode(_[cur])
         return prev
       }, {} as Record<string, Encoded>)
     ),
-    S.mapApi(() => ({})),
-    S.withDefaults,
-    S.annotate(dictionaryIdentifier, {})
+    MO.mapApi(() => ({})),
+    MO.withDefaults,
+    MO.annotate(dictionaryIdentifier, {})
   )
 }

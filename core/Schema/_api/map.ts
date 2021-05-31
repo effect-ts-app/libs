@@ -3,7 +3,7 @@
 
 import { Map } from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts/schema"
+import * as MO from "@effect-ts/schema"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
 import * as Encoder from "@effect-ts/schema/Encoder"
 import * as Guard from "@effect-ts/schema/Guard"
@@ -12,23 +12,23 @@ import * as Th from "@effect-ts/schema/These"
 
 import { tuple } from "./tuple"
 
-export const mapIdentifier = S.makeAnnotation<{}>()
+export const mapIdentifier = MO.makeAnnotation<{}>()
 
 export function map<
-  KeyParserError extends S.AnyError,
+  KeyParserError extends MO.AnyError,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends S.AnyError,
+  KeyConstructorError extends MO.AnyError,
   KeyEncoded,
   KeyApi,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  key: S.Schema<
+  key: MO.Schema<
     unknown,
     KeyParserError,
     KeyParsedShape,
@@ -37,7 +37,7 @@ export function map<
     KeyEncoded,
     KeyApi
   >,
-  self: S.Schema<
+  self: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -46,9 +46,9 @@ export function map<
     Encoded,
     Api
   >
-): S.DefaultSchema<
+): MO.DefaultSchema<
   unknown,
-  S.AnyError,
+  MO.AnyError,
   Map<KeyParsedShape, ParsedShape>,
   Map<KeyParsedShape, ParsedShape>,
   never,
@@ -59,7 +59,7 @@ export function map<
 
   const guard = Guard.for(self)
 
-  const maparr = S.array(tuple(key, self))
+  const maparr = MO.array(tuple(key, self))
   const mapParse = Parser.for(maparr)
   const mapEncode = Encoder.for(maparr)
   const mapArb = Arbitrary.for(maparr)
@@ -69,15 +69,15 @@ export function map<
     Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
 
   return pipe(
-    S.identity(refinement),
-    S.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
-    S.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
-    S.parser((i: unknown) =>
+    MO.identity(refinement),
+    MO.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
+    MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
+    MO.parser((i: unknown) =>
       mapParse(i)["|>"](Th.map((x) => new Map(x) as Map<KeyParsedShape, ParsedShape>))
     ),
-    S.encoder((_) => Array.from(_.entries())["|>"](mapEncode)),
-    S.mapApi(() => ({})),
-    S.withDefaults,
-    S.annotate(mapIdentifier, {})
+    MO.encoder((_) => Array.from(_.entries())["|>"](mapEncode)),
+    MO.mapApi(() => ({})),
+    MO.withDefaults,
+    MO.annotate(mapIdentifier, {})
   )
 }

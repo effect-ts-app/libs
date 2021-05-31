@@ -1,45 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as T from "@effect-ts/core/Effect"
 import { flow } from "@effect-ts-app/core/Function"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 
 import { NotFoundError, UnauthorizedError } from "./errors"
 
 export function handle<
   TModule extends Record<
     string,
-    any //{ Model: S.SchemaAny; new (...args: any[]): any } | S.SchemaAny
+    any //{ Model: MO.SchemaAny; new (...args: any[]): any } | MO.SchemaAny
   >,
-  TRes extends { Model: S.SchemaAny } | S.SchemaAny = typeof S.Void
+  TRes extends { Model: MO.SchemaAny } | MO.SchemaAny = typeof MO.Void
 >(
   _: TModule & { Response?: TRes; ResponseOpenApi?: any },
   adaptResponse?: any
 ): <R, E>(
   h: (
     r: InstanceType<
-      S.GetRequest<TModule> extends { new (...args: any[]): any }
-        ? S.GetRequest<TModule>
+      MO.GetRequest<TModule> extends { new (...args: any[]): any }
+        ? MO.GetRequest<TModule>
         : never
     >
-  ) => T.Effect<R, E, S.ParsedShapeOf<Extr<TRes>>>
+  ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<TRes>>>
 ) => {
   h: typeof h
-  Request: S.GetRequest<TModule>
+  Request: MO.GetRequest<TModule>
   Response: TRes
   ResponseOpenApi: any
 } {
   // TODO: Prevent over providing // no strict/shrink yet.
-  const Request = S.extractRequest(_)
-  const Response = (_.Response ?? S.Void) as TRes
+  const Request = MO.extractRequest(_)
+  const Response = (_.Response ?? MO.Void) as TRes
 
   return <R, E>(
     h: (
       r: InstanceType<
-        S.GetRequest<TModule> extends { new (...args: any[]): any }
-          ? S.GetRequest<TModule>
+        MO.GetRequest<TModule> extends { new (...args: any[]): any }
+          ? MO.GetRequest<TModule>
           : never
       >
-    ) => T.Effect<R, E, S.ParsedShapeOf<Extr<TRes>>>
+    ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<TRes>>>
   ) =>
     ({
       adaptResponse,
@@ -50,9 +50,9 @@ export function handle<
     } as any)
 }
 
-type Extr<T> = T extends { Model: S.SchemaAny }
+type Extr<T> = T extends { Model: MO.SchemaAny }
   ? T["Model"]
-  : T extends S.SchemaAny
+  : T extends MO.SchemaAny
   ? T
   : never
 

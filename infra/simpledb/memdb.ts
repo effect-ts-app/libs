@@ -5,7 +5,7 @@ import * as O from "@effect-ts/core/Option"
 import * as Sy from "@effect-ts/core/Sync"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 
 import {
   CachedRecord,
@@ -21,7 +21,7 @@ import { Version } from "./simpledb"
 // Do not try this at home.
 const storage = makeMap<string, string>()
 
-const parseSDB = SerializedDBRecord.Parser["|>"](S.condemnFail)
+const parseSDB = SerializedDBRecord.Parser["|>"](MO.condemnFail)
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(

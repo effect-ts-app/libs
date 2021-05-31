@@ -4,7 +4,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import { Numbers } from "../../FastCheck"
 import { pipe, Refinement } from "../../Function"
 import { isValidPhone } from "../../validation"
-import * as S from "../_schema"
+import * as MO from "../_schema"
 import {
   brand,
   DefaultSchema,
@@ -23,7 +23,7 @@ export interface PhoneNumberBrand {
 
 export type PhoneNumber = NonEmptyString & PhoneNumberBrand
 
-export const PhoneNumberFromStringIdentifier = S.makeAnnotation<{}>()
+export const PhoneNumberFromStringIdentifier = MO.makeAnnotation<{}>()
 
 const isPhoneNumber: Refinement<string, PhoneNumber> = (
   s: string
@@ -33,52 +33,52 @@ const isPhoneNumber: Refinement<string, PhoneNumber> = (
 
 export const PhoneNumberFromString: DefaultSchema<
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   PhoneNumber,
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   string,
   {}
 > = pipe(
   fromString,
-  S.arbitrary((FC) => Numbers(7, 10)(FC)),
+  MO.arbitrary((FC) => Numbers(7, 10)(FC)),
   nonEmpty,
-  S.mapParserError((_) => CNK.unsafeHead(_.errors).error),
-  S.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
-  S.refine(isPhoneNumber, (n) => S.leafE(parseUuidE(n))),
+  MO.mapParserError((_) => CNK.unsafeHead(_.errors).error),
+  MO.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
+  MO.refine(isPhoneNumber, (n) => MO.leafE(parseUuidE(n))),
   brand<PhoneNumber>(),
-  S.annotate(PhoneNumberFromStringIdentifier, {})
+  MO.annotate(PhoneNumberFromStringIdentifier, {})
 )
 
-export const PhoneNumberIdentifier = S.makeAnnotation<{}>()
+export const PhoneNumberIdentifier = MO.makeAnnotation<{}>()
 
 export const PhoneNumber: DefaultSchema<
   unknown,
-  S.CompositionE<
-    | S.PrevE<S.RefinementE<S.LeafE<S.ParseStringE>>>
-    | S.NextE<
-        S.CompositionE<
-          | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-          | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.ParseStringE>>>
+    | MO.NextE<
+        MO.CompositionE<
+          | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+          | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
         >
       >
   >,
   PhoneNumber,
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   string,
-  S.ApiSelfType<PhoneNumber>
+  MO.ApiSelfType<PhoneNumber>
 > = pipe(
   string[">>>"](PhoneNumberFromString),
   brand<PhoneNumber>(),
-  S.annotate(PhoneNumberIdentifier, {})
+  MO.annotate(PhoneNumberIdentifier, {})
 )

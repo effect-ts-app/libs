@@ -1,24 +1,24 @@
 import { NonEmptyBrand } from "@effect-ts/schema"
 
 import { pipe } from "../../Function"
-import * as S from "../_schema"
+import * as MO from "../_schema"
 
 export const maxLengthIdentifier =
-  S.makeAnnotation<{ self: S.SchemaAny; maxLength: number }>()
+  MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
 
 // TODO: proper errors.
 
 export function maxLength<Brand>(maxLength: number) {
   return <
     ParserInput,
-    ParserError extends S.AnyError,
+    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends S.AnyError,
+    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: S.Schema<
+    self: MO.Schema<
       ParserInput,
       ParserError,
       ParsedShape,
@@ -27,32 +27,33 @@ export function maxLength<Brand>(maxLength: number) {
       Encoded,
       Api
     >
-  ): S.Schema<
+  ): MO.Schema<
     ParserInput,
-    S.CompositionE<
-      S.NextE<S.RefinementE<S.LeafE<S.NonEmptyE<ParsedShape>>>> | S.PrevE<ParserError>
+    MO.CompositionE<
+      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
+      | MO.PrevE<ParserError>
     >,
     ParsedShape & Brand,
     ConstructorInput,
-    S.CompositionE<
-      | S.NextE<S.RefinementE<S.LeafE<S.NonEmptyE<ParsedShape>>>>
-      | S.PrevE<ConstructorError>
+    MO.CompositionE<
+      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
+      | MO.PrevE<ConstructorError>
     >,
     Encoded,
     Api
   > =>
     pipe(
       self,
-      S.refine(
+      MO.refine(
         (n): n is ParsedShape & Brand => n.length <= maxLength,
-        (n) => S.leafE(S.nonEmptyE(n))
+        (n) => MO.leafE(MO.nonEmptyE(n))
       ),
-      S.annotate(maxLengthIdentifier, { self, maxLength })
+      MO.annotate(maxLengthIdentifier, { self, maxLength })
     )
 }
 
 export const minLengthIdentifier =
-  S.makeAnnotation<{ self: S.SchemaAny; minLength: number }>()
+  MO.makeAnnotation<{ self: MO.SchemaAny; minLength: number }>()
 
 export function minLength<Brand>(minLength: number) {
   if (minLength < 1) {
@@ -60,14 +61,14 @@ export function minLength<Brand>(minLength: number) {
   }
   return <
     ParserInput,
-    ParserError extends S.AnyError,
+    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends S.AnyError,
+    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: S.Schema<
+    self: MO.Schema<
       ParserInput,
       ParserError,
       ParsedShape,
@@ -76,41 +77,42 @@ export function minLength<Brand>(minLength: number) {
       Encoded,
       Api
     >
-  ): S.Schema<
+  ): MO.Schema<
     ParserInput,
-    S.CompositionE<
-      S.NextE<S.RefinementE<S.LeafE<S.NonEmptyE<ParsedShape>>>> | S.PrevE<ParserError>
+    MO.CompositionE<
+      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
+      | MO.PrevE<ParserError>
     >,
     ParsedShape & Brand & NonEmptyBrand,
     ConstructorInput,
-    S.CompositionE<
-      | S.NextE<S.RefinementE<S.LeafE<S.NonEmptyE<ParsedShape>>>>
-      | S.PrevE<ConstructorError>
+    MO.CompositionE<
+      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
+      | MO.PrevE<ConstructorError>
     >,
     Encoded,
     Api
   > =>
     pipe(
       self,
-      S.refine(
+      MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
-        (n) => S.leafE(S.nonEmptyE(n))
+        (n) => MO.leafE(MO.nonEmptyE(n))
       ),
-      S.annotate(minLengthIdentifier, { self, minLength })
+      MO.annotate(minLengthIdentifier, { self, minLength })
     )
 }
 
 export function constrained<Brand>(min: number, max: number) {
   return <
     ParserInput,
-    ParserError extends S.AnyError,
+    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends S.AnyError,
+    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: S.Schema<
+    self: MO.Schema<
       ParserInput,
       ParserError,
       ParsedShape,

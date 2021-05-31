@@ -3,7 +3,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { pipe, Refinement } from "../../Function"
 import { isValidEmail } from "../../validation"
-import * as S from "../_schema"
+import * as MO from "../_schema"
 import {
   brand,
   DefaultSchema,
@@ -22,7 +22,7 @@ export interface EmailBrand {
 
 export type Email = NonEmptyString & EmailBrand
 
-export const EmailFromStringIdentifier = S.makeAnnotation<{}>()
+export const EmailFromStringIdentifier = MO.makeAnnotation<{}>()
 
 const isEmail: Refinement<string, Email> = (s: string): s is Email => {
   return isValidEmail(s)
@@ -30,52 +30,52 @@ const isEmail: Refinement<string, Email> = (s: string): s is Email => {
 
 export const EmailFromString: DefaultSchema<
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   Email,
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   string,
   {}
 > = pipe(
   fromString,
-  S.arbitrary((FC) => FC.emailAddress()),
+  MO.arbitrary((FC) => FC.emailAddress()),
   nonEmpty,
-  S.mapParserError((_) => CNK.unsafeHead(_.errors).error),
-  S.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
-  S.refine(isEmail, (n) => S.leafE(parseUuidE(n))),
+  MO.mapParserError((_) => CNK.unsafeHead(_.errors).error),
+  MO.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
+  MO.refine(isEmail, (n) => MO.leafE(parseUuidE(n))),
   brand<Email>(),
-  S.annotate(EmailFromStringIdentifier, {})
+  MO.annotate(EmailFromStringIdentifier, {})
 )
 
-export const EmailIdentifier = S.makeAnnotation<{}>()
+export const EmailIdentifier = MO.makeAnnotation<{}>()
 
 export const Email: DefaultSchema<
   unknown,
-  S.CompositionE<
-    | S.PrevE<S.RefinementE<S.LeafE<S.ParseStringE>>>
-    | S.NextE<
-        S.CompositionE<
-          | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-          | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.ParseStringE>>>
+    | MO.NextE<
+        MO.CompositionE<
+          | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+          | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
         >
       >
   >,
   Email,
   string,
-  S.CompositionE<
-    | S.NextE<S.RefinementE<S.LeafE<S.ParseUuidE>>>
-    | S.PrevE<S.RefinementE<S.LeafE<S.NonEmptyE<string>>>>
+  MO.CompositionE<
+    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
   >,
   string,
-  S.ApiSelfType<Email>
+  MO.ApiSelfType<Email>
 > = pipe(
   string[">>>"](EmailFromString),
   brand<Email>(),
-  S.annotate(EmailIdentifier, {})
+  MO.annotate(EmailIdentifier, {})
 )

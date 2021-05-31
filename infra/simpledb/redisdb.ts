@@ -4,7 +4,7 @@ import * as M from "@effect-ts/core/Effect/Managed"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as O from "@effect-ts-app/core/Option"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
 
 import * as RED from "../redis-client"
@@ -41,7 +41,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         RED.hmgetAll(getKey(id)),
         EO.chainEffect((v) =>
           pipe(
-            RedisSerializedDBRecord.Parser["|>"](S.condemnFail)(v),
+            RedisSerializedDBRecord.Parser["|>"](MO.condemnFail)(v),
             T.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version })),
             T.mapError((e) => new ConnectionException(new Error(e.toString())))
           )
@@ -200,8 +200,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   }
 }
 
-export class RedisSerializedDBRecord extends S.Model<RedisSerializedDBRecord>()({
-  version: S.prop(S.string),
-  timestamp: S.prop(S.date),
-  data: S.prop(S.string),
+export class RedisSerializedDBRecord extends MO.Model<RedisSerializedDBRecord>()({
+  version: MO.prop(MO.string),
+  timestamp: MO.prop(MO.date),
+  data: MO.prop(MO.string),
 }) {}

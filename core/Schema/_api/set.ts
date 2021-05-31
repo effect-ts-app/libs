@@ -6,23 +6,23 @@ import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutabl
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"
-import * as S from "@effect-ts/schema"
+import * as MO from "@effect-ts/schema"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
 import * as Encoder from "@effect-ts/schema/Encoder"
 import * as Guard from "@effect-ts/schema/Guard"
 import * as Th from "@effect-ts/schema/These"
 
-export const setIdentifier = S.makeAnnotation<{ self: S.SchemaUPI }>()
+export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 
 export function set<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  self: S.Schema<
+  self: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -33,11 +33,11 @@ export function set<
   >,
   ord: Ord.Ord<ParsedShape>,
   eq?: Eq.Equal<ParsedShape>
-): S.DefaultSchema<
+): MO.DefaultSchema<
   unknown,
-  S.CompositionE<
-    | S.PrevE<S.RefinementE<S.LeafE<S.UnknownArrayE>>>
-    | S.NextE<S.CollectionE<S.OptionalIndexE<number, ParserError>>>
+  MO.CompositionE<
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
+    | MO.NextE<MO.CollectionE<MO.OptionalIndexE<number, ParserError>>>
   >,
   Set<ParsedShape>,
   Set<ParsedShape>,
@@ -58,19 +58,21 @@ export function set<
   const toArray_ = toArray(ord)
 
   const fromChunk = pipe(
-    S.identity(refinement),
-    S.parser((u: Chunk.Chunk<ParsedShape>) => Th.succeed(fromArray_(Chunk.toArray(u)))),
-    S.encoder((u): Chunk.Chunk<ParsedShape> => Chunk.from(u)),
-    S.arbitrary((_) => _.set(arbitrarySelf(_)).map(fromArray_))
+    MO.identity(refinement),
+    MO.parser((u: Chunk.Chunk<ParsedShape>) =>
+      Th.succeed(fromArray_(Chunk.toArray(u)))
+    ),
+    MO.encoder((u): Chunk.Chunk<ParsedShape> => Chunk.from(u)),
+    MO.arbitrary((_) => _.set(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
-    S.chunk(self)[">>>"](fromChunk),
-    S.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
-    S.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
-    S.encoder((u) => toArray_(u).map(encodeSelf)),
-    S.mapApi(() => ({ self: self.Api, eq: eq_, ord })),
-    S.withDefaults,
-    S.annotate(setIdentifier, { self })
+    MO.chunk(self)[">>>"](fromChunk),
+    MO.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
+    MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
+    MO.encoder((u) => toArray_(u).map(encodeSelf)),
+    MO.mapApi(() => ({ self: self.Api, eq: eq_, ord })),
+    MO.withDefaults,
+    MO.annotate(setIdentifier, { self })
   )
 }

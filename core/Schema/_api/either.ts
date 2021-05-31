@@ -4,7 +4,7 @@
 
 import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts/schema"
+import * as MO from "@effect-ts/schema"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
 import * as Encoder from "@effect-ts/schema/Encoder"
 import * as Guard from "@effect-ts/schema/Guard"
@@ -12,28 +12,28 @@ import * as Parser from "@effect-ts/schema/Parser"
 import * as Th from "@effect-ts/schema/These"
 
 export const fromEitherIdentifier =
-  S.makeAnnotation<{ left: S.SchemaAny; right: S.SchemaAny }>()
+  MO.makeAnnotation<{ left: MO.SchemaAny; right: MO.SchemaAny }>()
 
 /**
  *  @experimental
  */
 export function fromEither<
   LeftParserInput,
-  LeftParserError extends S.AnyError,
+  LeftParserError extends MO.AnyError,
   LeftParsedShape,
   LeftConstructorInput,
-  LeftConstructorError extends S.AnyError,
+  LeftConstructorError extends MO.AnyError,
   LeftEncoded,
   LeftApi,
   ParserInput,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  left: S.Schema<
+  left: MO.Schema<
     LeftParserInput,
     LeftParserError,
     LeftParsedShape,
@@ -42,7 +42,7 @@ export function fromEither<
     LeftEncoded,
     LeftApi
   >,
-  right: S.Schema<
+  right: MO.Schema<
     ParserInput,
     ParserError,
     ParsedShape,
@@ -51,7 +51,7 @@ export function fromEither<
     Encoded,
     Api
   >
-): S.DefaultSchema<
+): MO.DefaultSchema<
   object,
   LeftParserError | ParserError, // TODO
   E.Either<LeftParsedShape, ParsedShape>,
@@ -87,42 +87,42 @@ export function fromEither<
     if (E.isRight(ei)) {
       return parse(ei.right)
     }
-    return Th.fail(S.parseObjectE("not an either"))
+    return Th.fail(MO.parseObjectE("not an either"))
   }
 
   return pipe(
-    S.identity(refinement),
-    S.arbitrary((_) => _.oneof(leftArb(_).map(E.left), arb(_).map(E.right)) as any),
-    S.parser(parseEither as any),
-    S.constructor(parseEither as any),
-    S.encoder((_) => E.bimap_(_, leftEncode, encode)),
-    S.mapApi(() => ({ left: left.Api, right: right.Api })),
-    S.withDefaults,
-    S.annotate(fromEitherIdentifier, { left, right })
+    MO.identity(refinement),
+    MO.arbitrary((_) => _.oneof(leftArb(_).map(E.left), arb(_).map(E.right)) as any),
+    MO.parser(parseEither as any),
+    MO.constructor(parseEither as any),
+    MO.encoder((_) => E.bimap_(_, leftEncode, encode)),
+    MO.mapApi(() => ({ left: left.Api, right: right.Api })),
+    MO.withDefaults,
+    MO.annotate(fromEitherIdentifier, { left, right })
   ) as any
 }
 
 export const eitherIdentifier =
-  S.makeAnnotation<{ left: S.SchemaAny; right: S.SchemaAny }>()
+  MO.makeAnnotation<{ left: MO.SchemaAny; right: MO.SchemaAny }>()
 
 /**
  *  @experimental
  */
 export function either<
-  LeftParserError extends S.AnyError,
+  LeftParserError extends MO.AnyError,
   LeftParsedShape,
   LeftConstructorInput,
-  LeftConstructorError extends S.AnyError,
+  LeftConstructorError extends MO.AnyError,
   LeftEncoded,
   LeftApi,
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  left: S.Schema<
+  left: MO.Schema<
     unknown,
     LeftParserError,
     LeftParsedShape,
@@ -131,7 +131,7 @@ export function either<
     LeftEncoded,
     LeftApi
   >,
-  right: S.Schema<
+  right: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -140,24 +140,24 @@ export function either<
     Encoded,
     Api
   >
-): S.DefaultSchema<
+): MO.DefaultSchema<
   unknown,
-  S.CompositionE<
-    | S.PrevE<S.RefinementE<S.LeafE<S.ParseObjectE>>>
-    | S.NextE<LeftParserError | ParserError>
+  MO.CompositionE<
+    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.ParseObjectE>>>
+    | MO.NextE<LeftParserError | ParserError>
   >,
   E.Either<LeftParsedShape, ParsedShape>,
   object,
-  S.LeafE<S.UnknownArrayE>,
+  MO.LeafE<MO.UnknownArrayE>,
   E.Either<LeftEncoded, Encoded>,
   { left: LeftApi; right: Api }
 > {
   const encodeLeft = Encoder.for(left)
   const encodeSelf = Encoder.for(right)
   return pipe(
-    S.object[">>>"](fromEither(left, right)),
-    S.encoder((_) => E.bimap_(_, encodeLeft, encodeSelf)),
-    S.withDefaults,
-    S.annotate(eitherIdentifier, { left, right })
+    MO.object[">>>"](fromEither(left, right)),
+    MO.encoder((_) => E.bimap_(_, encodeLeft, encodeSelf)),
+    MO.withDefaults,
+    MO.annotate(eitherIdentifier, { left, right })
   ) as any
 }

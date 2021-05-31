@@ -2,20 +2,20 @@
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { flow, pipe } from "../Function"
-import * as S from "./_schema"
+import * as MO from "./_schema"
 import { Constructor, Parser, These as Th } from "./_schema"
 
 export function onParseOrConstruct<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
-    self: S.Schema<
+    self: MO.Schema<
       unknown,
       ParserError,
       ParsedShape,
@@ -28,15 +28,15 @@ export function onParseOrConstruct<
 }
 
 export function onParseOrConstruct_<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(
-  self: S.Schema<
+  self: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -51,16 +51,16 @@ export function onParseOrConstruct_<
 }
 
 export function onParse<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
-    self: S.Schema<
+    self: MO.Schema<
       unknown,
       ParserError,
       ParsedShape,
@@ -73,15 +73,15 @@ export function onParse<
 }
 
 export function onParse_<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(
-  self: S.Schema<
+  self: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -92,20 +92,20 @@ export function onParse_<
   >,
   mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>
 ) {
-  return pipe(self, S.parser(flow(Parser.for(self), Th.chain(mod))))
+  return pipe(self, MO.parser(flow(Parser.for(self), Th.chain(mod))))
 }
 
 export function onConstruct<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
-    self: S.Schema<
+    self: MO.Schema<
       unknown,
       ParserError,
       ParsedShape,
@@ -118,15 +118,15 @@ export function onConstruct<
 }
 
 export function onConstruct_<
-  ParserError extends S.AnyError,
+  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends S.AnyError,
+  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
-  Errors extends S.AnyError
+  Errors extends MO.AnyError
 >(
-  self: S.Schema<
+  self: MO.Schema<
     unknown,
     ParserError,
     ParsedShape,
@@ -137,9 +137,9 @@ export function onConstruct_<
   >,
   mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>
 ) {
-  return pipe(self, S.constructor(flow(Constructor.for(self), Th.chain(mod))))
+  return pipe(self, MO.constructor(flow(Constructor.for(self), Th.chain(mod))))
 }
-export type DomainError = S.RequiredKeyE<any, any>
+export type DomainError = MO.RequiredKeyE<any, any>
 export function domainResponse<A>(errors: DomainError[], success: () => A) {
   if (errors.length) {
     return Th.fail(domainError(errors))
@@ -147,22 +147,22 @@ export function domainResponse<A>(errors: DomainError[], success: () => A) {
   return Th.succeed(success())
 }
 
-export function domainResponse2<A>(errors: S.AnyError[], success: () => A) {
+export function domainResponse2<A>(errors: MO.AnyError[], success: () => A) {
   if (errors.length) {
-    return Th.fail(S.compositionE(CNK.from(errors)))
+    return Th.fail(MO.compositionE(CNK.from(errors)))
   }
   return Th.succeed(success())
 }
 
 export function domainError(errors: DomainError[]) {
-  return S.compositionE(CNK.from([S.nextE(S.structE(CNK.from(errors)))]))
+  return MO.compositionE(CNK.from([MO.nextE(MO.structE(CNK.from(errors)))]))
 }
 
 export function domainE(key: string, message: string) {
   // TODO
-  return S.requiredKeyE<string, S.AnyError>(key, domainEE(message))
+  return MO.requiredKeyE<string, MO.AnyError>(key, domainEE(message))
 }
 
 export function domainEE(message: string) {
-  return S.leafE(S.parseStringE(message))
+  return MO.leafE(MO.parseStringE(message))
 }

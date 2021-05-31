@@ -1,19 +1,19 @@
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 
-export const positiveInt = S.Constructor.for(S.positiveInt)
-export const positiveIntUnsafe = positiveInt["|>"](S.unsafe)
-export const reasonableString = S.Constructor.for(S.reasonableString)
-export const reasonableStringUnsafe = reasonableString["|>"](S.unsafe)
-export const longString = S.Constructor.for(S.longString)
-export const longStringUnsafe = longString["|>"](S.unsafe)
+export const positiveInt = MO.Constructor.for(MO.positiveInt)
+export const positiveIntUnsafe = positiveInt["|>"](MO.unsafe)
+export const reasonableString = MO.Constructor.for(MO.reasonableString)
+export const reasonableStringUnsafe = reasonableString["|>"](MO.unsafe)
+export const longString = MO.Constructor.for(MO.longString)
+export const longStringUnsafe = longString["|>"](MO.unsafe)
 
-export const nonEmptyString = S.Constructor.for(S.nonEmptyString)
-export const nonEmptyStringUnsafe = nonEmptyString["|>"](S.unsafe)
+export const nonEmptyString = MO.Constructor.for(MO.nonEmptyString)
+export const nonEmptyStringUnsafe = nonEmptyString["|>"](MO.unsafe)
 
-export const email = S.Constructor.for(S.Email)
-export const emailUnsafe = email["|>"](S.unsafe)
-export const phoneNumber = S.Constructor.for(S.PhoneNumber)
-export const phoneNumberUnsafe = phoneNumber["|>"](S.unsafe)
+export const email = MO.Constructor.for(MO.Email)
+export const emailUnsafe = email["|>"](MO.unsafe)
+export const phoneNumber = MO.Constructor.for(MO.PhoneNumber)
+export const phoneNumberUnsafe = phoneNumber["|>"](MO.unsafe)
 
-export const uuid = S.Constructor.for(S.UUID)
-export const uuidUnsafe = uuid["|>"](S.unsafe)
+export const uuid = MO.Constructor.for(MO.UUID)
+export const uuidUnsafe = uuid["|>"](MO.unsafe)

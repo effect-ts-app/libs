@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { pipe } from "@effect-ts-app/core/Function"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 import { These as Th } from "@effect-ts-app/core/Schema"
 import jwt_decode from "jwt-decode"
 
-export const jwtIdentifier = S.makeAnnotation<{}>()
+export const jwtIdentifier = MO.makeAnnotation<{}>()
 
-export const jwtFromString: S.Schema<
+export const jwtFromString: MO.Schema<
   string,
   any, //err
   unknown,
@@ -16,26 +16,26 @@ export const jwtFromString: S.Schema<
   string,
   {}
 > = pipe(
-  //S.identity((u): u is string => typeof u === "string"),
-  S.identity((u): u is string => {
+  //MO.identity((u): u is string => typeof u === "string"),
+  MO.identity((u): u is string => {
     throw new Error("Cannot id JWT: " + u)
   }),
-  S.constructor((n) => Th.succeed(n)),
-  //   S.arbitrary((_) => {
+  MO.constructor((n) => Th.succeed(n)),
+  //   MO.arbitrary((_) => {
   //     throw new Error("Cannot arb JWT")
   //   }), // TODO
-  //   S.encoder((_) => {
+  //   MO.encoder((_) => {
   //     throw new Error("can't encode")
   //   }),
-  S.parser((p: any) => {
+  MO.parser((p: any) => {
     try {
       return Th.succeed(jwt_decode(p))
     } catch (err) {
-      return Th.fail(S.leafE(S.parseStringE(p))) // "not a JWT: " + err as anyw
+      return Th.fail(MO.leafE(MO.parseStringE(p))) // "not a JWT: " + err as anyw
     }
   }),
-  S.mapApi(() => ({})),
-  S.annotate(jwtIdentifier, {})
+  MO.mapApi(() => ({})),
+  MO.annotate(jwtIdentifier, {})
 )
 
-export const jwt = S.string[">>>"](jwtFromString)
+export const jwt = MO.string[">>>"](jwtFromString)

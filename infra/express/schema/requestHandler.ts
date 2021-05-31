@@ -10,7 +10,7 @@ import * as O from "@effect-ts/core/Option"
 import * as EU from "@effect-ts/core/Utils"
 import { Erase } from "@effect-ts-app/core/Effect"
 import * as EO from "@effect-ts-app/core/EffectOption"
-import * as S from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 import { Encoder, extractSchema, Methods, Parser } from "@effect-ts-app/core/Schema"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 import express from "express"
@@ -29,18 +29,18 @@ export type Request<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA
-> = S.ReqResSchemed<unknown, ReqA> & {
+> = MO.ReqResSchemed<unknown, ReqA> & {
   method: Methods
   path: string
-  Cookie?: S.ReqRes<Record<string, string>, CookieA>
-  Path?: S.ReqRes<Record<string, string>, PathA>
-  Body?: S.ReqRes<unknown, BodyA>
-  Query?: S.ReqRes<Record<string, string>, QueryA>
-  Headers?: S.ReqRes<Record<string, string>, HeaderA>
+  Cookie?: MO.ReqRes<Record<string, string>, CookieA>
+  Path?: MO.ReqRes<Record<string, string>, PathA>
+  Body?: MO.ReqRes<unknown, BodyA>
+  Query?: MO.ReqRes<Record<string, string>, QueryA>
+  Headers?: MO.ReqRes<Record<string, string>, HeaderA>
 }
 
 export type Request2<Path extends string, Method extends Methods, ReqA> =
-  S.ReqResSchemed<unknown, ReqA> & {
+  MO.ReqResSchemed<unknown, ReqA> & {
     method: Method
     path: Path
   }
@@ -238,7 +238,7 @@ export interface RequestHandlerOptRes<
   adaptResponse?: any
   h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, SupportedErrors, ResA>
   Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
-  Response?: S.ReqRes<unknown, ResA> | S.ReqResSchemed<unknown, ResA>
+  Response?: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
 }
 
 export interface RequestHandler<
@@ -254,7 +254,7 @@ export interface RequestHandler<
   adaptResponse?: any
   h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, SupportedErrors, ResA>
   Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
-  Response: S.ReqRes<unknown, ResA> | S.ReqResSchemed<unknown, ResA>
+  Response: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
 }
 
@@ -267,7 +267,7 @@ export interface RequestHandler2<
 > {
   h: (i: ReqA) => T.Effect<R, SupportedErrors, ResA>
   Request: Request2<Path, Method, ReqA>
-  Response: S.ReqRes<unknown, ResA> | S.ReqResSchemed<unknown, ResA>
+  Response: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
 }
 
 export type Middleware<
@@ -329,7 +329,7 @@ export function makeRequestHandler<
   h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
 ) {
   const { Request, Response } = handle
-  const res = Response ? extractSchema(Response as any) : S.Void
+  const res = Response ? extractSchema(Response as any) : MO.Void
   const encodeResponse = handle.adaptResponse
     ? (req: ReqA) => Encoder.for(handle.adaptResponse(req))
     : () => Encoder.for(res)
@@ -375,7 +375,7 @@ function makeRequestParsers<
   const ph = O.fromNullable(Request.Headers)
     ["|>"](O.map((s) => s))
     ["|>"](O.map(Parser.for)) // todo strict
-    ["|>"](O.map(S.condemn))
+    ["|>"](O.map(MO.condemn))
     ["|>"](EO.fromOption)
   const parseHeaders = (u: unknown) =>
     ph["|>"](EO.chain((d) => d(u)["|>"](EO.fromEffect)))
@@ -383,7 +383,7 @@ function makeRequestParsers<
   const pq = O.fromNullable(Request.Query)
     ["|>"](O.map((s) => s))
     ["|>"](O.map(Parser.for)) // todo strict
-    ["|>"](O.map(S.condemn))
+    ["|>"](O.map(MO.condemn))
     ["|>"](EO.fromOption)
   const parseQuery = (u: unknown) =>
     pq["|>"](EO.chain((d) => d(u)["|>"](EO.fromEffect)))
@@ -391,21 +391,21 @@ function makeRequestParsers<
   const pb = O.fromNullable(Request.Body)
     ["|>"](O.map((s) => s))
     ["|>"](O.map(Parser.for)) // todo strict
-    ["|>"](O.map(S.condemn))
+    ["|>"](O.map(MO.condemn))
     ["|>"](EO.fromOption)
   const parseBody = (u: unknown) => pb["|>"](EO.chain((d) => d(u)["|>"](EO.fromEffect)))
 
   const pp = O.fromNullable(Request.Path)
     ["|>"](O.map((s) => s))
     ["|>"](O.map(Parser.for)) // todo strict
-    ["|>"](O.map(S.condemn))
+    ["|>"](O.map(MO.condemn))
     ["|>"](EO.fromOption)
   const parsePath = (u: unknown) => pp["|>"](EO.chain((d) => d(u)["|>"](EO.fromEffect)))
 
   const pc = O.fromNullable(Request.Cookie)
     ["|>"](O.map((s) => s))
     ["|>"](O.map(Parser.for)) // todo strict
-    ["|>"](O.map(S.condemn))
+    ["|>"](O.map(MO.condemn))
     ["|>"](EO.fromOption)
   const parseCookie = (u: unknown) =>
     pc["|>"](EO.chain((d) => d(u)["|>"](EO.fromEffect)))

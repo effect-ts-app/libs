@@ -1,14 +1,14 @@
-import * as S from "@effect-ts/schema"
+import * as MO from "@effect-ts/schema"
 
 import { pipe } from "../../Function"
 
 export const Void = pipe(
-  S.unknown,
-  S.encoder(() => void 0),
-  S.refine(
+  MO.unknown,
+  MO.encoder(() => void 0),
+  MO.refine(
     (_u: unknown): _u is void => true,
-    (n) => S.leafE(S.nonEmptyE(n))
+    (n) => MO.leafE(MO.nonEmptyE(n))
   )
 )
 
-export type Void = S.ParsedShapeOf<typeof Void>
+export type Void = MO.ParsedShapeOf<typeof Void>
