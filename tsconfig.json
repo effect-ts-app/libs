@@ -4,41 +4,19 @@
     "baseUrl": ".",
     "paths": {
       "@effect-ts-app/core/*": [
-        "libs/core/*"
+        "packages/core/*"
       ],
       "@effect-ts-app/core": [
-        "libs/core"
+        "packages/core"
       ],
       "@effect-ts-app/infra/*": [
-        "libs/infra/*"
+        "packages/infra/*"
       ],
       "@effect-ts-app/infra": [
-        "libs/infra"
+        "packages/infra"
       ],
-      "@effect-ts-demo/todo-client/*": [
-        "packages/client/*"
-      ],
-      "@effect-ts-demo/todo-client": [
-        "packages/client"
-      ],
-      "@effect-ts-demo/todo-types/*": [
-        "packages/types/*"
-      ],
-      "@effect-ts-demo/todo-types": [
-        "packages/types"
-      ],
-      "@/*": [
-        "apps/api/*"
-      ],
-      "@": [
-        "apps/api"
-      ]
     },
     "target": "ES2018",
-    "module": "ESNext",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./typings"
-    ]
+    "module": "ESNext"
   }
 }
