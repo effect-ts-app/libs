@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as O from "@effect-ts-app/core/ext/Option"
+import * as O from "@effect-ts-app/core/Option"
 import type { If } from "ts-toolbelt/out/Any/If"
 import type { Key } from "ts-toolbelt/out/Any/Key"
 import type { BuiltIn } from "ts-toolbelt/out/Misc/BuiltIn"

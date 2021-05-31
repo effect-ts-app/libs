@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as T from "@effect-ts/core/Effect"
 import * as M from "@effect-ts/core/Effect/Managed"
-import * as EO from "@effect-ts-app/core/ext/EffectOption"
-import { flow, pipe } from "@effect-ts-app/core/ext/Function"
-import * as O from "@effect-ts-app/core/ext/Option"
-import * as S from "@effect-ts-app/core/ext/Schema"
+import * as EO from "@effect-ts-app/core/EffectOption"
+import { flow, pipe } from "@effect-ts-app/core/Function"
+import * as O from "@effect-ts-app/core/Option"
+import * as S from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
 
 import * as RED from "../redis-client"

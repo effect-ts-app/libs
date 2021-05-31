@@ -32,7 +32,7 @@ import {
   stringIdentifier,
   unionIdentifier,
   UUIDFromStringIdentifier,
-} from "@effect-ts-app/core/ext/Schema"
+} from "@effect-ts-app/core/Schema"
 
 import * as S from "../_schema"
 import {

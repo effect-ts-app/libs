@@ -1,4 +1,4 @@
-import * as S from "@effect-ts-app/core/ext/Schema"
+import * as S from "@effect-ts-app/core/Schema"
 
 export const positiveInt = S.Constructor.for(S.positiveInt)
 export const positiveIntUnsafe = positiveInt["|>"](S.unsafe)

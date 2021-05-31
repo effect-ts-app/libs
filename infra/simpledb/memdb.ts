@@ -3,9 +3,9 @@ import * as M from "@effect-ts/core/Effect/Managed"
 import * as Eq from "@effect-ts/core/Equal"
 import * as O from "@effect-ts/core/Option"
 import * as Sy from "@effect-ts/core/Sync"
-import * as EO from "@effect-ts-app/core/ext/EffectOption"
-import { flow, pipe } from "@effect-ts-app/core/ext/Function"
-import * as S from "@effect-ts-app/core/ext/Schema"
+import * as EO from "@effect-ts-app/core/EffectOption"
+import { flow, pipe } from "@effect-ts-app/core/Function"
+import * as S from "@effect-ts-app/core/Schema"
 
 import {
   CachedRecord,

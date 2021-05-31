@@ -2,8 +2,8 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
-import * as O from "@effect-ts-app/core/ext/Option"
-import * as SET from "@effect-ts-app/core/ext/Set"
+import * as O from "@effect-ts-app/core/Option"
+import * as SET from "@effect-ts-app/core/Set"
 import { v4 } from "uuid"
 
 import { Compute } from "../Compute"

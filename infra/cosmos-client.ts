@@ -3,7 +3,7 @@ import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as Has from "@effect-ts/core/Has"
 import { _A } from "@effect-ts/core/Utils"
-import { pipe } from "@effect-ts-app/core/ext/Function"
+import { pipe } from "@effect-ts-app/core/Function"
 
 const withClient = (url: string) => T.succeedWith(() => new ComosClient_(url))
 

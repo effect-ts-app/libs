@@ -5,7 +5,7 @@ import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
 import { ParsedShapeOf } from "@effect-ts/schema"
 import { unsafe } from "@effect-ts/schema/_api/condemn"
-import { Erase } from "@effect-ts-app/core/ext/Effect"
+import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"

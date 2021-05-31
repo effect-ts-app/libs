@@ -1,8 +1,8 @@
 import * as T from "@effect-ts/core/Effect"
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as O from "@effect-ts/core/Option"
-import * as EO from "@effect-ts-app/core/ext/EffectOption"
-import { flow, pipe } from "@effect-ts-app/core/ext/Function"
+import * as EO from "@effect-ts-app/core/EffectOption"
+import { flow, pipe } from "@effect-ts-app/core/Function"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 

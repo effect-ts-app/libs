@@ -1,12 +1,8 @@
 // tracing: off
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
-import {
-  every_,
-  fromArray,
-  toArray,
-} from "@effect-ts/core/Collections/Immutable/Set"
 import type { Set } from "@effect-ts/core/Collections/Immutable/Set"
+import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutable/Set"
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"

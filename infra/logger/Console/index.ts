@@ -1,7 +1,7 @@
 import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as Has from "@effect-ts/core/Has"
-import { pipe } from "@effect-ts-app/core/ext/Function"
+import { pipe } from "@effect-ts-app/core/Function"
 
 import * as LOG from "../Logger"
 

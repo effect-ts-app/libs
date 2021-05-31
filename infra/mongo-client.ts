@@ -3,7 +3,7 @@ import * as L from "@effect-ts/core/Effect/Layer"
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as Has from "@effect-ts/core/Has"
 import { _A } from "@effect-ts/core/Utils"
-import { pipe } from "@effect-ts-app/core/ext/Function"
+import { pipe } from "@effect-ts-app/core/Function"
 import { MongoClient as MongoClient_ } from "mongodb"
 
 // TODO: we should probably share a single client...
