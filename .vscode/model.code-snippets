@@ -1,0 +1,58 @@
+{
+    "Model": {
+        "prefix": "mo",
+        "body": [
+            "export class $1 extends Model<$1>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a Model signature"
+    },
+    "GetRequest": {
+        "prefix": "gr",
+        "body": [
+            "export default class Request extends Get(\"/$1\")<Request>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a GetRequest signature"
+    },
+    "DeleteRequest": {
+        "prefix": "dr",
+        "body": [
+            "export default class Request extends Delete(\"/$1\")<Request>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a DeleteRequest signature"
+    },
+    "PatchRequest": {
+        "prefix": "par",
+        "body": [
+            "export default class Request extends Patch(\"/$1\")<Request>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a PatchRequest signature"
+    },
+    "PutRequest": {
+        "prefix": "pur",
+        "body": [
+            "export default class Request extends Put(\"/$1\")<Request>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a PutRequest signature"
+    },
+    "PostRequest": {
+        "prefix": "por",
+        "body": [
+            "export default class Request extends Post(\"/$1\")<Request>()({$2}) {}",
+            ""
+        ],
+        "description": "Defines a PostRequest signature"
+    },
+    "Response": {
+        "prefix": "res",
+        "body": [
+            "export class Response extends Model<Response()({$1}) {}",
+            ""
+        ],
+        "description": "Defines a Response signature"
+    },
+}

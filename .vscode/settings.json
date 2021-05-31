@@ -1,0 +1,32 @@
+{
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "eslint.workingDirectories": [
+        {
+            "pattern": "apps/*"
+        },
+        {
+            "pattern": "packages/*"
+        }
+    ],
+    "editor.formatOnSave": true,
+    "eslint.format.enable": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "prettier.disableLanguages": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ]
+}

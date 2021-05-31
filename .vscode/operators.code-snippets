@@ -1,0 +1,37 @@
+{
+  "Pipe Operator |": {
+    "prefix": "|",
+    "body": [
+      "[\"|>\"]()"
+    ],
+    "description": "Pipe Operator"
+  },
+  "Flow Operator": {
+    "prefix": ">",
+    "body": [
+      "[\">>\"]()"
+    ],
+    "description": "Flow Operator"
+  },
+  "Operators Import": {
+    "prefix": "op",
+    "body": [
+      "import \"@effect-ts/core/Operator\""
+    ],
+    "description": "Operators Import"
+  },
+  "Gen Function $": {
+    "prefix": "$gen",
+    "body": [
+      "function* ($) {}"
+    ],
+    "description": "Generator Function with _ input"
+  },
+  "Gen Yield $": {
+    "prefix": "$!",
+    "body": [
+      "yield* $()"
+    ],
+    "description": "Yield generator calling $()"
+  }
+}
