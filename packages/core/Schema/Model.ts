@@ -1053,9 +1053,30 @@ function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Se
 
 export type Meta = { description?: string; summary?: string }
 export const metaIdentifier = MO.makeAnnotation<Meta>()
-export const metaC = (meta: Meta) => {
+export function meta<
+  ParserInput,
+  ParserError extends MO.AnyError,
+  ParsedShape,
+  ConstructorInput,
+  ConstructorError extends MO.AnyError,
+  Encoded,
+  Api
+>(meta: Meta) {
+  return (
+    self: MO.Schema<
+      ParserInput,
+      ParserError,
+      ParsedShape,
+      ConstructorInput,
+      ConstructorError,
+      Encoded,
+      Api
+    >
+  ) => self.annotate(metaIdentifier, meta)
+}
+export const metaC = (m: Meta) => {
   return function (cls: any) {
-    setSchema(cls, cls[schemaField].annotate(metaIdentifier, meta))
+    setSchema(cls, cls[schemaField]["|>"](meta(m)))
     return cls
   }
 }
