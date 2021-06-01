@@ -1051,7 +1051,7 @@ function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Se
   })
 }
 
-export type Meta = { description?: string; summary?: string }
+export type Meta = { description?: string; summary?: string; openapiRef?: string }
 export const metaIdentifier = MO.makeAnnotation<Meta>()
 export function meta<
   ParserInput,
