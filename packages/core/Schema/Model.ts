@@ -1063,7 +1063,7 @@ export const metaC = (meta: Meta) => {
 /**
  * Automatically assign the name of the Class to the Schema.
  */
-export function namedC(cls: any) {
+export function useClassNameForSchema(cls: any) {
   setSchema(cls, cls[schemaField]["|>"](MO.named(cls.name)))
   return cls
 }
