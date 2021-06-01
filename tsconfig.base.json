@@ -17,7 +17,6 @@
         "noUnusedParameters": true,
         "outDir": "build/dist",
         "esModuleInterop": true,
-        "removeComments": true,
         "sourceMap": true,
         "strict": true,
         "resolveJsonModule": true,
