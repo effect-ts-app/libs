@@ -386,19 +386,6 @@ export function defaultProp(
   return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema)["|>"](withDefault)
 }
 
-export function include<Props extends Record<string, MO.AnyProperty>>(props: Props) {
-  return <NewProps extends Record<string, MO.AnyProperty>>(
-    fnc: (props: Props) => NewProps
-  ) => include_(props, fnc)
-}
-
-export function include_<
-  Props extends Record<string, MO.AnyProperty>,
-  NewProps extends Record<string, MO.AnyProperty>
->(props: Props, fnc: (props: Props) => NewProps) {
-  return fnc(props)
-}
-
 export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
   t: NER // TODO: enforce non empty
 ): {

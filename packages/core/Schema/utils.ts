@@ -5,6 +5,19 @@ import { flow, pipe } from "../Function"
 import * as MO from "./_schema"
 import { Constructor, Parser, These as Th } from "./_schema"
 
+export function include<Props extends Record<string, MO.AnyProperty>>(props: Props) {
+  return <NewProps extends Record<string, MO.AnyProperty>>(
+    fnc: (props: Props) => NewProps
+  ) => include_(props, fnc)
+}
+
+export function include_<
+  Props extends Record<string, MO.AnyProperty>,
+  NewProps extends Record<string, MO.AnyProperty>
+>(props: Props, fnc: (props: Props) => NewProps) {
+  return fnc(props)
+}
+
 export function onParseOrConstruct<
   ParserError extends MO.AnyError,
   ParsedShape,

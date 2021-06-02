@@ -9,6 +9,7 @@ import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
+import { include } from "../Model"
 import * as MO from "./_schema"
 import { AnyError, schemaField, SchemaForModel } from "./_schema"
 
@@ -713,10 +714,15 @@ export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord
     ? C
     : ["You must specify the properties that you expect in the path", never]
 
+export type PropsExtensions<Props extends MO.PropertyRecord> = {
+  include: <NewProps extends Record<string, MO.AnyProperty>>(
+    fnc: (props: Props) => NewProps
+  ) => NewProps
+}
+
 export function Model<M>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(
-    props: Props
-  ): Model<M, MO.SchemaProperties<Props>> => ModelSpecial<M>(__name)(MO.props(props))
+  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
+    ModelSpecial<M>(__name)(MO.props(props))
 }
 
 /**
@@ -1005,6 +1011,11 @@ function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Se
   //   value: self,
   // })
 
+  Object.defineProperty(schemed, "include", {
+    value: include(self.Api.props),
+    configurable: true,
+  })
+
   Object.defineProperty(schemed, "lenses", {
     value: lensFromProps()(self.Api.props),
     configurable: true,
@@ -1089,9 +1100,17 @@ export function useClassNameForSchema(cls: any) {
   return cls
 }
 
+type GetProps<Self> = Self extends { Api: { props: infer Props } }
+  ? Props extends MO.PropertyRecord
+    ? Props
+    : never
+  : never
+
 // We don't want Copy interface from the official implementation
 export function ModelSpecial<M>(__name?: string) {
-  return <Self extends MO.SchemaAny>(self: Self): Model<M, Self> => {
+  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+    self: Self
+  ): Model<M, Self> & PropsExtensions<GetProps<Self>> => {
     const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
     const of_ = MO.Constructor.for(schema)["|>"](unsafe)
     const fromFields = (fields: any, target: any) => {
@@ -1118,6 +1137,8 @@ export function ModelSpecial<M>(__name?: string) {
 
       static lens = Lens.id<any>()
       static lenses = lensFromProps()(schema.Api.props)
+
+      static include = include(schema.Api.props)
 
       static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
         new MO.SchemaAnnotated(self, identifier, meta)
