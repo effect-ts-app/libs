@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { DSL } from "@effect-ts/core"
 import { makeAssociative } from "@effect-ts/core/Associative"
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { flow, pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
+import * as DSL from "@effect-ts/core/Prelude/DSL"
 import * as EU from "@effect-ts/core/Utils"
 import { Erase } from "@effect-ts-app/core/Effect"
 import * as EO from "@effect-ts-app/core/EffectOption"

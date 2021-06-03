@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DSL } from "@effect-ts/core"
 import { Either } from "@effect-ts/core/Either"
 import { Has, Tag } from "@effect-ts/core/Has"
 import * as OptionT from "@effect-ts/core/OptionT"
 import * as P from "@effect-ts/core/Prelude"
+import * as DSL from "@effect-ts/core/Prelude/DSL"
 import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
 
