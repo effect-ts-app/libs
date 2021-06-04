@@ -1,0 +1,39 @@
+{
+    "name": "@effect-ts-app/react",
+    "version": "0.16.1",
+    "main": "./index.js",
+    "license": "MIT",
+    "dependencies": {
+        "abort-controller": "^3.0.0",
+        "cross-fetch": "^3.1.4",
+        "path-parser": "^6.1.0"
+    },
+    "devDependencies": {
+        "@effect-ts/core": "^0.40.1",
+        "@effect-ts/monocle": "^0.33.0",
+        "@effect-ts/schema": "^0.8.1"
+    },
+    "peerDependencies": {
+        "@effect-ts/core": "^0.40.1",
+        "@effect-ts/monocle": "^0.33.0",
+        "@effect-ts/schema": "^0.8.1",
+        "@nll/datum": "^3.5.0",
+        "fp-ts": "^2.10.5"
+    },
+    "scripts": {
+        "build": "yarn clean && tsc",
+        "clean": "find . | egrep '\\.js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "postpublish": "yarn clean",
+        "prepare": "yarn build",
+        "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
+        "compile": "tsc --noEmit",
+        "lint": "eslint .",
+        "prettier": "prettier \"**/*.ts\"",
+        "autofix": "yarn lint --fix && yarn prettier --write",
+        "test": "echo 'no tests yet'",
+        "testsuite": "yarn compile && yarn lint && yarn test && yarn circular"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
