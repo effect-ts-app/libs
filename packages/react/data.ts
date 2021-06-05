@@ -3,9 +3,10 @@ import { Tagged } from "@effect-ts/core/Case"
 import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
 import { matchTag } from "@effect-ts/core/Utils"
-import { Exit } from "@effect-ts/system/Exit"
 import * as T from "@effect-ts-app/core/Effect"
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { ServiceContext } from "./context"
 
 export { matchTag } from "@effect-ts/core/Utils"
 
@@ -93,10 +94,4 @@ export function matchQuery<E, A, Result>(_: {
           ),
       })
     )
-}
-
-export interface ServiceContext<R> {
-  readonly provide: <E, A>(self: T.Effect<R, E, A>) => T.Effect<unknown, E, A>
-  readonly runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => () => void
-  readonly runPromise: <E, A>(self: T.Effect<R, E, A>) => Promise<Exit<E, A>>
 }

@@ -5,7 +5,8 @@
         "outDir": "../",
         "noEmit": false,
         "module": "CommonJS",
-        "incremental": false
+        "incremental": false,
+        "jsx": "preserve"
     },
     "include": [
         "./"
