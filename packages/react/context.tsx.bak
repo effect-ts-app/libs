@@ -10,12 +10,6 @@ import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 
 type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP : never
 export type ProvidedEnv = T.DefaultEnv & GetProvider<ReturnType<typeof makeLayers>>
 
-export interface ServiceContext {
-  readonly provide: <E, A>(self: T.Effect<ProvidedEnv, E, A>) => T.Effect<unknown, E, A>
-  readonly runWithErrorLog: <E, A>(self: T.Effect<ProvidedEnv, E, A>) => () => void
-  readonly runPromise: <E, A>(self: T.Effect<ProvidedEnv, E, A>) => Promise<Exit<E, A>>
-}
-
 const MissingContext = T.die(
   "service context not provided, wrap your app in LiveServiceContext"
 )

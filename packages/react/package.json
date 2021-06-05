@@ -11,14 +11,15 @@
     "devDependencies": {
         "@effect-ts/core": "^0.40.1",
         "@effect-ts/monocle": "^0.33.0",
-        "@effect-ts/schema": "^0.8.1"
+        "@effect-ts/schema": "^0.8.1",
+        "react": "^17.0.2",
+        "@types/react": "^17.0.2"
     },
     "peerDependencies": {
         "@effect-ts/core": "^0.40.1",
         "@effect-ts/monocle": "^0.33.0",
         "@effect-ts/schema": "^0.8.1",
-        "@nll/datum": "^3.5.0",
-        "fp-ts": "^2.10.5"
+        "react": "^17.0.2"
     },
     "scripts": {
         "build": "yarn clean && tsc",
