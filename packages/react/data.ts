@@ -27,18 +27,18 @@ export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 const fail = <E>(err: E) => new Done({ current: E.left(err) })
 const succeed = <A>(a: A) => new Done({ current: E.right(a) })
 
-/**
- * Takes an Effect and turns it into a QueryResult and refresh function.
- *
- * NOTE:
- * Pass a stable Effect, otherwise will request at every render.
- * E.g memoize for a parameterised effect:
- * ```
- *  const findSomething = useMemo(() => Something.find(id), [id])
- *  const [result] = useQuery(findSomething)
- * ```
- */
 export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
+  /**
+   * Takes an Effect and turns it into a QueryResult and refresh function.
+   *
+   * NOTE:
+   * Pass a stable Effect, otherwise will request at every render.
+   * E.g memoize for a parameterised effect:
+   * ```
+   *  const findSomething = useMemo(() => Something.find(id), [id])
+   *  const [result] = useQuery(findSomething)
+   * ```
+   */
   return <E, A>(self: T.Effect<R, E, A>): QueryResultTuple<E, A> => {
     const { runWithErrorLog } = useServiceContext()
     const resultInternal = useRef<QueryResult<E, A>>(new Initial())
