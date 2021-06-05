@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/react",
-    "version": "0.16.1",
+    "version": "0.16.2",
     "main": "./index.js",
     "license": "MIT",
     "dependencies": {
@@ -12,8 +12,8 @@
         "@effect-ts/core": "^0.40.1",
         "@effect-ts/monocle": "^0.33.0",
         "@effect-ts/schema": "^0.8.1",
-        "react": "^17.0.2",
-        "@types/react": "^17.0.2"
+        "@types/react": "^17.0.2",
+        "react": "^17.0.2"
     },
     "peerDependencies": {
         "@effect-ts/core": "^0.40.1",
