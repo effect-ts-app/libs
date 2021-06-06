@@ -5,4 +5,4 @@ export * as Guard from "./custom/Guard"
 export * as Parser from "./custom/Parser"
 export * as These from "./custom/These"
 
-export * from "./custom/_schema"
+export * from "./custom"
