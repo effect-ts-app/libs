@@ -9,9 +9,9 @@ import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
-import { include } from "../Model"
 import * as MO from "./_schema"
 import { AnyError, schemaField, SchemaForModel } from "./_schema"
+import { include } from "./utils"
 
 export const GET = "GET"
 export type GET = typeof GET
