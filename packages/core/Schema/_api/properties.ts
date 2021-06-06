@@ -7,26 +7,21 @@ import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
-import type { LiteralApi } from "@effect-ts/schema/_api/literal"
-import type { DefaultSchema } from "@effect-ts/schema/_api/withDefaults"
-import { withDefaults } from "@effect-ts/schema/_api/withDefaults"
-import * as S from "@effect-ts/schema/_schema"
-import type { Annotation } from "@effect-ts/schema/_schema/annotation"
-import { augmentRecord } from "@effect-ts/schema/_utils"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
+import type { LiteralApi } from "@effect-ts-app/core/Schema/custom/_api/literal"
+import type { DefaultSchema } from "@effect-ts-app/core/Schema/custom/_api/withDefaults"
+import { withDefaults } from "@effect-ts-app/core/Schema/custom/_api/withDefaults"
+import * as S from "@effect-ts-app/core/Schema/custom/_schema"
+import type { Annotation } from "@effect-ts-app/core/Schema/custom/_schema/annotation"
+import { augmentRecord } from "@effect-ts-app/core/Schema/custom/_utils"
+import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
+import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
+import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
+import * as Parser from "@effect-ts-app/core/Schema/custom/Parser"
+import * as Th from "@effect-ts-app/core/Schema/custom/These"
 import type * as fc from "fast-check"
 
-// TODO
-type Errors = any
-
-export type SchemaUPI = S.Schema<unknown, Errors, any, any, Errors, any, any>
-
 export class Property<
-  Self extends SchemaUPI,
+  Self extends S.SchemaUPI,
   Optional extends "optional" | "required",
   As extends O.Option<PropertyKey>,
   Def extends O.Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
@@ -39,7 +34,7 @@ export class Property<
     readonly _map: HashMap.HashMap<Annotation<any>, any>
   ) {}
 
-  schema<That extends SchemaUPI>(schema: That): Property<That, Optional, As, O.None> {
+  schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, O.None> {
     return new Property(this._as, schema, this._optional, new O.None(), this._map)
   }
 
@@ -122,22 +117,9 @@ export class Property<
     )
   }
 }
-
-export type SchemaEraseError<Self extends SchemaUPI> = Self extends S.Schema<
-  infer A,
-  any, // Parser Error
-  infer C,
-  infer D,
-  any, // ConstructorError
-  infer F,
-  infer G
->
-  ? S.Schema<A, Errors, C, D, Errors, F, G>
-  : never
-
-export function prop<Self extends SchemaUPI>(
+export function prop<Self extends S.SchemaUPI>(
   schema: Self
-): Property<SchemaEraseError<Self>, "required", O.None, O.None> {
+): Property<Self, "required", O.None, O.None> {
   return new Property(
     new O.None(),
     schema,
@@ -225,7 +207,7 @@ export type HasRequiredProperty<Props extends PropertyRecord> = unknown extends 
 // @ts-expect-error
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type ParserErrorFromProperties<Props extends PropertyRecord> =
-  Errors /*S.CompositionE<
+  any /*S.CompositionE<
   | S.PrevE<S.LeafE<S.UnknownRecordE>>
   | S.NextE<
       HasRequiredProperty<Props> extends true
@@ -307,10 +289,8 @@ export const propertiesIdentifier = S.makeAnnotation<{ props: PropertyRecord }>(
 
 export type SchemaProperties<Props extends PropertyRecord> = DefaultSchema<
   unknown,
-  ParserErrorFromProperties<Props>,
   ShapeFromProperties<Props>,
   ConstructorFromProperties<Props>,
-  never,
   EncodedFromProperties<Props>,
   { props: Props }
 >
@@ -341,7 +321,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
   const keys = Object.keys(props)
   const tags = {}
   for (const key of keys) {
-    const s: SchemaUPI = props[key]._schema
+    const s: S.SchemaUPI = props[key]._schema
 
     if (
       O.isNone(props[key]._as) &&

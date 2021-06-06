@@ -4,56 +4,40 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import * as MO from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
+import * as MO from "@effect-ts-app/core/Schema/custom"
+import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
+import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
+import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
+import * as Parser from "@effect-ts-app/core/Schema/custom/Parser"
+import * as Th from "@effect-ts-app/core/Schema/custom/These"
 
 export const fromTupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
 // TODO: any sized tuple
 export function fromTuple<
   KeyParserInput,
-  KeyParserError extends MO.AnyError,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends MO.AnyError,
   KeyEncoded,
   KeyApi,
   ParserInput,
-  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
   key: MO.Schema<
     KeyParserInput,
-    KeyParserError,
     KeyParsedShape,
     KeyConstructorInput,
-    KeyConstructorError,
     KeyEncoded,
     KeyApi
   >,
-  self: MO.Schema<
-    ParserInput,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+  self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   readonly (KeyParserInput | ParserInput)[],
-  MO.CollectionE<MO.OptionalIndexE<number, KeyParserError | ParserError>>,
   readonly [KeyParsedShape, ParsedShape],
   Iterable<KeyParsedShape | ParsedShape>,
-  MO.LeafE<MO.UnknownArrayE>,
   readonly [KeyEncoded, Encoded],
   { self: Api }
 > {
@@ -71,7 +55,7 @@ export function fromTuple<
     Array.isArray(_) && keyGuard(_[0]) && guard(_[1])
 
   const parseTup = (i: readonly (KeyParserInput | ParserInput)[]) => {
-    const e = Chunk.builder<MO.OptionalIndexE<number, KeyParserError | ParserError>>()
+    const e = Chunk.builder<MO.OptionalIndexE<number, any>>()
     let err = false
     let warn = false
 
@@ -132,46 +116,21 @@ export function fromTuple<
 export const tupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
 export function tuple<
-  KeyParserError extends MO.AnyError,
+  ParsedShape,
+  Encoded,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends MO.AnyError,
   KeyEncoded,
   KeyApi,
-  ParserError extends MO.AnyError,
-  ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
-  Encoded,
   Api
 >(
-  key: MO.Schema<
-    unknown,
-    KeyParserError,
-    KeyParsedShape,
-    KeyConstructorInput,
-    KeyConstructorError,
-    KeyEncoded,
-    KeyApi
-  >,
-  self: MO.Schema<
-    unknown,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+  key: MO.Schema<unknown, KeyParsedShape, KeyConstructorInput, KeyEncoded, KeyApi>,
+  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   unknown,
-  MO.CompositionE<
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
-    | MO.NextE<MO.CollectionE<MO.OptionalIndexE<number, KeyParserError | ParserError>>>
-  >,
   readonly [KeyParsedShape, ParsedShape],
   Iterable<KeyParsedShape | ParsedShape>,
-  MO.LeafE<MO.UnknownArrayE>,
   readonly [KeyEncoded, Encoded],
   { self: Api }
 > {

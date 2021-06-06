@@ -3,15 +3,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
-import { ParsedShapeOf } from "@effect-ts/schema"
-import { unsafe } from "@effect-ts/schema/_api/condemn"
 import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
 import { include } from "../Model"
 import * as MO from "./_schema"
-import { AnyError, schemaField, SchemaForModel } from "./_schema"
+import { schemaField, SchemaForModel } from "./_schema"
+import { ParsedShapeOf } from "./custom"
+import { unsafe } from "./custom/_api/condemn"
 
 export const GET = "GET"
 export type GET = typeof GET
@@ -51,24 +51,8 @@ export type StringRecord = Record<string, string>
 
 export type AnyRecord = Record<string, any>
 
-export type AnyRecordSchema = MO.Schema<
-  unknown,
-  AnyError,
-  any,
-  any,
-  AnyError,
-  AnyRecord,
-  any
->
-export type StringRecordSchema = MO.Schema<
-  unknown,
-  AnyError,
-  any,
-  any,
-  AnyError,
-  StringRecord,
-  any
->
+export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
+export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
 // Actually GET + DELETE
 export interface QueryRequest<
@@ -112,10 +96,8 @@ export interface Model<M, Self extends MO.SchemaAny>
 export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
   extends MO.Schema<
     MO.ParserInputOf<Self>,
-    MO.NamedE<string, MO.ParserErrorOf<Self>>,
     M,
     MO.ConstructorInputOf<Self>,
-    MO.NamedE<string, MO.ConstructorErrorOf<Self>>,
     MO.EncodedOf<Self>,
     MO.ApiOf<Self>
   > {
@@ -192,16 +174,12 @@ export function QueryRequest<M>(__name?: string) {
     }
   ): QueryRequest<M, undefined, Query, Headers, Query>
   function a<
-    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
-    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -212,54 +190,28 @@ export function QueryRequest<M>(__name?: string) {
       headers?: Headers
       path: MO.Schema<
         unknown,
-        PathParserError,
         PathParsedShape,
         PathConstructorInput,
-        PathConstructorError,
         PathEncoded,
         PathApi
       >
       query: MO.Schema<
         unknown,
-        QueryParserError,
         QueryParsedShape,
         QueryConstructorInput,
-        QueryConstructorError,
         QueryEncoded,
         QueryApi
       >
     }
   ): QueryRequest<
     M,
-    MO.Schema<
-      unknown,
-      PathParserError,
-      PathParsedShape,
-      PathConstructorInput,
-      PathConstructorError,
-      PathEncoded,
-      PathApi
-    >,
-    MO.Schema<
-      unknown,
-      QueryParserError,
-      QueryParsedShape,
-      QueryConstructorInput,
-      QueryConstructorError,
-      QueryEncoded,
-      QueryApi
-    >,
+    MO.Schema<unknown, PathParsedShape, PathConstructorInput, PathEncoded, PathApi>,
+    MO.Schema<unknown, QueryParsedShape, QueryConstructorInput, QueryEncoded, QueryApi>,
     Headers,
     MO.Schema<
       unknown,
-      MO.IntersectionE<
-        MO.MemberE<0, QueryParserError> | MO.MemberE<1, PathParserError>
-      >,
       QueryParsedShape & PathParsedShape,
       QueryConstructorInput & PathConstructorInput,
-      MO.IntersectionE<
-        MO.MemberE<0, QueryConstructorError> | MO.MemberE<1, PathConstructorError>
-      >,
       QueryEncoded & PathEncoded,
       {}
     >
@@ -325,16 +277,12 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<M, undefined, Body, undefined, Headers, Body>
   function a<
-    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
     Headers extends StringRecordSchema
@@ -345,19 +293,15 @@ export function BodyRequest<M>(__name?: string) {
       headers?: Headers
       body: MO.Schema<
         unknown,
-        BodyParserError,
         BodyParsedShape,
         BodyConstructorInput,
-        BodyConstructorError,
         BodyEncoded,
         BodyApi
       >
       query: MO.Schema<
         unknown,
-        QueryParserError,
         QueryParsedShape,
         QueryConstructorInput,
-        QueryConstructorError,
         QueryEncoded,
         QueryApi
       >
@@ -365,50 +309,24 @@ export function BodyRequest<M>(__name?: string) {
   ): BodyRequest<
     M,
     undefined,
-    MO.Schema<
-      unknown,
-      BodyParserError,
-      BodyParsedShape,
-      BodyConstructorInput,
-      BodyConstructorError,
-      BodyEncoded,
-      BodyApi
-    >,
-    MO.Schema<
-      unknown,
-      QueryParserError,
-      QueryParsedShape,
-      QueryConstructorInput,
-      QueryConstructorError,
-      QueryEncoded,
-      QueryApi
-    >,
+    MO.Schema<unknown, BodyParsedShape, BodyConstructorInput, BodyEncoded, BodyApi>,
+    MO.Schema<unknown, QueryParsedShape, QueryConstructorInput, QueryEncoded, QueryApi>,
     Headers,
     MO.Schema<
       unknown,
-      MO.IntersectionE<
-        MO.MemberE<0, BodyParserError> | MO.MemberE<1, QueryParserError>
-      >,
       BodyParsedShape & QueryParsedShape,
       BodyConstructorInput & QueryConstructorInput,
-      MO.IntersectionE<
-        MO.MemberE<0, BodyConstructorError> | MO.MemberE<1, QueryConstructorError>
-      >,
       BodyEncoded & QueryEncoded,
       {}
     >
   >
   function a<
-    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
-    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -419,70 +337,40 @@ export function BodyRequest<M>(__name?: string) {
       headers?: Headers
       path: MO.Schema<
         unknown,
-        PathParserError,
         PathParsedShape,
         PathConstructorInput,
-        PathConstructorError,
         PathEncoded,
         PathApi
       >
       query: MO.Schema<
         unknown,
-        QueryParserError,
         QueryParsedShape,
         QueryConstructorInput,
-        QueryConstructorError,
         QueryEncoded,
         QueryApi
       >
     }
   ): BodyRequest<
     M,
-    MO.Schema<
-      unknown,
-      PathParserError,
-      PathParsedShape,
-      PathConstructorInput,
-      PathConstructorError,
-      PathEncoded,
-      PathApi
-    >,
-    MO.Schema<
-      unknown,
-      QueryParserError,
-      QueryParsedShape,
-      QueryConstructorInput,
-      QueryConstructorError,
-      QueryEncoded,
-      QueryApi
-    >,
+    MO.Schema<unknown, PathParsedShape, PathConstructorInput, PathEncoded, PathApi>,
+    MO.Schema<unknown, QueryParsedShape, QueryConstructorInput, QueryEncoded, QueryApi>,
     undefined,
     Headers,
     MO.Schema<
       unknown,
-      MO.IntersectionE<
-        MO.MemberE<0, QueryParserError> | MO.MemberE<1, PathParserError>
-      >,
       QueryParsedShape & PathParsedShape,
       QueryConstructorInput & PathConstructorInput,
-      MO.IntersectionE<
-        MO.MemberE<0, QueryConstructorError> | MO.MemberE<1, PathConstructorError>
-      >,
       QueryEncoded & PathEncoded,
       {}
     >
   >
   function a<
-    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
     Headers extends StringRecordSchema
@@ -493,74 +381,44 @@ export function BodyRequest<M>(__name?: string) {
       headers?: Headers
       path: MO.Schema<
         unknown,
-        PathParserError,
         PathParsedShape,
         PathConstructorInput,
-        PathConstructorError,
         PathEncoded,
         PathApi
       >
       body: MO.Schema<
         unknown,
-        BodyParserError,
         BodyParsedShape,
         BodyConstructorInput,
-        BodyConstructorError,
         BodyEncoded,
         BodyApi
       >
     }
   ): BodyRequest<
     M,
-    MO.Schema<
-      unknown,
-      PathParserError,
-      PathParsedShape,
-      PathConstructorInput,
-      PathConstructorError,
-      PathEncoded,
-      PathApi
-    >,
-    MO.Schema<
-      unknown,
-      BodyParserError,
-      BodyParsedShape,
-      BodyConstructorInput,
-      BodyConstructorError,
-      BodyEncoded,
-      BodyApi
-    >,
+    MO.Schema<unknown, PathParsedShape, PathConstructorInput, PathEncoded, PathApi>,
+    MO.Schema<unknown, BodyParsedShape, BodyConstructorInput, BodyEncoded, BodyApi>,
     undefined,
     Headers,
     MO.Schema<
       unknown,
-      MO.IntersectionE<MO.MemberE<0, BodyParserError> | MO.MemberE<1, PathParserError>>,
       BodyParsedShape & PathParsedShape,
       BodyConstructorInput & PathConstructorInput,
-      MO.IntersectionE<
-        MO.MemberE<0, BodyConstructorError> | MO.MemberE<1, PathConstructorError>
-      >,
       BodyEncoded & PathEncoded,
       {}
     >
   >
   function a<
-    BodyParserError extends MO.SchemaError<any>,
     BodyParsedShape extends AnyRecord,
     BodyConstructorInput,
-    BodyConstructorError extends MO.SchemaError<any>,
     BodyEncoded extends AnyRecord,
     BodyApi,
-    PathParserError extends MO.SchemaError<any>,
     PathParsedShape extends AnyRecord,
     PathConstructorInput,
-    PathConstructorError extends MO.SchemaError<any>,
     PathEncoded extends StringRecord,
     PathApi,
-    QueryParserError extends MO.SchemaError<any>,
     QueryParsedShape extends AnyRecord,
     QueryConstructorInput,
-    QueryConstructorError extends MO.SchemaError<any>,
     QueryEncoded extends StringRecord,
     QueryApi,
     Headers extends StringRecordSchema
@@ -571,76 +429,36 @@ export function BodyRequest<M>(__name?: string) {
       headers?: Headers
       path: MO.Schema<
         unknown,
-        PathParserError,
         PathParsedShape,
         PathConstructorInput,
-        PathConstructorError,
         PathEncoded,
         PathApi
       >
       body: MO.Schema<
         unknown,
-        BodyParserError,
         BodyParsedShape,
         BodyConstructorInput,
-        BodyConstructorError,
         BodyEncoded,
         BodyApi
       >
       query: MO.Schema<
         unknown,
-        QueryParserError,
         QueryParsedShape,
         QueryConstructorInput,
-        QueryConstructorError,
         QueryEncoded,
         QueryApi
       >
     }
   ): BodyRequest<
     M,
-    MO.Schema<
-      unknown,
-      PathParserError,
-      PathParsedShape,
-      PathConstructorInput,
-      PathConstructorError,
-      PathEncoded,
-      PathApi
-    >,
-    MO.Schema<
-      unknown,
-      BodyParserError,
-      BodyParsedShape,
-      BodyConstructorInput,
-      BodyConstructorError,
-      BodyEncoded,
-      BodyApi
-    >,
-    MO.Schema<
-      unknown,
-      QueryParserError,
-      QueryParsedShape,
-      QueryConstructorInput,
-      QueryConstructorError,
-      QueryEncoded,
-      QueryApi
-    >,
+    MO.Schema<unknown, PathParsedShape, PathConstructorInput, PathEncoded, PathApi>,
+    MO.Schema<unknown, BodyParsedShape, BodyConstructorInput, BodyEncoded, BodyApi>,
+    MO.Schema<unknown, QueryParsedShape, QueryConstructorInput, QueryEncoded, QueryApi>,
     Headers,
     MO.Schema<
       unknown,
-      MO.IntersectionE<
-        | MO.MemberE<0, BodyParserError>
-        | MO.MemberE<1, PathParserError>
-        | MO.MemberE<2, QueryParserError>
-      >,
       BodyParsedShape & PathParsedShape & QueryParsedShape,
       BodyConstructorInput & PathConstructorInput & QueryConstructorInput,
-      MO.IntersectionE<
-        | MO.MemberE<0, BodyConstructorError>
-        | MO.MemberE<1, PathConstructorError>
-        | MO.MemberE<2, QueryConstructorError>
-      >,
       BodyEncoded & PathEncoded & QueryEncoded,
       {}
     >
@@ -1064,26 +882,11 @@ function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Se
 
 export type Meta = { description?: string; summary?: string; openapiRef?: string }
 export const metaIdentifier = MO.makeAnnotation<Meta>()
-export function meta<
-  ParserInput,
-  ParserError extends MO.AnyError,
-  ParsedShape,
-  ConstructorInput,
-  ConstructorError extends MO.AnyError,
-  Encoded,
-  Api
->(meta: Meta) {
-  return (
-    self: MO.Schema<
-      ParserInput,
-      ParserError,
-      ParsedShape,
-      ConstructorInput,
-      ConstructorError,
-      Encoded,
-      Api
-    >
-  ) => self.annotate(metaIdentifier, meta)
+export function meta<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
+  meta: Meta
+) {
+  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) =>
+    self.annotate(metaIdentifier, meta)
 }
 export const metaC = (m: Meta) => {
   return function (cls: any) {
@@ -1192,10 +995,8 @@ export function ModelSpecial<M>(__name?: string) {
 }
 export type ReqRes<E, A> = MO.Schema<
   unknown, //ParserInput,
-  any, // MO.AnyError //ParserError,
   A, //ParsedShape,
   any, //ConstructorInput,
-  any, //ConstructorError,
   E, //Encoded,
   any //Api
 >

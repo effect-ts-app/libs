@@ -13,8 +13,8 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
     MO.fromString,
     MO.arbitrary((FC) => FC.string({ minLength, maxLength })),
     constrained<Brand>(minLength, maxLength),
-    MO.mapParserError((_) => CNK.unsafeHead(_.errors).error),
-    MO.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
+    MO.mapParserError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
+    MO.mapConstructorError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
     MO.brand<Brand>()
   )
 }

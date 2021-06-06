@@ -6,42 +6,22 @@ import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutabl
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"
-import * as MO from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Th from "@effect-ts/schema/These"
+import * as MO from "@effect-ts-app/core/Schema/custom"
+import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
+import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
+import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
+import * as Th from "@effect-ts-app/core/Schema/custom/These"
 
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 
-export function set<
-  ParserError extends MO.AnyError,
-  ParsedShape,
-  ConstructorInput,
-  ConstructorError extends MO.AnyError,
-  Encoded,
-  Api
->(
-  self: MO.Schema<
-    unknown,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >,
+export function set<ParsedShape, ConstructorInput, Encoded, Api>(
+  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord.Ord<ParsedShape>,
   eq?: Eq.Equal<ParsedShape>
 ): MO.DefaultSchema<
   unknown,
-  MO.CompositionE<
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
-    | MO.NextE<MO.CollectionE<MO.OptionalIndexE<number, ParserError>>>
-  >,
   Set<ParsedShape>,
   Set<ParsedShape>,
-  never,
   readonly Encoded[],
   { self: Api; eq: Eq.Equal<ParsedShape>; ord: Ord.Ord<ParsedShape> }
 > {
@@ -68,7 +48,7 @@ export function set<
 
   return pipe(
     MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
+    MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
     MO.encoder((u) => toArray_(u).map(encodeSelf)),
     MO.mapApi(() => ({ self: self.Api, eq: eq_, ord })),

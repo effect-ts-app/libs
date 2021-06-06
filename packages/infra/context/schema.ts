@@ -8,24 +8,12 @@ import { Encoder, Parser } from "@effect-ts-app/core/Schema"
 
 export function makeCodec<
   ParserInput,
-  ParserError extends MO.AnyError,
   ParsedShape extends { id: Id },
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
   Encoded,
   Api,
   Id
->(
-  self: MO.Schema<
-    ParserInput,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
-) {
+>(self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) {
   // TODO: strict
   const decode = flow(Parser.for(self)["|>"](MO.condemn), T.orDie)
   const enc = Encoder.for(self)
