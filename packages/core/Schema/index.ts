@@ -129,7 +129,6 @@ export function withDefaultConstructorFields<
           ...u,
           ...Object.keys(kvs).reduce((prev, cur) => {
             if (typeof u[cur] === "undefined") {
-              // @ts-expect-error we know we may run and assign
               prev[cur] = kvs[cur]()
             }
             return prev
@@ -547,10 +546,9 @@ export type ParserInputFromSchemaProperties<T> = T extends {
     : never
   : never
 
-export * from "./_api"
 // customized Model
 export { Model } from "./Model"
 export * from "./Model"
 export * from "./adapt"
 
-export * from "./vendor"
+export * from "./_schema"

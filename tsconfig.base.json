@@ -21,7 +21,8 @@
         "strict": true,
         "resolveJsonModule": true,
         "moduleResolution": "node",
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "suppressImplicitAnyIndexErrors": true
     },
     // NEW: Options for file/directory watching
     "watchOptions": {

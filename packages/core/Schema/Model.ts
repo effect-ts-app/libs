@@ -1153,13 +1153,11 @@ export function ModelSpecial<M>(__name?: string) {
         if (ka.length === 0) {
           return 0
         }
-        // @ts-expect-error doc
         let hash = St.combineHash(St.hashString(ka[0]!), St.hash(this[ka[0]!]))
         let i = 1
         while (hash && i < ka.length) {
           hash = St.combineHash(
             hash,
-            // @ts-expect-error doc
             St.combineHash(St.hashString(ka[i]!), St.hash(this[ka[i]!]))
           )
           i++
@@ -1181,7 +1179,6 @@ export function ModelSpecial<M>(__name?: string) {
         const ka_ = ka.sort()
         const kb_ = kb.sort()
         while (eq && i < ka.length) {
-          // @ts-expect-error doc
           eq = ka_[i] === kb_[i] && St.equals(this[ka_[i]!], this[kb_[i]!])
           i++
         }
