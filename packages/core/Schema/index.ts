@@ -11,7 +11,7 @@ import { constant, Lazy, pipe } from "../Function"
 import { typedKeysOf } from "../utils"
 import { set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
-import { UUID } from "./_schema"
+import { SchemaEraseError, UUID } from "./_schema"
 
 export * from "./utils"
 
@@ -310,7 +310,7 @@ export function withDefault<
 
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
-  makeDefault: () => MO.ParsedShapeOf<Self>
+  makeDefault: () => MO.ParsedShapeOf<SchemaEraseError<Self>>
 ) {
   return MO.prop(schema).def(makeDefault, "constructor")
 }

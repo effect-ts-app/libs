@@ -123,10 +123,28 @@ export class Property<
   }
 }
 
+export type SchemaEraseError<Self extends SchemaUPI> = Self extends S.Schema<
+  infer A,
+  any, // Parser Error
+  infer C,
+  infer D,
+  any, // ConstructorError
+  infer F,
+  infer G
+>
+  ? S.Schema<A, Errors, C, D, Errors, F, G>
+  : never
+
 export function prop<Self extends SchemaUPI>(
   schema: Self
-): Property<Self, "required", O.None, O.None> {
-  return new Property(new O.None(), schema, "required", new O.None(), HashMap.make())
+): Property<SchemaEraseError<Self>, "required", O.None, O.None> {
+  return new Property(
+    new O.None(),
+    schema,
+    "required",
+    new O.None(),
+    HashMap.make()
+  ) as any
 }
 
 export type AnyProperty = Property<any, any, any, any>
