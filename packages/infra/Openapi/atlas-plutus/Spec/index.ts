@@ -520,9 +520,7 @@ export function optionalParameter<P extends { [k in keyof P]: Parameter<any, any
 } {
   const q = {}
   for (const k of Object.keys(p)) {
-    // @ts-expect-error
     q[k] = {
-      // @ts-expect-error
       ...p[k],
       required: false,
     }
@@ -540,9 +538,7 @@ export function requiredParameter<P extends { [k in keyof P]: Parameter<any, any
 } {
   const q = {}
   for (const k of Object.keys(p)) {
-    // @ts-expect-error
     q[k] = {
-      // @ts-expect-error
       ...p[k],
       required: true,
     }

@@ -68,14 +68,12 @@ export function dictionary<
     const keys = Object.keys(_)
 
     for (const key of keys) {
-      // @ts-expect-error doc
       const res = parse(_[key])
 
       if (res.effect._tag === "Left") {
         errors = Chunk.append_(errors, MO.requiredKeyE(key, res.effect.left))
         isError = true
       } else {
-        // @ts-expect-error doc
         result[key] = res.effect.right.get(0)
 
         const warnings = res.effect.right.get(1)

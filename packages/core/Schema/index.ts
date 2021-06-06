@@ -129,7 +129,6 @@ export function withDefaultConstructorFields<
           ...u,
           ...Object.keys(kvs).reduce((prev, cur) => {
             if (typeof u[cur] === "undefined") {
-              // @ts-expect-error we know we may run and assign
               prev[cur] = kvs[cur]()
             }
             return prev
