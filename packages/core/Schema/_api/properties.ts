@@ -26,7 +26,7 @@ type Errors = any
 export type SchemaUPI = S.Schema<unknown, Errors, any, any, Errors, any, any>
 
 export class Property<
-  Self extends S.SchemaUPI,
+  Self extends SchemaUPI,
   Optional extends "optional" | "required",
   As extends O.Option<PropertyKey>,
   Def extends O.Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
@@ -39,7 +39,7 @@ export class Property<
     readonly _map: HashMap.HashMap<Annotation<any>, any>
   ) {}
 
-  schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, O.None> {
+  schema<That extends SchemaUPI>(schema: That): Property<That, Optional, As, O.None> {
     return new Property(this._as, schema, this._optional, new O.None(), this._map)
   }
 
@@ -123,7 +123,7 @@ export class Property<
   }
 }
 
-export function prop<Self extends S.SchemaUPI>(
+export function prop<Self extends SchemaUPI>(
   schema: Self
 ): Property<Self, "required", O.None, O.None> {
   return new Property(new O.None(), schema, "required", new O.None(), HashMap.make())
@@ -204,7 +204,10 @@ export type HasRequiredProperty<Props extends PropertyRecord> = unknown extends 
   ? true
   : false
 
-export type ParserErrorFromProperties<Props extends PropertyRecord> = S.CompositionE<
+// @ts-expect-error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type ParserErrorFromProperties<Props extends PropertyRecord> =
+  Errors /*S.CompositionE<
   | S.PrevE<S.LeafE<S.UnknownRecordE>>
   | S.NextE<
       HasRequiredProperty<Props> extends true
@@ -280,7 +283,7 @@ export type ParserErrorFromProperties<Props extends PropertyRecord> = S.Composit
             }[keyof Props]
           >
     >
->
+>*/
 
 export const propertiesIdentifier = S.makeAnnotation<{ props: PropertyRecord }>()
 
@@ -320,7 +323,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
   const keys = Object.keys(props)
   const tags = {}
   for (const key of keys) {
-    const s: S.SchemaUPI = props[key]._schema
+    const s: SchemaUPI = props[key]._schema
 
     if (
       O.isNone(props[key]._as) &&
@@ -412,7 +415,7 @@ export function props<Props extends PropertyRecord>(
       }
     }
     if (!Chunk.isEmpty(missingKeys)) {
-      // @ts-expect-error
+      // // @ts-expect-error
       return Th.fail(
         S.compositionE(
           Chunk.single(
@@ -482,7 +485,7 @@ export function props<Props extends PropertyRecord>(
     const error = hasRequired ? S.compositionE(Chunk.single(S.nextE(error_))) : error_
 
     if (isError) {
-      // @ts-expect-error
+      // // @ts-expect-error
       return Th.fail(error)
     }
 
