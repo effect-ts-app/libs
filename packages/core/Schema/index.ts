@@ -396,5 +396,5 @@ export type ParserInputFromSchemaProperties<T> = T extends {
 export { Model } from "./Model"
 export * from "./Model"
 export * from "./adapt"
-
+export * from "./_api"
 export * from "./_schema"
