@@ -4,29 +4,29 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import * as MO from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
+import * as MO from "@effect-ts-app/core/Schema/custom"
+import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
+import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
+import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
+import * as Parser from "@effect-ts-app/core/Schema/custom/Parser"
+import * as Th from "@effect-ts-app/core/Schema/custom/These"
 
 export const fromTupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
 // TODO: any sized tuple
 export function fromTuple<
   KeyParserInput,
-  KeyParserError extends MO.AnyError,
+  KeyParserError,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends MO.AnyError,
+  KeyConstructorError,
   KeyEncoded,
   KeyApi,
   ParserInput,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -132,16 +132,16 @@ export function fromTuple<
 export const tupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
 export function tuple<
-  KeyParserError extends MO.AnyError,
+  KeyParserError,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends MO.AnyError,
+  KeyConstructorError,
   KeyEncoded,
   KeyApi,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(

@@ -1,5 +1,4 @@
 import {
-  AnyError,
   HasContinuation,
   Schema,
   SchemaAny,
@@ -12,10 +11,10 @@ export * from "@effect-ts-app/core/Schema"
 
 export class SchemaOpenApi<
     ParserInput,
-    ParserError extends AnyError,
+    ParserError,
     ParsedShape,
     ConstructorInput,
-    ConstructorError extends AnyError,
+    ConstructorError,
     Encoded,
     Api
   >
@@ -50,14 +49,7 @@ export class SchemaOpenApi<
 }
 
 export function openapi<ParsedShape>(f: () => JSONSchema) {
-  return <
-    ParserInput,
-    ParserError extends AnyError,
-    ConstructorInput,
-    ConstructorError extends AnyError,
-    Encoded,
-    Api
-  >(
+  return <ParserInput, ParserError, ConstructorInput, ConstructorError, Encoded, Api>(
     self: Schema<
       ParserInput,
       ParserError,
@@ -81,10 +73,10 @@ export function openapi<ParsedShape>(f: () => JSONSchema) {
 
 export function openapi_<
   ParserInput,
-  ParserError extends AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(

@@ -8,10 +8,10 @@ import { Encoder, Parser } from "@effect-ts-app/core/Schema"
 
 export function makeCodec<
   ParserInput,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape extends { id: Id },
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
   Id

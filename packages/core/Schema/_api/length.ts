@@ -1,4 +1,4 @@
-import { NonEmptyBrand } from "@effect-ts/schema"
+import { NonEmptyBrand } from "@effect-ts-app/core/Schema/custom"
 
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
@@ -11,10 +11,10 @@ export const maxLengthIdentifier =
 export function maxLength<Brand>(maxLength: number) {
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
+    ParserError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
+    ConstructorError,
     Encoded,
     Api
   >(
@@ -61,10 +61,10 @@ export function minLength<Brand>(minLength: number) {
   }
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
+    ParserError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
+    ConstructorError,
     Encoded,
     Api
   >(
@@ -105,10 +105,10 @@ export function minLength<Brand>(minLength: number) {
 export function constrained<Brand>(min: number, max: number) {
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
+    ParserError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
+    ConstructorError,
     Encoded,
     Api
   >(

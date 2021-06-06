@@ -19,13 +19,13 @@ export function include_<
 }
 
 export function onParseOrConstruct<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
@@ -41,13 +41,13 @@ export function onParseOrConstruct<
 }
 
 export function onParseOrConstruct_<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(
   self: MO.Schema<
     unknown,
@@ -64,13 +64,13 @@ export function onParseOrConstruct_<
 }
 
 export function onParse<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
@@ -86,13 +86,13 @@ export function onParse<
 }
 
 export function onParse_<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(
   self: MO.Schema<
     unknown,
@@ -109,13 +109,13 @@ export function onParse_<
 }
 
 export function onConstruct<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
@@ -131,13 +131,13 @@ export function onConstruct<
 }
 
 export function onConstruct_<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
-  Errors extends MO.AnyError
+  Errors
 >(
   self: MO.Schema<
     unknown,
@@ -160,7 +160,7 @@ export function domainResponse<A>(errors: DomainError[], success: () => A) {
   return Th.succeed(success())
 }
 
-export function domainResponse2<A>(errors: MO.AnyError[], success: () => A) {
+export function domainResponse2<A>(errors: unknown[], success: () => A) {
   if (errors.length) {
     return Th.fail(MO.compositionE(CNK.from(errors)))
   }
@@ -173,7 +173,7 @@ export function domainError(errors: DomainError[]) {
 
 export function domainE(key: string, message: string) {
   // TODO
-  return MO.requiredKeyE<string, MO.AnyError>(key, domainEE(message))
+  return MO.requiredKeyE<string, unknown>(key, domainEE(message))
 }
 
 export function domainEE(message: string) {

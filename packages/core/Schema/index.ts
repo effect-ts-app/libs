@@ -90,10 +90,10 @@ type LazyPartial<T> = {
 
 export function withDefaultConstructorFields<
   ParserInput,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -179,10 +179,10 @@ export function findAnnotation<A>(
 
 export type SupportedDefaultsSchema = MO.Schema<
   unknown,
-  MO.AnyError,
+  any,
   SupportedDefaults,
   any,
-  MO.AnyError,
+  any,
   any,
   any
 >
@@ -217,10 +217,10 @@ export function allWithDefault<Props extends DefaultPropertyRecord>(
 }
 
 export type WithDefault<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
   As extends O.Option<PropertyKey>
@@ -240,10 +240,10 @@ export type WithDefault<
 >
 
 export function withDefault<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
   As extends O.Option<PropertyKey>,
@@ -316,10 +316,10 @@ function defProp<Self extends MO.SchemaUPI>(
 }
 
 export function defaultProp<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -348,10 +348,10 @@ export function defaultProp<
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -379,7 +379,7 @@ export function defaultProp<
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp(
-  schema: MO.Schema<unknown, MO.AnyError, any, any, MO.AnyError, any, any>,
+  schema: MO.Schema<unknown, any, any, any, any, any, any>,
   makeDefault?: () => any
 ) {
   return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema)["|>"](withDefault)
@@ -423,10 +423,10 @@ export function createUnorder<T>(): Ord.Ord<T> {
   }
 }
 export function makeSet<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -449,10 +449,10 @@ export function makeSet<
 }
 
 export function makeUnorderedContramappedStringSet<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
   MA extends string
@@ -476,7 +476,7 @@ export function makeUnorderedStringSet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<
     unknown, //ParserInput,
-    any, // MO.AnyError //ParserError,
+    any, // any //ParserError,
     A,
     any, //ConstructorInput,
     any, //ConstructorError,
@@ -488,10 +488,10 @@ export function makeUnorderedStringSet<A extends string>(
 }
 
 export function makeUnorderedSet<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(
@@ -511,10 +511,10 @@ export function makeUnorderedSet<
 }
 
 export function makeContramappedSet<
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api,
   MA

@@ -283,10 +283,10 @@ const cache = new WeakMap()
 
 function for_<
   ParserInput,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(

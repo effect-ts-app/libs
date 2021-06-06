@@ -3,15 +3,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
-import { ParsedShapeOf } from "@effect-ts/schema"
-import { unsafe } from "@effect-ts/schema/_api/condemn"
 import { Erase } from "@effect-ts-app/core/Effect"
+import { ParsedShapeOf } from "@effect-ts-app/core/Schema/custom"
+import { unsafe } from "@effect-ts-app/core/Schema/custom/_api/condemn"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
 import { include } from "../Model"
 import * as MO from "./_schema"
-import { AnyError, schemaField, SchemaForModel } from "./_schema"
+import { schemaField, SchemaForModel } from "./_schema"
 
 export const GET = "GET"
 export type GET = typeof GET
@@ -51,21 +51,13 @@ export type StringRecord = Record<string, string>
 
 export type AnyRecord = Record<string, any>
 
-export type AnyRecordSchema = MO.Schema<
-  unknown,
-  AnyError,
-  any,
-  any,
-  AnyError,
-  AnyRecord,
-  any
->
+export type AnyRecordSchema = MO.Schema<unknown, any, any, any, any, AnyRecord, any>
 export type StringRecordSchema = MO.Schema<
   unknown,
-  AnyError,
   any,
   any,
-  AnyError,
+  any,
+  any,
   StringRecord,
   any
 >
@@ -1066,10 +1058,10 @@ export type Meta = { description?: string; summary?: string; openapiRef?: string
 export const metaIdentifier = MO.makeAnnotation<Meta>()
 export function meta<
   ParserInput,
-  ParserError extends MO.AnyError,
+  ParserError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
+  ConstructorError,
   Encoded,
   Api
 >(meta: Meta) {
@@ -1192,7 +1184,7 @@ export function ModelSpecial<M>(__name?: string) {
 }
 export type ReqRes<E, A> = MO.Schema<
   unknown, //ParserInput,
-  any, // MO.AnyError //ParserError,
+  any, // MO.any //ParserError,
   A, //ParsedShape,
   any, //ConstructorInput,
   any, //ConstructorError,

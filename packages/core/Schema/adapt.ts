@@ -2,7 +2,7 @@
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { None, Some } from "@effect-ts/core/Option"
 import { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
-import { positiveInt } from "@effect-ts/schema"
+import { positiveInt } from "@effect-ts-app/core/Schema/custom"
 
 import { array, prop, props } from "./_schema"
 import * as MO from "./_schema"
