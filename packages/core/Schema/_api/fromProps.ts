@@ -676,6 +676,14 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
   "flat"
 >
 
+export type ParserInputFromParserInputOrEncodedFromSchema<T> = T extends {
+  Api: { props: infer Props }
+}
+  ? Props extends FromPropertyRecord
+    ? ParserInputFromParserInputOrEncodedFromProperties<Props>
+    : never
+  : never
+
 export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecord> =
   Compute<
     UnionToIntersection<
@@ -703,3 +711,11 @@ export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecor
     >,
     "flat"
   >
+
+export type ParserInputFromEncodedFromSchema<T> = T extends {
+  Api: { props: infer Props }
+}
+  ? Props extends FromPropertyRecord
+    ? ParserInputFromEncodedFromProperties<Props>
+    : never
+  : never
