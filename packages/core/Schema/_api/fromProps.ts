@@ -635,7 +635,8 @@ export type ParserInputFromFromProperties<Props extends FromPropertyRecord> = Co
   "flat"
 >
 
-type AorB<A, B> = A extends unknown ? B : A
+type IsAnyOrUnknown<T> = any extends T ? never : T
+type AorB<A, B> = IsAnyOrUnknown<A> extends never ? B : A
 
 export type ParserInputFromParserInputOrEncodedFromProperties<
   Props extends FromPropertyRecord
