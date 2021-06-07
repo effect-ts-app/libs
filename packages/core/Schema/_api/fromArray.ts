@@ -2,10 +2,7 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import { fromChunk } from "@effect-ts/schema/_api/chunk"
-import type { DefaultSchema } from "@effect-ts/schema/_api/withDefaults"
-import { withDefaults } from "@effect-ts/schema/_api/withDefaults"
-import * as S from "@effect-ts/schema/_schema"
+import * as S from "@effect-ts/schema"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
 import * as Encoder from "@effect-ts/schema/Encoder"
 import * as Guard from "@effect-ts/schema/Guard"
@@ -31,7 +28,7 @@ export function fromArray<
     Encoded,
     Api
   >
-): DefaultSchema<
+): S.DefaultSchema<
   readonly ParserInput[],
   S.CollectionE<S.OptionalIndexE<number, ParserError>>,
   readonly ParsedShape[],
@@ -54,12 +51,12 @@ export function fromArray<
   )
 
   return pipe(
-    fromChunk(self)[">>>"](fromFromChunk),
+    S.fromChunk(self)[">>>"](fromFromChunk),
     S.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
     S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
-    withDefaults,
+    S.withDefaults,
     S.annotate(fromArrayIdentifier, { self })
   )
 }

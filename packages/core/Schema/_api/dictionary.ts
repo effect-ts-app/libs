@@ -58,8 +58,9 @@ export function dictionary<
         MO.compositionE(Chunk.single(MO.prevE(MO.leafE(MO.unknownRecordE(_)))))
       )
     }
-    let errors =
-      Chunk.empty<MO.OptionalKeyE<string, unknown> | MO.RequiredKeyE<string, unknown>>()
+    let errors = Chunk.empty<
+      MO.OptionalKeyE<string, unknown> | MO.RequiredKeyE<string, unknown>
+    >()
 
     let isError = false
 

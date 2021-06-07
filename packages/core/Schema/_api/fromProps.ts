@@ -7,10 +7,7 @@ import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
-import type { LiteralApi } from "@effect-ts/schema/_api/literal"
-import type { DefaultSchema } from "@effect-ts/schema/_api/withDefaults"
-import { withDefaults } from "@effect-ts/schema/_api/withDefaults"
-import * as S from "@effect-ts/schema/_schema"
+import * as S from "@effect-ts/schema"
 import type { Annotation } from "@effect-ts/schema/_schema/annotation"
 import { augmentRecord } from "@effect-ts/schema/_utils"
 import * as Arbitrary from "@effect-ts/schema/Arbitrary"
@@ -301,7 +298,7 @@ export type ParserErrorFromFromProperties<Props extends FromPropertyRecord> =
 export const fromPropertiesIdentifier =
   S.makeAnnotation<{ props: FromPropertyRecord }>()
 
-export type SchemaFromProperties<Props extends FromPropertyRecord> = DefaultSchema<
+export type SchemaFromProperties<Props extends FromPropertyRecord> = S.DefaultSchema<
   ParserInputFromFromProperties<Props>,
   ParserErrorFromFromProperties<Props>,
   ShapeFromFromProperties<Props>,
@@ -314,7 +311,7 @@ export type SchemaFromProperties<Props extends FromPropertyRecord> = DefaultSche
 export type TagsFromFromProps<Props extends FromPropertyRecord> = {
   [k in keyof Props]: Props[k]["_as"] extends O.None
     ? Props[k]["_optional"] extends "required"
-      ? S.ApiOf<Props[k]["_schema"]> extends LiteralApi<infer KS>
+      ? S.ApiOf<Props[k]["_schema"]> extends S.LiteralApi<infer KS>
         ? KS extends [string]
           ? k
           : never
@@ -553,7 +550,7 @@ export function fromProps<Props extends FromPropertyRecord>(
       return Th.succeed(res)
     }),
     S.mapApi(() => ({ props })),
-    withDefaults,
+    S.withDefaults,
     S.annotate(fromPropertiesIdentifier, { props })
   )
 }
