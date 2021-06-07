@@ -608,6 +608,73 @@ export function fromPropsOmit<
   }
 }
 
+export type ParserInputFromFromProperties<Props extends FromPropertyRecord> = Compute<
+  UnionToIntersection<
+    {
+      [k in keyof Props]: Props[k] extends AnyFromProperty
+        ? Props[k]["_optional"] extends "optional"
+          ? {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+            }
+          : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
+          ? {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+            }
+          : {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]: S.ParsedShapeOf<Props[k]["_schema"]>
+            }
+        : never
+    }[keyof Props]
+  >,
+  "flat"
+>
+
+type AorB<A, B> = A extends unknown ? B : A
+
+export type ParserInputFromParserInputOrEncodedFromProperties<
+  Props extends FromPropertyRecord
+> = Compute<
+  UnionToIntersection<
+    {
+      [k in keyof Props]: Props[k] extends AnyFromProperty
+        ? Props[k]["_optional"] extends "optional"
+          ? {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]?: AorB<
+                S.ParserInputOf<Props[k]["_schema"]>,
+                S.EncodedOf<Props[k]["_schema"]>
+              >
+            }
+          : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
+          ? {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]?: AorB<
+                S.ParserInputOf<Props[k]["_schema"]>,
+                S.EncodedOf<Props[k]["_schema"]>
+              >
+            }
+          : {
+              readonly [h in Props[k]["_as"] extends O.Some<any>
+                ? Props[k]["_as"]["value"]
+                : k]: AorB<
+                S.ParserInputOf<Props[k]["_schema"]>,
+                S.EncodedOf<Props[k]["_schema"]>
+              >
+            }
+        : never
+    }[keyof Props]
+  >,
+  "flat"
+>
+
 export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecord> =
   Compute<
     UnionToIntersection<

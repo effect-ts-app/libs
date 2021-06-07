@@ -348,6 +348,7 @@ export function defaultProp<
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
@@ -356,7 +357,7 @@ export function defaultProp<
   Api
 >(
   schema: MO.Schema<
-    unknown,
+    ParserInput,
     ParserError,
     ParsedShape,
     ConstructorInput,
@@ -364,9 +365,9 @@ export function defaultProp<
     Encoded,
     Api
   >
-): MO.Property<
+): FromProperty<
   MO.Schema<
-    unknown,
+    ParserInput,
     ParserError,
     ParsedShape,
     ConstructorInput,

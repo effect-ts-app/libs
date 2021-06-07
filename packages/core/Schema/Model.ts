@@ -9,6 +9,7 @@ import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
+import { FromPropertyRecord, fromProps } from "./_api"
 import * as MO from "./_schema"
 import { AnyError, schemaField, SchemaForModel } from "./_schema"
 import { include } from "./utils"
@@ -725,6 +726,11 @@ export type PropsExtensions<Props extends PropertyRecord> = {
 export function Model<M>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecial<M>(__name)(MO.props(props))
+}
+
+export function fromModel<M>(__name?: string) {
+  return <Props extends FromPropertyRecord = {}>(props: Props) =>
+    ModelSpecial<M>(__name)(fromProps(props))
 }
 
 /**
