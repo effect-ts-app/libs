@@ -77,7 +77,8 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Model<M, Self> {
+> extends Model<M, Self>,
+    PropsExtensions<GetProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -95,7 +96,8 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Model<M, Self> {
+> extends Model<M, Self>,
+    PropsExtensions<GetProps<Self>> {
   Path: Path
   Body: Body
   Query: Query

@@ -19,6 +19,7 @@ export function include_<
 }
 
 export function onParseOrConstruct<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -29,7 +30,7 @@ export function onParseOrConstruct<
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
-      unknown,
+      ParserInput,
       ParserError,
       ParsedShape,
       ConstructorInput,
@@ -41,6 +42,7 @@ export function onParseOrConstruct<
 }
 
 export function onParseOrConstruct_<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -50,7 +52,7 @@ export function onParseOrConstruct_<
   Errors extends MO.AnyError
 >(
   self: MO.Schema<
-    unknown,
+    ParserInput,
     ParserError,
     ParsedShape,
     ConstructorInput,
@@ -64,6 +66,7 @@ export function onParseOrConstruct_<
 }
 
 export function onParse<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -74,7 +77,7 @@ export function onParse<
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
-      unknown,
+      ParserInput,
       ParserError,
       ParsedShape,
       ConstructorInput,
@@ -86,6 +89,7 @@ export function onParse<
 }
 
 export function onParse_<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -95,7 +99,7 @@ export function onParse_<
   Errors extends MO.AnyError
 >(
   self: MO.Schema<
-    unknown,
+    ParserInput,
     ParserError,
     ParsedShape,
     ConstructorInput,
@@ -109,6 +113,7 @@ export function onParse_<
 }
 
 export function onConstruct<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -119,7 +124,7 @@ export function onConstruct<
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
   return (
     self: MO.Schema<
-      unknown,
+      ParserInput,
       ParserError,
       ParsedShape,
       ConstructorInput,
@@ -131,6 +136,7 @@ export function onConstruct<
 }
 
 export function onConstruct_<
+  ParserInput,
   ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
@@ -140,7 +146,7 @@ export function onConstruct_<
   Errors extends MO.AnyError
 >(
   self: MO.Schema<
-    unknown,
+    ParserInput,
     ParserError,
     ParsedShape,
     ConstructorInput,
