@@ -9,7 +9,7 @@ import { v4 } from "uuid"
 import { Compute } from "../Compute"
 import { constant, Lazy, pipe } from "../Function"
 import { typedKeysOf } from "../utils"
-import { set, setIdentifier } from "./_api"
+import { FromProperty, set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
 import { UUID } from "./_schema"
 
@@ -178,7 +178,7 @@ export function findAnnotation<A>(
 }
 
 export type SupportedDefaultsSchema = MO.Schema<
-  unknown,
+  any,
   MO.AnyError,
   SupportedDefaults,
   any,
@@ -186,7 +186,7 @@ export type SupportedDefaultsSchema = MO.Schema<
   any,
   any
 >
-export type DefaultProperty = MO.Property<any, any, any, any>
+export type DefaultProperty = FromProperty<any, any, any, any>
 
 export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
 

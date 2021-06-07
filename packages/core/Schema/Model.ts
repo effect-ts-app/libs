@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
-import { ParsedShapeOf } from "@effect-ts/schema"
+import { AnyProperty, ParsedShapeOf, PropertyRecord } from "@effect-ts/schema"
 import { unsafe } from "@effect-ts/schema/_api/condemn"
 import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
@@ -716,8 +716,8 @@ export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord
     ? C
     : ["You must specify the properties that you expect in the path", never]
 
-export type PropsExtensions<Props extends MO.PropertyRecord> = {
-  include: <NewProps extends Record<string, MO.AnyProperty>>(
+export type PropsExtensions<Props extends PropertyRecord> = {
+  include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
 }
@@ -1103,7 +1103,7 @@ export function useClassNameForSchema(cls: any) {
 }
 
 type GetProps<Self> = Self extends { Api: { props: infer Props } }
-  ? Props extends MO.PropertyRecord
+  ? Props extends PropertyRecord
     ? Props
     : never
   : never
