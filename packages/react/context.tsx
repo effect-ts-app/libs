@@ -10,7 +10,8 @@ export type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP 
 export interface ServiceContext<R> {
   readonly provide: <E, A>(self: T.Effect<R, E, A>) => T.Effect<unknown, E, A>
   readonly runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => () => void
-  readonly runPromise: <E, A>(self: T.Effect<R, E, A>) => Promise<Exit<E, A>>
+  readonly runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => Promise<void>
+  readonly runPromiseExit: <E, A>(self: T.Effect<R, E, A>) => Promise<Exit<E, A>>
 }
 
 const MissingContext = T.die(
@@ -20,7 +21,8 @@ export function makeApp<R>() {
   const ServiceContext = createContext<ServiceContext<R>>({
     provide: () => MissingContext,
     runWithErrorLog: () => runWithErrorLog(MissingContext),
-    runPromise: () => runPromiseWithErrorLog(MissingContext),
+    runPromiseWithErrorLog: () => runPromiseWithErrorLog(MissingContext),
+    runPromiseExit: () => runPromiseExit(MissingContext),
   })
 
   const LiveServiceContext = ({
@@ -37,8 +39,10 @@ export function makeApp<R>() {
         provide: provider.provide,
         runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
           runWithErrorLog(provider.provide(self)),
-        runPromise: <E, A>(self: T.Effect<R, E, A>) =>
+        runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
           runPromiseWithErrorLog(provider.provide(self)),
+        runPromiseExit: <E, A>(self: T.Effect<R, E, A>) =>
+          runPromiseExit(provider.provide(self)),
       }),
       [provider]
     )
@@ -73,11 +77,14 @@ function runWithErrorLog<E, A>(self: T.Effect<unknown, E, A>) {
   }
 }
 
+function runPromiseExit<E, A>(self: T.Effect<unknown, E, A>) {
+  return pipe(self, T.runPromiseExit)
+}
+
 function runPromiseWithErrorLog<E, A>(self: T.Effect<unknown, E, A>) {
-  return pipe(self, T.runPromiseExit).then((ex) => {
+  return runPromiseExit(self).then((ex) => {
     if (ex._tag === "Failure") {
       console.error(pretty(ex.cause))
     }
-    return ex
   })
 }
