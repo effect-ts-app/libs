@@ -547,6 +547,50 @@ export type ParserInputFromSchemaProperties<T> = T extends {
     : never
   : never
 
+/**
+ * We know that the Parser will work from `unknown`, but we also want to expose the knowledge that we can parse from a ParserInput of type X
+ * as such we can use fromProps, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
+ */
+export type AsUPI<
+  ParserError extends MO.AnyError,
+  ParsedShape,
+  ConstructorInput,
+  ConstructorError extends MO.AnyError,
+  Encoded,
+  Api
+> = MO.Schema<
+  unknown,
+  ParserError,
+  ParsedShape,
+  ConstructorInput,
+  ConstructorError,
+  Encoded,
+  Api
+>
+
+/**
+ * @see AsUPI
+ */
+export const asUpi = <
+  ParserError extends MO.AnyError,
+  ParsedShape,
+  ConstructorInput,
+  ConstructorError extends MO.AnyError,
+  Encoded,
+  Api
+>(
+  s: MO.Schema<
+    any,
+    ParserError,
+    ParsedShape,
+    ConstructorInput,
+    ConstructorError,
+    Encoded,
+    Api
+  >
+) =>
+  s as AsUPI<ParserError, ParsedShape, ConstructorInput, ConstructorError, Encoded, Api>
+
 export * from "./_api"
 // customized Model
 export { Model } from "./Model"
