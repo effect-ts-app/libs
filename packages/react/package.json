@@ -9,16 +9,16 @@
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.40.3",
-        "@effect-ts/monocle": "^0.33.0",
-        "@effect-ts/schema": "^0.8.1",
-        "@types/react": "^17.0.9",
+        "@effect-ts/core": "^0.40.4",
+        "@effect-ts/monocle": "^0.34.0",
+        "@effect-ts/schema": "^0.8.2",
+        "@types/react": "^17.0.11",
         "react": "^17.0.2"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.40.3",
-        "@effect-ts/monocle": "^0.33.0",
-        "@effect-ts/schema": "^0.8.1",
+        "@effect-ts/core": "^0.40.4",
+        "@effect-ts/monocle": "^0.34.0",
+        "@effect-ts/schema": "^0.8.2",
         "react": "^17.0.2"
     },
     "scripts": {
