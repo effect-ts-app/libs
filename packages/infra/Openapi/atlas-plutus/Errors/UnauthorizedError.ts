@@ -17,8 +17,9 @@ const UnauthorizedError_ = MO.make((F) =>
 
 export interface UnauthorizedError extends MO.AType<typeof UnauthorizedError_> {}
 export interface UnauthorizedErrorE extends MO.EType<typeof UnauthorizedError_> {}
-export const UnauthorizedError =
-  MO.opaque<UnauthorizedErrorE, UnauthorizedError>()(UnauthorizedError_)
+export const UnauthorizedError = MO.opaque<UnauthorizedErrorE, UnauthorizedError>()(
+  UnauthorizedError_
+)
 
 export function unauthorizedError(message: string) {
   return UnauthorizedError.build({ _tag: "UnauthorizedError", message })

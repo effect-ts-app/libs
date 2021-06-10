@@ -28,96 +28,98 @@ export const adaptRes = <Props extends MO.PropertyRecord>(properties: Props) => 
     })
 }
 
-export type Adapted<Props extends MO.PropertyRecord, Key extends keyof Props> =
-  /* copy pasted from return type of function */ MO.SchemaProperties<{
-    items: MO.Property<
-      MO.SchemaDefaultSchema<
-        unknown,
-        MO.CompositionE<
-          | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
-          | MO.NextE<
-              MO.CollectionE<
-                MO.OptionalIndexE<
-                  number,
-                  MO.ParserErrorFromProperties<AdaptSchema<Props, Key>>
-                >
+export type Adapted<
+  Props extends MO.PropertyRecord,
+  Key extends keyof Props
+> = /* copy pasted from return type of function */ MO.SchemaProperties<{
+  items: MO.Property<
+    MO.SchemaDefaultSchema<
+      unknown,
+      MO.CompositionE<
+        | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
+        | MO.NextE<
+            MO.CollectionE<
+              MO.OptionalIndexE<
+                number,
+                MO.ParserErrorFromProperties<AdaptSchema<Props, Key>>
               >
             >
-        >,
-        readonly ComputeFlat<
-          UnionToIntersection<
-            {
-              [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-                Props,
-                Key
-              >[k] extends MO.AnyProperty
-                ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
-                  ? {
-                      readonly [h in k]?:
-                        | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                        | undefined
-                    }
-                  : {
-                      readonly [h in k]: MO.ParsedShapeOf<
-                        AdaptSchema<Props, Key>[k]["_schema"]
-                      >
-                    }
-                : never
-            }[Key]
           >
-        >[],
-        readonly ComputeFlat<
-          UnionToIntersection<
-            {
-              [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-                Props,
-                Key
-              >[k] extends MO.AnyProperty
-                ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
-                  ? {
-                      readonly [h in k]?:
-                        | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                        | undefined
-                    }
-                  : {
-                      readonly [h in k]: MO.ParsedShapeOf<
-                        AdaptSchema<Props, Key>[k]["_schema"]
-                      >
-                    }
-                : never
-            }[Key]
-          >
-        >[],
-        never,
-        readonly ComputeFlat<
-          UnionToIntersection<
-            {
-              [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-                Props,
-                Key
-              >[k] extends MO.AnyProperty
-                ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
-                  ? {
-                      readonly [h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
-                        ? AdaptSchema<Props, Key>[k]["_as"]["value"]
-                        : k]?:
-                        | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                        | undefined
-                    }
-                  : {
-                      readonly [h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
-                        ? AdaptSchema<Props, Key>[k]["_as"]["value"]
-                        : k]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                    }
-                : never
-            }[Key]
-          >
-        >[],
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        {}
       >,
-      "required",
-      None,
-      None
-    >
-  }>
+      readonly ComputeFlat<
+        UnionToIntersection<
+          {
+            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
+              Props,
+              Key
+            >[k] extends MO.AnyProperty
+              ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
+                ? {
+                    readonly [h in k]?:
+                      | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                      | undefined
+                  }
+                : {
+                    readonly [h in k]: MO.ParsedShapeOf<
+                      AdaptSchema<Props, Key>[k]["_schema"]
+                    >
+                  }
+              : never
+          }[Key]
+        >
+      >[],
+      readonly ComputeFlat<
+        UnionToIntersection<
+          {
+            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
+              Props,
+              Key
+            >[k] extends MO.AnyProperty
+              ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
+                ? {
+                    readonly [h in k]?:
+                      | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                      | undefined
+                  }
+                : {
+                    readonly [h in k]: MO.ParsedShapeOf<
+                      AdaptSchema<Props, Key>[k]["_schema"]
+                    >
+                  }
+              : never
+          }[Key]
+        >
+      >[],
+      never,
+      readonly ComputeFlat<
+        UnionToIntersection<
+          {
+            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
+              Props,
+              Key
+            >[k] extends MO.AnyProperty
+              ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional"
+                ? {
+                    readonly [h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
+                      ? AdaptSchema<Props, Key>[k]["_as"]["value"]
+                      : k]?:
+                      | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                      | undefined
+                  }
+                : {
+                    readonly [h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
+                      ? AdaptSchema<Props, Key>[k]["_as"]["value"]
+                      : k]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                  }
+              : never
+          }[Key]
+        >
+      >[],
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      {}
+    >,
+    "required",
+    None,
+    None
+  >
+}>
