@@ -9,11 +9,11 @@ import React from "react"
 export type PromiseExit<E = unknown, A = unknown> = Promise<Exit<E, A>>
 
 export function onFail<E, T>(cb: (a: Cause<E>) => T) {
-  return Ex.fold(cb, () => void 0)
+  return Ex.fold<E, unknown, T | void>(cb, () => void 0)
 }
 
 export function onSuccess<A, T>(cb: (a: A) => T) {
-  return Ex.fold(() => void 0, cb)
+  return Ex.fold<unknown, A, T | void>(() => void 0, cb)
 }
 
 /**
