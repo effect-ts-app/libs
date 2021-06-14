@@ -699,6 +699,7 @@ export interface Request<
   path: Path
 }
 
+// TODO: Only Path Params, not also Query Params..
 export type PathParams<Path extends string> =
   Path extends `:${infer Param}/${infer Rest}`
     ? Param | PathParams<Rest>
@@ -912,7 +913,7 @@ export function Req<M>(__name?: string) {
 
 export function parsePathParams<Path extends string>(path: Path) {
   const p = new Path(path)
-  const params = p.params as PathParams<Path>[]
+  const params = p.urlParams as PathParams<Path>[]
   return params
 }
 
@@ -954,11 +955,11 @@ export function makeRequest<
   self: MO.SchemaProperties<Props>,
   __name?: string
 ): BuildRequest<Props, Path, Method, M> {
-  const params = parsePathParams(path)
+  const pathParams = parsePathParams(path)
   // TODO: path props must be parsed "from string"
   const remainProps = { ...self.Api.props }
-  const pathProps = params.length
-    ? params.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
+  const pathProps = pathParams.length
+    ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
         prev[cur] = self.Api.props[cur]
         delete remainProps[cur]
         return prev
