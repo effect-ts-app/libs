@@ -39,11 +39,14 @@ export type Request<
   Headers?: MO.ReqRes<Record<string, string>, HeaderA>
 }
 
-export type Request2<Path extends string, Method extends Methods, ReqA> =
-  MO.ReqResSchemed<unknown, ReqA> & {
-    method: Method
-    path: Path
-  }
+export type Request2<
+  Path extends string,
+  Method extends Methods,
+  ReqA
+> = MO.ReqResSchemed<unknown, ReqA> & {
+  method: Method
+  path: Path
+}
 
 type Encode<A, E> = (a: A) => E
 

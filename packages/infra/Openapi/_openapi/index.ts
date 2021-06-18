@@ -10,6 +10,7 @@ import {
   EmailFromStringIdentifier,
   EmailIdentifier,
   fromChunkIdentifier,
+  fromPropertiesIdentifier,
   fromStringIdentifier,
   hasContinuation,
   intersectIdentifier,
@@ -214,6 +215,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new ArraySchema({
             items: yield* $(processId(schemaMeta.self, meta)) as any,
           })
+        case fromPropertiesIdentifier:
         case propertiesIdentifier: {
           const properties: Record<string, any> = {}
           const required = []

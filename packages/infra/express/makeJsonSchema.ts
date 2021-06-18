@@ -38,7 +38,7 @@ export function makeJsonSchema(
         e,
         {} as Record<string, Record<Methods, ReturnType<typeof map>>>,
         (prev, e) => {
-          const path = e.path.replace(rx, (_a, b) => `{${b}}`)
+          const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)
           prev[path] = {
             ...prev[path],
             ...map(e),

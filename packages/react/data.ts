@@ -48,14 +48,17 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
     const refresh = useCallback(() => setSignal(Symbol()), [])
 
     useEffect(() => {
-      const loadingResult =
+      const set = (result: QueryResult<E, A>) =>
+        setResult((resultInternal.current = result))
+
+      set(
         resultInternal.current._tag === "Initial" ||
-        resultInternal.current._tag === "Loading"
+          resultInternal.current._tag === "Loading"
           ? new Loading()
           : new Refreshing({ current: resultInternal.current.current })
-      setResult((resultInternal.current = loadingResult))
+      )
 
-      return runWithErrorLog(pipe(queryResult(self), T.map(setResult)))
+      return runWithErrorLog(pipe(queryResult(self), T.map(set)))
     }, [self, runWithErrorLog, signal])
 
     return [result, refresh] as const

@@ -7,11 +7,12 @@ import { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
-import { include } from "../Model"
+import { FromPropertyRecord, fromProps } from "./_api"
 import * as MO from "./_schema"
 import { schemaField, SchemaForModel } from "./_schema"
-import { ParsedShapeOf } from "./custom"
+import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
 import { unsafe } from "./custom/_api/condemn"
+import { include } from "./utils"
 
 export const GET = "GET"
 export type GET = typeof GET
@@ -61,7 +62,8 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Model<M, Self> {
+> extends Model<M, Self>,
+    PropsExtensions<GetProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -79,7 +81,8 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Model<M, Self> {
+> extends Model<M, Self>,
+    PropsExtensions<GetProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
@@ -514,6 +517,7 @@ export interface Request<
   path: Path
 }
 
+// TODO: Only Path Params, not also Query Params..
 export type PathParams<Path extends string> =
   Path extends `:${infer Param}/${infer Rest}`
     ? Param | PathParams<Rest>
@@ -532,8 +536,8 @@ export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord
     ? C
     : ["You must specify the properties that you expect in the path", never]
 
-export type PropsExtensions<Props extends MO.PropertyRecord> = {
-  include: <NewProps extends Record<string, MO.AnyProperty>>(
+export type PropsExtensions<Props extends PropertyRecord> = {
+  include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
 }
@@ -541,6 +545,11 @@ export type PropsExtensions<Props extends MO.PropertyRecord> = {
 export function Model<M>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecial<M>(__name)(MO.props(props))
+}
+
+export function fromModel<M>(__name?: string) {
+  return <Props extends FromPropertyRecord = {}>(props: Props) =>
+    ModelSpecial<M>(__name)(fromProps(props))
 }
 
 /**
@@ -722,7 +731,7 @@ export function Req<M>(__name?: string) {
 
 export function parsePathParams<Path extends string>(path: Path) {
   const p = new Path(path)
-  const params = p.params as PathParams<Path>[]
+  const params = p.urlParams as PathParams<Path>[]
   return params
 }
 
@@ -764,11 +773,11 @@ export function makeRequest<
   self: MO.SchemaProperties<Props>,
   __name?: string
 ): BuildRequest<Props, Path, Method, M> {
-  const params = parsePathParams(path)
+  const pathParams = parsePathParams(path)
   // TODO: path props must be parsed "from string"
   const remainProps = { ...self.Api.props }
-  const pathProps = params.length
-    ? params.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
+  const pathProps = pathParams.length
+    ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
         prev[cur] = self.Api.props[cur]
         delete remainProps[cur]
         return prev
@@ -904,7 +913,7 @@ export function useClassNameForSchema(cls: any) {
 }
 
 type GetProps<Self> = Self extends { Api: { props: infer Props } }
-  ? Props extends MO.PropertyRecord
+  ? Props extends PropertyRecord
     ? Props
     : never
   : never

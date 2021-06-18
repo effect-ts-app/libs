@@ -11,4 +11,8 @@ export * from "./map"
 export * from "./set"
 export * from "./tuple"
 
+export * from "./fromProps"
+export * from "./fromArray"
+export * from "./nonEmptyArray"
+
 export * from "@effect-ts-app/core/Schema/custom/_api"

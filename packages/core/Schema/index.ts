@@ -9,7 +9,7 @@ import { v4 } from "uuid"
 import { Compute } from "../Compute"
 import { constant, Lazy, pipe } from "../Function"
 import { typedKeysOf } from "../utils"
-import { set, setIdentifier } from "./_api"
+import { FromProperty, set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
 import { UUID } from "./_schema"
 
@@ -163,14 +163,8 @@ export function findAnnotation<A>(
   return undefined
 }
 
-export type SupportedDefaultsSchema = MO.Schema<
-  unknown,
-  SupportedDefaults,
-  any,
-  any,
-  any
->
-export type DefaultProperty = MO.Property<any, any, any, any>
+export type SupportedDefaultsSchema = MO.Schema<any, SupportedDefaults, any, any, any>
+export type DefaultProperty = FromProperty<any, any, any, any>
 
 export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
 
@@ -270,14 +264,15 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   O.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
+  ParserInput,
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
   Encoded,
   Api
 >(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): MO.Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  schema: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+): FromProperty<
+  MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   O.None,
   O.Some<["constructor", () => ParsedShape]>
@@ -391,6 +386,25 @@ export type ParserInputFromSchemaProperties<T> = T extends {
     ? MO.ParserInputFromProperties<Props>
     : never
   : never
+
+/**
+ * We know that the Parser will work from `unknown`, but we also want to expose the knowledge that we can parse from a ParserInput of type X
+ * as such we can use fromProps, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
+ */
+export type AsUPI<ParsedShape, ConstructorInput, Encoded, Api> = MO.Schema<
+  unknown,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api
+>
+
+/**
+ * @see AsUPI
+ */
+export const asUpi = <ParsedShape, ConstructorInput, Encoded, Api>(
+  s: MO.Schema<any, ParsedShape, ConstructorInput, Encoded, Api>
+) => s as AsUPI<ParsedShape, ConstructorInput, Encoded, Api>
 
 // customized Model
 export { Model } from "./Model"

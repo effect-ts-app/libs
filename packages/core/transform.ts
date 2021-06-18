@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import * as O from "@effect-ts-app/core/Option"
+import * as SET from "@effect-ts-app/core/Set"
 import { Misc, Union } from "ts-toolbelt"
 
 // type SomeObject = {
@@ -21,8 +22,6 @@ type OptionOf<A> = Union.Exclude<A extends O.Some<infer X> ? X | null : A, O.Non
 export type TransformRoot<O> = O extends O.Option<any>
   ? Transform<OptionOf<O>>
   : Transform<O>
-
-// TODO: Set and ReadOnlySet?
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
   ? O
   : {
@@ -31,6 +30,8 @@ export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
           ? OptionOf<Transform<Y>>[]
           : X extends NA.NonEmptyArray<infer Y>
           ? NA.NonEmptyArray<OptionOf<Transform<Y>>>
+          : X extends SET.Set<infer Y>
+          ? SET.Set<OptionOf<Transform<Y>>>
           : X extends readonly (infer Y)[]
           ? readonly OptionOf<Transform<Y>>[]
           : Transform<X>

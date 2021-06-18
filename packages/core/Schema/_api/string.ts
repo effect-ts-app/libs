@@ -2,6 +2,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
+import { NonEmptyBrand } from "../_schema"
 import { constrained } from "./length"
 
 // TODO: Word, for lorem ipsum generation, but as composition?
@@ -19,12 +20,11 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
   )
 }
 
-export interface ReasonableStringBrand {
+export interface ReasonableStringBrand extends LongStringBrand {
   readonly ReasonableString: unique symbol
 }
 
-// TODO: Evaluate if it makes sense to inherit the others too.
-export type ReasonableString = TextString & LongString & ReasonableStringBrand
+export type ReasonableString = string & ReasonableStringBrand
 
 export const reasonableStringFromString = pipe(
   makeConstrainedFromString<ReasonableString>(1, 256 - 1),
@@ -37,12 +37,11 @@ export const reasonableStringFromString = pipe(
 
 export const reasonableString = pipe(MO.string[">>>"](reasonableStringFromString))
 
-export interface LongStringBrand {
+export interface LongStringBrand extends TextStringBrand {
   readonly LongString: unique symbol
 }
 
-// TODO: Evaluate if it makes sense to inherit the others too.
-export type LongString = TextString & LongStringBrand
+export type LongString = string & LongStringBrand
 
 export const longStringFromString = pipe(
   makeConstrainedFromString<LongString>(1, 2048 - 1),
@@ -55,11 +54,11 @@ export const longStringFromString = pipe(
 
 export const longString = pipe(MO.string[">>>"](longStringFromString))
 
-export interface TextStringBrand {
+export interface TextStringBrand extends NonEmptyBrand {
   readonly TextString: unique symbol
 }
 
-export type TextString = MO.NonEmptyString & TextStringBrand
+export type TextString = string & TextStringBrand
 
 // TODO: compose arbitraries?
 export const textStringFromString = pipe(
