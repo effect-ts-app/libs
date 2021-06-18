@@ -1,8 +1,8 @@
 diff --git a/node_modules/typescript/lib/tsserver.js b/node_modules/typescript/lib/tsserver.js
-index f4b7750..ed34f92 100644
+index 66a3b91..d52b4ba 100644
 --- a/node_modules/typescript/lib/tsserver.js
 +++ b/node_modules/typescript/lib/tsserver.js
-@@ -13602,7 +13602,7 @@ var ts;
+@@ -13468,7 +13468,7 @@ var ts;
  (function (ts) {
      ts.resolvingEmptyArray = [];
      ts.externalHelpersModuleNameText = "tslib";
@@ -11,7 +11,7 @@ index f4b7750..ed34f92 100644
      ts.noTruncationMaximumTruncationLength = 1000000;
      function getDeclarationOfKind(symbol, kind) {
          var declarations = symbol.declarations;
-@@ -165589,7 +165589,7 @@ var ts;
+@@ -165002,7 +165002,7 @@ var ts;
                      return;
                  }
                  // No need to analyze lib.d.ts
@@ -21,10 +21,10 @@ index f4b7750..ed34f92 100644
                      return;
                  }
 diff --git a/node_modules/typescript/lib/tsserverlibrary.js b/node_modules/typescript/lib/tsserverlibrary.js
-index 1612f5b..f56e5e1 100644
+index bddccf9..e447ed2 100644
 --- a/node_modules/typescript/lib/tsserverlibrary.js
 +++ b/node_modules/typescript/lib/tsserverlibrary.js
-@@ -13796,7 +13796,7 @@ var ts;
+@@ -13662,7 +13662,7 @@ var ts;
  (function (ts) {
      ts.resolvingEmptyArray = [];
      ts.externalHelpersModuleNameText = "tslib";
@@ -33,7 +33,7 @@ index 1612f5b..f56e5e1 100644
      ts.noTruncationMaximumTruncationLength = 1000000;
      function getDeclarationOfKind(symbol, kind) {
          var declarations = symbol.declarations;
-@@ -165783,7 +165783,7 @@ var ts;
+@@ -165196,7 +165196,7 @@ var ts;
                      return;
                  }
                  // No need to analyze lib.d.ts
