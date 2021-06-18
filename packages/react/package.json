@@ -13,6 +13,8 @@
         "@effect-ts/monocle": "^0.34.0",
         "@effect-ts/schema": "^0.8.2",
         "@types/react": "^17.0.11",
+        "eslint-plugin-react": "^7.24.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
         "react": "^17.0.2"
     },
     "peerDependencies": {
