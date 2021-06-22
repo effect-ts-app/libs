@@ -11,7 +11,7 @@ import { constant, Lazy, pipe } from "../Function"
 import { typedKeysOf } from "../utils"
 import { FromProperty, set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
-import { UUID } from "./_schema"
+import { Nullable, UUID } from "./_schema"
 
 export * from "./utils"
 
@@ -147,7 +147,7 @@ type SupportedDefaults =
   | Date
   | boolean
   | UUID
-  | null
+  | Nullable<unknown>
 
 export function findAnnotation<A>(
   schema: MO.SchemaAny,
