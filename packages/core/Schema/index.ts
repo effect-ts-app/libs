@@ -229,8 +229,11 @@ export function withDefault<
   if (findAnnotation(p._schema, MO.dateIdentifier)) {
     return p.def(makeCurrentDate as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
+  if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
     return p.def(() => O.none as any, "constructor")
+  }
+  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
+    return p.def(() => null as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.arrayIdentifier)) {
     return p.def(() => [] as any, "constructor")

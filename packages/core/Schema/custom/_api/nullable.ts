@@ -1,5 +1,4 @@
 import { pipe } from "@effect-ts/core/Function"
-import * as O from "@effect-ts/core/Option"
 
 import * as S from "../_schema"
 import * as Arbitrary from "../Arbitrary"
@@ -17,8 +16,8 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<
   ParserInput | null,
-  O.Option<ParsedShape>,
-  O.Option<ConstructorInput>,
+  ParsedShape | null,
+  ConstructorInput | null,
   Encoded | null,
   Api
 > {
@@ -26,27 +25,18 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is O.Option<ParsedShape> =>
-    typeof u === "object" &&
-    u !== null &&
-    ["None", "Some"].indexOf(u["_tag"]) !== -1 &&
-    ((u["_tag"] === "Some" && guard(u["value"])) || u["_tag"] === "None")
+  const refinement = (u: unknown): u is ParsedShape | null =>
+    (typeof u === "object" && u !== null && guard(u)) || u === null
   const encode = Encoder.for(self)
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary((_) => _.option(arb(_)).map(O.fromNullable)),
-    S.parser((i: ParserInput | null) =>
-      i === null ? Th.succeed(O.none) : Th.map_(parse(i), O.some)
+    S.arbitrary((_) => _.option(arb(_))),
+    S.parser((i: ParserInput | null) => (i === null ? Th.succeed(null) : parse(i))),
+    S.constructor((x: ConstructorInput | null) =>
+      x === null ? Th.succeed(null) : create(x)
     ),
-    S.constructor((x: O.Option<ConstructorInput>) =>
-      O.fold_(
-        x,
-        () => Th.succeed(O.none),
-        (v) => Th.map_(create(v), O.some)
-      )
-    ),
-    S.encoder((_) => O.map_(_, encode)["|>"](O.toNullable) as Encoded | null),
+    S.encoder((_) => (_ === null ? null : encode(_))),
     S.mapApi(() => self.Api as Api),
     withDefaults,
     S.annotate(nullableIdentifier, { self })

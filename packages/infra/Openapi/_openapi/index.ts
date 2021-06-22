@@ -23,6 +23,7 @@ import {
   nonEmptyStringIdentifier,
   nullableIdentifier,
   numberIdentifier,
+  optionFromNullIdentifier,
   PhoneNumberFromStringIdentifier,
   PhoneNumberIdentifier,
   positiveIntFromNumberIdentifier,
@@ -198,6 +199,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new NumberSchema({ minimum: 0, ...meta })
         case boolIdentifier:
           return new BooleanSchema(meta)
+        case optionFromNullIdentifier:
+          return {
+            ...((yield* $(processId(schemaMeta.self, meta))) as any),
+            nullable: true,
+          }
         case nullableIdentifier:
           return {
             ...((yield* $(processId(schemaMeta.self, meta))) as any),
