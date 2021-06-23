@@ -27,8 +27,7 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is Nullable<ParsedShape> =>
-    (typeof u === "object" && u !== null && guard(u)) || u === null
+  const refinement = (u: unknown): u is Nullable<ParsedShape> => u === null || guard(u)
   const encode = Encoder.for(self)
 
   return pipe(
