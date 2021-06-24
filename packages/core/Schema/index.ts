@@ -44,6 +44,32 @@ export function partialConstructor_<
     new model({ ...partConstructor, ...restConstructor } as any)
 }
 
+export function partialConstructorF<ConstructorInput, ParsedShape>(
+  constr: (inp: ConstructorInput) => ParsedShape
+): <PartialConstructorInput extends Partial<ConstructorInput>>(
+  // TODO: Prevent over provide
+  partConstructor: PartialConstructorInput
+) => (
+  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+) => ParsedShape {
+  return (partConstructor) => (restConstructor) =>
+    partialConstructorF_(constr, partConstructor)(restConstructor)
+}
+
+export function partialConstructorF_<
+  ConstructorInput,
+  ParsedShape,
+  PartialConstructorInput extends Partial<ConstructorInput>
+>(
+  constr: (inp: ConstructorInput) => ParsedShape,
+  // TODO: Prevent over provide
+  partConstructor: PartialConstructorInput
+): (
+  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+) => ParsedShape {
+  return (restConstructor) => constr({ ...partConstructor, ...restConstructor } as any)
+}
+
 // TODO: morph the schema instead.
 export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
   [MO.schemaField]: MO.Schema<any, ParsedShape, ConstructorInput, any, any>
