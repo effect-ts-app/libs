@@ -14,19 +14,51 @@ export class Initial extends Tagged("Initial")<{}> {}
 
 export class Loading extends Tagged("Loading")<{}> {}
 
-export class Done<E, A> extends Tagged("Done")<{ readonly current: E.Either<E, A> }> {}
+export class Done<E, A> extends Tagged("Done")<{ readonly current: E.Either<E, A> }> {
+  static succeed<A, E = never>(a: A) {
+    return new Done<E, A>({ current: E.right(a) })
+  }
+  static fail<E, A = never>(e: E) {
+    return new Done<E, A>({ current: E.left(e) })
+  }
+
+  static refresh<E, A>(d: Done<E, A>) {
+    return new Refreshing(d)
+  }
+}
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: E.Either<E, A>
-}> {}
+}> {
+  static succeed<A, E = never>(a: A) {
+    return new Refreshing<E, A>({ current: E.right(a) })
+  }
+  static fail<E, A = never>(e: E) {
+    return new Refreshing<E, A>({ current: E.left(e) })
+  }
+  static fromDone<E, A>(d: Done<E, A>) {
+    return new Refreshing(d)
+  }
+}
 
 export type QueryResult<E, A> = Initial | Loading | Refreshing<E, A> | Done<E, A>
+
+export function isSuccess<E, A>(
+  qr: QueryResult<E, A>
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: E.Right<A> } {
+  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
+}
+
+export function isFailed<E, A>(
+  qr: QueryResult<E, A>
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: E.Left<E> } {
+  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
+}
 
 export type ResultTuple<Result> = readonly [result: Result, refresh: () => void]
 export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 
-const fail = <E>(err: E) => new Done({ current: E.left(err) })
-const succeed = <A>(a: A) => new Done({ current: E.right(a) })
+export const { fail, succeed } = Done
 
 export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
   /**
