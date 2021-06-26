@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Effect } from "@effect-ts/core/Effect"
 import type { Either } from "@effect-ts/core/Either"
 import type { Has, Tag } from "@effect-ts/core/Has"
 import type { Option } from "@effect-ts/core/Option"
@@ -7,9 +8,7 @@ import * as P from "@effect-ts/core/Prelude"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
 import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
-import { _A, _E, _R } from "@effect-ts/system/Effect/commons"
-import type { Effect } from "@effect-ts/system/Effect/effect"
-import { fromEither } from "@effect-ts/system/Effect/fromEither"
+import { _A, _E, _R, fromEither } from "@effect-ts/system/Effect"
 import { service } from "@effect-ts/system/Effect/has"
 
 import * as T from "./Effect"
