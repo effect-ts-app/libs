@@ -45,6 +45,10 @@
             "node": "./index.mjs",
             "import": "./index.mjs"
         },
+        "./context": {
+            "node": "./context.mjs",
+            "import": "./context.mjs"
+        },
         "./data": {
             "node": "./data.mjs",
             "import": "./data.mjs"

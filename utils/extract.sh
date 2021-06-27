@@ -15,3 +15,11 @@ echo "\"${f%.ts}\": {
     \"import\": \"${f%.ts}.js\"
   },"
 done
+
+for f in `find . -type f | grep .tsx$ | grep -v index.ts$ | grep -v .d.ts$`
+do
+echo "\"${f%.tsx}\": {
+    \"node\": \"${f%.tsx}.js\",
+    \"import\": \"${f%.tsx}.js\"
+  },"
+done
