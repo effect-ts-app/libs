@@ -22,16 +22,16 @@ do
 done
 
 
-for f in `find . -type f | grep .d.ts$`
-do
-  #dest="../dist${f#.}"
-  dest=$f
-  mv -f -- "${f}.map" "${dest}.map"
-  mv -f -- "$f" "${dest}"
-done
+# for f in `find . -type f | grep .d.ts$`
+# do
+#   #dest="../dist${f#.}"
+#   dest=$f
+#   mv -f -- "${f}.map" "${dest}.map"
+#   mv -f -- "$f" "${dest}"
+# done
 
 
-for f in `find . -type f | grep .js$ | grep -v .mjs$`
+for f in `find . -type f | grep .js$ | grep -v .mjs | grep -v .eslintrc.js`
 do
   #dest="../dist${f#.}"
   dest=$f

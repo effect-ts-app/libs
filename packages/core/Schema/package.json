@@ -1,5 +1,1 @@
-{
-  "sideEffects": false,
-  "module": "./index.mjs",
-  "typings": "./index.d.ts"
-}
+{ "sideEffects": false, "module": "./index.mjs", "typings": "./index.d.ts" }

@@ -2,6 +2,9 @@
 node_modules/
 *.log
 **/*/.next/
+packages/**/*.mjs
+packages/**/*.mjs.map
+
 packages/**/*.js
 packages/**/*.js.map
 packages/**/*.d.ts
