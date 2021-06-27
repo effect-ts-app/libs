@@ -483,6 +483,13 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@effect-ts/core@^0.40.11":
+  version "0.40.11"
+  resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.40.11.tgz#a0c95c16ceb0ff0175d8f6598ee0bcabbf27b7df"
+  integrity sha512-5oMULwzr2xDBM7QISV9Pirrrjq4C/TA2G+Q5grXwq2aH7+EWgEa2TRAyLxW6NBJ0JGydvttcNJ+IBX7s5ZK6Sg==
+  dependencies:
+    "@effect-ts/system" "^0.37.10"
+
 "@effect-ts/core@^0.40.8":
   version "0.40.8"
   resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.40.8.tgz#18ea172e90174fe52a55d174b90ec4d3c3581ea8"
@@ -516,6 +523,11 @@
   integrity sha512-dfltVyI65Ompq73yFRSbQ5vezMLipett0ar3vMQ3+nJPo8WISL0Gyx5pPhMfiQqZmFk0yrVhCkS3AjwnxibQ4w==
   dependencies:
     "@effect-ts/core" "^0.40.8"
+
+"@effect-ts/system@^0.37.10":
+  version "0.37.10"
+  resolved "https://registry.yarnpkg.com/@effect-ts/system/-/system-0.37.10.tgz#6976e7a58ff4ed3cd7a447573446042679386744"
+  integrity sha512-w/vczgHLaX/pNeGGtb2cdX+2WR6AeOkFkQWGr8lKh18UDmXckgHNCVLZ5fu6sLBz+LDz6QEWj0kr33YDuGLwNg==
 
 "@effect-ts/system@^0.37.8":
   version "0.37.8"

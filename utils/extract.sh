@@ -1,25 +1,16 @@
 
-for d in `find . -type d$`
+for d in `find . -type d$ | grep -v node_modules`
 do
-echo "\"${d}\": {
-    \"node\": \"${d}/index.js\",
-    \"import\": \"${d}/index.js\"
-  },"
+echo "\"${d}\": \"${d}/index.mjs\","
 done
 
 
-for f in `find . -type f | grep .ts$ | grep -v index.ts$ | grep -v .d.ts$`
+for f in `find . -type f | grep .ts$ | grep -v index.ts$ | grep -v .d.ts$ | grep -v node_modules`
 do
-echo "\"${f%.ts}\": {
-    \"node\": \"${f%.ts}.js\",
-    \"import\": \"${f%.ts}.js\"
-  },"
+echo "\"${f%.ts}\": \"${f%.ts}.mjs\","
 done
 
-for f in `find . -type f | grep .tsx$ | grep -v index.ts$ | grep -v .d.ts$`
+for f in `find . -type f | grep .tsx$ | grep -v index.ts$ | grep -v .d.ts$ | grep -v node_modules`
 do
-echo "\"${f%.tsx}\": {
-    \"node\": \"${f%.tsx}.js\",
-    \"import\": \"${f%.tsx}.js\"
-  },"
+echo "\"${f%.tsx}\": \"${f%.tsx}.mjs\","
 done

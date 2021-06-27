@@ -8,7 +8,7 @@
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.40.8",
+        "@effect-ts/core": "^0.40.11",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4",
         "@types/react": "^17.0.11",
@@ -17,15 +17,16 @@
         "react": "^17.0.2"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.40.8",
+        "@effect-ts/core": "^0.40.11",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4",
         "react": "^17.0.2"
     },
     "scripts": {
-        "build": "yarn clean && tsc && sh ../../utils/fix.sh",
+        "build": "yarn clean && tsc && sh ../../utils/fix.sh && yarn generate-exports",
         "clean": "find . | egrep '\\.m?js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
+        "generate-exports": "sh ../../utils/extract.sh > package.log",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
         "compile": "tsc --noEmit",
@@ -41,22 +42,10 @@
     "module": "./index.mjs",
     "typings": "./index.d.ts",
     "exports": {
-        ".": {
-            "node": "./index.mjs",
-            "import": "./index.mjs"
-        },
-        "./context": {
-            "node": "./context.mjs",
-            "import": "./context.mjs"
-        },
-        "./data": {
-            "node": "./data.mjs",
-            "import": "./data.mjs"
-        },
-        "./hooks": {
-            "node": "./hooks.mjs",
-            "import": "./hooks.mjs"
-        }
+        ".": "./index.mjs",
+        "./data": "./data.mjs",
+        "./hooks": "./hooks.mjs",
+        "./context": "./context.mjs"
     },
     "sideEffects": false
 }
