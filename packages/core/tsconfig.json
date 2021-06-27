@@ -4,7 +4,6 @@
         "moduleResolution": "node",
         "outDir": "./",
         "noEmit": false,
-        "module": "CommonJS",
         "incremental": false
     },
     "include": [

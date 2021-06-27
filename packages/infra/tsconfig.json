@@ -8,7 +8,6 @@
         "outDir": "../",
         "noEmit": false,
         "moduleResolution": "node",
-        "module": "CommonJS",
         "incremental": false
     },
     "include": [
