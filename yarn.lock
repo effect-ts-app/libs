@@ -483,39 +483,39 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@effect-ts/core@^0.40.0", "@effect-ts/core@^0.40.8":
+"@effect-ts/core@^0.40.8":
   version "0.40.8"
   resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.40.8.tgz#18ea172e90174fe52a55d174b90ec4d3c3581ea8"
   integrity sha512-5lr8WrJ+5Pfx4VTOpv6GdmrQdsB7fhtjaAeEGD5vYE5jaCewMUiKIpWzXiJZoGfTRnotyAB+aYVCFeC4McFlBw==
   dependencies:
     "@effect-ts/system" "^0.37.8"
 
-"@effect-ts/express@^0.20.2":
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/@effect-ts/express/-/express-0.20.2.tgz#fa2c7f660d9df1f155c5e62a6063d20058e9d212"
-  integrity sha512-KvSwUfC4z3xlUwlP3p8xIu+4MUX1acxY6HN7tmPxzZK5jY/TwW/UiAhoPaLKAbFpQGufZ1i73nK5/igs8+qbrQ==
+"@effect-ts/express@^0.20.3":
+  version "0.20.3"
+  resolved "https://registry.yarnpkg.com/@effect-ts/express/-/express-0.20.3.tgz#798ca5ea36a580b6aea88814f39dba6671e6d125"
+  integrity sha512-rLNd+ZYT7FynNMGYMuKoyCqjpxKRty1YcvplV2tDev6qiZdIp45ta36kSxEmL4Wa9687o3vL7qAm2VLU1dECxQ==
 
-"@effect-ts/jest@^0.28.4":
-  version "0.28.4"
-  resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.28.4.tgz#fd2be280e6aaa8e1e38c169db3d22e5f312dfa3a"
-  integrity sha512-x+wfsOwKLngEznwxiLLtrOE9+jcFTHNGZisFk4t6hkchmH+izm/UgaOoQqeqeqN7fF0eRvMKEAjxjkG+ipGB0w==
+"@effect-ts/jest@^0.28.6":
+  version "0.28.6"
+  resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.28.6.tgz#525c6d545bc5d664dd7eb8ca04bf7e08262aa5e2"
+  integrity sha512-YV6un4/GaLt9ryz5RM8/mkCN4G52ZHyzby1Fl5beDvWj2TDlbigK/Y5r6IEN2n2MUaH24/tECXh6Y0WORUhgvg==
 
-"@effect-ts/monocle@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.34.0.tgz#b6a4d0f4d4d654add1dab727bf2a96e37634d858"
-  integrity sha512-sB+0RrQuNJTPzVP8WQVl6GDeXUuYvnitNUh/MzZHGOpq4V8kvLe5omys/T9VpzFCcJq1UpXPatwxMOyowIUKWA==
+"@effect-ts/monocle@^0.34.1":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.34.1.tgz#5c7ecc30002b53189da0751b3898528588a8f8bd"
+  integrity sha512-D3bZGYRmoG4i63FSM9BlmHkaGtap+op//cJ18/FDUhjOrn+pmQyrTUwy2jaOHfMOtYDgzi076tH9vi+jg+eaEQ==
 
-"@effect-ts/morphic@^0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/morphic/-/morphic-0.37.0.tgz#5167dc2971a29c9a9314632385efdfe2e080023a"
-  integrity sha512-dA5bq2169zyIqCeJjOUtm4F200nD6PLAuwilMaelAjDs/3QokIeJ2AGReYFllVp4bcGNEAzSd3d0nqm7MHhIXA==
+"@effect-ts/morphic@^0.37.1":
+  version "0.37.1"
+  resolved "https://registry.yarnpkg.com/@effect-ts/morphic/-/morphic-0.37.1.tgz#948c0b44603a49737ffa426ed5dfd891b4901a40"
+  integrity sha512-kuo40bGVc5/3BcnoScI6h1bR1NhEACjY+Ap59uBWwwSNq7JKDiBYD1kTRpldFkv7XFaHHMjVHf0ikLlzYHqAqA==
 
-"@effect-ts/schema@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@effect-ts/schema/-/schema-0.8.2.tgz#b3f8d41cfaf436a37212c1d391797e335fba5855"
-  integrity sha512-rkgSlmohYp/PLNQE0KdOFxt7DY9E3CesGvmHehvM0ZCaAlXQnAwhdsjjgaxBKDoUKp3G2PI0Mbmd821sE+ilZw==
+"@effect-ts/schema@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@effect-ts/schema/-/schema-0.8.4.tgz#e4c4a7dec6945f6f240755129bcdf0fc16103f8f"
+  integrity sha512-dfltVyI65Ompq73yFRSbQ5vezMLipett0ar3vMQ3+nJPo8WISL0Gyx5pPhMfiQqZmFk0yrVhCkS3AjwnxibQ4w==
   dependencies:
-    "@effect-ts/core" "^0.40.0"
+    "@effect-ts/core" "^0.40.8"
 
 "@effect-ts/system@^0.37.8":
   version "0.37.8"
@@ -1846,9 +1846,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^15.6.1":
-  version "15.12.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.4.tgz#e1cf817d70a1e118e81922c4ff6683ce9d422e26"
-  integrity sha512-zrNj1+yqYF4WskCMOHwN+w9iuD12+dGm0rQ35HLl9/Ouuq52cEtd0CH9qMgrdNmi5ejC1/V7vKEXYubB+65DkA==
+  version "15.12.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.5.tgz#9a78318a45d75c9523d2396131bd3cca54b2d185"
+  integrity sha512-se3yX7UHv5Bscf8f1ERKvQOD6sTyycH3hdaoozvaLxgUiY5lIGEeH37AD0G0Qi9kPqihPn0HOfd2yaIEN9VwEg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
