@@ -1,0 +1,1 @@
+{ "sideEffects": false, "module": "./index.js", "typings": "./index.d.ts" }

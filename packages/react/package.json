@@ -39,5 +39,17 @@
     "publishConfig": {
         "access": "public"
     },
+    "module": "./index.js",
+    "typings": "./index.d.ts",
+    "exports": {
+        "./data": {
+            "node": "./data.js",
+            "import": "./data.js"
+        },
+        "./hooks": {
+            "node": "./hooks.js",
+            "import": "./hooks.js"
+        }
+    },
     "sideEffects": false
 }
