@@ -13,7 +13,7 @@ VAR="
 
 echo "Running fix in ${PWD}"
 
-for D in `find . -type d | grep -v ^\.$`
+for D in `find . -type d | grep -v ^\.$ | grep -v node_modules`
 do
   #dir="../dist${D#.}"
   dir=$D
@@ -22,7 +22,7 @@ do
 done
 
 
-# for f in `find . -type f | grep .d.ts$`
+# for f in `find . -type f | grep .d.ts$ | grep -v node_modules`
 # do
 #   #dest="../dist${f#.}"
 #   dest=$f
@@ -31,7 +31,7 @@ done
 # done
 
 
-for f in `find . -type f | grep .js$ | grep -v .mjs | grep -v .eslintrc.js`
+for f in `find . -type f | grep .js$ | grep -v .mjs | grep -v .eslintrc.js | grep -v node_modules`
 do
   #dest="../dist${f#.}"
   dest=$f
