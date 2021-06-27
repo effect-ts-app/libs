@@ -25,8 +25,8 @@
         "@effect-ts/schema": "^0.8.4"
     },
     "scripts": {
-        "build": "yarn clean && tsc",
-        "clean": "find . | egrep '\\.js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "build": "yarn clean && tsc && sh ../../utils/fix.sh",
+        "clean": "find . | egrep '\\.m?js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
@@ -40,400 +40,400 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "./index.js",
+    "module": "./index.mjs",
     "typings": "./index.d.ts",
     "exports": {
         ".": {
-            "node": "./index.js",
-            "import": "./index.js"
+            "node": "./index.mjs",
+            "import": "./index.mjs"
         },
         "./node_modules": {
-            "node": "./node_modules/index.js",
-            "import": "./node_modules/index.js"
+            "node": "./node_modules/index.mjs",
+            "import": "./node_modules/index.mjs"
         },
         "./node_modules/.bin": {
-            "node": "./node_modules/.bin/index.js",
-            "import": "./node_modules/.bin/index.js"
+            "node": "./node_modules/.bin/index.mjs",
+            "import": "./node_modules/.bin/index.mjs"
         },
         "./utils": {
-            "node": "./utils/index.js",
-            "import": "./utils/index.js"
+            "node": "./utils/index.mjs",
+            "import": "./utils/index.mjs"
         },
         "./Schema": {
-            "node": "./Schema/index.js",
-            "import": "./Schema/index.js"
+            "node": "./Schema/index.mjs",
+            "import": "./Schema/index.mjs"
         },
         "./Schema/_api": {
-            "node": "./Schema/_api/index.js",
-            "import": "./Schema/_api/index.js"
+            "node": "./Schema/_api/index.mjs",
+            "import": "./Schema/_api/index.mjs"
         },
         "./Schema/custom": {
-            "node": "./Schema/custom/index.js",
-            "import": "./Schema/custom/index.js"
+            "node": "./Schema/custom/index.mjs",
+            "import": "./Schema/custom/index.mjs"
         },
         "./Schema/custom/_utils": {
-            "node": "./Schema/custom/_utils/index.js",
-            "import": "./Schema/custom/_utils/index.js"
+            "node": "./Schema/custom/_utils/index.mjs",
+            "import": "./Schema/custom/_utils/index.mjs"
         },
         "./Schema/custom/Collect": {
-            "node": "./Schema/custom/Collect/index.js",
-            "import": "./Schema/custom/Collect/index.js"
+            "node": "./Schema/custom/Collect/index.mjs",
+            "import": "./Schema/custom/Collect/index.mjs"
         },
         "./Schema/custom/Collect/_collect": {
-            "node": "./Schema/custom/Collect/_collect/index.js",
-            "import": "./Schema/custom/Collect/_collect/index.js"
+            "node": "./Schema/custom/Collect/_collect/index.mjs",
+            "import": "./Schema/custom/Collect/_collect/index.mjs"
         },
         "./Schema/custom/These": {
-            "node": "./Schema/custom/These/index.js",
-            "import": "./Schema/custom/These/index.js"
+            "node": "./Schema/custom/These/index.mjs",
+            "import": "./Schema/custom/These/index.mjs"
         },
         "./Schema/custom/_schema": {
-            "node": "./Schema/custom/_schema/index.js",
-            "import": "./Schema/custom/_schema/index.js"
+            "node": "./Schema/custom/_schema/index.mjs",
+            "import": "./Schema/custom/_schema/index.mjs"
         },
         "./Schema/custom/Encoder": {
-            "node": "./Schema/custom/Encoder/index.js",
-            "import": "./Schema/custom/Encoder/index.js"
+            "node": "./Schema/custom/Encoder/index.mjs",
+            "import": "./Schema/custom/Encoder/index.mjs"
         },
         "./Schema/custom/Encoder/_encoder": {
-            "node": "./Schema/custom/Encoder/_encoder/index.js",
-            "import": "./Schema/custom/Encoder/_encoder/index.js"
+            "node": "./Schema/custom/Encoder/_encoder/index.mjs",
+            "import": "./Schema/custom/Encoder/_encoder/index.mjs"
         },
         "./Schema/custom/Arbitrary": {
-            "node": "./Schema/custom/Arbitrary/index.js",
-            "import": "./Schema/custom/Arbitrary/index.js"
+            "node": "./Schema/custom/Arbitrary/index.mjs",
+            "import": "./Schema/custom/Arbitrary/index.mjs"
         },
         "./Schema/custom/Arbitrary/_arbitrary": {
-            "node": "./Schema/custom/Arbitrary/_arbitrary/index.js",
-            "import": "./Schema/custom/Arbitrary/_arbitrary/index.js"
+            "node": "./Schema/custom/Arbitrary/_arbitrary/index.mjs",
+            "import": "./Schema/custom/Arbitrary/_arbitrary/index.mjs"
         },
         "./Schema/custom/_api": {
-            "node": "./Schema/custom/_api/index.js",
-            "import": "./Schema/custom/_api/index.js"
+            "node": "./Schema/custom/_api/index.mjs",
+            "import": "./Schema/custom/_api/index.mjs"
         },
         "./Schema/custom/Parser": {
-            "node": "./Schema/custom/Parser/index.js",
-            "import": "./Schema/custom/Parser/index.js"
+            "node": "./Schema/custom/Parser/index.mjs",
+            "import": "./Schema/custom/Parser/index.mjs"
         },
         "./Schema/custom/Parser/_parser": {
-            "node": "./Schema/custom/Parser/_parser/index.js",
-            "import": "./Schema/custom/Parser/_parser/index.js"
+            "node": "./Schema/custom/Parser/_parser/index.mjs",
+            "import": "./Schema/custom/Parser/_parser/index.mjs"
         },
         "./Schema/custom/Guard": {
-            "node": "./Schema/custom/Guard/index.js",
-            "import": "./Schema/custom/Guard/index.js"
+            "node": "./Schema/custom/Guard/index.mjs",
+            "import": "./Schema/custom/Guard/index.mjs"
         },
         "./Schema/custom/Guard/_guard": {
-            "node": "./Schema/custom/Guard/_guard/index.js",
-            "import": "./Schema/custom/Guard/_guard/index.js"
+            "node": "./Schema/custom/Guard/_guard/index.mjs",
+            "import": "./Schema/custom/Guard/_guard/index.mjs"
         },
         "./Schema/custom/TS": {
-            "node": "./Schema/custom/TS/index.js",
-            "import": "./Schema/custom/TS/index.js"
+            "node": "./Schema/custom/TS/index.mjs",
+            "import": "./Schema/custom/TS/index.mjs"
         },
         "./Schema/custom/Constructor": {
-            "node": "./Schema/custom/Constructor/index.js",
-            "import": "./Schema/custom/Constructor/index.js"
+            "node": "./Schema/custom/Constructor/index.mjs",
+            "import": "./Schema/custom/Constructor/index.mjs"
         },
         "./Schema/custom/Constructor/_constructor": {
-            "node": "./Schema/custom/Constructor/_constructor/index.js",
-            "import": "./Schema/custom/Constructor/_constructor/index.js"
+            "node": "./Schema/custom/Constructor/_constructor/index.mjs",
+            "import": "./Schema/custom/Constructor/_constructor/index.mjs"
         },
         "./http": {
-            "node": "./http/index.js",
-            "import": "./http/index.js"
+            "node": "./http/index.mjs",
+            "import": "./http/index.mjs"
         },
         "./validation": {
-            "node": "./validation/index.js",
-            "import": "./validation/index.js"
+            "node": "./validation/index.mjs",
+            "import": "./validation/index.mjs"
         },
         "./Compute": {
-            "node": "./Compute.js",
-            "import": "./Compute.js"
+            "node": "./Compute.mjs",
+            "import": "./Compute.mjs"
         },
         "./Function": {
-            "node": "./Function.js",
-            "import": "./Function.js"
+            "node": "./Function.mjs",
+            "import": "./Function.mjs"
         },
         "./Effect": {
-            "node": "./Effect.js",
-            "import": "./Effect.js"
+            "node": "./Effect.mjs",
+            "import": "./Effect.mjs"
         },
         "./FastCheck": {
-            "node": "./FastCheck.js",
-            "import": "./FastCheck.js"
+            "node": "./FastCheck.mjs",
+            "import": "./FastCheck.mjs"
         },
         "./Set": {
-            "node": "./Set.js",
-            "import": "./Set.js"
+            "node": "./Set.mjs",
+            "import": "./Set.mjs"
         },
         "./Array": {
-            "node": "./Array.js",
-            "import": "./Array.js"
+            "node": "./Array.mjs",
+            "import": "./Array.mjs"
         },
         "./transform": {
-            "node": "./transform.js",
-            "import": "./transform.js"
+            "node": "./transform.mjs",
+            "import": "./transform.mjs"
         },
         "./Model": {
-            "node": "./Model.js",
-            "import": "./Model.js"
+            "node": "./Model.mjs",
+            "import": "./Model.mjs"
         },
         "./Schema/adapt": {
-            "node": "./Schema/adapt.js",
-            "import": "./Schema/adapt.js"
+            "node": "./Schema/adapt.mjs",
+            "import": "./Schema/adapt.mjs"
         },
         "./Schema/_api/phoneNumber": {
-            "node": "./Schema/_api/phoneNumber.js",
-            "import": "./Schema/_api/phoneNumber.js"
+            "node": "./Schema/_api/phoneNumber.mjs",
+            "import": "./Schema/_api/phoneNumber.mjs"
         },
         "./Schema/_api/futureDate": {
-            "node": "./Schema/_api/futureDate.js",
-            "import": "./Schema/_api/futureDate.js"
+            "node": "./Schema/_api/futureDate.mjs",
+            "import": "./Schema/_api/futureDate.mjs"
         },
         "./Schema/_api/set": {
-            "node": "./Schema/_api/set.js",
-            "import": "./Schema/_api/set.js"
+            "node": "./Schema/_api/set.mjs",
+            "import": "./Schema/_api/set.mjs"
         },
         "./Schema/_api/dictionary": {
-            "node": "./Schema/_api/dictionary.js",
-            "import": "./Schema/_api/dictionary.js"
+            "node": "./Schema/_api/dictionary.mjs",
+            "import": "./Schema/_api/dictionary.mjs"
         },
         "./Schema/_api/string": {
-            "node": "./Schema/_api/string.js",
-            "import": "./Schema/_api/string.js"
+            "node": "./Schema/_api/string.mjs",
+            "import": "./Schema/_api/string.mjs"
         },
         "./Schema/_api/email": {
-            "node": "./Schema/_api/email.js",
-            "import": "./Schema/_api/email.js"
+            "node": "./Schema/_api/email.mjs",
+            "import": "./Schema/_api/email.mjs"
         },
         "./Schema/_api/map": {
-            "node": "./Schema/_api/map.js",
-            "import": "./Schema/_api/map.js"
+            "node": "./Schema/_api/map.mjs",
+            "import": "./Schema/_api/map.mjs"
         },
         "./Schema/_api/fromArray": {
-            "node": "./Schema/_api/fromArray.js",
-            "import": "./Schema/_api/fromArray.js"
+            "node": "./Schema/_api/fromArray.mjs",
+            "import": "./Schema/_api/fromArray.mjs"
         },
         "./Schema/_api/fromProps": {
-            "node": "./Schema/_api/fromProps.js",
-            "import": "./Schema/_api/fromProps.js"
+            "node": "./Schema/_api/fromProps.mjs",
+            "import": "./Schema/_api/fromProps.mjs"
         },
         "./Schema/_api/length": {
-            "node": "./Schema/_api/length.js",
-            "import": "./Schema/_api/length.js"
+            "node": "./Schema/_api/length.mjs",
+            "import": "./Schema/_api/length.mjs"
         },
         "./Schema/_api/futureDate.test": {
-            "node": "./Schema/_api/futureDate.test.js",
-            "import": "./Schema/_api/futureDate.test.js"
+            "node": "./Schema/_api/futureDate.test.mjs",
+            "import": "./Schema/_api/futureDate.test.mjs"
         },
         "./Schema/_api/either": {
-            "node": "./Schema/_api/either.js",
-            "import": "./Schema/_api/either.js"
+            "node": "./Schema/_api/either.mjs",
+            "import": "./Schema/_api/either.mjs"
         },
         "./Schema/_api/tuple": {
-            "node": "./Schema/_api/tuple.js",
-            "import": "./Schema/_api/tuple.js"
+            "node": "./Schema/_api/tuple.mjs",
+            "import": "./Schema/_api/tuple.mjs"
         },
         "./Schema/_api/nonEmptyArray": {
-            "node": "./Schema/_api/nonEmptyArray.js",
-            "import": "./Schema/_api/nonEmptyArray.js"
+            "node": "./Schema/_api/nonEmptyArray.mjs",
+            "import": "./Schema/_api/nonEmptyArray.mjs"
         },
         "./Schema/utils": {
-            "node": "./Schema/utils.js",
-            "import": "./Schema/utils.js"
+            "node": "./Schema/utils.mjs",
+            "import": "./Schema/utils.mjs"
         },
         "./Schema/Model": {
-            "node": "./Schema/Model.js",
-            "import": "./Schema/Model.js"
+            "node": "./Schema/Model.mjs",
+            "import": "./Schema/Model.mjs"
         },
         "./Schema/custom/_schema/schema": {
-            "node": "./Schema/custom/_schema/schema.js",
-            "import": "./Schema/custom/_schema/schema.js"
+            "node": "./Schema/custom/_schema/schema.mjs",
+            "import": "./Schema/custom/_schema/schema.mjs"
         },
         "./Schema/custom/_schema/matchers": {
-            "node": "./Schema/custom/_schema/matchers.js",
-            "import": "./Schema/custom/_schema/matchers.js"
+            "node": "./Schema/custom/_schema/matchers.mjs",
+            "import": "./Schema/custom/_schema/matchers.mjs"
         },
         "./Schema/custom/_schema/primitives": {
-            "node": "./Schema/custom/_schema/primitives.js",
-            "import": "./Schema/custom/_schema/primitives.js"
+            "node": "./Schema/custom/_schema/primitives.mjs",
+            "import": "./Schema/custom/_schema/primitives.mjs"
         },
         "./Schema/custom/_schema/error": {
-            "node": "./Schema/custom/_schema/error.js",
-            "import": "./Schema/custom/_schema/error.js"
+            "node": "./Schema/custom/_schema/error.mjs",
+            "import": "./Schema/custom/_schema/error.mjs"
         },
         "./Schema/custom/_schema/annotation": {
-            "node": "./Schema/custom/_schema/annotation.js",
-            "import": "./Schema/custom/_schema/annotation.js"
+            "node": "./Schema/custom/_schema/annotation.mjs",
+            "import": "./Schema/custom/_schema/annotation.mjs"
         },
         "./Schema/custom/_api/union": {
-            "node": "./Schema/custom/_api/union.js",
-            "import": "./Schema/custom/_api/union.js"
+            "node": "./Schema/custom/_api/union.mjs",
+            "import": "./Schema/custom/_api/union.mjs"
         },
         "./Schema/custom/_api/unknown": {
-            "node": "./Schema/custom/_api/unknown.js",
-            "import": "./Schema/custom/_api/unknown.js"
+            "node": "./Schema/custom/_api/unknown.mjs",
+            "import": "./Schema/custom/_api/unknown.mjs"
         },
         "./Schema/custom/_api/int": {
-            "node": "./Schema/custom/_api/int.js",
-            "import": "./Schema/custom/_api/int.js"
+            "node": "./Schema/custom/_api/int.mjs",
+            "import": "./Schema/custom/_api/int.mjs"
         },
         "./Schema/custom/_api/date": {
-            "node": "./Schema/custom/_api/date.js",
-            "import": "./Schema/custom/_api/date.js"
+            "node": "./Schema/custom/_api/date.mjs",
+            "import": "./Schema/custom/_api/date.mjs"
         },
         "./Schema/custom/_api/json": {
-            "node": "./Schema/custom/_api/json.js",
-            "import": "./Schema/custom/_api/json.js"
+            "node": "./Schema/custom/_api/json.mjs",
+            "import": "./Schema/custom/_api/json.mjs"
         },
         "./Schema/custom/_api/array": {
-            "node": "./Schema/custom/_api/array.js",
-            "import": "./Schema/custom/_api/array.js"
+            "node": "./Schema/custom/_api/array.mjs",
+            "import": "./Schema/custom/_api/array.mjs"
         },
         "./Schema/custom/_api/condemn": {
-            "node": "./Schema/custom/_api/condemn.js",
-            "import": "./Schema/custom/_api/condemn.js"
+            "node": "./Schema/custom/_api/condemn.mjs",
+            "import": "./Schema/custom/_api/condemn.mjs"
         },
         "./Schema/custom/_api/lazy": {
-            "node": "./Schema/custom/_api/lazy.js",
-            "import": "./Schema/custom/_api/lazy.js"
+            "node": "./Schema/custom/_api/lazy.mjs",
+            "import": "./Schema/custom/_api/lazy.mjs"
         },
         "./Schema/custom/_api/string": {
-            "node": "./Schema/custom/_api/string.js",
-            "import": "./Schema/custom/_api/string.js"
+            "node": "./Schema/custom/_api/string.mjs",
+            "import": "./Schema/custom/_api/string.mjs"
         },
         "./Schema/custom/_api/optionFromNull": {
-            "node": "./Schema/custom/_api/optionFromNull.js",
-            "import": "./Schema/custom/_api/optionFromNull.js"
+            "node": "./Schema/custom/_api/optionFromNull.mjs",
+            "import": "./Schema/custom/_api/optionFromNull.mjs"
         },
         "./Schema/custom/_api/intersect": {
-            "node": "./Schema/custom/_api/intersect.js",
-            "import": "./Schema/custom/_api/intersect.js"
+            "node": "./Schema/custom/_api/intersect.mjs",
+            "import": "./Schema/custom/_api/intersect.mjs"
         },
         "./Schema/custom/_api/model": {
-            "node": "./Schema/custom/_api/model.js",
-            "import": "./Schema/custom/_api/model.js"
+            "node": "./Schema/custom/_api/model.mjs",
+            "import": "./Schema/custom/_api/model.mjs"
         },
         "./Schema/custom/_api/chunk": {
-            "node": "./Schema/custom/_api/chunk.js",
-            "import": "./Schema/custom/_api/chunk.js"
+            "node": "./Schema/custom/_api/chunk.mjs",
+            "import": "./Schema/custom/_api/chunk.mjs"
         },
         "./Schema/custom/_api/refinement": {
-            "node": "./Schema/custom/_api/refinement.js",
-            "import": "./Schema/custom/_api/refinement.js"
+            "node": "./Schema/custom/_api/refinement.mjs",
+            "import": "./Schema/custom/_api/refinement.mjs"
         },
         "./Schema/custom/_api/unknownArray": {
-            "node": "./Schema/custom/_api/unknownArray.js",
-            "import": "./Schema/custom/_api/unknownArray.js"
+            "node": "./Schema/custom/_api/unknownArray.mjs",
+            "import": "./Schema/custom/_api/unknownArray.mjs"
         },
         "./Schema/custom/_api/withDefaults": {
-            "node": "./Schema/custom/_api/withDefaults.js",
-            "import": "./Schema/custom/_api/withDefaults.js"
+            "node": "./Schema/custom/_api/withDefaults.mjs",
+            "import": "./Schema/custom/_api/withDefaults.mjs"
         },
         "./Schema/custom/_api/number": {
-            "node": "./Schema/custom/_api/number.js",
-            "import": "./Schema/custom/_api/number.js"
+            "node": "./Schema/custom/_api/number.mjs",
+            "import": "./Schema/custom/_api/number.mjs"
         },
         "./Schema/custom/_api/bool": {
-            "node": "./Schema/custom/_api/bool.js",
-            "import": "./Schema/custom/_api/bool.js"
+            "node": "./Schema/custom/_api/bool.mjs",
+            "import": "./Schema/custom/_api/bool.mjs"
         },
         "./Schema/custom/_api/positiveInt": {
-            "node": "./Schema/custom/_api/positiveInt.js",
-            "import": "./Schema/custom/_api/positiveInt.js"
+            "node": "./Schema/custom/_api/positiveInt.mjs",
+            "import": "./Schema/custom/_api/positiveInt.mjs"
         },
         "./Schema/custom/_api/ensure": {
-            "node": "./Schema/custom/_api/ensure.js",
-            "import": "./Schema/custom/_api/ensure.js"
+            "node": "./Schema/custom/_api/ensure.mjs",
+            "import": "./Schema/custom/_api/ensure.mjs"
         },
         "./Schema/custom/_api/object": {
-            "node": "./Schema/custom/_api/object.js",
-            "import": "./Schema/custom/_api/object.js"
+            "node": "./Schema/custom/_api/object.mjs",
+            "import": "./Schema/custom/_api/object.mjs"
         },
         "./Schema/custom/_api/positive": {
-            "node": "./Schema/custom/_api/positive.js",
-            "import": "./Schema/custom/_api/positive.js"
+            "node": "./Schema/custom/_api/positive.mjs",
+            "import": "./Schema/custom/_api/positive.mjs"
         },
         "./Schema/custom/_api/properties": {
-            "node": "./Schema/custom/_api/properties.js",
-            "import": "./Schema/custom/_api/properties.js"
+            "node": "./Schema/custom/_api/properties.mjs",
+            "import": "./Schema/custom/_api/properties.mjs"
         },
         "./Schema/custom/_api/nullable": {
-            "node": "./Schema/custom/_api/nullable.js",
-            "import": "./Schema/custom/_api/nullable.js"
+            "node": "./Schema/custom/_api/nullable.mjs",
+            "import": "./Schema/custom/_api/nullable.mjs"
         },
         "./Schema/custom/_api/literal": {
-            "node": "./Schema/custom/_api/literal.js",
-            "import": "./Schema/custom/_api/literal.js"
+            "node": "./Schema/custom/_api/literal.mjs",
+            "import": "./Schema/custom/_api/literal.mjs"
         },
         "./Schema/custom/_api/nonEmpty": {
-            "node": "./Schema/custom/_api/nonEmpty.js",
-            "import": "./Schema/custom/_api/nonEmpty.js"
+            "node": "./Schema/custom/_api/nonEmpty.mjs",
+            "import": "./Schema/custom/_api/nonEmpty.mjs"
         },
         "./Schema/custom/_api/nonEmptyString": {
-            "node": "./Schema/custom/_api/nonEmptyString.js",
-            "import": "./Schema/custom/_api/nonEmptyString.js"
+            "node": "./Schema/custom/_api/nonEmptyString.mjs",
+            "import": "./Schema/custom/_api/nonEmptyString.mjs"
         },
         "./Schema/vendor": {
-            "node": "./Schema/vendor.js",
-            "import": "./Schema/vendor.js"
+            "node": "./Schema/vendor.mjs",
+            "import": "./Schema/vendor.mjs"
         },
         "./Schema/_schema": {
-            "node": "./Schema/_schema.js",
-            "import": "./Schema/_schema.js"
+            "node": "./Schema/_schema.mjs",
+            "import": "./Schema/_schema.mjs"
         },
         "./http/http-client-fetch": {
-            "node": "./http/http-client-fetch.js",
-            "import": "./http/http-client-fetch.js"
+            "node": "./http/http-client-fetch.mjs",
+            "import": "./http/http-client-fetch.mjs"
         },
         "./http/http-client-curl": {
-            "node": "./http/http-client-curl.js",
-            "import": "./http/http-client-curl.js"
+            "node": "./http/http-client-curl.mjs",
+            "import": "./http/http-client-curl.mjs"
         },
         "./http/http-client": {
-            "node": "./http/http-client.js",
-            "import": "./http/http-client.js"
+            "node": "./http/http-client.mjs",
+            "import": "./http/http-client.mjs"
         },
         "./Order": {
-            "node": "./Order.js",
-            "import": "./Order.js"
+            "node": "./Order.mjs",
+            "import": "./Order.mjs"
         },
         "./Object": {
-            "node": "./Object.js",
-            "import": "./Object.js"
+            "node": "./Object.mjs",
+            "import": "./Object.mjs"
         },
         "./Option": {
-            "node": "./Option.js",
-            "import": "./Option.js"
+            "node": "./Option.mjs",
+            "import": "./Option.mjs"
         },
         "./EffectOption": {
-            "node": "./EffectOption.js",
-            "import": "./EffectOption.js"
+            "node": "./EffectOption.mjs",
+            "import": "./EffectOption.mjs"
         },
         "./Tuple": {
-            "node": "./Tuple.js",
-            "import": "./Tuple.js"
+            "node": "./Tuple.mjs",
+            "import": "./Tuple.mjs"
         },
         "./NonEmptyArray": {
-            "node": "./NonEmptyArray.js",
-            "import": "./NonEmptyArray.js"
+            "node": "./NonEmptyArray.mjs",
+            "import": "./NonEmptyArray.mjs"
         },
         "./validation/validators": {
-            "node": "./validation/validators.js",
-            "import": "./validation/validators.js"
+            "node": "./validation/validators.mjs",
+            "import": "./validation/validators.mjs"
         },
         "./SyncOption": {
-            "node": "./SyncOption.js",
-            "import": "./SyncOption.js"
+            "node": "./SyncOption.mjs",
+            "import": "./SyncOption.mjs"
         },
         "./Sync": {
-            "node": "./Sync.js",
-            "import": "./Sync.js"
+            "node": "./Sync.mjs",
+            "import": "./Sync.mjs"
         },
         "./test.helpers": {
-            "node": "./test.helpers.js",
-            "import": "./test.helpers.js"
+            "node": "./test.helpers.mjs",
+            "import": "./test.helpers.mjs"
         }
     },
     "sideEffects": false

@@ -23,8 +23,8 @@
         "react": "^17.0.2"
     },
     "scripts": {
-        "build": "yarn clean && tsc",
-        "clean": "find . | egrep '\\.js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "build": "yarn clean && tsc && sh ../../utils/fix.sh",
+        "clean": "find . | egrep '\\.m?js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
@@ -38,20 +38,20 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "./index.js",
+    "module": "./index.mjs",
     "typings": "./index.d.ts",
     "exports": {
         ".": {
-            "node": "./index.js",
-            "import": "./index.js"
+            "node": "./index.mjs",
+            "import": "./index.mjs"
         },
         "./data": {
-            "node": "./data.js",
-            "import": "./data.js"
+            "node": "./data.mjs",
+            "import": "./data.mjs"
         },
         "./hooks": {
-            "node": "./hooks.js",
-            "import": "./hooks.js"
+            "node": "./hooks.mjs",
+            "import": "./hooks.mjs"
         }
     },
     "sideEffects": false

@@ -6,7 +6,7 @@ set -e
 VAR="
 {
   \"sideEffects\": false,
-  \"module\": \"./index.js\",
+  \"module\": \"./index.mjs\",
   \"typings\": \"./index.d.ts\"
 }
 "
@@ -19,4 +19,22 @@ do
   dir=$D
   #mkdir -p $dir
   echo $VAR > "${dir}/package.json"
+done
+
+
+for f in `find . -type f | grep .d.ts$`
+do
+  #dest="../dist${f#.}"
+  dest=$f
+  mv -f -- "${f}.map" "${dest}.map"
+  mv -f -- "$f" "${dest}"
+done
+
+
+for f in `find . -type f | grep .js$ | grep -v .mjs$`
+do
+  #dest="../dist${f#.}"
+  dest=$f
+  mv -f -- "$f.map" "${dest%.js}.mjs.map"
+  mv -f -- "$f" "${dest%.js}.mjs"
 done
