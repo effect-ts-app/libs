@@ -26,8 +26,8 @@ done
 # do
 #   #dest="../dist${f#.}"
 #   dest=$f
-#   mv -f -- "${f}.map" "${dest}.map"
-#   mv -f -- "$f" "${dest}"
+#   cp -f -- "${f}.map" "${dest}.map"
+#   cp -f -- "$f" "${dest}"
 # done
 
 
@@ -35,6 +35,8 @@ for f in `find . -type f | grep .js$ | grep -v .mjs | grep -v .eslintrc.js | gre
 do
   #dest="../dist${f#.}"
   dest=$f
-  mv -f -- "$f.map" "${dest%.js}.mjs.map"
-  mv -f -- "$f" "${dest%.js}.mjs"
+  # the references to maps are not yet rewritten, so they stay ".js.map"
+  #cp -f -- "$f.map" "${dest%.js}.mjs.map"
+  cp -f -- "$f.map" "${dest}.map"
+  cp -f -- "$f" "${dest%.js}.mjs"
 done
