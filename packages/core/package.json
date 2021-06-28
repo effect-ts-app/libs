@@ -11,7 +11,7 @@
         "validator": "^13.6.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.40.11",
+        "@effect-ts/core": "^0.40.16",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4",
         "@types/uuid": "^8.3.0",
@@ -20,7 +20,7 @@
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.40.11",
+        "@effect-ts/core": "^0.40.16",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4"
     },

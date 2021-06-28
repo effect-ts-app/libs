@@ -8,7 +8,7 @@
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.40.11",
+        "@effect-ts/core": "^0.40.16",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4",
         "@types/react": "^17.0.11",
@@ -17,7 +17,7 @@
         "react": "^17.0.2"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.40.11",
+        "@effect-ts/core": "^0.40.16",
         "@effect-ts/monocle": "^0.34.1",
         "@effect-ts/schema": "^0.8.4",
         "react": "^17.0.2"
