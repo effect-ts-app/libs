@@ -21,13 +21,14 @@ do
   echo $VAR > "${dir}/package.json"
 done
 
+# must use mv, as we are dealing with files in the same dir..
 
 # for f in `find . -type f | grep .d.ts$ | grep -v node_modules`
 # do
 #   #dest="../dist${f#.}"
 #   dest=$f
-#   cp -f -- "${f}.map" "${dest}.map"
-#   cp -f -- "$f" "${dest}"
+#   mv -f -- "${f}.map" "${dest}.map"
+#   mv -f -- "$f" "${dest}"
 # done
 
 
@@ -36,6 +37,6 @@ do
   #dest="../dist${f#.}"
   dest=$f
   # the references to maps are not yet rewritten, so they stay ".js.map"
-  #cp -f -- "$f.map" "${dest%.js}.mjs.map"
-  cp -f -- "$f" "${dest%.js}.mjs"
+  #mv -f -- "$f.map" "${dest%.js}.mjs.map"
+  mv -f -- "$f" "${dest%.js}.mjs"
 done
