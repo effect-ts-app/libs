@@ -40,6 +40,9 @@ export type RIO<R, E, A> = EffectOption<R, E, A>
 
 export const fromNullable = <A>(a: A) => T.succeed(O.fromNullable(a))
 
+export const toNullable = <R, E, A>(eff: EffectOption<R, E, A>) =>
+  pipe(eff, T.map(O.toNullable))
+
 export const some = <A>(a: A): UIO<A> => T.succeed(O.some(a))
 
 export const none: UIO<never> =
