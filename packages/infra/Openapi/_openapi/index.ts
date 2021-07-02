@@ -183,6 +183,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new StringSchema({ format: "phone" as any, ...meta })
 
         case literalIdentifier:
+          // FUTURE OAS 3.1.0: literals.length === 1 ? { const: literals[0 ]} : { enum: literals } ...
           return new EnumSchema({ enum: schemaMeta.literals, ...meta })
 
         case UUIDFromStringIdentifier:
