@@ -4,6 +4,7 @@
 import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
 import { Erase } from "@effect-ts-app/core/Effect"
+import { omit, pick } from "lodash-es"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
@@ -540,6 +541,8 @@ export type PropsExtensions<Props extends PropertyRecord> = {
   include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
+  pick: <P extends keyof Props>(...keys: readonly P[]) => Pick<Props, P>
+  omit: <P extends keyof Props>(...keys: readonly P[]) => Omit<Props, P>
 }
 
 export function Model<M>(__name?: string) {
@@ -951,6 +954,8 @@ export function ModelSpecial<M>(__name?: string) {
       static lenses = lensFromProps()(schema.Api.props)
 
       static include = include(schema.Api.props)
+      static pick = (...props) => pick(schema.Api.props, props)
+      static omit = (...props) => omit(schema.Api.props, props)
 
       static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
         new MO.SchemaAnnotated(self, identifier, meta)
