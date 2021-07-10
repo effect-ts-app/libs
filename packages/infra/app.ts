@@ -30,7 +30,7 @@ export function handle<
 } {
   // TODO: Prevent over providing // no strict/shrink yet.
   const Request = MO.extractRequest(_)
-  const Response = (_.Response ?? MO.Void) as TRes
+  const Response = MO.extractResponse(_) as TRes
 
   return <R, E>(
     h: (

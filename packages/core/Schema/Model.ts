@@ -8,7 +8,7 @@ import { omit, pick } from "lodash-es"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
-import { FromPropertyRecord, fromProps } from "./_api"
+import { FromPropertyRecord, fromProps, Void } from "./_api"
 import * as MO from "./_schema"
 import { schemaField, SchemaForModel } from "./_schema"
 import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
@@ -118,17 +118,24 @@ export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny
   readonly Arbitrary: MO.ArbitraryFor<SelfM>
 }
 
+type ResponseString = "Response" | `${string}Response`
 type RequestString = "Request" | "default" | `${string}Request`
 
-type Filter<U> = U extends RequestString ? U : never
-export type GetRequestKey<U extends Record<RequestString | "Response", any>> = Filter<
+type FilterRequest<U> = U extends RequestString ? U : never
+export type GetRequestKey<U extends Record<RequestString | "Response", any>> =
+  FilterRequest<keyof U>
+export type GetRequest<U extends Record<RequestString | "Response", any>> =
+  FilterRequest<keyof U> extends never ? never : U[FilterRequest<keyof U>]
+
+type FilterResponse<U> = U extends ResponseString ? U : never
+export type GetResponseKey<U extends Record<ResponseString, any>> = FilterResponse<
   keyof U
 >
-export type GetRequest<U extends Record<RequestString | "Response", any>> = Filter<
+export type GetResponse<U extends Record<ResponseString, any>> = FilterResponse<
   keyof U
 > extends never
-  ? never
-  : U[Filter<keyof U>]
+  ? typeof Void
+  : U[FilterResponse<keyof U>]
 
 export function extractRequest<TModule extends Record<string, any>>(
   h: TModule
@@ -141,6 +148,19 @@ export function extractRequest<TModule extends Record<string, any>>(
   }
   const Request = h[reqKey]
   return Request
+}
+
+export function extractResponse<TModule extends Record<string, any>>(
+  h: TModule
+): GetResponse<TModule> | typeof Void {
+  const resKey =
+    Object.keys(h).find((x) => x.endsWith("Response")) ||
+    Object.keys(h).find((x) => x === "default")
+  if (!resKey) {
+    return Void
+  }
+  const Response = h[resKey]
+  return Response
 }
 
 export const reqId = MO.makeAnnotation()
