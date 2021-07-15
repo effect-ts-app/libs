@@ -8,10 +8,16 @@ import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 
 export type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP : never
 
 export interface ServiceContext<R> {
-  readonly provide: <E, A>(self: T.Effect<R, E, A>) => T.Effect<unknown, E, A>
-  readonly runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => () => void
-  readonly runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => Promise<void>
-  readonly runPromiseExit: <E, A>(self: T.Effect<R, E, A>) => Promise<Exit<E, A>>
+  readonly provide: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => T.Effect<unknown, E, A>
+  readonly runWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) => () => void
+  readonly runPromiseWithErrorLog: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => Promise<void>
+  readonly runPromiseExit: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => Promise<Exit<E, A>>
 }
 
 const MissingContext = T.die(
