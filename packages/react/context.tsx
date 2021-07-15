@@ -37,11 +37,11 @@ export function makeApp<R>() {
     const ctx = useMemo(
       () => ({
         provide: provider.provide,
-        runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
+        runWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runWithErrorLog(provider.provide(self)),
-        runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
+        runPromiseWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseWithErrorLog(provider.provide(self)),
-        runPromiseExit: <E, A>(self: T.Effect<R, E, A>) =>
+        runPromiseExit: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseExit(provider.provide(self)),
       }),
       [provider]
