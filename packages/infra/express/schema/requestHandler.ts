@@ -68,40 +68,20 @@ const structValidation = DSL.structF(ValidationApplicative)
 export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
-  return ({
-    body,
-    cookies,
-    headers,
-    method,
-    originalUrl,
-    params,
-    query,
-  }: express.Request) =>
+  return ({ body, cookies, headers, params, query }: express.Request) =>
     pipe(
-      T.succeedWith(() => ({ path: params, query, body, headers, cookies })),
-      T.tap((pars) =>
-        T.succeedWith(() =>
-          console.log(
-            `${new Date().toISOString()} ${method} ${originalUrl} processing request`,
-            pars
-          )
+      structValidation(
+        mapErrors_(
+          {
+            body: parsers.parseBody(body),
+            cookie: parsers.parseCookie(cookies),
+            headers: parsers.parseHeaders(headers),
+            query: parsers.parseQuery(query),
+            path: parsers.parsePath(params),
+          },
+          makeError
         )
       ),
-      T.chain(() => {
-        const result = structValidation(
-          mapErrors_(
-            {
-              body: parsers.parseBody(body),
-              cookie: parsers.parseCookie(cookies),
-              headers: parsers.parseHeaders(headers),
-              query: parsers.parseQuery(query),
-              path: parsers.parsePath(params),
-            },
-            makeError
-          )
-        )
-        return result
-      }),
       T.mapError((err) => new ValidationError(err))
     )
 }
