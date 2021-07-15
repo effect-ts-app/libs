@@ -83,6 +83,7 @@
         "./express/schema/routing": "./express/schema/routing.mjs",
         "./express/schema/requestHandler": "./express/schema/requestHandler.mjs",
         "./express/makeJsonSchema": "./express/makeJsonSchema.mjs",
+        "./express/routing": "./express/routing.mjs",
         "./errors": "./errors.mjs",
         "./app": "./app.mjs",
         "./redis-client": "./redis-client.mjs",

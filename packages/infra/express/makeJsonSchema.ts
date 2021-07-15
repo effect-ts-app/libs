@@ -14,9 +14,7 @@ const rx = /:(\w+)/g
 /**
  * Work in progress JSONSchema generator.
  */
-export function makeJsonSchema(
-  r: Iterable<RS.RouteDescriptor<any, any, any, any, any, any, any, any>>
-) {
+export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return pipe(
     CNK.from(r),
     T.forEach(RS.makeFromSchema),

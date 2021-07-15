@@ -7,8 +7,6 @@ import {
 
 import type { JSONSchema } from "./atlas-plutus"
 
-export * from "@effect-ts-app/core/Schema"
-
 export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   implements HasContinuation

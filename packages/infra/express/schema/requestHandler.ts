@@ -8,19 +8,12 @@ import { flow, pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
 import * as EU from "@effect-ts/core/Utils"
-import { Erase } from "@effect-ts-app/core/Effect"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import * as MO from "@effect-ts-app/core/Schema"
-import { Encoder, extractSchema, Methods, Parser } from "@effect-ts-app/core/Schema"
+import { Methods, Parser } from "@effect-ts-app/core/Schema"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
+import { ValidationError } from "@effect-ts-app/infra/errors"
 import express from "express"
-
-import {
-  NotFoundError,
-  NotLoggedInError,
-  UnauthorizedError,
-  ValidationError,
-} from "../../errors"
 
 export type Request<
   PathA,
@@ -48,13 +41,7 @@ export type Request2<
   path: Path
 }
 
-type Encode<A, E> = (a: A) => E
-
-export type SupportedErrors =
-  | ValidationError
-  | NotFoundError
-  | NotLoggedInError
-  | UnauthorizedError
+export type Encode<A, E> = (a: A) => E
 
 // function getErrorMessage(current: ContextEntry) {
 //   switch (current.type.name) {
@@ -78,7 +65,7 @@ const ValidationApplicative = T.getValidationApplicative(
 
 const structValidation = DSL.structF(ValidationApplicative)
 
-function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
+export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
   return ({
@@ -141,7 +128,9 @@ function makeError(type: string) {
   return (e: unknown) => [{ type, errors: decodeErrors(e) }]
 }
 
-function respondSuccess<ReqA, A, E>(encodeResponse: (req: ReqA) => Encode<A, E>) {
+export function respondSuccess<ReqA, A, E>(
+  encodeResponse: (req: ReqA) => Encode<A, E>
+) {
   return (req: ReqA, res: express.Response) =>
     flow(
       encodeResponse(req),
@@ -156,78 +145,6 @@ function respondSuccess<ReqA, A, E>(encodeResponse: (req: ReqA) => Encode<A, E>)
     )
 }
 
-function handleRequest<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ResA,
-  ResE,
-  ReqA extends PathA & BodyA & QueryA,
-  R2 = unknown,
-  PR = unknown
->(
-  requestParsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>,
-  encodeResponse: (r: ReqA) => Encode<ResA, ResE>,
-  handle: (r: ReqA) => T.Effect<R & PR, SupportedErrors, ResA>,
-  h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
-) {
-  const parseRequest = parseRequestParams(requestParsers)
-  const respond = respondSuccess(encodeResponse)
-  return (req: express.Request, res: express.Response) =>
-    pipe(
-      parseRequest(req),
-      T.map(({ body, path, query }) => {
-        const hn = {
-          ...O.toUndefined(body),
-          ...O.toUndefined(query),
-          ...O.toUndefined(path),
-        } as ReqA
-        return hn
-      }),
-      T.chain((inp) => {
-        const hn = handle(inp)
-        const r = h ? T.provideSomeLayer(h(req, res))(hn) : hn
-        return pipe(
-          r as T.Effect<Erase<R & R2, PR>, SupportedErrors, ResA>,
-          T.chain((outp) => respond(inp, res)(outp))
-        )
-      }),
-      T.catch("_tag", "ValidationError", (err) =>
-        T.succeedWith(() => {
-          res.status(400).send(err.errors)
-        })
-      ),
-      T.catch("_tag", "NotFoundError", (err) =>
-        T.succeedWith(() => {
-          res.status(404).send(err)
-        })
-      ),
-      T.catch("_tag", "NotLoggedInError", (err) =>
-        T.succeedWith(() => {
-          res.status(401).send(err)
-        })
-      ),
-      T.catch("_tag", "UnauthorizedError", (err) =>
-        T.succeedWith(() => {
-          res.status(403).send(err)
-        })
-      ),
-      // final catch all; expecting never so that unhandled known errors will show up
-      T.catchAll((err: never) =>
-        T.succeedWith(() =>
-          console.error(
-            "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
-            err
-          )
-        )["|>"](T.chain(T.die))
-      ),
-      T.tapCause(() => T.succeedWith(() => res.status(500).send()))
-    )
-}
-
 export interface RequestHandlerOptRes<
   R,
   PathA,
@@ -236,10 +153,11 @@ export interface RequestHandlerOptRes<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
-  ResA
+  ResA,
+  ResE
 > {
   adaptResponse?: any
-  h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, SupportedErrors, ResA>
+  h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, ResE, ResA>
   Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
   Response?: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
 }
@@ -252,10 +170,11 @@ export interface RequestHandler<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
-  ResA
+  ResA,
+  ResE
 > {
   adaptResponse?: any
-  h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, SupportedErrors, ResA>
+  h: (i: PathA & QueryA & BodyA & {}) => T.Effect<R, ResE, ResA>
   Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
   Response: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
@@ -266,9 +185,10 @@ export interface RequestHandler2<
   Path extends string,
   Method extends Methods,
   ReqA,
-  ResA
+  ResA,
+  ResE
 > {
-  h: (i: ReqA) => T.Effect<R, SupportedErrors, ResA>
+  h: (i: ReqA) => T.Effect<R, ResE, ResA>
   Request: Request2<Path, Method, ReqA>
   Response: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
 }
@@ -282,16 +202,14 @@ export type Middleware<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA,
+  ResE,
   R2 = unknown,
   PR = unknown
 > = (
-  handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
+  handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE>
 ) => {
   handler: typeof handler
-  handle: (
-    req: express.Request,
-    res: express.Response
-  ) => L.Layer<R2, SupportedErrors, PR>
+  handle: (req: express.Request, res: express.Response) => L.Layer<R2, ResE, PR>
 }
 
 export type Middleware2<R, ReqA, ResA, R2 = unknown, PR = unknown> = Middleware<
@@ -307,7 +225,7 @@ export type Middleware2<R, ReqA, ResA, R2 = unknown, PR = unknown> = Middleware<
   PR
 >
 
-export function makeRequestHandler<
+export function makeRequestParsers<
   R,
   PathA,
   CookieA,
@@ -315,54 +233,8 @@ export function makeRequestHandler<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
-  ResA = void,
-  R2 = unknown,
-  PR = unknown
->(
-  handle: RequestHandlerOptRes<
-    R & PR,
-    PathA,
-    CookieA,
-    QueryA,
-    BodyA,
-    HeaderA,
-    ReqA,
-    ResA
-  >,
-  h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
-) {
-  const { Request, Response } = handle
-  const res = Response ? extractSchema(Response as any) : MO.Void
-  const encodeResponse = handle.adaptResponse
-    ? (req: ReqA) => Encoder.for(handle.adaptResponse(req))
-    : () => Encoder.for(res)
-  //const { shrink: shrinkResponse } = strict(Response)
-  // flow(shrinkResponse, Sy.chain(encodeResponse))
-
-  return handleRequest<
-    R,
-    PathA,
-    CookieA,
-    QueryA,
-    BodyA,
-    HeaderA,
-    ResA,
-    unknown,
-    ReqA,
-    R2,
-    PR
-  >(makeRequestParsers(Request), encodeResponse, handle.h, h)
-}
-
-function makeRequestParsers<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA
+  ResA,
+  Errors
 >(
   Request: RequestHandler<
     R,
@@ -372,7 +244,8 @@ function makeRequestParsers<
     BodyA,
     HeaderA,
     ReqA,
-    ResA
+    ResA,
+    Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph = O.fromNullable(Request.Headers)
@@ -424,7 +297,7 @@ function makeRequestParsers<
 
 type Decode<A> = (u: unknown) => T.IO<unknown, A>
 
-interface RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
+export interface RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   parseHeaders: Decode<O.Option<HeaderA>>
   parseQuery: Decode<O.Option<QueryA>>
   parseBody: Decode<O.Option<BodyA>>
