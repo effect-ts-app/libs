@@ -52,7 +52,7 @@ export function isSuccess<E, A>(
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
 ): qr is (Done<E, A> | Refreshing<E, A>) & { current: E.Left<E> } {
-  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
+  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Left"
 }
 
 export type ResultTuple<Result> = readonly [result: Result, refresh: () => void]
