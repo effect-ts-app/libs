@@ -68,17 +68,10 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
     result,
     chain(
       Ex.foldM((cause) => {
-        if (Cause.died(cause)) {
-          const defects = Cause.defects(cause)
+        const firstError = getFirstError(cause)
+        if (firstError) {
           return pipe(
-            onError(defects[0]),
-            chain(() => halt(cause))
-          )
-        }
-        if (Cause.failed(cause)) {
-          const failures = Cause.failures(cause)
-          return pipe(
-            onError(failures[0]),
+            onError(firstError),
             chain(() => halt(cause))
           )
         }
@@ -86,6 +79,18 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
       }, flow(succeed, tap(onSuccess)))
     )
   )
+
+export function getFirstError<E>(cause: Cause.Cause<E>) {
+  if (Cause.died(cause)) {
+    const defects = Cause.defects(cause)
+    return defects[0]
+  }
+  if (Cause.failed(cause)) {
+    const failures = Cause.failures(cause)
+    return failures[0]
+  }
+  return null
+}
 
 export const tapBothInclAbort =
   <A, ER, EE, EA, SR, SE, SA>(
@@ -104,16 +109,10 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
     result,
     chain(
       Ex.foldM((cause) => {
-        if (Cause.died(cause)) {
-          const defects = Cause.defects(cause)
+        const firstError = getFirstError(cause)
+        if (firstError) {
           return pipe(
-            onError(defects[0]),
-            chain(() => halt(cause))
-          )
-        }
-        if (Cause.failed(cause)) {
-          return pipe(
-            onError((cause as Cause.Fail<E>).value),
+            onError(firstError),
             chain(() => halt(cause))
           )
         }
