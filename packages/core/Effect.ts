@@ -58,61 +58,73 @@ export const tapBoth =
   <R>(self: Effect<R, E, A>) =>
     tapBoth_(self, f, g)
 
+export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
+  self: Effect<R, E, A>,
+  onError: (err: unknown) => Effect<ER, EE, EA>,
+  onSuccess: (a: A) => Effect<SR, SE, SA>
+) =>
+  pipe(
+    self,
+    result,
+    chain(
+      Ex.foldM((cause) => {
+        if (Cause.died(cause)) {
+          const defects = Cause.defects(cause)
+          return pipe(
+            onError(defects[0]),
+            chain(() => halt(cause))
+          )
+        }
+        if (Cause.failed(cause)) {
+          const failures = Cause.failures(cause)
+          return pipe(
+            onError(failures[0]),
+            chain(() => halt(cause))
+          )
+        }
+        return halt(cause)
+      }, flow(succeed, tap(onSuccess)))
+    )
+  )
+
 export const tapBothInclAbort =
   <A, ER, EE, EA, SR, SE, SA>(
     onError: (err: unknown) => Effect<ER, EE, EA>,
     onSuccess: (a: A) => Effect<SR, SE, SA>
   ) =>
   <R, E>(eff: Effect<R, E, A>) =>
-    pipe(
-      eff,
-      result,
-      chain(
-        Ex.foldM((cause) => {
-          if (Cause.died(cause)) {
-            const defects = Cause.defects(cause)
-            return pipe(
-              onError(defects[0]),
-              chain(() => halt(cause))
-            )
-          }
-          if (Cause.failed(cause)) {
-            const failures = Cause.failures(cause)
-            return pipe(
-              onError(failures[0]),
-              chain(() => halt(cause))
-            )
-          }
-          return halt(cause)
-        }, flow(succeed, tap(onSuccess)))
-      )
-    )
+    tapBothInclAbort_(eff, onError, onSuccess)
 
+export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
+  self: Effect<R, E, A>,
+  onError: (err: unknown) => Effect<ER, EE, EA>
+) =>
+  pipe(
+    self,
+    result,
+    chain(
+      Ex.foldM((cause) => {
+        if (Cause.died(cause)) {
+          const defects = Cause.defects(cause)
+          return pipe(
+            onError(defects[0]),
+            chain(() => halt(cause))
+          )
+        }
+        if (Cause.failed(cause)) {
+          return pipe(
+            onError((cause as Cause.Fail<E>).value),
+            chain(() => halt(cause))
+          )
+        }
+        return halt(cause)
+      }, succeed)
+    )
+  )
 export const tapErrorInclAbort =
   <A, ER, EE, EA>(onError: (err: unknown) => Effect<ER, EE, EA>) =>
   <R, E>(eff: Effect<R, E, A>) =>
-    pipe(
-      eff,
-      result,
-      chain(
-        Ex.foldM((cause) => {
-          if (Cause.died(cause)) {
-            const defects = Cause.defects(cause)
-            return pipe(
-              onError(defects[0]),
-              chain(() => halt(cause))
-            )
-          }
-          if (Cause.failed(cause)) {
-            return pipe(
-              onError((cause as Cause.Fail<E>).value),
-              chain(() => halt(cause))
-            )
-          }
-          return halt(cause)
-        }, succeed)
-      )
-    )
+    tapErrorInclAbort_(eff, onError)
 
 export function encaseOption_<E, A>(o: O.Option<A>, onError: Lazy<E>): IO<E, A> {
   return O.fold_(o, () => fail(onError()), succeed)
