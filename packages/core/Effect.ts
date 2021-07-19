@@ -1,17 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Cause } from "@effect-ts/core"
 import {
   chain,
   Effect,
   effectAsyncInterrupt,
   fail,
   fromEither,
+  halt,
   if_,
   IO,
+  result,
   succeed,
   succeedWith,
   tap,
+  tapError,
   unit,
 } from "@effect-ts/core/Effect"
+import * as Ex from "@effect-ts/core/Effect/Exit"
 import type * as Ei from "@effect-ts/core/Either"
 import * as O from "@effect-ts/core/Option"
 
@@ -37,6 +42,77 @@ export function tryCatchPromiseWithInterrupt<E, A>(
     return succeedWith(canceller)
   }, __trace)
 }
+
+export const tapBoth_ = <R, E, A, R2, R3, E3>(
+  self: Effect<R, E, A>,
+  // official tapBoth has E2 instead of never
+  f: (e: E) => Effect<R2, never, any>,
+  g: (a: A) => Effect<R3, E3, any>
+) => pipe(self, tapError(f), tap(g))
+export const tapBoth =
+  <E, A, R2, R3, E3>(
+    // official tapBoth has E2 instead of never
+    f: (e: E) => Effect<R2, never, any>,
+    g: (a: A) => Effect<R3, E3, any>
+  ) =>
+  <R>(self: Effect<R, E, A>) =>
+    tapBoth_(self, f, g)
+
+export const tapBothInclAbort =
+  <A, ER, EE, EA, SR, SE, SA>(
+    onError: (err: unknown) => Effect<ER, EE, EA>,
+    onSuccess: (a: A) => Effect<SR, SE, SA>
+  ) =>
+  <R, E>(eff: Effect<R, E, A>) =>
+    pipe(
+      eff,
+      result,
+      chain(
+        Ex.foldM((cause) => {
+          if (Cause.died(cause)) {
+            const defects = Cause.defects(cause)
+            return pipe(
+              onError(defects[0]),
+              chain(() => halt(cause))
+            )
+          }
+          if (Cause.failed(cause)) {
+            const failures = Cause.failures(cause)
+            return pipe(
+              onError(failures[0]),
+              chain(() => halt(cause))
+            )
+          }
+          return halt(cause)
+        }, flow(succeed, tap(onSuccess)))
+      )
+    )
+
+export const tapErrorInclAbort =
+  <A, ER, EE, EA>(onError: (err: unknown) => Effect<ER, EE, EA>) =>
+  <R, E>(eff: Effect<R, E, A>) =>
+    pipe(
+      eff,
+      result,
+      chain(
+        Ex.foldM((cause) => {
+          if (Cause.died(cause)) {
+            const defects = Cause.defects(cause)
+            return pipe(
+              onError(defects[0]),
+              chain(() => halt(cause))
+            )
+          }
+          if (Cause.failed(cause)) {
+            return pipe(
+              onError((cause as Cause.Fail<E>).value),
+              chain(() => halt(cause))
+            )
+          }
+          return halt(cause)
+        }, succeed)
+      )
+    )
 
 export function encaseOption_<E, A>(o: O.Option<A>, onError: Lazy<E>): IO<E, A> {
   return O.fold_(o, () => fail(onError()), succeed)
