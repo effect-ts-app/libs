@@ -201,6 +201,7 @@ export type Middleware2<R, ReqA, ResA, R2 = unknown, PR = unknown> = Middleware<
   any,
   ReqA,
   ResA,
+  any,
   R2,
   PR
 >
