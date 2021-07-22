@@ -81,7 +81,7 @@ export function match<
   }
   return pipe(
     Ex.match(r.Request.method.toLowerCase() as any)(
-      r.Request.path,
+      r.Request.path.split("?")[0],
       makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
         r,
         h
