@@ -542,6 +542,8 @@ export interface Request<
 export type PathParams<Path extends string> =
   Path extends `:${infer Param}/${infer Rest}`
     ? Param | PathParams<Rest>
+    : Path extends `:${infer Param}&${infer Rest}`
+    ? Param | PathParams<Rest>
     : Path extends `:${infer Param}`
     ? Param
     : // eslint-disable-next-line @typescript-eslint/no-unused-vars
