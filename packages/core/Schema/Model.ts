@@ -538,11 +538,9 @@ export interface Request<
   path: Path
 }
 
-// TODO: Only Path Params, not also Query Params..
+type Separator = "/" | "&" | "?"
 export type PathParams<Path extends string> =
-  Path extends `:${infer Param}/${infer Rest}`
-    ? Param | PathParams<Rest>
-    : Path extends `:${infer Param}&${infer Rest}`
+  Path extends `:${infer Param}${Separator}${infer Rest}`
     ? Param | PathParams<Rest>
     : Path extends `:${infer Param}`
     ? Param
