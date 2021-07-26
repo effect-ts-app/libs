@@ -381,7 +381,10 @@ export function props<Props extends PropertyRecord>(
         return false
       }
       if (key in _) {
-        if (!guards[key](_[key])) {
+        if (
+          (s._optional !== "optional" || typeof _[key] !== "undefined") &&
+          !guards[key](_[key])
+        ) {
           return false
         }
       }
@@ -414,8 +417,9 @@ export function props<Props extends PropertyRecord>(
       )
     }
 
-    let errors =
-      Chunk.empty<S.OptionalKeyE<string, unknown> | S.RequiredKeyE<string, unknown>>()
+    let errors = Chunk.empty<
+      S.OptionalKeyE<string, unknown> | S.RequiredKeyE<string, unknown>
+    >()
 
     let isError = false
 
@@ -426,6 +430,9 @@ export function props<Props extends PropertyRecord>(
       const _as: string = O.getOrElse_(props[key]._as, () => key)
 
       if (_as in _) {
+        if (prop._optional === "optional" && typeof _[_as] === "undefined") {
+          continue
+        }
         const res = parsers[key](_[_as])
 
         if (res.effect._tag === "Left") {
