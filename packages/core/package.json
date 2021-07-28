@@ -26,7 +26,7 @@
     },
     "scripts": {
         "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/fix.sh && yarn generate-exports",
-        "clean": "find . | egrep '\\.m?js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
         "postpublish": "yarn clean",
         "prepare": "yarn build",
