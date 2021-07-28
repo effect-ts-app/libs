@@ -1,8 +1,8 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.cjs.json",
     "compilerOptions": {
         "moduleResolution": "node",
-        "outDir": "./_esm",
+        "outDir": "./",
         "noEmit": false,
         "incremental": false
     },
