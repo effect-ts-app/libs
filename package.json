@@ -53,7 +53,7 @@
         "fast-check": "^2.17.0",
         "jest": "^27.0.6",
         "lerna": "^4.0.0",
-        "lodash-es": "^4.17.21",
+        "lodash": "^4.17.21",
         "madge": "^5.0.1",
         "nodemon": "^2.0.9",
         "npm-check-updates": "^11.8.1",
