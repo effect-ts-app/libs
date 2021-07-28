@@ -8,8 +8,10 @@ packages/**/*.mjs.map
 packages/**/*.js
 packages/**/*.js.map
 packages/**/*.d.ts
+packages/**/*.d.ts.map
 !**/jest.config.js
 !**/.eslintrc.js
 !**/.prettierrc.js
+_esm
 
-tsconfig.tsbuildinfo
+*.tsbuildinfo

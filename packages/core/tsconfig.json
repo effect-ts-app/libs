@@ -3,8 +3,7 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
-        "noEmit": false,
-        "incremental": false
+        "noEmit": false
     },
     "include": [
         "./"

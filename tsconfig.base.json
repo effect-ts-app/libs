@@ -22,7 +22,9 @@
         "resolveJsonModule": true,
         "moduleResolution": "node",
         "downlevelIteration": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "composite": true,
+        "declarationMap": true
     },
     // NEW: Options for file/directory watching
     "watchOptions": {

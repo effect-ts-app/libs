@@ -5,12 +5,16 @@
             "es2020",
             "DOM"
         ],
-        "outDir": "../",
-        "noEmit": false,
         "moduleResolution": "node",
-        "incremental": false
+        "outDir": "./_esm",
+        "noEmit": false
     },
     "include": [
         "./"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
     ]
 }
