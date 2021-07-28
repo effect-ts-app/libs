@@ -54,7 +54,8 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "./index.mjs",
+    "module": "./_esm/index.js",
+    "main": "./index.js",
     "typings": "./index.d.ts",
     "exports": {
         ".": "./index.mjs",
