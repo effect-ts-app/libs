@@ -43,10 +43,26 @@
     "main": "./index.js",
     "typings": "./index.d.ts",
     "exports": {
-        ".": "./index.mjs",
-        "./data": "./data.mjs",
-        "./hooks": "./hooks.mjs",
-        "./context": "./context.mjs"
+        ".": {
+            "module": "./_esm/index.js",
+            "default": "./index.js"
+        },
+        "./_esm": {
+            "module": "./_esm/_esm/index.js",
+            "default": "./_esm/index.js"
+        },
+        "./data": {
+            "module": "./_esm/data.js",
+            "default": "./data.js"
+        },
+        "./hooks": {
+            "module": "./_esm/hooks.js",
+            "default": "./hooks.js"
+        },
+        "./_esm/context.tsx.js": {
+            "module": "./context.tsx",
+            "default": "./context.js"
+        }
     },
     "sideEffects": false
 }
