@@ -4,8 +4,8 @@
 import * as St from "@effect-ts/core/Structural"
 import * as Lens from "@effect-ts/monocle/Lens"
 import { Erase } from "@effect-ts-app/core/Effect"
-import { omit } from "lodash/omit"
-import { pick } from "lodash/pick"
+import omit from "lodash/omit"
+import pick from "lodash/pick"
 import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
