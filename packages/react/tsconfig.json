@@ -9,6 +9,9 @@
     "include": [
         "./"
     ],
+    "exclude": [
+        "./_esm"
+    ],
     "references": [
         {
             "path": "../core"

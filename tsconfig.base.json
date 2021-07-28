@@ -40,6 +40,7 @@
     "exclude": [
         "node_modules",
         "build",
-        "lib"
+        "lib",
+        "_esm"
     ]
 }
