@@ -54,8 +54,8 @@ export interface LeafErrors {
 
 export type LeafError = Extract<LeafErrors[keyof LeafErrors], HasDefaultLeafE>
 
-export const defaultLeafSymbol = Symbol.for("@effect-ts-app/core/Schema/custom/error/defaultLeaf")
-export const toTreeSymbol = Symbol.for("@effect-ts-app/core/Schema/custom/error/defaultLeaf/toTree")
+export const defaultLeafSymbol = Symbol.for("../custom/error/defaultLeaf")
+export const toTreeSymbol = Symbol.for("../custom/error/defaultLeaf/toTree")
 
 export interface HasDefaultLeafE {
   readonly [toTreeSymbol]: Tree<string>

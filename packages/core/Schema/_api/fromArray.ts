@@ -2,11 +2,11 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts-app/core/Schema/custom"
-import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
-import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
-import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
-import * as Th from "@effect-ts-app/core/Schema/custom/These"
+import * as S from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Th from "../custom/These"
 
 export const fromArrayIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 

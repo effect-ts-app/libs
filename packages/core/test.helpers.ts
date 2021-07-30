@@ -1,4 +1,4 @@
-import * as MO from "@effect-ts-app/core/Schema"
+import * as MO from "./Schema"
 
 export const positiveInt = MO.Constructor.for(MO.positiveInt)
 export const positiveIntUnsafe = positiveInt["|>"](MO.unsafe)

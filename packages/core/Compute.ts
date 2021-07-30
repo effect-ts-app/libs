@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as O from "@effect-ts-app/core/Option"
 import type { If } from "ts-toolbelt/out/Any/If"
 import type { Key } from "ts-toolbelt/out/Any/Key"
 import type { BuiltIn } from "ts-toolbelt/out/Misc/BuiltIn"
 import type { Depth } from "ts-toolbelt/out/Object/_Internal"
 import type { Has } from "ts-toolbelt/out/Union/Has"
+
+import * as O from "./Option"
 
 type Prim = BuiltIn | string | number | boolean | O.None | O.Some<any>
 

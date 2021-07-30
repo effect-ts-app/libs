@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
-import * as O from "@effect-ts-app/core/Option"
-import * as SET from "@effect-ts-app/core/Set"
 import { Misc, Union } from "ts-toolbelt"
+
+import * as O from "./Option"
+import * as SET from "./Set"
 
 // type SomeObject = {
 //   0: O.Option<string>

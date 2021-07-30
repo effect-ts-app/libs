@@ -1,4 +1,4 @@
-import { NonEmptyBrand } from "@effect-ts-app/core/Schema/custom"
+import { NonEmptyBrand } from "../custom"
 
 import { pipe } from "../../Function"
 import * as MO from "../_schema"

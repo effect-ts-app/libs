@@ -15,4 +15,4 @@ export * from "./fromProps"
 export * from "./fromArray"
 export * from "./nonEmptyArray"
 
-export * from "@effect-ts-app/core/Schema/custom/_api"
+export * from "../custom/_api"

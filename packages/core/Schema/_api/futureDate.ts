@@ -1,5 +1,4 @@
-import { pipe } from "@effect-ts-app/core/Function"
-
+import { pipe } from "../../Function"
 import * as MO from "../_schema"
 import { domainEE, domainResponse2, onParseOrConstruct } from "../utils"
 import { Parser, These } from "../vendor"

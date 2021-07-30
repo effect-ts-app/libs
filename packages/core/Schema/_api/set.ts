@@ -6,11 +6,11 @@ import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutabl
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"
-import * as MO from "@effect-ts-app/core/Schema/custom"
-import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
-import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
-import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
-import * as Th from "@effect-ts-app/core/Schema/custom/These"
+import * as MO from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Th from "../custom/These"
 
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 

@@ -1,4 +1,4 @@
-import * as MO from "@effect-ts-app/core/Schema/custom"
+import * as MO from "../custom"
 
 import { pipe } from "../../Function"
 

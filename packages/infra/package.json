@@ -38,7 +38,7 @@
         "redlock": "^4.2.0"
     },
     "scripts": {
-        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/fix.sh && yarn generate-exports",
+        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",
         "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "generate-exports": "sh ../../utils/extract.sh > package.log",

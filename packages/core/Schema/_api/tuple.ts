@@ -4,12 +4,12 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import * as MO from "@effect-ts-app/core/Schema/custom"
-import * as Arbitrary from "@effect-ts-app/core/Schema/custom/Arbitrary"
-import * as Encoder from "@effect-ts-app/core/Schema/custom/Encoder"
-import * as Guard from "@effect-ts-app/core/Schema/custom/Guard"
-import * as Parser from "@effect-ts-app/core/Schema/custom/Parser"
-import * as Th from "@effect-ts-app/core/Schema/custom/These"
+import * as MO from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Parser from "../custom/Parser"
+import * as Th from "../custom/These"
 
 export const fromTupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
