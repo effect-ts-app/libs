@@ -3,20 +3,24 @@
 set -e
 
 
-VAR="
-{
-  \"sideEffects\": false,
-  \"module\": \"./index.js\",
-  \"typings\": \"./index.d.ts\"
-}
-"
+
 
 echo "Running fix in ${PWD}"
 
-for D in `find _esm -type d | grep -v ^\.$ | grep -v node_modules`
+for D in `find . -type d | grep -v ^\.$ | grep -v node_modules | grep -v _esm`
 do
-  #dir="../dist${D#.}"
   dir=$D
+  #dir="../dist${D#.}"
+  echo $dir
+  newdir=$(echo "$dir" | sed -e 's/[^\/]*\//..\//g' | sed -e 's/\/.*$//')
+  newdir="${newdir}/_esm${dir#.}"
   #mkdir -p $dir
-  echo $VAR > "${dir}/package.json"
+  var="
+{
+  \"sideEffects\": false,
+  \"module\": \"${newdir}/index.js\",
+  \"typings\": \"./index.d.ts\"
+}
+"
+  echo $var > "${dir}/package.json"
 done
