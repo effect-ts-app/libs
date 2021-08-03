@@ -33,7 +33,11 @@ const funcs = {
 
 Object.entries(funcs).forEach(([k, v]) => {
   const f = v as any
-  BasePrototype[k] = function (...args: [any]) {
-    return f(this, ...args)
-  }
+  Object.defineProperty(BasePrototype, k, {
+    enumerable: false,
+    configurable: true,
+    value(...args: [any]) {
+      return f(this, ...args)
+    },
+  })
 })
