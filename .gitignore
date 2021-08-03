@@ -9,6 +9,7 @@ packages/**/*.js
 packages/**/*.js.map
 packages/**/*.d.ts
 packages/**/*.d.ts.map
+!packages/fluent/types/**/*.d.ts
 !**/jest.config.js
 !**/.eslintrc.js
 !**/.prettierrc.js

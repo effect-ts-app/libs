@@ -1,0 +1,24 @@
+{
+  "name": "@effect-ts-app/fluent",
+  "version": "0.0.1",
+  "exports": {
+    "./_ext/*": "./src/_ext/*.ts",
+    "./polyfill": "./src/polyfill/index.ts",
+    "./polyfill/*": "./src/polyfill/*.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "watch": "tsc --build --watch",
+    "watch2": "tsc -w",
+    "prepare": "yarn build",
+    "clean": "rm -rf dist",
+    "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
+    "compile": "tsc --noEmit",
+    "lint": "eslint ./src ./types",
+    "prettier": "prettier \"src/**/*.ts\" \"types/**/*.d.ts\"",
+    "autofix": "yarn lint --fix && yarn prettier --write",
+    "test": "echo 'no tests yet'",
+    "testsuite": "yarn lint && yarn test && yarn circular",
+    "ncu": "ncu"
+  }
+}
