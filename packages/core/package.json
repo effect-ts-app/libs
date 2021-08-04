@@ -12,18 +12,19 @@
         "validator": "^13.6.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.42.5",
-        "@effect-ts/monocle": "^0.34.1",
-        "@effect-ts/schema": "^0.9.1",
+        "@effect-ts/core": "^0.43.0",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
         "@types/uuid": "^8.3.1",
-        "@types/validator": "^13.6.1",
-        "node-libcurl": "^2.3.3",
+        "@types/validator": "^13.6.3",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.42.5",
-        "@effect-ts/monocle": "^0.34.1",
-        "@effect-ts/schema": "^0.9.1"
+        "@effect-ts/core": "^0.43.0",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
+        "node-libcurl": "^2.3.3"
+
     },
     "scripts": {
         "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",

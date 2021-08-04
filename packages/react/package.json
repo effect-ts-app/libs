@@ -8,18 +8,18 @@
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.42.5",
-        "@effect-ts/monocle": "^0.34.1",
-        "@effect-ts/schema": "^0.9.1",
-        "@types/react": "^17.0.13",
+        "@effect-ts/core": "^0.43.0",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
+        "@types/react": "^17.0.15",
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "react": "^17.0.2"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.42.5",
-        "@effect-ts/monocle": "^0.34.1",
-        "@effect-ts/schema": "^0.9.1",
+        "@effect-ts/core": "^0.43.0",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
         "react": "^17.0.2"
     },
     "scripts": {
