@@ -38,7 +38,8 @@ export type UIO<A> = EffectOption<unknown, never, A>
 export type IO<E, A> = EffectOption<unknown, E, A>
 export type RIO<R, E, A> = EffectOption<R, E, A>
 
-export const fromNullable = <A>(a: A) => T.succeed(O.fromNullable(a))
+export const fromNullable = <A>(a: A): UIO<NonNullable<A>> =>
+  T.succeed(O.fromNullable(a))
 
 export const toNullable = <R, E, A>(eff: EffectOption<R, E, A>) =>
   pipe(eff, T.map(O.toNullable))
@@ -59,7 +60,7 @@ export const fromEffectIf = <R, E, A>(eff: T.Effect<R, E, A>) =>
 
 export const encaseNullableTask = <T>(
   taskCreator: F.Lazy<Promise<T | null>>
-): T.Effect<unknown, never, O.Option<NonNullable<T>>> =>
+): EffectOption<unknown, never, NonNullable<T>> =>
   T.map_(T.tryPromise(taskCreator)["|>"](T.orDie), O.fromNullable)
 
 export const encaseNullableTaskErrorIfNull = <T, E>(
