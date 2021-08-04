@@ -4,15 +4,15 @@
   "license": "MIT",
   "exports": {
     "./_ext/*": {
-      "module": "./dist/_ext/*.ts",
+      "module": "./dist/_ext/*.js",
       "default": "./dist/cjs/_ext/*.js"
     },
     "./polyfill": {
-      "module": "./dist/polyfill/*.ts",
+      "module": "./dist/polyfill/*.js",
       "default": "./dist/cjs/polyfill/*.js"
     },
     "./polyfill/*": {
-      "module": "./dist/polyfill/*.ts",
+      "module": "./dist/polyfill/*.js",
       "default": "./dist/cjs/polyfill/*.js"
     },
     "./types/*": "./types/*.ts"
