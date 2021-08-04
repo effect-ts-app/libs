@@ -20,6 +20,9 @@
   "devDependencies": {
     "@effect-ts/node": "^0.28.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc --build && tsc --build tsconfig.cjs.json",
     "watch": "tsc --build --watch",
