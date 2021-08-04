@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "0.31.0",
+    "version": "0.32.0",
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
@@ -24,7 +24,6 @@
         "@effect-ts/monocle": "^0.35.0",
         "@effect-ts/schema": "^0.10.0",
         "node-libcurl": "^2.3.3"
-
     },
     "scripts": {
         "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",
