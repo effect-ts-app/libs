@@ -4,5 +4,6 @@
       "moduleResolution": "node",
       "module": "CommonJS",
       "outDir": "./dist/cjs",
+      "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo",
   }
 }
