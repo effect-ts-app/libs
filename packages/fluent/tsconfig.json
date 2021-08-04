@@ -8,9 +8,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./_esm",
     "noEmit": false,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "removeComments": true,
     // keep in here, cause madge can't detect it from extended tsconfig
     "moduleResolution": "node"

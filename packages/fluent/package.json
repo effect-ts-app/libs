@@ -4,16 +4,16 @@
   "license": "MIT",
   "exports": {
     "./_ext/*": {
-      "module": "./dist/_ext/*.js",
-      "default": "./dist/cjs/_ext/*.js"
+      "module": "./_esm/_ext/*.js",
+      "default": "./_ext/*.js"
     },
     "./polyfill": {
-      "module": "./dist/polyfill/*.js",
-      "default": "./dist/cjs/polyfill/*.js"
+      "module": "./_esm/polyfill/*.js",
+      "default": "./polyfill/*.js"
     },
     "./polyfill/*": {
-      "module": "./dist/polyfill/*.js",
-      "default": "./dist/cjs/polyfill/*.js"
+      "module": "./_esm/polyfill/*.js",
+      "default": "./polyfill/*.js"
     },
     "./types/*": "./types/*.ts"
   },
@@ -28,7 +28,7 @@
     "watch": "tsc --build --watch",
     "watch2": "tsc -w",
     "prepare": "yarn build",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "compile": "tsc --noEmit",
     "lint": "eslint ./src ./types",
