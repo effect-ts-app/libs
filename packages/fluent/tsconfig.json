@@ -6,7 +6,6 @@
       "esnext"
     ],
     "esModuleInterop": true,
-    "module": "CommonJS",
     "baseUrl": "./",
     "rootDir": "./src",
     "outDir": "./dist",

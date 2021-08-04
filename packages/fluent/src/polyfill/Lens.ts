@@ -1,10 +1,12 @@
-import * as Lens from "../_ext/Lens"
+import { Lens } from "@effect-ts/monocle/Lens"
 
-const BasePrototype = Array.prototype as any
+import { modify_, prop_ } from "../_ext/Lens"
+
+const BasePrototype = Lens.prototype as any
 
 const funcs = {
-  modify: Lens.modify_,
-  prop: Lens.prop_,
+  modify: modify_,
+  prop: prop_,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

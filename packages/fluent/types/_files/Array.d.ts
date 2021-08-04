@@ -139,6 +139,11 @@ declare global {
     interface Array<T> extends ArrayOps, IterableOps {
     }
     interface ReadonlyArray<T> extends ArrayOps, IterableOps {
+        // undo the global overwrite in ETS
+        /**
+         * @ets_rewrite_method mapOriginal_ from "@effect-ts-app/fluent/_ext/Array"
+         */
+         map<AX, B>(this: ARR.Array<AX>, f: (a: AX, i: number) => B): ARR.Array<B>;
     }
 
     // interface Iterable<T> extends IterableOps {}

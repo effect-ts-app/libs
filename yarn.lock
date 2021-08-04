@@ -509,6 +509,11 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/morphic/-/morphic-0.37.1.tgz#948c0b44603a49737ffa426ed5dfd891b4901a40"
   integrity sha512-kuo40bGVc5/3BcnoScI6h1bR1NhEACjY+Ap59uBWwwSNq7JKDiBYD1kTRpldFkv7XFaHHMjVHf0ikLlzYHqAqA==
 
+"@effect-ts/node@^0.28.0":
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/node/-/node-0.28.0.tgz#7d04f6de5cf2e1e987a2195d20944d5379a1f512"
+  integrity sha512-ranX/1FgIrP7a3LlNhPAjU9tTv/YjOvvYP7Rgnq3VUllLP3UGIfWO8cgQt3JIRz2eZ2Uxrzs6cieq2c3Gh0MPw==
+
 "@effect-ts/schema@^0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@effect-ts/schema/-/schema-0.10.0.tgz#bd493f7daef57ef50960a664daab85f534b6e2ea"

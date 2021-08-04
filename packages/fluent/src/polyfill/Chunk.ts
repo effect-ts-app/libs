@@ -1,4 +1,10 @@
-import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+import {
+  ChunkInternal,
+  filter_,
+  filterMap_,
+  map_,
+  toArray,
+} from "@effect-ts/core/Collections/Immutable/Chunk"
 import {
   collectAll,
   forEach_,
@@ -6,19 +12,19 @@ import {
   forEachParN_,
 } from "@effect-ts-app/core/Effect"
 
-const BasePrototype = CNK.ChunkInternal.prototype as any
+const BasePrototype = ChunkInternal.prototype as any
 
 const funcs = {
-  toArray: CNK.toArray,
-  //mapWithIndex: CNK.mapWithIndex_,
-  filterMap: CNK.filterMap_,
-  filter: CNK.filter_,
-  map: CNK.map_,
-  //findFirst: CNK.findFirst_,
-  //findFirstMap: CNK.findFirstMap_,
-  //sortWith: CNK.sort_,
-  //sortBy: CNK.sortBy_,
-  //uniq: CNK.uniq_,
+  toArray,
+  //mapWithIndex: mapWithIndex_,
+  filterMap: filterMap_,
+  filter: filter_,
+  map: map_,
+  //findFirst: findFirst_,
+  //findFirstMap: findFirstMap_,
+  //sortWith: sort_,
+  //sortBy: sortBy_,
+  //uniq: uniq_,
 
   // IterableOps
   collectAll,

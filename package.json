@@ -4,9 +4,7 @@
     "license": "MIT",
     "workspaces": {
         "packages": [
-            "packages/core",
-            "packages/infra",
-            "packages/react"
+            "packages/*"
         ]
     },
     "private": true,
