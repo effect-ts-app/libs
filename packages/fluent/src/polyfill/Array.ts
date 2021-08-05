@@ -5,6 +5,7 @@ import {
   filterMap_,
   findFirst_,
   findFirstMap_,
+  flatten,
   map_,
   mapWithIndex_,
   toMutable,
@@ -33,6 +34,7 @@ const funcs = {
   sortBy: sortBy_,
   uniq: uniq_,
   append: append_,
+  flatten,
 
   // IterableOps
   collectAll,
