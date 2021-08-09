@@ -1,18 +1,14 @@
 // ets_tracing: off
 /* eslint-disable import/no-duplicates */
-/* eslint-disable unused-imports/no-unused-imports */
 import type * as ARR from "@effect-ts/core/Collections/Immutable/Array"
 import type * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+import type { Either } from "@effect-ts/core/Either"
 import type * as Eq from "@effect-ts/core/Equal"
 import type { Predicate } from "@effect-ts/core/Function"
-import type * as O from "@effect-ts/core/Option"
 import type { Option } from "@effect-ts/core/Option"
 import type * as Ord from "@effect-ts/core/Ord"
-import type * as LENS from "@effect-ts/monocle/Lens"
-import type * as T from "@effect-ts-app/core/Effect"
 import type { Effect } from "@effect-ts-app/core/Effect"
-import type { EffectOption } from "@effect-ts-app/core/EffectOption"
-import type * as EO from "@effect-ts-app/core/EffectOption"
+import type { Sync } from "@effect-ts-app/core/Sync"
 
 interface ArrayOps {
     /**
@@ -38,17 +34,17 @@ interface ArrayOps {
     /**
      * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Array"
      */
-    filterMap<A, B>(this: readonly A[], f: (a: A) => O.Option<B>): readonly B[]
+    filterMap<A, B>(this: readonly A[], f: (a: A) => Option<B>): readonly B[]
 
     /**
      * @ets_rewrite_method findFirst_ from "@effect-ts/core/Collections/Immutable/Array"
      */
-    findFirst<A>(this: readonly A[], predicate: Predicate<A>): O.Option<A>
+    findFirst<A>(this: readonly A[], predicate: Predicate<A>): Option<A>
 
     /**
      * @ets_rewrite_method findFirstMap_ from "@effect-ts/core/Collections/Immutable/Array"
      */
-    findFirstMap<A, B>(this: readonly A[], f: (a: A) => O.Option<B>): O.Option<B>
+    findFirstMap<A, B>(this: readonly A[], f: (a: A) => Option<B>): Option<B>
 
     /**
      * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Array"
@@ -79,8 +75,72 @@ interface ArrayOps {
     /**
      * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
      */
-     append<AX>(this: ARR.Array<AX>, end: AX): ARR.Array<AX>
+    append<AX>(this: ARR.Array<AX>, end: AX): ARR.Array<AX>
+
+
+    // replacement for mapM
+    /**
+     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+     mapEffect<AX, R, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => Effect<R, E, B>
+    ): Effect<R, E, readonly B[]>
+
+    /**
+     * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    mapSync<AX, R, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => Sync<R, E, B>
+    ): Sync<R, E, readonly B[]>
+
+    /**
+     * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
+     */
+    mapEither<AX, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => E.Either<E, B>
+    ): E.Either<E, ARR.Array<B>>
+
+    /**
+     * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
+     */
+    mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
+
+    /**
+     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    mapM<AX, R, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => Effect<R, E, B>
+    ): Effect<R, E, readonly B[]>
+
+    /**
+     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    mapM<AX, R, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => Sync<R, E, B>
+    ): Effect<R, E, readonly B[]> // Maps to Effect always
+
+    /**
+     * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+     */
+     mapM<AX, E, B>(
+      this: ARR.Array<AX>,
+      f: (a: AX) => Either<E, B>
+   ): Effect<unkown, E, readonly B[]>    
+
+    /**
+     * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+     */
+     mapM<AX, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Option<B>
+    ): Effect<unkown, Option<never>, readonly B[]> 
   }
+
 
 interface IterableOps {
     /**
@@ -125,7 +185,7 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
     /**
      * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Chunk"
      */
-     filterMap<A, B>(this: CNK.Chunk<A>, f: (a: A) => O.Option<B>): CNK.Chunk<B>;
+     filterMap<A, B>(this: CNK.Chunk<A>, f: (a: A) => Option<B>): CNK.Chunk<B>;
 
 
     /**

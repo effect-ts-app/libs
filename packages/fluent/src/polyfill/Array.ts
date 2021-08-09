@@ -1,3 +1,5 @@
+import { mapEffect_, mapSync_ } from "@effect-ts/core/Collections/Immutable/Array"
+import { mapEither_, mapOption_ } from "@effect-ts/fluent/Fx/Array"
 import {
   append_,
   concat_,
@@ -18,12 +20,18 @@ import {
 } from "@effect-ts-app/core/Effect"
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array"
+import { mapM } from "../_ext/mapM"
 
 const BasePrototype = Array.prototype as any
 
 const funcs = {
   mutable: toMutable,
   mapRA: map_,
+  mapEffect: mapEffect_,
+  mapEither: mapEither_,
+  mapOption: mapOption_,
+  mapSync: mapSync_,
+  mapM, // works differently than the original one, for Option and Sync.
   mapWithIndex: mapWithIndex_,
   concatRA: concat_,
   filterMap: filterMap_,

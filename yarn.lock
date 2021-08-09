@@ -494,6 +494,11 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/express/-/express-0.20.3.tgz#798ca5ea36a580b6aea88814f39dba6671e6d125"
   integrity sha512-rLNd+ZYT7FynNMGYMuKoyCqjpxKRty1YcvplV2tDev6qiZdIp45ta36kSxEmL4Wa9687o3vL7qAm2VLU1dECxQ==
 
+"@effect-ts/fluent@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/fluent/-/fluent-0.2.0.tgz#e40247594839f283a6a63217cecc241bfa22d73d"
+  integrity sha512-Hk4p+Ma+r/enxGjNckr3JCggwEMBkpveAeYKLH9jlPWx0lK/zDMDuAuQFZiKalA/HhMTXltO12al+AthTWarNQ==
+
 "@effect-ts/jest@^0.29.0":
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.29.0.tgz#da7d37bff18003ddf4a08d704896cc7c075d3015"
