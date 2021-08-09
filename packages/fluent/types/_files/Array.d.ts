@@ -100,8 +100,8 @@ interface ArrayOps {
      */
     mapEither<AX, E, B>(
       this: ARR.Array<AX>,
-      f: (a: AX) => E.Either<E, B>
-    ): E.Either<E, ARR.Array<B>>
+      f: (a: AX) => Either<E, B>
+    ): Either<E, ARR.Array<B>>
 
     /**
      * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
