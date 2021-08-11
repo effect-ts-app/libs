@@ -117,7 +117,7 @@ export function queryResult<R, E, A>(
 export function matchQuery<E, A, Result>(_: {
   Initial: () => Result
   Loading: () => Result
-  Error: (e: E, previous: O.Option<A>, isRefreshing: boolean) => Result
+  Error: (e: E, isRefreshing: boolean, previous: O.Option<A>) => Result
   Success: (a: A, isRefreshing: boolean) => Result
 }) {
   return (r: QueryResult<E, A>) =>
@@ -128,14 +128,14 @@ export function matchQuery<E, A, Result>(_: {
         Refreshing: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, r.previous, true),
+              (e) => _.Error(e, true, r.previous),
               (a) => _.Success(a, true)
             )
           ),
         Done: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, r.previous, false),
+              (e) => _.Error(e, false, r.previous),
               (a) => _.Success(a, false)
             )
           ),
