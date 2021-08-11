@@ -4,6 +4,7 @@ import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
 import { matchTag } from "@effect-ts/core/Utils"
 import * as T from "@effect-ts-app/core/Effect"
+import * as O from "@effect-ts-app/core/Option"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { ServiceContext } from "./context"
@@ -14,12 +15,18 @@ export class Initial extends Tagged("Initial")<{}> {}
 
 export class Loading extends Tagged("Loading")<{}> {}
 
-export class Done<E, A> extends Tagged("Done")<{ readonly current: E.Either<E, A> }> {
+export class Done<E, A> extends Tagged("Done")<{
+  readonly current: E.Either<E, A>
+  readonly previous: O.Option<A>
+}> {
   static succeed<A, E = never>(a: A) {
-    return new Done<E, A>({ current: E.right(a) })
+    return new Done<E, A>({ current: E.right(a), previous: O.none })
   }
-  static fail<E, A = never>(e: E) {
-    return new Done<E, A>({ current: E.left(e) })
+  static fail<E, A = never>(e: E, previous?: A) {
+    return new Done<E, A>({
+      current: E.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
+    })
   }
 
   static refresh<E, A>(d: Done<E, A>) {
@@ -29,12 +36,16 @@ export class Done<E, A> extends Tagged("Done")<{ readonly current: E.Either<E, A
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: E.Either<E, A>
+  readonly previous: O.Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: E.right(a) })
+    return new Refreshing<E, A>({ current: E.right(a), previous: O.none })
   }
-  static fail<E, A = never>(e: E) {
-    return new Refreshing<E, A>({ current: E.left(e) })
+  static fail<E, A = never>(e: E, previous?: A) {
+    return new Refreshing<E, A>({
+      current: E.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
+    })
   }
   static fromDone<E, A>(d: Done<E, A>) {
     return new Refreshing(d)
@@ -87,7 +98,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
         resultInternal.current._tag === "Initial" ||
           resultInternal.current._tag === "Loading"
           ? new Loading()
-          : new Refreshing({ current: resultInternal.current.current })
+          : new Refreshing(resultInternal.current)
       )
 
       return runWithErrorLog(pipe(queryResult(self), T.map(set)))
@@ -96,6 +107,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
     return [result, refresh] as const
   }
 }
+
 export function queryResult<R, E, A>(
   self: T.Effect<R, E, A>
 ): T.Effect<R, never, QueryResult<E, A>> {
@@ -105,7 +117,7 @@ export function queryResult<R, E, A>(
 export function matchQuery<E, A, Result>(_: {
   Initial: () => Result
   Loading: () => Result
-  Error: (e: E, isRefreshing: boolean) => Result
+  Error: (e: E, previous: O.Option<A>, isRefreshing: boolean) => Result
   Success: (a: A, isRefreshing: boolean) => Result
 }) {
   return (r: QueryResult<E, A>) =>
@@ -116,14 +128,14 @@ export function matchQuery<E, A, Result>(_: {
         Refreshing: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, true),
+              (e) => _.Error(e, r.previous, true),
               (a) => _.Success(a, true)
             )
           ),
         Done: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, false),
+              (e) => _.Error(e, r.previous, false),
               (a) => _.Success(a, false)
             )
           ),
