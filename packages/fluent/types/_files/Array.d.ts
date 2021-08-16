@@ -2,6 +2,7 @@
 /* eslint-disable import/no-duplicates */
 import type * as ARR from "@effect-ts/core/Collections/Immutable/Array"
 import type * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+import type * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Either } from "@effect-ts/core/Either"
 import type * as Eq from "@effect-ts/core/Equal"
 import type { Predicate } from "@effect-ts/core/Function"
@@ -11,11 +12,6 @@ import type { Effect } from "@effect-ts-app/core/Effect"
 import type { Sync } from "@effect-ts-app/core/Sync"
 
 interface ArrayOps {
-    /**
-     * @ets_rewrite_method flatten from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    flatten<A>(this: ARR.Array<ARR.Array<A>>): ARR.Array<A>;
-
     /**
      * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/Array"
      */
@@ -30,6 +26,91 @@ interface ArrayOps {
      * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
      */
     concatRA<A, A1>(this: readonly A[], y: readonly A1[]): readonly (A | A1)[]
+
+
+    /**
+     * @ets_rewrite_method sort_ from "@effect-ts-app/fluent/_ext/Array"
+     */
+     sortWith<A>(this: readonly A[], o: Ord.Ord<A>): readonly A[]
+
+     /**
+      * @ets_rewrite_method sortBy_ from "@effect-ts-app/fluent/_ext/Array"
+      */
+     sortBy<A>(this: readonly A[], ords: readonly Ord.Ord<A>[]): readonly A[]
+ 
+ 
+     /**
+      * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
+      */
+     append<AX>(this: ARR.Array<AX>, end: AX): ARR.Array<AX>
+ 
+ 
+     // replacement for mapM
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+      mapEffect<AX, R, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Effect<R, E, B>
+     ): Effect<R, E, readonly B[]>
+ 
+     /**
+      * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapSync<AX, R, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Sync<R, E, B>
+     ): Sync<R, E, readonly B[]>
+ 
+     /**
+      * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
+      */
+     mapEither<AX, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Either<E, B>
+     ): Either<E, ARR.Array<B>>
+ 
+     /**
+      * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
+      */
+     mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
+ 
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapM<AX, R, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Effect<R, E, B>
+     ): Effect<R, E, readonly B[]>
+ 
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapM<AX, R, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Sync<R, E, B>
+     ): Effect<R, E, readonly B[]> // Maps to Effect always
+ 
+     /**
+      * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+      */
+      mapM<AX, E, B>(
+       this: ARR.Array<AX>,
+       f: (a: AX) => Either<E, B>
+    ): Effect<unkown, E, readonly B[]>    
+ 
+     /**
+      * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+      */
+      mapM<AX, B>(
+        this: ARR.Array<AX>,
+        f: (a: AX) => Option<B>
+     ): Effect<unkown, Option<never>, readonly B[]> 
+
+    /**
+     * @ets_rewrite_method flatten from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    flatten<A>(this: ARR.Array<ARR.Array<A>>): ARR.Array<A>;
 
     /**
      * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Array"
@@ -57,88 +138,9 @@ interface ArrayOps {
      filterRA<A>(this: readonly A[], f: (a: A) => boolean): readonly A[]
 
     /**
-     * @ets_rewrite_method sort_ from "@effect-ts-app/fluent/_ext/Array"
-     */
-    sortWith<A>(this: readonly A[], o: Ord.Ord<A>): readonly A[]
-
-    /**
-     * @ets_rewrite_method sortBy_ from "@effect-ts-app/fluent/_ext/Array"
-     */
-    sortBy<A>(this: readonly A[], ords: readonly Ord.Ord<A>[]): readonly A[]
-
-    /**
      * @ets_rewrite_method uniq_ from "@effect-ts-app/fluent/_ext/Array"
      */
-    uniq<A>(this: readonly A[], E: Eq.Equal<A>): readonly A[]
-    
-
-    /**
-     * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
-     */
-    append<AX>(this: ARR.Array<AX>, end: AX): ARR.Array<AX>
-
-
-    // replacement for mapM
-    /**
-     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-     mapEffect<AX, R, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Effect<R, E, B>
-    ): Effect<R, E, readonly B[]>
-
-    /**
-     * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapSync<AX, R, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Sync<R, E, B>
-    ): Sync<R, E, readonly B[]>
-
-    /**
-     * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
-     */
-    mapEither<AX, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Either<E, B>
-    ): Either<E, ARR.Array<B>>
-
-    /**
-     * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
-     */
-    mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
-
-    /**
-     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Effect<R, E, B>
-    ): Effect<R, E, readonly B[]>
-
-    /**
-     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Sync<R, E, B>
-    ): Effect<R, E, readonly B[]> // Maps to Effect always
-
-    /**
-     * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-     */
-     mapM<AX, E, B>(
-      this: ARR.Array<AX>,
-      f: (a: AX) => Either<E, B>
-   ): Effect<unkown, E, readonly B[]>    
-
-    /**
-     * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-     */
-     mapM<AX, B>(
-       this: ARR.Array<AX>,
-       f: (a: AX) => Option<B>
-    ): Effect<unkown, Option<never>, readonly B[]> 
+     uniq<A>(this: readonly A[], E: Eq.Equal<A>): readonly A[]
   }
 
 
@@ -163,6 +165,112 @@ interface IterableOps {
      */
     collectAll<R, E, A>(this: Iterable<Effect<R, E, A>>, __trace?: string): Effect<R, E, CNK.Chunk<A>>
 }
+
+declare module "@effect-ts/system/Collections/Immutable/NonEmptyArray" {
+  export interface NonEmptyArray<A> {
+    /**
+     * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
+     */
+    mapRA<A, B>(this: NA.NonEmptyArray<A>, f: (a: A) => B): NA.NonEmptyArray<B>
+
+    /**
+     * @ets_rewrite_method mapWithIndex_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    mapWithIndex<A, B>(this: NA.NonEmptyArray<A>, f: (idx: number, a: A) => B): NA.NonEmptyArray<B>
+
+
+    /**
+     * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    concatRA<A, A1>(this: NA.NonEmptyArray<A>, y: readonly A1[]): NA.NonEmptyArray<A | A1>
+
+    /**
+     * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
+     */
+    concatRA<A, A1>(this: readonly A[], y: NA.NonEmptyArray<A1>): NA.NonEmptyArray<A | A1>
+
+
+    /**
+     * @ets_rewrite_method sort_ from "@effect-ts-app/fluent/_ext/Array"
+     */
+     sortWith<A>(this: NA.NonEmptyArray<A>, o: Ord.Ord<A>): NA.NonEmptyArray<A>
+
+     /**
+      * @ets_rewrite_method sortBy_ from "@effect-ts-app/fluent/_ext/Array"
+      */
+     sortBy<A>(this: NA.NonEmptyArray<A>, ords: readonly Ord.Ord<A>[]): NA.NonEmptyArray<A>
+ 
+ 
+     /**
+      * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
+      */
+     append<AX>(this: NA.NonEmptyArray<AX>, end: AX): NA.NonEmptyArray<AX>
+ 
+ 
+     // replacement for mapM
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+      mapEffect<AX, R, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Effect<R, E, B>
+     ): Effect<R, E, NA.NonEmptyArray<B>>
+ 
+     /**
+      * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapSync<AX, R, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Sync<R, E, B>
+     ): Sync<R, E, NA.NonEmptyArray<B>>
+ 
+     /**
+      * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
+      */
+     mapEither<AX, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Either<E, B>
+     ): Either<E, NA.NonEmptyArray<B>>
+ 
+     /**
+      * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
+      */
+     mapOption<AX, B>(this: NA.NonEmptyArray<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
+ 
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapM<AX, R, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Effect<R, E, B>
+     ): Effect<R, E, NA.NonEmptyArray<B>>
+ 
+     /**
+      * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+      */
+     mapM<AX, R, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Sync<R, E, B>
+     ): Effect<R, E, NA.NonEmptyArray<B>> // Maps to Effect always
+ 
+     /**
+      * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+      */
+      mapM<AX, E, B>(
+       this: NA.NonEmptyArray<AX>,
+       f: (a: AX) => Either<E, B>
+    ): Effect<unkown, E, NA.NonEmptyArray<B>>    
+ 
+     /**
+      * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
+      */
+      mapM<AX, B>(
+        this: NA.NonEmptyArray<AX>,
+        f: (a: AX) => Option<B>
+     ): Effect<unkown, Option<never>, NA.NonEmptyArray<B>> 
+  }
+}
+
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
     export interface Chunk<A> extends IterableOps {
