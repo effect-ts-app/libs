@@ -1,17 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
 /* eslint-disable import/no-duplicates */
-/* eslint-disable unused-imports/no-unused-imports */
-import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
-import type * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { Cause } from "@effect-ts/core/Effect/Cause"
 import * as Ex from "@effect-ts/core/Effect/Exit"
-import type * as O from "@effect-ts/core/Option"
-import type { Option } from "@effect-ts/core/Option"
-import * as Ord from "@effect-ts/core/Ord"
-import type * as LENS from "@effect-ts/monocle/Lens"
 import type { HasClock } from "@effect-ts/system/Clock"
-import type * as T from "@effect-ts-app/core/Effect"
-import type { Effect } from "@effect-ts-app/core/Effect"
 import type { EffectOption } from "@effect-ts-app/core/EffectOption"
 import type * as EO from "@effect-ts-app/core/EffectOption"
 
