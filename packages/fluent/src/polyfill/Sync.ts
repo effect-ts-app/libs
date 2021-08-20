@@ -3,7 +3,6 @@ import {
   asUnit,
   catchAll_,
   catchTag_,
-  chain_,
   delay_,
   fold_,
   forever,
@@ -11,8 +10,6 @@ import {
   forkDaemon,
   forkDaemonReport_,
   forkManaged,
-  map_,
-  mapError_,
   orDie,
   provideSomeLayer_,
   result,
@@ -24,13 +21,11 @@ import {
   tapError_,
   zipRight_,
 } from "@effect-ts/core/Effect"
+import { chain_, map_, mapError_ } from "@effect-ts/core/Sync"
 import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 
 const BasePrototype = XPureBase.prototype as any
-
-// TODO: Officially chain should select chain_ from Sync when second argument is returning a Sync
-// and should selet chain_ from Effect, when second argument is returning an Effect.
 
 const funcs = {
   catchAll: catchAll_,
