@@ -1,21 +1,21 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Map from "@effect-ts/core/Collections/Immutable/Map"
-import { flow, pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-ts/core/Function"
 import * as Sy from "@effect-ts/core/Sync"
 import * as T from "@effect-ts-app/core/Effect"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Encoder, Parser } from "@effect-ts-app/core/Schema"
 
 export function makeCodec<
-  ParserInput,
   ParsedShape extends { id: Id },
   ConstructorInput,
   Encoded,
   Api,
   Id
->(self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) {
+>(self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>) {
+  const parse = Parser.for(self)["|>"](MO.condemn)
   // TODO: strict
-  const decode = flow(Parser.for(self)["|>"](MO.condemn), T.orDie)
+  const decode = (e: Encoded) => parse(e)["|>"](T.orDie)
   const enc = Encoder.for(self)
 
   const encode = (u: ParsedShape) => Sy.succeedWith(() => enc(u))
