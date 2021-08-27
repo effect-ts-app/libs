@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/react",
-    "version": "0.33.2",
+    "version": "0.34.0",
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
