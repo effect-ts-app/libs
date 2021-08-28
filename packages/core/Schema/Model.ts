@@ -9,20 +9,12 @@ import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
 import { Erase } from "../Effect"
-import { FromPropertyRecord, fromProps, Void } from "./_api"
+import { EParserFor, FromPropertyRecord, fromProps, SchemaForModel, Void } from "./_api"
 import * as MO from "./_schema"
 import { schemaField } from "./_schema"
 import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
 import { unsafe } from "./custom/_api/condemn"
 import { include } from "./utils"
-
-export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc = never> = MO.Schema<
-  MO.ParserInputOf<Self>,
-  M,
-  MO.ConstructorInputOf<Self>,
-  [MEnc] extends [never] ? MO.EncodedOf<Self> : MEnc,
-  MO.ApiOf<Self> & MO.ApiSelfType<M>
->
 
 export const GET = "GET"
 export type GET = typeof GET
@@ -100,18 +92,6 @@ export interface BodyRequest<
   path: string
   method: WriteMethods
   [reqBrand]: typeof reqBrand
-}
-
-export type EParserFor<Self extends MO.SchemaAny> = MO.Parser.Parser<
-  MO.EncodedOf<Self>,
-  MO.ParserErrorOf<Self>,
-  MO.ParsedShapeOf<Self>
->
-
-export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): MO.Parser.Parser<Encoded, any, ParsedShape> {
-  return MO.Parser.for(schema)
 }
 
 // Not inheriting from Schemed because we don't want `copy`
