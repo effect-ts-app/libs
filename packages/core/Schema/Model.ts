@@ -96,18 +96,20 @@ export interface BodyRequest<
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<M, Self extends MO.SchemaAny, MEnc = never>
-  extends Model2<M, Self, SchemaForModel<M, Self, MEnc>, MEnc> {}
-export interface Model2<
-  M,
-  Self extends MO.SchemaAny,
-  SelfM extends MO.SchemaAny,
-  MEnc = never
-> extends MO.Schema<
+export interface Model<M, Self extends MO.SchemaAny>
+  extends Model2<M, Self, SchemaForModel<M, Self, MO.EncodedOf<Self>>> {}
+
+export interface ModelEnc<M, Self extends MO.SchemaAny, MEnc>
+  extends Model2Int<M, Self, SchemaForModel<M, Self, MEnc>, MEnc> {}
+
+export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
+  extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>> {}
+interface Model2Int<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny, MEnc>
+  extends MO.Schema<
     MO.ParserInputOf<Self>,
     M,
     MO.ConstructorInputOf<Self>,
-    [MEnc] extends [never] ? MO.EncodedOf<Self> : MEnc,
+    MEnc,
     MO.ApiOf<Self>
   > {
   new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
@@ -571,9 +573,14 @@ export type PropsExtensions<Props extends PropertyRecord> = {
   omit: <P extends keyof Props>(...keys: readonly P[]) => Omit<Props, P>
 }
 
-export function Model<M, MEnc = never>(__name?: string) {
+export function Model<M>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecial<M, MEnc>(__name)(MO.props(props))
+    ModelSpecial<M>(__name)(MO.props(props))
+}
+
+export function ModelEnc<M, MEnc>(__name?: string) {
+  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
+    ModelSpecialEnc<M, MEnc>(__name)(MO.props(props))
 }
 
 export function fromModel<M>(__name?: string) {
@@ -953,91 +960,102 @@ type GetProps<Self> = Self extends { Api: { props: infer Props } }
   : never
 
 // We don't want Copy interface from the official implementation
-export function ModelSpecial<M, MEnc = never>(__name?: string) {
+export function ModelSpecial<M>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
-    const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
-    const of_ = MO.Constructor.for(schema)["|>"](unsafe)
-    const fromFields = (fields: any, target: any) => {
-      for (const k of Object.keys(fields)) {
-        target[k] = fields[k]
+  ): Model<M, Self> & PropsExtensions<GetProps<Self>> => {
+    return makeSpecial(__name, self)
+  }
+}
+
+export function ModelSpecialEnc<M, MEnc>(__name?: string) {
+  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+    self: Self
+  ): ModelEnc<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
+    return makeSpecial(__name, self)
+  }
+}
+
+function makeSpecial(__name: any, self: any): any {
+  const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
+  const of_ = MO.Constructor.for(schema)["|>"](unsafe)
+  const fromFields = (fields: any, target: any) => {
+    for (const k of Object.keys(fields)) {
+      target[k] = fields[k]
+    }
+  }
+  const parser = MO.Parser.for(schema)
+
+  return class {
+    static [nModelBrand] = nModelBrand
+
+    static [schemaField] = schema
+    static [MO.SchemaContinuationSymbol] = schema
+    static Model = schema
+    static Api = schema.Api
+    static [">>>"] = schema[">>>"]
+
+    static Parser = parser
+    static EParser = parser
+    static Encoder = MO.Encoder.for(schema)
+    static Constructor = MO.Constructor.for(schema)
+    static Guard = MO.Guard.for(schema)
+    static Arbitrary = MO.Arbitrary.for(schema)
+
+    static lens = Lens.id<any>()
+    static lenses = lensFromProps()(schema.Api.props)
+
+    static include = include(schema.Api.props)
+    static pick = (...props: any[]) => pick(schema.Api.props, props)
+    static omit = (...props: any[]) => omit(schema.Api.props, props)
+
+    static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
+      new MO.SchemaAnnotated(self, identifier, meta)
+
+    constructor(inp?: MO.ConstructorInputOf<any>) {
+      if (inp) {
+        fromFields(of_(inp), this)
       }
     }
-    const parser = MO.Parser.for(schema)
-
-    // @ts-expect-error the following is correct
-    return class {
-      static [nModelBrand] = nModelBrand
-
-      static [schemaField] = schema
-      static [MO.SchemaContinuationSymbol] = schema
-      static Model = schema
-      static Api = schema.Api
-      static [">>>"] = schema[">>>"]
-
-      static Parser = parser
-      static EParser = parser
-      static Encoder = MO.Encoder.for(schema)
-      static Constructor = MO.Constructor.for(schema)
-      static Guard = MO.Guard.for(schema)
-      static Arbitrary = MO.Arbitrary.for(schema)
-
-      static lens = Lens.id<any>()
-      static lenses = lensFromProps()(schema.Api.props)
-
-      static include = include(schema.Api.props)
-      static pick = (...props) => pick(schema.Api.props, props)
-      static omit = (...props) => omit(schema.Api.props, props)
-
-      static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
-        new MO.SchemaAnnotated(self, identifier, meta)
-
-      constructor(inp?: MO.ConstructorInputOf<Self>) {
-        if (inp) {
-          fromFields(of_(inp), this)
-        }
+    get [St.hashSym](): number {
+      const ka = Object.keys(this).sort()
+      if (ka.length === 0) {
+        return 0
       }
-      get [St.hashSym](): number {
-        const ka = Object.keys(this).sort()
-        if (ka.length === 0) {
-          return 0
-        }
-        let hash = St.combineHash(St.hashString(ka[0]!), St.hash(this[ka[0]!]))
-        let i = 1
-        while (hash && i < ka.length) {
-          hash = St.combineHash(
-            hash,
-            St.combineHash(St.hashString(ka[i]!), St.hash(this[ka[i]!]))
-          )
-          i++
-        }
-        return hash
+      let hash = St.combineHash(St.hashString(ka[0]!), St.hash(this[ka[0]!]))
+      let i = 1
+      while (hash && i < ka.length) {
+        hash = St.combineHash(
+          hash,
+          St.combineHash(St.hashString(ka[i]!), St.hash(this[ka[i]!]))
+        )
+        i++
       }
-
-      [St.equalsSym](that: unknown): boolean {
-        if (!(that instanceof this.constructor)) {
-          return false
-        }
-        const ka = Object.keys(this)
-        const kb = Object.keys(that)
-        if (ka.length !== kb.length) {
-          return false
-        }
-        let eq = true
-        let i = 0
-        const ka_ = ka.sort()
-        const kb_ = kb.sort()
-        while (eq && i < ka.length) {
-          eq = ka_[i] === kb_[i] && St.equals(this[ka_[i]!], this[kb_[i]!])
-          i++
-        }
-        return eq
-      }
-      // static copy(this, that) {
-      //   return fromFields(that, this)
-      // }
+      return hash
     }
+
+    [St.equalsSym](that: unknown): boolean {
+      if (!(that instanceof this.constructor)) {
+        return false
+      }
+      const ka = Object.keys(this)
+      const kb = Object.keys(that)
+      if (ka.length !== kb.length) {
+        return false
+      }
+      let eq = true
+      let i = 0
+      const ka_ = ka.sort()
+      const kb_ = kb.sort()
+      while (eq && i < ka.length) {
+        eq = ka_[i] === kb_[i] && St.equals(this[ka_[i]!], this[kb_[i]!])
+        i++
+      }
+      return eq
+    }
+    // static copy(this, that) {
+    //   return fromFields(that, this)
+    // }
   }
 }
 export type ReqRes<E, A> = MO.Schema<

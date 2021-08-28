@@ -29,11 +29,11 @@ export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
   return MO.Parser.for(schema)
 }
 
-export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc = never> = MO.Schema<
+export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc> = MO.Schema<
   MO.ParserInputOf<Self>,
   M,
   MO.ConstructorInputOf<Self>,
-  [MEnc] extends [never] ? MO.EncodedOf<Self> : MEnc,
+  MEnc,
   MO.ApiOf<Self> & MO.ApiSelfType<M>
 >
 
