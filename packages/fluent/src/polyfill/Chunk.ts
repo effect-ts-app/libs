@@ -2,6 +2,8 @@ import {
   ChunkInternal,
   filter_,
   filterMap_,
+  find_,
+  from,
   map_,
   toArray,
 } from "@effect-ts/core/Collections/Immutable/Chunk"
@@ -20,6 +22,7 @@ const funcs = {
   filterMap: filterMap_,
   filter: filter_,
   map: map_,
+  find: find_,
   //findFirst: findFirst_,
   //findFirstMap: findFirstMap_,
   //sortWith: sort_,
@@ -31,6 +34,8 @@ const funcs = {
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
+
+  toChunk: from,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

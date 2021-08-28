@@ -6,7 +6,7 @@ import type * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import type * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Either } from "@effect-ts/core/Either"
 import type * as Eq from "@effect-ts/core/Equal"
-import type { Predicate } from "@effect-ts/core/Function"
+import type { Predicate, Refinement } from "@effect-ts/core/Function"
 import type { Option } from "@effect-ts/core/Option"
 import type * as Ord from "@effect-ts/core/Ord"
 import type { Effect } from "@effect-ts-app/core/Effect"
@@ -273,6 +273,11 @@ interface IterableOps {
     this: Iterable<Effect<R, E, A>>,
     __trace?: string
   ): Effect<R, E, CNK.Chunk<A>>
+
+  /**
+   * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk""
+   */
+  toChunk<A>(this: Iterable<A>): CNK.Chunk<A>
 }
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
@@ -301,6 +306,16 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
      * @ets_rewrite_method toArray from "@effect-ts/core/Collections/Immutable/Chunk"
      */
     toArray<A>(this: CNK.Chunk<A>): ARR.Array<A>
+
+    /**
+     * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     */
+    find<A, B extends A>(this: CNK.Chunk<A>, f: Refinement<A, B>): O.Option<B>
+
+    /**
+     * @ets_rewrite_method find from "@effect-ts/core/Collections/Immutable/Chunk"
+     */
+    find<A>(this: CNK.Chunk<A>, f: (a: A) => boolean): O.Option<A>
   }
 }
 

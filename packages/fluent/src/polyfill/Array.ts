@@ -1,4 +1,5 @@
 import { mapEffect_, mapSync_ } from "@effect-ts/core/Collections/Immutable/Array"
+import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
 import { mapEither_, mapOption_ } from "@effect-ts/fluent/Fx/Array"
 import {
   append_,
@@ -49,6 +50,8 @@ const funcs = {
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
+
+  toChunk: from,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {
