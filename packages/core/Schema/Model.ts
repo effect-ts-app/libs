@@ -571,7 +571,7 @@ export type PropsExtensions<Props extends PropertyRecord> = {
   omit: <P extends keyof Props>(...keys: readonly P[]) => Omit<Props, P>
 }
 
-export function Model<M, MEnc = unknown>(__name?: string) {
+export function Model<M, MEnc = never>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecial<M, MEnc>(__name)(MO.props(props))
 }
