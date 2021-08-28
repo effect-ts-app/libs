@@ -310,12 +310,12 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
     /**
      * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
      */
-    find<A, B extends A>(this: CNK.Chunk<A>, f: Refinement<A, B>): O.Option<B>
+    find<A, B extends A>(this: CNK.Chunk<A>, f: Refinement<A, B>): Option<B>
 
     /**
      * @ets_rewrite_method find from "@effect-ts/core/Collections/Immutable/Chunk"
      */
-    find<A>(this: CNK.Chunk<A>, f: (a: A) => boolean): O.Option<A>
+    find<A>(this: CNK.Chunk<A>, f: (a: A) => boolean): Option<A>
   }
 }
 
