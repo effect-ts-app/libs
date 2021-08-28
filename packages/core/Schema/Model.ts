@@ -11,10 +11,18 @@ import { Compute } from "../Compute"
 import { Erase } from "../Effect"
 import { FromPropertyRecord, fromProps, Void } from "./_api"
 import * as MO from "./_schema"
-import { schemaField, SchemaForModel } from "./_schema"
+import { schemaField } from "./_schema"
 import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
 import { unsafe } from "./custom/_api/condemn"
 import { include } from "./utils"
+
+export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc = never> = MO.Schema<
+  MO.ParserInputOf<Self>,
+  M,
+  MO.ConstructorInputOf<Self>,
+  [MEnc] extends [never] ? MO.EncodedOf<Self> : MEnc,
+  MO.ApiOf<Self> & MO.ApiSelfType<M>
+>
 
 export const GET = "GET"
 export type GET = typeof GET
@@ -94,16 +102,32 @@ export interface BodyRequest<
   [reqBrand]: typeof reqBrand
 }
 
+export type EParserFor<Self extends MO.SchemaAny> = MO.Parser.Parser<
+  MO.EncodedOf<Self>,
+  MO.ParserErrorOf<Self>,
+  MO.ParsedShapeOf<Self>
+>
+
+export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): MO.Parser.Parser<Encoded, any, ParsedShape> {
+  return MO.Parser.for(schema)
+}
+
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<M, Self extends MO.SchemaAny>
-  extends Model2<M, Self, SchemaForModel<M, Self>> {}
-export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
-  extends MO.Schema<
+export interface Model<M, Self extends MO.SchemaAny, MEnc = never>
+  extends Model2<M, Self, SchemaForModel<M, Self, MEnc>, MEnc> {}
+export interface Model2<
+  M,
+  Self extends MO.SchemaAny,
+  SelfM extends MO.SchemaAny,
+  MEnc = never
+> extends MO.Schema<
     MO.ParserInputOf<Self>,
     M,
     MO.ConstructorInputOf<Self>,
-    MO.EncodedOf<Self>,
+    [MEnc] extends [never] ? MO.EncodedOf<Self> : MEnc,
     MO.ApiOf<Self>
   > {
   new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
@@ -113,6 +137,7 @@ export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny
   readonly lenses: RecordSchemaToLenses<M, Self>
 
   readonly Parser: MO.ParserFor<SelfM>
+  readonly EParser: EParserFor<SelfM>
   readonly Constructor: MO.ConstructorFor<SelfM>
   readonly Encoder: MO.EncoderFor<SelfM>
   readonly Guard: MO.GuardFor<SelfM>
@@ -566,9 +591,9 @@ export type PropsExtensions<Props extends PropertyRecord> = {
   omit: <P extends keyof Props>(...keys: readonly P[]) => Omit<Props, P>
 }
 
-export function Model<M>(__name?: string) {
+export function Model<M, MEnc = unknown>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecial<M>(__name)(MO.props(props))
+    ModelSpecial<M, MEnc>(__name)(MO.props(props))
 }
 
 export function fromModel<M>(__name?: string) {
@@ -886,6 +911,11 @@ function setSchema<Self extends MO.SchemaProperties<any>>(schemed: any, self: Se
     configurable: true,
   })
 
+  Object.defineProperty(schemed, "EParser", {
+    value: MO.Parser.for(self),
+    configurable: true,
+  })
+
   Object.defineProperty(schemed, "Constructor", {
     value: MO.Constructor.for(self),
     configurable: true,
@@ -943,10 +973,10 @@ type GetProps<Self> = Self extends { Api: { props: infer Props } }
   : never
 
 // We don't want Copy interface from the official implementation
-export function ModelSpecial<M>(__name?: string) {
+export function ModelSpecial<M, MEnc = never>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<M, Self> & PropsExtensions<GetProps<Self>> => {
+  ): Model<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
     const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
     const of_ = MO.Constructor.for(schema)["|>"](unsafe)
     const fromFields = (fields: any, target: any) => {
@@ -954,6 +984,7 @@ export function ModelSpecial<M>(__name?: string) {
         target[k] = fields[k]
       }
     }
+    const parser = MO.Parser.for(schema)
 
     // @ts-expect-error the following is correct
     return class {
@@ -965,7 +996,8 @@ export function ModelSpecial<M>(__name?: string) {
       static Api = schema.Api
       static [">>>"] = schema[">>>"]
 
-      static Parser = MO.Parser.for(schema)
+      static Parser = parser
+      static EParser = parser
       static Encoder = MO.Encoder.for(schema)
       static Constructor = MO.Constructor.for(schema)
       static Guard = MO.Guard.for(schema)
