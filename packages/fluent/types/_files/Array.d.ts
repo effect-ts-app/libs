@@ -275,7 +275,7 @@ interface IterableOps {
   ): Effect<R, E, CNK.Chunk<A>>
 
   /**
-   * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk""
+   * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk"
    */
   toChunk<A>(this: Iterable<A>): CNK.Chunk<A>
 }
