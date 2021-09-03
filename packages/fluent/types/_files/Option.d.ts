@@ -18,12 +18,12 @@ export interface OptionOps<A> {
   /**
    * @ets_rewrite_method tryCatchOption_ from "@effect-ts-app/core/Sync"
    */
-  encaseInSync<A>(this: Option<A>, onNone: () => E): SyncIO<E, A>
+  encaseInSync<E, A>(this: Option<A>, onNone: () => E): SyncIO<E, A>
 
   /**
    * @ets_rewrite_method encaseOption_ from "@effect-ts/core/Effect"
    */
-  encaseInEffect<A>(this: Option<A>, onNone: () => E): EffectIO<E, A>
+  encaseInEffect<E, A>(this: Option<A>, onNone: () => E): EffectIO<E, A>
 }
 
 declare module "@effect-ts/system/Option/core" {
