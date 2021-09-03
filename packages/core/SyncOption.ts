@@ -192,6 +192,14 @@ function adapter(_: any) {
   return new GenSync(_["|>"](fromSyncIf))
 }
 
+export const getOrFail_ = <R, E, E2, A>(_: SyncOption<R, E, A>, onErr: () => E2) =>
+  T.chain_(_, (o) => (O.isSome(o) ? T.succeed(o.value) : T.fail(onErr())))
+
+export const getOrFail =
+  <E2>(onErr: () => E2) =>
+  <R, E, A>(_: SyncOption<R, E, A>) =>
+    getOrFail_(_, onErr)
+
 export interface Adapter {
   <A>(_: Tag<A>): GenSync<Has<A>, never, A>
 

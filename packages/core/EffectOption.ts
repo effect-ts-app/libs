@@ -168,11 +168,6 @@ export function zipRight_<R, E, A, R1, E1, A1>(
 
 export const fromOption = <A>(a: O.Option<A>): UIO<A> => T.succeed(a)
 
-export const getOrElse_ = <R, E, A, A2>(
-  _: EffectOption<R, E, A>,
-  f: () => A2
-): Effect<R, E, A | A2> => T.map_(_, (x) => (O.isNone(x) ? f() : x.value))
-
 export const alt_ = <R, E, A, R2, E2, A2>(
   _: EffectOption<R, E, A>,
   f: () => EffectOption<R2, E2, A2>
@@ -183,10 +178,23 @@ export const alt =
   <R, E, A>(_: EffectOption<R, E, A>): EffectOption<R & R2, E | E2, A | A2> =>
     alt_(_, f)
 
+export const getOrElse_ = <R, E, A, A2>(
+  _: EffectOption<R, E, A>,
+  f: () => A2
+): Effect<R, E, A | A2> => T.map_(_, (x) => (O.isNone(x) ? f() : x.value))
+
 export const getOrElse =
   <A2>(f: () => A2) =>
   <R, E, A>(_: EffectOption<R, E, A>): Effect<R, E, A | A2> =>
     getOrElse_(_, f)
+
+export const getOrFail_ = <R, E, E2, A>(_: EffectOption<R, E, A>, onErr: () => E2) =>
+  T.chain_(_, (o) => (O.isSome(o) ? T.succeed(o.value) : T.fail(onErr())))
+
+export const getOrFail =
+  <E2>(onErr: () => E2) =>
+  <R, E, A>(_: EffectOption<R, E, A>) =>
+    getOrFail_(_, onErr)
 
 export const tap = <R, E, A>(bind: FunctionN<[A], T.Effect<R, E, unknown>>) =>
   T.tap(O.fold(() => none, bind))

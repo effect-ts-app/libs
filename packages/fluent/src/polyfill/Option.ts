@@ -9,12 +9,16 @@ import {
   Some,
   toNullable,
 } from "@effect-ts/core/Option"
+import { tryCatchOption_ } from "@effect-ts/core/Sync"
+import { encaseOption_ } from "@effect-ts-app/core/Effect"
 
 import { alt_ } from "../_ext/Option"
 
 const funcs = {
   alt: alt_,
   fold: fold_,
+  encaseInSync: tryCatchOption_,
+  encaseInEffect: encaseOption_,
 }
 
 function apply(BasePrototype: any) {
