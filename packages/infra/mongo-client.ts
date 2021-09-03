@@ -12,8 +12,8 @@ const withClient = (url: string) =>
   M.make_(
     T.effectAsync<unknown, Error, MongoClient_>((res) => {
       const client = new MongoClient_(url)
-      client.connect((err, cl) => {
-        err ? res(T.fail(err)) : res(T.succeed(cl))
+      client.connect((err) => {
+        err ? res(T.fail(err)) : res(T.succeed(client))
       })
     }),
     (cl) =>
