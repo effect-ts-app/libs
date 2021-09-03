@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
-/* eslint-disable import/no-duplicates */
 import type * as ARR from "@effect-ts/core/Collections/Immutable/Array"
+import type { Chunk } from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Either } from "@effect-ts/core/Either"
 import type { Equal } from "@effect-ts/core/Equal"

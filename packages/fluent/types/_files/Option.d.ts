@@ -1,5 +1,4 @@
 // ets_tracing: off
-/* eslint-disable import/no-duplicates */
 import type { Option } from "@effect-ts/core/Option"
 
 export interface OptionOps<A> {

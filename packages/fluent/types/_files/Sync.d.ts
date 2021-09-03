@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import type { Effect } from "@effect-ts/core/Effect"
 import type { XPure } from "@effect-ts/system/XPure"
 import type { SyncOption } from "@effect-ts-app/core/SyncOption"

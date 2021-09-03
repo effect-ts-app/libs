@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
-/* eslint-disable import/no-duplicates */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Cause } from "@effect-ts/core/Effect/Cause"
 import type { Exit } from "@effect-ts/core/Effect/Exit"
 import type { HasClock } from "@effect-ts/system/Clock"
