@@ -2,6 +2,7 @@ import { pipe } from "@effect-ts/core"
 import {
   chain_,
   fold_,
+  getOrElse_,
   isNone,
   isSome,
   map_,
@@ -19,6 +20,7 @@ const funcs = {
   fold: fold_,
   encaseInSync: tryCatchOption_,
   encaseInEffect: encaseOption_,
+  getOrElse: getOrElse_,
 }
 
 function apply(BasePrototype: any) {
