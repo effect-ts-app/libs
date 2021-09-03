@@ -1,21 +1,21 @@
-import { Base } from "@effect-ts/core/Effect"
+import { XPureBase } from "@effect-ts/system/XPure"
 import {
   alt_,
   chain_,
-  chainEffect_,
+  chainSync_,
   getOrElse_,
   map_,
   toNullable,
-} from "@effect-ts-app/core/EffectOption"
+} from "@effect-ts-app/core/SyncOption"
 
-const BasePrototype = Base.prototype as any
+const BasePrototype = XPureBase.prototype as any
 
 const funcs = {
   chainOption: chain_,
   alt: alt_,
   getOrElse: getOrElse_,
   mapOption: map_,
-  chainOptionEffect: chainEffect_,
+  chainOptionSync: chainSync_,
   toNullable,
 }
 

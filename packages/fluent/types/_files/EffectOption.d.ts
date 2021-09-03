@@ -221,6 +221,22 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_method toNullable from "@effect-ts-app/core/EffectOption"
      */
     toNullable<R, E, A>(this: EO.EffectOption<R, E, A>): Effect<R, E, A | null>
+
+    /**
+     * @ets_rewrite_method alt_ from "@effect-ts-app/core/EffectOption"
+     */
+    alt<R, E, A, R2, E2, A2>(
+      this: EffectOption<R, E, A>,
+      f: () => EffectOption<R2, E2, A2>
+    ): EffectOption<R & R2, E | E2, A | A2>
+
+    /**
+     * @ets_rewrite_method getOrElse_ from "@effect-ts-app/core/EffectOption"
+     */
+    getOrElse<R, E, A, A2>(
+      this: EO.EffectOption<R, E, A>,
+      f: () => A2
+    ): Effect<R, E, A | A2>
   }
 }
 
