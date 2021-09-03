@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/fluent",
-  "version": "0.34.12",
+  "version": "0.34.13",
   "license": "MIT",
   "exports": {
     "./_ext/*": {
