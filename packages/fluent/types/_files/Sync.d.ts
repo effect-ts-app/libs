@@ -7,12 +7,12 @@ declare module "@effect-ts/system/Sync/core" {
     /**
      * @ets_rewrite_method toEffect from "@effect-ts-app/core/Sync"
      */
-    toEffect<R, E, A>(this: Sync<R, E, A>): T.Effect<R, E, A>
+    toEffect<R, E, A>(this: Sync<R, E, A>): Effect<R, E, A>
 
     // Undo the selection for Effect for now.
     chain<RX, EX, AX, R2, E2, B>(
       this: Sync<RX, EX, AX>,
-      f: (a: AX) => T.Effect<R2, E2, B>
+      f: (a: AX) => Effect<R2, E2, B>
     ): never
 
     /**
