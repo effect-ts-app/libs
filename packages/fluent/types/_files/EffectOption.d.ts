@@ -239,7 +239,7 @@ declare module "@effect-ts/system/Effect/effect" {
     /**
      * @ets_rewrite_method getOrFail_ from "@effect-ts-app/core/EffectOption"
      */
-    getOrFail<R, E, A, A2>(
+    getOrFail<R, E, E2, A>(
       this: EffectOption<R, E, A>,
       onNone: () => E2
     ): Effect<R, E | E2, A>

@@ -66,5 +66,13 @@ declare module "@effect-ts/system/Sync/core" {
      * @ets_rewrite_method getOrElse_ from "@effect-ts-app/core/SyncOption"
      */
     getOrElse<R, E, A, A2>(this: SyncOption<R, E, A>, f: () => A2): Sync<R, E, A | A2>
+
+    /**
+     * @ets_rewrite_method getOrFail_ from "@effect-ts-app/core/SyncOption"
+     */
+    getOrFail<R, E, E2, A>(
+      this: SyncOption<R, E, A>,
+      onNone: () => E2
+    ): Sync<R, E | E2, A>
   }
 }
