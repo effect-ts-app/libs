@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
 /* eslint-disable import/no-duplicates */
-import { Cause } from "@effect-ts/core/Effect/Cause"
-import * as Ex from "@effect-ts/core/Effect/Exit"
+import type { Cause } from "@effect-ts/core/Effect/Cause"
+import type { Exit } from "@effect-ts/core/Effect/Exit"
 import type { HasClock } from "@effect-ts/system/Clock"
 import type { EffectOption } from "@effect-ts-app/core/EffectOption"
-import type * as EO from "@effect-ts-app/core/EffectOption"
 
 declare module "@effect-ts/monocle/Lens" {
   export interface Base<S, A> extends Lens<S, A> {}
@@ -39,7 +38,7 @@ declare module "@effect-ts/system/Effect/effect" {
     result<R, E, A>(
       this: Effect<R, E, A>,
       __trace?: string
-    ): Effect<R, never, Ex.Exit<E, A>>
+    ): Effect<R, never, Exit<E, A>>
 
     /**
      * @ets_rewrite_method fold_ from "@effect-ts/core/Effect"
@@ -194,33 +193,33 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_method map_ from "@effect-ts-app/core/EffectOption"
      */
     mapOption<RX, EX, AX, B>(
-      this: EO.EffectOption<RX, EX, AX>,
+      this: EffectOption<RX, EX, AX>,
       f: (a: AX) => B,
       __trace?: string
-    ): EO.EffectOption<RX, EX, B>
+    ): EffectOption<RX, EX, B>
 
     /**
      * @ets_rewrite_method chain_ from "@effect-ts-app/core/EffectOption"
      */
     chainOption<RX, EX, AX, R2, E2, B>(
-      this: EO.EffectOption<RX, EX, AX>,
-      f: (a: AX) => EO.EffectOption<R2, E2, B>,
+      this: EffectOption<RX, EX, AX>,
+      f: (a: AX) => EffectOption<R2, E2, B>,
       __trace?: string
-    ): EO.EffectOption<RX & R2, EX | E2, B>
+    ): EffectOption<RX & R2, EX | E2, B>
 
     /**
      * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectOption"
      */
     chainOptionEffect<RX, EX, AX, R2, E2, B>(
-      this: EO.EffectOption<RX, EX, AX>,
+      this: EffectOption<RX, EX, AX>,
       f: (a: AX) => Effect<R2, E2, B>,
       __trace?: string
-    ): EO.EffectOption<RX & R2, EX | E2, B>
+    ): EffectOption<RX & R2, EX | E2, B>
 
     /**
      * @ets_rewrite_method toNullable from "@effect-ts-app/core/EffectOption"
      */
-    toNullable<R, E, A>(this: EO.EffectOption<R, E, A>): Effect<R, E, A | null>
+    toNullable<R, E, A>(this: EffectOption<R, E, A>): Effect<R, E, A | null>
 
     /**
      * @ets_rewrite_method alt_ from "@effect-ts-app/core/EffectOption"
@@ -234,7 +233,7 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_method getOrElse_ from "@effect-ts-app/core/EffectOption"
      */
     getOrElse<R, E, A, A2>(
-      this: EO.EffectOption<R, E, A>,
+      this: EffectOption<R, E, A>,
       f: () => A2
     ): Effect<R, E, A | A2>
   }
@@ -248,27 +247,27 @@ declare module "@effect-ts/system/Effect/effect" {
 //     //  * @ets_rewrite_method map_ from "@effect-ts-app/core/EffectOption"
 //     //  */
 //     //  map<RX, EX, AX, B>(
-//     //   this: EO.EffectOption<RX, EX, AX>,
+//     //   this: EffectOption<RX, EX, AX>,
 //     //   f: (a: AX) => B,
 //     //   __trace?: string
-//     // ): EO.EffectOption<RX, EX, B>
+//     // ): EffectOption<RX, EX, B>
 
 //     // /**
 //     //  * @ets_rewrite_method chain_ from "@effect-ts-app/core/EffectOption"
 //     //  */
 //     // chain<RX, EX, AX, R2, E2, B>(
-//     //   this: EO.EffectOption<RX, EX, AX>,
-//     //   f: (a: AX) => EO.EffectOption<R2, E2, B>,
+//     //   this: EffectOption<RX, EX, AX>,
+//     //   f: (a: AX) => EffectOption<R2, E2, B>,
 //     //   __trace?: string
-//     // ): EO.EffectOption<RX & R2, EX | E2, B>
+//     // ): EffectOption<RX & R2, EX | E2, B>
 
 //     /**
 //      * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectOption"
 //      */
 //      chainEffect<RX, EX, AX, R2, E2, B>(
-//       this: EO.EffectOption<RX, EX, AX>,
+//       this: EffectOption<RX, EX, AX>,
 //       f: (a: AX) => Effect<R2, E2, B>,
 //       __trace?: string
-//     ): EO.EffectOption<RX & R2, EX | E2, B>
+//     ): EffectOption<RX & R2, EX | E2, B>
 //   }
 // }
