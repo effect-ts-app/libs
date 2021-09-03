@@ -21,7 +21,7 @@ export interface OptionOps<A> {
   encaseInSync<E, A>(this: Option<A>, onNone: () => E): SyncIO<E, A>
 
   /**
-   * @ets_rewrite_method encaseOption_ from "@effect-ts/core/Effect"
+   * @ets_rewrite_method encaseOption_ from "@effect-ts-app/core/Effect"
    */
   encaseInEffect<E, A>(this: Option<A>, onNone: () => E): EffectIO<E, A>
 }
