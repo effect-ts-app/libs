@@ -12,6 +12,10 @@ import {
   Sync,
 } from "@effect-ts/core/Sync"
 
+import type { Effect } from "./Effect"
+import * as T from "./Effect"
+import { identity } from "./Function"
+
 export type ShapeFn<T> = Pick<
   T,
   {
@@ -107,6 +111,10 @@ export const orDie = mapError((err) => {
  */
 export function fromEither<E, A>(f: () => E.Either<E, A>) {
   return chain_(succeedWith(f), E.fold(fail, succeed))
+}
+
+export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
+  return T.map_(self, identity)
 }
 
 export * from "@effect-ts/core/Sync"

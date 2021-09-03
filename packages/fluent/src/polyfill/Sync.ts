@@ -21,13 +21,14 @@ import {
   tapError_,
   zipRight_,
 } from "@effect-ts/core/Effect"
-import { chain_, map_, mapError_ } from "@effect-ts/core/Sync"
 import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
+import { chain_, map_, mapError_, toEffect } from "@effect-ts-app/core/Sync"
 
 const BasePrototype = XPureBase.prototype as any
 
 const funcs = {
+  toEffect,
   catchAll: catchAll_,
   delay: delay_,
   chain: chain_,

@@ -7,6 +7,11 @@ import type * as SO from "@effect-ts-app/core/SyncOption"
 
 declare module "@effect-ts/system/Sync/core" {
   export interface Sync<R, E, A> extends XPure<unknown, unknown, unknown, R, E, A> {
+    /**
+     * @ets_rewrite_method toEffect from "@effect-ts-app/core/Sync"
+     */
+    toEffect<R, E, A>(this: S.Sync<R, E, A>): T.Effect<R, E, A>
+
     // Undo the selection for Effect for now.
     chain<RX, EX, AX, R2, E2, B>(
       this: S.Sync<RX, EX, AX>,
