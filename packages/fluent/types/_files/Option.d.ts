@@ -4,12 +4,6 @@ import type { Option } from "@effect-ts/core/Option"
 import type { IO as SyncIO } from "@effect-ts/core/Sync"
 
 export interface OptionOps<A> {
-  // fix for bug in original
-  /**
-   * @ets_rewrite_method getOrElse_ from "@effect-ts/core/Option"
-   */
-  getOrElse<AX, B>(this: Option<AX>, f: () => B): AX | B
-
   /**
    * @ets_rewrite_method alt_ from "@effect-ts-app/fluent/_ext/Option"
    */
