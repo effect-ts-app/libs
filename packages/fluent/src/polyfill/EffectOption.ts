@@ -4,6 +4,7 @@ import {
   chain_,
   chainEffect_,
   getOrElse_,
+  getOrFail_,
   map_,
   toNullable,
 } from "@effect-ts-app/core/EffectOption"
@@ -17,6 +18,7 @@ const funcs = {
   mapOption: map_,
   chainOptionEffect: chainEffect_,
   toNullable,
+  getOrFail: getOrFail_,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

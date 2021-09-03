@@ -4,6 +4,7 @@ import {
   chain_,
   chainSync_,
   getOrElse_,
+  getOrFail_,
   map_,
   toNullable,
 } from "@effect-ts-app/core/SyncOption"
@@ -16,6 +17,7 @@ const funcs = {
   getOrElse: getOrElse_,
   mapOption: map_,
   chainOptionSync: chainSync_,
+  getOrFail: getOrFail_,
   toNullable,
 }
 
