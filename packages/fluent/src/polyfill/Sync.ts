@@ -19,6 +19,7 @@ import {
   tapBoth_,
   tapCause_,
   tapError_,
+  union,
   zipRight_,
 } from "@effect-ts/core/Effect"
 import { XPureBase } from "@effect-ts/system/XPure"
@@ -51,6 +52,7 @@ const funcs = {
   zipRight: zipRight_,
   inject: provideSomeLayer_,
   asUnit,
+  union,
 
   runPromise,
   runPromiseExit,
