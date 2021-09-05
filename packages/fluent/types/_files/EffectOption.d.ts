@@ -246,7 +246,7 @@ declare module "@effect-ts/system/Effect/effect" {
     ): Effect<R, E | E2, A>
 
     /**
-     * @ets_rewrite_getter union from "@effect-ts/core/Effect"
+     * @ets_rewrite_method union from "@effect-ts/core/Effect"
      */
     union<Ret extends Effect<any, any, any>>(
       this: Ret

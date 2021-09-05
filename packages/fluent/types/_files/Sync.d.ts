@@ -77,7 +77,7 @@ declare module "@effect-ts/system/Sync/core" {
     ): Sync<R, E | E2, A>
 
     /**
-     * @ets_rewrite_getter union from "@effect-ts/core/Effect"
+     * @ets_rewrite_method union from "@effect-ts/core/Effect"
      */
     union<Ret extends Sync<any, any, any>>(this: Ret): Sync<_R<Ret>, _E<Ret>, _A<Ret>>
   }
