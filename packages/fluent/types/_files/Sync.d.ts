@@ -1,5 +1,4 @@
 import type { Effect } from "@effect-ts/core/Effect"
-import type { _A, _E, _R } from "@effect-ts/core/Utils"
 import type { XPure } from "@effect-ts/system/XPure"
 import type { SyncOption } from "@effect-ts-app/core/SyncOption"
 
@@ -75,12 +74,5 @@ declare module "@effect-ts/system/Sync/core" {
       this: SyncOption<R, E, A>,
       onNone: () => E2
     ): Sync<R, E | E2, A>
-
-    /**
-     * @ets_rewrite_method union from "@effect-ts/core/Effect"
-     */
-    unionSync<Ret extends Sync<any, any, any>>(
-      this: Ret
-    ): Sync<_R<Ret>, _E<Ret>, _A<Ret>>
   }
 }

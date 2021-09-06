@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Cause } from "@effect-ts/core/Effect/Cause"
 import type { Exit } from "@effect-ts/core/Effect/Exit"
-import type { _A, _E, _R } from "@effect-ts/core/Utils"
 import type { HasClock } from "@effect-ts/system/Clock"
 import type { EffectOption } from "@effect-ts-app/core/EffectOption"
 
@@ -244,13 +243,6 @@ declare module "@effect-ts/system/Effect/effect" {
       this: EffectOption<R, E, A>,
       onNone: () => E2
     ): Effect<R, E | E2, A>
-
-    /**
-     * @ets_rewrite_method union from "@effect-ts/core/Effect"
-     */
-    union<Ret extends Effect<any, any, any>>(
-      this: Ret
-    ): Effect<_R<Ret>, _E<Ret>, _A<Ret>>
   }
 }
 

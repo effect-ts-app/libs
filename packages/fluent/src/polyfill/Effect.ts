@@ -23,7 +23,6 @@ import {
   tapBoth_,
   tapCause_,
   tapError_,
-  union,
   zipRight_,
 } from "@effect-ts/core/Effect"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
@@ -53,7 +52,6 @@ const funcs = {
   zipRight: zipRight_,
   inject: provideSomeLayer_,
   asUnit,
-  union,
 
   runPromise,
   runPromiseExit,
