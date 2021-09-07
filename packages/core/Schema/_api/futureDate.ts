@@ -2,7 +2,7 @@ import { pipe } from "../../Function"
 import * as MO from "../_schema"
 import { domainEE, domainResponse2, onParseOrConstruct } from "../utils"
 import { Parser, These } from "../vendor"
-import { extendWithUtils } from "./string"
+import { extendWithUtils } from "./_shared"
 
 export const fromDateIdentifier = MO.makeAnnotation<{}>()
 export const fromDate: MO.DefaultSchema<Date, Date, Date, Date, {}> = pipe(

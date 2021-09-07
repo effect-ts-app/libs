@@ -13,7 +13,7 @@ import {
   parseUuidE,
   string,
 } from "../_schema"
-import { extendWithUtils } from "./string"
+import { extendWithUtils } from "./_shared"
 
 // TODO: openapi meta: format: email
 
