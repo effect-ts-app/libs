@@ -1,5 +1,4 @@
-import * as MO from "../vendor"
-
+export * from "./_shared"
 export * from "./futureDate"
 
 export * from "./Void"
@@ -16,26 +15,6 @@ export * from "./tuple"
 export * from "./fromProps"
 export * from "./fromArray"
 export * from "./nonEmptyArray"
-
-export type EParserFor<Self extends MO.SchemaAny> = MO.Parser.Parser<
-  MO.EncodedOf<Self>,
-  MO.ParserErrorOf<Self>,
-  MO.ParsedShapeOf<Self>
->
-
-export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): MO.Parser.Parser<Encoded, any, ParsedShape> {
-  return MO.Parser.for(schema)
-}
-
-export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc> = MO.Schema<
-  MO.ParserInputOf<Self>,
-  M,
-  MO.ConstructorInputOf<Self>,
-  MEnc,
-  MO.ApiOf<Self> & MO.ApiSelfType<M>
->
 
 export { UUID } from "./string"
 export * from "../custom/_api"

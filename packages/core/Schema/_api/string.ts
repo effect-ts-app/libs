@@ -1,21 +1,10 @@
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
-import { EParserFor } from "@effect-ts-app/core/Model"
 
 import { pipe } from "../../Function"
-import * as MO from "../_schema"
-import { Int, NonEmptyBrand, Positive } from "../_schema"
+import * as MO from "../vendor"
+import { Int, NonEmptyBrand, Positive } from "../vendor"
+import { extendWithUtils } from "./_shared"
 import { constrained } from "./length"
-
-export function makeUtils<B, C, D, E>(self: MO.Schema<unknown, B, C, D, E>) {
-  return {
-    parse: EParserFor(self),
-    unsafe: EParserFor(self)["|>"](MO.unsafe),
-  }
-}
-
-export function extendWithUtils<B, C, D, E>(self: MO.Schema<unknown, B, C, D, E>) {
-  return Object.assign(self, makeUtils(self))
-}
 
 // TODO: Word, for lorem ipsum generation, but as composition?
 

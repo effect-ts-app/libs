@@ -9,7 +9,13 @@ import { Path } from "path-parser"
 
 import { Compute } from "../Compute"
 import { Erase } from "../Effect"
-import { EParserFor, FromPropertyRecord, fromProps, SchemaForModel, Void } from "./_api"
+import {
+  EncSchemaForModel,
+  EParserFor,
+  FromPropertyRecord,
+  fromProps,
+  Void,
+} from "./_api"
 import * as MO from "./_schema"
 import { schemaField } from "./_schema"
 import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
@@ -97,10 +103,10 @@ export interface BodyRequest<
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
 export interface Model<M, Self extends MO.SchemaAny>
-  extends Model2<M, Self, SchemaForModel<M, Self, MO.EncodedOf<Self>>> {}
+  extends Model2<M, Self, EncSchemaForModel<M, Self, MO.EncodedOf<Self>>> {}
 
 export interface ModelEnc<M, Self extends MO.SchemaAny, MEnc>
-  extends Model2Int<M, Self, SchemaForModel<M, Self, MEnc>, MEnc> {}
+  extends Model2Int<M, Self, EncSchemaForModel<M, Self, MEnc>, MEnc> {}
 
 export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
   extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>> {}
