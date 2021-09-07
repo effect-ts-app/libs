@@ -13,6 +13,7 @@ import {
   parseUuidE,
   string,
 } from "../_schema"
+import { extendWithUtils } from "./string"
 
 // TODO: openapi meta: format: email
 
@@ -41,14 +42,6 @@ export const EmailFromString: DefaultSchema<string, Email, string, string, {}> =
 
 export const EmailIdentifier = MO.makeAnnotation<{}>()
 
-export const Email: DefaultSchema<
-  unknown,
-  Email,
-  string,
-  string,
-  MO.ApiSelfType<Email>
-> = pipe(
-  string[">>>"](EmailFromString),
-  brand<Email>(),
-  MO.annotate(EmailIdentifier, {})
+export const Email = extendWithUtils(
+  pipe(string[">>>"](EmailFromString), brand<Email>(), MO.annotate(EmailIdentifier, {}))
 )

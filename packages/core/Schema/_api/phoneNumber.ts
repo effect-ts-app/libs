@@ -14,6 +14,7 @@ import {
   parseUuidE,
   string,
 } from "../_schema"
+import { extendWithUtils } from "./string"
 
 // TODO: openapi meta: format: phone
 
@@ -50,14 +51,10 @@ export const PhoneNumberFromString: DefaultSchema<
 
 export const PhoneNumberIdentifier = MO.makeAnnotation<{}>()
 
-export const PhoneNumber: DefaultSchema<
-  unknown,
-  PhoneNumber,
-  string,
-  string,
-  MO.ApiSelfType<PhoneNumber>
-> = pipe(
-  string[">>>"](PhoneNumberFromString),
-  brand<PhoneNumber>(),
-  MO.annotate(PhoneNumberIdentifier, {})
+export const PhoneNumber = extendWithUtils(
+  pipe(
+    string[">>>"](PhoneNumberFromString),
+    brand<PhoneNumber>(),
+    MO.annotate(PhoneNumberIdentifier, {})
+  )
 )

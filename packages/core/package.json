@@ -425,10 +425,6 @@
         "./Sync": {
             "module": "./_esm/Sync.js",
             "default": "./Sync.js"
-        },
-        "./test.helpers": {
-            "module": "./_esm/test.helpers.js",
-            "default": "./test.helpers.js"
         }
     },
     "sideEffects": false

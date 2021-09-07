@@ -1,9 +1,21 @@
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+import { EParserFor } from "@effect-ts-app/core/Model"
 
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
-import { NonEmptyBrand } from "../_schema"
+import { Int, NonEmptyBrand, Positive } from "../_schema"
 import { constrained } from "./length"
+
+export function makeUtils<B, C, D, E>(self: MO.Schema<unknown, B, C, D, E>) {
+  return {
+    parse: EParserFor(self),
+    unsafe: EParserFor(self)["|>"](MO.unsafe),
+  }
+}
+
+export function extendWithUtils<B, C, D, E>(self: MO.Schema<unknown, B, C, D, E>) {
+  return Object.assign(self, makeUtils(self))
+}
 
 // TODO: Word, for lorem ipsum generation, but as composition?
 
@@ -19,6 +31,12 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
     MO.brand<Brand>()
   )
 }
+
+export type UUID = MO.UUID
+export const UUID = extendWithUtils(MO.UUID)
+
+export type PositiveInt = Int & Positive
+export const PositiveInt = extendWithUtils(MO.positiveInt)
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
@@ -47,13 +65,9 @@ export const reasonableStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 255.
  */
-export const ReasonableString = pipe(MO.string[">>>"](reasonableStringFromString))
-
-/**
- * A string that is at least 1 character long and a maximum of 255.
- * @deprecated @see ReasonableString
- */
-export const reasonableString = ReasonableString
+export const ReasonableString = extendWithUtils(
+  MO.string[">>>"](reasonableStringFromString)
+)
 
 /**
  * A string that is at least 1 character long and a maximum of 2048.
@@ -82,12 +96,7 @@ export const longStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 2048.
  */
-export const LongString = pipe(MO.string[">>>"](longStringFromString))
-
-/**
- * A string that is at least 1 character long and a maximum of 2048.
- */
-export const longString = LongString
+export const LongString = extendWithUtils(MO.string[">>>"](longStringFromString))
 
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
@@ -117,9 +126,4 @@ export const textStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
-export const TextString = pipe(MO.string[">>>"](textStringFromString))
-/**
- * A string that is at least 1 character long and a maximum of 255.
- * @deprecated @see TextString
- */
-export const textString = TextString
+export const TextString = extendWithUtils(MO.string[">>>"](textStringFromString))

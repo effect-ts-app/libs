@@ -4,6 +4,7 @@
 
 import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
+
 import * as MO from "../custom"
 import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
