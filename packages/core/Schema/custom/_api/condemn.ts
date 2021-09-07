@@ -8,6 +8,10 @@ import type { AnyError } from "../_schema"
 import { drawError } from "../_schema"
 import type { These } from "../These"
 
+/**
+ * The Effect fails with the generic `E` type when the parser produces an invalid result
+ * Otherwise success with the valid result.
+ */
 export function condemn<X, E, A>(self: (a: X) => These<E, A>): (a: X) => T.IO<E, A> {
   return (x) =>
     T.suspend(() => {
@@ -16,7 +20,7 @@ export function condemn<X, E, A>(self: (a: X) => These<E, A>): (a: X) => T.IO<E,
         return T.fail(y.left)
       }
       const {
-        tuple: [a, w]
+        tuple: [a, w],
       } = y.right
       return w._tag === "Some" ? T.fail(w.value) : T.succeed(a)
     })
@@ -38,6 +42,10 @@ export class ThrowableCondemnException extends Error {
   }
 }
 
+/**
+ * The Effect fails with `ThrowableCondemnException` when the parser produces an invalid result.
+ * Otherwise succeeds with the valid result.
+ */
 export function condemnFail<X, A>(self: (a: X) => These<AnyError, A>) {
   return (a: X, __trace?: string) =>
     T.fromEither(() => {
@@ -53,11 +61,19 @@ export function condemnFail<X, A>(self: (a: X) => These<AnyError, A>) {
     }, __trace)
 }
 
+/**
+ * The Effect dies with `ThrowableCondemnException` when the parser produces an invalid result.
+ * Otherwise succeeds with the valid result.
+ */
 export function condemnDie<X, A>(self: (a: X) => These<AnyError, A>) {
   const orFail = condemnFail(self)
   return (a: X, __trace?: string) => T.orDie(orFail(a, __trace))
 }
 
+/**
+ * Throws a classic `ThrowableCondemnException` when the parser produces an invalid result.
+ * Otherwise returns the valid result.
+ */
 export function unsafe<X, A>(self: (a: X) => These<AnyError, A>) {
   return (a: X) => {
     const res = self(a).effect
