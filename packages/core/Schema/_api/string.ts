@@ -20,12 +20,21 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
   )
 }
 
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ */
 export interface ReasonableStringBrand extends LongStringBrand {
   readonly ReasonableString: unique symbol
 }
 
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ */
 export type ReasonableString = string & ReasonableStringBrand
 
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ */
 export const reasonableStringFromString = pipe(
   makeConstrainedFromString<ReasonableString>(1, 256 - 1),
   MO.arbitrary((FC) =>
@@ -35,14 +44,26 @@ export const reasonableStringFromString = pipe(
   )
 )
 
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ */
 export const reasonableString = pipe(MO.string[">>>"](reasonableStringFromString))
 
+/**
+ * A string that is at least 1 character long and a maximum of 2048.
+ */
 export interface LongStringBrand extends TextStringBrand {
   readonly LongString: unique symbol
 }
 
+/**
+ * A string that is at least 1 character long and a maximum of 2048.
+ */
 export type LongString = string & LongStringBrand
 
+/**
+ * A string that is at least 1 character long and a maximum of 2048.
+ */
 export const longStringFromString = pipe(
   makeConstrainedFromString<LongString>(1, 2048 - 1),
   MO.arbitrary((FC) =>
@@ -52,15 +73,27 @@ export const longStringFromString = pipe(
   )
 )
 
+/**
+ * A string that is at least 1 character long and a maximum of 2048.
+ */
 export const longString = pipe(MO.string[">>>"](longStringFromString))
 
+/**
+ * A string that is at least 1 character long and a maximum of 64kb.
+ */
 export interface TextStringBrand extends NonEmptyBrand {
   readonly TextString: unique symbol
 }
 
+/**
+ * A string that is at least 1 character long and a maximum of 64kb.
+ */
 export type TextString = string & TextStringBrand
 
 // TODO: compose arbitraries?
+/**
+ * A string that is at least 1 character long and a maximum of 64kb.
+ */
 export const textStringFromString = pipe(
   makeConstrainedFromString<TextString>(1, 64 * 1024),
   MO.arbitrary((FC) =>
@@ -70,4 +103,7 @@ export const textStringFromString = pipe(
   )
 )
 
+/**
+ * A string that is at least 1 character long and a maximum of 64kb.
+ */
 export const textString = pipe(MO.string[">>>"](textStringFromString))
