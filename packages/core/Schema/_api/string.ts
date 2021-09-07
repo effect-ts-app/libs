@@ -47,7 +47,13 @@ export const reasonableStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 255.
  */
-export const reasonableString = pipe(MO.string[">>>"](reasonableStringFromString))
+export const ReasonableString = pipe(MO.string[">>>"](reasonableStringFromString))
+
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ * @deprecated @see ReasonableString
+ */
+export const reasonableString = ReasonableString
 
 /**
  * A string that is at least 1 character long and a maximum of 2048.
@@ -76,7 +82,12 @@ export const longStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 2048.
  */
-export const longString = pipe(MO.string[">>>"](longStringFromString))
+export const LongString = pipe(MO.string[">>>"](longStringFromString))
+
+/**
+ * A string that is at least 1 character long and a maximum of 2048.
+ */
+export const longString = LongString
 
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
@@ -106,4 +117,9 @@ export const textStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
-export const textString = pipe(MO.string[">>>"](textStringFromString))
+export const TextString = pipe(MO.string[">>>"](textStringFromString))
+/**
+ * A string that is at least 1 character long and a maximum of 255.
+ * @deprecated @see TextString
+ */
+export const textString = TextString
