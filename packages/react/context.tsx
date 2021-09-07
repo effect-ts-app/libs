@@ -11,10 +11,23 @@ export interface ServiceContext<R> {
   readonly provide: <E, A>(
     self: T.Effect<R & T.DefaultEnv, E, A>
   ) => T.Effect<unknown, E, A>
+
+  /**
+   * Fire and Forget. Errors are logged however.
+   */
   readonly runWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) => () => void
+
+  /**
+   * Fire and Forget. A promise that never fails nor returns any value.
+   * Errors are logged however.
+   */
   readonly runPromiseWithErrorLog: <E, A>(
     self: T.Effect<R & T.DefaultEnv, E, A>
   ) => Promise<void>
+
+  /**
+   * A Promise that never fails, the Resolved value is an Exit result that can be either Success or Failed
+   */
   readonly runPromiseExit: <E, A>(
     self: T.Effect<R & T.DefaultEnv, E, A>
   ) => Promise<Exit<E, A>>
