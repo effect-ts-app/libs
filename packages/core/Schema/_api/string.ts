@@ -2,7 +2,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
-import { NonEmptyBrand } from "../_schema"
+import { NonEmptyBrand, ParsedShapeOf } from "../_schema"
 import { constrained } from "./length"
 
 // TODO: Word, for lorem ipsum generation, but as composition?
@@ -30,17 +30,19 @@ export interface ReasonableStringBrand extends LongStringBrand {
 /**
  * A string that is at least 1 character long and a maximum of 255.
  */
-export type ReasonableString = string & ReasonableStringBrand
+export type ReasonableString = ParsedShapeOf<typeof reasonableString>
+
+type ReasonableString_ = string & ReasonableStringBrand
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
  */
 export const reasonableStringFromString = pipe(
-  makeConstrainedFromString<ReasonableString>(1, 256 - 1),
+  makeConstrainedFromString<ReasonableString_>(1, 256 - 1),
   MO.arbitrary((FC) =>
     FC.lorem({ mode: "words", maxCount: 2 })
       .filter((x) => x.length < 256 - 1 && x.length > 0)
-      .map((x) => x as ReasonableString)
+      .map((x) => x as ReasonableString_)
   )
 )
 
@@ -59,17 +61,19 @@ export interface LongStringBrand extends TextStringBrand {
 /**
  * A string that is at least 1 character long and a maximum of 2048.
  */
-export type LongString = string & LongStringBrand
+export type LongString = ParsedShapeOf<typeof longString>
+
+type LongString_ = string & LongStringBrand
 
 /**
  * A string that is at least 1 character long and a maximum of 2048.
  */
 export const longStringFromString = pipe(
-  makeConstrainedFromString<LongString>(1, 2048 - 1),
+  makeConstrainedFromString<LongString_>(1, 2048 - 1),
   MO.arbitrary((FC) =>
     FC.lorem({ mode: "words", maxCount: 25 })
       .filter((x) => x.length < 2048 - 1 && x.length > 0)
-      .map((x) => x as LongString)
+      .map((x) => x as LongString_)
   )
 )
 
@@ -88,18 +92,20 @@ export interface TextStringBrand extends NonEmptyBrand {
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
-export type TextString = string & TextStringBrand
+export type TextString = ParsedShapeOf<typeof textString>
+
+type TextString_ = string & TextStringBrand
 
 // TODO: compose arbitraries?
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
 export const textStringFromString = pipe(
-  makeConstrainedFromString<TextString>(1, 64 * 1024),
+  makeConstrainedFromString<TextString_>(1, 64 * 1024),
   MO.arbitrary((FC) =>
     FC.lorem({ mode: "sentences", maxCount: 25 })
       .filter((x) => x.length < 64 * 1024 && x.length > 0)
-      .map((x) => x as TextString)
+      .map((x) => x as TextString_)
   )
 )
 
