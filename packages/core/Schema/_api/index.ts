@@ -37,4 +37,5 @@ export type SchemaForModel<M, Self extends MO.SchemaAny, MEnc> = MO.Schema<
   MO.ApiOf<Self> & MO.ApiSelfType<M>
 >
 
+export { UUID } from "./string"
 export * from "../custom/_api"
