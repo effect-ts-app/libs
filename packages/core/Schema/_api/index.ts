@@ -16,5 +16,5 @@ export * from "./fromProps"
 export * from "./fromArray"
 export * from "./nonEmptyArray"
 
-export { UUID } from "./string"
+export { UUID, Int, PositiveInt, NonEmptyString } from "./string"
 export * from "../custom/_api"

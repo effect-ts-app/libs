@@ -26,8 +26,13 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
 export type UUID = MO.UUID
 export const UUID = extendWithUtils(MO.UUID)
 
+export const Int = extendWithUtils(MO.int)
+export type Int = MO.Int
 export const PositiveInt = extendWithUtils(MO.positiveInt)
-//export type PositiveInt = MO.PositiveInt
+export type PositiveInt = MO.PositiveInt
+
+export const NonEmptyString = extendWithUtils(MO.nonEmptyString)
+export type NonEmptyString = MO.NonEmptyString
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
