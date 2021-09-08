@@ -2,7 +2,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { pipe } from "../../Function"
 import * as MO from "../vendor"
-import { Int, NonEmptyBrand, Positive } from "../vendor"
+import { NonEmptyBrand } from "../vendor"
 import { extendWithUtils } from "./_shared"
 import { constrained } from "./length"
 
@@ -17,6 +17,8 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
     constrained<Brand>(minLength, maxLength),
     MO.mapParserError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
     MO.mapConstructorError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
+    // NOTE: brand must come after, to reap benefits of showing Opaque types in editor
+    // if combining types further down the line, must re-apply brand.
     MO.brand<Brand>()
   )
 }
@@ -24,8 +26,8 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
 export type UUID = MO.UUID
 export const UUID = extendWithUtils(MO.UUID)
 
-export type PositiveInt = Int & Positive
 export const PositiveInt = extendWithUtils(MO.positiveInt)
+//export type PositiveInt = MO.PositiveInt
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
@@ -48,7 +50,9 @@ export const reasonableStringFromString = pipe(
     FC.lorem({ mode: "words", maxCount: 2 })
       .filter((x) => x.length < 256 - 1 && x.length > 0)
       .map((x) => x as ReasonableString)
-  )
+  ),
+  // arbitrary removes brand benefit
+  MO.brand<ReasonableString>()
 )
 
 /**
@@ -79,7 +83,9 @@ export const longStringFromString = pipe(
     FC.lorem({ mode: "words", maxCount: 25 })
       .filter((x) => x.length < 2048 - 1 && x.length > 0)
       .map((x) => x as LongString)
-  )
+  ),
+  // arbitrary removes brand benefit
+  MO.brand<LongString>()
 )
 
 /**
@@ -109,7 +115,9 @@ export const textStringFromString = pipe(
     FC.lorem({ mode: "sentences", maxCount: 25 })
       .filter((x) => x.length < 64 * 1024 && x.length > 0)
       .map((x) => x as TextString)
-  )
+  ),
+  // arbitrary removes brand benefit
+  MO.brand<TextString>()
 )
 
 /**
