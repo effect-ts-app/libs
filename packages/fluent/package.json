@@ -18,8 +18,8 @@
     "./types/*": "./types/*.ts"
   },
   "devDependencies": {
-    "@effect-ts/fluent": "^0.2.1",
-    "@effect-ts/node": "^0.28.0"
+    "@effect-ts/fluent": "^0.3.4",
+    "@effect-ts/node": "^0.28.1"
   },
   "publishConfig": {
     "access": "public"
