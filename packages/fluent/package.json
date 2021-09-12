@@ -19,6 +19,12 @@
   },
   "devDependencies": {
     "@effect-ts/fluent": "^0.3.4",
+    "@effect-ts/fluent-node": "^0.1.1",
+    "@effect-ts/node": "^0.28.1"
+  },
+  "peerDependencies": {
+    "@effect-ts/fluent": "^0.3.4",
+    "@effect-ts/fluent-node": "^0.1.1",
     "@effect-ts/node": "^0.28.1"
   },
   "publishConfig": {

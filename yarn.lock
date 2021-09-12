@@ -630,6 +630,11 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/express/-/express-0.20.3.tgz#798ca5ea36a580b6aea88814f39dba6671e6d125"
   integrity sha512-rLNd+ZYT7FynNMGYMuKoyCqjpxKRty1YcvplV2tDev6qiZdIp45ta36kSxEmL4Wa9687o3vL7qAm2VLU1dECxQ==
 
+"@effect-ts/fluent-node@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@effect-ts/fluent-node/-/fluent-node-0.1.1.tgz#75e852f830eb2b6b8a0e692c1acc404d4ad95baa"
+  integrity sha512-qVCCYDGmhgW4yc6YKsiB1UwDfDE4R+GYAqm0QUYqIPKq8DITw15MWGusZF1Yfyw4yHxgU555G5+wggZRHoVYmA==
+
 "@effect-ts/fluent@^0.3.4":
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@effect-ts/fluent/-/fluent-0.3.4.tgz#c1555e2f135643d4cf21bbf14257d85fd906c95c"
