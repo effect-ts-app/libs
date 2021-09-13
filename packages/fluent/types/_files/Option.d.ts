@@ -16,6 +16,11 @@ declare module "@effect-ts/system/Option/core" {
     readonly val: A | null
 
     /**
+     * @ets_rewrite_getter toUndefined from "@effect-ts/core/Option"
+     */
+    readonly value: A | undefined
+
+    /**
      * @ets_rewrite_method tryCatchOption_ from "@effect-ts-app/core/Sync"
      */
     encaseInSync<E, A>(this: Option<A>, onNone: () => E): SyncIO<E, A>
