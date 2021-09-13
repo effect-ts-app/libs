@@ -5,7 +5,7 @@ import {
   chain_,
   fold_,
   fork,
-  Managed as Base,
+  ManagedImpl as Base,
   map_,
   mapError_,
   orDie,
