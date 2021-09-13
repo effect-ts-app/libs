@@ -18,24 +18,26 @@ import { tag } from "@effect-ts/core/Has"
 
 const gl = global as any
 
-gl.T.Effect = {
-  ...XEffect,
-  async: effectAsync,
-  asyncInterrupt: effectAsyncInterrupt,
-  do_: XEffect.do,
-  succeedNow: succeed,
-  succeed: succeedWith,
-  failNow: fail,
-  fail: failWith,
-  dieNow: die,
-  die: dieWith,
-  haltNow: halt,
-  halt: haltWith,
-}
-gl.T.Managed = XManaged
-gl.T.Chunk = XChunk
-gl.T.Data = {
-  Case,
-  Tagged,
-  tag,
+gl.T = {
+  Effect: {
+    ...XEffect,
+    async: effectAsync,
+    asyncInterrupt: effectAsyncInterrupt,
+    do_: XEffect.do,
+    succeedNow: succeed,
+    succeed: succeedWith,
+    failNow: fail,
+    fail: failWith,
+    dieNow: die,
+    die: dieWith,
+    haltNow: halt,
+    halt: haltWith,
+  },
+  Managed: XManaged,
+  Chunk: XChunk,
+  Data: {
+    Case,
+    Tagged,
+    tag,
+  },
 }
