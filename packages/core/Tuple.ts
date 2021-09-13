@@ -3,7 +3,7 @@ import { Tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 
 export * from "@effect-ts/core/Collections/Immutable/Tuple"
 
-export function flattenArray<T>({ tuple }: Tuple<A.Array<T>[]>) {
+export function flattenArray<T>({ tuple }: Tuple<A.Array<A.Array<T>>>) {
   return A.flatten(tuple)
 }
 

@@ -33,7 +33,7 @@ const EffectExtensions = {
   halt: haltWith,
 }
 
-gl.T = {
+gl.$T = {
   Effect: {
     ...EffectExtensions,
   },
