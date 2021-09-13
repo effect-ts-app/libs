@@ -18,20 +18,27 @@ import { tag } from "@effect-ts/core/Has"
 
 const gl = global as any
 
+const EffectExtensions = {
+  ...XEffect,
+  async: effectAsync,
+  asyncInterrupt: effectAsyncInterrupt,
+  do_: XEffect.do,
+  succeedNow: succeed,
+  succeed: succeedWith,
+  failNow: fail,
+  fail: failWith,
+  dieNow: die,
+  die: dieWith,
+  haltNow: halt,
+  halt: haltWith,
+}
+
+// Because of possible collision with T.Effect.*
+Object.assign(XEffect.Base, EffectExtensions)
+
 gl.T = {
   Effect: {
-    ...XEffect,
-    async: effectAsync,
-    asyncInterrupt: effectAsyncInterrupt,
-    do_: XEffect.do,
-    succeedNow: succeed,
-    succeed: succeedWith,
-    failNow: fail,
-    fail: failWith,
-    dieNow: die,
-    die: dieWith,
-    haltNow: halt,
-    halt: haltWith,
+    ...EffectExtensions,
   },
   Managed: XManaged,
   Chunk: XChunk,
