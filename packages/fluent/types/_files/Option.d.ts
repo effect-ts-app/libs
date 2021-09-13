@@ -4,12 +4,7 @@ import type { Option } from "@effect-ts/core/Option"
 import type { IO as SyncIO } from "@effect-ts/core/Sync"
 
 declare module "@effect-ts/system/Option/core" {
-  export interface OptionOps {
-    /**
-     * @ets_rewrite_method alt_ from "@effect-ts-app/fluent/_ext/Option"
-     */
-    alt<A, B>(this: Option<A>, fb: () => Option<B>): Option<A | B>
-
+  interface Ops<A> {
     /**
      * @ets_rewrite_getter toNullable from "@effect-ts/core/Option"
      */
@@ -19,6 +14,15 @@ declare module "@effect-ts/system/Option/core" {
      * @ets_rewrite_getter toUndefined from "@effect-ts/core/Option"
      */
     readonly value: A | undefined
+  }
+  export interface Some<A> extends Ops<A> {}
+  export interface None extends Ops<never> {}
+
+  export interface OptionOps {
+    /**
+     * @ets_rewrite_method alt_ from "@effect-ts-app/fluent/_ext/Option"
+     */
+    alt<A, B>(this: Option<A>, fb: () => Option<B>): Option<A | B>
 
     /**
      * @ets_rewrite_method tryCatchOption_ from "@effect-ts-app/core/Sync"
