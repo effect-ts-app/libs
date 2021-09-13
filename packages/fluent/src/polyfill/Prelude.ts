@@ -33,9 +33,6 @@ const EffectExtensions = {
   halt: haltWith,
 }
 
-// Because of possible collision with T.Effect.*
-Object.assign(XEffect.Base, EffectExtensions)
-
 gl.T = {
   Effect: {
     ...EffectExtensions,
