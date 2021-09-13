@@ -44,6 +44,16 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
      */
     const tryCatchPromise: typeof T.tryCatchPromise
+
+    /**
+     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
+     */
+    const tuple: typeof T.tuple
+
+    /**
+     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
+     */
+    const struct: typeof T.struct
   }
 
   export interface Effect<R, E, A> {
