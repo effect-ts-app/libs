@@ -650,10 +650,10 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/fluent-node/-/fluent-node-0.1.2.tgz#245621195c1c02aa795c1fe8d7f51826df34c72a"
   integrity sha512-u3G/krlMICsAPTH1UWsJu2E2nw1xe732KUUYCt107NyxtASq8mwT/Tm1MkHxTdoRV2UglAe1RGlsvWd11H4vbw==
 
-"@effect-ts/fluent@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@effect-ts/fluent/-/fluent-0.3.5.tgz#d3d67e0e1eb3af153e07d4e75ebb28b4666904e8"
-  integrity sha512-bCvtoYInUsJ7wySdtxsMhx9rls8kGLhMWuv0Gk07jlAlA+k2nqwpXj9NX3eO9FZEy5fL5HDoylTX+DjzIEB69g==
+"@effect-ts/fluent@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@effect-ts/fluent/-/fluent-0.3.6.tgz#682494fe01d1ff3b7549879e5e6e2480d161f1dd"
+  integrity sha512-8P/454eFKz/wQmgP+7j5dtf38HiNY2sQguWyWkvNDsz6lz+OvugvrNXVVLCLvbmBlO6GWNDTphWOnduIqH9UGg==
 
 "@effect-ts/jest@^0.29.0":
   version "0.29.0"

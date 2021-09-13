@@ -23,7 +23,6 @@ declare module "@effect-ts/monocle/Lens" {
 }
 
 declare module "@effect-ts/system/Effect/effect" {
-  export interface Base<R, E, A> extends Effect<R, E, A> {}
   export interface EffectStaticOps {
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
@@ -73,7 +72,7 @@ declare module "@effect-ts/system/Effect/effect" {
     struct: typeof T.struct
   }
 
-  export interface Effect<R, E, A> {
+  interface EffectOps {
     // no tracing..
     // /**
     //  * @ets_rewrite_getter asUnit from "@effect-ts/core/Effect"
