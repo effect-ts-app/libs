@@ -18,7 +18,7 @@ import { tag } from "@effect-ts/core/Has"
 
 const gl = global as any
 
-gl.Effect = {
+gl.T.Effect = {
   ...XEffect,
   async: effectAsync,
   asyncInterrupt: effectAsyncInterrupt,
@@ -32,9 +32,9 @@ gl.Effect = {
   haltNow: halt,
   halt: haltWith,
 }
-gl.Managed = XManaged
-gl.Chunk = XChunk
-gl.Data = {
+gl.T.Managed = XManaged
+gl.T.Chunk = XChunk
+gl.T.Data = {
   Case,
   Tagged,
   tag,
