@@ -1,5 +1,6 @@
 // ets_tracing: off
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import type * as T from "@effect-ts/core/Effect"
 import type { Cause } from "@effect-ts/core/Effect/Cause"
 import type { Exit } from "@effect-ts/core/Effect/Exit"
 import type { HasClock } from "@effect-ts/system/Clock"
@@ -23,6 +24,27 @@ declare module "@effect-ts/monocle/Lens" {
 
 declare module "@effect-ts/system/Effect/effect" {
   export interface Base<R, E, A> extends Effect<R, E, A> {}
+  namespace Effect {
+    /**
+     * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
+     */
+    const tryPromise: typeof T.tryPromise
+
+    /**
+     * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
+     */
+    const tryPromise: typeof T.tryPromise
+
+    /**
+     * @ets_rewrite_static promise from "@effect-ts/core/Effect"
+     */
+    const promise: typeof T.promise
+
+    /**
+     * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
+     */
+    const tryCatchPromise: typeof T.tryCatchPromise
+  }
 
   export interface Effect<R, E, A> {
     // no tracing..
