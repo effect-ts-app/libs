@@ -280,7 +280,7 @@ interface IterableOps {
 }
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
-  export interface Chunk<A> extends IterableOps {
+  interface ChunkOps extends IterableOps {
     /**
      * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
      */
@@ -325,7 +325,7 @@ declare global {
     /**
      * @ets_rewrite_method mapOriginal_ from "@effect-ts-app/fluent/_ext/Array"
      */
-    map<AX, B>(this: ARR.Array<AX>, f: (a: AX, i: number) => B): ARR.Array<B>
+    map<AX, B>(this: ARR.Array<AX>, f: (a: AX, i: number) => B): B[]
   }
 
   // interface Iterable<T> extends IterableOps {}
