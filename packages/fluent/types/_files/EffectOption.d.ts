@@ -24,53 +24,53 @@ declare module "@effect-ts/monocle/Lens" {
 
 declare module "@effect-ts/system/Effect/effect" {
   export interface Base<R, E, A> extends Effect<R, E, A> {}
-  namespace Effect {
+  export interface EffectStaticOps {
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
      */
-    const tryPromise: typeof T.tryPromise
+    tryPromise: typeof T.tryPromise
 
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
      */
-    const tryPromise: typeof T.tryPromise
+    tryPromise: typeof T.tryPromise
 
     /**
      * @ets_rewrite_static promise from "@effect-ts/core/Effect"
      */
-    const promise: typeof T.promise
+    promise: typeof T.promise
 
     /**
      * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
      */
-    const tryCatchPromise: typeof T.tryCatchPromise
+    tryCatchPromise: typeof T.tryCatchPromise
 
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    const tuple: typeof T.tuple
+    tuple: typeof T.tuple
 
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    const tuplePar: typeof T.tuplePar
+    tuplePar: typeof T.tuplePar
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    const tupleParN: typeof T.tupleParN
+    tupleParN: typeof T.tupleParN
 
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    const structPar: typeof T.structPar
+    structPar: typeof T.structPar
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    const structParN: typeof T.structParN
+    structParN: typeof T.structParN
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    const struct: typeof T.struct
+    struct: typeof T.struct
   }
 
   export interface Effect<R, E, A> {
