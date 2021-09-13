@@ -11,7 +11,7 @@ import type { Ord } from "@effect-ts/core/Ord"
 import type { Effect } from "@effect-ts-app/core/Effect"
 import type { Sync } from "@effect-ts-app/core/Sync"
 
-interface ArrayOps {
+interface AOps {
   /**
    * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
    */
@@ -319,8 +319,8 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
 }
 
 declare global {
-  interface Array<T> extends ArrayOps, IterableOps {}
-  interface ReadonlyArray<T> extends ArrayOps, IterableOps {
+  interface ArrayOps extends AOps, IterableOps {}
+  interface ReadonlyArrayOps extends AOps, IterableOps {
     // undo the global overwrite in ETS
     /**
      * @ets_rewrite_method mapOriginal_ from "@effect-ts-app/fluent/_ext/Array"
