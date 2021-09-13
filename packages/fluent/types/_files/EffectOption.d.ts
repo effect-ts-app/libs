@@ -51,6 +51,23 @@ declare module "@effect-ts/system/Effect/effect" {
     const tuple: typeof T.tuple
 
     /**
+     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
+     */
+    const tuplePar: typeof T.tuplePar
+    /**
+     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
+     */
+    const tupleParN: typeof T.tupleParN
+
+    /**
+     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
+     */
+    const structPar: typeof T.structPar
+    /**
+     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
+     */
+    const structParN: typeof T.structParN
+    /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
     const struct: typeof T.struct
