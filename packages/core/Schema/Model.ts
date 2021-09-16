@@ -167,9 +167,7 @@ export function extractRequest<TModule extends Record<string, any>>(
 export function extractResponse<TModule extends Record<string, any>>(
   h: TModule
 ): GetResponse<TModule> | typeof Void {
-  const resKey =
-    Object.keys(h).find((x) => x.endsWith("Response")) ||
-    Object.keys(h).find((x) => x === "default")
+  const resKey = Object.keys(h).find((x) => x.endsWith("Response"))
   if (!resKey) {
     return Void
   }
