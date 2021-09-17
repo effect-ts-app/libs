@@ -5,7 +5,7 @@ export default function augmentName(_program: ts.Program) {
 
   return {
     before(ctx: ts.TransformationContext) {
-      const factory = ctx.factory
+      const { factory } = ctx
 
       return (sourceFile: ts.SourceFile) => {
         function visitor(node: ts.Node): ts.VisitResult<ts.Node> {
@@ -55,6 +55,6 @@ export default function augmentName(_program: ts.Program) {
 
         return ts.visitEachChild(sourceFile, visitor, ctx)
       }
-    }
+    },
   }
 }

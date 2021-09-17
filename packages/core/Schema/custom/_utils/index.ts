@@ -20,7 +20,7 @@ export function augmentRecord(value: {}) {
       }
       return hash
     },
-    enumerable: false
+    enumerable: false,
   })
 
   Object.defineProperty(value, St.equalsSym, {
@@ -43,6 +43,6 @@ export function augmentRecord(value: {}) {
       }
       return eq
     },
-    enumerable: false
+    enumerable: false,
   })
 }

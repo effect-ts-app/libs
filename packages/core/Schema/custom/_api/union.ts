@@ -38,14 +38,12 @@ export interface MatchS<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
       >]
     ) => Result
   ): (ks: AS) => Result
-  <Result>(
-    mat: {
-      [K in keyof Props]: (
-        _: S.ParsedShapeOf<Props[K]>,
-        __: S.ParsedShapeOf<Props[K]>
-      ) => Result
-    }
-  ): (ks: AS) => Result
+  <Result>(mat: {
+    [K in keyof Props]: (
+      _: S.ParsedShapeOf<Props[K]>,
+      __: S.ParsedShapeOf<Props[K]>
+    ) => Result
+  }): (ks: AS) => Result
 }
 
 export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
@@ -132,16 +130,15 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
   UnionApi<Props>
 >
 
-export const unionIdentifier =
-  S.makeAnnotation<{
-    props: Record<PropertyKey, S.SchemaUPI>
-    tag: O.Option<{
-      key: string
-      index: D.Dictionary<string>
-      reverse: D.Dictionary<string>
-      values: readonly string[]
-    }>
-  }>()
+export const unionIdentifier = S.makeAnnotation<{
+  props: Record<PropertyKey, S.SchemaUPI>
+  tag: O.Option<{
+    key: string
+    index: D.Dictionary<string>
+    reverse: D.Dictionary<string>
+    values: readonly string[]
+  }>
+}>()
 
 export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   props: Props & EnforceNonEmptyRecord<Props>

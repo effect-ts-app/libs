@@ -12,12 +12,11 @@ export type OptionalKey<ConstructorInput, Key extends keyof ConstructorInput> = 
 > &
   Partial<Pick<ConstructorInput, Key>>
 
-export const withDefaultConstructorFieldIdentifier =
-  S.makeAnnotation<{
-    key: PropertyKey
-    value: Lazy<unknown>
-    self: S.SchemaAny
-  }>()
+export const withDefaultConstructorFieldIdentifier = S.makeAnnotation<{
+  key: PropertyKey
+  value: Lazy<unknown>
+  self: S.SchemaAny
+}>()
 
 export function withDefaultConstructorField<
   ConstructorInput,

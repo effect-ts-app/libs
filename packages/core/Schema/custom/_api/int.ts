@@ -62,5 +62,10 @@ export const stringInt: DefaultSchema<
 
 export const intIdentifier = S.makeAnnotation<{}>()
 
-export const int: DefaultSchema<unknown, Int, number, number, S.ApiSelfType<Int>> =
-  pipe(number[">>>"](intFromNumber), brand<Int>(), S.annotate(intIdentifier, {}))
+export const int: DefaultSchema<
+  unknown,
+  Int,
+  number,
+  number,
+  S.ApiSelfType<Int>
+> = pipe(number[">>>"](intFromNumber), brand<Int>(), S.annotate(intIdentifier, {}))

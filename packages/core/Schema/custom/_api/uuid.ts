@@ -38,5 +38,10 @@ export const UUIDFromString: DefaultSchema<string, UUID, string, string, {}> = p
 
 export const UUIDIdentifier = S.makeAnnotation<{}>()
 
-export const UUID: DefaultSchema<unknown, UUID, string, string, S.ApiSelfType<UUID>> =
-  pipe(string[">>>"](UUIDFromString), brand<UUID>(), S.annotate(UUIDIdentifier, {}))
+export const UUID: DefaultSchema<
+  unknown,
+  UUID,
+  string,
+  string,
+  S.ApiSelfType<UUID>
+> = pipe(string[">>>"](UUIDFromString), brand<UUID>(), S.annotate(UUIDIdentifier, {}))

@@ -17,48 +17,51 @@ export interface CollectAnnotations {
 }
 
 export const interpreters: ((schema: S.SchemaAny) => O.Option<() => any>)[] = [
-  O.partial((miss) => (schema: S.SchemaAny): (() => (
-    ...xs: S.Annotation<any>[]
-  ) => Chunk.Chunk<any>) => {
-    if (S.isAnnotatedSchema(schema)) {
-      return () =>
-        (...xs) => {
-          for (const x of xs) {
-            if (schema.annotation === x) {
-              return Chunk.append_(
-                collectAnnotationsFor(schema.self)(...xs),
-                schema.meta
-              )
+  O.partial(
+    (miss) =>
+      (
+        schema: S.SchemaAny
+      ): (() => (...xs: S.Annotation<any>[]) => Chunk.Chunk<any>) => {
+        if (S.isAnnotatedSchema(schema)) {
+          return () =>
+            (...xs) => {
+              for (const x of xs) {
+                if (schema.annotation === x) {
+                  return Chunk.append_(
+                    collectAnnotationsFor(schema.self)(...xs),
+                    schema.meta
+                  )
+                }
+              }
+              return collectAnnotationsFor(schema.self)(...xs)
             }
-          }
-          return collectAnnotationsFor(schema.self)(...xs)
         }
-    }
-    if (schema instanceof S.SchemaNamed) {
-      return () => collectAnnotationsFor(schema.self)
-    }
-    if (schema instanceof S.SchemaMapParserError) {
-      return () => collectAnnotationsFor(schema.self)
-    }
-    if (schema instanceof S.SchemaIdentity) {
-      return () => () => Chunk.empty<any>()
-    }
-    if (schema instanceof S.SchemaPipe) {
-      return () =>
-        (...xs) =>
-          Chunk.concat_(
-            collectAnnotationsFor(schema.self)(...xs),
-            collectAnnotationsFor(schema.that)(...xs)
-          )
-    }
-    if (schema instanceof S.SchemaParser) {
-      return () => collectAnnotationsFor(schema.self)
-    }
-    if (schema instanceof S.SchemaRefinement) {
-      return () => collectAnnotationsFor(schema.self)
-    }
-    return miss()
-  }),
+        if (schema instanceof S.SchemaNamed) {
+          return () => collectAnnotationsFor(schema.self)
+        }
+        if (schema instanceof S.SchemaMapParserError) {
+          return () => collectAnnotationsFor(schema.self)
+        }
+        if (schema instanceof S.SchemaIdentity) {
+          return () => () => Chunk.empty<any>()
+        }
+        if (schema instanceof S.SchemaPipe) {
+          return () =>
+            (...xs) =>
+              Chunk.concat_(
+                collectAnnotationsFor(schema.self)(...xs),
+                collectAnnotationsFor(schema.that)(...xs)
+              )
+        }
+        if (schema instanceof S.SchemaParser) {
+          return () => collectAnnotationsFor(schema.self)
+        }
+        if (schema instanceof S.SchemaRefinement) {
+          return () => collectAnnotationsFor(schema.self)
+        }
+        return miss()
+      }
+  ),
 ]
 
 const cache = new WeakMap()

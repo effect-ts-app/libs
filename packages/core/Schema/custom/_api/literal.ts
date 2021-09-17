@@ -11,11 +11,9 @@ import { withDefaults } from "./withDefaults"
 
 export interface LiteralApi<KS extends readonly string[]> extends ApiSelfType {
   readonly literals: KS
-  readonly matchS: <A>(
-    _: {
-      [K in KS[number]]: (_: K) => A
-    }
-  ) => (ks: S.GetApiSelfType<this, KS[number]>) => A
+  readonly matchS: <A>(_: {
+    [K in KS[number]]: (_: K) => A
+  }) => (ks: S.GetApiSelfType<this, KS[number]>) => A
   readonly matchW: <
     M extends {
       [K in KS[number]]: (_: K) => any

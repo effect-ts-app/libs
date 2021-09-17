@@ -10,11 +10,10 @@ import { unknown } from "./unknown"
 import type { DefaultSchema } from "./withDefaults"
 import { withDefaults } from "./withDefaults"
 
-export const refinementIdentifier =
-  S.makeAnnotation<{
-    refinement: Refinement<unknown, unknown>
-    error: (value: unknown) => unknown
-  }>()
+export const refinementIdentifier = S.makeAnnotation<{
+  refinement: Refinement<unknown, unknown>
+  error: (value: unknown) => unknown
+}>()
 
 export function refinement<E extends S.AnyError, NewParsedShape>(
   refinement: Refinement<unknown, NewParsedShape>,

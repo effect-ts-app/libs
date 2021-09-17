@@ -520,7 +520,7 @@ const empty = Chunk.empty<never>()
 export function tree<A>(value: A, forest: Forest<A> = empty): Tree<A> {
   return {
     value,
-    forest
+    forest,
   }
 }
 
