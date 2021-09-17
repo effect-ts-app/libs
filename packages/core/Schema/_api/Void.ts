@@ -1,6 +1,5 @@
-import * as MO from "../custom"
-
 import { pipe } from "../../Function"
+import * as MO from "../custom"
 
 export const Void = pipe(
   MO.unknown,

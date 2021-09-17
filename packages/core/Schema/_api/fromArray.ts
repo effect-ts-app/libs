@@ -2,6 +2,7 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
+
 import * as S from "../custom"
 import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"

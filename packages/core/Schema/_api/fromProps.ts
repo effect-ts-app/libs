@@ -7,6 +7,8 @@ import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
+import type * as fc from "fast-check"
+
 import * as S from "../custom"
 import type { Annotation } from "../custom/_schema/annotation"
 import { augmentRecord } from "../custom/_utils"
@@ -15,7 +17,6 @@ import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
 import * as Th from "../custom/These"
-import type * as fc from "fast-check"
 
 export class FromProperty<
   Self extends S.SchemaAny,

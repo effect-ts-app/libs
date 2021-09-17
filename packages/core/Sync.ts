@@ -55,15 +55,13 @@ export type DerivedLifted<
   [k in Fns]: T[k] extends (...args: infer ARGS) => Sync<infer R, infer E, infer A>
     ? (...args: ARGS) => Sync<R & Has<T>, E, A>
     : never
-} &
-  {
-    [k in Cns]: T[k] extends Sync<infer R, infer E, infer A>
-      ? Sync<R & Has<T>, E, A>
-      : never
-  } &
-  {
-    [k in Values]: Sync<Has<T>, never, T[k]>
-  }
+} & {
+  [k in Cns]: T[k] extends Sync<infer R, infer E, infer A>
+    ? Sync<R & Has<T>, E, A>
+    : never
+} & {
+  [k in Values]: Sync<Has<T>, never, T[k]>
+}
 
 export type IO<E, A> = Sync<unknown, E, A>
 export type RIO<R, A> = Sync<R, never, A>

@@ -1,7 +1,6 @@
-import { NonEmptyBrand } from "../custom"
-
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
+import { NonEmptyBrand } from "../custom"
 
 export const maxLengthIdentifier =
   MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()

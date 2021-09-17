@@ -16,11 +16,9 @@ import type { References, SchemaURI } from "./base"
 import { modelSchemaInterpreter } from "./interpreter"
 
 export function deriveFor<S extends Summoner<any>>(_S: S) {
-  return (
-      _: {
-        [k in SchemaURI & keyof SummonerEnv<S>]: SummonerEnv<S>[k]
-      }
-    ) =>
+  return (_: {
+      [k in SchemaURI & keyof SummonerEnv<S>]: SummonerEnv<S>[k]
+    }) =>
     <L, A>(
       F: Materialized<SummonerEnv<S>, L, A, SummonerProgURI<S>, SummonerInterpURI<S>>
     ) =>

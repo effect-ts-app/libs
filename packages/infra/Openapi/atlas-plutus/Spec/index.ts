@@ -126,14 +126,13 @@ export type ParameterRegistry<P extends string> = {
   [k in ParameterLocation]?: {
     [h in string]: Parameter<StringType, any>
   }
-} &
-  (keyof ExtractRouteParams<P> extends never
-    ? {}
-    : {
-        path: {
-          [h in keyof ExtractRouteParams<P>]: Parameter<StringType, any>
-        }
-      })
+} & (keyof ExtractRouteParams<P> extends never
+  ? {}
+  : {
+      path: {
+        [h in keyof ExtractRouteParams<P>]: Parameter<StringType, any>
+      }
+    })
 
 export type TagsType = readonly TagElement<any>[]
 

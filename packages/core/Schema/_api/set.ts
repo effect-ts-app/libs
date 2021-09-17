@@ -6,6 +6,7 @@ import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutabl
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"
+
 import * as MO from "../custom"
 import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
