@@ -31,6 +31,7 @@ import {
   propertiesIdentifier,
   SchemaAnnotated,
   SchemaContinuationSymbol,
+  setIdentifier,
   stringIdentifier,
   unionIdentifier,
   UUIDFromStringIdentifier,
@@ -213,6 +214,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case arrayIdentifier:
           return new ArraySchema({
             items: yield* $(processId(schemaMeta.self, meta)) as any,
+          })
+        case setIdentifier:
+          return new ArraySchema({
+            items: yield* $(processId(schemaMeta.self, meta)) as any,
+            uniqueItems: true,
           })
         case chunkIdentifier:
           return new ArraySchema({
