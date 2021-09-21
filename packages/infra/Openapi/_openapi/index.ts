@@ -95,6 +95,10 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   if (!schema) {
     throw new Error("schema undefined")
   }
+  if ("lazy" in schema) {
+    // TODO: Support recursive structures
+    return T.succeed(new ObjectSchema({}))
+  }
   return T.gen(function* ($) {
     if (schema instanceof MO.SchemaRefinement) {
       return yield* $(processId(schema.self, meta))
