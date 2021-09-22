@@ -1,11 +1,15 @@
 import {
   ChunkInternal,
+  concat_,
   filter_,
   filterMap_,
   find_,
+  flatten,
   from,
+  head,
   map_,
   toArray,
+  unsafeLast,
 } from "@effect-ts/core/Collections/Immutable/Chunk"
 import {
   collectAll,
@@ -17,12 +21,16 @@ import {
 const BasePrototype = ChunkInternal.prototype as any
 
 const funcs = {
+  head,
   toArray,
+  unsafeLast,
+  flatten,
   //mapWithIndex: mapWithIndex_,
   filterMap: filterMap_,
   filter: filter_,
   map: map_,
   find: find_,
+  concat_,
   //findFirst: findFirst_,
   //findFirstMap: findFirstMap_,
   //sortWith: sort_,
