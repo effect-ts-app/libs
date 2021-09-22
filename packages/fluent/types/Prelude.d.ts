@@ -8,6 +8,7 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 import * as T from "@effect-ts-app/core/Effect"
 import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
+import type * as SCHEMA from "@effect-ts-app/core/Schema"
 import type * as SET from "@effect-ts-app/core/Set"
 //import type * as O from "@effect-ts-app/core/Option"
 import type * as SO from "@effect-ts-app/core/SyncOption"
@@ -40,5 +41,8 @@ declare global {
 
     export const Lens = LNS
     export { Lens } from "@effect-ts/monocle/Lens"
+
+    export const Schema = SCHEMA
+    export { Schema, DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
   }
 }
