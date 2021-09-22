@@ -1,11 +1,15 @@
 import "@effect-ts/fluent/Prelude"
 
+import * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+import * as LAYER from "@effect-ts/core/Effect/Layer"
+import * as REF from "@effect-ts/core/Effect/Ref"
+import * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
 import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
 //import type * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import type * as Sy from "@effect-ts/core/Sync"
 import type * as LNS from "@effect-ts/monocle/Lens"
-import * as T from "@effect-ts-app/core/Effect"
+import type * as T from "@effect-ts-app/core/Effect"
 import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as O from "@effect-ts-app/core/Option"
@@ -16,6 +20,18 @@ import type * as SO from "@effect-ts-app/core/SyncOption"
 
 declare global {
   export namespace $T {
+    export const Map = MAP
+    export { Map } from "@effect-ts/core/Collections/Immutable/Map"
+
+    export const Layer = LAYER
+    export { Layer } from "@effect-ts/core/Effect/Layer"
+
+    export const Ref = REF
+    export { Ref } from "@effect-ts/core/Effect/Ref"
+
+    export const Semaphore = SEMAPHORE
+    export { Semaphore } from "@effect-ts/core/Effect/Semaphore"
+
     export const Equal = EQ
     export { Equal } from "@effect-ts/core/Equal"
 
