@@ -23,7 +23,7 @@ import type * as SO from "@effect-ts-app/core/SyncOption"
 
 declare global {
   export namespace $T {
-    export const Exit = EXIT
+    export const Exit = EX
     export { Exit } from "@effect-ts/core/Effect/Exit"
     export const Cause = CAUSE
     export { Cause } from "@effect-ts/core/Effect/Cause"
