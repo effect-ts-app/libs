@@ -14,7 +14,11 @@ import {
   succeedWith,
 } from "@effect-ts/core/Effect"
 import * as XManaged from "@effect-ts/core/Effect/Managed"
+import * as Equal from "@effect-ts/core/Equal"
 import { tag } from "@effect-ts/core/Has"
+import * as Ord from "@effect-ts/core/Ord"
+import * as Lens from "@effect-ts/monocle/Lens"
+import * as XEffectOption from "@effect-ts-app/core/EffectOption"
 
 const gl = global as any
 
@@ -37,6 +41,10 @@ gl.$T = {
   Effect: {
     ...EffectExtensions,
   },
+  EffectOption: XEffectOption,
+  Equal,
+  Ord,
+  Lens,
   Managed: XManaged,
   Chunk: XChunk,
   Data: {
