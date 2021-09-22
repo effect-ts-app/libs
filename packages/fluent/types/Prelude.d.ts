@@ -15,7 +15,7 @@ import type * as SET from "@effect-ts-app/core/Set"
 import type * as SO from "@effect-ts-app/core/SyncOption"
 
 declare global {
-  namespace $T {
+  export namespace $T {
     export const Equal = EQ
     export { Equal } from "@effect-ts/core/Equal"
 
@@ -24,9 +24,15 @@ declare global {
 
     export const EffectOption = EO
     export { EffectOption } from "@effect-ts-app/core/EffectOption"
+    export type EffectOptionU<A> = EO.EffectOption<unknown, never, A>
+    export type EffectOptionE<E, A> = EO.EffectOption<unknown, E, A>
+    export type EffectOptionR<R, A> = EO.EffectOption<R, never, A>
 
     export const SyncOption = SO
     export { SyncOption } from "@effect-ts-app/core/SyncOption"
+    export type SyncOptionU<A> = SO.SyncOption<unknown, never, A>
+    export type SyncOptionE<E, A> = SO.SyncOption<unknown, E, A>
+    export type SyncOptionR<R, A> = SO.SyncOption<R, never, A>
 
     export const Effect = T
     export { Effect } from "@effect-ts-app/core/Effect"
@@ -36,6 +42,9 @@ declare global {
 
     export const Sync = Sy
     export { Sync } from "@effect-ts-app/core/Sync"
+    export type SyncU<A> = Sy.Sync<unknown, never, A>
+    export type SyncE<E, A> = Sy.Sync<unknown, E, A>
+    export type SyncR<R, A> = Sy.Sync<R, never, A>
 
     export const NonEmptyArray = NA
     export { NonEmptyArray } from "@effect-ts-app/core/NonEmptyArray"
@@ -50,3 +59,8 @@ declare global {
     export { Schema, DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
   }
 }
+
+// declare module "@effect-ts/system/Option/core" {
+//   interface OptionStaticOps extends O {}
+//   const Option: OptionStaticOps
+// }
