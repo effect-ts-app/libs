@@ -5,6 +5,7 @@ import * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 import * as LAYER from "@effect-ts/core/Effect/Layer"
 import * as REF from "@effect-ts/core/Effect/Ref"
 import * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
+import * as EITHER from "@effect-ts/core/Either"
 import * as EQ from "@effect-ts/core/Equal"
 import * as ORD from "@effect-ts/core/Ord"
 import * as Sy from "@effect-ts/core/Sync"
@@ -29,6 +30,9 @@ import * as SO from "@effect-ts-app/core/SyncOption"
 // }
 export const Equal = EQ
 export type Equal<A> = EQ.Equal<A>
+
+export const Either = EITHER
+export type Either<E, A> = EITHER.Either<E, A>
 
 export const Ord = ORD
 export type Ord<A> = ORD.Ord<A>

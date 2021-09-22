@@ -1,9 +1,10 @@
 import "@effect-ts/fluent/Prelude"
 
-import * as MAP from "@effect-ts/core/Collections/Immutable/Map"
-import * as LAYER from "@effect-ts/core/Effect/Layer"
-import * as REF from "@effect-ts/core/Effect/Ref"
-import * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
+import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+import type * as LAYER from "@effect-ts/core/Effect/Layer"
+import type * as REF from "@effect-ts/core/Effect/Ref"
+import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
+import type * as EITHER from "@effect-ts/core/Either"
 import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
 //import type * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
@@ -20,6 +21,8 @@ import type * as SO from "@effect-ts-app/core/SyncOption"
 
 declare global {
   export namespace $T {
+    export const Either = EITHER
+    export { Either } from "@effect-ts/core/Either"
     export const Map = MAP
     export { Map } from "@effect-ts/core/Collections/Immutable/Map"
 
