@@ -1,5 +1,6 @@
 import { Case, Tagged } from "@effect-ts/core/Case"
 import * as XChunk from "@effect-ts/core/Collections/Immutable/Chunk"
+import * as Map from "@effect-ts/core/Collections/Immutable/Map"
 import {
   die,
   dieWith,
@@ -12,7 +13,13 @@ import {
   succeed,
   succeedWith,
 } from "@effect-ts/core/Effect"
+import * as Cause from "@effect-ts/core/Effect/Cause"
+import * as Exit from "@effect-ts/core/Effect/Exit"
+import * as Layer from "@effect-ts/core/Effect/Layer"
 import * as XManaged from "@effect-ts/core/Effect/Managed"
+import * as Ref from "@effect-ts/core/Effect/Ref"
+import * as Semaphore from "@effect-ts/core/Effect/Semaphore"
+import * as Either from "@effect-ts/core/Either"
 import * as Equal from "@effect-ts/core/Equal"
 import { tag } from "@effect-ts/core/Has"
 import * as Ord from "@effect-ts/core/Ord"
@@ -47,6 +54,13 @@ gl.$T = {
   Effect: {
     ...EffectExtensions,
   },
+  Map,
+  Exit,
+  Cause,
+  Semaphore,
+  Either,
+  Layer,
+  Ref,
   Option,
   EffectOption: XEffectOption,
   SyncOption: XSyncOption,
