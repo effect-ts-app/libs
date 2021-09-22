@@ -20,6 +20,7 @@ import * as Lens from "@effect-ts/monocle/Lens"
 import * as XEffect from "@effect-ts-app/core/Effect"
 import * as XEffectOption from "@effect-ts-app/core/EffectOption"
 import * as NA from "@effect-ts-app/core/NonEmptyArray"
+import * as Option from "@effect-ts-app/core/Option"
 import * as Schema from "@effect-ts-app/core/Schema"
 import * as Set from "@effect-ts-app/core/Set"
 import * as Sync from "@effect-ts-app/core/Sync"
@@ -46,6 +47,7 @@ gl.$T = {
   Effect: {
     ...EffectExtensions,
   },
+  Option,
   EffectOption: XEffectOption,
   SyncOption: XSyncOption,
   NonEmptyArray: NA,
