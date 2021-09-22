@@ -2,6 +2,8 @@
 
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+import * as CAUSE from "@effect-ts/core/Effect/Cause"
+import * as EX from "@effect-ts/core/Effect/Exit"
 import * as LAYER from "@effect-ts/core/Effect/Layer"
 import * as REF from "@effect-ts/core/Effect/Ref"
 import * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
@@ -30,6 +32,12 @@ import * as SO from "@effect-ts-app/core/SyncOption"
 // }
 export const Equal = EQ
 export type Equal<A> = EQ.Equal<A>
+
+export const Cause = CAUSE
+export type Cause<A> = CAUSE.Cause<A>
+
+export const Exit = EX
+export type Exit<E, A> = EX.Exit<E, A>
 
 export const Either = EITHER
 export type Either<E, A> = EITHER.Either<E, A>
