@@ -21,6 +21,7 @@ import * as SET from "@effect-ts-app/core/Set"
 import * as SO from "@effect-ts-app/core/SyncOption"
 
 // not sure if these consts can be tree shaked by Webpack etc ;-)
+// an alternative could be to use a d.ts + manual .js file?
 
 // TODO: with namespaces things just get better as they can include also Types
 //export const Equal = EQ

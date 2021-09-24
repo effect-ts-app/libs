@@ -281,6 +281,12 @@ interface IterableOps {
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
   interface ChunkOps extends IterableOps {
+    // TYPO FIX
+    /**
+     * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     */
+    concat<A, A1>(this: Chunk<A>, that: Chunk<A1>): Chunk<A | A1>
+
     /**
      * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
      */
