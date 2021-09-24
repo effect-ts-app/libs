@@ -4,6 +4,8 @@ import { flow, identity, Predicate } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import { Ord } from "@effect-ts/core/Ord"
 
+export const { isArray } = Array
+
 export const findIndexOrElse_ = flow(
   A.findIndex_,
   O.getOrElse(() => -1)
