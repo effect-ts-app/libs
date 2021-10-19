@@ -2,13 +2,19 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "moduleResolution": "node",
-        "outDir": "../",
+        "outDir": "./_esm",
         "noEmit": false,
-        "module": "CommonJS",
-        "incremental": false,
         "jsx": "react"
     },
     "include": [
         "./"
+    ],
+    "exclude": [
+        "./_esm"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
     ]
 }

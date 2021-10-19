@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as O from "@effect-ts-app/core/Option"
 import type { If } from "ts-toolbelt/out/Any/If"
 import type { Key } from "ts-toolbelt/out/Any/Key"
 import type { BuiltIn } from "ts-toolbelt/out/Misc/BuiltIn"
 import type { Depth } from "ts-toolbelt/out/Object/_Internal"
 import type { Has } from "ts-toolbelt/out/Union/Has"
+
+import * as O from "./Option"
 
 type Prim = BuiltIn | string | number | boolean | O.None | O.Some<any>
 
@@ -14,8 +15,7 @@ export declare type ComputeRaw<A extends any> = A extends Function
   ? A
   : {
       [K in keyof A]: A[K]
-    } &
-      unknown
+    } & unknown
 /**
  * @hidden
  */
@@ -28,8 +28,7 @@ declare type ComputeFlat<A extends any> = A extends BuiltIn
     ? Array<
         {
           [K in keyof A[number]]: A[number][K]
-        } &
-          unknown
+        } & unknown
       >
     : A
   : A extends ReadonlyArray<any>
@@ -39,14 +38,12 @@ declare type ComputeFlat<A extends any> = A extends BuiltIn
     ? ReadonlyArray<
         {
           [K in keyof A[number]]: A[number][K]
-        } &
-          unknown
+        } & unknown
       >
     : A
   : {
       [K in keyof A]: A[K]
-    } &
-      unknown
+    } & unknown
 /**
  * @hidden
  */
@@ -62,8 +59,7 @@ declare type ComputeDeep<A extends any, Seen = never> = A extends Prim
           ? Array<
               {
                 [K in keyof A[number]]: ComputeDeep<A[number][K], A | Seen>
-              } &
-                unknown
+              } & unknown
             >
           : A
         : A extends ReadonlyArray<any>
@@ -73,14 +69,12 @@ declare type ComputeDeep<A extends any, Seen = never> = A extends Prim
           ? ReadonlyArray<
               {
                 [K in keyof A[number]]: ComputeDeep<A[number][K], A | Seen>
-              } &
-                unknown
+              } & unknown
             >
           : A
         : {
             [K in keyof A]: ComputeDeep<A[K], A | Seen>
-          } &
-            unknown
+          } & unknown
     >
 /**
  * Force TS to load a type that has not been computed (to resolve composed

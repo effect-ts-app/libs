@@ -1,7 +1,6 @@
-import { NonEmptyBrand } from "@effect-ts/schema"
-
 import { pipe } from "../../Function"
 import * as MO from "../_schema"
+import { NonEmptyBrand } from "../custom"
 
 export const maxLengthIdentifier =
   MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
@@ -11,37 +10,13 @@ export const maxLengthIdentifier =
 export function maxLength<Brand>(maxLength: number) {
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: MO.Schema<
-      ParserInput,
-      ParserError,
-      ParsedShape,
-      ConstructorInput,
-      ConstructorError,
-      Encoded,
-      Api
-    >
-  ): MO.Schema<
-    ParserInput,
-    MO.CompositionE<
-      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
-      | MO.PrevE<ParserError>
-    >,
-    ParsedShape & Brand,
-    ConstructorInput,
-    MO.CompositionE<
-      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
-      | MO.PrevE<ConstructorError>
-    >,
-    Encoded,
-    Api
-  > =>
+    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  ): MO.Schema<ParserInput, ParsedShape & Brand, ConstructorInput, Encoded, Api> =>
     pipe(
       self,
       MO.refine(
@@ -61,34 +36,16 @@ export function minLength<Brand>(minLength: number) {
   }
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: MO.Schema<
-      ParserInput,
-      ParserError,
-      ParsedShape,
-      ConstructorInput,
-      ConstructorError,
-      Encoded,
-      Api
-    >
+    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   ): MO.Schema<
     ParserInput,
-    MO.CompositionE<
-      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
-      | MO.PrevE<ParserError>
-    >,
     ParsedShape & Brand & NonEmptyBrand,
     ConstructorInput,
-    MO.CompositionE<
-      | MO.NextE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<ParsedShape>>>>
-      | MO.PrevE<ConstructorError>
-    >,
     Encoded,
     Api
   > =>
@@ -105,21 +62,11 @@ export function minLength<Brand>(minLength: number) {
 export function constrained<Brand>(min: number, max: number) {
   return <
     ParserInput,
-    ParserError extends MO.AnyError,
     ParsedShape extends { length: number },
     ConstructorInput,
-    ConstructorError extends MO.AnyError,
     Encoded,
     Api
   >(
-    self: MO.Schema<
-      ParserInput,
-      ParserError,
-      ParsedShape,
-      ConstructorInput,
-      ConstructorError,
-      Encoded,
-      Api
-    >
+    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   ) => pipe(self, minLength<Brand>(min), maxLength<Brand>(max))
 }

@@ -7,15 +7,7 @@ import jwt_decode from "jwt-decode"
 
 export const jwtIdentifier = MO.makeAnnotation<{}>()
 
-export const jwtFromString: MO.Schema<
-  string,
-  any, //err
-  unknown,
-  unknown,
-  never,
-  string,
-  {}
-> = pipe(
+export const jwtFromString: MO.Schema<string, unknown, unknown, string, {}> = pipe(
   //MO.identity((u): u is string => typeof u === "string"),
   MO.identity((u): u is string => {
     throw new Error("Cannot id JWT: " + u)

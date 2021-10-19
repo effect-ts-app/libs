@@ -3,55 +3,33 @@
 
 import { Map } from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-ts/core/Function"
-import * as MO from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
 
+import * as MO from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Parser from "../custom/Parser"
+import * as Th from "../custom/These"
 import { tuple } from "./tuple"
 
 export const mapIdentifier = MO.makeAnnotation<{}>()
 
 export function map<
-  KeyParserError extends MO.AnyError,
   KeyParsedShape,
   KeyConstructorInput,
-  KeyConstructorError extends MO.AnyError,
   KeyEncoded,
   KeyApi,
-  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  key: MO.Schema<
-    unknown,
-    KeyParserError,
-    KeyParsedShape,
-    KeyConstructorInput,
-    KeyConstructorError,
-    KeyEncoded,
-    KeyApi
-  >,
-  self: MO.Schema<
-    unknown,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+  key: MO.Schema<unknown, KeyParsedShape, KeyConstructorInput, KeyEncoded, KeyApi>,
+  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   unknown,
-  MO.AnyError,
   Map<KeyParsedShape, ParsedShape>,
   Map<KeyParsedShape, ParsedShape>,
-  never,
   readonly (readonly [KeyEncoded, Encoded])[],
   {}
 > {

@@ -8,3 +8,4 @@ tslint.json
 *.tsx
 .eslintrc.js
 coverage/
+**/*.tsbuildinfo

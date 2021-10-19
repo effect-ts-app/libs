@@ -78,7 +78,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
       pipe(
         c.find(id),
         EO.map((existing) => existing.data),
-        EO.chainNone(read(id))
+        EO.alt(() => read(id))
       )
     )
 }

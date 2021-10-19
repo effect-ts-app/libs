@@ -2,38 +2,21 @@
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Th from "@effect-ts/schema/These"
+
+import * as S from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Th from "../custom/These"
 
 export const fromArrayIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 
-export function fromArray<
-  ParserInput,
-  ParserError extends S.AnyError,
-  ParsedShape,
-  ConstructorInput,
-  ConstructorError extends S.AnyError,
-  Encoded,
-  Api
->(
-  self: S.Schema<
-    ParserInput,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+export function fromArray<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
+  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): S.DefaultSchema<
   readonly ParserInput[],
-  S.CollectionE<S.OptionalIndexE<number, ParserError>>,
   readonly ParsedShape[],
   readonly ParsedShape[],
-  never,
   readonly Encoded[],
   { self: Api }
 > {
@@ -52,7 +35,7 @@ export function fromArray<
 
   return pipe(
     S.fromChunk(self)[">>>"](fromFromChunk),
-    S.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
+    S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
     S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),

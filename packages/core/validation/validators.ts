@@ -1,4 +1,5 @@
-import Validator from "validator"
+// Not importing from /es/lib because they are .js files and bundlers probably assume they're cjs :(
+import isEmail from "validator/lib/isEmail"
 
 // Source https://emailregex.com/
 // eslint-disable-next-line no-control-regex
@@ -15,7 +16,7 @@ const PHONE_LENGTH = 7
 // export const isValidEmail = (email: string): boolean => {
 //   return EMAIL_REGEX.test(email.toLowerCase())
 // }
-export const isValidEmail = Validator.isEmail
+export const isValidEmail = isEmail
 
 /**
  * Validates that phone number contains at least 7 numbers.

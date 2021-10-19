@@ -2,10 +2,10 @@
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { None, Some } from "@effect-ts/core/Option"
 import { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
-import { positiveInt } from "@effect-ts/schema"
 
 import { array, prop, props } from "./_schema"
 import * as MO from "./_schema"
+import { positiveInt } from "./custom"
 
 type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {
   [K in Key]: Props[K]
@@ -35,17 +35,6 @@ export type Adapted<
   items: MO.Property<
     MO.SchemaDefaultSchema<
       unknown,
-      MO.CompositionE<
-        | MO.PrevE<MO.RefinementE<MO.LeafE<MO.UnknownArrayE>>>
-        | MO.NextE<
-            MO.CollectionE<
-              MO.OptionalIndexE<
-                number,
-                MO.ParserErrorFromProperties<AdaptSchema<Props, Key>>
-              >
-            >
-          >
-      >,
       readonly ComputeFlat<
         UnionToIntersection<
           {
@@ -90,7 +79,6 @@ export type Adapted<
           }[Key]
         >
       >[],
-      never,
       readonly ComputeFlat<
         UnionToIntersection<
           {

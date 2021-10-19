@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Effect, service } from "@effect-ts/core/Effect"
 import type { Either } from "@effect-ts/core/Either"
 import type { Has, Tag } from "@effect-ts/core/Has"
 import type { Option } from "@effect-ts/core/Option"
@@ -7,10 +8,7 @@ import * as P from "@effect-ts/core/Prelude"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
 import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
-import { _A, _E, _R } from "@effect-ts/system/Effect/commons"
-import type { Effect } from "@effect-ts/system/Effect/effect"
-import { fromEither } from "@effect-ts/system/Effect/fromEither"
-import { service } from "@effect-ts/system/Effect/has"
+import { _A, _E, _R, fromEither } from "@effect-ts/system/Effect"
 
 import * as T from "./Effect"
 import * as F from "./Function"
@@ -40,7 +38,11 @@ export type UIO<A> = EffectOption<unknown, never, A>
 export type IO<E, A> = EffectOption<unknown, E, A>
 export type RIO<R, E, A> = EffectOption<R, E, A>
 
-export const fromNullable = <A>(a: A) => T.succeed(O.fromNullable(a))
+export const fromNullable = <A>(a: A): UIO<NonNullable<A>> =>
+  T.succeed(O.fromNullable(a))
+
+export const toNullable = <R, E, A>(eff: EffectOption<R, E, A>) =>
+  pipe(eff, T.map(O.toNullable))
 
 export const some = <A>(a: A): UIO<A> => T.succeed(O.some(a))
 
@@ -58,7 +60,7 @@ export const fromEffectIf = <R, E, A>(eff: T.Effect<R, E, A>) =>
 
 export const encaseNullableTask = <T>(
   taskCreator: F.Lazy<Promise<T | null>>
-): T.Effect<unknown, never, O.Option<NonNullable<T>>> =>
+): EffectOption<unknown, never, NonNullable<T>> =>
   T.map_(T.tryPromise(taskCreator)["|>"](T.orDie), O.fromNullable)
 
 export const encaseNullableTaskErrorIfNull = <T, E>(
@@ -166,15 +168,33 @@ export function zipRight_<R, E, A, R1, E1, A1>(
 
 export const fromOption = <A>(a: O.Option<A>): UIO<A> => T.succeed(a)
 
-export const mapNone =
-  <A2>(f: () => A2) =>
-  <R, E, A>(_: EffectOption<R, E, A>): EffectOption<R, E, A | A2> =>
-    T.map_(_, (x) => (O.isNone(x) ? O.some(f()) : x))
+export const alt_ = <R, E, A, R2, E2, A2>(
+  _: EffectOption<R, E, A>,
+  f: () => EffectOption<R2, E2, A2>
+) => T.chain_(_, (x) => (O.isNone(x) ? f() : T.succeed(x as O.Option<A | A2>)))
 
-export const chainNone =
-  <R2, E2, A2>(f: EffectOption<R2, E2, A2>) =>
+export const alt =
+  <R2, E2, A2>(f: () => EffectOption<R2, E2, A2>) =>
   <R, E, A>(_: EffectOption<R, E, A>): EffectOption<R & R2, E | E2, A | A2> =>
-    T.chain_(_, (x) => (O.isNone(x) ? f : T.succeed(x as O.Option<A | A2>)))
+    alt_(_, f)
+
+export const getOrElse_ = <R, E, A, A2>(
+  _: EffectOption<R, E, A>,
+  f: () => A2
+): Effect<R, E, A | A2> => T.map_(_, (x) => (O.isNone(x) ? f() : x.value))
+
+export const getOrElse =
+  <A2>(f: () => A2) =>
+  <R, E, A>(_: EffectOption<R, E, A>): Effect<R, E, A | A2> =>
+    getOrElse_(_, f)
+
+export const getOrFail_ = <R, E, E2, A>(_: EffectOption<R, E, A>, onErr: () => E2) =>
+  T.chain_(_, (o) => (O.isSome(o) ? T.succeed(o.value) : T.fail(onErr())))
+
+export const getOrFail =
+  <E2>(onErr: () => E2) =>
+  <R, E, A>(_: EffectOption<R, E, A>) =>
+    getOrFail_(_, onErr)
 
 export const tap = <R, E, A>(bind: FunctionN<[A], T.Effect<R, E, unknown>>) =>
   T.tap(O.fold(() => none, bind))

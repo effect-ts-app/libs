@@ -4,42 +4,22 @@ import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { pipe } from "@effect-ts/core/Function"
-import * as S from "@effect-ts/schema"
-import { leafE, unknownArrayE } from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Th from "@effect-ts/schema/These"
-import * as O from "@effect-ts-app/core/Option"
 
+import * as O from "../../Option"
+import * as S from "../custom"
+import { leafE, unknownArrayE } from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Th from "../custom/These"
 import { minLengthIdentifier } from "./length"
 
-export function nonEmptyArray<
-  ParserError extends S.AnyError,
-  ParsedShape,
-  ConstructorInput,
-  ConstructorError extends S.AnyError,
-  Encoded,
-  Api
->(
-  self: S.Schema<
-    unknown,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
+  self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): S.DefaultSchema<
   unknown,
-  S.CompositionE<
-    | S.PrevE<S.RefinementE<S.LeafE<S.UnknownArrayE>>>
-    | S.NextE<S.CollectionE<S.OptionalIndexE<number, ParserError>>>
-  >,
   NonEmptyArray<ParsedShape>,
   NonEmptyArray<ParsedShape>,
-  never,
   readonly Encoded[],
   { self: Api }
 > {
@@ -68,7 +48,7 @@ export function nonEmptyArray<
 
   return pipe(
     S.chunk(self)[">>>"](fromChunk),
-    S.mapParserError((_) => Chunk.unsafeHead(_.errors).error),
+    S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
     S.constructor((_: NonEmptyArray<ParsedShape>) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),

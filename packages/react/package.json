@@ -1,7 +1,6 @@
 {
     "name": "@effect-ts-app/react",
-    "version": "0.21.0",
-    "main": "./index.js",
+    "version": "0.40.0",
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
@@ -9,24 +8,25 @@
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.40.4",
-        "@effect-ts/monocle": "^0.34.0",
-        "@effect-ts/schema": "^0.8.2",
-        "@types/react": "^17.0.11",
-        "eslint-plugin-react": "^7.24.0",
+        "@effect-ts/core": "^0.44.5",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
+        "@types/react": "^17.0.24",
+        "eslint-plugin-react": "^7.26.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "react": "^17.0.2"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.40.4",
-        "@effect-ts/monocle": "^0.34.0",
-        "@effect-ts/schema": "^0.8.2",
+        "@effect-ts/core": "^0.44.5",
+        "@effect-ts/monocle": "^0.35.0",
+        "@effect-ts/schema": "^0.10.0",
         "react": "^17.0.2"
     },
     "scripts": {
-        "build": "yarn clean && tsc",
-        "clean": "find . | egrep '\\.js(\\.map)?$|\\.d.ts$' | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",
+        "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
+        "generate-exports": "sh ../../utils/extract.sh > package.log",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
         "compile": "tsc --noEmit",
@@ -34,9 +34,32 @@
         "prettier": "prettier \"**/*.ts\"",
         "autofix": "yarn lint --fix && yarn prettier --write",
         "test": "echo 'no tests yet'",
-        "testsuite": "yarn compile && yarn lint && yarn test && yarn circular"
+        "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
+        "ncu": "ncu"
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "module": "./_esm/index.js",
+    "main": "./index.js",
+    "typings": "./index.d.ts",
+    "exports": {
+        ".": {
+            "module": "./_esm/index.js",
+            "default": "./index.js"
+        },
+        "./data": {
+            "module": "./_esm/data.js",
+            "default": "./data.js"
+        },
+        "./hooks": {
+            "module": "./_esm/hooks.js",
+            "default": "./hooks.js"
+        },
+        "./context": {
+            "module": "./_esm/context.js",
+            "default": "./context.js"
+        }
+    },
+    "sideEffects": false
 }

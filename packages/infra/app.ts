@@ -9,10 +9,9 @@ export function handle<
   TModule extends Record<
     string,
     any //{ Model: MO.SchemaAny; new (...args: any[]): any } | MO.SchemaAny
-  >,
-  TRes extends { Model: MO.SchemaAny } | MO.SchemaAny = typeof MO.Void
+  >
 >(
-  _: TModule & { Response?: TRes; ResponseOpenApi?: any },
+  _: TModule & { ResponseOpenApi?: any },
   adaptResponse?: any
 ): <R, E>(
   h: (
@@ -21,16 +20,16 @@ export function handle<
         ? MO.GetRequest<TModule>
         : never
     >
-  ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<TRes>>>
+  ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
 ) => {
   h: typeof h
   Request: MO.GetRequest<TModule>
-  Response: TRes
+  Response: MO.GetResponse<TModule>
   ResponseOpenApi: any
 } {
   // TODO: Prevent over providing // no strict/shrink yet.
   const Request = MO.extractRequest(_)
-  const Response = (_.Response ?? MO.Void) as TRes
+  const Response = MO.extractResponse(_)
 
   return <R, E>(
     h: (
@@ -39,7 +38,7 @@ export function handle<
           ? MO.GetRequest<TModule>
           : never
       >
-    ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<TRes>>>
+    ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
   ) =>
     ({
       adaptResponse,

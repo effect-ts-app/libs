@@ -90,6 +90,7 @@ export class ArraySchema extends Base<
     minItems?: number
     maxItems?: number
     description?: string
+    uniqueItems?: boolean
   }
 > {
   readonly type = "array"

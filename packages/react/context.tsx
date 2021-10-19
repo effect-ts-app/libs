@@ -8,10 +8,29 @@ import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 
 export type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP : never
 
 export interface ServiceContext<R> {
-  readonly provide: <E, A>(self: T.Effect<R, E, A>) => T.Effect<unknown, E, A>
-  readonly runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => () => void
-  readonly runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) => Promise<void>
-  readonly runPromiseExit: <E, A>(self: T.Effect<R, E, A>) => Promise<Exit<E, A>>
+  readonly provide: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => T.Effect<unknown, E, A>
+
+  /**
+   * Fire and Forget. Errors are logged however.
+   */
+  readonly runWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) => () => void
+
+  /**
+   * Fire and Forget. A promise that never fails nor returns any value.
+   * Errors are logged however.
+   */
+  readonly runPromiseWithErrorLog: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => Promise<void>
+
+  /**
+   * A Promise that never fails, the Resolved value is an Exit result that can be either Success or Failed
+   */
+  readonly runPromiseExit: <E, A>(
+    self: T.Effect<R & T.DefaultEnv, E, A>
+  ) => Promise<Exit<E, A>>
 }
 
 const MissingContext = T.die(
@@ -37,11 +56,11 @@ export function makeApp<R>() {
     const ctx = useMemo(
       () => ({
         provide: provider.provide,
-        runWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
+        runWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runWithErrorLog(provider.provide(self)),
-        runPromiseWithErrorLog: <E, A>(self: T.Effect<R, E, A>) =>
+        runPromiseWithErrorLog: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseWithErrorLog(provider.provide(self)),
-        runPromiseExit: <E, A>(self: T.Effect<R, E, A>) =>
+        runPromiseExit: <E, A>(self: T.Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseExit(provider.provide(self)),
       }),
       [provider]

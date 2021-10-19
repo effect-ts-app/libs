@@ -1,0 +1,28 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "module": "ES2020",
+    "baseUrl": "./",
+    "rootDir": "./",
+    "noEmit": true,
+    "removeComments": true,
+    // keep in here, cause madge can't detect it from extended tsconfig
+    "moduleResolution": "node"
+  },
+  "include": [
+    "./"
+  ],
+  "exclude": [
+    "./dist",
+    "node_modules",
+    "build",
+    "lib",
+    "dist",
+    "**/*.d.ts.map"
+  ]
+}

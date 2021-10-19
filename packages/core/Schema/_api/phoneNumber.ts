@@ -14,6 +14,7 @@ import {
   parseUuidE,
   string,
 } from "../_schema"
+import { extendWithUtils } from "./_shared"
 
 // TODO: openapi meta: format: phone
 
@@ -33,24 +34,16 @@ const isPhoneNumber: Refinement<string, PhoneNumber> = (
 
 export const PhoneNumberFromString: DefaultSchema<
   string,
-  MO.CompositionE<
-    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
-  >,
   PhoneNumber,
   string,
-  MO.CompositionE<
-    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
-  >,
   string,
   {}
 > = pipe(
   fromString,
   MO.arbitrary((FC) => Numbers(7, 10)(FC)),
   nonEmpty,
-  MO.mapParserError((_) => CNK.unsafeHead(_.errors).error),
-  MO.mapConstructorError((_) => CNK.unsafeHead(_.errors).error),
+  MO.mapParserError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
+  MO.mapConstructorError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
   MO.refine(isPhoneNumber, (n) => MO.leafE(parseUuidE(n))),
   brand<PhoneNumber>(),
   MO.annotate(PhoneNumberFromStringIdentifier, {})
@@ -58,27 +51,10 @@ export const PhoneNumberFromString: DefaultSchema<
 
 export const PhoneNumberIdentifier = MO.makeAnnotation<{}>()
 
-export const PhoneNumber: DefaultSchema<
-  unknown,
-  MO.CompositionE<
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.ParseStringE>>>
-    | MO.NextE<
-        MO.CompositionE<
-          | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
-          | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
-        >
-      >
-  >,
-  PhoneNumber,
-  string,
-  MO.CompositionE<
-    | MO.NextE<MO.RefinementE<MO.LeafE<MO.ParseUuidE>>>
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.NonEmptyE<string>>>>
-  >,
-  string,
-  MO.ApiSelfType<PhoneNumber>
-> = pipe(
-  string[">>>"](PhoneNumberFromString),
-  brand<PhoneNumber>(),
-  MO.annotate(PhoneNumberIdentifier, {})
+export const PhoneNumber = extendWithUtils(
+  pipe(
+    string[">>>"](PhoneNumberFromString),
+    brand<PhoneNumber>(),
+    MO.annotate(PhoneNumberIdentifier, {})
+  )
 )

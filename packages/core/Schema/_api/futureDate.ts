@@ -1,19 +1,11 @@
-import { pipe } from "@effect-ts-app/core/Function"
-
+import { pipe } from "../../Function"
 import * as MO from "../_schema"
 import { domainEE, domainResponse2, onParseOrConstruct } from "../utils"
 import { Parser, These } from "../vendor"
+import { extendWithUtils } from "./_shared"
 
 export const fromDateIdentifier = MO.makeAnnotation<{}>()
-export const fromDate: MO.DefaultSchema<
-  Date,
-  MO.LeafE<MO.ParseDateE>,
-  Date,
-  Date,
-  never,
-  Date,
-  {}
-> = pipe(
+export const fromDate: MO.DefaultSchema<Date, Date, Date, Date, {}> = pipe(
   MO.identity((u): u is Date => u instanceof Date),
   MO.arbitrary((_) => _.date()),
   MO.mapApi(() => ({})),
@@ -22,23 +14,16 @@ export const fromDate: MO.DefaultSchema<
 )
 
 export const fromStringOrDateIdentifier = MO.makeAnnotation<{}>()
-export const fromStringOrDate: MO.DefaultSchema<
-  string | Date,
-  MO.LeafE<MO.ParseDateE>,
-  Date,
-  Date,
-  never,
-  string,
-  {}
-> = pipe(
-  MO.identity((u): u is Date => u instanceof Date),
-  MO.parser((u) => (u instanceof Date ? These.succeed(u) : Parser.for(MO.date)(u))),
-  MO.arbitrary((_) => _.date()),
-  MO.encoder((_) => _.toISOString()),
-  MO.mapApi(() => ({})),
-  MO.withDefaults,
-  MO.annotate(fromStringOrDateIdentifier, {})
-)
+export const fromStringOrDate: MO.DefaultSchema<string | Date, Date, Date, string, {}> =
+  pipe(
+    MO.identity((u): u is Date => u instanceof Date),
+    MO.parser((u) => (u instanceof Date ? These.succeed(u) : Parser.for(MO.date)(u))),
+    MO.arbitrary((_) => _.date()),
+    MO.encoder((_) => _.toISOString()),
+    MO.mapApi(() => ({})),
+    MO.withDefaults,
+    MO.annotate(fromStringOrDateIdentifier, {})
+  )
 
 export const FutureDateFromDate = fromDate["|>"](
   onParseOrConstruct((i) => {
@@ -60,5 +45,5 @@ export const FutureDateFromStringOrDate = fromStringOrDate["|>"](
   })
 )
 
-export const FutureDate = MO.date[">>>"](FutureDateFromDate)
+export const FutureDate = extendWithUtils(MO.date[">>>"](FutureDateFromDate))
 export type FutureDate = MO.ParsedShapeOf<typeof FutureDate>

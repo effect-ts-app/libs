@@ -4,6 +4,7 @@ import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
 import { matchTag } from "@effect-ts/core/Utils"
 import * as T from "@effect-ts-app/core/Effect"
+import * as O from "@effect-ts-app/core/Option"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { ServiceContext } from "./context"
@@ -14,19 +15,61 @@ export class Initial extends Tagged("Initial")<{}> {}
 
 export class Loading extends Tagged("Loading")<{}> {}
 
-export class Done<E, A> extends Tagged("Done")<{ readonly current: E.Either<E, A> }> {}
+export class Done<E, A> extends Tagged("Done")<{
+  readonly current: E.Either<E, A>
+  readonly previous: O.Option<A>
+}> {
+  static succeed<A, E = never>(a: A) {
+    return new Done<E, A>({ current: E.right(a), previous: O.none })
+  }
+  static fail<E, A = never>(e: E, previous?: A) {
+    return new Done<E, A>({
+      current: E.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
+    })
+  }
+
+  static refresh<E, A>(d: Done<E, A>) {
+    return new Refreshing(d)
+  }
+}
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: E.Either<E, A>
-}> {}
+  readonly previous: O.Option<A>
+}> {
+  static succeed<A, E = never>(a: A) {
+    return new Refreshing<E, A>({ current: E.right(a), previous: O.none })
+  }
+  static fail<E, A = never>(e: E, previous?: A) {
+    return new Refreshing<E, A>({
+      current: E.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
+    })
+  }
+  static fromDone<E, A>(d: Done<E, A>) {
+    return new Refreshing(d)
+  }
+}
 
 export type QueryResult<E, A> = Initial | Loading | Refreshing<E, A> | Done<E, A>
+
+export function isSuccess<E, A>(
+  qr: QueryResult<E, A>
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: E.Right<A> } {
+  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
+}
+
+export function isFailed<E, A>(
+  qr: QueryResult<E, A>
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: E.Left<E> } {
+  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Left"
+}
 
 export type ResultTuple<Result> = readonly [result: Result, refresh: () => void]
 export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 
-const fail = <E>(err: E) => new Done({ current: E.left(err) })
-const succeed = <A>(a: A) => new Done({ current: E.right(a) })
+export const { fail, succeed } = Done
 
 export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
   /**
@@ -55,7 +98,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
         resultInternal.current._tag === "Initial" ||
           resultInternal.current._tag === "Loading"
           ? new Loading()
-          : new Refreshing({ current: resultInternal.current.current })
+          : new Refreshing(resultInternal.current)
       )
 
       return runWithErrorLog(pipe(queryResult(self), T.map(set)))
@@ -64,6 +107,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
     return [result, refresh] as const
   }
 }
+
 export function queryResult<R, E, A>(
   self: T.Effect<R, E, A>
 ): T.Effect<R, never, QueryResult<E, A>> {
@@ -73,7 +117,7 @@ export function queryResult<R, E, A>(
 export function matchQuery<E, A, Result>(_: {
   Initial: () => Result
   Loading: () => Result
-  Error: (e: E, isRefreshing: boolean) => Result
+  Error: (e: E, isRefreshing: boolean, previous: O.Option<A>) => Result
   Success: (a: A, isRefreshing: boolean) => Result
 }) {
   return (r: QueryResult<E, A>) =>
@@ -84,14 +128,14 @@ export function matchQuery<E, A, Result>(_: {
         Refreshing: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, true),
+              (e) => _.Error(e, true, r.previous),
               (a) => _.Success(a, true)
             )
           ),
         Done: (r) =>
           r.current["|>"](
             E.fold(
-              (e) => _.Error(e, false),
+              (e) => _.Error(e, false, r.previous),
               (a) => _.Success(a, false)
             )
           ),

@@ -7,15 +7,16 @@ import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
-import * as S from "@effect-ts/schema"
-import type { Annotation } from "@effect-ts/schema/_schema/annotation"
-import { augmentRecord } from "@effect-ts/schema/_utils"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
 import type * as fc from "fast-check"
+
+import * as S from "../custom"
+import type { Annotation } from "../custom/_schema/annotation"
+import { augmentRecord } from "../custom/_utils"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Parser from "../custom/Parser"
+import * as Th from "../custom/These"
 
 export class FromProperty<
   Self extends S.SchemaAny,
@@ -216,94 +217,92 @@ export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
     ? true
     : false
 
-export type ParserErrorFromFromProperties<Props extends FromPropertyRecord> =
-  S.CompositionE<
-    | S.PrevE<S.LeafE<S.UnknownRecordE>>
-    | S.NextE<
-        HasRequiredFromProperty<Props> extends true
-          ? S.CompositionE<
-              | S.PrevE<
-                  S.MissingKeysE<
-                    {
-                      [k in keyof Props]: Props[k] extends AnyFromProperty
-                        ? Props[k]["_optional"] extends "optional"
-                          ? never
-                          : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
-                          ? never
-                          : Props[k]["_as"] extends O.Some<any>
-                          ? Props[k]["_as"]["value"]
-                          : k
-                        : never
-                    }[keyof Props]
-                  >
-                >
-              | S.NextE<
-                  S.StructE<
-                    {
-                      [k in keyof Props]: Props[k] extends AnyFromProperty
-                        ? Props[k]["_optional"] extends "optional"
-                          ? S.OptionalKeyE<
-                              Props[k]["_as"] extends O.Some<any>
-                                ? Props[k]["_as"]["value"]
-                                : k,
-                              S.ParserErrorOf<Props[k]["_schema"]>
-                            >
-                          : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
-                          ? S.OptionalKeyE<
-                              Props[k]["_as"] extends O.Some<any>
-                                ? Props[k]["_as"]["value"]
-                                : k,
-                              S.ParserErrorOf<Props[k]["_schema"]>
-                            >
-                          : S.RequiredKeyE<
-                              Props[k]["_as"] extends O.Some<any>
-                                ? Props[k]["_as"]["value"]
-                                : k,
-                              S.ParserErrorOf<Props[k]["_schema"]>
-                            >
-                        : never
-                    }[keyof Props]
-                  >
-                >
-            >
-          : S.StructE<
-              {
-                [k in keyof Props]: Props[k] extends AnyFromProperty
-                  ? Props[k]["_optional"] extends "optional"
-                    ? S.OptionalKeyE<
-                        Props[k]["_as"] extends O.Some<any>
-                          ? Props[k]["_as"]["value"]
-                          : k,
-                        S.ParserErrorOf<Props[k]["_schema"]>
-                      >
-                    : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
-                    ? S.OptionalKeyE<
-                        Props[k]["_as"] extends O.Some<any>
-                          ? Props[k]["_as"]["value"]
-                          : k,
-                        S.ParserErrorOf<Props[k]["_schema"]>
-                      >
-                    : S.RequiredKeyE<
-                        Props[k]["_as"] extends O.Some<any>
-                          ? Props[k]["_as"]["value"]
-                          : k,
-                        S.ParserErrorOf<Props[k]["_schema"]>
-                      >
-                  : never
-              }[keyof Props]
-            >
-      >
-  >
+// export type ParserErrorFromFromProperties<Props extends FromPropertyRecord> =
+//   S.CompositionE<
+//     | S.PrevE<S.LeafE<S.UnknownRecordE>>
+//     | S.NextE<
+//         HasRequiredFromProperty<Props> extends true
+//           ? S.CompositionE<
+//               | S.PrevE<
+//                   S.MissingKeysE<
+//                     {
+//                       [k in keyof Props]: Props[k] extends AnyFromProperty
+//                         ? Props[k]["_optional"] extends "optional"
+//                           ? never
+//                           : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
+//                           ? never
+//                           : Props[k]["_as"] extends O.Some<any>
+//                           ? Props[k]["_as"]["value"]
+//                           : k
+//                         : never
+//                     }[keyof Props]
+//                   >
+//                 >
+//               | S.NextE<
+//                   S.StructE<
+//                     {
+//                       [k in keyof Props]: Props[k] extends AnyFromProperty
+//                         ? Props[k]["_optional"] extends "optional"
+//                           ? S.OptionalKeyE<
+//                               Props[k]["_as"] extends O.Some<any>
+//                                 ? Props[k]["_as"]["value"]
+//                                 : k,
+//                               S.ParserErrorOf<Props[k]["_schema"]>
+//                             >
+//                           : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
+//                           ? S.OptionalKeyE<
+//                               Props[k]["_as"] extends O.Some<any>
+//                                 ? Props[k]["_as"]["value"]
+//                                 : k,
+//                               S.ParserErrorOf<Props[k]["_schema"]>
+//                             >
+//                           : S.RequiredKeyE<
+//                               Props[k]["_as"] extends O.Some<any>
+//                                 ? Props[k]["_as"]["value"]
+//                                 : k,
+//                               S.ParserErrorOf<Props[k]["_schema"]>
+//                             >
+//                         : never
+//                     }[keyof Props]
+//                   >
+//                 >
+//             >
+//           : S.StructE<
+//               {
+//                 [k in keyof Props]: Props[k] extends AnyFromProperty
+//                   ? Props[k]["_optional"] extends "optional"
+//                     ? S.OptionalKeyE<
+//                         Props[k]["_as"] extends O.Some<any>
+//                           ? Props[k]["_as"]["value"]
+//                           : k,
+//                         S.ParserErrorOf<Props[k]["_schema"]>
+//                       >
+//                     : Props[k]["_def"] extends O.Some<["parser" | "both", any]>
+//                     ? S.OptionalKeyE<
+//                         Props[k]["_as"] extends O.Some<any>
+//                           ? Props[k]["_as"]["value"]
+//                           : k,
+//                         S.ParserErrorOf<Props[k]["_schema"]>
+//                       >
+//                     : S.RequiredKeyE<
+//                         Props[k]["_as"] extends O.Some<any>
+//                           ? Props[k]["_as"]["value"]
+//                           : k,
+//                         S.ParserErrorOf<Props[k]["_schema"]>
+//                       >
+//                   : never
+//               }[keyof Props]
+//             >
+//       >
+//   >
 
 export const fromPropertiesIdentifier =
   S.makeAnnotation<{ props: FromPropertyRecord }>()
 
 export type SchemaFromProperties<Props extends FromPropertyRecord> = S.DefaultSchema<
   ParserInputFromFromProperties<Props>,
-  ParserErrorFromFromProperties<Props>,
   ShapeFromFromProperties<Props>,
   ConstructorFromFromProperties<Props>,
-  never,
   EncodedFromFromProperties<Props>,
   { props: Props }
 >
@@ -411,9 +410,7 @@ export function fromProps<Props extends FromPropertyRecord>(
     return true
   }
 
-  function parser(
-    _: unknown
-  ): Th.These<ParserErrorFromFromProperties<Props>, ShapeFromFromProperties<Props>> {
+  function parser(_: unknown): Th.These<any, ShapeFromFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -426,7 +423,6 @@ export function fromProps<Props extends FromPropertyRecord>(
       }
     }
     if (!Chunk.isEmpty(missingKeys)) {
-      // @ts-expect-error
       return Th.fail(
         S.compositionE(
           Chunk.single(
@@ -497,7 +493,6 @@ export function fromProps<Props extends FromPropertyRecord>(
     const error = hasRequired ? S.compositionE(Chunk.single(S.nextE(error_))) : error_
 
     if (isError) {
-      // @ts-expect-error
       return Th.fail(error)
     }
 

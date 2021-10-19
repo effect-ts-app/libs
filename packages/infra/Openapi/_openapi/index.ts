@@ -23,6 +23,7 @@ import {
   nonEmptyStringIdentifier,
   nullableIdentifier,
   numberIdentifier,
+  optionFromNullIdentifier,
   PhoneNumberFromStringIdentifier,
   PhoneNumberIdentifier,
   positiveIntFromNumberIdentifier,
@@ -30,12 +31,13 @@ import {
   propertiesIdentifier,
   SchemaAnnotated,
   SchemaContinuationSymbol,
+  setIdentifier,
   stringIdentifier,
   unionIdentifier,
   UUIDFromStringIdentifier,
 } from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/core/Schema"
 
-import * as MO from "../_schema"
 import {
   AllOfSchema,
   ArraySchema,
@@ -92,6 +94,10 @@ type Meta = MO.Meta & {
 function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   if (!schema) {
     throw new Error("schema undefined")
+  }
+  if ("lazy" in schema) {
+    // TODO: Support recursive structures
+    return T.succeed(new ObjectSchema({}))
   }
   return T.gen(function* ($) {
     if (schema instanceof MO.SchemaRefinement) {
@@ -182,6 +188,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new StringSchema({ format: "phone" as any, ...meta })
 
         case literalIdentifier:
+          // FUTURE OAS 3.1.0: literals.length === 1 ? { const: literals[0 ]} : { enum: literals } ...
           return new EnumSchema({ enum: schemaMeta.literals, ...meta })
 
         case UUIDFromStringIdentifier:
@@ -198,6 +205,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new NumberSchema({ minimum: 0, ...meta })
         case boolIdentifier:
           return new BooleanSchema(meta)
+        case optionFromNullIdentifier:
+          return {
+            ...((yield* $(processId(schemaMeta.self, meta))) as any),
+            nullable: true,
+          }
         case nullableIdentifier:
           return {
             ...((yield* $(processId(schemaMeta.self, meta))) as any),
@@ -206,6 +218,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case arrayIdentifier:
           return new ArraySchema({
             items: yield* $(processId(schemaMeta.self, meta)) as any,
+          })
+        case setIdentifier:
+          return new ArraySchema({
+            items: yield* $(processId(schemaMeta.self, meta)) as any,
+            uniqueItems: true,
           })
         case chunkIdentifier:
           return new ArraySchema({
@@ -283,24 +300,8 @@ function merge(schema: any) {
 
 const cache = new WeakMap()
 
-function for_<
-  ParserInput,
-  ParserError extends MO.AnyError,
-  ParsedShape,
-  ConstructorInput,
-  ConstructorError extends MO.AnyError,
-  Encoded,
-  Api
->(
-  schema: MO.Schema<
-    ParserInput,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): Gen {
   if (cache.has(schema)) {
     return cache.get(schema)

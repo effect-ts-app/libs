@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "ES2020",
         "lib": [
             "es2020"
         ],
@@ -22,7 +22,9 @@
         "resolveJsonModule": true,
         "moduleResolution": "node",
         "downlevelIteration": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "composite": true,
+        "declarationMap": true
     },
     // NEW: Options for file/directory watching
     "watchOptions": {
@@ -38,6 +40,7 @@
     "exclude": [
         "node_modules",
         "build",
-        "lib"
+        "lib",
+        "_esm"
     ]
 }

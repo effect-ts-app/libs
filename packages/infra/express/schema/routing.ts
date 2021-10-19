@@ -3,7 +3,6 @@ import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as T from "@effect-ts/core/Effect"
 import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
-import * as Ex from "@effect-ts/express"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Methods } from "@effect-ts-app/core/Schema"
@@ -17,12 +16,7 @@ import {
   ParameterLocation,
   SubSchema,
 } from "../../Openapi/atlas-plutus"
-import {
-  makeRequestHandler,
-  Middleware,
-  RequestHandler,
-  RequestHandlerOptRes,
-} from "./requestHandler"
+import { RequestHandler, RequestHandlerOptRes } from "./requestHandler"
 
 export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
   return i as RouteDescriptorAny
@@ -49,17 +43,28 @@ export interface RouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA,
+  Errors,
   METHOD extends Methods = Methods
 > {
   path: string
   method: METHOD
-  handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
+  handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
     tags: A.Array<string>
   }
 }
 
-export type RouteDescriptorAny = RouteDescriptor<any, any, any, any, any, any, any, any>
+export type RouteDescriptorAny = RouteDescriptor<
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any
+>
 
 export function makeRouteDescriptor<
   R,
@@ -70,11 +75,22 @@ export function makeRouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA = void,
+  Errors = any,
   METHOD extends Methods = Methods
 >(
   path: string,
   method: METHOD,
-  handler: RequestHandlerOptRes<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
+  handler: RequestHandlerOptRes<
+    R,
+    PathA,
+    CookieA,
+    QueryA,
+    BodyA,
+    HeaderA,
+    ReqA,
+    ResA,
+    Errors
+  >
 ) {
   return { path, method, handler, _tag: "Schema" } as RouteDescriptor<
     R,
@@ -85,254 +101,13 @@ export function makeRouteDescriptor<
     HeaderA,
     ReqA,
     ResA,
+    Errors,
     METHOD
   >
 }
 
-// export function match<
-//   R,
-//   Path extends string,
-//   Method extends Methods,
-//   ReqA,
-//   ResA,
-//   R2 = unknown,
-//   PR = unknown
-// >(
-//   r: RequestHandler2<R, Path, Method, ReqA, ResA>,
-//   mw?: Middleware2<R, ReqA, ResA, R2, PR>
-// ) {
-//   //r.Request = MO.adaptRequest(r.Request as any) as any
-
-//   let h = undefined
-//   if (mw) {
-//     const { handle, handler } = mw(r)
-//     r = handler as any
-//     h = handle
-//   }
-
-//   return pipe(
-//     Ex.match(r.Request.method.toLowerCase() as any)(
-//       r.Request.path,
-//       //makeRequestHandler2<R, Path, Method, ReqA, ResA, R2, PR>(r, h)
-//       makeRequestHandler<R, any, any, any, any, any, ReqA, ResA, R2, PR>(r, h)
-//     ),
-//     T.zipRight(
-//       T.succeedWith(() =>
-//         makeRouteDescriptor(r.Request.path, r.Request.method, r as any)
-//       )
-//     )
-//   )
-// }
-
-export function match<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA,
-  R2 = unknown,
-  PR = unknown
->(
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.match(r.Request.method.toLowerCase() as any)(
-      r.Request.path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(
-      T.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
-    )
-  )
-}
-
-export function get<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA,
-  R2 = unknown,
-  PR = unknown
->(
-  path: string,
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.get(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
-  )
-}
-
-export function post<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA = void,
-  R2 = unknown,
-  PR = unknown
->(
-  path: string,
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.post(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
-  )
-}
-
-export function put<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA = void,
-  R2 = unknown,
-  PR = unknown
->(
-  path: string,
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.put(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
-  )
-}
-
-export function patch<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA = void,
-  R2 = unknown,
-  PR = unknown
->(
-  path: string,
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.patch(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
-  )
-}
-
-function del<
-  R,
-  PathA,
-  CookieA,
-  QueryA,
-  BodyA,
-  HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
-  ResA = void,
-  R2 = unknown,
-  PR = unknown
->(
-  path: string,
-  r: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>,
-  mw?: Middleware<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>
-) {
-  let h = undefined
-  if (mw) {
-    const { handle, handler } = mw(r)
-    r = handler
-    h = handle
-  }
-  return pipe(
-    Ex.delete(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
-  )
-}
-
-export { del as delete }
-
 export function makeFromSchema<ResA>(
-  e: RouteDescriptor<any, any, any, any, any, any, ResA, any>
+  e: RouteDescriptor<any, any, any, any, any, any, ResA, any, any>
 ) {
   const jsonSchema_ = OpenApi.for
   const jsonSchema = <E, A>(r: MO.ReqRes<E, A>) => jsonSchema_(r)

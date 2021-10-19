@@ -5,13 +5,19 @@
             "es2020",
             "DOM"
         ],
-        "outDir": "../",
-        "noEmit": false,
         "moduleResolution": "node",
-        "module": "CommonJS",
-        "incremental": false
+        "outDir": "./_esm",
+        "noEmit": false
     },
     "include": [
         "./"
+    ],
+    "exclude": [
+        "./_esm"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
     ]
 }

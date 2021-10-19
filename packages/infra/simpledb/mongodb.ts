@@ -2,7 +2,7 @@ import * as T from "@effect-ts/core/Effect"
 import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
-import { CollectionInsertOneOptions, IndexSpecification } from "mongodb"
+import { IndexDescription, InsertOneOptions } from "mongodb"
 
 import * as Mongo from "../mongo-client"
 import { CachedRecord, DBRecord, OptimisticLockException } from "./shared"
@@ -14,7 +14,7 @@ import { Version } from "./simpledb"
 //   return prev
 // }, {} as Record<string, number>)
 
-const setup = (type: string, indexes: IndexSpecification[]) =>
+const setup = (type: string, indexes: IndexDescription[]) =>
   pipe(
     Mongo.db,
     T.tap((db) =>
@@ -29,7 +29,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     encode: (record: A) => T.RIO<REncode, EA>,
     decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
     //schemaVersion: string,
-    indexes: IndexSpecification[]
+    indexes: IndexDescription[]
   ) => {
     return pipe(
       setup(type, indexes),
@@ -83,9 +83,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               T.tryPromise(() =>
                 db
                   .collection(type)
-                  .insertOne({ _id: record.id, version, timestamp: new Date(), data }, {
-                    checkKeys: false, // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
-                  } as CollectionInsertOneOptions)
+                  .insertOne(
+                    { _id: record.id as any, version, timestamp: new Date(), data },
+                    {
+                      checkKeys: false, // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
+                    } as InsertOneOptions
+                  )
               )
                 ["|>"](T.asUnit)
                 ["|>"](T.orDie),

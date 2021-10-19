@@ -12,6 +12,10 @@ import {
   Sync,
 } from "@effect-ts/core/Sync"
 
+import type { Effect } from "./Effect"
+import * as T from "./Effect"
+import { identity } from "./Function"
+
 export type ShapeFn<T> = Pick<
   T,
   {
@@ -51,15 +55,13 @@ export type DerivedLifted<
   [k in Fns]: T[k] extends (...args: infer ARGS) => Sync<infer R, infer E, infer A>
     ? (...args: ARGS) => Sync<R & Has<T>, E, A>
     : never
-} &
-  {
-    [k in Cns]: T[k] extends Sync<infer R, infer E, infer A>
-      ? Sync<R & Has<T>, E, A>
-      : never
-  } &
-  {
-    [k in Values]: Sync<Has<T>, never, T[k]>
-  }
+} & {
+  [k in Cns]: T[k] extends Sync<infer R, infer E, infer A>
+    ? Sync<R & Has<T>, E, A>
+    : never
+} & {
+  [k in Values]: Sync<Has<T>, never, T[k]>
+}
 
 export type IO<E, A> = Sync<unknown, E, A>
 export type RIO<R, A> = Sync<R, never, A>
@@ -107,6 +109,10 @@ export const orDie = mapError((err) => {
  */
 export function fromEither<E, A>(f: () => E.Either<E, A>) {
   return chain_(succeedWith(f), E.fold(fail, succeed))
+}
+
+export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
+  return T.map_(self, identity)
 }
 
 export * from "@effect-ts/core/Sync"

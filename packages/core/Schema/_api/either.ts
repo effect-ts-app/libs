@@ -4,12 +4,13 @@
 
 import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
-import * as MO from "@effect-ts/schema"
-import * as Arbitrary from "@effect-ts/schema/Arbitrary"
-import * as Encoder from "@effect-ts/schema/Encoder"
-import * as Guard from "@effect-ts/schema/Guard"
-import * as Parser from "@effect-ts/schema/Parser"
-import * as Th from "@effect-ts/schema/These"
+
+import * as MO from "../custom"
+import * as Arbitrary from "../custom/Arbitrary"
+import * as Encoder from "../custom/Encoder"
+import * as Guard from "../custom/Guard"
+import * as Parser from "../custom/Parser"
+import * as Th from "../custom/These"
 
 export const fromEitherIdentifier =
   MO.makeAnnotation<{ left: MO.SchemaAny; right: MO.SchemaAny }>()
@@ -19,44 +20,28 @@ export const fromEitherIdentifier =
  */
 export function fromEither<
   LeftParserInput,
-  LeftParserError extends MO.AnyError,
   LeftParsedShape,
   LeftConstructorInput,
-  LeftConstructorError extends MO.AnyError,
   LeftEncoded,
   LeftApi,
   ParserInput,
-  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
   left: MO.Schema<
     LeftParserInput,
-    LeftParserError,
     LeftParsedShape,
     LeftConstructorInput,
-    LeftConstructorError,
     LeftEncoded,
     LeftApi
   >,
-  right: MO.Schema<
-    ParserInput,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+  right: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   object,
-  LeftParserError | ParserError, // TODO
   E.Either<LeftParsedShape, ParsedShape>,
   object,
-  LeftParserError | ParserError, // TODO
   E.Either<LeftEncoded, Encoded>,
   { left: LeftApi; right: Api }
 > {
@@ -109,46 +94,21 @@ export const eitherIdentifier =
  *  @experimental
  */
 export function either<
-  LeftParserError extends MO.AnyError,
   LeftParsedShape,
   LeftConstructorInput,
-  LeftConstructorError extends MO.AnyError,
   LeftEncoded,
   LeftApi,
-  ParserError extends MO.AnyError,
   ParsedShape,
   ConstructorInput,
-  ConstructorError extends MO.AnyError,
   Encoded,
   Api
 >(
-  left: MO.Schema<
-    unknown,
-    LeftParserError,
-    LeftParsedShape,
-    LeftConstructorInput,
-    LeftConstructorError,
-    LeftEncoded,
-    LeftApi
-  >,
-  right: MO.Schema<
-    unknown,
-    ParserError,
-    ParsedShape,
-    ConstructorInput,
-    ConstructorError,
-    Encoded,
-    Api
-  >
+  left: MO.Schema<unknown, LeftParsedShape, LeftConstructorInput, LeftEncoded, LeftApi>,
+  right: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   unknown,
-  MO.CompositionE<
-    | MO.PrevE<MO.RefinementE<MO.LeafE<MO.ParseObjectE>>>
-    | MO.NextE<LeftParserError | ParserError>
-  >,
   E.Either<LeftParsedShape, ParsedShape>,
   object,
-  MO.LeafE<MO.UnknownArrayE>,
   E.Either<LeftEncoded, Encoded>,
   { left: LeftApi; right: Api }
 > {

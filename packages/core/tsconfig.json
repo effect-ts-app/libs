@@ -2,12 +2,13 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "moduleResolution": "node",
-        "outDir": "./",
-        "noEmit": false,
-        "module": "CommonJS",
-        "incremental": false
+        "outDir": "./_esm",
+        "noEmit": false
     },
     "include": [
         "./"
+    ],
+    "exclude": [
+        "./_esm"
     ]
 }

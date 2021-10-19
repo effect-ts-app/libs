@@ -3,11 +3,11 @@ import "abort-controller/polyfill"
 
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as O from "@effect-ts/core/Option"
-import * as T from "@effect-ts-app/core/Effect"
-import { pipe } from "@effect-ts-app/core/Function"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
+import * as T from "../Effect"
+import { pipe } from "../Function"
 import * as H from "./http-client"
 
 function getContentType(requestType: H.RequestType): string {
