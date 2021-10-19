@@ -439,6 +439,7 @@ export const asUpi = <ParsedShape, ConstructorInput, Encoded, Api>(
 // customized Model
 export { Model } from "./Model"
 export * from "./Model"
+export * from "./REST"
 export * from "./adapt"
 export * from "./_api"
 export * from "./_schema"
