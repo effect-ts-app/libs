@@ -1,5 +1,6 @@
 import "./Array"
 import "./Chunk"
+import "./Either"
 import "./Effect"
 import "./EffectOption"
 import "./Lens"

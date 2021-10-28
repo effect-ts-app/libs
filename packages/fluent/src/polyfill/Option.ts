@@ -21,6 +21,11 @@ const funcs = {
   encaseInSync: tryCatchOption_,
   encaseInEffect: encaseOption_,
   getOrElse: getOrElse_,
+  chain: chain_,
+  isSome,
+  isNone,
+  map: map_,
+  pipe,
 }
 
 function apply(BasePrototype: any) {
@@ -40,39 +45,6 @@ function apply(BasePrototype: any) {
       return f(this, ...args)
     }
   })
-
-  // this overlaps with the real value object
-  // should not be needed
-  // Object.defineProperty(BasePrototype, "value", {
-  //   get() {
-  //     return toUndefined(this)
-  //   },
-  //   enumerable: false,
-  // })
-
-  BasePrototype.chain = function (...args: [any]) {
-    return chain_(this, ...args)
-  }
-
-  BasePrototype.isSome = function () {
-    return isSome(this)
-  }
-
-  BasePrototype.isSome = function () {
-    return isSome(this)
-  }
-
-  BasePrototype.isNone = function () {
-    return isNone(this)
-  }
-
-  BasePrototype.map = function (...args: [any]) {
-    return map_(this, ...args)
-  }
-
-  BasePrototype.pipe = function (...args: [any]) {
-    return pipe(this, ...args)
-  }
 }
 
 apply(None.prototype)
