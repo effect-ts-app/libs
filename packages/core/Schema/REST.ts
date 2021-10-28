@@ -12,6 +12,7 @@ import {
   AnyRecordSchema,
   GetProps,
   Model,
+  ModelSpecial,
   PropsExtensions,
   setSchema,
   StringRecord,
