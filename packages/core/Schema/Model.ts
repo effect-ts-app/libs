@@ -166,7 +166,7 @@ export type GetProps<Self> = Self extends { Api: { props: infer Props } }
     : never
   : never
 
-export type PropsExtensions<Props extends PropertyRecord> = {
+export interface PropsExtensions<Props extends PropertyRecord> {
   include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
