@@ -173,7 +173,7 @@ type SupportedDefaults =
   | Date
   | boolean
   | UUID
-  | Nullable<unknown>
+  | null
 
 export function findAnnotation<A>(
   schema: MO.SchemaAny,
