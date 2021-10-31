@@ -283,12 +283,7 @@ function defProp<Self extends MO.SchemaUPI>(
   return MO.prop(schema).def(makeDefault, "constructor")
 }
 
-export function optProp<
-  ParsedShape extends SupportedDefaults,
-  ConstructorInput,
-  Encoded,
-  Api
->(
+export function optProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
