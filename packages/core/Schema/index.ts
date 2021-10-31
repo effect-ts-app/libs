@@ -11,7 +11,7 @@ import * as SET from "../Set"
 import { typedKeysOf } from "../utils"
 import { FromProperty, set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
-import { Nullable, UUID } from "./_schema"
+import { UUID } from "./_schema"
 
 export * from "./utils"
 
@@ -173,7 +173,6 @@ type SupportedDefaults =
   | Date
   | boolean
   | UUID
-  | null
 
 export function findAnnotation<A>(
   schema: MO.SchemaAny,
@@ -322,6 +321,16 @@ export function defaultProp<
   O.None,
   O.Some<["constructor", () => ParsedShape]>
 >
+export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): null extends ParsedShape
+  ? FromProperty<
+      MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+      "required",
+      O.None,
+      O.Some<["constructor", () => ParsedShape]>
+    >
+  : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
   schema: MO.Schema<unknown, any, any, any, any>,
   makeDefault?: () => any

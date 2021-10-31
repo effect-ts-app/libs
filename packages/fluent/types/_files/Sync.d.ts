@@ -13,7 +13,7 @@ declare module "@effect-ts/system/Sync/core" {
     chain<RX, EX, AX, R2, E2, B>(
       this: Sync<RX, EX, AX>,
       f: (a: AX) => Effect<R2, E2, B>
-    ): never
+    ): ["Not supported currently, use toEffect and chain", never]
 
     /**
      * @ets_rewrite_method map_ from "@effect-ts/core/Sync"
