@@ -30,10 +30,18 @@ export interface Model<M, Self extends MO.SchemaAny>
 export interface ModelEnc<M, Self extends MO.SchemaAny, MEnc>
   extends Model2Int<M, Self, EncSchemaForModel<M, Self, MEnc>, MEnc> {}
 
+export interface ModelEncSchema<M, Self extends MO.SchemaAny, MEnc, MSchema>
+  extends Model2Int<M, Self, EncSchemaForModel<M, Self, MEnc>, MEnc, MSchema> {}
+
 export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
   extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>> {}
-interface Model2Int<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny, MEnc>
-  extends MO.Schema<
+interface Model2Int<
+  M,
+  Self extends MO.SchemaAny,
+  SelfM extends MO.SchemaAny,
+  MEnc,
+  MSchema = Self
+> extends MO.Schema<
     MO.ParserInputOf<Self>,
     M,
     MO.ConstructorInputOf<Self>,
@@ -41,10 +49,10 @@ interface Model2Int<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny, ME
     MO.ApiOf<Self>
   > {
   new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
-  [MO.schemaField]: Self
+  [MO.schemaField]: MSchema
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<M, M> // added
-  readonly lenses: RecordSchemaToLenses<M, Self>
+  readonly lenses: RecordSchemaToLenses<M, Self> // MSchema ?
 
   readonly Parser: MO.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
@@ -62,6 +70,11 @@ export function Model<M>(__name?: string) {
 export function ModelEnc<M, MEnc>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecialEnc<M, MEnc>(__name)(MO.props(props))
+}
+
+export function ModelEncSchema<M, MEnc, MSchema>(__name?: string) {
+  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
+    ModelSpecialEncSchema<M, MEnc, MSchema>(__name)(MO.props(props))
 }
 
 export function fromModel<M>(__name?: string) {
@@ -187,6 +200,14 @@ export function ModelSpecialEnc<M, MEnc>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
   ): ModelEnc<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
+    return makeSpecial(__name, self)
+  }
+}
+
+export function ModelSpecialEncSchema<M, MEnc, MSchema>(__name?: string) {
+  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+    self: Self
+  ): ModelEncSchema<M, Self, MEnc, MSchema> & PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
