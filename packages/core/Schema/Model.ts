@@ -42,14 +42,16 @@ export interface MNModel<
   ParsedShape = MO.ParsedShapeOf<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
   Encoded = MO.EncodedOf<Self>,
-  Props extends PropertyRecord = GetApiProps<Self>
+  Props = GetApiProps<Self>,
+  ProvidedProps = GetApiProps<Self>
 > extends MM<
     Self,
     MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>,
     ParsedShape,
     ConstructorInput,
     Encoded,
-    Props
+    Props,
+    ProvidedProps
   > {}
 
 export interface MM<
@@ -58,11 +60,13 @@ export interface MM<
   ParsedShape,
   ConstructorInput,
   Encoded,
-  Props
+  Props,
+  ProvidedProps
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   //new (_: ConstructorInput): ParsedShape;
   new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
   [MO.schemaField]: Self
+  readonly ProvidedProps: ProvidedProps
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
   readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
@@ -107,12 +111,9 @@ export function ModelEnc<M, MEnc>(__name?: string) {
     ModelSpecialEnc<M, MEnc>(__name)(MO.props(props))
 }
 
-export function MNModel<
-  ParsedShape,
-  ConstructorInput,
-  Encoded,
-  Props extends MO.PropertyRecord
->(__name?: string) {
+export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
+  __name?: string
+) {
   return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
     const self = MO.props(props)
     return makeSpecial(__name, self) as MNModel<
@@ -120,7 +121,8 @@ export function MNModel<
       ParsedShape,
       ConstructorInput,
       Encoded,
-      Props
+      Props,
+      ProvidedProps
     > &
       PropsExtensions<Props>
   }
@@ -229,7 +231,7 @@ export type GetProps<Self> = Self extends { Api: { props: infer Props } }
     : never
   : never
 
-export interface PropsExtensions<Props extends PropertyRecord> {
+export interface PropsExtensions<Props> {
   include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
