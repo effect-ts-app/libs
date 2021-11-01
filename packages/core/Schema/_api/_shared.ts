@@ -50,10 +50,10 @@ export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
   return MO.Parser.for(schema)
 }
 
-export type EncSchemaForModel<M, Self extends MO.SchemaAny, MEnc> = MO.Schema<
-  MO.ParserInputOf<Self>,
-  M,
+export type EncSchemaForModel<ParsedShape, Self extends MO.SchemaAny, MEnc> = MO.Schema<
+  MO.ParserInputOf<Self>, // unknown lock to
+  ParsedShape,
   MO.ConstructorInputOf<Self>,
   MEnc,
-  MO.ApiOf<Self> & MO.ApiSelfType<M>
+  MO.ApiOf<Self> & MO.ApiSelfType<ParsedShape>
 >

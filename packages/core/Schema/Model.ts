@@ -32,6 +32,48 @@ export interface ModelEnc<M, Self extends MO.SchemaAny, MEnc>
 
 export interface Model2<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny>
   extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>> {}
+
+type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Props>
+  ? Props
+  : never
+
+export interface MNModel<
+  Self extends MO.SchemaAny,
+  ParsedShape = MO.ParsedShapeOf<Self>,
+  ConstructorInput = MO.ConstructorInputOf<Self>,
+  Encoded = MO.EncodedOf<Self>,
+  Props extends PropertyRecord = GetApiProps<Self>
+> extends MM<
+    Self,
+    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>,
+    ParsedShape,
+    ConstructorInput,
+    Encoded,
+    Props
+  > {}
+
+export interface MM<
+  Self extends MO.SchemaAny,
+  SelfM extends MO.SchemaAny,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Props
+> extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
+  new (_: ConstructorInput): ParsedShape // Compute<>
+  [MO.schemaField]: Self
+  readonly Model: SelfM // added
+  readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
+  readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
+
+  readonly Parser: MO.ParserFor<SelfM>
+  readonly EParser: EParserFor<SelfM>
+  readonly Constructor: MO.ConstructorFor<SelfM>
+  readonly Encoder: MO.EncoderFor<SelfM>
+  readonly Guard: MO.GuardFor<SelfM>
+  readonly Arbitrary: MO.ArbitraryFor<SelfM>
+}
+
 interface Model2Int<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny, MEnc>
   extends MO.Schema<
     MO.ParserInputOf<Self>,
@@ -62,6 +104,26 @@ export function Model<M>(__name?: string) {
 export function ModelEnc<M, MEnc>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecialEnc<M, MEnc>(__name)(MO.props(props))
+}
+
+export function MNModel<
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Props extends MO.PropertyRecord
+>(__name?: string) {
+  return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
+    const self = MO.props(props)
+    return makeSpecial(__name, self) as MNModel<
+      typeof self,
+      ParsedShape,
+      ConstructorInput,
+      Encoded,
+      Props
+    > &
+      PropsExtensions<Props>
+  }
+  //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
 }
 
 export function fromModel<M>(__name?: string) {
@@ -190,6 +252,14 @@ export function ModelSpecialEnc<M, MEnc>(__name?: string) {
     return makeSpecial(__name, self)
   }
 }
+
+// export function MNModelSpecial<ParsedShape, MEnc>(__name?: string) {
+//   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+//     self: Self
+//   ): MNModel<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
+//     return makeSpecial(__name, self)
+//   }
+// }
 
 function makeSpecial(__name: any, self: any): any {
   const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
