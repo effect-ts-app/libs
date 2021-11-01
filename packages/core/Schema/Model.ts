@@ -60,7 +60,8 @@ export interface MM<
   Encoded,
   Props
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
-  new (_: ConstructorInput): ParsedShape // Compute<>
+  //new (_: ConstructorInput): ParsedShape;
+  new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
   [MO.schemaField]: Self
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
