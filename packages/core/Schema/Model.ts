@@ -43,7 +43,7 @@ export interface MNModel<
   ConstructorInput = MO.ConstructorInputOf<Self>,
   Encoded = MO.EncodedOf<Self>,
   Props = GetApiProps<Self>,
-  ProvidedProps = GetApiProps<Self>
+  ProvidedProps extends MO.PropertyRecord = GetApiProps<Self>
 > extends MM<
     Self,
     MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>,
@@ -61,7 +61,7 @@ export interface MM<
   ConstructorInput,
   Encoded,
   Props,
-  ProvidedProps
+  ProvidedProps extends MO.PropertyRecord
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   //new (_: ConstructorInput): ParsedShape;
   new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
