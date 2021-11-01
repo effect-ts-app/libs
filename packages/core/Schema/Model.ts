@@ -10,7 +10,7 @@ import { Compute } from "../Compute"
 import { EncSchemaForModel, EParserFor, FromPropertyRecord, fromProps } from "./_api"
 import * as MO from "./_schema"
 import { schemaField } from "./_schema"
-import { AnyProperty, ParsedShapeOf, PropertyRecord, SchemaAny } from "./custom"
+import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
 import { unsafe } from "./custom/_api/condemn"
 import { include } from "./utils"
 
@@ -173,24 +173,13 @@ export function useClassNameForSchema(cls: any) {
   return cls
 }
 
-export type GetProps<Self> = Self extends MO.SchemaProperties<infer Props>
+export type GetProps<Self> = Self extends { Api: { props: infer Props } }
   ? Props extends PropertyRecord
     ? Props
     : never
   : never
 
-export type GetSchemaProps<Self extends SchemaAny> =
-  Self extends MO.SchemaProperties<any> ? Self : never
-
-export interface PropsExtensions<Self extends MO.SchemaProperties<any>> {
-  include: <NewProps extends Record<string, AnyProperty>>(
-    fnc: (props: Self["props"]) => NewProps
-  ) => NewProps
-  pick: <P extends keyof Self["props"]>(...keys: readonly P[]) => Pick<Self["props"], P>
-  omit: <P extends keyof Self["props"]>(...keys: readonly P[]) => Omit<Self["props"], P>
-}
-
-export interface PropsExtensionsOrig<Props extends PropertyRecord> {
+export interface PropsExtensions<Props extends PropertyRecord> {
   include: <NewProps extends Record<string, AnyProperty>>(
     fnc: (props: Props) => NewProps
   ) => NewProps
@@ -202,7 +191,7 @@ export interface PropsExtensionsOrig<Props extends PropertyRecord> {
 export function ModelSpecial<M>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<M, Self> & PropsExtensions<GetSchemaProps<Self>> => {
+  ): Model<M, Self> & PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -210,7 +199,7 @@ export function ModelSpecial<M>(__name?: string) {
 export function ModelSpecialEnc<M, MEnc>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEnc<M, Self, MEnc> & PropsExtensions<GetSchemaProps<Self>> => {
+  ): ModelEnc<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -218,7 +207,7 @@ export function ModelSpecialEnc<M, MEnc>(__name?: string) {
 export function ModelSpecialEncSchema<M, MEnc, MSchema>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEncSchema<M, Self, MEnc, MSchema> & PropsExtensions<GetSchemaProps<Self>> => {
+  ): ModelEncSchema<M, Self, MEnc, MSchema> & PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }

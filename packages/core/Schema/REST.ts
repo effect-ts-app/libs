@@ -10,7 +10,7 @@ import { schemaField } from "./_schema"
 import {
   AnyRecord,
   AnyRecordSchema,
-  GetSchemaProps,
+  GetProps,
   Model,
   ModelSpecial,
   PropsExtensions,
@@ -62,7 +62,7 @@ export interface QueryRequest<
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
 > extends Model<M, Self>,
-    PropsExtensions<GetSchemaProps<Self>> {
+    PropsExtensions<GetProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -81,7 +81,7 @@ export interface BodyRequest<
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
 > extends Model<M, Self>,
-    PropsExtensions<GetSchemaProps<Self>> {
+    PropsExtensions<GetProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
