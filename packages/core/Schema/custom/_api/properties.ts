@@ -8,7 +8,6 @@ import { intersect } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 
 import * as S from "../_schema"
-import { Schema } from "../_schema"
 import type { Annotation } from "../_schema/annotation"
 import { augmentRecord } from "../_utils"
 import * as Arbitrary from "../Arbitrary"
