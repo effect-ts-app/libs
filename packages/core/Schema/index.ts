@@ -11,7 +11,7 @@ import * as SET from "../Set"
 import { typedKeysOf } from "../utils"
 import { FromProperty, set, setIdentifier } from "./_api"
 import * as MO from "./_schema"
-import { UUID } from "./_schema"
+import { propDef, Property, propOpt, propReq, UUID } from "./_schema"
 
 export * from "./utils"
 
@@ -162,7 +162,7 @@ export function defaultConstructor<
   >
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
-    p.def(makeDefault, "constructor")
+    propDef(p, makeDefault, "constructor")
 }
 
 type SupportedDefaults =
@@ -253,25 +253,25 @@ export function withDefault<
   >
 ): WithDefault<ParsedShape, ConstructorInput, Encoded, Api, As> {
   if (findAnnotation(p._schema, MO.dateIdentifier)) {
-    return p.def(makeCurrentDate as any, "constructor")
+    return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return p.def(() => O.none as any, "constructor")
+    return propDef(p, () => O.none as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
-    return p.def(() => null as any, "constructor")
+    return propDef(p, () => null as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.arrayIdentifier)) {
-    return p.def(() => [] as any, "constructor")
+    return propDef(p, () => [] as any, "constructor")
   }
   if (findAnnotation(p._schema, setIdentifier)) {
-    return p.def(() => new Set() as any, "constructor")
+    return propDef(p, () => new Set() as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.boolIdentifier)) {
-    return p.def(() => false as any, "constructor")
+    return propDef(p, () => false as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.UUIDIdentifier)) {
-    return p.def(makeUuid as any, "constructor")
+    return propDef(p, makeUuid as any, "constructor")
   }
   throw new Error("Not supported")
 }
@@ -280,18 +280,18 @@ function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
 ) {
-  return MO.prop(schema).def(makeDefault, "constructor")
+  return propDef(MO.prop(schema), makeDefault, "constructor")
 }
 
 export function optProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): FromProperty<
+): Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "optional",
   O.None,
   O.None
 > {
-  return MO.prop(schema).opt()
+  return propOpt(MO.prop(schema))
 }
 
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -344,7 +344,7 @@ export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
   >
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
-    prev[cur] = t[cur].opt()
+    prev[cur] = propOpt(t[cur])
     return prev
   }, {} as any)
 }
@@ -360,7 +360,7 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
   >
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
-    prev[cur] = t[cur].req()
+    prev[cur] = propReq(t[cur])
     return prev
   }, {} as any)
 }

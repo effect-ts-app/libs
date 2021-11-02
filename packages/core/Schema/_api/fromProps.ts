@@ -32,101 +32,123 @@ export class FromProperty<
     readonly _map: HashMap.HashMap<Annotation<any>, any>
   ) {}
 
-  schema<That extends S.SchemaAny>(
-    schema: That
-  ): FromProperty<That, Optional, As, O.None> {
-    return new FromProperty(this._as, schema, this._optional, new O.None(), this._map)
-  }
+  // Disabled because it sends the compiler down into rabbit holes..
+  // schema<That extends S.SchemaAny>(
+  //   schema: That
+  // ): FromProperty<That, Optional, As, O.None> {
+  //   return new FromProperty(this._as, schema, this._optional, new O.None(), this._map)
+  // }
 
-  opt(): FromProperty<Self, "optional", As, Def> {
-    return new FromProperty(this._as, this._schema, "optional", this._def, this._map)
-  }
+  // opt(): FromProperty<Self, "optional", As, Def> {
+  //   return new FromProperty(this._as, this._schema, "optional", this._def, this._map)
+  // }
 
-  req(): FromProperty<Self, "required", As, Def> {
-    return new FromProperty(this._as, this._schema, "required", this._def, this._map)
-  }
+  // req(): FromProperty<Self, "required", As, Def> {
+  //   return new FromProperty(this._as, this._schema, "required", this._def, this._map)
+  // }
 
-  from<As1 extends PropertyKey>(
-    as: As1
-  ): FromProperty<Self, Optional, O.Some<As1>, Def> {
-    return new FromProperty(
-      new O.Some(as),
-      this._schema,
-      this._optional,
-      this._def,
-      this._map
-    )
-  }
+  // from<As1 extends PropertyKey>(
+  //   as: As1
+  // ): FromProperty<Self, Optional, O.Some<As1>, Def> {
+  //   return new FromProperty(
+  //     new O.Some(as),
+  //     this._schema,
+  //     this._optional,
+  //     this._def,
+  //     this._map
+  //   )
+  // }
 
-  removeFrom(): FromProperty<Self, Optional, O.None, Def> {
-    return new FromProperty(
-      new O.None(),
-      this._schema,
-      this._optional,
-      this._def,
-      this._map
-    )
-  }
+  // removeFrom(): FromProperty<Self, Optional, O.None, Def> {
+  //   return new FromProperty(
+  //     new O.None(),
+  //     this._schema,
+  //     this._optional,
+  //     this._def,
+  //     this._map
+  //   )
+  // }
 
-  def(
-    _: Optional extends "required"
-      ? () => S.ParsedShapeOf<Self>
-      : ["default can be set only for required properties", never]
-  ): FromProperty<Self, Optional, As, O.Some<["both", () => S.ParsedShapeOf<Self>]>>
-  def<K extends "parser" | "constructor" | "both">(
-    _: Optional extends "required"
-      ? () => S.ParsedShapeOf<Self>
-      : ["default can be set only for required properties", never],
-    k: K
-  ): FromProperty<Self, Optional, As, O.Some<[K, () => S.ParsedShapeOf<Self>]>>
-  def(
-    _: Optional extends "required"
-      ? () => S.ParsedShapeOf<Self>
-      : ["default can be set only for required properties", never],
-    k?: "parser" | "constructor" | "both"
-  ): FromProperty<
-    Self,
-    Optional,
-    As,
-    O.Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
-  > {
-    // @ts-expect-error
-    return new FromProperty(
-      this._as,
-      this._schema,
-      this._optional,
-      // @ts-expect-error
-      new O.Some([k ?? "both", _]),
-      this._map
-    )
-  }
+  // def(
+  //   _: Optional extends "required"
+  //     ? () => S.ParsedShapeOf<Self>
+  //     : ["default can be set only for required properties", never]
+  // ): FromProperty<Self, Optional, As, O.Some<["both", () => S.ParsedShapeOf<Self>]>>
+  // def<K extends "parser" | "constructor" | "both">(
+  //   _: Optional extends "required"
+  //     ? () => S.ParsedShapeOf<Self>
+  //     : ["default can be set only for required properties", never],
+  //   k: K
+  // ): FromProperty<Self, Optional, As, O.Some<[K, () => S.ParsedShapeOf<Self>]>>
+  // def(
+  //   _: Optional extends "required"
+  //     ? () => S.ParsedShapeOf<Self>
+  //     : ["default can be set only for required properties", never],
+  //   k?: "parser" | "constructor" | "both"
+  // ): FromProperty<
+  //   Self,
+  //   Optional,
+  //   As,
+  //   O.Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  // > {
+  //   // @ts-expect-error
+  //   return new FromProperty(
+  //     this._as,
+  //     this._schema,
+  //     this._optional,
+  //     // @ts-expect-error
+  //     new O.Some([k ?? "both", _]),
+  //     this._map
+  //   )
+  // }
 
-  removeDef(): FromProperty<Self, Optional, As, O.None> {
-    return new FromProperty(
-      this._as,
-      this._schema,
-      this._optional,
-      new O.None(),
-      this._map
-    )
-  }
+  // removeDef(): FromProperty<Self, Optional, As, O.None> {
+  //   return new FromProperty(
+  //     this._as,
+  //     this._schema,
+  //     this._optional,
+  //     new O.None(),
+  //     this._map
+  //   )
+  // }
 
-  getAnnotation<A>(annotation: Annotation<A>): O.Option<A> {
-    return HashMap.get_(this._map, annotation)
-  }
+  // getAnnotation<A>(annotation: Annotation<A>): O.Option<A> {
+  //   return HashMap.get_(this._map, annotation)
+  // }
 
-  annotate<A>(
-    annotation: Annotation<A>,
-    value: A
-  ): FromProperty<Self, Optional, As, Def> {
-    return new FromProperty(
-      this._as,
-      this._schema,
-      this._optional,
-      this._def,
-      HashMap.set_(this._map, annotation, value)
-    )
-  }
+  // annotate<A>(
+  //   annotation: Annotation<A>,
+  //   value: A
+  // ): FromProperty<Self, Optional, As, Def> {
+  //   return new FromProperty(
+  //     this._as,
+  //     this._schema,
+  //     this._optional,
+  //     this._def,
+  //     HashMap.set_(this._map, annotation, value)
+  //   )
+  // }
+}
+
+export function fromPropFrom<
+  Self extends S.SchemaAny,
+  Optional extends "optional" | "required",
+  As extends O.Option<PropertyKey>,
+  Def extends O.Option<
+    ["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]
+  >,
+  As1 extends PropertyKey
+>(
+  prop: FromProperty<Self, Optional, As, Def>,
+  as: As1
+): FromProperty<Self, Optional, O.Some<As1>, Def> {
+  return new FromProperty(
+    new O.Some(as),
+    prop._schema,
+    prop._optional,
+    prop._def,
+    prop._map
+  )
 }
 
 export function fromProp<Self extends S.SchemaAny>(

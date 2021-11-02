@@ -3,6 +3,7 @@ import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { None, Some } from "@effect-ts/core/Option"
 import { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
 
+import { optProp } from "../Model"
 import { array, prop, props } from "./_schema"
 import * as MO from "./_schema"
 import { positiveInt } from "./custom"
@@ -24,7 +25,7 @@ export const adaptRes = <Props extends MO.PropertyRecord>(properties: Props) => 
     props({
       items: prop(array(props(adapt(keys)))),
       // TODO: hide count when not asked for $count. and demand non-opt count, when asked.
-      count: prop(positiveInt).opt(),
+      count: optProp(positiveInt),
     })
 }
 
