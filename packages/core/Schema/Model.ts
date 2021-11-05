@@ -300,10 +300,9 @@ function makeSpecial(__name: any, self: any): any {
     static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
       new MO.SchemaAnnotated(self, identifier, meta)
 
-    constructor(inp?: MO.ConstructorInputOf<any>) {
-      if (inp) {
-        fromFields(of_(inp), this)
-      }
+    constructor(inp: MO.ConstructorInputOf<any>) {
+      // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
+      fromFields(of_(inp), this)
     }
     get [St.hashSym](): number {
       const ka = Object.keys(this).sort()
