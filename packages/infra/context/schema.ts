@@ -2,7 +2,6 @@ import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Map from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-ts/core/Function"
 import * as Sy from "@effect-ts/core/Sync"
-import * as T from "@effect-ts-app/core/Effect"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Encoder, Parser } from "@effect-ts-app/core/Schema"
 
@@ -13,9 +12,9 @@ export function makeCodec<
   Api,
   Id
 >(self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>) {
-  const parse = Parser.for(self)["|>"](MO.condemn)
+  const parse = Parser.for(self)["|>"](MO.condemnDie)
   // TODO: strict
-  const decode = (e: Encoded) => parse(e)["|>"](T.orDie)
+  const decode = (e: Encoded) => parse(e)
   const enc = Encoder.for(self)
 
   const encode = (u: ParsedShape) => Sy.succeedWith(() => enc(u))
