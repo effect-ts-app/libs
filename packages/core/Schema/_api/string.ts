@@ -68,19 +68,19 @@ export const ReasonableString = extendWithUtils(
 )
 
 /**
- * A string that is at least 1 character long and a maximum of 2048.
+ * A string that is at least 1 character long and a maximum of 2047.
  */
 export interface LongStringBrand extends TextStringBrand {
   readonly LongString: unique symbol
 }
 
 /**
- * A string that is at least 1 character long and a maximum of 2048.
+ * A string that is at least 1 character long and a maximum of 2047.
  */
 export type LongString = string & LongStringBrand
 
 /**
- * A string that is at least 1 character long and a maximum of 2048.
+ * A string that is at least 1 character long and a maximum of 2047.
  */
 export const longStringFromString = pipe(
   makeConstrainedFromString<LongString>(1, 2048 - 1),
@@ -94,7 +94,7 @@ export const longStringFromString = pipe(
 )
 
 /**
- * A string that is at least 1 character long and a maximum of 2048.
+ * A string that is at least 1 character long and a maximum of 2047.
  */
 export const LongString = extendWithUtils(MO.string[">>>"](longStringFromString))
 
