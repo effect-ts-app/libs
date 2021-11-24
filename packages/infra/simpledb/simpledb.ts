@@ -20,9 +20,11 @@ export class InvalidStateError {
   constructor(readonly message: string, readonly details?: unknown) {}
 }
 
+export const RecordCacheId = Symbol()
 export function makeLiveRecordCache() {
   const m = new Map<string, EffectMap<string, unknown>>()
   return {
+    serviceId: RecordCacheId,
     get: <T>(type: string) =>
       T.succeedWith(() => {
         const ex = m.get(type)
@@ -39,7 +41,7 @@ export function makeLiveRecordCache() {
 export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 
 // module tag
-export const RecordCache = Has.tag<RecordCache>()
+export const RecordCache = Has.tag<RecordCache>(RecordCacheId)
 
 export const LiveRecordCache = L.fromFunction(RecordCache)(makeLiveRecordCache)
 

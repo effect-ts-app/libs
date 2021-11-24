@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as E from "@effect-ts/core/Either"
-import { Has, Tag } from "@effect-ts/core/Has"
+import { AnyService, Has, Tag } from "@effect-ts/core/Has"
 import {
   accessService,
   accessServiceM,
@@ -47,7 +47,7 @@ export type ShapePu<T> = Omit<
 >
 
 export type DerivedLifted<
-  T,
+  T extends AnyService,
   Fns extends keyof ShapeFn<T>,
   Cns extends keyof ShapeCn<T>,
   Values extends keyof ShapePu<T>
@@ -70,7 +70,7 @@ export type UIO<A> = Sync<unknown, never, A>
 export const encaseEither = <E, A>(ei: E.Either<E, A>): IO<E, A> =>
   E.fold_(ei, fail, succeed)
 
-export function deriveLifted<T>(
+export function deriveLifted<T extends AnyService>(
   H: Tag<T>
 ): <
   Fns extends keyof ShapeFn<T> = never,

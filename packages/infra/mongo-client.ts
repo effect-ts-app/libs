@@ -8,6 +8,8 @@ import { MongoClient as MongoClient_ } from "mongodb"
 
 // TODO: we should probably share a single client...
 
+export const MongoClientId = Symbol()
+
 const withClient = (url: string) =>
   M.make_(
     T.effectAsync<unknown, Error, MongoClient_>((res) => {
@@ -30,12 +32,12 @@ const withClient = (url: string) =>
 const makeMongoClient = (url: string, dbName?: string) =>
   pipe(
     withClient(url),
-    M.map((x) => ({ db: x.db(dbName) }))
+    M.map((x) => ({ serviceId: MongoClientId, db: x.db(dbName) }))
   )
 
 export interface MongoClient extends _A<ReturnType<typeof makeMongoClient>> {}
 
-export const MongoClient = Has.tag<MongoClient>()
+export const MongoClient = Has.tag<MongoClient>(MongoClientId)
 
 export const { db } = T.deriveLifted(MongoClient)([], [], ["db"])
 

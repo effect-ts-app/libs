@@ -10,12 +10,14 @@ import Redlock from "redlock"
 
 import { ConnectionException } from "./simpledb/shared"
 
+export const RedisClientId = Symbol()
 const makeRedisClient = (makeClient: () => Client) =>
   M.make_(
     T.succeedWith(() => {
       const client = createClient(makeClient)
       const lock = new Redlock([client])
       return {
+        serviceId: RedisClientId,
         client,
         lock,
       }
@@ -33,7 +35,7 @@ const makeRedisClient = (makeClient: () => Client) =>
 
 export interface RedisClient extends _A<ReturnType<typeof makeRedisClient>> {}
 
-export const RedisClient = Has.tag<RedisClient>()
+export const RedisClient = Has.tag<RedisClient>(RedisClientId)
 
 export const { client, lock } = T.deriveLifted(RedisClient)([], [], ["client", "lock"])
 

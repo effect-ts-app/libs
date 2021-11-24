@@ -8,7 +8,7 @@ export interface Meta {
 
 export type LogFn = (message: string, meta?: Meta) => T.UIO<void>
 
-export interface Logger {
+interface LoggerLevels {
   silly: LogFn
   debug: LogFn
   verbose: LogFn
@@ -17,10 +17,14 @@ export interface Logger {
   warn: LogFn
   error: LogFn
 }
+export interface Logger extends LoggerLevels {
+  serviceId: typeof LoggerId
+}
 
-export type Level = keyof Logger
+export type Level = keyof LoggerLevels
 
-export const Logger = Has.tag<Logger>()
+export const LoggerId = Symbol()
+export const Logger = Has.tag<Logger>(LoggerId)
 
 export const severity: Record<Level, number> = {
   error: 0,

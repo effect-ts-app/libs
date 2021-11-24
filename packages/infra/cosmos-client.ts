@@ -7,15 +7,17 @@ import { pipe } from "@effect-ts-app/core/Function"
 
 const withClient = (url: string) => T.succeedWith(() => new ComosClient_(url))
 
+export const CosmosClientId = Symbol()
+
 const makeCosmosClient = (url: string, dbName: string) =>
   pipe(
     withClient(url),
-    T.map((x) => ({ db: x.database(dbName) }))
+    T.map((x) => ({ serviceId: CosmosClientId, db: x.database(dbName) }))
   )
 
 export interface CosmosClient extends _A<ReturnType<typeof makeCosmosClient>> {}
 
-export const CosmosClient = Has.tag<CosmosClient>()
+export const CosmosClient = Has.tag<CosmosClient>(CosmosClientId)
 
 export const { db } = T.deriveLifted(CosmosClient)([], [], ["db"])
 

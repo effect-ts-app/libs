@@ -7,19 +7,23 @@ import * as W from "winston"
 
 import * as LOG from "../Logger"
 
+export const WinstonFactoryId = Symbol()
 export interface WinstonFactory {
+  serviceId: typeof WinstonFactoryId
   logger: T.UIO<W.Logger>
 }
 
-export const WinstonFactory = Has.tag<WinstonFactory>()
+export const WinstonFactory = Has.tag<WinstonFactory>(WinstonFactoryId)
 
 export const { logger } = T.deriveLifted(WinstonFactory)([], ["logger"], [])
 
 export interface WinstonInstance {
+  serviceId: typeof WinstonInstanceId
   logger: W.Logger
 }
 
-export const WinstonInstance = Has.tag<WinstonInstance>()
+export const WinstonInstanceId = Symbol()
+export const WinstonInstance = Has.tag<WinstonInstance>(WinstonInstanceId)
 
 export const LiveWinstonInstance = L.fromEffect(WinstonInstance)(
   pipe(
@@ -44,7 +48,7 @@ export const provideChildLogger = (meta: LOG.Meta) =>
 
 /* istanbul ignore next */
 export const LoggerFactory = (loggerOpts: W.LoggerOptions) =>
-  L.pure(WinstonFactory)({
+  L.fromValue(WinstonFactory)({
     logger: T.succeedWith(() => W.createLogger(loggerOpts)),
   })
 

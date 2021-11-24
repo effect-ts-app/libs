@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Either } from "@effect-ts/core/Either"
-import { Has, Tag } from "@effect-ts/core/Has"
+import { AnyService, Has, Tag } from "@effect-ts/core/Has"
 import * as OptionT from "@effect-ts/core/OptionT"
 import * as P from "@effect-ts/core/Prelude"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
@@ -201,7 +201,7 @@ export const getOrFail =
     getOrFail_(_, onErr)
 
 export interface Adapter {
-  <A>(_: Tag<A>): GenSync<Has<A>, never, A>
+  <A extends AnyService>(_: Tag<A>): GenSync<Has<A>, never, A>
 
   <E, A>(_: O.Option<A>): GenSync<unknown, E, A>
   <E, A>(_: Either<E, A>): GenSync<unknown, E, A>

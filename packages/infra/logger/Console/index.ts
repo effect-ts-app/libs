@@ -62,17 +62,20 @@ function log(
   )
 }
 
+export const ConsoleLoggerConfigId = Symbol()
 export interface Config {
   formatter?: typeof format
   level?: LOG.Level
 }
 
-export interface ConsoleLoggerConfig extends Config {}
+export interface ConsoleLoggerConfig extends Config {
+  serviceId: typeof ConsoleLoggerConfigId
+}
 
-export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>()
+export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>(ConsoleLoggerConfigId)
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  L.pure(ConsoleLoggerConfig)(config)
+  L.fromValue(ConsoleLoggerConfig)(config)
 
 export const LiveConsoleLogger = L.fromEffect(LOG.Logger)(
   T.gen(function* ($) {
