@@ -9,20 +9,20 @@
         "path-parser": "^6.1.0",
         "short-uuid": "^4.2.0",
         "uuid": "^8.3.2",
-        "validator": "^13.6.0"
+        "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.44.5",
-        "@effect-ts/monocle": "^0.35.0",
-        "@effect-ts/schema": "^0.10.0",
-        "@types/uuid": "^8.3.1",
-        "@types/validator": "^13.6.3",
+        "@effect-ts/core": "^0.47.0",
+        "@effect-ts/monocle": "^0.36.0",
+        "@effect-ts/schema": "^0.12.0",
+        "@types/uuid": "^8.3.3",
+        "@types/validator": "^13.7.0",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.44.5",
-        "@effect-ts/monocle": "^0.35.0",
-        "@effect-ts/schema": "^0.10.0",
+        "@effect-ts/core": "^0.47.0",
+        "@effect-ts/monocle": "^0.36.0",
+        "@effect-ts/schema": "^0.12.0",
         "node-libcurl": "^2.3.3"
     },
     "scripts": {

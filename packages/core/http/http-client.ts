@@ -214,7 +214,7 @@ export function accessMiddlewareStack<A>(eff: (h: O.Option<MiddlewareStack>) => 
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  L.pure(MiddlewareStack)({
+  L.fromValue(MiddlewareStack)({
     stack,
   })
 

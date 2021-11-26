@@ -44,7 +44,7 @@ export const provideChildLogger = (meta: LOG.Meta) =>
 
 /* istanbul ignore next */
 export const LoggerFactory = (loggerOpts: W.LoggerOptions) =>
-  L.pure(WinstonFactory)({
+  L.fromValue(WinstonFactory)({
     logger: T.succeedWith(() => W.createLogger(loggerOpts)),
   })
 

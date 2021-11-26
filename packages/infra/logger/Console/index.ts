@@ -72,7 +72,7 @@ export interface ConsoleLoggerConfig extends Config {}
 export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>()
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  L.pure(ConsoleLoggerConfig)(config)
+  L.fromValue(ConsoleLoggerConfig)(config)
 
 export const LiveConsoleLogger = L.fromEffect(LOG.Logger)(
   T.gen(function* ($) {
