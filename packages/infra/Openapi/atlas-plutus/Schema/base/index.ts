@@ -11,13 +11,11 @@ import { pipe } from "@effect-ts/system/Function"
 import type { JSONSchema, SubSchema } from "../../JsonSchema"
 import { Ref } from "../../JsonSchema"
 
-export const ReferencesId = Symbol()
 export interface References {
-  serviceId: typeof ReferencesId
   ref: TRef.Ref<Map<string, SubSchema>>
 }
 
-export const References = tag<References>(ReferencesId)
+export const References = tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"

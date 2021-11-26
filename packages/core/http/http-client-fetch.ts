@@ -36,7 +36,7 @@ function getBody(
 const makeAbort = T.succeedWith(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
-  L.fromValue(H.Http)({
+  L.pure(H.Http)({
     request(
       method: H.Method,
       url: string,

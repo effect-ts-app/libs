@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Effect, service } from "@effect-ts/core/Effect"
 import type { Either } from "@effect-ts/core/Either"
-import type { AnyService, Has, Tag } from "@effect-ts/core/Has"
+import type { Has, Tag } from "@effect-ts/core/Has"
 import type { Option } from "@effect-ts/core/Option"
 import * as OptionT from "@effect-ts/core/OptionT"
 import * as P from "@effect-ts/core/Prelude"
@@ -251,7 +251,7 @@ function adapter(_: any, __?: any) {
 }
 
 export interface Adapter {
-  <A extends AnyService>(_: Tag<A>, __trace?: string): GenEffect<Has<A>, never, A>
+  <A>(_: Tag<A>, __trace?: string): GenEffect<Has<A>, never, A>
 
   <A>(_: Option<A>, __trace?: string): GenEffect<unknown, never, A>
   <E, A>(_: Either<E, A>, __trace?: string): GenEffect<unknown, E, A>

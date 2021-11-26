@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
-import { flow, pipe, Predicate } from "@effect-ts/core/Function"
+import { pipe, Predicate } from "@effect-ts/core/Function"
 import * as Has from "@effect-ts/core/Has"
 import * as O from "@effect-ts/core/Option"
 import { ParsedQuery } from "query-string"
@@ -154,29 +154,19 @@ export function foldHttpError<A, B, ErrorBody>(
   }
 }
 
-export interface HttpHeaders {
-  headers: Record<string, string>
-  serviceId: typeof HttpHeadersId
-}
-export const HttpHeadersId = Symbol()
-export const HttpHeaders = Has.tag<HttpHeaders>(HttpHeadersId)
-const accessHttpHeaders_ = T.access(
-  flow(
-    HttpHeaders.readOption,
-    O.map((h) => h.headers)
-  )
-)
+export interface HttpHeaders extends Record<string, string> {}
+export const HttpHeaders = Has.tag<HttpHeaders>()
+const accessHttpHeaders_ = T.access(HttpHeaders.readOption)
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: O.Option<HttpHeaders["headers"]>) => T.Effect<R, E, A>
+  eff: (h: O.Option<HttpHeaders>) => T.Effect<R, E, A>
 ) {
   return pipe(accessHttpHeaders_, T.chain(eff))
 }
-export function accessHttpHeaders<A>(eff: (h: O.Option<HttpHeaders["headers"]>) => A) {
+export function accessHttpHeaders<A>(eff: (h: O.Option<HttpHeaders>) => A) {
   return pipe(accessHttpHeaders_, T.map(eff))
 }
 
 export interface HttpOps {
-  serviceId: typeof HttpOpsId
   request<M extends Method, Req extends RequestType, Resp extends ResponseType>(
     method: M,
     url: string,
@@ -188,8 +178,7 @@ export interface HttpOps {
 }
 
 export interface Http extends HttpOps {}
-export const HttpOpsId = Symbol()
-export const Http = Has.tag<HttpOps>(HttpOpsId)
+export const Http = Has.tag<HttpOps>()
 // const accessHttp = T.accessService(Http)
 const accessHttpM = T.accessServiceM(Http)
 
@@ -208,13 +197,11 @@ export type RequestF = <
 
 export type RequestMiddleware = (request: RequestF) => RequestF
 
-export const MiddlewareStackId = Symbol()
 export interface MiddlewareStack {
-  serviceId: typeof MiddlewareStackId
-  stack: readonly RequestMiddleware[] // todo; is optional.
+  stack: RequestMiddleware[] // todo; is optional.
 }
 
-export const MiddlewareStack = Has.tag<MiddlewareStack>(MiddlewareStackId)
+export const MiddlewareStack = Has.tag<MiddlewareStack>()
 
 const accessMiddlewareStack_ = T.access(MiddlewareStack.readOption)
 export function accessMiddlewareStackM<R, E, A>(
@@ -227,7 +214,7 @@ export function accessMiddlewareStack<A>(eff: (h: O.Option<MiddlewareStack>) => 
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  L.fromValue(MiddlewareStack)({
+  L.pure(MiddlewareStack)({
     stack,
   })
 
