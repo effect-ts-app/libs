@@ -2,9 +2,9 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
+import { ComputeFlat } from "@effect-ts/core/Utils"
 import { v4 } from "uuid"
 
-import { Compute } from "../Compute"
 import { constant, Lazy, pipe } from "../Function"
 import * as O from "../Option"
 import * as SET from "../Set"
@@ -21,7 +21,7 @@ export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (partConstructor) => (restConstructor) =>
     partialConstructor_(model, partConstructor)(restConstructor)
@@ -38,7 +38,7 @@ export function partialConstructor_<
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (restConstructor) =>
     new model({ ...partConstructor, ...restConstructor } as any)
@@ -50,7 +50,7 @@ export function partialConstructorF<ConstructorInput, ParsedShape>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (partConstructor) => (restConstructor) =>
     partialConstructorF_(constr, partConstructor)(restConstructor)
@@ -65,7 +65,7 @@ export function partialConstructorF_<
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (restConstructor) => constr({ ...partConstructor, ...restConstructor } as any)
 }
@@ -78,7 +78,7 @@ export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (partConstructor) => (restConstructor) =>
     derivePartialConstructor_(model, partConstructor)(restConstructor)
@@ -96,7 +96,7 @@ export function derivePartialConstructor_<
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
-  restConstructor: Compute<Omit<ConstructorInput, keyof PartialConstructorInput>>
+  restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
   return (restConstructor) =>
     new model({ ...partConstructor, ...restConstructor } as any)

@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as St from "@effect-ts/core/Structural"
+import { ComputeFlat } from "@effect-ts/core/Utils"
 import * as Lens from "@effect-ts/monocle/Lens"
 import omit from "lodash/omit"
 import pick from "lodash/pick"
 
-import { Compute } from "../Compute"
 import { EncSchemaForModel, EParserFor, FromPropertyRecord, fromProps } from "./_api"
 import * as MO from "./_schema"
 import { schemaField } from "./_schema"
@@ -64,7 +64,7 @@ export interface MM<
   ProvidedProps extends MO.PropertyRecord
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   //new (_: ConstructorInput): ParsedShape;
-  new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
+  new (_: ComputeFlat<MO.ConstructorInputOf<Self>>): ComputeFlat<MO.ParsedShapeOf<Self>>
   [MO.schemaField]: Self
   readonly ProvidedProps: ProvidedProps
   readonly Model: SelfM // added
@@ -87,7 +87,7 @@ interface Model2Int<M, Self extends MO.SchemaAny, SelfM extends MO.SchemaAny, ME
     MEnc,
     MO.ApiOf<Self>
   > {
-  new (_: Compute<MO.ConstructorInputOf<Self>>): Compute<MO.ParsedShapeOf<Self>>
+  new (_: ComputeFlat<MO.ConstructorInputOf<Self>>): ComputeFlat<MO.ParsedShapeOf<Self>>
   [MO.schemaField]: Self
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<M, M> // added

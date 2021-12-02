@@ -143,10 +143,6 @@
             "module": "./_esm/validation/index.js",
             "default": "./validation/index.js"
         },
-        "./Compute": {
-            "module": "./_esm/Compute.js",
-            "default": "./Compute.js"
-        },
         "./Function": {
             "module": "./_esm/Function.js",
             "default": "./Function.js"
