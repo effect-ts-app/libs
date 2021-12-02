@@ -64,7 +64,7 @@ export interface MM<
   ProvidedProps extends MO.PropertyRecord
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   //new (_: ConstructorInput): ParsedShape;
-  new (_: ComputeFlat<MO.ConstructorInputOf<Self>>): ComputeFlat<MO.ParsedShapeOf<Self>>
+  new (_: ComputeFlat<MO.ConstructorInputOf<Self>>): ParsedShape
   [MO.schemaField]: Self
   readonly ProvidedProps: ProvidedProps
   readonly Model: SelfM // added
