@@ -159,9 +159,19 @@ export function Model3<ParsedShape, ParsedShape2>(__name?: string) {
     ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(props))
 }
 
+export function Model4<ParsedShape>(__name?: string) {
+  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
+    ModelSpecial3<ParsedShape, {}>(__name)(MO.props(props))
+}
+
 export function ModelEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
   return <Props extends MO.PropertyRecord = {}>(props: Props) =>
     ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(props))
+}
+
+export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
+  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
+    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(props))
 }
 
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
@@ -195,6 +205,25 @@ export function MNModel3<ParsedShape, ParsedShape2, ConstructorInput, Encoded, P
       Props,
       ProvidedProps,
       ParsedShape2
+    > &
+      PropsExtensions<Props>
+  }
+  //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
+}
+
+export function MNModel4<ParsedShape, ConstructorInput, Encoded, Props>(
+  __name?: string
+) {
+  return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
+    const self = MO.props(props)
+    return makeSpecial(__name, self) as MNModel<
+      typeof self,
+      ParsedShape,
+      ConstructorInput,
+      Encoded,
+      Props,
+      ProvidedProps,
+      {}
     > &
       PropsExtensions<Props>
   }
