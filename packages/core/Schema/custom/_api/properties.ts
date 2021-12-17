@@ -615,7 +615,7 @@ export function props<Props extends PropertyRecord>(
       const res = {} as ShapeFromProperties<Props>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
-        if (!(k in res)) {
+        if (!(k in res) || res[k] === undefined) {
           if (v[0] === "constructor" || v[0] === "both") {
             res[k] = v[1]()
           }
