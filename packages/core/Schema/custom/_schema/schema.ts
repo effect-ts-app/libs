@@ -93,9 +93,11 @@ export function hasContinuation<
   return SchemaContinuationSymbol in schema
 }
 
-export type ParserInputOf<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_ParserInput"]
->
+export type ParserInputOf<X extends Schema<any, any, any, any, any>> = [X] extends [
+  Schema<infer Y, any, any, any, any>
+]
+  ? Y
+  : never
 
 export type ParserErrorOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, any, any>
@@ -105,9 +107,12 @@ export type ParserErrorOf<X extends Schema<any, any, any, any, any>> = [X] exten
     : never*/
   : never
 
-export type ConstructorInputOf<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_ConstructorInput"]
->
+export type ConstructorInputOf<X extends Schema<any, any, any, any, any>> = [
+  X
+] extends [Schema<any, any, infer Y, any, any>]
+  ? Y
+  : never
+
 export type ConstructorErrorOf<X extends Schema<any, any, any, any, any>> = [
   X
 ] extends [Schema<any, any, any, any, any>]
@@ -117,32 +122,23 @@ export type ConstructorErrorOf<X extends Schema<any, any, any, any, any>> = [
     */
   : never
 
-export type EncodedOf<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_Encoded"]
->
+export type EncodedOf<X extends Schema<any, any, any, any, any>> = [X] extends [
+  Schema<any, any, any, infer Y, any>
+]
+  ? Y
+  : never
 
-// [X] extends [
-//   Schema<any, any, any, infer Y, any>
-// ]
-//   ? Y
-//   : never
+export type ParsedShapeOf<X extends Schema<any, any, any, any, any>> = [X] extends [
+  Schema<any, infer Y, any, any, any>
+]
+  ? Y
+  : never
 
-export type ParsedShapeOf<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_ParsedShape"]
->
-
-// [X] extends [
-//   Schema<any, infer Y, any, any, any>
-// ]
-//   ? Y
-//   : never
-
-export type ApiOf<X extends Schema<any, any, any, any, any>> = X["Api"]
-// [X] extends [
-//   Schema<any, any, any, any, infer Y>
-// ]
-//   ? Y
-//   : never
+export type ApiOf<X extends Schema<any, any, any, any, any>> = [X] extends [
+  Schema<any, any, any, any, infer Y>
+]
+  ? Y
+  : never
 
 export class SchemaIdentity<A> extends Schema<A, A, A, A, {}> {
   readonly Api = {}
