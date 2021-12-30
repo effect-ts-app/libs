@@ -64,7 +64,7 @@ export const reasonableStringFromString = pipe(
  * A string that is at least 1 character long and a maximum of 255.
  */
 export const ReasonableString = extendWithUtils(
-  MO.string[">>>"](reasonableStringFromString)
+  MO.string[">>>"](reasonableStringFromString)["|>"](MO.brand<ReasonableString>())
 )
 
 /**
@@ -96,7 +96,9 @@ export const longStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 2047.
  */
-export const LongString = extendWithUtils(MO.string[">>>"](longStringFromString))
+export const LongString = extendWithUtils(
+  MO.string[">>>"](longStringFromString)["|>"](MO.brand<LongString>())
+)
 
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
@@ -128,4 +130,6 @@ export const textStringFromString = pipe(
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
-export const TextString = extendWithUtils(MO.string[">>>"](textStringFromString))
+export const TextString = extendWithUtils(
+  MO.string[">>>"](textStringFromString)["|>"](MO.brand<TextString>())
+)
