@@ -171,6 +171,10 @@
             "module": "./_esm/Model.js",
             "default": "./Model.js"
         },
+        "./Chunk": {
+            "module": "./_esm/Chunk.js",
+            "default": "./Chunk.js"
+        },
         "./Schema/adapt": {
             "module": "./_esm/Schema/adapt.js",
             "default": "./Schema/adapt.js"
@@ -238,6 +242,10 @@
         "./Schema/Model": {
             "module": "./_esm/Schema/Model.js",
             "default": "./Schema/Model.js"
+        },
+        "./Schema/REST": {
+            "module": "./_esm/Schema/REST.js",
+            "default": "./Schema/REST.js"
         },
         "./Schema/custom/_schema/schema": {
             "module": "./_esm/Schema/custom/_schema/schema.js",
@@ -378,10 +386,6 @@
         "./http/http-client-fetch": {
             "module": "./_esm/http/http-client-fetch.js",
             "default": "./http/http-client-fetch.js"
-        },
-        "./http/http-client-curl": {
-            "module": "./_esm/http/http-client-curl.js",
-            "default": "./http/http-client-curl.js"
         },
         "./http/http-client": {
             "module": "./_esm/http/http-client.js",
