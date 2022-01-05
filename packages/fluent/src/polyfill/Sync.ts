@@ -23,7 +23,7 @@ const funcs = {
   mapError: mapError_,
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "Sync")
 BasePrototype.pipe = function (...args: [any]) {
   return pipe(this, ...args)
 }

@@ -23,4 +23,4 @@ const funcs = {
   getOrFail: getOrFail_,
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "EffectOption")

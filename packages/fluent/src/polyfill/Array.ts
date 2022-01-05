@@ -51,4 +51,4 @@ const funcs = {
   forEachEff: forEach_,
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "Array")

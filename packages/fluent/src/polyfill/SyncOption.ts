@@ -23,4 +23,4 @@ const funcs = {
   toNullable,
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "SyncOption")

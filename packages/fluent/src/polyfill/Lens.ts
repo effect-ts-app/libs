@@ -10,4 +10,4 @@ const funcs = {
   prop: prop_,
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "Lens")

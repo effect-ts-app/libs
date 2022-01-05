@@ -11,7 +11,7 @@ const funcs = {
   ...makeAutoFuncs(MAN, exceptions),
 }
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "Managed")
 BasePrototype.pipe = function (...args: [any]) {
   return pipe(this, ...args)
 }

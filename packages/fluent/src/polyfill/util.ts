@@ -30,12 +30,13 @@ export function makeAutoFuncs(
 
 export function applyFunctions(
   functions: Record<string, unknown>,
-  mod: Record<string, unknown>
+  mod: Record<string, unknown>,
+  modName: string
 ) {
   Object.entries(functions).forEach(([k, v]) => {
     // don't overwrite...
     if (mod[k]) {
-      console.log(`$$$ polyfill; skipping already existing ${k} on ${mod}`)
+      console.log(`$$$ polyfill; skipping already existing ${k} on ${modName}`)
       return
     }
     const f = v as any

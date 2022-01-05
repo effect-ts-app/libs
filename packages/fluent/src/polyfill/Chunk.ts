@@ -21,4 +21,4 @@ const funcs = {
 
 const BasePrototype = CNK.ChunkInternal.prototype as any
 
-applyFunctions(funcs, BasePrototype)
+applyFunctions(funcs, BasePrototype, "Chunk")

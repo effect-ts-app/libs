@@ -40,7 +40,7 @@ function apply(BasePrototype: any) {
     })
   }
   // functions
-  applyFunctions(funcs, BasePrototype)
+  applyFunctions(funcs, BasePrototype, "Either")
 }
 
 apply(Ei.Left.prototype)
