@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
 import type * as ARR from "@effect-ts/core/Collections/Immutable/Array"
-import type { Chunk } from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Either } from "@effect-ts/core/Either"
 import type { Equal } from "@effect-ts/core/Equal"
 import type { Predicate, Refinement } from "@effect-ts/core/Function"
 import type { Option } from "@effect-ts/core/Option"
 import type { Ord } from "@effect-ts/core/Ord"
+import type { Chunk } from "@effect-ts-app/core/Chunk"
 import type { Effect } from "@effect-ts-app/core/Effect"
 import type { Sync } from "@effect-ts-app/core/Sync"
 
@@ -274,7 +274,7 @@ interface IterableOps {
   ): Effect<R, E, Chunk<A>>
 
   /**
-   * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk"
+   * @ets_rewrite_method from from "@effect-ts-app/core/Chunk"
    */
   toChunk<A>(this: Iterable<A>): Chunk<A>
 }
@@ -283,42 +283,42 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
   interface ChunkOps extends IterableOps {
     // TYPO FIX
     /**
-     * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method concat_ from "@effect-ts-app/core/Chunk"
      */
     concat<A, A1>(this: Chunk<A>, that: Chunk<A1>): Chunk<A | A1>
 
     /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
      */
     filter<A, S extends A>(this: Chunk<A>, f: (a: A) => a is S): Chunk<S>
 
     /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
      */
     filter<A>(this: Chunk<A>, f: (a: A) => boolean): Chunk<A>
 
     /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method map_ from "@effect-ts-app/core/Chunk"
      */
     map<A, B>(this: Chunk<A>, f: (a: A) => B): Chunk<B>
 
     /**
-     * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method collect_ from "@effect-ts-app/core/Chunk"
      */
-    filterMap<A, B>(this: Chunk<A>, f: (a: A) => Option<B>): Chunk<B>
+    collect<A, B>(this: Chunk<A>, f: (a: A) => Option<B>): Chunk<B>
 
     /**
-     * @ets_rewrite_method toArray from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method toArray from "@effect-ts-app/core/Chunk"
      */
     toArray<A>(this: Chunk<A>): ARR.Array<A>
 
     /**
-     * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
      */
     find<A, B extends A>(this: Chunk<A>, f: Refinement<A, B>): Option<B>
 
     /**
-     * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
+     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
      */
     find<A>(this: Chunk<A>, f: (a: A) => boolean): Option<A>
   }

@@ -60,4 +60,11 @@ export function sortByO<A>(
   return ords["|>"](O.fold(() => identity, A.sortBy))
 }
 
+export {
+  collectArray as collect,
+  collectArrayWithIndex as collectWithIndex,
+  collectArray_ as collect_,
+  collectArrayWithIndex_ as collectWithIndex_,
+} from "@effect-ts/core/Collections/Immutable/Array"
+
 export * from "@effect-ts/core/Collections/Immutable/Array"

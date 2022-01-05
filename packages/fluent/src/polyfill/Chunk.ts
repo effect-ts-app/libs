@@ -14,6 +14,8 @@ const exceptions = {
 
 const funcs = {
   ...makeAutoFuncs(CNK, exceptions),
+  collect: CNK.collectChunk_,
+  collectWithIndex: CNK.collectChunkWithIndex_,
   // IterableOps
   collectAll,
   forEachParN: forEachParN_,

@@ -86,7 +86,7 @@
     "Chunk": {
         "prefix": "+Chunk",
         "body": [
-            "import * as CNK from \"@effect-ts/core/Collections/Immutable/Chunk\""
+            "import * as CNK from \"@effect-ts-app/core/Chunk\""
         ],
         "description": "Chunk as CNK"
     },

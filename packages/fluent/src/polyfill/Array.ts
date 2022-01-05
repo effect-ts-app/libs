@@ -34,6 +34,8 @@ const exceptions = {
 
 const funcs = {
   ...makeAutoFuncs(ARR, exceptions),
+  collect: ARR.collectArray_,
+  collectWithIndex: ARR.collectArrayWithIndex_,
 
   // custom
   sortWith: sort_,
