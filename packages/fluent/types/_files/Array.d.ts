@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ets_tracing: off
-import type * as ARR from "@effect-ts/core/Collections/Immutable/Array"
 import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Either } from "@effect-ts/core/Either"
 import type { Equal } from "@effect-ts/core/Equal"
 import type { Predicate, Refinement } from "@effect-ts/core/Function"
 import type { Option } from "@effect-ts/core/Option"
 import type { Ord } from "@effect-ts/core/Ord"
+import type * as ARR from "@effect-ts-app/core/Array"
 import type { Chunk } from "@effect-ts-app/core/Chunk"
 import type { Effect } from "@effect-ts-app/core/Effect"
 import type { Sync } from "@effect-ts-app/core/Sync"
@@ -17,33 +17,33 @@ interface AOps {
    */
   mapRA<A, B>(this: NonEmptyArray<A>, f: (a: A) => B): NonEmptyArray<B>
   /**
-   * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method map_ from "@effect-ts-app/core/Array"
    */
   mapRA<A, B>(this: readonly A[], f: (a: A) => B): readonly B[]
 
   /**
-   * @ets_rewrite_method mapWithIndex_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapWithIndex_ from "@effect-ts-app/core/Array"
    */
   mapWithIndex<A, B>(
     this: NonEmptyArray<A>,
     f: (idx: number, a: A) => B
   ): NonEmptyArray<B>
   /**
-   * @ets_rewrite_method mapWithIndex_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapWithIndex_ from "@effect-ts-app/core/Array"
    */
   mapWithIndex<A, B>(this: readonly A[], f: (idx: number, a: A) => B): readonly B[]
 
   /**
-   * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
    */
   concatRA<A, A1>(this: NonEmptyArray<A>, y: readonly A1[]): NonEmptyArray<A | A1>
 
   /**
-   * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
    */
   concatRA<A, A1>(this: readonly A[], y: NonEmptyArray<A1>): NonEmptyArray<A | A1>
   /**
-   * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
    */
   concatRA<A, A1>(this: readonly A[], y: readonly A1[]): readonly (A | A1)[]
 
@@ -78,14 +78,14 @@ interface AOps {
 
   // replacement for mapM
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapEffect<AX, R, E, B>(
     this: NonEmptyArray<AX>,
     f: (a: AX) => Effect<R, E, B>
   ): Effect<R, E, NonEmptyArray<B>>
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapEffect<AX, R, E, B>(
     this: ARR.Array<AX>,
@@ -93,14 +93,14 @@ interface AOps {
   ): Effect<R, E, readonly B[]>
 
   /**
-   * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapSync_ from "@effect-ts-app/core/Array"
    */
   mapSync<AX, R, E, B>(
     this: NonEmptyArray<AX>,
     f: (a: AX) => Sync<R, E, B>
   ): Sync<R, E, NonEmptyArray<B>>
   /**
-   * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapSync_ from "@effect-ts-app/core/Array"
    */
   mapSync<AX, R, E, B>(
     this: ARR.Array<AX>,
@@ -137,7 +137,7 @@ interface AOps {
   mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
 
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapM<AX, R, E, B>(
     this: NonEmptyArray<AX>,
@@ -145,7 +145,7 @@ interface AOps {
   ): Effect<R, E, NonEmptyArray<B>>
 
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapM<AX, R, E, B>(
     this: NonEmptyArray<AX>,
@@ -169,7 +169,7 @@ interface AOps {
   ): Effect<unkown, Option<never>, NonEmptyArray<B>>
 
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapM<AX, R, E, B>(
     this: ARR.Array<AX>,
@@ -177,7 +177,7 @@ interface AOps {
   ): Effect<R, E, readonly B[]>
 
   /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
    */
   mapM<AX, R, E, B>(
     this: ARR.Array<AX>,
@@ -201,32 +201,32 @@ interface AOps {
   ): Effect<unkown, Option<never>, readonly B[]>
 
   /**
-   * @ets_rewrite_method flatten from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method flatten from "@effect-ts-app/core/Array"
    */
   flatten<A>(this: ARR.Array<ARR.Array<A>>): ARR.Array<A>
 
   /**
-   * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method collect_ from "@effect-ts-app/core/Array"
    */
-  filterMap<A, B>(this: readonly A[], f: (a: A) => Option<B>): readonly B[]
+  collect<A, B>(this: readonly A[], f: (a: A) => Option<B>): readonly B[]
 
   /**
-   * @ets_rewrite_method findFirst_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method findFirst_ from "@effect-ts-app/core/Array"
    */
   findFirst<A>(this: readonly A[], predicate: Predicate<A>): Option<A>
 
   /**
-   * @ets_rewrite_method findFirstMap_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method findFirstMap_ from "@effect-ts-app/core/Array"
    */
   findFirstMap<A, B>(this: readonly A[], f: (a: A) => Option<B>): Option<B>
 
   /**
-   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method filter_ from "@effect-ts-app/core/Array"
    */
   filterRA<A, S extends A>(this: readonly A[], f: (a: A) => a is S): readonly S[]
 
   /**
-   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Array"
+   * @ets_rewrite_method filter_ from "@effect-ts-app/core/Array"
    */
   filterRA<A>(this: readonly A[], f: (a: A) => boolean): readonly A[]
 
