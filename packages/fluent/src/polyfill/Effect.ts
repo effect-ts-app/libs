@@ -3,7 +3,7 @@ import * as T from "@effect-ts-app/core/Effect"
 
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {
+export const exceptions: Partial<Record<keyof typeof T, string | null>> = {
   provideSomeLayer_: "inject",
   trace: null,
   forkScope: null,
@@ -13,6 +13,8 @@ const exceptions = {
   // constructors
   getOrFail: null,
   getOrFailUnit: null,
+  access: null,
+  accessM: null,
 }
 
 const funcs = {

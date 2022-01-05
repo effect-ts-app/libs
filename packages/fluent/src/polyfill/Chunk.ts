@@ -8,7 +8,7 @@ import {
 
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {
+const exceptions: Partial<Record<keyof Omit<typeof CNK, "toString">, string | null>> = {
   chain_: null, // collides with implementation details currently :'(
 }
 

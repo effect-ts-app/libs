@@ -4,16 +4,13 @@ import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 import { chain_, map_, mapError_, toEffect } from "@effect-ts-app/core/Sync"
 
+import { exceptions as effectExceptions } from "./Effect"
 import { applyFunctions, makeAutoFuncs } from "./util"
 
 const BasePrototype = XPureBase.prototype as any
 
-const exceptions = {
-  provideSomeLayer_: "inject",
-  trace: null,
-  forkScope: null,
-  left: null,
-  right: null,
+const exceptions: Partial<Record<keyof typeof Effect, string | null>> = {
+  ...effectExceptions,
 }
 
 const funcs = {

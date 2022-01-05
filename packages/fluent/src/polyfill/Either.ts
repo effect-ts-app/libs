@@ -7,7 +7,7 @@ import { encaseEither as encaseEitherInSync } from "@effect-ts-app/core/Sync"
 import { alt_ } from "../_ext/Option"
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {
+const exceptions: Partial<Record<keyof typeof Ei, string | null>> = {
   right: null,
   left: null,
 }

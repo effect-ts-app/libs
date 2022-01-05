@@ -14,17 +14,17 @@ import { applyFunctions, makeAutoFuncs } from "./util"
 
 const BasePrototype = Array.prototype as any
 
-const exceptions = {
+const exceptions: Partial<Record<keyof typeof ARR, string | null>> = {
   // should not overwrite built-in!
   map_: "mapRA",
   concat_: "concatRA",
-  sort_: "sortWith",
-  forEach_: "forEachRA",
+  //forEach_: "forEachRA", // no longer exists?
   filter_: "filterRA",
   flatten: "flattenRA",
   reduce_: "reduceRA",
   find_: "findFirst",
 
+  sort: null,
   // overwrites are not applied anyway atm
   // includes_: null,
   // join_: null,

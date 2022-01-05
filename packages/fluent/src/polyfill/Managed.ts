@@ -5,7 +5,7 @@ import { applyFunctions, makeAutoFuncs } from "./util"
 
 const BasePrototype = MAN.ManagedImpl.prototype as any
 
-const exceptions = {}
+const exceptions: Partial<Record<keyof typeof MAN, string | null>> = {}
 
 const funcs = {
   ...makeAutoFuncs(MAN, exceptions),
