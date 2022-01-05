@@ -9,6 +9,10 @@ const exceptions = {
   forkScope: null,
   left: null,
   right: null,
+
+  // constructors
+  getOrFail: null,
+  getOrFailUnit: null,
 }
 
 const funcs = {

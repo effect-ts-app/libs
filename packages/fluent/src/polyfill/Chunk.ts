@@ -8,7 +8,9 @@ import {
 
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {}
+const exceptions = {
+  chain_: null, // collides with implementation details currently :'(
+}
 
 const funcs = {
   ...makeAutoFuncs(CNK, exceptions),
