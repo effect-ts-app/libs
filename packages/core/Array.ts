@@ -60,12 +60,4 @@ export function sortByO<A>(
   return ords["|>"](O.fold(() => identity, A.sortBy))
 }
 
-// Human readable helpers
-export {
-  snoc as append,
-  snoc_ as append_,
-  cons as prepend,
-  cons_ as prepend_,
-} from "@effect-ts/core/Collections/Immutable/Array"
-
 export * from "@effect-ts/core/Collections/Immutable/Array"

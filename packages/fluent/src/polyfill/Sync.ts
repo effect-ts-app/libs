@@ -1,59 +1,26 @@
 import { pipe } from "@effect-ts/core"
-import {
-  asUnit,
-  catchAll_,
-  catchTag_,
-  delay_,
-  fold_,
-  forever,
-  fork,
-  forkDaemon,
-  forkDaemonReport_,
-  forkManaged,
-  orDie,
-  provideSomeLayer_,
-  result,
-  runPromise,
-  runPromiseExit,
-  tap_,
-  tapBoth_,
-  tapCause_,
-  tapError_,
-  zipRight_,
-} from "@effect-ts/core/Effect"
+import * as Effect from "@effect-ts/core/Effect"
 import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 import { chain_, map_, mapError_, toEffect } from "@effect-ts-app/core/Sync"
 
+import { makeAutoFuncs } from "./util"
+
 const BasePrototype = XPureBase.prototype as any
 
+const exceptions = {
+  provideSomeLayer_: "inject",
+}
+
 const funcs = {
+  // Uses Effect instead of Sync for most of the combinators...
+  ...makeAutoFuncs(Effect, exceptions),
+  // custom
+  tapBothInclAbort: tapBothInclAbort_,
   toEffect,
-  catchAll: catchAll_,
-  delay: delay_,
   chain: chain_,
-  fold: fold_,
-  forever,
-  forkManaged,
-  fork,
-  forkDaemon,
-  forkDaemonReport: forkDaemonReport_,
   map: map_,
   mapError: mapError_,
-  tap: tap_,
-  tapCause: tapCause_,
-  tapError: tapError_,
-  tapBoth: tapBoth_,
-  tapBothInclAbort: tapBothInclAbort_,
-  result,
-  orDie,
-  catchTag: catchTag_,
-  zipRight: zipRight_,
-  inject: provideSomeLayer_,
-  asUnit,
-
-  runPromise,
-  runPromiseExit,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

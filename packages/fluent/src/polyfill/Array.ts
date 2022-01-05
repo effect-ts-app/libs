@@ -1,18 +1,6 @@
-import { mapEffect_, mapSync_ } from "@effect-ts/core/Collections/Immutable/Array"
 import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
 import { mapEither_, mapOption_ } from "@effect-ts/fluent/Fx/Array"
-import {
-  append_,
-  concat_,
-  filter_,
-  filterMap_,
-  findFirst_,
-  findFirstMap_,
-  flatten,
-  map_,
-  mapWithIndex_,
-  toMutable,
-} from "@effect-ts-app/core/Array"
+import * as ARR from "@effect-ts-app/core/Array"
 import {
   collectAll,
   forEach_,
@@ -22,36 +10,40 @@ import {
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array"
 import { mapM } from "../_ext/mapM"
+import { makeAutoFuncs } from "./util"
 
 const BasePrototype = Array.prototype as any
 
+const exceptions = {
+  // should not overwrite built-in!
+  map_: "mapRA",
+  concat_: "concatRA",
+  sort_: "sortWith",
+  forEach_: "forEachRA",
+  filter_: "filterRA",
+  flatten: "flattenRA",
+
+  // name changes
+  toMutable: "mutable",
+}
+
 const funcs = {
-  mutable: toMutable,
-  mapRA: map_,
-  mapEffect: mapEffect_,
-  mapEither: mapEither_,
-  mapOption: mapOption_,
-  mapSync: mapSync_,
-  mapM, // works differently than the original one, for Option and Sync.
-  mapWithIndex: mapWithIndex_,
-  concatRA: concat_,
-  filterMap: filterMap_,
-  findFirst: findFirst_,
-  findFirstMap: findFirstMap_,
-  filterRA: filter_,
+  ...makeAutoFuncs(ARR, exceptions),
+
+  // custom
   sortWith: sort_,
   sortBy: sortBy_,
   uniq: uniq_,
-  append: append_,
-  flatten,
+  mapM, // works differently than the original one, for Option and Sync.
+  toChunk: from,
+  mapEither: mapEither_,
+  mapOption: mapOption_,
 
   // IterableOps
   collectAll,
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
-
-  toChunk: from,
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

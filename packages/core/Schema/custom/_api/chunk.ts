@@ -36,7 +36,7 @@ export function fromChunk<
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
   const refinement = (_: unknown): _ is Chunk.Chunk<ParsedShape> =>
-    Chunk.isChunk(_) && Chunk.every_(_, guard)
+    Chunk.isChunk(_) && Chunk.forAll_(_, guard)
   const encode = Encoder.for(self)
 
   return pipe(

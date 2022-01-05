@@ -1,44 +1,36 @@
 import { pipe } from "@effect-ts/core"
-import {
-  chain_,
-  fold_,
-  getOrElse_,
-  isNone,
-  isSome,
-  map_,
-  None,
-  Some,
-  toNullable,
-} from "@effect-ts/core/Option"
+import * as Option from "@effect-ts/core/Option"
 import { tryCatchOption_ } from "@effect-ts/core/Sync"
 import { encaseOption_ } from "@effect-ts-app/core/Effect"
 
 import { alt_ } from "../_ext/Option"
+import { makeAutoFuncs } from "./util"
+
+const exceptions = {}
 
 const funcs = {
+  ...makeAutoFuncs(Option, exceptions),
+
+  // custom
   alt: alt_,
-  fold: fold_,
   encaseInSync: tryCatchOption_,
   encaseInEffect: encaseOption_,
-  getOrElse: getOrElse_,
-  chain: chain_,
-  isSome,
-  isNone,
-  map: map_,
   pipe,
 }
 
 function apply(BasePrototype: any) {
+  // getters
   if (!BasePrototype.val) {
     Object.defineProperty(BasePrototype, "val", {
       get() {
-        return toNullable(this)
+        return Option.toNullable(this)
       },
       enumerable: false,
       configurable: true,
     })
   }
 
+  // functions
   Object.entries(funcs).forEach(([k, v]) => {
     const f = v as any
     BasePrototype[k] = function (...args: [any]) {
@@ -47,5 +39,5 @@ function apply(BasePrototype: any) {
   })
 }
 
-apply(None.prototype)
-apply(Some.prototype)
+apply(Option.None.prototype)
+apply(Option.Some.prototype)

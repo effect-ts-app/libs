@@ -1,39 +1,14 @@
 import { pipe } from "@effect-ts/core"
-import {
-  asUnit,
-  catchAll_,
-  chain_,
-  fold_,
-  fork,
-  ManagedImpl as Base,
-  map_,
-  mapError_,
-  orDie,
-  result,
-  tap_,
-  tapBoth_,
-  tapCause_,
-  tapError_,
-  zipRight_,
-} from "@effect-ts/core/Effect/Managed"
+import * as MAN from "@effect-ts/core/Effect/Managed"
 
-const BasePrototype = Base.prototype as any
+import { makeAutoFuncs } from "./util"
+
+const BasePrototype = MAN.ManagedImpl.prototype as any
+
+const exceptions = {}
 
 const funcs = {
-  catchAll: catchAll_,
-  chain: chain_,
-  fold: fold_,
-  fork,
-  map: map_,
-  mapError: mapError_,
-  tap: tap_,
-  tapCause: tapCause_,
-  tapError: tapError_,
-  tapBoth: tapBoth_,
-  result,
-  orDie,
-  zipRight: zipRight_,
-  asUnit,
+  ...makeAutoFuncs(MAN, exceptions),
 }
 
 Object.entries(funcs).forEach(([k, v]) => {

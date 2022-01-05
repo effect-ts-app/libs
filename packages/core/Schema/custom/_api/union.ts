@@ -170,7 +170,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     reverse: D.Dictionary<string>
     values: readonly string[]
   }> = A.findFirstMap_(Object.keys(firstMemberTags), (tagField) => {
-    const tags = A.filterMap_(entriesTags, ([member, tags]) => {
+    const tags = A.collectArray_(entriesTags, ([member, tags]) => {
       if (tagField in tags) {
         return O.some(tuple(tags[tagField], member))
       }
