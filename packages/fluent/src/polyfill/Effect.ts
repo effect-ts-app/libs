@@ -5,6 +5,10 @@ import { applyFunctions, makeAutoFuncs } from "./util"
 
 const exceptions = {
   provideSomeLayer_: "inject",
+  trace: null,
+  forkScope: null,
+  left: null,
+  right: null,
 }
 
 const funcs = {

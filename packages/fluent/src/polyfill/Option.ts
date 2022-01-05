@@ -6,7 +6,10 @@ import { encaseOption_ } from "@effect-ts-app/core/Effect"
 import { alt_ } from "../_ext/Option"
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {}
+const exceptions = {
+  none: null,
+  some: null,
+}
 
 const funcs = {
   ...makeAutoFuncs(Option, exceptions),

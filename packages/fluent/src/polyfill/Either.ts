@@ -7,7 +7,10 @@ import { encaseEither as encaseEitherInSync } from "@effect-ts-app/core/Sync"
 import { alt_ } from "../_ext/Option"
 import { applyFunctions, makeAutoFuncs } from "./util"
 
-const exceptions = {}
+const exceptions = {
+  right: null,
+  left: null,
+}
 
 const funcs = {
   ...makeAutoFuncs(Ei, exceptions),

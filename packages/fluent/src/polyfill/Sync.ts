@@ -10,6 +10,10 @@ const BasePrototype = XPureBase.prototype as any
 
 const exceptions = {
   provideSomeLayer_: "inject",
+  trace: null,
+  forkScope: null,
+  left: null,
+  right: null,
 }
 
 const funcs = {
