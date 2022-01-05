@@ -23,6 +23,7 @@ const exceptions = {
   filter_: "filterRA",
   flatten: "flattenRA",
   reduce_: "reduceRA",
+  find_: "findFirst",
 
   // overwrites are not applied anyway atm
   // includes_: null,

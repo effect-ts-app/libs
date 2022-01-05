@@ -211,7 +211,7 @@ interface AOps {
   collect<A, B>(this: readonly A[], f: (a: A) => Option<B>): readonly B[]
 
   /**
-   * @ets_rewrite_method findFirst_ from "@effect-ts-app/core/Array"
+   * @ets_rewrite_method find_ from "@effect-ts-app/core/Array"
    */
   findFirst<A>(this: readonly A[], predicate: Predicate<A>): Option<A>
 
