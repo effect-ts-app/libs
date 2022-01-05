@@ -4,7 +4,7 @@ import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 import { chain_, map_, mapError_, toEffect } from "@effect-ts-app/core/Sync"
 
-import { makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util"
 
 const BasePrototype = XPureBase.prototype as any
 
@@ -23,13 +23,7 @@ const funcs = {
   mapError: mapError_,
 }
 
-Object.entries(funcs).forEach(([k, v]) => {
-  const f = v as any
-  BasePrototype[k] = function (...args: [any]) {
-    return f(this, ...args)
-  }
-})
-
+applyFunctions(funcs, BasePrototype)
 BasePrototype.pipe = function (...args: [any]) {
   return pipe(this, ...args)
 }

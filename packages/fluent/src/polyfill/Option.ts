@@ -4,7 +4,7 @@ import { tryCatchOption_ } from "@effect-ts/core/Sync"
 import { encaseOption_ } from "@effect-ts-app/core/Effect"
 
 import { alt_ } from "../_ext/Option"
-import { makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util"
 
 const exceptions = {}
 
@@ -31,12 +31,7 @@ function apply(BasePrototype: any) {
   }
 
   // functions
-  Object.entries(funcs).forEach(([k, v]) => {
-    const f = v as any
-    BasePrototype[k] = function (...args: [any]) {
-      return f(this, ...args)
-    }
-  })
+  applyFunctions(funcs, BasePrototype)
 }
 
 apply(Option.None.prototype)

@@ -9,6 +9,8 @@ import {
   toNullable,
 } from "@effect-ts-app/core/EffectOption"
 
+import { applyFunctions } from "./util"
+
 const BasePrototype = Base.prototype as any
 
 const funcs = {
@@ -21,9 +23,4 @@ const funcs = {
   getOrFail: getOrFail_,
 }
 
-Object.entries(funcs).forEach(([k, v]) => {
-  const f = v as any
-  BasePrototype[k] = function (...args: [any]) {
-    return f(this, ...args)
-  }
-})
+applyFunctions(funcs, BasePrototype)

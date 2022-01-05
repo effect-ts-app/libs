@@ -9,6 +9,8 @@ import {
   toNullable,
 } from "@effect-ts-app/core/SyncOption"
 
+import { applyFunctions } from "./util"
+
 const BasePrototype = XPureBase.prototype as any
 
 const funcs = {
@@ -21,9 +23,4 @@ const funcs = {
   toNullable,
 }
 
-Object.entries(funcs).forEach(([k, v]) => {
-  const f = v as any
-  BasePrototype[k] = function (...args: [any]) {
-    return f(this, ...args)
-  }
-})
+applyFunctions(funcs, BasePrototype)

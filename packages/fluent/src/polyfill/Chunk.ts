@@ -6,7 +6,7 @@ import {
   forEachParN_,
 } from "@effect-ts-app/core/Effect"
 
-import { makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util"
 
 const exceptions = {}
 
@@ -21,9 +21,4 @@ const funcs = {
 
 const BasePrototype = CNK.ChunkInternal.prototype as any
 
-Object.entries(funcs).forEach(([k, v]) => {
-  const f = v as any
-  BasePrototype[k] = function (...args: [any]) {
-    return f(this, ...args)
-  }
-})
+applyFunctions(funcs, BasePrototype)

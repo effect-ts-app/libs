@@ -10,7 +10,7 @@ import {
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array"
 import { mapM } from "../_ext/mapM"
-import { makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util"
 
 const BasePrototype = Array.prototype as any
 
@@ -22,6 +22,11 @@ const exceptions = {
   forEach_: "forEachRA",
   filter_: "filterRA",
   flatten: "flattenRA",
+  reduce_: "reduceRA",
+
+  // overwrites are not applied anyway atm
+  // includes_: null,
+  // join_: null,
 
   // name changes
   toMutable: "mutable",
@@ -46,13 +51,4 @@ const funcs = {
   forEachEff: forEach_,
 }
 
-Object.entries(funcs).forEach(([k, v]) => {
-  const f = v as any
-  Object.defineProperty(BasePrototype, k, {
-    enumerable: false,
-    configurable: true,
-    value(...args: [any]) {
-      return f(this, ...args)
-    },
-  })
-})
+applyFunctions(funcs, BasePrototype)
