@@ -35,8 +35,6 @@ const exceptions: Partial<Record<keyof typeof ARR, string | null>> = {
 
 const funcs = {
   ...makeAutoFuncs(ARR, exceptions),
-  collect: ARR.collectArray_,
-  collectWithIndex: ARR.collectArrayWithIndex_,
 
   // custom
   sortWith: sort_,

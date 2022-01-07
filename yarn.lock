@@ -633,12 +633,12 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@effect-ts/core@^0.49.0":
-  version "0.49.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.49.0.tgz#d7d65d19cae870517c08080a9cf996e62ae18a00"
-  integrity sha512-hSxv5e3vOScRbnBdtd8WIfbN/Uj91Cm6r8GaIECxfkxG3sZKDVMmKHWXlt5Xq+qG1ElVWUqszMNUm6uesGj8hw==
+"@effect-ts/core@^0.50.0":
+  version "0.50.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.50.0.tgz#4fd2490155ceaeee7065d33df09de4d3c58c97ea"
+  integrity sha512-anfVl/sI6LogwiJxcky8ujDX4/mP1TYL+647nUuyPO+2N0cR+wwGYplZQBuS1XqIGOpvmXZJI0mGJOdQTeWrLg==
   dependencies:
-    "@effect-ts/system" "^0.46.0"
+    "@effect-ts/system" "^0.47.0"
 
 "@effect-ts/express@~0.24.0":
   version "0.24.0"
@@ -670,20 +670,20 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/morphic/-/morphic-0.38.1.tgz#47e2d0b202630d91b66ce884042a0a6523e9b6eb"
   integrity sha512-xzrKQFPt0tEZ1gNwUO7p/vCT/7lMJHX1R9WpY8NR8Ev8zFx293RbfCnknFhEgOhivMo3oQ20qYfgu7P7qPhOZg==
 
-"@effect-ts/node@^0.32.0":
-  version "0.32.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/node/-/node-0.32.0.tgz#13ca0720c98d671c9694c56434cb9026e736322a"
-  integrity sha512-VbkObHWKUdpeQ6oXjfjXbhp9bbAmT+tEZDwpB1I/2SWGjEKCEpjZxhB3hMOTVRX3cN1a5R/uPojLscoItX7T7A==
+"@effect-ts/node@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/node/-/node-0.34.0.tgz#539c8a09c647f2325ea95d111b8f65f2b2beb5c7"
+  integrity sha512-9AsvjkuZ+eI9Gyl+fyEJjYMYe7T/chOD4y2n/Ba+YwCk3FQYNFletp/RvZ8Alc6wIqT1zOZw6h9ckOIJ3PbzTw==
 
 "@effect-ts/schema@^0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@effect-ts/schema/-/schema-0.12.0.tgz#827ca5ac2006c358050493017f04b96daff668ae"
   integrity sha512-6wm5MrMXUx6SVfegkFFnBDakn7Wkw6jcIi0wd0WcfRMlIvPUfxJyRPBWg94PFIG8XNdPmdFkCl+02PPCe+nspw==
 
-"@effect-ts/system@^0.46.0":
-  version "0.46.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/system/-/system-0.46.0.tgz#aafc88a875b4dc0da95d6171b5f2203887067367"
-  integrity sha512-8e/vx+P9/uNQh3SWS8kahhKdEQXkKZBLuIRH7KybcSkrVUqO9Hdwa1NSms7uD/DTo63IrLqOGMRlJgbnXpebIQ==
+"@effect-ts/system@^0.47.0":
+  version "0.47.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/system/-/system-0.47.0.tgz#3b448b5d7ea47a320b8ac82bc931b9ae0c92aa95"
+  integrity sha512-aSThtDqda3FZxTMPXJE7pMcc9wPvdmgQ8fESihrn++x1w5htk/8Uxq4/VuVQ1VxN0l1R2w9yfQ4Jd7jRuKaH6A==
 
 "@effect-ts/tracing-plugin@^0.14.8":
   version "0.14.8"
@@ -2120,10 +2120,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/uuid@^8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.3.tgz#c6a60686d953dbd1b1d45e66f4ecdbd5d471b4d0"
-  integrity sha512-0LbEEx1zxrYB3pgpd1M5lEhLcXjKJnYghvhTRgaBeUivLHMDM1TzF3IJ6hXU2+8uA4Xz+5BA63mtZo5DjVT8iA==
+"@types/uuid@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
 "@types/validator@^13.7.1":
   version "13.7.1"
@@ -2825,9 +2825,9 @@ bson@^4.5.1:
     buffer "^5.6.0"
 
 bson@^4.5.4:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-4.6.0.tgz#15c3b39ba3940c3d915a0c44d51459f4b4fbf1b2"
-  integrity sha512-8jw1NU1hglS+Da1jDOUYuNcBJ4cNHCFIqzlwoFNnsTOg2R/ox0aTYcTiBN4dzRa9q7Cvy6XErh3L8ReTEb9AQQ==
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-4.6.1.tgz#2b5da517539bb0f7f3ffb54ac70a384ca899641c"
+  integrity sha512-I1LQ7Hz5zgwR4QquilLNZwbhPw0Apx7i7X9kGMBTsqPdml/03Q9NBtD9nt/19ahjlphktQImrnderxqpzeVDjw==
   dependencies:
     buffer "^5.6.0"
 
@@ -8103,10 +8103,10 @@ query-string@^6.13.8:
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
 
-query-string@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.0.1.tgz#45bd149cf586aaa582dffc7ec7a8ad97dd02f75d"
-  integrity sha512-uIw3iRvHnk9to1blJCG3BTc+Ro56CBowJXKmNNAm3RulvPBzWLRqKSiiDk+IplJhsydwtuNMHi8UGQFcCLVfkA==
+query-string@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.1.0.tgz#96b88f27b39794f97b8c8ccd060bc900495078ef"
+  integrity sha512-wnJ8covk+S9isYR5JIXPt93kFUmI2fQ4R/8130fuq+qwLiGVTurg7Klodgfw4NSz/oe7xnyi09y3lSrogUeM3g==
   dependencies:
     decode-uri-component "^0.2.0"
     filter-obj "^1.1.0"
