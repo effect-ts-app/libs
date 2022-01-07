@@ -660,10 +660,10 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.29.0.tgz#da7d37bff18003ddf4a08d704896cc7c075d3015"
   integrity sha512-wPT+7Sg3coE9SGsqZMdD994daaoBTkiMtQNNiT50oOT2pArdOW7otRN3hPPpuXNqvXk0GSX6f1YViyPSfnJ9vA==
 
-"@effect-ts/monocle@^0.36.0":
-  version "0.36.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.36.0.tgz#327aad5dda490f062b6c15c01306f46ac2946916"
-  integrity sha512-hpteDzJZb+vAn/GH67dj0JkyOpic4r1/1Lmbz7WYogR9JSwJDVX6S9T+czGEDYMv+0mIyHl1h9UAYSCRnOsNcA==
+"@effect-ts/monocle@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.37.0.tgz#9388bfbd3f886a15b9f78597b891e30949630949"
+  integrity sha512-c+qWnjQzIhCIVZBQMWKrOkXnl2V+NwutWmtgPx8R/hc2+T/WbKzljj1EfQdCsARiovnx8Uwp49KdJrkdn9NSsA==
 
 "@effect-ts/morphic@^0.38.1":
   version "0.38.1"

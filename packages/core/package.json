@@ -13,7 +13,7 @@
     },
     "devDependencies": {
         "@effect-ts/core": "^0.50.0",
-        "@effect-ts/monocle": "^0.36.0",
+        "@effect-ts/monocle": "^0.37.0",
         "@effect-ts/schema": "^0.12.0",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.7.1",
@@ -21,7 +21,7 @@
     },
     "peerDependencies": {
         "@effect-ts/core": "^0.50.0",
-        "@effect-ts/monocle": "^0.36.0",
+        "@effect-ts/monocle": "^0.37.0",
         "@effect-ts/schema": "^0.12.0",
         "node-libcurl": "^2.3.3"
     },
