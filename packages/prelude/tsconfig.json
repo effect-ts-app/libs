@@ -1,0 +1,21 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "outDir": "./_esm",
+        "noEmit": false,
+        "jsx": "react",
+        "declarationMap": false
+    },
+    "include": [
+        "./"
+    ],
+    "exclude": [
+        "./_esm"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "name": "@effect-ts-app/prelude",
+    "version": "0.47.9",
+    "license": "MIT",
+    "dependencies": {
+        "@effect-ts-app/core": "^0.47.9"
+    },
+    "devDependencies": {
+        "@effect-ts/core": "^0.50.0",
+        "@effect-ts/monocle": "^0.37.0"
+    },
+    "peerDependencies": {
+        "@effect-ts/core": "^0.50.0",
+        "@effect-ts/monocle": "^0.37.0"
+    },
+    "scripts": {
+        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports && cp -f Prelude.d.ts index.d.ts && cp -f Prelude.d.ts _esm/index.d.ts",
+        "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v Prelude.d.ts | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "postpublish": "yarn clean",
+        "generate-exports": "sh ../../utils/extract.sh > package.log",
+        "prepare": "yarn build",
+        "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
+        "compile": "tsc --noEmit",
+        "lint": "eslint .",
+        "prettier": "prettier \"**/*.ts\"",
+        "autofix": "yarn lint --fix && yarn prettier --write",
+        "test": "echo 'no tests yet'",
+        "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
+        "ncu": "ncu"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "module": "./_esm/index.js",
+    "main": "./index.js",
+    "typings": "./index.d.ts",
+    "exports": {
+        ".": {
+            "module": "./_esm/index.js",
+            "default": "./index.js"
+        }
+    },
+    "sideEffects": false
+}
