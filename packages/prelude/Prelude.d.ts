@@ -62,30 +62,25 @@ export namespace EffectOption {
   export * from "@effect-ts-app/core/EffectOption"
 }
 export type EffectOption<R, E, A> = EO.EffectOption<R, E, A>
-export type EffectOptionU<A> = EO.EffectOption<unknown, never, A>
-export type EffectOptionE<E, A> = EO.EffectOption<unknown, E, A>
-export type EffectOptionR<R, A> = EO.EffectOption<R, never, A>
+export { UIO as EffectOptionU, IO as EffectOptionE, RIO as EffectOptionR } from "@effect-ts-app/core/EffectOption"
 
 export namespace SyncOption {
   export * from "@effect-ts-app/core/SyncOption"
 }
 export type SyncOption<R, E, A> = SO.SyncOption<R, E, A>
-export type SyncOptionU<A> = SO.SyncOption<unknown, never, A>
-export type SyncOptionE<E, A> = SO.SyncOption<unknown, E, A>
-export type SyncOptionR<R, A> = SO.SyncOption<R, never, A>
+export { UIO as SyncOptionU, IO as SyncOptionE, RIO as SyncOptionR } from "@effect-ts-app/core/SyncOption"
 
 export namespace Managed {
   export * from "@effect-ts/core/Effect/Managed"
 }
 export type Managed<R,E,A> = M.Managed<R, E, A>
+export { UIO as ManagedU, IO as ManagedE, RIO as ManagedR } from "@effect-ts/core/Effect/Managed"
 
 export namespace Effect {
   export * from "@effect-ts-app/core/Effect"
 }
 export type Effect<R,E,A> = T.Effect<R, E, A>
-export type EffectU<A> = T.Effect<unknown, never, A>
-export type EffectE<E, A> = T.Effect<unknown, E, A>
-export type EffectR<R, A> = T.Effect<R, never, A>
+export { UIO as EffectU, IO as EffectE, RIO as EffectR } from "@effect-ts-app/core/Effect"
 
 export namespace Schedule {
   export * from "@effect-ts/core/Effect/Schedule"
@@ -98,14 +93,11 @@ export namespace Option {
 export type Option<A> = O.Option<A>
 
 export namespace Sync {
-  //export { succeed as succeedNow, succeedWith as succeed, fail as failNow, failWith as fail } from "@effect-ts-app/core/Sync"
   export * from "@effect-ts-app/core/Sync"
 }
 
 export type Sync<R, E, A> = Sy.Sync<R, E, A>
-export type SyncU<A> = Sy.Sync<unknown, never, A>
-export type SyncE<E, A> = Sy.Sync<unknown, E, A>
-export type SyncR<R, A> = Sy.Sync<R, never, A>
+export { UIO as SyncU, IO as SyncE, RIO as SyncR } from "@effect-ts-app/core/Sync"
 
 export namespace NonEmptyArray {
   export * from "@effect-ts-app/core/NonEmptyArray"
@@ -117,21 +109,34 @@ export namespace Array {
 }
 export type Array<A> = A.Array<A>
 
-export declare const Chunk = CNK
+export namespace Chunk {
+  export * from "@effect-ts-app/core/Chunk"
+}
 export type Chunk<A> = CNK.Chunk<A>
 
-export declare const Set = SET
+export namespace Set {
+  export * from "@effect-ts-app/core/Set"
+}
 export type Set<A> = SET.Set<A>
 
-export declare const Layer = LAYER
+export namespace Layer {
+  export * from "@effect-ts/core/Effect/Layer"
+}
 export type Layer<RIn, E, ROut> = LAYER.Layer<RIn, E, ROut>
 
-export declare const Ref = REF
+export namespace Ref {
+  export * from "@effect-ts/core/Effect/Ref"
+}
 export type Ref<A> = REF.Ref<A>
-export declare const Semaphore = SEMAPHORE
+
+export namespace Semaphore {
+  export * from "@effect-ts/core/Effect/Semaphore"
+}
 export type Semaphore = SEMAPHORE.Semaphore
 
-export declare const Map = MAP
+export namespace Map {
+  export * from "@effect-ts/core/Collections/Immutable/Map"
+}
 export type Map<K, A> = MAP.Map<K, A>
 
 export namespace Lens {
@@ -139,7 +144,9 @@ export namespace Lens {
 }
 export type Lens<S, A> = LNS.Lens<S, A>
 
-export declare const Schema = SCHEMA
+export namespace Map {
+  export * from "@effect-ts-app/core/Schema"
+}
 export { DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
 export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
