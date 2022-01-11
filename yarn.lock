@@ -633,12 +633,12 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@effect-ts/core@^0.50.0":
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.50.0.tgz#4fd2490155ceaeee7065d33df09de4d3c58c97ea"
-  integrity sha512-anfVl/sI6LogwiJxcky8ujDX4/mP1TYL+647nUuyPO+2N0cR+wwGYplZQBuS1XqIGOpvmXZJI0mGJOdQTeWrLg==
+"@effect-ts/core@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/core/-/core-0.51.0.tgz#b4959bcd7210df3e36a76d4628f4620a93393e7f"
+  integrity sha512-tJvR/0kHt4kbpb9mIgXHkQ9Ox/l/4836PePrcxPs3loj++uNSHMSl5MgETyDca760wUGgHAsNmd/lSnpaBAj6w==
   dependencies:
-    "@effect-ts/system" "^0.47.0"
+    "@effect-ts/system" "^0.48.0"
 
 "@effect-ts/express@~0.24.0":
   version "0.24.0"
@@ -660,10 +660,10 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.29.0.tgz#da7d37bff18003ddf4a08d704896cc7c075d3015"
   integrity sha512-wPT+7Sg3coE9SGsqZMdD994daaoBTkiMtQNNiT50oOT2pArdOW7otRN3hPPpuXNqvXk0GSX6f1YViyPSfnJ9vA==
 
-"@effect-ts/monocle@^0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.37.0.tgz#9388bfbd3f886a15b9f78597b891e30949630949"
-  integrity sha512-c+qWnjQzIhCIVZBQMWKrOkXnl2V+NwutWmtgPx8R/hc2+T/WbKzljj1EfQdCsARiovnx8Uwp49KdJrkdn9NSsA==
+"@effect-ts/monocle@^0.38.0":
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.38.0.tgz#9da12f5cff5a7686674384c28474c7cec729d1af"
+  integrity sha512-rPy8bpqXWJprY9JEps4rw8RlQTzTOnsC7uMqTcGEwv2ySdVUGxjHqcsh739PvVALRHSkJfc0gVS6FShzbwdVRQ==
 
 "@effect-ts/morphic@^0.38.1":
   version "0.38.1"
@@ -675,15 +675,10 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/node/-/node-0.34.0.tgz#539c8a09c647f2325ea95d111b8f65f2b2beb5c7"
   integrity sha512-9AsvjkuZ+eI9Gyl+fyEJjYMYe7T/chOD4y2n/Ba+YwCk3FQYNFletp/RvZ8Alc6wIqT1zOZw6h9ckOIJ3PbzTw==
 
-"@effect-ts/schema@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/schema/-/schema-0.12.0.tgz#827ca5ac2006c358050493017f04b96daff668ae"
-  integrity sha512-6wm5MrMXUx6SVfegkFFnBDakn7Wkw6jcIi0wd0WcfRMlIvPUfxJyRPBWg94PFIG8XNdPmdFkCl+02PPCe+nspw==
-
-"@effect-ts/system@^0.47.0":
-  version "0.47.0"
-  resolved "https://registry.yarnpkg.com/@effect-ts/system/-/system-0.47.0.tgz#3b448b5d7ea47a320b8ac82bc931b9ae0c92aa95"
-  integrity sha512-aSThtDqda3FZxTMPXJE7pMcc9wPvdmgQ8fESihrn++x1w5htk/8Uxq4/VuVQ1VxN0l1R2w9yfQ4Jd7jRuKaH6A==
+"@effect-ts/system@^0.48.0":
+  version "0.48.0"
+  resolved "https://registry.yarnpkg.com/@effect-ts/system/-/system-0.48.0.tgz#126ad11d99ee71a4340a309e5effe5f9eb5a4259"
+  integrity sha512-jb4sk6rJyKs1ARmHjauTwd+Jht/7exmv2Z7jFXaTPFPzt3aicN8lo7vkO9BWZ/x8XhXuyBlVXuqYHqQxXZ1bfA==
 
 "@effect-ts/tracing-plugin@^0.14.8":
   version "0.14.8"
@@ -2602,6 +2597,11 @@ async@^3.1.0:
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
   integrity sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw==
 
+async@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
+  integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
+
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -3166,7 +3166,7 @@ colors@1.0.3:
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
   integrity sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
 
-colors@^1.2.1:
+colors@1.4.0, colors@^1.2.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
   integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
@@ -6510,6 +6510,17 @@ logform@^2.2.0:
     ms "^2.1.1"
     triple-beam "^1.3.0"
 
+logform@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/logform/-/logform-2.3.2.tgz#68babe6a74ab09a1fd15a9b1e6cbc7713d41cb5b"
+  integrity sha512-V6JiPThZzTsbVRspNO6TmHkR99oqYTs8fivMBYQkjZj6rxW92KxtDCPE6IkAk1DNBnYKNkjm4jYBm6JDUcyhOA==
+  dependencies:
+    colors "1.4.0"
+    fecha "^4.2.0"
+    ms "^2.1.1"
+    safe-stable-stringify "^1.1.0"
+    triple-beam "^1.3.0"
+
 loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -8544,6 +8555,11 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
+safe-stable-stringify@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-1.1.1.tgz#c8a220ab525cd94e60ebf47ddc404d610dc5d84a"
+  integrity sha512-ERq4hUjKDbJfE4+XtZLFPCDi8Vb1JqaxAPTxWFLBx8XcAlf9Bda/ZJdVezs/NAfsMQScyIlUMx+Yeu7P7rx5jw==
+
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
@@ -9888,7 +9904,16 @@ winston-transport@^4.4.0:
     readable-stream "^2.3.7"
     triple-beam "^1.2.0"
 
-winston@*, winston@^3.3.3:
+winston-transport@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.4.2.tgz#554efe3fce229d046df006e0e3c411d240652e51"
+  integrity sha512-9jmhltAr5ygt5usgUTQbEiw/7RYXpyUbEAFRCSicIacpUzPkrnQsQZSPGEI12aLK9Jth4zNcYJx3Cvznwrl8pw==
+  dependencies:
+    logform "^2.3.2"
+    readable-stream "^3.4.0"
+    triple-beam "^1.2.0"
+
+winston@*:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/winston/-/winston-3.3.3.tgz#ae6172042cafb29786afa3d09c8ff833ab7c9170"
   integrity sha512-oEXTISQnC8VlSAKf1KYSSd7J6IWuRPQqDdo8eoRNaYKLvwSb5+79Z3Yi1lrl6KDpU6/VWaxpakDAtb1oQ4n9aw==
@@ -9902,6 +9927,21 @@ winston@*, winston@^3.3.3:
     stack-trace "0.0.x"
     triple-beam "^1.3.0"
     winston-transport "^4.4.0"
+
+winston@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-3.4.0.tgz#7080f24b02a0684f8a37f9d5c6afb1ac23e95b84"
+  integrity sha512-FqilVj+5HKwCfIHQzMxrrd5tBIH10JTS3koFGbLVWBODjiIYq7zir08rFyBT4rrTYG/eaTqDcfSIbcjSM78YSw==
+  dependencies:
+    "@dabh/diagnostics" "^2.0.2"
+    async "^3.2.3"
+    is-stream "^2.0.0"
+    logform "^2.3.2"
+    one-time "^1.0.0"
+    readable-stream "^3.4.0"
+    stack-trace "0.0.x"
+    triple-beam "^1.3.0"
+    winston-transport "^4.4.2"
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"

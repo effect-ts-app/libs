@@ -6,12 +6,12 @@
         "@effect-ts-app/core": "^0.50.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.50.0",
-        "@effect-ts/monocle": "^0.37.0"
+        "@effect-ts/core": "^0.51.0",
+        "@effect-ts/monocle": "^0.38.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.50.0",
-        "@effect-ts/monocle": "^0.37.0"
+        "@effect-ts/core": "^0.51.0",
+        "@effect-ts/monocle": "^0.38.0"
     },
     "scripts": {
         "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports && cp -f Prelude.d.ts index.d.ts && cp -f Prelude.d.ts _esm/index.d.ts",
