@@ -144,7 +144,7 @@ export namespace Lens {
 }
 export type Lens<S, A> = LNS.Lens<S, A>
 
-export namespace Map {
+export namespace Schema {
   export * from "@effect-ts-app/core/Schema"
 }
 export { DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
