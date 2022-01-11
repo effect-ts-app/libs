@@ -1,4 +1,4 @@
-import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+import * as CNK from "@effect-ts-app/core/Chunk"
 import {
   collectAll,
   forEach_,
@@ -14,8 +14,8 @@ const exceptions: Partial<Record<keyof Omit<typeof CNK, "toString">, string | nu
 
 const funcs = {
   ...makeAutoFuncs(CNK, exceptions),
-  collect: CNK.collectChunk_,
-  collectWithIndex: CNK.collectChunkWithIndex_,
+  collect: CNK.collect_,
+  collectWithIndex: CNK.collectWithIndex_,
   // IterableOps
   collectAll,
   forEachParN: forEachParN_,

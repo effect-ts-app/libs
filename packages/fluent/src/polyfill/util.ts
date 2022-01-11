@@ -34,6 +34,9 @@ export function applyFunctions(
   modName: string
 ) {
   Object.entries(functions).forEach(([k, v]) => {
+    if (!v) {
+      throw new Error(`function not defined for ${modName}.${k}`)
+    }
     // don't overwrite...
     if (mod[k]) {
       console.log(`$$$ polyfill; skipping already existing ${k} on ${modName}`)
