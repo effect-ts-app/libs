@@ -13,6 +13,7 @@ import type * as Sy from "@effect-ts-app/core/Sync"
 import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as T from "@effect-ts-app/core/Effect"
 import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
+import type * as QUEUE from "@effect-ts/core/Effect/Queue"
 import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as A from "@effect-ts-app/core/Array"
@@ -128,6 +129,12 @@ export namespace Ref {
   export * from "@effect-ts/core/Effect/Ref"
 }
 export type Ref<A> = REF.Ref<A>
+
+export namespace Queue {
+  export * from "@effect-ts/core/Effect/Queue"
+}
+export type Queue<A> = QUEUE.Queue<A>
+export { Enqueue, XEnqueue, Dequeue, XDequeue} from "@effect-ts/core/Effect/Queue"
 
 export namespace Semaphore {
   export * from "@effect-ts/core/Effect/Semaphore"
