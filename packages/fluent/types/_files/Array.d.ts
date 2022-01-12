@@ -242,6 +242,9 @@ interface SOps {
    * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Set"
    */
   filter<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): SET.Set<B>
+  /**
+   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Set"
+   */
   filter<A>(this: SET.Set<A>, predicate: Predicate<A>): SET.Set<A>
 
   /**
@@ -253,12 +256,18 @@ interface SOps {
    * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
    */
   find<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): B | undefined
+  /**
+   * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
+   */
   find<A>(this: SET.Set<A>, predicate: Predicate<A>): A | undefined
 
   /**
    * @ets_rewrite_method findFirst_ from "@effect-ts-app/fluent/_ext/Set"
    */
   findFirst<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): Option<B>
+  /**
+   * @ets_rewrite_method findFirst_ from "@effect-ts-app/fluent/_ext/Set"
+   */
   findFirst<A>(this: SET.Set<A>, predicate: Predicate<A>): Option<A>
 
   /**
