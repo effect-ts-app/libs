@@ -1,4 +1,4 @@
-import { filter_ } from "@effect-ts/core/Collections/Immutable/Set"
+import { filter_, some_ } from "@effect-ts/core/Collections/Immutable/Set"
 import {
   collectAll,
   forEach_,
@@ -17,6 +17,8 @@ const funcs = {
   findFirstMap: findFirstMap_,
   findFirst: findFirst_,
   find: find_,
+
+  some: some_,
 
   // IterableOps
   collectAll,

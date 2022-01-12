@@ -245,6 +245,11 @@ interface SOps {
   filter<A>(this: SET.Set<A>, predicate: Predicate<A>): SET.Set<A>
 
   /**
+   * @ets_rewrite_method some_ from "@effect-ts/core/Collections/Immutable/Set"
+   */
+  some<A>(this: SET.Set<A>, predicate: Predicate<A>): boolean
+
+  /**
    * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
    */
   find<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): B | undefined
