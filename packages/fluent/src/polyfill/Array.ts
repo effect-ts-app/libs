@@ -20,7 +20,6 @@ const exceptions: Partial<Record<keyof typeof ARR, string | null>> = {
   concat_: "concatRA",
   //forEach_: "forEachRA", // no longer exists?
   filter_: "filterRA",
-  flatten: "flattenRA",
   reduce_: "reduceRA",
   find_: "findFirst",
 
