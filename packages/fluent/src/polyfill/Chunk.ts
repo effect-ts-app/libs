@@ -14,8 +14,6 @@ const exceptions: Partial<Record<keyof Omit<typeof CNK, "toString">, string | nu
 
 const funcs = {
   ...makeAutoFuncs(CNK, exceptions),
-  collect: CNK.collect_,
-  collectWithIndex: CNK.collectWithIndex_,
   // IterableOps
   collectAll,
   forEachParN: forEachParN_,

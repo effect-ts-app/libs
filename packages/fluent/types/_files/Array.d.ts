@@ -311,53 +311,7 @@ interface IterableOps {
 }
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
-  interface ChunkOps extends IterableOps {
-    // TYPO FIX
-    /**
-     * @ets_rewrite_method concat_ from "@effect-ts-app/core/Chunk"
-     */
-    concat<A, A1>(this: Chunk<A>, that: Chunk<A1>): Chunk<A | A1>
-
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
-     */
-    filter<A, S extends A>(this: Chunk<A>, f: (a: A) => a is S): Chunk<S>
-
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
-     */
-    filter<A>(this: Chunk<A>, f: (a: A) => boolean): Chunk<A>
-
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts-app/core/Chunk"
-     */
-    map<A, B>(this: Chunk<A>, f: (a: A) => B): Chunk<B>
-
-    /**
-     * @ets_rewrite_method collect_ from "@effect-ts-app/core/Chunk"
-     */
-    collect<A, B>(this: Chunk<A>, f: (a: A) => Option<B>): Chunk<B>
-
-    /**
-     * @ets_rewrite_method toArray from "@effect-ts-app/core/Chunk"
-     */
-    toArray<A>(this: Chunk<A>): ARR.Array<A>
-
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
-     */
-    find<A, B extends A>(this: Chunk<A>, f: Refinement<A, B>): Option<B>
-
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
-     */
-    find<A>(this: Chunk<A>, f: (a: A) => boolean): Option<A>
-
-    /**
-     * @ets_rewrite_method flatten from "@effect-ts-app/core/Chunk"
-     */
-    flatten<A>(this: Chunk<Chunk<A>>): Chunk<A>
-  }
+  interface ChunkOps extends IterableOps {}
 }
 
 declare global {
