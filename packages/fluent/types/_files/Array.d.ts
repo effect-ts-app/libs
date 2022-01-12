@@ -9,6 +9,7 @@ import type { Ord } from "@effect-ts/core/Ord"
 import type * as ARR from "@effect-ts-app/core/Array"
 import type { Chunk } from "@effect-ts-app/core/Chunk"
 import type { Effect } from "@effect-ts-app/core/Effect"
+import type * as SET from "@effect-ts-app/core/Set"
 import type { Sync } from "@effect-ts-app/core/Sync"
 
 interface AOps {
@@ -236,6 +237,31 @@ interface AOps {
   uniq<A>(this: readonly A[], E: Equal<A>): readonly A[]
 }
 
+interface SOps {
+  /**
+   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Set"
+   */
+  filter<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): SET.Set<B>
+  filter<A>(this: SET.Set<A>, predicate: Predicate<A>): SET.Set<A>
+
+  /**
+   * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
+   */
+  find<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): B | undefined
+  find<A>(this: SET.Set<A>, predicate: Predicate<A>): A | undefined
+
+  /**
+   * @ets_rewrite_method findFirst_ from "@effect-ts-app/fluent/_ext/Set"
+   */
+  findFirst<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): Option<B>
+  findFirst<A>(this: SET.Set<A>, predicate: Predicate<A>): Option<A>
+
+  /**
+   * @ets_rewrite_method findFirstMap_ from "@effect-ts-app/fluent/_ext/Set"
+   */
+  findFirstMap<A, B>(this: SET.Set<A>, f: (a: A) => Option<B>): Option<B>
+}
+
 interface IterableOps {
   /**
    * @ets_rewrite_method forEachParN_ from "@effect-ts-app/core/Effect"
@@ -333,6 +359,11 @@ declare global {
      */
     map<AX, B>(this: ARR.Array<AX>, f: (a: AX, i: number) => B): B[]
   }
+
+  interface Set<T> extends SetOps {}
+  interface ReadonlySet<T> extends ReadonlySetOps {}
+  interface SetOps extends SOps, IterableOps {}
+  interface ReadonlySetOps extends SOps, IterableOps {}
 
   // interface Iterable<T> extends IterableOps {}
   // interface IterableIterator<T> extends IterableOps {}
