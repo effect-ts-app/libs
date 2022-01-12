@@ -352,6 +352,11 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
      * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
      */
     find<A>(this: Chunk<A>, f: (a: A) => boolean): Option<A>
+
+    /**
+     * @ets_rewrite_method flatten from "@effect-ts-app/core/Chunk"
+     */
+    flatten<A>(this: Chunk<Chunk<A>>): Chunk<A>
   }
 }
 
