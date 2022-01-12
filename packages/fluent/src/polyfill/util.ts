@@ -5,6 +5,9 @@
 //   use it (check exceptions)
 // else
 //   use it (check exceptions)
+
+import { skipped } from "./state"
+
 // TODO: drop constructors, via exceptions
 export function makeAutoFuncs(
   mod: Record<string, unknown>,
@@ -39,7 +42,7 @@ export function applyFunctions(
     }
     // don't overwrite...
     if (mod[k]) {
-      console.log(`$$$ polyfill; skipping already existing ${k} on ${modName}`)
+      skipped.set(modName, skipped.get(modName)?.concat([k]) ?? [k])
       return
     }
     const f = v as any
