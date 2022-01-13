@@ -318,17 +318,13 @@ interface IterableOps {
    */
   forEachSync<R, E, A, B>(
     this: Iterable<A>,
-    f: (a: A) => Sync<R, E, B>,
-    __trace?: string
+    f: (a: A) => Sync<R, E, B>
   ): Sync<R, E, Chunk<B>>
 
   /**
    * @ets_rewrite_method collectAll from "@effect-ts-app/core/Sync"
    */
-  collectAllSync<R, E, A>(
-    this: Iterable<Sync<R, E, A>>,
-    __trace?: string
-  ): Sync<R, E, Chunk<A>>
+  collectAllSync<R, E, A>(this: Iterable<Sync<R, E, A>>): Sync<R, E, Chunk<A>>
 
   /**
    * @ets_rewrite_method from from "@effect-ts-app/core/Chunk"
