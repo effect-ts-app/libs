@@ -5,6 +5,10 @@ import {
   forEachPar_,
   forEachParN_,
 } from "@effect-ts-app/core/Effect"
+import {
+  collectAll as collectAllSync,
+  forEach_ as forEachSync,
+} from "@effect-ts-app/core/Sync"
 
 import { applyFunctions, makeAutoFuncs } from "./util"
 
@@ -21,6 +25,8 @@ const funcs = {
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
+  collectAllSync,
+  forEachSync,
 }
 
 const BasePrototype = CNK.ChunkInternal.prototype as any

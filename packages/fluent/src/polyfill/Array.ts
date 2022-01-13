@@ -7,6 +7,10 @@ import {
   forEachPar_,
   forEachParN_,
 } from "@effect-ts-app/core/Effect"
+import {
+  collectAll as collectAllSync,
+  forEach_ as forEachSync,
+} from "@effect-ts-app/core/Sync"
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array"
 import { mapM } from "../_ext/mapM"
@@ -49,6 +53,8 @@ const funcs = {
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
+  collectAllSync,
+  forEachSync,
 }
 
 applyFunctions(funcs, BasePrototype, "Array")

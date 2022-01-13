@@ -5,6 +5,10 @@ import {
   forEachPar_,
   forEachParN_,
 } from "@effect-ts-app/core/Effect"
+import {
+  collectAll as collectAllSync,
+  forEach_ as forEachSync,
+} from "@effect-ts-app/core/Sync"
 
 import { find_, findFirst_, findFirstMap_ } from "../_ext/Set"
 import { applyFunctions } from "./util"
@@ -25,6 +29,8 @@ const funcs = {
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
   forEachEff: forEach_,
+  collectAllSync,
+  forEachSync,
 }
 
 applyFunctions(funcs, BasePrototype, "Set")

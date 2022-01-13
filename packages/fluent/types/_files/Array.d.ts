@@ -314,6 +314,23 @@ interface IterableOps {
   ): Effect<R, E, Chunk<A>>
 
   /**
+   * @ets_rewrite_method forEach_ from "@effect-ts-app/core/Sync"
+   */
+  forEachSync<R, E, A, B>(
+    this: Iterable<A>,
+    f: (a: A) => Sync<R, E, B>,
+    __trace?: string
+  ): Sync<R, E, Chunk<B>>
+
+  /**
+   * @ets_rewrite_method collectAll from "@effect-ts-app/core/Sync"
+   */
+  collectAllSync<R, E, A>(
+    this: Iterable<Sync<R, E, A>>,
+    __trace?: string
+  ): Sync<R, E, Chunk<A>>
+
+  /**
    * @ets_rewrite_method from from "@effect-ts-app/core/Chunk"
    */
   toChunk<A>(this: Iterable<A>): Chunk<A>
