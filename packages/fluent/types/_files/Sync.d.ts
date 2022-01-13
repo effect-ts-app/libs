@@ -9,6 +9,11 @@ declare module "@effect-ts/system/Sync/core" {
      */
     toEffect<R, E, A>(this: Sync<R, E, A>): Effect<R, E, A>
 
+    /**
+     * @ets_rewrite_method orDie from "@effect-ts-app/core/Sync"
+     */
+    orDie<R, A>(this: Sync<R, unknown, A>): Sync<R, never, A>
+
     // Undo the selection for Effect for now.
     chain<RX, EX, AX, R2, E2, B>(
       this: Sync<RX, EX, AX>,
