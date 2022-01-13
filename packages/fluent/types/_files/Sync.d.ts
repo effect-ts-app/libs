@@ -14,6 +14,14 @@ declare module "@effect-ts/system/Sync/core" {
      */
     orDie<R, A>(this: Sync<R, unknown, A>): Sync<R, never, A>
 
+    /**
+     * @ets_rewrite_method chain_ from "@effect-ts/core/Sync"
+     */
+    chain<RX, EX, AX, R2, E2, B>(
+      this: Sync<RX, EX, AX>,
+      f: (a: AX) => Sync<R2, E2, B>
+    ): Sync<RX & R2, E2 | EX, B>
+
     // Undo the selection for Effect for now.
     chain<RX, EX, AX, R2, E2, B>(
       this: Sync<RX, EX, AX>,
