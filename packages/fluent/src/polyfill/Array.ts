@@ -52,7 +52,7 @@ const funcs = {
   collectAll,
   forEachParN: forEachParN_,
   forEachPar: forEachPar_,
-  forEachEff: forEach_,
+  forEachEffect: forEach_,
   collectAllSync,
   forEachSync,
 }

@@ -299,7 +299,7 @@ interface IterableOps {
   /**
    * @ets_rewrite_method forEach_ from "@effect-ts-app/core/Effect"
    */
-  forEachEff<R, E, A, B>(
+  forEachEffect<R, E, A, B>(
     this: Iterable<A>,
     f: (a: A) => Effect<R, E, B>,
     __trace?: string
