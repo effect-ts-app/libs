@@ -283,17 +283,44 @@ function defProp<Self extends MO.SchemaUPI>(
   return propDef(MO.prop(schema), makeDefault, "constructor")
 }
 
-export function optProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  "optional",
-  O.None,
-  O.None
-> {
+export function optProp<Self extends MO.SchemaUPI>(
+  schema: Self
+): Property<Self, "optional", O.None, O.None> {
   return propOpt(MO.prop(schema))
 }
 
+export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  makeDefault: () => ParsedShape
+): MO.Property<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["constructor", () => ParsedShape]>
+>
+export function defaultProp<
+  ParsedShape extends SupportedDefaults,
+  ConstructorInput,
+  Encoded,
+  Api
+>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): FromProperty<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["constructor", () => ParsedShape]>
+>
+export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): null extends ParsedShape
+  ? FromProperty<
+      MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+      "required",
+      O.None,
+      O.Some<["constructor", () => ParsedShape]>
+    >
+  : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   makeDefault: () => ParsedShape
