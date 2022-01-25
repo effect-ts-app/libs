@@ -78,9 +78,7 @@ export interface MNModel<
   ParsedShape = MO.ParsedShapeOf<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
   Encoded = MO.EncodedOf<Self>,
-  Props = GetApiProps<Self>,
-  ProvidedProps extends MO.PropertyRecord = GetApiProps<Self>,
-  ParsedShape2 = MO.ParsedShapeOf<Self>
+  Props = GetApiProps<Self>
 > extends MM<
     Self,
     MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>,
@@ -88,8 +86,7 @@ export interface MNModel<
     ConstructorInput,
     Encoded,
     Props,
-    ProvidedProps,
-    ParsedShape2
+    MO.ParsedShapeOf<Self>
   > {}
 
 export interface MM<
@@ -99,14 +96,12 @@ export interface MM<
   ConstructorInput,
   Encoded,
   Props,
-  ProvidedProps extends MO.PropertyRecord,
   ParsedShape2
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   new (_: ConstructorInput): ParsedShape2
   [MO.schemaField]: Self
   readonly parsed: ParsedShapeOf<Self>
   readonly encoded: EncodedOf<Self>
-  readonly ProvidedProps: ProvidedProps
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
   readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
@@ -188,51 +183,48 @@ export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
       ParsedShape,
       ConstructorInput,
       Encoded,
-      Props,
-      ProvidedProps
+      Props
     > &
       PropsExtensions<Props>
   }
   //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
 }
 
-export function MNModel3<ParsedShape, ParsedShape2, ConstructorInput, Encoded, Props>(
-  __name?: string
-) {
-  return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
-    const self = MO.props(props)
-    return makeSpecial(__name, self) as MNModel<
-      typeof self,
-      ParsedShape,
-      ConstructorInput,
-      Encoded,
-      Props,
-      ProvidedProps,
-      ParsedShape2
-    > &
-      PropsExtensions<Props>
-  }
-  //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
-}
+// export function MNModel3<ParsedShape, ParsedShape2, ConstructorInput, Encoded, Props>(
+//   __name?: string
+// ) {
+//   return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
+//     const self = MO.props(props)
+//     return makeSpecial(__name, self) as MNModel<
+//       typeof self,
+//       ParsedShape,
+//       ConstructorInput,
+//       Encoded,
+//       Props,
+//     > &
+//       PropsExtensions<Props>
+//   }
+//   //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
+// }
 
-export function MNModel4<ParsedShape, ConstructorInput, Encoded, Props>(
-  __name?: string
-) {
-  return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
-    const self = MO.props(props)
-    return makeSpecial(__name, self) as MNModel<
-      typeof self,
-      ParsedShape,
-      ConstructorInput,
-      Encoded,
-      Props,
-      ProvidedProps,
-      {}
-    > &
-      PropsExtensions<Props>
-  }
-  //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
-}
+// export function MNModel4<ParsedShape, ConstructorInput, Encoded, Props>(
+//   __name?: string
+// ) {
+//   return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
+//     const self = MO.props(props)
+//     return makeSpecial(__name, self) as MNModel<
+//       typeof self,
+//       ParsedShape,
+//       ConstructorInput,
+//       Encoded,
+//       Props,
+//       ProvidedProps,
+//       {}
+//     > &
+//       PropsExtensions<Props>
+//   }
+//   //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
+// }
 
 export function fromModel<ParsedShape>(__name?: string) {
   return <Props extends FromPropertyRecord = {}>(props: Props) =>
