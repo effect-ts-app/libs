@@ -24,50 +24,68 @@ export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<ParsedShape, Self extends MO.SchemaAny>
-  extends Model2<
+export interface Model<
+  ParsedShape,
+  Self extends MO.SchemaAny,
+  ProvidedProps extends MO.PropertyRecord
+> extends Model2<
     ParsedShape,
     Self,
     EncSchemaForModel<ParsedShape, Self, MO.EncodedOf<Self>>,
-    ComputeFlat<MO.ParsedShapeOf<Self>>
+    ComputeFlat<MO.ParsedShapeOf<Self>>,
+    ProvidedProps
   > {}
 
-export interface Model3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny>
-  extends Model2<
+export interface Model3<
+  ParsedShape,
+  ParsedShape2,
+  Self extends MO.SchemaAny,
+  ProvidedProps extends MO.PropertyRecord
+> extends Model2<
     ParsedShape,
     Self,
     EncSchemaForModel<ParsedShape, Self, MO.EncodedOf<Self>>,
-    ParsedShape2
+    ParsedShape2,
+    ProvidedProps
   > {}
 
 export interface ModelEnc<
   ParsedShape,
   Self extends MO.SchemaAny,
   MEnc,
+  ProvidedProps extends MO.PropertyRecord,
   ParsedShape2 = ComputeFlat<MO.ParsedShapeOf<Self>>
 > extends Model2Int<
     ParsedShape,
     Self,
     EncSchemaForModel<ParsedShape, Self, MEnc>,
     MEnc,
-    ParsedShape2
+    ParsedShape2,
+    ProvidedProps
   > {}
 
-export interface ModelEnc3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny, MEnc>
-  extends Model2Int<
+export interface ModelEnc3<
+  ParsedShape,
+  ParsedShape2,
+  Self extends MO.SchemaAny,
+  MEnc,
+  ProvidedProps extends MO.PropertyRecord
+> extends Model2Int<
     ParsedShape,
     Self,
     EncSchemaForModel<ParsedShape, Self, MEnc>,
     MEnc,
-    ParsedShape2
+    ParsedShape2,
+    ProvidedProps
   > {}
 
 export interface Model2<
   M,
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
-  ParsedShape2
-> extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>, ParsedShape2> {}
+  ParsedShape2,
+  ProvidedProps extends MO.PropertyRecord
+> extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>, ParsedShape2, ProvidedProps> {}
 
 type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Props>
   ? Props
@@ -124,7 +142,8 @@ interface Model2Int<
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
   MEnc,
-  ParsedShape2
+  ParsedShape2,
+  ProvidedProps extends MO.PropertyRecord
 > extends MO.Schema<
     MO.ParserInputOf<Self>,
     M,
@@ -139,6 +158,7 @@ interface Model2Int<
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<M, M> // added
   readonly lenses: RecordSchemaToLenses<M, Self>
+  readonly ProvidedProps: ProvidedProps
 
   readonly Parser: MO.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
@@ -348,7 +368,7 @@ export interface PropsExtensions<Props> {
 export function ModelSpecial<ParsedShape>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<ParsedShape, Self> & PropsExtensions<GetProps<Self>> => {
+  ): Model<ParsedShape, Self, GetProps<Self>> & PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -356,7 +376,8 @@ export function ModelSpecial<ParsedShape>(__name?: string) {
 export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEnc<ParsedShape, Self, Encoded> & PropsExtensions<GetProps<Self>> => {
+  ): ModelEnc<ParsedShape, Self, Encoded, GetProps<Self>> &
+    PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -364,7 +385,8 @@ export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
 export function ModelSpecial3<ParsedShape, ParsedShape2>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model3<ParsedShape, ParsedShape2, Self> & PropsExtensions<GetProps<Self>> => {
+  ): Model3<ParsedShape, ParsedShape2, Self, GetProps<Self>> &
+    PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -372,7 +394,7 @@ export function ModelSpecial3<ParsedShape, ParsedShape2>(__name?: string) {
 export function ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEnc3<ParsedShape, ParsedShape2, Self, Encoded> &
+  ): ModelEnc3<ParsedShape, ParsedShape2, Self, Encoded, GetProps<Self>> &
     PropsExtensions<GetProps<Self>> => {
     return makeSpecial(__name, self)
   }
