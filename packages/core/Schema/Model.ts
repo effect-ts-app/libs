@@ -10,7 +10,7 @@ import pick from "lodash/pick"
 import { EncSchemaForModel, EParserFor, FromPropertyRecord, fromProps } from "./_api"
 import * as MO from "./_schema"
 import { schemaField } from "./_schema"
-import { AnyProperty, ParsedShapeOf, PropertyRecord } from "./custom"
+import { AnyProperty, EncodedOf, ParsedShapeOf, PropertyRecord } from "./custom"
 import { unsafe } from "./custom/_api/condemn"
 import { include } from "./utils"
 
@@ -104,6 +104,8 @@ export interface MM<
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   new (_: ConstructorInput): ParsedShape2
   [MO.schemaField]: Self
+  readonly parsed: ParsedShapeOf<Self>
+  readonly encoded: EncodedOf<Self>
   readonly ProvidedProps: ProvidedProps
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
@@ -132,6 +134,8 @@ interface Model2Int<
   > {
   new (_: MO.ConstructorInputOf<Self>): ParsedShape2
   [MO.schemaField]: Self
+  readonly parsed: ParsedShapeOf<Self>
+  readonly encoded: EncodedOf<Self>
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<M, M> // added
   readonly lenses: RecordSchemaToLenses<M, Self>
