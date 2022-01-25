@@ -17,24 +17,24 @@ export type Nullable<A> = A | null
 export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<
-  Nullable<ParserInput>,
-  Nullable<ParsedShape>,
-  Nullable<ConstructorInput>,
-  Nullable<Encoded>,
+  ParserInput | null,
+  ParsedShape | null,
+  ConstructorInput | null,
+  Encoded | null,
   Api
 > {
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is Nullable<ParsedShape> => u === null || guard(u)
+  const refinement = (u: unknown): u is ParsedShape | null => u === null || guard(u)
   const encode = Encoder.for(self)
 
   return pipe(
     S.identity(refinement),
     S.arbitrary((_) => _.option(arb(_))),
-    S.parser((i: Nullable<ParserInput>) => (i === null ? Th.succeed(null) : parse(i))),
-    S.constructor((x: Nullable<ConstructorInput>) =>
+    S.parser((i: ParserInput | null) => (i === null ? Th.succeed(null) : parse(i))),
+    S.constructor((x: ConstructorInput | null) =>
       x === null ? Th.succeed(null) : create(x)
     ),
     S.encoder((_) => (_ === null ? null : encode(_))),
