@@ -29,6 +29,7 @@ export interface Model<ParsedShape, Self extends MO.SchemaAny>
     ParsedShape,
     Self,
     EncSchemaForModel<ParsedShape, Self, MO.EncodedOf<Self>>,
+    // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.ParsedShapeOf<Self>>
   > {}
 
@@ -44,6 +45,7 @@ export interface ModelEnc<
   ParsedShape,
   Self extends MO.SchemaAny,
   MEnc,
+  // makes it pretty, but also helps compatibility with WebStorm it seems...
   ParsedShape2 = ComputeFlat<MO.ParsedShapeOf<Self>>
 > extends MM<
     Self,
@@ -98,6 +100,7 @@ export interface MNModel<
     ConstructorInput,
     Encoded,
     Props,
+    // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.ParsedShapeOf<Self>>
   > {}
 
