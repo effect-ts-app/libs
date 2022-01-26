@@ -53,7 +53,7 @@ export interface ModelEnc<
     ParsedShape,
     MO.ConstructorInputOf<Self>,
     MEnc,
-    MO.ApiOf<Self>,
+    GetApiProps<Self>,
     ParsedShape2
   > {}
 
@@ -64,7 +64,7 @@ export interface ModelEnc3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny,
     ParsedShape,
     MO.ConstructorInputOf<Self>,
     MEnc,
-    MO.ApiOf<Self>,
+    GetApiProps<Self>,
     ParsedShape2
   > {}
 
@@ -79,7 +79,7 @@ export interface Model2<
     M,
     MO.ConstructorInputOf<Self>,
     MO.EncodedOf<Self>,
-    MO.ApiOf<Self>,
+    GetApiProps<Self>,
     ParsedShape2
   > {}
 
