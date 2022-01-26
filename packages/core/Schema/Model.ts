@@ -45,20 +45,24 @@ export interface ModelEnc<
   Self extends MO.SchemaAny,
   MEnc,
   ParsedShape2 = ComputeFlat<MO.ParsedShapeOf<Self>>
-> extends Model2Int<
-    ParsedShape,
+> extends MM<
     Self,
     EncSchemaForModel<ParsedShape, Self, MEnc>,
+    ParsedShape,
+    MO.ConstructorInputOf<Self>,
     MEnc,
+    MO.ApiOf<Self>,
     ParsedShape2
   > {}
 
 export interface ModelEnc3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny, MEnc>
-  extends Model2Int<
-    ParsedShape,
+  extends MM<
     Self,
     EncSchemaForModel<ParsedShape, Self, MEnc>,
+    ParsedShape,
+    MO.ConstructorInputOf<Self>,
     MEnc,
+    MO.ApiOf<Self>,
     ParsedShape2
   > {}
 
@@ -67,7 +71,15 @@ export interface Model2<
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
   ParsedShape2
-> extends Model2Int<M, Self, SelfM, MO.EncodedOf<Self>, ParsedShape2> {}
+> extends MM<
+    Self,
+    SelfM,
+    M,
+    MO.ConstructorInputOf<Self>,
+    MO.EncodedOf<Self>,
+    MO.ApiOf<Self>,
+    ParsedShape2
+  > {}
 
 type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Props>
   ? Props
@@ -86,7 +98,7 @@ export interface MNModel<
     ConstructorInput,
     Encoded,
     Props,
-    MO.ParsedShapeOf<Self>
+    ComputeFlat<MO.ParsedShapeOf<Self>>
   > {}
 
 export interface MM<
@@ -105,35 +117,6 @@ export interface MM<
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
   readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
-
-  readonly Parser: MO.ParserFor<SelfM>
-  readonly EParser: EParserFor<SelfM>
-  readonly Constructor: MO.ConstructorFor<SelfM>
-  readonly Encoder: MO.EncoderFor<SelfM>
-  readonly Guard: MO.GuardFor<SelfM>
-  readonly Arbitrary: MO.ArbitraryFor<SelfM>
-}
-
-interface Model2Int<
-  M,
-  Self extends MO.SchemaAny,
-  SelfM extends MO.SchemaAny,
-  MEnc,
-  ParsedShape2
-> extends MO.Schema<
-    MO.ParserInputOf<Self>,
-    M,
-    MO.ConstructorInputOf<Self>,
-    MEnc,
-    MO.ApiOf<Self>
-  > {
-  new (_: MO.ConstructorInputOf<Self>): ParsedShape2
-  [MO.schemaField]: Self
-  readonly parsed: ParsedShapeOf<Self>
-  readonly encoded: EncodedOf<Self>
-  readonly Model: SelfM // added
-  readonly lens: Lens.Lens<M, M> // added
-  readonly lenses: RecordSchemaToLenses<M, Self>
 
   readonly Parser: MO.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
