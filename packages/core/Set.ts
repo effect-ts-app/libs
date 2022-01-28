@@ -1,8 +1,9 @@
 import {
+  filter_,
   filterMap,
   filterMap_,
   fromArray as fromArray_,
-  insert,
+  insert as insertOriginal,
   insert_,
   map,
   map_,
@@ -20,13 +21,21 @@ import * as Ord from "./Order"
 function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const fromArray = fromArray_(eq)
   const concat_ = (set: Set<A>, it: Iterable<A>) => fromArray([...set, ...it])
+  const insert = insertOriginal(eq)
+
+  function replace_(set: Set<A>, a: A) {
+    return filter_(set, (x) => !eq.equals(x, a))["|>"](insert(a))
+  }
+
   return {
-    insert: insert(eq),
+    insert,
     insert_: insert_(eq),
     remove: remove(eq),
     remove_: remove_(eq),
     reduce: reduce(ord),
     reduce_: reduce_(ord),
+    replace: (a: A) => (set: Set<A>) => replace_(set, a),
+    replace_,
     toArray: toArray(ord),
     fromArray,
     from: (it: Iterable<A>) => fromArray([...it]),
