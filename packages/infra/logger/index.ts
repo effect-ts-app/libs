@@ -34,7 +34,7 @@ const fileFormat = winston.format.combine(
 )
 
 export const createLoggerConfig = (
-  c: { devMode: boolean; service: string },
+  c: { devMode: boolean; service: string; baseDir?: string },
   meta?: Record<string, string>
 ) => ({
   defaultMeta: c.devMode ? meta : { service: c.service, ...meta },
@@ -50,11 +50,11 @@ export const createLoggerConfig = (
         }),
         new winston.transports.File({
           level: "verbose",
-          filename: "logs/combined.log",
+          filename: `${c.baseDir ?? "logs"}/combined.log`,
           format: fileFormat,
         }),
         new winston.transports.File({
-          filename: "logs/errors.log",
+          filename: `${c.baseDir ?? "logs"}/errors.log`,
           level: "error",
           format: fileFormat,
         }),
