@@ -194,29 +194,6 @@ export type DefaultProperty = FromProperty<any, any, any, any>
 
 export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
 
-type ParsedShapeOfBla<X extends MO.Schema<any, any, any, any, any>> =
-  X extends MO.Schema<any, infer Y, any, any, any> ? Y : never
-
-// TODO does not properly filter on SupportedDefaults :S
-type AllWithDefault<Props extends DefaultPropertyRecord> = {
-  [K in keyof Props]: WithDefault<
-    ParsedShapeOfBla<Props[K]["_schema"]>,
-    MO.ConstructorInputOf<Props[K]["_schema"]>,
-    MO.EncodedOf<Props[K]["_schema"]>,
-    MO.ApiOf<Props[K]["_schema"]>,
-    Props[K]["_as"]
-  >
-}
-
-export function allWithDefault<Props extends DefaultPropertyRecord>(
-  props: Props
-): AllWithDefault<Props> {
-  return typedKeysOf(props).reduce((prev, cur) => {
-    prev[cur] = props[cur]["|>"](withDefault)
-    return prev
-  }, {} as any)
-}
-
 export type WithDefault<
   ParsedShape extends SupportedDefaults,
   ConstructorInput,
@@ -228,6 +205,19 @@ export type WithDefault<
   "required",
   As,
   O.Some<["constructor", () => ParsedShape]>
+>
+
+export type WithInputDefault<
+  ParsedShape extends SupportedDefaults,
+  ConstructorInput,
+  Encoded,
+  Api,
+  As extends O.Option<PropertyKey>
+> = MO.Property<
+  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  As,
+  O.Some<["both", () => ParsedShape]>
 >
 
 export function withDefault<
@@ -276,11 +266,84 @@ export function withDefault<
   throw new Error("Not supported")
 }
 
+export function withInputDefault<
+  ParsedShape extends SupportedDefaults,
+  ConstructorInput,
+  Encoded,
+  Api,
+  As extends O.Option<PropertyKey>,
+  Def extends O.Option<
+    [
+      "parser" | "constructor" | "both",
+      () => MO.ParsedShapeOf<
+        MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+      >
+    ]
+  >
+>(
+  p: MO.Property<
+    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    "required",
+    As,
+    Def
+  >
+): WithInputDefault<ParsedShape, ConstructorInput, Encoded, Api, As> {
+  if (findAnnotation(p._schema, MO.dateIdentifier)) {
+    return propDef(p, makeCurrentDate as any, "both")
+  }
+  if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
+    return propDef(p, () => O.none as any, "both")
+  }
+  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
+    return propDef(p, () => null as any, "both")
+  }
+  if (findAnnotation(p._schema, MO.arrayIdentifier)) {
+    return propDef(p, () => [] as any, "both")
+  }
+  if (findAnnotation(p._schema, setIdentifier)) {
+    return propDef(p, () => new Set() as any, "both")
+  }
+  if (findAnnotation(p._schema, MO.boolIdentifier)) {
+    return propDef(p, () => false as any, "both")
+  }
+  if (findAnnotation(p._schema, MO.UUIDIdentifier)) {
+    return propDef(p, makeUuid as any, "both")
+  }
+  throw new Error("Not supported")
+}
+
+type Optionality = "parser" | "constructor" | "both"
+
+function defProp<Self extends MO.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => MO.ParsedShapeOf<Self>,
+  optionality: "parser"
+): MO.Property<
+  Self,
+  "required",
+  O.None,
+  O.Some<["parser", () => MO.ParsedShapeOf<Self>]>
+>
+function defProp<Self extends MO.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => MO.ParsedShapeOf<Self>,
+  optionality: "both"
+): MO.Property<Self, "required", O.None, O.Some<["both", () => MO.ParsedShapeOf<Self>]>>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
+): MO.Property<
+  Self,
+  "required",
+  O.None,
+  O.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
+>
+function defProp<Self extends MO.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => MO.ParsedShapeOf<Self>,
+  optionality: Optionality = "constructor"
 ) {
-  return propDef(MO.prop(schema), makeDefault, "constructor")
+  return propDef(MO.prop(schema), makeDefault, optionality)
 }
 
 export function optProp<Self extends MO.SchemaUPI>(
@@ -358,6 +421,79 @@ export function defaultProp(
   makeDefault?: () => any
 ) {
   return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema)["|>"](withDefault)
+}
+
+export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  makeDefault: () => ParsedShape
+): MO.Property<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["both", () => ParsedShape]>
+>
+export function defaultInputProp<
+  ParsedShape extends SupportedDefaults,
+  ConstructorInput,
+  Encoded,
+  Api
+>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): FromProperty<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["both", () => ParsedShape]>
+>
+export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): null extends ParsedShape
+  ? FromProperty<
+      MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+      "required",
+      O.None,
+      O.Some<["both", () => ParsedShape]>
+    >
+  : ["Not a supported type, see SupportedTypes", never]
+export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  makeDefault: () => ParsedShape
+): MO.Property<
+  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["both", () => ParsedShape]>
+>
+export function defaultInputProp<
+  ParsedShape extends SupportedDefaults,
+  ConstructorInput,
+  Encoded,
+  Api
+>(
+  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): FromProperty<
+  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  O.None,
+  O.Some<["both", () => ParsedShape]>
+>
+export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+): null extends ParsedShape
+  ? FromProperty<
+      MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+      "required",
+      O.None,
+      O.Some<["both", () => ParsedShape]>
+    >
+  : ["Not a supported type, see SupportedTypes", never]
+export function defaultInputProp(
+  schema: MO.Schema<unknown, any, any, any, any>,
+  makeDefault?: () => any
+) {
+  return makeDefault
+    ? defProp(schema, makeDefault, "both")
+    : MO.prop(schema)["|>"](withInputDefault)
 }
 
 export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
