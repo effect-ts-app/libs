@@ -521,8 +521,20 @@ export function props<Props extends PropertyRecord>(
       const prop = props[key]
       const _as: string = O.getOrElse_(props[key]._as, () => key)
 
+      // TODO: support actual optionallity vs explicit `| undefined`
       if (_as in _) {
-        if (prop._optional === "optional" && typeof _[_as] === "undefined") {
+        const isUndefined = typeof _[_as] === "undefined"
+        if (prop._optional === "optional" && isUndefined) {
+          continue
+        }
+        if (
+          isUndefined &&
+          O.isSome(prop._def) &&
+          // @ts-expect-error
+          (prop._def.value[0] === "parser" || prop._def.value[0] === "both")
+        ) {
+          // @ts-expect-error
+          result[key] = prop._def.value[1]()
           continue
         }
         const res = parsers[key](_[_as])
