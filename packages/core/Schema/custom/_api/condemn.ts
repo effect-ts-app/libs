@@ -1,9 +1,9 @@
 // tracing: off
 
-import * as T from "@effect-ts/core/Effect"
 import * as E from "@effect-ts/core/Either"
 import { Case } from "@effect-ts/system/Case"
 
+import * as T from "../../../Sync"
 import type { AnyError } from "../_schema"
 import { drawError } from "../_schema"
 import { Parser, ParserEnv } from "../Parser"
@@ -49,7 +49,7 @@ export class ThrowableCondemnException extends Error {
  * Otherwise succeeds with the valid result.
  */
 export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
-  return (a: X, env?: ParserEnv, __trace?: string) =>
+  return (a: X, env?: ParserEnv) =>
     T.fromEither(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
@@ -60,7 +60,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
         return E.left(new CondemnException({ message: drawError(warn.value) }))
       }
       return E.right(res.right.get(0))
-    }, __trace)
+    })
 }
 
 /**
@@ -69,7 +69,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
  */
 export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
   const orFail = condemnFail(self)
-  return (a: X, env?: ParserEnv, __trace?: string) => T.orDie(orFail(a, env, __trace))
+  return (a: X, env?: ParserEnv) => T.orDie(orFail(a, env))
 }
 
 /**
