@@ -118,8 +118,8 @@ function parserFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    const parser: Parser<unknown, unknown, unknown> = (__) =>
-      parserFor(schema.self())(__)
+    const parser: Parser<unknown, unknown, unknown> = (__, env) =>
+      parserFor(schema.self())(__, env)
     cache.set(schema, parser)
     return parser as Parser<ParserInput, any, ParsedShape>
   }
@@ -127,22 +127,22 @@ function parserFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     const _ = interpreter(schema)
     if (_._tag === "Some") {
       let x: Parser<unknown, unknown, unknown>
-      const parser: Parser<unknown, unknown, unknown> = (__) => {
+      const parser: Parser<unknown, unknown, unknown> = (__, env) => {
         if (!x) {
           x = _.value()
         }
-        return x(__)
+        return x(__, env)
       }
       return parser as Parser<ParserInput, any, ParsedShape>
     }
   }
   if (hasContinuation(schema)) {
     let x: Parser<unknown, unknown, unknown>
-    const parser: Parser<unknown, unknown, unknown> = (__) => {
+    const parser: Parser<unknown, unknown, unknown> = (__, env) => {
       if (!x) {
         x = parserFor(schema[SchemaContinuationSymbol])
       }
-      return x(__)
+      return x(__, env)
     }
     cache.set(schema, parser)
     return parser as Parser<ParserInput, any, ParsedShape>
