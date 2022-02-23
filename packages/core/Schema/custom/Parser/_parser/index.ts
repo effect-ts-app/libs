@@ -25,13 +25,14 @@ export const interpreters: ((
         if (schema instanceof S.SchemaNamed) {
           return () => {
             const self = parserFor(schema.self)
-            return (u) => Th.mapError_(self(u), (e) => S.namedE(schema.name, e))
+            return (u, env) =>
+              Th.mapError_(self(u, env), (e) => S.namedE(schema.name, e))
           }
         }
         if (schema instanceof S.SchemaMapParserError) {
           return () => {
             const self = parserFor(schema.self)
-            return (u) => Th.mapError_(self(u), schema.mapError)
+            return (u, env) => Th.mapError_(self(u, env), schema.mapError)
           }
         }
         if (schema instanceof S.SchemaIdentity) {
@@ -41,9 +42,9 @@ export const interpreters: ((
           return () => {
             const self = parserFor(schema.self)
             const that = parserFor(schema.that)
-            return (u) =>
+            return (u, env) =>
               Th.chain_(
-                self(u)["|>"](
+                self(u, env)["|>"](
                   Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                 ),
                 (a, w) =>
@@ -74,9 +75,9 @@ export const interpreters: ((
         if (schema instanceof S.SchemaRefinement) {
           return () => {
             const self = parserFor(schema.self)
-            return (u) =>
+            return (u, env) =>
               Th.chain_(
-                self(u)["|>"](
+                self(u, env)["|>"](
                   Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                 ),
                 (
