@@ -154,8 +154,8 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       }
       return Th.succeed(x)
     }),
-    S.parser((u: any): any => {
-      const res = parse_(u)
+    S.parser((u: any, env): any => {
+      const res = parse_(u, env)
       if (res.effect._tag === "Left") {
         return Th.fail(res.effect.left)
       }

@@ -16,6 +16,7 @@ import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
+import { ParserEnv } from "../custom/Parser"
 import * as Th from "../custom/These"
 
 export class FromProperty<
@@ -432,7 +433,10 @@ export function fromProps<Props extends FromPropertyRecord>(
     return true
   }
 
-  function parser(_: unknown): Th.These<any, ShapeFromFromProperties<Props>> {
+  function parser(
+    _: unknown,
+    env?: ParserEnv
+  ): Th.These<any, ShapeFromFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -462,12 +466,16 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     const result = {}
 
+    const parse = env?.cache
+      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
+      : (key: string) => (val: unknown) => parsers[key](val, env)
+
     for (const key of keys) {
       const prop = props[key]
       const _as: string = O.getOrElse_(props[key]._as, () => key)
 
       if (_as in _) {
-        const res = parsers[key](_[_as])
+        const res = parse(key)(_[_as])
 
         if (res.effect._tag === "Left") {
           errors = Chunk.append_(

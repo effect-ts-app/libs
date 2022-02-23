@@ -11,6 +11,7 @@ import * as Arbitrary from "../Arbitrary"
 import * as Encoder from "../Encoder"
 import * as Guard from "../Guard"
 import * as Parser from "../Parser"
+import { ParserEnv } from "../Parser"
 import * as Th from "../These"
 import { isPropertyRecord, tagsFromProps } from "./properties"
 import type { DefaultSchema } from "./withDefaults"
@@ -231,7 +232,10 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     throw new Error(`bug: can't find any valid encoder`)
   }
 
-  function parser(u: unknown): Th.These<
+  function parser(
+    u: unknown,
+    env?: ParserEnv
+  ): Th.These<
     S.CompositionE<
       | S.PrevE<S.LeafE<S.ExtractKeyE>>
       | S.NextE<
@@ -277,8 +281,12 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
     let errors = Chunk.empty<S.MemberE<string, any>>()
 
+    const parse = env?.cache
+      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
+      : (key: string) => (val: unknown) => parsers[key](val, env)
+
     for (const k of keys) {
-      const parser = parsers[k]
+      const parser = parse(k)
       const res = parser(u)
 
       if (res.effect._tag === "Right") {
