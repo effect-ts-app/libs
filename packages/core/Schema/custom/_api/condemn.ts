@@ -6,16 +6,18 @@ import { Case } from "@effect-ts/system/Case"
 
 import type { AnyError } from "../_schema"
 import { drawError } from "../_schema"
-import type { These } from "../These"
+import { Parser, ParserEnv } from "../Parser"
 
 /**
  * The Effect fails with the generic `E` type when the parser produces an invalid result
  * Otherwise success with the valid result.
  */
-export function condemn<X, E, A>(self: (a: X) => These<E, A>): (a: X) => T.IO<E, A> {
-  return (x) =>
+export function condemn<X, E, A>(
+  self: Parser<X, E, A>
+): (a: X, env?: ParserEnv) => T.IO<E, A> {
+  return (x, env?: ParserEnv) =>
     T.suspend(() => {
-      const y = self(x).effect
+      const y = self(x, env).effect
       if (y._tag === "Left") {
         return T.fail(y.left)
       }
@@ -46,10 +48,10 @@ export class ThrowableCondemnException extends Error {
  * The Effect fails with `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise succeeds with the valid result.
  */
-export function condemnFail<X, A>(self: (a: X) => These<AnyError, A>) {
-  return (a: X, __trace?: string) =>
+export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
+  return (a: X, env?: ParserEnv, __trace?: string) =>
     T.fromEither(() => {
-      const res = self(a).effect
+      const res = self(a, env).effect
       if (res._tag === "Left") {
         return E.left(new CondemnException({ message: drawError(res.left) }))
       }
@@ -65,18 +67,18 @@ export function condemnFail<X, A>(self: (a: X) => These<AnyError, A>) {
  * The Effect dies with `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise succeeds with the valid result.
  */
-export function condemnDie<X, A>(self: (a: X) => These<AnyError, A>) {
+export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
   const orFail = condemnFail(self)
-  return (a: X, __trace?: string) => T.orDie(orFail(a, __trace))
+  return (a: X, env?: ParserEnv, __trace?: string) => T.orDie(orFail(a, env, __trace))
 }
 
 /**
  * Throws a classic `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise returns the valid result.
  */
-export function unsafe<X, A>(self: (a: X) => These<AnyError, A>) {
-  return (a: X) => {
-    const res = self(a).effect
+export function unsafe<X, A>(self: Parser<X, AnyError, A>) {
+  return (a: X, env?: ParserEnv) => {
+    const res = self(a, env).effect
     if (res._tag === "Left") {
       throw new ThrowableCondemnException(res.left)
     }
