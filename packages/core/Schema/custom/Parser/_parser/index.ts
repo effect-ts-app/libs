@@ -9,8 +9,11 @@ import { hasContinuation, SchemaContinuationSymbol } from "../../_schema"
 import type * as T from "../../These"
 import * as Th from "../../These"
 
+export type ParserEnv = {
+  cache?: { getOrSet: <I, E, A>(i: I, parser: Parser<I, E, A>) => T.These<E, A> }
+}
 export type Parser<I, E, A> = {
-  (u: I): T.These<E, A>
+  (u: I, env?: ParserEnv): T.These<E, A>
 }
 
 export const interpreters: ((

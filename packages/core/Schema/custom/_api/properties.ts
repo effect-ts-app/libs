@@ -14,6 +14,7 @@ import * as Arbitrary from "../Arbitrary"
 import * as Encoder from "../Encoder"
 import * as Guard from "../Guard"
 import * as Parser from "../Parser"
+import { ParserEnv } from "../Parser"
 import * as Th from "../These"
 import type { LiteralApi } from "./literal"
 import type { DefaultSchema } from "./withDefaults"
@@ -485,7 +486,8 @@ export function props<Props extends PropertyRecord>(
   }
 
   function parser(
-    _: unknown
+    _: unknown,
+    env?: ParserEnv
   ): Th.These<ParserErrorFromProperties<Props>, ShapeFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
@@ -517,6 +519,10 @@ export function props<Props extends PropertyRecord>(
 
     const result = {}
 
+    const parse = env?.cache
+      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
+      : (key: string) => (val: unknown) => parsers[key](val, env)
+
     for (const key of keys) {
       const prop = props[key]
       const _as: string = O.getOrElse_(props[key]._as, () => key)
@@ -537,7 +543,7 @@ export function props<Props extends PropertyRecord>(
           result[key] = prop._def.value[1]()
           continue
         }
-        const res = parsers[key](_[_as])
+        const res = parse(key)(_[_as])
 
         if (res.effect._tag === "Left") {
           errors = Chunk.append_(

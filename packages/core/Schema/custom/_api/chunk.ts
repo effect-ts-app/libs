@@ -42,14 +42,17 @@ export function fromChunk<
   return pipe(
     S.identity(refinement),
     S.arbitrary((_) => _.array(arb(_)).map(Chunk.from)),
-    S.parser((i: readonly ParserInput[]) => {
+    S.parser((i: readonly ParserInput[], env) => {
+      const parseEl = env?.cache
+        ? (val: ParserInput) => env.cache!.getOrSet(val, parse)
+        : (val: ParserInput) => parse(val, env)
       const b = Chunk.builder<ParsedShape>()
       const e = Chunk.builder<S.OptionalIndexE<number, ParserError>>()
       let j = 0
       let err = false
       let warn = false
       for (const a of i) {
-        const res = Th.result(parse(a))
+        const res = Th.result(parseEl(a))
         if (res._tag === "Right") {
           if (!err) {
             b.append(res.right.get(0))

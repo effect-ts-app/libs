@@ -6,6 +6,7 @@ import type { Refinement } from "@effect-ts/core/Function"
 import { LazyGetter } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 
+import { Parser } from "../Parser"
 import type * as Th from "../These"
 import type { Annotation } from "./annotation"
 import type { AnyError } from "./error" // CompositionE, NamedE, NextE, PrevE, RefinementE
@@ -192,7 +193,7 @@ export class SchemaParser<
 
   constructor(
     readonly self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-    readonly parser: (i: NewParserInput) => Th.These<any, ParsedShape>
+    readonly parser: Parser<NewParserInput, any, ParsedShape>
   ) {
     super()
     this[SchemaContinuationSymbol] = self

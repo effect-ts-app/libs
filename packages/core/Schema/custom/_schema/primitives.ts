@@ -3,6 +3,7 @@
 import type { Refinement } from "@effect-ts/system/Function"
 import type * as fc from "fast-check"
 
+import { ParserEnv } from "../Parser"
 import type * as Th from "../These"
 import type { Annotation } from "./annotation"
 import type { AnyError } from "./error"
@@ -76,7 +77,7 @@ export function parser<
   ConstructorInput,
   Encoded,
   Api
->(f: (_: NewParserInput) => Th.These<any, ParsedShape>) {
+>(f: (_: NewParserInput, env?: ParserEnv) => Th.These<any, ParsedShape>) {
   return (
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   ): Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>

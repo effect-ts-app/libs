@@ -42,8 +42,10 @@ export function optionFromNull<
   return pipe(
     S.identity(refinement),
     S.arbitrary((_) => _.option(arb(_)).map(O.fromNullable)),
-    S.parser((i: ParserInput | null) =>
-      i === null ? Th.succeed(O.none) : Th.map_(parse(i), O.some)
+    S.parser((i: ParserInput | null, env) =>
+      i === null
+        ? Th.succeed(O.none)
+        : Th.map_(env?.cache ? env.cache.getOrSet(i, parse) : parse(i, env), O.some)
     ),
     S.constructor((x: O.Option<ConstructorInput>) =>
       O.fold_(
