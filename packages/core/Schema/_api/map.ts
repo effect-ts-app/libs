@@ -9,6 +9,7 @@ import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
+import { ParserEnv } from "../custom/Parser"
 import * as Th from "../custom/These"
 import { tuple } from "./tuple"
 
@@ -50,8 +51,10 @@ export function map<
     MO.identity(refinement),
     MO.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
     MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
-    MO.parser((i: unknown) =>
-      mapParse(i)["|>"](Th.map((x) => new Map(x) as Map<KeyParsedShape, ParsedShape>))
+    MO.parser((i: unknown, env?: ParserEnv) =>
+      mapParse(i, env)["|>"](
+        Th.map((x) => new Map(x) as Map<KeyParsedShape, ParsedShape>)
+      )
     ),
     MO.encoder((_) => Array.from(_.entries())["|>"](mapEncode)),
     MO.mapApi(() => ({})),

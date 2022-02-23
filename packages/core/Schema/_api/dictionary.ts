@@ -11,6 +11,7 @@ import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
+import { ParserEnv } from "../custom/Parser"
 import * as Th from "../custom/These"
 
 export const dictionaryIdentifier = MO.makeAnnotation<{}>()
@@ -34,7 +35,8 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
   const encode = Encoder.for(self)
 
   function parser(
-    _: unknown
+    _: unknown,
+    env?: ParserEnv
   ): Th.These<ParserErrorFromDictionary, Dictionary<ParsedShape>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
@@ -51,8 +53,10 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
 
     const keys = Object.keys(_)
 
+    const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
+
     for (const key of keys) {
-      const res = parse(_[key])
+      const res = parsev2(_[key])
 
       if (res.effect._tag === "Left") {
         errors = Chunk.append_(errors, MO.requiredKeyE(key, res.effect.left))

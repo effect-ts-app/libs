@@ -10,6 +10,7 @@ import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
+import { ParserEnv } from "../custom/Parser"
 import * as Th from "../custom/These"
 
 export const fromTupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
@@ -55,15 +56,18 @@ export function fromTuple<
   const refinement = (_: unknown): _ is readonly [KeyParsedShape, ParsedShape] =>
     Array.isArray(_) && keyGuard(_[0]) && guard(_[1])
 
-  const parseTup = (i: readonly (KeyParserInput | ParserInput)[]) => {
+  const parseTup = (i: readonly (KeyParserInput | ParserInput)[], env?: ParserEnv) => {
     const e = Chunk.builder<MO.OptionalIndexE<number, any>>()
     let err = false
     let warn = false
 
     let v: readonly [KeyParsedShape, ParsedShape] | undefined
 
-    const keyRes = Th.result(keyParse(i[0] as any))
-    const res = Th.result(parse(i[1] as any))
+    const keyParsev2 = env?.cache ? env.cache.getOrSetParser(keyParse) : keyParse
+    const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
+
+    const keyRes = Th.result(keyParsev2(i[0] as any))
+    const res = Th.result(parsev2(i[1] as any))
     if (keyRes._tag === "Right" && res._tag === "Right") {
       if (!err) {
         const keyW = keyRes.right.get(1)

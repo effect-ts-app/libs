@@ -10,6 +10,7 @@ import * as Arbitrary from "../custom/Arbitrary"
 import * as Encoder from "../custom/Encoder"
 import * as Guard from "../custom/Guard"
 import * as Parser from "../custom/Parser"
+import { ParserEnv } from "../custom/Parser"
 import * as Th from "../custom/These"
 
 export const fromEitherIdentifier =
@@ -64,13 +65,15 @@ export function fromEither<
     )
   }
 
-  const parseEither = (i: object) => {
+  const parseEither = (i: object, env?: ParserEnv) => {
     const ei = i as E.Either<any, any>
     if (E.isLeft(ei)) {
-      return leftParse(ei.left)
+      const parsev2 = env?.cache ? env.cache.getOrSetParser(leftParse) : leftParse
+      return parsev2(ei.left)
     }
     if (E.isRight(ei)) {
-      return parse(ei.right)
+      const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
+      return parsev2(ei.right)
     }
     return Th.fail(MO.parseObjectE("not an either"))
   }
