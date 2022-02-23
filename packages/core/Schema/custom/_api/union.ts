@@ -281,13 +281,10 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
     let errors = Chunk.empty<S.MemberE<string, any>>()
 
-    const parse = env?.cache
-      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
-      : (key: string) => (val: unknown) => parsers[key](val, env)
+    const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const k of keys) {
-      const parser = parse(k)
-      const res = parser(u)
+      const res = parsersv2[k](u)
 
       if (res.effect._tag === "Right") {
         return Th.mapError_(res, (e) =>

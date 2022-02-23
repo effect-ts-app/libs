@@ -36,9 +36,7 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
     S.parser((i: ParserInput | null, env) =>
       i === null
         ? Th.succeed(null)
-        : env?.cache
-        ? env.cache.getOrSet(i, parse)
-        : parse(i, env)
+        : (env?.cache ? env.cache.getOrSetParser(parse) : parse)(i)
     ),
     S.constructor((x: ConstructorInput | null) =>
       x === null ? Th.succeed(null) : create(x)

@@ -10,7 +10,15 @@ import type * as T from "../../These"
 import * as Th from "../../These"
 
 export type ParserEnv = {
-  cache?: { getOrSet: <I, E, A>(i: I, parser: Parser<I, E, A>) => T.These<E, A> }
+  cache?: {
+    getOrSet: <I, E, A>(i: I, parser: Parser<I, E, A>) => T.These<E, A>
+    getOrSetParser: <I, E, A>(parser: Parser<I, E, A>) => (i: I) => Th.These<E, A>
+    getOrSetParsers: <
+      Parsers extends Record<string, Parser<unknown, unknown, unknown>>
+    >(
+      parsers: Parsers
+    ) => { [k in keyof Parsers]: (u: unknown) => Th.These<unknown, unknown> }
+  }
 }
 export type Parser<I, E, A> = {
   (u: I, env?: ParserEnv): T.These<E, A>

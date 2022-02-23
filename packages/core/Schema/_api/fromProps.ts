@@ -466,16 +466,14 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     const result = {}
 
-    const parse = env?.cache
-      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
-      : (key: string) => (val: unknown) => parsers[key](val, env)
+    const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const key of keys) {
       const prop = props[key]
       const _as: string = O.getOrElse_(props[key]._as, () => key)
 
       if (_as in _) {
-        const res = parse(key)(_[_as])
+        const res = parsersv2[key](_[_as])
 
         if (res.effect._tag === "Left") {
           errors = Chunk.append_(

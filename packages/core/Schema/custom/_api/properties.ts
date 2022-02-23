@@ -519,9 +519,7 @@ export function props<Props extends PropertyRecord>(
 
     const result = {}
 
-    const parse = env?.cache
-      ? (key: string) => (val: unknown) => env.cache!.getOrSet(val, parsers[key])
-      : (key: string) => (val: unknown) => parsers[key](val, env)
+    const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const key of keys) {
       const prop = props[key]
@@ -543,7 +541,7 @@ export function props<Props extends PropertyRecord>(
           result[key] = prop._def.value[1]()
           continue
         }
-        const res = parse(key)(_[_as])
+        const res = parsersv2[key](_[_as])
 
         if (res.effect._tag === "Left") {
           errors = Chunk.append_(
