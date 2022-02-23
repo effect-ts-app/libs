@@ -19,6 +19,7 @@ export interface ParserEnv {
       parsers: Parsers
     ) => { [k in keyof Parsers]: (u: unknown) => Th.These<unknown, unknown> }
   }
+  lax?: boolean
 }
 export type Parser<I, E, A> = {
   (u: I, env?: ParserEnv): T.These<E, A>
@@ -84,32 +85,37 @@ export const interpreters: ((
           return () => {
             const self = parserFor(schema.self)
             return (u, env) =>
-              Th.chain_(
-                self(u, env)["|>"](
-                  Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
-                ),
-                (
-                  a,
-                  w
-                ): Th.These<
-                  S.CompositionE<S.PrevE<unknown> | S.NextE<S.RefinementE<unknown>>>,
-                  unknown
-                > =>
-                  schema.refinement(a)
-                    ? w._tag === "None"
-                      ? Th.succeed(a)
-                      : Th.warn(a, w.value)
-                    : Th.fail(
-                        S.compositionE(
-                          w._tag === "None"
-                            ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
-                            : Chunk.append_(
-                                w.value.errors,
-                                S.nextE(S.refinementE(schema.error(a)))
-                              )
-                        )
-                      )
-              )
+              env?.lax
+                ? // refinements can really pile up
+                  self(u, env)
+                : Th.chain_(
+                    self(u, env)["|>"](
+                      Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
+                    ),
+                    (
+                      a,
+                      w
+                    ): Th.These<
+                      S.CompositionE<
+                        S.PrevE<unknown> | S.NextE<S.RefinementE<unknown>>
+                      >,
+                      unknown
+                    > =>
+                      schema.refinement(a)
+                        ? w._tag === "None"
+                          ? Th.succeed(a)
+                          : Th.warn(a, w.value)
+                        : Th.fail(
+                            S.compositionE(
+                              w._tag === "None"
+                                ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
+                                : Chunk.append_(
+                                    w.value.errors,
+                                    S.nextE(S.refinementE(schema.error(a)))
+                                  )
+                            )
+                          )
+                  )
           }
         }
         return miss()
