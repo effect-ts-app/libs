@@ -4,6 +4,7 @@ import { pipe } from "@effect-ts/core/Function"
 import * as Sy from "@effect-ts/core/Sync"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Encoder, Parser } from "@effect-ts-app/core/Schema"
+import { ParserEnv } from "@effect-ts-app/core/Schema/custom/Parser"
 
 export function makeCodec<
   ParsedShape extends { id: Id },
@@ -14,7 +15,7 @@ export function makeCodec<
 >(self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>) {
   const parse = Parser.for(self)["|>"](MO.condemnDie)
   // TODO: strict
-  const decode = (e: Encoded) => parse(e)
+  const decode = (e: Encoded, env?: ParserEnv) => parse(e, env)
   const enc = Encoder.for(self)
 
   const encode = (u: ParsedShape) => Sy.succeedWith(() => enc(u))
