@@ -25,9 +25,7 @@ export type Email = NonEmptyString & EmailBrand
 
 export const EmailFromStringIdentifier = MO.makeAnnotation<{}>()
 
-const isEmail: Refinement<string, Email> = (s: string): s is Email => {
-  return isValidEmail(s)
-}
+const isEmail: Refinement<string, Email> = isValidEmail as any
 
 export const EmailFromString: DefaultSchema<string, Email, string, string, {}> = pipe(
   fromString,

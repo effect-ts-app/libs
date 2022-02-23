@@ -26,11 +26,7 @@ export type PhoneNumber = NonEmptyString & PhoneNumberBrand
 
 export const PhoneNumberFromStringIdentifier = MO.makeAnnotation<{}>()
 
-const isPhoneNumber: Refinement<string, PhoneNumber> = (
-  s: string
-): s is PhoneNumber => {
-  return isValidPhone(s)
-}
+const isPhoneNumber: Refinement<string, PhoneNumber> = isValidPhone as any
 
 export const PhoneNumberFromString: DefaultSchema<
   string,
