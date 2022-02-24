@@ -250,6 +250,8 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       [k in keyof Props]: S.ParsedShapeOf<Props[k]>
     }[keyof Props]
   > {
+    const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
+
     if (O.isSome(tag)) {
       if (
         typeof u !== "object" ||
@@ -267,7 +269,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         )
       } else {
         // // @ts-expect-error
-        return Th.mapError_(parsers[tag.value.index[u[tag.value.key]]](u), (e) =>
+        return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), (e) =>
           S.compositionE(
             Chunk.single(
               S.nextE(
@@ -280,8 +282,6 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     }
 
     let errors = Chunk.empty<S.MemberE<string, any>>()
-
-    const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const k of keys) {
       const res = parsersv2[k](u)
