@@ -132,8 +132,13 @@ function parserFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    const parser: Parser<unknown, unknown, unknown> = (__, env) =>
-      parserFor(schema.self())(__, env)
+    let x: Parser<unknown, unknown, unknown>
+    const parser: Parser<unknown, unknown, unknown> = (__, env) => {
+      if (!x) {
+        x = parserFor(schema.self())
+      }
+      return x(__, env)
+    }
     cache.set(schema, parser)
     return parser as Parser<ParserInput, any, ParsedShape>
   }

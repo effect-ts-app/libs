@@ -13,11 +13,13 @@ export const fromDate: MO.DefaultSchema<Date, Date, Date, Date, {}> = pipe(
   MO.annotate(fromDateIdentifier, {})
 )
 
+const parseDate = Parser.for(MO.date)
+
 export const fromStringOrDateIdentifier = MO.makeAnnotation<{}>()
 export const fromStringOrDate: MO.DefaultSchema<string | Date, Date, Date, string, {}> =
   pipe(
     MO.identity((u): u is Date => u instanceof Date),
-    MO.parser((u) => (u instanceof Date ? These.succeed(u) : Parser.for(MO.date)(u))),
+    MO.parser((u, env) => (u instanceof Date ? These.succeed(u) : parseDate(u, env))),
     MO.arbitrary((_) => _.date()),
     MO.encoder((_) => _.toISOString()),
     MO.mapApi(() => ({})),
