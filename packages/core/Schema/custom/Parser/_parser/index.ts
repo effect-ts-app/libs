@@ -57,7 +57,7 @@ export const interpreters: ((
                   Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                 ),
                 (a, w) =>
-                  that(a)["|>"](
+                  that(a, env)["|>"](
                     Th.foldM(
                       (a) => (w._tag === "Some" ? Th.warn(a, w.value) : Th.succeed(a)),
                       (a, e) =>

@@ -69,9 +69,13 @@ export function intersect_<
 
   return pipe(
     S.identity(guard),
-    S.parser((u) => {
-      const left = Th.result(parseSelf(u))
-      const right = Th.result(parseThat(u))
+    S.parser((u, env) => {
+      const left = Th.result(
+        (env?.cache ? env.cache.getOrSetParser(parseSelf) : parseSelf)(u)
+      )
+      const right = Th.result(
+        (env?.cache ? env.cache.getOrSetParser(parseThat) : parseThat)(u)
+      )
 
       let errors = Chunk.empty<S.MemberE<0, any> | S.MemberE<1, any>>()
 

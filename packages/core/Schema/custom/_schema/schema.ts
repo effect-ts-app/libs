@@ -6,7 +6,7 @@ import type { Refinement } from "@effect-ts/core/Function"
 import { LazyGetter } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 
-import { Parser } from "../Parser"
+import { Parser, ParserEnv } from "../Parser"
 import type * as Th from "../These"
 import type { Annotation } from "./annotation"
 import type { AnyError } from "./error" // CompositionE, NamedE, NextE, PrevE, RefinementE
@@ -29,7 +29,7 @@ export type SchemaSym = typeof SchemaSym
  */
 export abstract class Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
   readonly [SchemaSym]: SchemaSym = SchemaSym
-  readonly _ParserInput!: (_: ParserInput) => void
+  readonly _ParserInput!: (_: ParserInput, env?: ParserEnv) => void
   readonly _ParserError!: () => any
   readonly _ParsedShape!: () => ParsedShape
   readonly _ConstructorInput!: (_: ConstructorInput) => void
