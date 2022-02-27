@@ -69,11 +69,11 @@ export function fromEither<
     const ei = i as E.Either<any, any>
     if (E.isLeft(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(leftParse) : leftParse
-      return Th.succeed(E.left(parsev2(ei.left)))
+      return Th.map_(parsev2(ei.left), E.left)
     }
     if (E.isRight(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
-      return Th.succeed(E.right(parsev2(ei.right)))
+      return Th.map_(parsev2(ei.right), E.right)
     }
     return Th.fail(MO.parseObjectE("not an either"))
   }
@@ -83,7 +83,13 @@ export function fromEither<
     MO.arbitrary((_) => _.oneof(leftArb(_).map(E.left), arb(_).map(E.right)) as any),
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
-    MO.encoder((_) => E.bimap_(_, leftEncode, encode)),
+    MO.encoder((_) =>
+      E.fold_(
+        _,
+        (x) => ({ _tag: "Left", left: leftEncode(x) }),
+        (x) => ({ _tag: "Right", right: encode(x) })
+      )
+    ),
     MO.mapApi(() => ({ left: left.Api, right: right.Api })),
     MO.withDefaults,
     MO.annotate(fromEitherIdentifier, { left, right })
