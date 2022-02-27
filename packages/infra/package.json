@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/infra",
-    "version": "0.53.8",
+    "version": "0.53.9",
     "license": "MIT",
     "dependencies": {
         "@effect-ts-app/core": "^0.53.8",
