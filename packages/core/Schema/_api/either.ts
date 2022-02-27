@@ -69,11 +69,11 @@ export function fromEither<
     const ei = i as E.Either<any, any>
     if (E.isLeft(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(leftParse) : leftParse
-      return E.left(parsev2(ei.left))
+      return Th.succeed(E.left(parsev2(ei.left)))
     }
     if (E.isRight(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
-      return E.right(parsev2(ei.right))
+      return Th.succeed(E.right(parsev2(ei.right)))
     }
     return Th.fail(MO.parseObjectE("not an either"))
   }
