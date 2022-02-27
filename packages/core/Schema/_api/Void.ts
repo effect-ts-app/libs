@@ -1,5 +1,6 @@
 import { pipe } from "../../Function"
 import * as MO from "../custom"
+import { withDefaults } from "../custom"
 
 export const Void = pipe(
   MO.unknown,
@@ -7,7 +8,9 @@ export const Void = pipe(
   MO.refine(
     (_u: unknown): _u is void => true,
     (n) => MO.leafE(MO.nonEmptyE(n))
-  )
+  ),
+  MO.named("void"),
+  withDefaults
 )
 
 export type Void = MO.ParsedShapeOf<typeof Void>
