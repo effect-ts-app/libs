@@ -136,7 +136,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           break
         }
         case intersectIdentifier: {
-          const { openapiRef, ...rest } = meta
+          const { noRef, openapiRef, ...rest } = meta
           const ref = openapiRef || rest.title
           const s = new AllOfSchema({
             ...rest,
@@ -150,9 +150,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const obj = ref ? merge(s) : s
 
           return yield* $(
-            meta.noRef
-              ? T.succeed(obj)
-              : referenced({ openapiRef: ref })(T.succeed(obj))
+            noRef ? T.succeed(obj) : referenced({ openapiRef: ref })(T.succeed(obj))
           )
         }
         case unionIdentifier: {
@@ -257,14 +255,14 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
         }
         case unknownIdentifier: {
-          const { openapiRef, ...rest } = meta
+          const { noRef, openapiRef, ...rest } = meta
           const obj = new ObjectSchema({
             ...rest,
             properties: {},
             required: undefined,
           })
           return yield* $(
-            meta.noRef
+            noRef
               ? T.succeed(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(T.succeed(obj))
           )
@@ -280,14 +278,14 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
               required.push(k)
             }
           }
-          const { openapiRef, ...rest } = meta
+          const { noRef, openapiRef, ...rest } = meta
           const obj = new ObjectSchema({
             ...rest,
             properties,
             required: required.length ? required : undefined,
           })
           return yield* $(
-            meta.noRef
+            noRef
               ? T.succeed(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(T.succeed(obj))
           )
