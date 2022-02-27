@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // tracing: off
+import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as T from "@effect-ts/core/Effect"
 import * as O from "@effect-ts/core/Option"
 import {
@@ -7,6 +8,7 @@ import {
   boolIdentifier,
   chunkIdentifier,
   dateIdentifier,
+  eitherIdentifier,
   EmailFromStringIdentifier,
   EmailIdentifier,
   fromChunkIdentifier,
@@ -34,6 +36,7 @@ import {
   setIdentifier,
   stringIdentifier,
   unionIdentifier,
+  unknownIdentifier,
   UUIDFromStringIdentifier,
 } from "@effect-ts-app/core/Schema"
 import * as MO from "@effect-ts-app/core/Schema"
@@ -232,6 +235,40 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new ArraySchema({
             items: yield* $(processId(schemaMeta.self, meta)) as any,
           })
+        case eitherIdentifier: {
+          return new OneOfSchema({
+            ...meta,
+            oneOf: (yield* $(
+              T.collectAll(
+                [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
+              )["|>"](T.map(Chunk.toArray))
+            )).map((v, i) => ({
+              properties: {
+                _tag: { enum: [i === 0 ? "Left" : "Right"] },
+                [i === 0 ? "left" : "right"]: v,
+              },
+              required: ["_tag", i === 0 ? "left" : "right"],
+              type: "object",
+            })) as any,
+            discriminator: { propertyName: "_tag" },
+            /*schemaMeta.tag["|>"](O.map((_) => ({
+                    propertyName: _.key, // TODO
+                })))["|>"](O.toUndefined), */
+          })
+        }
+        case unknownIdentifier: {
+          const { openapiRef, ...rest } = meta
+          const obj = new ObjectSchema({
+            ...rest,
+            properties: {},
+            required: undefined,
+          })
+          return yield* $(
+            meta.noRef
+              ? T.succeed(obj)
+              : referenced({ openapiRef: openapiRef || rest.title })(T.succeed(obj))
+          )
+        }
         case fromPropertiesIdentifier:
         case propertiesIdentifier: {
           const properties: Record<string, any> = {}
