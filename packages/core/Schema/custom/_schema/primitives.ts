@@ -3,7 +3,7 @@
 import type { Refinement } from "@effect-ts/system/Function"
 import type * as fc from "fast-check"
 
-import { ParserEnv } from "../Parser"
+import type { ParserEnv } from "../Parser"
 import type * as Th from "../These"
 import type { Annotation } from "./annotation"
 import type { AnyError } from "./error"

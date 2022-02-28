@@ -165,10 +165,6 @@
             "module": "./_esm/transform.js",
             "default": "./transform.js"
         },
-        "./Model": {
-            "module": "./_esm/Model.js",
-            "default": "./Model.js"
-        },
         "./Chunk": {
             "module": "./_esm/Chunk.js",
             "default": "./Chunk.js"

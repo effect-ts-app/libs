@@ -1,4 +1,4 @@
-import { Constructor, FutureDate, Parser, unsafe } from "../../Model"
+import { Constructor, FutureDate, Parser, unsafe } from "../../Schema"
 
 describe("Constructor", () => {
   it("allows a future date", () => {
