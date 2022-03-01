@@ -1,7 +1,7 @@
 *.test.js
 *.test.d.ts
 ./src
-/._esm
+./_esm
 tsconfig.json
 tslint.json
 **/*.ts
