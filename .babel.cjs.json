@@ -1,0 +1,13 @@
+{
+    "plugins": [
+        [
+            "@babel/plugin-proposal-export-namespace-from"
+        ],
+        [
+            "@babel/transform-modules-commonjs"
+        ],
+        [
+            "annotate-pure-calls"
+        ]
+    ]
+}

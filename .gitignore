@@ -14,5 +14,6 @@ packages/**/*.d.ts.map
 !**/.eslintrc.js
 !**/.prettierrc.js
 _esm
+_mjs
 
 *.tsbuildinfo
