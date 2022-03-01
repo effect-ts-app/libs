@@ -38,7 +38,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn clean && tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports",
+    "build": "yarn clean && tsc --build && yarn build2:mjs && yarn build2:cjs",
     "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir . --out-file-extension .js --source-maps",
     "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "watch": "tsc --build --watch",
