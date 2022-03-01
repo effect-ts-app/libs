@@ -21,7 +21,7 @@
         "react": "^17.0.2"
     },
     "scripts": {
-        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",
+        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/rename.sh && yarn generate-exports",
         "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
@@ -38,25 +38,22 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "./_esm/index.js",
-    "main": "./index.js",
-    "typings": "./index.d.ts",
     "exports": {
         ".": {
-            "module": "./_esm/index.js",
-            "default": "./index.js"
+            "import": "./_esm/index.mjs",
+            "require": "./index.js"
         },
         "./data": {
-            "module": "./_esm/data.js",
-            "default": "./data.js"
+            "import": "./_esm/data.mjs",
+            "require": "./data.js"
         },
         "./hooks": {
-            "module": "./_esm/hooks.js",
-            "default": "./hooks.js"
+            "import": "./_esm/hooks.mjs",
+            "require": "./hooks.js"
         },
         "./context": {
-            "module": "./_esm/context.js",
-            "default": "./context.js"
+            "import": "./_esm/context.mjs",
+            "require": "./context.js"
         }
     },
     "sideEffects": false

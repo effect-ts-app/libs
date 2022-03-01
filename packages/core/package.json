@@ -24,7 +24,7 @@
         "node-libcurl": "^2.3.3"
     },
     "scripts": {
-        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && yarn generate-exports",
+        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/rename.sh && yarn generate-exports",
         "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
         "postpublish": "yarn clean",
@@ -41,385 +41,382 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "./_esm/index.js",
-    "main": "./index.js",
-    "typings": "./index.d.ts",
     "exports": {
         ".": {
-            "module": "./_esm/index.js",
-            "default": "./index.js"
+            "import": "./_esm/index.mjs",
+            "require": "./index.js"
         },
         "./utils": {
-            "module": "./_esm/utils/index.js",
-            "default": "./utils/index.js"
+            "import": "./_esm/utils/index.mjs",
+            "require": "./utils/index.js"
         },
         "./Schema": {
-            "module": "./_esm/Schema/index.js",
-            "default": "./Schema/index.js"
+            "import": "./_esm/Schema/index.mjs",
+            "require": "./Schema/index.js"
         },
         "./Schema/_api": {
-            "module": "./_esm/Schema/_api/index.js",
-            "default": "./Schema/_api/index.js"
+            "import": "./_esm/Schema/_api/index.mjs",
+            "require": "./Schema/_api/index.js"
         },
         "./Schema/custom": {
-            "module": "./_esm/Schema/custom/index.js",
-            "default": "./Schema/custom/index.js"
+            "import": "./_esm/Schema/custom/index.mjs",
+            "require": "./Schema/custom/index.js"
         },
         "./Schema/custom/_utils": {
-            "module": "./_esm/Schema/custom/_utils/index.js",
-            "default": "./Schema/custom/_utils/index.js"
+            "import": "./_esm/Schema/custom/_utils/index.mjs",
+            "require": "./Schema/custom/_utils/index.js"
         },
         "./Schema/custom/Collect": {
-            "module": "./_esm/Schema/custom/Collect/index.js",
-            "default": "./Schema/custom/Collect/index.js"
+            "import": "./_esm/Schema/custom/Collect/index.mjs",
+            "require": "./Schema/custom/Collect/index.js"
         },
         "./Schema/custom/Collect/_collect": {
-            "module": "./_esm/Schema/custom/Collect/_collect/index.js",
-            "default": "./Schema/custom/Collect/_collect/index.js"
+            "import": "./_esm/Schema/custom/Collect/_collect/index.mjs",
+            "require": "./Schema/custom/Collect/_collect/index.js"
         },
         "./Schema/custom/These": {
-            "module": "./_esm/Schema/custom/These/index.js",
-            "default": "./Schema/custom/These/index.js"
+            "import": "./_esm/Schema/custom/These/index.mjs",
+            "require": "./Schema/custom/These/index.js"
         },
         "./Schema/custom/_schema": {
-            "module": "./_esm/Schema/custom/_schema/index.js",
-            "default": "./Schema/custom/_schema/index.js"
+            "import": "./_esm/Schema/custom/_schema/index.mjs",
+            "require": "./Schema/custom/_schema/index.js"
         },
         "./Schema/custom/Encoder": {
-            "module": "./_esm/Schema/custom/Encoder/index.js",
-            "default": "./Schema/custom/Encoder/index.js"
+            "import": "./_esm/Schema/custom/Encoder/index.mjs",
+            "require": "./Schema/custom/Encoder/index.js"
         },
         "./Schema/custom/Encoder/_encoder": {
-            "module": "./_esm/Schema/custom/Encoder/_encoder/index.js",
-            "default": "./Schema/custom/Encoder/_encoder/index.js"
+            "import": "./_esm/Schema/custom/Encoder/_encoder/index.mjs",
+            "require": "./Schema/custom/Encoder/_encoder/index.js"
         },
         "./Schema/custom/Arbitrary": {
-            "module": "./_esm/Schema/custom/Arbitrary/index.js",
-            "default": "./Schema/custom/Arbitrary/index.js"
+            "import": "./_esm/Schema/custom/Arbitrary/index.mjs",
+            "require": "./Schema/custom/Arbitrary/index.js"
         },
         "./Schema/custom/Arbitrary/_arbitrary": {
-            "module": "./_esm/Schema/custom/Arbitrary/_arbitrary/index.js",
-            "default": "./Schema/custom/Arbitrary/_arbitrary/index.js"
+            "import": "./_esm/Schema/custom/Arbitrary/_arbitrary/index.mjs",
+            "require": "./Schema/custom/Arbitrary/_arbitrary/index.js"
         },
         "./Schema/custom/_api": {
-            "module": "./_esm/Schema/custom/_api/index.js",
-            "default": "./Schema/custom/_api/index.js"
+            "import": "./_esm/Schema/custom/_api/index.mjs",
+            "require": "./Schema/custom/_api/index.js"
         },
         "./Schema/custom/Parser": {
-            "module": "./_esm/Schema/custom/Parser/index.js",
-            "default": "./Schema/custom/Parser/index.js"
+            "import": "./_esm/Schema/custom/Parser/index.mjs",
+            "require": "./Schema/custom/Parser/index.js"
         },
         "./Schema/custom/Parser/_parser": {
-            "module": "./_esm/Schema/custom/Parser/_parser/index.js",
-            "default": "./Schema/custom/Parser/_parser/index.js"
+            "import": "./_esm/Schema/custom/Parser/_parser/index.mjs",
+            "require": "./Schema/custom/Parser/_parser/index.js"
         },
         "./Schema/custom/Guard": {
-            "module": "./_esm/Schema/custom/Guard/index.js",
-            "default": "./Schema/custom/Guard/index.js"
+            "import": "./_esm/Schema/custom/Guard/index.mjs",
+            "require": "./Schema/custom/Guard/index.js"
         },
         "./Schema/custom/Guard/_guard": {
-            "module": "./_esm/Schema/custom/Guard/_guard/index.js",
-            "default": "./Schema/custom/Guard/_guard/index.js"
+            "import": "./_esm/Schema/custom/Guard/_guard/index.mjs",
+            "require": "./Schema/custom/Guard/_guard/index.js"
         },
         "./Schema/custom/TS": {
-            "module": "./_esm/Schema/custom/TS/index.js",
-            "default": "./Schema/custom/TS/index.js"
+            "import": "./_esm/Schema/custom/TS/index.mjs",
+            "require": "./Schema/custom/TS/index.js"
         },
         "./Schema/custom/Constructor": {
-            "module": "./_esm/Schema/custom/Constructor/index.js",
-            "default": "./Schema/custom/Constructor/index.js"
+            "import": "./_esm/Schema/custom/Constructor/index.mjs",
+            "require": "./Schema/custom/Constructor/index.js"
         },
         "./Schema/custom/Constructor/_constructor": {
-            "module": "./_esm/Schema/custom/Constructor/_constructor/index.js",
-            "default": "./Schema/custom/Constructor/_constructor/index.js"
+            "import": "./_esm/Schema/custom/Constructor/_constructor/index.mjs",
+            "require": "./Schema/custom/Constructor/_constructor/index.js"
         },
         "./http": {
-            "module": "./_esm/http/index.js",
-            "default": "./http/index.js"
+            "import": "./_esm/http/index.mjs",
+            "require": "./http/index.js"
         },
         "./validation": {
-            "module": "./_esm/validation/index.js",
-            "default": "./validation/index.js"
+            "import": "./_esm/validation/index.mjs",
+            "require": "./validation/index.js"
         },
         "./Function": {
-            "module": "./_esm/Function.js",
-            "default": "./Function.js"
+            "import": "./_esm/Function.mjs",
+            "require": "./Function.js"
         },
         "./Effect": {
-            "module": "./_esm/Effect.js",
-            "default": "./Effect.js"
+            "import": "./_esm/Effect.mjs",
+            "require": "./Effect.js"
         },
         "./FastCheck": {
-            "module": "./_esm/FastCheck.js",
-            "default": "./FastCheck.js"
+            "import": "./_esm/FastCheck.mjs",
+            "require": "./FastCheck.js"
         },
         "./Set": {
-            "module": "./_esm/Set.js",
-            "default": "./Set.js"
+            "import": "./_esm/Set.mjs",
+            "require": "./Set.js"
         },
         "./Array": {
-            "module": "./_esm/Array.js",
-            "default": "./Array.js"
+            "import": "./_esm/Array.mjs",
+            "require": "./Array.js"
         },
         "./transform": {
-            "module": "./_esm/transform.js",
-            "default": "./transform.js"
+            "import": "./_esm/transform.mjs",
+            "require": "./transform.js"
         },
         "./Chunk": {
-            "module": "./_esm/Chunk.js",
-            "default": "./Chunk.js"
+            "import": "./_esm/Chunk.mjs",
+            "require": "./Chunk.js"
         },
         "./Schema/adapt": {
-            "module": "./_esm/Schema/adapt.js",
-            "default": "./Schema/adapt.js"
+            "import": "./_esm/Schema/adapt.mjs",
+            "require": "./Schema/adapt.js"
         },
         "./Schema/_api/phoneNumber": {
-            "module": "./_esm/Schema/_api/phoneNumber.js",
-            "default": "./Schema/_api/phoneNumber.js"
+            "import": "./_esm/Schema/_api/phoneNumber.mjs",
+            "require": "./Schema/_api/phoneNumber.js"
         },
         "./Schema/_api/futureDate": {
-            "module": "./_esm/Schema/_api/futureDate.js",
-            "default": "./Schema/_api/futureDate.js"
+            "import": "./_esm/Schema/_api/futureDate.mjs",
+            "require": "./Schema/_api/futureDate.js"
         },
         "./Schema/_api/set": {
-            "module": "./_esm/Schema/_api/set.js",
-            "default": "./Schema/_api/set.js"
+            "import": "./_esm/Schema/_api/set.mjs",
+            "require": "./Schema/_api/set.js"
         },
         "./Schema/_api/dictionary": {
-            "module": "./_esm/Schema/_api/dictionary.js",
-            "default": "./Schema/_api/dictionary.js"
+            "import": "./_esm/Schema/_api/dictionary.mjs",
+            "require": "./Schema/_api/dictionary.js"
         },
         "./Schema/_api/string": {
-            "module": "./_esm/Schema/_api/string.js",
-            "default": "./Schema/_api/string.js"
+            "import": "./_esm/Schema/_api/string.mjs",
+            "require": "./Schema/_api/string.js"
         },
         "./Schema/_api/email": {
-            "module": "./_esm/Schema/_api/email.js",
-            "default": "./Schema/_api/email.js"
+            "import": "./_esm/Schema/_api/email.mjs",
+            "require": "./Schema/_api/email.js"
         },
         "./Schema/_api/map": {
-            "module": "./_esm/Schema/_api/map.js",
-            "default": "./Schema/_api/map.js"
+            "import": "./_esm/Schema/_api/map.mjs",
+            "require": "./Schema/_api/map.js"
         },
         "./Schema/_api/fromArray": {
-            "module": "./_esm/Schema/_api/fromArray.js",
-            "default": "./Schema/_api/fromArray.js"
+            "import": "./_esm/Schema/_api/fromArray.mjs",
+            "require": "./Schema/_api/fromArray.js"
         },
         "./Schema/_api/fromProps": {
-            "module": "./_esm/Schema/_api/fromProps.js",
-            "default": "./Schema/_api/fromProps.js"
+            "import": "./_esm/Schema/_api/fromProps.mjs",
+            "require": "./Schema/_api/fromProps.js"
         },
         "./Schema/_api/length": {
-            "module": "./_esm/Schema/_api/length.js",
-            "default": "./Schema/_api/length.js"
+            "import": "./_esm/Schema/_api/length.mjs",
+            "require": "./Schema/_api/length.js"
         },
         "./Schema/_api/futureDate.test": {
-            "module": "./_esm/Schema/_api/futureDate.test.js",
-            "default": "./Schema/_api/futureDate.test.js"
+            "import": "./_esm/Schema/_api/futureDate.test.mjs",
+            "require": "./Schema/_api/futureDate.test.js"
         },
         "./Schema/_api/either": {
-            "module": "./_esm/Schema/_api/either.js",
-            "default": "./Schema/_api/either.js"
+            "import": "./_esm/Schema/_api/either.mjs",
+            "require": "./Schema/_api/either.js"
         },
         "./Schema/_api/tuple": {
-            "module": "./_esm/Schema/_api/tuple.js",
-            "default": "./Schema/_api/tuple.js"
+            "import": "./_esm/Schema/_api/tuple.mjs",
+            "require": "./Schema/_api/tuple.js"
         },
         "./Schema/_api/nonEmptyArray": {
-            "module": "./_esm/Schema/_api/nonEmptyArray.js",
-            "default": "./Schema/_api/nonEmptyArray.js"
+            "import": "./_esm/Schema/_api/nonEmptyArray.mjs",
+            "require": "./Schema/_api/nonEmptyArray.js"
         },
         "./Schema/utils": {
-            "module": "./_esm/Schema/utils.js",
-            "default": "./Schema/utils.js"
+            "import": "./_esm/Schema/utils.mjs",
+            "require": "./Schema/utils.js"
         },
         "./Schema/Model": {
-            "module": "./_esm/Schema/Model.js",
-            "default": "./Schema/Model.js"
+            "import": "./_esm/Schema/Model.mjs",
+            "require": "./Schema/Model.js"
         },
         "./Schema/REST": {
-            "module": "./_esm/Schema/REST.js",
-            "default": "./Schema/REST.js"
+            "import": "./_esm/Schema/REST.mjs",
+            "require": "./Schema/REST.js"
         },
         "./Schema/custom/_schema/schema": {
-            "module": "./_esm/Schema/custom/_schema/schema.js",
-            "default": "./Schema/custom/_schema/schema.js"
+            "import": "./_esm/Schema/custom/_schema/schema.mjs",
+            "require": "./Schema/custom/_schema/schema.js"
         },
         "./Schema/custom/_schema/matchers": {
-            "module": "./_esm/Schema/custom/_schema/matchers.js",
-            "default": "./Schema/custom/_schema/matchers.js"
+            "import": "./_esm/Schema/custom/_schema/matchers.mjs",
+            "require": "./Schema/custom/_schema/matchers.js"
         },
         "./Schema/custom/_schema/primitives": {
-            "module": "./_esm/Schema/custom/_schema/primitives.js",
-            "default": "./Schema/custom/_schema/primitives.js"
+            "import": "./_esm/Schema/custom/_schema/primitives.mjs",
+            "require": "./Schema/custom/_schema/primitives.js"
         },
         "./Schema/custom/_schema/error": {
-            "module": "./_esm/Schema/custom/_schema/error.js",
-            "default": "./Schema/custom/_schema/error.js"
+            "import": "./_esm/Schema/custom/_schema/error.mjs",
+            "require": "./Schema/custom/_schema/error.js"
         },
         "./Schema/custom/_schema/annotation": {
-            "module": "./_esm/Schema/custom/_schema/annotation.js",
-            "default": "./Schema/custom/_schema/annotation.js"
+            "import": "./_esm/Schema/custom/_schema/annotation.mjs",
+            "require": "./Schema/custom/_schema/annotation.js"
         },
         "./Schema/custom/_api/union": {
-            "module": "./_esm/Schema/custom/_api/union.js",
-            "default": "./Schema/custom/_api/union.js"
+            "import": "./_esm/Schema/custom/_api/union.mjs",
+            "require": "./Schema/custom/_api/union.js"
         },
         "./Schema/custom/_api/unknown": {
-            "module": "./_esm/Schema/custom/_api/unknown.js",
-            "default": "./Schema/custom/_api/unknown.js"
+            "import": "./_esm/Schema/custom/_api/unknown.mjs",
+            "require": "./Schema/custom/_api/unknown.js"
         },
         "./Schema/custom/_api/int": {
-            "module": "./_esm/Schema/custom/_api/int.js",
-            "default": "./Schema/custom/_api/int.js"
+            "import": "./_esm/Schema/custom/_api/int.mjs",
+            "require": "./Schema/custom/_api/int.js"
         },
         "./Schema/custom/_api/date": {
-            "module": "./_esm/Schema/custom/_api/date.js",
-            "default": "./Schema/custom/_api/date.js"
+            "import": "./_esm/Schema/custom/_api/date.mjs",
+            "require": "./Schema/custom/_api/date.js"
         },
         "./Schema/custom/_api/json": {
-            "module": "./_esm/Schema/custom/_api/json.js",
-            "default": "./Schema/custom/_api/json.js"
+            "import": "./_esm/Schema/custom/_api/json.mjs",
+            "require": "./Schema/custom/_api/json.js"
         },
         "./Schema/custom/_api/array": {
-            "module": "./_esm/Schema/custom/_api/array.js",
-            "default": "./Schema/custom/_api/array.js"
+            "import": "./_esm/Schema/custom/_api/array.mjs",
+            "require": "./Schema/custom/_api/array.js"
         },
         "./Schema/custom/_api/condemn": {
-            "module": "./_esm/Schema/custom/_api/condemn.js",
-            "default": "./Schema/custom/_api/condemn.js"
+            "import": "./_esm/Schema/custom/_api/condemn.mjs",
+            "require": "./Schema/custom/_api/condemn.js"
         },
         "./Schema/custom/_api/lazy": {
-            "module": "./_esm/Schema/custom/_api/lazy.js",
-            "default": "./Schema/custom/_api/lazy.js"
+            "import": "./_esm/Schema/custom/_api/lazy.mjs",
+            "require": "./Schema/custom/_api/lazy.js"
         },
         "./Schema/custom/_api/string": {
-            "module": "./_esm/Schema/custom/_api/string.js",
-            "default": "./Schema/custom/_api/string.js"
+            "import": "./_esm/Schema/custom/_api/string.mjs",
+            "require": "./Schema/custom/_api/string.js"
         },
         "./Schema/custom/_api/optionFromNull": {
-            "module": "./_esm/Schema/custom/_api/optionFromNull.js",
-            "default": "./Schema/custom/_api/optionFromNull.js"
+            "import": "./_esm/Schema/custom/_api/optionFromNull.mjs",
+            "require": "./Schema/custom/_api/optionFromNull.js"
         },
         "./Schema/custom/_api/intersect": {
-            "module": "./_esm/Schema/custom/_api/intersect.js",
-            "default": "./Schema/custom/_api/intersect.js"
+            "import": "./_esm/Schema/custom/_api/intersect.mjs",
+            "require": "./Schema/custom/_api/intersect.js"
         },
         "./Schema/custom/_api/model": {
-            "module": "./_esm/Schema/custom/_api/model.js",
-            "default": "./Schema/custom/_api/model.js"
+            "import": "./_esm/Schema/custom/_api/model.mjs",
+            "require": "./Schema/custom/_api/model.js"
         },
         "./Schema/custom/_api/chunk": {
-            "module": "./_esm/Schema/custom/_api/chunk.js",
-            "default": "./Schema/custom/_api/chunk.js"
+            "import": "./_esm/Schema/custom/_api/chunk.mjs",
+            "require": "./Schema/custom/_api/chunk.js"
         },
         "./Schema/custom/_api/refinement": {
-            "module": "./_esm/Schema/custom/_api/refinement.js",
-            "default": "./Schema/custom/_api/refinement.js"
+            "import": "./_esm/Schema/custom/_api/refinement.mjs",
+            "require": "./Schema/custom/_api/refinement.js"
         },
         "./Schema/custom/_api/unknownArray": {
-            "module": "./_esm/Schema/custom/_api/unknownArray.js",
-            "default": "./Schema/custom/_api/unknownArray.js"
+            "import": "./_esm/Schema/custom/_api/unknownArray.mjs",
+            "require": "./Schema/custom/_api/unknownArray.js"
         },
         "./Schema/custom/_api/withDefaults": {
-            "module": "./_esm/Schema/custom/_api/withDefaults.js",
-            "default": "./Schema/custom/_api/withDefaults.js"
+            "import": "./_esm/Schema/custom/_api/withDefaults.mjs",
+            "require": "./Schema/custom/_api/withDefaults.js"
         },
         "./Schema/custom/_api/number": {
-            "module": "./_esm/Schema/custom/_api/number.js",
-            "default": "./Schema/custom/_api/number.js"
+            "import": "./_esm/Schema/custom/_api/number.mjs",
+            "require": "./Schema/custom/_api/number.js"
         },
         "./Schema/custom/_api/bool": {
-            "module": "./_esm/Schema/custom/_api/bool.js",
-            "default": "./Schema/custom/_api/bool.js"
+            "import": "./_esm/Schema/custom/_api/bool.mjs",
+            "require": "./Schema/custom/_api/bool.js"
         },
         "./Schema/custom/_api/positiveInt": {
-            "module": "./_esm/Schema/custom/_api/positiveInt.js",
-            "default": "./Schema/custom/_api/positiveInt.js"
+            "import": "./_esm/Schema/custom/_api/positiveInt.mjs",
+            "require": "./Schema/custom/_api/positiveInt.js"
         },
         "./Schema/custom/_api/ensure": {
-            "module": "./_esm/Schema/custom/_api/ensure.js",
-            "default": "./Schema/custom/_api/ensure.js"
+            "import": "./_esm/Schema/custom/_api/ensure.mjs",
+            "require": "./Schema/custom/_api/ensure.js"
         },
         "./Schema/custom/_api/object": {
-            "module": "./_esm/Schema/custom/_api/object.js",
-            "default": "./Schema/custom/_api/object.js"
+            "import": "./_esm/Schema/custom/_api/object.mjs",
+            "require": "./Schema/custom/_api/object.js"
         },
         "./Schema/custom/_api/positive": {
-            "module": "./_esm/Schema/custom/_api/positive.js",
-            "default": "./Schema/custom/_api/positive.js"
+            "import": "./_esm/Schema/custom/_api/positive.mjs",
+            "require": "./Schema/custom/_api/positive.js"
         },
         "./Schema/custom/_api/properties": {
-            "module": "./_esm/Schema/custom/_api/properties.js",
-            "default": "./Schema/custom/_api/properties.js"
+            "import": "./_esm/Schema/custom/_api/properties.mjs",
+            "require": "./Schema/custom/_api/properties.js"
         },
         "./Schema/custom/_api/nullable": {
-            "module": "./_esm/Schema/custom/_api/nullable.js",
-            "default": "./Schema/custom/_api/nullable.js"
+            "import": "./_esm/Schema/custom/_api/nullable.mjs",
+            "require": "./Schema/custom/_api/nullable.js"
         },
         "./Schema/custom/_api/literal": {
-            "module": "./_esm/Schema/custom/_api/literal.js",
-            "default": "./Schema/custom/_api/literal.js"
+            "import": "./_esm/Schema/custom/_api/literal.mjs",
+            "require": "./Schema/custom/_api/literal.js"
         },
         "./Schema/custom/_api/nonEmpty": {
-            "module": "./_esm/Schema/custom/_api/nonEmpty.js",
-            "default": "./Schema/custom/_api/nonEmpty.js"
+            "import": "./_esm/Schema/custom/_api/nonEmpty.mjs",
+            "require": "./Schema/custom/_api/nonEmpty.js"
         },
         "./Schema/custom/_api/nonEmptyString": {
-            "module": "./_esm/Schema/custom/_api/nonEmptyString.js",
-            "default": "./Schema/custom/_api/nonEmptyString.js"
+            "import": "./_esm/Schema/custom/_api/nonEmptyString.mjs",
+            "require": "./Schema/custom/_api/nonEmptyString.js"
         },
         "./Schema/vendor": {
-            "module": "./_esm/Schema/vendor.js",
-            "default": "./Schema/vendor.js"
+            "import": "./_esm/Schema/vendor.mjs",
+            "require": "./Schema/vendor.js"
         },
         "./Schema/_schema": {
-            "module": "./_esm/Schema/_schema.js",
-            "default": "./Schema/_schema.js"
+            "import": "./_esm/Schema/_schema.mjs",
+            "require": "./Schema/_schema.js"
         },
         "./http/http-client-fetch": {
-            "module": "./_esm/http/http-client-fetch.js",
-            "default": "./http/http-client-fetch.js"
+            "import": "./_esm/http/http-client-fetch.mjs",
+            "require": "./http/http-client-fetch.js"
         },
         "./http/http-client": {
-            "module": "./_esm/http/http-client.js",
-            "default": "./http/http-client.js"
+            "import": "./_esm/http/http-client.mjs",
+            "require": "./http/http-client.js"
         },
         "./Order": {
-            "module": "./_esm/Order.js",
-            "default": "./Order.js"
+            "import": "./_esm/Order.mjs",
+            "require": "./Order.js"
         },
         "./Object": {
-            "module": "./_esm/Object.js",
-            "default": "./Object.js"
+            "import": "./_esm/Object.mjs",
+            "require": "./Object.js"
         },
         "./Option": {
-            "module": "./_esm/Option.js",
-            "default": "./Option.js"
+            "import": "./_esm/Option.mjs",
+            "require": "./Option.js"
         },
         "./EffectOption": {
-            "module": "./_esm/EffectOption.js",
-            "default": "./EffectOption.js"
+            "import": "./_esm/EffectOption.mjs",
+            "require": "./EffectOption.js"
         },
         "./Tuple": {
-            "module": "./_esm/Tuple.js",
-            "default": "./Tuple.js"
+            "import": "./_esm/Tuple.mjs",
+            "require": "./Tuple.js"
         },
         "./NonEmptyArray": {
-            "module": "./_esm/NonEmptyArray.js",
-            "default": "./NonEmptyArray.js"
+            "import": "./_esm/NonEmptyArray.mjs",
+            "require": "./NonEmptyArray.js"
         },
         "./validation/validators": {
-            "module": "./_esm/validation/validators.js",
-            "default": "./validation/validators.js"
+            "import": "./_esm/validation/validators.mjs",
+            "require": "./validation/validators.js"
         },
         "./SyncOption": {
-            "module": "./_esm/SyncOption.js",
-            "default": "./SyncOption.js"
+            "import": "./_esm/SyncOption.mjs",
+            "require": "./SyncOption.js"
         },
         "./Sync": {
-            "module": "./_esm/Sync.js",
-            "default": "./Sync.js"
+            "import": "./_esm/Sync.mjs",
+            "require": "./Sync.js"
         }
     },
     "sideEffects": false

@@ -4,16 +4,16 @@
   "license": "MIT",
   "exports": {
     "./_ext/*": {
-      "module": "./_esm/_ext/*.js",
-      "default": "./_ext/*.js"
+      "import": "./_esm/_ext/*.mjs",
+      "require": "./_ext/*.js"
     },
     "./polyfill": {
-      "module": "./_esm/polyfill/*.js",
-      "default": "./polyfill/*.js"
+      "import": "./_esm/polyfill/*.mjs",
+      "require": "./polyfill/*.js"
     },
     "./polyfill/*": {
-      "module": "./_esm/polyfill/*.js",
-      "default": "./polyfill/*.js"
+      "import": "./_esm/polyfill/*.mjs",
+      "require": "./polyfill/*.js"
     },
     "./types/*": "./types/*.ts"
   },
@@ -38,7 +38,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --build && tsc --build tsconfig.cjs.json",
+    "build": "tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/rename.sh",
     "watch": "tsc --build --watch",
     "watch2": "tsc -w",
     "prepare": "yarn build",
