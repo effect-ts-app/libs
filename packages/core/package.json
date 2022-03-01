@@ -419,6 +419,10 @@
         "./Sync": {
             "import": "./_mjs/Sync.mjs",
             "require": "./Sync.js"
+        },
+        "./*": {
+            "require": "./*.js",
+            "import": "./_mjs/*.mjs"
         }
     },
     "sideEffects": false
