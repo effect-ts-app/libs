@@ -38,7 +38,9 @@
         "redlock": "^4.2.0"
     },
     "scripts": {
-        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/rename.sh && yarn generate-exports",
+        "build": "yarn clean && tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports",
+        "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir . --out-file-extension .js --source-maps",
+        "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
         "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
@@ -57,227 +59,227 @@
     },
     "exports": {
         ".": {
-            "import": "./_esm/index.mjs",
+            "import": "./_mjs/index.mjs",
             "require": "./index.js"
         },
         "./context": {
-            "import": "./_esm/context/index.mjs",
+            "import": "./_mjs/context/index.mjs",
             "require": "./context/index.js"
         },
         "./logger": {
-            "import": "./_esm/logger/index.mjs",
+            "import": "./_mjs/logger/index.mjs",
             "require": "./logger/index.js"
         },
         "./logger/Logger": {
-            "import": "./_esm/logger/Logger/index.mjs",
+            "import": "./_mjs/logger/Logger/index.mjs",
             "require": "./logger/Logger/index.js"
         },
         "./logger/Winston": {
-            "import": "./_esm/logger/Winston/index.mjs",
+            "import": "./_mjs/logger/Winston/index.mjs",
             "require": "./logger/Winston/index.js"
         },
         "./logger/Console": {
-            "import": "./_esm/logger/Console/index.mjs",
+            "import": "./_mjs/logger/Console/index.mjs",
             "require": "./logger/Console/index.js"
         },
         "./express": {
-            "import": "./_esm/express/index.mjs",
+            "import": "./_mjs/express/index.mjs",
             "require": "./express/index.js"
         },
         "./express/schema": {
-            "import": "./_esm/express/schema/index.mjs",
+            "import": "./_mjs/express/schema/index.mjs",
             "require": "./express/schema/index.js"
         },
         "./Openapi": {
-            "import": "./_esm/Openapi/index.mjs",
+            "import": "./_mjs/Openapi/index.mjs",
             "require": "./Openapi/index.js"
         },
         "./Openapi/atlas-plutus": {
-            "import": "./_esm/Openapi/atlas-plutus/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/index.mjs",
             "require": "./Openapi/atlas-plutus/index.js"
         },
         "./Openapi/atlas-plutus/test": {
-            "import": "./_esm/Openapi/atlas-plutus/test/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/test/index.mjs",
             "require": "./Openapi/atlas-plutus/test/index.js"
         },
         "./Openapi/atlas-plutus/Spec": {
-            "import": "./_esm/Openapi/atlas-plutus/Spec/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Spec/index.mjs",
             "require": "./Openapi/atlas-plutus/Spec/index.js"
         },
         "./Openapi/atlas-plutus/Gen": {
-            "import": "./_esm/Openapi/atlas-plutus/Gen/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Gen/index.mjs",
             "require": "./Openapi/atlas-plutus/Gen/index.js"
         },
         "./Openapi/atlas-plutus/Schema": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/index.mjs",
             "require": "./Openapi/atlas-plutus/Schema/index.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/index.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/index.js"
         },
         "./Openapi/atlas-plutus/Schema/base": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/base/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/base/index.mjs",
             "require": "./Openapi/atlas-plutus/Schema/base/index.js"
         },
         "./Openapi/atlas-plutus/JsonSchema": {
-            "import": "./_esm/Openapi/atlas-plutus/JsonSchema/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/JsonSchema/index.mjs",
             "require": "./Openapi/atlas-plutus/JsonSchema/index.js"
         },
         "./Openapi/atlas-plutus/Errors": {
-            "import": "./_esm/Openapi/atlas-plutus/Errors/index.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Errors/index.mjs",
             "require": "./Openapi/atlas-plutus/Errors/index.js"
         },
         "./Openapi/_openapi": {
-            "import": "./_esm/Openapi/_openapi/index.mjs",
+            "import": "./_mjs/Openapi/_openapi/index.mjs",
             "require": "./Openapi/_openapi/index.js"
         },
         "./simpledb": {
-            "import": "./_esm/simpledb/index.mjs",
+            "import": "./_mjs/simpledb/index.mjs",
             "require": "./simpledb/index.js"
         },
         "./context/schema": {
-            "import": "./_esm/context/schema.mjs",
+            "import": "./_mjs/context/schema.mjs",
             "require": "./context/schema.js"
         },
         "./express/routing": {
-            "import": "./_esm/express/routing.mjs",
+            "import": "./_mjs/express/routing.mjs",
             "require": "./express/routing.js"
         },
         "./express/makeOpenApiSpecs": {
-            "import": "./_esm/express/makeOpenApiSpecs.mjs",
+            "import": "./_mjs/express/makeOpenApiSpecs.mjs",
             "require": "./express/makeOpenApiSpecs.js"
         },
         "./express/schema/jwt": {
-            "import": "./_esm/express/schema/jwt.mjs",
+            "import": "./_mjs/express/schema/jwt.mjs",
             "require": "./express/schema/jwt.js"
         },
         "./express/schema/routing": {
-            "import": "./_esm/express/schema/routing.mjs",
+            "import": "./_mjs/express/schema/routing.mjs",
             "require": "./express/schema/routing.js"
         },
         "./express/schema/requestHandler": {
-            "import": "./_esm/express/schema/requestHandler.mjs",
+            "import": "./_mjs/express/schema/requestHandler.mjs",
             "require": "./express/schema/requestHandler.js"
         },
         "./express/makeJsonSchema": {
-            "import": "./_esm/express/makeJsonSchema.mjs",
+            "import": "./_mjs/express/makeJsonSchema.mjs",
             "require": "./express/makeJsonSchema.js"
         },
         "./errors": {
-            "import": "./_esm/errors.mjs",
+            "import": "./_mjs/errors.mjs",
             "require": "./errors.js"
         },
         "./app": {
-            "import": "./_esm/app.mjs",
+            "import": "./_mjs/app.mjs",
             "require": "./app.js"
         },
         "./redis-client": {
-            "import": "./_esm/redis-client.mjs",
+            "import": "./_mjs/redis-client.mjs",
             "require": "./redis-client.js"
         },
         "./Openapi/atlas-plutus/test/main.test": {
-            "import": "./_esm/Openapi/atlas-plutus/test/main.test.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/test/main.test.mjs",
             "require": "./Openapi/atlas-plutus/test/main.test.js"
         },
         "./Openapi/atlas-plutus/Spec/code": {
-            "import": "./_esm/Openapi/atlas-plutus/Spec/code.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Spec/code.mjs",
             "require": "./Openapi/atlas-plutus/Spec/code.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/union": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/union.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/union.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/union.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/unknown": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/unknown.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/unknown.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/unknown.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/newtype": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/newtype.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/newtype.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/newtype.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/set": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/set.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/set.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/set.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/intersection": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/intersection.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/intersection.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/intersection.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/recursive": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/recursive.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/recursive.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/recursive.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/primitives": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/primitives.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/primitives.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/primitives.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/object": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/object.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/object.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/object.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/tagged-union": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/tagged-union.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/tagged-union.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/tagged-union.js"
         },
         "./Openapi/atlas-plutus/Schema/interpreter/configs": {
-            "import": "./_esm/Openapi/atlas-plutus/Schema/interpreter/configs.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Schema/interpreter/configs.mjs",
             "require": "./Openapi/atlas-plutus/Schema/interpreter/configs.js"
         },
         "./Openapi/atlas-plutus/Errors/MalformedRequestError": {
-            "import": "./_esm/Openapi/atlas-plutus/Errors/MalformedRequestError.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Errors/MalformedRequestError.mjs",
             "require": "./Openapi/atlas-plutus/Errors/MalformedRequestError.js"
         },
         "./Openapi/atlas-plutus/Errors/UnauthorizedError": {
-            "import": "./_esm/Openapi/atlas-plutus/Errors/UnauthorizedError.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Errors/UnauthorizedError.mjs",
             "require": "./Openapi/atlas-plutus/Errors/UnauthorizedError.js"
         },
         "./Openapi/atlas-plutus/Errors/NotFoundError": {
-            "import": "./_esm/Openapi/atlas-plutus/Errors/NotFoundError.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Errors/NotFoundError.mjs",
             "require": "./Openapi/atlas-plutus/Errors/NotFoundError.js"
         },
         "./Openapi/atlas-plutus/Errors/InternalServerError": {
-            "import": "./_esm/Openapi/atlas-plutus/Errors/InternalServerError.mjs",
+            "import": "./_mjs/Openapi/atlas-plutus/Errors/InternalServerError.mjs",
             "require": "./Openapi/atlas-plutus/Errors/InternalServerError.js"
         },
         "./Openapi/_schema": {
-            "import": "./_esm/Openapi/_schema.mjs",
+            "import": "./_mjs/Openapi/_schema.mjs",
             "require": "./Openapi/_schema.js"
         },
         "./mongo-client": {
-            "import": "./_esm/mongo-client.mjs",
+            "import": "./_mjs/mongo-client.mjs",
             "require": "./mongo-client.js"
         },
         "./cosmos-client": {
-            "import": "./_esm/cosmos-client.mjs",
+            "import": "./_mjs/cosmos-client.mjs",
             "require": "./cosmos-client.js"
         },
         "./simpledb/simpledb": {
-            "import": "./_esm/simpledb/simpledb.mjs",
+            "import": "./_mjs/simpledb/simpledb.mjs",
             "require": "./simpledb/simpledb.js"
         },
         "./simpledb/memdb": {
-            "import": "./_esm/simpledb/memdb.mjs",
+            "import": "./_mjs/simpledb/memdb.mjs",
             "require": "./simpledb/memdb.js"
         },
         "./simpledb/fileutil": {
-            "import": "./_esm/simpledb/fileutil.mjs",
+            "import": "./_mjs/simpledb/fileutil.mjs",
             "require": "./simpledb/fileutil.js"
         },
         "./simpledb/cosmosdb": {
-            "import": "./_esm/simpledb/cosmosdb.mjs",
+            "import": "./_mjs/simpledb/cosmosdb.mjs",
             "require": "./simpledb/cosmosdb.js"
         },
         "./simpledb/mongodb": {
-            "import": "./_esm/simpledb/mongodb.mjs",
+            "import": "./_mjs/simpledb/mongodb.mjs",
             "require": "./simpledb/mongodb.js"
         },
         "./simpledb/diskdb": {
-            "import": "./_esm/simpledb/diskdb.mjs",
+            "import": "./_mjs/simpledb/diskdb.mjs",
             "require": "./simpledb/diskdb.js"
         },
         "./simpledb/redisdb": {
-            "import": "./_esm/simpledb/redisdb.mjs",
+            "import": "./_mjs/simpledb/redisdb.mjs",
             "require": "./simpledb/redisdb.js"
         }
     },

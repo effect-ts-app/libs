@@ -4,7 +4,7 @@ import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as S from "../_schema/index.js"
-import { augmentRecord } from "../_utils.js"
+import { augmentRecord } from "../_utils/index.js"
 import * as Arbitrary from "../Arbitrary/index.js"
 import * as Constructor from "../Constructor/index.js"
 import * as Encoder from "../Encoder/index.js"

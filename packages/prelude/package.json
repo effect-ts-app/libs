@@ -14,7 +14,9 @@
         "@effect-ts/monocle": "^0.38.0"
     },
     "scripts": {
-        "build": "yarn clean && tsc --build && tsc --build tsconfig.cjs.json && sh ../../utils/rename.sh && yarn generate-exports && cp -f Prelude.d.ts index.d.ts && cp -f Prelude.d.ts _esm/index.d.ts",
+        "build": "yarn clean && tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && cp -f Prelude.d.ts index.d.ts && cp -f Prelude.d.ts _esm/index.d.ts",
+        "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir . --out-file-extension .js --source-maps",
+        "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
         "clean": "rm -rf ./_esm && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v Prelude.d.ts | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "postpublish": "yarn clean",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
@@ -33,7 +35,7 @@
     },
     "exports": {
         ".": {
-            "import": "./_esm/index.mjs",
+            "import": "./_mjs/index.mjs",
             "require": "./index.js"
         }
     },

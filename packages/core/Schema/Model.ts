@@ -13,8 +13,8 @@ import {
   FromPropertyRecord,
   fromProps,
 } from "./_api/index.js"
-import * as MO from "./_schema/index.js"
-import { schemaField } from "./_schema/index.js"
+import * as MO from "./_schema.js"
+import { schemaField } from "./_schema.js"
 import { unsafe } from "./custom/_api/condemn.js"
 import {
   AnyProperty,
