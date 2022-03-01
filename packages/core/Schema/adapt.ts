@@ -5,7 +5,7 @@ import { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
 
 import { array, prop, props } from "./_schema.js"
 import * as MO from "./_schema.js"
-import { positiveInt } from "./custom.js"
+import { positiveInt } from "./custom/index.js"
 import { optProp } from "./ext.js"
 
 type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {

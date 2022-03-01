@@ -5,13 +5,13 @@
 import * as E from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as MO from "../custom.js"
-import * as Arbitrary from "../custom/Arbitrary.js"
-import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
-import * as Parser from "../custom/Parser.js"
-import { ParserEnv } from "../custom/Parser.js"
-import * as Th from "../custom/These.js"
+import * as Arbitrary from "../custom/Arbitrary/index.js"
+import * as Encoder from "../custom/Encoder/index.js"
+import * as Guard from "../custom/Guard/index.js"
+import * as MO from "../custom/index.js"
+import * as Parser from "../custom/Parser/index.js"
+import { ParserEnv } from "../custom/Parser/index.js"
+import * as Th from "../custom/These/index.js"
 
 export const fromEitherIdentifier =
   MO.makeAnnotation<{ left: MO.SchemaAny; right: MO.SchemaAny }>()

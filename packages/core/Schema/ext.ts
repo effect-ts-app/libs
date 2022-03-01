@@ -9,9 +9,9 @@ import { constant, Lazy, pipe } from "../Function.js"
 import * as O from "../Option.js"
 import * as SET from "../Set.js"
 import { typedKeysOf } from "../utils.js"
-import { FromProperty, set, setIdentifier } from "./_api.js"
-import * as MO from "./_schema.js"
-import { propDef, Property, propOpt, propReq, UUID } from "./_schema.js"
+import { FromProperty, set, setIdentifier } from "./_api/index.js"
+import * as MO from "./_schema/index.js"
+import { propDef, Property, propOpt, propReq, UUID } from "./_schema/index.js"
 
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   new (inp: ConstructorInput): ParsedShape

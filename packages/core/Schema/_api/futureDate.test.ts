@@ -1,4 +1,4 @@
-import { Constructor, FutureDate, Parser, unsafe } from "../../Schema.js"
+import { Constructor, FutureDate, Parser, unsafe } from "../../Schema/index.js"
 
 describe("Constructor", () => {
   it("allows a future date", () => {

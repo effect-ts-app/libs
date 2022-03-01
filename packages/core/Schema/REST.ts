@@ -4,9 +4,9 @@
 import { Path } from "path-parser"
 
 import { Erase } from "../Effect.js"
-import { Void } from "./_api.js"
-import * as MO from "./_schema.js"
-import { schemaField } from "./_schema.js"
+import { Void } from "./_api/index.js"
+import * as MO from "./_schema/index.js"
+import { schemaField } from "./_schema/index.js"
 import {
   AnyRecord,
   AnyRecordSchema,

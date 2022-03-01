@@ -1,11 +1,11 @@
 import { pipe } from "@effect-ts/core/Function"
 import * as St from "@effect-ts/core/Structural"
 
-import * as S from "../_schema.js"
-import * as Arbitrary from "../Arbitrary.js"
-import * as Constructor from "../Constructor.js"
-import * as Parser from "../Parser.js"
-import * as Th from "../These.js"
+import * as S from "../_schema/index.js"
+import * as Arbitrary from "../Arbitrary/index.js"
+import * as Constructor from "../Constructor/index.js"
+import * as Parser from "../Parser/index.js"
+import * as Th from "../These/index.js"
 import { unsafe } from "./condemn.js"
 
 export const schemaField = Symbol()

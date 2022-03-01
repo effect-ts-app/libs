@@ -3,7 +3,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { pipe, Refinement } from "../../Function.js"
 import { isValidEmail } from "../../validation.js"
-import * as MO from "../_schema.js"
+import * as MO from "../_schema/index.js"
 import {
   brand,
   DefaultSchema,
@@ -12,7 +12,7 @@ import {
   NonEmptyString,
   parseUuidE,
   string,
-} from "../_schema.js"
+} from "../_schema/index.js"
 import { extendWithUtils } from "./_shared.js"
 
 // TODO: openapi meta: format: email

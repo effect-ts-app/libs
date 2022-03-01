@@ -3,8 +3,8 @@
 import * as O from "@effect-ts/core/Option"
 import type * as fc from "fast-check"
 
-import * as S from "../../_schema.js"
-import { hasContinuation, SchemaContinuationSymbol } from "../../_schema.js"
+import * as S from "../../_schema/index.js"
+import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 
 export type Gen<T> = { (_: typeof fc): fc.Arbitrary<T> }
 

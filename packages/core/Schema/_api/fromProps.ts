@@ -9,15 +9,15 @@ import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 
-import * as S from "../custom.js"
+import * as S from "../custom/index.js"
 import type { Annotation } from "../custom/_schema/annotation.js"
 import { augmentRecord } from "../custom/_utils.js"
-import * as Arbitrary from "../custom/Arbitrary.js"
-import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
-import * as Parser from "../custom/Parser.js"
-import { ParserEnv } from "../custom/Parser.js"
-import * as Th from "../custom/These.js"
+import * as Arbitrary from "../custom/Arbitrary/index.js"
+import * as Encoder from "../custom/Encoder/index.js"
+import * as Guard from "../custom/Guard/index.js"
+import * as Parser from "../custom/Parser/index.js"
+import { ParserEnv } from "../custom/Parser/index.js"
+import * as Th from "../custom/These/index.js"
 
 export class FromProperty<
   Self extends S.SchemaAny,

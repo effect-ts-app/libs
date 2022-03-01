@@ -7,11 +7,21 @@ import * as Lens from "@effect-ts/monocle/Lens"
 import omit from "lodash/omit"
 import pick from "lodash/pick"
 
-import { EncSchemaForModel, EParserFor, FromPropertyRecord, fromProps } from "./_api.js"
-import * as MO from "./_schema.js"
-import { schemaField } from "./_schema.js"
-import { AnyProperty, EncodedOf, ParsedShapeOf, PropertyRecord } from "./custom.js"
+import {
+  EncSchemaForModel,
+  EParserFor,
+  FromPropertyRecord,
+  fromProps,
+} from "./_api/index.js"
+import * as MO from "./_schema/index.js"
+import { schemaField } from "./_schema/index.js"
 import { unsafe } from "./custom/_api/condemn.js"
+import {
+  AnyProperty,
+  EncodedOf,
+  ParsedShapeOf,
+  PropertyRecord,
+} from "./custom/index.js"
 import { include } from "./utils.js"
 
 export const nModelBrand = Symbol()

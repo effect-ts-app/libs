@@ -3,7 +3,7 @@ import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import { Numbers } from "../../FastCheck.js"
 import { pipe, Refinement } from "../../Function.js"
-import { isValidPhone } from "../../validation.js"
+import { isValidPhone } from "../../validation/index.js"
 import * as MO from "../_schema.js"
 import {
   brand,

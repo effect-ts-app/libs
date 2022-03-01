@@ -2,8 +2,8 @@
 
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema.js"
-import { annotate, identity, named } from "../_schema.js"
+import * as S from "../_schema/index.js"
+import { annotate, identity, named } from "../_schema/index.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 

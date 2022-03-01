@@ -6,12 +6,12 @@ import { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArr
 import { pipe } from "@effect-ts/core/Function"
 
 import * as O from "../../Option.js"
-import * as S from "../custom.js"
-import { leafE, unknownArrayE } from "../custom.js"
-import * as Arbitrary from "../custom/Arbitrary.js"
-import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
-import * as Th from "../custom/These.js"
+import * as Arbitrary from "../custom/Arbitrary/index.js"
+import * as Encoder from "../custom/Encoder/index.js"
+import * as Guard from "../custom/Guard/index.js"
+import * as S from "../custom/index.js"
+import { leafE, unknownArrayE } from "../custom/index.js"
+import * as Th from "../custom/These/index.js"
 import { minLengthIdentifier } from "./length.js"
 
 export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(

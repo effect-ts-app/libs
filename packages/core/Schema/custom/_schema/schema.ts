@@ -6,8 +6,8 @@ import type { Refinement } from "@effect-ts/core/Function"
 import { LazyGetter } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 
-import type { Parser, ParserEnv } from "../Parser.js"
-import type * as Th from "../These.js"
+import type { Parser, ParserEnv } from "../Parser/index.js"
+import type * as Th from "../These/index.js"
 import type { Annotation } from "./annotation.js"
 import type { AnyError } from "./error.js" // CompositionE, NamedE, NextE, PrevE, RefinementE
 

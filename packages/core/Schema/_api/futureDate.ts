@@ -1,5 +1,5 @@
 import { pipe } from "../../Function.js"
-import * as MO from "../_schema.js"
+import * as MO from "../_schema/index.js"
 import { domainEE, domainResponse2, onParseOrConstruct } from "../utils.js"
 import { Parser, These } from "../vendor.js"
 import { extendWithUtils } from "./_shared.js"

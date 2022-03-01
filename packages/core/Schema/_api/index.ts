@@ -18,4 +18,4 @@ export * from "./fromArray.js"
 export * from "./nonEmptyArray.js"
 
 export { UUID, Int, PositiveInt, NonEmptyString } from "./string.js"
-export * from "../custom/_api.js"
+export * from "../custom/_api/index.js"
