@@ -2,13 +2,13 @@ import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import { parseUuidE } from "../_schema"
-import { brand } from "./brand"
-import { nonEmpty } from "./nonEmpty"
-import type { NonEmptyString } from "./nonEmptyString"
-import { fromString, string } from "./string"
-import type { DefaultSchema } from "./withDefaults"
+import * as S from "../_schema.js"
+import { parseUuidE } from "../_schema.js"
+import { brand } from "./brand.js"
+import { nonEmpty } from "./nonEmpty.js"
+import type { NonEmptyString } from "./nonEmptyString.js"
+import { fromString, string } from "./string.js"
+import type { DefaultSchema } from "./withDefaults.js"
 
 export interface UUIDBrand {
   readonly UUID: unique symbol

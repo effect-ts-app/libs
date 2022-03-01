@@ -3,14 +3,14 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import * as Arbitrary from "../Arbitrary"
-import * as Encoder from "../Encoder"
-import * as Guard from "../Guard"
-import * as Th from "../These"
-import { chunk } from "./chunk"
-import type { DefaultSchema } from "./withDefaults"
-import { withDefaults } from "./withDefaults"
+import * as S from "../_schema.js"
+import * as Arbitrary from "../Arbitrary.js"
+import * as Encoder from "../Encoder.js"
+import * as Guard from "../Guard.js"
+import * as Th from "../These.js"
+import { chunk } from "./chunk.js"
+import type { DefaultSchema } from "./withDefaults.js"
+import { withDefaults } from "./withDefaults.js"
 
 export const arrayIdentifier = S.makeAnnotation<{ self: S.SchemaUPI }>()
 

@@ -1,12 +1,12 @@
-import type { Annotation } from "../_schema"
-import * as MO from "../_schema"
-import { named } from "../_schema"
-import * as Arbitrary from "../Arbitrary"
-import * as Constructor from "../Constructor"
-import * as Encoder from "../Encoder"
-import * as Guard from "../Guard"
-import * as Parser from "../Parser"
-import * as S from "./schemed"
+import type { Annotation } from "../_schema.js"
+import * as MO from "../_schema.js"
+import { named } from "../_schema.js"
+import * as Arbitrary from "../Arbitrary.js"
+import * as Constructor from "../Constructor.js"
+import * as Encoder from "../Encoder.js"
+import * as Guard from "../Guard.js"
+import * as Parser from "../Parser.js"
+import * as S from "./schemed.js"
 
 export type SchemaForModel<M, Self extends MO.SchemaAny> = MO.Schema<
   MO.ParserInputOf<Self>,

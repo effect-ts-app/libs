@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
-import { flow, pipe } from "../Function"
-import * as MO from "./_schema"
-import { Constructor, Parser, These as Th } from "./_schema"
+import { flow, pipe } from "../Function.js"
+import * as MO from "./_schema.js"
+import { Constructor, Parser, These as Th } from "./_schema.js"
 
 export function include<Props extends Record<string, MO.AnyProperty>>(props: Props) {
   return <NewProps extends Record<string, MO.AnyProperty>>(

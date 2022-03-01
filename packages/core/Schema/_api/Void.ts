@@ -1,6 +1,6 @@
-import { pipe } from "../../Function"
-import * as MO from "../custom"
-import { withDefaults } from "../custom"
+import { pipe } from "../../Function.js"
+import * as MO from "../custom.js"
+import { withDefaults } from "../custom.js"
 
 export const Void = pipe(
   MO.unknown,

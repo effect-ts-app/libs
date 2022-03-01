@@ -11,9 +11,9 @@ import type {
   SummonerProgURI,
 } from "@effect-ts/morphic/Batteries/usage/summoner"
 
-import type { JSONSchema, SubSchema } from "../JsonSchema"
-import type { References, SchemaURI } from "./base"
-import { modelSchemaInterpreter } from "./interpreter"
+import type { JSONSchema, SubSchema } from "../JsonSchema.js"
+import type { References, SchemaURI } from "./base.js"
+import { modelSchemaInterpreter } from "./interpreter.js"
 
 export function deriveFor<S extends Summoner<any>>(_S: S) {
   return (_: {
@@ -39,4 +39,4 @@ export function schema<E, A>(
   return d
 }
 
-export * from "./base"
+export * from "./base.js"

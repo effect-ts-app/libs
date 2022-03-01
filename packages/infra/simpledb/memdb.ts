@@ -13,9 +13,9 @@ import {
   getRecordName,
   makeMap,
   SerializedDBRecord,
-} from "./shared"
-import * as simpledb from "./simpledb"
-import { Version } from "./simpledb"
+} from "./shared.js"
+import * as simpledb from "./simpledb.js"
+import { Version } from "./simpledb.js"
 
 // When we are in-process, we want to share the same Storage
 // Do not try this at home.

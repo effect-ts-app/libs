@@ -6,9 +6,9 @@ import * as O from "@effect-ts/core/Option"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
-import * as T from "../Effect"
-import { pipe } from "../Function"
-import * as H from "./http-client"
+import * as T from "../Effect.js"
+import { pipe } from "../Function.js"
+import * as H from "./http-client.js"
 
 function getContentType(requestType: H.RequestType): string {
   return H.foldRequestType(

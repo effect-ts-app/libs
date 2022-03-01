@@ -10,8 +10,8 @@ import {
   forEach_ as forEachSync,
 } from "@effect-ts-app/core/Sync"
 
-import { find_, findFirst_, findFirstMap_ } from "../_ext/Set"
-import { applyFunctions } from "./util"
+import { find_, findFirst_, findFirstMap_ } from "../_ext/Set.js"
+import { applyFunctions } from "./util.js"
 
 const BasePrototype = Set.prototype as any
 

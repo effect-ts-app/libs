@@ -2,8 +2,8 @@
 
 import * as O from "@effect-ts/core/Option"
 
-import * as S from "../../_schema"
-import { hasContinuation, SchemaContinuationSymbol } from "../../_schema"
+import * as S from "../../_schema.js"
+import { hasContinuation, SchemaContinuationSymbol } from "../../_schema.js"
 
 export type Guard<T> = { (u: unknown): u is T }
 

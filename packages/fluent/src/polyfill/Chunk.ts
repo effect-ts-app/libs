@@ -10,7 +10,7 @@ import {
   forEach_ as forEachSync,
 } from "@effect-ts-app/core/Sync"
 
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const exceptions: Partial<Record<keyof Omit<typeof CNK, "toString">, string | null>> = {
   chain_: null, // collides with implementation details currently :'(

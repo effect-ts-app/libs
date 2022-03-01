@@ -12,9 +12,9 @@ import {
   Sync,
 } from "@effect-ts/core/Sync"
 
-import type { Effect } from "./Effect"
-import * as T from "./Effect"
-import { identity } from "./Function"
+import type { Effect } from "./Effect.js"
+import * as T from "./Effect.js"
+import { identity } from "./Function.js"
 
 export type ShapeFn<T> = Pick<
   T,

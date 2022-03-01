@@ -2,7 +2,7 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as O from "@effect-ts/core/Option"
 
-import * as S from "../../_schema"
+import * as S from "../../_schema.js"
 
 export interface CollectAnnotations {
   <Annotations extends readonly S.Annotation<any>[]>(

@@ -1,3 +1,3 @@
 // tracing: off
 
-export * from "./_guard"
+export * from "./_guard.js"

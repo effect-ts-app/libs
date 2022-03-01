@@ -14,7 +14,7 @@ import {
   NotLoggedInError,
   UnauthorizedError,
   ValidationError,
-} from "../errors"
+} from "../errors.js"
 import {
   Encode,
   makeRequestParsers,
@@ -24,8 +24,8 @@ import {
   RequestHandlerOptRes,
   RequestParsers,
   respondSuccess,
-} from "./schema/requestHandler"
-import { makeRouteDescriptor } from "./schema/routing"
+} from "./schema/requestHandler.js"
+import { makeRouteDescriptor } from "./schema/routing.js"
 
 /*
 An app should take ownership over these

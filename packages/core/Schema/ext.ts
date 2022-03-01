@@ -5,13 +5,13 @@ import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
 import { v4 } from "uuid"
 
-import { constant, Lazy, pipe } from "../Function"
-import * as O from "../Option"
-import * as SET from "../Set"
-import { typedKeysOf } from "../utils"
-import { FromProperty, set, setIdentifier } from "./_api"
-import * as MO from "./_schema"
-import { propDef, Property, propOpt, propReq, UUID } from "./_schema"
+import { constant, Lazy, pipe } from "../Function.js"
+import * as O from "../Option.js"
+import * as SET from "../Set.js"
+import { typedKeysOf } from "../utils.js"
+import { FromProperty, set, setIdentifier } from "./_api.js"
+import * as MO from "./_schema.js"
+import { propDef, Property, propOpt, propReq, UUID } from "./_schema.js"
 
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   new (inp: ConstructorInput): ParsedShape

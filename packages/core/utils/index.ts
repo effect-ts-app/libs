@@ -4,10 +4,10 @@ import { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 import * as E from "@effect-ts/core/Either"
 import * as Sy from "@effect-ts/core/Sync"
 
-import { flow, identity, pipe } from "../Function"
-import * as O from "../Option"
+import { flow, identity, pipe } from "../Function.js"
+import * as O from "../Option.js"
 
-export * from "./extend"
+export * from "./extend.js"
 
 export const unsafe = flow(
   Sy.runEither,

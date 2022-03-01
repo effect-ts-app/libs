@@ -7,10 +7,10 @@ import * as DSL from "@effect-ts/core/Prelude/DSL"
 import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
 
-import { flow, pipe } from "./Function"
-import * as O from "./Option"
-import * as T from "./Sync"
-import { GenSync, service, Sync } from "./Sync"
+import { flow, pipe } from "./Function.js"
+import * as O from "./Option.js"
+import * as T from "./Sync.js"
+import { GenSync, service, Sync } from "./Sync.js"
 
 export const Monad = OptionT.monad(T.Monad)
 export const Applicative = OptionT.applicative(T.Applicative)

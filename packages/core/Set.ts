@@ -16,7 +16,7 @@ import {
 } from "@effect-ts/core/Collections/Immutable/Set"
 import * as Eq from "@effect-ts/core/Equal"
 
-import * as Ord from "./Order"
+import * as Ord from "./Order.js"
 
 function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const fromArray = fromArray_(eq)

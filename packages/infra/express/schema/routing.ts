@@ -9,14 +9,14 @@ import { Methods } from "@effect-ts-app/core/Schema"
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
 
-import * as OpenApi from "../../Openapi"
+import * as OpenApi from "../../Openapi.js"
 import {
   isObjectSchema,
   JSONSchema,
   ParameterLocation,
   SubSchema,
-} from "../../Openapi/atlas-plutus"
-import { RequestHandler, RequestHandlerOptRes } from "./requestHandler"
+} from "../../Openapi/atlas-plutus.js"
+import { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
 
 export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
   return i as RouteDescriptorAny

@@ -4,8 +4,8 @@ import { XPureBase } from "@effect-ts/system/XPure"
 import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 import { chain_, map_, mapError_, orDie, toEffect } from "@effect-ts-app/core/Sync"
 
-import { exceptions as effectExceptions } from "./Effect"
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { exceptions as effectExceptions } from "./Effect.js"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const BasePrototype = XPureBase.prototype as any
 

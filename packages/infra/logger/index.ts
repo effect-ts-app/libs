@@ -2,8 +2,8 @@ import strip from "strip-ansi"
 import * as winston from "winston"
 import { format } from "winston"
 
-import * as console from "./Console"
-import * as logger from "./Logger"
+import * as console from "./Console.js"
+import * as logger from "./Logger.js"
 
 export { logger, console }
 

@@ -11,14 +11,14 @@ import type {
   MalformedRequestErrorE,
   NotFoundErrorE,
   UnauthorizedErrorE,
-} from "../Errors"
+} from "../Errors.js"
 import {
   InternalServerError,
   MalformedRequestError,
   NotFoundError,
   UnauthorizedError,
-} from "../Errors"
-import type { ResponseCode } from "./code"
+} from "../Errors.js"
+import type { ResponseCode } from "./code.js"
 
 export type Type<E, A> = MO.M<{}, E, A>
 
@@ -503,7 +503,7 @@ export function trace<P extends string>(path: P): `[TRACE]: ${P}` {
   return `[TRACE]: ${path}` as any
 }
 
-export { ResponseCode } from "./code"
+export { ResponseCode } from "./code.js"
 
 const true_ = true
 const false_ = false

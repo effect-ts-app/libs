@@ -3,7 +3,7 @@ import * as T from "@effect-ts/core/Effect"
 import { flow } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 
-import { NotFoundError, UnauthorizedError } from "./errors"
+import { NotFoundError, UnauthorizedError } from "./errors.js"
 
 export function handle<
   TModule extends Record<

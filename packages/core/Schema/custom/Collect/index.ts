@@ -1,3 +1,3 @@
 // tracing: off
 
-export * from "./_collect"
+export * from "./_collect.js"

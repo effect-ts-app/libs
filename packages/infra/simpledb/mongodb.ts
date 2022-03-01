@@ -4,10 +4,10 @@ import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
-import * as Mongo from "../mongo-client"
-import { CachedRecord, DBRecord, OptimisticLockException } from "./shared"
-import * as simpledb from "./simpledb"
-import { Version } from "./simpledb"
+import * as Mongo from "../mongo-client.js"
+import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
+import * as simpledb from "./simpledb.js"
+import { Version } from "./simpledb.js"
 
 // const makeFromIndexKeys = (indexKeys: string[], unique: boolean) => indexKeys.reduce((prev, cur) => {
 //   prev[cur] = 1

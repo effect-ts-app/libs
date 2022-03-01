@@ -10,10 +10,10 @@ import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
 import { _A, _E, _R, fromEither } from "@effect-ts/system/Effect"
 
-import * as T from "./Effect"
-import * as F from "./Function"
-import { flow, pipe } from "./Function"
-import * as O from "./Option"
+import * as T from "./Effect.js"
+import * as F from "./Function.js"
+import { flow, pipe } from "./Function.js"
+import * as O from "./Option.js"
 
 export const Monad = OptionT.monad(T.Monad)
 export const Applicative = OptionT.applicative(T.Applicative)

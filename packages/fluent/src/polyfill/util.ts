@@ -6,7 +6,7 @@
 // else
 //   use it (check exceptions)
 
-import { skipped } from "./state"
+import { skipped } from "./state.js"
 
 // TODO: drop constructors, via exceptions
 export function makeAutoFuncs(

@@ -3,12 +3,12 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import { brand } from "./brand"
-import type { NonEmptyBrand } from "./nonEmpty"
-import { nonEmpty } from "./nonEmpty"
-import { fromString, string } from "./string"
-import type { DefaultSchema } from "./withDefaults"
+import * as S from "../_schema.js"
+import { brand } from "./brand.js"
+import type { NonEmptyBrand } from "./nonEmpty.js"
+import { nonEmpty } from "./nonEmpty.js"
+import { fromString, string } from "./string.js"
+import type { DefaultSchema } from "./withDefaults.js"
 
 export type NonEmptyString = string & NonEmptyBrand
 

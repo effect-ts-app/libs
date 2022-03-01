@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Path } from "path-parser"
 
-import { Erase } from "../Effect"
-import { Void } from "./_api"
-import * as MO from "./_schema"
-import { schemaField } from "./_schema"
+import { Erase } from "../Effect.js"
+import { Void } from "./_api.js"
+import * as MO from "./_schema.js"
+import { schemaField } from "./_schema.js"
 import {
   AnyRecord,
   AnyRecordSchema,
@@ -16,7 +16,7 @@ import {
   PropsExtensions,
   setSchema,
   StringRecord,
-} from "./Model"
+} from "./Model.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
@@ -509,7 +509,7 @@ export interface Request<
   path: Path
 }
 
-type Separator = "/" | "&" | "?"
+type Separator = "/" | "&" | "?.js"
 export type PathParams<Path extends string> =
   Path extends `:${infer Param}${Separator}${infer Rest}`
     ? Param | PathParams<Rest>

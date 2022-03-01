@@ -1,3 +1,3 @@
 // tracing: off
 
-export * from "./_parser"
+export * from "./_parser.js"

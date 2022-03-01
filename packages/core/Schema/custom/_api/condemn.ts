@@ -4,9 +4,9 @@ import * as T from "@effect-ts/core/Effect"
 import * as E from "@effect-ts/core/Either"
 import { Case } from "@effect-ts/system/Case"
 
-import type { AnyError } from "../_schema"
-import { drawError } from "../_schema"
-import { Parser, ParserEnv } from "../Parser"
+import type { AnyError } from "../_schema.js"
+import { drawError } from "../_schema.js"
+import { Parser, ParserEnv } from "../Parser.js"
 
 /**
  * The Effect fails with the generic `E` type when the parser produces an invalid result

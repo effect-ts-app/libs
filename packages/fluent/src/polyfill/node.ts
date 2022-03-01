@@ -1,2 +1,2 @@
-import "./index"
-import "./EffectNode"
+import "./index.js"
+import "./EffectNode.js"

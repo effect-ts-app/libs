@@ -52,7 +52,7 @@ import {
   OneOfSchema,
   referenced,
   StringSchema,
-} from "../atlas-plutus"
+} from "../atlas-plutus.js"
 
 export type Gen = T.UIO<JSONSchema>
 

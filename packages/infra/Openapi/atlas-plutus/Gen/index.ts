@@ -6,8 +6,8 @@ import { makeRef } from "@effect-ts/core/Effect/Ref"
 import type { _R, UnionToIntersection } from "@effect-ts/core/Utils"
 import { mapRecord } from "@effect-ts/morphic/Utils"
 
-import type { JSONSchema, SubSchema } from "../JsonSchema"
-import { References, schema } from "../Schema"
+import type { JSONSchema, SubSchema } from "../JsonSchema.js"
+import { References, schema } from "../Schema.js"
 import type {
   AnyOperation,
   Api,
@@ -17,7 +17,7 @@ import type {
   Parameter,
   RequestBody,
   Response,
-} from "../Spec"
+} from "../Spec.js"
 
 export interface OpenApiSpec {
   openapi: "3.0.0"

@@ -1,1 +1,1 @@
-export * from "./vendor"
+export * from "./vendor.js"

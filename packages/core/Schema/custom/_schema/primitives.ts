@@ -3,11 +3,11 @@
 import type { Refinement } from "@effect-ts/system/Function"
 import type * as fc from "fast-check"
 
-import type { ParserEnv } from "../Parser"
-import type * as Th from "../These"
-import type { Annotation } from "./annotation"
-import type { AnyError } from "./error"
-import type { ApiSelfType, Schema, SchemaAny } from "./schema"
+import type { ParserEnv } from "../Parser.js"
+import type * as Th from "../These.js"
+import type { Annotation } from "./annotation.js"
+import type { AnyError } from "./error.js"
+import type { ApiSelfType, Schema, SchemaAny } from "./schema.js"
 import {
   SchemaAnnotated,
   SchemaArbitrary,
@@ -22,7 +22,7 @@ import {
   SchemaParser,
   SchemaPipe,
   SchemaRefinement,
-} from "./schema"
+} from "./schema.js"
 
 export function opaque<Shape>() {
   return <ConstructorInput, ParserInput, Encoded, Api>(

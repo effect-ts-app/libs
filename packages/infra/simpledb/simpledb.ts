@@ -12,7 +12,7 @@ import {
   EffectMap,
   makeMap,
   OptimisticLockException,
-} from "./shared"
+} from "./shared.js"
 
 export type Version = string
 export class InvalidStateError {

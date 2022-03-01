@@ -1,3 +1,3 @@
 // tracing: off
 
-export * from "./_constructor"
+export * from "./_constructor.js"

@@ -2,7 +2,7 @@
 
 import * as O from "@effect-ts/core/Option"
 
-import * as S from "../../_schema"
+import * as S from "../../_schema.js"
 
 export type Encoder<Output, Encoded> = {
   (u: Output): Encoded

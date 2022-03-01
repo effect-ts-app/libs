@@ -5,7 +5,7 @@ import * as Has from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts-app/core/Function"
 import * as W from "winston"
 
-import * as LOG from "../Logger"
+import * as LOG from "../Logger.js"
 
 export interface WinstonFactory {
   logger: T.UIO<W.Logger>

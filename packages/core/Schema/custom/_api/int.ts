@@ -3,11 +3,11 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import { brand } from "./brand"
-import { fromNumber, number, stringNumberFromString } from "./number"
-import { string } from "./string"
-import type { DefaultSchema } from "./withDefaults"
+import * as S from "../_schema.js"
+import { brand } from "./brand.js"
+import { fromNumber, number, stringNumberFromString } from "./number.js"
+import { string } from "./string.js"
+import type { DefaultSchema } from "./withDefaults.js"
 
 export interface IntBrand {
   readonly Int: unique symbol

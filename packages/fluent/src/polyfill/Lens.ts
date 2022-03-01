@@ -1,7 +1,7 @@
 import { Lens } from "@effect-ts/monocle/Lens"
 
-import { modify_, prop_ } from "../_ext/Lens"
-import { applyFunctions } from "./util"
+import { modify_, prop_ } from "../_ext/Lens.js"
+import { applyFunctions } from "./util.js"
 
 const BasePrototype = Lens.prototype as any
 

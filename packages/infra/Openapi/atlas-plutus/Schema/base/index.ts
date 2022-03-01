@@ -8,8 +8,8 @@ import { tag } from "@effect-ts/core/Has"
 import { getApplyConfig } from "@effect-ts/morphic/HKT"
 import { pipe } from "@effect-ts/system/Function"
 
-import type { JSONSchema, SubSchema } from "../../JsonSchema"
-import { Ref } from "../../JsonSchema"
+import type { JSONSchema, SubSchema } from "../../JsonSchema.js"
+import { Ref } from "../../JsonSchema.js"
 
 export interface References {
   ref: TRef.Ref<Map<string, SubSchema>>

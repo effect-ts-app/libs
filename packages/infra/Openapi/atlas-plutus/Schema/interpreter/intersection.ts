@@ -4,7 +4,7 @@ import { identity, pipe } from "@effect-ts/core/Function"
 import type { IntersectionURI } from "@effect-ts/morphic/Algebra/Intersection"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import * as X from "../base"
+import * as X from "../base.js"
 
 export const SchemaIntersectionInterpreter = interpreter<
   X.SchemaURI,

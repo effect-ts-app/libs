@@ -1,3 +1,3 @@
 // tracing: off
 
-export * from "./_encoder"
+export * from "./_encoder.js"

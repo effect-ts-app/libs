@@ -3,8 +3,8 @@ import * as Option from "@effect-ts/core/Option"
 import { tryCatchOption_ } from "@effect-ts/core/Sync"
 import { encaseOption_ } from "@effect-ts-app/core/Effect"
 
-import { alt_ } from "../_ext/Option"
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { alt_ } from "../_ext/Option.js"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const exceptions: Partial<Record<keyof typeof Option, string | null>> = {
   none: null,

@@ -7,7 +7,7 @@ import * as T from "@effect-ts-app/core/Effect"
 import * as O from "@effect-ts-app/core/Option"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { ServiceContext } from "./context"
+import { ServiceContext } from "./context.js"
 
 export { matchTag } from "@effect-ts/core/Utils"
 

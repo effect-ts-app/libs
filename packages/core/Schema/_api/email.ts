@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
-import { pipe, Refinement } from "../../Function"
-import { isValidEmail } from "../../validation"
-import * as MO from "../_schema"
+import { pipe, Refinement } from "../../Function.js"
+import { isValidEmail } from "../../validation.js"
+import * as MO from "../_schema.js"
 import {
   brand,
   DefaultSchema,
@@ -12,8 +12,8 @@ import {
   NonEmptyString,
   parseUuidE,
   string,
-} from "../_schema"
-import { extendWithUtils } from "./_shared"
+} from "../_schema.js"
+import { extendWithUtils } from "./_shared.js"
 
 // TODO: openapi meta: format: email
 

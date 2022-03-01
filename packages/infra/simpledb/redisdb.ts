@@ -7,7 +7,7 @@ import * as O from "@effect-ts-app/core/Option"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
 
-import * as RED from "../redis-client"
+import * as RED from "../redis-client.js"
 import {
   CachedRecord,
   ConnectionException,
@@ -16,8 +16,8 @@ import {
   getIndexName,
   getRecordName,
   Index,
-} from "./shared"
-import * as simpledb from "./simpledb"
+} from "./shared.js"
+import * as simpledb from "./simpledb.js"
 
 const ttl = 10 * 1000
 

@@ -4,8 +4,8 @@ import { pipe } from "@effect-ts/core/Function"
 import type { PrimitivesURI } from "@effect-ts/morphic/Algebra/Primitives"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import type { EnumSchema, NumberEnumSchema } from "../../JsonSchema"
-import * as X from "../base"
+import type { EnumSchema, NumberEnumSchema } from "../../JsonSchema.js"
+import * as X from "../base.js"
 
 export const SchemaPrimitiveInterpreter = interpreter<X.SchemaURI, PrimitivesURI>()(
   () => ({

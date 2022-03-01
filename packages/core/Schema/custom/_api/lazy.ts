@@ -1,7 +1,7 @@
-import type { Schema } from "../_schema"
-import { SchemaLazy } from "../_schema"
-import type { DefaultSchema } from "./withDefaults"
-import { withDefaults } from "./withDefaults"
+import type { Schema } from "../_schema.js"
+import { SchemaLazy } from "../_schema.js"
+import type { DefaultSchema } from "./withDefaults.js"
+import { withDefaults } from "./withDefaults.js"
 
 export function lazy<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   self: () => Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>

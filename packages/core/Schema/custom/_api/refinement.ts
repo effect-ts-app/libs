@@ -4,11 +4,11 @@ import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-//import type { RefinementE } from "../_schema/error"
-import { unknown } from "./unknown"
-import type { DefaultSchema } from "./withDefaults"
-import { withDefaults } from "./withDefaults"
+import * as S from "../_schema.js"
+//import type { RefinementE } from "../_schema/error.js"
+import { unknown } from "./unknown.js"
+import type { DefaultSchema } from "./withDefaults.js"
+import { withDefaults } from "./withDefaults.js"
 
 export const refinementIdentifier = S.makeAnnotation<{
   refinement: Refinement<unknown, unknown>

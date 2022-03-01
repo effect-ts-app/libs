@@ -9,7 +9,7 @@ import {
   toNullable,
 } from "@effect-ts-app/core/EffectOption"
 
-import { applyFunctions } from "./util"
+import { applyFunctions } from "./util.js"
 
 const BasePrototype = Base.prototype as any
 

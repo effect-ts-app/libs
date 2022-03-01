@@ -2,14 +2,14 @@
 
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import { brand } from "./brand"
-import type { Int } from "./int"
-import { intFromNumber } from "./int"
-import { number } from "./number"
-import type { Positive } from "./positive"
-import { positive } from "./positive"
-import type { DefaultSchema } from "./withDefaults"
+import * as S from "../_schema.js"
+import { brand } from "./brand.js"
+import type { Int } from "./int.js"
+import { intFromNumber } from "./int.js"
+import { number } from "./number.js"
+import type { Positive } from "./positive.js"
+import { positive } from "./positive.js"
+import type { DefaultSchema } from "./withDefaults.js"
 
 export const positiveIntFromNumberIdentifier = S.makeAnnotation<{}>()
 

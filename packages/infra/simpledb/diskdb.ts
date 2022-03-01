@@ -6,7 +6,7 @@ import { flow, pipe } from "@effect-ts-app/core/Function"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
-import * as fu from "./fileutil"
+import * as fu from "./fileutil.js"
 import {
   CachedRecord,
   ConnectionException,
@@ -15,9 +15,9 @@ import {
   getIndexName,
   getRecordName,
   Index,
-} from "./shared"
-import * as simpledb from "./simpledb"
-import { Version } from "./simpledb"
+} from "./shared.js"
+import * as simpledb from "./simpledb.js"
+import { Version } from "./simpledb.js"
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
@@ -26,7 +26,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index,
-    dir = "./data"
+    dir = "./data.js"
   ) => {
     initialise(dir)
     const globalLock = "global.lock"

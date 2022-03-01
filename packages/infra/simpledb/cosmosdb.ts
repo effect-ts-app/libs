@@ -6,10 +6,10 @@ import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 
-import * as Cosmos from "../cosmos-client"
-import { CachedRecord, DBRecord, OptimisticLockException } from "./shared"
-import * as simpledb from "./simpledb"
-import { Version } from "./simpledb"
+import * as Cosmos from "../cosmos-client.js"
+import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
+import * as simpledb from "./simpledb.js"
+import { Version } from "./simpledb.js"
 
 class CosmosDbOperationError {
   constructor(readonly message: string) {}

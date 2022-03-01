@@ -1,4 +1,4 @@
-import "./EffectOption"
-import "./Option"
-import "./Array"
-import "./Sync"
+import "./EffectOption.js"
+import "./Option.js"
+import "./Array.js"
+import "./Sync.js"

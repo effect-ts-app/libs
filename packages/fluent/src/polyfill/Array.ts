@@ -12,9 +12,9 @@ import {
   forEach_ as forEachSync,
 } from "@effect-ts-app/core/Sync"
 
-import { sort_, sortBy_, uniq_ } from "../_ext/Array"
-import { mapM } from "../_ext/mapM"
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { sort_, sortBy_, uniq_ } from "../_ext/Array.js"
+import { mapM } from "../_ext/mapM.js"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const BasePrototype = Array.prototype as any
 

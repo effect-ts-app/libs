@@ -3,9 +3,9 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as O from "@effect-ts/core/Option"
 
-import * as S from "../../_schema"
-import { hasContinuation, SchemaContinuationSymbol } from "../../_schema"
-import * as Th from "../../These"
+import * as S from "../../_schema.js"
+import { hasContinuation, SchemaContinuationSymbol } from "../../_schema.js"
+import * as Th from "../../These.js"
 
 export type Constructor<Input, Output, ConstructorError> = {
   (u: Input): Th.These<ConstructorError, Output>

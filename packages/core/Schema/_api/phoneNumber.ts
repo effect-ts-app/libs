@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
-import { Numbers } from "../../FastCheck"
-import { pipe, Refinement } from "../../Function"
-import { isValidPhone } from "../../validation"
-import * as MO from "../_schema"
+import { Numbers } from "../../FastCheck.js"
+import { pipe, Refinement } from "../../Function.js"
+import { isValidPhone } from "../../validation.js"
+import * as MO from "../_schema.js"
 import {
   brand,
   DefaultSchema,
@@ -13,8 +13,8 @@ import {
   NonEmptyString,
   parseUuidE,
   string,
-} from "../_schema"
-import { extendWithUtils } from "./_shared"
+} from "../_schema.js"
+import { extendWithUtils } from "./_shared.js"
 
 // TODO: openapi meta: format: phone
 

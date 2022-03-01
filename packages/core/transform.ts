@@ -2,8 +2,8 @@
 import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { Misc, Union } from "ts-toolbelt"
 
-import * as O from "./Option"
-import * as SET from "./Set"
+import * as O from "./Option.js"
+import * as SET from "./Set.js"
 
 // type SomeObject = {
 //   0: O.Option<string>

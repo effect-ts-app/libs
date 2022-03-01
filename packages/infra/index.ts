@@ -1,2 +1,2 @@
-export * as sdb from "./simpledb"
-export * as logger from "./logger"
+export * as sdb from "./simpledb.js"
+export * as logger from "./logger.js"

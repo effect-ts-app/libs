@@ -5,7 +5,7 @@ import {
   SchemaContinuationSymbol,
 } from "@effect-ts-app/core/Schema"
 
-import type { JSONSchema } from "./atlas-plutus"
+import type { JSONSchema } from "./atlas-plutus.js"
 
 export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>

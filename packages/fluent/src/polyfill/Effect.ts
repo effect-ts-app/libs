@@ -1,7 +1,7 @@
 import { pipe } from "@effect-ts/core"
 import * as T from "@effect-ts-app/core/Effect"
 
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 export const exceptions: Partial<Record<keyof typeof T, string | null>> = {
   provideSomeLayer_: "inject",

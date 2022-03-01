@@ -1,4 +1,4 @@
 // tracing: off
 
-export * from "./_openapi"
-export * from "./_schema"
+export * from "./_openapi.js"
+export * from "./_schema.js"

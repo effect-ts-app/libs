@@ -5,14 +5,14 @@ import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as O from "../../Option"
-import * as S from "../custom"
-import { leafE, unknownArrayE } from "../custom"
-import * as Arbitrary from "../custom/Arbitrary"
-import * as Encoder from "../custom/Encoder"
-import * as Guard from "../custom/Guard"
-import * as Th from "../custom/These"
-import { minLengthIdentifier } from "./length"
+import * as O from "../../Option.js"
+import * as S from "../custom.js"
+import { leafE, unknownArrayE } from "../custom.js"
+import * as Arbitrary from "../custom/Arbitrary.js"
+import * as Encoder from "../custom/Encoder.js"
+import * as Guard from "../custom/Guard.js"
+import * as Th from "../custom/These.js"
+import { minLengthIdentifier } from "./length.js"
 
 export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>

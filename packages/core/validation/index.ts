@@ -1,4 +1,4 @@
-import { Predicate } from "../Function"
+import { Predicate } from "../Function.js"
 
 export const all_ = <T>(v: T, ...a: Predicate<T>[]) => !a.some((x) => !x(v))
 export const all =
@@ -18,4 +18,4 @@ export const min = (min: number) => {
   return (v: { length: number }) => f(v.length)
 }
 
-export * from "./validators"
+export * from "./validators.js"

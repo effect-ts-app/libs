@@ -1,10 +1,10 @@
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 
-import { pipe } from "../../Function"
-import * as MO from "../vendor"
-import { NonEmptyBrand } from "../vendor"
-import { extendWithUtils } from "./_shared"
-import { constrained } from "./length"
+import { pipe } from "../../Function.js"
+import * as MO from "../vendor.js"
+import { NonEmptyBrand } from "../vendor.js"
+import { extendWithUtils } from "./_shared.js"
+import { constrained } from "./length.js"
 
 // TODO: Word, for lorem ipsum generation, but as composition?
 

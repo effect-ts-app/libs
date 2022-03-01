@@ -7,11 +7,11 @@ import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ord from "@effect-ts/core/Ord"
 
-import * as MO from "../custom"
-import * as Arbitrary from "../custom/Arbitrary"
-import * as Encoder from "../custom/Encoder"
-import * as Guard from "../custom/Guard"
-import * as Th from "../custom/These"
+import * as MO from "../custom.js"
+import * as Arbitrary from "../custom/Arbitrary.js"
+import * as Encoder from "../custom/Encoder.js"
+import * as Guard from "../custom/Guard.js"
+import * as Th from "../custom/These.js"
 
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 

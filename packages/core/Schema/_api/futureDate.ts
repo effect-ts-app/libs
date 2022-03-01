@@ -1,8 +1,8 @@
-import { pipe } from "../../Function"
-import * as MO from "../_schema"
-import { domainEE, domainResponse2, onParseOrConstruct } from "../utils"
-import { Parser, These } from "../vendor"
-import { extendWithUtils } from "./_shared"
+import { pipe } from "../../Function.js"
+import * as MO from "../_schema.js"
+import { domainEE, domainResponse2, onParseOrConstruct } from "../utils.js"
+import { Parser, These } from "../vendor.js"
+import { extendWithUtils } from "./_shared.js"
 
 export const fromDateIdentifier = MO.makeAnnotation<{}>()
 export const fromDate: MO.DefaultSchema<Date, Date, Date, Date, {}> = pipe(

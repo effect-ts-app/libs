@@ -3,10 +3,10 @@ import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { None, Some } from "@effect-ts/core/Option"
 import { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
 
-import { array, prop, props } from "./_schema"
-import * as MO from "./_schema"
-import { positiveInt } from "./custom"
-import { optProp } from "./ext"
+import { array, prop, props } from "./_schema.js"
+import * as MO from "./_schema.js"
+import { positiveInt } from "./custom.js"
+import { optProp } from "./ext.js"
 
 type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {
   [K in Key]: Props[K]

@@ -9,7 +9,7 @@ import {
   toNullable,
 } from "@effect-ts-app/core/SyncOption"
 
-import { applyFunctions } from "./util"
+import { applyFunctions } from "./util.js"
 
 const BasePrototype = XPureBase.prototype as any
 

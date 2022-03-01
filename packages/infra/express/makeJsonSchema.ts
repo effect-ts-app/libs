@@ -5,7 +5,7 @@ import * as T from "@effect-ts/core/Effect"
 import { pipe } from "@effect-ts/core/Function"
 import { _A } from "@effect-ts/core/Utils"
 
-import * as RS from "./schema/routing"
+import * as RS from "./schema/routing.js"
 
 type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 

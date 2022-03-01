@@ -4,8 +4,8 @@ import { encaseEither } from "@effect-ts-app/core/Effect"
 import { identity } from "@effect-ts-app/core/Function"
 import { encaseEither as encaseEitherInSync } from "@effect-ts-app/core/Sync"
 
-import { alt_ } from "../_ext/Option"
-import { applyFunctions, makeAutoFuncs } from "./util"
+import { alt_ } from "../_ext/Option.js"
+import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const exceptions: Partial<Record<keyof typeof Ei, string | null>> = {
   right: null,

@@ -3,10 +3,10 @@
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import { unknown } from "./unknown"
-import type { DefaultSchema } from "./withDefaults"
-import { withDefaults } from "./withDefaults"
+import * as S from "../_schema.js"
+import { unknown } from "./unknown.js"
+import type { DefaultSchema } from "./withDefaults.js"
+import { withDefaults } from "./withDefaults.js"
 
 export const unknownArrayIdentifier = S.makeAnnotation<{}>()
 

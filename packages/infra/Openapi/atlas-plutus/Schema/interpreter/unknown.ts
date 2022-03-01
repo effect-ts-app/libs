@@ -1,7 +1,7 @@
 import type { UnknownURI } from "@effect-ts/morphic/Algebra/Unknown"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import * as X from "../base"
+import * as X from "../base.js"
 
 export const SchemaUnknownInterpreter = interpreter<X.SchemaURI, UnknownURI>()(() => ({
   _F: X.SchemaURI,

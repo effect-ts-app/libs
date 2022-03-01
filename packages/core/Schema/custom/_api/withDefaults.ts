@@ -1,14 +1,14 @@
 import type { UnionToIntersection } from "@effect-ts/core/Utils"
 
-import type { Annotation } from "../_schema"
-import * as MO from "../_schema"
-import type { Schema } from "../_schema/schema"
-import * as Arbitrary from "../Arbitrary"
-import * as Constructor from "../Constructor"
-import * as Encoder from "../Encoder"
-import * as Guard from "../Guard"
-import * as Parser from "../Parser"
-import { unsafe } from "./condemn"
+import type { Annotation } from "../_schema.js"
+import * as MO from "../_schema.js"
+import type { Schema } from "../_schema/schema.js"
+import * as Arbitrary from "../Arbitrary.js"
+import * as Constructor from "../Constructor.js"
+import * as Encoder from "../Encoder.js"
+import * as Guard from "../Guard.js"
+import * as Parser from "../Parser.js"
+import { unsafe } from "./condemn.js"
 
 export interface SchemaDefaultSchema<
   ParserInput,

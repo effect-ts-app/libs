@@ -1,10 +1,10 @@
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema"
-import * as Th from "../These"
-import { string } from "./string"
-import type { DefaultSchema } from "./withDefaults"
-import { withDefaults } from "./withDefaults"
+import * as S from "../_schema.js"
+import * as Th from "../These.js"
+import { string } from "./string.js"
+import type { DefaultSchema } from "./withDefaults.js"
+import { withDefaults } from "./withDefaults.js"
 
 export const jsonFromStringIdentifier = S.makeAnnotation<{}>()
 
