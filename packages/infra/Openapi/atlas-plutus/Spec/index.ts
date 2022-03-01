@@ -11,13 +11,13 @@ import type {
   MalformedRequestErrorE,
   NotFoundErrorE,
   UnauthorizedErrorE,
-} from "../Errors.js"
+} from "../Errors/index.js"
 import {
   InternalServerError,
   MalformedRequestError,
   NotFoundError,
   UnauthorizedError,
-} from "../Errors.js"
+} from "../Errors/index.js"
 import type { ResponseCode } from "./code.js"
 
 export type Type<E, A> = MO.M<{}, E, A>

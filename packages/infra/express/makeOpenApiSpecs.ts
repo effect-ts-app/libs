@@ -2,9 +2,9 @@
 import * as T from "@effect-ts/core/Effect"
 import { makeRef } from "@effect-ts/core/Effect/Ref"
 
-import * as Plutus from "../Openapi/atlas-plutus.js"
-import { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema.js"
-import { References } from "../Openapi/atlas-plutus/Schema.js"
+import * as Plutus from "../Openapi/atlas-plutus/index.js"
+import { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"
+import { References } from "../Openapi/atlas-plutus/Schema/index.js"
 import { makeJsonSchema } from "./makeJsonSchema.js"
 import { RouteDescriptorAny } from "./schema/routing.js"
 

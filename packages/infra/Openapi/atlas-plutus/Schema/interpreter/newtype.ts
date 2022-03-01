@@ -2,7 +2,7 @@ import { pipe } from "@effect-ts/core/Function"
 import type { NewtypeURI } from "@effect-ts/morphic/Algebra/Newtype"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import { SchemaApplyConfig, SchemaType, SchemaURI } from "../base.js"
+import { SchemaApplyConfig, SchemaType, SchemaURI } from "../base/index.js"
 
 export const SchemaNewtypeInterpreter = interpreter<SchemaURI, NewtypeURI>()(() => ({
   _F: SchemaURI,

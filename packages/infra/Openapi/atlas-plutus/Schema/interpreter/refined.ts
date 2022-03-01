@@ -4,7 +4,7 @@ import { pipe } from "@effect-ts/core/Function"
 import type { RefinedURI } from "@effect-ts/morphic/Algebra/Refined"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import { SchemaApplyConfig, SchemaType, SchemaURI } from "../base.js"
+import { SchemaApplyConfig, SchemaType, SchemaURI } from "../base/index.js"
 
 export const SchemaRefinedInterpreter = interpreter<SchemaURI, RefinedURI>()(() => ({
   _F: SchemaURI,

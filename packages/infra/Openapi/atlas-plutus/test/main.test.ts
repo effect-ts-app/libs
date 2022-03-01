@@ -3,9 +3,9 @@ import { makeRef } from "@effect-ts/core/Effect/Ref"
 import { pipe } from "@effect-ts/core/Function"
 import * as MO from "@effect-ts/morphic"
 
-import type { SubSchema } from "../.js"
-import * as Api from "../.js"
-import { References } from "../.js"
+import type { SubSchema } from "../index.js"
+import * as Api from "../index.js"
+import { References } from "../index.js"
 
 const A = MO.make((F) =>
   F.interface(

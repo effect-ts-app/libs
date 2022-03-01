@@ -5,7 +5,7 @@ import type {
   TaggedUnionLA,
 } from "@effect-ts/morphic/Algebra/Config"
 
-import type { Schema, SchemaURI } from "../base.js"
+import type { Schema, SchemaURI } from "../base/index.js"
 
 declare module "@effect-ts/morphic/Algebra/Intersection" {
   interface IntersectionConfig<

@@ -2,7 +2,7 @@ import type { RecursiveURI } from "@effect-ts/morphic/Algebra/Recursive"
 import { interpreter } from "@effect-ts/morphic/HKT"
 import { memo } from "@effect-ts/morphic/Utils"
 
-import { Ref } from "../../JsonSchema.js"
+import { Ref } from "../../JsonSchema/index.js"
 import {
   dieMessage,
   referenced,
@@ -10,7 +10,7 @@ import {
   SchemaType,
   SchemaURI,
   succeed,
-} from "../base.js"
+} from "../base/index.js"
 
 export const SchemaRecursiveInterpreter = interpreter<SchemaURI, RecursiveURI>()(
   () => ({

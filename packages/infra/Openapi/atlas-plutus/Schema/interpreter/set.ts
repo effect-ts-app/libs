@@ -2,7 +2,7 @@ import { pipe } from "@effect-ts/core/Function"
 import type { SetURI } from "@effect-ts/morphic/Algebra/Set"
 import { interpreter } from "@effect-ts/morphic/HKT"
 
-import * as X from "../base.js"
+import * as X from "../base/index.js"
 
 export const SchemaSetInterpreter = interpreter<X.SchemaURI, SetURI>()(() => ({
   _F: X.SchemaURI,

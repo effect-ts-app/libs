@@ -4,7 +4,7 @@ import type { ObjectURI } from "@effect-ts/morphic/Algebra/Object"
 import { interpreter } from "@effect-ts/morphic/HKT"
 import { projectFieldWithEnv } from "@effect-ts/morphic/Utils"
 
-import * as X from "../base.js"
+import * as X from "../base/index.js"
 
 export const SchemaObjectInterpreter = interpreter<X.SchemaURI, ObjectURI>()(() => ({
   _F: X.SchemaURI,
