@@ -16,7 +16,7 @@ export function nonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
   ord: Ord.Ord<ParsedShape>,
   eq?: Eq.Equal<ParsedShape>
 ) {
-  return pipe(set(self, ord, eq), minSize<NonEmptySet<ParsedShape>>(0), MO.withDefaults)
+  return pipe(set(self, ord, eq), minSize<NonEmptySet<ParsedShape>>(1), MO.withDefaults)
 }
 
 export const NonEmptySet = {
