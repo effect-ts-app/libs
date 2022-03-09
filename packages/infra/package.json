@@ -1,9 +1,9 @@
 {
     "name": "@effect-ts-app/infra",
-    "version": "0.57.4",
+    "version": "0.57.5",
     "license": "MIT",
     "dependencies": {
-        "@effect-ts-app/core": "^0.57.3",
+        "@effect-ts-app/core": "^0.57.5",
         "proper-lockfile": "^4.1.2",
         "query-string": "^7.1.0",
         "winston": "^3.4.0"
