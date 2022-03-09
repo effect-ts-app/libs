@@ -11,6 +11,7 @@ export * from "./dictionary.js"
 export * from "./either.js"
 export * from "./map.js"
 export * from "./set.js"
+export * from "./nonEmptySet.js"
 export * from "./tuple.js"
 
 export * from "./fromProps.js"

@@ -59,6 +59,35 @@ export function minLength<Brand>(minLength: number) {
     )
 }
 
+export function minSize<Brand>(minLength: number) {
+  if (minLength < 1) {
+    throw new Error("Must be at least 1")
+  }
+  return <
+    ParserInput,
+    ParsedShape extends { size: number },
+    ConstructorInput,
+    Encoded,
+    Api
+  >(
+    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  ): MO.Schema<
+    ParserInput,
+    ParsedShape & Brand & NonEmptyBrand,
+    ConstructorInput,
+    Encoded,
+    Api
+  > =>
+    pipe(
+      self,
+      MO.refine(
+        (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
+        (n) => MO.leafE(MO.nonEmptyE(n))
+      ),
+      MO.annotate(minLengthIdentifier, { self, minLength })
+    )
+}
+
 export function constrained<Brand>(minLength: number, maxLength: number) {
   return <
     ParserInput,

@@ -10,6 +10,7 @@ import * as O from "../Option.js"
 import * as SET from "../Set.js"
 import { typedKeysOf } from "../utils/index.js"
 import { FromProperty, set, setIdentifier } from "./_api/index.js"
+import { nonEmptySet } from "./_api/nonEmptySet.js"
 import * as MO from "./_schema.js"
 import { propDef, Property, propOpt, propReq, UUID } from "./_schema.js"
 
@@ -585,6 +586,72 @@ export function makeContramappedSet<ParsedShape, ConstructorInput, Encoded, Api,
   eq: Eq.Equal<MA>
 ) {
   return makeSet(type, Ord.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
+}
+
+export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  ord: Ord.Ord<ParsedShape>,
+  eq_?: Eq.Equal<ParsedShape>
+) {
+  const eq = eq_ ?? Ord.getEqual(ord)
+  const s = nonEmptySet(type, ord, eq)
+  return Object.assign(s, SET.make(ord, eq))
+}
+
+export function makeUnorderedContramappedStringNonEmptySet<
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  MA extends string
+>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  contramap: (a: ParsedShape) => MA
+) {
+  return makeUnorderedNonEmptySet(type, Eq.contramap(contramap)(Eq.string))
+}
+
+export function makeUnorderedStringNonEmptySet<A extends string>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  type: MO.Schema<
+    unknown, //ParserInput,
+    A,
+    any, //ConstructorInput,
+    any, //Encoded
+    any //Api
+  >
+) {
+  return makeUnorderedNonEmptySet(type, Eq.string)
+}
+
+export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  eq: Eq.Equal<ParsedShape>
+) {
+  return makeNonEmptySet(type, createUnorder<ParsedShape>(), eq)
+}
+
+export function makeContramappedNonEmptySet<
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  MA
+>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  contramap: (a: ParsedShape) => MA,
+  ord: Ord.Ord<MA>,
+  eq: Eq.Equal<MA>
+) {
+  return makeNonEmptySet(
+    type,
+    Ord.contramap_(ord, contramap),
+    Eq.contramap(contramap)(eq)
+  )
 }
 
 export const constArray = constant(A.empty)
