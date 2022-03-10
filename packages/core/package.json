@@ -408,6 +408,10 @@
             "import": "./_mjs/NonEmptyArray.mjs",
             "require": "./NonEmptyArray.js"
         },
+        "./NonEmptySet": {
+            "import": "./_mjs/NonEmptySet.mjs",
+            "require": "./NonEmptySet.js"
+        },
         "./validation/validators": {
             "import": "./_mjs/validation/validators.mjs",
             "require": "./validation/validators.js"
