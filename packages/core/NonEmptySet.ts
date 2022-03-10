@@ -1,12 +1,8 @@
 import {
   filter_,
-  filterMap,
-  filterMap_,
   fromArray as fromArrayOriginal,
   insert as insertOriginal,
   insert_ as insert_Original,
-  map,
-  map_,
   reduce,
   reduce_,
   remove,
