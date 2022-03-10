@@ -43,10 +43,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     concat_,
     concat: (it: Iterable<A>) => (set: Set<A>) => concat_(set, it),
 
-    map: map(eq),
-    map_: map_(eq),
-    filterMap: filterMap(eq),
-    filterMap_: filterMap_(eq),
+    // map and filterMap need eq for B, not A, so just use the built-in
   }
   // TODO: extend
 }

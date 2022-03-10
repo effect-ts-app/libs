@@ -43,11 +43,13 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     return toArray__(s) as NonEmptyArray<A>
   }
 
+  const remove__ = remove(eq)
+
   return {
     insert,
     insert_,
-    remove: remove(eq),
-    remove_: remove_(eq),
+    remove: (a: A) => flow(remove__(a), fromSet),
+    remove_: flow(remove_(eq), fromSet),
     reduce: reduce(ord),
     reduce_: reduce_(ord),
     replace: (a: A) => (set: NonEmptySet<A>) => replace_(set, a),
@@ -60,15 +62,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     concat_,
     concat: (it: Iterable<A>) => (set: NonEmptySet<A>) => concat_(set, it),
 
-    map: map(eq) as unknown as <A>(
-      f: (x: A) => A
-    ) => (set: NonEmptySet<A>) => NonEmptySet<A>,
-    map_: map_(eq) as unknown as <A>(
-      set: NonEmptySet<A>,
-      f: (x: A) => A
-    ) => NonEmptySet<A>,
-    filterMap: filterMap(eq),
-    filterMap_: filterMap_(eq),
+    // map and filterMap need eq for B, not A, so just use the built-in
   }
   // TODO: extend
 }
