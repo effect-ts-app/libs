@@ -6,6 +6,7 @@ import { ComputeFlat } from "@effect-ts/core/Utils"
 import { v4 } from "uuid"
 
 import { constant, Lazy, pipe } from "../Function.js"
+import * as NonEmptySet from "../NonEmptySet.js"
 import * as O from "../Option.js"
 import * as SET from "../Set.js"
 import { typedKeysOf } from "../utils/index.js"
@@ -596,7 +597,7 @@ export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const eq = eq_ ?? Ord.getEqual(ord)
   const s = nonEmptySet(type, ord, eq)
-  return Object.assign(s, SET.make(ord, eq))
+  return Object.assign(s, NonEmptySet.make(ord, eq))
 }
 
 export function makeUnorderedContramappedStringNonEmptySet<
