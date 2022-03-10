@@ -16,6 +16,7 @@ import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 import type * as QUEUE from "@effect-ts/core/Effect/Queue"
 import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
+import type * as NS from "@effect-ts-app/core/NonEmptySet"
 import type * as A from "@effect-ts-app/core/Array"
 import type * as O from "@effect-ts-app/core/Option"
 import type * as SCHEMA from "@effect-ts-app/core/Schema"
@@ -104,6 +105,11 @@ export namespace NonEmptyArray {
   export * from "@effect-ts-app/core/NonEmptyArray"
 }
 export type NonEmptyArray<A> = NA.NonEmptyArray<A>
+
+export namespace NonEmptySet {
+  export * from "@effect-ts-app/core/NonEmptySet"
+}
+export type NonEmptySet<A> = NS.NonEmptySet<A>
 
 export namespace Array {
   export * from "@effect-ts-app/core/Array"
