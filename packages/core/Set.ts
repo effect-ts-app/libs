@@ -1,8 +1,12 @@
 import {
   filter_,
+  filterMap,
+  filterMap_,
   fromArray as fromArray_,
   insert as insertOriginal,
   insert_,
+  map,
+  map_,
   reduce,
   reduce_,
   remove,
@@ -39,7 +43,11 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     concat_,
     concat: (it: Iterable<A>) => (set: Set<A>) => concat_(set, it),
 
-    // map and filterMap need eq for B, not A, so just use the built-in
+    // A and B the same, useful when editing elements.
+    map: map(eq),
+    map_: map_(eq),
+    filterMap: filterMap(eq),
+    filterMap_: filterMap_(eq),
   }
   // TODO: extend
 }

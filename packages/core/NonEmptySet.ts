@@ -1,8 +1,12 @@
 import {
   filter_,
+  filterMap,
+  filterMap_,
   fromArray as fromArrayOriginal,
   insert as insertOriginal,
   insert_ as insert_Original,
+  map,
+  map_,
   reduce,
   reduce_,
   remove,
@@ -40,6 +44,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   }
 
   const remove__ = remove(eq)
+  const filterMap__ = filterMap(eq)
 
   return {
     insert,
@@ -58,7 +63,16 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     concat_,
     concat: (it: Iterable<A>) => (set: NonEmptySet<A>) => concat_(set, it),
 
-    // map and filterMap need eq for B, not A, so just use the built-in
+    // A and B the same, useful when editing elements.
+    map: map(eq) as unknown as <A>(
+      f: (x: A) => A
+    ) => (set: NonEmptySet<A>) => NonEmptySet<A>,
+    map_: map_(eq) as unknown as <A>(
+      set: NonEmptySet<A>,
+      f: (x: A) => A
+    ) => NonEmptySet<A>,
+    filterMap: (f: (a: A) => Option.Option<A>) => flow(filterMap__(f), fromSet),
+    filterMap_: flow(filterMap_(eq), fromSet),
   }
   // TODO: extend
 }
