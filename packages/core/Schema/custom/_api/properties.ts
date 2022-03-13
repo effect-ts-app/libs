@@ -414,7 +414,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
       "literals" in s.Api &&
       Array.isArray(s.Api["literals"]) &&
       // at least support the first
-      s.Api["literals"].length === 1 &&
+      //s.Api["literals"].length === 1 &&
       typeof s.Api["literals"][0] === "string"
     ) {
       tags[key] = s.Api["literals"][0]
