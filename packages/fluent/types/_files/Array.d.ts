@@ -235,6 +235,21 @@ interface AOps {
    * @ets_rewrite_method uniq_ from "@effect-ts-app/fluent/_ext/Array"
    */
   uniq<A>(this: readonly A[], E: Equal<A>): readonly A[]
+
+  /**
+   * @ets_rewrite_method head from "@effect-ts-app/core/Array"
+   */
+  head<A>(this: readonly A[]): Option<A>
+
+  /**
+   * @ets_rewrite_method last from "@effect-ts-app/core/Array"
+   */
+  last<A>(this: readonly A[]): Option<A>
+
+  /**
+   * @ets_rewrite_method tail from "@effect-ts-app/core/Array"
+   */
+  tail<A>(this: readonly A[]): Option<readonly A[]>
 }
 
 interface SOps {
