@@ -9,4 +9,4 @@ export * from "./adapt.js"
 export * from "./_api/index.js"
 // workaround conflicting star-exports warning
 export { UUID } from "./_api/index.js"
-export * from "./_schema"
+export * from "./_schema.js"
