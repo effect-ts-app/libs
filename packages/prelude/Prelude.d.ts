@@ -28,18 +28,22 @@ import type * as TUP from "@effect-ts-app/core/Tuple"
 export namespace Equal {
   export * from "@effect-ts/core/Equal"
 }
+/** @tsplus type ets/Equal */
 export type Equal<A> = EQ.Equal<A>
 
 export namespace Has {
   export * from "@effect-ts/core/Has"
 }
+/** @tsplus type ets/Has */
 export type Has<T> = HAS.Has<T>
 
 export namespace Tuple {
   export * from "@effect-ts-app/core/Tuple"
 }
+/** @tsplus type ets/Tuple */
 export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 
+/** @tsplus type ets/Cause */
 export type Cause<A> = CAUSE.Cause<A>
 export namespace Cause {
   export * from "@effect-ts/core/Effect/Cause"
@@ -48,118 +52,140 @@ export namespace Cause {
 export namespace Exit {
   export * from "@effect-ts/core/Effect/Exit"
 }
+/** @tsplus type ets/Exit */
 export type Exit<E, A> = EX.Exit<E, A>
 
 export namespace Either {
   export * from "@effect-ts/core/Either"
 }
+/** @tsplus type ets/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Ord {
   export * from "@effect-ts/core/Ord"
 }
+/** @tsplus type ets/Ord */
 export type Ord<A> = ORD.Ord<A>
 
 export namespace EffectOption {
   export * from "@effect-ts-app/core/EffectOption"
 }
+/** @tsplus type ets/EffectOption */
 export type EffectOption<R, E, A> = EO.EffectOption<R, E, A>
 export { UIO as EffectOptionU, IO as EffectOptionE, RIO as EffectOptionR } from "@effect-ts-app/core/EffectOption"
 
 export namespace SyncOption {
   export * from "@effect-ts-app/core/SyncOption"
 }
+/** @tsplus type ets/SyncOption */
 export type SyncOption<R, E, A> = SO.SyncOption<R, E, A>
 export { UIO as SyncOptionU, IO as SyncOptionE, RIO as SyncOptionR } from "@effect-ts-app/core/SyncOption"
 
 export namespace Managed {
   export * from "@effect-ts/core/Effect/Managed"
 }
+/** @tsplus type ets/Managed */
 export type Managed<R,E,A> = M.Managed<R, E, A>
 export { UIO as ManagedU, IO as ManagedE, RIO as ManagedR } from "@effect-ts/core/Effect/Managed"
 
 export namespace Effect {
   export * from "@effect-ts-app/core/Effect"
 }
+/** @tsplus type ets/Effect */
 export type Effect<R,E,A> = T.Effect<R, E, A>
 export { UIO as EffectU, IO as EffectE, RIO as EffectR } from "@effect-ts-app/core/Effect"
 
 export namespace Schedule {
   export * from "@effect-ts/core/Effect/Schedule"
 }
+/** @tsplus type ets/Schedule */
 export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 
 export namespace Option {
   export * from "@effect-ts-app/core/Option"
 }
+/** @tsplus type ets/Option */
 export type Option<A> = O.Option<A>
 
 export namespace Sync {
   export * from "@effect-ts-app/core/Sync"
 }
 
+/** @tsplus type ets/Sync */
 export type Sync<R, E, A> = Sy.Sync<R, E, A>
 export { UIO as SyncU, IO as SyncE, RIO as SyncR } from "@effect-ts-app/core/Sync"
 
 export namespace NonEmptyArray {
   export * from "@effect-ts-app/core/NonEmptyArray"
 }
+/** @tsplus type ets/NonEmptyArray */
 export type NonEmptyArray<A> = NA.NonEmptyArray<A>
 
 export namespace NonEmptySet {
   export * from "@effect-ts-app/core/NonEmptySet"
 }
+/** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
 export namespace Array {
   export * from "@effect-ts-app/core/Array"
 }
+/** @tsplus type ets/Array */
 export type Array<A> = A.Array<A>
 
 export namespace Chunk {
   export * from "@effect-ts-app/core/Chunk"
 }
+/** @tsplus type ets/Chunk */
 export type Chunk<A> = CNK.Chunk<A>
 
 export namespace Set {
   export * from "@effect-ts-app/core/Set"
 }
+/** @tsplus type ets/Set */
 export type Set<A> = SET.Set<A>
 
 export namespace Layer {
   export * from "@effect-ts/core/Effect/Layer"
 }
+/** @tsplus type ets/Layer */
 export type Layer<RIn, E, ROut> = LAYER.Layer<RIn, E, ROut>
 
 export namespace Ref {
   export * from "@effect-ts/core/Effect/Ref"
 }
+/** @tsplus type ets/Ref */
 export type Ref<A> = REF.Ref<A>
 
 export namespace Queue {
   export * from "@effect-ts/core/Effect/Queue"
 }
+/** @tsplus type ets/Queue */
 export type Queue<A> = QUEUE.Queue<A>
 export { Enqueue, XEnqueue, Dequeue, XDequeue} from "@effect-ts/core/Effect/Queue"
 
 export namespace Semaphore {
   export * from "@effect-ts/core/Effect/Semaphore"
 }
+/** @tsplus type ets/Semaphore */
 export type Semaphore = SEMAPHORE.Semaphore
 
 export namespace Map {
   export * from "@effect-ts/core/Collections/Immutable/Map"
 }
+/** @tsplus type ets/Map */
 export type Map<K, A> = MAP.Map<K, A>
 
 export namespace Lens {
   export * from "@effect-ts/monocle/Lens"
 }
+/** @tsplus type ets/Lens */
 export type Lens<S, A> = LNS.Lens<S, A>
 
 export namespace Schema {
   export * from "@effect-ts-app/core/Schema"
 }
 export { DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
+/** @tsplus type ets/Schema */
 export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
