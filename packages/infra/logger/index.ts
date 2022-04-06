@@ -67,7 +67,16 @@ export const createLoggerConfig = (
           level: c.defaultLevel,
           format: winston.format.combine(
             winston.format.timestamp(),
-            winston.format.metadata({ fillExcept: ["level", "message", "timestamp"] }),
+            winston.format.metadata({
+              fillExcept: [
+                "level",
+                "message",
+                "timestamp",
+                "requestId",
+                "requestName",
+                "requestLocale",
+              ],
+            }),
             reformatMetadataJson(),
             winston.format.json()
           ),
