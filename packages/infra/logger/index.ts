@@ -34,7 +34,7 @@ const fileFormat = winston.format.combine(
 )
 
 export const createLoggerConfig = (
-  c: { devMode: boolean; service: string; baseDir?: string },
+  c: { devMode: boolean; service: string; baseDir?: string; defaultLevel?: string },
   meta?: Record<string, string>
 ) => ({
   defaultMeta: c.devMode ? meta : { service: c.service, ...meta },
@@ -61,6 +61,7 @@ export const createLoggerConfig = (
       ]
     : [
         new winston.transports.Console({
+          level: c.defaultLevel,
           format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.json()
