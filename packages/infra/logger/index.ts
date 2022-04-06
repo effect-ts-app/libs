@@ -4,6 +4,7 @@ import { format } from "winston"
 
 import * as console from "./Console/index.js"
 import * as logger from "./Logger/index.js"
+import { prettyJson } from "./util.js"
 
 export { logger, console }
 
@@ -21,17 +22,19 @@ const consoleFormatDev = winston.format.combine(
   winston.format.simple()
 )
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const prettyJson = (obj: any): string => {
-  return JSON.stringify(obj, undefined, 2)
-}
-
 const fileFormat = winston.format.combine(
   winston.format.timestamp(),
   stripAnsi(),
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   winston.format.printf((i) => `${i.timestamp} | ${i.message}. ${prettyJson(i)}`)
 )
+
+const reformatMetadataJson = winston.format((info) => {
+  if (info.metadata) {
+    info.metadata = prettyJson(info.metadata)
+  }
+  return info
+})
 
 export const createLoggerConfig = (
   c: { devMode: boolean; service: string; baseDir?: string; defaultLevel?: string },
@@ -64,6 +67,8 @@ export const createLoggerConfig = (
           level: c.defaultLevel,
           format: winston.format.combine(
             winston.format.timestamp(),
+            winston.format.metadata({ fillExcept: ["level", "message", "timestamp"] }),
+            reformatMetadataJson(),
             winston.format.json()
           ),
         }),
