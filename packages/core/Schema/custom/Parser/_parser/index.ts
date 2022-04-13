@@ -21,6 +21,9 @@ export interface ParserEnv {
   }
   lax?: boolean
 }
+/**
+ * @tsplus type ets/Schema/Parser
+ */
 export type Parser<I, E, A> = {
   (u: I, env?: ParserEnv): T.These<E, A>
 }

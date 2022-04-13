@@ -4,6 +4,9 @@ import * as O from "@effect-ts/core/Option"
 
 import * as S from "../../_schema/index.js"
 
+/**
+ * @tsplus type ets/Schema/Encoder
+ */
 export type Encoder<Output, Encoded> = {
   (u: Output): Encoded
 }

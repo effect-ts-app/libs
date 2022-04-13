@@ -7,6 +7,9 @@ import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 import * as Th from "../../These/index.js"
 
+/**
+ * @tsplus type ets/Schema/Constructor
+ */
 export type Constructor<Input, Output, ConstructorError> = {
   (u: Input): Th.These<ConstructorError, Output>
 }

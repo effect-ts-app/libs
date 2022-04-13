@@ -27,6 +27,10 @@ export type SchemaSym = typeof SchemaSym
  *
  * 4) interacted with via `Api`
  */
+/**
+ * @tsplus type ets/Schema/Schema
+ * @tsplus companion ets/Schema/SchemaOps
+ */
 export abstract class Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
   readonly [SchemaSym]: SchemaSym = SchemaSym
   readonly _ParserInput!: (_: ParserInput, env?: ParserEnv) => void
