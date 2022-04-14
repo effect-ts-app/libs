@@ -902,11 +902,6 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/monocle/-/monocle-0.38.0.tgz#9da12f5cff5a7686674384c28474c7cec729d1af"
   integrity sha512-rPy8bpqXWJprY9JEps4rw8RlQTzTOnsC7uMqTcGEwv2ySdVUGxjHqcsh739PvVALRHSkJfc0gVS6FShzbwdVRQ==
 
-"@effect-ts/morphic@^0.38.1":
-  version "0.38.1"
-  resolved "https://registry.yarnpkg.com/@effect-ts/morphic/-/morphic-0.38.1.tgz#47e2d0b202630d91b66ce884042a0a6523e9b6eb"
-  integrity sha512-xzrKQFPt0tEZ1gNwUO7p/vCT/7lMJHX1R9WpY8NR8Ev8zFx293RbfCnknFhEgOhivMo3oQ20qYfgu7P7qPhOZg==
-
 "@effect-ts/node@^0.34.0":
   version "0.34.0"
   resolved "https://registry.yarnpkg.com/@effect-ts/node/-/node-0.34.0.tgz#539c8a09c647f2325ea95d111b8f65f2b2beb5c7"
