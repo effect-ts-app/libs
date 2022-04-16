@@ -14,6 +14,7 @@ packages/**/*.d.ts.map
 !**/.eslintrc.js
 !**/.prettierrc.js
 !packages/prelude/_ext/*.d.ts
+!**/_src
 _esm
 _mjs
 
