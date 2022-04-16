@@ -24,7 +24,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const insert = insertOriginal(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, (x) => !eq.equals(x, a))["|>"](insert(a))
+    return filter_(set, (x) => !eq.equals(x, a)) >= insert(a)
   }
 
   return {

@@ -22,6 +22,9 @@ import { NonEmptyArray } from "./NonEmptyArray.js"
 import * as Ord from "./Order.js"
 import type { NonEmptyBrand } from "./Schema/custom/_api/nonEmpty.js"
 
+/**
+ * @tsplus type etc/NESet
+ */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
 function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
@@ -34,7 +37,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const insert_: (set: NonEmptySet<A>, a: A) => NonEmptySet<A> = insert_Original as any
 
   function replace_(set: NonEmptySet<A>, a: A) {
-    return filter_(set, (x) => !eq.equals(x, a))["|>"](insert__(a)) as NonEmptySet<A>
+    return (filter_(set, (x) => !eq.equals(x, a)) >= insert__(a)) as NonEmptySet<A>
   }
 
   const toArray__ = toArrayOriginal(ord)

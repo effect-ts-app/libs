@@ -16,7 +16,7 @@ export function findIndexOrElse<A>(predicate: Predicate<A>): (as: Array<A>) => n
 }
 
 export function modifyAtOrOriginal_<A>(as: A.Array<A>, i: number, f: (a: A) => A) {
-  return A.modifyAt_(as, i, f)["|>"](O.getOrElse(() => as))
+  return A.modifyAt_(as, i, f) >= O.getOrElse(() => as)
 }
 
 export function modifyOrOriginal_<A>(as: A.Array<A>, a: A, f: (a: A) => A) {
@@ -36,7 +36,7 @@ export function modifyOrOriginal<A>(a: A, f: (a: A) => A) {
 }
 
 export function deleteAtOrOriginal_<A>(as: A.Array<A>, i: number) {
-  return A.deleteAt_(as, i)["|>"](O.getOrElse(() => as))
+  return A.deleteAt_(as, i) >= O.getOrElse(() => as)
 }
 
 export function deleteOrOriginal_<A>(as: A.Array<A>, a: A) {
@@ -57,7 +57,7 @@ export function deleteOrOriginal<A>(a: A) {
 export function sortByO<A>(
   ords: O.Option<NA.NonEmptyArray<Ord<A>>>
 ): (a: A.Array<A>) => A.Array<A> {
-  return ords["|>"](O.fold(() => identity, A.sortBy))
+  return ords >= O.fold(() => identity, A.sortBy)
 }
 
 export * from "@effect-ts/core/Collections/Immutable/Array"

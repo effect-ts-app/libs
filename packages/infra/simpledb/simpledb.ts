@@ -91,7 +91,8 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
   return (record: A) =>
     getCache((c) =>
       pipe(
-        c.find(record.id)["|>"](EO.map((x) => x.version)),
+        c.find(record.id),
+        EO.map((x) => x.version),
         T.chain((cv) => save(record, cv)),
         T.tap((r) => c.set(record.id, r)),
         T.map((r) => r.data)

@@ -41,7 +41,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         RED.hmgetAll(getKey(id)),
         EO.chainEffect((v) =>
           pipe(
-            RedisSerializedDBRecord.Parser["|>"](MO.condemnFail)(v),
+            pipe(RedisSerializedDBRecord.Parser, MO.condemnFail)(v),
             T.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version })),
             T.mapError((e) => new ConnectionException(new Error(e.toString())))
           )
@@ -50,9 +50,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       )
     }
     function store(record: A, currentVersion: O.Option<string>) {
-      const version = currentVersion["|>"](
-        O.map((cv) => (parseInt(cv) + 1).toString())
-      )["|>"](O.getOrElse(() => "1"))
+      const version =
+        currentVersion >=
+        O.map((cv) => (parseInt(cv) + 1).toString()) >=
+        O.getOrElse(() => "1")
       return O.fold_(
         currentVersion,
         () =>
@@ -133,9 +134,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           (lock) => ({
-            release: T.tryPromise(() => lock.unlock() as any as Promise<void>)["|>"](
-              T.orDie
-            ),
+            release:
+              T.tryPromise(() => lock.unlock() as any as Promise<void>) >= T.orDie,
           })
         ),
         (l) => l.release
@@ -153,9 +153,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           // release
           (lock) => ({
             // TODO
-            release: T.tryPromise(() => lock.unlock() as any as Promise<void>)["|>"](
-              T.orDie
-            ),
+            release:
+              T.tryPromise(() => lock.unlock() as any as Promise<void>) >= T.orDie,
           })
         ),
         (l) => l.release

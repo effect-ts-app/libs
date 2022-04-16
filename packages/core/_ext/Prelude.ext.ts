@@ -8,6 +8,7 @@ import {
   Either,
   Managed,
   NonEmptyArray,
+  //NonEmptySet,
   Option,
   Set,
   Sync,
@@ -39,12 +40,36 @@ import { pipe } from "./pipe"
 export const pipeEffect = pipe
 
 /**
+ * @tsplus operator ets/NESet >=
+ * @tsplus fluent ets/NESet apply
+ * @tsplus fluent ets/NESet __call
+ * @tsplus macro pipe
+ */
+export const pipeNESet = pipe
+
+/**
+ * @tsplus operator ets/Set >=
+ * @tsplus fluent ets/Set apply
+ * @tsplus fluent ets/Set __call
+ * @tsplus macro pipe
+ */
+export const pipeSet = pipe
+
+/**
  * @tsplus operator ets/Option >=
  * @tsplus fluent ets/Option apply
  * @tsplus fluent ets/Option __call
  * @tsplus macro pipe
  */
 export const pipeOption = pipe
+
+/**
+ * @tsplus operator ets/Either >=
+ * @tsplus fluent ets/Either apply
+ * @tsplus fluent ets/Either __call
+ * @tsplus macro pipe
+ */
+export const pipeEither = pipe
 
 /**
  * @tsplus operator ets/Sync >=

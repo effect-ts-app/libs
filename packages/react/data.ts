@@ -111,7 +111,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
 export function queryResult<R, E, A>(
   self: T.Effect<R, E, A>
 ): T.Effect<R, never, QueryResult<E, A>> {
-  return self["|>"](T.fold(fail, succeed))
+  return pipe(self, T.fold(fail, succeed))
 }
 
 export function matchQuery<E, A, Result>(_: {
@@ -121,19 +121,22 @@ export function matchQuery<E, A, Result>(_: {
   Success: (a: A, isRefreshing: boolean) => Result
 }) {
   return (r: QueryResult<E, A>) =>
-    r["|>"](
+    pipe(
+      r,
       matchTag({
         Initial: _.Initial,
         Loading: _.Loading,
         Refreshing: (r) =>
-          r.current["|>"](
+          pipe(
+            r.current,
             E.fold(
               (e) => _.Error(e, true, r.previous),
               (a) => _.Success(a, true)
             )
           ),
         Done: (r) =>
-          r.current["|>"](
+          pipe(
+            r.current,
             E.fold(
               (e) => _.Error(e, false, r.previous),
               (a) => _.Success(a, false)

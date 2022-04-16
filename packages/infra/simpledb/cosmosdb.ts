@@ -103,9 +103,9 @@ WHERE (
                   timestamp: new Date(),
                   data,
                 })
-              )
-                ["|>"](T.asUnit)
-                ["|>"](T.orDie),
+              ) >=
+              T.asUnit >=
+              T.orDie,
             (currentVersion) =>
               pipe(
                 T.tryPromise(() =>
@@ -125,7 +125,8 @@ WHERE (
                         },
                       }
                     )
-                )["|>"](T.orDie),
+                ),
+                T.orDie,
                 T.chain((x) => {
                   if (x.statusCode === 412) {
                     return T.fail(new OptimisticLockException(type, record.id))

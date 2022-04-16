@@ -9,11 +9,11 @@ const exists = promisify(fs.exists)
 // const unlinkFile = promisify(fs.unlink)
 
 export function writeTextFile(fileName: string, content: string) {
-  return T.tryPromise(() => writeFile(fileName, content, "utf-8"))["|>"](T.orDie)
+  return T.tryPromise(() => writeFile(fileName, content, "utf-8")) >= T.orDie
 }
 
 export function fileExists(fileName: string) {
-  return T.tryPromise(() => exists(fileName))["|>"](T.orDie)
+  return T.tryPromise(() => exists(fileName)) >= T.orDie
 }
 
 export function readTextFile(fileName: string) {

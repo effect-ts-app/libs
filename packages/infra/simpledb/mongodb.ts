@@ -70,9 +70,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function store(record: A, currentVersion: O.Option<Version>) {
       return T.gen(function* ($) {
-        const version = currentVersion["|>"](
-          O.map((cv) => (parseInt(cv) + 1).toString())
-        )["|>"](O.getOrElse(() => "1"))
+        const version =
+          currentVersion >=
+          O.map((cv) => (parseInt(cv) + 1).toString()) >=
+          O.getOrElse(() => "1")
 
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
@@ -89,9 +90,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       checkKeys: false, // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
                     } as InsertOneOptions
                   )
-              )
-                ["|>"](T.asUnit)
-                ["|>"](T.orDie),
+              ) >=
+              T.asUnit >=
+              T.orDie,
             (currentVersion) =>
               pipe(
                 T.tryPromise(() =>
@@ -104,7 +105,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                     },
                     { upsert: false }
                   )
-                )["|>"](T.orDie),
+                ),
+                T.orDie,
                 T.chain((x) => {
                   if (!x.modifiedCount) {
                     return T.fail(new OptimisticLockException(type, record.id))

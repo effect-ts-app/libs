@@ -61,7 +61,8 @@ export const fromEffectIf = <R, E, A>(eff: T.Effect<R, E, A>) =>
 export const encaseNullableTask = <T>(
   taskCreator: F.Lazy<Promise<T | null>>
 ): EffectOption<unknown, never, NonNullable<T>> =>
-  T.map_(T.tryPromise(taskCreator)["|>"](T.orDie), O.fromNullable)
+  // TODO: why error here?
+  T.map_(T.tryPromise(taskCreator) >= T.orDie, O.fromNullable)
 
 export const encaseNullableTaskErrorIfNull = <T, E>(
   taskCreator: F.Lazy<Promise<T | null>>,
@@ -236,7 +237,7 @@ export class GenEffect<R, E, A> {
 
 function adapter(_: any, __?: any) {
   if (Utils.isEither(_)) {
-    return new GenEffect(fromEither(() => _)["|>"](fromEffect), __)
+    return new GenEffect(fromEither(() => _) >= fromEffect, __)
   }
   if (Utils.isOption(_)) {
     // if (__ && typeof __ === "function") {
@@ -245,9 +246,9 @@ function adapter(_: any, __?: any) {
     return new GenEffect(fromOption(_), __)
   }
   if (Utils.isTag(_)) {
-    return new GenEffect(service(_)["|>"](fromEffect), __)
+    return new GenEffect(service(_) >= fromEffect, __)
   }
-  return new GenEffect(_["|>"](fromEffectIf), __)
+  return new GenEffect(_ >= fromEffectIf, __)
 }
 
 export interface Adapter {

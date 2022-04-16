@@ -161,11 +161,12 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
                 Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
               )
             ) as any,
-            discriminator: schemaMeta.tag["|>"](
+            discriminator:
+              (schemaMeta.tag as O.Option<any>) >=
               O.map((_: any) => ({
                 propertyName: _.key, // TODO
-              }))
-            )["|>"](O.toUndefined),
+              })) >=
+              O.toUndefined,
           })
         }
         case fromStringIdentifier:

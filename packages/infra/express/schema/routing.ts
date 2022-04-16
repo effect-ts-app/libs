@@ -124,27 +124,28 @@ export function makeFromSchema<ResA>(
   const makeReqCookieSchema = EO.fromNullable(Req.Cookie)["|>"](
     EO.chainEffect(jsonSchema)
   )
-  const makeReqPathSchema = EO.fromNullable(Req.Path)["|>"](EO.chainEffect(jsonSchema))
-  const makeReqBodySchema = EO.fromNullable(Req.Body)["|>"](EO.chainEffect(jsonSchema))
+  const makeReqPathSchema = EO.fromNullable(Req.Path) >= EO.chainEffect(jsonSchema)
+  const makeReqBodySchema = EO.fromNullable(Req.Body) >= EO.chainEffect(jsonSchema)
   //const makeReqSchema = schema(Req)
 
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
     return (a: O.Option<JSONSchema | SubSchema>) => {
-      return a["|>"](O.chain((o) => (isObjectSchema(o) ? O.some(o) : O.none)))
-        ["|>"](
-          O.map((x) => {
+      return pipe(
+        a,
+        O.chain((o) => (isObjectSchema(o) ? O.some(o) : O.none)),
+        O.map((x) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return Object.keys(x.properties!).map((p) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return Object.keys(x.properties!).map((p) => {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              const schema = x.properties![p]
-              const required = Boolean(x.required?.includes(p))
-              return { name: p, in: inn, required, schema }
-            })
+            const schema = x.properties![p]
+            const required = Boolean(x.required?.includes(p))
+            return { name: p, in: inn, required, schema }
           })
-        )
-        ["|>"](O.getOrElse(() => []))
+        }),
+        O.getOrElse(() => [])
+      )
     }
   }
 
