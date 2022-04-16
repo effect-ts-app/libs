@@ -22,9 +22,9 @@
     },
     "scripts": {
         "build": "yarn clean && ttsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
-        "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir . --out-file-extension .js --source-maps",
+        "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
         "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
-        "clean": "rm -rf ./_esm && rm -rf ./_mjs && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
+        "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs",
         "postpublish": "yarn clean",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
         "prepare": "yarn build",
@@ -43,19 +43,19 @@
     "exports": {
         ".": {
             "import": "./_mjs/index.mjs",
-            "require": "./index.js"
+            "require": "./_cjs/index.js"
         },
         "./data": {
             "import": "./_mjs/data.mjs",
-            "require": "./data.js"
+            "require": "./_cjs/data.js"
         },
         "./hooks": {
             "import": "./_mjs/hooks.mjs",
-            "require": "./hooks.js"
+            "require": "./_cjs/hooks.js"
         },
         "./context": {
             "import": "./_mjs/context.mjs",
-            "require": "./context.js"
+            "require": "./_cjs/context.js"
         }
     },
     "sideEffects": false
