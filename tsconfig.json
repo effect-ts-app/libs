@@ -2,32 +2,6 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@effect-ts-app/core/*": [
-        "packages/core/_src/*"
-      ],
-      "@effect-ts-app/core": [
-        "packages/core/_src"
-      ],
-      "@effect-ts-app/infra/*": [
-        "packages/infra/_src/*"
-      ],
-      "@effect-ts-app/infra": [
-        "packages/infra/_src"
-      ],
-      "@effect-ts-app/fluent/*": [
-        "packages/fluent/_src/*"
-      ],
-      "@effect-ts-app/fluent": [
-        "packages/fluent/_src"
-      ],
-      "@effect-ts-app/prelude/*": [
-        "packages/prelude/*"
-      ],
-      "@effect-ts-app/prelude": [
-        "packages/prelude"
-      ]
-    },
     "target": "ES2020",
     "module": "ESNext"
   }

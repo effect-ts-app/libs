@@ -17,9 +17,35 @@
       "@effect-ts-app/prelude/_ext/index",
       "@effect-ts-app/fluent/types/node"
     ],
+    "paths": {
+      "@effect-ts-app/core/*": [
+        "../core/_src/*"
+      ],
+      "@effect-ts-app/core": [
+        "../core/_src"
+      ],
+      "@effect-ts-app/infra/*": [
+        "../infra/_src/*"
+      ],
+      "@effect-ts-app/infra": [
+        "../infra/_src"
+      ],
+      "@effect-ts-app/fluent/*": [
+        "../fluent/_src/*"
+      ],
+      "@effect-ts-app/fluent": [
+        "../fluent/_src"
+      ],
+      "@effect-ts-app/prelude/*": [
+        "../prelude/*"
+      ],
+      "@effect-ts-app/prelude": [
+        "../prelude"
+      ]
+    },
   },
   "include": [
-    "./src"
+    "./_src"
   ],
   "exclude": [
     "./dist",
@@ -28,5 +54,10 @@
     "lib",
     "dist",
     "**/*.d.ts.map"
+  ],
+  "references": [
+    {
+      "path": "../core"
+    }
   ]
 }

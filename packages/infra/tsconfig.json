@@ -6,6 +6,7 @@
             "DOM"
         ],
         "moduleResolution": "node",
+        "baseUrl": "./",
         "outDir": "./_esm",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
@@ -13,6 +14,32 @@
             "@effect-ts-app/prelude/_ext/index",
             "@effect-ts-app/fluent/types/node"
         ],
+        "paths": {
+            "@effect-ts-app/core/*": [
+                "../core/_src/*"
+            ],
+            "@effect-ts-app/core": [
+                "../core/_src"
+            ],
+            "@effect-ts-app/infra/*": [
+                "../infra/_src/*"
+            ],
+            "@effect-ts-app/infra": [
+                "../infra/_src"
+            ],
+            "@effect-ts-app/fluent/*": [
+                "../fluent/_src/*"
+            ],
+            "@effect-ts-app/fluent": [
+                "../fluent/_src"
+            ],
+            "@effect-ts-app/prelude/*": [
+                "../prelude/*"
+            ],
+            "@effect-ts-app/prelude": [
+                "../prelude"
+            ]
+        },
         "plugins": [
             // // Transform paths in output .js files
             // {
@@ -29,10 +56,15 @@
         ]
     },
     "include": [
-        "./"
+        "./_src"
     ],
     "exclude": [
-        "./_esm"
+        "./dist",
+        "node_modules",
+        "build",
+        "lib",
+        "dist",
+        "**/*.d.ts.map"
     ],
     "references": [
         {

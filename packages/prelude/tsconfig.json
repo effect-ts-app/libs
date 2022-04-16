@@ -6,7 +6,33 @@
         "noEmit": false,
         "jsx": "react",
         "declarationMap": false,
-        "tsPlusConfig": "../../tsplus.config.json"
+        "tsPlusConfig": "../../tsplus.config.json",
+        "paths": {
+            "@effect-ts-app/core/*": [
+                "../core/_src/*"
+            ],
+            "@effect-ts-app/core": [
+                "../core/_src"
+            ],
+            "@effect-ts-app/infra/*": [
+                "../infra/_src/*"
+            ],
+            "@effect-ts-app/infra": [
+                "../infra/_src"
+            ],
+            "@effect-ts-app/fluent/*": [
+                "../fluent/_src/*"
+            ],
+            "@effect-ts-app/fluent": [
+                "../fluent/_src"
+            ],
+            "@effect-ts-app/prelude/*": [
+                "../prelude/*"
+            ],
+            "@effect-ts-app/prelude": [
+                "../prelude"
+            ]
+        },
     },
     "include": [
         "./"
