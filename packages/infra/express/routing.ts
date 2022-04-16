@@ -198,14 +198,13 @@ export function handleRequest<
         })
       ),
       // final catch all; expecting never so that unhandled known errors will show up
-      T.catchAll(
-        (err: never) =>
-          T.succeedWith(() =>
-            console.error(
-              "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
-              err
-            )
-          ) >= T.chain(T.die)
+      T.catchAll((err: never) =>
+        T.succeedWith(() =>
+          console.error(
+            "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
+            err
+          )
+        ).chain(T.die)
       ),
       T.tapCause(() => T.succeedWith(() => res.status(500).send()))
     )

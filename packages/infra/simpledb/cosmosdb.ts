@@ -103,9 +103,9 @@ WHERE (
                   timestamp: new Date(),
                   data,
                 })
-              ) >=
-              T.asUnit >=
-              T.orDie,
+              )
+                .asUnit()
+                .orDie(),
             (currentVersion) =>
               pipe(
                 T.tryPromise(() =>

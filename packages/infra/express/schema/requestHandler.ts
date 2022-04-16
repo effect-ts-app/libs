@@ -95,7 +95,7 @@ function mapErrors_<E, NE, NER extends Record<string, T.Effect<any, E, any>>>(
 } {
   return typedKeysOf(t).reduce(
     (prev, cur) => {
-      prev[cur] = t[cur] >= T.mapError(mapErrors(cur))
+      prev[cur] = t[cur].mapError(mapErrors(cur))
       return prev
     },
     {} as {
@@ -230,44 +230,39 @@ export function makeRequestParsers<
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph =
-    O.fromNullable(Request.Headers) >=
-    O.map((s) => s) >=
-    O.map(Parser.for) >= // todo strict
-    O.map(MO.condemn) >=
-    EO.fromOption
-  const parseHeaders = (u: unknown) => ph >= EO.chain((d) => d(u) >= EO.fromEffect)
+    O.fromNullable(Request.Headers)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EO.fromOption
+  const parseHeaders = (u: unknown) => ph.chainOption((d) => d(u) >= EO.fromEffect)
 
   const pq =
-    O.fromNullable(Request.Query) >=
-    O.map((s) => s) >=
-    O.map(Parser.for) >= // todo strict
-    O.map(MO.condemn) >=
-    EO.fromOption
-  const parseQuery = (u: unknown) => pq >= EO.chain((d) => d(u) >= EO.fromEffect)
+    O.fromNullable(Request.Query)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EO.fromOption
+  const parseQuery = (u: unknown) => pq.chainOption((d) => d(u) >= EO.fromEffect)
 
   const pb =
-    O.fromNullable(Request.Body) >=
-    O.map((s) => s) >=
-    O.map(Parser.for) >= // todo strict
-    O.map(MO.condemn) >=
-    EO.fromOption
-  const parseBody = (u: unknown) => pb >= EO.chain((d) => d(u) >= EO.fromEffect)
+    O.fromNullable(Request.Body)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EO.fromOption
+  const parseBody = (u: unknown) => pb.chainOption((d) => d(u) >= EO.fromEffect)
 
   const pp =
-    O.fromNullable(Request.Path) >=
-    O.map((s) => s) >=
-    O.map(Parser.for) >= // todo strict
-    O.map(MO.condemn) >=
-    EO.fromOption
-  const parsePath = (u: unknown) => pp >= EO.chain((d) => d(u) >= EO.fromEffect)
+    O.fromNullable(Request.Path)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EO.fromOption
+  const parsePath = (u: unknown) => pp.chainOption((d) => d(u) >= EO.fromEffect)
 
   const pc =
-    O.fromNullable(Request.Cookie) >=
-    O.map((s) => s) >=
-    O.map(Parser.for) >= // todo strict
-    O.map(MO.condemn) >=
-    EO.fromOption
-  const parseCookie = (u: unknown) => pc >= EO.chain((d) => d(u) >= EO.fromEffect)
+    O.fromNullable(Request.Cookie)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EO.fromOption
+  const parseCookie = (u: unknown) => pc.chainOption((d) => d(u) >= EO.fromEffect)
 
   return {
     parseBody,

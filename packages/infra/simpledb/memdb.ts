@@ -74,10 +74,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function store(record: A, currentVersion: O.Option<Version>) {
-      const version =
-        currentVersion >=
-        O.map((cv) => (parseInt(cv) + 1).toString()) >=
-        O.getOrElse(() => "1")
+      const version = currentVersion
+        .map((cv) => (parseInt(cv) + 1).toString())
+        .getOrElse(() => "1")
 
       const getData = flow(
         encode,
