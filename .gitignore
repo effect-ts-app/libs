@@ -13,7 +13,7 @@ packages/**/*.d.ts.map
 !**/jest.config.js
 !**/.eslintrc.js
 !**/.prettierrc.js
-!**/_ext/*.d.ts
+!packages/prelude/_ext/*.d.ts
 _esm
 _mjs
 

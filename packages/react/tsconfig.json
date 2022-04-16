@@ -4,7 +4,8 @@
         "moduleResolution": "node",
         "outDir": "./_esm",
         "noEmit": false,
-        "jsx": "react"
+        "jsx": "react",
+        "tsPlusConfig": "../../tsplus.config.json"
     },
     "include": [
         "./"

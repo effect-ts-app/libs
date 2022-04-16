@@ -5,7 +5,8 @@
         "outDir": "./_esm",
         "noEmit": false,
         "jsx": "react",
-        "declarationMap": false
+        "declarationMap": false,
+        "tsPlusConfig": "../../tsplus.config.json"
     },
     "include": [
         "./"

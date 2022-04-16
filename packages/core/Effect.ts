@@ -142,7 +142,7 @@ export function liftM<A, B>(a: (a: A) => B) {
  * taps the Effect, returning A.
  */
 export function tupleTap<A, B, R, E, C>(f: (b: B) => (a: A) => Effect<R, E, C>) {
-  return (t: readonly [A, B]) => succeed(t[0]) >= tap(f(t[1]))
+  return (t: readonly [A, B]) => succeed(t[0]).tap(f(t[1]))
 }
 
 /**
