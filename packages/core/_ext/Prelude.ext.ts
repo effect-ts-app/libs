@@ -1,7 +1,18 @@
-import "./Lens.ext"
+//import "./Lens.ext"
 import "./Schema.ext"
 
-import { Chunk, Effect, EffectOption, NonEmptyArray, Option, Set, Sync } from "@effect-ts-app/prelude"
+import {
+  Chunk,
+  Effect,
+  EffectOption,
+  Either,
+  Managed,
+  NonEmptyArray,
+  Option,
+  Set,
+  Sync,
+} from "@effect-ts-app/prelude"
+
 import { pipe } from "./pipe"
 
 // TODO: + for zipFlatten..
@@ -12,10 +23,10 @@ import { pipe } from "./pipe"
  * @tsplus fluent ets/Effect zipFlatten
  */
 //  export function zipFlatten_<R, E, A, R2, E2, A2>(
-//   self: Effect<R, E, A>,
-//   that: LazyArg<Effect<R2, E2, A2>>,
+//   self: Effect.Effect<R, E, A>,
+//   that: LazyArg<Effect.Effect<R2, E2, A2>>,
 //   __tsplusTrace?: string
-// ): Effect<R & R2, E | E2, MergeTuple<A, A2>> {
+// ): Effect.Effect<R & R2, E | E2, MergeTuple<A, A2>> {
 //   return self.zipWith(that, Tuple.mergeTuple);
 // }
 
@@ -26,6 +37,14 @@ import { pipe } from "./pipe"
  * @tsplus macro pipe
  */
 export const pipeEffect = pipe
+
+/**
+ * @tsplus operator ets/Option >=
+ * @tsplus fluent ets/Option apply
+ * @tsplus fluent ets/Option __call
+ * @tsplus macro pipe
+ */
+export const pipeOption = pipe
 
 /**
  * @tsplus operator ets/Sync >=
@@ -43,10 +62,10 @@ export const pipeSync = pipe
  * @tsplus operator ets/Effect >
  */
 export function effectZipRight_<R, E, A, R2, E2, A2>(
-  a: Effect<R, E, A>,
-  b: Effect<R2, E2, A2>,
+  a: Effect.Effect<R, E, A>,
+  b: Effect.Effect<R2, E2, A2>,
   __trace?: string
-): Effect<R & R2, E | E2, A2> {
+): Effect.Effect<R & R2, E | E2, A2> {
   return Effect.zipRight_(a, b, __trace)
 }
 
@@ -57,9 +76,9 @@ export function effectZipRight_<R, E, A, R2, E2, A2>(
  * @tsplus operator ets/Sync >
  */
 export function syncZipRight_<R, E, A, R2, E2, A2>(
-  a: Sync<R, E, A>,
-  b: Sync<R2, E2, A2>
-): Sync<R & R2, E | E2, A2> {
+  a: Sync.Sync<R, E, A>,
+  b: Sync.Sync<R2, E2, A2>
+): Sync.Sync<R & R2, E | E2, A2> {
   return Sync.chain_(a, () => b)
 }
 
@@ -70,9 +89,9 @@ export function syncZipRight_<R, E, A, R2, E2, A2>(
  * @tsplus operator ets/Managed >
  */
 export function managedZipRight_<R, E, A, R2, E2, A2>(
-  a: Managed<R, E, A>,
-  b: Managed<R2, E2, A2>
-): Managed<R & R2, E | E2, A2> {
+  a: Managed.Managed<R, E, A>,
+  b: Managed.Managed<R2, E2, A2>
+): Managed.Managed<R & R2, E | E2, A2> {
   return Managed.zipRight_(a, b)
 }
 
