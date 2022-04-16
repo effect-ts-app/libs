@@ -166,15 +166,14 @@ export function makeFromSchema<ResA>(
         summary: _.req?.summary,
         operationId: _.req?.title,
         parameters: [
-          ...(_.reqPath >= makeParameters("path")),
-          ...(_.reqQuery >= makeParameters("query")),
-          ...(_.reqHeaders >= makeParameters("header")),
-          ...(_.reqCookie >= makeParameters("cookie")),
+          ..._.reqPath.pipe(makeParameters("path")),
+          ..._.reqQuery.pipe(makeParameters("query")),
+          ..._.reqHeaders.pipe(makeParameters("header")),
+          ..._.reqCookie.pipe(makeParameters("cookie")),
         ],
-        requestBody: O.toUndefined(
-          _.reqBody >=
-            O.map((schema) => ({ content: { "application/json": { schema } } }))
-        ),
+        requestBody: _.reqBody
+          .map((schema) => ({ content: { "application/json": { schema } } }))
+          .toUndefined(),
         responses: A.concat_(
           [
             isEmpty

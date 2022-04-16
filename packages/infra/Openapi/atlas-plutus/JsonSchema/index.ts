@@ -14,7 +14,7 @@ export interface BaseConstructor {
 }
 
 // @ts-expect-error
-export const Base: BaseConstructor = class<T> {
+export const Base: BaseConstructor = class<T extends {}> {
   constructor(args?: T) {
     if (typeof args === "object" && args != null) {
       const keys = Object.keys(args)

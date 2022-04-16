@@ -229,40 +229,40 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph =
-    O.fromNullable(Request.Headers)
-      .map((s) => s)
-      .map(Parser.for)
-      .map(MO.condemn) >= EO.fromOption
-  const parseHeaders = (u: unknown) => ph.chainOption((d) => d(u) >= EO.fromEffect)
+  const ph = O.fromNullable(Request.Headers)
+    .map((s) => s)
+    .map(Parser.for)
+    .map(MO.condemn)
+    .pipe(EO.fromOption)
+  const parseHeaders = (u: unknown) => ph.chainOption((d) => d(u).pipe(EO.fromEffect))
 
-  const pq =
-    O.fromNullable(Request.Query)
-      .map((s) => s)
-      .map(Parser.for)
-      .map(MO.condemn) >= EO.fromOption
-  const parseQuery = (u: unknown) => pq.chainOption((d) => d(u) >= EO.fromEffect)
+  const pq = O.fromNullable(Request.Query)
+    .map((s) => s)
+    .map(Parser.for)
+    .map(MO.condemn)
+    .pipe(EO.fromOption)
+  const parseQuery = (u: unknown) => pq.chainOption((d) => d(u).pipe(EO.fromEffect))
 
-  const pb =
-    O.fromNullable(Request.Body)
-      .map((s) => s)
-      .map(Parser.for)
-      .map(MO.condemn) >= EO.fromOption
-  const parseBody = (u: unknown) => pb.chainOption((d) => d(u) >= EO.fromEffect)
+  const pb = O.fromNullable(Request.Body)
+    .map((s) => s)
+    .map(Parser.for)
+    .map(MO.condemn)
+    .pipe(EO.fromOption)
+  const parseBody = (u: unknown) => pb.chainOption((d) => d(u).pipe(EO.fromEffect))
 
-  const pp =
-    O.fromNullable(Request.Path)
-      .map((s) => s)
-      .map(Parser.for)
-      .map(MO.condemn) >= EO.fromOption
-  const parsePath = (u: unknown) => pp.chainOption((d) => d(u) >= EO.fromEffect)
+  const pp = O.fromNullable(Request.Path)
+    .map((s) => s)
+    .map(Parser.for)
+    .map(MO.condemn)
+    .pipe(EO.fromOption)
+  const parsePath = (u: unknown) => pp.chainOption((d) => d(u).pipe(EO.fromEffect))
 
-  const pc =
-    O.fromNullable(Request.Cookie)
-      .map((s) => s)
-      .map(Parser.for)
-      .map(MO.condemn) >= EO.fromOption
-  const parseCookie = (u: unknown) => pc.chainOption((d) => d(u) >= EO.fromEffect)
+  const pc = O.fromNullable(Request.Cookie)
+    .map((s) => s)
+    .map(Parser.for)
+    .map(MO.condemn)
+    .pipe(EO.fromOption)
+  const parseCookie = (u: unknown) => pc.chainOption((d) => d(u).pipe(EO.fromEffect))
 
   return {
     parseBody,

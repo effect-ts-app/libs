@@ -43,7 +43,7 @@ export function match<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA,
   R2 = unknown,
   PR = unknown
@@ -100,7 +100,7 @@ export function makeRequestHandler<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
   R2 = unknown,
   PR = unknown
@@ -147,7 +147,7 @@ export function handleRequest<
   HeaderA,
   ResA,
   ResE,
-  ReqA extends PathA & BodyA & QueryA,
+  ReqA extends {} & PathA & BodyA & QueryA,
   R2 = unknown,
   PR = unknown
 >(
@@ -219,7 +219,7 @@ export function get<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA,
   R2 = unknown,
   PR = unknown
@@ -275,7 +275,7 @@ export function post<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
   R2 = unknown,
   PR = unknown
@@ -331,7 +331,7 @@ export function put<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
   R2 = unknown,
   PR = unknown
@@ -387,7 +387,7 @@ export function patch<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
   R2 = unknown,
   PR = unknown
@@ -443,7 +443,7 @@ function del<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA,
+  ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
   R2 = unknown,
   PR = unknown

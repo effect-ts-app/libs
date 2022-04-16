@@ -38,9 +38,8 @@ export function toString(v: unknown) {
 }
 
 export const isTruthy = <T>(item: T | null | undefined): item is T => Boolean(item)
-export const typedKeysOf = <T extends Record<string, any>>(obj: T) =>
-  Object.keys(obj) as (keyof T)[]
-export const typedValuesOf = <T extends Record<string, any>>(obj: T) =>
+export const typedKeysOf = <T extends {}>(obj: T) => Object.keys(obj) as (keyof T)[]
+export const typedValuesOf = <T extends {}>(obj: T) =>
   Object.values(obj) as ValueOf<T>[]
 type ValueOf<T> = T[keyof T]
 
