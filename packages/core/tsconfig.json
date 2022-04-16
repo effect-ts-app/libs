@@ -6,7 +6,22 @@
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "types": [
-            "./_ext/index",
+            "@effect-ts-app/prelude/_ext/index",
+            "@effect-ts-app/fluent/types/node"
+        ],
+        "plugins": [
+            // // Transform paths in output .js files
+            // {
+            //     "transform": "ts-transform-paths"
+            // },
+            // // Transform paths in output .d.ts files (Include this line if you output declarations files)
+            // {
+            //     "transform": "ts-transform-paths",
+            //     "afterDeclarations": true
+            // },
+            {
+                "transform": "@effect-ts/tracing-plugin"
+            }
         ]
     },
     "include": [

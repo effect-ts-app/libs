@@ -38,8 +38,10 @@ export function toString(v: unknown) {
 }
 
 export const isTruthy = <T>(item: T | null | undefined): item is T => Boolean(item)
-export const typedKeysOf = <T>(obj: T) => Object.keys(obj) as (keyof T)[]
-export const typedValuesOf = <T>(obj: T) => Object.values(obj) as ValueOf<T>[]
+export const typedKeysOf = <T extends Record<string, any>>(obj: T) =>
+  Object.keys(obj) as (keyof T)[]
+export const typedValuesOf = <T extends Record<string, any>>(obj: T) =>
+  Object.values(obj) as ValueOf<T>[]
 type ValueOf<T> = T[keyof T]
 
 export type Constructor<T = any> = { new (...args: any[]): T }

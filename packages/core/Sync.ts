@@ -85,11 +85,11 @@ export function deriveLifted<T>(
     const ret = {} as any
 
     for (const k of functions) {
-      ret[k] = (...args: any[]) => accessServiceM(H)((h) => h[k](...args))
+      ret[k] = (...args: any[]) => accessServiceM(H)((h) => (h[k] as any)(...args))
     }
 
     for (const k of constants) {
-      ret[k] = accessServiceM(H)((h) => h[k])
+      ret[k] = accessServiceM(H)((h) => h[k] as any)
     }
 
     for (const k of values) {

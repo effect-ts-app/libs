@@ -6,8 +6,8 @@ import * as E from "@effect-ts/core/Either"
 import * as O from "@effect-ts/core/Option"
 
 export class These<E, A> {
-  readonly [_E]: () => E;
-  readonly [_A]: () => A
+  readonly [_E]!: () => E;
+  readonly [_A]!: () => A
   constructor(readonly effect: E.Either<E, Tp.Tuple<[A, O.Option<E>]>>) {}
 }
 

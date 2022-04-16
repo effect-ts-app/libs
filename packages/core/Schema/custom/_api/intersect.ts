@@ -35,11 +35,11 @@ export const intersectIdentifier =
   S.makeAnnotation<{ self: S.SchemaUPI; that: S.SchemaUPI }>()
 
 export function intersect_<
-  ParsedShape,
+  ParsedShape extends {},
   ConstructorInput,
   Encoded,
   Api,
-  ThatParsedShape,
+  ThatParsedShape extends {},
   ThatConstructorInput,
   ThatEncoded,
   ThatApi
@@ -165,7 +165,7 @@ export function intersect_<
         return Th.fail(S.intersectionE(errors))
       }
 
-      augmentRecord(intersection as {})
+      augmentRecord(intersection as unknown as {})
 
       if (warned) {
         return Th.warn(intersection, S.intersectionE(errors))
@@ -204,9 +204,14 @@ export function intersect_<
   )
 }
 
-export function intersect<ThatParsedShape, ThatConstructorInput, ThatEncoded, ThatApi>(
+export function intersect<
+  ThatParsedShape extends {},
+  ThatConstructorInput,
+  ThatEncoded,
+  ThatApi
+>(
   that: S.Schema<unknown, ThatParsedShape, ThatConstructorInput, ThatEncoded, ThatApi>
-): <ParsedShape, ConstructorInput, Encoded, Api>(
+): <ParsedShape extends {}, ConstructorInput, Encoded, Api>(
   self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ) => DefaultSchema<
   unknown,
@@ -219,7 +224,7 @@ export function intersect<ThatParsedShape, ThatConstructorInput, ThatEncoded, Th
 }
 
 export function intersectLazy<
-  ThatParsedShape,
+  ThatParsedShape extends {},
   ThatConstructorInput,
   ThatEncoded,
   ThatApi
@@ -232,7 +237,7 @@ export function intersectLazy<
     ThatApi
   >
 ) {
-  return <ParsedShape, ConstructorInput, Encoded, Api>(
+  return <ParsedShape extends {}, ConstructorInput, Encoded, Api>(
     self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
   ): DefaultSchema<
     unknown,

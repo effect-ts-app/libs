@@ -181,15 +181,15 @@ export const toNullable = <R, E, A>(eff: SyncOption<R, E, A>) =>
 
 function adapter(_: any) {
   if (Utils.isEither(_)) {
-    return new GenSync(T.fromEither(() => _) >= fromSync)
+    return new GenSync(T.fromEither(() => _).pipe(fromSync))
   }
   if (Utils.isOption(_)) {
     return new GenSync(fromOption(_))
   }
   if (Utils.isTag(_)) {
-    return new GenSync(service(_) >= fromSync)
+    return new GenSync(service(_).pipe(fromSync))
   }
-  return new GenSync(_ >= fromSyncIf)
+  return new GenSync(_.pipe(fromSyncIf))
 }
 
 export const getOrFail_ = <R, E, E2, A>(_: SyncOption<R, E, A>, onErr: () => E2) =>

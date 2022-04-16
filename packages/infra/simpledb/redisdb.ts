@@ -134,8 +134,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           (lock) => ({
-            release:
-              T.tryPromise(() => lock.unlock() as any as Promise<void>) >= T.orDie,
+            release: T.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
           })
         ),
         (l) => l.release
@@ -153,8 +152,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           // release
           (lock) => ({
             // TODO
-            release:
-              T.tryPromise(() => lock.unlock() as any as Promise<void>) >= T.orDie,
+            release: T.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
           })
         ),
         (l) => l.release
