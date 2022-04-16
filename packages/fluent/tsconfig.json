@@ -9,6 +9,7 @@
     "baseUrl": "./",
     "rootDir": "./_src",
     "outDir": "./_esm",
+    "tsBuildInfoFile": "./_esm/tsconfig.tsbuildinfo",
     "noEmit": false,
     "removeComments": true,
     // keep in here, cause madge can't detect it from extended tsconfig

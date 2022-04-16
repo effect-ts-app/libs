@@ -3,6 +3,7 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
+        "tsBuildInfoFile": "./_esm/tsconfig.tsbuildinfo",
         "baseUrl": "./",
         "rootDir": "./_src",
         "noEmit": false,

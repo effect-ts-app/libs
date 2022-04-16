@@ -3,6 +3,7 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
+        "tsBuildInfoFile": "./_esm/tsconfig.tsbuildinfo",
         "noEmit": false,
         "jsx": "react",
         "tsPlusConfig": "../../tsplus.config.json",
