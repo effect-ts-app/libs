@@ -1,0 +1,6 @@
+{
+  "importMap": {
+    "^(.*)/packages/(.*)/_src/(.*)\\.ts$": "@effect-ts-app/$2/$3",
+    "^(.*)/packages/(.*)/(.*)\\.ts$": "@effect-ts-app/$2/$3"
+  }
+}

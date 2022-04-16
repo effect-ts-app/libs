@@ -3,7 +3,11 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
-        "noEmit": false
+        "noEmit": false,
+        "tsPlusConfig": "../../tsplus.config.json",
+        "types": [
+            "./_ext/index",
+        ]
     },
     "include": [
         "./"
