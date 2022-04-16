@@ -115,15 +115,10 @@ export function makeFromSchema<ResA>(
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = EO.fromNullable(Req.Query)["|>"](
-    EO.chainEffect(jsonSchema)
-  )
-  const makeReqHeadersSchema = EO.fromNullable(Req.Headers)["|>"](
-    EO.chainEffect(jsonSchema)
-  )
-  const makeReqCookieSchema = EO.fromNullable(Req.Cookie)["|>"](
-    EO.chainEffect(jsonSchema)
-  )
+  const makeReqQuerySchema = EO.fromNullable(Req.Query) >= EO.chainEffect(jsonSchema)
+  const makeReqHeadersSchema =
+    EO.fromNullable(Req.Headers) >= EO.chainEffect(jsonSchema)
+  const makeReqCookieSchema = EO.fromNullable(Req.Cookie) >= EO.chainEffect(jsonSchema)
   const makeReqPathSchema = EO.fromNullable(Req.Path) >= EO.chainEffect(jsonSchema)
   const makeReqBodySchema = EO.fromNullable(Req.Body) >= EO.chainEffect(jsonSchema)
   //const makeReqSchema = schema(Req)
@@ -170,15 +165,14 @@ export function makeFromSchema<ResA>(
         summary: _.req?.summary,
         operationId: _.req?.title,
         parameters: [
-          ..._.reqPath["|>"](makeParameters("path")),
-          ..._.reqQuery["|>"](makeParameters("query")),
-          ..._.reqHeaders["|>"](makeParameters("header")),
-          ..._.reqCookie["|>"](makeParameters("cookie")),
+          ...(_.reqPath >= makeParameters("path")),
+          ...(_.reqQuery >= makeParameters("query")),
+          ...(_.reqHeaders >= makeParameters("header")),
+          ...(_.reqCookie >= makeParameters("cookie")),
         ],
         requestBody: O.toUndefined(
-          _.reqBody["|>"](
+          _.reqBody >=
             O.map((schema) => ({ content: { "application/json": { schema } } }))
-          )
         ),
         responses: A.concat_(
           [

@@ -238,9 +238,12 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: (yield* $(
-              T.collectAll(
-                [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-              )["|>"](T.map(Chunk.toArray))
+              pipe(
+                T.collectAll(
+                  [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
+                ),
+                T.map(Chunk.toArray)
+              )
             )).map((v, i) => ({
               properties: {
                 _tag: { enum: [i === 0 ? "Left" : "Right"] },
@@ -250,9 +253,6 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
               type: "object",
             })) as any,
             discriminator: { propertyName: "_tag" },
-            /*schemaMeta.tag["|>"](O.map((_) => ({
-                    propertyName: _.key, // TODO
-                })))["|>"](O.toUndefined), */
           })
         }
         case unknownIdentifier: {

@@ -54,7 +54,7 @@ export function optionFromNull<
         (v) => Th.map_(create(v), O.some)
       )
     ),
-    S.encoder((_) => O.map_(_, encode)["|>"](O.toNullable) as Encoded | null),
+    S.encoder((_) => (O.map_(_, encode) >= O.toNullable) as Encoded | null),
     S.mapApi(() => self.Api as Api),
     withDefaults,
     S.annotate(optionFromNullIdentifier, { self })
