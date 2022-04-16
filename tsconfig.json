@@ -4,22 +4,22 @@
     "baseUrl": ".",
     "paths": {
       "@effect-ts-app/core/*": [
-        "packages/core/*"
+        "packages/core/_src/*"
       ],
       "@effect-ts-app/core": [
-        "packages/core"
+        "packages/core/_src"
       ],
       "@effect-ts-app/infra/*": [
-        "packages/infra/*"
+        "packages/infra/_src/*"
       ],
       "@effect-ts-app/infra": [
-        "packages/infra"
+        "packages/infra/_src"
       ],
       "@effect-ts-app/fluent/*": [
-        "packages/fluent/*"
+        "packages/fluent/_src/*"
       ],
       "@effect-ts-app/fluent": [
-        "packages/fluent"
+        "packages/fluent/_src"
       ],
       "@effect-ts-app/prelude/*": [
         "packages/prelude/*"

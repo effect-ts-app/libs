@@ -7,7 +7,7 @@
     ],
     "esModuleInterop": true,
     "baseUrl": "./",
-    "rootDir": "./src",
+    "rootDir": "./_src",
     "outDir": "./_esm",
     "noEmit": false,
     "removeComments": true,
