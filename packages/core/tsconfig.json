@@ -3,6 +3,8 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
+        "baseUrl": "./",
+        "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "types": [

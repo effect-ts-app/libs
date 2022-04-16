@@ -5,7 +5,9 @@
         "outDir": "./_esm",
         "noEmit": false,
         "jsx": "react",
-        "tsPlusConfig": "../../tsplus.config.json"
+        "tsPlusConfig": "../../tsplus.config.json",
+        "baseUrl": "./",
+        "rootDir": "./_src"
     },
     "include": [
         "./"
