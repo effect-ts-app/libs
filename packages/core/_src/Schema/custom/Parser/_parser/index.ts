@@ -1,7 +1,6 @@
 // tracing: off
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
-import * as O from "@effect-ts/core/Option"
 
 import type { Schema, SchemaAny } from "../../_schema/index.js"
 import * as S from "../../_schema/index.js"
@@ -30,8 +29,8 @@ export type Parser<I, E, A> = {
 
 export const interpreters: ((
   schema: SchemaAny
-) => O.Option<() => Parser<unknown, unknown, unknown>>)[] = [
-  O.partial(
+) => Option<() => Parser<unknown, unknown, unknown>>)[] = [
+  Option.partial(
     (miss) =>
       (schema: S.SchemaAny): (() => Parser<unknown, unknown, unknown>) => {
         if (schema instanceof S.SchemaNamed) {

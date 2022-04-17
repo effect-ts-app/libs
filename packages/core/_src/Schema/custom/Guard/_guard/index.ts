@@ -1,15 +1,14 @@
 // tracing: off
 
-import * as O from "@effect-ts/core/Option"
 
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 
 export type Guard<T> = { (u: unknown): u is T }
 
-export const interpreters: ((schema: S.SchemaAny) => O.Option<() => Guard<unknown>>)[] =
+export const interpreters: ((schema: S.SchemaAny) => Option<() => Guard<unknown>>)[] =
   [
-    O.partial((miss) => (schema: S.SchemaAny): (() => Guard<unknown>) => {
+    Option.partial((miss) => (schema: S.SchemaAny): (() => Guard<unknown>) => {
       if (schema instanceof S.SchemaGuard) {
         return () => schema.guard
       }

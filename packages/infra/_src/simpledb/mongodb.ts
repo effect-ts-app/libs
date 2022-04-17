@@ -1,5 +1,3 @@
-import * as T from "@effect-ts/core/Effect"
-import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { IndexDescription, InsertOneOptions } from "mongodb"
@@ -17,23 +15,23 @@ import { Version } from "./simpledb.js"
 const setup = (type: string, indexes: IndexDescription[]) =>
   pipe(
     Mongo.db,
-    T.tap((db) =>
-      T.tryPromise(() => db.createCollection(type).catch((err) => console.warn(err)))
+    Effect.tap((db) =>
+      Effect.tryPromise(() => db.createCollection(type).catch((err) => console.warn(err)))
     ),
-    T.chain((db) => T.tryPromise(() => db.collection(type).createIndexes(indexes)))
+    Effect.chain((db) => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
   )
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => T.RIO<REncode, EA>,
-    decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect.RIO<REncode, EA>,
+    decode: (d: EA) => Effect<RDecode, EDecode, A>,
     //schemaVersion: string,
     indexes: IndexDescription[]
   ) => {
     return pipe(
       setup(type, indexes),
-      T.map(() => ({
+      Effect.map(() => ({
         find: simpledb.find(find, decode, type),
         findBy,
         save: simpledb.storeDirectly(store, type),
@@ -43,14 +41,14 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return pipe(
         Mongo.db,
-        T.chain((db) =>
-          T.tryPromise(() =>
+        Effect.chain((db) =>
+          Effect.tryPromise(() =>
             db
               .collection(type)
               .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
           )
         ),
-        T.map(O.fromNullable),
+        Effect.map(Option.fromNullable),
         EO.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
       )
     }
@@ -58,18 +56,18 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function findBy(keys: Record<string, string>) {
       return pipe(
         Mongo.db,
-        T.chain((db) =>
-          T.tryPromise(() =>
+        Effect.chain((db) =>
+          Effect.tryPromise(() =>
             db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } })
           )
         ),
-        T.map(O.fromNullable),
+        Effect.map(Option.fromNullable),
         EO.map(({ _id }) => _id)
       )
     }
 
-    function store(record: A, currentVersion: O.Option<Version>) {
-      return T.gen(function* ($) {
+    function store(record: A, currentVersion: Option<Version>) {
+      return Effect.gen(function* ($) {
         const version = currentVersion
           .map((cv) => (parseInt(cv) + 1).toString())
           .getOrElse(() => "1")
@@ -77,10 +75,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          O.fold_(
+          Option.fold_(
             currentVersion,
             () =>
-              T.tryPromise(() =>
+              Effect.tryPromise(() =>
                 db
                   .collection(type)
                   .insertOne(
@@ -94,7 +92,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 .orDie(),
             (currentVersion) =>
               pipe(
-                T.tryPromise(() =>
+                Effect.tryPromise(() =>
                   db.collection(type).replaceOne(
                     { _id: record.id, version: currentVersion },
                     {
@@ -105,12 +103,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                     { upsert: false }
                   )
                 ),
-                T.orDie,
-                T.chain((x) => {
+                Effect.orDie,
+                Effect.chain((x) => {
                   if (!x.modifiedCount) {
-                    return T.fail(new OptimisticLockException(type, record.id))
+                    return Effect.fail(new OptimisticLockException(type, record.id))
                   }
-                  return T.unit
+                  return Effect.unit
                 })
               )
           )

@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as T from "@effect-ts/core/Effect"
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as O from "@effect-ts-app/core/Option"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
 
@@ -24,12 +22,12 @@ const ttl = 10 * 1000
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => T.RIO<REncode, EA>,
-    decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect.RIO<REncode, EA>,
+    decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
   ) => {
-    const getData = flow(encode, T.map(JSON.stringify))
+    const getData = flow(encode, Effect.map(JSON.stringify))
     return {
       find: simpledb.find(find, decode, type),
       findByIndex: getIdx,
@@ -42,18 +40,18 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         EO.chainEffect((v) =>
           pipe(
             pipe(RedisSerializedDBRecord.Parser, MO.condemnFail)(v),
-            T.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version })),
-            T.mapError((e) => new ConnectionException(new Error(e.toString())))
+            Effect.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version })),
+            Effect.mapError((e) => new ConnectionException(new Error(e.toString())))
           )
         ),
-        T.orDie
+        Effect.orDie
       )
     }
-    function store(record: A, currentVersion: O.Option<string>) {
+    function store(record: A, currentVersion: Option<string>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      return O.fold_(
+      return Option.fold_(
         currentVersion,
         () =>
           pipe(
@@ -62,36 +60,36 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 pipe(
                   getIndex(record),
                   EO.zipRight(
-                    T.fail(() => new Error("Combination already exists, abort"))
+                    Effect.fail(() => new Error("Combination already exists, abort"))
                   )
                 ),
-                T.zipRight(getData(record)),
+                Effect.zipRight(getData(record)),
                 // TODO: instead use MULTI & EXEC to make it in one command?
-                T.chain((data) =>
+                Effect.chain((data) =>
                   hmSetRec(getKey(record.id), {
                     version,
                     timestamp: new Date(),
                     data,
                   })
                 ),
-                T.zipRight(setIndex(record)),
-                T.orDie
+                Effect.zipRight(setIndex(record)),
+                Effect.orDie
               )
             ),
-            T.map(() => ({ version, data: record } as CachedRecord<A>))
+            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
           ),
         () =>
           pipe(
             getData(record),
-            T.chain((data) =>
+            Effect.chain((data) =>
               hmSetRec(getKey(record.id), {
                 version,
                 timestamp: new Date(),
                 data,
               })
             ),
-            T.orDie,
-            T.map(() => ({ version, data: record } as CachedRecord<A>))
+            Effect.orDie,
+            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
           )
       )
     }
@@ -125,15 +123,15 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
       return M.make_(
-        T.bimap_(
+        Effect.bimap_(
           // acquire
-          T.chain_(RED.lock, (lock) =>
-            T.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
+          Effect.chain_(RED.lock, (lock) =>
+            Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
           ),
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           (lock) => ({
-            release: T.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
+            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
           })
         ),
         (l) => l.release
@@ -142,16 +140,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisRecord(id: string) {
       return M.make_(
-        T.bimap_(
+        Effect.bimap_(
           // acquire
-          T.chain_(RED.lock, (lock) =>
-            T.tryPromise(() => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>)
+          Effect.chain_(RED.lock, (lock) =>
+            Effect.tryPromise(() => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>)
           ),
           (err) => new CouldNotAquireDbLockException(type, id, err as Error),
           // release
           (lock) => ({
             // TODO
-            release: T.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
+            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
           })
         ),
         (l) => l.release
@@ -176,9 +174,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return T.chain_(RED.client, (client) =>
-      T.uninterruptible(
-        T.effectAsync<unknown, ConnectionException, void>((res) => {
+    return Effect.chain_(RED.client, (client) =>
+      Effect.uninterruptible(
+        Effect.effectAsync<unknown, ConnectionException, void>((res) => {
           client.hmset(
             key,
             "version",
@@ -188,7 +186,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             "data",
             enc.data,
             (err) =>
-              err ? res(T.fail(new ConnectionException(err))) : res(T.succeed(void 0))
+              err ? res(Effect.fail(new ConnectionException(err))) : res(Effect.succeed(void 0))
           )
         })
       )

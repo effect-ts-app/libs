@@ -1,5 +1,3 @@
-import * as T from "@effect-ts/core/Effect"
-import * as O from "@effect-ts/core/Option"
 import * as MO from "@effect-ts-app/core/Schema"
 import { SchemaAny } from "@effect-ts-app/core/Schema"
 
@@ -67,10 +65,10 @@ export function getRecordName(type: string, id: string) {
 export function makeMap<TKey, T>() {
   const map = new Map<TKey, T>()
   return {
-    find: (k: TKey) => T.succeedWith(() => O.fromNullable(map.get(k))),
+    find: (k: TKey) => Effect.succeedWith(() => Option.fromNullable(map.get(k))),
     [Symbol.iterator]: () => map[Symbol.iterator](),
     set: (k: TKey, v: T) =>
-      T.succeedWith(() => {
+      Effect.succeedWith(() => {
         map.set(k, v)
       }),
   } as EffectMap<TKey, T>
@@ -78,16 +76,16 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => T.UIO<O.Option<T>>
-  set: (k: TKey, v: T) => T.UIO<void>
+  find: (k: TKey) => Effect.UIO<Option<T>>
+  set: (k: TKey, v: T) => Effect.UIO<void>
 }
 
 // export function encodeOnlyWhenStrictMatch<A, E>(
 //   encode: MO.HasEncoder<A, E>["encode_"],
 //   v: A
 // ) {
-//   const e1 = Sy.run(encode(v, "strict"))
-//   const e2 = Sy.run(encode(v, "classic"))
+//   const e1 = Sync.run(encode(v, "strict"))
+//   const e2 = Sync.run(encode(v, "classic"))
 //   try {
 //     assert.deepStrictEqual(e1, e2)
 //   } catch (err) {
@@ -106,12 +104,12 @@ export interface EffectMap<TKey, T> {
 // ) {
 //   return pipe(
 //     decode(u, "strict"),
-//     Sy.tap((v) =>
+//     Sync.tap((v) =>
 //       pipe(
 //         decode(u),
-//         Sy.tap((v2) => {
+//         Sync.tap((v2) => {
 //           assert.deepStrictEqual(v, v2)
-//           return Sy.succeed(v2)
+//           return Sync.succeed(v2)
 //         })
 //       )
 //     )

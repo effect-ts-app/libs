@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type * as A from "@effect-ts/core/Collections/Immutable/Array"
-import * as T from "@effect-ts/core/Effect"
 import * as TRef from "@effect-ts/core/Effect/Ref"
 import type { Has } from "@effect-ts/core/Has"
 import { tag } from "@effect-ts/core/Has"
@@ -18,7 +16,7 @@ export const References = tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
-  constructor(readonly errors: A.Array<string>) {}
+  constructor(readonly errors: ROArray<string>) {}
 }
 
 export interface ConfigExtensionRef {
@@ -29,7 +27,7 @@ export interface ConfigExtensionMeta {
   openapiMeta?: any
 }
 
-export type Schema = T.RIO<Has<References>, JSONSchema | SubSchema>
+export type Schema = Effect.RIO<Has<References>, JSONSchema | SubSchema>
 
 export const SchemaURI = "SchemaURI" as const
 export type SchemaURI = typeof SchemaURI
@@ -38,7 +36,7 @@ export function referenced(x?: ConfigExtensionRef) {
   return (schema: Schema): Schema => {
     if (x && typeof x.openapiRef !== "undefined") {
       const { openapiRef } = x
-      return T.gen(function* (_) {
+      return Effect.gen(function* (_) {
         const { ref } = yield* _(References)
         const jsonSchema = yield* _(schema)
         yield* _(
@@ -61,11 +59,11 @@ export class SchemaType<E, A> {
   constructor(public Schema: Schema) {}
 }
 
-export const succeed = (_: SubSchema) => T.succeed(_)
-export const dieMessage = (_: string) => T.die(new UnsupportedOperation([_]))
+export const succeed = (_: SubSchema) => Effect.succeed(_)
+export const dieMessage = (_: string) => Effect.die(new UnsupportedOperation([_]))
 
 export function described(description: string) {
-  return T.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       description,
@@ -74,7 +72,7 @@ export function described(description: string) {
 }
 
 export function titled(title: string) {
-  return T.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       title,

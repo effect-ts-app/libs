@@ -2,11 +2,9 @@
 import "abort-controller/polyfill"
 
 import * as L from "@effect-ts/core/Effect/Layer"
-import * as O from "@effect-ts/core/Option"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
-import * as T from "../Effect.js"
 import { pipe } from "../Function.js"
 import * as H from "./http-client.js"
 
@@ -33,7 +31,7 @@ function getBody(
   )
 }
 
-const makeAbort = T.succeedWith(() => new AbortController())
+const makeAbort = Effect.succeedWith(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
   L.fromValue(H.Http)({
@@ -44,7 +42,7 @@ export const Client = (fetchApi: typeof fetch) =>
       responseType: H.ResponseType,
       headers: Record<string, string>,
       body: unknown
-    ): T.IO<H.HttpError<string>, H.Response<any>> {
+    ): Effect.IO<H.HttpError<string>, H.Response<any>> {
       const input: RequestInit = {
         headers: {
           "Content-Type": getContentType(requestType),
@@ -70,32 +68,32 @@ export const Client = (fetchApi: typeof fetch) =>
                   ? {
                       headers: h,
                       status: resp.status,
-                      body: O.fromNullable(void 0),
+                      body: Option.fromNullable(void 0),
                     }
                   : resp.json().then((json: unknown) => ({
                       headers: h,
                       status: resp.status,
-                      body: O.fromNullable(json),
+                      body: Option.fromNullable(json),
                     })),
               () =>
                 resp.text().then((text) => ({
                   headers: h,
                   status: resp.status,
-                  body: O.fromNullable(text),
+                  body: Option.fromNullable(text),
                 })),
               () => {
                 if (resp["arrayBuffer"]) {
                   return resp.arrayBuffer().then((arrayBuffer) => ({
                     headers: h,
                     status: resp.status,
-                    body: O.fromNullable(Buffer.from(arrayBuffer)),
+                    body: Option.fromNullable(Buffer.from(arrayBuffer)),
                   }))
                 } else {
                   return ((resp as any).buffer() as Promise<Buffer>).then(
                     (buffer: Buffer) => ({
                       headers: h,
                       status: resp.status,
-                      body: O.fromNullable(Buffer.from(buffer)),
+                      body: Option.fromNullable(Buffer.from(buffer)),
                     })
                   )
                 }
@@ -108,7 +106,7 @@ export const Client = (fetchApi: typeof fetch) =>
                 response: {
                   headers: h,
                   status: resp.status,
-                  body: O.fromNullable(text),
+                  body: Option.fromNullable(text),
                 },
               }
             })
@@ -118,8 +116,8 @@ export const Client = (fetchApi: typeof fetch) =>
 
       return pipe(
         makeAbort,
-        T.chain((abort) =>
-          T.tryCatchPromiseWithInterrupt(
+        Effect.chain((abort) =>
+          Effect.tryCatchPromiseWithInterrupt(
             () => makeFetch(abort),
             (err) =>
               H.isHttpResponseError(err)

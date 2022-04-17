@@ -1,4 +1,3 @@
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 
 export class NotFoundError {
   public readonly _tag = "NotFoundError"
@@ -10,7 +9,7 @@ export class NotFoundError {
 
 export class ValidationError {
   public readonly _tag = "ValidationError"
-  constructor(public readonly errors: A.Array<unknown>) {}
+  constructor(public readonly errors: ROArray<unknown>) {}
 }
 
 export class NotLoggedInError {

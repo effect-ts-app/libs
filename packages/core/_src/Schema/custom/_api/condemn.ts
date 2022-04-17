@@ -1,7 +1,6 @@
 // tracing: off
 
-import * as T from "@effect-ts/core/Effect"
-import * as E from "@effect-ts/core/Either"
+
 import { Case } from "@effect-ts/system/Case"
 
 import type { AnyError } from "../_schema/index.js"
@@ -14,17 +13,17 @@ import { Parser, ParserEnv } from "../Parser/index.js"
  */
 export function condemn<X, E, A>(
   self: Parser<X, E, A>
-): (a: X, env?: ParserEnv) => T.IO<E, A> {
+): (a: X, env?: ParserEnv) => Effect.IO<E, A> {
   return (x, env?: ParserEnv) =>
-    T.suspend(() => {
+    Effect.suspend(() => {
       const y = self(x, env).effect
       if (y._tag === "Left") {
-        return T.fail(y.left)
+        return Effect.fail(y.left)
       }
       const {
         tuple: [a, w],
       } = y.right
-      return w._tag === "Some" ? T.fail(w.value) : T.succeed(a)
+      return w._tag === "Some" ? Effect.fail(w.value) : Effect.succeed(a)
     })
 }
 
@@ -50,16 +49,16 @@ export class ThrowableCondemnException extends Error {
  */
 export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
   return (a: X, env?: ParserEnv, __trace?: string) =>
-    T.fromEither(() => {
+    Effect.fromEither(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
-        return E.left(new CondemnException({ message: drawError(res.left) }))
+        return Either.left(new CondemnException({ message: drawError(res.left) }))
       }
       const warn = res.right.get(1)
       if (warn._tag === "Some") {
-        return E.left(new CondemnException({ message: drawError(warn.value) }))
+        return Either.left(new CondemnException({ message: drawError(warn.value) }))
       }
-      return E.right(res.right.get(0))
+      return Either.right(res.right.get(0))
     }, __trace)
 }
 
@@ -69,7 +68,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
  */
 export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
   const orFail = condemnFail(self)
-  return (a: X, env?: ParserEnv, __trace?: string) => T.orDie(orFail(a, env, __trace))
+  return (a: X, env?: ParserEnv, __trace?: string) => Effect.orDie(orFail(a, env, __trace))
 }
 
 /**

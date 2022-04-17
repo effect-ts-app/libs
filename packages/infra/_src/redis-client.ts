@@ -1,8 +1,6 @@
-import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as Has from "@effect-ts/core/Has"
-import * as O from "@effect-ts/core/Option"
 import { _A } from "@effect-ts/core/Utils"
 import { pipe } from "@effect-ts-app/core/Function"
 import { RedisClient as Client } from "redis"
@@ -12,7 +10,7 @@ import { ConnectionException } from "./simpledb/shared.js"
 
 const makeRedisClient = (makeClient: () => Client) =>
   M.make_(
-    T.succeedWith(() => {
+    Effect.succeedWith(() => {
       const client = createClient(makeClient)
       const lock = new Redlock([client])
       return {
@@ -22,12 +20,12 @@ const makeRedisClient = (makeClient: () => Client) =>
     }),
     (cl) =>
       pipe(
-        T.uninterruptible(
-          T.effectAsync<unknown, Error, void>((res) => {
-            cl.client.quit((err) => res(err ? T.fail(err) : T.unit))
+        Effect.uninterruptible(
+          Effect.effectAsync<unknown, Error, void>((res) => {
+            cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
           })
         ),
-        T.orDie
+        Effect.orDie
       )
   )
 
@@ -35,7 +33,11 @@ export interface RedisClient extends _A<ReturnType<typeof makeRedisClient>> {}
 
 export const RedisClient = Has.tag<RedisClient>()
 
-export const { client, lock } = T.deriveLifted(RedisClient)([], [], ["client", "lock"])
+export const { client, lock } = Effect.deriveLifted(RedisClient)(
+  [],
+  [],
+  ["client", "lock"]
+)
 
 export const RedisClientLive = (makeClient: () => Client) =>
   L.fromManaged(RedisClient)(makeRedisClient(makeClient))
@@ -49,13 +51,13 @@ function createClient(makeClient: () => Client) {
 }
 
 export function get(key: string) {
-  return T.chain_(client, (client) =>
-    T.uninterruptible(
-      T.effectAsync<unknown, ConnectionException, O.Option<string>>((res) => {
+  return Effect.chain_(client, (client) =>
+    Effect.uninterruptible(
+      Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
         client.get(key, (err, v) =>
           err
-            ? res(T.fail(new ConnectionException(err)))
-            : res(T.succeed(O.fromNullable(v)))
+            ? res(Effect.fail(new ConnectionException(err)))
+            : res(Effect.succeed(Option.fromNullable(v)))
         )
       })
     )
@@ -63,11 +65,13 @@ export function get(key: string) {
 }
 
 export function set(key: string, val: string) {
-  return T.chain_(client, (client) =>
-    T.uninterruptible(
-      T.effectAsync<unknown, ConnectionException, void>((res) => {
+  return Effect.chain_(client, (client) =>
+    Effect.uninterruptible(
+      Effect.effectAsync<unknown, ConnectionException, void>((res) => {
         client.set(key, val, (err) =>
-          err ? res(T.fail(new ConnectionException(err))) : res(T.succeed(void 0))
+          err
+            ? res(Effect.fail(new ConnectionException(err)))
+            : res(Effect.succeed(void 0))
         )
       })
     )
@@ -75,11 +79,13 @@ export function set(key: string, val: string) {
 }
 
 export function hset(key: string, field: string, value: string) {
-  return T.chain_(client, (client) =>
-    T.uninterruptible(
-      T.effectAsync<unknown, ConnectionException, void>((res) => {
+  return Effect.chain_(client, (client) =>
+    Effect.uninterruptible(
+      Effect.effectAsync<unknown, ConnectionException, void>((res) => {
         client.hset(key, field, value, (err) =>
-          err ? res(T.fail(new ConnectionException(err))) : res(T.succeed(void 0))
+          err
+            ? res(Effect.fail(new ConnectionException(err)))
+            : res(Effect.succeed(void 0))
         )
       })
     )
@@ -87,30 +93,32 @@ export function hset(key: string, field: string, value: string) {
 }
 
 export function hget(key: string, field: string) {
-  return T.chain_(client, (client) =>
-    T.uninterruptible(
-      T.effectAsync<unknown, ConnectionException, O.Option<string>>((res) => {
+  return Effect.chain_(client, (client) =>
+    Effect.uninterruptible(
+      Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
         client.hget(key, field, (err, v) =>
           err
-            ? res(T.fail(new ConnectionException(err)))
-            : res(T.succeed(O.fromNullable(v)))
+            ? res(Effect.fail(new ConnectionException(err)))
+            : res(Effect.succeed(Option.fromNullable(v)))
         )
       })
     )
   )
 }
 export function hmgetAll(key: string) {
-  return T.chain_(client, (client) =>
-    T.uninterruptible(
-      T.effectAsync<unknown, ConnectionException, O.Option<{ [key: string]: string }>>(
-        (res) => {
-          client.hgetall(key, (err, v) =>
-            err
-              ? res(T.fail(new ConnectionException(err)))
-              : res(T.succeed(O.fromNullable(v)))
-          )
-        }
-      )
+  return Effect.chain_(client, (client) =>
+    Effect.uninterruptible(
+      Effect.effectAsync<
+        unknown,
+        ConnectionException,
+        Option<{ [key: string]: string }>
+      >((res) => {
+        client.hgetall(key, (err, v) =>
+          err
+            ? res(Effect.fail(new ConnectionException(err)))
+            : res(Effect.succeed(Option.fromNullable(v)))
+        )
+      })
     )
   )
 }

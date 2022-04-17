@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as T from "@effect-ts/core/Effect"
 import { flow } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 
@@ -20,7 +19,7 @@ export function handle<
         ? MO.GetRequest<TModule>
         : never
     >
-  ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
+  ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
 ) => {
   h: typeof h
   Request: MO.GetRequest<TModule>
@@ -38,7 +37,7 @@ export function handle<
           ? MO.GetRequest<TModule>
           : never
       >
-    ) => T.Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
+    ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
   ) =>
     ({
       adaptResponse,
@@ -62,12 +61,12 @@ export function accessM_<T, UserId, Err>(
   return <R, E, A>(
     rsc: T,
     userId: UserId,
-    ok: (rsc: T) => T.Effect<R, E, A>
-  ): T.Effect<R, E | Err, A> => {
+    ok: (rsc: T) => Effect<R, E, A>
+  ): Effect<R, E | Err, A> => {
     if (canAccess(rsc, userId)) {
       return ok(rsc)
     }
-    return T.fail(bad(rsc, userId))
+    return Effect.fail(bad(rsc, userId))
   }
 }
 
@@ -77,19 +76,19 @@ export function access_<T, UserId, Err>(
 ) {
   const auth = accessM_(canAccess, bad)
   return <A>(rsc: T, userId: UserId, ok: (rsc: T) => A) =>
-    auth(rsc, userId, flow(ok, T.succeed))
+    auth(rsc, userId, flow(ok, Effect.succeed))
 }
 
 export function accessM<T, UserId, Err>(
   canAccess: (rsc: T, userId: UserId) => boolean,
   bad: (rsc: T, userId: UserId) => Err
 ) {
-  return <R, E, A>(userId: UserId, ok: (rsc: T) => T.Effect<R, E, A>) =>
-    (rsc: T): T.Effect<R, E | Err, A> => {
+  return <R, E, A>(userId: UserId, ok: (rsc: T) => Effect<R, E, A>) =>
+    (rsc: T): Effect<R, E | Err, A> => {
       if (canAccess(rsc, userId)) {
         return ok(rsc)
       }
-      return T.fail(bad(rsc, userId))
+      return Effect.fail(bad(rsc, userId))
     }
 }
 
@@ -98,7 +97,7 @@ export function access<T, UserId, Err>(
   bad: (rsc: T, userId: UserId) => Err
 ) {
   const auth = accessM(canAccess, bad)
-  return <A>(userId: UserId, ok: (rsc: T) => A) => auth(userId, flow(ok, T.succeed))
+  return <A>(userId: UserId, ok: (rsc: T) => A) => auth(userId, flow(ok, Effect.succeed))
 }
 
 export function makeAuthorize<T, UserId>(

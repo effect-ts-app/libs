@@ -1,7 +1,4 @@
 import { IndexingPolicy } from "@azure/cosmos"
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
-import * as T from "@effect-ts/core/Effect"
-import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
@@ -18,27 +15,27 @@ class CosmosDbOperationError {
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
   pipe(
     Cosmos.db,
-    T.tap((db) =>
-      T.tryPromise(() =>
+    Effect.tap((db) =>
+      Effect.tryPromise(() =>
         db.containers
           .create({ id: type, indexingPolicy })
           .catch((err) => console.warn(err))
       )
     )
     // TODO: Error if current indexingPolicy does not match
-    //T.chain((db) => T.tryPromise(() => db.container(type).(indexes)))
+    //Effect.chain((db) => Effect.tryPromise(() => db.container(type).(indexes)))
   )
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => T.RIO<REncode, EA>,
-    decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect.RIO<REncode, EA>,
+    decode: (d: EA) => Effect<RDecode, EDecode, A>,
     //schemaVersion: string,
     indexes: IndexingPolicy
   ) => {
     return pipe(
       setup(type, indexes),
-      T.map(() => ({
+      Effect.map(() => ({
         find: simpledb.find(find, decode, type),
         findBy,
         save: simpledb.storeDirectly(store, type),
@@ -48,10 +45,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return pipe(
         Cosmos.db,
-        T.chain((db) =>
-          T.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
+        Effect.chain((db) =>
+          Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
         ),
-        T.map((i) => O.fromNullable(i.resource)),
+        Effect.map((i) => Option.fromNullable(i.resource)),
         EO.map(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
       )
     }
@@ -59,8 +56,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function findBy(parameters: Record<string, string>) {
       return pipe(
         Cosmos.db,
-        T.chain((db) =>
-          T.tryPromise(() =>
+        Effect.chain((db) =>
+          Effect.tryPromise(() =>
             db
               .container(type)
               .items.query({
@@ -81,23 +78,23 @@ WHERE (
               .fetchAll()
           )
         ),
-        T.map((x) => A.head(x.resources)),
+        Effect.map((x) => ROArray.head(x.resources)),
         EO.map(({ id }) => id)
       )
     }
 
-    function store(record: A, currentVersion: O.Option<Version>) {
-      return T.gen(function* ($) {
+    function store(record: A, currentVersion: Option<Version>) {
+      return Effect.gen(function* ($) {
         const version = "_etag" // we get this from the etag anyway.
 
         const db = yield* $(Cosmos.db)
         const data = yield* $(encode(record))
 
         yield* $(
-          O.fold_(
+          Option.fold_(
             currentVersion,
             () =>
-              T.tryPromise(() =>
+              Effect.tryPromise(() =>
                 db.container(type).items.create({
                   id: record.id,
                   timestamp: new Date(),
@@ -108,7 +105,7 @@ WHERE (
                 .orDie(),
             (currentVersion) =>
               pipe(
-                T.tryPromise(() =>
+                Effect.tryPromise(() =>
                   db
                     .container(type)
                     .item(record.id)
@@ -126,19 +123,19 @@ WHERE (
                       }
                     )
                 ),
-                T.orDie,
-                T.chain((x) => {
+                Effect.orDie,
+                Effect.chain((x) => {
                   if (x.statusCode === 412) {
-                    return T.fail(new OptimisticLockException(type, record.id))
+                    return Effect.fail(new OptimisticLockException(type, record.id))
                   }
                   if (x.statusCode > 299 || x.statusCode < 200) {
-                    return T.die(
+                    return Effect.die(
                       new CosmosDbOperationError(
                         "not able to update record: " + x.statusCode
                       )
                     )
                   }
-                  return T.unit
+                  return Effect.unit
                 })
               )
           )

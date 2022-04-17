@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
@@ -7,8 +6,6 @@ import { v4 } from "uuid"
 
 import { constant, Lazy, pipe } from "../Function.js"
 import * as NonEmptySet from "../NonEmptySet.js"
-import * as O from "../Option.js"
-import * as SET from "../Set.js"
 import { typedKeysOf } from "../utils/index.js"
 import { FromProperty, set, setIdentifier } from "./_api/index.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
@@ -156,20 +153,18 @@ export function makeCurrentDate() {
 }
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
-  As extends O.Option<PropertyKey>,
-  Def extends O.Option<
-    ["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]
-  >
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
     propDef(p, makeDefault, "constructor")
 }
 
 type SupportedDefaults =
-  | SET.Set<any>
-  | A.Array<any>
-  | O.Some<any>
-  | O.None
+  | ROSet<any>
+  | ROArray<any>
+  | Option.Some<any>
+  | Option.None
   | Date
   | boolean
   | UUID
@@ -199,12 +194,12 @@ export type WithDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends O.Option<PropertyKey>
+  As extends Option<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  O.Some<["constructor", () => ParsedShape]>
+  Option.Some<["constructor", () => ParsedShape]>
 >
 
 export type WithInputDefault<
@@ -212,12 +207,12 @@ export type WithInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends O.Option<PropertyKey>
+  As extends Option<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  O.Some<["both", () => ParsedShape]>
+  Option.Some<["both", () => ParsedShape]>
 >
 
 export function withDefault<
@@ -225,8 +220,8 @@ export function withDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends O.Option<PropertyKey>,
-  Def extends O.Option<
+  As extends Option<PropertyKey>,
+  Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -246,7 +241,7 @@ export function withDefault<
     return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => O.none as any, "constructor")
+    return propDef(p, () => Option.none as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
@@ -271,8 +266,8 @@ export function withInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends O.Option<PropertyKey>,
-  Def extends O.Option<
+  As extends Option<PropertyKey>,
+  Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -292,7 +287,7 @@ export function withInputDefault<
     return propDef(p, makeCurrentDate as any, "both")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => O.none as any, "both")
+    return propDef(p, () => Option.none as any, "both")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")
@@ -321,22 +316,27 @@ function defProp<Self extends MO.SchemaUPI>(
 ): MO.Property<
   Self,
   "required",
-  O.None,
-  O.Some<["parser", () => MO.ParsedShapeOf<Self>]>
+  Option.None,
+  Option.Some<["parser", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "both"
-): MO.Property<Self, "required", O.None, O.Some<["both", () => MO.ParsedShapeOf<Self>]>>
+): MO.Property<
+  Self,
+  "required",
+  Option.None,
+  Option.Some<["both", () => MO.ParsedShapeOf<Self>]>
+>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
 ): MO.Property<
   Self,
   "required",
-  O.None,
-  O.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
+  Option.None,
+  Option.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
@@ -348,7 +348,7 @@ function defProp<Self extends MO.SchemaUPI>(
 
 export function optProp<Self extends MO.SchemaUPI>(
   schema: Self
-): Property<Self, "optional", O.None, O.None> {
+): Property<Self, "optional", Option.None, Option.None> {
   return propOpt(MO.prop(schema))
 }
 
@@ -358,8 +358,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["constructor", () => ParsedShape]>
+  Option.None,
+  Option.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -371,8 +371,8 @@ export function defaultProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["constructor", () => ParsedShape]>
+  Option.None,
+  Option.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -380,8 +380,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      O.None,
-      O.Some<["constructor", () => ParsedShape]>
+      Option.None,
+      Option.Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -390,8 +390,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["constructor", () => ParsedShape]>
+  Option.None,
+  Option.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -403,8 +403,8 @@ export function defaultProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["constructor", () => ParsedShape]>
+  Option.None,
+  Option.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -412,8 +412,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      O.None,
-      O.Some<["constructor", () => ParsedShape]>
+      Option.None,
+      Option.Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
@@ -429,8 +429,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["both", () => ParsedShape]>
+  Option.None,
+  Option.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -442,8 +442,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["both", () => ParsedShape]>
+  Option.None,
+  Option.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -451,8 +451,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      O.None,
-      O.Some<["both", () => ParsedShape]>
+      Option.None,
+      Option.Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -461,8 +461,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["both", () => ParsedShape]>
+  Option.None,
+  Option.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -474,8 +474,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  O.None,
-  O.Some<["both", () => ParsedShape]>
+  Option.None,
+  Option.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -483,8 +483,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      O.None,
-      O.Some<["both", () => ParsedShape]>
+      Option.None,
+      Option.Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
@@ -541,7 +541,7 @@ export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const eq = eq_ ?? Ord.getEqual(ord)
   const s = set(type, ord, eq)
-  return Object.assign(s, SET.make(ord, eq))
+  return Object.assign(s, ROSet.make(ord, eq))
 }
 
 export function makeUnorderedContramappedStringSet<
@@ -655,7 +655,7 @@ export function makeContramappedNonEmptySet<
   )
 }
 
-export const constArray = constant(A.empty)
+export const constArray = constant(ROArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }

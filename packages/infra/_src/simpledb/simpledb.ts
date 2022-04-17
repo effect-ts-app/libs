@@ -1,8 +1,6 @@
-import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as Has from "@effect-ts/core/Has"
-import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 
@@ -24,7 +22,7 @@ export function makeLiveRecordCache() {
   const m = new Map<string, EffectMap<string, unknown>>()
   return {
     get: <T>(type: string) =>
-      T.succeedWith(() => {
+      Effect.succeedWith(() => {
         const ex = m.get(type)
         if (!ex) {
           const nm = makeMap<string, unknown>()
@@ -45,15 +43,15 @@ export const LiveRecordCache = L.fromFunction(RecordCache)(makeLiveRecordCache)
 
 const getM =
   <T>(type: string) =>
-  <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => T.Effect<R, E, A>) =>
-    T.gen(function* ($) {
+  <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
+    Effect.gen(function* ($) {
       const { get } = yield* $(RecordCache)
-      return yield* $(pipe(get<T>(type), T.chain(eff)))
+      return yield* $(pipe(get<T>(type), Effect.chain(eff)))
     })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
-  tryRead: (id: string) => T.Effect<R, E, O.Option<CachedRecord<EA>>>,
-  decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
+  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
+  decode: (d: EA) => Effect<RDecode, EDecode, A>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -63,7 +61,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
       EO.chainEffect(({ data, version }) =>
         pipe(
           decode(data),
-          T.bimap(
+          Effect.bimap(
             (err) => new InvalidStateError("DB serialisation Issue", err),
             (data) => ({ data, version })
           )
@@ -84,7 +82,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
 }
 
 export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey>>(
-  save: (r: A, version: O.Option<Version>) => T.Effect<R, E, CachedRecord<A>>,
+  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -93,16 +91,16 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
       pipe(
         c.find(record.id),
         EO.map((x) => x.version),
-        T.chain((cv) => save(record, cv)),
-        T.tap((r) => c.set(record.id, r)),
-        T.map((r) => r.data)
+        Effect.chain((cv) => save(record, cv)),
+        Effect.tap((r) => c.set(record.id, r)),
+        Effect.map((r) => r.data)
       )
     )
 }
 
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
-  tryRead: (id: string) => T.Effect<R, E, O.Option<CachedRecord<EA>>>,
-  save: (r: A, version: O.Option<Version>) => T.Effect<R, E, CachedRecord<A>>,
+  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
+  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
   lock: (id: string) => M.Managed<R2, E2, unknown>,
   type: string
 ) {
@@ -112,9 +110,9 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       pipe(
         c.find(record.id),
         EO.map((x) => x.version),
-        T.chain(O.fold(() => save(record, O.none), confirmVersionAndSave(record))),
-        T.tap((r) => c.set(record.id, r)),
-        T.map((r) => r.data)
+        Effect.chain(Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))),
+        Effect.tap((r) => c.set(record.id, r)),
+        Effect.map((r) => r.data)
       )
     )
 
@@ -124,16 +122,16 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
         pipe(
           pipe(
             tryRead(record.id),
-            T.chain(
-              O.fold(() => T.fail(new InvalidStateError("record is gone")), T.succeed)
+            Effect.chain(
+              Option.fold(() => Effect.fail(new InvalidStateError("record is gone")), Effect.succeed)
             )
           ),
-          T.tap(({ version }) =>
+          Effect.tap(({ version }) =>
             version !== cv
-              ? T.fail(new OptimisticLockException(type, record.id))
-              : T.unit
+              ? Effect.fail(new OptimisticLockException(type, record.id))
+              : Effect.unit
           ),
-          T.zipRight(save(record, O.some(cv)))
+          Effect.zipRight(save(record, Option.some(cv)))
         )
       )
   }

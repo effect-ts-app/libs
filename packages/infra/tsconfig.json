@@ -2,8 +2,7 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "lib": [
-            "es2020",
-            "DOM"
+            "es2020"
         ],
         "moduleResolution": "node",
         "baseUrl": "./",

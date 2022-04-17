@@ -1,4 +1,3 @@
-import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import * as Has from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts-app/core/Function"
@@ -14,16 +13,16 @@ function log(
   level: LOG.Level,
   message: string,
   meta?: LOG.Meta
-): T.UIO<void> {
+): Effect.UIO<void> {
   return pipe(
-    T.do,
-    T.let("config", () => config),
-    T.bind("formatter", (s) => T.succeed(s.config.formatter ?? format)),
-    T.bind("level", (s) => T.succeed(s.config.level ?? "silly")),
-    T.bind("msg", (s) => T.succeed(s.formatter(level, message, meta))),
-    T.tap(({ level: configLevel, msg }) =>
-      T.when(() => LOG.severity[configLevel] >= LOG.severity[level])(
-        T.succeedWith(() => {
+    Effect.do,
+    Effect.let("config", () => config),
+    Effect.bind("formatter", (s) => Effect.succeed(s.config.formatter ?? format)),
+    Effect.bind("level", (s) => Effect.succeed(s.config.level ?? "silly")),
+    Effect.bind("msg", (s) => Effect.succeed(s.formatter(level, message, meta))),
+    Effect.tap(({ level: configLevel, msg }) =>
+      Effect.when(() => LOG.severity[configLevel] >= LOG.severity[level])(
+        Effect.succeedWith(() => {
           switch (level) {
             case "info":
               // tslint:disable-next-line: no-console
@@ -58,7 +57,7 @@ function log(
       )
     ),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    T.map(() => {})
+    Effect.map(() => {})
   )
 }
 
@@ -75,7 +74,7 @@ export const LiveConsoleLoggerConfig = (config: Config = {}) =>
   L.fromValue(ConsoleLoggerConfig)(config)
 
 export const LiveConsoleLogger = L.fromEffect(LOG.Logger)(
-  T.gen(function* ($) {
+  Effect.gen(function* ($) {
     const config = yield* $(ConsoleLoggerConfig)
     return {
       debug: (message, meta) => log(config, "debug", message, meta),
