@@ -1,4 +1,3 @@
-import * as Has from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts-app/core/Function"
 
 import {

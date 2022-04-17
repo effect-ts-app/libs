@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 

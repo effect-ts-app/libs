@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as Arbitrary from "../custom/Arbitrary/index.js"
@@ -29,7 +28,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
       (u): u is NonEmptyArray<ParsedShape> =>
         Array.isArray(u) && u.length > 0 && u.every(guardSelf)
     ),
-    S.parser((u: Chunk.Chunk<ParsedShape>) => {
+    S.parser((u: Chunk<ParsedShape>) => {
       const ar = Chunk.toArray(u)
       const nar = NonEmptyArray.fromArray(ar)
       return Option.fold_(
@@ -38,7 +37,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
         Th.succeed
       )
     }),
-    S.encoder((u): Chunk.Chunk<ParsedShape> => Chunk.from(u)),
+    S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary(
       (_) =>
         _.array(arbitrarySelf(_), { minLength: 1 }) as any as Arbitrary.Arbitrary<

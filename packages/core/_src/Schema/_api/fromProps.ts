@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as Dictionary from "@effect-ts/core/Collections/Immutable/Dictionary"
 import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
 import { pipe } from "@effect-ts/core/Function"

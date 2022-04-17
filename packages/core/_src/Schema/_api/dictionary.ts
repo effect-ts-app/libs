@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { pipe } from "@effect-ts/core/Function"
 

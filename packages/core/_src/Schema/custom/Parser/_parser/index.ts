@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import type { Schema, SchemaAny } from "../../_schema/index.js"
 import * as S from "../../_schema/index.js"

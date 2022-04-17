@@ -1,5 +1,4 @@
 import { CosmosClient as ComosClient_ } from "@azure/cosmos"
-import * as Has from "@effect-ts/core/Has"
 import { _A } from "@effect-ts/core/Utils"
 import { pipe } from "@effect-ts-app/core/Function"
 

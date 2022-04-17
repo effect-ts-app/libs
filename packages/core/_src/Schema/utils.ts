@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+
 
 import { flow, pipe } from "../Function.js"
 import * as MO from "./_schema.js"
@@ -105,13 +105,13 @@ export function domainResponse<A>(errors: DomainError[], success: () => A) {
 
 export function domainResponse2<A>(errors: MO.AnyError[], success: () => A) {
   if (errors.length) {
-    return Th.fail(MO.compositionE(CNK.from(errors)))
+    return Th.fail(MO.compositionE(Chunk.from(errors)))
   }
   return Th.succeed(success())
 }
 
 export function domainError(errors: DomainError[]) {
-  return MO.compositionE(CNK.from([MO.nextE(MO.structE(CNK.from(errors)))]))
+  return MO.compositionE(Chunk.from([MO.nextE(MO.structE(Chunk.from(errors)))]))
 }
 
 export function domainE(key: string, message: string) {

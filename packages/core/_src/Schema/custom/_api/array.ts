@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as S from "../_schema/index.js"
@@ -31,8 +30,8 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
     S.identity(
       (u): u is readonly ParsedShape[] => Array.isArray(u) && u.every(guardSelf)
     ),
-    S.parser((u: Chunk.Chunk<ParsedShape>) => Th.succeed(Chunk.toArray(u))),
-    S.encoder((u): Chunk.Chunk<ParsedShape> => Chunk.from(u)),
+    S.parser((u: Chunk<ParsedShape>) => Th.succeed(Chunk.toArray(u))),
+    S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary((_) => _.array(arbitrarySelf(_)))
   )
 

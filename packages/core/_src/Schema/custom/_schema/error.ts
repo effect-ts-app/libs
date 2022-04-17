@@ -4,7 +4,6 @@
 
 import { flow } from "@effect-ts/core/Function"
 import { Case } from "@effect-ts/system/Case"
-import * as Chunk from "@effect-ts/system/Collections/Immutable/Chunk"
 
 export interface Actual<A> {
   readonly actual: A
@@ -15,7 +14,7 @@ export interface SingleE<E> {
 }
 
 export interface CompoundE<E> {
-  readonly errors: Chunk.Chunk<E>
+  readonly errors: Chunk<E>
 }
 
 export type SchemaError<E> =
@@ -82,13 +81,13 @@ export type AnyError = SchemaError<HasDefaultLeafE>
 //
 
 export class UnionE<E>
-  extends Case<{ readonly errors: Chunk.Chunk<E> }>
+  extends Case<{ readonly errors: Chunk<E> }>
   implements CompoundE<E>
 {
   readonly _tag = "Union"
 }
 
-export function unionE<E>(errors: Chunk.Chunk<E>): UnionE<E> {
+export function unionE<E>(errors: Chunk<E>): UnionE<E> {
   return new UnionE({ errors })
 }
 
@@ -162,24 +161,24 @@ export function namedE<N extends string, E>(name: N, error: E): NamedE<N, E> {
 }
 
 export class StructE<E>
-  extends Case<{ readonly errors: Chunk.Chunk<E> }>
+  extends Case<{ readonly errors: Chunk<E> }>
   implements CompoundE<E>
 {
   readonly _tag = "Struct"
 }
 
-export function structE<E>(errors: Chunk.Chunk<E>): StructE<E> {
+export function structE<E>(errors: Chunk<E>): StructE<E> {
   return new StructE({ errors })
 }
 
 export class CollectionE<E>
-  extends Case<{ readonly errors: Chunk.Chunk<E> }>
+  extends Case<{ readonly errors: Chunk<E> }>
   implements CompoundE<E>
 {
   readonly _tag = "Collection"
 }
 
-export function chunkE<E>(errors: Chunk.Chunk<E>): CollectionE<E> {
+export function chunkE<E>(errors: Chunk<E>): CollectionE<E> {
   return new CollectionE({ errors })
 }
 
@@ -240,24 +239,24 @@ export function optionalIndexE<K, E>(index: K, error: E): OptionalIndexE<K, E> {
   return new OptionalIndexE({ error, index })
 }
 
-export class MissingKeysE<K> extends Case<{ readonly keys: Chunk.Chunk<K> }> {
+export class MissingKeysE<K> extends Case<{ readonly keys: Chunk<K> }> {
   readonly _tag = "Missing"
 }
 
-export function missingKeysE<K>(keys: Chunk.Chunk<K>): MissingKeysE<K> {
+export function missingKeysE<K>(keys: Chunk<K>): MissingKeysE<K> {
   return new MissingKeysE({ keys })
 }
 
 export class CompositionE<E>
   extends Case<{
-    readonly errors: Chunk.Chunk<E>
+    readonly errors: Chunk<E>
   }>
   implements CompoundE<E>
 {
   readonly _tag = "Composition"
 }
 
-export function compositionE<E>(errors: Chunk.Chunk<E>): CompositionE<E> {
+export function compositionE<E>(errors: Chunk<E>): CompositionE<E> {
   return new CompositionE({ errors })
 }
 
@@ -292,14 +291,14 @@ export function memberE<M, E>(member: M, error: E): MemberE<M, E> {
 
 export class IntersectionE<E>
   extends Case<{
-    readonly errors: Chunk.Chunk<E>
+    readonly errors: Chunk<E>
   }>
   implements CompoundE<E>
 {
   readonly _tag = "Intersection"
 }
 
-export function intersectionE<E>(errors: Chunk.Chunk<E>): IntersectionE<E> {
+export function intersectionE<E>(errors: Chunk<E>): IntersectionE<E> {
   return new IntersectionE({ errors })
 }
 
@@ -508,7 +507,7 @@ export function parseUuidE(actual: unknown): ParseUuidE {
 //
 // Draw
 //
-export type Forest<A> = Chunk.Chunk<Tree<A>>
+export type Forest<A> = Chunk<Tree<A>>
 
 export interface Tree<A> {
   readonly value: A
@@ -617,7 +616,7 @@ export function drawTree(tree: Tree<string>): string {
   return tree.value + drawForest("\n", tree.forest)
 }
 
-function drawForest(indentation: string, forest: Chunk.Chunk<Tree<string>>): string {
+function drawForest(indentation: string, forest: Chunk<Tree<string>>): string {
   let r = ""
   const len = forest.length
   let tree: Tree<string>

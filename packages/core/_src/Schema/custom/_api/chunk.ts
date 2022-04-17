@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as S from "../_schema/index.js"
@@ -27,7 +26,7 @@ export function fromChunk<
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<
   readonly ParserInput[],
-  Chunk.Chunk<ParsedShape>,
+  Chunk<ParsedShape>,
   Iterable<ParsedShape>,
   readonly Encoded[],
   { self: Api }
@@ -35,7 +34,7 @@ export function fromChunk<
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
-  const refinement = (_: unknown): _ is Chunk.Chunk<ParsedShape> =>
+  const refinement = (_: unknown): _ is Chunk<ParsedShape> =>
     Chunk.isChunk(_) && Chunk.forAll_(_, guard)
   const encode = Encoder.for(self)
 
@@ -88,7 +87,7 @@ export function chunk<ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<
   unknown,
-  Chunk.Chunk<ParsedShape>,
+  Chunk<ParsedShape>,
   Iterable<ParsedShape>,
   readonly Encoded[],
   { self: Api }

@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"

@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import type { Set } from "@effect-ts/core/Collections/Immutable/Set"
 import { every_, fromArray, toArray } from "@effect-ts/core/Collections/Immutable/Set"
 import type * as Eq from "@effect-ts/core/Equal"
@@ -40,10 +39,10 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     MO.identity(refinement),
-    MO.parser((u: Chunk.Chunk<ParsedShape>) =>
+    MO.parser((u: Chunk<ParsedShape>) =>
       Th.succeed(fromArray_(Chunk.toArray(u)))
     ),
-    MO.encoder((u): Chunk.Chunk<ParsedShape> => Chunk.from(u)),
+    MO.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     MO.arbitrary((_) => _.set(arbitrarySelf(_)).map(fromArray_))
   )
 

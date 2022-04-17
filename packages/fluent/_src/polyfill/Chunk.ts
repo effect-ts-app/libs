@@ -18,8 +18,8 @@ const exceptions: Partial<Record<keyof Omit<typeof CNK, "toString">, string | nu
 
 const funcs = {
   ...makeAutoFuncs(CNK, exceptions),
-  collect: CNK.collect_,
-  collectWithIndex: CNK.collectWithIndex_,
+  collect: Chunk.collect_,
+  collectWithIndex: Chunk.collectWithIndex_,
   // IterableOps
   collectAll,
   forEachParN: forEachParN_,
@@ -29,6 +29,6 @@ const funcs = {
   forEachSync,
 }
 
-const BasePrototype = CNK.ChunkInternal.prototype as any
+const BasePrototype = Chunk.ChunkInternal.prototype as any
 
 applyFunctions(funcs, BasePrototype, "Chunk")

@@ -1,4 +1,4 @@
-import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+
 
 import { pipe } from "../../Function.js"
 import * as MO from "../vendor.js"
@@ -15,8 +15,8 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
     MO.fromString,
     MO.arbitrary((FC) => FC.string({ minLength, maxLength })),
     constrained<Brand>(minLength, maxLength),
-    MO.mapParserError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
-    MO.mapConstructorError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
+    MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    MO.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
     // NOTE: brand must come after, to reap benefits of showing Opaque types in editor
     // if combining types further down the line, must re-apply brand.
     MO.brand<Brand>()

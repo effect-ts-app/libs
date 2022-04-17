@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // tracing: off
 
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as MO from "../custom/index.js"

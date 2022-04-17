@@ -1,12 +1,11 @@
 // tracing: off
-import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 
 import * as S from "../../_schema/index.js"
 
 export interface CollectAnnotations {
   <Annotations extends readonly S.Annotation<any>[]>(
     ...annotations: Annotations
-  ): Chunk.Chunk<
+  ): Chunk<
     {
       [k in keyof Annotations]: [Annotations[k]] extends [S.Annotation<infer A>]
         ? A
@@ -20,7 +19,7 @@ export const interpreters: ((schema: S.SchemaAny) => Option<() => any>)[] = [
     (miss) =>
       (
         schema: S.SchemaAny
-      ): (() => (...xs: S.Annotation<any>[]) => Chunk.Chunk<any>) => {
+      ): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {
         if (S.isAnnotatedSchema(schema)) {
           return () =>
             (...xs) => {

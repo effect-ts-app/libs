@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
+
 
 import { pipe, Refinement } from "../../Function.js"
 import { isValidEmail } from "../../validation/index.js"
@@ -31,8 +31,8 @@ export const EmailFromString: DefaultSchema<string, Email, string, string, {}> =
   fromString,
   MO.arbitrary((FC) => FC.emailAddress()),
   nonEmpty,
-  MO.mapParserError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
-  MO.mapConstructorError((_) => (CNK.unsafeHead((_ as any).errors) as any).error),
+  MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  MO.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
   MO.refine(isEmail, (n) => MO.leafE(parseUuidE(n))),
   brand<Email>(),
   MO.annotate(EmailFromStringIdentifier, {})
