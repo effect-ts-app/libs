@@ -2,10 +2,7 @@
 *.test.d.ts
 tsconfig.json
 tslint.json
-**/*.ts
-!**/*.d.ts
-*.tsx
-.eslintrc.js
+!**/*.d.ts.eslintrc.js
 coverage/
 **/*.tsbuildinfo
 _esm/
