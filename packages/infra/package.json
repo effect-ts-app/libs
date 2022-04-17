@@ -281,5 +281,6 @@
             "require": "./simpledb/redisdb.js"
         }
     },
-    "sideEffects": false
+    "sideEffects": false,
+    "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
 }

@@ -53,5 +53,6 @@
     "test": "echo 'no tests yet'",
     "testsuite": "yarn lint && yarn test && yarn circular",
     "ncu": "ncu"
-  }
+  },
+  "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
 }
