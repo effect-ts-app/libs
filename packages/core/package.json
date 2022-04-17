@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "0.66.2",
+    "version": "0.66.3",
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
