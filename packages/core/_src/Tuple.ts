@@ -2,7 +2,7 @@ import { Tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 
 export * from "@effect-ts/core/Collections/Immutable/Tuple"
 
-export function flattenArray<T>({ tuple }: Tuple<ROArray<ROArray<T>>>) {
+export function flattenArray<T>({ tuple }: Tuple<ROArray<ROArray<T>>>): ROArray<T> {
   return ROArray.flatten(tuple)
 }
 
