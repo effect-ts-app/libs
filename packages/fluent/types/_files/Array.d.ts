@@ -4,6 +4,7 @@ import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmp
 import type { Either } from "@effect-ts/core/Either"
 import type { Equal } from "@effect-ts/core/Equal"
 import type { Predicate, Refinement } from "@effect-ts/core/Function"
+import type { Option } from "@effect-ts/core/Option"
 import type { Ord } from "@effect-ts/core/Ord"
 import type * as ARR from "@effect-ts-app/core/Array"
 import type { Chunk } from "@effect-ts-app/core/Chunk"

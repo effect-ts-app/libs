@@ -27,49 +27,49 @@ declare module "@effect-ts/system/Effect/effect" {
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
      */
-    tryPromise: typeof Effect.tryPromise
+    tryPromise: typeof T.tryPromise
 
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
      */
-    tryPromise: typeof Effect.tryPromise
+    tryPromise: typeof T.tryPromise
 
     /**
      * @ets_rewrite_static promise from "@effect-ts/core/Effect"
      */
-    promise: typeof Effect.promise
+    promise: typeof T.promise
 
     /**
      * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
      */
-    tryCatchPromise: typeof Effect.tryCatchPromise
+    tryCatchPromise: typeof T.tryCatchPromise
 
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    tuple: typeof Effect.tuple
+    tuple: typeof T.tuple
 
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    tuplePar: typeof Effect.tuplePar
+    tuplePar: typeof T.tuplePar
     /**
      * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
      */
-    tupleParN: typeof Effect.tupleParN
+    tupleParN: typeof T.tupleParN
 
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    structPar: typeof Effect.structPar
+    structPar: typeof T.structPar
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    structParN: typeof Effect.structParN
+    structParN: typeof T.structParN
     /**
      * @ets_rewrite_static struct from "@effect-ts/core/Effect"
      */
-    struct: typeof Effect.struct
+    struct: typeof T.struct
   }
 
   interface EffectOps {

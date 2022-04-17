@@ -15,8 +15,10 @@ import {
   toArray as toArrayOriginal,
 } from "@effect-ts/core/Collections/Immutable/Set"
 import * as Eq from "@effect-ts/core/Equal"
+import * as Option from "@effect-ts/core/Option"
 
 import { flow } from "./Function.js"
+import { NonEmptyArray } from "./NonEmptyArray.js"
 import * as Ord from "./Order.js"
 import type { NonEmptyBrand } from "./Schema/custom/_api/nonEmpty.js"
 
@@ -72,7 +74,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Option.Option<A>) => flow(filterMap__(f), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet),
   }
   // TODO: extend

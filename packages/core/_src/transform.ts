@@ -1,25 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { Misc, Union } from "ts-toolbelt"
 
+import * as O from "./Option.js"
+import * as SET from "./Set.js"
+
 // type SomeObject = {
-//   0: Option<string>
+//   0: O.Option<string>
 //   a: {
-//     b: Option<string>
-//     g: Option<Option<string>>
-//     h: Option<{ i: Option<boolean> }>
+//     b: O.Option<string>
+//     g: O.Option<O.Option<string>>
+//     h: O.Option<{ i: O.Option<boolean> }>
 //   }
-//   c: { d: Array<Option<{ e: Option<boolean> }>> }
+//   c: { d: Array<O.Option<{ e: O.Option<boolean> }>> }
 // }
 // type test0 = Transform<SomeObject>
 // type test1 = Transform<SomeObject[]>
 
-type OptionOf<A> = Union.Exclude<
-  A extends Option.Some<infer X> ? X | null : A,
-  Option.None
->
+type OptionOf<A> = Union.Exclude<A extends O.Some<infer X> ? X | null : A, O.None>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-export type TransformRoot<O> = O extends Option<any>
+export type TransformRoot<O> = O extends O.Option<any>
   ? Transform<OptionOf<O>>
   : Transform<O>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
@@ -28,10 +29,10 @@ export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
       [K in keyof O]: OptionOf<O[K]> extends infer X
         ? X extends (infer Y)[]
           ? OptionOf<Transform<Y>>[]
-          : X extends NonEmptyArray.NonEmptyArray<infer Y>
-          ? NonEmptyArray.NonEmptyArray<OptionOf<Transform<Y>>>
-          : X extends ROSet<infer Y>
-          ? ROSet<OptionOf<Transform<Y>>>
+          : X extends NA.NonEmptyArray<infer Y>
+          ? NA.NonEmptyArray<OptionOf<Transform<Y>>>
+          : X extends SET.Set<infer Y>
+          ? SET.Set<OptionOf<Transform<Y>>>
           : X extends readonly (infer Y)[]
           ? readonly OptionOf<Transform<Y>>[]
           : Transform<X>
@@ -66,7 +67,7 @@ const encodeOptionsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      return encodeOptionsAsNullable_(Option.toNullable(value), cacheMap)
+      return encodeOptionsAsNullable_(O.toNullable(value), cacheMap)
     }
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)
