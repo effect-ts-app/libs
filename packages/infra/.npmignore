@@ -8,5 +8,4 @@ tslint.json
 .eslintrc.js
 coverage/
 **/*.tsbuildinfo
-src/
 _esm/

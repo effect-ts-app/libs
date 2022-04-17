@@ -6,4 +6,7 @@
 # done
 cd ./_esm
 find . -depth -name "*.d.ts" -exec sh -c 'cp "$1" "../_cjs/${1}"' _ {} \;
-find . -depth -name "*.d.ts.map" -exec sh -c 'cp "$1" "../_cjs/.${1}"' _ {} \;
+find . -depth -name "*.d.ts.map" -exec sh -c 'cp "$1" "../_cjs/${1}"' _ {} \;
+
+find . -depth -name "*.d.ts" -exec sh -c 'cp "$1" "../_mjs/${1}"' _ {} \;
+find . -depth -name "*.d.ts.map" -exec sh -c 'cp "$1" "../_mjs/${1}"' _ {} \;
