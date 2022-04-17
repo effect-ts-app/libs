@@ -52,28 +52,22 @@ export function find<R, RDecode, EDecode, E, EA, A>(
 ) {
   const getCache = getM<A>(type)
   const read = (id: string) =>
-    pipe(
-      tryRead(id),
-      EffectOption.chainEffect(({ data, version }) =>
-        pipe(
-          decode(data),
-          Effect.bimap(
-            (err) => new InvalidStateError("DB serialisation Issue", err),
-            (data) => ({ data, version })
-          )
+    tryRead(id)
+      .chainOptionEffect(({ data, version }) =>
+        decode(data).bimap(
+          (err) => new InvalidStateError("DB serialisation Issue", err),
+          (data) => ({ data, version })
         )
-      ),
-      EffectOption.tap((r) => getCache((c) => c.set(id, r))),
-      EffectOption.map((r) => r.data)
-    )
+      )
+      .tapOption((r) => getCache((c) => c.set(id, r)))
+      .mapOption((r) => r.data)
 
   return (id: string) =>
     getCache((c) =>
-      pipe(
-        c.find(id),
-        EffectOption.map((existing) => existing.data),
-        EffectOption.alt(() => read(id))
-      )
+      c
+        .find(id)
+        .mapOption((existing) => existing.data)
+        .alt(() => read(id))
     )
 }
 

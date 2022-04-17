@@ -126,6 +126,11 @@ export function managedZipRight_<R, E, A, R2, E2, A2>(
 }
 
 /**
+ * @tsplus fluent ets/Effect tapOption
+ */
+export const tapEffectOption = EffectOption.tap_
+
+/**
  * @tsplus fluent ets/Option encaseInEither
  */
 export const optionEncaseEither = Either.fromOption_

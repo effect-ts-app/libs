@@ -1,4 +1,3 @@
-import { pipe } from "@effect-ts-app/core/Function"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
 import * as Mongo from "../mongo-client.js"
@@ -12,13 +11,13 @@ import { Version } from "./simpledb.js"
 // }, {} as Record<string, number>)
 
 const setup = (type: string, indexes: IndexDescription[]) =>
-  pipe(
-    Mongo.db,
-    Effect.tap((db) =>
-      Effect.tryPromise(() => db.createCollection(type).catch((err) => console.warn(err)))
-    ),
-    Effect.chain((db) => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
-  )
+  Mongo.db
+    .tap((db) =>
+      Effect.tryPromise(() =>
+        db.createCollection(type).catch((err) => console.warn(err))
+      )
+    )
+    .chain((db) => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
@@ -28,41 +27,36 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     //schemaVersion: string,
     indexes: IndexDescription[]
   ) => {
-    return pipe(
-      setup(type, indexes),
-      Effect.map(() => ({
-        find: simpledb.find(find, decode, type),
-        findBy,
-        save: simpledb.storeDirectly(store, type),
-      }))
-    )
+    return setup(type, indexes).map(() => ({
+      find: simpledb.find(find, decode, type),
+      findBy,
+      save: simpledb.storeDirectly(store, type),
+    }))
 
     function find(id: string) {
-      return pipe(
-        Mongo.db,
-        Effect.chain((db) =>
-          Effect.tryPromise(() =>
-            db
-              .collection(type)
-              .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
+      return (
+        Mongo.db
+          .chain((db) =>
+            Effect.tryPromise(() =>
+              db
+                .collection(type)
+                .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
+            )
           )
-        ),
-        Effect.map(Option.fromNullable),
+          .map(Option.fromNullable) >=
         EffectOption.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
       )
     }
 
     function findBy(keys: Record<string, string>) {
-      return pipe(
-        Mongo.db,
-        Effect.chain((db) =>
+      return Mongo.db
+        .chain((db) =>
           Effect.tryPromise(() =>
             db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } })
           )
-        ),
-        Effect.map(Option.fromNullable),
-        EffectOption.map(({ _id }) => _id)
-      )
+        )
+        .map(Option.fromNullable)
+        .mapOption(({ _id }) => _id)
     }
 
     function store(record: A, currentVersion: Option<Version>) {
@@ -90,26 +84,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 .asUnit()
                 .orDie(),
             (currentVersion) =>
-              pipe(
-                Effect.tryPromise(() =>
-                  db.collection(type).replaceOne(
-                    { _id: record.id, version: currentVersion },
-                    {
-                      version,
-                      timestamp: new Date(),
-                      data,
-                    },
-                    { upsert: false }
-                  )
-                ),
-                Effect.orDie,
-                Effect.chain((x) => {
+              Effect.tryPromise(() =>
+                db.collection(type).replaceOne(
+                  { _id: record.id, version: currentVersion },
+                  {
+                    version,
+                    timestamp: new Date(),
+                    data,
+                  },
+                  { upsert: false }
+                )
+              )
+                .orDie()
+                .chain((x) => {
                   if (!x.modifiedCount) {
                     return Effect.fail(new OptimisticLockException(type, record.id))
                   }
                   return Effect.unit
                 })
-              )
           )
         )
         return { version, data: record } as CachedRecord<A>

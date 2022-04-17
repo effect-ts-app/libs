@@ -196,7 +196,7 @@ export const getOrFail =
   <R, E, A>(_: EffectOption<R, E, A>) =>
     getOrFail_(_, onErr)
 
-export const tap = <R, E, A>(bind: FunctionN<[A], T.Effect<R, E, unknown>>) =>
+export const tap = <R, E, A>(bind: (a: A) => T.Effect<R, E, unknown>) =>
   T.tap(O.fold(() => none, bind))
 
 export const fromOptionS = <R, E, A>(
