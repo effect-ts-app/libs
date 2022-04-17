@@ -3,7 +3,6 @@ import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 import { pipe } from "@effect-ts/core/Function"
-import * as O from "@effect-ts/core/Option"
 import type { EnforceNonEmptyRecord, Unify } from "@effect-ts/core/Utils"
 
 import * as S from "../_schema/index.js"
@@ -133,7 +132,7 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
 
 export const unionIdentifier = S.makeAnnotation<{
   props: Record<PropertyKey, S.SchemaUPI>
-  tag: O.Option<{
+  tag: Option<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -165,7 +164,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   const firstMemberTags = entriesTags[0]![1]
 
-  const tag: O.Option<{
+  const tag: Option<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -174,13 +173,13 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     const tags =
       A.collect_(entriesTags, ([member, tags]) => {
         if (tagField in tags) {
-          return O.some(tuple(tags[tagField], member))
+          return Option.some(tuple(tags[tagField], member))
         }
-        return O.none
+        return Option.none
       }) >= A.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
 
     if (tags.length === entries.length) {
-      return O.some({
+      return Option.some({
         key: tagField,
         index: D.fromArray(tags),
         reverse: D.fromArray(tags.map(({ tuple: [a, b] }) => tuple(b, a))),
@@ -188,13 +187,13 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       })
     }
 
-    return O.none
+    return Option.none
   })
 
   function guard(u: unknown): u is {
     [k in keyof Props]: S.ParsedShapeOf<Props[k]>
   }[keyof Props] {
-    if (O.isSome(tag)) {
+    if (Option.isSome(tag)) {
       if (
         typeof u !== "object" ||
         u === null ||
@@ -222,7 +221,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   ): {
     [k in keyof Props]: S.EncodedOf<Props[k]>
   }[keyof Props] {
-    if (O.isSome(tag)) {
+    if (Option.isSome(tag)) {
       return encoders[tag.value.index[u[tag.value.key]]](u)
     }
     for (const k of keys) {
@@ -253,7 +252,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   > {
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
-    if (O.isSome(tag)) {
+    if (Option.isSome(tag)) {
       if (
         typeof u !== "object" ||
         u === null ||
@@ -309,7 +308,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         ({
           // @ts-ignore
           matchS: (matcher, def) => (ks) => {
-            if (O.isSome(tag)) {
+            if (Option.isSome(tag)) {
               return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
             }
             for (const k of keys) {
@@ -321,7 +320,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           },
           // @ts-ignore
           matchW: (matcher, def) => (ks) => {
-            if (O.isSome(tag)) {
+            if (Option.isSome(tag)) {
               return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
             }
             for (const k of keys) {

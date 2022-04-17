@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as O from "@effect-ts/core/Option"
 
 import * as S from "../../_schema/index.js"
 
@@ -13,8 +12,8 @@ export type Encoder<Output, Encoded> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => O.Option<() => Encoder<unknown, unknown>>)[] = [
-  O.partial((miss) => (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
+) => Option<() => Encoder<unknown, unknown>>)[] = [
+  Option.partial((miss) => (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
     if (schema instanceof S.SchemaIdentity) {
       return () => (_) => _
     }

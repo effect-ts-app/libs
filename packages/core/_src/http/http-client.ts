@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe, Predicate } from "@effect-ts/core/Function"
 import * as Has from "@effect-ts/core/Has"
-import * as O from "@effect-ts/core/Option"
 import { ParsedQuery } from "query-string"
 
 /* tested in the implementation packages */
@@ -96,7 +94,7 @@ export interface DataInput {
 export type Headers = Record<string, string>
 
 export interface Response<Body> {
-  body: O.Option<Body>
+  body: Option<Body>
   headers: Headers
   status: number
 }
@@ -156,14 +154,14 @@ export function foldHttpError<A, B, ErrorBody>(
 
 export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Has.tag<HttpHeaders>()
-const accessHttpHeaders_ = T.access(HttpHeaders.readOption)
+const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: O.Option<HttpHeaders>) => T.Effect<R, E, A>
+  eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
 ) {
-  return pipe(accessHttpHeaders_, T.chain(eff))
+  return pipe(accessHttpHeaders_, Effect.chain(eff))
 }
-export function accessHttpHeaders<A>(eff: (h: O.Option<HttpHeaders>) => A) {
-  return pipe(accessHttpHeaders_, T.map(eff))
+export function accessHttpHeaders<A>(eff: (h: Option<HttpHeaders>) => A) {
+  return pipe(accessHttpHeaders_, Effect.map(eff))
 }
 
 export interface HttpOps {
@@ -174,13 +172,13 @@ export interface HttpOps {
     responseType: Resp,
     headers: Record<string, string>,
     body: RequestBodyTypes[Req][M]
-  ): T.IO<HttpError<string>, Response<ResponseTypes[Resp][M]>>
+  ): Effect.IO<HttpError<string>, Response<ResponseTypes[Resp][M]>>
 }
 
 export interface Http extends HttpOps {}
 export const Http = Has.tag<HttpOps>()
-// const accessHttp = T.accessService(Http)
-const accessHttpM = T.accessServiceM(Http)
+// const accessHttp = Effect.accessService(Http)
+const accessHttpM = Effect.accessServiceM(Http)
 
 export type RequestF = <
   R,
@@ -193,7 +191,7 @@ export type RequestF = <
   requestType: Req,
   responseType: Resp,
   body?: RequestBodyTypes[Req][M]
-) => T.Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
+) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
 
 export type RequestMiddleware = (request: RequestF) => RequestF
 
@@ -203,14 +201,14 @@ export interface MiddlewareStack {
 
 export const MiddlewareStack = Has.tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = T.access(MiddlewareStack.readOption)
+const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: O.Option<MiddlewareStack>) => T.Effect<R, E, A>
+  eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
 ) {
-  return pipe(accessMiddlewareStack_, T.chain(eff))
+  return pipe(accessMiddlewareStack_, Effect.chain(eff))
 }
-export function accessMiddlewareStack<A>(eff: (h: O.Option<MiddlewareStack>) => A) {
-  return pipe(accessMiddlewareStack_, T.map(eff))
+export function accessMiddlewareStack<A>(eff: (h: Option<MiddlewareStack>) => A) {
+  return pipe(accessMiddlewareStack_, Effect.map(eff))
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
@@ -245,7 +243,7 @@ export function requestInner<
   requestType: Req,
   responseType: Resp,
   body: RequestBodyTypes[Req][M]
-): T.Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+): Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM((headers) =>
     accessHttpM((h) =>
       h.request<M, Req, Resp>(
@@ -253,7 +251,7 @@ export function requestInner<
         url,
         requestType,
         responseType,
-        O.getOrElse_(headers, () => ({})),
+        Option.getOrElse_(headers, () => ({})),
         body
       )
     )
@@ -267,7 +265,7 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
 ): (
   url: string,
   body?: RequestBodyTypes[Req]["GET"]
-) => T.Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp]["GET"]>>
+) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp]["GET"]>>
 export function request<R, Req extends RequestType, Resp extends ResponseType>(
   method: "DELETE",
   requestType: Req,
@@ -275,7 +273,7 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
 ): (
   url: string,
   body?: RequestBodyTypes[Req]["DELETE"]
-) => T.Effect<
+) => Effect<
   RequestEnv & R,
   HttpError<string>,
   Response<ResponseTypes[Resp]["DELETE"]>
@@ -292,7 +290,7 @@ export function request<
 ): (
   url: string,
   body: RequestBodyTypes[Req][M]
-) => T.Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
+) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
 export function request<
   R,
   M extends Method,
@@ -305,10 +303,10 @@ export function request<
 ): (
   url: string,
   body: RequestBodyTypes[Req][M]
-) => T.Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return (url, body) =>
     accessMiddlewareStackM((s) =>
-      foldMiddlewareStack(O.toNullable(s), requestInner)<R, M, Req, Resp>(
+      foldMiddlewareStack(Option.toNullable(s), requestInner)<R, M, Req, Resp>(
         method,
         url,
         requestType,
@@ -393,12 +391,12 @@ export const delBinaryGetBinary =
 export function withHeaders(
   headers: Record<string, string>,
   replace = false
-): <R, E, A>(eff: T.Effect<R, E, A>) => T.Effect<R, E, A> {
-  return <R, E, A>(eff: T.Effect<R, E, A>) =>
+): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
+  return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? T.accessM((r: R) => T.provide({ ...r, [HttpHeaders.key]: headers })(eff))
-      : T.accessM((r: R) =>
-          T.provide({
+      ? Effect.accessM((r: R) => Effect.provide({ ...r, [HttpHeaders.key]: headers })(eff))
+      : Effect.accessM((r: R) =>
+          Effect.provide({
             ...r,
             [HttpHeaders.key]: { ...(r as any)[HttpHeaders.key], ...headers },
           })(eff)

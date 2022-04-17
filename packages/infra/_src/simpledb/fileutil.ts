@@ -1,4 +1,3 @@
-import * as T from "@effect-ts/core/Effect"
 import fs from "fs"
 import { promisify } from "util"
 
@@ -9,13 +8,13 @@ const exists = promisify(fs.exists)
 // const unlinkFile = promisify(fs.unlink)
 
 export function writeTextFile(fileName: string, content: string) {
-  return T.tryPromise(() => writeFile(fileName, content, "utf-8")).orDie()
+  return Effect.tryPromise(() => writeFile(fileName, content, "utf-8")).orDie()
 }
 
 export function fileExists(fileName: string) {
-  return T.tryPromise(() => exists(fileName)).orDie()
+  return Effect.tryPromise(() => exists(fileName)).orDie()
 }
 
 export function readTextFile(fileName: string) {
-  return T.tryPromise(() => readFile(fileName, "utf-8"))
+  return Effect.tryPromise(() => readFile(fileName, "utf-8"))
 }

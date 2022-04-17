@@ -3,7 +3,6 @@ import "./Schema.ext"
 
 import {
   Chunk,
-  Effect,
   EffectOption,
   Either,
   Managed,
@@ -24,10 +23,10 @@ import { pipe } from "./pipe"
  * @tsplus fluent ets/Effect zipFlatten
  */
 //  export function zipFlatten_<R, E, A, R2, E2, A2>(
-//   self: Effect.Effect<R, E, A>,
-//   that: LazyArg<Effect.Effect<R2, E2, A2>>,
+//   self: Effect<R, E, A>,
+//   that: LazyArg<Effect<R2, E2, A2>>,
 //   __tsplusTrace?: string
-// ): Effect.Effect<R & R2, E | E2, MergeTuple<A, A2>> {
+// ): Effect<R & R2, E | E2, MergeTuple<A, A2>> {
 //   return self.zipWith(that, Tuple.mergeTuple);
 // }
 
@@ -95,10 +94,10 @@ export const pipeSync = pipe
  * @tsplus operator ets/Effect >
  */
 export function effectZipRight_<R, E, A, R2, E2, A2>(
-  a: Effect.Effect<R, E, A>,
-  b: Effect.Effect<R2, E2, A2>,
+  a: Effect<R, E, A>,
+  b: Effect<R2, E2, A2>,
   __trace?: string
-): Effect.Effect<R & R2, E | E2, A2> {
+): Effect<R & R2, E | E2, A2> {
   return Effect.zipRight_(a, b, __trace)
 }
 

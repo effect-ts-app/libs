@@ -1,4 +1,3 @@
-import * as T from "@effect-ts/core/Effect"
 import * as Has from "@effect-ts/core/Has"
 
 export interface Meta {
@@ -6,7 +5,7 @@ export interface Meta {
   [k: string]: any
 }
 
-export type LogFn = (message: string, meta?: Meta) => T.UIO<void>
+export type LogFn = (message: string, meta?: Meta) => Effect.UIO<void>
 
 export interface Logger {
   silly: LogFn
@@ -32,6 +31,6 @@ export const severity: Record<Level, number> = {
   silly: 6,
 }
 
-export const { debug, error, http, info, silly, verbose, warn } = T.deriveLifted(
+export const { debug, error, http, info, silly, verbose, warn } = Effect.deriveLifted(
   Logger
 )(["debug", "error", "http", "info", "silly", "verbose", "warn"], [], [])

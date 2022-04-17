@@ -1,6 +1,4 @@
-import * as T from "@effect-ts/core/Effect"
 import * as M from "@effect-ts/core/Effect/Managed"
-import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import fs from "fs"
@@ -22,8 +20,8 @@ import { Version } from "./simpledb.js"
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => T.RIO<REncode, EA>,
-    decode: (d: EA) => T.Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect.RIO<REncode, EA>,
+    decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index,
     dir = "./data.js"
@@ -41,45 +39,45 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       save: simpledb.store(find(type), store, lockRecordOnDisk(type), type),
     }
 
-    function store(record: A, currentVersion: O.Option<Version>) {
+    function store(record: A, currentVersion: Option<Version>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
       const getData = flow(
         encode,
-        T.map((data) =>
+        Effect.map((data) =>
           JSON.stringify({ version, timestamp: new Date(), data }, undefined, 2)
         )
       )
 
       const idx = makeIndexKey(record)
-      return O.isSome(currentVersion)
+      return Option.isSome(currentVersion)
         ? pipe(
             M.use_(lockIndex(record), () =>
               pipe(
                 readIndex(idx),
-                T.chain((x) =>
+                Effect.chain((x) =>
                   x[record.id]
-                    ? T.fail(() => new Error("Combination already exists, abort"))
+                    ? Effect.fail(() => new Error("Combination already exists, abort"))
                     : pipe(
                         getData(record),
-                        T.chain((serialised) =>
+                        Effect.chain((serialised) =>
                           fu.writeTextFile(getFilename(type, record.id), serialised)
                         ),
-                        T.zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
+                        Effect.zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
                       )
                 ),
-                T.orDie
+                Effect.orDie
               )
             ),
-            T.map(() => ({ version, data: record } as CachedRecord<A>))
+            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
           )
         : pipe(
             getData(record),
-            T.chain((serialised) =>
+            Effect.chain((serialised) =>
               fu.writeTextFile(getFilename(type, record.id), serialised)
             ),
-            T.map(() => ({ version, data: record } as CachedRecord<A>))
+            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
           )
     }
 
@@ -100,7 +98,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
         M.make_(
-          T.bimap_(
+          Effect.bimap_(
             lockFile(getFilename(type, id)),
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
@@ -112,7 +110,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
         M.make_(
-          T.bimap_(
+          Effect.bimap_(
             lockFile(getIdxName(type, id)),
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
@@ -124,7 +122,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function readFile(filePath: string) {
       return pipe(
         fu.readTextFile(filePath),
-        T.catchAll((err) => T.die(new ConnectionException(err as Error)))
+        Effect.catchAll((err) => Effect.die(new ConnectionException(err as Error)))
       )
     }
 
@@ -140,15 +138,15 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdx(index: Index) {
       return pipe(
         readIndex(index),
-        T.map((idx) => O.fromNullable(idx[index.key]))
+        Effect.map((idx) => Option.fromNullable(idx[index.key]))
       )
     }
 
     function readIndex(index: Index) {
       return pipe(
         tryRead(getIdxName(type, index.doc)),
-        T.map(
-          O.fold(
+        Effect.map(
+          Option.fold(
             () => ({} as Record<string, TKey>),
             (x) => JSON.parse(x) as Record<string, TKey>
           )
@@ -165,8 +163,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return pipe(
         fu.fileExists(filePath),
-        T.chain((exists) =>
-          !exists ? T.succeed(O.none) : pipe(readFile(filePath), T.map(O.some))
+        Effect.chain((exists) =>
+          !exists ? Effect.succeed(Option.none) : pipe(readFile(filePath), Effect.map(Option.some))
         )
       )
     }
@@ -182,7 +180,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function lockFile(fileName: string) {
-  return T.tryPromise(() => PLF.lock(fileName).then(flow(T.tryPromise, T.orDie)))
+  return Effect.tryPromise(() => PLF.lock(fileName).then(flow(Effect.tryPromise, Effect.orDie)))
 }
 
 // TODO: ugh.

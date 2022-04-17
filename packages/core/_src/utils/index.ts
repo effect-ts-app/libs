@@ -26,8 +26,8 @@ export const unsafeRight = <E, A>(ei: E.Either<E, A>) => {
 
 export const unsafeSome =
   (makeErrorMessage: () => string) =>
-  <A>(o: O.Option<A>) => {
-    if (O.isNone(o)) {
+  <A>(o: Option<A>) => {
+    if (Option.isNone(o)) {
       throw new Error(makeErrorMessage())
     }
     return o.value

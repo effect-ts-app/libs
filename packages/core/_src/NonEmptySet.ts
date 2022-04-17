@@ -74,7 +74,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option.Option<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__(f), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet),
   }
   // TODO: extend

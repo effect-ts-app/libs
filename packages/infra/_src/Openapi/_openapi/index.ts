@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // tracing: off
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
-import * as T from "@effect-ts/core/Effect"
-import * as O from "@effect-ts/core/Option"
 import {
   arrayIdentifier,
   boolIdentifier,
@@ -54,10 +52,10 @@ import {
   StringSchema,
 } from "../atlas-plutus/index.js"
 
-export type Gen = T.UIO<JSONSchema>
+export type Gen = Effect.UIO<JSONSchema>
 
-export const interpreters: ((schema: MO.SchemaAny) => O.Option<Gen>)[] = [
-  O.partial((_miss) => (schema: MO.SchemaAny): Gen => {
+export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
+  Option.partial((_miss) => (schema: MO.SchemaAny): Gen => {
     // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
@@ -100,9 +98,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   }
   if ("lazy" in schema) {
     // TODO: Support recursive structures
-    return T.succeed(new ObjectSchema({}))
+    return Effect.succeed(new ObjectSchema({}))
   }
-  return T.gen(function* ($) {
+  return Effect.gen(function* ($) {
     if (schema instanceof MO.SchemaRefinement) {
       return yield* $(processId(schema.self, meta))
     }
@@ -150,18 +148,18 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const obj = ref ? merge(s) : s
 
           return yield* $(
-            noRef ? T.succeed(obj) : referenced({ openapiRef: ref })(T.succeed(obj))
+            noRef ? Effect.succeed(obj) : referenced({ openapiRef: ref })(Effect.succeed(obj))
           )
         }
         case unionIdentifier: {
           return new OneOfSchema({
             ...meta,
             oneOf: yield* $(
-              T.collectAll(
+              Effect.collectAll(
                 Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
               )
             ) as any,
-            discriminator: (schemaMeta.tag as O.Option<any>)
+            discriminator: (schemaMeta.tag as Option<any>)
               .map((_: any) => ({
                 propertyName: _.key, // TODO
               }))
@@ -238,10 +236,10 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             ...meta,
             oneOf: (yield* $(
               pipe(
-                T.collectAll(
+                Effect.collectAll(
                   [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
                 ),
-                T.map(Chunk.toArray)
+                Effect.map(Chunk.toArray)
               )
             )).map((v, i) => ({
               properties: {
@@ -263,8 +261,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? T.succeed(obj)
-              : referenced({ openapiRef: openapiRef || rest.title })(T.succeed(obj))
+              ? Effect.succeed(obj)
+              : referenced({ openapiRef: openapiRef || rest.title })(Effect.succeed(obj))
           )
         }
         case fromPropertiesIdentifier:
@@ -286,8 +284,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? T.succeed(obj)
-              : referenced({ openapiRef: openapiRef || rest.title })(T.succeed(obj))
+              ? Effect.succeed(obj)
+              : referenced({ openapiRef: openapiRef || rest.title })(Effect.succeed(obj))
           )
         }
       }

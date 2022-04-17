@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
-import * as T from "@effect-ts/core/Effect"
 import { pipe } from "@effect-ts/core/Function"
-import * as O from "@effect-ts/core/Option"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Methods } from "@effect-ts-app/core/Schema"
@@ -127,11 +125,11 @@ export function makeFromSchema<ResA>(
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
-    return (a: O.Option<JSONSchema | SubSchema>) => {
+    return (a: Option<JSONSchema | SubSchema>) => {
       return pipe(
         a,
-        O.chain((o) => (isObjectSchema(o) ? O.some(o) : O.none)),
-        O.map((x) => {
+        Option.chain((o) => (isObjectSchema(o) ? Option.some(o) : Option.none)),
+        Option.map((x) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map((p) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -140,13 +138,13 @@ export function makeFromSchema<ResA>(
             return { name: p, in: inn, required, schema }
           })
         }),
-        O.getOrElse(() => [])
+        Option.getOrElse(() => [])
       )
     }
   }
 
   return pipe(
-    T.struct({
+    Effect.struct({
       req: jsonSchema(Req.Model),
       reqQuery: makeReqQuerySchema,
       reqHeaders: makeReqHeadersSchema,
@@ -155,7 +153,7 @@ export function makeFromSchema<ResA>(
       reqCookie: makeReqCookieSchema,
       res: makeResSchema,
     }),
-    T.map((_) => {
+    Effect.map((_) => {
       //console.log("$$$ REQ", _.req)
       const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
       return {

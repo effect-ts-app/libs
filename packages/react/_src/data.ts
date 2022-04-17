@@ -17,15 +17,15 @@ export class Loading extends Tagged("Loading")<{}> {}
 
 export class Done<E, A> extends Tagged("Done")<{
   readonly current: E.Either<E, A>
-  readonly previous: O.Option<A>
+  readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Done<E, A>({ current: E.right(a), previous: O.none })
+    return new Done<E, A>({ current: E.right(a), previous: Option.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Done<E, A>({
       current: E.left(e),
-      previous: previous === undefined ? O.none : O.some(previous),
+      previous: previous === undefined ? Option.none : Option.some(previous),
     })
   }
 
@@ -36,15 +36,15 @@ export class Done<E, A> extends Tagged("Done")<{
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: E.Either<E, A>
-  readonly previous: O.Option<A>
+  readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: E.right(a), previous: O.none })
+    return new Refreshing<E, A>({ current: E.right(a), previous: Option.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
       current: E.left(e),
-      previous: previous === undefined ? O.none : O.some(previous),
+      previous: previous === undefined ? Option.none : Option.some(previous),
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -83,7 +83,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
    *  const [result] = useQuery(findSomething)
    * ```
    */
-  return <E, A>(self: T.Effect<R, E, A>): QueryResultTuple<E, A> => {
+  return <E, A>(self: Effect<R, E, A>): QueryResultTuple<E, A> => {
     const { runWithErrorLog } = useServiceContext()
     const resultInternal = useRef<QueryResult<E, A>>(new Initial())
     const [result, setResult] = useState<QueryResult<E, A>>(resultInternal.current)
@@ -101,7 +101,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
           : new Refreshing(resultInternal.current)
       )
 
-      return runWithErrorLog(pipe(queryResult(self), T.map(set)))
+      return runWithErrorLog(pipe(queryResult(self), Effect.map(set)))
     }, [self, runWithErrorLog, signal])
 
     return [result, refresh] as const
@@ -109,15 +109,15 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
 }
 
 export function queryResult<R, E, A>(
-  self: T.Effect<R, E, A>
-): T.Effect<R, never, QueryResult<E, A>> {
-  return pipe(self, T.fold(fail, succeed))
+  self: Effect<R, E, A>
+): Effect<R, never, QueryResult<E, A>> {
+  return pipe(self, Effect.fold(fail, succeed))
 }
 
 export function matchQuery<E, A, Result>(_: {
   Initial: () => Result
   Loading: () => Result
-  Error: (e: E, isRefreshing: boolean, previous: O.Option<A>) => Result
+  Error: (e: E, isRefreshing: boolean, previous: Option<A>) => Result
   Success: (a: A, isRefreshing: boolean) => Result
 }) {
   return (r: QueryResult<E, A>) =>

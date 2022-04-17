@@ -1,7 +1,6 @@
 // tracing: off
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
-import * as O from "@effect-ts/core/Option"
 
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
@@ -16,8 +15,8 @@ export type Constructor<Input, Output, ConstructorError> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => O.Option<() => Constructor<unknown, unknown, unknown>>)[] = [
-  O.partial(
+) => Option<() => Constructor<unknown, unknown, unknown>>)[] = [
+  Option.partial(
     (miss) =>
       (schema: S.SchemaAny): (() => Constructor<unknown, unknown, unknown>) => {
         if (schema instanceof S.SchemaNamed) {

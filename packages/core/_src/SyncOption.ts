@@ -8,12 +8,10 @@ import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
 
 import { flow, pipe } from "./Function.js"
-import * as O from "./Option.js"
-import * as T from "./Sync.js"
-import { GenSync, service, Sync } from "./Sync.js"
+import { GenSync, service } from "./Sync.js"
 
-export const Monad = OptionT.monad(T.Monad)
-export const Applicative = OptionT.applicative(T.Applicative)
+export const Monad = OptionT.monad(Sync.Monad)
+export const Applicative = OptionT.applicative(Sync.Applicative)
 
 export const { any, both, flatten, map } = intersect(Monad, Applicative)
 
@@ -30,55 +28,56 @@ export interface FunctionN<A extends ReadonlyArray<unknown>, B> {
   (...args: A): B
 }
 
-export interface SyncOption<R, E, A> extends T.Sync<R, E, O.Option<A>> {}
+export interface SyncOption<R, E, A> extends Sync<R, E, Option<A>> {}
 export type UIO<A> = SyncOption<unknown, never, A>
 export type IO<E, A> = SyncOption<unknown, E, A>
 export type RIO<R, E, A> = SyncOption<R, E, A>
 
-export const fromNullable = <A>(a: A) => T.succeed(O.fromNullable(a))
+export const fromNullable = <A>(a: A) => Sync.succeed(Option.fromNullable(a))
 
-export const some = <A>(a: A): UIO<A> => T.succeed(O.some(a))
+export const some = <A>(a: A): UIO<A> => Sync.succeed(Option.some(a))
 
 export const none: UIO<never> =
   /*#__PURE__*/
-  (() => T.succeed(O.none))()
+  (() => Sync.succeed(Option.none))()
 
-export const fromSync = <R, E, A>(eff: T.Sync<R, E, A>) => pipe(eff, T.map(O.some))
-export const fromSyncIf = <R, E, A>(eff: T.Sync<R, E, A>) =>
+export const fromSync = <R, E, A>(eff: Sync.Sync<R, E, A>) =>
+  pipe(eff, Sync.map(Option.some))
+export const fromSyncIf = <R, E, A>(eff: Sync.Sync<R, E, A>) =>
   pipe(
     eff,
-    T.map((x) => (Utils.isOption(x) ? x : O.some(x)))
+    Sync.map((x) => (Utils.isOption(x) ? x : Option.some(x)))
   )
 
-export const encaseEither = flow(T.encaseEither, fromSync)
+export const encaseEither = flow(Sync.encaseEither, fromSync)
 
 export const map_ = <R, E, A, B>(
   fa: SyncOption<R, E, A>,
   f: (a: A) => B
-): SyncOption<R, E, B> => T.map_(fa, O.map(f))
+): SyncOption<R, E, B> => Sync.map_(fa, Option.map(f))
 
 export const chain_ = <R, E, A, R2, E2, B>(
   fa: SyncOption<R, E, A>,
   f: (a: A) => SyncOption<R2, E2, B>
 ): SyncOption<R & R2, E | E2, B> =>
-  T.chain_(
+  Sync.chain_(
     fa,
-    O.fold(() => none, f)
+    Option.fold(() => none, f)
   )
 
 export const tap_ = <R, E, A, R2, E2>(
   inner: SyncOption<R, E, A>,
-  bind: FunctionN<[A], T.Sync<R2, E2, unknown>>
+  bind: FunctionN<[A], Sync.Sync<R2, E2, unknown>>
 ): SyncOption<R & R2, E | E2, A> =>
-  T.tap_(
+  Sync.tap_(
     inner,
-    O.fold(() => none, bind)
+    Option.fold(() => none, bind)
   )
 
 export const ap_ = <R, E, A, B, R2, E2>(
   fab: SyncOption<R, E, (a: A) => B>,
   fa: SyncOption<R2, E2, A>
-): SyncOption<R & R2, E | E2, B> => T.zipWith_(fab, fa, O.ap_)
+): SyncOption<R & R2, E | E2, B> => Sync.zipWith_(fab, fa, Option.ap_)
 
 export const apFirst: <R, E, B>(
   fb: SyncOption<R, E, B>
@@ -132,17 +131,17 @@ export function zipRight_<R, E, A, R1, E1, A1>(
   return chain_(fa, () => fb)
 }
 
-export const fromOption = <A>(a: O.Option<A>): UIO<A> => T.succeed(a)
+export const fromOption = <A>(a: Option<A>): UIO<A> => Sync.succeed(a)
 
 export const getOrElse_ = <R, E, A, A2>(
   _: SyncOption<R, E, A>,
   f: () => A2
-): Sync<R, E, A | A2> => T.map_(_, (x) => (O.isNone(x) ? f() : x.value))
+): Sync<R, E, A | A2> => Sync.map_(_, (x) => (Option.isNone(x) ? f() : x.value))
 
 export const alt_ = <R, E, A, R2, E2, A2>(
   _: SyncOption<R, E, A>,
   f: () => SyncOption<R2, E2, A2>
-) => T.chain_(_, (x) => (O.isNone(x) ? f() : T.succeed(x as O.Option<A | A2>)))
+) => Sync.chain_(_, (x) => (Option.isNone(x) ? f() : Sync.succeed(x as Option<A | A2>)))
 
 export const alt =
   <R2, E2, A2>(f: () => SyncOption<R2, E2, A2>) =>
@@ -154,34 +153,34 @@ export const getOrElse =
   <R, E, A>(_: SyncOption<R, E, A>): Sync<R, E, A | A2> =>
     getOrElse_(_, f)
 
-export const tap = <R, E, A>(bind: FunctionN<[A], T.Sync<R, E, unknown>>) =>
-  T.tap(O.fold(() => none, bind))
+export const tap = <R, E, A>(bind: FunctionN<[A], Sync.Sync<R, E, unknown>>) =>
+  Sync.tap(Option.fold(() => none, bind))
 
 export const fromOptionS = <R, E, A>(
-  onNone: T.Sync<R, E, O.Option<A>>
-): ((opt: O.Option<A>) => SyncOption<R, E, A>) => O.fold(() => onNone, some)
+  onNone: Sync.Sync<R, E, Option<A>>
+): ((opt: Option<A>) => SyncOption<R, E, A>) => Option.fold(() => onNone, some)
 
 export const fromSyncOptionS =
   <R, R2, E, E2, A>(onNone: SyncOption<R, E, A>) =>
   (eff: SyncOption<R2, E2, A>) =>
-    T.chain_(eff, fromOptionS(onNone))
+    Sync.chain_(eff, fromOptionS(onNone))
 
 export const chainSync_ = <R, R2, E, E2, A, A2>(
   eo: SyncOption<R, E, A>,
-  eff: (a: A) => T.Sync<R2, E2, A2>
+  eff: (a: A) => Sync.Sync<R2, E2, A2>
 ) => chain_(eo, flow(eff, fromSync))
 
 export const chainSync =
-  <R, R2, E, E2, A, A2>(eff: (a: A) => T.Sync<R2, E2, A2>) =>
+  <R, R2, E, E2, A, A2>(eff: (a: A) => Sync.Sync<R2, E2, A2>) =>
   (eo: SyncOption<R, E, A>) =>
     chainSync_(eo, eff)
 
 export const toNullable = <R, E, A>(eff: SyncOption<R, E, A>) =>
-  pipe(eff, T.map(O.toNullable))
+  pipe(eff, Sync.map(Option.toNullable))
 
 function adapter(_: any) {
   if (Utils.isEither(_)) {
-    return new GenSync(T.fromEither(() => _).pipe(fromSync))
+    return new GenSync(Sync.fromEither(() => _).pipe(fromSync))
   }
   if (Utils.isOption(_)) {
     return new GenSync(fromOption(_))
@@ -193,7 +192,7 @@ function adapter(_: any) {
 }
 
 export const getOrFail_ = <R, E, E2, A>(_: SyncOption<R, E, A>, onErr: () => E2) =>
-  T.chain_(_, (o) => (O.isSome(o) ? T.succeed(o.value) : T.fail(onErr())))
+  Sync.chain_(_, (o) => (Option.isSome(o) ? Sync.succeed(o.value) : Sync.fail(onErr())))
 
 export const getOrFail =
   <E2>(onErr: () => E2) =>
@@ -203,7 +202,7 @@ export const getOrFail =
 export interface Adapter {
   <A>(_: Tag<A>): GenSync<Has<A>, never, A>
 
-  <E, A>(_: O.Option<A>): GenSync<unknown, E, A>
+  <E, A>(_: Option<A>): GenSync<unknown, E, A>
   <E, A>(_: Either<E, A>): GenSync<unknown, E, A>
   <R, E, A>(_: SyncOption<R, E, A>): GenSync<R, E, A>
   <R, E, A>(_: Sync<R, E, A>): GenSync<R, E, A>

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as T from "@effect-ts/core/Effect"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ex from "@effect-ts/express"
@@ -87,8 +86,8 @@ export function match<
         h
       )
     ),
-    T.zipRight(
-      T.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
+    Effect.zipRight(
+      Effect.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
     )
   )
 }
@@ -153,7 +152,7 @@ export function handleRequest<
 >(
   requestParsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>,
   encodeResponse: (r: ReqA) => Encode<ResA, ResE>,
-  handle: (r: ReqA) => T.Effect<R & PR, SupportedErrors, ResA>,
+  handle: (r: ReqA) => Effect<R & PR, SupportedErrors, ResA>,
   h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
 ) {
   const parseRequest = parseRequestParams(requestParsers)
@@ -161,52 +160,52 @@ export function handleRequest<
   return (req: express.Request, res: express.Response) =>
     pipe(
       parseRequest(req),
-      T.map(({ body, path, query }) => {
+      Effect.map(({ body, path, query }) => {
         const hn = {
-          ...O.toUndefined(body),
-          ...O.toUndefined(query),
-          ...O.toUndefined(path),
+          ...Option.toUndefined(body),
+          ...Option.toUndefined(query),
+          ...Option.toUndefined(path),
         } as ReqA
         return hn
       }),
-      T.chain((inp) => {
+      Effect.chain((inp) => {
         const hn = handle(inp)
-        const r = h ? T.provideSomeLayer(h(req, res))(hn) : hn
+        const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
         return pipe(
-          r as T.Effect<Erase<R & R2, PR>, SupportedErrors, ResA>,
-          T.chain((outp) => respond(inp, res)(outp))
+          r as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>,
+          Effect.chain((outp) => respond(inp, res)(outp))
         )
       }),
-      T.catch("_tag", "ValidationError", (err) =>
-        T.succeedWith(() => {
+      Effect.catch("_tag", "ValidationError", (err) =>
+        Effect.succeedWith(() => {
           res.status(400).send(err.errors)
         })
       ),
-      T.catch("_tag", "NotFoundError", (err) =>
-        T.succeedWith(() => {
+      Effect.catch("_tag", "NotFoundError", (err) =>
+        Effect.succeedWith(() => {
           res.status(404).send(err)
         })
       ),
-      T.catch("_tag", "NotLoggedInError", (err) =>
-        T.succeedWith(() => {
+      Effect.catch("_tag", "NotLoggedInError", (err) =>
+        Effect.succeedWith(() => {
           res.status(401).send(err)
         })
       ),
-      T.catch("_tag", "UnauthorizedError", (err) =>
-        T.succeedWith(() => {
+      Effect.catch("_tag", "UnauthorizedError", (err) =>
+        Effect.succeedWith(() => {
           res.status(403).send(err)
         })
       ),
       // final catch all; expecting never so that unhandled known errors will show up
-      T.catchAll((err: never) =>
-        T.succeedWith(() =>
+      Effect.catchAll((err: never) =>
+        Effect.succeedWith(() =>
           console.error(
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
             err
           )
-        ).chain(T.die)
+        ).chain(Effect.die)
       ),
-      T.tapCause(() => T.succeedWith(() => res.status(500).send()))
+      Effect.tapCause(() => Effect.succeedWith(() => res.status(500).send()))
     )
 }
 
@@ -264,7 +263,7 @@ export function get<
         h
       )
     ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
+    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
   )
 }
 
@@ -320,7 +319,7 @@ export function post<
         h
       )
     ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
+    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
   )
 }
 
@@ -376,7 +375,7 @@ export function put<
         h
       )
     ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
+    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
   )
 }
 
@@ -432,7 +431,7 @@ export function patch<
         h
       )
     ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
+    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
   )
 }
 
@@ -488,7 +487,7 @@ function del<
         h
       )
     ),
-    T.zipRight(T.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
+    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
   )
 }
 

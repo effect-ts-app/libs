@@ -1,0 +1,32 @@
+diff --git a/node_modules/typescript/lib/lib.dom.d.ts b/node_modules/typescript/lib/lib.dom.d.ts
+index fcd2b1e..9381a69 100644
+--- a/node_modules/typescript/lib/lib.dom.d.ts
++++ b/node_modules/typescript/lib/lib.dom.d.ts
+@@ -16736,10 +16736,16 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+     [index: number]: Window;
+ }
+ 
++declare namespace WindowNS {
++    declare var Option: {
++        new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
++    };    
++}
++
+ declare var Window: {
+     prototype: Window;
+     new(): Window;
+-};
++} & typeof WindowNS;
+ 
+ interface WindowEventHandlersEventMap {
+     "afterprint": Event;
+@@ -17664,9 +17670,6 @@ declare var Audio: {
+ declare var Image: {
+     new(width?: number, height?: number): HTMLImageElement;
+ };
+-declare var Option: {
+-    new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
+-};
+ /** @deprecated This is a legacy alias of `navigator`. */
+ declare var clientInformation: Navigator;
+ /** Returns true if the window has been closed, false otherwise. */

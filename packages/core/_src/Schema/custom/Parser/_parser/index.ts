@@ -1,7 +1,6 @@
 // tracing: off
 
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
-import * as O from "@effect-ts/core/Option"
 
 import type { Schema, SchemaAny } from "../../_schema/index.js"
 import * as S from "../../_schema/index.js"
@@ -11,7 +10,7 @@ import * as Th from "../../These/index.js"
 
 export interface ParserEnv {
   cache?: {
-    getOrSet: <I, E, A>(i: I, parser: Parser<I, E, A>) => T.These<E, A>
+    getOrSet: <I, E, A>(i: I, parser: Parser<I, E, A>) => Effect.These<E, A>
     getOrSetParser: <I, E, A>(parser: Parser<I, E, A>) => (i: I) => Th.These<E, A>
     getOrSetParsers: <
       Parsers extends Record<string, Parser<unknown, unknown, unknown>>
@@ -25,13 +24,13 @@ export interface ParserEnv {
  * @tsplus type ets/Schema/Parser
  */
 export type Parser<I, E, A> = {
-  (u: I, env?: ParserEnv): T.These<E, A>
+  (u: I, env?: ParserEnv): Effect.These<E, A>
 }
 
 export const interpreters: ((
   schema: SchemaAny
-) => O.Option<() => Parser<unknown, unknown, unknown>>)[] = [
-  O.partial(
+) => Option<() => Parser<unknown, unknown, unknown>>)[] = [
+  Option.partial(
     (miss) =>
       (schema: S.SchemaAny): (() => Parser<unknown, unknown, unknown>) => {
         if (schema instanceof S.SchemaNamed) {

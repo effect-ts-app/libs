@@ -6,21 +6,21 @@ import * as O from "./Option.js"
 import * as SET from "./Set.js"
 
 // type SomeObject = {
-//   0: O.Option<string>
+//   0: Option<string>
 //   a: {
-//     b: O.Option<string>
-//     g: O.Option<O.Option<string>>
-//     h: O.Option<{ i: O.Option<boolean> }>
+//     b: Option<string>
+//     g: Option<Option<string>>
+//     h: Option<{ i: Option<boolean> }>
 //   }
-//   c: { d: Array<O.Option<{ e: O.Option<boolean> }>> }
+//   c: { d: Array<Option<{ e: Option<boolean> }>> }
 // }
 // type test0 = Transform<SomeObject>
 // type test1 = Transform<SomeObject[]>
 
-type OptionOf<A> = Union.Exclude<A extends O.Some<infer X> ? X | null : A, O.None>
+type OptionOf<A> = Union.Exclude<A extends Option.Some<infer X> ? X | null : A, Option.None>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-export type TransformRoot<O> = O extends O.Option<any>
+export type TransformRoot<O> = O extends Option<any>
   ? Transform<OptionOf<O>>
   : Transform<O>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
@@ -67,7 +67,7 @@ const encodeOptionsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      return encodeOptionsAsNullable_(O.toNullable(value), cacheMap)
+      return encodeOptionsAsNullable_(Option.toNullable(value), cacheMap)
     }
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)

@@ -1,7 +1,6 @@
 /* eslint-disable import/no-duplicates */
 // ets_tracing: off
 import type { IO as EffectIO } from "@effect-ts/core/Effect"
-import type { Option } from "@effect-ts/core/Option"
 import type * as O from "@effect-ts/core/Option"
 import type { IO as SyncIO } from "@effect-ts/core/Sync"
 
@@ -38,9 +37,9 @@ declare module "@effect-ts/system/Option/core" {
   }
 
   export interface OptionStaticOps {
-    fromNullable: typeof O.fromNullable
-    isSome: typeof O.isSome
-    isNone: typeof O.isNone
+    fromNullable: typeof Option.fromNullable
+    isSome: typeof Option.isSome
+    isNone: typeof Option.isNone
   }
   const Option: OptionStaticOps
 }
