@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
 import * as Ex from "@effect-ts/express"
 import { Erase } from "@effect-ts-app/core/Effect"
@@ -114,7 +113,7 @@ export function makeRequestHandler<
     ResA,
     SupportedErrors
   >,
-  h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
+  h?: (req: express.Request, res: express.Response) => Layer<R2, SupportedErrors, PR>
 ) {
   const { Request, Response } = handle
   const res = Response ? extractSchema(Response as any) : MO.Void
@@ -152,7 +151,7 @@ export function handleRequest<
   requestParsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>,
   encodeResponse: (r: ReqA) => Encode<ResA, ResE>,
   handle: (r: ReqA) => Effect<R & PR, SupportedErrors, ResA>,
-  h?: (req: express.Request, res: express.Response) => L.Layer<R2, SupportedErrors, PR>
+  h?: (req: express.Request, res: express.Response) => Layer<R2, SupportedErrors, PR>
 ) {
   const parseRequest = parseRequestParams(requestParsers)
   const respond = respondSuccess(encodeResponse)

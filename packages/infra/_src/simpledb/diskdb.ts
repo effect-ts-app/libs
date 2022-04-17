@@ -1,5 +1,3 @@
-import * as M from "@effect-ts/core/Effect/Managed"
-import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
@@ -53,7 +51,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const idx = makeIndexKey(record)
       return Option.isSome(currentVersion)
         ? pipe(
-            M.use_(lockIndex(record), () =>
+            Managed.use_(lockIndex(record), () =>
               pipe(
                 readIndex(idx),
                 Effect.chain((x) =>
@@ -97,7 +95,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        M.make_(
+        Managed.make_(
           Effect.bimap_(
             lockFile(getFilename(type, id)),
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
@@ -109,7 +107,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        M.make_(
+        Managed.make_(
           Effect.bimap_(
             lockFile(getIdxName(type, id)),
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
@@ -130,7 +128,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return (id: string) => {
         return pipe(
           tryRead(getFilename(type, id)),
-          EO.map((s) => JSON.parse(s) as CachedRecord<EA>)
+          EffectOption.map((s) => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
@@ -164,7 +162,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return pipe(
         fu.fileExists(filePath),
         Effect.chain((exists) =>
-          !exists ? Effect.succeed(Option.none) : pipe(readFile(filePath), Effect.map(Option.some))
+          !exists
+            ? Effect.succeed(Option.none)
+            : pipe(readFile(filePath), Effect.map(Option.some))
         )
       )
     }
@@ -180,7 +180,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function lockFile(fileName: string) {
-  return Effect.tryPromise(() => PLF.lock(fileName).then(flow(Effect.tryPromise, Effect.orDie)))
+  return Effect.tryPromise(() =>
+    PLF.lock(fileName).then(flow(Effect.tryPromise, Effect.orDie))
+  )
 }
 
 // TODO: ugh.

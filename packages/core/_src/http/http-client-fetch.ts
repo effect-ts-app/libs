@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "abort-controller/polyfill"
 
-import * as L from "@effect-ts/core/Effect/Layer"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
@@ -34,7 +33,7 @@ function getBody(
 const makeAbort = Effect.succeedWith(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
-  L.fromValue(H.Http)({
+  Layer.fromValue(H.Http)({
     request(
       method: H.Method,
       url: string,

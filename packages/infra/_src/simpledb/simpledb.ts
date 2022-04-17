@@ -1,7 +1,4 @@
-import * as L from "@effect-ts/core/Effect/Layer"
-import * as M from "@effect-ts/core/Effect/Managed"
 import * as Has from "@effect-ts/core/Has"
-import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 
 import {
@@ -39,7 +36,7 @@ export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 // module tag
 export const RecordCache = Has.tag<RecordCache>()
 
-export const LiveRecordCache = L.fromFunction(RecordCache)(makeLiveRecordCache)
+export const LiveRecordCache = Layer.fromFunction(RecordCache)(makeLiveRecordCache)
 
 const getM =
   <T>(type: string) =>
@@ -58,7 +55,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const read = (id: string) =>
     pipe(
       tryRead(id),
-      EO.chainEffect(({ data, version }) =>
+      EffectOption.chainEffect(({ data, version }) =>
         pipe(
           decode(data),
           Effect.bimap(
@@ -67,16 +64,16 @@ export function find<R, RDecode, EDecode, E, EA, A>(
           )
         )
       ),
-      EO.tap((r) => getCache((c) => c.set(id, r))),
-      EO.map((r) => r.data)
+      EffectOption.tap((r) => getCache((c) => c.set(id, r))),
+      EffectOption.map((r) => r.data)
     )
 
   return (id: string) =>
     getCache((c) =>
       pipe(
         c.find(id),
-        EO.map((existing) => existing.data),
-        EO.alt(() => read(id))
+        EffectOption.map((existing) => existing.data),
+        EffectOption.alt(() => read(id))
       )
     )
 }
@@ -90,7 +87,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
     getCache((c) =>
       pipe(
         c.find(record.id),
-        EO.map((x) => x.version),
+        EffectOption.map((x) => x.version),
         Effect.chain((cv) => save(record, cv)),
         Effect.tap((r) => c.set(record.id, r)),
         Effect.map((r) => r.data)
@@ -101,7 +98,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
   tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
   save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
-  lock: (id: string) => M.Managed<R2, E2, unknown>,
+  lock: (id: string) => Managed<R2, E2, unknown>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -109,8 +106,10 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
     getCache((c) =>
       pipe(
         c.find(record.id),
-        EO.map((x) => x.version),
-        Effect.chain(Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))),
+        EffectOption.map((x) => x.version),
+        Effect.chain(
+          Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))
+        ),
         Effect.tap((r) => c.set(record.id, r)),
         Effect.map((r) => r.data)
       )
@@ -118,12 +117,15 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
 
   function confirmVersionAndSave(record: A) {
     return (cv: Version) =>
-      M.use_(lock(record.id), () =>
+      Managed.use_(lock(record.id), () =>
         pipe(
           pipe(
             tryRead(record.id),
             Effect.chain(
-              Option.fold(() => Effect.fail(new InvalidStateError("record is gone")), Effect.succeed)
+              Option.fold(
+                () => Effect.fail(new InvalidStateError("record is gone")),
+                Effect.succeed
+              )
             )
           ),
           Effect.tap(({ version }) =>

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe, Predicate } from "@effect-ts/core/Function"
-import * as Has from "@effect-ts/core/Has"
 import { ParsedQuery } from "query-string"
 
 /* tested in the implementation packages */
@@ -212,11 +210,11 @@ export function accessMiddlewareStack<A>(eff: (h: Option<MiddlewareStack>) => A)
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  L.fromValue(MiddlewareStack)({
+  Layer.fromValue(MiddlewareStack)({
     stack,
   })
 
-export type RequestEnv = Has.Has<Http>
+export type RequestEnv = Has<Http>
 
 function foldMiddlewareStack(env: MiddlewareStack | null, request: RequestF): RequestF {
   if (env && env.stack.length > 0) {

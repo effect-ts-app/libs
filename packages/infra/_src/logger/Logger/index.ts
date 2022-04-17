@@ -1,4 +1,3 @@
-import * as Has from "@effect-ts/core/Has"
 
 export interface Meta {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

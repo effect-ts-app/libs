@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as M from "@effect-ts/core/Effect/Managed"
-import * as EO from "@effect-ts-app/core/EffectOption"
+
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
@@ -37,10 +36,13 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return pipe(
         RED.hmgetAll(getKey(id)),
-        EO.chainEffect((v) =>
+        EffectOption.chainEffect((v) =>
           pipe(
             pipe(RedisSerializedDBRecord.Parser, MO.condemnFail)(v),
-            Effect.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version })),
+            Effect.map(({ data, version }) => ({
+              data: JSON.parse(data) as EA,
+              version,
+            })),
             Effect.mapError((e) => new ConnectionException(new Error(e.toString())))
           )
         ),
@@ -55,11 +57,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         currentVersion,
         () =>
           pipe(
-            M.use_(lockIndex(record), () =>
+            Managed.use_(lockIndex(record), () =>
               pipe(
                 pipe(
                   getIndex(record),
-                  EO.zipRight(
+                  EffectOption.zipRight(
                     Effect.fail(() => new Error("Combination already exists, abort"))
                   )
                 ),
@@ -112,7 +114,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdx(index: Index) {
       return pipe(
         RED.hget(getIdxKey(index), index.key),
-        EO.map((i) => i as TKey)
+        EffectOption.map((i) => i as TKey)
       )
     }
 
@@ -122,7 +124,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
-      return M.make_(
+      return Managed.make_(
         Effect.bimap_(
           // acquire
           Effect.chain_(RED.lock, (lock) =>
@@ -131,7 +133,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           (lock) => ({
-            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
+            release: Effect.tryPromise(
+              () => lock.unlock() as any as Promise<void>
+            ).orDie(),
           })
         ),
         (l) => l.release
@@ -139,17 +143,21 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function lockRedisRecord(id: string) {
-      return M.make_(
+      return Managed.make_(
         Effect.bimap_(
           // acquire
           Effect.chain_(RED.lock, (lock) =>
-            Effect.tryPromise(() => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>)
+            Effect.tryPromise(
+              () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
+            )
           ),
           (err) => new CouldNotAquireDbLockException(type, id, err as Error),
           // release
           (lock) => ({
             // TODO
-            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>).orDie(),
+            release: Effect.tryPromise(
+              () => lock.unlock() as any as Promise<void>
+            ).orDie(),
           })
         ),
         (l) => l.release
@@ -186,7 +194,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             "data",
             enc.data,
             (err) =>
-              err ? res(Effect.fail(new ConnectionException(err))) : res(Effect.succeed(void 0))
+              err
+                ? res(Effect.fail(new ConnectionException(err)))
+                : res(Effect.succeed(void 0))
           )
         })
       )

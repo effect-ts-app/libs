@@ -1,6 +1,3 @@
-import * as L from "@effect-ts/core/Effect/Layer"
-import * as M from "@effect-ts/core/Effect/Managed"
-import * as Has from "@effect-ts/core/Has"
 import { _A } from "@effect-ts/core/Utils"
 import { pipe } from "@effect-ts-app/core/Function"
 import { RedisClient as Client } from "redis"
@@ -9,7 +6,7 @@ import Redlock from "redlock"
 import { ConnectionException } from "./simpledb/shared.js"
 
 const makeRedisClient = (makeClient: () => Client) =>
-  M.make_(
+  Managed.make_(
     Effect.succeedWith(() => {
       const client = createClient(makeClient)
       const lock = new Redlock([client])
@@ -40,7 +37,7 @@ export const { client, lock } = Effect.deriveLifted(RedisClient)(
 )
 
 export const RedisClientLive = (makeClient: () => Client) =>
-  L.fromManaged(RedisClient)(makeRedisClient(makeClient))
+  Layer.fromManaged(RedisClient)(makeRedisClient(makeClient))
 
 function createClient(makeClient: () => Client) {
   const client = makeClient()

@@ -119,9 +119,9 @@ export function syncZipRight_<R, E, A, R2, E2, A2>(
  * @tsplus operator ets/Managed >
  */
 export function managedZipRight_<R, E, A, R2, E2, A2>(
-  a: Managed.Managed<R, E, A>,
-  b: Managed.Managed<R2, E2, A2>
-): Managed.Managed<R & R2, E | E2, A2> {
+  a: Managed<R, E, A>,
+  b: Managed<R2, E2, A2>
+): Managed<R & R2, E | E2, A2> {
   return Managed.zipRight_(a, b)
 }
 

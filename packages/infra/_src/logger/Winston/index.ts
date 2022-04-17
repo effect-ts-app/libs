@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as L from "@effect-ts/core/Effect/Layer"
-import * as Has from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts-app/core/Function"
 import * as W from "winston"
 
@@ -20,7 +18,7 @@ export interface WinstonInstance {
 
 export const WinstonInstance = Has.tag<WinstonInstance>()
 
-export const LiveWinstonInstance = L.fromEffect(WinstonInstance)(
+export const LiveWinstonInstance = Layer.fromEffect(WinstonInstance)(
   pipe(
     logger,
     Effect.map((logger) => ({ logger }))
@@ -36,14 +34,14 @@ export const makeChild = (meta: LOG.Meta) =>
     } as WinstonInstance
   })
 
-export const Child = (meta: LOG.Meta) => L.fromEffect(WinstonInstance)(makeChild(meta))
+export const Child = (meta: LOG.Meta) => Layer.fromEffect(WinstonInstance)(makeChild(meta))
 
 export const provideChildLogger = (meta: LOG.Meta) =>
   Effect.replaceServiceM(WinstonInstance, () => makeChild(meta))
 
 /* istanbul ignore next */
 export const LoggerFactory = (loggerOpts: W.LoggerOptions) =>
-  L.fromValue(WinstonFactory)({
+  Layer.fromValue(WinstonFactory)({
     logger: Effect.succeedWith(() => W.createLogger(loggerOpts)),
   })
 
@@ -84,6 +82,6 @@ export const makeWinstonLogger = Effect.gen(function* ($) {
   } as LOG.Logger
 })
 
-export const WinstonLogger = L.fromEffect(LOG.Logger)(makeWinstonLogger)["<+<"](
+export const WinstonLogger = Layer.fromEffect(LOG.Logger)(makeWinstonLogger)["<+<"](
   LiveWinstonInstance
 )

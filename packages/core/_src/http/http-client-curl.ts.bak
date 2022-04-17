@@ -1,5 +1,4 @@
 import * as R from "@effect-ts/core/Collections/Immutable/Dictionary"
-import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
 import * as F from "@effect-ts/core/Function"
 import * as C from "node-libcurl"
@@ -14,7 +13,7 @@ export const Client = (
     requestTransformer?: F.Endomorphism<C.Curl>
   } = {}
 ) =>
-  L.fromValue(H.Http)({
+  Layer.fromValue(H.Http)({
     request: (
       method: H.Method,
       url: string,

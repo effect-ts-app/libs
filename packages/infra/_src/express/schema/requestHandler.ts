@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { makeAssociative } from "@effect-ts/core/Associative"
-import * as L from "@effect-ts/core/Effect/Layer"
 import { flow, pipe } from "@effect-ts/core/Function"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
 import * as EU from "@effect-ts/core/Utils"
-import * as EO from "@effect-ts-app/core/EffectOption"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Methods, Parser } from "@effect-ts-app/core/Schema"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
@@ -186,7 +184,7 @@ export type Middleware<
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE>
 ) => {
   handler: typeof handler
-  handle: (req: express.Request, res: express.Response) => L.Layer<R2, ResE, PR>
+  handle: (req: express.Request, res: express.Response) => Layer<R2, ResE, PR>
 }
 
 export type Middleware2<R, ReqA, ResA, R2 = unknown, PR = unknown> = Middleware<
@@ -230,36 +228,36 @@ export function makeRequestParsers<
     .map((s) => s)
     .map(Parser.for)
     .map(MO.condemn)
-    .pipe(EO.fromOption)
-  const parseHeaders = (u: unknown) => ph.chainOption((d) => d(u).pipe(EO.fromEffect))
+    .pipe(EffectOption.fromOption)
+  const parseHeaders = (u: unknown) => ph.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
 
   const pq = Option.fromNullable(Request.Query)
     .map((s) => s)
     .map(Parser.for)
     .map(MO.condemn)
-    .pipe(EO.fromOption)
-  const parseQuery = (u: unknown) => pq.chainOption((d) => d(u).pipe(EO.fromEffect))
+    .pipe(EffectOption.fromOption)
+  const parseQuery = (u: unknown) => pq.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
 
   const pb = Option.fromNullable(Request.Body)
     .map((s) => s)
     .map(Parser.for)
     .map(MO.condemn)
-    .pipe(EO.fromOption)
-  const parseBody = (u: unknown) => pb.chainOption((d) => d(u).pipe(EO.fromEffect))
+    .pipe(EffectOption.fromOption)
+  const parseBody = (u: unknown) => pb.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
 
   const pp = Option.fromNullable(Request.Path)
     .map((s) => s)
     .map(Parser.for)
     .map(MO.condemn)
-    .pipe(EO.fromOption)
-  const parsePath = (u: unknown) => pp.chainOption((d) => d(u).pipe(EO.fromEffect))
+    .pipe(EffectOption.fromOption)
+  const parsePath = (u: unknown) => pp.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
 
   const pc = Option.fromNullable(Request.Cookie)
     .map((s) => s)
     .map(Parser.for)
     .map(MO.condemn)
-    .pipe(EO.fromOption)
-  const parseCookie = (u: unknown) => pc.chainOption((d) => d(u).pipe(EO.fromEffect))
+    .pipe(EffectOption.fromOption)
+  const parseCookie = (u: unknown) => pc.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
 
   return {
     parseBody,

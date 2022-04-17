@@ -1,5 +1,3 @@
-import * as L from "@effect-ts/core/Effect/Layer"
-import * as Has from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts-app/core/Function"
 
 import * as LOG from "../Logger/index.js"
@@ -71,9 +69,9 @@ export interface ConsoleLoggerConfig extends Config {}
 export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>()
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  L.fromValue(ConsoleLoggerConfig)(config)
+  Layer.fromValue(ConsoleLoggerConfig)(config)
 
-export const LiveConsoleLogger = L.fromEffect(LOG.Logger)(
+export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
   Effect.gen(function* ($) {
     const config = yield* $(ConsoleLoggerConfig)
     return {

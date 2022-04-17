@@ -1,6 +1,5 @@
-import * as M from "@effect-ts/core/Effect/Managed"
+
 import * as Eq from "@effect-ts/core/Equal"
-import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 
@@ -35,9 +34,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return pipe(
         storage.find(getRecordName(type, id)),
-        EO.map((s) => JSON.parse(s) as unknown),
-        EO.chainEffect(parseSDB),
-        EO.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version }))
+        EffectOption.map((s) => JSON.parse(s) as unknown),
+        EffectOption.chainEffect(parseSDB),
+        EffectOption.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version }))
       )
     }
 
@@ -92,5 +91,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function bogusLock() {
-  return M.make_(Effect.unit, () => Effect.unit)
+  return Managed.make_(Effect.unit, () => Effect.unit)
 }

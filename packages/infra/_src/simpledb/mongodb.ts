@@ -1,4 +1,3 @@
-import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
@@ -49,7 +48,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           )
         ),
         Effect.map(Option.fromNullable),
-        EO.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
+        EffectOption.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
       )
     }
 
@@ -62,7 +61,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           )
         ),
         Effect.map(Option.fromNullable),
-        EO.map(({ _id }) => _id)
+        EffectOption.map(({ _id }) => _id)
       )
     }
 

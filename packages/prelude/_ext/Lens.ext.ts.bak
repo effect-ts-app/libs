@@ -18,7 +18,7 @@ export const { modifyConcat } = L
 /**
  * @tsplus fluent ets/Lens modifyConcat_
  */
-export const modifyConcat__ = L.modifyConcat_
+export const modifyConcat__ = Layer.modifyConcat_
 
 /**
  * @tsplus fluent ets/Lens modifyM_

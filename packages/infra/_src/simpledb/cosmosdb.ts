@@ -1,5 +1,4 @@
 import { IndexingPolicy } from "@azure/cosmos"
-import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 
@@ -49,7 +48,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
         ),
         Effect.map((i) => Option.fromNullable(i.resource)),
-        EO.map(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
+        EffectOption.map(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
       )
     }
 
@@ -79,7 +78,7 @@ WHERE (
           )
         ),
         Effect.map((x) => ROArray.head(x.resources)),
-        EO.map(({ id }) => id)
+        EffectOption.map(({ id }) => id)
       )
     }
 

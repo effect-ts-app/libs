@@ -1,9 +1,8 @@
 import { pretty } from "@effect-ts/core/Effect/Cause"
-import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
 import React, { createContext, ReactNode, useContext, useEffect, useMemo } from "react"
 
-export type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP : never
+export type GetProvider<P> = P extends Layer<unknown, unknown, infer TP> ? TP : never
 
 export interface ServiceContext<R> {
   readonly provide: <E, A>(
@@ -49,9 +48,9 @@ export function makeApp<R>() {
     env,
   }: {
     children: ReactNode
-    env: L.Layer<unknown, never, R>
+    env: Layer<unknown, never, R>
   }) => {
-    const provider = useMemo(() => L.unsafeMainProvider(env), [env])
+    const provider = useMemo(() => Layer.unsafeMainProvider(env), [env])
 
     const ctx = useMemo(
       () => ({
