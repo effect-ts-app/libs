@@ -37,6 +37,10 @@
         ".": {
             "import": "./_mjs/index.mjs",
             "require": "./index.js"
+        },
+        "./_ext/*": {
+            "import": "./_mjs/_ext/*.mjs",
+            "require": "./_ext/*.js"
         }
     },
     "sideEffects": false,
