@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "lib": [
             "es2020",
@@ -32,7 +32,9 @@
         "./"
     ],
     "exclude": [
-        "./_esm"
+        "./_esm",
+        "./_mjs",
+        "./_cjs"
     ],
     "references": [
         {

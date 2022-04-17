@@ -41,6 +41,8 @@
         "node_modules",
         "build",
         "lib",
-        "_esm"
+        "_esm",
+        "_mjs",
+        "_cjs"
     ]
 }

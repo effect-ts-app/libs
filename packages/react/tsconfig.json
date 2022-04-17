@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "moduleResolution": "node",
         "outDir": "./_esm",
@@ -11,7 +11,9 @@
         "./"
     ],
     "exclude": [
-        "./_esm"
+        "./_esm",
+        "./_mjs",
+        "./_cjs"
     ],
     "references": [
         {
