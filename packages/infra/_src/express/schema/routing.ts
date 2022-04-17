@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { pipe } from "@effect-ts/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Methods } from "@effect-ts-app/core/Schema"
 import * as TUP from "@effect-ts-app/core/Tuple"
@@ -111,23 +110,30 @@ export function makeFromSchema<ResA>(
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = EffectOption.fromNullable(Req.Query).chainOptionEffect(jsonSchema)
+  const makeReqQuerySchema = EffectOption.fromNullable(Req.Query).chainOptionEffect(
+    jsonSchema
+  )
   const makeReqHeadersSchema = EffectOption.fromNullable(Req.Headers).chainOptionEffect(
     jsonSchema
   )
-  const makeReqCookieSchema = EffectOption.fromNullable(Req.Cookie).chainOptionEffect(jsonSchema)
-  const makeReqPathSchema = EffectOption.fromNullable(Req.Path).chainOptionEffect(jsonSchema)
-  const makeReqBodySchema = EffectOption.fromNullable(Req.Body).chainOptionEffect(jsonSchema)
+  const makeReqCookieSchema = EffectOption.fromNullable(Req.Cookie).chainOptionEffect(
+    jsonSchema
+  )
+  const makeReqPathSchema = EffectOption.fromNullable(Req.Path).chainOptionEffect(
+    jsonSchema
+  )
+  const makeReqBodySchema = EffectOption.fromNullable(Req.Body).chainOptionEffect(
+    jsonSchema
+  )
   //const makeReqSchema = schema(Req)
 
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
     return (a: Option<JSONSchema | SubSchema>) => {
-      return pipe(
-        a,
-        Option.chain((o) => (isObjectSchema(o) ? Option.some(o) : Option.none)),
-        Option.map((x) => {
+      return a
+        .chain((o) => (isObjectSchema(o) ? Option.some(o) : Option.none))
+        .map((x) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map((p) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -135,58 +141,54 @@ export function makeFromSchema<ResA>(
             const required = Boolean(x.required?.includes(p))
             return { name: p, in: inn, required, schema }
           })
-        }),
-        Option.getOrElse(() => [])
-      )
+        })
+        .getOrElse(() => [])
     }
   }
 
-  return pipe(
-    Effect.struct({
-      req: jsonSchema(Req.Model),
-      reqQuery: makeReqQuerySchema,
-      reqHeaders: makeReqHeadersSchema,
-      reqBody: makeReqBodySchema,
-      reqPath: makeReqPathSchema,
-      reqCookie: makeReqCookieSchema,
-      res: makeResSchema,
-    }),
-    Effect.map((_) => {
-      //console.log("$$$ REQ", _.req)
-      const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
-      return {
-        path: e.path,
-        method: e.method.toLowerCase(),
-        tags: e.info?.tags,
-        description: _.req?.description,
-        summary: _.req?.summary,
-        operationId: _.req?.title,
-        parameters: [
-          ..._.reqPath.pipe(makeParameters("path")),
-          ..._.reqQuery.pipe(makeParameters("query")),
-          ..._.reqHeaders.pipe(makeParameters("header")),
-          ..._.reqCookie.pipe(makeParameters("cookie")),
+  return Effect.struct({
+    req: jsonSchema(Req.Model),
+    reqQuery: makeReqQuerySchema,
+    reqHeaders: makeReqHeadersSchema,
+    reqBody: makeReqBodySchema,
+    reqPath: makeReqPathSchema,
+    reqCookie: makeReqCookieSchema,
+    res: makeResSchema,
+  }).map((_) => {
+    //console.log("$$$ REQ", _.req)
+    const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
+    return {
+      path: e.path,
+      method: e.method.toLowerCase(),
+      tags: e.info?.tags,
+      description: _.req?.description,
+      summary: _.req?.summary,
+      operationId: _.req?.title,
+      parameters: [
+        ..._.reqPath.pipe(makeParameters("path")),
+        ..._.reqQuery.pipe(makeParameters("query")),
+        ..._.reqHeaders.pipe(makeParameters("header")),
+        ..._.reqCookie.pipe(makeParameters("cookie")),
+      ],
+      requestBody: _.reqBody
+        .map((schema) => ({ content: { "application/json": { schema } } }))
+        .toUndefined(),
+      responses: ROArray.concat_(
+        [
+          isEmpty
+            ? new Response(204, { description: "Empty" })
+            : new Response(200, {
+                description: "OK",
+                content: { "application/json": { schema: _.res } },
+              }),
+          new Response(400, { description: "ValidationError" }),
         ],
-        requestBody: _.reqBody
-          .map((schema) => ({ content: { "application/json": { schema } } }))
-          .toUndefined(),
-        responses: ROArray.concat_(
-          [
-            isEmpty
-              ? new Response(204, { description: "Empty" })
-              : new Response(200, {
-                  description: "OK",
-                  content: { "application/json": { schema: _.res } },
-                }),
-            new Response(400, { description: "ValidationError" }),
-          ],
-          e.path.includes(":") && isEmpty
-            ? [new Response(404, { description: "NotFoundError" })]
-            : []
-        ),
-      }
-    })
-  )
+        e.path.includes(":") && isEmpty
+          ? [new Response(404, { description: "NotFoundError" })]
+          : []
+      ),
+    }
+  })
 }
 
 class Response {

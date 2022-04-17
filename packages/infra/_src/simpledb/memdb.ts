@@ -1,5 +1,5 @@
 import * as Eq from "@effect-ts/core/Equal"
-import { flow, pipe } from "@effect-ts-app/core/Function"
+import { flow } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 
 import {
@@ -31,44 +31,38 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return pipe(
-        storage.find(getRecordName(type, id)),
-        EffectOption.map((s) => JSON.parse(s) as unknown),
-        EffectOption.chainEffect(parseSDB),
-        EffectOption.map(({ data, version }) => ({
+      return storage
+        .find(getRecordName(type, id))
+        .mapOption((s) => JSON.parse(s) as unknown)
+        .chainOptionEffect(parseSDB)
+        .mapOption(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version,
         }))
-      )
     }
 
     function findBy<V extends Partial<A>>(keys: V, eq: Eq.Equal<V>) {
       // Naive implementation, fine for in memory testing purposes.
-      return pipe(
-        Effect.gen(function* ($) {
-          for (const [, value] of storage) {
-            const sdb_ = JSON.parse(value) as unknown
-            const sdb = yield* $(parseSDB(sdb_))
-            const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
-            const r = yield* $(
-              pipe(
-                decode(cr.data),
-                Effect.chain((d) =>
-                  eq.equals(keys, d as unknown as V)
-                    ? Sync.succeed(d)
-                    : Sync.fail("not equals")
-                ),
-                Effect.result
+      return Effect.gen(function* ($) {
+        for (const [, value] of storage) {
+          const sdb_ = JSON.parse(value) as unknown
+          const sdb = yield* $(parseSDB(sdb_))
+          const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
+          const r = yield* $(
+            decode(cr.data)
+              .chain((d) =>
+                eq.equals(keys, d as unknown as V)
+                  ? Sync.succeed(d)
+                  : Sync.fail("not equals")
               )
-            )
-            if (r._tag === "Success") {
-              return r.value
-            }
+              .result()
+          )
+          if (r._tag === "Success") {
+            return r.value
           }
-          return null
-        }),
-        Effect.map(Option.fromNullable)
-      )
+        }
+        return null
+      }).map(Option.fromNullable)
     }
 
     function store(record: A, currentVersion: Option<Version>) {
@@ -81,13 +75,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         Effect.map(JSON.stringify),
         Effect.map((data) => JSON.stringify({ version, timestamp: new Date(), data }))
       )
-      return pipe(
-        getData(record),
-        Effect.chain((serialised) =>
-          storage.set(getRecordName(type, record.id), serialised)
-        ),
-        Effect.map(() => ({ version, data: record } as CachedRecord<A>))
-      )
+      return getData(record)
+        .chain((serialised) => storage.set(getRecordName(type, record.id), serialised))
+        .map(() => ({ version, data: record } as CachedRecord<A>))
     }
   }
 }

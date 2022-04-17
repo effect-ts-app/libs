@@ -147,7 +147,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const obj = ref ? merge(s) : s
 
           return yield* $(
-            noRef ? Effect.succeed(obj) : referenced({ openapiRef: ref })(Effect.succeed(obj))
+            noRef
+              ? Effect.succeed(obj)
+              : referenced({ openapiRef: ref })(Effect.succeed(obj))
           )
         }
         case unionIdentifier: {
@@ -234,12 +236,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: (yield* $(
-              pipe(
-                Effect.collectAll(
-                  [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-                ),
-                Effect.map(Chunk.toArray)
-              )
+              Effect.collectAll(
+                [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
+              ).map(Chunk.toArray)
             )).map((v, i) => ({
               properties: {
                 _tag: { enum: [i === 0 ? "Left" : "Right"] },
@@ -261,7 +260,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return yield* $(
             noRef
               ? Effect.succeed(obj)
-              : referenced({ openapiRef: openapiRef || rest.title })(Effect.succeed(obj))
+              : referenced({ openapiRef: openapiRef || rest.title })(
+                  Effect.succeed(obj)
+                )
           )
         }
         case fromPropertiesIdentifier:
@@ -284,7 +285,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return yield* $(
             noRef
               ? Effect.succeed(obj)
-              : referenced({ openapiRef: openapiRef || rest.title })(Effect.succeed(obj))
+              : referenced({ openapiRef: openapiRef || rest.title })(
+                  Effect.succeed(obj)
+                )
           )
         }
       }

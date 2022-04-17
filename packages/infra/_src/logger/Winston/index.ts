@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { pipe } from "@effect-ts-app/core/Function"
 import * as W from "winston"
 
 import * as LOG from "../Logger/index.js"
@@ -19,10 +18,7 @@ export interface WinstonInstance {
 export const WinstonInstance = Has.tag<WinstonInstance>()
 
 export const LiveWinstonInstance = Layer.fromEffect(WinstonInstance)(
-  pipe(
-    logger,
-    Effect.map((logger) => ({ logger }))
-  )
+  logger.map((logger) => ({ logger }))
 )
 
 export const makeChild = (meta: LOG.Meta) =>
@@ -34,7 +30,8 @@ export const makeChild = (meta: LOG.Meta) =>
     } as WinstonInstance
   })
 
-export const Child = (meta: LOG.Meta) => Layer.fromEffect(WinstonInstance)(makeChild(meta))
+export const Child = (meta: LOG.Meta) =>
+  Layer.fromEffect(WinstonInstance)(makeChild(meta))
 
 export const provideChildLogger = (meta: LOG.Meta) =>
   Effect.replaceServiceM(WinstonInstance, () => makeChild(meta))

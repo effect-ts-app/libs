@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { pipe } from "@effect-ts/core/Function"
 import * as Ex from "@effect-ts/express"
 import { Erase } from "@effect-ts-app/core/Effect"
 import * as MO from "@effect-ts-app/core/Schema"
@@ -76,17 +75,14 @@ export function match<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.match(r.Request.method.toLowerCase() as any)(
-      r.Request.path.split("?")[0],
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(
-      Effect.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
+  return Ex.match(r.Request.method.toLowerCase() as any)(
+    r.Request.path.split("?")[0],
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
     )
+  ).zipRight(
+    Effect.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
   )
 }
 
@@ -156,55 +152,52 @@ export function handleRequest<
   const parseRequest = parseRequestParams(requestParsers)
   const respond = respondSuccess(encodeResponse)
   return (req: express.Request, res: express.Response) =>
-    pipe(
-      parseRequest(req),
-      Effect.map(({ body, path, query }) => {
+    parseRequest(req)
+      .map(({ body, path, query }) => {
         const hn = {
           ...Option.toUndefined(body),
           ...Option.toUndefined(query),
           ...Option.toUndefined(path),
         } as ReqA
         return hn
-      }),
-      Effect.chain((inp) => {
+      })
+      .chain((inp) => {
         const hn = handle(inp)
         const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
-        return pipe(
-          r as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>,
-          Effect.chain((outp) => respond(inp, res)(outp))
+        return (r as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>).chain((outp) =>
+          respond(inp, res)(outp)
         )
-      }),
-      Effect.catch("_tag", "ValidationError", (err) =>
+      })
+      .catch("_tag", "ValidationError", (err) =>
         Effect.succeedWith(() => {
           res.status(400).send(err.errors)
         })
-      ),
-      Effect.catch("_tag", "NotFoundError", (err) =>
+      )
+      .catch("_tag", "NotFoundError", (err) =>
         Effect.succeedWith(() => {
           res.status(404).send(err)
         })
-      ),
-      Effect.catch("_tag", "NotLoggedInError", (err) =>
+      )
+      .catch("_tag", "NotLoggedInError", (err) =>
         Effect.succeedWith(() => {
           res.status(401).send(err)
         })
-      ),
-      Effect.catch("_tag", "UnauthorizedError", (err) =>
+      )
+      .catch("_tag", "UnauthorizedError", (err) =>
         Effect.succeedWith(() => {
           res.status(403).send(err)
         })
-      ),
+      )
       // final catch all; expecting never so that unhandled known errors will show up
-      Effect.catchAll((err: never) =>
+      .catchAll((err: never) =>
         Effect.succeedWith(() =>
           console.error(
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
             err
           )
         ).chain(Effect.die)
-      ),
-      Effect.tapCause(() => Effect.succeedWith(() => res.status(500).send()))
-    )
+      )
+      .tapCause(() => Effect.succeedWith(() => res.status(500).send()))
 }
 
 // Additional convenience helpers
@@ -253,16 +246,13 @@ export function get<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.get(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
-  )
+  return Ex.get(
+    path,
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
+    )
+  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
 }
 
 export function post<
@@ -309,16 +299,13 @@ export function post<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.post(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
-  )
+  return Ex.post(
+    path,
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
+    )
+  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
 }
 
 export function put<
@@ -365,16 +352,13 @@ export function put<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.put(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
-  )
+  return Ex.put(
+    path,
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
+    )
+  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
 }
 
 export function patch<
@@ -421,16 +405,13 @@ export function patch<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.patch(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
-  )
+  return Ex.patch(
+    path,
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
+    )
+  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
 }
 
 function del<
@@ -477,16 +458,13 @@ function del<
     r = handler
     h = handle
   }
-  return pipe(
-    Ex.delete(
-      path,
-      makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
-        r,
-        h
-      )
-    ),
-    Effect.zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
-  )
+  return Ex.delete(
+    path,
+    makeRequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR>(
+      r,
+      h
+    )
+  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
 }
 
 export { del as delete }

@@ -1,5 +1,3 @@
-import { pipe } from "@effect-ts-app/core/Function"
-
 import {
   CachedRecord,
   DBRecord,
@@ -42,7 +40,7 @@ const getM =
   <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
     Effect.gen(function* ($) {
       const { get } = yield* $(RecordCache)
-      return yield* $(pipe(get<T>(type), Effect.chain(eff)))
+      return yield* $(get<T>(type).chain(eff))
     })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
@@ -78,13 +76,12 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
   const getCache = getM<A>(type)
   return (record: A) =>
     getCache((c) =>
-      pipe(
-        c.find(record.id),
-        EffectOption.map((x) => x.version),
-        Effect.chain((cv) => save(record, cv)),
-        Effect.tap((r) => c.set(record.id, r)),
-        Effect.map((r) => r.data)
-      )
+      c
+        .find(record.id)
+        .mapOption((x) => x.version)
+        .chain((cv) => save(record, cv))
+        .tap((r) => c.set(record.id, r))
+        .map((r) => r.data)
     )
 }
 
@@ -97,37 +94,32 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
   const getCache = getM<A>(type)
   return (record: A) =>
     getCache((c) =>
-      pipe(
-        c.find(record.id),
-        EffectOption.map((x) => x.version),
-        Effect.chain(
+      c
+        .find(record.id)
+        .mapOption((x) => x.version)
+        .chain(
           Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))
-        ),
-        Effect.tap((r) => c.set(record.id, r)),
-        Effect.map((r) => r.data)
-      )
+        )
+        .tap((r) => c.set(record.id, r))
+        .map((r) => r.data)
     )
 
   function confirmVersionAndSave(record: A) {
     return (cv: Version) =>
       Managed.use_(lock(record.id), () =>
-        pipe(
-          pipe(
-            tryRead(record.id),
-            Effect.chain(
-              Option.fold(
-                () => Effect.fail(new InvalidStateError("record is gone")),
-                Effect.succeed
-              )
+        tryRead(record.id)
+          .chain(
+            Option.fold(
+              () => Effect.fail(new InvalidStateError("record is gone")),
+              Effect.succeed
             )
-          ),
-          Effect.tap(({ version }) =>
+          )
+          .tap(({ version }) =>
             version !== cv
               ? Effect.fail(new OptimisticLockException(type, record.id))
               : Effect.unit
-          ),
-          Effect.zipRight(save(record, Option.some(cv)))
-        )
+          )
+          .zipRight(save(record, Option.some(cv)))
       )
   }
 }

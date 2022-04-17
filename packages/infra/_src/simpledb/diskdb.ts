@@ -50,33 +50,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
       const idx = makeIndexKey(record)
       return Option.isSome(currentVersion)
-        ? pipe(
-            Managed.use_(lockIndex(record), () =>
-              pipe(
-                readIndex(idx),
-                Effect.chain((x) =>
-                  x[record.id]
-                    ? Effect.fail(() => new Error("Combination already exists, abort"))
-                    : pipe(
-                        getData(record),
-                        Effect.chain((serialised) =>
-                          fu.writeTextFile(getFilename(type, record.id), serialised)
-                        ),
-                        Effect.zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
+        ? Managed.use_(lockIndex(record), () =>
+            readIndex(idx)
+              .chain((x) =>
+                x[record.id]
+                  ? Effect.fail(() => new Error("Combination already exists, abort"))
+                  : getData(record)
+                      .chain((serialised) =>
+                        fu.writeTextFile(getFilename(type, record.id), serialised)
                       )
-                ),
-                Effect.orDie
+                      .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
               )
-            ),
-            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
-          )
-        : pipe(
-            getData(record),
-            Effect.chain((serialised) =>
+              .orDie()
+          ).map(() => ({ version, data: record } as CachedRecord<A>))
+        : getData(record)
+            .chain((serialised) =>
               fu.writeTextFile(getFilename(type, record.id), serialised)
-            ),
-            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
-          )
+            )
+            .map(() => ({ version, data: record } as CachedRecord<A>))
     }
 
     function lockIndex(record: A) {
@@ -118,36 +109,28 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function readFile(filePath: string) {
-      return pipe(
-        fu.readTextFile(filePath),
-        Effect.catchAll((err) => Effect.die(new ConnectionException(err as Error)))
-      )
+      return fu
+        .readTextFile(filePath)
+        .catchAll((err) => Effect.die(new ConnectionException(err as Error)))
     }
 
     function find(type: string) {
       return (id: string) => {
-        return pipe(
-          tryRead(getFilename(type, id)),
-          EffectOption.map((s) => JSON.parse(s) as CachedRecord<EA>)
+        return tryRead(getFilename(type, id)).mapOption(
+          (s) => JSON.parse(s) as CachedRecord<EA>
         )
       }
     }
 
     function getIdx(index: Index) {
-      return pipe(
-        readIndex(index),
-        Effect.map((idx) => Option.fromNullable(idx[index.key]))
-      )
+      return readIndex(index).map((idx) => Option.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
-      return pipe(
-        tryRead(getIdxName(type, index.doc)),
-        Effect.map(
-          Option.fold(
-            () => ({} as Record<string, TKey>),
-            (x) => JSON.parse(x) as Record<string, TKey>
-          )
+      return tryRead(getIdxName(type, index.doc)).map(
+        Option.fold(
+          () => ({} as Record<string, TKey>),
+          (x) => JSON.parse(x) as Record<string, TKey>
         )
       )
     }
@@ -159,14 +142,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function tryRead(filePath: string) {
-      return pipe(
-        fu.fileExists(filePath),
-        Effect.chain((exists) =>
-          !exists
-            ? Effect.succeed(Option.none)
-            : pipe(readFile(filePath), Effect.map(Option.some))
+      return fu
+        .fileExists(filePath)
+        .chain((exists) =>
+          !exists ? Effect.succeed(Option.none) : readFile(filePath).map(Option.some)
         )
-      )
     }
 
     function getFilename(type: string, id: string) {

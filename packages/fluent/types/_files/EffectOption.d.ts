@@ -154,7 +154,7 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_method catch_ from "@effect-ts/core/Effect"
      */
     catch<N extends keyof E, K extends E[N] & string, E, R, A, R1, E1, A1>(
-      self: Effect<R, E, A>,
+      this: Effect<R, E, A>,
       tag: N,
       k: K,
       f: (

@@ -34,20 +34,19 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return pipe(
-        RED.hmgetAll(getKey(id)),
-        EffectOption.chainEffect((v) =>
+      return RED.hmgetAll(getKey(id))
+        .chainOptionEffect((v) =>
           pipe(
-            pipe(RedisSerializedDBRecord.Parser, MO.condemnFail)(v),
-            Effect.map(({ data, version }) => ({
+            RedisSerializedDBRecord.Parser,
+            MO.condemnFail
+          )(v)
+            .map(({ data, version }) => ({
               data: JSON.parse(data) as EA,
               version,
-            })),
-            Effect.mapError((e) => new ConnectionException(new Error(e.toString())))
-          )
-        ),
-        Effect.orDie
-      )
+            }))
+            .mapError((e) => new ConnectionException(new Error(e.toString())))
+        )
+        .orDie()
     }
     function store(record: A, currentVersion: Option<string>) {
       const version = currentVersion
@@ -56,43 +55,37 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Option.fold_(
         currentVersion,
         () =>
-          pipe(
-            Managed.use_(lockIndex(record), () =>
-              pipe(
-                pipe(
-                  getIndex(record),
-                  EffectOption.zipRight(
-                    Effect.fail(() => new Error("Combination already exists, abort"))
-                  )
-                ),
-                Effect.zipRight(getData(record)),
-                // TODO: instead use MULTI & EXEC to make it in one command?
-                Effect.chain((data) =>
-                  hmSetRec(getKey(record.id), {
-                    version,
-                    timestamp: new Date(),
-                    data,
-                  })
-                ),
-                Effect.zipRight(setIndex(record)),
-                Effect.orDie
+          Managed.use_(lockIndex(record), () =>
+            pipe(
+              getIndex(record),
+              EffectOption.zipRight(
+                Effect.fail(() => new Error("Combination already exists, abort"))
               )
-            ),
-            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
+            )
+              .zipRight(getData(record))
+              // TODO: instead use MULTI & EXEC to make it in one command?
+              .chain((data) =>
+                hmSetRec(getKey(record.id), {
+                  version,
+                  timestamp: new Date(),
+                  data,
+                })
+              )
+              .zipRight(setIndex(record))
+              .orDie()
+              .map(() => ({ version, data: record } as CachedRecord<A>))
           ),
         () =>
-          pipe(
-            getData(record),
-            Effect.chain((data) =>
+          getData(record)
+            .chain((data) =>
               hmSetRec(getKey(record.id), {
                 version,
                 timestamp: new Date(),
                 data,
               })
-            ),
-            Effect.orDie,
-            Effect.map(() => ({ version, data: record } as CachedRecord<A>))
-          )
+            )
+            .orDie()
+            .map(() => ({ version, data: record } as CachedRecord<A>))
       )
     }
 
@@ -112,10 +105,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return pipe(
-        RED.hget(getIdxKey(index), index.key),
-        EffectOption.map((i) => i as TKey)
-      )
+      return RED.hget(getIdxKey(index), index.key).mapOption((i) => i as TKey)
     }
 
     function setIdx(index: Index, r: A) {

@@ -1,5 +1,4 @@
 import { IndexingPolicy } from "@azure/cosmos"
-import { pipe } from "@effect-ts-app/core/Function"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 
 import * as Cosmos from "../cosmos-client.js"
@@ -12,18 +11,15 @@ class CosmosDbOperationError {
 }
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
-  pipe(
-    Cosmos.db,
-    Effect.tap((db) =>
-      Effect.tryPromise(() =>
-        db.containers
-          .create({ id: type, indexingPolicy })
-          .catch((err) => console.warn(err))
-      )
+  Cosmos.db.tap((db) =>
+    Effect.tryPromise(() =>
+      db.containers
+        .create({ id: type, indexingPolicy })
+        .catch((err) => console.warn(err))
     )
-    // TODO: Error if current indexingPolicy does not match
-    //Effect.chain((db) => Effect.tryPromise(() => db.container(type).(indexes)))
   )
+// TODO: Error if current indexingPolicy does not match
+//Effect.chain((db) => Effect.tryPromise(() => db.container(type).(indexes)))
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
@@ -32,30 +28,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     //schemaVersion: string,
     indexes: IndexingPolicy
   ) => {
-    return pipe(
-      setup(type, indexes),
-      Effect.map(() => ({
-        find: simpledb.find(find, decode, type),
-        findBy,
-        save: simpledb.storeDirectly(store, type),
-      }))
-    )
+    return setup(type, indexes).map(() => ({
+      find: simpledb.find(find, decode, type),
+      findBy,
+      save: simpledb.storeDirectly(store, type),
+    }))
 
     function find(id: string) {
-      return pipe(
-        Cosmos.db,
-        Effect.chain((db) =>
+      return Cosmos.db
+        .chain((db) =>
           Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
-        ),
-        Effect.map((i) => Option.fromNullable(i.resource)),
-        EffectOption.map(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
-      )
+        )
+        .map((i) => Option.fromNullable(i.resource))
+        .mapOption(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
     }
 
     function findBy(parameters: Record<string, string>) {
-      return pipe(
-        Cosmos.db,
-        Effect.chain((db) =>
+      return Cosmos.db
+        .chain((db) =>
           Effect.tryPromise(() =>
             db
               .container(type)
@@ -76,10 +66,9 @@ WHERE (
               })
               .fetchAll()
           )
-        ),
-        Effect.map((x) => ROArray.head(x.resources)),
-        EffectOption.map(({ id }) => id)
-      )
+        )
+        .map((x) => ROArray.head(x.resources))
+        .mapOption(({ id }) => id)
     }
 
     function store(record: A, currentVersion: Option<Version>) {
@@ -103,27 +92,26 @@ WHERE (
                 .asUnit()
                 .orDie(),
             (currentVersion) =>
-              pipe(
-                Effect.tryPromise(() =>
-                  db
-                    .container(type)
-                    .item(record.id)
-                    .replace(
-                      {
-                        id: record.id,
-                        timestamp: new Date(),
-                        data,
+              Effect.tryPromise(() =>
+                db
+                  .container(type)
+                  .item(record.id)
+                  .replace(
+                    {
+                      id: record.id,
+                      timestamp: new Date(),
+                      data,
+                    },
+                    {
+                      accessCondition: {
+                        type: "IfMatch",
+                        condition: currentVersion,
                       },
-                      {
-                        accessCondition: {
-                          type: "IfMatch",
-                          condition: currentVersion,
-                        },
-                      }
-                    )
-                ),
-                Effect.orDie,
-                Effect.chain((x) => {
+                    }
+                  )
+              )
+                .orDie()
+                .chain((x) => {
                   if (x.statusCode === 412) {
                     return Effect.fail(new OptimisticLockException(type, record.id))
                   }
@@ -136,7 +124,6 @@ WHERE (
                   }
                   return Effect.unit
                 })
-              )
           )
         )
         return { version, data: record } as CachedRecord<A>
