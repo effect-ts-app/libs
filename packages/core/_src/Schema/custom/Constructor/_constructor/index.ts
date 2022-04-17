@@ -1,6 +1,5 @@
 // tracing: off
 
-
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 import * as Th from "../../These/index.js"
@@ -41,7 +40,8 @@ export const interpreters: ((
             const self = constructorFor(schema.self)
             return (u) =>
               Th.chain_(
-                self(u)["|>"](
+                pipe(
+                  self(u),
                   Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                 ),
                 (

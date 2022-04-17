@@ -13,7 +13,7 @@ import * as MO from "../_schema.js"
 export function makeUtils<Schema extends MO.SchemaUPI>(self: Schema): Utils<Schema> {
   return {
     parse: EParserFor(self),
-    unsafe: EParserFor(self)["|>"](MO.unsafe),
+    unsafe: EParserFor(self) >= MO.unsafe,
   }
 }
 

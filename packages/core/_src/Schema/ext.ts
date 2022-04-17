@@ -420,7 +420,7 @@ export function defaultProp(
   schema: MO.Schema<unknown, any, any, any, any>,
   makeDefault?: () => any
 ) {
-  return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema)["|>"](withDefault)
+  return makeDefault ? defProp(schema, makeDefault) : MO.prop(schema) >= withDefault
 }
 
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -493,7 +493,7 @@ export function defaultInputProp(
 ) {
   return makeDefault
     ? defProp(schema, makeDefault, "both")
-    : MO.prop(schema)["|>"](withInputDefault)
+    : MO.prop(schema) >= withInputDefault
 }
 
 export function makeOptional<NER extends Record<string, MO.AnyProperty>>(

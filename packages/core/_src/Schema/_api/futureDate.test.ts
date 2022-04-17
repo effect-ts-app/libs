@@ -2,24 +2,23 @@ import { describe, expect, it } from "@jest/globals"
 
 import { Constructor, FutureDate, Parser, unsafe } from "../../Schema/index.js"
 
+const makeFutureDateUnsafe = Constructor.for(FutureDate) >= unsafe
+const parseFutureDateUnsafe = Parser.for(FutureDate) >= unsafe
+
 describe("Constructor", () => {
   it("allows a future date", () => {
-    Constructor.for(FutureDate)["|>"](unsafe)(new Date(2040, 1, 1))
+    makeFutureDateUnsafe(new Date(2040, 1, 1))
   })
   it("disallows a past date", () => {
-    expect(() =>
-      Constructor.for(FutureDate)["|>"](unsafe)(new Date(1985, 1, 1))
-    ).toThrow()
+    expect(() => makeFutureDateUnsafe(new Date(1985, 1, 1))).toThrow()
   })
 })
 
 describe("Parser", () => {
   it("allows a future date", () => {
-    Parser.for(FutureDate)["|>"](unsafe)(new Date(2040, 1, 1).toISOString())
+    parseFutureDateUnsafe(new Date(2040, 1, 1).toISOString())
   })
   it("disallows a past date", () => {
-    expect(() =>
-      Parser.for(FutureDate)["|>"](unsafe)(new Date(1985, 1, 1).toISOString())
-    )
+    expect(() => parseFutureDateUnsafe(new Date(1985, 1, 1).toISOString()))
   })
 })

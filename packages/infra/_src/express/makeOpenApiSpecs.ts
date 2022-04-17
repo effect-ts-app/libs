@@ -14,7 +14,7 @@ export function makeOpenApiSpecs(
   return Effect.gen(function* ($) {
     const ref = yield* $(makeRef<Map<string, JSONSchema | SubSchema>>(new Map()))
     const withRef = Effect.provideService(References)({ ref })
-    const paths = yield* $(makeJsonSchema(rdescs)["|>"](withRef))
+    const paths = yield* $(pipe(makeJsonSchema(rdescs), withRef))
     const refs = yield* $(ref.get)
     const parameterRefs: Record<string, any> = {} // todos
     const schemas: Record<string, any> = {}

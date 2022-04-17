@@ -1,4 +1,3 @@
-
 import * as Eq from "@effect-ts/core/Equal"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
@@ -17,7 +16,7 @@ import { Version } from "./simpledb.js"
 // Do not try this at home.
 const storage = makeMap<string, string>()
 
-const parseSDB = SerializedDBRecord.Parser["|>"](MO.condemnFail)
+const parseSDB = SerializedDBRecord.Parser >= MO.condemnFail
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
@@ -36,7 +35,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         storage.find(getRecordName(type, id)),
         EffectOption.map((s) => JSON.parse(s) as unknown),
         EffectOption.chainEffect(parseSDB),
-        EffectOption.map(({ data, version }) => ({ data: JSON.parse(data) as EA, version }))
+        EffectOption.map(({ data, version }) => ({
+          data: JSON.parse(data) as EA,
+          version,
+        }))
       )
     }
 

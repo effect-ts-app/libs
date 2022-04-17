@@ -52,7 +52,7 @@ type CarryFromApi<Api> = UnionToIntersection<
 export function withDefaults<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
-  const of_ = Constructor.for(self)["|>"](unsafe)
+  const of_ = Constructor.for(self) >= unsafe
 
   function schemed(_: ConstructorInput) {
     return of_(_)

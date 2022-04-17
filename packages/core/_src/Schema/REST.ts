@@ -234,8 +234,9 @@ export function QueryRequest<M>(__name?: string) {
       ..._.query?.Api.props,
       ..._.path?.Api.props,
     })
+    const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(self["|>"](MO.annotate(reqId, {}))) {
+    return class extends ModelSpecial<M>(__name)(schema) {
       static Path = _.path
       static Query = _.query
       static Headers = _.headers
@@ -485,8 +486,9 @@ export function BodyRequest<M>(__name?: string) {
       ..._.query?.Api.props,
       ..._.path?.Api.props,
     })
+    const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(self["|>"](MO.annotate(reqId, {}))) {
+    return class extends ModelSpecial<M>(__name)(schema) {
       static Path = _.path
       static Body = _.body
       static Query = _.query
@@ -800,7 +802,7 @@ export function meta<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
 }
 export const metaC = (m: Meta) => {
   return function (cls: any) {
-    setSchema(cls, cls[schemaField]["|>"](meta(m)))
+    setSchema(cls, pipe(cls[schemaField], meta(m)) as any)
     return cls
   }
 }

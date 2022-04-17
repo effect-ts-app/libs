@@ -4,10 +4,10 @@
 import { Map } from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as MO from "../custom/index.js"
 import * as Arbitrary from "../custom/Arbitrary/index.js"
 import * as Encoder from "../custom/Encoder/index.js"
 import * as Guard from "../custom/Guard/index.js"
+import * as MO from "../custom/index.js"
 import * as Parser from "../custom/Parser/index.js"
 import { ParserEnv } from "../custom/Parser/index.js"
 import * as Th from "../custom/These/index.js"
@@ -51,12 +51,12 @@ export function map<
     MO.identity(refinement),
     MO.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
     MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
-    MO.parser((i: unknown, env?: ParserEnv) =>
-      mapParse(i, env)["|>"](
+    MO.parser(
+      (i: unknown, env?: ParserEnv) =>
+        mapParse(i, env) >=
         Th.map((x) => new Map(x) as Map<KeyParsedShape, ParsedShape>)
-      )
     ),
-    MO.encoder((_) => Array.from(_.entries())["|>"](mapEncode)),
+    MO.encoder((_) => ROArray.from(_.entries()) >= mapEncode),
     MO.mapApi(() => ({})),
     MO.withDefaults,
     MO.annotate(mapIdentifier, {})

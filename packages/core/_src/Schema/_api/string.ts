@@ -1,5 +1,3 @@
-
-
 import { pipe } from "../../Function.js"
 import * as MO from "../vendor.js"
 import { NonEmptyBrand } from "../vendor.js"
@@ -64,7 +62,7 @@ export const reasonableStringFromString = pipe(
  * A string that is at least 1 character long and a maximum of 255.
  */
 export const ReasonableString = extendWithUtils(
-  MO.string[">>>"](reasonableStringFromString)["|>"](MO.brand<ReasonableString>())
+  pipe(MO.string[">>>"](reasonableStringFromString), MO.brand<ReasonableString>())
 )
 
 /**
@@ -97,7 +95,7 @@ export const longStringFromString = pipe(
  * A string that is at least 1 character long and a maximum of 2047.
  */
 export const LongString = extendWithUtils(
-  MO.string[">>>"](longStringFromString)["|>"](MO.brand<LongString>())
+  pipe(MO.string[">>>"](longStringFromString), MO.brand<LongString>())
 )
 
 /**
@@ -131,5 +129,5 @@ export const textStringFromString = pipe(
  * A string that is at least 1 character long and a maximum of 64kb.
  */
 export const TextString = extendWithUtils(
-  MO.string[">>>"](textStringFromString)["|>"](MO.brand<TextString>())
+  pipe(MO.string[">>>"](textStringFromString), MO.brand<TextString>())
 )

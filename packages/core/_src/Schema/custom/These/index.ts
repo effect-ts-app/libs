@@ -3,7 +3,10 @@
 import * as Tp from "@effect-ts/core/Collections/Immutable/Tuple"
 import { _A, _E } from "@effect-ts/core/Effect"
 
-
+/**
+ * @tsplus type ets/Schema/These
+ * @tsplus companion ets/Schema/TheseOps
+ */
 export class These<E, A> {
   readonly [_E]!: () => E;
   readonly [_A]!: () => A
@@ -94,8 +97,6 @@ export function chain<E0, A0, E, A>(f: (a: A0, w: Option<E0>) => These<E, A>) {
   return (self: These<E0, A0>) => chain_(self, f)
 }
 
-export function result<E, A>(
-  self: These<E, A>
-): Either<E, Tp.Tuple<[A, Option<E>]>> {
+export function result<E, A>(self: These<E, A>): Either<E, Tp.Tuple<[A, Option<E>]>> {
   return self.effect
 }

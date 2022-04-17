@@ -18,6 +18,10 @@ import type { LiteralApi } from "./literal.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
+/**
+ * @tsplus type ets/Schema/Property
+ * @tsplus companion ets/Schema/PropertyOps
+ */
 export class Property<
   Self extends S.SchemaUPI,
   Optional extends "optional" | "required",
@@ -191,9 +195,7 @@ export function propFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<
-    ["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]
-  >,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
   As1 extends PropertyKey
 >(
   prop: Property<Self, Optional, As, Def>,
@@ -211,7 +213,13 @@ export function propFrom<
 export function prop<Self extends S.SchemaUPI>(
   schema: Self
 ): Property<Self, "required", Option.None, Option.None> {
-  return new Property(new Option.None(), schema, "required", new Option.None(), HashMap.make())
+  return new Property(
+    new Option.None(),
+    schema,
+    "required",
+    new Option.None(),
+    HashMap.make()
+  )
 }
 
 export type AnyProperty = Property<any, any, any, any>

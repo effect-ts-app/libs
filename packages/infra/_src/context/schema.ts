@@ -11,7 +11,7 @@ export function makeCodec<
   Api,
   Id
 >(self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>) {
-  const parse = Parser.for(self)["|>"](MO.condemnDie)
+  const parse = Parser.for(self) >= MO.condemnDie
   // TODO: strict
   const decode = (e: Encoded, env?: ParserEnv) => parse(e, env)
   const enc = Encoder.for(self)
@@ -24,7 +24,9 @@ export function makeCodec<
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Sync.UIO<E>) {
   return (a: ROArray<A>) =>
     pipe(
-      ROArray.map_(a, (task) => Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))),
+      ROArray.map_(a, (task) =>
+        Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))
+      ),
       Sync.collectAll,
       Sync.map(Map.make)
     )

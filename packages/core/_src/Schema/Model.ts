@@ -238,7 +238,7 @@ export function lensFromProps<T>() {
   return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
-      prev[cur] = id["|>"](Lens.prop(cur as any))
+      prev[cur] = id.prop(cur as any)
       return prev
     }, {} as any)
   }
@@ -314,7 +314,7 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
  * Automatically assign the name of the Class to the Schema.
  */
 export function useClassNameForSchema(cls: any) {
-  setSchema(cls, cls[schemaField]["|>"](MO.named(cls.name)))
+  setSchema(cls, pipe(cls[schemaField], MO.named(cls.name)) as any)
   return cls
 }
 
@@ -374,9 +374,9 @@ export function ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: st
 //   }
 // }
 
-function makeSpecial(__name: any, self: any): any {
-  const schema = __name ? self["|>"](MO.named(__name)) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
-  const of_ = MO.Constructor.for(schema)["|>"](unsafe)
+function makeSpecial<Self extends Schema.SchemaAny>(__name: any, self: Self): any {
+  const schema = __name ? self >= MO.named(__name) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
+  const of_ = MO.Constructor.for(schema) >= unsafe
   const fromFields = (fields: any, target: any) => {
     for (const k of Object.keys(fields)) {
       target[k] = fields[k]

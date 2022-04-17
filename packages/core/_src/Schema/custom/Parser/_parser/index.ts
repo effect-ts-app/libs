@@ -1,6 +1,5 @@
 // tracing: off
 
-
 import type { Schema, SchemaAny } from "../../_schema/index.js"
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
@@ -54,11 +53,13 @@ export const interpreters: ((
             const that = parserFor(schema.that)
             return (u, env) =>
               Th.chain_(
-                self(u, env)["|>"](
+                pipe(
+                  self(u, env),
                   Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                 ),
                 (a, w) =>
-                  that(a, env)["|>"](
+                  pipe(
+                    that(a, env),
                     Th.foldM(
                       (a) => (w._tag === "Some" ? Th.warn(a, w.value) : Th.succeed(a)),
                       (a, e) =>
@@ -90,7 +91,8 @@ export const interpreters: ((
                 ? // refinements can really pile up
                   self(u, env)
                 : Th.chain_(
-                    self(u, env)["|>"](
+                    pipe(
+                      self(u, env),
                       Th.mapError((e) => S.compositionE(Chunk.single(S.prevE(e))))
                     ),
                     (

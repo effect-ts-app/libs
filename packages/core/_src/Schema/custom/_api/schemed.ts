@@ -70,7 +70,7 @@ export const fromFields = Symbol()
 export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
   self: Self
 ): Schemed<Self> {
-  const of_ = Constructor.for(self)["|>"](unsafe)
+  const of_ = Constructor.for(self) >= unsafe
   // @ts-expect-error
   return class {
     static [schemaField] = self
