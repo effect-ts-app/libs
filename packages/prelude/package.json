@@ -35,6 +35,7 @@
     },
     "exports": {
         ".": {
+            "types": "./_cjs/index.d.ts",
             "import": "./_mjs/index.mjs",
             "require": "./_cjs/index.js"
         }

@@ -4,14 +4,12 @@
   "license": "MIT",
   "exports": {
     "./_ext/*": {
+      "types": "./_cjs/_ext/*.d.ts",
       "import": "./_mjs/_ext/*.mjs",
       "require": "./_cjs/_ext/*.js"
     },
-    "./polyfill": {
-      "import": "./_mjs/polyfill/*.mjs",
-      "require": "./_cjs/polyfill/*.js"
-    },
     "./polyfill/*": {
+      "types": "./_cjs/polyfill/*.d.ts",
       "import": "./_mjs/polyfill/*.mjs",
       "require": "./_cjs/polyfill/*.js"
     },

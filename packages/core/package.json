@@ -45,382 +45,477 @@
     },
     "exports": {
         ".": {
+            "types": "./_cjs/index.d.ts",
             "import": "./_mjs/index.mjs",
             "require": "./index.js"
         },
         "./utils": {
+            "types": "./_cjs/utils/index.d.ts",
             "import": "./_mjs/utils/index.mjs",
             "require": "./utils/index.js"
         },
         "./Schema": {
+            "types": "./_cjs/Schema/index.d.ts",
             "import": "./_mjs/Schema/index.mjs",
             "require": "./Schema/index.js"
         },
         "./Schema/_api": {
+            "types": "./_cjs/Schema/_api/index.d.ts",
             "import": "./_mjs/Schema/_api/index.mjs",
             "require": "./Schema/_api/index.js"
         },
         "./Schema/custom": {
+            "types": "./_cjs/Schema/custom/index.d.ts",
             "import": "./_mjs/Schema/custom/index.mjs",
             "require": "./Schema/custom/index.js"
         },
         "./Schema/custom/_utils": {
+            "types": "./_cjs/Schema/custom/_utils/index.d.ts",
             "import": "./_mjs/Schema/custom/_utils/index.mjs",
             "require": "./Schema/custom/_utils/index.js"
         },
         "./Schema/custom/Collect": {
+            "types": "./_cjs/Schema/custom/Collect/index.d.ts",
             "import": "./_mjs/Schema/custom/Collect/index.mjs",
             "require": "./Schema/custom/Collect/index.js"
         },
         "./Schema/custom/Collect/_collect": {
+            "types": "./_cjs/Schema/custom/Collect/_collect/index.d.ts",
             "import": "./_mjs/Schema/custom/Collect/_collect/index.mjs",
             "require": "./Schema/custom/Collect/_collect/index.js"
         },
         "./Schema/custom/These": {
+            "types": "./_cjs/Schema/custom/These/index.d.ts",
             "import": "./_mjs/Schema/custom/These/index.mjs",
             "require": "./Schema/custom/These/index.js"
         },
         "./Schema/custom/_schema": {
+            "types": "./_cjs/Schema/custom/_schema/index.d.ts",
             "import": "./_mjs/Schema/custom/_schema/index.mjs",
             "require": "./Schema/custom/_schema/index.js"
         },
         "./Schema/custom/Encoder": {
+            "types": "./_cjs/Schema/custom/Encoder/index.d.ts",
             "import": "./_mjs/Schema/custom/Encoder/index.mjs",
             "require": "./Schema/custom/Encoder/index.js"
         },
         "./Schema/custom/Encoder/_encoder": {
+            "types": "./_cjs/Schema/custom/Encoder/_encoder/index.d.ts",
             "import": "./_mjs/Schema/custom/Encoder/_encoder/index.mjs",
             "require": "./Schema/custom/Encoder/_encoder/index.js"
         },
         "./Schema/custom/Arbitrary": {
+            "types": "./_cjs/Schema/custom/Arbitrary/index.d.ts",
             "import": "./_mjs/Schema/custom/Arbitrary/index.mjs",
             "require": "./Schema/custom/Arbitrary/index.js"
         },
         "./Schema/custom/Arbitrary/_arbitrary": {
+            "types": "./_cjs/Schema/custom/Arbitrary/_arbitrary/index.d.ts",
             "import": "./_mjs/Schema/custom/Arbitrary/_arbitrary/index.mjs",
             "require": "./Schema/custom/Arbitrary/_arbitrary/index.js"
         },
         "./Schema/custom/_api": {
+            "types": "./_cjs/Schema/custom/_api/index.d.ts",
             "import": "./_mjs/Schema/custom/_api/index.mjs",
             "require": "./Schema/custom/_api/index.js"
         },
         "./Schema/custom/Parser": {
+            "types": "./_cjs/Schema/custom/Parser/index.d.ts",
             "import": "./_mjs/Schema/custom/Parser/index.mjs",
             "require": "./Schema/custom/Parser/index.js"
         },
         "./Schema/custom/Parser/_parser": {
+            "types": "./_cjs/Schema/custom/Parser/_parser/index.d.ts",
             "import": "./_mjs/Schema/custom/Parser/_parser/index.mjs",
             "require": "./Schema/custom/Parser/_parser/index.js"
         },
         "./Schema/custom/Guard": {
+            "types": "./_cjs/Schema/custom/Guard/index.d.ts",
             "import": "./_mjs/Schema/custom/Guard/index.mjs",
             "require": "./Schema/custom/Guard/index.js"
         },
         "./Schema/custom/Guard/_guard": {
+            "types": "./_cjs/Schema/custom/Guard/_guard/index.d.ts",
             "import": "./_mjs/Schema/custom/Guard/_guard/index.mjs",
             "require": "./Schema/custom/Guard/_guard/index.js"
         },
         "./Schema/custom/TS": {
+            "types": "./_cjs/Schema/custom/TS/index.d.ts",
             "import": "./_mjs/Schema/custom/TS/index.mjs",
             "require": "./Schema/custom/TS/index.js"
         },
         "./Schema/custom/Constructor": {
+            "types": "./_cjs/Schema/custom/Constructor/index.d.ts",
             "import": "./_mjs/Schema/custom/Constructor/index.mjs",
             "require": "./Schema/custom/Constructor/index.js"
         },
         "./Schema/custom/Constructor/_constructor": {
+            "types": "./_cjs/Schema/custom/Constructor/_constructor/index.d.ts",
             "import": "./_mjs/Schema/custom/Constructor/_constructor/index.mjs",
             "require": "./Schema/custom/Constructor/_constructor/index.js"
         },
         "./http": {
+            "types": "./_cjs/http/index.d.ts",
             "import": "./_mjs/http/index.mjs",
             "require": "./http/index.js"
         },
         "./validation": {
+            "types": "./_cjs/validation/index.d.ts",
             "import": "./_mjs/validation/index.mjs",
             "require": "./validation/index.js"
         },
         "./Function": {
+            "types": "./_cjs/Function.d.ts",
             "import": "./_mjs/Function.mjs",
             "require": "./Function.js"
         },
         "./Effect": {
+            "types": "./_cjs/Effect.d.ts",
             "import": "./_mjs/Effect.mjs",
             "require": "./Effect.js"
         },
         "./FastCheck": {
+            "types": "./_cjs/FastCheck.d.ts",
             "import": "./_mjs/FastCheck.mjs",
             "require": "./FastCheck.js"
         },
         "./Set": {
+            "types": "./_cjs/Set.d.ts",
             "import": "./_mjs/Set.mjs",
             "require": "./Set.js"
         },
         "./Array": {
+            "types": "./_cjs/Array.d.ts",
             "import": "./_mjs/Array.mjs",
             "require": "./Array.js"
         },
         "./transform": {
+            "types": "./_cjs/transform.d.ts",
             "import": "./_mjs/transform.mjs",
             "require": "./transform.js"
         },
         "./Chunk": {
+            "types": "./_cjs/Chunk.d.ts",
             "import": "./_mjs/Chunk.mjs",
             "require": "./Chunk.js"
         },
         "./Schema/adapt": {
+            "types": "./_cjs/Schema/adapt.d.ts",
             "import": "./_mjs/Schema/adapt.mjs",
             "require": "./Schema/adapt.js"
         },
         "./Schema/_api/phoneNumber": {
+            "types": "./_cjs/Schema/_api/phoneNumber.d.ts",
             "import": "./_mjs/Schema/_api/phoneNumber.mjs",
             "require": "./Schema/_api/phoneNumber.js"
         },
         "./Schema/_api/futureDate": {
+            "types": "./_cjs/Schema/_api/futureDate.d.ts",
             "import": "./_mjs/Schema/_api/futureDate.mjs",
             "require": "./Schema/_api/futureDate.js"
         },
         "./Schema/_api/set": {
+            "types": "./_cjs/Schema/_api/set.d.ts",
             "import": "./_mjs/Schema/_api/set.mjs",
             "require": "./Schema/_api/set.js"
         },
         "./Schema/_api/dictionary": {
+            "types": "./_cjs/Schema/_api/dictionary.d.ts",
             "import": "./_mjs/Schema/_api/dictionary.mjs",
             "require": "./Schema/_api/dictionary.js"
         },
         "./Schema/_api/string": {
+            "types": "./_cjs/Schema/_api/string.d.ts",
             "import": "./_mjs/Schema/_api/string.mjs",
             "require": "./Schema/_api/string.js"
         },
         "./Schema/_api/email": {
+            "types": "./_cjs/Schema/_api/email.d.ts",
             "import": "./_mjs/Schema/_api/email.mjs",
             "require": "./Schema/_api/email.js"
         },
         "./Schema/_api/map": {
+            "types": "./_cjs/Schema/_api/map.d.ts",
             "import": "./_mjs/Schema/_api/map.mjs",
             "require": "./Schema/_api/map.js"
         },
         "./Schema/_api/fromArray": {
+            "types": "./_cjs/Schema/_api/fromArray.d.ts",
             "import": "./_mjs/Schema/_api/fromArray.mjs",
             "require": "./Schema/_api/fromArray.js"
         },
         "./Schema/_api/fromProps": {
+            "types": "./_cjs/Schema/_api/fromProps.d.ts",
             "import": "./_mjs/Schema/_api/fromProps.mjs",
             "require": "./Schema/_api/fromProps.js"
         },
         "./Schema/_api/length": {
+            "types": "./_cjs/Schema/_api/length.d.ts",
             "import": "./_mjs/Schema/_api/length.mjs",
             "require": "./Schema/_api/length.js"
         },
         "./Schema/_api/futureDate.test": {
+            "types": "./_cjs/Schema/_api/futureDate.test.d.ts",
             "import": "./_mjs/Schema/_api/futureDate.test.mjs",
             "require": "./Schema/_api/futureDate.test.js"
         },
         "./Schema/_api/either": {
+            "types": "./_cjs/Schema/_api/either.d.ts",
             "import": "./_mjs/Schema/_api/either.mjs",
             "require": "./Schema/_api/either.js"
         },
         "./Schema/_api/tuple": {
+            "types": "./_cjs/Schema/_api/tuple.d.ts",
             "import": "./_mjs/Schema/_api/tuple.mjs",
             "require": "./Schema/_api/tuple.js"
         },
         "./Schema/_api/nonEmptyArray": {
+            "types": "./_cjs/Schema/_api/nonEmptyArray.d.ts",
             "import": "./_mjs/Schema/_api/nonEmptyArray.mjs",
             "require": "./Schema/_api/nonEmptyArray.js"
         },
         "./Schema/utils": {
+            "types": "./_cjs/Schema/utils.d.ts",
             "import": "./_mjs/Schema/utils.mjs",
             "require": "./Schema/utils.js"
         },
         "./Schema/Model": {
+            "types": "./_cjs/Schema/Model.d.ts",
             "import": "./_mjs/Schema/Model.mjs",
             "require": "./Schema/Model.js"
         },
         "./Schema/REST": {
+            "types": "./_cjs/Schema/REST.d.ts",
             "import": "./_mjs/Schema/REST.mjs",
             "require": "./Schema/REST.js"
         },
         "./Schema/custom/_schema/schema": {
+            "types": "./_cjs/Schema/custom/_schema/schema.d.ts",
             "import": "./_mjs/Schema/custom/_schema/schema.mjs",
             "require": "./Schema/custom/_schema/schema.js"
         },
         "./Schema/custom/_schema/matchers": {
+            "types": "./_cjs/Schema/custom/_schema/matchers.d.ts",
             "import": "./_mjs/Schema/custom/_schema/matchers.mjs",
             "require": "./Schema/custom/_schema/matchers.js"
         },
         "./Schema/custom/_schema/primitives": {
+            "types": "./_cjs/Schema/custom/_schema/primitives.d.ts",
             "import": "./_mjs/Schema/custom/_schema/primitives.mjs",
             "require": "./Schema/custom/_schema/primitives.js"
         },
         "./Schema/custom/_schema/error": {
+            "types": "./_cjs/Schema/custom/_schema/error.d.ts",
             "import": "./_mjs/Schema/custom/_schema/error.mjs",
             "require": "./Schema/custom/_schema/error.js"
         },
         "./Schema/custom/_schema/annotation": {
+            "types": "./_cjs/Schema/custom/_schema/annotation.d.ts",
             "import": "./_mjs/Schema/custom/_schema/annotation.mjs",
             "require": "./Schema/custom/_schema/annotation.js"
         },
         "./Schema/custom/_api/union": {
+            "types": "./_cjs/Schema/custom/_api/union.d.ts",
             "import": "./_mjs/Schema/custom/_api/union.mjs",
             "require": "./Schema/custom/_api/union.js"
         },
         "./Schema/custom/_api/unknown": {
+            "types": "./_cjs/Schema/custom/_api/unknown.d.ts",
             "import": "./_mjs/Schema/custom/_api/unknown.mjs",
             "require": "./Schema/custom/_api/unknown.js"
         },
         "./Schema/custom/_api/int": {
+            "types": "./_cjs/Schema/custom/_api/int.d.ts",
             "import": "./_mjs/Schema/custom/_api/int.mjs",
             "require": "./Schema/custom/_api/int.js"
         },
         "./Schema/custom/_api/date": {
+            "types": "./_cjs/Schema/custom/_api/date.d.ts",
             "import": "./_mjs/Schema/custom/_api/date.mjs",
             "require": "./Schema/custom/_api/date.js"
         },
         "./Schema/custom/_api/json": {
+            "types": "./_cjs/Schema/custom/_api/json.d.ts",
             "import": "./_mjs/Schema/custom/_api/json.mjs",
             "require": "./Schema/custom/_api/json.js"
         },
         "./Schema/custom/_api/array": {
+            "types": "./_cjs/Schema/custom/_api/array.d.ts",
             "import": "./_mjs/Schema/custom/_api/array.mjs",
             "require": "./Schema/custom/_api/array.js"
         },
         "./Schema/custom/_api/condemn": {
+            "types": "./_cjs/Schema/custom/_api/condemn.d.ts",
             "import": "./_mjs/Schema/custom/_api/condemn.mjs",
             "require": "./Schema/custom/_api/condemn.js"
         },
         "./Schema/custom/_api/lazy": {
+            "types": "./_cjs/Schema/custom/_api/lazy.d.ts",
             "import": "./_mjs/Schema/custom/_api/lazy.mjs",
             "require": "./Schema/custom/_api/lazy.js"
         },
         "./Schema/custom/_api/string": {
+            "types": "./_cjs/Schema/custom/_api/string.d.ts",
             "import": "./_mjs/Schema/custom/_api/string.mjs",
             "require": "./Schema/custom/_api/string.js"
         },
         "./Schema/custom/_api/optionFromNull": {
+            "types": "./_cjs/Schema/custom/_api/optionFromNull.d.ts",
             "import": "./_mjs/Schema/custom/_api/optionFromNull.mjs",
             "require": "./Schema/custom/_api/optionFromNull.js"
         },
         "./Schema/custom/_api/intersect": {
+            "types": "./_cjs/Schema/custom/_api/intersect.d.ts",
             "import": "./_mjs/Schema/custom/_api/intersect.mjs",
             "require": "./Schema/custom/_api/intersect.js"
         },
         "./Schema/custom/_api/model": {
+            "types": "./_cjs/Schema/custom/_api/model.d.ts",
             "import": "./_mjs/Schema/custom/_api/model.mjs",
             "require": "./Schema/custom/_api/model.js"
         },
         "./Schema/custom/_api/chunk": {
+            "types": "./_cjs/Schema/custom/_api/chunk.d.ts",
             "import": "./_mjs/Schema/custom/_api/chunk.mjs",
             "require": "./Schema/custom/_api/chunk.js"
         },
         "./Schema/custom/_api/refinement": {
+            "types": "./_cjs/Schema/custom/_api/refinement.d.ts",
             "import": "./_mjs/Schema/custom/_api/refinement.mjs",
             "require": "./Schema/custom/_api/refinement.js"
         },
         "./Schema/custom/_api/unknownArray": {
+            "types": "./_cjs/Schema/custom/_api/unknownArray.d.ts",
             "import": "./_mjs/Schema/custom/_api/unknownArray.mjs",
             "require": "./Schema/custom/_api/unknownArray.js"
         },
         "./Schema/custom/_api/withDefaults": {
+            "types": "./_cjs/Schema/custom/_api/withDefaults.d.ts",
             "import": "./_mjs/Schema/custom/_api/withDefaults.mjs",
             "require": "./Schema/custom/_api/withDefaults.js"
         },
         "./Schema/custom/_api/number": {
+            "types": "./_cjs/Schema/custom/_api/number.d.ts",
             "import": "./_mjs/Schema/custom/_api/number.mjs",
             "require": "./Schema/custom/_api/number.js"
         },
         "./Schema/custom/_api/bool": {
+            "types": "./_cjs/Schema/custom/_api/bool.d.ts",
             "import": "./_mjs/Schema/custom/_api/bool.mjs",
             "require": "./Schema/custom/_api/bool.js"
         },
         "./Schema/custom/_api/positiveInt": {
+            "types": "./_cjs/Schema/custom/_api/positiveInt.d.ts",
             "import": "./_mjs/Schema/custom/_api/positiveInt.mjs",
             "require": "./Schema/custom/_api/positiveInt.js"
         },
         "./Schema/custom/_api/ensure": {
+            "types": "./_cjs/Schema/custom/_api/ensure.d.ts",
             "import": "./_mjs/Schema/custom/_api/ensure.mjs",
             "require": "./Schema/custom/_api/ensure.js"
         },
         "./Schema/custom/_api/object": {
+            "types": "./_cjs/Schema/custom/_api/object.d.ts",
             "import": "./_mjs/Schema/custom/_api/object.mjs",
             "require": "./Schema/custom/_api/object.js"
         },
         "./Schema/custom/_api/positive": {
+            "types": "./_cjs/Schema/custom/_api/positive.d.ts",
             "import": "./_mjs/Schema/custom/_api/positive.mjs",
             "require": "./Schema/custom/_api/positive.js"
         },
         "./Schema/custom/_api/properties": {
+            "types": "./_cjs/Schema/custom/_api/properties.d.ts",
             "import": "./_mjs/Schema/custom/_api/properties.mjs",
             "require": "./Schema/custom/_api/properties.js"
         },
         "./Schema/custom/_api/nullable": {
+            "types": "./_cjs/Schema/custom/_api/nullable.d.ts",
             "import": "./_mjs/Schema/custom/_api/nullable.mjs",
             "require": "./Schema/custom/_api/nullable.js"
         },
         "./Schema/custom/_api/literal": {
+            "types": "./_cjs/Schema/custom/_api/literal.d.ts",
             "import": "./_mjs/Schema/custom/_api/literal.mjs",
             "require": "./Schema/custom/_api/literal.js"
         },
         "./Schema/custom/_api/nonEmpty": {
+            "types": "./_cjs/Schema/custom/_api/nonEmpty.d.ts",
             "import": "./_mjs/Schema/custom/_api/nonEmpty.mjs",
             "require": "./Schema/custom/_api/nonEmpty.js"
         },
         "./Schema/custom/_api/nonEmptyString": {
+            "types": "./_cjs/Schema/custom/_api/nonEmptyString.d.ts",
             "import": "./_mjs/Schema/custom/_api/nonEmptyString.mjs",
             "require": "./Schema/custom/_api/nonEmptyString.js"
         },
         "./Schema/vendor": {
+            "types": "./_cjs/Schema/vendor.d.ts",
             "import": "./_mjs/Schema/vendor.mjs",
             "require": "./Schema/vendor.js"
         },
         "./Schema/_schema": {
+            "types": "./_cjs/Schema/_schema.d.ts",
             "import": "./_mjs/Schema/_schema.mjs",
             "require": "./Schema/_schema.js"
         },
         "./http/http-client-fetch": {
+            "types": "./_cjs/http/http-client-fetch.d.ts",
             "import": "./_mjs/http/http-client-fetch.mjs",
             "require": "./http/http-client-fetch.js"
         },
         "./http/http-client": {
+            "types": "./_cjs/http/http-client.d.ts",
             "import": "./_mjs/http/http-client.mjs",
             "require": "./http/http-client.js"
         },
         "./Order": {
+            "types": "./_cjs/Order.d.ts",
             "import": "./_mjs/Order.mjs",
             "require": "./Order.js"
         },
         "./Object": {
+            "types": "./_cjs/Object.d.ts",
             "import": "./_mjs/Object.mjs",
             "require": "./Object.js"
         },
         "./Option": {
+            "types": "./_cjs/Option.d.ts",
             "import": "./_mjs/Option.mjs",
             "require": "./Option.js"
         },
         "./EffectOption": {
+            "types": "./_cjs/EffectOption.d.ts",
             "import": "./_mjs/EffectOption.mjs",
             "require": "./EffectOption.js"
         },
         "./Tuple": {
+            "types": "./_cjs/Tuple.d.ts",
             "import": "./_mjs/Tuple.mjs",
             "require": "./Tuple.js"
         },
         "./NonEmptyArray": {
+            "types": "./_cjs/NonEmptyArray.d.ts",
             "import": "./_mjs/NonEmptyArray.mjs",
             "require": "./NonEmptyArray.js"
         },
         "./NonEmptySet": {
+            "types": "./_cjs/NonEmptySet.d.ts",
             "import": "./_mjs/NonEmptySet.mjs",
             "require": "./NonEmptySet.js"
         },
         "./validation/validators": {
+            "types": "./_cjs/validation/validators.d.ts",
             "import": "./_mjs/validation/validators.mjs",
             "require": "./validation/validators.js"
         },
         "./SyncOption": {
+            "types": "./_cjs/SyncOption.d.ts",
             "import": "./_mjs/SyncOption.mjs",
             "require": "./SyncOption.js"
         },
         "./Sync": {
+            "types": "./_cjs/Sync.d.ts",
             "import": "./_mjs/Sync.mjs",
             "require": "./Sync.js"
         }
