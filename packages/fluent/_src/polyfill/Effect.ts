@@ -21,7 +21,7 @@ const funcs = {
   ...makeAutoFuncs(T, exceptions),
 }
 
-const BasePrototype = T.Base.prototype as any
+const BasePrototype = Effect.Base.prototype as any
 applyFunctions(funcs, BasePrototype, "Effect")
 BasePrototype.pipe = function (...args: [any]) {
   return pipe(this, ...args)

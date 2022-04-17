@@ -1,5 +1,4 @@
 import { pipe } from "@effect-ts/core"
-import * as Option from "@effect-ts/core/Option"
 import { tryCatchOption_ } from "@effect-ts/core/Sync"
 import { encaseOption_ } from "@effect-ts-app/core/Effect"
 
