@@ -8,6 +8,7 @@
         "moduleResolution": "node",
         "baseUrl": "./",
         "outDir": "./_esm",
+        "rootDir": "./_src",
         "tsBuildInfoFile": "./_esm/tsconfig.tsbuildinfo",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
