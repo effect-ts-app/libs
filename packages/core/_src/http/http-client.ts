@@ -273,11 +273,7 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
 ): (
   url: string,
   body?: RequestBodyTypes[Req]["DELETE"]
-) => Effect<
-  RequestEnv & R,
-  HttpError<string>,
-  Response<ResponseTypes[Resp]["DELETE"]>
->
+) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp]["DELETE"]>>
 export function request<
   R,
   M extends Method,
@@ -394,7 +390,9 @@ export function withHeaders(
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.accessM((r: R) => Effect.provide({ ...r, [HttpHeaders.key]: headers })(eff))
+      ? Effect.accessM((r: R) =>
+          Effect.provide({ ...r, [HttpHeaders.key]: headers })(eff)
+        )
       : Effect.accessM((r: R) =>
           Effect.provide({
             ...r,

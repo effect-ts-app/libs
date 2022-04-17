@@ -20,8 +20,7 @@ import * as Ex from "@effect-ts/core/Effect/Exit"
 import type * as Ei from "@effect-ts/core/Either"
 import * as O from "@effect-ts/core/Option"
 
-import { constant, flow, Lazy, pipe } from "./Function.js"
-import { curry } from "./utils/index.js"
+import { constant, curry, flow, Lazy, pipe } from "./Function.js"
 
 export const encaseEither = <E, A>(ei: Ei.Either<E, A>) => fromEither(() => ei)
 export const chainEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>
