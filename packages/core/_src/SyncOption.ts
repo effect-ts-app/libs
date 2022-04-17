@@ -189,7 +189,7 @@ function adapter(_: any) {
   if (Utils.isTag(_)) {
     return new GenSync(service(_).pipe(fromSync))
   }
-  return new GenSync(_.pipe(fromSyncIf))
+  return new GenSync(pipe(_, fromSyncIf))
 }
 
 export const getOrFail_ = <R, E, E2, A>(_: SyncOption<R, E, A>, onErr: () => E2) =>

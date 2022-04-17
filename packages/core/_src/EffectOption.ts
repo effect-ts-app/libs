@@ -247,7 +247,7 @@ function adapter(_: any, __?: any) {
   if (Utils.isTag(_)) {
     return new GenEffect(service(_).pipe(fromEffect), __)
   }
-  return new GenEffect(_.pipe(fromEffectIf), __)
+  return new GenEffect(pipe(_, fromEffectIf), __)
 }
 
 export interface Adapter {
