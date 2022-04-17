@@ -5,7 +5,6 @@ import * as L from "@effect-ts/core/Effect/Layer"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
-import * as T from "../Effect.js"
 import { pipe } from "../Function.js"
 import * as H from "./http-client.js"
 

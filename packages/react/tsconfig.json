@@ -34,6 +34,10 @@
                 "../prelude"
             ]
         },
+        "types": [
+            "@effect-ts-app/prelude/_ext/index",
+            "@effect-ts-app/fluent/types/node"
+        ]
     },
     "include": [
         "./_src"

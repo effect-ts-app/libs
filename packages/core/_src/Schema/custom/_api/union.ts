@@ -1,4 +1,3 @@
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Chunk from "@effect-ts/core/Collections/Immutable/Chunk"
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
@@ -169,14 +168,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
     values: readonly string[]
-  }> = A.findFirstMap_(Object.keys(firstMemberTags), (tagField) => {
+  }> = ROArray.findFirstMap_(Object.keys(firstMemberTags), (tagField) => {
     const tags =
-      A.collect_(entriesTags, ([member, tags]) => {
+      ROArray.collect_(entriesTags, ([member, tags]) => {
         if (tagField in tags) {
           return Option.some(tuple(tags[tagField], member))
         }
         return Option.none
-      }) >= A.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
+      }) >= ROArray.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
 
     if (tags.length === entries.length) {
       return Option.some({

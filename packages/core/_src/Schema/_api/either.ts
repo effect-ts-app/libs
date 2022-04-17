@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import * as E from "@effect-ts/core/Either"
+
 import { pipe } from "@effect-ts/core/Function"
 
 import * as Arbitrary from "../custom/Arbitrary/index.js"
@@ -41,9 +41,9 @@ export function fromEither<
   right: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   object,
-  E.Either<LeftParsedShape, ParsedShape>,
+  Either<LeftParsedShape, ParsedShape>,
   object,
-  E.Either<LeftEncoded, Encoded>,
+  Either<LeftEncoded, Encoded>,
   { left: LeftApi; right: Api }
 > {
   const leftGuard = Guard.for(left)
@@ -56,35 +56,35 @@ export function fromEither<
   const parse = Parser.for(right)
   const encode = Encoder.for(right)
 
-  const refinement = (_: unknown): _ is E.Either<LeftParsedShape, ParsedShape> => {
-    const ei = _ as E.Either<any, any>
+  const refinement = (_: unknown): _ is Either<LeftParsedShape, ParsedShape> => {
+    const ei = _ as Either<any, any>
     return (
       typeof _ === "object" &&
       _ != null &&
-      ((E.isLeft(ei) && leftGuard(ei.left)) || (E.isRight(ei) && guard(ei.right)))
+      ((Either.isLeft(ei) && leftGuard(ei.left)) || (Either.isRight(ei) && guard(ei.right)))
     )
   }
 
   const parseEither = (i: object, env?: ParserEnv) => {
-    const ei = i as E.Either<any, any>
-    if (E.isLeft(ei)) {
+    const ei = i as Either<any, any>
+    if (Either.isLeft(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(leftParse) : leftParse
-      return Th.map_(parsev2(ei.left), E.left)
+      return Th.map_(parsev2(ei.left), Either.left)
     }
-    if (E.isRight(ei)) {
+    if (Either.isRight(ei)) {
       const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
-      return Th.map_(parsev2(ei.right), E.right)
+      return Th.map_(parsev2(ei.right), Either.right)
     }
     return Th.fail(MO.parseObjectE("not an either"))
   }
 
   return pipe(
     MO.identity(refinement),
-    MO.arbitrary((_) => _.oneof(leftArb(_).map(E.left), arb(_).map(E.right)) as any),
+    MO.arbitrary((_) => _.oneof(leftArb(_).map(Either.left), arb(_).map(Either.right)) as any),
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
     MO.encoder((_) =>
-      E.fold_(
+      Either.fold_(
         _,
         (x) => ({ _tag: "Left", left: leftEncode(x) }),
         (x) => ({ _tag: "Right", right: encode(x) })
@@ -116,16 +116,16 @@ export function either<
   right: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   unknown,
-  E.Either<LeftParsedShape, ParsedShape>,
+  Either<LeftParsedShape, ParsedShape>,
   object,
-  E.Either<LeftEncoded, Encoded>,
+  Either<LeftEncoded, Encoded>,
   { left: LeftApi; right: Api }
 > {
   const encodeLeft = Encoder.for(left)
   const encodeSelf = Encoder.for(right)
   return pipe(
     MO.object[">>>"](fromEither(left, right)),
-    MO.encoder((_) => E.bimap_(_, encodeLeft, encodeSelf)),
+    MO.encoder((_) => Either.bimap_(_, encodeLeft, encodeSelf)),
     MO.withDefaults,
     MO.annotate(eitherIdentifier, { left, right })
   ) as any

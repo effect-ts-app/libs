@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { Misc, Union } from "ts-toolbelt"
-
-import * as O from "./Option.js"
-import * as SET from "./Set.js"
 
 // type SomeObject = {
 //   0: Option<string>
@@ -17,7 +13,10 @@ import * as SET from "./Set.js"
 // type test0 = Transform<SomeObject>
 // type test1 = Transform<SomeObject[]>
 
-type OptionOf<A> = Union.Exclude<A extends Option.Some<infer X> ? X | null : A, Option.None>
+type OptionOf<A> = Union.Exclude<
+  A extends Option.Some<infer X> ? X | null : A,
+  Option.None
+>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 export type TransformRoot<O> = O extends Option<any>
@@ -29,10 +28,10 @@ export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive
       [K in keyof O]: OptionOf<O[K]> extends infer X
         ? X extends (infer Y)[]
           ? OptionOf<Transform<Y>>[]
-          : X extends NA.NonEmptyArray<infer Y>
-          ? NA.NonEmptyArray<OptionOf<Transform<Y>>>
-          : X extends SET.Set<infer Y>
-          ? SET.Set<OptionOf<Transform<Y>>>
+          : X extends NonEmptyArray.NonEmptyArray<infer Y>
+          ? NonEmptyArray.NonEmptyArray<OptionOf<Transform<Y>>>
+          : X extends ROSet<infer Y>
+          ? ROSet<OptionOf<Transform<Y>>>
           : X extends readonly (infer Y)[]
           ? readonly OptionOf<Transform<Y>>[]
           : Transform<X>

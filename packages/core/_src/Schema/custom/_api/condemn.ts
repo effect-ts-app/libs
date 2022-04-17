@@ -1,6 +1,6 @@
 // tracing: off
 
-import * as E from "@effect-ts/core/Either"
+
 import { Case } from "@effect-ts/system/Case"
 
 import type { AnyError } from "../_schema/index.js"
@@ -52,13 +52,13 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
     Effect.fromEither(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
-        return E.left(new CondemnException({ message: drawError(res.left) }))
+        return Either.left(new CondemnException({ message: drawError(res.left) }))
       }
       const warn = res.right.get(1)
       if (warn._tag === "Some") {
-        return E.left(new CondemnException({ message: drawError(warn.value) }))
+        return Either.left(new CondemnException({ message: drawError(warn.value) }))
       }
-      return E.right(res.right.get(0))
+      return Either.right(res.right.get(0))
     }, __trace)
 }
 

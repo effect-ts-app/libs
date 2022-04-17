@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
@@ -7,8 +6,6 @@ import { v4 } from "uuid"
 
 import { constant, Lazy, pipe } from "../Function.js"
 import * as NonEmptySet from "../NonEmptySet.js"
-import * as O from "../Option.js"
-import * as SET from "../Set.js"
 import { typedKeysOf } from "../utils/index.js"
 import { FromProperty, set, setIdentifier } from "./_api/index.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
@@ -157,17 +154,15 @@ export function makeCurrentDate() {
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
   As extends Option<PropertyKey>,
-  Def extends Option<
-    ["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]
-  >
+  Def extends Option<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
     propDef(p, makeDefault, "constructor")
 }
 
 type SupportedDefaults =
-  | SET.Set<any>
-  | A.Array<any>
+  | ROSet<any>
+  | ROArray<any>
   | Option.Some<any>
   | Option.None
   | Date
@@ -328,7 +323,12 @@ function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "both"
-): MO.Property<Self, "required", Option.None, Option.Some<["both", () => MO.ParsedShapeOf<Self>]>>
+): MO.Property<
+  Self,
+  "required",
+  Option.None,
+  Option.Some<["both", () => MO.ParsedShapeOf<Self>]>
+>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
@@ -541,7 +541,7 @@ export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const eq = eq_ ?? Ord.getEqual(ord)
   const s = set(type, ord, eq)
-  return Object.assign(s, SET.make(ord, eq))
+  return Object.assign(s, ROSet.make(ord, eq))
 }
 
 export function makeUnorderedContramappedStringSet<
@@ -655,7 +655,7 @@ export function makeContramappedNonEmptySet<
   )
 }
 
-export const constArray = constant(A.empty)
+export const constArray = constant(ROArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }

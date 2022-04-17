@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as TRef from "@effect-ts/core/Effect/Ref"
 import type { Has } from "@effect-ts/core/Has"
 import { tag } from "@effect-ts/core/Has"
@@ -17,7 +16,7 @@ export const References = tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
-  constructor(readonly errors: A.Array<string>) {}
+  constructor(readonly errors: ROArray<string>) {}
 }
 
 export interface ConfigExtensionRef {

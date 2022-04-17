@@ -1,6 +1,5 @@
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as Eq from "@effect-ts/core/Equal"
-import * as Sy from "@effect-ts/core/Sync"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
@@ -55,8 +54,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 decode(cr.data),
                 Effect.chain((d) =>
                   eq.equals(keys, d as unknown as V)
-                    ? Sy.succeed(d)
-                    : Sy.fail("not equals")
+                    ? Sync.succeed(d)
+                    : Sync.fail("not equals")
                 ),
                 Effect.result
               )

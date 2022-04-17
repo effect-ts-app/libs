@@ -41,9 +41,9 @@ export const none: UIO<never> =
   /*#__PURE__*/
   (() => Sync.succeed(Option.none))()
 
-export const fromSync = <R, E, A>(eff: Sync.Sync<R, E, A>) =>
+export const fromSync = <R, E, A>(eff: Sync<R, E, A>) =>
   pipe(eff, Sync.map(Option.some))
-export const fromSyncIf = <R, E, A>(eff: Sync.Sync<R, E, A>) =>
+export const fromSyncIf = <R, E, A>(eff: Sync<R, E, A>) =>
   pipe(
     eff,
     Sync.map((x) => (Utils.isOption(x) ? x : Option.some(x)))
@@ -67,7 +67,7 @@ export const chain_ = <R, E, A, R2, E2, B>(
 
 export const tap_ = <R, E, A, R2, E2>(
   inner: SyncOption<R, E, A>,
-  bind: FunctionN<[A], Sync.Sync<R2, E2, unknown>>
+  bind: FunctionN<[A], Sync<R2, E2, unknown>>
 ): SyncOption<R & R2, E | E2, A> =>
   Sync.tap_(
     inner,
@@ -153,11 +153,11 @@ export const getOrElse =
   <R, E, A>(_: SyncOption<R, E, A>): Sync<R, E, A | A2> =>
     getOrElse_(_, f)
 
-export const tap = <R, E, A>(bind: FunctionN<[A], Sync.Sync<R, E, unknown>>) =>
+export const tap = <R, E, A>(bind: FunctionN<[A], Sync<R, E, unknown>>) =>
   Sync.tap(Option.fold(() => none, bind))
 
 export const fromOptionS = <R, E, A>(
-  onNone: Sync.Sync<R, E, Option<A>>
+  onNone: Sync<R, E, Option<A>>
 ): ((opt: Option<A>) => SyncOption<R, E, A>) => Option.fold(() => onNone, some)
 
 export const fromSyncOptionS =
@@ -167,11 +167,11 @@ export const fromSyncOptionS =
 
 export const chainSync_ = <R, R2, E, E2, A, A2>(
   eo: SyncOption<R, E, A>,
-  eff: (a: A) => Sync.Sync<R2, E2, A2>
+  eff: (a: A) => Sync<R2, E2, A2>
 ) => chain_(eo, flow(eff, fromSync))
 
 export const chainSync =
-  <R, R2, E, E2, A, A2>(eff: (a: A) => Sync.Sync<R2, E2, A2>) =>
+  <R, R2, E, E2, A, A2>(eff: (a: A) => Sync<R2, E2, A2>) =>
   (eo: SyncOption<R, E, A>) =>
     chainSync_(eo, eff)
 

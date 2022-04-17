@@ -4,7 +4,6 @@
 // https://github.com/sledorze/morphic-ts/blob/master/packages/morphic-json-schema-interpreters/src/json-schema/json-schema.ts
 
 /* eslint-disable no-prototype-builtins */
-import type * as A from "@effect-ts/core/Collections/Immutable/Array"
 import { pipe } from "@effect-ts/core/Function"
 import * as Lens from "@effect-ts/monocle/Lens"
 import * as Prism from "@effect-ts/monocle/Prism"
@@ -54,7 +53,7 @@ export class StringSchema extends Base<
 
 export class EnumSchema extends Base<
   DescriptionSchema & {
-    enum: A.Array<string>
+    enum: ROArray<string>
   }
 > {
   readonly type = "string"
@@ -62,7 +61,7 @@ export class EnumSchema extends Base<
 
 export interface NumberEnumSchema extends DescriptionSchema {
   type: "number"
-  enum: A.Array<number>
+  enum: ROArray<number>
 }
 
 export const isEnumSchema = (x: JSONSchema): x is EnumSchema =>
@@ -86,7 +85,7 @@ export class BooleanSchema extends Base<DescriptionSchema> {
 
 export class ArraySchema extends Base<
   DescriptionSchema & {
-    items: SubSchema | A.Array<SubSchema>
+    items: SubSchema | ROArray<SubSchema>
     minItems?: number
     maxItems?: number
     description?: string
@@ -104,7 +103,7 @@ export const Ref = ($ref: string): Ref => ({ $ref })
 
 export class ObjectSchema extends Base<
   DescriptionSchema & {
-    required?: A.Array<string>
+    required?: ROArray<string>
     properties?: Record<string, SubSchema>
     additionalProperties?: SubSchema
   }
@@ -133,7 +132,7 @@ export const Anything: Anything = {}
 
 export class OneOfSchema extends Base<
   DescriptionSchema & {
-    oneOf: A.Array<JSONSchema | SubSchema>
+    oneOf: ROArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
     }
@@ -142,7 +141,7 @@ export class OneOfSchema extends Base<
 
 export class AllOfSchema extends Base<
   DescriptionSchema & {
-    allOf: A.Array<JSONSchema | SubSchema>
+    allOf: ROArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
     }

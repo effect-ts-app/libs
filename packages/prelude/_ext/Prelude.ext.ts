@@ -1,18 +1,16 @@
 //import "./Lens.ext"
 import "./Schema.ext"
 
-import {
-  Chunk,
-  EffectOption,
-  Either,
-  Managed,
-  NonEmptyArray,
-  //NonEmptySet,
-  Option,
-  Set,
-  Sync,
-} from "@effect-ts-app/prelude"
-
+// import {
+//   Chunk,
+//   EffectOption,
+//   Either,
+//   Managed,
+//   NonEmptyArray,
+//   //NonEmptySet,
+//   Option,
+//   Set,
+// } from "@effect-ts-app/prelude"
 import { pipe } from "./pipe"
 
 // TODO: + for zipFlatten..
@@ -108,9 +106,9 @@ export function effectZipRight_<R, E, A, R2, E2, A2>(
  * @tsplus operator ets/Sync >
  */
 export function syncZipRight_<R, E, A, R2, E2, A2>(
-  a: Sync.Sync<R, E, A>,
-  b: Sync.Sync<R2, E2, A2>
-): Sync.Sync<R & R2, E | E2, A2> {
+  a: Sync<R, E, A>,
+  b: Sync<R2, E2, A2>
+): Sync<R & R2, E | E2, A2> {
   return Sync.chain_(a, () => b)
 }
 
@@ -165,7 +163,7 @@ export const naSucceed = NonEmptyArray.fromArray
 /**
  * @tsplus static ets/Set __call
  */
-export const setSucceed = Set.fromArray
+export const setSucceed = ROSet.fromArray
 
 /**
  * @tsplus static ets/Chunk __call

@@ -1,5 +1,4 @@
 import { IndexingPolicy } from "@azure/cosmos"
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { pipe } from "@effect-ts-app/core/Function"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
@@ -79,7 +78,7 @@ WHERE (
               .fetchAll()
           )
         ),
-        Effect.map((x) => A.head(x.resources)),
+        Effect.map((x) => ROArray.head(x.resources)),
         EO.map(({ id }) => id)
       )
     }

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import { pipe } from "@effect-ts/core/Function"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import * as MO from "@effect-ts-app/core/Schema"
@@ -21,15 +20,15 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
 }
 
 export function tupAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  tup: Tuple<A.Array<R>>
+  tup: Tuple<ROArray<R>>
 ) {
   return TUP.map_(tup, asRouteDescriptionAny)
 }
 
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  arr: A.Array<R>
+  arr: ROArray<R>
 ) {
-  return A.map_(arr, asRouteDescriptionAny)
+  return ROArray.map_(arr, asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -48,7 +47,7 @@ export interface RouteDescriptor<
   method: METHOD
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
-    tags: A.Array<string>
+    tags: ROArray<string>
   }
 }
 
@@ -172,7 +171,7 @@ export function makeFromSchema<ResA>(
         requestBody: _.reqBody
           .map((schema) => ({ content: { "application/json": { schema } } }))
           .toUndefined(),
-        responses: A.concat_(
+        responses: ROArray.concat_(
           [
             isEmpty
               ? new Response(204, { description: "Empty" })

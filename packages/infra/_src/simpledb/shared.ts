@@ -84,8 +84,8 @@ export interface EffectMap<TKey, T> {
 //   encode: MO.HasEncoder<A, E>["encode_"],
 //   v: A
 // ) {
-//   const e1 = Sy.run(encode(v, "strict"))
-//   const e2 = Sy.run(encode(v, "classic"))
+//   const e1 = Sync.run(encode(v, "strict"))
+//   const e2 = Sync.run(encode(v, "classic"))
 //   try {
 //     assert.deepStrictEqual(e1, e2)
 //   } catch (err) {
@@ -104,12 +104,12 @@ export interface EffectMap<TKey, T> {
 // ) {
 //   return pipe(
 //     decode(u, "strict"),
-//     Sy.tap((v) =>
+//     Sync.tap((v) =>
 //       pipe(
 //         decode(u),
-//         Sy.tap((v2) => {
+//         Sync.tap((v2) => {
 //           assert.deepStrictEqual(v, v2)
-//           return Sy.succeed(v2)
+//           return Sync.succeed(v2)
 //         })
 //       )
 //     )

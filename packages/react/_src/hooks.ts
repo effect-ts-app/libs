@@ -1,7 +1,7 @@
 import { Cause } from "@effect-ts/core/Effect/Cause"
 import * as Ex from "@effect-ts/core/Effect/Exit"
 import { Exit } from "@effect-ts/core/Effect/Exit"
-import * as E from "@effect-ts/core/Either"
+
 import { equals } from "@effect-ts/system/Structural/HasEquals"
 import React from "react"
 
@@ -23,10 +23,10 @@ assert.strictEqual(shallowEqual({ a: Option.some(1)}, { a: Option.some(1) }), tr
 assert.strictEqual(shallowEqual({ a: Option.some(something)}, { a: Option.some(something) }), true)
 assert.strictEqual(shallowEqual({ a: Option.some(something)}, { a: Option.none }), false)
 
-assert.strictEqual(shallowEqual({ a: E.left(something)}, { a: E.left(something) }), true)
-assert.strictEqual(shallowEqual({ a: E.right(something)}, { a: E.left(something) }), false)
-assert.strictEqual(shallowEqual({ a: E.left(1)}, { a: E.left(2) }), false)
-assert.strictEqual(shallowEqual({ a: E.right(1)}, { a: E.right(2) }), false)
+assert.strictEqual(shallowEqual({ a: Either.left(something)}, { a: Either.left(something) }), true)
+assert.strictEqual(shallowEqual({ a: Either.right(something)}, { a: Either.left(something) }), false)
+assert.strictEqual(shallowEqual({ a: Either.left(1)}, { a: Either.left(2) }), false)
+assert.strictEqual(shallowEqual({ a: Either.right(1)}, { a: Either.right(2) }), false)
 
 // Works by default
 assert.strictEqual(shallowEqual(1, 1), true)
@@ -35,10 +35,10 @@ assert.strictEqual(shallowEqual(Option.none, Option.none), true)
 assert.strictEqual(shallowEqual(Option.some(something), Option.some(something)), true)
 assert.strictEqual(shallowEqual(Option.some(something), Option.none), false)
 
-assert.strictEqual(shallowEqual(E.left(something), E.left(something)), true)
-assert.strictEqual(shallowEqual(E.right(something), E.left(something)), false)
-assert.strictEqual(shallowEqual(E.left(1), E.left(2)), false)
-assert.strictEqual(shallowEqual(E.right(1), E.right(2)), false)
+assert.strictEqual(shallowEqual(Either.left(something), Either.left(something)), true)
+assert.strictEqual(shallowEqual(Either.right(something), Either.left(something)), false)
+assert.strictEqual(shallowEqual(Either.left(1), Either.left(2)), false)
+assert.strictEqual(shallowEqual(Either.right(1), Either.right(2)), false)
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function shallowEqual(objA: any, objB: any) {
@@ -110,9 +110,9 @@ function convertDep(x: any) {
     ? x
     : Option.isSome(x) || Option.isNone(x)
     ? Option.toNullable(x)
-    : E.isLeft(x)
+    : Either.isLeft(x)
     ? x.left
-    : E.isRight(x)
+    : Either.isRight(x)
     ? x.right
     : x
 }

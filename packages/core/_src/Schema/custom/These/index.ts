@@ -2,24 +2,24 @@
 
 import * as Tp from "@effect-ts/core/Collections/Immutable/Tuple"
 import { _A, _E } from "@effect-ts/core/Effect"
-import * as E from "@effect-ts/core/Either"
+
 
 export class These<E, A> {
   readonly [_E]!: () => E;
   readonly [_A]!: () => A
-  constructor(readonly effect: E.Either<E, Tp.Tuple<[A, Option<E>]>>) {}
+  constructor(readonly effect: Either<E, Tp.Tuple<[A, Option<E>]>>) {}
 }
 
 export function succeed<A>(a: A) {
-  return new These(E.right(Tp.tuple(a, Option.none)))
+  return new These(Either.right(Tp.tuple(a, Option.none)))
 }
 
 export function warn<E, A>(a: A, e: E) {
-  return new These(E.right(Tp.tuple(a, Option.some(e))))
+  return new These(Either.right(Tp.tuple(a, Option.some(e))))
 }
 
 export function fail<E>(e: E) {
-  return new These<E, never>(E.left(e))
+  return new These<E, never>(Either.left(e))
 }
 
 export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
@@ -29,9 +29,9 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
   onFail: (e: E) => These<E3, A3>
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
-    E.fold_(
+    Either.fold_(
       self.effect,
-      (x): E.Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Option<E1 | E2 | E3>]>> =>
+      (x): Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Option<E1 | E2 | E3>]>> =>
         onFail(x).effect,
       ({ tuple: [result, warnings] }) =>
         warnings._tag === "None"
@@ -96,6 +96,6 @@ export function chain<E0, A0, E, A>(f: (a: A0, w: Option<E0>) => These<E, A>) {
 
 export function result<E, A>(
   self: These<E, A>
-): E.Either<E, Tp.Tuple<[A, Option<E>]>> {
+): Either<E, Tp.Tuple<[A, Option<E>]>> {
   return self.effect
 }

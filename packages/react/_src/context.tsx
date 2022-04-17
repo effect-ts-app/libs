@@ -1,8 +1,6 @@
 import { pretty } from "@effect-ts/core/Effect/Cause"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
-import { Exit } from "@effect-ts/system/Exit"
-import * as T from "@effect-ts-app/core/Effect"
 import React, { createContext, ReactNode, useContext, useEffect, useMemo } from "react"
 
 export type GetProvider<P> = P extends L.Layer<unknown, unknown, infer TP> ? TP : never
@@ -15,7 +13,9 @@ export interface ServiceContext<R> {
   /**
    * Fire and Forget. Errors are logged however.
    */
-  readonly runWithErrorLog: <E, A>(self: Effect<R & Effect.DefaultEnv, E, A>) => () => void
+  readonly runWithErrorLog: <E, A>(
+    self: Effect<R & Effect.DefaultEnv, E, A>
+  ) => () => void
 
   /**
    * Fire and Forget. A promise that never fails nor returns any value.

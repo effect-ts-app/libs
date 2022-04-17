@@ -2,7 +2,6 @@
 import * as M from "@effect-ts/core/Effect/Managed"
 import * as EO from "@effect-ts-app/core/EffectOption"
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as O from "@effect-ts-app/core/Option"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Lock } from "redlock"
 

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { makeAssociative } from "@effect-ts/core/Associative"
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { flow, pipe } from "@effect-ts/core/Function"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
@@ -56,7 +55,7 @@ export function decodeErrors(x: unknown) {
 }
 
 const ValidationApplicative = Effect.getValidationApplicative(
-  makeAssociative<A.Array<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
+  makeAssociative<ROArray<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
     (l, r) => l.concat(r)
   )
 )

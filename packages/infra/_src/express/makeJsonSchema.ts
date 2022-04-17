@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as CNK from "@effect-ts/core/Collections/Immutable/Chunk"
 import { pipe } from "@effect-ts/core/Function"
 import { _A } from "@effect-ts/core/Utils"
@@ -21,7 +20,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
-          responses: A.reduce_(
+          responses: ROArray.reduce_(
             responses,
             {} as Record<Response["statusCode"], Response["type"]>,
             (prev, cur) => {
