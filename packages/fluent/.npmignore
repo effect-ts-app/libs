@@ -5,5 +5,4 @@ tslint.json
 !**/*.d.ts.eslintrc.js
 coverage/
 **/*.tsbuildinfo
-src/
 _esm/
