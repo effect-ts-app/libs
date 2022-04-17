@@ -2,7 +2,7 @@
 *.test.d.ts
 tsconfig.json
 tslint.json
-./index.ts
+index.ts
 !**/*.d.ts
 .eslintrc.js
 coverage/
