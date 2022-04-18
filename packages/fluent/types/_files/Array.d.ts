@@ -403,6 +403,9 @@ declare global {
   }
 
   interface Set<T> extends SetOps {}
+  /**
+   * @tsplus type ets/ROSet
+   */
   interface ReadonlySet<T> extends ReadonlySetOps {}
   interface SetOps extends SOps, IterableOps {}
   interface ReadonlySetOps extends SOps, IterableOps {}
