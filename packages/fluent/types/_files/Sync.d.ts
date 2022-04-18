@@ -3,6 +3,9 @@ import type { XPure } from "@effect-ts/system/XPure"
 import type { SyncOption } from "@effect-ts-app/core/SyncOption"
 
 declare module "@effect-ts/system/Sync/core" {
+  /**
+   * @tsplus type ets/Sync
+   */
   export interface Sync<R, E, A> extends XPure<unknown, unknown, unknown, R, E, A> {
     /**
      * @ets_rewrite_method toEffect from "@effect-ts-app/core/Sync"

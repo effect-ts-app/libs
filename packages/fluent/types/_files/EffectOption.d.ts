@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 // ets_tracing: off
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type * as T from "@effect-ts/core/Effect"
@@ -9,6 +10,9 @@ import type { EffectOption } from "@effect-ts-app/core/EffectOption"
 declare module "@effect-ts/monocle/Lens" {
   export interface Base<S, A> extends Lens<S, A> {}
 
+  /**
+   * @tsplus type ets/Lens
+   */
   export interface Lens<S, A> {
     /**
      * @ets_rewrite_method modify_ from "@effect-ts-app/fluent/_ext/Lens"
@@ -23,6 +27,10 @@ declare module "@effect-ts/monocle/Lens" {
 }
 
 declare module "@effect-ts/system/Effect/effect" {
+  /**
+   * @tsplus type ets/Effect
+   */
+  export interface Effect<R, E, A> {}
   export interface EffectStaticOps {
     /**
      * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
