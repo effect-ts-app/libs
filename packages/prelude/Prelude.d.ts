@@ -104,6 +104,7 @@ export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 export namespace Option {
   export * from "@effect-ts-app/core/Option"
 }
+/** @tsplus type ets/Option */
 export type Option<A> = O.Option<A>
 
 export namespace Sync {
