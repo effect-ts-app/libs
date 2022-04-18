@@ -3,15 +3,105 @@ import "./Schema.ext"
 
 // import {
 //   Chunk,
+//   Effect,
 //   EffectOption,
-//   Either,
-//   Managed,
 //   NonEmptyArray,
-//   //NonEmptySet,
 //   Option,
 //   Set,
+//   Sync,
 // } from "@effect-ts-app/prelude"
 import { pipe } from "./pipe"
+
+// NOTE: unify functions only work if the @tsplus type tag is on the original definition, not on prelude's definitions.
+/**
+ * @tsplus unify ets/Effect
+ */
+export function unifyEffect<X extends Effect<any, any, any>>(
+  self: X
+): Effect<
+  [X] extends [{ [Effect._R]: (_: infer R) => void }] ? R : never,
+  [X] extends [{ [Effect._E]: () => infer E }] ? E : never,
+  [X] extends [{ [Effect._A]: () => infer A }] ? A : never
+> {
+  return self
+}
+
+/**
+ * @tsplus unify ets/Sync
+ */
+export function unifySync<X extends Sync<any, any, any>>(
+  self: X
+): Sync<
+  [X] extends [{ [Effect._R]: (_: infer R) => void }] ? R : never,
+  [X] extends [{ [Effect._E]: () => infer E }] ? E : never,
+  [X] extends [{ [Effect._A]: () => infer A }] ? A : never
+> {
+  return self
+}
+
+/**
+ * @tsplus unify Either
+ * @tsplus unify Either/Left
+ * @tsplus unify Either/Right
+ */
+export function unifyEither<X extends Either<any, any>>(
+  self: X
+): Either<
+  [X] extends [Either<infer EX, any>] ? EX : never,
+  [X] extends [Either<any, infer AX>] ? AX : never
+> {
+  return self
+}
+
+/**
+ * @tsplus unify Option
+ * @tsplus unify Option/Some
+ * @tsplus unify Option/None
+ */
+export function unifyOption<X extends Option<any>>(
+  self: X
+): Option<[X] extends [Option<infer A>] ? A : never> {
+  return self
+}
+
+/**
+ * @tsplus fluent ets/Effect flatMap
+ */
+export const flatMapEffect = Effect.chain_
+
+/**
+ * @tsplus fluent ets/Effect map
+ */
+export const mapEffect = Effect.map_
+/**
+ * @tsplus fluent ets/Sync flatMap
+ */
+export const flatMapSync = Sync.chain_
+
+/**
+ * @tsplus fluent ets/Sync map
+ */
+export const mapSync = Sync.map_
+
+/**
+ * @tsplus fluent ets/Option flatMap
+ */
+export const flatMapOption = Option.chain_
+
+/**
+ * @tsplus fluent ets/Option map
+ */
+export const mapOption = Option.map_
+
+/**
+ * @tsplus fluent ets/Either flatMap
+ */
+export const flatMapEither = Either.chain_
+
+/**
+ * @tsplus fluent ets/Either map
+ */
+export const mapEither = Either.map_
 
 // TODO: + for zipFlatten..
 /**
