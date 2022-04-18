@@ -164,8 +164,8 @@ export function handleRequest<
       .chain((inp) => {
         const hn = handle(inp)
         const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
-        return (r as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>).chain((outp) =>
-          respond(inp, res)(outp)
+        return (r as unknown as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>).chain(
+          (outp) => respond(inp, res)(outp)
         )
       })
       .catch("_tag", "ValidationError", (err) =>
