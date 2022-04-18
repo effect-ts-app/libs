@@ -1,16 +1,9 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable import/no-duplicates */
 // ets_tracing: off
 import type { IO as EffectIO } from "@effect-ts/core/Effect"
 import type { Option } from "@effect-ts/core/Option"
 import type * as O from "@effect-ts/core/Option"
 import type { IO as SyncIO } from "@effect-ts/core/Sync"
-
-declare module "@effect-ts/system/Either/core" {
-  export interface Left<E> {}
-  export interface Right<A> {}
-  export type Either<E, A> = Left<E> | Right<A>
-}
 
 declare module "@effect-ts/system/Option/core" {
   interface Ops<A> {
@@ -24,21 +17,8 @@ declare module "@effect-ts/system/Option/core" {
      */
     readonly value: A | undefined
   }
-  /**
-   * @tsplus type ets/Option/Some
-   */
   export interface Some<A> extends Ops<A> {}
-
-  /**
-   * @tsplus type ets/Option/None
-   */
-
   export interface None extends Ops<never> {}
-
-  /**
-   * @tsplus type ets/Option
-   */
-  export interface Option<A> {}
 
   export interface OptionOps {
     /**
