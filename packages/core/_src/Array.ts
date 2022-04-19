@@ -61,3 +61,4 @@ export function sortByO<A>(
 }
 
 export * from "@effect-ts/core/Collections/Immutable/Array"
+export * as $ from "./ArrayAspects"

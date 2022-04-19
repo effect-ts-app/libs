@@ -267,5 +267,3 @@ export const gen = DSL.genF(Monad, { adapter: adapter as Adapter })
  * Useful for use in generators, not to short-circuit the operation on the None case.
  */
 export const genUnit = flow(gen, asUnitDiscard)
-
-export * as $ from "./EffectOptionAspects"

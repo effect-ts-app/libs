@@ -22,6 +22,8 @@ import * as O from "@effect-ts/core/Option"
 
 import { constant, curry, flow, Lazy, pipe } from "./Function.js"
 
+export * as $ from "./EffectAspects.js"
+
 export const encaseEither = <E, A>(ei: Ei.Either<E, A>) => fromEither(() => ei)
 export const chainEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>
   chain((a: A2) => fromEither(() => ei(a)))
@@ -91,14 +93,6 @@ export function getFirstError<E>(cause: Cause.Cause<E>) {
   return null
 }
 
-export const tapBothInclAbort =
-  <A, ER, EE, EA, SR, SE, SA>(
-    onError: (err: unknown) => Effect<ER, EE, EA>,
-    onSuccess: (a: A) => Effect<SR, SE, SA>
-  ) =>
-  <R, E>(eff: Effect<R, E, A>) =>
-    tapBothInclAbort_(eff, onError, onSuccess)
-
 export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   self: Effect<R, E, A>,
   onError: (err: unknown) => Effect<ER, EE, EA>
@@ -119,11 +113,6 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
       }, succeed)
     )
   )
-export const tapErrorInclAbort =
-  <A, ER, EE, EA>(onError: (err: unknown) => Effect<ER, EE, EA>) =>
-  <R, E>(eff: Effect<R, E, A>) =>
-    tapErrorInclAbort_(eff, onError)
-
 export function encaseOption_<E, A>(o: O.Option<A>, onError: Lazy<E>): IO<E, A> {
   return O.fold_(o, () => fail(onError()), succeed)
 }
@@ -154,10 +143,6 @@ export function tupleTap_<A, B, R, E, C>(f: (a: A, b: B) => Effect<R, E, C>) {
 
 export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<R, E, A>) {
   return (n: I, orig: I) => ifDiff_(n, orig, f)
-}
-
-export function ifDiff<I, R, E, A>(n: I, orig: I) {
-  return (f: (i: I) => Effect<R, E, A>) => ifDiff_(n, orig, f)
 }
 
 export function ifDiff_<I, R, E, A>(n: I, orig: I, f: (i: I) => Effect<R, E, A>) {

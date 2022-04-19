@@ -210,5 +210,3 @@ export interface Adapter {
 }
 
 export const gen = DSL.genF(Monad, { adapter: adapter as Adapter })
-
-export * as $ from "./SyncOptionAspects.js"

@@ -6,6 +6,8 @@ import * as O from "@effect-ts/core/Option"
 
 export * from "@effect-ts/core/Option"
 
+export const fromBool = (b: boolean) => (b ? O.some(true) : O.none)
+
 /**
  * Access property, unwrapping Options along the path
  */
@@ -22,13 +24,4 @@ function convert(a: any) {
 export type _A<A> = A extends O.Some<infer Y> ? Y : never
 type KeysMatching<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T]
 
-export const toBool = O.fold(
-  () => false,
-  () => true
-)
-
-export const fromBool = (b: boolean) => (b ? O.some(true) : O.none)
-
-export function omitableToNullable<T>(om: O.Option<T> | undefined) {
-  return om ?? O.fromNullable(om)
-}
+export * as $ from "./OptionAspects"

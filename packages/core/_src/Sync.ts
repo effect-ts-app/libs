@@ -16,6 +16,8 @@ import type { Effect } from "./Effect.js"
 import * as T from "./Effect.js"
 import { identity } from "./Function.js"
 
+export * as $ from "./SyncAspects.js"
+
 export type ShapeFn<T> = Pick<
   T,
   {
@@ -104,15 +106,15 @@ export const orDie = mapError((err) => {
   throw err
 })
 
+export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
+  return T.map_(self, identity)
+}
+
 /**
  * Lifts an `Either` into a `Sync` value.
  */
 export function fromEither<E, A>(f: () => E.Either<E, A>) {
   return chain_(succeedWith(f), E.fold(fail, succeed))
-}
-
-export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
-  return T.map_(self, identity)
 }
 
 export * from "@effect-ts/core/Sync"
