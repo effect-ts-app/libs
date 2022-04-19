@@ -98,7 +98,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
           : new Refreshing(resultInternal.current)
       )
 
-      return runWithErrorLog(pipe(queryResult(self), Effect.map(set)))
+      return runWithErrorLog(queryResult(self).map(set))
     }, [self, runWithErrorLog, signal])
 
     return [result, refresh] as const

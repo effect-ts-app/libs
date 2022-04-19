@@ -41,9 +41,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      const getData = flow(
-        encode,
-        Effect.map((data) =>
+      const getData = flow(encode, (_) =>
+        _.map((data) =>
           JSON.stringify({ version, timestamp: new Date(), data }, undefined, 2)
         )
       )

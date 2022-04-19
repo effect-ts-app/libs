@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { pipe, Predicate } from "@effect-ts/core/Function"
+import { Predicate } from "@effect-ts/core/Function"
 import { ParsedQuery } from "query-string"
 
 /* tested in the implementation packages */
@@ -156,10 +156,10 @@ const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
 export function accessHttpHeadersM<R, E, A>(
   eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
 ) {
-  return pipe(accessHttpHeaders_, Effect.chain(eff))
+  return accessHttpHeaders_.chain(eff)
 }
 export function accessHttpHeaders<A>(eff: (h: Option<HttpHeaders>) => A) {
-  return pipe(accessHttpHeaders_, Effect.map(eff))
+  return accessHttpHeaders_.map(eff)
 }
 
 export interface HttpOps {
@@ -203,10 +203,10 @@ const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
 export function accessMiddlewareStackM<R, E, A>(
   eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
 ) {
-  return pipe(accessMiddlewareStack_, Effect.chain(eff))
+  return accessMiddlewareStack_.chain(eff)
 }
 export function accessMiddlewareStack<A>(eff: (h: Option<MiddlewareStack>) => A) {
-  return pipe(accessMiddlewareStack_, Effect.map(eff))
+  return accessMiddlewareStack_.map(eff)
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>

@@ -70,10 +70,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
 
-      const getData = flow(
-        encode,
-        Effect.map(JSON.stringify),
-        Effect.map((data) => JSON.stringify({ version, timestamp: new Date(), data }))
+      const getData = flow(encode, (_) =>
+        _.map(JSON.stringify).map((data) =>
+          JSON.stringify({ version, timestamp: new Date(), data })
+        )
       )
       return getData(record)
         .chain((serialised) => storage.set(getRecordName(type, record.id), serialised))

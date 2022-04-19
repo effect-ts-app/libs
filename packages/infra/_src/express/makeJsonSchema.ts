@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { pipe } from "@effect-ts/core/Function"
 import { _A } from "@effect-ts/core/Utils"
 
 import * as RS from "./schema/routing.js"
@@ -13,10 +12,9 @@ const rx = /:(\w+)/g
  * Work in progress JSONSchema generator.
  */
 export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
-  return pipe(
-    Chunk.from(r),
-    Effect.forEach(RS.makeFromSchema),
-    Effect.map((e) => {
+  return Chunk.from(r)
+    .forEachEffect(RS.makeFromSchema)
+    .map((e) => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
@@ -43,7 +41,6 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
         }
       )
     })
-  )
 }
 
 class Response {

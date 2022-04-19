@@ -26,7 +26,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
   ) => {
-    const getData = flow(encode, Effect.map(JSON.stringify))
+    const getData = flow(encode, (_) => _.map(JSON.stringify))
     return {
       find: simpledb.find(find, decode, type),
       findByIndex: getIdx,

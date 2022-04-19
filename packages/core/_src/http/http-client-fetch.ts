@@ -4,7 +4,6 @@ import "abort-controller/polyfill"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
-import { pipe } from "../Function.js"
 import * as H from "./http-client.js"
 
 function getContentType(requestType: H.RequestType): string {
@@ -113,17 +112,14 @@ export const Client = (fetchApi: typeof fetch) =>
         })
       }
 
-      return pipe(
-        makeAbort,
-        Effect.chain((abort) =>
-          Effect.tryCatchPromiseWithInterrupt(
-            () => makeFetch(abort),
-            (err) =>
-              H.isHttpResponseError(err)
-                ? (err as H.HttpResponseError<string>)
-                : { _tag: H.HttpErrorReason.Request, error: err as Error },
-            () => abort.abort()
-          )
+      return makeAbort.chain((abort) =>
+        Effect.tryCatchPromiseWithInterrupt(
+          () => makeFetch(abort),
+          (err) =>
+            H.isHttpResponseError(err)
+              ? (err as H.HttpResponseError<string>)
+              : { _tag: H.HttpErrorReason.Request, error: err as Error },
+          () => abort.abort()
         )
       )
     },
