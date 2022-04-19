@@ -1,5 +1,4 @@
 import * as Map from "@effect-ts/core/Collections/Immutable/Map"
-import { pipe } from "@effect-ts/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
 import { Encoder, Parser } from "@effect-ts-app/core/Schema"
 import { ParserEnv } from "@effect-ts-app/core/Schema/custom/Parser"
@@ -23,11 +22,9 @@ export function makeCodec<
 
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Sync.UIO<E>) {
   return (a: ROArray<A>) =>
-    pipe(
-      ROArray.map_(a, (task) =>
-        Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))
-      ),
-      Sync.collectAll,
-      Sync.map(Map.make)
+    ROArray.map_(a, (task) =>
+      Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))
     )
+      .collectAllSync()
+      .map(Map.make)
 }

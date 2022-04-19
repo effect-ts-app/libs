@@ -1,14 +1,10 @@
 import { CosmosClient as ComosClient_ } from "@azure/cosmos"
 import { _A } from "@effect-ts/core/Utils"
-import { pipe } from "@effect-ts-app/core/Function"
 
 const withClient = (url: string) => Effect.succeedWith(() => new ComosClient_(url))
 
 const makeCosmosClient = (url: string, dbName: string) =>
-  pipe(
-    withClient(url),
-    Effect.map((x) => ({ db: x.database(dbName) }))
-  )
+  withClient(url).map((x) => ({ db: x.database(dbName) }))
 
 export interface CosmosClient extends _A<ReturnType<typeof makeCosmosClient>> {}
 

@@ -165,10 +165,10 @@ export function makeFromSchema<ResA>(
       summary: _.req?.summary,
       operationId: _.req?.title,
       parameters: [
-        ..._.reqPath.pipe(makeParameters("path")),
-        ..._.reqQuery.pipe(makeParameters("query")),
-        ..._.reqHeaders.pipe(makeParameters("header")),
-        ..._.reqCookie.pipe(makeParameters("cookie")),
+        ...(_.reqPath >= makeParameters("path")),
+        ...(_.reqQuery >= makeParameters("query")),
+        ...(_.reqHeaders >= makeParameters("header")),
+        ...(_.reqCookie >= makeParameters("cookie")),
       ],
       requestBody: _.reqBody
         .map((schema) => ({ content: { "application/json": { schema } } }))

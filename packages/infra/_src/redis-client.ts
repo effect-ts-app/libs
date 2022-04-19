@@ -1,5 +1,4 @@
 import { _A } from "@effect-ts/core/Utils"
-import { pipe } from "@effect-ts-app/core/Function"
 import { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
@@ -16,14 +15,11 @@ const makeRedisClient = (makeClient: () => Client) =>
       }
     }),
     (cl) =>
-      pipe(
-        Effect.uninterruptible(
-          Effect.effectAsync<unknown, Error, void>((res) => {
-            cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
-          })
-        ),
-        Effect.orDie
-      )
+      Effect.uninterruptible(
+        Effect.effectAsync<unknown, Error, void>((res) => {
+          cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
+        })
+      ).orDie()
   )
 
 export interface RedisClient extends _A<ReturnType<typeof makeRedisClient>> {}
@@ -48,7 +44,7 @@ function createClient(makeClient: () => Client) {
 }
 
 export function get(key: string) {
-  return Effect.chain_(client, (client) =>
+  return client.chain((client) =>
     Effect.uninterruptible(
       Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
         client.get(key, (err, v) =>

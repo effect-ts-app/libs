@@ -221,45 +221,45 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Option.fromNullable(Request.Headers)
-    .map((s) => s)
-    .map(Parser.for)
-    .map(MO.condemn)
-    .pipe(EffectOption.fromOption)
+  const ph =
+    Option.fromNullable(Request.Headers)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EffectOption.fromOption
   const parseHeaders = (u: unknown) =>
-    ph.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
+    ph.chainOption((d) => d(u) >= EffectOption.fromEffect)
 
-  const pq = Option.fromNullable(Request.Query)
-    .map((s) => s)
-    .map(Parser.for)
-    .map(MO.condemn)
-    .pipe(EffectOption.fromOption)
+  const pq =
+    Option.fromNullable(Request.Query)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EffectOption.fromOption
   const parseQuery = (u: unknown) =>
-    pq.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
+    pq.chainOption((d) => d(u) >= EffectOption.fromEffect)
 
-  const pb = Option.fromNullable(Request.Body)
-    .map((s) => s)
-    .map(Parser.for)
-    .map(MO.condemn)
-    .pipe(EffectOption.fromOption)
+  const pb =
+    Option.fromNullable(Request.Body)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EffectOption.fromOption
   const parseBody = (u: unknown) =>
-    pb.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
+    pb.chainOption((d) => d(u) >= EffectOption.fromEffect)
 
-  const pp = Option.fromNullable(Request.Path)
-    .map((s) => s)
-    .map(Parser.for)
-    .map(MO.condemn)
-    .pipe(EffectOption.fromOption)
+  const pp =
+    Option.fromNullable(Request.Path)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EffectOption.fromOption
   const parsePath = (u: unknown) =>
-    pp.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
+    pp.chainOption((d) => d(u) >= EffectOption.fromEffect)
 
-  const pc = Option.fromNullable(Request.Cookie)
-    .map((s) => s)
-    .map(Parser.for)
-    .map(MO.condemn)
-    .pipe(EffectOption.fromOption)
+  const pc =
+    Option.fromNullable(Request.Cookie)
+      .map((s) => s)
+      .map(Parser.for)
+      .map(MO.condemn) >= EffectOption.fromOption
   const parseCookie = (u: unknown) =>
-    pc.chainOption((d) => d(u).pipe(EffectOption.fromEffect))
+    pc.chainOption((d) => d(u) >= EffectOption.fromEffect)
 
   return {
     parseBody,

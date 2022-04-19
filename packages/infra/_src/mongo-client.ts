@@ -1,5 +1,4 @@
 import { _A } from "@effect-ts/core/Utils"
-import { pipe } from "@effect-ts-app/core/Function"
 import { MongoClient as MongoClient_ } from "mongodb"
 
 // TODO: we should probably share a single client...
@@ -13,21 +12,15 @@ const withClient = (url: string) =>
       })
     }),
     (cl) =>
-      pipe(
-        Effect.uninterruptible(
-          Effect.effectAsync<unknown, Error, void>((res) => {
-            cl.close((err, r) => res(err ? Effect.fail(err) : Effect.succeed(r)))
-          })
-        ),
-        Effect.orDie
-      )
+      Effect.uninterruptible(
+        Effect.effectAsync<unknown, Error, void>((res) => {
+          cl.close((err, r) => res(err ? Effect.fail(err) : Effect.succeed(r)))
+        })
+      ).orDie()
   )
 
 const makeMongoClient = (url: string, dbName?: string) =>
-  pipe(
-    withClient(url),
-    Managed.map((x) => ({ db: x.db(dbName) }))
-  )
+  withClient(url).map((x) => ({ db: x.db(dbName) }))
 
 export interface MongoClient extends _A<ReturnType<typeof makeMongoClient>> {}
 
