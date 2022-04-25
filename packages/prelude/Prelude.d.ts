@@ -10,7 +10,7 @@ import type * as EITHER from "@effect-ts/core/Either"
 import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
 import type * as Sy from "@effect-ts-app/core/Sync"
-import type * as XPure from "@effect-ts-app/core/XPure"
+import type * as XPURE from "@effect-ts/core/XPure"
 import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as T from "@effect-ts-app/core/Effect"
 import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
@@ -121,7 +121,7 @@ export namespace XPure {
 }
 
 /** @tsplus type ets/XPure */
-export type XPure<W, S1, S2, R, E, A> = XPure.XPure<W, S1, S2, R, E, A>
+export type XPure<W, S1, S2, R, E, A> = XPURE.XPure<W, S1, S2, R, E, A>
 
 export namespace NonEmptyArray {
   export * from "@effect-ts-app/core/NonEmptyArray"
