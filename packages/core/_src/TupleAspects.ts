@@ -1,6 +1,6 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 
-import { map_ } from "./Tuple"
+import { map_ } from "./Tuple.js"
 
 export * from "@effect-ts/core/Collections/Immutable/Tuple"
 
