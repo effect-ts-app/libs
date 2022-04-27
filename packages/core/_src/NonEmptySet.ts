@@ -104,4 +104,4 @@ export function fromSet<A>(set: Set<A>) {
 
 // TODO
 export * from "@effect-ts/core/Collections/Immutable/Set"
-export * as $ from "./NonEmptySetAspects"
+export * as $ from "./NonEmptySetAspects.js"

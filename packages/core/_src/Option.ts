@@ -24,4 +24,4 @@ function convert(a: any) {
 export type _A<A> = A extends O.Some<infer Y> ? Y : never
 type KeysMatching<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T]
 
-export * as $ from "./OptionAspects"
+export * as $ from "./OptionAspects.js"

@@ -268,4 +268,4 @@ export const gen = DSL.genF(Monad, { adapter: adapter as Adapter })
  */
 export const genUnit = flow(gen, asUnitDiscard)
 
-export * as $ from "./EffectOptionAspects"
+export * as $ from "./EffectOptionAspects.js"
