@@ -6,7 +6,7 @@ const writeFile = promisify(fs.writeFile)
 const rename = promisify(fs.rename)
 const exists = promisify(fs.exists)
 // const mkdir = promisify(fs.mkdir)
-// const unlinkFile = promisify(fs.unlink)
+const unlinkFile = promisify(fs.unlink)
 
 /**
  * Safe write file to .tmp and then rename
@@ -15,6 +15,7 @@ export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
   return (
     Effect.tryPromise(() => writeFile(tmp, content, "utf-8")) >
+    Effect.tryPromise(() => unlinkFile(fileName)) >
     Effect.tryPromise(() => rename(tmp, fileName))
   ).orDie()
 }
