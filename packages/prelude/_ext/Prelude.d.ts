@@ -41,3 +41,7 @@ import {
   Utils,
   XPure,
 } from "@effect-ts-app/prelude/Prelude"
+
+import type {
+  LazyArg
+} from "@effect-ts-app/prelude/_ext/Prelude.ext"
