@@ -39,4 +39,5 @@ import {
   SyncOption,
   Tuple,
   Utils,
+  XPure,
 } from "@effect-ts-app/prelude/Prelude"
