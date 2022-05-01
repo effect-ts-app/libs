@@ -12,7 +12,7 @@ import "./Schema.ext"
 // } from "@effect-ts-app/prelude"
 import { pipe } from "./pipe"
 
-/*
+/**
  * @tsplus type tsplus/LazyArgument
  */
 export interface LazyArg<A> {
