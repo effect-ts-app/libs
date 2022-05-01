@@ -253,31 +253,17 @@ export const optionSome = Option.some
 /**
  * @tsplus static ets/EffectOption __call
  */
-export const effectOptionSome: <A>(
-  a: LazyArg<A>,
-  __trace?: string
-) => EffectOption<unknown, never, A> = EffectOption.succeed as any
+export const effectOptionSome = EffectOption.some
 
 /**
  * @tsplus static ets/Effect __call
  */
-export const effectSucceed: <A>(
-  a: LazyArg<A>,
-  __trace?: string
-) => Effect<unknown, never, A> = Effect.succeed as any
-
-/**
- * @tsplus static ets/XPure __call
- */
-export const xpureSucceed: <S, A>(
-  a: LazyArg<A>
-) => XPure<never, S, S, unknown, never, A> = XPure.succeed as any
+export const effectSucceed = Effect.succeed
 
 /**
  * @tsplus static ets/Sync __call
  */
-export const syncSucceed: <A>(a: LazyArg<A>) => Sync<unknown, never, A> =
-  Sync.succeed as any
+export const syncSucceed = Sync.succeed
 
 /**
  * @tsplus static ets/NonEmptyArray __call
