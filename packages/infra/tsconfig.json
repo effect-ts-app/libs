@@ -22,10 +22,10 @@
                 "../core/_src"
             ],
             "@effect-ts-app/infra/*": [
-                "../infra/_src/*"
+                "./_src/*"
             ],
             "@effect-ts-app/infra": [
-                "../infra/_src"
+                "./_src"
             ],
             "@effect-ts-app/fluent/*": [
                 "../fluent/_src/*"

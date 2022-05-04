@@ -30,10 +30,10 @@
         "../infra/_src"
       ],
       "@effect-ts-app/fluent/*": [
-        "../fluent/_src/*"
+        "./_src/*"
       ],
       "@effect-ts-app/fluent": [
-        "../fluent/_src"
+        "./_src"
       ],
       "@effect-ts-app/prelude/*": [
         "../prelude/*"

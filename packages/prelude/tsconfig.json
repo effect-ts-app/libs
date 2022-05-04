@@ -28,10 +28,10 @@
                 "../fluent/_src"
             ],
             "@effect-ts-app/prelude/*": [
-                "../prelude/*"
+                "./*"
             ],
             "@effect-ts-app/prelude": [
-                "../prelude"
+                "."
             ]
         },
     },

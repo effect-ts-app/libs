@@ -32,6 +32,12 @@
             ],
             "@effect-ts-app/prelude": [
                 "../prelude"
+            ],
+            "@effect-ts-app/react/*": [
+                "./_src/*"
+            ],
+            "@effect-ts-app/react": [
+                "./_src"
             ]
         },
         "types": [
