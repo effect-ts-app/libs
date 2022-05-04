@@ -82,7 +82,7 @@ export function groupByT_<A, Key extends PropertyKey>(
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {
-  return (as: ROArray<A>): ROArray<Tuple<[Key, NonEmptyArray<A>]>> => groupByT_(f, as)
+  return (as: ROArray<A>): ROArray<Tuple<[Key, NonEmptyArray<A>]>> => groupByT_(as, f)
 }
 
 export * from "@effect-ts/core/Collections/Immutable/Array"
