@@ -48,6 +48,14 @@
             "import": "./_mjs/index.mjs",
             "require": "./index.js"
         },
+        "./Array/ext": {
+            "import": "./_mjs/Array/ext.mjs",
+            "require": "./Array/ext.js"
+        },
+        "./Array/aspects": {
+            "import": "./_mjs/Array/aspects.mjs",
+            "require": "./Array/aspects.js"
+        },
         "./utils": {
             "import": "./_mjs/utils/index.mjs",
             "require": "./utils/index.js"
