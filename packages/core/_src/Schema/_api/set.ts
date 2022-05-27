@@ -39,11 +39,9 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     MO.identity(refinement),
-    MO.parser((u: Chunk<ParsedShape>) =>
-      Th.succeed(fromArray_(Chunk.toArray(u)))
-    ),
+    MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(Chunk.toArray(u)))),
     MO.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
-    MO.arbitrary((_) => _.set(arbitrarySelf(_)).map(fromArray_))
+    MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
