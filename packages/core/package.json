@@ -240,6 +240,13 @@
             },
             "require": "./Effect.js"
         },
+        "./EffectAspects": {
+            "import": {
+                "types": "./EffectAspects.d.ts",
+                "default": "./_mjs/EffectAspects.mjs"
+            },
+            "require": "./EffectAspects.js"
+        },
         "./FastCheck": {
             "import": {
                 "types": "./FastCheck.d.ts",
@@ -274,6 +281,13 @@
                 "default": "./_mjs/Chunk.mjs"
             },
             "require": "./Chunk.js"
+        },
+        "./ChunkAspects": {
+            "import": {
+                "types": "./ChunkAspects.d.ts",
+                "default": "./_mjs/ChunkAspects.mjs"
+            },
+            "require": "./ChunkAspects.js"
         },
         "./Schema/adapt": {
             "import": {
@@ -674,12 +688,26 @@
             },
             "require": "./Option.js"
         },
+        "./OptionAspects": {
+            "import": {
+                "types": "./OptionAspects.d.ts",
+                "default": "./_mjs/OptionAspects.mjs"
+            },
+            "require": "./OptionAspects.js"
+        },
         "./EffectOption": {
             "import": {
                 "types": "./EffectOption.d.ts",
                 "default": "./_mjs/EffectOption.mjs"
             },
             "require": "./EffectOption.js"
+        },
+        "./EffectOptionAspects": {
+            "import": {
+                "types": "./EffectOptionAspects.d.ts",
+                "default": "./_mjs/EffectOptionAspects.mjs"
+            },
+            "require": "./EffectOptionAspects.js"
         },
         "./Tuple": {
             "import": {
@@ -695,12 +723,26 @@
             },
             "require": "./NonEmptyArray.js"
         },
+        "./NonEmptyArrayAspects": {
+            "import": {
+                "types": "./NonEmptyArrayAspects.d.ts",
+                "default": "./_mjs/NonEmptyArrayAspects.mjs"
+            },
+            "require": "./NonEmptyArrayAspects.js"
+        },
         "./NonEmptySet": {
             "import": {
                 "types": "./NonEmptySet.d.ts",
                 "default": "./_mjs/NonEmptySet.mjs"
             },
             "require": "./NonEmptySet.js"
+        },
+        "./NonEmptySetAspects": {
+            "import": {
+                "types": "./NonEmptySetAspects.d.ts",
+                "default": "./_mjs/NonEmptySetAspects.mjs"
+            },
+            "require": "./NonEmptySetAspects.js"
         },
         "./validation/validators": {
             "import": {
@@ -722,6 +764,20 @@
                 "default": "./_mjs/Sync.mjs"
             },
             "require": "./Sync.js"
+        },
+        "./SyncOptionAspects": {
+            "import": {
+                "types": "./SyncOptionAspects.d.ts",
+                "default": "./_mjs/SyncOptionAspects.mjs"
+            },
+            "require": "./SyncOptionAspects.js"
+        },
+        "./SyncAspects": {
+            "import": {
+                "types": "./SyncAspects.d.ts",
+                "default": "./_mjs/SyncAspects.mjs"
+            },
+            "require": "./SyncAspects.js"
         }
     },
     "sideEffects": false,
