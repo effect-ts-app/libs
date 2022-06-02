@@ -42,19 +42,31 @@
     },
     "exports": {
         ".": {
-            "import": "./_mjs/index.mjs",
+            "import": {
+                "types": "./index.d.ts",
+                "default": "./_mjs/index.mjs"
+            },
             "require": "./index.js"
         },
         "./data": {
-            "import": "./_mjs/data.mjs",
+            "import": {
+                "types": "./data.d.ts",
+                "default": "./_mjs/data.mjs"
+            },
             "require": "./data.js"
         },
         "./hooks": {
-            "import": "./_mjs/hooks.mjs",
+            "import": {
+                "types": "./hooks.d.ts",
+                "default": "./_mjs/hooks.mjs"
+            },
             "require": "./hooks.js"
         },
         "./context": {
-            "import": "./_mjs/context.mjs",
+            "import": {
+                "types": "./context.d.ts",
+                "default": "./_mjs/context.mjs"
+            },
             "require": "./context.js"
         }
     },

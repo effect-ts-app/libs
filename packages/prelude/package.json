@@ -35,15 +35,24 @@
     },
     "exports": {
         ".": {
-            "import": "./_mjs/index.mjs",
+            "import": {
+                "types": "./index.d.ts",
+                "default": "./_mjs/index.mjs"
+            },
             "require": "./index.js"
         },
         "./Prelude": {
-            "import": "./_mjs/Prelude.mjs",
+            "import": {
+                "types": "./Prelude.d.ts",
+                "default": "./_mjs/Prelude.mjs"
+            },
             "require": "./Prelude.js"
         },
         "./_ext/*": {
-            "import": "./_mjs/_ext/*.mjs",
+            "import": {
+                "types": "./_ext/*.d.ts",
+                "default": "./_mjs/_ext/*.mjs"
+            },
             "require": "./_ext/*.js"
         }
     },
