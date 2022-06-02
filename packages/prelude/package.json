@@ -46,7 +46,10 @@
                 "types": "./Prelude.d.ts",
                 "default": "./_mjs/Prelude.mjs"
             },
-            "require": "./Prelude.js"
+            "require": {
+                "types": "./Prelude.d.ts",
+                "default": "./Prelude.js"
+            }
         },
         "./_ext/*": {
             "import": {

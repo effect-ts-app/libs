@@ -9860,9 +9860,9 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.9.5, typescript@^3.9.7, "typescript@https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.91/compiler/typescript.tgz":
-  version "4.7.0-tsplus.20220417"
-  resolved "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.91/compiler/typescript.tgz#5fa33298689c9efb44dcce9630b3ba7187878bd1"
+typescript@^3.9.5, typescript@^3.9.7, "typescript@https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.108/compiler/typescript.tgz":
+  version "4.8.0-tsplus.20220527"
+  resolved "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.108/compiler/typescript.tgz#17bd18e344f2fe4effb94f8651fb280fb3cbde2e"
 
 uglify-js@^3.1.4:
   version "3.13.10"
