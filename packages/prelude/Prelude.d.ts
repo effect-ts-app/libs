@@ -75,12 +75,25 @@ export namespace EffectOption {
 export type EffectOption<R, E, A> = EO.EffectOption<R, E, A>
 export { UIO as EffectOptionU, IO as EffectOptionE, RIO as EffectOptionR } from "@effect-ts-app/core/EffectOption"
 
+export namespace EffOpt {
+  export * from "@effect-ts-app/core/EffectOption"
+}
+/** @tsplus type ets/EffectOption */
+export type EffOpt<R, E, A> = EO.EffectOption<R, E, A>
+
 export namespace SyncOption {
   export * from "@effect-ts-app/core/SyncOption"
 }
 /** @tsplus type ets/SyncOption */
 export type SyncOption<R, E, A> = SO.SyncOption<R, E, A>
 export { UIO as SyncOptionU, IO as SyncOptionE, RIO as SyncOptionR } from "@effect-ts-app/core/SyncOption"
+
+export namespace SyncOpt {
+  export * from "@effect-ts-app/core/SyncOpt"
+}
+/** @tsplus type ets/SyncOpt */
+export type SyncOpt<R, E, A> = SO.SyncOpt<R, E, A>
+
 
 export namespace Managed {
   export * from "@effect-ts/core/Effect/Managed"
