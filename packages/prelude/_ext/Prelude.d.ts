@@ -42,19 +42,6 @@ import {
   XPure,
 } from "@effect-ts-app/prelude/Prelude"
 
-/**
- * @tsplus global
- */
-import {
-  Effect as Eff,
-  EffectOption as EffOpt,
-  Option as Opt,
-  SyncOption as SyncOpt,
-  ROArray as ImmutableArray,
-  ROMap as ImmutableMap,
-  ROSet as ImmutableSet
-} from "@effect-ts-app/prelude/Prelude"
-
 import type {
   LazyArg
 } from "@effect-ts-app/prelude/_ext/Prelude.ext"
