@@ -111,12 +111,12 @@ export const flatMapEither = Either.chain_
 export const mapEither = Either.map_
 
 // TODO: + for zipFlatten..
-/**
- * Sequentially zips this effect with the specified effect
- *
- * @tsplus operator ets/Effect +
- * @tsplus fluent ets/Effect zipFlatten
- */
+// /**
+//  * Sequentially zips this effect with the specified effect
+//  *
+//  * @tsplus operator ets/Effect +
+//  * @tsplus fluent ets/Effect zipFlatten
+//  */
 //  export function zipFlatten_<R, E, A, R2, E2, A2>(
 //   self: Effect<R, E, A>,
 //   that: LazyArg<Effect<R2, E2, A2>>,
