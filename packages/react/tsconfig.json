@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "moduleResolution": "node",
+        "moduleResolution": "Node16",
         "outDir": "./_esm",
         "noEmit": false,
         "jsx": "react",

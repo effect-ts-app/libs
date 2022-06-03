@@ -11,7 +11,7 @@
     "noEmit": false,
     "removeComments": true,
     // keep in here, cause madge can't detect it from extended tsconfig
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "types": [
       "@effect-ts-app/prelude/_ext/index",
       "@effect-ts-app/fluent/types/node"

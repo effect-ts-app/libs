@@ -1,39 +1,13 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "moduleResolution": "node",
+        "moduleResolution": "Node16",
         "outDir": "./_esm",
         "noEmit": false,
         "baseUrl": "./",
         "jsx": "react",
         "declarationMap": false,
-        "tsPlusConfig": "../../tsplus.config.json",
-        "paths": {
-            "@effect-ts-app/core/*": [
-                "../core/_src/*"
-            ],
-            "@effect-ts-app/core": [
-                "../core/_src"
-            ],
-            "@effect-ts-app/infra/*": [
-                "../infra/_src/*"
-            ],
-            "@effect-ts-app/infra": [
-                "../infra/_src"
-            ],
-            "@effect-ts-app/fluent/*": [
-                "../fluent/_src/*"
-            ],
-            "@effect-ts-app/fluent": [
-                "../fluent/_src"
-            ],
-            "@effect-ts-app/prelude/*": [
-                "./*"
-            ],
-            "@effect-ts-app/prelude": [
-                "."
-            ]
-        },
+        "tsPlusConfig": "../../tsplus.config.json"
     },
     "include": [
         "./"

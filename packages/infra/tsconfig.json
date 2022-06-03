@@ -4,7 +4,7 @@
         "lib": [
             "es2020"
         ],
-        "moduleResolution": "node",
+        "moduleResolution": "Node16",
         "baseUrl": "./",
         "outDir": "./_esm",
         "noEmit": false,

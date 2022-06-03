@@ -20,7 +20,7 @@
         "sourceMap": true,
         "strict": true,
         "resolveJsonModule": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node16",
         "downlevelIteration": true,
         "suppressImplicitAnyIndexErrors": true,
         "composite": true,
