@@ -2,6 +2,7 @@
 import { Tagged } from "@effect-ts/core/Case"
 import { pipe } from "@effect-ts/core/Function"
 import { matchTag } from "@effect-ts/core/Utils"
+import { Effect } from "@effect-ts-app/prelude/Prelude"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { ServiceContext } from "./context.js"

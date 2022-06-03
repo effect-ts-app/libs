@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/core/Schema"
+import { Effect } from "@effect-ts-app/prelude/Prelude"
 
 import { NotFoundError, UnauthorizedError } from "./errors.js"
 
@@ -97,7 +98,8 @@ export function access<T, UserId, Err>(
   bad: (rsc: T, userId: UserId) => Err
 ) {
   const auth = accessM(canAccess, bad)
-  return <A>(userId: UserId, ok: (rsc: T) => A) => auth(userId, flow(ok, Effect.succeed))
+  return <A>(userId: UserId, ok: (rsc: T) => A) =>
+    auth(userId, flow(ok, Effect.succeed))
 }
 
 export function makeAuthorize<T, UserId>(

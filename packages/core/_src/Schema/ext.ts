@@ -2,6 +2,7 @@
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
+import { ROArray } from "@effect-ts-app/prelude/Prelude"
 import { v4 } from "uuid"
 
 import { constant, Lazy, pipe } from "../Function.js"

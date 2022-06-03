@@ -1,4 +1,4 @@
-import { ifDiff_, tapBothInclAbort_, tapErrorInclAbort_ } from "./Effect.js"
+import { Effect, ifDiff_, tapBothInclAbort_, tapErrorInclAbort_ } from "./Effect.js"
 
 export * from "@effect-ts/core/Effect"
 

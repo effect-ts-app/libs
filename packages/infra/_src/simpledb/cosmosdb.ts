@@ -1,5 +1,6 @@
 import { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
+import { Effect, Option } from "@effect-ts-app/prelude/Prelude"
 
 import * as Cosmos from "../cosmos-client.js"
 import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
