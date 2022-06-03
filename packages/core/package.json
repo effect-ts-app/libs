@@ -51,20 +51,6 @@
             },
             "require": "./index.js"
         },
-        "./EffectOption.js": {
-            "import": {
-                "types": "./EffectOption.d.ts",
-                "default": "./_mjs/EffectOption.mjs"
-            },
-            "require": "./EffectOption.js"
-        },
-        "./EffectAspects.js": {
-            "import": {
-                "types": "./EffectAspects.d.ts",
-                "default": "./_mjs/EffectAspects.mjs"
-            },
-            "require": "./EffectAspects.js"
-        },
         "./Array/ext": {
             "import": {
                 "types": "./Array/ext.d.ts",
@@ -792,6 +778,20 @@
                 "default": "./_mjs/SyncAspects.mjs"
             },
             "require": "./SyncAspects.js"
+        },
+        "./EffectOption.js": {
+            "import": {
+                "types": "./EffectOption.d.ts",
+                "default": "./_mjs/EffectOption.mjs"
+            },
+            "require": "./EffectOption.js"
+        },
+        "./EffectAspects.js": {
+            "import": {
+                "types": "./EffectAspects.d.ts",
+                "default": "./_mjs/EffectAspects.mjs"
+            },
+            "require": "./EffectAspects.js"
         }
     },
     "sideEffects": false,
