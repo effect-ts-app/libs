@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { Either } from "@effect-ts-app/prelude/Prelude"
+import { Either, Option } from "@effect-ts-app/prelude/Prelude"
 
 import { flow, identity, pipe } from "../Function.js"
-import { Option } from "../Option.js"
 
 export * from "./extend.js"
 
