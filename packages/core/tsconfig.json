@@ -1,15 +1,36 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "moduleResolution": "Node16",
+        "moduleResolution": "node",
         "outDir": "./_esm",
         "baseUrl": "./",
         "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "types": [
-            "../../types/prelude"
+            "@effect-ts-app/prelude/_ext/index",
+            "@effect-ts-app/fluent/types/node"
         ],
+        "paths": {
+            "@effect-ts-app/core/*": [
+                "./_src/*"
+            ],
+            "@effect-ts-app/core": [
+                "./_src"
+            ],
+            "@effect-ts-app/fluent/*": [
+                "../fluent/_src/*"
+            ],
+            "@effect-ts-app/fluent": [
+                "../fluent/_src"
+            ],
+            "@effect-ts-app/prelude/*": [
+                "../prelude/*"
+            ],
+            "@effect-ts-app/prelude": [
+                "../prelude"
+            ]
+        },
         "plugins": [
             // // Transform paths in output .js files
             // {
