@@ -26,6 +26,18 @@ declare module "@effect-ts/monocle/Lens" {
   }
 }
 
+declare module "@effect-ts/system/Has" {
+  /**
+   * @tsplus type ets/Has
+   */
+  export interface Has<T> {}
+
+  /**
+   * @tsplus type ets/Tag
+   */
+  export interface Tag<T> {}
+}
+
 declare module "@effect-ts/system/Effect/effect" {
   /**
    * @tsplus type ets/Effect
