@@ -38,6 +38,9 @@ export namespace Has {
 /** @tsplus type ets/Has */
 export type Has<T> = HAS.Has<T>
 
+/** @tsplus type ets/Tag */
+export type Tag<T> = HAS.Tag<T>
+
 export namespace Tuple {
   export * from "@effect-ts-app/core/Tuple"
 }
