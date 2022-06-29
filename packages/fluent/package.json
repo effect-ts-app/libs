@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/fluent",
-  "version": "0.68.6",
+  "version": "0.68.9",
   "license": "MIT",
   "sideEffects": [
     "./polyfill/Array.js",
