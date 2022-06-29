@@ -1,8 +1,8 @@
 diff --git a/node_modules/typescript/lib/lib.dom.d.ts b/node_modules/typescript/lib/lib.dom.d.ts
-index fcd2b1e..9381a69 100644
+index 0f98d76..8e65d13 100644
 --- a/node_modules/typescript/lib/lib.dom.d.ts
 +++ b/node_modules/typescript/lib/lib.dom.d.ts
-@@ -16736,10 +16736,16 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+@@ -16663,10 +16663,16 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
      [index: number]: Window;
  }
  
@@ -20,7 +20,7 @@ index fcd2b1e..9381a69 100644
  
  interface WindowEventHandlersEventMap {
      "afterprint": Event;
-@@ -17664,9 +17670,6 @@ declare var Audio: {
+@@ -17613,9 +17619,6 @@ declare var Audio: {
  declare var Image: {
      new(width?: number, height?: number): HTMLImageElement;
  };
