@@ -4,6 +4,7 @@ import type * as CAUSE from "@effect-ts/core/Effect/Cause"
 import type * as EX from "@effect-ts/core/Effect/Exit"
 import type * as M from "@effect-ts/core/Effect/Managed"
 import type * as LAYER from "@effect-ts/core/Effect/Layer"
+import type * as FIBER from "@effect-ts/core/Effect/Fiber"
 import type * as REF from "@effect-ts/core/Effect/Ref"
 import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
 import type * as EITHER from "@effect-ts/core/Either"
@@ -40,6 +41,12 @@ export type Has<T> = HAS.Has<T>
 
 /** @tsplus type ets/Tag */
 export type Tag<T> = HAS.Tag<T>
+
+/** @tsplus type ets/Fiber */
+export type Fiber<A, B> = FIBER.Fiber<A, B>
+export namespace Fiber {
+  export * from "@effect-ts/core/Effect/Fiber"
+}
 
 export namespace Tuple {
   export * from "@effect-ts-app/core/Tuple"
