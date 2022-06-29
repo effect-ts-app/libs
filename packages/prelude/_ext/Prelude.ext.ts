@@ -1,5 +1,5 @@
 //import "./Lens.ext"
-import "./Schema.ext"
+import "./Schema.ext.js"
 
 // import {
 //   Chunk,
@@ -10,7 +10,7 @@ import "./Schema.ext"
 //   Set,
 //   Sync,
 // } from "@effect-ts-app/prelude"
-import { pipe } from "./pipe"
+import { pipe } from "./pipe.js"
 
 /**
  * @tsplus type tsplus/LazyArgument

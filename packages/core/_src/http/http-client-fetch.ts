@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "abort-controller/polyfill"
+import "abort-controller/polyfill.js"
 
 import { Layer } from "@effect-ts-app/prelude/Prelude"
 import fetch from "cross-fetch"

@@ -4,8 +4,8 @@
 import * as St from "@effect-ts/core/Structural"
 import { ComputeFlat } from "@effect-ts/core/Utils"
 import * as Lens from "@effect-ts/monocle/Lens"
-import omit from "lodash/omit"
-import pick from "lodash/pick"
+import omit from "lodash/omit.js"
+import pick from "lodash/pick.js"
 
 import {
   EncSchemaForModel,
