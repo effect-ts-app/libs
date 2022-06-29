@@ -1,15 +1,18 @@
 //import "./Lens.ext"
 import "./Schema.ext.js"
 
-// import {
-//   Chunk,
-//   Effect,
-//   EffectOption,
-//   NonEmptyArray,
-//   Option,
-//   Set,
-//   Sync,
-// } from "@effect-ts-app/prelude"
+import {
+  Chunk,
+  Effect,
+  EffectOption,
+  Either,
+  Managed,
+  NonEmptyArray,
+  Option,
+  ROSet,
+  Sync,
+} from "@effect-ts-app/prelude/Prelude"
+
 import { pipe } from "./pipe.js"
 
 /**

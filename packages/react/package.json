@@ -4,21 +4,21 @@
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
-        "cross-fetch": "^3.1.4",
+        "cross-fetch": "^3.1.5",
         "path-parser": "^6.1.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.51.0",
-        "@effect-ts/monocle": "^0.38.0",
-        "@types/react": "^17.0.38",
-        "eslint-plugin-react": "^7.28.0",
-        "eslint-plugin-react-hooks": "^4.3.0",
-        "react": "^17.0.2"
+        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "^0.43.0",
+        "@types/react": "^18.0.14",
+        "eslint-plugin-react": "^7.30.1",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "react": "^18.2.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.51.0",
-        "@effect-ts/monocle": "^0.38.0",
-        "react": "^17.0.2"
+        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "^0.43.0",
+        "react": "^18.2.0"
     },
     "scripts": {
         "build": "yarn clean && ttsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",

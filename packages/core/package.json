@@ -4,7 +4,7 @@
     "license": "MIT",
     "dependencies": {
         "abort-controller": "^3.0.0",
-        "cross-fetch": "^3.1.4",
+        "cross-fetch": "^3.1.5",
         "lodash": "^4.17.21",
         "path-parser": "^6.1.0",
         "short-uuid": "^4.2.0",
@@ -12,16 +12,16 @@
         "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.51.0",
-        "@effect-ts/monocle": "^0.38.0",
+        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "^0.43.0",
         "@types/uuid": "^8.3.4",
-        "@types/validator": "^13.7.1",
+        "@types/validator": "^13.7.3",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.51.0",
-        "@effect-ts/monocle": "^0.38.0",
-        "node-libcurl": "^2.3.3"
+        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "^0.43.0",
+        "node-libcurl": "^2.3.4"
     },
     "scripts": {
         "build": "yarn clean && ttsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",

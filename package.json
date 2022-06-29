@@ -19,29 +19,29 @@
         "client": "cd packages/client && yarn client"
     },
     "resolutions": {
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.108/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.123/compiler/typescript.tgz"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.6",
         "@babel/core": "^7.17.5",
-        "@babel/plugin-transform-modules-commonjs": "^7.16.8",
-        "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
-        "babel-plugin-annotate-pure-calls": "^0.4.0",
-        "babel-plugin-replace-import-extension": "^1.1.2",
         "@babel/node": "^7.15.4",
         "@babel/plugin-proposal-class-properties": "^7.14.5",
         "@babel/plugin-proposal-decorators": "^7.15.4",
+        "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
         "@babel/plugin-proposal-object-rest-spread": "^7.15.6",
+        "@babel/plugin-transform-modules-commonjs": "^7.16.8",
         "@babel/preset-typescript": "^7.15.0",
         "@effect-ts/jest": "^0.29.0",
         "@effect-ts/tracing-plugin": "^0.14.8",
-        "@types/lodash-es": "^4.17.5",
         "@types/jest": "^27.0.1",
+        "@types/lodash-es": "^4.17.5",
         "@types/node": "^16.9.1",
         "@typescript-eslint/eslint-plugin": "^4.31.0",
         "@typescript-eslint/parser": "^4.31.0",
         "babel-jest": "^27.1.1",
+        "babel-plugin-annotate-pure-calls": "^0.4.0",
         "babel-plugin-module-resolver": "^4.1.0",
+        "babel-plugin-replace-import-extension": "^1.1.2",
         "concurrently": "^6.2.1",
         "core-js": "^3.17.3",
         "esbuild": "^0.12.27",
@@ -67,7 +67,7 @@
         "ts-node": "^10.2.1",
         "tsconfig-paths": "^3.11.0",
         "ttypescript": "^1.5.12",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.108/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.123/compiler/typescript.tgz",
         "ultra-runner": "^3.10.5"
     }
 }
