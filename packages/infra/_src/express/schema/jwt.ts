@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { pipe } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/core/Schema"
-import { These as Th } from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/schema"
+import { These as Th } from "@effect-ts-app/schema"
 import jwt_decode from "jwt-decode"
 
 export const jwtIdentifier = MO.makeAnnotation<{}>()

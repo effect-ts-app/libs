@@ -1,7 +1,7 @@
 import * as Map from "@effect-ts/core/Collections/Immutable/Map"
-import * as MO from "@effect-ts-app/core/Schema"
-import { Encoder, Parser } from "@effect-ts-app/core/Schema"
-import { ParserEnv } from "@effect-ts-app/core/Schema/custom/Parser"
+import * as MO from "@effect-ts-app/schema"
+import { Encoder, Parser } from "@effect-ts-app/schema"
+import { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
 
 export function makeCodec<
   ParsedShape extends { id: Id },

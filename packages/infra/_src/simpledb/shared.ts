@@ -1,5 +1,5 @@
-import * as MO from "@effect-ts-app/core/Schema"
-import { SchemaAny } from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/schema"
+import { SchemaAny } from "@effect-ts-app/schema"
 
 class BaseError {
   constructor(public message: string) {}

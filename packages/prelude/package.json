@@ -3,7 +3,8 @@
     "version": "0.69.0",
     "license": "MIT",
     "dependencies": {
-        "@effect-ts-app/core": "^0.69.0"
+        "@effect-ts-app/core": "^0.69.0",
+        "@effect-ts-app/schema": "^0.69.0"
     },
     "devDependencies": {
         "@effect-ts/core": "^0.60.2",

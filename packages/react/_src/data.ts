@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tagged } from "@effect-ts/core/Case"
+import { Effect } from "@effect-ts/core/Effect"
+import * as T from "@effect-ts/core/Effect"
+import { Either } from "@effect-ts/core/Either"
+import * as Ei from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
+import * as O from "@effect-ts/core/Option"
+import { Option } from "@effect-ts/core/Option"
 import { matchTag } from "@effect-ts/core/Utils"
-import { Effect } from "@effect-ts-app/prelude/Prelude"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { ServiceContext } from "./context.js"
@@ -18,12 +23,12 @@ export class Done<E, A> extends Tagged("Done")<{
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Done<E, A>({ current: Either.right(a), previous: Option.none })
+    return new Done<E, A>({ current: Ei.right(a), previous: O.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Done<E, A>({
-      current: Either.left(e),
-      previous: previous === undefined ? Option.none : Option.some(previous),
+      current: Ei.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
     })
   }
 
@@ -37,12 +42,12 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: Either.right(a), previous: Option.none })
+    return new Refreshing<E, A>({ current: Ei.right(a), previous: O.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
-      current: Either.left(e),
-      previous: previous === undefined ? Option.none : Option.some(previous),
+      current: Ei.left(e),
+      previous: previous === undefined ? O.none : O.some(previous),
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -54,13 +59,13 @@ export type QueryResult<E, A> = Initial | Loading | Refreshing<E, A> | Done<E, A
 
 export function isSuccess<E, A>(
   qr: QueryResult<E, A>
-): qr is (Done<E, A> | Refreshing<E, A>) & { current: Either.Right<A> } {
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: Ei.Right<A> } {
   return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
 }
 
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
-): qr is (Done<E, A> | Refreshing<E, A>) & { current: Either.Left<E> } {
+): qr is (Done<E, A> | Refreshing<E, A>) & { current: Ei.Left<E> } {
   return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Left"
 }
 
@@ -75,7 +80,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
    *
    * NOTE:
    * Pass a stable Effect, otherwise will request at every render.
-   * Either.g memoize for a parameterised effect:
+   * Ei.g memoize for a parameterised effect:
    * ```
    *  const findSomething = useMemo(() => Something.find(id), [id])
    *  const [result] = useQuery(findSomething)
@@ -99,7 +104,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
           : new Refreshing(resultInternal.current)
       )
 
-      return runWithErrorLog(queryResult(self).map(set))
+      return runWithErrorLog(T.map_(queryResult(self), set))
     }, [self, runWithErrorLog, signal])
 
     return [result, refresh] as const
@@ -109,7 +114,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>
 ): Effect<R, never, QueryResult<E, A>> {
-  return pipe(self, Effect.fold(fail, succeed))
+  return pipe(self, T.fold(fail, succeed))
 }
 
 export function matchQuery<E, A, Result>(_: {
@@ -127,7 +132,7 @@ export function matchQuery<E, A, Result>(_: {
         Refreshing: (r) =>
           pipe(
             r.current,
-            Either.fold(
+            Ei.fold(
               (e) => _.Error(e, true, r.previous),
               (a) => _.Success(a, true)
             )
@@ -135,7 +140,7 @@ export function matchQuery<E, A, Result>(_: {
         Done: (r) =>
           pipe(
             r.current,
-            Either.fold(
+            Ei.fold(
               (e) => _.Error(e, false, r.previous),
               (a) => _.Success(a, false)
             )

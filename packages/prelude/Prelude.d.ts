@@ -21,7 +21,7 @@ import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
 import type * as A from "@effect-ts-app/core/Array"
 import type * as O from "@effect-ts-app/core/Option"
-import type * as SCHEMA from "@effect-ts-app/core/Schema"
+import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
 import type * as SO from "@effect-ts-app/core/SyncOption"
 import type * as HAS from "@effect-ts/core/Has"
@@ -220,10 +220,10 @@ export namespace Lens {
 /** @tsplus type ets/Lens */
 export type Lens<S, A> = LNS.Lens<S, A>
 
-export namespace Schema {
-  export * from "@effect-ts-app/core/Schema"
-}
-export { DefaultSchema, SchemaUPI } from "@effect-ts-app/core/Schema"
-/** @tsplus type ets/Schema */
-export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
-  SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+// export namespace Schema {
+//   export * from "@effect-ts-app/schema"
+// }
+// export { DefaultSchema, SchemaUPI } from "@effect-ts-app/schema"
+// /** @tsplus type ets/Schema */
+// export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
+//   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>

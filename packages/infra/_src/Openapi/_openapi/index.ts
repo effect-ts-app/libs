@@ -35,8 +35,8 @@ import {
   unionIdentifier,
   unknownIdentifier,
   UUIDFromStringIdentifier,
-} from "@effect-ts-app/core/Schema"
-import * as MO from "@effect-ts-app/core/Schema"
+} from "@effect-ts-app/schema"
+import * as MO from "@effect-ts-app/schema"
 
 import {
   AllOfSchema,

@@ -1,0 +1,71 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "outDir": "./_esm",
+        "baseUrl": "./",
+        "rootDir": "./_src",
+        "noEmit": false,
+        "tsPlusConfig": "../../tsplus.config.json",
+        "types": [
+            "@effect-ts-app/prelude/_ext/index",
+            "@effect-ts-app/fluent/types/node"
+        ],
+        "paths": {
+            "@effect-ts-app/core/*": [
+                "../core/_src/*"
+            ],
+            "@effect-ts-app/core": [
+                "../core/_src"
+            ],
+            "@effect-ts-app/fluent/*": [
+                "../fluent/_src/*"
+            ],
+            "@effect-ts-app/fluent": [
+                "../fluent/_src"
+            ],
+            "@effect-ts-app/schema/*": [
+                "./_src/*"
+            ],
+            "@effect-ts-app/schema": [
+                "./_src"
+            ],
+            "@effect-ts-app/prelude/*": [
+                "../prelude/*"
+            ],
+            "@effect-ts-app/prelude": [
+                "../prelude"
+            ]
+        },
+        "plugins": [
+            // // Transform paths in output .js files
+            // {
+            //     "transform": "ts-transform-paths"
+            // },
+            // // Transform paths in output .d.ts files (Include this line if you output declarations files)
+            // {
+            //     "transform": "ts-transform-paths",
+            //     "afterDeclarations": true
+            // },
+            {
+                "transform": "@effect-ts/tracing-plugin"
+            }
+        ]
+    },
+    "include": [
+        "./_src"
+    ],
+    "exclude": [
+        "./dist",
+        "node_modules",
+        "build",
+        "lib",
+        "dist",
+        "**/*.d.ts.map"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
+    ]
+}

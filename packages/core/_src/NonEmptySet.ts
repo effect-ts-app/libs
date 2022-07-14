@@ -20,7 +20,10 @@ import * as Option from "@effect-ts/core/Option"
 import { flow } from "./Function.js"
 import { NonEmptyArray } from "./NonEmptyArray.js"
 import * as Ord from "./Order.js"
-import type { NonEmptyBrand } from "./Schema/custom/_api/nonEmpty.js"
+
+export interface NonEmptyBrand {
+  readonly NonEmpty: unique symbol
+}
 
 /**
  * @tsplus type etc/NESet

@@ -1,7 +1,7 @@
 import * as Eq from "@effect-ts/core/Equal"
 import { flow } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/core/Schema"
 import { Effect, Option } from "@effect-ts-app/prelude/Prelude"
+import * as MO from "@effect-ts-app/schema"
 
 import {
   CachedRecord,

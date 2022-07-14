@@ -1,4 +1,9 @@
+import { Effect } from "@effect-ts/core/Effect"
+import * as T from "@effect-ts/core/Effect"
 import { pretty } from "@effect-ts/core/Effect/Cause"
+import { Exit } from "@effect-ts/core/Effect/Exit"
+import { Layer } from "@effect-ts/core/Effect/Layer"
+import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
 import React, { createContext, ReactNode, useContext, useEffect, useMemo } from "react"
 
@@ -6,33 +11,31 @@ export type GetProvider<P> = P extends Layer<unknown, unknown, infer TP> ? TP : 
 
 export interface ServiceContext<R> {
   readonly provide: <E, A>(
-    self: Effect<R & Effect.DefaultEnv, E, A>
+    self: Effect<R & T.DefaultEnv, E, A>
   ) => Effect<unknown, E, A>
 
   /**
    * Fire and Forget. Errors are logged however.
    */
-  readonly runWithErrorLog: <E, A>(
-    self: Effect<R & Effect.DefaultEnv, E, A>
-  ) => () => void
+  readonly runWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) => () => void
 
   /**
    * Fire and Forget. A promise that never fails nor returns any value.
    * Errors are logged however.
    */
   readonly runPromiseWithErrorLog: <E, A>(
-    self: Effect<R & Effect.DefaultEnv, E, A>
+    self: Effect<R & T.DefaultEnv, E, A>
   ) => Promise<void>
 
   /**
    * A Promise that never fails, the Resolved value is an Exit result that can be either Success or Failed
    */
   readonly runPromiseExit: <E, A>(
-    self: Effect<R & Effect.DefaultEnv, E, A>
+    self: Effect<R & T.DefaultEnv, E, A>
   ) => Promise<Exit<E, A>>
 }
 
-const MissingContext = Effect.die(
+const MissingContext = T.die(
   "service context not provided, wrap your app in LiveServiceContext"
 )
 export function makeApp<R>() {
@@ -50,26 +53,26 @@ export function makeApp<R>() {
     children: ReactNode
     env: Layer<unknown, never, R>
   }) => {
-    const provider = useMemo(() => Layer.unsafeMainProvider(env), [env])
+    const provider = useMemo(() => L.unsafeMainProvider(env), [env])
 
     const ctx = useMemo(
       () => ({
         provide: provider.provide,
-        runWithErrorLog: <E, A>(self: Effect<R & Effect.DefaultEnv, E, A>) =>
+        runWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
           runWithErrorLog(provider.provide(self)),
-        runPromiseWithErrorLog: <E, A>(self: Effect<R & Effect.DefaultEnv, E, A>) =>
+        runPromiseWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseWithErrorLog(provider.provide(self)),
-        runPromiseExit: <E, A>(self: Effect<R & Effect.DefaultEnv, E, A>) =>
+        runPromiseExit: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseExit(provider.provide(self)),
       }),
       [provider]
     )
 
     useEffect(() => {
-      const cancel = Effect.runCancel(provider.allocate)
+      const cancel = T.runCancel(provider.allocate)
       return () => {
-        Effect.run(cancel)
-        Effect.run(provider.release)
+        T.run(cancel)
+        T.run(provider.release)
       }
     }, [provider])
 
@@ -85,18 +88,18 @@ export function makeApp<R>() {
 }
 
 function runWithErrorLog<E, A>(self: Effect<unknown, E, A>) {
-  const cancel = Effect.runCancel(self, (ex) => {
+  const cancel = T.runCancel(self, (ex) => {
     if (ex._tag === "Failure") {
       console.error(pretty(ex.cause))
     }
   })
   return () => {
-    Effect.run(cancel)
+    T.run(cancel)
   }
 }
 
 function runPromiseExit<E, A>(self: Effect<unknown, E, A>) {
-  return pipe(self, Effect.runPromiseExit)
+  return pipe(self, T.runPromiseExit)
 }
 
 function runPromiseWithErrorLog<E, A>(self: Effect<unknown, E, A>) {

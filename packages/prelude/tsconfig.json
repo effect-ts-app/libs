@@ -27,6 +27,12 @@
             "@effect-ts-app/fluent": [
                 "../fluent/_src"
             ],
+            "@effect-ts-app/schema/*": [
+                "../schema/_src/*"
+            ],
+            "@effect-ts-app/schema": [
+                "../schema/_src"
+            ],
             "@effect-ts-app/prelude/*": [
                 "./*"
             ],
@@ -44,6 +50,9 @@
     "references": [
         {
             "path": "../core"
+        },
+        {
+            "path": "../schema"
         }
     ]
 }

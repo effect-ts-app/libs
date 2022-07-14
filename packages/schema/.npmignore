@@ -1,0 +1,9 @@
+*.test.js
+*.test.d.ts
+tsconfig.json
+tslint.json
+!**/*.d.ts
+.eslintrc.js
+coverage/
+**/*.tsbuildinfo
+_esm/

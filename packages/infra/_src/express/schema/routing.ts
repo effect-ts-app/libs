@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-ts-app/core/Schema"
-import { Methods } from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/schema"
+import { Methods } from "@effect-ts-app/schema"
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
 import { Effect, EffectOption, Option, ROArray } from "@effect-ts-app/prelude/Prelude"

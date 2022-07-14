@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/core/Schema"
+import * as MO from "@effect-ts-app/schema"
 import { Effect, EffectOption, Option } from "@effect-ts-app/prelude/Prelude"
 import { Lock } from "redlock"
 

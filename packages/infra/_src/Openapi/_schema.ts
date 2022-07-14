@@ -3,7 +3,7 @@ import {
   Schema,
   SchemaAny,
   SchemaContinuationSymbol,
-} from "@effect-ts-app/core/Schema"
+} from "@effect-ts-app/schema"
 
 import type { JSONSchema } from "./atlas-plutus/index.js"
 
