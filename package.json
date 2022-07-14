@@ -19,7 +19,7 @@
         "client": "cd packages/client && yarn client"
     },
     "resolutions": {
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.123/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.6",
@@ -67,7 +67,7 @@
         "ts-node": "^10.2.1",
         "tsconfig-paths": "^3.11.0",
         "ttypescript": "^1.5.12",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.123/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz",
         "ultra-runner": "^3.10.5"
     }
 }
