@@ -123,7 +123,7 @@
     "watch": "ttsc --build --watch",
     "watch2": "ttsc -w",
     "prepare": "yarn build",
-    "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.d.ts(\\.map)?$|\\.tsbuildinfo' | grep -v ./types | grep -v .eslint | grep -v jest.config | xargs rm -f",
+    "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v ./types | grep -v .eslint | grep -v jest.config | xargs rm -f",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "compile": "ttsc --noEmit",
     "lint": "eslint ./src ./types",
