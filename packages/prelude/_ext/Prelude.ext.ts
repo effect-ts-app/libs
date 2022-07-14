@@ -284,9 +284,9 @@ export const setSucceed = ROSet.fromArray
 export const chunkSucceed = Chunk.from
 
 /**
- * @tsplus operator ets/Schema >=
- * @tsplus fluent ets/Schema apply
- * @tsplus fluent ets/Schema __call
+ * @tsplus operator ets/Schema/Schema >=
+ * @tsplus fluent ets/Schema/Schema apply
+ * @tsplus fluent ets/Schema/Schema __call
  * @tsplus macro pipe
  */
 export const pipeSchema = pipe

@@ -224,6 +224,6 @@ export type Lens<S, A> = LNS.Lens<S, A>
 //   export * from "@effect-ts-app/schema"
 // }
 // export { DefaultSchema, SchemaUPI } from "@effect-ts-app/schema"
-// /** @tsplus type ets/Schema */
+// /** @tsplus type ets/Schema/Schema */
 // export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
 //   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
