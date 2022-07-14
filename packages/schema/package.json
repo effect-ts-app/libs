@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/schema",
-    "version": "0.71.0",
+    "version": "0.71.1",
     "license": "MIT",
     "dependencies": {
         "@effect-ts-app/core": "^0.71.0",
