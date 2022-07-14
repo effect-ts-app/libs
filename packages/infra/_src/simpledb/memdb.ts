@@ -53,8 +53,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             decode(cr.data)
               .chain((d) =>
                 eq.equals(keys, d as unknown as V)
-                  ? Sync.succeed(d)
-                  : Sync.fail("not equals")
+                  ? Effect.succeed(d)
+                  : Effect.fail("not equals")
               )
               .result()
           )
