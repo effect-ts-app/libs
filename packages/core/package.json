@@ -273,19 +273,19 @@
             },
             "require": "./SyncAspects.js"
         },
-        "./EffectOption.js": {
+        "./*.js": {
             "import": {
-                "types": "./EffectOption.d.ts",
-                "default": "./_mjs/EffectOption.mjs"
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
             },
-            "require": "./EffectOption.js"
+            "require": "./*.js"
         },
-        "./EffectAspects.js": {
+        "./*": {
             "import": {
-                "types": "./EffectAspects.d.ts",
-                "default": "./_mjs/EffectAspects.mjs"
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
             },
-            "require": "./EffectAspects.js"
+            "require": "./*.js"
         }
     },
     "sideEffects": false,

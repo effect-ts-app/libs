@@ -562,6 +562,20 @@
                 "default": "./_mjs/_schema.mjs"
             },
             "require": "./_schema.js"
+        },
+        "./*.js": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
+        },
+        "./*": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
         }
     },
     "sideEffects": false,

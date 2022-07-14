@@ -66,6 +66,20 @@
                 "default": "./_mjs/context.mjs"
             },
             "require": "./context.js"
+        },
+        "./*.js": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
+        },
+        "./*": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
         }
     },
     "sideEffects": false,

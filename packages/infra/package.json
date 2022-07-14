@@ -448,6 +448,20 @@
                 "default": "./_mjs/simpledb/redisdb.mjs"
             },
             "require": "./simpledb/redisdb.js"
+        },
+        "./*.js": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
+        },
+        "./*": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
         }
     },
     "sideEffects": false,
