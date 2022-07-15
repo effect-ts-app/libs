@@ -254,6 +254,11 @@ export const eitherMapLeft = Either.mapLeft_
 export const optionSome = Option.some
 
 /**
+ * @tsplus static ets/Either __call
+ */
+export const eitherRight = Either.right
+
+/**
  * @tsplus static ets/EffectOption __call
  */
 export const effectOptionSome = EffectOption.some
