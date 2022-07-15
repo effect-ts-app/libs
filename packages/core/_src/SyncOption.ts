@@ -17,7 +17,8 @@ export const Applicative = OptionT.applicative(T.Applicative)
 
 export const { any, both, flatten, map } = intersect(Monad, Applicative)
 
-export const chain = P.chainF(Monad)
+export const flatMap = P.chainF(Monad)
+export const chain = flatMap
 export const succeed = P.succeedF(Monad)
 export const ap = P.apF(Applicative)
 export const bind = P.bindF(Monad)
@@ -57,7 +58,7 @@ export const map_ = <R, E, A, B>(
   f: (a: A) => B
 ): SyncOption<R, E, B> => T.map_(fa, O.map(f))
 
-export const chain_ = <R, E, A, R2, E2, B>(
+export const flatMap_ = <R, E, A, R2, E2, B>(
   fa: SyncOption<R, E, A>,
   f: (a: A) => SyncOption<R2, E2, B>
 ): SyncOption<R & R2, E | E2, B> =>
@@ -65,6 +66,8 @@ export const chain_ = <R, E, A, R2, E2, B>(
     fa,
     O.fold(() => none, f)
   )
+
+export const chain_ = flatMap_
 
 export const tap_ = <R, E, A, R2, E2>(
   inner: SyncOption<R, E, A>,
@@ -166,15 +169,18 @@ export const fromSyncOptionS =
   (eff: SyncOption<R2, E2, A>) =>
     T.chain_(eff, fromOptionS(onNone))
 
-export const chainSync_ = <R, R2, E, E2, A, A2>(
+export const flatMapSync_ = <R, R2, E, E2, A, A2>(
   eo: SyncOption<R, E, A>,
   eff: (a: A) => T.Sync<R2, E2, A2>
-) => chain_(eo, flow(eff, fromSync))
+) => flatMap_(eo, flow(eff, fromSync))
 
-export const chainSync =
+export const flatMapSync =
   <R, R2, E, E2, A, A2>(eff: (a: A) => T.Sync<R2, E2, A2>) =>
   (eo: SyncOption<R, E, A>) =>
-    chainSync_(eo, eff)
+    flatMapSync_(eo, eff)
+
+export const chainSync_ = flatMapSync_
+export const chainSync = flatMapSync
 
 export const toNullable = <R, E, A>(eff: SyncOption<R, E, A>) =>
   pipe(eff, T.map(O.toNullable))

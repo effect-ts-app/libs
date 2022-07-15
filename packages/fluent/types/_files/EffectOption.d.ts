@@ -266,18 +266,18 @@ declare module "@effect-ts/system/Effect/effect" {
     ): EffectOption<RX, EX, B>
 
     /**
-     * @ets_rewrite_method chain_ from "@effect-ts-app/core/EffectOption"
+     * @ets_rewrite_method flatMap_ from "@effect-ts-app/core/EffectOption"
      */
-    chainOption<RX, EX, AX, R2, E2, B>(
+    flatMapOption<RX, EX, AX, R2, E2, B>(
       this: EffectOption<RX, EX, AX>,
       f: (a: AX) => EffectOption<R2, E2, B>,
       __trace?: string
     ): EffectOption<RX & R2, EX | E2, B>
 
     /**
-     * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectOption"
+     * @ets_rewrite_method flatMapEffect_ from "@effect-ts-app/core/EffectOption"
      */
-    chainOptionEffect<RX, EX, AX, R2, E2, B>(
+    flatMapOptionEffect<RX, EX, AX, R2, E2, B>(
       this: EffectOption<RX, EX, AX>,
       f: (a: AX) => Effect<R2, E2, B>,
       __trace?: string

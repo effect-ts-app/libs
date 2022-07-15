@@ -35,7 +35,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return storage
         .find(getRecordName(type, id))
         .mapOption((s) => JSON.parse(s) as unknown)
-        .chainOptionEffect(parseSDB)
+        .flatMapOptionEffect(parseSDB)
         .mapOption(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version,

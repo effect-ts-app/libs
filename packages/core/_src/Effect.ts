@@ -25,8 +25,10 @@ import { constant, curry, flow, Lazy, pipe } from "./Function.js"
 export * as $ from "./EffectAspects.js"
 
 export const encaseEither = <E, A>(ei: Ei.Either<E, A>) => fromEither(() => ei)
-export const chainEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>
+export const flatMapEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>
   chain((a: A2) => fromEither(() => ei(a)))
+
+export const chainEither = flatMapEither
 
 export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 

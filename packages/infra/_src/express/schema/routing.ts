@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-ts-app/schema"
-import { Methods } from "@effect-ts-app/schema"
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
 import { Effect, EffectOption, Option, ROArray } from "@effect-ts-app/prelude/Prelude"
+import * as MO from "@effect-ts-app/schema"
+import { Methods } from "@effect-ts-app/schema"
 
 import {
   isObjectSchema,
@@ -111,19 +111,19 @@ export function makeFromSchema<ResA>(
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = EffectOption.fromNullable(Req.Query).chainOptionEffect(
+  const makeReqQuerySchema = EffectOption.fromNullable(Req.Query).flatMapOptionEffect(
     jsonSchema
   )
-  const makeReqHeadersSchema = EffectOption.fromNullable(Req.Headers).chainOptionEffect(
+  const makeReqHeadersSchema = EffectOption.fromNullable(
+    Req.Headers
+  ).flatMapOptionEffect(jsonSchema)
+  const makeReqCookieSchema = EffectOption.fromNullable(Req.Cookie).flatMapOptionEffect(
     jsonSchema
   )
-  const makeReqCookieSchema = EffectOption.fromNullable(Req.Cookie).chainOptionEffect(
+  const makeReqPathSchema = EffectOption.fromNullable(Req.Path).flatMapOptionEffect(
     jsonSchema
   )
-  const makeReqPathSchema = EffectOption.fromNullable(Req.Path).chainOptionEffect(
-    jsonSchema
-  )
-  const makeReqBodySchema = EffectOption.fromNullable(Req.Body).chainOptionEffect(
+  const makeReqBodySchema = EffectOption.fromNullable(Req.Body).flatMapOptionEffect(
     jsonSchema
   )
   //const makeReqSchema = schema(Req)

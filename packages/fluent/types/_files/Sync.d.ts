@@ -50,17 +50,17 @@ declare module "@effect-ts/system/Sync/core" {
     ): SyncOption<RX, EX, B>
 
     /**
-     * @ets_rewrite_method chain_ from "@effect-ts-app/core/SyncOption"
+     * @ets_rewrite_method flatMap_ from "@effect-ts-app/core/SyncOption"
      */
-    chainOption<RX, EX, AX, R2, E2, B>(
+    flatMapOption<RX, EX, AX, R2, E2, B>(
       this: SyncOption<RX, EX, AX>,
       f: (a: AX) => SyncOption<R2, E2, B>
     ): SyncOption<RX & R2, EX | E2, B>
 
     /**
-     * @ets_rewrite_method chainSync_ from "@effect-ts-app/core/SyncOption"
+     * @ets_rewrite_method flatMapSync_ from "@effect-ts-app/core/SyncOption"
      */
-    chainOptionSync<RX, EX, AX, R2, E2, B>(
+    flatMapOptionSync<RX, EX, AX, R2, E2, B>(
       this: SyncOption<RX, EX, AX>,
       f: (a: AX) => Sync<R2, E2, B>
     ): SyncOption<RX & R2, EX | E2, B>

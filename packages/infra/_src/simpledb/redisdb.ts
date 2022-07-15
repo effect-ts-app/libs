@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/schema"
 import { Effect, EffectOption, Option } from "@effect-ts-app/prelude/Prelude"
+import * as MO from "@effect-ts-app/schema"
 import { Lock } from "redlock"
 
 import * as RED from "../redis-client.js"
@@ -36,7 +36,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(id: string) {
       return RED.hmgetAll(getKey(id))
-        .chainOptionEffect((v) =>
+        .flatMapOptionEffect((v) =>
           pipe(
             RedisSerializedDBRecord.Parser,
             MO.condemnFail

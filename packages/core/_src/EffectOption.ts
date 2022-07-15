@@ -20,7 +20,8 @@ export const Applicative = OptionT.applicative(T.Applicative)
 
 export const { any, both, flatten, map } = intersect(Monad, Applicative)
 
-export const chain = P.chainF(Monad)
+export const flatMap = P.chainF(Monad)
+export const chain = flatMap
 export const succeed = P.succeedF(Monad)
 export const ap = P.apF(Applicative)
 export const bind = P.bindF(Monad)
@@ -89,7 +90,7 @@ export const map_ = <R, E, A, B>(
   f: (a: A) => B
 ): EffectOption<R, E, B> => T.map_(fa, O.map(f))
 
-export const chain_ = <R, E, A, R2, E2, B>(
+export const flatMap_ = <R, E, A, R2, E2, B>(
   fa: EffectOption<R, E, A>,
   f: (a: A) => EffectOption<R2, E2, B>,
   __trace?: string
@@ -99,6 +100,8 @@ export const chain_ = <R, E, A, R2, E2, B>(
     O.fold(() => none, f),
     __trace
   )
+
+export const chain_ = flatMap_
 
 export const tap_ = <R, E, A, R2, E2>(
   inner: EffectOption<R, E, A>,
@@ -208,17 +211,20 @@ export const fromEffectOptionS =
   (eff: EffectOption<R2, E2, A>) =>
     T.chain_(eff, fromOptionS(onNone))
 
-export const chainEffect_ = <R, R2, E, E2, A, A2>(
+export const flatMapEffect_ = <R, R2, E, E2, A, A2>(
   eo: EffectOption<R, E, A>,
   eff: (a: A) => T.Effect<R2, E2, A2>,
   __trace?: string
-) => chain_(eo, flow(eff, fromEffect))
+) => flatMap_(eo, flow(eff, fromEffect))
 
-export const chainEffect =
+export const flatMapEffect =
   <R, R2, E, E2, A, A2>(eff: (a: A) => T.Effect<R2, E2, A2>, __trace?: string) =>
   (eo: EffectOption<R, E, A>) =>
-    chainEffect_(eo, eff, __trace)
+    flatMapEffect_(eo, eff, __trace)
 
+export const chainEffect_ = flatMapEffect_
+
+export const chainEffect = flatMapEffect
 export class GenEffect<R, E, A> {
   readonly [_R]!: (_R: R) => void;
   readonly [_E]!: () => E;

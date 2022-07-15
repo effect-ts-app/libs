@@ -14,11 +14,11 @@ import { applyFunctions } from "./util.js"
 const BasePrototype = Base.prototype as any
 
 const funcs = {
-  chainOption: chain_,
+  flatMapOption: chain_,
   alt: alt_,
   getOrElse: getOrElse_,
   mapOption: map_,
-  chainOptionEffect: chainEffect_,
+  flatMapOptionEffect: chainEffect_,
   toNullable,
   getOrFail: getOrFail_,
 }

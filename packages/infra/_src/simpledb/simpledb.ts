@@ -53,7 +53,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const getCache = getM<A>(type)
   const read = (id: string) =>
     tryRead(id)
-      .chainOptionEffect(({ data, version }) =>
+      .flatMapOptionEffect(({ data, version }) =>
         decode(data).bimap(
           (err) => new InvalidStateError("DB serialisation Issue", err),
           (data) => ({ data, version })

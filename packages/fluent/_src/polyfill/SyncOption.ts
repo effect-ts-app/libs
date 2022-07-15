@@ -14,11 +14,11 @@ import { applyFunctions } from "./util.js"
 const BasePrototype = XPureBase.prototype as any
 
 const funcs = {
-  chainOption: chain_,
+  flatMapOption: chain_,
   alt: alt_,
   getOrElse: getOrElse_,
   mapOption: map_,
-  chainOptionSync: chainSync_,
+  flatMapOptionSync: chainSync_,
   getOrFail: getOrFail_,
   toNullable,
 }
