@@ -2,6 +2,7 @@
 import { Cause } from "@effect-ts/core"
 import {
   chain,
+  chain_,
   Effect,
   effectAsyncInterrupt,
   fail,
@@ -152,5 +153,8 @@ export function ifDiff_<I, R, E, A>(n: I, orig: I, f: (i: I) => Effect<R, E, A>)
 }
 
 const constUnit = constant(unit)
+
+export const flatMap = chain
+export const flatMap_ = chain_
 
 export * from "@effect-ts/core/Effect"

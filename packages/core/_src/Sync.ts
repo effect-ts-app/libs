@@ -4,6 +4,7 @@ import { Has, Tag } from "@effect-ts/core/Has"
 import {
   accessService,
   accessServiceM,
+  chain,
   chain_,
   fail,
   mapError,
@@ -116,5 +117,8 @@ export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
 export function fromEither<E, A>(f: () => E.Either<E, A>) {
   return chain_(succeedWith(f), E.fold(fail, succeed))
 }
+
+export const flatMap = chain
+export const flatMap_ = chain_
 
 export * from "@effect-ts/core/Sync"

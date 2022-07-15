@@ -1,4 +1,4 @@
-import { mapError, Sync } from "@effect-ts/core/Sync"
+import { chain, mapError, Sync } from "@effect-ts/core/Sync"
 
 import * as T from "./Effect.js"
 import { identity } from "./Function.js"
@@ -12,3 +12,5 @@ export const orDie = mapError((err) => {
 export function toEffect<R, E, A>(self: Sync<R, E, A>): Effect<R, E, A> {
   return T.map_(self, identity)
 }
+
+export const flatMap = chain
