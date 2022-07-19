@@ -50,13 +50,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           const sdb = yield* $(parseSDB(sdb_))
           const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
           const r = yield* $(
-            decode(cr.data)
-              .chain((d) =>
-                eq.equals(keys, d as unknown as V)
-                  ? Sync.succeed(d)
-                  : Sync.fail("not equals")
-              )
-              .result()
+            decode(cr.data).flatMap((d) =>
+              eq.equals(keys, d as unknown as V)
+                ? Sync.succeed(d)
+                : Sync.fail("not equals")
+            ).result
           )
           if (r._tag === "Success") {
             return r.value
@@ -77,7 +75,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         )
       )
       return getData(record)
-        .chain((serialised) => storage.set(getRecordName(type, record.id), serialised))
+        .flatMap((serialised) =>
+          storage.set(getRecordName(type, record.id), serialised)
+        )
         .map(() => ({ version, data: record } as CachedRecord<A>))
     }
   }

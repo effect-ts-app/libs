@@ -173,7 +173,10 @@ export type Set<A> = SET.Set<A>
 export namespace ROSet {
   export * from "@effect-ts-app/core/Set"
 }
-/** @tsplus type ets/Set */
+/** 
+ * @tsplus type ets/Set
+ * @tsplus type ets/ROSet
+ */
 export type ROSet<A> = SET.Set<A>
 
 export namespace Layer {

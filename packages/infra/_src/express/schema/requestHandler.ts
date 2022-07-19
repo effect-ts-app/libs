@@ -105,7 +105,7 @@ export function respondSuccess<ReqA, A, E>(
 ) {
   return (req: ReqA, res: express.Response) =>
     flow(encodeResponse(req), Effect.succeed, (_) =>
-      _.chain((r) =>
+      _.flatMap((r) =>
         Effect.succeedWith(() => {
           r === undefined
             ? res.status(204).send()

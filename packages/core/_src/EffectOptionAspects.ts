@@ -243,7 +243,7 @@ export class GenEffect<R, E, A> {
 
 function adapter(_: any, __?: any) {
   if (Utils.isEither(_)) {
-    return new GenEffect(fromEither(() => _).pipe(fromEffect), __)
+    return new GenEffect(fromEither(() => _) >= fromEffect, __)
   }
   if (Utils.isOption(_)) {
     // if (__ && typeof __ === "function") {
@@ -252,7 +252,7 @@ function adapter(_: any, __?: any) {
     return new GenEffect(fromOption(_), __)
   }
   if (Utils.isTag(_)) {
-    return new GenEffect(service(_).pipe(fromEffect), __)
+    return new GenEffect(service(_) >= fromEffect, __)
   }
   return new GenEffect(pipe(_, fromEffectIf), __)
 }

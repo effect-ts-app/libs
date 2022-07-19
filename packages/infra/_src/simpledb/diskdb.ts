@@ -52,11 +52,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Option.isSome(currentVersion)
         ? Managed.use_(lockIndex(record), () =>
             readIndex(idx)
-              .chain((x) =>
+              .flatMap((x) =>
                 x[record.id]
                   ? Effect.fail(() => new Error("Combination already exists, abort"))
                   : getData(record)
-                      .chain((serialised) =>
+                      .flatMap((serialised) =>
                         fu.writeTextFile(getFilename(type, record.id), serialised)
                       )
                       .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
@@ -64,7 +64,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               .orDie()
           ).map(() => ({ version, data: record } as CachedRecord<A>))
         : getData(record)
-            .chain((serialised) =>
+            .flatMap((serialised) =>
               fu.writeTextFile(getFilename(type, record.id), serialised)
             )
             .map(() => ({ version, data: record } as CachedRecord<A>))
@@ -144,7 +144,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .chain((exists) =>
+        .flatMap((exists) =>
           !exists ? Effect.succeed(Option.none) : readFile(filePath).map(Option.some)
         )
     }

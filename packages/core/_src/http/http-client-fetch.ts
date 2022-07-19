@@ -113,7 +113,7 @@ export const Client = (fetchApi: typeof fetch) =>
         })
       }
 
-      return makeAbort.chain((abort) =>
+      return makeAbort.flatMap((abort) =>
         Effect.tryCatchPromiseWithInterrupt(
           () => makeFetch(abort),
           (err) =>

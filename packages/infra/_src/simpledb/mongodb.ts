@@ -18,7 +18,9 @@ const setup = (type: string, indexes: IndexDescription[]) =>
         db.createCollection(type).catch((err) => console.warn(err))
       )
     )
-    .chain((db) => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
+    .flatMap((db) =>
+      Effect.tryPromise(() => db.collection(type).createIndexes(indexes))
+    )
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
@@ -37,7 +39,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return (
         Mongo.db
-          .chain((db) =>
+          .flatMap((db) =>
             Effect.tryPromise(() =>
               db
                 .collection(type)
@@ -51,7 +53,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function findBy(keys: Record<string, string>) {
       return Mongo.db
-        .chain((db) =>
+        .flatMap((db) =>
           Effect.tryPromise(() =>
             db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } })
           )
@@ -97,7 +99,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 )
               )
                 .orDie()
-                .chain((x) => {
+                .flatMap((x) => {
                   if (!x.modifiedCount) {
                     return Effect.fail(new OptimisticLockException(type, record.id))
                   }

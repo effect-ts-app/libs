@@ -20,7 +20,7 @@ const setup = (type: string, indexingPolicy: IndexingPolicy) =>
     )
   )
 // TODO: Error if current indexingPolicy does not match
-//Effect.chain((db) => Effect.tryPromise(() => db.container(type).(indexes)))
+//Effect.flatMap((db) => Effect.tryPromise(() => db.container(type).(indexes)))
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
@@ -37,7 +37,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(id: string) {
       return Cosmos.db
-        .chain((db) =>
+        .flatMap((db) =>
           Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
         )
         .map((i) => Option.fromNullable(i.resource))
@@ -46,7 +46,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function findBy(parameters: Record<string, string>) {
       return Cosmos.db
-        .chain((db) =>
+        .flatMap((db) =>
           Effect.tryPromise(() =>
             db
               .container(type)
@@ -112,7 +112,7 @@ WHERE (
                   )
               )
                 .orDie()
-                .chain((x) => {
+                .flatMap((x) => {
                   if (x.statusCode === 412) {
                     return Effect.fail(new OptimisticLockException(type, record.id))
                   }

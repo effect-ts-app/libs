@@ -42,7 +42,7 @@ const getM =
   <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
     Effect.gen(function* ($) {
       const { get } = yield* $(RecordCache)
-      return yield* $(get<T>(type).chain(eff))
+      return yield* $(get<T>(type).flatMap(eff))
     })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
@@ -81,7 +81,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
       c
         .find(record.id)
         .mapOption((x) => x.version)
-        .chain((cv) => save(record, cv))
+        .flatMap((cv) => save(record, cv))
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
     )
@@ -99,7 +99,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapOption((x) => x.version)
-        .chain(
+        .flatMap(
           Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))
         )
         .tap((r) => c.set(record.id, r))
@@ -110,7 +110,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
     return (cv: Version) =>
       Managed.use_(lock(record.id), () =>
         tryRead(record.id)
-          .chain(
+          .flatMap(
             Option.fold(
               () => Effect.fail(new InvalidStateError("record is gone")),
               Effect.succeed

@@ -21,12 +21,6 @@
             "@effect-ts-app/infra": [
                 "../infra/_src"
             ],
-            "@effect-ts-app/fluent/*": [
-                "../fluent/_src/*"
-            ],
-            "@effect-ts-app/fluent": [
-                "../fluent/_src"
-            ],
             "@effect-ts-app/schema/*": [
                 "../schema/_src/*"
             ],

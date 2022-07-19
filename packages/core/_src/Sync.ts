@@ -119,6 +119,7 @@ export function fromEither<E, A>(f: () => E.Either<E, A>) {
 }
 
 export const flatMap = chain
+
 export const flatMap_ = chain_
 
 export * from "@effect-ts/core/Sync"
