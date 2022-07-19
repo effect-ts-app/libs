@@ -887,16 +887,6 @@
   resolved "https://registry.yarnpkg.com/@effect-ts/express/-/express-0.25.1.tgz#b4e6a739d3182adcfef12dd1543dfe9e4e121f37"
   integrity sha512-HOlfUFHq3i0ljFZMwhxK/UG1qmL9ZIJOv1b0cX3+rgrjb4IZwrOIzCGuTmlDsr9V9yyDpIzGtXmivdw1oMaE5w==
 
-"@effect-ts/fluent-node@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@effect-ts/fluent-node/-/fluent-node-0.1.3.tgz#286612e81d14e9a5182f368fd96b4f78d9df77a7"
-  integrity sha512-GwulYyMDbVMOUYDUcXTvXFBTWgB6uVbHMVmFRMOUbgtzyvUdLPa3zUg2qoLG0c2ZWLs0AsGY0OeRwbqe3fJyBA==
-
-"@effect-ts/fluent@^0.3.13":
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/@effect-ts/fluent/-/fluent-0.3.13.tgz#03a2d33fa35cf912402c47aca3889d776348d59e"
-  integrity sha512-vr006NU9Cm0NRh94RsOcgNPuH1Nyg+4MguCeyqXrSVCr6pCcw2gumbRsP+MkrX998VlbdDZWGCCf6712J9HnAA==
-
 "@effect-ts/jest@^0.29.0":
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/@effect-ts/jest/-/jest-0.29.0.tgz#da7d37bff18003ddf4a08d704896cc7c075d3015"

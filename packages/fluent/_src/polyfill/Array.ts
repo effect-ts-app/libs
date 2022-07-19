@@ -1,5 +1,4 @@
 import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
-import { mapEither_, mapOption_ } from "@effect-ts/fluent/Fx/Array"
 import * as ARR from "@effect-ts-app/core/Array"
 import {
   collectAll,
@@ -14,6 +13,7 @@ import {
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array.js"
 import { mapM } from "../_ext/mapM.js"
+import { mapEither_, mapOption_ } from "../fluent/Array.js"
 import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const BasePrototype = Array.prototype as any

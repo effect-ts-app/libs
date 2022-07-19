@@ -80,6 +80,13 @@
       },
       "require": "./_ext/*.js"
     },
+    "./fluent/*": {
+      "import": {
+        "types": "./fluent/*.d.ts",
+        "default": "./_mjs/fluent/*.mjs"
+      },
+      "require": "./fluent/*.js"
+    },
     "./polyfill": {
       "import": {
         "types": "./polyfill/*.d.ts",
@@ -98,8 +105,6 @@
   },
   "devDependencies": {
     "@effect-ts/core": "^0.60.2",
-    "@effect-ts/fluent": "^0.3.13",
-    "@effect-ts/fluent-node": "^0.1.3",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/node": "^0.39.0",
     "@effect-ts/system": "^0.57.2"
@@ -107,8 +112,6 @@
   "peerDependencies": {
     "@effect-ts-app/core": "^0.68.9",
     "@effect-ts/core": "^0.60.2",
-    "@effect-ts/fluent": "^0.3.13",
-    "@effect-ts/fluent-node": "^0.1.3",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/node": "^0.39.0",
     "@effect-ts/system": "^0.57.2"

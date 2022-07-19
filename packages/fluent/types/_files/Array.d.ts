@@ -109,7 +109,7 @@ interface AOps {
   ): Sync<R, E, readonly B[]>
 
   /**
-   * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
+   * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
    */
   mapEither<AX, E, B>(
     this: NonEmptyArray<AX>,
@@ -117,7 +117,7 @@ interface AOps {
   ): Either<E, NonEmptyArray<B>>
 
   /**
-   * @ets_rewrite_method mapEither_ from "@effect-ts/fluent/Fx/Array"
+   * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
    */
   mapEither<AX, E, B>(
     this: ARR.Array<AX>,
@@ -125,7 +125,7 @@ interface AOps {
   ): Either<E, ARR.Array<B>>
 
   /**
-   * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
+   * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
    */
   mapOption<AX, B>(
     this: NonEmptyArray<AX>,
@@ -133,7 +133,7 @@ interface AOps {
   ): Option<ARR.Array<B>>
 
   /**
-   * @ets_rewrite_method mapOption_ from "@effect-ts/fluent/Fx/Array"
+   * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
    */
   mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
 
