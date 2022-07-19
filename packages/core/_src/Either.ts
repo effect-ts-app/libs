@@ -1,4 +1,4 @@
-import { chain, chain_ } from "@effect-ts/core/Either/index.js"
+import { chain, chain_ } from "@effect-ts/core/Either"
 
 export * from "@effect-ts/core/Either"
 
