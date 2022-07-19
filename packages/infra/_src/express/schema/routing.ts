@@ -133,7 +133,7 @@ export function makeFromSchema<ResA>(
   function makeParameters(inn: ParameterLocation) {
     return (a: Option<JSONSchema | SubSchema>) => {
       return a
-        .chain((o) => (isObjectSchema(o) ? Option.some(o) : Option.none))
+        .flatMap((o) => (isObjectSchema(o) ? Option.some(o) : Option.none))
         .map((x) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map((p) => {

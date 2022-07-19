@@ -156,7 +156,7 @@ const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
 export function accessHttpHeadersM<R, E, A>(
   eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
 ) {
-  return accessHttpHeaders_.chain(eff)
+  return accessHttpHeaders_.flatMap(eff)
 }
 export function accessHttpHeaders<A>(eff: (h: Option<HttpHeaders>) => A) {
   return accessHttpHeaders_.map(eff)
@@ -203,7 +203,7 @@ const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
 export function accessMiddlewareStackM<R, E, A>(
   eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
 ) {
-  return accessMiddlewareStack_.chain(eff)
+  return accessMiddlewareStack_.flatMap(eff)
 }
 export function accessMiddlewareStack<A>(eff: (h: Option<MiddlewareStack>) => A) {
   return accessMiddlewareStack_.map(eff)

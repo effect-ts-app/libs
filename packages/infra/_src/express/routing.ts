@@ -161,12 +161,12 @@ export function handleRequest<
         } as ReqA
         return hn
       })
-      .chain((inp) => {
+      .flatMap((inp) => {
         const hn = handle(inp)
         const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
-        return (r as unknown as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>).chain(
-          (outp) => respond(inp, res)(outp)
-        )
+        return (
+          r as unknown as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>
+        ).flatMap((outp) => respond(inp, res)(outp))
       })
       .catch("_tag", "ValidationError", (err) =>
         Effect.succeedWith(() => {
@@ -195,7 +195,7 @@ export function handleRequest<
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
             err
           )
-        ).chain(Effect.die)
+        ).flatMap(Effect.die)
       )
       .tapCause(() => Effect.succeedWith(() => res.status(500).send()))
 }

@@ -45,7 +45,7 @@ function createClient(makeClient: () => Client) {
 }
 
 export function get(key: string) {
-  return client.chain((client) =>
+  return client.flatMap((client) =>
     Effect.uninterruptible(
       Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
         client.get(key, (err, v) =>
@@ -59,7 +59,7 @@ export function get(key: string) {
 }
 
 export function set(key: string, val: string) {
-  return Effect.chain_(client, (client) =>
+  return Effect.flatMap_(client, (client) =>
     Effect.uninterruptible(
       Effect.effectAsync<unknown, ConnectionException, void>((res) => {
         client.set(key, val, (err) =>
@@ -73,7 +73,7 @@ export function set(key: string, val: string) {
 }
 
 export function hset(key: string, field: string, value: string) {
-  return Effect.chain_(client, (client) =>
+  return Effect.flatMap_(client, (client) =>
     Effect.uninterruptible(
       Effect.effectAsync<unknown, ConnectionException, void>((res) => {
         client.hset(key, field, value, (err) =>
@@ -87,7 +87,7 @@ export function hset(key: string, field: string, value: string) {
 }
 
 export function hget(key: string, field: string) {
-  return Effect.chain_(client, (client) =>
+  return Effect.flatMap_(client, (client) =>
     Effect.uninterruptible(
       Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
         client.hget(key, field, (err, v) =>
@@ -100,7 +100,7 @@ export function hget(key: string, field: string) {
   )
 }
 export function hmgetAll(key: string) {
-  return Effect.chain_(client, (client) =>
+  return Effect.flatMap_(client, (client) =>
     Effect.uninterruptible(
       Effect.effectAsync<
         unknown,
