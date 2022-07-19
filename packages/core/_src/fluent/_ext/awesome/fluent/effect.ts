@@ -394,6 +394,7 @@ import {
 } from "@effect-ts/core/Effect"
 import { fromEffect_, fromRawEffect } from "@effect-ts/core/Effect/Layer"
 import { fromEffect } from "@effect-ts/core/Effect/Managed"
+import { Erase } from "@effect-ts-app/core/Effect.js"
 
 // /**
 //  * @ets_rewrite_method onlyDefaultEnv from "smart:identity"
@@ -1899,7 +1900,10 @@ export const ext_provideServiceM_ = provideServiceM_
 /**
  * @tsplus fluent ets/Effect inject
  */
-export const ext_inject_ = provideSomeLayer_
+export const ext_inject_ = <RX, EX, AX, R2, E2, A2>(
+  self: Effect<RX, EX, AX>,
+  layer: Layer<R2, E2, A2>
+): Effect<Erase<RX, A2> & R2, EX | E2, AX> => provideSomeLayer_(self, layer)
 
 /**
  * @tsplus fluent ets/Effect ignore
