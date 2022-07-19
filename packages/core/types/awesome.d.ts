@@ -63,10 +63,36 @@ declare module "@effect-ts/system/Option/core" {
 }
 
 declare global {
+    /**
+   * @tsplus type ets/Array
+   */
+  interface ReadonlyArray<T> { }
+
+  /**
+   * @tsplus type ets/Array
+   */
+  interface Array<T> { }
+
+  /**
+   * @tsplus type ets/Set
+   */
+  interface Set<T> {}
+  
   /**
    * @tsplus type ets/ROSet
+   * @tsplus type ets/Set
    */
-  interface ReadonlySet<T> {}
+  interface ReadonlySet<T> { }
+  
+  /**
+   * @tsplus type ets/Map
+   */
+  interface Map<K, V> { }
+  
+  /**
+   * @tsplus type ets/Map
+   */
+  interface ReadonlyMap<K, V> {}
 }
 
 declare module "@effect-ts/system/Sync/core" {
