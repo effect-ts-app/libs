@@ -1,6 +1,9 @@
 import { filter_, some_ } from "@effect-ts/core/Collections/Immutable/Set"
 import { find_, findFirst_, findFirstMap_ } from "@effect-ts-app/core/fluent/_ext/Set"
 
+/**
+ * @tsplus fluent ets/Set filter
+ */
 export const ext_filter_ = filter_
 
 /**
