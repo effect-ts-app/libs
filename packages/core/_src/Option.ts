@@ -25,3 +25,6 @@ export type _A<A> = A extends O.Some<infer Y> ? Y : never
 type KeysMatching<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T]
 
 export * as $ from "./OptionAspects.js"
+
+export const flatMap = O.chain
+export const flatMap_ = O.chain_

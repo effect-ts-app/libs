@@ -806,15 +806,15 @@ export const ext_unsafeGet_ = unsafeGet_
  */
 export const ext_unsafeHead = unsafeHead
 
-// /**
-//  * @tsplus fluent ets/Chunk unsafeLast
-//  */
-// export const ext_unsafeLast = unsafeLast
+/**
+ * @tsplus fluent ets/Chunk unsafeLast
+ */
+export const ext_unsafeLast = unsafeLast
 
 /**
  * @tsplus fluent ets/Chunk unsafeTail
  */
-export const ext_unsafeLast = unsafeLast
+export const ext_unsafeTail = unsafeLast
 
 /**
  * @tsplus fluent ets/Chunk unzip

@@ -22,6 +22,7 @@ import { mapEither_, mapOption_ } from "@effect-ts-app/core/fluent/fluent/Array"
 
 /**
  * @tsplus fluent ets/NonEmptyArray mapRA
+ * @tsplus fluent ets/Array mapRA
  */
 export const ext_map_ = map_
 
