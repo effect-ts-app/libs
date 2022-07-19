@@ -1,6 +1,6 @@
 import { pipe } from "@effect-ts/core"
-import * as Ei from "@effect-ts/core/Either"
 import { encaseEither } from "@effect-ts-app/core/Effect"
+import * as Ei from "@effect-ts-app/core/Either"
 import { identity } from "@effect-ts-app/core/Function"
 import { encaseEither as encaseEitherInSync } from "@effect-ts-app/core/Sync"
 

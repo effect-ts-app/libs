@@ -1,7 +1,7 @@
 import { pipe } from "@effect-ts/core"
-import * as Option from "@effect-ts/core/Option"
 import { tryCatchOption_ } from "@effect-ts/core/Sync"
 import { encaseOption_ } from "@effect-ts-app/core/Effect"
+import * as Option from "@effect-ts-app/core/Option"
 
 import { alt_ } from "../_ext/Option.js"
 import { applyFunctions, makeAutoFuncs } from "./util.js"

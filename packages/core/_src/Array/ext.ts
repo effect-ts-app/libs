@@ -4,6 +4,9 @@ import { flow, identity, Predicate } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
 import { Ord } from "@effect-ts/core/Ord"
 
+export const flatMap = A.chain
+export const flatMap_ = A.chain_
+
 export const { isArray } = Array
 
 export const findIndexOrElse_ = flow(
