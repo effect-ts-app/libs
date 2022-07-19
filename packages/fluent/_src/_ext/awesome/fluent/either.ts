@@ -8,26 +8,33 @@ export interface EitherOps<E, A> {
    * @ets_rewrite_method pipe from "smart:pipe"
    */
   pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { unsafeGetLeft } from "@effect-ts/core/Either"
 
-  /**
-   * @ets_rewrite_getter unsafeGetLeft from "@effect-ts/core/Either"
-   */
-  readonly left: E | undefined
+/**
+ * @tsplus getter ets/Either left
+ */
+export const ext_unsafeGetLeft = unsafeGetLeft
 
-  /**
-   * @ets_rewrite_getter unsafeGetRight from "@effect-ts/core/Either"
-   */
-  readonly right: A | undefined
+import { unsafeGetRight } from "@effect-ts/core/Either"
 
-  /**
-   * @ets_rewrite_getter getLeft from "@effect-ts/core/Either"
-   */
-  readonly getLeft: O.Option<E>
+/**
+ * @tsplus getter ets/Either right
+ */
+export const ext_unsafeGetRight = unsafeGetRight
 
-  /**
-   * @ets_rewrite_getter getRight from "@effect-ts/core/Either"
-   */
-  readonly getRight: O.Option<A>
+import { getLeft } from "@effect-ts/core/Either"
+
+/**
+ * @tsplus getter ets/Either getLeft
+ */
+export const ext_getLeft = getLeft
+
+import { getRight } from "@effect-ts/core/Either"
+
+/**
+ * @tsplus getter ets/Either getRight
+ */
+export const ext_getRight = getRight
 
   /**
    * @ets_rewrite_method identity from "smart:identity"

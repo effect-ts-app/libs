@@ -25,20 +25,19 @@ declare module "@effect-ts/system/Either/core" {
 
 declare module "@effect-ts/system/Option/core" {
   interface Ops<A> {
-    /**
-     * @ets_rewrite_getter toNullable from "@effect-ts/core/Option"
-     */
-    readonly val: A | null
+import { toNullable } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_getter toUndefined from "@effect-ts/core/Option"
-     */
-    readonly value: A | undefined
-  }
-  /**
-   * @tsplus type ets/Option/Some
-   */
-  export interface Some<A> extends Ops<A> {}
+/**
+ * @tsplus getter ets/Option val
+ */
+export const ext_toNullable = toNullable
+
+import { toUndefined } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus getter ets/Option value
+ */
+export const ext_toUndefined = toUndefined
 
   /**
    * @tsplus type ets/Option/None
