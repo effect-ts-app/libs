@@ -1,4 +1,4 @@
-import { XPure } from "@effect-ts/core/XPure/index.js"
+import { XPure } from "@effect-ts/core/XPure/index"
 
 declare module "@effect-ts/monocle/Lens" {
   export interface Base<S, A> extends Lens<S, A> {}

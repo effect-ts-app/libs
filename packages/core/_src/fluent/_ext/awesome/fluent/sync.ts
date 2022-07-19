@@ -1,7 +1,7 @@
 // ets_tracing: off
 
 import { chain_, provideAll_, provideSome } from "@effect-ts/core/Sync"
-import { catchTag_, Erase } from "@effect-ts-app/core/Effect.js"
+import { catchTag_, Erase } from "@effect-ts-app/core/Effect"
 
 /**
  * @tsplus fluent ets/Sync flatMap

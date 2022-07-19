@@ -394,7 +394,7 @@ import {
 } from "@effect-ts/core/Effect"
 import { fromEffect_, fromRawEffect } from "@effect-ts/core/Effect/Layer"
 import { fromEffect } from "@effect-ts/core/Effect/Managed"
-import { Erase } from "@effect-ts-app/core/Effect.js"
+import { Erase } from "@effect-ts-app/core/Effect"
 
 // /**
 //  * @ets_rewrite_method onlyDefaultEnv from "smart:identity"
