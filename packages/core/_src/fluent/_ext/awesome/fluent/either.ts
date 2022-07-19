@@ -7,19 +7,17 @@ import {
   isLeft,
   isRight,
   map_,
-  unsafeGetLeft,
-  unsafeGetRight,
 } from "@effect-ts/core/Either"
 
 /**
  * @tsplus getter ets/Either left
  */
-export const ext_unsafeGetLeft = unsafeGetLeft
+export const ext_left = <E>(self: Either.Left<E>): E => self.left
 
 /**
  * @tsplus getter ets/Either right
  */
-export const ext_unsafeGetRight = unsafeGetRight
+export const ext_right = <A>(self: Either.Right<A>): A => self.right
 
 /**
  * @tsplus getter ets/Either getLeft
