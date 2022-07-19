@@ -1,6 +1,7 @@
 // ets_tracing: off
 
 import { chain_, provideAll_, provideSome } from "@effect-ts/core/Sync"
+import { Erase } from "@effect-ts-app/core/Effect.js"
 
 /**
  * @tsplus fluent ets/Sync flatMap
@@ -52,10 +53,11 @@ export const ext_provideSome_ = <R0, R1, E, A>(
 //  */
 // export const ext_provideServiceM_ = provideServiceM_
 
-// /**
-//  * @tsplus fluent ets/Sync inject
-//  */
-// export const ext_inject_ = <RX, EX, AX, R2, E2, A2>(
-//   self: Effect<RX, EX, AX>,
-//   layer: Layer<R2, E2, A2>
-// ): Effect<Erase<RX, A2> & R2, EX | E2, AX> => provideSomeLayer_(self, layer)
+/**
+ * @tsplus fluent ets/Sync inject
+ */
+export const ext_inject_ = <RX, EX, AX, R2, E2, A2>(
+  self: Sync<RX, EX, AX>,
+  layer: Layer<R2, E2, A2>
+): Effect<Erase<RX, A2> & R2, EX | E2, AX> =>
+  Effect.provideSomeLayer_(self as any, layer)
