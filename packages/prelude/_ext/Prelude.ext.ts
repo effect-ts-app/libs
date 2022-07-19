@@ -50,9 +50,9 @@ export function unifySync<X extends Sync<any, any, any>>(
 }
 
 /**
- * @tsplus unify Either
- * @tsplus unify Either/Left
- * @tsplus unify Either/Right
+ * @tsplus unify ets/Either
+ * @tsplus unify ets/Either/Left
+ * @tsplus unify ets/Either/Right
  */
 export function unifyEither<X extends Either<any, any>>(
   self: X
@@ -64,9 +64,9 @@ export function unifyEither<X extends Either<any, any>>(
 }
 
 /**
- * @tsplus unify Option
- * @tsplus unify Option/Some
- * @tsplus unify Option/None
+ * @tsplus unify ets/Option
+ * @tsplus unify ets/Option/Some
+ * @tsplus unify ets/Option/None
  */
 export function unifyOption<X extends Option<any>>(
   self: X

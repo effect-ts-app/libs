@@ -273,6 +273,7 @@
             },
             "require": "./SyncAspects.js"
         },
+        "./types/*": "./types/*.js",
         "./*.js": {
             "import": {
                 "types": "./*.d.ts",
