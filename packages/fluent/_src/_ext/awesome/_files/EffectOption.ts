@@ -46,53 +46,54 @@ declare module "@effect-ts/system/Effect/effect" {
    */
   export interface Effect<R, E, A> {}
   export interface EffectStaticOps {
-    /**
-     * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
-     */
-    tryPromise: typeof T.tryPromise
+import { tryPromise } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
-     */
-    tryPromise: typeof T.tryPromise
+/**
+ * @tsplus static ets/Effect.Ops tryPromise
+ */
+export const ext_tryPromise = tryPromise
 
-    /**
-     * @ets_rewrite_static promise from "@effect-ts/core/Effect"
-     */
-    promise: typeof T.promise
+import { tryPromise } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
-     */
-    tryCatchPromise: typeof T.tryCatchPromise
+/**
+ * @tsplus static ets/Effect.Ops tryPromise
+ */
+export const ext_tryPromise = tryPromise
 
-    /**
-     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
-     */
-    tuple: typeof T.tuple
+import { promise } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
-     */
-    tuplePar: typeof T.tuplePar
-    /**
-     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
-     */
-    tupleParN: typeof T.tupleParN
+/**
+ * @tsplus static ets/Effect.Ops promise
+ */
+export const ext_promise = promise
 
-    /**
-     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
-     */
-    structPar: typeof T.structPar
-    /**
-     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
-     */
-    structParN: typeof T.structParN
-    /**
-     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
-     */
-    struct: typeof T.struct
-  }
+import { tryCatchPromise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tryCatchPromise
+ */
+export const ext_tryCatchPromise = tryCatchPromise
+
+import { tuple } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tuple
+ */
+export const ext_tuple = tuple
+
+import { tuple } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tuplePar
+ */
+export const ext_tuple = tuple
+
+import { struct } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops structPar
+ */
+export const ext_struct = struct
 
   interface EffectOps {
     // no tracing..

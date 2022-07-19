@@ -11,11 +11,12 @@ declare global {
   interface ArrayConstructor extends ArrayStaticOps {}
 
   interface ArrayStaticOps {
-    /**
-     * @ets_rewrite_static getEqual from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    getEqual: typeof A.getEqual
-  }
+import { getEqual } from "@effect-ts/core/Collections/Immutable/Array"
+
+/**
+ * @tsplus static ets/Array.Ops getEqual
+ */
+export const ext_getEqual = getEqual
 
   interface Array<T> extends ArrayOps {}
 

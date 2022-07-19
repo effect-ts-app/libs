@@ -20,14 +20,16 @@ export const ext_mapN_ = mapN_
 
   // refactor tuple to use TupleOps
   namespace Tuple {
-    /**
-     * @ets_rewrite_static tuple from "@effect-ts/core/Collections/Immutable/Tuple"
-     */
-    const tuple: typeof Tp.tuple
+import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 
-    /**
-     * @ets_rewrite_static fromNative from "@effect-ts/core/Collections/Immutable/Tuple"
-     */
-    const fromNative: typeof Tp.fromNative
-  }
-}
+/**
+ * @tsplus static ets/Tuple.Ops const
+ */
+export const ext_tuple = tuple
+
+import { fromNative } from "@effect-ts/core/Collections/Immutable/Tuple"
+
+/**
+ * @tsplus static ets/Tuple.Ops const
+ */
+export const ext_fromNative = fromNative

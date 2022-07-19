@@ -184,21 +184,26 @@ export const ext_zipSecond_ = zipSecond_
   export interface None extends OptionOps<never> {}
 
   export interface OptionStaticOps {
-    /**
-     * @ets_rewrite_static some from "@effect-ts/core/Option"
-     */
-    some: typeof O.some
+import { some } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_static none from "@effect-ts/core/Option"
-     */
-    none: typeof O.none
+/**
+ * @tsplus static ets/Option.Ops some
+ */
+export const ext_some = some
 
-    /**
-     * @ets_rewrite_static Applicative from "@effect-ts/core/Option"
-     */
-    Applicative: typeof O.Applicative
-  }
+import { none } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus static ets/Option.Ops none
+ */
+export const ext_none = none
+
+import { Applicative } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus static ets/Option.Ops Applicative
+ */
+export const ext_Applicative = Applicative
 
   export const Option: OptionStaticOps
 }

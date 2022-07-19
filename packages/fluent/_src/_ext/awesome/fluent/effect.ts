@@ -38,45 +38,61 @@ declare module "@effect-ts/system/Effect/effect" {
   export const Effect: EffectStaticOps
 
   export interface EffectStaticOps {
-    /**
-     * @ets_rewrite_static access from "@effect-ts/core/Effect"
-     */
-    access: typeof T.access
+import { access } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static accessM from "@effect-ts/core/Effect"
-     */
-    accessM: typeof T.accessM
+/**
+ * @tsplus static ets/Effect.Ops access
+ */
+export const ext_access = access
 
-    /**
-     * @ets_rewrite_static accessServiceM from "@effect-ts/core/Effect"
-     */
-    accessServiceM: typeof T.accessServiceM
+import { accessM } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static accessService from "@effect-ts/core/Effect"
-     */
-    accessService: typeof T.accessService
+/**
+ * @tsplus static ets/Effect.Ops accessM
+ */
+export const ext_accessM = accessM
 
-    /**
-     * @ets_rewrite_static accessServices from "@effect-ts/core/Effect"
-     */
-    accessServices: typeof T.accessServices
+import { accessServiceM } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static accessServices from "@effect-ts/core/Effect"
-     */
-    accessServicesM: typeof T.accessServicesM
+/**
+ * @tsplus static ets/Effect.Ops accessServiceM
+ */
+export const ext_accessServiceM = accessServiceM
 
-    /**
-     * @ets_rewrite_static accessServicesT from "@effect-ts/core/Effect"
-     */
-    accessServicesT: typeof T.accessServicesT
+import { accessService } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static accessServicesTM from "@effect-ts/core/Effect"
-     */
-    accessServicesTM: typeof T.accessServicesTM
+/**
+ * @tsplus static ets/Effect.Ops accessService
+ */
+export const ext_accessService = accessService
+
+import { accessServices } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops accessServices
+ */
+export const ext_accessServices = accessServices
+
+import { accessServices } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops accessServicesM
+ */
+export const ext_accessServices = accessServices
+
+import { accessServicesT } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops accessServicesT
+ */
+export const ext_accessServicesT = accessServicesT
+
+import { accessServicesTM } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops accessServicesTM
+ */
+export const ext_accessServicesTM = accessServicesTM
 
     /**
      * @ets_rewrite_static collect from "@effect-ts/core/Effect"
@@ -86,25 +102,26 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, O.Option<E>, B>,
       __trace?: string | undefined
     ): (self: Iterable<A>) => T.Effect<R, E, Chunk<B>>
+import { collect_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collect_ from "@effect-ts/core/Effect"
-     */
-    collect<A, R, E, B>(
-      self: Iterable<A>,
-      f: (a: A) => T.Effect<R, O.Option<E>, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collect
+ */
+export const ext_collect_ = collect_
 
-    /**
-     * @ets_rewrite_static collectAll from "@effect-ts/core/Effect"
-     */
-    collectAll: typeof T.collectAll
+import { collectAll } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllPar from "@effect-ts/core/Effect"
-     */
-    collectAllPar: typeof T.collectAllPar
+/**
+ * @tsplus static ets/Effect.Ops collectAll
+ */
+export const ext_collectAll = collectAll
+
+import { collectAllPar } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops collectAllPar
+ */
+export const ext_collectAllPar = collectAllPar
 
     /**
      * @ets_rewrite_static collectAllPar from "@effect-ts/core/Effect"
@@ -114,40 +131,47 @@ declare module "@effect-ts/system/Effect/effect" {
       n: number,
       __trace?: string | undefined
     ): <R, E, A>(as: Iterable<Effect<R, E, A>>) => Effect<R, E, Chunk<A>>
+import { collectAllParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllParN_ from "@effect-ts/core/Effect"
-     */
-    collectAllParN<R, E, A>(
-      as: Iterable<Effect<R, E, A>>,
-      n: number,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<A>>
+/**
+ * @tsplus static ets/Effect.Ops collectAllParN
+ */
+export const ext_collectAllParN_ = collectAllParN_
 
-    /**
-     * @ets_rewrite_static collectAllSuccesses from "@effect-ts/core/Effect"
-     */
-    collectAllSuccesses: typeof T.collectAllSuccesses
+import { collectAllSuccesses } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllSuccessesPar from "@effect-ts/core/Effect"
-     */
-    collectAllSuccessesPar: typeof T.collectAllSuccessesPar
+/**
+ * @tsplus static ets/Effect.Ops collectAllSuccesses
+ */
+export const ext_collectAllSuccesses = collectAllSuccesses
 
-    /**
-     * @ets_rewrite_static collectAllSuccessesPar from "@effect-ts/core/Effect"
-     */
-    collectAllSuccessesParN: typeof T.collectAllSuccessesParN
+import { collectAllSuccessesPar } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllUnit from "@effect-ts/core/Effect"
-     */
-    collectAllUnit: typeof T.collectAllUnit
+/**
+ * @tsplus static ets/Effect.Ops collectAllSuccessesPar
+ */
+export const ext_collectAllSuccessesPar = collectAllSuccessesPar
 
-    /**
-     * @ets_rewrite_static collectAllUnit from "@effect-ts/core/Effect"
-     */
-    collectAllUnitPar: typeof T.collectAllUnitPar
+import { collectAllSuccessesPar } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops collectAllSuccessesParN
+ */
+export const ext_collectAllSuccessesPar = collectAllSuccessesPar
+
+import { collectAllUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops collectAllUnit
+ */
+export const ext_collectAllUnit = collectAllUnit
+
+import { collectAllUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops collectAllUnitPar
+ */
+export const ext_collectAllUnit = collectAllUnit
 
     /**
      * @ets_rewrite_static collectAllUnitParN from "@effect-ts/core/Effect"
@@ -157,15 +181,12 @@ declare module "@effect-ts/system/Effect/effect" {
       n: number,
       __trace?: string | undefined
     ): <R, E, A>(as: Iterable<Effect<R, E, A>>) => Effect<R, E, void>
+import { collectAllUnitParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllUnitParN_ from "@effect-ts/core/Effect"
-     */
-    collectAllUnitParN<R, E, A>(
-      as: Iterable<Effect<R, E, A>>,
-      n: number,
-      __trace?: string | undefined
-    ): Effect<R, E, void>
+/**
+ * @tsplus static ets/Effect.Ops collectAllUnitParN
+ */
+export const ext_collectAllUnitParN_ = collectAllUnitParN_
 
     /**
      * @ets_rewrite_static collectAllWith from "@effect-ts/core/Effect"
@@ -175,15 +196,12 @@ declare module "@effect-ts/system/Effect/effect" {
       pf: (a: A) => O.Option<B>,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<Effect<R, E, A>>) => Effect<R, E, Chunk<B>>
+import { collectAllWith_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllWith_ from "@effect-ts/core/Effect"
-     */
-    collectAllWith<R, E, A, B>(
-      as: Iterable<Effect<R, E, A>>,
-      pf: (a: A) => O.Option<B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collectAllWith
+ */
+export const ext_collectAllWith_ = collectAllWith_
 
     /**
      * @ets_rewrite_static collectAllWithPar from "@effect-ts/core/Effect"
@@ -193,15 +211,12 @@ declare module "@effect-ts/system/Effect/effect" {
       pf: (a: A) => O.Option<B>,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<Effect<R, E, A>>) => Effect<R, E, Chunk<B>>
+import { collectAllWithPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllWithPar_ from "@effect-ts/core/Effect"
-     */
-    collectAllWithPar<R, E, A, B>(
-      as: Iterable<Effect<R, E, A>>,
-      pf: (a: A) => O.Option<B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collectAllWithPar
+ */
+export const ext_collectAllWithPar_ = collectAllWithPar_
 
     /**
      * @ets_rewrite_static collectAllWithParN from "@effect-ts/core/Effect"
@@ -212,16 +227,12 @@ declare module "@effect-ts/system/Effect/effect" {
       pf: (a: A) => O.Option<B>,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<Effect<R, E, A>>) => Effect<R, E, Chunk<B>>
+import { collectAllWithParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectAllWithParN_ from "@effect-ts/core/Effect"
-     */
-    collectAllWithParN<R, E, A, B>(
-      as: Iterable<Effect<R, E, A>>,
-      n: number,
-      pf: (a: A) => O.Option<B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collectAllWithParN
+ */
+export const ext_collectAllWithParN_ = collectAllWithParN_
 
     /**
      * @ets_rewrite_static collectPar from "@effect-ts/core/Effect"
@@ -231,15 +242,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, O.Option<E>, B>,
       __trace?: string | undefined
     ): (self: Iterable<A>) => T.Effect<R, E, Chunk<B>>
+import { collectPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectPar_ from "@effect-ts/core/Effect"
-     */
-    collectPar<A, R, E, B>(
-      self: Iterable<A>,
-      f: (a: A) => T.Effect<R, O.Option<E>, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collectPar
+ */
+export const ext_collectPar_ = collectPar_
 
     /**
      * @ets_rewrite_static collectParN from "@effect-ts/core/Effect"
@@ -250,16 +258,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, O.Option<E>, B>,
       __trace?: string | undefined
     ): (self: Iterable<A>) => T.Effect<R, E, Chunk<B>>
+import { collectParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static collectParN_ from "@effect-ts/core/Effect"
-     */
-    collectParN<A, R, E, B>(
-      self: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, O.Option<E>, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops collectParN
+ */
+export const ext_collectParN_ = collectParN_
 
     /**
      * @ets_rewrite_static cond from "@effect-ts/core/Effect"
@@ -270,16 +274,12 @@ declare module "@effect-ts/system/Effect/effect" {
       onFalse: () => E,
       __trace?: string | undefined
     ): (b: boolean) => T.Effect<unknown, E, A>
+import { cond_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static cond_ from "@effect-ts/core/Effect"
-     */
-    cond<E, A>(
-      b: boolean,
-      onTrue: () => A,
-      onFalse: () => E,
-      __trace?: string | undefined
-    ): T.Effect<unknown, E, A>
+/**
+ * @tsplus static ets/Effect.Ops cond
+ */
+export const ext_cond_ = cond_
 
     /**
      * @ets_rewrite_static condM from "@effect-ts/core/Effect"
@@ -290,26 +290,26 @@ declare module "@effect-ts/system/Effect/effect" {
       onFalse: T.RIO<R2, E>,
       __trace?: string | undefined
     ): (b: boolean) => T.Effect<R & R2, E, A>
+import { condM_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static condM_ from "@effect-ts/core/Effect"
-     */
-    condM<R, R2, E, A>(
-      b: boolean,
-      onTrue: T.RIO<R, A>,
-      onFalse: T.RIO<R2, E>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E, A>
+/**
+ * @tsplus static ets/Effect.Ops condM
+ */
+export const ext_condM_ = condM_
 
-    /**
-     * @ets_rewrite_static Applicative from "@effect-ts/core/Effect"
-     */
-    descriptor: typeof T.descriptor
+import { Applicative } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static descriptorWith from "@effect-ts/core/Effect"
-     */
-    descriptorWith: typeof T.descriptorWith
+/**
+ * @tsplus static ets/Effect.Ops descriptor
+ */
+export const ext_Applicative = Applicative
+
+import { descriptorWith } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops descriptorWith
+ */
+export const ext_descriptorWith = descriptorWith
 
     /**
      * @ets_rewrite_static dropWhile from "@effect-ts/core/Effect"
@@ -319,147 +319,145 @@ declare module "@effect-ts/system/Effect/effect" {
       p: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, Array<A>>
+import { dropWhile_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static dropWhile_ from "@effect-ts/core/Effect"
-     */
-    dropWhile<A, R, E>(
-      as: Iterable<A>,
-      p: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Array<A>>
+/**
+ * @tsplus static ets/Effect.Ops dropWhile
+ */
+export const ext_dropWhile_ = dropWhile_
 
-    /**
-     * @ets_rewrite_static Applicative from "@effect-ts/core/Effect"
-     */
-    Applicative: typeof T.Applicative
+import { Applicative } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static effectAsyncInterrupt from "@effect-ts/core/Effect"
-     */
-    asyncInterrupt<R, E, A>(
-      register: (cb: T.Cb<Effect<R, E, A>>) => T.Canceler<R>,
-      __trace?: string | undefined
-    ): Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops Applicative
+ */
+export const ext_Applicative = Applicative
 
-    /**
-     * @ets_rewrite_static effectAsyncInterruptBlockingOn from "@effect-ts/core/Effect"
-     */
-    asyncInterrupt<R, E, A>(
-      register: (cb: T.Cb<T.Effect<R, E, A>>) => T.Canceler<R>,
-      blockingOn: readonly Fiber.FiberID[],
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { effectAsyncInterrupt } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static effectAsync from "@effect-ts/core/Effect"
-     */
-    async<R, E, A>(
-      register: (cb: T.Cb<Effect<R, E, A>>) => void,
-      __trace?: string | undefined
-    ): Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops asyncInterrupt
+ */
+export const ext_effectAsyncInterrupt = effectAsyncInterrupt
 
-    /**
-     * @ets_rewrite_static effectAsyncBlockingOn from "@effect-ts/core/Effect"
-     */
-    async<R, E, A>(
-      register: (cb: T.Cb<T.Effect<R, E, A>>) => void,
-      blockingOn: readonly Fiber.FiberID[],
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { effectAsyncInterruptBlockingOn } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static effectAsyncM from "@effect-ts/core/Effect"
-     */
-    asyncEffect<R, E, R2, E2, A, X>(
-      register: (cb: (_: T.Effect<R2, E2, A>) => void) => T.Effect<R, E, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A>
+/**
+ * @tsplus static ets/Effect.Ops asyncInterrupt
+ */
+export const ext_effectAsyncInterruptBlockingOn = effectAsyncInterruptBlockingOn
 
-    /**
-     * @ets_rewrite_static effectAsyncOption from "@effect-ts/core/Effect"
-     */
-    asyncOption<R, E, A>(
-      register: (cb: (_: T.Effect<R, E, A>) => void) => O.Option<T.Effect<R, E, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { effectAsync } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static effectAsyncOptionBlockingOn from "@effect-ts/core/Effect"
-     */
-    asyncOption<R, E, A>(
-      register: (cb: (_: Effect<R, E, A>) => void) => O.Option<Effect<R, E, A>>,
-      blockingOn: readonly Fiber.FiberID[],
-      __trace?: string
-    ): Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops async
+ */
+export const ext_effectAsync = effectAsync
 
-    /**
-     * @ets_rewrite_static effectMaybeAsyncInterrupt from "@effect-ts/core/Effect"
-     */
-    asyncOptionInterrupt<R, E, A>(
-      register: (
-        cb: T.Cb<T.Effect<R, E, A>>
-      ) => E.Either<T.Canceler<R>, T.Effect<R, E, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { effectAsyncBlockingOn } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static effectMaybeAsyncInterruptBlockingOn from "@effect-ts/core/Effect"
-     */
-    asyncOptionInterrupt<R, E, A>(
-      register: (cb: T.Cb<Effect<R, E, A>>) => E.Either<T.Canceler<R>, Effect<R, E, A>>,
-      blockingOn: readonly Fiber.FiberID[],
-      __trace?: string
-    ): Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops async
+ */
+export const ext_effectAsyncBlockingOn = effectAsyncBlockingOn
 
-    /**
-     * @ets_rewrite_static do from "@effect-ts/core/Effect"
-     */
-    do_: typeof T.do
+import { effectAsyncM } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static deriveLifted from "@effect-ts/core/Effect"
-     */
-    deriveLifted: typeof T.deriveLifted
+/**
+ * @tsplus static ets/Effect.Ops asyncEffect
+ */
+export const ext_effectAsyncM = effectAsyncM
 
-    /**
-     * @ets_rewrite_static done from "@effect-ts/core/Effect"
-     */
-    done: typeof T.done
+import { effectAsyncOption } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static dieWith from "@effect-ts/core/Effect"
-     */
-    die: typeof T.dieWith
+/**
+ * @tsplus static ets/Effect.Ops asyncOption
+ */
+export const ext_effectAsyncOption = effectAsyncOption
 
-    /**
-     * @ets_rewrite_static die from "@effect-ts/core/Effect"
-     */
-    dieNow: typeof T.die
+import { effectAsyncOptionBlockingOn } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static defaultEnv from "@effect-ts/core/Effect"
-     */
-    defaultEnv: typeof T.defaultEnv
+/**
+ * @tsplus static ets/Effect.Ops asyncOption
+ */
+export const ext_effectAsyncOptionBlockingOn = effectAsyncOptionBlockingOn
 
-    /**
-     * @ets_rewrite_static defaultPlatform from "@effect-ts/core/Effect"
-     */
-    defaultPlatform: typeof T.defaultPlatform
+import { effectMaybeAsyncInterrupt } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static environment from "@effect-ts/core/Effect"
-     */
-    environment: typeof T.environment
+/**
+ * @tsplus static ets/Effect.Ops asyncOptionInterrupt
+ */
+export const ext_effectMaybeAsyncInterrupt = effectMaybeAsyncInterrupt
 
-    /**
-     * @ets_rewrite_static forEach_ from "@effect-ts/core/Effect"
-     */
-    forEach<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => Effect<R, E, B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+import { effectMaybeAsyncInterruptBlockingOn } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops asyncOptionInterrupt
+ */
+export const ext_effectMaybeAsyncInterruptBlockingOn = effectMaybeAsyncInterruptBlockingOn
+
+import { do } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops do_
+ */
+export const ext_do = do
+
+import { deriveLifted } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops deriveLifted
+ */
+export const ext_deriveLifted = deriveLifted
+
+import { done } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops done
+ */
+export const ext_done = done
+
+import { dieWith } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops die
+ */
+export const ext_dieWith = dieWith
+
+import { die } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops dieNow
+ */
+export const ext_die = die
+
+import { defaultEnv } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops defaultEnv
+ */
+export const ext_defaultEnv = defaultEnv
+
+import { defaultPlatform } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops defaultPlatform
+ */
+export const ext_defaultPlatform = defaultPlatform
+
+import { environment } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops environment
+ */
+export const ext_environment = environment
+
+import { forEach_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops forEach
+ */
+export const ext_forEach_ = forEach_
 
     /**
      * @ets_rewrite_static forEach from "@effect-ts/core/Effect"
@@ -469,15 +467,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => Effect<R, E, Chunk<B>>
+import { forEachPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forEachPar_ from "@effect-ts/core/Effect"
-     */
-    forEachPar<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => Effect<R, E, B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops forEachPar
+ */
+export const ext_forEachPar_ = forEachPar_
 
     /**
      * @ets_rewrite_static forEachPar from "@effect-ts/core/Effect"
@@ -487,16 +482,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => Effect<R, E, Chunk<B>>
+import { forEachParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forEachParN_ from "@effect-ts/core/Effect"
-     */
-    forEachParN<A, R, E, B>(
-      as: Iterable<A>,
-      n: number,
-      f: (a: A) => Effect<R, E, B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops forEachParN
+ */
+export const ext_forEachParN_ = forEachParN_
 
     /**
      * @ets_rewrite_static forEachParN from "@effect-ts/core/Effect"
@@ -507,16 +498,19 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => Effect<R, E, Chunk<B>>
+import { failWith } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static failWith from "@effect-ts/core/Effect"
-     */
-    fail: typeof T.failWith
+/**
+ * @tsplus static ets/Effect.Ops fail
+ */
+export const ext_failWith = failWith
 
-    /**
-     * @ets_rewrite_static fail from "@effect-ts/core/Effect"
-     */
-    failNow: typeof T.fail
+import { fail } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops failNow
+ */
+export const ext_fail = fail
 
     /**
      * @ets_rewrite_static filter from "@effect-ts/core/Effect"
@@ -526,15 +520,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, readonly A[]>
+import { filter_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filter_ from "@effect-ts/core/Effect"
-     */
-    filter<A, R, E>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, readonly A[]>
+/**
+ * @tsplus static ets/Effect.Ops filter
+ */
+export const ext_filter_ = filter_
 
     /**
      * @ets_rewrite_static filterNot from "@effect-ts/core/Effect"
@@ -544,15 +535,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, readonly A[]>
+import { filterNot_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filterNot_ from "@effect-ts/core/Effect"
-     */
-    filterNot<A, R, E>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, readonly A[]>
+/**
+ * @tsplus static ets/Effect.Ops filterNot
+ */
+export const ext_filterNot_ = filterNot_
 
     /**
      * @ets_rewrite_static filterNotPar from "@effect-ts/core/Effect"
@@ -562,15 +550,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, readonly A[]>
+import { filterNotPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filterNotPar_ from "@effect-ts/core/Effect"
-     */
-    filterNotPar<A, R, E>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, readonly A[]>
+/**
+ * @tsplus static ets/Effect.Ops filterNotPar
+ */
+export const ext_filterNotPar_ = filterNotPar_
 
     /**
      * @ets_rewrite_static filterNotParN from "@effect-ts/core/Effect"
@@ -581,16 +566,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, Chunk<A>>
+import { filterNotParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filterNotParN_ from "@effect-ts/core/Effect"
-     */
-    filterNotParN<A, R, E>(
-      as: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Chunk<A>>
+/**
+ * @tsplus static ets/Effect.Ops filterNotParN
+ */
+export const ext_filterNotParN_ = filterNotParN_
 
     /**
      * @ets_rewrite_static filterPar from "@effect-ts/core/Effect"
@@ -600,15 +581,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, readonly A[]>
+import { filterPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filterPar_ from "@effect-ts/core/Effect"
-     */
-    filterPar<A, R, E>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, readonly A[]>
+/**
+ * @tsplus static ets/Effect.Ops filterPar
+ */
+export const ext_filterPar_ = filterPar_
 
     /**
      * @ets_rewrite_static filterParN from "@effect-ts/core/Effect"
@@ -619,16 +597,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, boolean>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, E, Chunk<A>>
+import { filterParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static filterParN_ from "@effect-ts/core/Effect"
-     */
-    filterParN<A, R, E>(
-      as: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Chunk<A>>
+/**
+ * @tsplus static ets/Effect.Ops filterParN
+ */
+export const ext_filterParN_ = filterParN_
 
     /**
      * @ets_rewrite_static forEachExec from "@effect-ts/core/Effect"
@@ -639,36 +613,40 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => Effect<R, E, Chunk<B>>
+import { forEachExec_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forEachExec_ from "@effect-ts/core/Effect"
-     */
-    forEachExec<R, E, A, B>(
-      as: Iterable<A>,
-      es: T.ExecutionStrategy,
-      f: (a: A) => Effect<R, E, B>,
-      __trace?: string | undefined
-    ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops forEachExec
+ */
+export const ext_forEachExec_ = forEachExec_
 
-    /**
-     * @ets_rewrite_static first from "@effect-ts/core/Effect"
-     */
-    first: typeof T.first
+import { first } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forkAll from "@effect-ts/core/Effect"
-     */
-    forkAll: typeof T.forkAll
+/**
+ * @tsplus static ets/Effect.Ops first
+ */
+export const ext_first = first
 
-    /**
-     * @ets_rewrite_static forkAllUnit from "@effect-ts/core/Effect"
-     */
-    forkAllUnit: typeof T.forkAllUnit
+import { forkAll } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forkScope from "@effect-ts/core/Effect"
-     */
-    forkScope: typeof T.forkScope
+/**
+ * @tsplus static ets/Effect.Ops forkAll
+ */
+export const ext_forkAll = forkAll
+
+import { forkAllUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops forkAllUnit
+ */
+export const ext_forkAllUnit = forkAllUnit
+
+import { forkScope } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops forkScope
+ */
+export const ext_forkScope = forkScope
 
     /**
      * @ets_rewrite_static forkScopeMask from "@effect-ts/core/Effect"
@@ -678,215 +656,201 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (restore: T.ForkScopeRestore) => T.Effect<R, E, A>,
       __trace?: string | undefined
     ): (newScope: Scope<Exit<any, any>>) => T.Effect<R, E, A>
+import { forkScopeMask_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static forkScopeMask_ from "@effect-ts/core/Effect"
-     */
-    forkScopeMask<R, E, A>(
-      newScope: Scope<Exit<any, any>>,
-      f: (restore: T.ForkScopeRestore) => T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops forkScopeMask
+ */
+export const ext_forkScopeMask_ = forkScopeMask_
 
-    /**
-     * @ets_rewrite_static forkScope from "@effect-ts/core/Effect"
-     */
-    forkScopeWith: typeof T.forkScopeWith
+import { forkScope } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static firstSuccessOf from "@effect-ts/core/Effect"
-     */
-    firstSuccessOf: typeof T.firstSuccessOf
+/**
+ * @tsplus static ets/Effect.Ops forkScopeWith
+ */
+export const ext_forkScope = forkScope
 
-    /**
-     * @ets_rewrite_static fromAsync from "@effect-ts/core/Effect"
-     */
-    from<R, E, A>(
-      async: Async<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { firstSuccessOf } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromEither from "@effect-ts/core/Effect"
-     */
-    from<E, A>(
-      f: () => E.Either<E, A>,
-      __trace?: string | undefined
-    ): T.Effect<unknown, E, A>
+/**
+ * @tsplus static ets/Effect.Ops firstSuccessOf
+ */
+export const ext_firstSuccessOf = firstSuccessOf
 
-    /**
-     * @ets_rewrite_static fromFiber from "@effect-ts/core/Effect"
-     */
-    from<E, A>(fiber: () => Fiber.Fiber<E, A>, __trace?: string | undefined): T.IO<E, A>
+import { fromAsync } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromFiberM from "@effect-ts/core/Effect"
-     */
-    from<R, E, E2, A>(
-      fiber: T.Effect<R, E, Fiber.Fiber<E2, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E2, A>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromAsync = fromAsync
 
-    /**
-     * @ets_rewrite_static fromPredicate from "@effect-ts/core/Effect"
-     */
-    from<E, A, B extends A>(
-      refinement: Refinement<A, B>,
-      onFalse: (a: A) => E
-    ): (a: A) => IO<E, B>
+import { fromEither } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromPredicate from "@effect-ts/core/Effect"
-     */
-    from<E, A>(predicate: Predicate<A>, onFalse: (a: A) => E): (a: A) => IO<E, A>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromEither = fromEither
 
-    /**
-     * @ets_rewrite_static fromIO from "@effect-ts/core/Effect"
-     */
-    from<A>(io: IO.IO<A>, __trace?: string | undefined): T.Effect<unknown, never, A>
+import { fromFiber } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<L, R>(
-      f: (this: unknown, cb: (e: L | null | undefined, r?: R) => void) => void,
-      __trace?: string
-    ): () => IO<L, R>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromFiber = fromFiber
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A, L, R>(
-      f: (this: unknown, a: A, cb: (e: L | null | undefined, r?: R) => void) => void,
-      __trace?: string
-    ): (a: A) => IO<L, R>
+import { fromFiberM } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A, B, L, R>(
-      f: (
-        this: unknown,
-        a: A,
-        b: B,
-        cb: (e: L | null | undefined, r?: R) => void
-      ) => void,
-      __trace?: string
-    ): (a: A, b: B) => IO<L, R>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromFiberM = fromFiberM
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A, B, C, L, R>(
-      f: (
-        this: unknown,
-        a: A,
-        b: B,
-        c: C,
-        cb: (e: L | null | undefined, r?: R) => void
-      ) => void,
-      __trace?: string
-    ): (a: A, b: B, c: C) => IO<L, R>
+import { fromPredicate } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A, B, C, D, L, R>(
-      f: (
-        this: unknown,
-        a: A,
-        b: B,
-        c: C,
-        d: D,
-        cb: (e: L | null | undefined, r?: R) => void
-      ) => void,
-      __trace?: string
-    ): (a: A, b: B, c: C, d: D) => IO<L, R>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromPredicate = fromPredicate
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A, B, C, D, E, L, R>(
-      f: (
-        this: unknown,
-        a: A,
-        b: B,
-        c: C,
-        d: D,
-        e: E,
-        cb: (e: L | null | undefined, r?: R) => void
-      ) => void,
-      __trace?: string
-    ): (a: A, b: B, c: C, d: D, e: E) => IO<L, R>
+import { fromPredicate } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromNodeCb from "@effect-ts/core/Effect"
-     */
-    from<A extends any[], L, R>(
-      f: (
-        this: unknown,
-        ...args: [...A, (e: L | null | undefined, r?: R) => void]
-      ) => void,
-      __trace?: string
-    ): (...args: A) => IO<L, R>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromPredicate = fromPredicate
 
-    /**
-     * @ets_rewrite_static fromOption from "@effect-ts/core/Effect"
-     */
-    from<A>(o: O.Option<A>, __trace?: string | undefined): T.IO<O.Option<never>, A>
+import { fromIO } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static fromNullable from "@effect-ts/core/Effect"
-     */
-    fromNullable<A>(
-      o: A,
-      __trace?: string | undefined
-    ): T.IO<O.Option<never>, NonNullable<A>>
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromIO = fromIO
 
-    /**
-     * @ets_rewrite_static gen from "@effect-ts/core/Effect"
-     */
-    gen: typeof T.gen
+import { fromNodeCb } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static genM from "@effect-ts/core/Effect"
-     */
-    genM: typeof T.genM
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
 
-    /**
-     * @ets_rewrite_static getIdentity from "@effect-ts/core/Effect"
-     */
-    getIdentity: typeof T.getIdentity
+import { fromNodeCb } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static getIdentityPar from "@effect-ts/core/Effect"
-     */
-    getIdentityPar: typeof T.getIdentityPar
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
 
-    /**
-     * @ets_rewrite_static getOrFail from "@effect-ts/core/Effect"
-     */
-    getOrFail: typeof T.getOrFail
+import { fromNodeCb } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static getOrFailUnit from "@effect-ts/core/Effect"
-     */
-    getOrFailUnit: typeof T.getOrFailUnit
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
 
-    /**
-     * @ets_rewrite_static getValidationApplicative from "@effect-ts/core/Effect"
-     */
-    getValidationApplicative: typeof T.getValidationApplicative
+import { fromNodeCb } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static haltWith from "@effect-ts/core/Effect"
-     */
-    halt: typeof T.haltWith
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
 
-    /**
-     * @ets_rewrite_static halt from "@effect-ts/core/Effect"
-     */
-    haltNow: typeof T.halt
+import { fromNodeCb } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
+
+import { fromNodeCb } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
+
+import { fromNodeCb } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromNodeCb = fromNodeCb
+
+import { fromOption } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops from
+ */
+export const ext_fromOption = fromOption
+
+import { fromNullable } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops fromNullable
+ */
+export const ext_fromNullable = fromNullable
+
+import { gen } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops gen
+ */
+export const ext_gen = gen
+
+import { genM } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops genM
+ */
+export const ext_genM = genM
+
+import { getIdentity } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops getIdentity
+ */
+export const ext_getIdentity = getIdentity
+
+import { getIdentityPar } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops getIdentityPar
+ */
+export const ext_getIdentityPar = getIdentityPar
+
+import { getOrFail } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops getOrFail
+ */
+export const ext_getOrFail = getOrFail
+
+import { getOrFailUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops getOrFailUnit
+ */
+export const ext_getOrFailUnit = getOrFailUnit
+
+import { getValidationApplicative } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops getValidationApplicative
+ */
+export const ext_getValidationApplicative = getValidationApplicative
+
+import { haltWith } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops halt
+ */
+export const ext_haltWith = haltWith
+
+import { halt } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops haltNow
+ */
+export const ext_halt = halt
 
     /**
      * @ets_rewrite_static if from "@effect-ts/core/Effect"
@@ -897,51 +861,61 @@ declare module "@effect-ts/system/Effect/effect" {
       onFalse: () => Effect<R2, E2, A2>,
       __trace?: string | undefined
     ): (b: boolean) => Effect<R1 & R2, E1 | E2, A1 | A2>
+import { if_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static if_ from "@effect-ts/core/Effect"
-     */
-    if<R1, E1, A1, R2, E2, A2>(
-      b: boolean,
-      onTrue: () => T.Effect<R1, E1, A1>,
-      onFalse: () => T.Effect<R2, E2, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R1 & R2, E1 | E2, A1 | A2>
+/**
+ * @tsplus static ets/Effect.Ops if
+ */
+export const ext_if_ = if_
 
-    /**
-     * @ets_rewrite_static interrupt from "@effect-ts/core/Effect"
-     */
-    interrupt: typeof T.interrupt
+import { interrupt } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static interruptAs from "@effect-ts/core/Effect"
-     */
-    interruptAs: typeof T.interruptAs
+/**
+ * @tsplus static ets/Effect.Ops interrupt
+ */
+export const ext_interrupt = interrupt
 
-    /**
-     * @ets_rewrite_static interruptibleMask from "@effect-ts/core/Effect"
-     */
-    interruptibleMask: typeof T.interruptibleMask
+import { interruptAs } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static iterate from "@effect-ts/core/Effect"
-     */
-    iterate: typeof T.iterate
+/**
+ * @tsplus static ets/Effect.Ops interruptAs
+ */
+export const ext_interruptAs = interruptAs
 
-    /**
-     * @ets_rewrite_static loop from "@effect-ts/core/Effect"
-     */
-    loop: typeof T.loop
+import { interruptibleMask } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static loopUnit from "@effect-ts/core/Effect"
-     */
-    loopUnit: typeof T.loopUnit
+/**
+ * @tsplus static ets/Effect.Ops interruptibleMask
+ */
+export const ext_interruptibleMask = interruptibleMask
 
-    /**
-     * @ets_rewrite_static makeCustomRuntime from "@effect-ts/core/Effect"
-     */
-    makeCustomRuntime: typeof T.makeCustomRuntime
+import { iterate } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops iterate
+ */
+export const ext_iterate = iterate
+
+import { loop } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops loop
+ */
+export const ext_loop = loop
+
+import { loopUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops loopUnit
+ */
+export const ext_loopUnit = loopUnit
+
+import { makeCustomRuntime } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops makeCustomRuntime
+ */
+export const ext_makeCustomRuntime = makeCustomRuntime
 
     /**
      * @ets_rewrite_static mapN from "@effect-ts/core/Effect"
@@ -955,19 +929,12 @@ declare module "@effect-ts/system/Effect/effect" {
       ) => B,
       __trace?: string
     ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
+import { mapN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mapN_ from "@effect-ts/core/Effect"
-     */
-    mapN<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      t: Tp.Tuple<T>,
-      f: (
-        ..._: ForcedArray<{
-          [k in keyof T]: _A<T[k]>
-        }>
-      ) => B,
-      __trace?: string
-    ): Effect<_R<T[number]>, _E<T[number]>, B>
+/**
+ * @tsplus static ets/Effect.Ops mapN
+ */
+export const ext_mapN_ = mapN_
 
     /**
      * @ets_rewrite_static mapNPar from "@effect-ts/core/Effect"
@@ -981,19 +948,12 @@ declare module "@effect-ts/system/Effect/effect" {
       ) => B,
       __trace?: string
     ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
+import { mapNPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mapNPar_ from "@effect-ts/core/Effect"
-     */
-    mapNPar<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      t: Tp.Tuple<T>,
-      f: (
-        ..._: ForcedArray<{
-          [k in keyof T]: _A<T[k]>
-        }>
-      ) => B,
-      __trace?: string
-    ): Effect<_R<T[number]>, _E<T[number]>, B>
+/**
+ * @tsplus static ets/Effect.Ops mapNPar
+ */
+export const ext_mapNPar_ = mapNPar_
 
     /**
      * @ets_rewrite_static mapNParN from "@effect-ts/core/Effect"
@@ -1008,55 +968,61 @@ declare module "@effect-ts/system/Effect/effect" {
       ) => B,
       __trace?: string
     ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
+import { mapNParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mapNParN_ from "@effect-ts/core/Effect"
-     */
-    mapNParN<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      t: Tp.Tuple<T>,
-      n: number,
-      f: (
-        ..._: ForcedArray<{
-          [k in keyof T]: _A<T[k]>
-        }>
-      ) => B,
-      __trace?: string
-    ): Effect<_R<T[number]>, _E<T[number]>, B>
+/**
+ * @tsplus static ets/Effect.Ops mapNParN
+ */
+export const ext_mapNParN_ = mapNParN_
 
-    /**
-     * @ets_rewrite_static match from "@effect-ts/core/Effect"
-     */
-    match: typeof T.match
+import { match } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static matchIn from "@effect-ts/core/Effect"
-     */
-    matchIn: typeof T.matchIn
+/**
+ * @tsplus static ets/Effect.Ops match
+ */
+export const ext_match = match
 
-    /**
-     * @ets_rewrite_static matchMorph from "@effect-ts/core/Effect"
-     */
-    matchMorph: typeof T.matchMorph
+import { matchIn } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static matchTag from "@effect-ts/core/Effect"
-     */
-    matchTag: typeof T.matchTag
+/**
+ * @tsplus static ets/Effect.Ops matchIn
+ */
+export const ext_matchIn = matchIn
 
-    /**
-     * @ets_rewrite_static matchTagIn from "@effect-ts/core/Effect"
-     */
-    matchTagIn: typeof T.matchTagIn
+import { matchMorph } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static memoize from "@effect-ts/core/Effect"
-     */
-    memoize: typeof T.memoize
+/**
+ * @tsplus static ets/Effect.Ops matchMorph
+ */
+export const ext_matchMorph = matchMorph
 
-    /**
-     * @ets_rewrite_static memoizeEq from "@effect-ts/core/Effect"
-     */
-    memoizeEq: typeof T.memoizeEq
+import { matchTag } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops matchTag
+ */
+export const ext_matchTag = matchTag
+
+import { matchTagIn } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops matchTagIn
+ */
+export const ext_matchTagIn = matchTagIn
+
+import { memoize } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops memoize
+ */
+export const ext_memoize = memoize
+
+import { memoizeEq } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops memoizeEq
+ */
+export const ext_memoizeEq = memoizeEq
 
     /**
      * @ets_rewrite_static mergeAll from "@effect-ts/core/Effect"
@@ -1067,16 +1033,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (b: B, a: A) => B,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<T.Effect<R, E, A>>) => T.Effect<R, E, B>
+import { mergeAll_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mergeAll_ from "@effect-ts/core/Effect"
-     */
-    mergeAll<R, E, A, B>(
-      as: Iterable<T.Effect<R, E, A>>,
-      zero: B,
-      f: (b: B, a: A) => B,
-      __trace?: string | undefined
-    ): T.Effect<R, E, B>
+/**
+ * @tsplus static ets/Effect.Ops mergeAll
+ */
+export const ext_mergeAll_ = mergeAll_
 
     /**
      * @ets_rewrite_static mergeAllPar from "@effect-ts/core/Effect"
@@ -1087,16 +1049,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (b: B, a: A) => B,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<T.Effect<R, E, A>>) => T.Effect<R, E, B>
+import { mergeAllPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mergeAllPar_ from "@effect-ts/core/Effect"
-     */
-    mergeAllPar<R, E, A, B>(
-      as: Iterable<T.Effect<R, E, A>>,
-      zero: B,
-      f: (b: B, a: A) => B,
-      __trace?: string | undefined
-    ): T.Effect<R, E, B>
+/**
+ * @tsplus static ets/Effect.Ops mergeAllPar
+ */
+export const ext_mergeAllPar_ = mergeAllPar_
 
     /**
      * @ets_rewrite_static mergeAllParN from "@effect-ts/core/Effect"
@@ -1108,37 +1066,40 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (b: B, a: A) => B,
       __trace?: string | undefined
     ): <R, E>(as: Iterable<T.Effect<R, E, A>>) => T.Effect<R, E, B>
+import { mergeAllParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static mergeAllParN_ from "@effect-ts/core/Effect"
-     */
-    mergeAllParN<R, E, A, B>(
-      as: Iterable<T.Effect<R, E, A>>,
-      n: number,
-      zero: B,
-      f: (b: B, a: A) => B,
-      __trace?: string | undefined
-    ): T.Effect<R, E, B>
+/**
+ * @tsplus static ets/Effect.Ops mergeAllParN
+ */
+export const ext_mergeAllParN_ = mergeAllParN_
 
-    /**
-     * @ets_rewrite_static never from "@effect-ts/core/Effect"
-     */
-    never: typeof T.never
+import { never } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static none from "@effect-ts/core/Effect"
-     */
-    none: typeof T.none
+/**
+ * @tsplus static ets/Effect.Ops never
+ */
+export const ext_never = never
 
-    /**
-     * @ets_rewrite_static parallel from "@effect-ts/core/Effect"
-     */
-    parallel: typeof T.parallel
+import { none } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static parallelN from "@effect-ts/core/Effect"
-     */
-    parallelN: typeof T.parallelN
+/**
+ * @tsplus static ets/Effect.Ops none
+ */
+export const ext_none = none
+
+import { parallel } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops parallel
+ */
+export const ext_parallel = parallel
+
+import { parallelN } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops parallelN
+ */
+export const ext_parallelN = parallelN
 
     /**
      * @ets_rewrite_static partition from "@effect-ts/core/Effect"
@@ -1148,15 +1109,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.RIO<R, Separated<Iterable<E>, Iterable<B>>>
+import { partition_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static partition_ from "@effect-ts/core/Effect"
-     */
-    partition<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.RIO<R, Separated<Iterable<E>, Iterable<B>>>
+/**
+ * @tsplus static ets/Effect.Ops partition
+ */
+export const ext_partition_ = partition_
 
     /**
      * @ets_rewrite_static partitionPar from "@effect-ts/core/Effect"
@@ -1166,15 +1124,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.RIO<R, Separated<Iterable<E>, Iterable<B>>>
+import { partitionPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static partitionPar_ from "@effect-ts/core/Effect"
-     */
-    partitionPar<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.RIO<R, Separated<Iterable<E>, Iterable<B>>>
+/**
+ * @tsplus static ets/Effect.Ops partitionPar
+ */
+export const ext_partitionPar_ = partitionPar_
 
     /**
      * @ets_rewrite_static partitionParN from "@effect-ts/core/Effect"
@@ -1185,35 +1140,33 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string
     ): (as: Iterable<A>) => Effect<R, never, Separated<Iterable<E>, Iterable<B>>>
+import { partitionParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static partitionParN_ from "@effect-ts/core/Effect"
-     */
-    partitionParN<A, R, E, B>(
-      as: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, Separated<Iterable<E>, Iterable<B>>>
+/**
+ * @tsplus static ets/Effect.Ops partitionParN
+ */
+export const ext_partitionParN_ = partitionParN_
 
-    /**
-     * @ets_rewrite_static prettyReporter from "@effect-ts/core/Effect"
-     */
-    prettyReporter: typeof T.prettyReporter
+import { prettyReporter } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static promise from "@effect-ts/core/Effect"
-     */
-    promise<A>(effect: Lazy<Promise<A>>, __trace?: string | undefined): UIO<A>
+/**
+ * @tsplus static ets/Effect.Ops prettyReporter
+ */
+export const ext_prettyReporter = prettyReporter
 
-    /**
-     * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
-     */
-    promise<E, A>(
-      promise: Lazy<Promise<A>>,
-      onReject: (reason: unknown) => E,
-      __trace?: string | undefined
-    ): T.IO<E, A>
+import { promise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops promise
+ */
+export const ext_promise = promise
+
+import { tryCatchPromise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops promise
+ */
+export const ext_tryCatchPromise = tryCatchPromise
 
     /**
      * @ets_rewrite_static provide from "@effect-ts/core/Effect"
@@ -1223,15 +1176,12 @@ declare module "@effect-ts/system/Effect/effect" {
       r: R,
       __trace?: string | undefined
     ): <E, A, R0>(next: T.Effect<R & R0, E, A>) => T.Effect<R0, E, A>
+import { provide_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static provide_ from "@effect-ts/core/Effect"
-     */
-    provide_<E, A, R0, R>(
-      next: T.Effect<R & R0, E, A>,
-      r: R,
-      __trace?: string | undefined
-    ): T.Effect<R0, E, A>
+/**
+ * @tsplus static ets/Effect.Ops provide_
+ */
+export const ext_provide_ = provide_
 
     /**
      * @ets_rewrite_static provideAll from "@effect-ts/core/Effect"
@@ -1241,15 +1191,12 @@ declare module "@effect-ts/system/Effect/effect" {
       r: R,
       __trace?: string | undefined
     ): <E, A>(next: T.Effect<R, E, A>) => T.Effect<unknown, E, A>
+import { provideAll_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static provideAll_ from "@effect-ts/core/Effect"
-     */
-    provideAll<R, E, A>(
-      next: T.Effect<R, E, A>,
-      r: R,
-      __trace?: string | undefined
-    ): T.Effect<unknown, E, A>
+/**
+ * @tsplus static ets/Effect.Ops provideAll
+ */
+export const ext_provideAll_ = provideAll_
 
     /**
      * @ets_rewrite_static provideLayer from "@effect-ts/core/Effect"
@@ -1258,14 +1205,12 @@ declare module "@effect-ts/system/Effect/effect" {
     provideLayer<R, E, A>(
       layer: Layer<R, E, A>
     ): <E1, A1>(self: T.Effect<A, E1, A1>) => T.Effect<R, E | E1, A1>
+import { provideLayer_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static provideLayer_ from "@effect-ts/core/Effect"
-     */
-    provideLayer<R, E, A, E1, A1>(
-      self: T.Effect<A, E1, A1>,
-      layer: Layer<R, E, A>
-    ): T.Effect<R, E | E1, A1>
+/**
+ * @tsplus static ets/Effect.Ops provideLayer
+ */
+export const ext_provideLayer_ = provideLayer_
 
     /**
      * @ets_rewrite_static provideSomeLayer from "@effect-ts/core/Effect"
@@ -1274,14 +1219,12 @@ declare module "@effect-ts/system/Effect/effect" {
     provideSomeLayer<R, E, A>(
       layer: Layer<R, E, A>
     ): <R1, E1, A1>(self: T.Effect<R1 & A, E1, A1>) => T.Effect<R & R1, E | E1, A1>
+import { provideSomeLayer_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static provideSomeLayer_ from "@effect-ts/core/Effect"
-     */
-    provideSomeLayer<R1, E1, A1, R, E, A>(
-      self: T.Effect<R1 & A, E1, A1>,
-      layer: Layer<R, E, A>
-    ): T.Effect<R & R1, E | E1, A1>
+/**
+ * @tsplus static ets/Effect.Ops provideSomeLayer
+ */
+export const ext_provideSomeLayer_ = provideSomeLayer_
 
     /**
      * @ets_rewrite_static provideSome from "@effect-ts/core/Effect"
@@ -1291,30 +1234,33 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (r0: R0) => R,
       __trace?: string | undefined
     ): <E, A>(effect: T.Effect<R, E, A>) => T.Effect<R0, E, A>
+import { provideSome_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static provideSome_ from "@effect-ts/core/Effect"
-     */
-    provideSome<R0, R, E, A>(
-      effect: T.Effect<R, E, A>,
-      f: (r0: R0) => R,
-      __trace?: string | undefined
-    ): T.Effect<R0, E, A>
+/**
+ * @tsplus static ets/Effect.Ops provideSome
+ */
+export const ext_provideSome_ = provideSome_
 
-    /**
-     * @ets_rewrite_static raceAll from "@effect-ts/core/Effect"
-     */
-    raceAll: typeof T.raceAll
+import { raceAll } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static raceAllWait from "@effect-ts/core/Effect"
-     */
-    raceAllWait: typeof T.raceAllWait
+/**
+ * @tsplus static ets/Effect.Ops raceAll
+ */
+export const ext_raceAll = raceAll
 
-    /**
-     * @ets_rewrite_static raceAllWithStrategy from "@effect-ts/core/Effect"
-     */
-    raceAllWithStrategy: typeof T.raceAllWithStrategy
+import { raceAllWait } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops raceAllWait
+ */
+export const ext_raceAllWait = raceAllWait
+
+import { raceAllWithStrategy } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops raceAllWithStrategy
+ */
+export const ext_raceAllWithStrategy = raceAllWithStrategy
 
     /**
      * @ets_rewrite_static reduce from "@effect-ts/core/Effect"
@@ -1325,16 +1271,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (z: Z, a: A) => Effect<R, E, Z>,
       __trace?: string
     ): (i: Iterable<A>) => Effect<R, E, Z>
+import { reduce_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static reduce_ from "@effect-ts/core/Effect"
-     */
-    reduce<A, Z, R, E>(
-      i: Iterable<A>,
-      zero: Z,
-      f: (z: Z, a: A) => T.Effect<R, E, Z>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Z>
+/**
+ * @tsplus static ets/Effect.Ops reduce
+ */
+export const ext_reduce_ = reduce_
 
     /**
      * @ets_rewrite_static reduceAll from "@effect-ts/core/Effect"
@@ -1344,15 +1286,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (acc: A, a: A) => A,
       __trace?: string | undefined
     ): <R, E>(as: NonEmptyArray<T.Effect<R, E, A>>) => T.Effect<R, E, A>
+import { reduceAll_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static reduceAll_ from "@effect-ts/core/Effect"
-     */
-    reduceAll<R, E, A>(
-      as: NonEmptyArray<T.Effect<R, E, A>>,
-      f: (acc: A, a: A) => A,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops reduceAll
+ */
+export const ext_reduceAll_ = reduceAll_
 
     /**
      * @ets_rewrite_static reduceAllPar from "@effect-ts/core/Effect"
@@ -1362,15 +1301,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (acc: A, a: A) => A,
       __trace?: string | undefined
     ): <R, E>(as: NonEmptyArray<T.Effect<R, E, A>>) => T.Effect<R, E, A>
+import { reduceAllPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static reduceAllPar_ from "@effect-ts/core/Effect"
-     */
-    reduceAllPar<R, E, A>(
-      as: NonEmptyArray<T.Effect<R, E, A>>,
-      f: (acc: A, a: A) => A,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops reduceAllPar
+ */
+export const ext_reduceAllPar_ = reduceAllPar_
 
     /**
      * @ets_rewrite_static reduceAllParN from "@effect-ts/core/Effect"
@@ -1381,16 +1317,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (acc: A, a: A) => A,
       __trace?: string
     ): <R, E>(as: NonEmptyArray<Effect<R, E, A>>) => Effect<R, E, A>
+import { reduceAllParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static reduceAllParN_ from "@effect-ts/core/Effect"
-     */
-    reduceAllParN<R, E, A>(
-      as: NonEmptyArray<T.Effect<R, E, A>>,
-      n: number,
-      f: (acc: A, a: A) => A,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+/**
+ * @tsplus static ets/Effect.Ops reduceAllParN
+ */
+export const ext_reduceAllParN_ = reduceAllParN_
 
     /**
      * @ets_rewrite_static reduceRight from "@effect-ts/core/Effect"
@@ -1401,56 +1333,68 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A, z: Z) => T.Effect<R, E, Z>,
       __trace?: string | undefined
     ): (i: Iterable<A>) => T.Effect<R, E, Z>
+import { reduceRight_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static reduceRight_ from "@effect-ts/core/Effect"
-     */
-    reduceRight<A, Z, R, E>(
-      i: Iterable<A>,
-      zero: Z,
-      f: (a: A, z: Z) => T.Effect<R, E, Z>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Z>
+/**
+ * @tsplus static ets/Effect.Ops reduceRight
+ */
+export const ext_reduceRight_ = reduceRight_
 
-    /**
-     * @ets_rewrite_static runtime from "@effect-ts/core/Effect"
-     */
-    runtime: typeof T.runtime
+import { runtime } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static second from "@effect-ts/core/Effect"
-     */
-    second: typeof T.second
+/**
+ * @tsplus static ets/Effect.Ops runtime
+ */
+export const ext_runtime = runtime
 
-    /**
-     * @ets_rewrite_static sequential from "@effect-ts/core/Effect"
-     */
-    sequential: typeof T.sequential
+import { second } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static service from "@effect-ts/core/Effect"
-     */
-    service: typeof T.service
+/**
+ * @tsplus static ets/Effect.Ops second
+ */
+export const ext_second = second
 
-    /**
-     * @ets_rewrite_static services from "@effect-ts/core/Effect"
-     */
-    services: typeof T.services
+import { sequential } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static sleep from "@effect-ts/core/Effect"
-     */
-    sleep: typeof T.sleep
+/**
+ * @tsplus static ets/Effect.Ops sequential
+ */
+export const ext_sequential = sequential
 
-    /**
-     * @ets_rewrite_static struct from "@effect-ts/core/Effect"
-     */
-    struct: typeof T.struct
+import { service } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static structPar from "@effect-ts/core/Effect"
-     */
-    structPar: typeof T.structPar
+/**
+ * @tsplus static ets/Effect.Ops service
+ */
+export const ext_service = service
+
+import { services } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops services
+ */
+export const ext_services = services
+
+import { sleep } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops sleep
+ */
+export const ext_sleep = sleep
+
+import { struct } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops struct
+ */
+export const ext_struct = struct
+
+import { structPar } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops structPar
+ */
+export const ext_structPar = structPar
 
     /**
      * @ets_rewrite_static structParN from "@effect-ts/core/Effect"
@@ -1466,126 +1410,159 @@ declare module "@effect-ts/system/Effect/effect" {
       _E<NER[keyof NER]>,
       { [K in keyof NER]: [NER[K]] extends [Effect<any, any, infer A>] ? A : never }
     >
+import { structParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static structParN_ from "@effect-ts/core/Effect"
-     */
-    structParN<NER extends Record<string, Effect<any, any, any>>>(
-      r: EnforceNonEmptyRecord<NER> & Record<string, Effect<any, any, any>>,
-      n: number,
-      __trace?: string
-    ): Effect<
-      _R<NER[keyof NER]>,
-      _E<NER[keyof NER]>,
-      {
-        [K in keyof NER]: [NER[K]] extends [Effect<any, any, infer A>] ? A : never
-      }
-    >
+/**
+ * @tsplus static ets/Effect.Ops structParN
+ */
+export const ext_structParN_ = structParN_
 
-    /**
-     * @ets_rewrite_static succeedWith from "@effect-ts/core/Effect"
-     */
-    succeed: typeof T.succeedWith
+import { succeedWith } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static suspend from "@effect-ts/core/Effect"
-     */
-    suspend: typeof T.suspend
+/**
+ * @tsplus static ets/Effect.Ops succeed
+ */
+export const ext_succeedWith = succeedWith
 
-    /**
-     * @ets_rewrite_static succeed from "@effect-ts/core/Effect"
-     */
-    succeedNow: typeof T.succeed
+import { suspend } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static trace from "@effect-ts/core/Effect"
-     */
-    trace: typeof T.trace
+/**
+ * @tsplus static ets/Effect.Ops suspend
+ */
+export const ext_suspend = suspend
 
-    /**
-     * @ets_rewrite_static tracedMask from "@effect-ts/core/Effect"
-     */
-    tracedMask: typeof T.tracedMask
+import { succeed } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static transplant from "@effect-ts/core/Effect"
-     */
-    transplant: typeof T.transplant
+/**
+ * @tsplus static ets/Effect.Ops succeedNow
+ */
+export const ext_succeed = succeed
 
-    /**
-     * @ets_rewrite_static try from "@effect-ts/core/Effect"
-     */
-    try: typeof T.try
+import { trace } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tryCatch from "@effect-ts/core/Effect"
-     */
-    tryCatch: typeof T.tryCatchOption
+/**
+ * @tsplus static ets/Effect.Ops trace
+ */
+export const ext_trace = trace
 
-    /**
-     * @ets_rewrite_static tryCatch from "@effect-ts/core/Effect"
-     */
-    tryCatchOption: typeof T.tryCatchOption
+import { tracedMask } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tryCatchSuspend from "@effect-ts/core/Effect"
-     */
-    tryCatchSuspend: typeof T.tryCatchSuspend
+/**
+ * @tsplus static ets/Effect.Ops tracedMask
+ */
+export const ext_tracedMask = tracedMask
 
-    /**
-     * @ets_rewrite_static tryCatchPromise from "@effect-ts/core/Effect"
-     */
-    tryCatchPromise: typeof T.tryCatchPromise
+import { transplant } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tryPromise from "@effect-ts/core/Effect"
-     */
-    tryPromise: typeof T.tryPromise
+/**
+ * @tsplus static ets/Effect.Ops transplant
+ */
+export const ext_transplant = transplant
 
-    /**
-     * @ets_rewrite_static tuple from "@effect-ts/core/Effect"
-     */
-    tuple: typeof T.tuple
+import { try } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static tuplePar from "@effect-ts/core/Effect"
-     */
-    tuplePar: typeof T.tuplePar
+/**
+ * @tsplus static ets/Effect.Ops try
+ */
+export const ext_try = try
 
-    /**
-     * @ets_rewrite_static tupleParN from "@effect-ts/core/Effect"
-     */
-    tupleParN: typeof T.tupleParN
+import { tryCatch } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static uninterruptibleMask from "@effect-ts/core/Effect"
-     */
-    uninterruptibleMask: typeof T.uninterruptibleMask
+/**
+ * @tsplus static ets/Effect.Ops tryCatch
+ */
+export const ext_tryCatch = tryCatch
 
-    /**
-     * @ets_rewrite_static union from "@effect-ts/core/Effect"
-     */
-    union: typeof T.union
+import { tryCatch } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static unionFn from "@effect-ts/core/Effect"
-     */
-    unionFn: typeof T.unionFn
+/**
+ * @tsplus static ets/Effect.Ops tryCatchOption
+ */
+export const ext_tryCatch = tryCatch
 
-    /**
-     * @ets_rewrite_static unit from "@effect-ts/core/Effect"
-     */
-    unit: typeof T.unit
+import { tryCatchSuspend } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static unitTraced from "@effect-ts/core/Effect"
-     */
-    unitTraced: typeof T.unitTraced
+/**
+ * @tsplus static ets/Effect.Ops tryCatchSuspend
+ */
+export const ext_tryCatchSuspend = tryCatchSuspend
 
-    /**
-     * @ets_rewrite_static untracedMask from "@effect-ts/core/Effect"
-     */
-    untracedMask: typeof T.untracedMask
+import { tryCatchPromise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tryCatchPromise
+ */
+export const ext_tryCatchPromise = tryCatchPromise
+
+import { tryPromise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tryPromise
+ */
+export const ext_tryPromise = tryPromise
+
+import { tuple } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tuple
+ */
+export const ext_tuple = tuple
+
+import { tuplePar } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tuplePar
+ */
+export const ext_tuplePar = tuplePar
+
+import { tupleParN } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops tupleParN
+ */
+export const ext_tupleParN = tupleParN
+
+import { uninterruptibleMask } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops uninterruptibleMask
+ */
+export const ext_uninterruptibleMask = uninterruptibleMask
+
+import { union } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops union
+ */
+export const ext_union = union
+
+import { unionFn } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops unionFn
+ */
+export const ext_unionFn = unionFn
+
+import { unit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops unit
+ */
+export const ext_unit = unit
+
+import { unitTraced } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops unitTraced
+ */
+export const ext_unitTraced = unitTraced
+
+import { untracedMask } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops untracedMask
+ */
+export const ext_untracedMask = untracedMask
 
     /**
      * @ets_rewrite_static validate from "@effect-ts/core/Effect"
@@ -1595,15 +1572,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, Chunk<E>, Chunk<B>>
+import { validate_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validate_ from "@effect-ts/core/Effect"
-     */
-    validate<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops validate
+ */
+export const ext_validate_ = validate_
 
     /**
      * @ets_rewrite_static validatePar from "@effect-ts/core/Effect"
@@ -1613,15 +1587,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, Chunk<E>, Chunk<B>>
+import { validatePar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validatePar_ from "@effect-ts/core/Effect"
-     */
-    validatePar<A, R, E, B>(
-      as: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops validatePar
+ */
+export const ext_validatePar_ = validatePar_
 
     /**
      * @ets_rewrite_static validateParN from "@effect-ts/core/Effect"
@@ -1632,16 +1603,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (as: Iterable<A>) => T.Effect<R, Chunk<E>, Chunk<B>>
+import { validateParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validateParN_ from "@effect-ts/core/Effect"
-     */
-    validateParN<A, R, E, B>(
-      as: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops validateParN
+ */
+export const ext_validateParN_ = validateParN_
 
     /**
      * @ets_rewrite_static validateExec from "@effect-ts/core/Effect"
@@ -1652,16 +1619,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => Effect<R, E, B>,
       __trace?: string
     ): (as: Iterable<A>) => Effect<R, Chunk<E>, Chunk<B>>
+import { validateExec_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validateExec_ from "@effect-ts/core/Effect"
-     */
-    validateExec<A, R, E, B>(
-      as: Iterable<A>,
-      es: T.ExecutionStrategy,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, Chunk<B>>
+/**
+ * @tsplus static ets/Effect.Ops validateExec
+ */
+export const ext_validateExec_ = validateExec_
 
     /**
      * @ets_rewrite_static validateFirst from "@effect-ts/core/Effect"
@@ -1671,15 +1634,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (i: Iterable<A>) => T.Effect<R, Chunk<E>, B>
+import { validateFirst_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validateFirst_ from "@effect-ts/core/Effect"
-     */
-    validateFirst<A, R, E, B>(
-      i: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, B>
+/**
+ * @tsplus static ets/Effect.Ops validateFirst
+ */
+export const ext_validateFirst_ = validateFirst_
 
     /**
      * @ets_rewrite_static validateFirstPar from "@effect-ts/core/Effect"
@@ -1689,15 +1649,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (i: Iterable<A>) => T.Effect<R, Chunk<E>, B>
+import { validateFirstPar_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validateFirstPar_ from "@effect-ts/core/Effect"
-     */
-    validateFirstPar<A, R, E, B>(
-      i: Iterable<A>,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, B>
+/**
+ * @tsplus static ets/Effect.Ops validateFirstPar
+ */
+export const ext_validateFirstPar_ = validateFirstPar_
 
     /**
      * @ets_rewrite_static validateFirstParN from "@effect-ts/core/Effect"
@@ -1708,16 +1665,12 @@ declare module "@effect-ts/system/Effect/effect" {
       f: (a: A) => T.Effect<R, E, B>,
       __trace?: string | undefined
     ): (i: Iterable<A>) => T.Effect<R, Chunk<E>, B>
+import { validateFirstParN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static validateFirstParN_ from "@effect-ts/core/Effect"
-     */
-    validateFirstParN<A, R, E, B>(
-      i: Iterable<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, Chunk<E>, B>
+/**
+ * @tsplus static ets/Effect.Ops validateFirstParN
+ */
+export const ext_validateFirstParN_ = validateFirstParN_
 
     /**
      * @ets_rewrite_static whenCase from "@effect-ts/core/Effect"
@@ -1727,36 +1680,40 @@ declare module "@effect-ts/system/Effect/effect" {
       pf: (a: A) => O.Option<T.Effect<R, E, X>>,
       __trace?: string | undefined
     ): (a: A) => T.Effect<R, E, void>
+import { whenCase_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static whenCase_ from "@effect-ts/core/Effect"
-     */
-    whenCase<R, E, A, X>(
-      a: A,
-      pf: (a: A) => O.Option<T.Effect<R, E, X>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, void>
+/**
+ * @tsplus static ets/Effect.Ops whenCase
+ */
+export const ext_whenCase_ = whenCase_
 
-    /**
-     * @ets_rewrite_static withChildren from "@effect-ts/core/Effect"
-     */
-    withChildren: typeof T.withChildren
+import { withChildren } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static withRuntime from "@effect-ts/core/Effect"
-     */
-    withRuntime: typeof T.withRuntime
+/**
+ * @tsplus static ets/Effect.Ops withChildren
+ */
+export const ext_withChildren = withChildren
 
-    /**
-     * @ets_rewrite_static withRuntime from "@effect-ts/core/Effect"
-     */
-    withRuntimeM: typeof T.withRuntimeM
+import { withRuntime } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_static yieldNow from "@effect-ts/core/Effect"
-     */
-    yieldNow: typeof T.yieldNow
-  }
+/**
+ * @tsplus static ets/Effect.Ops withRuntime
+ */
+export const ext_withRuntime = withRuntime
+
+import { withRuntime } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops withRuntimeM
+ */
+export const ext_withRuntime = withRuntime
+
+import { yieldNow } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus static ets/Effect.Ops yieldNow
+ */
+export const ext_yieldNow = yieldNow
 
   export interface Base<R, E, A> extends Effect<R, E, A> {}
 

@@ -17,301 +17,418 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
   const Chunk: ChunkStaticOps
 
   interface ChunkStaticOps {
-    /**
-     * @ets_rewrite_static Any from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Any: typeof C.Any
+import { Any } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Applicative from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Applicative: typeof C.Applicative
+/**
+ * @tsplus static ets/Chunk.Ops Any
+ */
+export const ext_Any = Any
 
-    /**
-     * @ets_rewrite_static ApplyZip from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ApplyZip: typeof C.ApplyZip
+import { Applicative } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static AssociativeBothZip from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    AssociativeBothZip: typeof C.AssociativeBothZip
+/**
+ * @tsplus static ets/Chunk.Ops Applicative
+ */
+export const ext_Applicative = Applicative
 
-    /**
-     * @ets_rewrite_static AssociativeFlatten from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    AssociativeFlatten: typeof C.AssociativeFlatten
+import { ApplyZip } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static BreadthFirstChainRec from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    BreadthFirstChainRec: typeof C.BreadthFirstChainRec
+/**
+ * @tsplus static ets/Chunk.Ops ApplyZip
+ */
+export const ext_ApplyZip = ApplyZip
 
-    /**
-     * @ets_rewrite_static breadthFirstChainRec from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    breadthFirstChainRec: typeof C.breadthFirstChainRec
+import { AssociativeBothZip } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static builder from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    builder: typeof C.builder
+/**
+ * @tsplus static ets/Chunk.Ops AssociativeBothZip
+ */
+export const ext_AssociativeBothZip = AssociativeBothZip
 
-    /**
-     * @ets_rewrite_static Collection from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Collection: typeof C.Collection
+import { AssociativeFlatten } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Compact from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Compact: typeof C.Compact
+/**
+ * @tsplus static ets/Chunk.Ops AssociativeFlatten
+ */
+export const ext_AssociativeFlatten = AssociativeFlatten
 
-    /**
-     * @ets_rewrite_static compactF from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    compactF: typeof C.compactF
+import { BreadthFirstChainRec } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static compactWithIndexF from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    compactWithIndexF: typeof C.compactWithIndexF
+/**
+ * @tsplus static ets/Chunk.Ops BreadthFirstChainRec
+ */
+export const ext_BreadthFirstChainRec = BreadthFirstChainRec
 
-    /**
-     * @ets_rewrite_static Covariant from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Covariant: typeof C.Covariant
+import { breadthFirstChainRec } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static DepthFirstChainRec from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    DepthFirstChainRec: typeof C.DepthFirstChainRec
+/**
+ * @tsplus static ets/Chunk.Ops breadthFirstChainRec
+ */
+export const ext_breadthFirstChainRec = breadthFirstChainRec
 
-    /**
-     * @ets_rewrite_static depthFirstChainRec from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    depthFirstChainRec: typeof C.depthFirstChainRec
+import { builder } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static empty from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    empty: typeof C.empty
+/**
+ * @tsplus static ets/Chunk.Ops builder
+ */
+export const ext_builder = builder
 
-    /**
-     * @ets_rewrite_static Extend from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Extend: typeof C.Extend
+import { Collection } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static fill from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    fill: typeof C.fill
+/**
+ * @tsplus static ets/Chunk.Ops Collection
+ */
+export const ext_Collection = Collection
 
-    /**
-     * @ets_rewrite_static Filter from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Filter: typeof C.Filter
+import { Compact } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Filterable from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Filterable: typeof C.Filterable
+/**
+ * @tsplus static ets/Chunk.Ops Compact
+ */
+export const ext_Compact = Compact
 
-    /**
-     * @ets_rewrite_static FilterableWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FilterableWithIndex: typeof C.FilterableWithIndex
+import { compactF } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static FilterMap from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FilterMap: typeof C.FilterMap
+/**
+ * @tsplus static ets/Chunk.Ops compactF
+ */
+export const ext_compactF = compactF
 
-    /**
-     * @ets_rewrite_static FilterMapWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FilterMapWithIndex: typeof C.FilterMapWithIndex
+import { compactWithIndexF } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static FilterWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FilterWithIndex: typeof C.FilterWithIndex
+/**
+ * @tsplus static ets/Chunk.Ops compactWithIndexF
+ */
+export const ext_compactWithIndexF = compactWithIndexF
 
-    /**
-     * @ets_rewrite_static Foldable from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Foldable: typeof C.Foldable
+import { Covariant } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static FoldableWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FoldableWithIndex: typeof C.FoldableWithIndex
+/**
+ * @tsplus static ets/Chunk.Ops Covariant
+ */
+export const ext_Covariant = Covariant
 
-    /**
-     * @ets_rewrite_static FoldMap from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FoldMap: typeof C.FoldMap
+import { DepthFirstChainRec } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static FoldMapWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    FoldMapWithIndex: typeof C.FoldMapWithIndex
+/**
+ * @tsplus static ets/Chunk.Ops DepthFirstChainRec
+ */
+export const ext_DepthFirstChainRec = DepthFirstChainRec
 
-    /**
-     * @ets_rewrite_static ForEach from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ForEach: typeof C.ForEach
+import { depthFirstChainRec } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static forEachF from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    forEachF: typeof C.forEachF
+/**
+ * @tsplus static ets/Chunk.Ops depthFirstChainRec
+ */
+export const ext_depthFirstChainRec = depthFirstChainRec
 
-    /**
-     * @ets_rewrite_static ForEachWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ForEachWithIndex: typeof C.ForEachWithIndex
+import { empty } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static forEachWithIndexF from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    forEachWithIndexF: typeof C.forEachWithIndexF
+/**
+ * @tsplus static ets/Chunk.Ops empty
+ */
+export const ext_empty = empty
 
-    /**
-     * @ets_rewrite_static from from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    from: typeof C.from
+import { Extend } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static getEqual from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    getEqual: typeof C.getEqual
+/**
+ * @tsplus static ets/Chunk.Ops Extend
+ */
+export const ext_Extend = Extend
 
-    /**
-     * @ets_rewrite_static getIdentity from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    getIdentity: typeof C.getIdentity
+import { fill } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static getOrd from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    getOrd: typeof C.getOrd
+/**
+ * @tsplus static ets/Chunk.Ops fill
+ */
+export const ext_fill = fill
 
-    /**
-     * @ets_rewrite_static getShow from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    getShow: typeof C.getShow
+import { Filter } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static many from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    many: typeof C.many
+/**
+ * @tsplus static ets/Chunk.Ops Filter
+ */
+export const ext_Filter = Filter
 
-    /**
-     * @ets_rewrite_static Monad from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Monad: typeof C.Monad
+import { Filterable } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Partition from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Partition: typeof C.Partition
+/**
+ * @tsplus static ets/Chunk.Ops Filterable
+ */
+export const ext_Filterable = Filterable
 
-    /**
-     * @ets_rewrite_static PartitionMap from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    PartitionMap: typeof C.PartitionMap
+import { FilterableWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static PartitionMapWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    PartitionMapWithIndex: typeof C.PartitionMapWithIndex
+/**
+ * @tsplus static ets/Chunk.Ops FilterableWithIndex
+ */
+export const ext_FilterableWithIndex = FilterableWithIndex
 
-    /**
-     * @ets_rewrite_static PartitionWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    PartitionWithIndex: typeof C.PartitionWithIndex
+import { FilterMap } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static range from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    range: typeof C.range
+/**
+ * @tsplus static ets/Chunk.Ops FilterMap
+ */
+export const ext_FilterMap = FilterMap
 
-    /**
-     * @ets_rewrite_static Reduce from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Reduce: typeof C.Reduce
+import { FilterMapWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static ReduceRight from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ReduceRight: typeof C.ReduceRight
+/**
+ * @tsplus static ets/Chunk.Ops FilterMapWithIndex
+ */
+export const ext_FilterMapWithIndex = FilterMapWithIndex
 
-    /**
-     * @ets_rewrite_static ReduceRightWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ReduceRightWithIndex: typeof C.ReduceRightWithIndex
+import { FilterWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static ReduceWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    ReduceWithIndex: typeof C.ReduceWithIndex
+/**
+ * @tsplus static ets/Chunk.Ops FilterWithIndex
+ */
+export const ext_FilterWithIndex = FilterWithIndex
 
-    /**
-     * @ets_rewrite_static Separate from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Separate: typeof C.Separate
+import { Foldable } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static separateF from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    separateF: typeof C.separateF
+/**
+ * @tsplus static ets/Chunk.Ops Foldable
+ */
+export const ext_Foldable = Foldable
 
-    /**
-     * @ets_rewrite_static single from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    single: typeof C.single
+import { FoldableWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static unfold_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unfold: typeof C.unfold
+/**
+ * @tsplus static ets/Chunk.Ops FoldableWithIndex
+ */
+export const ext_FoldableWithIndex = FoldableWithIndex
 
-    /**
-     * @ets_rewrite_static unfoldM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unfoldM: typeof C.unfoldM
+import { FoldMap } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static uniq from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    uniq: typeof C.uniq
+/**
+ * @tsplus static ets/Chunk.Ops FoldMap
+ */
+export const ext_FoldMap = FoldMap
 
-    /**
-     * @ets_rewrite_static unit from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unit: typeof C.unit
+import { FoldMapWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Wiltable from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Wiltable: typeof C.Wiltable
+/**
+ * @tsplus static ets/Chunk.Ops FoldMapWithIndex
+ */
+export const ext_FoldMapWithIndex = FoldMapWithIndex
 
-    /**
-     * @ets_rewrite_static WiltableWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    WiltableWithIndex: typeof C.WiltableWithIndex
+import { ForEach } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_static Witherable from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    Witherable: typeof C.Witherable
+/**
+ * @tsplus static ets/Chunk.Ops ForEach
+ */
+export const ext_ForEach = ForEach
 
-    /**
-     * @ets_rewrite_static WitherableWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    WitherableWithIndex: typeof C.WitherableWithIndex
-  }
+import { forEachF } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops forEachF
+ */
+export const ext_forEachF = forEachF
+
+import { ForEachWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops ForEachWithIndex
+ */
+export const ext_ForEachWithIndex = ForEachWithIndex
+
+import { forEachWithIndexF } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops forEachWithIndexF
+ */
+export const ext_forEachWithIndexF = forEachWithIndexF
+
+import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops from
+ */
+export const ext_from = from
+
+import { getEqual } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops getEqual
+ */
+export const ext_getEqual = getEqual
+
+import { getIdentity } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops getIdentity
+ */
+export const ext_getIdentity = getIdentity
+
+import { getOrd } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops getOrd
+ */
+export const ext_getOrd = getOrd
+
+import { getShow } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops getShow
+ */
+export const ext_getShow = getShow
+
+import { many } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops many
+ */
+export const ext_many = many
+
+import { Monad } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Monad
+ */
+export const ext_Monad = Monad
+
+import { Partition } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Partition
+ */
+export const ext_Partition = Partition
+
+import { PartitionMap } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops PartitionMap
+ */
+export const ext_PartitionMap = PartitionMap
+
+import { PartitionMapWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops PartitionMapWithIndex
+ */
+export const ext_PartitionMapWithIndex = PartitionMapWithIndex
+
+import { PartitionWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops PartitionWithIndex
+ */
+export const ext_PartitionWithIndex = PartitionWithIndex
+
+import { range } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops range
+ */
+export const ext_range = range
+
+import { Reduce } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Reduce
+ */
+export const ext_Reduce = Reduce
+
+import { ReduceRight } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops ReduceRight
+ */
+export const ext_ReduceRight = ReduceRight
+
+import { ReduceRightWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops ReduceRightWithIndex
+ */
+export const ext_ReduceRightWithIndex = ReduceRightWithIndex
+
+import { ReduceWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops ReduceWithIndex
+ */
+export const ext_ReduceWithIndex = ReduceWithIndex
+
+import { Separate } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Separate
+ */
+export const ext_Separate = Separate
+
+import { separateF } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops separateF
+ */
+export const ext_separateF = separateF
+
+import { single } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops single
+ */
+export const ext_single = single
+
+import { unfold_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops unfold
+ */
+export const ext_unfold_ = unfold_
+
+import { unfoldM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops unfoldM
+ */
+export const ext_unfoldM_ = unfoldM_
+
+import { uniq } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops uniq
+ */
+export const ext_uniq = uniq
+
+import { unit } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops unit
+ */
+export const ext_unit = unit
+
+import { Wiltable } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Wiltable
+ */
+export const ext_Wiltable = Wiltable
+
+import { WiltableWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops WiltableWithIndex
+ */
+export const ext_WiltableWithIndex = WiltableWithIndex
+
+import { Witherable } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops Witherable
+ */
+export const ext_Witherable = Witherable
+
+import { WitherableWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus static ets/Chunk.Ops WitherableWithIndex
+ */
+export const ext_WitherableWithIndex = WitherableWithIndex
 
   interface Chunk<A> extends ChunkOps {}
 
