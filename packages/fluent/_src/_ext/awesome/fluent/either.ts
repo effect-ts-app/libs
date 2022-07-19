@@ -32,7 +32,7 @@ export const ext_getLeft = getLeft
 export const ext_getRight = getRight
 
 /**
- * @tsplus fluent ets/Either chain
+ * @tsplus fluent ets/Either flatMap
  */
 export const ext_chain_ = chain_
 

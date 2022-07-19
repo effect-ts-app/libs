@@ -16,6 +16,7 @@
       "@effect-ts-app/prelude/_ext/index",
       "@effect-ts-app/fluent/types/node"
     ],
+    "tsPlusConfig": "../../tsplus.config.json",
     "paths": {
       "@effect-ts-app/core/*": [
         "../core/_src/*"

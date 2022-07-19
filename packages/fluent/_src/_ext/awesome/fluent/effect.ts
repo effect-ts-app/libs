@@ -10,12 +10,10 @@ import {
   accessService,
   accessServiceM,
   accessServices,
-  accessServices,
   accessServicesT,
   accessServicesTM,
   andThen_,
   ap_,
-  Applicative,
   Applicative,
   as_,
   asService_,
@@ -44,35 +42,47 @@ import {
   chain_,
   chainError_,
   collect,
+  collect_,
   collectAll,
   collectAllPar,
-  collectAllPar,
+  collectAllParN,
+  collectAllParN_,
   collectAllSuccesses,
   collectAllSuccessesPar,
-  collectAllSuccessesPar,
+  collectAllSuccessesParN,
   collectAllUnit,
-  collectAllUnit,
+  collectAllUnitPar,
   collectAllUnitParN,
+  collectAllUnitParN_,
   collectAllWith,
+  collectAllWith_,
   collectAllWithPar,
+  collectAllWithPar_,
   collectAllWithParN,
+  collectAllWithParN_,
   collectPar,
+  collectPar_,
   collectParN,
+  collectParN_,
   compose_,
   cond,
+  cond_,
   condM,
+  condM_,
   continueOrFail_,
   continueOrFailM_,
   defaultEnv,
   defaultPlatform,
   delay_,
   deriveLifted,
+  descriptor,
   descriptorWith,
   die,
   dieWith,
   do as do__,
   done,
   dropWhile,
+  dropWhile_,
   effectAsync,
   effectAsyncBlockingOn,
   effectAsyncInterrupt,
@@ -89,12 +99,19 @@ import {
   environment,
   eventually,
   fail,
+  failWith,
   filter,
+  filter_,
   filterNot,
+  filterNot_,
   filterNotPar,
+  filterNotPar_,
   filterNotParN,
+  filterNotParN_,
   filterPar,
+  filterPar_,
   filterParN,
+  filterParN_,
   first,
   firstSuccessOf,
   flatten,
@@ -106,8 +123,11 @@ import {
   forEach,
   forEach_,
   forEachExec,
+  forEachExec_,
   forEachPar,
+  forEachPar_,
   forEachParN,
+  forEachParN_,
   forever,
   fork,
   forkAll,
@@ -119,8 +139,9 @@ import {
   forkInReport_,
   forkManaged,
   forkScope,
-  forkScope,
   forkScopeMask,
+  forkScopeMask_,
+  forkScopeWith,
   forkWithErrorHandler_,
   fromAsync,
   fromEither,
@@ -128,15 +149,8 @@ import {
   fromFiberM,
   fromIO,
   fromNodeCb,
-  fromNodeCb,
-  fromNodeCb,
-  fromNodeCb,
-  fromNodeCb,
-  fromNodeCb,
-  fromNodeCb,
   fromNullable,
   fromOption,
-  fromPredicate,
   fromPredicate,
   gen,
   genM,
@@ -149,6 +163,7 @@ import {
   halt,
   haltWith,
   if as if__,
+  if_,
   ifM_,
   ignore,
   in_,
@@ -189,8 +204,11 @@ import {
   memoizeEq,
   merge,
   mergeAll,
+  mergeAll_,
   mergeAllPar,
+  mergeAllPar_,
   mergeAllParN,
+  mergeAllParN_,
   never,
   none,
   once,
@@ -214,15 +232,19 @@ import {
   parallel,
   parallelN,
   partition,
+  partition_,
   partitionPar,
+  partitionPar_,
   partitionParN,
+  partitionParN_,
   prettyReporter,
   promise,
   provide,
+  provide_,
   provideAll,
   provideAll_,
-  provideAll_,
   provideLayer,
+  provideLayer_,
   provideService_,
   provideServiceM_,
   provideSome,
@@ -238,10 +260,15 @@ import {
   raceWith_,
   raceWithScope_,
   reduce,
+  reduce_,
   reduceAll,
+  reduceAll_,
   reduceAllPar,
+  reduceAllPar_,
   reduceAllParN,
+  reduceAllParN_,
   reduceRight,
+  reduceRight_,
   refailWithTrace,
   refineOrDie_,
   refineOrDieWith_,
@@ -259,7 +286,7 @@ import {
   replicate_,
   require_,
   reserve_,
-  resetForkScope_,
+  resetForkScope,
   result,
   resurrect,
   retry_,
@@ -289,6 +316,7 @@ import {
   struct,
   structPar,
   structParN,
+  structParN_,
   succeed,
   succeedWith,
   summarized_,
@@ -312,8 +340,7 @@ import {
   transplant,
   try as try__,
   tryCatch,
-  tryCatch,
-  tryCatchPromise,
+  tryCatchOption,
   tryCatchPromise,
   tryCatchSuspend,
   tryPromise,
@@ -330,24 +357,31 @@ import {
   unless_,
   unlessM_,
   unrefine_,
-  unrefine_,
   unrefineWith_,
   untraced,
   untracedMask,
   updateService_,
   validate,
+  validate_,
   validateExec,
+  validateExec_,
   validateFirst,
+  validateFirst_,
   validateFirstPar,
+  validateFirstPar_,
   validateFirstParN,
+  validateFirstParN_,
   validatePar,
+  validatePar_,
   validateParN,
+  validateParN_,
   when_,
   whenCase,
+  whenCase_,
   whenM_,
   withChildren,
   withRuntime,
-  withRuntime,
+  withRuntimeM,
   yieldNow,
   zip_,
   zipLeft_,
@@ -401,7 +435,7 @@ export const ext_accessServices = accessServices
 /**
  * @tsplus static ets/Effect.Ops accessServicesM
  */
-export const ext_accessServices = accessServices
+export const ext_accessServicesM = accessServices
 
 /**
  * @tsplus static ets/Effect.Ops accessServicesT
@@ -438,7 +472,7 @@ export const ext_collectAllPar = collectAllPar
  * @tsplus static ets/Effect collectAllParN
  *  // data_first collectAllParN_
  */
-export const ext_collectAllPar = collectAllPar
+export const ext_collectAllParN = collectAllParN
 
 /**
  * @tsplus static ets/Effect.Ops collectAllParN
@@ -458,7 +492,7 @@ export const ext_collectAllSuccessesPar = collectAllSuccessesPar
 /**
  * @tsplus static ets/Effect.Ops collectAllSuccessesParN
  */
-export const ext_collectAllSuccessesPar = collectAllSuccessesPar
+export const ext_collectAllSuccessesParN = collectAllSuccessesParN
 
 /**
  * @tsplus static ets/Effect.Ops collectAllUnit
@@ -468,7 +502,7 @@ export const ext_collectAllUnit = collectAllUnit
 /**
  * @tsplus static ets/Effect.Ops collectAllUnitPar
  */
-export const ext_collectAllUnit = collectAllUnit
+export const ext_collectAllUnitPar = collectAllUnitPar
 
 /**
  * @tsplus static ets/Effect collectAllUnitParN
@@ -561,7 +595,7 @@ export const ext_condM_ = condM_
 /**
  * @tsplus static ets/Effect.Ops descriptor
  */
-export const ext_Applicative = Applicative
+export const ext_descriptor = descriptor
 
 /**
  * @tsplus static ets/Effect.Ops descriptorWith
@@ -824,7 +858,7 @@ export const ext_forkScopeMask_ = forkScopeMask_
 /**
  * @tsplus static ets/Effect.Ops forkScopeWith
  */
-export const ext_forkScope = forkScope
+export const ext_forkScopeWith = forkScopeWith
 
 /**
  * @tsplus static ets/Effect.Ops firstSuccessOf
@@ -856,10 +890,10 @@ export const ext_fromFiberM = fromFiberM
  */
 export const ext_fromPredicate = fromPredicate
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromPredicate = fromPredicate
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromPredicate = fromPredicate
 
 /**
  * @tsplus static ets/Effect.Ops from
@@ -871,35 +905,35 @@ export const ext_fromIO = fromIO
  */
 export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
-/**
- * @tsplus static ets/Effect.Ops from
- */
-export const ext_fromNodeCb = fromNodeCb
+// /**
+//  * @tsplus static ets/Effect.Ops from
+//  */
+// export const ext_fromNodeCb = fromNodeCb
 
 /**
  * @tsplus static ets/Effect.Ops from
@@ -1011,7 +1045,7 @@ export const ext_mapN = mapN
 /**
  * @tsplus static ets/Effect.Ops mapN
  */
-export const ext_mapN_ = mapN_
+export const ext_mapNOp_ = mapN_
 
 /**
  * @tsplus static ets/Effect mapNPar
@@ -1022,7 +1056,7 @@ export const ext_mapNPar = mapNPar
 /**
  * @tsplus static ets/Effect.Ops mapNPar
  */
-export const ext_mapNPar_ = mapNPar_
+export const ext_mapNParOp_ = mapNPar_
 
 /**
  * @tsplus static ets/Effect mapNParN
@@ -1033,7 +1067,7 @@ export const ext_mapNParN = mapNParN
 /**
  * @tsplus static ets/Effect.Ops mapNParN
  */
-export const ext_mapNParN_ = mapNParN_
+export const ext_mapNParNOp_ = mapNParN_
 
 /**
  * @tsplus static ets/Effect.Ops match
@@ -1169,7 +1203,7 @@ export const ext_promise = promise
 /**
  * @tsplus static ets/Effect.Ops promise
  */
-export const ext_tryCatchPromise = tryCatchPromise
+export const ext_tryCatchPromiseOp = tryCatchPromise
 
 /**
  * @tsplus static ets/Effect provide
@@ -1191,7 +1225,7 @@ export const ext_provideAll = provideAll
 /**
  * @tsplus static ets/Effect.Ops provideAll
  */
-export const ext_provideAll_ = provideAll_
+export const ext_provideAllOp_ = provideAll_
 
 /**
  * @tsplus static ets/Effect provideLayer
@@ -1223,6 +1257,7 @@ export const ext_provideSome = provideSome
 
 /**
  * @tsplus static ets/Effect.Ops provideSome
+ * @tsplus fluent ets/Effect injectSome
  */
 export const ext_provideSome_ = provideSome_
 
@@ -1390,7 +1425,7 @@ export const ext_tryCatch = tryCatch
 /**
  * @tsplus static ets/Effect.Ops tryCatchOption
  */
-export const ext_tryCatch = tryCatch
+export const ext_tryCatchOption = tryCatchOption
 
 /**
  * @tsplus static ets/Effect.Ops tryCatchSuspend
@@ -1553,7 +1588,7 @@ export const ext_withRuntime = withRuntime
 /**
  * @tsplus static ets/Effect.Ops withRuntimeM
  */
-export const ext_withRuntime = withRuntime
+export const ext_withRuntimeM = withRuntimeM
 
 /**
  * @tsplus static ets/Effect.Ops yieldNow
@@ -1706,12 +1741,12 @@ export const ext_catchSomeDefect_ = catchSomeDefect_
 export const ext_cause = cause
 
 /**
- * @tsplus fluent ets/Effect chain
+ * @tsplus fluent ets/Effect flatMap
  */
 export const ext_chain_ = chain_
 
 /**
- * @tsplus fluent ets/Effect chainError
+ * @tsplus fluent ets/Effect flatMapError
  */
 export const ext_chainError_ = chainError_
 
@@ -1847,18 +1882,9 @@ export const ext_ifM_ = ifM_
 
 /**
  * @tsplus fluent ets/Effect injectAll
- */
-export const ext_provideAll_ = provideAll_
-
-/**
  * @tsplus fluent ets/Effect injectEnv
  */
 export const ext_provideAll_ = provideAll_
-
-/**
- * @tsplus fluent ets/Effect injectSome
- */
-export const ext_provideSome_ = provideSome_
 
 /**
  * @tsplus fluent ets/Effect injectService
@@ -1873,7 +1899,7 @@ export const ext_provideServiceM_ = provideServiceM_
 /**
  * @tsplus fluent ets/Effect inject
  */
-export const ext_provideSomeLayer_ = provideSomeLayer_
+export const ext_inject_ = provideSomeLayer_
 
 /**
  * @tsplus fluent ets/Effect ignore
@@ -2183,7 +2209,7 @@ export const ext_reserve_ = reserve_
 /**
  * @tsplus fluent ets/Effect resetForkScope
  */
-export const ext_resetForkScope_ = resetForkScope_
+export const ext_resetForkScope_ = resetForkScope
 
 /**
  * @tsplus fluent ets/Effect result
@@ -2408,7 +2434,7 @@ export const ext_unrefine_ = unrefine_
 /**
  * @tsplus fluent ets/Effect unsandbox
  */
-export const ext_unrefine_ = unrefine_
+export const ext_unsandbox_ = unrefine_
 
 /**
  * @tsplus fluent ets/Effect untraced

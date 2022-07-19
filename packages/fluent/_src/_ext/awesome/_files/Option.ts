@@ -2,13 +2,8 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable import/no-duplicates */
 // ets_tracing: off
-import type { IO as EffectIO } from "@effect-ts/core/Effect"
-import type { Option } from "@effect-ts/core/Option"
-import type * as O from "@effect-ts/core/Option"
 import { toNullable } from "@effect-ts/core/Option"
 import { toUndefined } from "@effect-ts/core/Option"
-import type { IO as SyncIO } from "@effect-ts/core/Sync"
-import { encaseOption_ } from "@effect-ts-app/core/Effect"
 import { tryCatchOption_ } from "@effect-ts-app/core/Sync"
 import { alt_ } from "@effect-ts-app/fluent/_ext/Option"
 

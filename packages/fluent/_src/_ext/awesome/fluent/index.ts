@@ -1,5 +1,7 @@
 // ets_tracing: off
 
+import "@effect-ts-app/fluent/types/awesome/awesome"
+
 export {} from "./core"
 export {} from "./effect"
 export {} from "./either"

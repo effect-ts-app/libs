@@ -9,7 +9,6 @@ import {
   exists_,
   extend_,
   filter_,
-  filter_,
   filterMap_,
   flatten,
   fold_,
@@ -18,7 +17,6 @@ import {
   isSome,
   map_,
   none,
-  partition_,
   partition_,
   partitionMap_,
   separate,
@@ -36,7 +34,7 @@ import {
 export const ext_ap_ = ap_
 
 /**
- * @tsplus fluent ets/Option chain
+ * @tsplus fluent ets/Option flatMap
  */
 export const ext_chain_ = chain_
 
@@ -59,11 +57,6 @@ export const ext_extend_ = extend_
  * @tsplus fluent ets/Option flatten
  */
 export const ext_flatten = flatten
-
-/**
- * @tsplus fluent ets/Option filter
- */
-export const ext_filter_ = filter_
 
 /**
  * @tsplus fluent ets/Option filter
@@ -104,11 +97,6 @@ export const ext_map_ = map_
  * @tsplus fluent ets/Option partition
  */
 export const ext_partitionMap_ = partitionMap_
-
-/**
- * @tsplus fluent ets/Option partition
- */
-export const ext_partition_ = partition_
 
 /**
  * @tsplus fluent ets/Option partition
@@ -159,5 +147,3 @@ export const ext_none = none
  * @tsplus static ets/Option.Ops Applicative
  */
 export const ext_Applicative = Applicative
-
-export const Option: OptionStaticOps

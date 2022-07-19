@@ -12,9 +12,10 @@ import {
   buckets,
   builder,
   chain_,
+  collect_,
+  collectEffect_,
   Collection,
-  collectM_,
-  collectWhileM_,
+  collectWhileEffect_,
   Compact,
   compact,
   compactF,
@@ -27,27 +28,24 @@ import {
   difference_,
   drop_,
   dropWhile_,
-  dropWhileM_,
+  dropWhileEffect_,
   elem_,
   empty,
   equals,
-  every_,
+  //every_,
   exists_,
   Extend,
   fill,
   Filter,
   filter_,
-  filter_,
   Filterable,
   FilterableWithIndex,
-  filterM_,
+  filterEffect_,
   FilterMap,
-  filterMap_,
   FilterMapWithIndex,
   FilterWithIndex,
   find_,
-  find_,
-  findM_,
+  findEffect_,
   flatten,
   Foldable,
   FoldableWithIndex,
@@ -75,16 +73,15 @@ import {
   isEmpty,
   join_,
   last,
-  many,
   map_,
   mapAccum_,
-  mapAccumM_,
-  mapM_,
-  mapMPar_,
-  mapMParN_,
-  mapMUnit_,
-  mapMUnitPar_,
-  mapMUnitParN_,
+  mapAccumEffect_,
+  mapEffect_,
+  mapEffectPar_,
+  //mapEffectParN_,
+  mapEffectUnit_,
+  mapEffectUnitPar_,
+  mapEffectUnitParN_,
   Monad,
   Partition,
   partition_,
@@ -98,13 +95,13 @@ import {
   range,
   Reduce,
   reduce_,
-  reduceM_,
+  reduceEffect_,
   ReduceRight,
   reduceRight_,
-  reduceRightM_,
+  reduceRightEffect_,
   ReduceRightWithIndex,
   reduceWhile_,
-  reduceWhileM_,
+  reduceWhileEffect_,
   ReduceWithIndex,
   reverse,
   reverseBuckets,
@@ -120,18 +117,17 @@ import {
   tail,
   take_,
   takeWhile_,
-  takeWhileM_,
+  takeWhileEffect_,
   toArray,
   toArrayLike,
-  unfold_,
-  unfoldM_,
+  unfold,
+  unfoldEffect,
   union_,
   uniq,
   uniq_,
   unit,
   unsafeGet_,
   unsafeHead,
-  unsafeLast,
   unsafeLast,
   unzip,
   Wiltable,
@@ -330,10 +326,10 @@ export const ext_getOrd = getOrd
  */
 export const ext_getShow = getShow
 
-/**
- * @tsplus static ets/Chunk.Ops many
- */
-export const ext_many = many
+// /**
+//  * @tsplus static ets/Chunk.Ops many
+//  */
+// export const ext_many = many
 
 /**
  * @tsplus static ets/Chunk.Ops Monad
@@ -403,12 +399,12 @@ export const ext_single = single
 /**
  * @tsplus static ets/Chunk.Ops unfold
  */
-export const ext_unfold_ = unfold_
+export const ext_unfold_ = unfold
 
 /**
- * @tsplus static ets/Chunk.Ops unfoldM
+ * @tsplus static ets/Chunk.Ops unfoldEffect
  */
-export const ext_unfoldM_ = unfoldM_
+export const ext_unfoldEffect = unfoldEffect
 
 /**
  * @tsplus static ets/Chunk.Ops uniq
@@ -446,19 +442,19 @@ export const ext_append_ = append_
 export const ext_buckets = buckets
 
 /**
- * @tsplus fluent ets/Chunk chain
+ * @tsplus fluent ets/Chunk flatMap
  */
 export const ext_chain_ = chain_
 
 /**
- * @tsplus fluent ets/Chunk collectM
+ * @tsplus fluent ets/Chunk collectEffect
  */
-export const ext_collectM_ = collectM_
+export const ext_collectEffect_ = collectEffect_
 
 /**
- * @tsplus fluent ets/Chunk collectWhileM
+ * @tsplus fluent ets/Chunk collectWhileEffect
  */
-export const ext_collectWhileM_ = collectWhileM_
+export const ext_collectWhileEffect_ = collectWhileEffect_
 
 /**
  * @tsplus fluent ets/Chunk compact
@@ -491,9 +487,9 @@ export const ext_drop_ = drop_
 export const ext_dropWhile_ = dropWhile_
 
 /**
- * @tsplus fluent ets/Chunk dropWhileM_
+ * @tsplus fluent ets/Chunk dropWhileEffect_
  */
-export const ext_dropWhileM_ = dropWhileM_
+export const ext_dropWhileEffect_ = dropWhileEffect_
 
 /**
  * @tsplus fluent ets/Chunk elem
@@ -505,10 +501,10 @@ export const ext_elem_ = elem_
  */
 export const ext_equals = equals
 
-/**
- * @tsplus fluent ets/Chunk every
- */
-export const ext_every_ = every_
+// /**
+//  * @tsplus fluent ets/Chunk every
+//  */
+// export const ext_every_ = every_
 
 /**
  * @tsplus fluent ets/Chunk exists
@@ -520,35 +516,35 @@ export const ext_exists_ = exists_
  */
 export const ext_filter_ = filter_
 
-/**
- * @tsplus fluent ets/Chunk filter
- */
-export const ext_filter_ = filter_
+// /**
+//  * @tsplus fluent ets/Chunk filter
+//  */
+// export const ext_filter_ = filter_
 
 /**
- * @tsplus fluent ets/Chunk filterM
+ * @tsplus fluent ets/Chunk filterEffect
  */
-export const ext_filterM_ = filterM_
+export const ext_filterEffect_ = filterEffect_
 
 /**
- * @tsplus fluent ets/Chunk filterMap
+ * @tsplus fluent ets/Chunk filterEffectap
  */
-export const ext_filterMap_ = filterMap_
-
-/**
- * @tsplus fluent ets/Chunk find
- */
-export const ext_find_ = find_
+export const ext_collect_ = collect_
 
 /**
  * @tsplus fluent ets/Chunk find
  */
 export const ext_find_ = find_
 
+// /**
+//  * @tsplus fluent ets/Chunk find
+//  */
+// export const ext_find_ = find_
+
 /**
- * @tsplus fluent ets/Chunk findM
+ * @tsplus fluent ets/Chunk findEffect
  */
-export const ext_findM_ = findM_
+export const ext_findEffect_ = findEffect_
 
 /**
  * @tsplus fluent ets/Chunk flatten
@@ -631,39 +627,39 @@ export const ext_map_ = map_
 export const ext_mapAccum_ = mapAccum_
 
 /**
- * @tsplus fluent ets/Chunk mapAccumM
+ * @tsplus fluent ets/Chunk mapAccumEffect
  */
-export const ext_mapAccumM_ = mapAccumM_
+export const ext_mapAccumEffect_ = mapAccumEffect_
 
 /**
- * @tsplus fluent ets/Chunk mapM
+ * @tsplus fluent ets/Chunk mapEffect
  */
-export const ext_mapM_ = mapM_
+export const ext_mapEffect_ = mapEffect_
 
 /**
- * @tsplus fluent ets/Chunk mapMPar
+ * @tsplus fluent ets/Chunk mapEffectPar
  */
-export const ext_mapMPar_ = mapMPar_
+export const ext_mapEffectPar_ = mapEffectPar_
+
+// /**
+//  * @tsplus fluent ets/Chunk mapEffectParN
+//  */
+// export const ext_mapEffectParN_ = mapEffectParN_
 
 /**
- * @tsplus fluent ets/Chunk mapMParN
+ * @tsplus fluent ets/Chunk mapEffectUnit
  */
-export const ext_mapMParN_ = mapMParN_
+export const ext_mapEffectUnit_ = mapEffectUnit_
 
 /**
- * @tsplus fluent ets/Chunk mapMUnit
+ * @tsplus fluent ets/Chunk mapEffectUnitPar
  */
-export const ext_mapMUnit_ = mapMUnit_
+export const ext_mapEffectUnitPar_ = mapEffectUnitPar_
 
 /**
- * @tsplus fluent ets/Chunk mapMUnitPar
+ * @tsplus fluent ets/Chunk mapEffectUnitParN
  */
-export const ext_mapMUnitPar_ = mapMUnitPar_
-
-/**
- * @tsplus fluent ets/Chunk mapMUnitParN
- */
-export const ext_mapMUnitParN_ = mapMUnitParN_
+export const ext_mapEffectUnitParN_ = mapEffectUnitParN_
 
 /**
  * @tsplus fluent ets/Chunk partition
@@ -696,9 +692,9 @@ export const ext_prepend_ = prepend_
 export const ext_reduce_ = reduce_
 
 /**
- * @tsplus fluent ets/Chunk reduceM
+ * @tsplus fluent ets/Chunk reduceEffect
  */
-export const ext_reduceM_ = reduceM_
+export const ext_reduceEffect_ = reduceEffect_
 
 /**
  * @tsplus fluent ets/Chunk reduceRight
@@ -706,9 +702,9 @@ export const ext_reduceM_ = reduceM_
 export const ext_reduceRight_ = reduceRight_
 
 /**
- * @tsplus fluent ets/Chunk reduceRightM
+ * @tsplus fluent ets/Chunk reduceRightEffect
  */
-export const ext_reduceRightM_ = reduceRightM_
+export const ext_reduceRightEffect_ = reduceRightEffect_
 
 /**
  * @tsplus fluent ets/Chunk reduceWhile
@@ -716,9 +712,9 @@ export const ext_reduceRightM_ = reduceRightM_
 export const ext_reduceWhile_ = reduceWhile_
 
 /**
- * @tsplus fluent ets/Chunk reduceWhileM
+ * @tsplus fluent ets/Chunk reduceWhileEffect
  */
-export const ext_reduceWhileM_ = reduceWhileM_
+export const ext_reduceWhileEffect_ = reduceWhileEffect_
 
 /**
  * @tsplus fluent ets/Chunk reverse
@@ -776,9 +772,9 @@ export const ext_take_ = take_
 export const ext_takeWhile_ = takeWhile_
 
 /**
- * @tsplus fluent ets/Chunk takeWhileM
+ * @tsplus fluent ets/Chunk takeWhileEffect
  */
-export const ext_takeWhileM_ = takeWhileM_
+export const ext_takeWhileEffect_ = takeWhileEffect_
 
 /**
  * @tsplus fluent ets/Chunk toArray
@@ -810,10 +806,10 @@ export const ext_unsafeGet_ = unsafeGet_
  */
 export const ext_unsafeHead = unsafeHead
 
-/**
- * @tsplus fluent ets/Chunk unsafeLast
- */
-export const ext_unsafeLast = unsafeLast
+// /**
+//  * @tsplus fluent ets/Chunk unsafeLast
+//  */
+// export const ext_unsafeLast = unsafeLast
 
 /**
  * @tsplus fluent ets/Chunk unsafeTail

@@ -38,7 +38,7 @@ export const ext_as_ = as_
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent ets/Managed chain
+ * @tsplus fluent ets/Managed flatMap
  */
 export const ext_chain_ = chain_
 

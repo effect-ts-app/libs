@@ -2,8 +2,6 @@ import {
   collect_,
   concat_,
   filter_,
-  filter_,
-  find_,
   find_,
   map_,
   toArray,
@@ -19,10 +17,10 @@ export const ext_concat_ = concat_
  */
 export const ext_filter_ = filter_
 
-/**
- * @tsplus fluent ets/Chunk filter
- */
-export const ext_filter_ = filter_
+// /**
+//  * @tsplus fluent ets/Chunk filter
+//  */
+// export const ext_filter_ = filter_
 
 /**
  * @tsplus fluent ets/Chunk map
@@ -44,7 +42,27 @@ export const ext_toArray = toArray
  */
 export const ext_find_ = find_
 
-/**
- * @tsplus fluent ets/Chunk find
- */
-export const ext_find_ = find_
+// /**
+//  * @tsplus fluent ets/Chunk find
+//  */
+// export const ext_find_ = find_
+
+// /**
+//  * @tsplus fluent ets/Chunk mapEffect
+//  */
+// export const ext_mapEffect_ = mapEffect_
+
+// /**
+//  * @tsplus fluent ets/Chunk mapSync
+//  */
+// export const ext_mapSync_ = mapSync_
+
+// /**
+//  * @tsplus fluent ets/Chunk mapEither
+//  */
+// export const ext_mapEither_ = mapEither_
+
+// /**
+//  * @tsplus fluent ets/Chunk mapOption
+//  */
+// export const ext_mapOption_ = mapOption_
