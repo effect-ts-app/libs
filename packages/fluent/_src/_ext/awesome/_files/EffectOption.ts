@@ -150,37 +150,37 @@ export const ext_orDie = orDie
 export const ext_mapError_ = mapError_
 
 /**
- * @tsplus fluent ets/EffectOption mapOption
+ * @tsplus fluent ets/Effect mapOption
  */
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent ets/EffectOption flatMapOption
+ * @tsplus fluent ets/Effect flatMapOption
  */
 export const ext_flatMap_ = flatMap_
 
 /**
- * @tsplus fluent ets/EffectOption flatMapOptionEffect
+ * @tsplus fluent ets/Effect flatMapOptionEffect
  */
 export const ext_flatMapEffect_ = flatMapEffect_
 
 /**
- * @tsplus fluent ets/EffectOption toNullable
+ * @tsplus fluent ets/Effect toNullable
  */
 export const ext_toNullable = toNullable
 
 /**
- * @tsplus fluent ets/EffectOption alt
+ * @tsplus fluent ets/Effect alt
  */
 export const ext_alt_ = alt_
 
 /**
- * @tsplus fluent ets/EffectOption getOrElse
+ * @tsplus fluent ets/Effect getOrElse
  */
 export const ext_getOrElse_ = getOrElse_
 
 /**
- * @tsplus fluent ets/EffectOption getOrFail
+ * @tsplus fluent ets/Effect getOrFail
  */
 export const ext_getOrFail_ = getOrFail_
 

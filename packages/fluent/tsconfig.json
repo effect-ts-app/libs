@@ -14,7 +14,7 @@
     "moduleResolution": "node",
     "types": [
       "@effect-ts-app/prelude/_ext/index",
-      "@effect-ts-app/fluent/types/node"
+      "@effect-ts-app/fluent/_ext/awesome/node"
     ],
     "tsPlusConfig": "../../tsplus.config.json",
     "paths": {

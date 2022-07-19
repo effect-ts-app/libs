@@ -51,7 +51,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
           const r = yield* $(
             decode(cr.data)
-              .chain((d) =>
+              .flatMap((d) =>
                 eq.equals(keys, d as unknown as V)
                   ? Sync.succeed(d)
                   : Sync.fail("not equals")
