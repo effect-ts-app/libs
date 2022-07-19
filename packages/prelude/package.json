@@ -1,10 +1,10 @@
 {
     "name": "@effect-ts-app/prelude",
-    "version": "0.73.11",
+    "version": "0.73.12",
     "license": "MIT",
     "dependencies": {
-        "@effect-ts-app/core": "^0.73.11",
-        "@effect-ts-app/schema": "^0.73.11"
+        "@effect-ts-app/core": "^0.73.12",
+        "@effect-ts-app/schema": "^0.73.12"
     },
     "devDependencies": {
         "@effect-ts/core": "^0.60.2",
