@@ -9,7 +9,7 @@
         "tsPlusConfig": "../../tsplus.config.json",
         "types": [
             "@effect-ts-app/prelude/_ext/index",
-            "@effect-ts-app/fluent/_ext/awesome/node"
+            "@effect-ts-app/core/fluent/_ext/awesome/node"
         ],
         "paths": {
             "@effect-ts-app/core/*": [
@@ -17,12 +17,6 @@
             ],
             "@effect-ts-app/core": [
                 "../core/_src"
-            ],
-            "@effect-ts-app/fluent/*": [
-                "../fluent/_src/*"
-            ],
-            "@effect-ts-app/fluent": [
-                "../fluent/_src"
             ],
             "@effect-ts-app/schema/*": [
                 "./_src/*"
