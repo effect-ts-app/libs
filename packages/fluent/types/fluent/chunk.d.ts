@@ -355,7 +355,7 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
     /**
      * @ets_rewrite_method compact from "@effect-ts/core/Collections/Immutable/Chunk"
      */
-    compact<A>(fa: Chunk<Option<A>>): Chunk<A>
+    compact<A>(this: Chunk<Option<A>>): Chunk<A>
 
     /**
      * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Chunk"
