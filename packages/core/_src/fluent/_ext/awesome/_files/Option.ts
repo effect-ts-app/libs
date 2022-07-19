@@ -4,6 +4,7 @@
 // ets_tracing: off
 import { toNullable } from "@effect-ts/core/Option"
 import { toUndefined } from "@effect-ts/core/Option"
+import { encaseOption_ } from "@effect-ts-app/core/Effect"
 import { alt_ } from "@effect-ts-app/core/fluent/_ext/Option"
 import { tryCatchOption_ } from "@effect-ts-app/core/Sync"
 
@@ -26,3 +27,8 @@ export const ext_alt_ = alt_
  * @tsplus fluent ets/Option encaseInSync
  */
 export const ext_tryCatchOption_ = tryCatchOption_
+
+/**
+ * @tsplus fluent ets/Option encaseInEffect
+ */
+export const ext_tryCatchOptionEffect_ = encaseOption_
