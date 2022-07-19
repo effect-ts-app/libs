@@ -117,7 +117,7 @@ export function extractRequest<TModule extends Record<string, any>>(
     Object.keys(h).find((x) => x.endsWith("Request")) ||
     Object.keys(h).find((x) => x === "default")
   if (!reqKey) {
-    throw new Error("Module appears to have no Request: " + Object.keys(h))
+    throw new Error("Module appears to have no Request: " + Object.keys(h).join(", "))
   }
   const Request = h[reqKey]
   return Request
