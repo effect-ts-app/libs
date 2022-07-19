@@ -2212,9 +2212,9 @@ export const ext_reserve_ = reserve_
 export const ext_resetForkScope_ = resetForkScope
 
 /**
- * @tsplus fluent ets/Effect result
+ * @tsplus getter ets/Effect result
  */
-export const ext_result = result
+export const ext_result = <R, E, A>(value: Effect<R, E, A>) => result(value)
 
 /**
  * @tsplus fluent ets/Effect resurrect

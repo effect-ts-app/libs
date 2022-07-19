@@ -16,9 +16,9 @@ import {
   mapWithIndex_,
   tail,
 } from "@effect-ts-app/core/Array"
-import { sort_, sortBy_, uniq_ } from "@effect-ts-app/fluent/_ext/Array"
-// import { mapM_, mapM_, mapM_, mapM_ } from "@effect-ts-app/fluent/_ext/mapM"
-import { mapEither_, mapOption_ } from "@effect-ts-app/fluent/fluent/Array"
+import { sort_, sortBy_, uniq_ } from "@effect-ts-app/core/fluent/_ext/Array"
+// import { mapM_, mapM_, mapM_, mapM_ } from "@effect-ts-app/core/fluent/_ext/mapM"
+import { mapEither_, mapOption_ } from "@effect-ts-app/core/fluent/fluent/Array"
 
 /**
  * @tsplus fluent ets/NonEmptyArray mapRA

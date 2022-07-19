@@ -32,7 +32,7 @@ import {
   map_,
   toNullable,
 } from "@effect-ts-app/core/EffectOption"
-import { modify_, prop_ } from "@effect-ts-app/fluent/_ext/Lens"
+import { modify_, prop_ } from "@effect-ts-app/core/fluent/_ext/Lens"
 
 /**
  * @tsplus fluent ets/Lens modify
@@ -85,9 +85,9 @@ export const ext_struct = struct
 export const ext_asUnit = asUnit
 
 /**
- * @tsplus fluent ets/Effect result
+ * @tsplus getter ets/Effect result
  */
-export const ext_result = result
+export const ext_result = <R, E, A>(value: Effect<R, E, A>) => result(value)
 
 /**
  * @tsplus fluent ets/Effect fold

@@ -65,7 +65,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             )
               .zipRight(getData(record))
               // TODO: instead use MULTI & EXEC to make it in one command?
-              .chain((data) =>
+              .flatMap((data) =>
                 hmSetRec(getKey(record.id), {
                   version,
                   timestamp: new Date(),
@@ -78,7 +78,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           ),
         () =>
           getData(record)
-            .chain((data) =>
+            .flatMap((data) =>
               hmSetRec(getKey(record.id), {
                 version,
                 timestamp: new Date(),
@@ -118,7 +118,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Managed.make_(
         Effect.bimap_(
           // acquire
-          Effect.chain_(RED.lock, (lock) =>
+          Effect.flatMap_(RED.lock, (lock) =>
             Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
           ),
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
@@ -137,7 +137,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Managed.make_(
         Effect.bimap_(
           // acquire
-          Effect.chain_(RED.lock, (lock) =>
+          Effect.flatMap_(RED.lock, (lock) =>
             Effect.tryPromise(
               () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
             )
@@ -173,7 +173,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return Effect.chain_(RED.client, (client) =>
+    return Effect.flatMap_(RED.client, (client) =>
       Effect.uninterruptible(
         Effect.effectAsync<unknown, ConnectionException, void>((res) => {
           client.hmset(

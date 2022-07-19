@@ -5,7 +5,7 @@
 import { toNullable } from "@effect-ts/core/Option"
 import { toUndefined } from "@effect-ts/core/Option"
 import { tryCatchOption_ } from "@effect-ts-app/core/Sync"
-import { alt_ } from "@effect-ts-app/fluent/_ext/Option"
+import { alt_ } from "@effect-ts-app/core/fluent/_ext/Option"
 
 /**
  * @tsplus getter ets/Option val
