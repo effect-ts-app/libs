@@ -13,138 +13,166 @@ declare module "@effect-ts/system/Option/core" {
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { ap_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method ap_ from "@effect-ts/core/Option"
-     */
-    ap<AX, B>(this: O.Option<(a: AX) => B>, fa: O.Option<AX>): O.Option<B>
+/**
+ * @tsplus fluent ets/Option ap
+ */
+export const ext_ap_ = ap_
 
-    /**
-     * @ets_rewrite_method chain_ from "@effect-ts/core/Option"
-     */
-    chain<AX, B>(this: O.Option<AX>, f: (a: AX) => O.Option<B>): O.Option<B>
+import { chain_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method duplicate from "@effect-ts/core/Option"
-     */
-    duplicate<AX>(this: O.Option<AX>): O.Option<O.Option<AX>>
+/**
+ * @tsplus fluent ets/Option chain
+ */
+export const ext_chain_ = chain_
 
-    /**
-     * @ets_rewrite_method exists_ from "@effect-ts/core/Option"
-     */
-    exists<AX>(this: O.Option<AX>, predicate: Predicate<AX>): boolean
+import { duplicate } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method extend_ from "@effect-ts/core/Option"
-     */
-    extend<AX, B>(this: O.Option<AX>, f: (a: O.Option<AX>) => B): O.Option<B>
+/**
+ * @tsplus fluent ets/Option duplicate
+ */
+export const ext_duplicate = duplicate
 
-    /**
-     * @ets_rewrite_method flatten from "@effect-ts/core/Option"
-     */
-    flatten<AX>(this: O.Option<O.Option<AX>>): O.Option<AX>
+import { exists_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Option"
-     */
-    filter<AX, BX extends AX>(
-      this: O.Option<AX>,
-      refinement: Refinement<AX, BX>
-    ): O.Option<BX>
+/**
+ * @tsplus fluent ets/Option exists
+ */
+export const ext_exists_ = exists_
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Option"
-     */
-    filter<AX>(this: O.Option<AX>, refinement: Predicate<AX>): O.Option<AX>
+import { extend_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method filterMap_ from "@effect-ts/core/Option"
-     */
-    filter<AX, BX>(
-      this: O.Option<AX>,
-      refinement: (a: AX) => O.Option<BX>
-    ): O.Option<BX>
+/**
+ * @tsplus fluent ets/Option extend
+ */
+export const ext_extend_ = extend_
 
-    /**
-     * @ets_rewrite_method fold_ from "@effect-ts/core/Option"
-     */
-    fold<AX, B, C>(this: O.Option<AX>, onNone: () => B, onSome: (a: AX) => C): B | C
+import { flatten } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method getOrElse_ from "@effect-ts/core/Option"
-     */
-    getOrElse<AX, B>(this: O.Option<AX>, f: () => B): AX | B
+/**
+ * @tsplus fluent ets/Option flatten
+ */
+export const ext_flatten = flatten
 
-    /**
-     * @ets_rewrite_method isSome from "@effect-ts/core/Option"
-     */
-    isSome<AX>(this: O.Option<AX>): this is O.Some<AX>
+import { filter_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method isNone from "@effect-ts/core/Option"
-     */
-    isNone<AX>(this: O.Option<AX>): this is O.None
+/**
+ * @tsplus fluent ets/Option filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Option"
-     */
-    map<AX, B>(this: O.Option<AX>, f: (a: AX) => B): O.Option<B>
+import { filter_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method partitionMap_ from "@effect-ts/core/Option"
-     */
-    partition<AX, B, C>(
-      this: O.Option<AX>,
-      f: (a: AX) => E.Either<B, C>
-    ): Separated<O.Option<B>, O.Option<C>>
+/**
+ * @tsplus fluent ets/Option filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method partition_ from "@effect-ts/core/Option"
-     */
-    partition<AX, B extends AX>(
-      this: O.Option<AX>,
-      ref: Refinement<AX, B>
-    ): Separated<O.Option<Exclude<AX, B>>, O.Option<B>>
+import { filterMap_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method partition_ from "@effect-ts/core/Option"
-     */
-    partition<AX>(
-      this: O.Option<AX>,
-      ref: Predicate<AX>
-    ): Separated<O.Option<AX>, O.Option<AX>>
+/**
+ * @tsplus fluent ets/Option filter
+ */
+export const ext_filterMap_ = filterMap_
 
-    /**
-     * @ets_rewrite_method separate from "@effect-ts/core/Option"
-     */
-    separate<AX, BX>(
-      this: O.Option<E.Either<AX, BX>>
-    ): Separated<O.Option<AX>, O.Option<BX>>
+import { fold_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method tap_ from "@effect-ts/core/Option"
-     */
-    tap<AX, B>(this: O.Option<AX>, f: (a: AX) => O.Option<B>): O.Option<AX>
+/**
+ * @tsplus fluent ets/Option fold
+ */
+export const ext_fold_ = fold_
 
-    /**
-     * @ets_rewrite_method toUndefined from "@effect-ts/core/Option"
-     */
-    toUndefined<A>(this: O.Option<A>): A | undefined
+import { getOrElse_ } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method zip_ from "@effect-ts/core/Option"
-     */
-    zip<AX, B>(this: O.Option<AX>, fa: O.Option<B>): O.Option<Tuple<[AX, B]>>
+/**
+ * @tsplus fluent ets/Option getOrElse
+ */
+export const ext_getOrElse_ = getOrElse_
 
-    /**
-     * @ets_rewrite_method zipFirst_ from "@effect-ts/core/Option"
-     */
-    zipLeft<AX, B>(this: O.Option<AX>, fa: O.Option<B>): O.Option<AX>
+import { isSome } from "@effect-ts/core/Option"
 
-    /**
-     * @ets_rewrite_method zipSecond_ from "@effect-ts/core/Option"
-     */
-    zipRight<AX, B>(this: O.Option<AX>, fa: O.Option<B>): O.Option<B>
+/**
+ * @tsplus fluent ets/Option isSome
+ */
+export const ext_isSome = isSome
+
+import { isNone } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option isNone
+ */
+export const ext_isNone = isNone
+
+import { map_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option map
+ */
+export const ext_map_ = map_
+
+import { partitionMap_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option partition
+ */
+export const ext_partitionMap_ = partitionMap_
+
+import { partition_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option partition
+ */
+export const ext_partition_ = partition_
+
+import { partition_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option partition
+ */
+export const ext_partition_ = partition_
+
+import { separate } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option separate
+ */
+export const ext_separate = separate
+
+import { tap_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option tap
+ */
+export const ext_tap_ = tap_
+
+import { toUndefined } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option toUndefined
+ */
+export const ext_toUndefined = toUndefined
+
+import { zip_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option zip
+ */
+export const ext_zip_ = zip_
+
+import { zipFirst_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option zipLeft
+ */
+export const ext_zipFirst_ = zipFirst_
+
+import { zipSecond_ } from "@effect-ts/core/Option"
+
+/**
+ * @tsplus fluent ets/Option zipRight
+ */
+export const ext_zipSecond_ = zipSecond_
 
     /**
      * @ets_rewrite_getter toUndefined from "@effect-ts/core/Option"

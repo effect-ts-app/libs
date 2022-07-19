@@ -320,522 +320,591 @@ declare module "@effect-ts/system/Collections/Immutable/Chunk" {
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { append_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method append_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    append<A, A1>(this: Chunk<A>, a: A1): Chunk<A | A1>
+/**
+ * @tsplus fluent ets/Chunk append
+ */
+export const ext_append_ = append_
 
-    /**
-     * @ets_rewrite_method buckets from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    buckets<A>(this: Chunk<A>): Iterable<ArrayLike<A>>
+import { buckets } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method chain_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    chain<A, B>(this: Chunk<A>, f: (a: A) => Chunk<B>): Chunk<B>
+/**
+ * @tsplus fluent ets/Chunk buckets
+ */
+export const ext_buckets = buckets
 
-    /**
-     * @ets_rewrite_method collectM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    collectM<A, R, E, B>(
-      this: Chunk<A>,
-      f: (a: A) => Option<T.Effect<R, E, B>>
-    ): T.Effect<R, E, Chunk<B>>
+import { chain_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method collectWhileM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    collectWhileM<A, R, E, B>(
-      this: Chunk<A>,
-      f: (a: A) => Option<T.Effect<R, E, B>>
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus fluent ets/Chunk chain
+ */
+export const ext_chain_ = chain_
 
-    /**
-     * @ets_rewrite_method compact from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    compact<A>(this: Chunk<Option<A>>): Chunk<A>
+import { collectM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method concat_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    concat<A, A1>(this: Chunk<A>, that: Chunk<A1>): Chunk<A | A1>
+/**
+ * @tsplus fluent ets/Chunk collectM
+ */
+export const ext_collectM_ = collectM_
 
-    /**
-     * @ets_rewrite_method corresponds_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    corresponds<A, B>(
-      this: Chunk<A>,
-      that: Chunk<B>,
-      f: (a: A, b: B) => boolean
-    ): boolean
+import { collectWhileM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method difference_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    difference<A>(this: Chunk<A>, E: Equal<A>, ys: Chunk<A>): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk collectWhileM
+ */
+export const ext_collectWhileM_ = collectWhileM_
 
-    /**
-     * @ets_rewrite_method drop_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    drop<A>(this: Chunk<A>, n: number): Chunk<A>
+import { compact } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method dropWhile_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    dropWhile<A>(this: Chunk<A>, f: (a: A) => boolean): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk compact
+ */
+export const ext_compact = compact
 
-    /**
-     * @ets_rewrite_method dropWhileM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    dropWhileM_<R, E, A>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, boolean>
-    ): T.Effect<R, E, Chunk<A>>
+import { concat_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method elem_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    elem<A>(this: Chunk<A>, E: Equal<A>, a: A): boolean
+/**
+ * @tsplus fluent ets/Chunk concat
+ */
+export const ext_concat_ = concat_
 
-    /**
-     * @ets_rewrite_method equals from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    equals<A, B>(this: Chunk<A>, that: Chunk<B>): boolean
+import { corresponds_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method every_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    every<A>(this: Chunk<A>, f: (a: A) => boolean): boolean
+/**
+ * @tsplus fluent ets/Chunk corresponds
+ */
+export const ext_corresponds_ = corresponds_
 
-    /**
-     * @ets_rewrite_method exists_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    exists<A>(this: Chunk<A>, f: (a: A) => boolean): boolean
+import { difference_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    filter<A, B extends A>(this: Chunk<A>, f: F.Refinement<A, B>): Chunk<B>
+/**
+ * @tsplus fluent ets/Chunk difference
+ */
+export const ext_difference_ = difference_
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    filter<A>(this: Chunk<A>, f: F.Predicate<A>): Chunk<A>
+import { drop_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method filterM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    filterM<R, E, A>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, boolean>
-    ): T.Effect<R, E, Chunk<A>>
+/**
+ * @tsplus fluent ets/Chunk drop
+ */
+export const ext_drop_ = drop_
 
-    /**
-     * @ets_rewrite_method filterMap_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    filterMap<A, B>(this: Chunk<A>, f: (a: A) => Option<B>): Chunk<B>
+import { dropWhile_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    find<A, B extends A>(this: Chunk<A>, f: F.Refinement<A, B>): Option<B>
+/**
+ * @tsplus fluent ets/Chunk dropWhile
+ */
+export const ext_dropWhile_ = dropWhile_
 
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    find<A>(this: Chunk<A>, f: F.Predicate<A>): Option<A>
+import { dropWhileM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method findM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    findM<R, E, A>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, boolean>
-    ): T.Effect<R, E, Option<A>>
+/**
+ * @tsplus fluent ets/Chunk dropWhileM_
+ */
+export const ext_dropWhileM_ = dropWhileM_
 
-    /**
-     * @ets_rewrite_method flatten from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    flatten<A>(this: Chunk<Chunk<A>>): Chunk<A>
+import { elem_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method forEach_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    forEach<A, U>(this: Chunk<A>, f: (a: A) => U): void
+/**
+ * @tsplus fluent ets/Chunk elem
+ */
+export const ext_elem_ = elem_
 
-    /**
-     * @ets_rewrite_method foldMap_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    foldMap<M, A>(this: Chunk<A>, M: Identity<M>, f: (a: A) => M): M
+import { equals } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method foldMapWithIndex_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    foldMapWithIndex_<M, A>(
-      this: Chunk<A>,
-      M: Identity<M>,
-      f: (i: number, a: A) => M
-    ): M
+/**
+ * @tsplus fluent ets/Chunk equals
+ */
+export const ext_equals = equals
 
-    /**
-     * @ets_rewrite_method forEachF_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    forEachF<A, G extends HKT.URIS, GC, GK>(
-      this: Chunk<A>,
-      G: HKT.IdentityBoth<G, GC> & HKT.Covariant<G, GC>
-    ): <GQ, GW, GX, GI, GS, GR, GE, B>(
-      f: (a: A) => HKT.Kind<G, GC, GK, GQ, GW, GX, GI, GS, GR, GE, B>
-    ) => HKT.Kind<G, GC, GK, GQ, GW, GX, GI, GS, GR, GE, Chunk<B>>
+import { every_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method get_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    get<A>(this: Chunk<A>, n: number): Option<A>
+/**
+ * @tsplus fluent ets/Chunk every
+ */
+export const ext_every_ = every_
 
-    /**
-     * @ets_rewrite_method grouped_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    grouped<A>(this: Chunk<A>, n: number): Chunk<Chunk<A>>
+import { exists_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method head from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    head<A>(this: Chunk<A>): Option<A>
+/**
+ * @tsplus fluent ets/Chunk exists
+ */
+export const ext_exists_ = exists_
 
-    /**
-     * @ets_rewrite_method indexWhere_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    indexWhere<A>(this: Chunk<A>, f: (a: A) => boolean): number
+import { filter_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method indexWhereFrom_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    indexWhereFrom_<A>(this: Chunk<A>, from: number, f: (a: A) => boolean): number
+/**
+ * @tsplus fluent ets/Chunk filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method intersection_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    intersection<A>(this: Chunk<A>, E: Equal<A>, ys: Chunk<A>): Chunk<A>
+import { filter_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method isEmpty from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    isEmpty<A>(this: Chunk<A>): boolean
+/**
+ * @tsplus fluent ets/Chunk filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method join_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    join(this: Chunk<string>, sep: string): string
+import { filterM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method last from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    last<A>(this: Chunk<A>): Option<A>
+/**
+ * @tsplus fluent ets/Chunk filterM
+ */
+export const ext_filterM_ = filterM_
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    map<A, B>(this: Chunk<A>, f: (a: A) => B): Chunk<B>
+import { filterMap_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method mapAccum_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapAccum<A, B, S>(
-      this: Chunk<A>,
-      s: S,
-      f: (s: S, a: A) => Tuple<[S, B]>
-    ): Tuple<[S, Chunk<B>]>
+/**
+ * @tsplus fluent ets/Chunk filterMap
+ */
+export const ext_filterMap_ = filterMap_
 
-    /**
-     * @ets_rewrite_method mapAccumM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapAccumM<A, B, R, E, S>(
-      this: Chunk<A>,
-      s: S,
-      f: (s: S, a: A) => T.Effect<R, E, Tuple<[S, B]>>
-    ): T.Effect<R, E, Tuple<[S, Chunk<B>]>>
+import { find_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method mapM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapM<R, E, A, B>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus fluent ets/Chunk find
+ */
+export const ext_find_ = find_
 
-    /**
-     * @ets_rewrite_method mapMPar_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapMPar<R, E, A, B>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, Chunk<B>>
+import { find_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method mapMParN_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapMParN<A, R, E, B>(
-      this: Chunk<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, Chunk<B>>
+/**
+ * @tsplus fluent ets/Chunk find
+ */
+export const ext_find_ = find_
 
-    /**
-     * @ets_rewrite_method mapMUnit_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapMUnit<A, R, E, B>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, void>
+import { findM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method mapMUnitPar_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapMUnitPar<A, R, E, B>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, void>
+/**
+ * @tsplus fluent ets/Chunk findM
+ */
+export const ext_findM_ = findM_
 
-    /**
-     * @ets_rewrite_method mapMUnitParN_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    mapMUnitParN<A, R, E, B>(
-      this: Chunk<A>,
-      n: number,
-      f: (a: A) => T.Effect<R, E, B>
-    ): T.Effect<R, E, void>
+import { flatten } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method partition_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    partition<A>(
-      this: Chunk<A>,
-      predicate: F.Predicate<A>
-    ): Separated<Chunk<A>, Chunk<A>>
+/**
+ * @tsplus fluent ets/Chunk flatten
+ */
+export const ext_flatten = flatten
 
-    /**
-     * @ets_rewrite_method partitionMap_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    partitionMap<A, B, C>(
-      this: Chunk<A>,
-      f: (a: A) => Either<B, C>
-    ): Separated<Chunk<B>, Chunk<C>>
+import { forEach_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method partitionMapWithIndex_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    partitionMapWithIndex<A, B, C>(
-      this: Chunk<A>,
-      f: (i: number, a: A) => Either<B, C>
-    ): Separated<Chunk<B>, Chunk<C>>
+/**
+ * @tsplus fluent ets/Chunk forEach
+ */
+export const ext_forEach_ = forEach_
 
-    /**
-     * @ets_rewrite_method partitionWithIndex_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    partitionWithIndex<A>(
-      this: Chunk<A>,
-      predicateWithIndex: PredicateWithIndex<number, A>
-    ): Separated<Chunk<A>, Chunk<A>>
+import { foldMap_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method prepend_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    prepend<A, A1>(this: Chunk<A>, a: A1): Chunk<A | A1>
+/**
+ * @tsplus fluent ets/Chunk foldMap
+ */
+export const ext_foldMap_ = foldMap_
 
-    /**
-     * @ets_rewrite_method reduce_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduce<A, S>(this: Chunk<A>, s: S, f: (s: S, a: A) => S): S
+import { foldMapWithIndex_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method reduceM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduceM<A, R, E, S>(
-      this: Chunk<A>,
-      s: S,
-      f: (s: S, a: A) => T.Effect<R, E, S>
-    ): T.Effect<R, E, S>
+/**
+ * @tsplus fluent ets/Chunk foldMapWithIndex_
+ */
+export const ext_foldMapWithIndex_ = foldMapWithIndex_
 
-    /**
-     * @ets_rewrite_method reduceRight_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduceRight<A, S>(this: Chunk<A>, s: S, f: (a: A, s: S) => S): S
+import { forEachF_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method reduceRightM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduceRightM<A, R, E, S>(
-      this: Chunk<A>,
-      s: S,
-      f: (a: A, s: S) => T.Effect<R, E, S>
-    ): T.Effect<R, E, S>
+/**
+ * @tsplus fluent ets/Chunk forEachF
+ */
+export const ext_forEachF_ = forEachF_
 
-    /**
-     * @ets_rewrite_method reduceWhile_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduceWhile<A, S>(
-      this: Chunk<A>,
-      s: S,
-      pred: (s: S) => boolean,
-      f: (s: S, a: A) => S
-    ): S
+import { get_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method reduceWhileM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reduceWhileM<A, R, E, S>(
-      this: Chunk<A>,
-      s: S,
-      pred: (s: S) => boolean,
-      f: (s: S, a: A) => T.Effect<R, E, S>
-    ): T.Effect<R, E, S>
+/**
+ * @tsplus fluent ets/Chunk get
+ */
+export const ext_get_ = get_
 
-    /**
-     * @ets_rewrite_method reverse from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reverse<A>(this: Chunk<A>): Iterable<A>
+import { grouped_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method reverseBuckets from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    reverseBuckets<A>(this: Chunk<A>): Iterable<ArrayLike<A>>
+/**
+ * @tsplus fluent ets/Chunk grouped
+ */
+export const ext_grouped_ = grouped_
 
-    /**
-     * @ets_rewrite_method separate from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    separate<B, C>(this: Chunk<Either<B, C>>): Separated<Chunk<B>, Chunk<C>>
+import { head } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk head
+ */
+export const ext_head = head
+
+import { indexWhere_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk indexWhere
+ */
+export const ext_indexWhere_ = indexWhere_
+
+import { indexWhereFrom_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk indexWhereFrom_
+ */
+export const ext_indexWhereFrom_ = indexWhereFrom_
+
+import { intersection_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk intersection
+ */
+export const ext_intersection_ = intersection_
+
+import { isEmpty } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk isEmpty
+ */
+export const ext_isEmpty = isEmpty
+
+import { join_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk join
+ */
+export const ext_join_ = join_
+
+import { last } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk last
+ */
+export const ext_last = last
+
+import { map_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk map
+ */
+export const ext_map_ = map_
+
+import { mapAccum_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapAccum
+ */
+export const ext_mapAccum_ = mapAccum_
+
+import { mapAccumM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapAccumM
+ */
+export const ext_mapAccumM_ = mapAccumM_
+
+import { mapM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapM
+ */
+export const ext_mapM_ = mapM_
+
+import { mapMPar_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapMPar
+ */
+export const ext_mapMPar_ = mapMPar_
+
+import { mapMParN_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapMParN
+ */
+export const ext_mapMParN_ = mapMParN_
+
+import { mapMUnit_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapMUnit
+ */
+export const ext_mapMUnit_ = mapMUnit_
+
+import { mapMUnitPar_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapMUnitPar
+ */
+export const ext_mapMUnitPar_ = mapMUnitPar_
+
+import { mapMUnitParN_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk mapMUnitParN
+ */
+export const ext_mapMUnitParN_ = mapMUnitParN_
+
+import { partition_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk partition
+ */
+export const ext_partition_ = partition_
+
+import { partitionMap_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk partitionMap
+ */
+export const ext_partitionMap_ = partitionMap_
+
+import { partitionMapWithIndex_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk partitionMapWithIndex
+ */
+export const ext_partitionMapWithIndex_ = partitionMapWithIndex_
+
+import { partitionWithIndex_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk partitionWithIndex
+ */
+export const ext_partitionWithIndex_ = partitionWithIndex_
+
+import { prepend_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk prepend
+ */
+export const ext_prepend_ = prepend_
+
+import { reduce_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduce
+ */
+export const ext_reduce_ = reduce_
+
+import { reduceM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduceM
+ */
+export const ext_reduceM_ = reduceM_
+
+import { reduceRight_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduceRight
+ */
+export const ext_reduceRight_ = reduceRight_
+
+import { reduceRightM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduceRightM
+ */
+export const ext_reduceRightM_ = reduceRightM_
+
+import { reduceWhile_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduceWhile
+ */
+export const ext_reduceWhile_ = reduceWhile_
+
+import { reduceWhileM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reduceWhileM
+ */
+export const ext_reduceWhileM_ = reduceWhileM_
+
+import { reverse } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reverse
+ */
+export const ext_reverse = reverse
+
+import { reverseBuckets } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk reverseBuckets
+ */
+export const ext_reverseBuckets = reverseBuckets
+
+import { separate } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk separate
+ */
+export const ext_separate = separate
 
     // TODO separateF/separateWithIndexF
+import { sort_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method sort_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    sort<A>(this: Chunk<A>, O: Ord<A>): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk sort
+ */
+export const ext_sort_ = sort_
 
-    /**
-     * @ets_rewrite_method sortBy_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    sortBy<A>(this: Chunk<A>, ords: Array<Ord<A>>): Chunk<A>
+import { sortBy_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method split_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    split<A>(this: Chunk<A>, n: number): Chunk<Chunk<A>>
+/**
+ * @tsplus fluent ets/Chunk sortBy
+ */
+export const ext_sortBy_ = sortBy_
 
-    /**
-     * @ets_rewrite_method splitAt_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    splitAt<A>(this: Chunk<A>, n: number): Tuple<[Chunk<A>, Chunk<A>]>
+import { split_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method splitWhere_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    splitWhere<A>(this: Chunk<A>, f: (a: A) => boolean): Tuple<[Chunk<A>, Chunk<A>]>
+/**
+ * @tsplus fluent ets/Chunk split
+ */
+export const ext_split_ = split_
 
-    /**
-     * @ets_rewrite_method tail from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    tail<A>(this: Chunk<A>): Option<Chunk<A>>
+import { splitAt_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method take_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    take<A>(this: Chunk<A>, n: number): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk splitAt
+ */
+export const ext_splitAt_ = splitAt_
 
-    /**
-     * @ets_rewrite_method takeWhile_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    takeWhile<A>(this: Chunk<A>, f: (a: A) => boolean): Chunk<A>
+import { splitWhere_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method takeWhileM_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    takeWhileM<R, E, A>(
-      this: Chunk<A>,
-      f: (a: A) => T.Effect<R, E, boolean>
-    ): T.Effect<R, E, Chunk<A>>
+/**
+ * @tsplus fluent ets/Chunk splitWhere
+ */
+export const ext_splitWhere_ = splitWhere_
 
-    /**
-     * @ets_rewrite_method toArray from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    toArray<A>(this: Chunk<A>): A.Array<A>
+import { tail } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method toArrayLike from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    toArrayLike<A>(this: Chunk<A>): ArrayLike<A>
+/**
+ * @tsplus fluent ets/Chunk tail
+ */
+export const ext_tail = tail
 
-    /**
-     * @ets_rewrite_method union_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    union<A>(this: Chunk<A>, E: Equal<A>, ys: Chunk<A>): Chunk<A>
+import { take_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method uniq_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    uniq<A>(this: Chunk<A>, E: Equal<A>): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk take
+ */
+export const ext_take_ = take_
 
-    /**
-     * @ets_rewrite_method unsafeGet_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unsafeGet<A>(this: Chunk<A>, n: number): A
+import { takeWhile_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method unsafeHead from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unsafeHead<A>(this: Chunk<A>): A
+/**
+ * @tsplus fluent ets/Chunk takeWhile
+ */
+export const ext_takeWhile_ = takeWhile_
 
-    /**
-     * @ets_rewrite_method unsafeLast from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unsafeLast<A>(this: Chunk<A>): A
+import { takeWhileM_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method unsafeLast from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unsafeTail<A>(this: Chunk<A>): Chunk<A>
+/**
+ * @tsplus fluent ets/Chunk takeWhileM
+ */
+export const ext_takeWhileM_ = takeWhileM_
 
-    /**
-     * @ets_rewrite_method unzip from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    unzip<A, B>(this: Chunk<Tuple<[A, B]>>): Tuple<[Chunk<A>, Chunk<B>]>
+import { toArray } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method zip_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zip<A, B>(this: Chunk<A>, that: Chunk<B>): Chunk<Tuple<[A, B]>>
+/**
+ * @tsplus fluent ets/Chunk toArray
+ */
+export const ext_toArray = toArray
 
-    /**
-     * @ets_rewrite_method zipAll_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zipAll<A, B>(this: Chunk<A>, that: Chunk<B>): Chunk<Tuple<[Option<A>, Option<B>]>>
+import { toArrayLike } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method zipAllWith_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zipAllWith<A, B, C, D, E>(
-      this: Chunk<A>,
-      that: Chunk<B>,
-      f: (a: A, b: B) => C,
-      left: (a: A) => D,
-      right: (b: B) => E
-    ): Chunk<C | D | E>
+/**
+ * @tsplus fluent ets/Chunk toArrayLike
+ */
+export const ext_toArrayLike = toArrayLike
 
-    /**
-     * @ets_rewrite_method zipWith_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zipWith<A, B, C>(this: Chunk<A>, that: Chunk<B>, f: (a: A, b: B) => C): Chunk<C>
+import { union_ } from "@effect-ts/core/Collections/Immutable/Chunk"
 
-    /**
-     * @ets_rewrite_method zipWithIndex from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zipWithIndex<A>(this: Chunk<A>): Chunk<Tuple<[A, number]>>
+/**
+ * @tsplus fluent ets/Chunk union
+ */
+export const ext_union_ = union_
 
-    /**
-     * @ets_rewrite_method zipWithIndexOffset_ from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    zipWithIndexOffset<A>(this: Chunk<A>, offset: number): Chunk<Tuple<[A, number]>>
-  }
-}
+import { uniq_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk uniq
+ */
+export const ext_uniq_ = uniq_
+
+import { unsafeGet_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk unsafeGet
+ */
+export const ext_unsafeGet_ = unsafeGet_
+
+import { unsafeHead } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk unsafeHead
+ */
+export const ext_unsafeHead = unsafeHead
+
+import { unsafeLast } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk unsafeLast
+ */
+export const ext_unsafeLast = unsafeLast
+
+import { unsafeLast } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk unsafeTail
+ */
+export const ext_unsafeLast = unsafeLast
+
+import { unzip } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk unzip
+ */
+export const ext_unzip = unzip
+
+import { zip_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zip
+ */
+export const ext_zip_ = zip_
+
+import { zipAll_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zipAll
+ */
+export const ext_zipAll_ = zipAll_
+
+import { zipAllWith_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zipAllWith
+ */
+export const ext_zipAllWith_ = zipAllWith_
+
+import { zipWith_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zipWith
+ */
+export const ext_zipWith_ = zipWith_
+
+import { zipWithIndex } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zipWithIndex
+ */
+export const ext_zipWithIndex = zipWithIndex
+
+import { zipWithIndexOffset_ } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk zipWithIndexOffset
+ */
+export const ext_zipWithIndexOffset_ = zipWithIndexOffset_

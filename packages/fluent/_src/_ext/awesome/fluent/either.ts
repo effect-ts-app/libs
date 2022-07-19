@@ -38,30 +38,33 @@ export interface EitherOps<E, A> {
    * @ets_rewrite_method identity from "smart:identity"
    */
   widenRight<WA>(): E.Either<E, WA | A>
+import { chain_ } from "@effect-ts/core/Either"
 
-  /**
-   * @ets_rewrite_method chain_ from "@effect-ts/core/Either"
-   */
-  chain<EX, AX, E2, B>(
-    this: E.Either<EX, AX>,
-    f: (a: AX) => E.Either<E2, B>
-  ): E.Either<EX | E2, B>
+/**
+ * @tsplus fluent ets/Either chain
+ */
+export const ext_chain_ = chain_
 
-  /**
-   * @ets_rewrite_method map_ from "@effect-ts/core/Either"
-   */
-  map<EX, AX, B>(this: E.Either<EX, AX>, f: (a: AX) => B): E.Either<EX, B>
+import { map_ } from "@effect-ts/core/Either"
 
-  /**
-   * @ets_rewrite_method isRight from "@effect-ts/core/Either"
-   */
-  isRight<EX, AX>(this: E.Either<EX, AX>): this is E.Right<AX>
+/**
+ * @tsplus fluent ets/Either map
+ */
+export const ext_map_ = map_
 
-  /**
-   * @ets_rewrite_method isLeft from "@effect-ts/core/Either"
-   */
-  isLeft<EX, AX>(this: E.Either<EX, AX>): this is E.Left<EX>
-}
+import { isRight } from "@effect-ts/core/Either"
+
+/**
+ * @tsplus fluent ets/Either isRight
+ */
+export const ext_isRight = isRight
+
+import { isLeft } from "@effect-ts/core/Either"
+
+/**
+ * @tsplus fluent ets/Either isLeft
+ */
+export const ext_isLeft = isLeft
 
 declare module "@effect-ts/system/Either/core" {
   export interface Right<A> extends EitherOps<never, A> {}

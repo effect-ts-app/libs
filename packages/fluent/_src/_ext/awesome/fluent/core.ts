@@ -20,92 +20,104 @@ declare global {
   interface Array<T> extends ArrayOps {}
 
   interface ArrayOps extends ReadonlyArrayOps {
-    /**
-     * @ets_rewrite_method fromMutable from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    immutable<AX>(this: AX[]): A.Array<AX>
+import { fromMutable } from "@effect-ts/core/Collections/Immutable/Array"
+
+/**
+ * @tsplus fluent ets/Array immutable
+ */
+export const ext_fromMutable = fromMutable
 
     /**
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { mapSync_ } from "@effect-ts/core/Collections/Immutable/Array"
 
-    /**
-     * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(this: AX[], f: (a: AX) => S.Sync<R, E, B>): S.Sync<R, E, B[]>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapSync_ = mapSync_
 
-    /**
-     * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
-     */
-    mapM<AX, E, B>(this: AX[], f: (a: AX) => Ei.Either<E, B>): Ei.Either<E, B[]>
+import { mapEither_ } from "@effect-ts-app/fluent/fluent/Array"
 
-    /**
-     * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
-     */
-    mapM<AX, B>(this: A.Array<AX>, f: (a: AX) => O.Option<B>): O.Option<B[]>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEither_ = mapEither_
 
-    /**
-     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(this: AX[], f: (a: AX) => T.Effect<R, E, B>): T.Effect<R, E, B[]>
+import { mapOption_ } from "@effect-ts-app/fluent/fluent/Array"
 
-    /**
-     * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    toChunk<AX>(this: AX[]): C.Chunk<AX>
-  }
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapOption_ = mapOption_
+
+import { mapEffect_ } from "@effect-ts/core/Collections/Immutable/Array"
+
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
+
+import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk toChunk
+ */
+export const ext_from = from
 
   interface ReadonlyArray<T> extends ReadonlyArrayOps {}
 
   interface ReadonlyArrayOps {
-    /**
-     * @ets_rewrite_method toMutable from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mutable<AX>(this: A.Array<AX>): AX[]
+import { toMutable } from "@effect-ts/core/Collections/Immutable/Array"
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    map<AX, B>(this: A.Array<AX>, f: (a: AX) => B): A.Array<B>
+/**
+ * @tsplus fluent ets/Array mutable
+ */
+export const ext_toMutable = toMutable
+
+import { map_ } from "@effect-ts/core/Collections/Immutable/Array"
+
+/**
+ * @tsplus fluent ets/Array map
+ */
+export const ext_map_ = map_
 
     /**
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { mapSync_ } from "@effect-ts/core/Collections/Immutable/Array"
 
-    /**
-     * @ets_rewrite_method mapSync_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(
-      this: A.Array<AX>,
-      f: (a: AX) => S.Sync<R, E, B>
-    ): S.Sync<R, E, A.Array<B>>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapSync_ = mapSync_
 
-    /**
-     * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
-     */
-    mapM<AX, E, B>(
-      this: A.Array<AX>,
-      f: (a: AX) => Ei.Either<E, B>
-    ): Ei.Either<E, A.Array<B>>
+import { mapEither_ } from "@effect-ts-app/fluent/fluent/Array"
 
-    /**
-     * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
-     */
-    mapM<AX, B>(this: A.Array<AX>, f: (a: AX) => O.Option<B>): O.Option<A.Array<B>>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEither_ = mapEither_
 
-    /**
-     * @ets_rewrite_method mapEffect_ from "@effect-ts/core/Collections/Immutable/Array"
-     */
-    mapM<AX, R, E, B>(
-      this: A.Array<AX>,
-      f: (a: AX) => T.Effect<R, E, B>
-    ): T.Effect<R, E, A.Array<B>>
+import { mapOption_ } from "@effect-ts-app/fluent/fluent/Array"
 
-    /**
-     * @ets_rewrite_method from from "@effect-ts/core/Collections/Immutable/Chunk"
-     */
-    toChunk<AX>(this: A.Array<AX>): C.Chunk<AX>
-  }
-}
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapOption_ = mapOption_
+
+import { mapEffect_ } from "@effect-ts/core/Collections/Immutable/Array"
+
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
+
+import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk toChunk
+ */
+export const ext_from = from

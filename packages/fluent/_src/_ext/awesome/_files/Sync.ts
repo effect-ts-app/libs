@@ -7,88 +7,91 @@ declare module "@effect-ts/system/Sync/core" {
    * @tsplus type ets/Sync
    */
   export interface Sync<R, E, A> extends XPure<unknown, unknown, unknown, R, E, A> {
-    /**
-     * @ets_rewrite_method toEffect from "@effect-ts-app/core/Sync"
-     */
-    toEffect<R, E, A>(this: Sync<R, E, A>): Effect<R, E, A>
+import { toEffect } from "@effect-ts-app/core/Sync"
 
-    /**
-     * @ets_rewrite_method orDie from "@effect-ts-app/core/Sync"
-     */
-    orDie<R, A>(this: Sync<R, unknown, A>): Sync<R, never, A>
+/**
+ * @tsplus fluent ets/Sync toEffect
+ */
+export const ext_toEffect = toEffect
 
-    /**
-     * @ets_rewrite_method chain_ from "@effect-ts/core/Sync"
-     */
-    chain<RX, EX, AX, R2, E2, B>(
-      this: Sync<RX, EX, AX>,
-      f: (a: AX) => Sync<R2, E2, B>
-    ): Sync<RX & R2, E2 | EX, B>
+import { orDie } from "@effect-ts-app/core/Sync"
+
+/**
+ * @tsplus fluent ets/Sync orDie
+ */
+export const ext_orDie = orDie
+
+import { chain_ } from "@effect-ts/core/Sync"
+
+/**
+ * @tsplus fluent ets/Sync chain
+ */
+export const ext_chain_ = chain_
 
     // Undo the selection for Effect for now.
     chain<RX, EX, AX, R2, E2, B>(
       this: Sync<RX, EX, AX>,
       f: (a: AX) => Effect<R2, E2, B>
     ): ["Not supported currently, use toEffect and chain", never]
+import { map_ } from "@effect-ts/core/Sync"
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Sync"
-     */
-    map<R, E, A, A2>(this: Sync<R, E, A>, f: (e: A) => A2): Sync<R, E, A2>
+/**
+ * @tsplus fluent ets/Sync map
+ */
+export const ext_map_ = map_
 
-    /**
-     * @ets_rewrite_method mapError_ from "@effect-ts/core/Sync"
-     */
-    mapError<R, E, E2, A>(this: Sync<R, E, A>, f: (e: E) => E2): Sync<R, E2, A>
+import { mapError_ } from "@effect-ts/core/Sync"
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts-app/core/SyncOption"
-     */
-    mapOption<RX, EX, AX, B>(
-      this: SyncOption<RX, EX, AX>,
-      f: (a: AX) => B
-    ): SyncOption<RX, EX, B>
+/**
+ * @tsplus fluent ets/Sync mapError
+ */
+export const ext_mapError_ = mapError_
 
-    /**
-     * @ets_rewrite_method flatMap_ from "@effect-ts-app/core/SyncOption"
-     */
-    flatMapOption<RX, EX, AX, R2, E2, B>(
-      this: SyncOption<RX, EX, AX>,
-      f: (a: AX) => SyncOption<R2, E2, B>
-    ): SyncOption<RX & R2, EX | E2, B>
+import { map_ } from "@effect-ts-app/core/SyncOption"
 
-    /**
-     * @ets_rewrite_method flatMapSync_ from "@effect-ts-app/core/SyncOption"
-     */
-    flatMapOptionSync<RX, EX, AX, R2, E2, B>(
-      this: SyncOption<RX, EX, AX>,
-      f: (a: AX) => Sync<R2, E2, B>
-    ): SyncOption<RX & R2, EX | E2, B>
+/**
+ * @tsplus fluent ets/SyncOption mapOption
+ */
+export const ext_map_ = map_
 
-    /**
-     * @ets_rewrite_method toNullable from "@effect-ts-app/core/SyncOption"
-     */
-    toNullable<R, E, A>(this: SyncOption<R, E, A>): Sync<R, E, A | null>
+import { flatMap_ } from "@effect-ts-app/core/SyncOption"
 
-    /**
-     * @ets_rewrite_method alt_ from "@effect-ts-app/core/SyncOption"
-     */
-    alt<R, E, A, R2, E2, A2>(
-      this: SyncOption<R, E, A>,
-      f: () => SyncOption<R2, E2, A2>
-    ): SyncOption<R & R2, E | E2, A | A2>
+/**
+ * @tsplus fluent ets/SyncOption flatMapOption
+ */
+export const ext_flatMap_ = flatMap_
 
-    /**
-     * @ets_rewrite_method getOrElse_ from "@effect-ts-app/core/SyncOption"
-     */
-    getOrElse<R, E, A, A2>(this: SyncOption<R, E, A>, f: () => A2): Sync<R, E, A | A2>
+import { flatMapSync_ } from "@effect-ts-app/core/SyncOption"
 
-    /**
-     * @ets_rewrite_method getOrFail_ from "@effect-ts-app/core/SyncOption"
-     */
-    getOrFail<R, E, E2, A>(
-      this: SyncOption<R, E, A>,
-      onNone: () => E2
-    ): Sync<R, E | E2, A>
-  }
-}
+/**
+ * @tsplus fluent ets/SyncOption flatMapOptionSync
+ */
+export const ext_flatMapSync_ = flatMapSync_
+
+import { toNullable } from "@effect-ts-app/core/SyncOption"
+
+/**
+ * @tsplus fluent ets/SyncOption toNullable
+ */
+export const ext_toNullable = toNullable
+
+import { alt_ } from "@effect-ts-app/core/SyncOption"
+
+/**
+ * @tsplus fluent ets/SyncOption alt
+ */
+export const ext_alt_ = alt_
+
+import { getOrElse_ } from "@effect-ts-app/core/SyncOption"
+
+/**
+ * @tsplus fluent ets/SyncOption getOrElse
+ */
+export const ext_getOrElse_ = getOrElse_
+
+import { getOrFail_ } from "@effect-ts-app/core/SyncOption"
+
+/**
+ * @tsplus fluent ets/SyncOption getOrFail
+ */
+export const ext_getOrFail_ = getOrFail_

@@ -1767,883 +1767,642 @@ declare module "@effect-ts/system/Effect/effect" {
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { absolve } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method absolve from "@effect-ts/core/Effect"
-     */
-    absolve<RX, EX, EE, AA>(
-      this: T.Effect<RX, EX, E.Either<EE, AA>>,
-      __trace?: string
-    ): T.Effect<RX, EX | EE, AA>
-
-    /**
-     * @ets_rewrite_method absorb from "@effect-ts/core/Effect"
-     */
-    absorb<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, unknown, A>
-
-    /**
-     * @ets_rewrite_method absorbWith_ from "@effect-ts/core/Effect"
-     */
-    absorbWith<R, A, E>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => unknown,
-      __trace?: string | undefined
-    ): T.Effect<R, unknown, A>
-
-    /**
-     * @ets_rewrite_method andThen_ from "@effect-ts/core/Effect"
-     */
-    andThen<R, E, A, E1, A1>(
-      this: Effect<R, E, A>,
-      fb: Effect<A, E1, A1>,
-      __trace?: string
-    ): Effect<R, E | E1, A1>
-
-    /**
-     * @ets_rewrite_method ap_ from "@effect-ts/core/Effect"
-     */
-    ap<R, E, B, R2, E2, A>(
-      this: T.Effect<R, E, (a: A) => B>,
-      fa: T.Effect<R2, E2, A>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, B>
-
-    /**
-     * @ets_rewrite_method asService_ from "@effect-ts/core/Effect"
-     */
-    asService<R, E, A>(
-      this: T.Effect<R, E, A>,
-      has: Tag<A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Has<A>>
-
-    /**
-     * @ets_rewrite_method as_ from "@effect-ts/core/Effect"
-     */
-    as<RX, EX, AX, B>(
-      this: T.Effect<RX, EX, AX>,
-      b: B,
-      __trace?: string
-    ): T.Effect<RX, EX, B>
-
-    /**
-     * @ets_rewrite_method asSome from "@effect-ts/core/Effect"
-     */
-    asSome<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, O.Option<A>>
-
-    /**
-     * @ets_rewrite_method asSomeError from "@effect-ts/core/Effect"
-     */
-    asSomeError<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, O.Option<E>, A>
-
-    /**
-     * @ets_rewrite_method asUnit from "@effect-ts/core/Effect"
-     */
-    asUnit<R, E, X>(
-      this: T.Effect<R, E, X>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, void>
-
-    /**
-     * @ets_rewrite_method awaitAllChildren from "@effect-ts/core/Effect"
-     */
-    awaitAllChildren<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method bimap_ from "@effect-ts/core/Effect"
-     */
-    bimap<R, E, A, E2, B>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => E2,
-      g: (a: A) => B,
-      __trace?: string | undefined
-    ): T.Effect<R, E2, B>
-
-    /**
-     * @ets_rewrite_method bind_ from "@effect-ts/core/Effect"
-     */
-    bind<RX, EX, AX extends Record<string, unknown>, N extends string, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      n: N & N extends keyof AX ? [`${N} already in use`] : N,
-      f: (a: AX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<
-      RX & R2,
-      EX | E2,
-      Compute<
-        AX & {
-          readonly [k in N]: B
-        },
-        "flat"
-      >
-    >
-
-    /**
-     * @ets_rewrite_method bindAll_ from "@effect-ts/core/Effect"
-     */
-    bindAll<
-      K,
-      NER extends Record<string, Effect<any, any, any>> & {
-        [k in keyof K & keyof NER]?: never
-      },
-      R,
-      E
-    >(
-      this: Effect<R, E, K>,
-      r: (k: K) => EnforceNonEmptyRecord<NER> & Record<string, Effect<any, any, any>>,
-      __trace?: string
-    ): Effect<
-      R & _R<NER[keyof NER]>,
-      E | _E<NER[keyof NER]>,
-      Compute<
-        K & {
-          readonly [K in keyof NER]: [NER[K]] extends [Effect<any, any, infer A>]
-            ? A
-            : never
-        },
-        "flat"
-      >
-    >
-
-    /**
-     * @ets_rewrite_method bindAllPar_ from "@effect-ts/core/Effect"
-     */
-    bindAllPar<
-      K,
-      NER extends Record<string, Effect<any, any, any>> & {
-        [k in keyof K & keyof NER]?: never
-      },
-      R,
-      E
-    >(
-      this: Effect<R, E, K>,
-      r: (k: K) => EnforceNonEmptyRecord<NER> & Record<string, Effect<any, any, any>>,
-      __trace?: string
-    ): Effect<
-      R & _R<NER[keyof NER]>,
-      E | _E<NER[keyof NER]>,
-      Compute<
-        K & {
-          readonly [K in keyof NER]: [NER[K]] extends [Effect<any, any, infer A>]
-            ? A
-            : never
-        },
-        "flat"
-      >
-    >
-
-    /**
-     * @ets_rewrite_method bindAllParN_ from "@effect-ts/core/Effect"
-     */
-    bindAllParN<
-      K,
-      NER extends Record<string, Effect<any, any, any>> & {
-        [k in keyof K & keyof NER]?: never
-      },
-      R,
-      E
-    >(
-      this: Effect<R, E, K>,
-      n: number,
-      r: (k: K) => EnforceNonEmptyRecord<NER> & Record<string, Effect<any, any, any>>,
-      __trace?: string
-    ): Effect<
-      R & _R<NER[keyof NER]>,
-      E | _E<NER[keyof NER]>,
-      Compute<
-        K & {
-          readonly [K in keyof NER]: [NER[K]] extends [Effect<any, any, infer A>]
-            ? A
-            : never
-        },
-        "flat"
-      >
-    >
-
-    /**
-     * @ets_rewrite_method bracketExit_ from "@effect-ts/core/Effect"
-     */
-    bracket<RX, EX, AX, R2, E2, A2, R3, B>(
-      this: T.Effect<RX, EX, AX>,
-      use: (a: AX) => Effect<R2, E2, A2>,
-      release: (a: AX, exit: Exit<E2, A2>) => Effect<R3, never, B>,
-      __trace?: string
-    ): T.Effect<RX & R2 & R3, EX | E2, A2>
-
-    /**
-     * @ets_rewrite_method bracketFiber_ from "@effect-ts/core/Effect"
-     */
-    bracketFiber<R, E, A, R2, E2, A2>(
-      this: Effect<R, E, A>,
-      use: (f: Fiber.Runtime<E, A>) => Effect<R2, E2, A2>,
-      __trace?: string
-    ): Effect<R & R2, E2, Exit<E, A>>
-
-    /**
-     * @ets_rewrite_method bracketOnError_ from "@effect-ts/core/Effect"
-     */
-    bracketOnError<R, E, A, E1, R1, A1, R2, E2, X>(
-      this: Effect<R, E, A>,
-      use: (a: A) => Effect<R1, E1, A1>,
-      release: (a: A, e: Exit<E1, A1>) => Effect<R2, E2, X>,
-      __trace?: string
-    ): Effect<R & R1 & R2, E | E1 | E2, A1>
-
-    /**
-     * @ets_rewrite_method cached_ from "@effect-ts/core/Effect"
-     */
-    cached<R, E, A>(
-      this: T.Effect<R, E, A>,
-      ttl: number,
-      __trace?: string | undefined
-    ): T.RIO<R & Has<Clock>, T.IO<E, A>>
-
-    /**
-     * @ets_rewrite_method cachedInvalidate_ from "@effect-ts/core/Effect"
-     */
-    cachedInvalidate<R, E, A>(
-      this: T.Effect<R, E, A>,
-      ttl: number,
-      __trace?: string | undefined
-    ): T.RIO<R & Has<Clock>, Tp.Tuple<[T.IO<E, A>, T.UIO<void>]>>
-
-    /**
-     * @ets_rewrite_method catchAll_ from "@effect-ts/core/Effect"
-     */
-    catchAll<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (e: EX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, E2, AX | B>
-
-    /**
-     * @ets_rewrite_method catchTag_ from "@effect-ts/core/Effect"
-     */
-    catchTag<
-      RX,
-      EX,
-      AX,
-      Tag extends (EX extends { _tag: infer X } ? X : never) & string,
-      R2,
-      E2,
-      B
-    >(
-      this: T.Effect<RX, EX, AX>,
-      tag: Tag,
-      f: (e: Extract<EX, { readonly _tag: Tag }>) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, E2 | Exclude<EX, { readonly _tag: Tag }>, AX | B>
-
-    /**
-     * @ets_rewrite_method catchAllCause_ from "@effect-ts/core/Effect"
-     */
-    catchAllCause<R2, E2, A2, R, E, A>(
-      this: T.Effect<R2, E2, A2>,
-      f: (_: Cause<E2>) => T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R2 & R, E, A2 | A>
-
-    /**
-     * @ets_rewrite_method catchAllDefect_ from "@effect-ts/core/Effect"
-     */
-    catchAllDefect<R2, E2, A2, R, E, A>(
-      this: T.Effect<R2, E2, A2>,
-      f: (_: unknown) => T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R2 & R, E2 | E, A2 | A>
-
-    /**
-     * @ets_rewrite_method catchSome_ from "@effect-ts/core/Effect"
-     */
-    catchSome<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => O.Option<T.Effect<R2, E2, A2>>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A | A2>
-
-    /**
-     * @ets_rewrite_method catchSomeCause_ from "@effect-ts/core/Effect"
-     */
-    catchSomeCause<R2, E2, A2, R, E, A>(
-      this: T.Effect<R2, E2, A2>,
-      f: (_: Cause<E2>) => O.Option<T.Effect<R, E, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R2 & R, E2 | E, A2 | A>
-
-    /**
-     * @ets_rewrite_method catchSomeDefect_ from "@effect-ts/core/Effect"
-     */
-    catchSomeDefect<R2, E2, A2, R, E, A>(
-      this: T.Effect<R2, E2, A2>,
-      f: (_: unknown) => O.Option<T.Effect<R, E, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R2 & R, E2 | E, A2 | A>
-
-    /**
-     * @ets_rewrite_method cause from "@effect-ts/core/Effect"
-     */
-    cause<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.RIO<R, Cause<E>>
-
-    /**
-     * @ets_rewrite_method chain_ from "@effect-ts/core/Effect"
-     */
-    chain<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (a: AX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, B>
-
-    /**
-     * @ets_rewrite_method chainError_ from "@effect-ts/core/Effect"
-     */
-    chainError<R, E, A, R2, E2>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => T.RIO<R2, E2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E2, A>
-
-    /**
-     * @ets_rewrite_method compose_ from "@effect-ts/core/Effect"
-     */
-    compose<A, E1, B, R, E>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<A, E1, B>,
-      __trace?: string | undefined
-    ): T.Effect<R, E1 | E, B>
-
-    /**
-     * @ets_rewrite_method continueOrFail_ from "@effect-ts/core/Effect"
-     */
-    continueOrFail<R, E, E1, A, A2>(
-      this: Effect<R, E, A>,
-      f: () => E1,
-      pf: (a: A) => O.Option<A2>,
-      __trace?: string
-    ): Effect<R, E | E1, A2>
-
-    /**
-     * @ets_rewrite_method continueOrFailM_ from "@effect-ts/core/Effect"
-     */
-    continueOrFailM<R, E, E1, A, R2, E2, A2>(
-      this: Effect<R, E, A>,
-      f: () => E1,
-      pf: (a: A) => O.Option<Effect<R2, E2, A2>>,
-      __trace?: string
-    ): Effect<R & R2, E | E1 | E2, A2>
-
-    /**
-     * @ets_rewrite_method delay_ from "@effect-ts/core/Effect"
-     */
-    delay<R, E, A>(
-      this: T.Effect<R, E, A>,
-      ms: number,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<Clock>, E, A>
-
-    /**
-     * @ets_rewrite_method either from "@effect-ts/core/Effect"
-     */
-    either<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      __trace?: string
-    ): T.Effect<RX, never, E.Either<EX, AX>>
-
-    /**
-     * @ets_rewrite_method ensuring_ from "@effect-ts/core/Effect"
-     */
-    ensuring<RX, EX, AX, R1, X>(
-      this: T.Effect<RX, EX, AX>,
-      finalizer: Effect<R1, never, X>,
-      __trace?: string
-    ): T.Effect<RX & R1, EX, AX>
-
-    /**
-     * @ets_rewrite_method ensuringChild_ from "@effect-ts/core/Effect"
-     */
-    ensuringChild<R, E, A, R2, X>(
-      this: T.Effect<R, E, A>,
-      f: (_: Fiber.Fiber<any, Chunk<unknown>>) => T.RIO<R2, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E, A>
-
-    /**
-     * @ets_rewrite_method ensuringChildren_ from "@effect-ts/core/Effect"
-     */
-    ensuringChildren<R, E, A, R1, X>(
-      this: T.Effect<R, E, A>,
-      children: (_: SortedSet<Fiber.Runtime<any, any>>) => T.RIO<R1, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E, A>
-
-    /**
-     * @ets_rewrite_method eventually from "@effect-ts/core/Effect"
-     */
-    eventually<R, E, A>(
-      fa: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, A>
-
-    /**
-     * @ets_rewrite_method flatten from "@effect-ts/core/Effect"
-     */
-    flatten<R, E, R1, E1, A>(
-      this: T.Effect<R, E, T.Effect<R1, E1, A>>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E | E1, A>
-
-    /**
-     * @ets_rewrite_method flattenErrorOption_ from "@effect-ts/core/Effect"
-     */
-    flattenErrorOption<R, E, A, E2>(
-      this: T.Effect<R, O.Option<E>, A>,
-      def: () => E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E2, A>
-
-    /**
-     * @ets_rewrite_method flip from "@effect-ts/core/Effect"
-     */
-    flip<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, A, E>
-
-    /**
-     * @ets_rewrite_method flipWith_ from "@effect-ts/core/Effect"
-     */
-    flipWith<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, E, A>,
-      f: (self: T.Effect<R, A, E>) => T.Effect<R2, A2, E2>,
-      __trace?: string | undefined
-    ): T.Effect<R2, E2, A2>
-
-    /**
-     * @ets_rewrite_method foldCauseM_ from "@effect-ts/core/Effect"
-     */
-    foldCauseM<RX, EX, AX, R2, E2, A2, R3, E3, A3>(
-      this: T.Effect<RX, EX, AX>,
-      g: (e: Cause<EX>) => T.Effect<R3, E3, A3>,
-      f: (a: AX) => T.Effect<R2, E2, A2>,
-      __trace?: string
-    ): T.Effect<RX & R2 & R3, E2 | E3, A2 | A3>
-
-    /**
-     * @ets_rewrite_method foldM_ from "@effect-ts/core/Effect"
-     */
-    foldM<RX, EX, AX, R2, E2, A2, R3, E3, A3>(
-      this: T.Effect<RX, EX, AX>,
-      g: (e: EX) => T.Effect<R3, E3, A3>,
-      f: (a: AX) => T.Effect<R2, E2, A2>,
-      __trace?: string
-    ): T.Effect<RX & R2 & R3, E2 | E3, A2 | A3>
-
-    /**
-     * @ets_rewrite_method forever from "@effect-ts/core/Effect"
-     */
-    forever<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, never>
-
-    /**
-     * @ets_rewrite_method fork from "@effect-ts/core/Effect"
-     */
-    fork<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      __trace?: string
-    ): T.Effect<RX, never, Fiber.FiberContext<EX, AX>>
-
-    /**
-     * @ets_rewrite_method forkAs_ from "@effect-ts/core/Effect"
-     */
-    forkAs<R, E, A>(
-      this: T.Effect<R, E, A>,
-      name: string,
-      __trace?: string | undefined
-    ): T.RIO<R, Fiber.FiberContext<E, A>>
-
-    /**
-     * @ets_rewrite_method forkManaged from "@effect-ts/core/Effect"
-     */
-    forkManaged<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      __trace?: string
-    ): M.Managed<RX, never, Fiber.Fiber<EX, AX>>
-
-    /**
-     * @ets_rewrite_method forkDaemon from "@effect-ts/core/Effect"
-     */
-    forkDaemon<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.RIO<R, Fiber.FiberContext<E, A>>
-
-    /**
-     * @ets_rewrite_method forkDaemonReport_ from "@effect-ts/core/Effect"
-     */
-    forkDaemonReport<R, E, A>(
-      this: T.Effect<R, E, A>,
-      reportFailure: T.FailureReporter,
-      __trace?: string | undefined
-    ): T.RIO<R, Fiber.FiberContext<E, A>>
-
-    /**
-     * @ets_rewrite_method forkIn_ from "@effect-ts/core/Effect"
-     */
-    forkIn<R, E, A>(
-      this: T.Effect<R, E, A>,
-      scope: Scope<Exit<any, any>>,
-      __trace?: string | undefined
-    ): T.RIO<R, Fiber.Runtime<E, A>>
-
-    /**
-     * @ets_rewrite_method forkInReport_ from "@effect-ts/core/Effect"
-     */
-    forkInReport<R, E, A>(
-      this: T.Effect<R, E, A>,
-      scope: Scope<Exit<any, any>>,
-      reportFailure: T.FailureReporter,
-      __trace?: string | undefined
-    ): T.RIO<R, Fiber.Runtime<E, A>>
-
-    /**
-     * @ets_rewrite_method forkWithErrorHandler_ from "@effect-ts/core/Effect"
-     */
-    forkWithErrorHandler<R, R2, E, A>(
-      self: T.Effect<R, E, A>,
-      handler: (e: E) => T.RIO<R2, void>,
-      __trace?: string | undefined
-    ): T.RIO<R & R2, Fiber.FiberContext<E, A>>
-
-    /**
-     * @ets_rewrite_method get from "@effect-ts/core/Effect"
-     */
-    get<R, E, A>(
-      this: T.Effect<R, E, O.Option<A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, O.Option<E>, A>
-
-    /**
-     * @ets_rewrite_method ifM_ from "@effect-ts/core/Effect"
-     */
-    ifM<R, E, R1, E1, A1, R2, E2, A2>(
-      this: Effect<R, E, boolean>,
-      onTrue: () => Effect<R1, E1, A1>,
-      onFalse: () => Effect<R2, E2, A2>,
-      __trace?: string
-    ): Effect<R & R1 & R2, E | E1 | E2, A1 | A2>
-
-    /**
-     * @ets_rewrite_method provideAll_ from "@effect-ts/core/Effect"
-     */
-    injectAll<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      env: AX
-    ): T.Effect<unknown, EX, AX>
-
-    /**
-     * @ets_rewrite_method provideAll_ from "@effect-ts/core/Effect"
-     */
-    injectEnv<RX, EX, AX, AX2>(
-      this: T.Effect<RX, EX, AX>,
-      env: AX2
-    ): T.Effect<RX extends Has<AX2> & infer K ? K : unknown, EX, AX>
-
-    /**
-     * @ets_rewrite_method provideSome_ from "@effect-ts/core/Effect"
-     */
-    injectSome<RX, EX, AX, R2>(
-      this: T.Effect<RX, EX, AX>,
-      env: (_: R2) => AX
-    ): T.Effect<R2, EX, AX>
-
-    /**
-     * @ets_rewrite_method provideService_ from "@effect-ts/core/Effect"
-     */
-    injectService<RX, EX, AX, A2>(
-      this: T.Effect<RX, EX, AX>,
-      tag: Tag<A2>,
-      value: A2
-    ): T.Effect<RX extends Has<A2> & infer K ? K : unknown, EX, AX>
-
-    /**
-     * @ets_rewrite_method provideServiceM_ from "@effect-ts/core/Effect"
-     */
-    injectServiceM<RX, EX, AX, R2, E2, A2>(
-      this: T.Effect<RX, EX, AX>,
-      tag: Tag<A2>,
-      value: T.Effect<R2, E2, A2>
-    ): T.Effect<R2 & (RX extends Has<A2> & infer K ? K : unknown), EX | E2, AX>
-
-    /**
-     * @ets_rewrite_method provideSomeLayer_ from "@effect-ts/core/Effect"
-     */
-    inject<RX, EX, AX, R2, E2, A2>(
-      this: T.Effect<RX, EX, AX>,
-      layer: Layer<R2, E2, A2>
-    ): T.Effect<Erase<RX, A2> & R2, EX | E2, AX>
-
-    /**
-     * @ets_rewrite_method ignore from "@effect-ts/core/Effect"
-     */
-    ignore<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.RIO<R, void>
-
-    /**
-     * @ets_rewrite_method in_ from "@effect-ts/core/Effect"
-     */
-    in<R, E, A>(
-      this: T.Effect<R, E, A>,
-      scope: Scope<any>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method interruptAllChildren from "@effect-ts/core/Effect"
-     */
-    interruptAllChildren<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method interruptStatus_ from "@effect-ts/core/Effect"
-     */
-    interruptStatus<R, E, A>(
-      this: T.Effect<R, E, A>,
-      flag: Fiber.InterruptStatus,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method interruptible from "@effect-ts/core/Effect"
-     */
-    interruptible<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method isFailure from "@effect-ts/core/Effect"
-     */
-    isFailure<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, boolean>
-
-    /**
-     * @ets_rewrite_method isSuccess from "@effect-ts/core/Effect"
-     */
-    isSuccess<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, boolean>
-
-    /**
-     * @ets_rewrite_method join_ from "@effect-ts/core/Effect"
-     */
-    join<R, E, A, R1, E1, A1>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R1, E1, A1>,
-      __trace?: string | undefined
-    ): T.Effect<E.Either<R, R1>, E | E1, A | A1>
-
-    /**
-     * @ets_rewrite_method joinEither_ from "@effect-ts/core/Effect"
-     */
-    joinEither<R, E, A, R1, E1, A1>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R1, E1, A1>,
-      __trace?: string | undefined
-    ): T.Effect<E.Either<R, R1>, E | E1, E.Either<A, A1>>
-
-    /**
-     * @ets_rewrite_method left from "@effect-ts/core/Effect"
-     */
-    left<R, E, B, C>(self: T.Effect<R, E, E.Either<B, C>>): T.Effect<R, O.Option<E>, B>
-
-    /**
-     * @ets_rewrite_method leftOrFail_ from "@effect-ts/core/Effect"
-     */
-    leftOrFail<R, E, B, C, E1>(
-      this: T.Effect<R, E, E.Either<B, C>>,
-      orFail: (c: C) => E1,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E1, B>
-
-    /**
-     * @ets_rewrite_method leftOrFailException from "@effect-ts/core/Effect"
-     */
-    leftOrFailException<R, E, B, C>(
-      this: T.Effect<R, E, E.Either<B, C>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E | NoSuchElementException, B>
-
-    /**
-     * @ets_rewrite_method let_ from "@effect-ts/core/Effect"
-     */
-    let<RX, EX, AX extends Record<string, unknown>, N extends string, B>(
-      this: T.Effect<RX, EX, AX>,
-      n: N & N extends keyof AX ? [`${N} already in use`] : N,
-      f: (a: AX) => B,
-      __trace?: string
-    ): T.Effect<
-      RX,
-      EX,
-      Compute<
-        AX & {
-          readonly [k in N]: B
-        },
-        "flat"
-      >
-    >
-
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Effect"
-     */
-    map<RX, EX, AX, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (a: AX) => B,
-      __trace?: string
-    ): T.Effect<RX, EX, B>
-
-    /**
-     * @ets_rewrite_method mapErrorCause_ from "@effect-ts/core/Effect"
-     */
-    mapErrorCause<R, E, A, E2>(
-      this: T.Effect<R, E, A>,
-      f: (cause: Cause<E>) => Cause<E2>,
-      __trace?: string | undefined
-    ): T.Effect<R, E2, A>
-
-    /**
-     * @ets_rewrite_method mapError_ from "@effect-ts/core/Effect"
-     */
-    mapError<R, E, E2, A>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E2, A>
-
-    /**
-     * @ets_rewrite_method mapN_ from "@effect-ts/core/Effect"
-     */
-    mapN<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      f: (..._: ForcedArray<{ [k in keyof T]: _A<T[k]> }>) => B,
-      __trace?: string
-    ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
-
-    /**
-     * @ets_rewrite_method mapNPar_ from "@effect-ts/core/Effect"
-     */
-    mapNPar<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      f: (...args: ForcedArray<{ [k in keyof T]: _A<T[k]> }>) => B,
-      __trace?: string
-    ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
-
-    /**
-     * @ets_rewrite_method mapNParN_ from "@effect-ts/core/Effect"
-     */
-    mapNParN<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      n: number,
-      f: (...args: ForcedArray<{ [k in keyof T]: _A<T[k]> }>) => B,
-      __trace?: string
-    ): (t: Tp.Tuple<T>) => Effect<_R<T[number]>, _E<T[number]>, B>
-
-    /**
-     * @ets_rewrite_method mapTryCatch_ from "@effect-ts/core/Effect"
-     */
-    mapTryCatch<R, E1, E, A, B>(
-      this: T.Effect<R, E1, A>,
-      f: (a: A) => B,
-      onThrow: (u: unknown) => E,
-      __trace?: string | undefined
-    ): T.Effect<R, E1 | E, B>
-
-    /**
-     * @ets_rewrite_method merge from "@effect-ts/core/Effect"
-     */
-    merge<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, E | A>
-
-    /**
-     * @ets_rewrite_method onError_ from "@effect-ts/core/Effect"
-     */
-    onError<R, E, A, R2, E2, X>(
-      this: T.Effect<R, E, A>,
-      cleanup: (exit: Cause<E>) => T.Effect<R2, E2, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A>
-
-    /**
-     * @ets_rewrite_method onExit_ from "@effect-ts/core/Effect"
-     */
-    onExit<R, E, A, R2, E2, X>(
-      this: T.Effect<R, E, A>,
-      cleanup: (exit: Exit<E, A>) => T.Effect<R2, E2, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A>
-
-    /**
-     * @ets_rewrite_method onFirst from "@effect-ts/core/Effect"
-     */
-    onFirst<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Tp.Tuple<[A, R]>>
-
-    /**
-     * @ets_rewrite_method onInterrupt_ from "@effect-ts/core/Effect"
-     */
-    onInterrupt<R, E, A, R2, X>(
-      self: T.Effect<R, E, A>,
-      cleanup: (interruptors: readonly Fiber.FiberID[]) => T.Effect<R2, never, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E, A>
-
-    /**
-     * @ets_rewrite_method onSecond from "@effect-ts/core/Effect"
-     */
-    onSecond<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, Tp.Tuple<[R, A]>>
-
-    /**
-     * @ets_rewrite_method onTermination_ from "@effect-ts/core/Effect"
-     */
-    onTermination<R1, R, E, A, X>(
-      this: T.Effect<R, E, A>,
-      cleanup: (_: Cause<never>) => T.RIO<R1, X>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E, A>
-
-    /**
-     * @ets_rewrite_method once from "@effect-ts/core/Effect"
-     */
-    once<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.UIO<T.Effect<R, E, void>>
+/**
+ * @tsplus fluent ets/Effect absolve
+ */
+export const ext_absolve = absolve
+
+import { absorb } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect absorb
+ */
+export const ext_absorb = absorb
+
+import { absorbWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect absorbWith
+ */
+export const ext_absorbWith_ = absorbWith_
+
+import { andThen_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect andThen
+ */
+export const ext_andThen_ = andThen_
+
+import { ap_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ap
+ */
+export const ext_ap_ = ap_
+
+import { asService_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect asService
+ */
+export const ext_asService_ = asService_
+
+import { as_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect as
+ */
+export const ext_as_ = as_
+
+import { asSome } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect asSome
+ */
+export const ext_asSome = asSome
+
+import { asSomeError } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect asSomeError
+ */
+export const ext_asSomeError = asSomeError
+
+import { asUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect asUnit
+ */
+export const ext_asUnit = asUnit
+
+import { awaitAllChildren } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect awaitAllChildren
+ */
+export const ext_awaitAllChildren = awaitAllChildren
+
+import { bimap_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bimap
+ */
+export const ext_bimap_ = bimap_
+
+import { bind_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bind
+ */
+export const ext_bind_ = bind_
+
+import { bindAll_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bindAll
+ */
+export const ext_bindAll_ = bindAll_
+
+import { bindAllPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bindAllPar
+ */
+export const ext_bindAllPar_ = bindAllPar_
+
+import { bindAllParN_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bindAllParN
+ */
+export const ext_bindAllParN_ = bindAllParN_
+
+import { bracketExit_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bracket
+ */
+export const ext_bracketExit_ = bracketExit_
+
+import { bracketFiber_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bracketFiber
+ */
+export const ext_bracketFiber_ = bracketFiber_
+
+import { bracketOnError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect bracketOnError
+ */
+export const ext_bracketOnError_ = bracketOnError_
+
+import { cached_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect cached
+ */
+export const ext_cached_ = cached_
+
+import { cachedInvalidate_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect cachedInvalidate
+ */
+export const ext_cachedInvalidate_ = cachedInvalidate_
+
+import { catchAll_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchAll
+ */
+export const ext_catchAll_ = catchAll_
+
+import { catchTag_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchTag
+ */
+export const ext_catchTag_ = catchTag_
+
+import { catchAllCause_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchAllCause
+ */
+export const ext_catchAllCause_ = catchAllCause_
+
+import { catchAllDefect_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchAllDefect
+ */
+export const ext_catchAllDefect_ = catchAllDefect_
+
+import { catchSome_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchSome
+ */
+export const ext_catchSome_ = catchSome_
+
+import { catchSomeCause_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchSomeCause
+ */
+export const ext_catchSomeCause_ = catchSomeCause_
+
+import { catchSomeDefect_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchSomeDefect
+ */
+export const ext_catchSomeDefect_ = catchSomeDefect_
+
+import { cause } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect cause
+ */
+export const ext_cause = cause
+
+import { chain_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect chain
+ */
+export const ext_chain_ = chain_
+
+import { chainError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect chainError
+ */
+export const ext_chainError_ = chainError_
+
+import { compose_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect compose
+ */
+export const ext_compose_ = compose_
+
+import { continueOrFail_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect continueOrFail
+ */
+export const ext_continueOrFail_ = continueOrFail_
+
+import { continueOrFailM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect continueOrFailM
+ */
+export const ext_continueOrFailM_ = continueOrFailM_
+
+import { delay_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect delay
+ */
+export const ext_delay_ = delay_
+
+import { either } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect either
+ */
+export const ext_either = either
+
+import { ensuring_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ensuring
+ */
+export const ext_ensuring_ = ensuring_
+
+import { ensuringChild_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ensuringChild
+ */
+export const ext_ensuringChild_ = ensuringChild_
+
+import { ensuringChildren_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ensuringChildren
+ */
+export const ext_ensuringChildren_ = ensuringChildren_
+
+import { eventually } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect eventually
+ */
+export const ext_eventually = eventually
+
+import { flatten } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect flatten
+ */
+export const ext_flatten = flatten
+
+import { flattenErrorOption_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect flattenErrorOption
+ */
+export const ext_flattenErrorOption_ = flattenErrorOption_
+
+import { flip } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect flip
+ */
+export const ext_flip = flip
+
+import { flipWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect flipWith
+ */
+export const ext_flipWith_ = flipWith_
+
+import { foldCauseM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect foldCauseM
+ */
+export const ext_foldCauseM_ = foldCauseM_
+
+import { foldM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect foldM
+ */
+export const ext_foldM_ = foldM_
+
+import { forever } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forever
+ */
+export const ext_forever = forever
+
+import { fork } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect fork
+ */
+export const ext_fork = fork
+
+import { forkAs_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkAs
+ */
+export const ext_forkAs_ = forkAs_
+
+import { forkManaged } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkManaged
+ */
+export const ext_forkManaged = forkManaged
+
+import { forkDaemon } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkDaemon
+ */
+export const ext_forkDaemon = forkDaemon
+
+import { forkDaemonReport_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkDaemonReport
+ */
+export const ext_forkDaemonReport_ = forkDaemonReport_
+
+import { forkIn_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkIn
+ */
+export const ext_forkIn_ = forkIn_
+
+import { forkInReport_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkInReport
+ */
+export const ext_forkInReport_ = forkInReport_
+
+import { forkWithErrorHandler_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect forkWithErrorHandler
+ */
+export const ext_forkWithErrorHandler_ = forkWithErrorHandler_
+
+import { get } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect get
+ */
+export const ext_get = get
+
+import { ifM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ifM
+ */
+export const ext_ifM_ = ifM_
+
+import { provideAll_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect injectAll
+ */
+export const ext_provideAll_ = provideAll_
+
+import { provideAll_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect injectEnv
+ */
+export const ext_provideAll_ = provideAll_
+
+import { provideSome_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect injectSome
+ */
+export const ext_provideSome_ = provideSome_
+
+import { provideService_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect injectService
+ */
+export const ext_provideService_ = provideService_
+
+import { provideServiceM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect injectServiceM
+ */
+export const ext_provideServiceM_ = provideServiceM_
+
+import { provideSomeLayer_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect inject
+ */
+export const ext_provideSomeLayer_ = provideSomeLayer_
+
+import { ignore } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect ignore
+ */
+export const ext_ignore = ignore
+
+import { in_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect in
+ */
+export const ext_in_ = in_
+
+import { interruptAllChildren } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect interruptAllChildren
+ */
+export const ext_interruptAllChildren = interruptAllChildren
+
+import { interruptStatus_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect interruptStatus
+ */
+export const ext_interruptStatus_ = interruptStatus_
+
+import { interruptible } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect interruptible
+ */
+export const ext_interruptible = interruptible
+
+import { isFailure } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect isFailure
+ */
+export const ext_isFailure = isFailure
+
+import { isSuccess } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect isSuccess
+ */
+export const ext_isSuccess = isSuccess
+
+import { join_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect join
+ */
+export const ext_join_ = join_
+
+import { joinEither_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect joinEither
+ */
+export const ext_joinEither_ = joinEither_
+
+import { left } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect left
+ */
+export const ext_left = left
+
+import { leftOrFail_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect leftOrFail
+ */
+export const ext_leftOrFail_ = leftOrFail_
+
+import { leftOrFailException } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect leftOrFailException
+ */
+export const ext_leftOrFailException = leftOrFailException
+
+import { let_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect let
+ */
+export const ext_let_ = let_
+
+import { map_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect map
+ */
+export const ext_map_ = map_
+
+import { mapErrorCause_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapErrorCause
+ */
+export const ext_mapErrorCause_ = mapErrorCause_
+
+import { mapError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapError
+ */
+export const ext_mapError_ = mapError_
+
+import { mapN_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapN
+ */
+export const ext_mapN_ = mapN_
+
+import { mapNPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapNPar
+ */
+export const ext_mapNPar_ = mapNPar_
+
+import { mapNParN_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapNParN
+ */
+export const ext_mapNParN_ = mapNParN_
+
+import { mapTryCatch_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapTryCatch
+ */
+export const ext_mapTryCatch_ = mapTryCatch_
+
+import { merge } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect merge
+ */
+export const ext_merge = merge
+
+import { onError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onError
+ */
+export const ext_onError_ = onError_
+
+import { onExit_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onExit
+ */
+export const ext_onExit_ = onExit_
+
+import { onFirst } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onFirst
+ */
+export const ext_onFirst = onFirst
+
+import { onInterrupt_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onInterrupt
+ */
+export const ext_onInterrupt_ = onInterrupt_
+
+import { onSecond } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onSecond
+ */
+export const ext_onSecond = onSecond
+
+import { onTermination_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect onTermination
+ */
+export const ext_onTermination_ = onTermination_
+
+import { once } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect once
+ */
+export const ext_once = once
 
     /**
      * @ets_rewrite_method onlyDefaultEnv from "smart:identity"
@@ -2651,793 +2410,643 @@ declare module "@effect-ts/system/Effect/effect" {
     onlyDefaultEnv<E, A>(
       self: T.Effect<T.DefaultEnv, E, A>
     ): T.Effect<T.DefaultEnv, E, A>
+import { option } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method option from "@effect-ts/core/Effect"
-     */
-    option<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.RIO<R, O.Option<A>>
-
-    /**
-     * @ets_rewrite_method optional from "@effect-ts/core/Effect"
-     */
-    optional<R, E, A>(
-      this: T.Effect<R, O.Option<E>, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, O.Option<A>>
-
-    /**
-     * @ets_rewrite_method orDie from "@effect-ts/core/Effect"
-     */
-    orDie<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, A>
-
-    /**
-     * @ets_rewrite_method orDieKeep from "@effect-ts/core/Effect"
-     */
-    orDieKeep<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, A>
-
-    /**
-     * @ets_rewrite_method orDieWith_ from "@effect-ts/core/Effect"
-     */
-    orDieWith<R, E, A>(
-      this: T.Effect<R, E, A>,
-      f: (e: E) => unknown,
-      __trace?: string | undefined
-    ): T.Effect<R, never, A>
-
-    /**
-     * @ets_rewrite_method orElseEither_ from "@effect-ts/core/Effect"
-     */
-    orElseEither<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, E, A>,
-      that: () => T.Effect<R2, E2, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E2, E.Either<A, A2>>
-
-    /**
-     * @ets_rewrite_method orElseFail_ from "@effect-ts/core/Effect"
-     */
-    orElseFail<R, E, A, E2>(
-      this: T.Effect<R, E, A>,
-      e: E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E2, A>
-
-    /**
-     * @ets_rewrite_method orElseOptional_ from "@effect-ts/core/Effect"
-     */
-    orElseOptional<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, O.Option<E>, A>,
-      that: () => T.Effect<R2, O.Option<E2>, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, O.Option<E | E2>, A | A2>
-
-    /**
-     * @ets_rewrite_method orElseSucceed_ from "@effect-ts/core/Effect"
-     */
-    orElseSucceed<R, E, A, A2>(
-      this: T.Effect<R, E, A>,
-      a: A2,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A | A2>
-
-    /**
-     * @ets_rewrite_method orElse_ from "@effect-ts/core/Effect"
-     */
-    orElse<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, E, A>,
-      that: () => T.Effect<R2, E2, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E2, A | A2>
-
-    /**
-     * @ets_rewrite_method overrideForkScope_ from "@effect-ts/core/Effect"
-     */
-    overrideForkScope<R, E, A>(
-      this: T.Effect<R, E, A>,
-      scope: Scope<Exit<any, any>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method race_ from "@effect-ts/core/Effect"
-     */
-    race<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX | B>
-
-    /**
-     * @ets_rewrite_method raceEither_ from "@effect-ts/core/Effect"
-     */
-    raceEither<R, E, A, R2, E2, A2>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R2, E2, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, E.Either<A, A2>>
-
-    /**
-     * @ets_rewrite_method raceFirst_ from "@effect-ts/core/Effect"
-     */
-    raceFirst<R, R2, E, E2, A, A2>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R2, E2, A2>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A | A2>
-
-    /**
-     * @ets_rewrite_method raceWith_ from "@effect-ts/core/Effect"
-     */
-    raceWith<R, E, A, R1, E1, A1, R2, E2, A2, R3, E3, A3>(
-      this: Effect<R, E, A>,
-      right: Effect<R1, E1, A1>,
-      leftWins: (exit: Exit<E, A>, fiber: Fiber.Fiber<E1, A1>) => Effect<R2, E2, A2>,
-      rightWins: (exit: Exit<E1, A1>, fiber: Fiber.Fiber<E, A>) => Effect<R3, E3, A3>,
-      __trace?: string
-    ): Effect<R & R1 & R2 & R3, E2 | E3, A2 | A3>
-
-    /**
-     * @ets_rewrite_method raceWithScope_ from "@effect-ts/core/Effect"
-     */
-    raceWithScope<R, E, A, R1, E1, A1, R2, E2, A2, R3, E3, A3>(
-      this: Effect<R, E, A>,
-      right: Effect<R1, E1, A1>,
-      leftWins: (exit: Exit<E, A>, fiber: Fiber.Fiber<E1, A1>) => Effect<R2, E2, A2>,
-      rightWins: (exit: Exit<E1, A1>, fiber: Fiber.Fiber<E, A>) => Effect<R3, E3, A3>,
-      scope: Scope<Exit<any, any>>,
-      __trace?: string
-    ): Effect<R & R1 & R2 & R3, E2 | E3, A2 | A3>
-
-    /**
-     * @ets_rewrite_method refailWithTrace from "@effect-ts/core/Effect"
-     */
-    refailWithTrace<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method refineOrDie_ from "@effect-ts/core/Effect"
-     */
-    refineOrDie<R, A, E, E1>(
-      this: T.Effect<R, E, A>,
-      pf: (e: E) => O.Option<E1>,
-      __trace?: string | undefined
-    ): T.Effect<R, E1, A>
-
-    /**
-     * @ets_rewrite_method refineOrDieWith_ from "@effect-ts/core/Effect"
-     */
-    refineOrDieWith<R, A, E, E1>(
-      this: T.Effect<R, E, A>,
-      pf: (e: E) => O.Option<E1>,
-      f: (e: E) => unknown,
-      __trace?: string | undefined
-    ): T.Effect<R, E1, A>
-
-    /**
-     * @ets_rewrite_method reject_ from "@effect-ts/core/Effect"
-     */
-    reject<R, E, A, E1>(
-      this: T.Effect<R, E, A>,
-      pf: (a: A) => O.Option<E1>,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E1, A>
-
-    /**
-     * @ets_rewrite_method repeat_ from "@effect-ts/core/Effect"
-     */
-    repeat<R, E, A, SR, B>(
-      this: T.Effect<R, E, A>,
-      schedule: Schedule<SR, A, B>,
-      __trace?: string | undefined
-    ): T.Effect<R & SR & Has<Clock>, E, B>
-
-    /**
-     * @ets_rewrite_method repeatN_ from "@effect-ts/core/Effect"
-     */
-    repeatN<R, E, A>(
-      this: T.Effect<R, E, A>,
-      n: number,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method repeatOrElse_ from "@effect-ts/core/Effect"
-     */
-    repeatOrElse<R, E, A, SR, B, R2, E2, C>(
-      this: Effect<R, E, A>,
-      schedule: Schedule<SR, A, B>,
-      orElse: (_: E, __: O.Option<B>) => Effect<R2, E2, C>,
-      __trace?: string
-    ): Effect<R & SR & R2 & HasClock, E2, C | B>
-
-    /**
-     * @ets_rewrite_method repeatOrElseEither_ from "@effect-ts/core/Effect"
-     */
-    repeatOrElseEither<R, E, Env1, A, B, R2, E2, C>(
-      this: Effect<R, E, A>,
-      schedule: Schedule<Env1, A, B>,
-      orElse: (_: E, __: O.Option<B>) => Effect<R2, E2, C>,
-      __trace?: string
-    ): Effect<R & Env1 & R2 & HasClock, E2, E.Either<C, B>>
-
-    /**
-     * @ets_rewrite_method repeatUntilM_ from "@effect-ts/core/Effect"
-     */
-    repeatUntilM<R, E, A, R1, E1>(
-      this: T.Effect<R, E, A>,
-      f: (a: A) => T.Effect<R1, E1, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E | E1, A>
-
-    /**
-     * @ets_rewrite_method repeatUntil_ from "@effect-ts/core/Effect"
-     */
-    repeatUntil<R, E, A>(
-      this: T.Effect<R, E, A>,
-      f: (a: A) => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method repeatWhileM_ from "@effect-ts/core/Effect"
-     */
-    repeatWhileM<R, E, A, R1, E1>(
-      this: T.Effect<R, E, A>,
-      f: (a: A) => T.Effect<R1, E1, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E | E1, A>
-
-    /**
-     * @ets_rewrite_method repeatWhile_ from "@effect-ts/core/Effect"
-     */
-    repeatWhile<R, E, A>(
-      this: T.Effect<R, E, A>,
-      f: (a: A) => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method replaceService_ from "@effect-ts/core/Effect"
-     */
-    replaceService<R1, E1, A1, T>(
-      ma: T.Effect<R1 & Has<T>, E1, A1>,
-      tag: Tag<T>,
-      f: (_: T) => T,
-      __trace?: string | undefined
-    ): T.Effect<R1 & Has<T>, E1, A1>
-
-    /**
-     * @ets_rewrite_method replaceServiceM_ from "@effect-ts/core/Effect"
-     */
-    replaceServiceM<R, E, T, R1, E1, A1>(
-      this: Effect<R1 & Has<T>, E1, A1>,
-      tag: Tag<T>,
-      f: (_: T) => Effect<R, E, T>,
-      __trace?: string
-    ): Effect<R & R1 & Has<T>, E | E1, A1>
-
-    /**
-     * @ets_rewrite_method replicate_ from "@effect-ts/core/Effect"
-     */
-    replicate<R, E, A>(this: T.Effect<R, E, A>, n: number): readonly T.Effect<R, E, A>[]
-
-    /**
-     * @ets_rewrite_method require_ from "@effect-ts/core/Effect"
-     */
-    require<R, A, E, E2>(
-      this: T.Effect<R, E, O.Option<A>>,
-      error: () => E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E2, A>
-
-    /**
-     * @ets_rewrite_method reserve_ from "@effect-ts/core/Effect"
-     */
-    reserve<R, E, R2, E2, R3, E3, B, A>(
-      this: Effect<R, E, M.Reservation<R2, E2, A>>,
-      use: (a: A) => Effect<R3, E3, B>,
-      __trace?: string
-    ): Effect<R & R2 & R3, E | E2 | E3, B>
-
-    /**
-     * @ets_rewrite_method resetForkScope_ from "@effect-ts/core/Effect"
-     */
-    resetForkScope<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method result from "@effect-ts/core/Effect"
-     */
-    result<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      __trace?: string
-    ): T.Effect<RX, never, Exit<EX, AX>>
-
-    /**
-     * @ets_rewrite_method resurrect from "@effect-ts/core/Effect"
-     */
-    resurrect<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, unknown, A>
-
-    /**
-     * @ets_rewrite_method retry_ from "@effect-ts/core/Effect"
-     */
-    retry<R, E extends I, I, A, R1, O>(
-      this: T.Effect<R, E, A>,
-      policy: Schedule<R1, I, O>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1 & Has<Clock>, E, A>
-
-    /**
-     * @ets_rewrite_method retryOrElse_ from "@effect-ts/core/Effect"
-     */
-    retryOrElse<R, E extends I, I, A, R1, O, R2, E2, A2>(
-      self: Effect<R, E, A>,
-      policy: Schedule<R1, I, O>,
-      orElse: (e: E, o: O) => Effect<R2, E2, A2>,
-      __trace?: string
-    ): Effect<R & R1 & R2 & HasClock, E2, A | A2>
-
-    /**
-     * @ets_rewrite_method retryOrElseEither_ from "@effect-ts/core/Effect"
-     */
-    retryOrElseEither<R, E extends I, A, I, R1, O, R2, E2, A2>(
-      self: Effect<R, E, A>,
-      policy: Schedule<R1, I, O>,
-      orElse: (e: E, o: O) => Effect<R2, E2, A2>,
-      __trace?: string
-    ): Effect<R & R1 & R2 & HasClock, E2, E.Either<A2, A>>
-
-    /**
-     * @ets_rewrite_method retryUntilM_ from "@effect-ts/core/Effect"
-     */
-    retryUntilM<R, E, A, R1, E1>(
-      this: T.Effect<R, E, A>,
-      f: (a: E) => T.Effect<R1, E1, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E | E1, A>
-
-    /**
-     * @ets_rewrite_method retryUntil_ from "@effect-ts/core/Effect"
-     */
-    retryUntil<R, E, A>(
-      this: T.Effect<R, E, A>,
-      f: (a: E) => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method retryWhileM_ from "@effect-ts/core/Effect"
-     */
-    retryWhileM<R, E, A, R1, E1>(
-      this: T.Effect<R, E, A>,
-      f: (a: E) => T.Effect<R1, E1, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E | E1, A>
-
-    /**
-     * @ets_rewrite_method retryWhile_ from "@effect-ts/core/Effect"
-     */
-    retryWhile<R, E, A>(
-      this: T.Effect<R, E, A>,
-      f: (a: E) => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method right from "@effect-ts/core/Effect"
-     */
-    right<R, E, B, C>(
-      this: T.Effect<R, E, E.Either<B, C>>,
-      __trace?: string | undefined
-    ): T.Effect<R, O.Option<E>, C>
-
-    /**
-     * @ets_rewrite_method runPromise from "@effect-ts/core/Effect"
-     */
-    runPromise<EX, AX>(this: T.Effect<T.DefaultEnv, EX, AX>): Promise<AX>
-
-    /**
-     * @ets_rewrite_method runPromiseExit from "@effect-ts/core/Effect"
-     */
-    runPromiseExit<EX, AX>(this: T.Effect<T.DefaultEnv, EX, AX>): Promise<Exit<EX, AX>>
-
-    /**
-     * @ets_rewrite_method runFiber from "@effect-ts/core/Effect"
-     */
-    runFiber<EX, AX>(this: T.Effect<T.DefaultEnv, EX, AX>): Fiber.Fiber<EX, AX>
-
-    /**
-     * @ets_rewrite_method sandbox from "@effect-ts/core/Effect"
-     */
-    sandbox<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, Cause<E>, A>
-
-    /**
-     * @ets_rewrite_method sandboxWith_ from "@effect-ts/core/Effect"
-     */
-    sandboxWith<R, E, A, E2>(
-      this: Effect<R, E, A>,
-      f: (_: Effect<R, Cause<E>, A>) => Effect<R, Cause<E2>, A>,
-      __trace?: string
-    ): Effect<R, E2, A>
-
-    /**
-     * @ets_rewrite_method some from "@effect-ts/core/Effect"
-     */
-    some<R, E, A>(
-      this: T.Effect<R, E, O.Option<A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, O.Option<E>, A>
-
-    /**
-     * @ets_rewrite_method someOrElseM_ from "@effect-ts/core/Effect"
-     */
-    someOrElseM<R, E, A, R2, E2, B>(
-      this: T.Effect<R, E, O.Option<A>>,
-      orElse: T.Effect<R2, E2, B>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, A | B>
-
-    /**
-     * @ets_rewrite_method someOrElse_ from "@effect-ts/core/Effect"
-     */
-    someOrElse<R, E, A, B>(
-      this: T.Effect<R, E, O.Option<A>>,
-      orElse: () => B,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A | B>
-
-    /**
-     * @ets_rewrite_method someOrFail_ from "@effect-ts/core/Effect"
-     */
-    someOrFail<R, E, A, E2>(
-      this: T.Effect<R, E, O.Option<A>>,
-      orFail: () => E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E2, A>
-
-    /**
-     * @ets_rewrite_method someOrFailException from "@effect-ts/core/Effect"
-     */
-    someOrFailException<R, E, A>(
-      this: T.Effect<R, E, O.Option<A>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E | NoSuchElementException, A>
-
-    /**
-     * @ets_rewrite_method summarized_ from "@effect-ts/core/Effect"
-     */
-    summarized<R, E, A, R2, E2, B, C>(
-      this: Effect<R, E, A>,
-      summary: Effect<R2, E2, B>,
-      f: (start: B, end: B) => C,
-      __trace?: string
-    ): Effect<R & R2, E | E2, Tp.Tuple<[C, A]>>
-
-    /**
-     * @ets_rewrite_method supervised_ from "@effect-ts/core/Effect"
-     */
-    supervised<R, E, A>(
-      this: T.Effect<R, E, A>,
-      supervisor: Supervisor<any>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method tap_ from "@effect-ts/core/Effect"
-     */
-    tap<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (a: AX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX>
-
-    /**
-     * @ets_rewrite_method tapError_ from "@effect-ts/core/Effect"
-     */
-    tapError<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (e: EX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX>
-
-    /**
-     * @ets_rewrite_method tapCause_ from "@effect-ts/core/Effect"
-     */
-    tapCause<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: (e: Cause<EX>) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX>
-
-    /**
-     * @ets_rewrite_method tapBoth_ from "@effect-ts/core/Effect"
-     */
-    tapBoth<RX, EX, AX, R2, E2, B, R3, E3, C>(
-      this: T.Effect<RX, EX, AX>,
-      f: (e: EX) => T.Effect<R2, E2, B>,
-      g: (e: AX) => T.Effect<R2, E3, C>,
-      __trace?: string
-    ): T.Effect<RX & R2 & R3, EX | E2 | E3, AX>
-
-    /**
-     * @ets_rewrite_method fromRawEffect from "@effect-ts/core/Effect/Layer"
-     */
-    toLayer<RX, EX, AX>(this: T.Effect<RX, EX, AX>): Layer<RX, EX, AX>
-
-    /**
-     * @ets_rewrite_method fromEffect_ from "@effect-ts/core/Effect/Layer"
-     */
-    toLayer<RX, EX, AX>(
-      this: T.Effect<RX, EX, AX>,
-      tag: Tag<AX>
-    ): Layer<RX, EX, Has<AX>>
-
-    /**
-     * @ets_rewrite_method fromEffect from "@effect-ts/core/Effect/Managed"
-     */
-    toManaged<RX, EX, AX>(this: T.Effect<RX, EX, AX>): M.Managed<RX, EX, AX>
-
-    /**
-     * @ets_rewrite_method toManagedRelease_ from "@effect-ts/core/Effect"
-     */
-    toManaged<A, R1, E1, R>(
-      this: T.Effect<R1, E1, A>,
-      release: (a: A) => T.Effect<R, never, any>
-    ): M.Managed<R1 & R, E1, A>
-
-    /**
-     * @ets_rewrite_method timed from "@effect-ts/core/Effect"
-     */
-    timed<R, E, A>(
-      this: T.Effect<R, E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<Clock>, E, Tp.Tuple<[number, A]>>
-
-    /**
-     * @ets_rewrite_method timedWith_ from "@effect-ts/core/Effect"
-     */
-    timedWith<R, E, A, R2, E2>(
-      this: T.Effect<R, E, A>,
-      msTime: T.Effect<R2, E2, number>,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, Tp.Tuple<[number, A]>>
-
-    /**
-     * @ets_rewrite_method timeoutFail_ from "@effect-ts/core/Effect"
-     */
-    timeoutFail<R, E, E2, A>(
-      this: T.Effect<R, E, A>,
-      d: number,
-      e: () => E2,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<Clock>, E | E2, A>
-
-    /**
-     * @ets_rewrite_method timeoutTo_ from "@effect-ts/core/Effect"
-     */
-    timeoutTo<R, E, A, B, B2>(
-      this: T.Effect<R, E, A>,
-      delay: number,
-      orElse: B,
-      f: (a: A) => B2,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<Clock>, E, B | B2>
-
-    /**
-     * @ets_rewrite_method timeout_ from "@effect-ts/core/Effect"
-     */
-    timeout<R, E, A>(
-      this: T.Effect<R, E, A>,
-      d: number,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<Clock>, E, O.Option<A>>
-
-    /**
-     * @ets_rewrite_method to_ from "@effect-ts/core/Effect"
-     */
-    to<R, E, A>(
-      this: T.Effect<R, E, A>,
-      promise: P.Promise<E, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, never, boolean>
-
-    /**
-     * @ets_rewrite_method traced from "@effect-ts/core/Effect"
-     */
-    traced<R, E, A>(this: T.Effect<R, E, A>): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method tracingStatus_ from "@effect-ts/core/Effect"
-     */
-    tracingStatus<R, E, A>(this: T.Effect<R, E, A>, flag: boolean): T.Effect<R, E, A>
-
-    /**
-     * @ets_rewrite_method uncause from "@effect-ts/core/Effect"
-     */
-    uncause<R, E>(
-      this: T.RIO<R, Cause<E>>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, void>
+/**
+ * @tsplus fluent ets/Effect option
+ */
+export const ext_option = option
+
+import { optional } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect optional
+ */
+export const ext_optional = optional
+
+import { orDie } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orDie
+ */
+export const ext_orDie = orDie
+
+import { orDieKeep } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orDieKeep
+ */
+export const ext_orDieKeep = orDieKeep
+
+import { orDieWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orDieWith
+ */
+export const ext_orDieWith_ = orDieWith_
+
+import { orElseEither_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orElseEither
+ */
+export const ext_orElseEither_ = orElseEither_
+
+import { orElseFail_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orElseFail
+ */
+export const ext_orElseFail_ = orElseFail_
+
+import { orElseOptional_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orElseOptional
+ */
+export const ext_orElseOptional_ = orElseOptional_
+
+import { orElseSucceed_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orElseSucceed
+ */
+export const ext_orElseSucceed_ = orElseSucceed_
+
+import { orElse_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orElse
+ */
+export const ext_orElse_ = orElse_
+
+import { overrideForkScope_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect overrideForkScope
+ */
+export const ext_overrideForkScope_ = overrideForkScope_
+
+import { race_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect race
+ */
+export const ext_race_ = race_
+
+import { raceEither_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect raceEither
+ */
+export const ext_raceEither_ = raceEither_
+
+import { raceFirst_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect raceFirst
+ */
+export const ext_raceFirst_ = raceFirst_
+
+import { raceWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect raceWith
+ */
+export const ext_raceWith_ = raceWith_
+
+import { raceWithScope_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect raceWithScope
+ */
+export const ext_raceWithScope_ = raceWithScope_
+
+import { refailWithTrace } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect refailWithTrace
+ */
+export const ext_refailWithTrace = refailWithTrace
+
+import { refineOrDie_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect refineOrDie
+ */
+export const ext_refineOrDie_ = refineOrDie_
+
+import { refineOrDieWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect refineOrDieWith
+ */
+export const ext_refineOrDieWith_ = refineOrDieWith_
+
+import { reject_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect reject
+ */
+export const ext_reject_ = reject_
+
+import { repeat_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeat
+ */
+export const ext_repeat_ = repeat_
+
+import { repeatN_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatN
+ */
+export const ext_repeatN_ = repeatN_
+
+import { repeatOrElse_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatOrElse
+ */
+export const ext_repeatOrElse_ = repeatOrElse_
+
+import { repeatOrElseEither_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatOrElseEither
+ */
+export const ext_repeatOrElseEither_ = repeatOrElseEither_
+
+import { repeatUntilM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatUntilM
+ */
+export const ext_repeatUntilM_ = repeatUntilM_
+
+import { repeatUntil_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatUntil
+ */
+export const ext_repeatUntil_ = repeatUntil_
+
+import { repeatWhileM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatWhileM
+ */
+export const ext_repeatWhileM_ = repeatWhileM_
+
+import { repeatWhile_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect repeatWhile
+ */
+export const ext_repeatWhile_ = repeatWhile_
+
+import { replaceService_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect replaceService
+ */
+export const ext_replaceService_ = replaceService_
+
+import { replaceServiceM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect replaceServiceM
+ */
+export const ext_replaceServiceM_ = replaceServiceM_
+
+import { replicate_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect replicate
+ */
+export const ext_replicate_ = replicate_
+
+import { require_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect require
+ */
+export const ext_require_ = require_
+
+import { reserve_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect reserve
+ */
+export const ext_reserve_ = reserve_
+
+import { resetForkScope_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect resetForkScope
+ */
+export const ext_resetForkScope_ = resetForkScope_
+
+import { result } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect result
+ */
+export const ext_result = result
+
+import { resurrect } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect resurrect
+ */
+export const ext_resurrect = resurrect
+
+import { retry_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retry
+ */
+export const ext_retry_ = retry_
+
+import { retryOrElse_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryOrElse
+ */
+export const ext_retryOrElse_ = retryOrElse_
+
+import { retryOrElseEither_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryOrElseEither
+ */
+export const ext_retryOrElseEither_ = retryOrElseEither_
+
+import { retryUntilM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryUntilM
+ */
+export const ext_retryUntilM_ = retryUntilM_
+
+import { retryUntil_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryUntil
+ */
+export const ext_retryUntil_ = retryUntil_
+
+import { retryWhileM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryWhileM
+ */
+export const ext_retryWhileM_ = retryWhileM_
+
+import { retryWhile_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect retryWhile
+ */
+export const ext_retryWhile_ = retryWhile_
+
+import { right } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect right
+ */
+export const ext_right = right
+
+import { runPromise } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect runPromise
+ */
+export const ext_runPromise = runPromise
+
+import { runPromiseExit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect runPromiseExit
+ */
+export const ext_runPromiseExit = runPromiseExit
+
+import { runFiber } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect runFiber
+ */
+export const ext_runFiber = runFiber
+
+import { sandbox } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect sandbox
+ */
+export const ext_sandbox = sandbox
+
+import { sandboxWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect sandboxWith
+ */
+export const ext_sandboxWith_ = sandboxWith_
+
+import { some } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect some
+ */
+export const ext_some = some
+
+import { someOrElseM_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect someOrElseM
+ */
+export const ext_someOrElseM_ = someOrElseM_
+
+import { someOrElse_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect someOrElse
+ */
+export const ext_someOrElse_ = someOrElse_
+
+import { someOrFail_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect someOrFail
+ */
+export const ext_someOrFail_ = someOrFail_
+
+import { someOrFailException } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect someOrFailException
+ */
+export const ext_someOrFailException = someOrFailException
+
+import { summarized_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect summarized
+ */
+export const ext_summarized_ = summarized_
+
+import { supervised_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect supervised
+ */
+export const ext_supervised_ = supervised_
+
+import { tap_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect tap
+ */
+export const ext_tap_ = tap_
+
+import { tapError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect tapError
+ */
+export const ext_tapError_ = tapError_
+
+import { tapCause_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect tapCause
+ */
+export const ext_tapCause_ = tapCause_
+
+import { tapBoth_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect tapBoth
+ */
+export const ext_tapBoth_ = tapBoth_
+
+import { fromRawEffect } from "@effect-ts/core/Effect/Layer"
+
+/**
+ * @tsplus fluent ets/Layer toLayer
+ */
+export const ext_fromRawEffect = fromRawEffect
+
+import { fromEffect_ } from "@effect-ts/core/Effect/Layer"
+
+/**
+ * @tsplus fluent ets/Layer toLayer
+ */
+export const ext_fromEffect_ = fromEffect_
+
+import { fromEffect } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed toManaged
+ */
+export const ext_fromEffect = fromEffect
+
+import { toManagedRelease_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect toManaged
+ */
+export const ext_toManagedRelease_ = toManagedRelease_
+
+import { timed } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect timed
+ */
+export const ext_timed = timed
+
+import { timedWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect timedWith
+ */
+export const ext_timedWith_ = timedWith_
+
+import { timeoutFail_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect timeoutFail
+ */
+export const ext_timeoutFail_ = timeoutFail_
+
+import { timeoutTo_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect timeoutTo
+ */
+export const ext_timeoutTo_ = timeoutTo_
+
+import { timeout_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect timeout
+ */
+export const ext_timeout_ = timeout_
+
+import { to_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect to
+ */
+export const ext_to_ = to_
+
+import { traced } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect traced
+ */
+export const ext_traced = traced
+
+import { tracingStatus_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect tracingStatus
+ */
+export const ext_tracingStatus_ = tracingStatus_
+
+import { uncause } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect uncause
+ */
+export const ext_uncause = uncause
 
     /**
      * @ets_rewrite_method unfailable from "smart:identity"
      */
     unfailable<R, A>(this: T.Effect<R, never, A>): T.RIO<R, A>
+import { uninterruptible } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method uninterruptible from "@effect-ts/core/Effect"
-     */
-    uninterruptible: <R, E, A>(effect: T.Effect<R, E, A>) => T.Effect<R, E, A>
+/**
+ * @tsplus fluent ets/Effect uninterruptible
+ */
+export const ext_uninterruptible = uninterruptible
 
-    /**
-     * @ets_rewrite_method unlessM_ from "@effect-ts/core/Effect"
-     */
-    unlessM<R2, E2, R, E, A>(
-      this: T.Effect<R, E, A>,
-      bool: T.Effect<R2, E2, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R2 & R, E2 | E, void>
+import { unlessM_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method unless_ from "@effect-ts/core/Effect"
-     */
-    unless<R, E, A>(
-      this: T.Effect<R, E, A>,
-      pred: () => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R, E, void>
+/**
+ * @tsplus fluent ets/Effect unlessM
+ */
+export const ext_unlessM_ = unlessM_
 
-    /**
-     * @ets_rewrite_method unrefineWith_ from "@effect-ts/core/Effect"
-     */
-    unrefineWith<R, E, E1, E2, A>(
-      this: T.Effect<R, E, A>,
-      pf: (u: unknown) => O.Option<E1>,
-      f: (e: E) => E2,
-      __trace?: string | undefined
-    ): T.Effect<R, E1 | E2, A>
+import { unless_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method unrefine_ from "@effect-ts/core/Effect"
-     */
-    unrefine<R, E, A, E1>(
-      this: T.Effect<R, E, A>,
-      pf: (u: unknown) => O.Option<E1>,
-      __trace?: string | undefined
-    ): T.Effect<R, E | E1, A>
+/**
+ * @tsplus fluent ets/Effect unless
+ */
+export const ext_unless_ = unless_
 
-    /**
-     * @ets_rewrite_method unrefine_ from "@effect-ts/core/Effect"
-     */
-    unsandbox<R, E, A>(
-      this: T.Effect<R, Cause<E>, A>,
-      __trace?: string | undefined
-    ): T.Effect<R, E, A>
+import { unrefineWith_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method untraced from "@effect-ts/core/Effect"
-     */
-    untraced<R, E, A>(this: T.Effect<R, E, A>): T.Effect<R, E, A>
+/**
+ * @tsplus fluent ets/Effect unrefineWith
+ */
+export const ext_unrefineWith_ = unrefineWith_
 
-    /**
-     * @ets_rewrite_method updateService_ from "@effect-ts/core/Effect"
-     */
-    updateService<T, R, E, A>(
-      this: T.Effect<R, E, A>,
-      tag: Tag<T>,
-      f: (_: T) => T,
-      __trace?: string | undefined
-    ): T.Effect<R & Has<T>, E, A>
+import { unrefine_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method whenM_ from "@effect-ts/core/Effect"
-     */
-    whenM<R1, E1, A, R, E>(
-      this: T.Effect<R1, E1, A>,
-      predicate: T.Effect<R, E, boolean>,
-      __trace?: string | undefined
-    ): T.Effect<R & R1, E1 | E, void>
+/**
+ * @tsplus fluent ets/Effect unrefine
+ */
+export const ext_unrefine_ = unrefine_
 
-    /**
-     * @ets_rewrite_method when_ from "@effect-ts/core/Effect"
-     */
-    when<R1, E1, A>(
-      this: T.Effect<R1, E1, A>,
-      predicate: () => boolean,
-      __trace?: string | undefined
-    ): T.Effect<R1, E1, O.Option<A>>
+import { unrefine_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method zip_ from "@effect-ts/core/Effect"
-     */
-    zip<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, Tp.Tuple<[AX, B]>>
+/**
+ * @tsplus fluent ets/Effect unsandbox
+ */
+export const ext_unrefine_ = unrefine_
 
-    /**
-     * @ets_rewrite_method zipPar_ from "@effect-ts/core/Effect"
-     */
-    zipPar<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, Tp.Tuple<[AX, B]>>
+import { untraced } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method zipRight_ from "@effect-ts/core/Effect"
-     */
-    zipRight<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, B>
+/**
+ * @tsplus fluent ets/Effect untraced
+ */
+export const ext_untraced = untraced
 
-    /**
-     * @ets_rewrite_method zipRightPar_ from "@effect-ts/core/Effect"
-     */
-    zipRightPar<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, B>
+import { updateService_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method zipLeft_ from "@effect-ts/core/Effect"
-     */
-    zipLeft<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX>
+/**
+ * @tsplus fluent ets/Effect updateService
+ */
+export const ext_updateService_ = updateService_
 
-    /**
-     * @ets_rewrite_method zipLeftPar_ from "@effect-ts/core/Effect"
-     */
-    zipLeftPar<RX, EX, AX, R2, E2, B>(
-      this: T.Effect<RX, EX, AX>,
-      f: T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, AX>
+import { whenM_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method zipWith_ from "@effect-ts/core/Effect"
-     */
-    zipWith<R, E, A, R2, E2, A2, B>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R2, E2, A2>,
-      f: (a: A, b: A2) => B,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, B>
+/**
+ * @tsplus fluent ets/Effect whenM
+ */
+export const ext_whenM_ = whenM_
 
-    /**
-     * @ets_rewrite_method zipWithPar_ from "@effect-ts/core/Effect"
-     */
-    zipWithPar<R, E, A, R2, E2, A2, B>(
-      this: T.Effect<R, E, A>,
-      that: T.Effect<R2, E2, A2>,
-      f: (a: A, b: A2) => B,
-      __trace?: string | undefined
-    ): T.Effect<R & R2, E | E2, B>
-  }
-}
+import { when_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect when
+ */
+export const ext_when_ = when_
+
+import { zip_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zip
+ */
+export const ext_zip_ = zip_
+
+import { zipPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipPar
+ */
+export const ext_zipPar_ = zipPar_
+
+import { zipRight_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipRight
+ */
+export const ext_zipRight_ = zipRight_
+
+import { zipRightPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipRightPar
+ */
+export const ext_zipRightPar_ = zipRightPar_
+
+import { zipLeft_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipLeft
+ */
+export const ext_zipLeft_ = zipLeft_
+
+import { zipLeftPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipLeftPar
+ */
+export const ext_zipLeftPar_ = zipLeftPar_
+
+import { zipWith_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipWith
+ */
+export const ext_zipWith_ = zipWith_
+
+import { zipWithPar_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect zipWithPar
+ */
+export const ext_zipWithPar_ = zipWithPar_

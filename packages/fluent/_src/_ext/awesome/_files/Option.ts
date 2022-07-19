@@ -52,21 +52,26 @@ declare module "@effect-ts/system/Option/core" {
   // export interface Option<A> {}
 
   export interface OptionOps {
-    /**
-     * @ets_rewrite_method alt_ from "@effect-ts-app/fluent/_ext/Option"
-     */
-    alt<A, B>(this: Option<A>, fb: () => Option<B>): Option<A | B>
+import { alt_ } from "@effect-ts-app/fluent/_ext/Option"
 
-    /**
-     * @ets_rewrite_method tryCatchOption_ from "@effect-ts-app/core/Sync"
-     */
-    encaseInSync<E, A>(this: Option<A>, onNone: () => E): SyncIO<E, A>
+/**
+ * @tsplus fluent ets/Option alt
+ */
+export const ext_alt_ = alt_
 
-    /**
-     * @ets_rewrite_method encaseOption_ from "@effect-ts-app/core/Effect"
-     */
-    encaseInEffect<E, A>(this: Option<A>, onNone: () => E): EffectIO<E, A>
-  }
+import { tryCatchOption_ } from "@effect-ts-app/core/Sync"
+
+/**
+ * @tsplus fluent ets/Sync encaseInSync
+ */
+export const ext_tryCatchOption_ = tryCatchOption_
+
+import { encaseOption_ } from "@effect-ts-app/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect encaseInEffect
+ */
+export const ext_encaseOption_ = encaseOption_
 
   export interface OptionStaticOps {
     fromNullable: typeof O.fromNullable

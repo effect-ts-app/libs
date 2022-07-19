@@ -11,20 +11,12 @@ declare module "@effect-ts/system/Collections/Immutable/Tuple" {
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { mapN_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method mapN_ from "@effect-ts/core/Effect"
-     */
-    mapEffectN<T extends NonEmptyArray<Effect<any, any, any>>, B>(
-      this: Tuple<T>,
-      f: (
-        ..._: ForcedArray<{
-          [k in keyof T]: _A<T[k]>
-        }>
-      ) => B,
-      __trace?: string
-    ): Effect<_R<T[number]>, _E<T[number]>, B>
-  }
+/**
+ * @tsplus fluent ets/Effect mapEffectN
+ */
+export const ext_mapN_ = mapN_
 
   // refactor tuple to use TupleOps
   namespace Tuple {

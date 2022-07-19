@@ -13,394 +13,393 @@ import type * as SET from "@effect-ts-app/core/Set"
 import type { Sync } from "@effect-ts-app/core/Sync"
 
 interface AOps {
-  /**
-   * @ets_rewrite_method map_ from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
-   */
-  mapRA<A, B>(this: NonEmptyArray<A>, f: (a: A) => B): NonEmptyArray<B>
-  /**
-   * @ets_rewrite_method map_ from "@effect-ts-app/core/Array"
-   */
-  mapRA<A, B>(this: readonly A[], f: (a: A) => B): readonly B[]
+import { map_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 
-  /**
-   * @ets_rewrite_method mapWithIndex_ from "@effect-ts-app/core/Array"
-   */
-  mapWithIndex<A, B>(
-    this: NonEmptyArray<A>,
-    f: (idx: number, a: A) => B
-  ): NonEmptyArray<B>
-  /**
-   * @ets_rewrite_method mapWithIndex_ from "@effect-ts-app/core/Array"
-   */
-  mapWithIndex<A, B>(this: readonly A[], f: (idx: number, a: A) => B): readonly B[]
+/**
+ * @tsplus fluent ets/NonEmptyArray mapRA
+ */
+export const ext_map_ = map_
 
-  /**
-   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
-   */
-  concatRA<A, A1>(this: NonEmptyArray<A>, y: readonly A1[]): NonEmptyArray<A | A1>
+import { mapWithIndex_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
-   */
-  concatRA<A, A1>(this: readonly A[], y: NonEmptyArray<A1>): NonEmptyArray<A | A1>
-  /**
-   * @ets_rewrite_method concat_ from "@effect-ts-app/core/Array"
-   */
-  concatRA<A, A1>(this: readonly A[], y: readonly A1[]): readonly (A | A1)[]
+/**
+ * @tsplus fluent ets/Array mapWithIndex
+ */
+export const ext_mapWithIndex_ = mapWithIndex_
 
-  /**
-   * @ets_rewrite_method sort_ from "@effect-ts-app/fluent/_ext/Array"
-   */
-  sortWith<A>(this: NonEmptyArray<A>, o: Ord<A>): NonEmptyArray<A>
+import { concat_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method sort_ from "@effect-ts-app/fluent/_ext/Array"
-   */
-  sortWith<A>(this: readonly A[], o: Ord<A>): readonly A[]
+/**
+ * @tsplus fluent ets/Array concatRA
+ */
+export const ext_concat_ = concat_
 
-  /**
-   * @ets_rewrite_method sortBy_ from "@effect-ts-app/fluent/_ext/Array"
-   */
-  sortBy<A>(this: NonEmptyArray<A>, ords: readonly Ord<A>[]): NonEmptyArray<A>
-  /**
-   * @ets_rewrite_method sortBy_ from "@effect-ts-app/fluent/_ext/Array"
-   */
-  sortBy<A>(this: readonly A[], ords: readonly Ord<A>[]): readonly A[]
+import { concat_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
-   */
-  append<AX>(this: NonEmptyArray<AX>, end: AX): NonEmptyArray<AX>
+/**
+ * @tsplus fluent ets/Array concatRA
+ */
+export const ext_concat_ = concat_
 
-  /**
-   * @ets_rewrite_method append_ from "@effect-ts-app/core/Array"
-   */
-  append<AX>(this: ARR.Array<AX>, end: AX): ARR.Array<AX>
+import { sort_ } from "@effect-ts-app/fluent/_ext/Array"
+
+/**
+ * @tsplus fluent ets/Array sortWith
+ */
+export const ext_sort_ = sort_
+
+import { sort_ } from "@effect-ts-app/fluent/_ext/Array"
+
+/**
+ * @tsplus fluent ets/Array sortWith
+ */
+export const ext_sort_ = sort_
+
+import { sortBy_ } from "@effect-ts-app/fluent/_ext/Array"
+
+/**
+ * @tsplus fluent ets/Array sortBy
+ */
+export const ext_sortBy_ = sortBy_
+
+import { append_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array append
+ */
+export const ext_append_ = append_
+
+import { append_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array append
+ */
+export const ext_append_ = append_
 
   // replacement for mapM
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapEffect<AX, R, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Effect<R, E, B>
-  ): Effect<R, E, NonEmptyArray<B>>
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapEffect<AX, R, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Effect<R, E, B>
-  ): Effect<R, E, readonly B[]>
+import { mapEffect_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method mapSync_ from "@effect-ts-app/core/Array"
-   */
-  mapSync<AX, R, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Sync<R, E, B>
-  ): Sync<R, E, NonEmptyArray<B>>
-  /**
-   * @ets_rewrite_method mapSync_ from "@effect-ts-app/core/Array"
-   */
-  mapSync<AX, R, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Sync<R, E, B>
-  ): Sync<R, E, readonly B[]>
+/**
+ * @tsplus fluent ets/Array mapEffect
+ */
+export const ext_mapEffect_ = mapEffect_
 
-  /**
-   * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
-   */
-  mapEither<AX, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Either<E, B>
-  ): Either<E, NonEmptyArray<B>>
+import { mapSync_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method mapEither_ from "@effect-ts-app/fluent/fluent/Array"
-   */
-  mapEither<AX, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Either<E, B>
-  ): Either<E, ARR.Array<B>>
+/**
+ * @tsplus fluent ets/Array mapSync
+ */
+export const ext_mapSync_ = mapSync_
 
-  /**
-   * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
-   */
-  mapOption<AX, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Option<B>
-  ): Option<ARR.Array<B>>
+import { mapEither_ } from "@effect-ts-app/fluent/fluent/Array"
 
-  /**
-   * @ets_rewrite_method mapOption_ from "@effect-ts-app/fluent/fluent/Array"
-   */
-  mapOption<AX, B>(this: ARR.Array<AX>, f: (a: AX) => Option<B>): Option<ARR.Array<B>>
+/**
+ * @tsplus fluent ets/Array mapEither
+ */
+export const ext_mapEither_ = mapEither_
 
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapM<AX, R, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Effect<R, E, B>
-  ): Effect<R, E, NonEmptyArray<B>>
+import { mapEither_ } from "@effect-ts-app/fluent/fluent/Array"
 
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapM<AX, R, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Sync<R, E, B>
-  ): Effect<R, E, NonEmptyArray<B>> // Maps to Effect always
+/**
+ * @tsplus fluent ets/Array mapEither
+ */
+export const ext_mapEither_ = mapEither_
 
-  /**
-   * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-   */
-  mapM<AX, E, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Either<E, B>
-  ): Effect<unkown, E, NonEmptyArray<B>>
+import { mapOption_ } from "@effect-ts-app/fluent/fluent/Array"
 
-  /**
-   * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-   */
-  mapM<AX, B>(
-    this: NonEmptyArray<AX>,
-    f: (a: AX) => Option<B>
-  ): Effect<unkown, Option<never>, NonEmptyArray<B>>
+/**
+ * @tsplus fluent ets/Array mapOption
+ */
+export const ext_mapOption_ = mapOption_
 
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapM<AX, R, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Effect<R, E, B>
-  ): Effect<R, E, readonly B[]>
+import { mapOption_ } from "@effect-ts-app/fluent/fluent/Array"
 
-  /**
-   * @ets_rewrite_method mapEffect_ from "@effect-ts-app/core/Array"
-   */
-  mapM<AX, R, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Sync<R, E, B>
-  ): Effect<R, E, readonly B[]> // Maps to Effect always
+/**
+ * @tsplus fluent ets/Array mapOption
+ */
+export const ext_mapOption_ = mapOption_
 
-  /**
-   * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-   */
-  mapM<AX, E, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Either<E, B>
-  ): Effect<unkown, E, readonly B[]>
+import { mapEffect_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method mapM_ from "@effect-ts-app/fluent/_ext/mapM"
-   */
-  mapM<AX, B>(
-    this: ARR.Array<AX>,
-    f: (a: AX) => Option<B>
-  ): Effect<unkown, Option<never>, readonly B[]>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
 
-  /**
-   * @ets_rewrite_method flatten from "@effect-ts-app/core/Array"
-   */
-  flatten<A>(this: ARR.Array<ARR.Array<A>>): ARR.Array<A>
+import { mapEffect_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method collect_ from "@effect-ts-app/core/Array"
-   */
-  collect<A, B>(this: readonly A[], f: (a: A) => Option<B>): readonly B[]
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
 
-  /**
-   * @ets_rewrite_method find_ from "@effect-ts-app/core/Array"
-   */
-  findFirst<A>(this: readonly A[], predicate: Predicate<A>): Option<A>
+import { mapM_ } from "@effect-ts-app/fluent/_ext/mapM"
 
-  /**
-   * @ets_rewrite_method findFirstMap_ from "@effect-ts-app/core/Array"
-   */
-  findFirstMap<A, B>(this: readonly A[], f: (a: A) => Option<B>): Option<B>
+/**
+ * @tsplus fluent ets/mapM mapM
+ */
+export const ext_mapM_ = mapM_
 
-  /**
-   * @ets_rewrite_method filter_ from "@effect-ts-app/core/Array"
-   */
-  filterRA<A, S extends A>(this: readonly A[], f: (a: A) => a is S): readonly S[]
+import { mapM_ } from "@effect-ts-app/fluent/_ext/mapM"
 
-  /**
-   * @ets_rewrite_method filter_ from "@effect-ts-app/core/Array"
-   */
-  filterRA<A>(this: readonly A[], f: (a: A) => boolean): readonly A[]
+/**
+ * @tsplus fluent ets/mapM mapM
+ */
+export const ext_mapM_ = mapM_
 
-  /**
-   * @ets_rewrite_method uniq_ from "@effect-ts-app/fluent/_ext/Array"
-   */
-  uniq<A>(this: readonly A[], E: Equal<A>): readonly A[]
+import { mapEffect_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method head from "@effect-ts-app/core/Array"
-   */
-  head<A>(this: readonly A[]): Option<A>
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
 
-  /**
-   * @ets_rewrite_method last from "@effect-ts-app/core/Array"
-   */
-  last<A>(this: readonly A[]): Option<A>
+import { mapEffect_ } from "@effect-ts-app/core/Array"
 
-  /**
-   * @ets_rewrite_method tail from "@effect-ts-app/core/Array"
-   */
-  tail<A>(this: readonly A[]): Option<readonly A[]>
-}
+/**
+ * @tsplus fluent ets/Array mapM
+ */
+export const ext_mapEffect_ = mapEffect_
+
+import { mapM_ } from "@effect-ts-app/fluent/_ext/mapM"
+
+/**
+ * @tsplus fluent ets/mapM mapM
+ */
+export const ext_mapM_ = mapM_
+
+import { mapM_ } from "@effect-ts-app/fluent/_ext/mapM"
+
+/**
+ * @tsplus fluent ets/mapM mapM
+ */
+export const ext_mapM_ = mapM_
+
+import { flatten } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array flatten
+ */
+export const ext_flatten = flatten
+
+import { collect_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array collect
+ */
+export const ext_collect_ = collect_
+
+import { find_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array findFirst
+ */
+export const ext_find_ = find_
+
+import { findFirstMap_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array findFirstMap
+ */
+export const ext_findFirstMap_ = findFirstMap_
+
+import { filter_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array filterRA
+ */
+export const ext_filter_ = filter_
+
+import { filter_ } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array filterRA
+ */
+export const ext_filter_ = filter_
+
+import { uniq_ } from "@effect-ts-app/fluent/_ext/Array"
+
+/**
+ * @tsplus fluent ets/Array uniq
+ */
+export const ext_uniq_ = uniq_
+
+import { head } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array head
+ */
+export const ext_head = head
+
+import { last } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array last
+ */
+export const ext_last = last
+
+import { tail } from "@effect-ts-app/core/Array"
+
+/**
+ * @tsplus fluent ets/Array tail
+ */
+export const ext_tail = tail
 
 interface SOps {
-  /**
-   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Set"
-   */
-  filter<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): SET.Set<B>
-  /**
-   * @ets_rewrite_method filter_ from "@effect-ts/core/Collections/Immutable/Set"
-   */
-  filter<A>(this: SET.Set<A>, predicate: Predicate<A>): SET.Set<A>
+import { filter_ } from "@effect-ts/core/Collections/Immutable/Set"
 
-  /**
-   * @ets_rewrite_method some_ from "@effect-ts/core/Collections/Immutable/Set"
-   */
-  some<A>(this: SET.Set<A>, predicate: Predicate<A>): boolean
+/**
+ * @tsplus fluent ets/Set filter
+ */
+export const ext_filter_ = filter_
 
-  /**
-   * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
-   */
-  find<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): B | undefined
-  /**
-   * @ets_rewrite_method find_ from "@effect-ts-app/fluent/_ext/Set"
-   */
-  find<A>(this: SET.Set<A>, predicate: Predicate<A>): A | undefined
+import { some_ } from "@effect-ts/core/Collections/Immutable/Set"
 
-  /**
-   * @ets_rewrite_method findFirst_ from "@effect-ts-app/fluent/_ext/Set"
-   */
-  findFirst<A, B extends A>(this: SET.Set<A>, refinement: Refinement<A, B>): Option<B>
-  /**
-   * @ets_rewrite_method findFirst_ from "@effect-ts-app/fluent/_ext/Set"
-   */
-  findFirst<A>(this: SET.Set<A>, predicate: Predicate<A>): Option<A>
+/**
+ * @tsplus fluent ets/Set some
+ */
+export const ext_some_ = some_
 
-  /**
-   * @ets_rewrite_method findFirstMap_ from "@effect-ts-app/fluent/_ext/Set"
-   */
-  findFirstMap<A, B>(this: SET.Set<A>, f: (a: A) => Option<B>): Option<B>
-}
+import { find_ } from "@effect-ts-app/fluent/_ext/Set"
+
+/**
+ * @tsplus fluent ets/Set find
+ */
+export const ext_find_ = find_
+
+import { findFirst_ } from "@effect-ts-app/fluent/_ext/Set"
+
+/**
+ * @tsplus fluent ets/Set findFirst
+ */
+export const ext_findFirst_ = findFirst_
+
+import { findFirstMap_ } from "@effect-ts-app/fluent/_ext/Set"
+
+/**
+ * @tsplus fluent ets/Set findFirstMap
+ */
+export const ext_findFirstMap_ = findFirstMap_
 
 interface IterableOps {
-  /**
-   * @ets_rewrite_method forEachParN_ from "@effect-ts-app/core/Effect"
-   */
-  forEachParN<R, E, A, B>(
-    this: Iterable<A>,
-    n: number,
-    f: (a: A) => Effect<R, E, B>,
-    __trace?: string
-  ): Effect<R, E, Chunk<B>>
+import { forEachParN_ } from "@effect-ts-app/core/Effect"
 
-  /**
-   * @ets_rewrite_method forEachPar_ from "@effect-ts-app/core/Effect"
-   */
-  forEachPar<R, E, A, B>(
-    this: Iterable<A>,
-    f: (a: A) => Effect<R, E, B>,
-    __trace?: string
-  ): Effect<R, E, Chunk<B>>
+/**
+ * @tsplus fluent ets/Effect forEachParN
+ */
+export const ext_forEachParN_ = forEachParN_
 
-  /**
-   * @ets_rewrite_method forEach_ from "@effect-ts-app/core/Effect"
-   */
-  forEachEffect<R, E, A, B>(
-    this: Iterable<A>,
-    f: (a: A) => Effect<R, E, B>,
-    __trace?: string
-  ): Effect<R, E, Chunk<B>>
+import { forEachPar_ } from "@effect-ts-app/core/Effect"
 
-  /**
-   * @ets_rewrite_method collectAll from "@effect-ts-app/core/Effect"
-   */
-  collectAll<R, E, A>(
-    this: Iterable<Effect<R, E, A>>,
-    __trace?: string
-  ): Effect<R, E, Chunk<A>>
+/**
+ * @tsplus fluent ets/Effect forEachPar
+ */
+export const ext_forEachPar_ = forEachPar_
 
-  /**
-   * @ets_rewrite_method forEach_ from "@effect-ts-app/core/Sync"
-   */
-  forEachSync<R, E, A, B>(
-    this: Iterable<A>,
-    f: (a: A) => Sync<R, E, B>
-  ): Sync<R, E, Chunk<B>>
+import { forEach_ } from "@effect-ts-app/core/Effect"
 
-  /**
-   * @ets_rewrite_method collectAll from "@effect-ts-app/core/Sync"
-   */
-  collectAllSync<R, E, A>(this: Iterable<Sync<R, E, A>>): Sync<R, E, Chunk<A>>
+/**
+ * @tsplus fluent ets/Effect forEachEffect
+ */
+export const ext_forEach_ = forEach_
 
-  /**
-   * @ets_rewrite_method from from "@effect-ts-app/core/Chunk"
-   */
-  toChunk<A>(this: Iterable<A>): Chunk<A>
-}
+import { collectAll } from "@effect-ts-app/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect collectAll
+ */
+export const ext_collectAll = collectAll
+
+import { forEach_ } from "@effect-ts-app/core/Sync"
+
+/**
+ * @tsplus fluent ets/Sync forEachSync
+ */
+export const ext_forEach_ = forEach_
+
+import { collectAll } from "@effect-ts-app/core/Sync"
+
+/**
+ * @tsplus fluent ets/Sync collectAllSync
+ */
+export const ext_collectAll = collectAll
+
+import { from } from "@effect-ts-app/core/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk toChunk
+ */
+export const ext_from = from
 
 declare module "@effect-ts/system/Collections/Immutable/Chunk" {
   interface ChunkOps extends IterableOps {
     // TYPO FIX
-    /**
-     * @ets_rewrite_method concat_ from "@effect-ts-app/core/Chunk"
-     */
-    concat<A, A1>(this: Chunk<A>, that: Chunk<A1>): Chunk<A | A1>
+import { concat_ } from "@effect-ts-app/core/Chunk"
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
-     */
-    filter<A, S extends A>(this: Chunk<A>, f: (a: A) => a is S): Chunk<S>
+/**
+ * @tsplus fluent ets/Chunk concat
+ */
+export const ext_concat_ = concat_
 
-    /**
-     * @ets_rewrite_method filter_ from "@effect-ts-app/core/Chunk"
-     */
-    filter<A>(this: Chunk<A>, f: (a: A) => boolean): Chunk<A>
+import { filter_ } from "@effect-ts-app/core/Chunk"
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts-app/core/Chunk"
-     */
-    map<A, B>(this: Chunk<A>, f: (a: A) => B): Chunk<B>
+/**
+ * @tsplus fluent ets/Chunk filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method collect_ from "@effect-ts-app/core/Chunk"
-     */
-    collect<A, B>(this: Chunk<A>, f: (a: A) => Option<B>): Chunk<B>
+import { filter_ } from "@effect-ts-app/core/Chunk"
 
-    /**
-     * @ets_rewrite_method toArray from "@effect-ts-app/core/Chunk"
-     */
-    toArray<A>(this: Chunk<A>): ARR.Array<A>
+/**
+ * @tsplus fluent ets/Chunk filter
+ */
+export const ext_filter_ = filter_
 
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
-     */
-    find<A, B extends A>(this: Chunk<A>, f: Refinement<A, B>): Option<B>
+import { map_ } from "@effect-ts-app/core/Chunk"
 
-    /**
-     * @ets_rewrite_method find_ from "@effect-ts-app/core/Chunk"
-     */
-    find<A>(this: Chunk<A>, f: (a: A) => boolean): Option<A>
-  }
-}
+/**
+ * @tsplus fluent ets/Chunk map
+ */
+export const ext_map_ = map_
+
+import { collect_ } from "@effect-ts-app/core/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk collect
+ */
+export const ext_collect_ = collect_
+
+import { toArray } from "@effect-ts-app/core/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk toArray
+ */
+export const ext_toArray = toArray
+
+import { find_ } from "@effect-ts-app/core/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk find
+ */
+export const ext_find_ = find_
+
+import { find_ } from "@effect-ts-app/core/Chunk"
+
+/**
+ * @tsplus fluent ets/Chunk find
+ */
+export const ext_find_ = find_
 
 declare global {
   interface ArrayOps extends AOps, IterableOps {}
   interface ReadonlyArrayOps extends AOps, IterableOps {
     // undo the global overwrite in ETS
-    /**
-     * @ets_rewrite_method mapOriginal_ from "@effect-ts-app/fluent/_ext/Array"
-     */
-    map<AX, B>(this: ARR.Array<AX>, f: (a: AX, i: number) => B): B[]
-  }
+import { mapOriginal_ } from "@effect-ts-app/fluent/_ext/Array"
+
+/**
+ * @tsplus fluent ets/Array map
+ */
+export const ext_mapOriginal_ = mapOriginal_
 
   interface Set<T> extends SetOps {}
   /**

@@ -9,16 +9,19 @@ import type { Has, Tag } from "@effect-ts/system/Has"
 
 declare module "@effect-ts/system/Managed/managed" {
   export interface ManagedStaticOps {
-    /**
-     * @ets_rewrite_method pipe from "@effect-ts/core/Effect/Managed"
-     */
-    gen: typeof M.gen
+import { pipe } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method makeExit_ from "@effect-ts/core/Effect/Managed"
-     */
-    makeExit: typeof M.makeExit_
-  }
+/**
+ * @tsplus fluent ets/Managed gen
+ */
+export const ext_pipe = pipe
+
+import { makeExit_ } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed makeExit
+ */
+export const ext_makeExit_ = makeExit_
 
   export const Managed: ManagedStaticOps
 
@@ -29,109 +32,86 @@ declare module "@effect-ts/system/Managed/managed" {
      * @ets_rewrite_method pipe from "smart:pipe"
      */
     pipe<Self, Ret>(this: Self, f: (self: Self) => Ret): Ret
+import { as_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method as_ from "@effect-ts/core/Effect/Managed"
-     */
-    as<RX, EX, AX, B>(
-      this: M.Managed<RX, EX, AX>,
-      b: B,
-      __trace?: string
-    ): M.Managed<RX, EX, B>
+/**
+ * @tsplus fluent ets/Managed as
+ */
+export const ext_as_ = as_
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts/core/Effect/Managed"
-     */
-    map<RX, EX, AX, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (a: AX) => B,
-      __trace?: string
-    ): M.Managed<RX, EX, B>
+import { map_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method chain_ from "@effect-ts/core/Effect/Managed"
-     */
-    chain<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (a: AX) => M.Managed<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, EX | E2, B>
+/**
+ * @tsplus fluent ets/Managed map
+ */
+export const ext_map_ = map_
 
-    /**
-     * @ets_rewrite_method tapM_ from "@effect-ts/core/Effect/Managed"
-     */
-    tap<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (a: AX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, EX | E2, AX>
+import { chain_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method tap_ from "@effect-ts/core/Effect/Managed"
-     */
-    tap<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (a: AX) => M.Managed<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, EX | E2, AX>
+/**
+ * @tsplus fluent ets/Managed chain
+ */
+export const ext_chain_ = chain_
 
-    /**
-     * @ets_rewrite_method tapError_ from "@effect-ts/core/Effect/Managed"
-     */
-    tapError<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (e: EX) => M.Managed<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, EX | E2, AX>
+import { tapM_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method tapCause_ from "@effect-ts/core/Effect/Managed"
-     */
-    tapCause<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (e: Cause<EX>) => M.Managed<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, EX | E2, AX>
+/**
+ * @tsplus fluent ets/Managed tap
+ */
+export const ext_tapM_ = tapM_
 
-    /**
-     * @ets_rewrite_method tapBoth_ from "@effect-ts/core/Effect/Managed"
-     */
-    tapBoth<RX, EX, AX, R2, E2, B, R3, E3, C>(
-      this: M.Managed<RX, EX, AX>,
-      f: (e: EX) => M.Managed<R2, E2, B>,
-      g: (e: AX) => M.Managed<R2, E3, C>,
-      __trace?: string
-    ): M.Managed<RX & R2 & R3, EX | E2 | E3, AX>
+import { tap_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method catchAll_ from "@effect-ts/core/Effect/Managed"
-     */
-    catchAll<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (e: EX) => M.Managed<R2, E2, B>,
-      __trace?: string
-    ): M.Managed<RX & R2, E2, AX | B>
+/**
+ * @tsplus fluent ets/Managed tap
+ */
+export const ext_tap_ = tap_
 
-    /**
-     * @ets_rewrite_method use_ from "@effect-ts/core/Effect/Managed"
-     */
-    use<RX, EX, AX, R2, E2, B>(
-      this: M.Managed<RX, EX, AX>,
-      f: (a: AX) => T.Effect<R2, E2, B>,
-      __trace?: string
-    ): T.Effect<RX & R2, EX | E2, B>
+import { tapError_ } from "@effect-ts/core/Effect/Managed"
 
-    /**
-     * @ets_rewrite_method fromRawManaged from "@effect-ts/core/Effect/Layer"
-     */
-    toLayer<RX, EX, AX>(this: M.Managed<RX, EX, AX>): Layer<RX, EX, AX>
+/**
+ * @tsplus fluent ets/Managed tapError
+ */
+export const ext_tapError_ = tapError_
 
-    /**
-     * @ets_rewrite_method fromManaged_ from "@effect-ts/core/Effect/Layer"
-     */
-    toLayer<RX, EX, AX>(
-      this: M.Managed<RX, EX, AX>,
-      tag: Tag<AX>
-    ): Layer<RX, EX, Has<AX>>
-  }
-}
+import { tapCause_ } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed tapCause
+ */
+export const ext_tapCause_ = tapCause_
+
+import { tapBoth_ } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed tapBoth
+ */
+export const ext_tapBoth_ = tapBoth_
+
+import { catchAll_ } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed catchAll
+ */
+export const ext_catchAll_ = catchAll_
+
+import { use_ } from "@effect-ts/core/Effect/Managed"
+
+/**
+ * @tsplus fluent ets/Managed use
+ */
+export const ext_use_ = use_
+
+import { fromRawManaged } from "@effect-ts/core/Effect/Layer"
+
+/**
+ * @tsplus fluent ets/Layer toLayer
+ */
+export const ext_fromRawManaged = fromRawManaged
+
+import { fromManaged_ } from "@effect-ts/core/Effect/Layer"
+
+/**
+ * @tsplus fluent ets/Layer toLayer
+ */
+export const ext_fromManaged_ = fromManaged_

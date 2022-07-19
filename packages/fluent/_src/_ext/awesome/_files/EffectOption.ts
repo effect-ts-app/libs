@@ -14,17 +14,19 @@ declare module "@effect-ts/monocle/Lens" {
    * @tsplus type ets/Lens
    */
   export interface Lens<S, A> {
-    /**
-     * @ets_rewrite_method modify_ from "@effect-ts-app/fluent/_ext/Lens"
-     */
-    modify<S, A>(this: Lens<S, A>, f: (a: A) => A): (s: S) => S
+import { modify_ } from "@effect-ts-app/fluent/_ext/Lens"
 
-    /**
-     * @ets_rewrite_method prop_ from "@effect-ts-app/fluent/_ext/Lens"
-     */
-    prop<S, A, P extends keyof A>(this: Lens<S, A>, prop: P): Lens<S, A[P]>
-  }
-}
+/**
+ * @tsplus fluent ets/Lens modify
+ */
+export const ext_modify_ = modify_
+
+import { prop_ } from "@effect-ts-app/fluent/_ext/Lens"
+
+/**
+ * @tsplus fluent ets/Lens prop
+ */
+export const ext_prop_ = prop_
 
 declare module "@effect-ts/system/Has" {
   /**
@@ -98,221 +100,146 @@ declare module "@effect-ts/system/Effect/effect" {
     //  * @ets_rewrite_getter asUnit from "@effect-ts/core/Effect"
     //  */
     // readonly asUnit: Effect<R, E, void>
+import { result } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method result from "@effect-ts/core/Effect"
-     */
-    result<R, E, A>(
-      this: Effect<R, E, A>,
-      __trace?: string
-    ): Effect<R, never, Exit<E, A>>
+/**
+ * @tsplus fluent ets/Effect result
+ */
+export const ext_result = result
 
-    /**
-     * @ets_rewrite_method fold_ from "@effect-ts/core/Effect"
-     */
-    fold<R, E, A, A2, A3>(
-      this: Effect<R, E, A>,
-      failure: (failure: E) => A2,
-      success: (a: A) => A3,
-      __trace?: string
-    ): Effect<R, never, A2 | A3>
+import { fold_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method delay_ from "@effect-ts/core/Effect"
-     */
-    delay<R, E, A>(
-      this: Effect<R, E, A>,
-      ms: number,
-      __trace?: string
-    ): Effect<R & HasClock, E, A>
+/**
+ * @tsplus fluent ets/Effect fold
+ */
+export const ext_fold_ = fold_
 
-    /**
-     * @ets_rewrite_method tapBoth_ from "@effect-ts-app/core/Effect"
-     */
-    tapBoth<R, E, A, R2, R3, E3>(
-      this: Effect<R, E, A>,
-      f: (e: E) => Effect<R2, never, any>,
-      g: (a: A) => Effect<R3, E3, any>
-    ): Effect<R3 & R & R2, E | E3, A>
+import { delay_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method tapBothInclAbort_ from "@effect-ts-app/core/Effect"
-     */
-    tapBothInclAbort<R, E, A, ER, EE, EA, SR, SE, SA>(
-      this: Effect<R, E, A>,
-      onError: (err: unknown) => Effect<ER, EE, EA>,
-      onSuccess: (a: A) => Effect<SR, SE, SA>
-    ): Effect<R & ER & SR, E | EE | SE, A>
+/**
+ * @tsplus fluent ets/Effect delay
+ */
+export const ext_delay_ = delay_
 
-    /**
-     * @ets_rewrite_method tapErrorInclAbort_ from "@effect-ts-app/core/Effect"
-     */
-    tapErrorInclAbort<R, E, A, ER, EE, EA>(
-      this: Effect<R, E, A>,
-      onError: (err: unknown) => Effect<ER, EE, EA>
-    ): Effect<R & ER, E | EE, A>
+import { tapBoth_ } from "@effect-ts-app/core/Effect"
 
-    /**
-     * @ets_rewrite_method tapCause_ from "@effect-ts/core/Effect"
-     */
-    tapCause<R2, A2, R, E, E2, X>(
-      this: Effect<R2, E2, A2>,
-      f: (e: Cause<E2>) => Effect<R, E, X>,
-      __trace?: string
-    ): Effect<R2 & R, E | E2, A2>
+/**
+ * @tsplus fluent ets/Effect tapBoth
+ */
+export const ext_tapBoth_ = tapBoth_
 
-    /**
-     * @ets_rewrite_method catchAll_ from "@effect-ts/core/Effect"
-     */
-    catchAll<R2, E2, A2, R, E, A>(
-      this: Effect<R2, E2, A2>,
-      f: (e: E2) => Effect<R, E, A>,
-      __trace?: string
-    ): Effect<R2 & R, E, A2 | A>
+import { tapBothInclAbort_ } from "@effect-ts-app/core/Effect"
 
-    /**
-     * @ets_rewrite_method catch_ from "@effect-ts/core/Effect"
-     */
-    catch<N extends keyof E, K extends E[N] & string, E, R, A, R1, E1, A1>(
-      this: Effect<R, E, A>,
-      tag: N,
-      k: K,
-      f: (
-        e: Extract<
-          E,
-          {
-            [n in N]: K
-          }
-        >
-      ) => Effect<R1, E1, A1>,
-      __trace?: string
-    ): Effect<
-      R & R1,
-      | Exclude<
-          E,
-          {
-            [n in N]: K
-          }
-        >
-      | E1,
-      A | A1
-    >
+/**
+ * @tsplus fluent ets/Effect tapBothInclAbort
+ */
+export const ext_tapBothInclAbort_ = tapBothInclAbort_
 
-    /**
-     * @ets_rewrite_method catchTag_ from "@effect-ts/core/Effect"
-     */
-    catchTag<
-      K extends E["_tag"] & string,
-      E extends {
-        _tag: string
-      },
-      R,
-      A,
-      R1,
-      E1,
-      A1
-    >(
-      this: Effect<R, E, A>,
-      k: K,
-      f: (
-        e: Extract<
-          E,
-          {
-            _tag: K
-          }
-        >
-      ) => Effect<R1, E1, A1>,
-      __trace?: string
-    ): Effect<
-      R & R1,
-      | Exclude<
-          E,
-          {
-            _tag: K
-          }
-        >
-      | E1,
-      A | A1
-    >
+import { tapErrorInclAbort_ } from "@effect-ts-app/core/Effect"
 
-    /**
-     * @ets_rewrite_method asUnit from "@effect-ts/core/Effect"
-     */
-    asUnit<R, E, A>(this: Effect<R, E, A>, __trace?: string): Effect<R, E, void>
+/**
+ * @tsplus fluent ets/Effect tapErrorInclAbort
+ */
+export const ext_tapErrorInclAbort_ = tapErrorInclAbort_
 
-    /**
-     * @ets_rewrite_method orDie from "@effect-ts/core/Effect"
-     */
-    orDie<R, E, A>(this: Effect<R, E, A>, __trace?: string): Effect<R, never, A>
+import { tapCause_ } from "@effect-ts/core/Effect"
 
-    /**
-     * @ets_rewrite_method mapError_ from "@effect-ts/core/Effect"
-     */
-    mapError<R, E, E2, A>(
-      this: Effect<R, E, A>,
-      f: (e: E) => E2,
-      __trace?: string
-    ): Effect<R, E2, A>
+/**
+ * @tsplus fluent ets/Effect tapCause
+ */
+export const ext_tapCause_ = tapCause_
+
+import { catchAll_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchAll
+ */
+export const ext_catchAll_ = catchAll_
+
+import { catch_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catch
+ */
+export const ext_catch_ = catch_
+
+import { catchTag_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect catchTag
+ */
+export const ext_catchTag_ = catchTag_
+
+import { asUnit } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect asUnit
+ */
+export const ext_asUnit = asUnit
+
+import { orDie } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect orDie
+ */
+export const ext_orDie = orDie
+
+import { mapError_ } from "@effect-ts/core/Effect"
+
+/**
+ * @tsplus fluent ets/Effect mapError
+ */
+export const ext_mapError_ = mapError_
 
     // TODO: consider different behavior of EffectOption (map maps over the value in Option), vs Effect (map maps over Option)
+import { map_ } from "@effect-ts-app/core/EffectOption"
 
-    /**
-     * @ets_rewrite_method map_ from "@effect-ts-app/core/EffectOption"
-     */
-    mapOption<RX, EX, AX, B>(
-      this: EffectOption<RX, EX, AX>,
-      f: (a: AX) => B,
-      __trace?: string
-    ): EffectOption<RX, EX, B>
+/**
+ * @tsplus fluent ets/EffectOption mapOption
+ */
+export const ext_map_ = map_
 
-    /**
-     * @ets_rewrite_method flatMap_ from "@effect-ts-app/core/EffectOption"
-     */
-    flatMapOption<RX, EX, AX, R2, E2, B>(
-      this: EffectOption<RX, EX, AX>,
-      f: (a: AX) => EffectOption<R2, E2, B>,
-      __trace?: string
-    ): EffectOption<RX & R2, EX | E2, B>
+import { flatMap_ } from "@effect-ts-app/core/EffectOption"
 
-    /**
-     * @ets_rewrite_method flatMapEffect_ from "@effect-ts-app/core/EffectOption"
-     */
-    flatMapOptionEffect<RX, EX, AX, R2, E2, B>(
-      this: EffectOption<RX, EX, AX>,
-      f: (a: AX) => Effect<R2, E2, B>,
-      __trace?: string
-    ): EffectOption<RX & R2, EX | E2, B>
+/**
+ * @tsplus fluent ets/EffectOption flatMapOption
+ */
+export const ext_flatMap_ = flatMap_
 
-    /**
-     * @ets_rewrite_method toNullable from "@effect-ts-app/core/EffectOption"
-     */
-    toNullable<R, E, A>(this: EffectOption<R, E, A>): Effect<R, E, A | null>
+import { flatMapEffect_ } from "@effect-ts-app/core/EffectOption"
 
-    /**
-     * @ets_rewrite_method alt_ from "@effect-ts-app/core/EffectOption"
-     */
-    alt<R, E, A, R2, E2, A2>(
-      this: EffectOption<R, E, A>,
-      f: () => EffectOption<R2, E2, A2>
-    ): EffectOption<R & R2, E | E2, A | A2>
+/**
+ * @tsplus fluent ets/EffectOption flatMapOptionEffect
+ */
+export const ext_flatMapEffect_ = flatMapEffect_
 
-    /**
-     * @ets_rewrite_method getOrElse_ from "@effect-ts-app/core/EffectOption"
-     */
-    getOrElse<R, E, A, A2>(
-      this: EffectOption<R, E, A>,
-      f: () => A2
-    ): Effect<R, E, A | A2>
+import { toNullable } from "@effect-ts-app/core/EffectOption"
 
-    /**
-     * @ets_rewrite_method getOrFail_ from "@effect-ts-app/core/EffectOption"
-     */
-    getOrFail<R, E, E2, A>(
-      this: EffectOption<R, E, A>,
-      onNone: () => E2
-    ): Effect<R, E | E2, A>
-  }
-}
+/**
+ * @tsplus fluent ets/EffectOption toNullable
+ */
+export const ext_toNullable = toNullable
+
+import { alt_ } from "@effect-ts-app/core/EffectOption"
+
+/**
+ * @tsplus fluent ets/EffectOption alt
+ */
+export const ext_alt_ = alt_
+
+import { getOrElse_ } from "@effect-ts-app/core/EffectOption"
+
+/**
+ * @tsplus fluent ets/EffectOption getOrElse
+ */
+export const ext_getOrElse_ = getOrElse_
+
+import { getOrFail_ } from "@effect-ts-app/core/EffectOption"
+
+/**
+ * @tsplus fluent ets/EffectOption getOrFail
+ */
+export const ext_getOrFail_ = getOrFail_
 
 // declare module "@effect-ts-app/core/EffectOption" {
 //   export interface Base<R, E, A> extends EffectOption<R, E, A> {}
