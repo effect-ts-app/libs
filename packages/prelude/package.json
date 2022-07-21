@@ -58,6 +58,13 @@
                 "default": "./_mjs/_ext/*.mjs"
             },
             "require": "./_ext/*.js"
+        },
+        "./*.js": {
+            "import": {
+                "types": "./*.d.ts",
+                "default": "./_mjs/*.mjs"
+            },
+            "require": "./*.js"
         }
     },
     "sideEffects": false,

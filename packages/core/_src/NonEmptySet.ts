@@ -26,7 +26,7 @@ export interface NonEmptyBrand {
 }
 
 /**
- * @tsplus type etc/NESet
+ * @tsplus type ets/NESet
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
