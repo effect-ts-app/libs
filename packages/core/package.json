@@ -3,7 +3,6 @@
     "version": "0.74.2",
     "license": "MIT",
     "dependencies": {
-        "abort-controller": "^3.0.0",
         "cross-fetch": "^3.1.5",
         "lodash": "^4.17.21",
         "path-parser": "^6.1.0",
