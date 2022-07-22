@@ -198,6 +198,13 @@
             },
             "require": "./adapt.js"
         },
+        "./_api/_shared": {
+            "import": {
+                "types": "./_api/_shared.d.ts",
+                "default": "./_mjs/_api/_shared.mjs"
+            },
+            "require": "./_api/_shared.js"
+        },
         "./_api/phoneNumber": {
             "import": {
                 "types": "./_api/phoneNumber.d.ts",
