@@ -1,6 +1,6 @@
 import { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
-import { Effect, Maybe } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Maybe } from "@effect-ts-app/core/Prelude"
 
 import * as Cosmos from "../cosmos-client.js"
 import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
@@ -68,7 +68,7 @@ WHERE (
               .fetchAll()
           )
         )
-        .map((x) => ROArray.head(x.resources))
+        .map((x) => ImmutableArray.head(x.resources))
         .mapMaybe(({ id }) => id)
     }
 

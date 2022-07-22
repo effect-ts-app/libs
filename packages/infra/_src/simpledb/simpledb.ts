@@ -1,4 +1,4 @@
-import { Effect, Layer, Maybe } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Layer, Maybe } from "@effect-ts-app/core/Prelude"
 
 import {
   CachedRecord,

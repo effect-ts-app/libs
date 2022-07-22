@@ -1,4 +1,4 @@
-import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/prelude/Prelude"
+import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/core/Prelude"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
 import * as Mongo from "../mongo-client.js"

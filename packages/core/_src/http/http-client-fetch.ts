@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Layer } from "@effect-ts-app/prelude/Prelude"
+import { Layer } from "@effect-ts-app/core/Prelude"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 

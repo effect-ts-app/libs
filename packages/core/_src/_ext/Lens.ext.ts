@@ -1,4 +1,4 @@
-import * as L from "@effect-ts-app/core/Lens"
+import * as L from "./lens.js"
 
 /**
  * @tsplus fluent ets/Lens setIfDefined
@@ -18,7 +18,7 @@ export const { modifyConcat } = L
 /**
  * @tsplus fluent ets/Lens modifyConcat_
  */
-export const modifyConcat__ = Layer.modifyConcat_
+export const modifyConcat__ = L.modifyConcat_
 
 /**
  * @tsplus fluent ets/Lens modifyM_
@@ -59,3 +59,13 @@ export const { modify2M_ } = L
  * @tsplus fluent ets/Lens modify2
  */
 export const { modify2_ } = L
+
+/**
+ * @tsplus fluent ets/Lens modify2S_
+ */
+export const { modify2S__ } = L
+
+/**
+ * @tsplus fluent ets/Lens modify2S
+ */
+export const { modify2S_ } = L

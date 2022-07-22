@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect, Layer } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Layer } from "@effect-ts-app/core/Prelude"
 import * as W from "winston"
 
 import * as LOG from "../Logger/index.js"

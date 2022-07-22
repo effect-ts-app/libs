@@ -1,5 +1,5 @@
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import { Effect, Maybe } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Maybe } from "@effect-ts-app/core/Prelude"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
