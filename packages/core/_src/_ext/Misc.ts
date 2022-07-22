@@ -39,7 +39,7 @@ export const naSucceed = NonEmptyArray.fromArray
 /**
  * @tsplus static ets/Set __call
  */
-export const setSucceed = ROSet.fromArray
+export const setSucceed = ImmutableSet.fromArray
 
 /**
  * @tsplus static ets/Chunk __call

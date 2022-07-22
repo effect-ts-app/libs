@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
-import { Effect, EffectMaybe, Maybe, ROArray } from "@effect-ts-app/core/Prelude"
+import { Effect, EffectMaybe, Maybe, ImmutableArray } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 import { Methods } from "@effect-ts-app/schema"
 
@@ -19,15 +19,15 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
 }
 
 export function tupAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  tup: Tuple<ROArray<R>>
+  tup: Tuple<ImmutableArray<R>>
 ) {
   return TUP.map_(tup, asRouteDescriptionAny)
 }
 
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  arr: ROArray<R>
+  arr: ImmutableArray<R>
 ) {
-  return ROArray.map_(arr, asRouteDescriptionAny)
+  return ImmutableArray.map_(arr, asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -46,7 +46,7 @@ export interface RouteDescriptor<
   method: METHOD
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
-    tags: ROArray<string>
+    tags: ImmutableArray<string>
   }
 }
 
@@ -174,7 +174,7 @@ export function makeFromSchema<ResA>(
       requestBody: _.reqBody
         .map((schema) => ({ content: { "application/json": { schema } } }))
         .toUndefined(),
-      responses: ROArray.concat_(
+      responses: ImmutableArray.concat_(
         [
           isEmpty
             ? new Response(204, { description: "Empty" })

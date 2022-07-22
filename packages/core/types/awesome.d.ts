@@ -79,7 +79,7 @@ declare global {
   interface Set<T> {}
   
   /**
-   * @tsplus type ets/ROSet
+   * @tsplus type ets/ImmutableSet
    * @tsplus type ets/Set
    */
   interface ReadonlySet<T> { }

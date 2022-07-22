@@ -151,11 +151,11 @@ export namespace Array {
 /** @tsplus type ets/Array */
 export type Array<A> = A.Array<A>
 
-export namespace ROArray {
+export namespace ImmutableArray {
   export * from "@effect-ts-app/core/Array"
 }
 /** @tsplus type ets/Array */
-export type ROArray<A> = A.Array<A>
+export type ImmutableArray<A> = A.Array<A>
 
 
 export namespace Chunk {
@@ -170,14 +170,14 @@ export namespace Set {
 /** @tsplus type ets/Set */
 export type Set<A> = SET.Set<A>
 
-export namespace ROSet {
+export namespace ImmutableSet {
   export * from "@effect-ts-app/core/Set"
 }
 /** 
  * @tsplus type ets/Set
- * @tsplus type ets/ROSet
+ * @tsplus type ets/ImmutableSet
  */
-export type ROSet<A> = SET.Set<A>
+export type ImmutableSet<A> = SET.Set<A>
 
 export namespace Layer {
   export * from "@effect-ts/core/Effect/Layer"
@@ -210,11 +210,11 @@ export namespace Map {
 /** @tsplus type ets/Map */
 export type Map<K, A> = MAP.Map<K, A>
 
-export namespace ROMap {
+export namespace ImmutableMap {
   export * from "@effect-ts/core/Collections/Immutable/Map"
 }
 /** @tsplus type ets/Map */
-export type ROMap<K, A> = MAP.Map<K, A>
+export type ImmutableMap<K, A> = MAP.Map<K, A>
 
 
 export namespace Lens {

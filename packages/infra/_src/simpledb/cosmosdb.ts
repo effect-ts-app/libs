@@ -68,7 +68,7 @@ WHERE (
               .fetchAll()
           )
         )
-        .map((x) => ROArray.head(x.resources))
+        .map((x) => ImmutableArray.head(x.resources))
         .mapMaybe(({ id }) => id)
     }
 
