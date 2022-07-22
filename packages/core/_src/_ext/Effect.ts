@@ -16,16 +16,6 @@ export function unifyEffect<X extends Effect<any, any, any>>(
   return self
 }
 
-/**
- * @tsplus fluent ets/Effect flatMap
- */
-export const flatMapEffect = Effect.chain_
-
-/**
- * @tsplus fluent ets/Effect map
- */
-export const mapEffect = Effect.map_
-
 // TODO: + for zipFlatten..
 // /**
 //  * Sequentially zips this effect with the specified effect
@@ -55,10 +45,6 @@ export function effectZipRight_<R, E, A, R2, E2, A2>(
 ): Effect<R & R2, E | E2, A2> {
   return Effect.zipRight_(a, b, __trace)
 }
-/**
- * @tsplus fluent ets/Effect tapMaybe
- */
-export const tapEffectMaybe = EffectMaybe.tap_
 
 /**
  * @tsplus static ets/Effect __call
