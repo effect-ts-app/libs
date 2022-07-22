@@ -42,6 +42,13 @@
             },
             "require": "./index.js"
         },
+        "./global": {
+            "import": {
+                "types": "./global.d.ts",
+                "default": "./_mjs/global.mjs"
+            },
+            "require": "./global.js"
+        },
         "./Prelude": {
             "import": {
                 "types": "./Prelude.d.ts",

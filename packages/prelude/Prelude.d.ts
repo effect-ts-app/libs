@@ -1,5 +1,6 @@
 import type * as CNK from "@effect-ts-app/core/Chunk"
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+import type * as DIC from "@effect-ts/core/Collections/Immutable/Dictionary"
 import type * as CAUSE from "@effect-ts/core/Effect/Cause"
 import type * as EX from "@effect-ts/core/Effect/Exit"
 import type * as M from "@effect-ts/core/Effect/Managed"
@@ -138,6 +139,12 @@ export namespace NonEmptyArray {
 }
 /** @tsplus type ets/NonEmptyArray */
 export type NonEmptyArray<A> = NA.NonEmptyArray<A>
+
+export namespace Dictionary {
+  export * from "@effect-ts-app/core/Dictionary"
+}
+/** @tsplus type ets/Dictionary */
+export type Dictionary<A> = DIC.Dictionary<A>
 
 export namespace NonEmptySet {
   export * from "@effect-ts-app/core/NonEmptySet"
