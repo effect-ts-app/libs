@@ -4,7 +4,7 @@ import {
   ifDiff_,
   tapBothInclAbort_,
   tapErrorInclAbort_,
-} from "./Effect.js"
+} from "./EffectBase.js"
 
 export * from "@effect-ts/core/Effect"
 

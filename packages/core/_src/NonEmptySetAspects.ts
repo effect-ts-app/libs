@@ -1,1 +1,1 @@
-export * from "./NonEmptySet.js"
+export * from "./NonEmptySetBase.js"
