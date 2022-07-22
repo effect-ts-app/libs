@@ -1,8 +1,9 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
 import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import { flow, identity, Predicate } from "@effect-ts/core/Function"
-import * as O from "@effect-ts/core/Option"
 import { Ord } from "@effect-ts/core/Ord"
+
+import * as O from "../Maybe.js"
 
 export const flatMap = A.chain
 export const flatMap_ = A.chain_
@@ -58,7 +59,7 @@ export function deleteOrOriginal<A>(a: A) {
 }
 
 export function sortByO<A>(
-  ords: O.Option<NA.NonEmptyArray<Ord<A>>>
+  ords: O.Maybe<NA.NonEmptyArray<Ord<A>>>
 ): (a: A.Array<A>) => A.Array<A> {
   return ords.fold(() => identity, A.sortBy)
 }

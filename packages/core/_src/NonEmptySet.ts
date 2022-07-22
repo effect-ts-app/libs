@@ -1,3 +1,9 @@
+import * as Eq from "@effect-ts/core/Equal"
+
+import { flow } from "./Function.js"
+import * as Maybe from "./Maybe.js"
+import { NonEmptyArray } from "./NonEmptyArray.js"
+import * as Ord from "./Order.js"
 import {
   filter_,
   filterMap,
@@ -13,13 +19,7 @@ import {
   remove_,
   Set,
   toArray as toArrayOriginal,
-} from "@effect-ts/core/Collections/Immutable/Set"
-import * as Eq from "@effect-ts/core/Equal"
-import * as Option from "@effect-ts/core/Option"
-
-import { flow } from "./Function.js"
-import { NonEmptyArray } from "./NonEmptyArray.js"
-import * as Ord from "./Order.js"
+} from "./Set.js"
 
 export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
@@ -77,7 +77,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option.Option<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Maybe.Maybe<A>) => flow(filterMap__(f), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet),
   }
   // TODO: extend
@@ -99,9 +99,9 @@ export const make: <A>(
 
 export function fromSet<A>(set: Set<A>) {
   if (set.size > 0) {
-    return Option.some(set as NonEmptySet<A>)
+    return Maybe.some(set as NonEmptySet<A>)
   } else {
-    return Option.none
+    return Maybe.none
   }
 }
 

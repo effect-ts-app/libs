@@ -6,9 +6,9 @@ import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.j
 
 export type Guard<T> = { (u: unknown): u is T }
 
-export const interpreters: ((schema: S.SchemaAny) => Option<() => Guard<unknown>>)[] =
+export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Guard<unknown>>)[] =
   [
-    Option.partial((miss) => (schema: S.SchemaAny): (() => Guard<unknown>) => {
+    Maybe.partial((miss) => (schema: S.SchemaAny): (() => Guard<unknown>) => {
       if (schema instanceof S.SchemaGuard) {
         return () => schema.guard
       }

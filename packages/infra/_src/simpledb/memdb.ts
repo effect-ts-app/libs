@@ -1,6 +1,6 @@
 import * as Eq from "@effect-ts/core/Equal"
 import { flow } from "@effect-ts-app/core/Function"
-import { Effect, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Maybe } from "@effect-ts-app/prelude/Prelude"
 import * as MO from "@effect-ts-app/schema"
 
 import {
@@ -34,9 +34,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .mapOption((s) => JSON.parse(s) as unknown)
-        .flatMapOptionEffect(parseSDB)
-        .mapOption(({ data, version }) => ({
+        .mapMaybe((s) => JSON.parse(s) as unknown)
+        .flatMapMaybeEffect(parseSDB)
+        .mapMaybe(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version,
         }))
@@ -61,10 +61,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           }
         }
         return null
-      }).map(Option.fromNullable)
+      }).map(Maybe.fromNullable)
     }
 
-    function store(record: A, currentVersion: Option<Version>) {
+    function store(record: A, currentVersion: Maybe<Version>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")

@@ -4,11 +4,11 @@
 import {
   Chunk,
   Effect,
-  EffectOption,
+  EffectMaybe,
   Either,
   Managed,
+  Maybe,
   NonEmptyArray,
-  Option,
   ROSet,
   Sync,
 } from "@effect-ts-app/prelude/Prelude"
@@ -64,13 +64,13 @@ export function unifyEither<X extends Either<any, any>>(
 }
 
 /**
- * @tsplus unify ets/Option
- * @tsplus unify ets/Option/Some
- * @tsplus unify ets/Option/None
+ * @tsplus unify ets/Maybe
+ * @tsplus unify ets/Maybe/Some
+ * @tsplus unify ets/Maybe/None
  */
-export function unifyOption<X extends Option<any>>(
+export function unifyMaybe<X extends Maybe<any>>(
   self: X
-): Option<[X] extends [Option<infer A>] ? A : never> {
+): Maybe<[X] extends [Maybe<infer A>] ? A : never> {
   return self
 }
 
@@ -94,14 +94,14 @@ export const flatMapSync = Sync.chain_
 export const mapSync = Sync.map_
 
 /**
- * @tsplus fluent ets/Option flatMap
+ * @tsplus fluent ets/Maybe flatMap
  */
-export const flatMapOption = Option.chain_
+export const flatMapMaybe = Maybe.chain_
 
 /**
- * @tsplus fluent ets/Option map
+ * @tsplus fluent ets/Maybe map
  */
-export const mapOption = Option.map_
+export const mapMaybe = Maybe.map_
 
 /**
  * @tsplus fluent ets/Either flatMap
@@ -169,12 +169,12 @@ export const pipeSet = pipe
 export const pipeArray = pipe
 
 /**
- * @tsplus operator ets/Option >=
- * @tsplus fluent ets/Option apply
- * @tsplus fluent ets/Option __call
+ * @tsplus operator ets/Maybe >=
+ * @tsplus fluent ets/Maybe apply
+ * @tsplus fluent ets/Maybe __call
  * @tsplus macro pipe
  */
-export const pipeOption = pipe
+export const pipeMaybe = pipe
 
 /**
  * @tsplus operator ets/Either >=
@@ -234,12 +234,12 @@ export function managedZipRight_<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent ets/Effect tapOption
+ * @tsplus fluent ets/Effect tapMaybe
  */
-export const tapEffectOption = EffectOption.tap_
+export const tapEffectMaybe = EffectMaybe.tap_
 
 /**
- * @tsplus fluent ets/Option encaseInEither
+ * @tsplus fluent ets/Maybe encaseInEither
  */
 export const optionEncaseEither = Either.fromOption_
 
@@ -249,9 +249,9 @@ export const optionEncaseEither = Either.fromOption_
 export const eitherMapLeft = Either.mapLeft_
 
 /**
- * @tsplus static ets/Option __call
+ * @tsplus static ets/Maybe __call
  */
-export const optionSome = Option.some
+export const optionSome = Maybe.some
 
 /**
  * @tsplus static ets/Either __call
@@ -259,9 +259,9 @@ export const optionSome = Option.some
 export const eitherRight = Either.right
 
 /**
- * @tsplus static ets/EffectOption __call
+ * @tsplus static ets/EffectMaybe __call
  */
-export const effectOptionSome = EffectOption.some
+export const effectMaybeSome = EffectMaybe.some
 
 /**
  * @tsplus static ets/Effect __call
@@ -336,13 +336,13 @@ export const pipeSchemaThese = pipe
 // /**
 //  * @tsplus getter global asOpt
 //  */
-// export function asOpt<A>(a: A | null | undefined): Option<A> | undefined
-// export function asOpt<A>(a: A | null): Option<A>
+// export function asOpt<A>(a: A | null | undefined): Maybe<A> | undefined
+// export function asOpt<A>(a: A | null): Maybe<A>
 // export function asOpt<A>(a: A | null | undefined) {
-//   return a === undefined ? a : Option.fromNullable(a)
+//   return a === undefined ? a : Maybe.fromNullable(a)
 // }
 
 // /**
 //  * @tsplus getter global asOpt2
 //  */
-// export const optionFromNullable = Option.fromNullable
+// export const optionFromNullable = Maybe.fromNullable

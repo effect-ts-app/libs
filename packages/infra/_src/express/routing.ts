@@ -155,9 +155,9 @@ export function handleRequest<
     parseRequest(req)
       .map(({ body, path, query }) => {
         const hn = {
-          ...Option.toUndefined(body),
-          ...Option.toUndefined(query),
-          ...Option.toUndefined(path),
+          ...Maybe.toUndefined(body),
+          ...Maybe.toUndefined(query),
+          ...Maybe.toUndefined(path),
         } as ReqA
         return hn
       })

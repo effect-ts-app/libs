@@ -1,4 +1,4 @@
-import { Effect, EffectOption, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/prelude/Prelude"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
 import * as Mongo from "../mongo-client.js"
@@ -46,8 +46,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
             )
           )
-          .map(Option.fromNullable) >=
-        EffectOption.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
+          .map(Maybe.fromNullable) >=
+        EffectMaybe.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
       )
     }
 
@@ -58,11 +58,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } })
           )
         )
-        .map(Option.fromNullable)
-        .mapOption(({ _id }) => _id)
+        .map(Maybe.fromNullable)
+        .mapMaybe(({ _id }) => _id)
     }
 
-    function store(record: A, currentVersion: Option<Version>) {
+    function store(record: A, currentVersion: Maybe<Version>) {
       return Effect.gen(function* ($) {
         const version = currentVersion
           .map((cv) => (parseInt(cv) + 1).toString())
@@ -71,7 +71,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          Option.fold_(
+          Maybe.fold_(
             currentVersion,
             () =>
               Effect.tryPromise(() =>

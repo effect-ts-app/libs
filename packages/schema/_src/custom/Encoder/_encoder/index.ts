@@ -12,8 +12,8 @@ export type Encoder<Output, Encoded> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => Option<() => Encoder<unknown, unknown>>)[] = [
-  Option.partial((miss) => (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
+) => Maybe<() => Encoder<unknown, unknown>>)[] = [
+  Maybe.partial((miss) => (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
     if (schema instanceof S.SchemaIdentity) {
       return () => (_) => _
     }

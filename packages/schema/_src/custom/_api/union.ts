@@ -130,7 +130,7 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
 
 export const unionIdentifier = S.makeAnnotation<{
   props: Record<PropertyKey, S.SchemaUPI>
-  tag: Option<{
+  tag: Maybe<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -162,7 +162,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   const firstMemberTags = entriesTags[0]![1]
 
-  const tag: Option<{
+  const tag: Maybe<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -171,13 +171,13 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     const tags =
       ROArray.collect_(entriesTags, ([member, tags]) => {
         if (tagField in tags) {
-          return Option.some(tuple(tags[tagField], member))
+          return Maybe.some(tuple(tags[tagField], member))
         }
-        return Option.none
+        return Maybe.none
       }) >= ROArray.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
 
     if (tags.length === entries.length) {
-      return Option.some({
+      return Maybe.some({
         key: tagField,
         index: D.fromArray(tags),
         reverse: D.fromArray(tags.map(({ tuple: [a, b] }) => tuple(b, a))),
@@ -185,13 +185,13 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       })
     }
 
-    return Option.none
+    return Maybe.none
   })
 
   function guard(u: unknown): u is {
     [k in keyof Props]: S.ParsedShapeOf<Props[k]>
   }[keyof Props] {
-    if (Option.isSome(tag)) {
+    if (Maybe.isSome(tag)) {
       if (
         typeof u !== "object" ||
         u === null ||
@@ -219,7 +219,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   ): {
     [k in keyof Props]: S.EncodedOf<Props[k]>
   }[keyof Props] {
-    if (Option.isSome(tag)) {
+    if (Maybe.isSome(tag)) {
       return encoders[tag.value.index[u[tag.value.key]]](u)
     }
     for (const k of keys) {
@@ -250,7 +250,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   > {
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
-    if (Option.isSome(tag)) {
+    if (Maybe.isSome(tag)) {
       if (
         typeof u !== "object" ||
         u === null ||
@@ -306,7 +306,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         ({
           // @ts-ignore
           matchS: (matcher, def) => (ks) => {
-            if (Option.isSome(tag)) {
+            if (Maybe.isSome(tag)) {
               return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
             }
             for (const k of keys) {
@@ -318,7 +318,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           },
           // @ts-ignore
           matchW: (matcher, def) => (ks) => {
-            if (Option.isSome(tag)) {
+            if (Maybe.isSome(tag)) {
               return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
             }
             for (const k of keys) {

@@ -1,6 +1,6 @@
 import { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
-import { Effect, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Maybe } from "@effect-ts-app/prelude/Prelude"
 
 import * as Cosmos from "../cosmos-client.js"
 import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
@@ -40,8 +40,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap((db) =>
           Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
         )
-        .map((i) => Option.fromNullable(i.resource))
-        .mapOption(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
+        .map((i) => Maybe.fromNullable(i.resource))
+        .mapMaybe(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
     }
 
     function findBy(parameters: Record<string, string>) {
@@ -69,10 +69,10 @@ WHERE (
           )
         )
         .map((x) => ROArray.head(x.resources))
-        .mapOption(({ id }) => id)
+        .mapMaybe(({ id }) => id)
     }
 
-    function store(record: A, currentVersion: Option<Version>) {
+    function store(record: A, currentVersion: Maybe<Version>) {
       return Effect.gen(function* ($) {
         const version = "_etag" // we get this from the etag anyway.
 
@@ -80,7 +80,7 @@ WHERE (
         const data = yield* $(encode(record))
 
         yield* $(
-          Option.fold_(
+          Maybe.fold_(
             currentVersion,
             () =>
               Effect.tryPromise(() =>

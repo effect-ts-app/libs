@@ -154,8 +154,8 @@ export function makeCurrentDate() {
 }
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
-  As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
+  As extends Maybe<PropertyKey>,
+  Def extends Maybe<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
     propDef(p, makeDefault, "constructor")
@@ -164,8 +164,8 @@ export function defaultConstructor<
 type SupportedDefaults =
   | ROSet<any>
   | ROArray<any>
-  | Option.Some<any>
-  | Option.None
+  | Maybe.Some<any>
+  | Maybe.None
   | Date
   | boolean
   | UUID
@@ -195,12 +195,12 @@ export type WithDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Option<PropertyKey>
+  As extends Maybe<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  Option.Some<["constructor", () => ParsedShape]>
+  Maybe.Some<["constructor", () => ParsedShape]>
 >
 
 export type WithInputDefault<
@@ -208,12 +208,12 @@ export type WithInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Option<PropertyKey>
+  As extends Maybe<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  Option.Some<["both", () => ParsedShape]>
+  Maybe.Some<["both", () => ParsedShape]>
 >
 
 export function withDefault<
@@ -221,8 +221,8 @@ export function withDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Option<PropertyKey>,
-  Def extends Option<
+  As extends Maybe<PropertyKey>,
+  Def extends Maybe<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -242,7 +242,7 @@ export function withDefault<
     return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Option.none as any, "constructor")
+    return propDef(p, () => Maybe.none as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
@@ -267,8 +267,8 @@ export function withInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Option<PropertyKey>,
-  Def extends Option<
+  As extends Maybe<PropertyKey>,
+  Def extends Maybe<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -288,7 +288,7 @@ export function withInputDefault<
     return propDef(p, makeCurrentDate as any, "both")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Option.none as any, "both")
+    return propDef(p, () => Maybe.none as any, "both")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")
@@ -317,8 +317,8 @@ function defProp<Self extends MO.SchemaUPI>(
 ): MO.Property<
   Self,
   "required",
-  Option.None,
-  Option.Some<["parser", () => MO.ParsedShapeOf<Self>]>
+  Maybe.None,
+  Maybe.Some<["parser", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
@@ -327,8 +327,8 @@ function defProp<Self extends MO.SchemaUPI>(
 ): MO.Property<
   Self,
   "required",
-  Option.None,
-  Option.Some<["both", () => MO.ParsedShapeOf<Self>]>
+  Maybe.None,
+  Maybe.Some<["both", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
@@ -336,8 +336,8 @@ function defProp<Self extends MO.SchemaUPI>(
 ): MO.Property<
   Self,
   "required",
-  Option.None,
-  Option.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
+  Maybe.None,
+  Maybe.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
@@ -349,7 +349,7 @@ function defProp<Self extends MO.SchemaUPI>(
 
 export function optProp<Self extends MO.SchemaUPI>(
   schema: Self
-): Property<Self, "optional", Option.None, Option.None> {
+): Property<Self, "optional", Maybe.None, Maybe.None> {
   return propOpt(MO.prop(schema))
 }
 
@@ -359,8 +359,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["constructor", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -372,8 +372,8 @@ export function defaultProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["constructor", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -381,8 +381,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Option.None,
-      Option.Some<["constructor", () => ParsedShape]>
+      Maybe.None,
+      Maybe.Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -391,8 +391,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["constructor", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -404,8 +404,8 @@ export function defaultProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["constructor", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -413,8 +413,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Option.None,
-      Option.Some<["constructor", () => ParsedShape]>
+      Maybe.None,
+      Maybe.Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
@@ -430,8 +430,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["both", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -443,8 +443,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["both", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -452,8 +452,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Option.None,
-      Option.Some<["both", () => ParsedShape]>
+      Maybe.None,
+      Maybe.Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -462,8 +462,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["both", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -475,8 +475,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Option.None,
-  Option.Some<["both", () => ParsedShape]>
+  Maybe.None,
+  Maybe.Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -484,8 +484,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Option.None,
-      Option.Some<["both", () => ParsedShape]>
+      Maybe.None,
+      Maybe.Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(

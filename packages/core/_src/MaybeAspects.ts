@@ -1,8 +1,8 @@
-import * as O from "@effect-ts/core/Option"
+import * as O from "./MaybeBase.js"
 
 export * from "@effect-ts/core/Option"
 
-export function omitableToNullable<T>(om: O.Option<T> | undefined) {
+export function omitableToNullable<T>(om: O.Maybe<T> | undefined) {
   return om ?? O.fromNullable(om)
 }
 

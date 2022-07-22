@@ -1,4 +1,4 @@
-import { Effect, Layer, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Layer, Maybe } from "@effect-ts-app/prelude/Prelude"
 
 import {
   CachedRecord,
@@ -46,33 +46,33 @@ const getM =
     })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
-  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
+  tryRead: (id: string) => Effect<R, E, Maybe<CachedRecord<EA>>>,
   decode: (d: EA) => Effect<RDecode, EDecode, A>,
   type: string
 ) {
   const getCache = getM<A>(type)
   const read = (id: string) =>
     tryRead(id)
-      .flatMapOptionEffect(({ data, version }) =>
+      .flatMapMaybeEffect(({ data, version }) =>
         decode(data).bimap(
           (err) => new InvalidStateError("DB serialisation Issue", err),
           (data) => ({ data, version })
         )
       )
-      .tapOption((r) => getCache((c) => c.set(id, r)))
-      .mapOption((r) => r.data)
+      .tapMaybe((r) => getCache((c) => c.set(id, r)))
+      .mapMaybe((r) => r.data)
 
   return (id: string) =>
     getCache((c) =>
       c
         .find(id)
-        .mapOption((existing) => existing.data)
+        .mapMaybe((existing) => existing.data)
         .alt(() => read(id))
     )
 }
 
 export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey>>(
-  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
+  save: (r: A, version: Maybe<Version>) => Effect<R, E, CachedRecord<A>>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -80,7 +80,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
     getCache((c) =>
       c
         .find(record.id)
-        .mapOption((x) => x.version)
+        .mapMaybe((x) => x.version)
         .flatMap((cv) => save(record, cv))
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
@@ -88,8 +88,8 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 }
 
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
-  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
-  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
+  tryRead: (id: string) => Effect<R, E, Maybe<CachedRecord<EA>>>,
+  save: (r: A, version: Maybe<Version>) => Effect<R, E, CachedRecord<A>>,
   lock: (id: string) => Managed<R2, E2, unknown>,
   type: string
 ) {
@@ -98,9 +98,9 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
     getCache((c) =>
       c
         .find(record.id)
-        .mapOption((x) => x.version)
+        .mapMaybe((x) => x.version)
         .flatMap(
-          Option.fold(() => save(record, Option.none), confirmVersionAndSave(record))
+          Maybe.fold(() => save(record, Maybe.none), confirmVersionAndSave(record))
         )
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
@@ -111,7 +111,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       Managed.use_(lock(record.id), () =>
         tryRead(record.id)
           .flatMap(
-            Option.fold(
+            Maybe.fold(
               () => Effect.fail(new InvalidStateError("record is gone")),
               Effect.succeed
             )
@@ -121,7 +121,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
               ? Effect.fail(new OptimisticLockException(type, record.id))
               : Effect.unit
           )
-          .zipRight(save(record, Option.some(cv)))
+          .zipRight(save(record, Maybe.some(cv)))
       )
   }
 }

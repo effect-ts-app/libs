@@ -63,6 +63,6 @@ export const ext_find_ = find_
 // export const ext_mapEither_ = mapEither_
 
 // /**
-//  * @tsplus fluent ets/Chunk mapOption
+//  * @tsplus fluent ets/Chunk mapMaybe
 //  */
-// export const ext_mapOption_ = mapOption_
+// export const ext_mapMaybe_ = mapMaybe_

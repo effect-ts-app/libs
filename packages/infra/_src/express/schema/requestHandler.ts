@@ -220,44 +220,44 @@ export function makeRequestParsers<
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph =
-    Option.fromNullable(Request.Headers)
+    Maybe.fromNullable(Request.Headers)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectOption.fromOption
+      .map(MO.condemn) >= EffectMaybe.fromMaybe
   const parseHeaders = (u: unknown) =>
-    ph.flatMapOption((d) => d(u) >= EffectOption.fromEffect)
+    ph.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 
   const pq =
-    Option.fromNullable(Request.Query)
+    Maybe.fromNullable(Request.Query)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectOption.fromOption
+      .map(MO.condemn) >= EffectMaybe.fromMaybe
   const parseQuery = (u: unknown) =>
-    pq.flatMapOption((d) => d(u) >= EffectOption.fromEffect)
+    pq.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 
   const pb =
-    Option.fromNullable(Request.Body)
+    Maybe.fromNullable(Request.Body)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectOption.fromOption
+      .map(MO.condemn) >= EffectMaybe.fromMaybe
   const parseBody = (u: unknown) =>
-    pb.flatMapOption((d) => d(u) >= EffectOption.fromEffect)
+    pb.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 
   const pp =
-    Option.fromNullable(Request.Path)
+    Maybe.fromNullable(Request.Path)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectOption.fromOption
+      .map(MO.condemn) >= EffectMaybe.fromMaybe
   const parsePath = (u: unknown) =>
-    pp.flatMapOption((d) => d(u) >= EffectOption.fromEffect)
+    pp.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 
   const pc =
-    Option.fromNullable(Request.Cookie)
+    Maybe.fromNullable(Request.Cookie)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectOption.fromOption
+      .map(MO.condemn) >= EffectMaybe.fromMaybe
   const parseCookie = (u: unknown) =>
-    pc.flatMapOption((d) => d(u) >= EffectOption.fromEffect)
+    pc.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 
   return {
     parseBody,
@@ -271,9 +271,9 @@ export function makeRequestParsers<
 type Decode<A> = (u: unknown) => Effect.IO<unknown, A>
 
 export interface RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  parseHeaders: Decode<Option<HeaderA>>
-  parseQuery: Decode<Option<QueryA>>
-  parseBody: Decode<Option<BodyA>>
-  parsePath: Decode<Option<PathA>>
-  parseCookie: Decode<Option<CookieA>>
+  parseHeaders: Decode<Maybe<HeaderA>>
+  parseQuery: Decode<Maybe<QueryA>>
+  parseBody: Decode<Maybe<BodyA>>
+  parsePath: Decode<Maybe<PathA>>
+  parseCookie: Decode<Maybe<CookieA>>
 }

@@ -1,5 +1,5 @@
 import { _A } from "@effect-ts/core/Utils"
-import { Effect, Layer, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Layer, Maybe } from "@effect-ts-app/prelude/Prelude"
 import { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
@@ -47,11 +47,11 @@ function createClient(makeClient: () => Client) {
 export function get(key: string) {
   return client.flatMap((client) =>
     Effect.uninterruptible(
-      Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
+      Effect.effectAsync<unknown, ConnectionException, Maybe<string>>((res) => {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Option.fromNullable(v)))
+            : res(Effect.succeed(Maybe.fromNullable(v)))
         )
       })
     )
@@ -89,11 +89,11 @@ export function hset(key: string, field: string, value: string) {
 export function hget(key: string, field: string) {
   return Effect.flatMap_(client, (client) =>
     Effect.uninterruptible(
-      Effect.effectAsync<unknown, ConnectionException, Option<string>>((res) => {
+      Effect.effectAsync<unknown, ConnectionException, Maybe<string>>((res) => {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Option.fromNullable(v)))
+            : res(Effect.succeed(Maybe.fromNullable(v)))
         )
       })
     )
@@ -105,12 +105,12 @@ export function hmgetAll(key: string) {
       Effect.effectAsync<
         unknown,
         ConnectionException,
-        Option<{ [key: string]: string }>
+        Maybe<{ [key: string]: string }>
       >((res) => {
         client.hgetall(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Option.fromNullable(v)))
+            : res(Effect.succeed(Maybe.fromNullable(v)))
         )
       })
     )

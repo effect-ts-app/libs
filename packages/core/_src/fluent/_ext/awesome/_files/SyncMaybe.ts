@@ -6,20 +6,20 @@ import {
   getOrFail_,
   map_,
   toNullable,
-} from "@effect-ts-app/core/SyncOption"
+} from "@effect-ts-app/core/SyncMaybe"
 
 /**
- * @tsplus fluent ets/Sync mapOption
+ * @tsplus fluent ets/Sync mapMaybe
  */
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent ets/Sync flatMapOption
+ * @tsplus fluent ets/Sync flatMapMaybe
  */
 export const ext_flatMap_ = flatMap_
 
 /**
- * @tsplus fluent ets/Sync flatMapOptionSync
+ * @tsplus fluent ets/Sync flatMapMaybeSync
  */
 export const ext_flatMapSync_ = flatMapSync_
 

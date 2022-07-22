@@ -66,32 +66,32 @@ export const Client = (fetchApi: typeof fetch) =>
                   ? {
                       headers: h,
                       status: resp.status,
-                      body: Option.fromNullable(void 0),
+                      body: Maybe.fromNullable(void 0),
                     }
                   : resp.json().then((json: unknown) => ({
                       headers: h,
                       status: resp.status,
-                      body: Option.fromNullable(json),
+                      body: Maybe.fromNullable(json),
                     })),
               () =>
                 resp.text().then((text) => ({
                   headers: h,
                   status: resp.status,
-                  body: Option.fromNullable(text),
+                  body: Maybe.fromNullable(text),
                 })),
               () => {
                 if (resp["arrayBuffer"]) {
                   return resp.arrayBuffer().then((arrayBuffer) => ({
                     headers: h,
                     status: resp.status,
-                    body: Option.fromNullable(Buffer.from(arrayBuffer)),
+                    body: Maybe.fromNullable(Buffer.from(arrayBuffer)),
                   }))
                 } else {
                   return ((resp as any).buffer() as Promise<Buffer>).then(
                     (buffer: Buffer) => ({
                       headers: h,
                       status: resp.status,
-                      body: Option.fromNullable(Buffer.from(buffer)),
+                      body: Maybe.fromNullable(Buffer.from(buffer)),
                     })
                   )
                 }
@@ -104,7 +104,7 @@ export const Client = (fetchApi: typeof fetch) =>
                 response: {
                   headers: h,
                   status: resp.status,
-                  body: Option.fromNullable(text),
+                  body: Maybe.fromNullable(text),
                 },
               }
             })

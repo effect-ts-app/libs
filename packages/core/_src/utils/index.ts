@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { Either, Option } from "@effect-ts-app/prelude/Prelude"
+import { Either, Maybe } from "@effect-ts-app/prelude/Prelude"
 
 import { flow, identity, pipe } from "../Function.js"
 
@@ -24,8 +24,8 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
 
 export const unsafeSome =
   (makeErrorMessage: () => string) =>
-  <A>(o: Option<A>) => {
-    if (Option.isNone(o)) {
+  <A>(o: Maybe<A>) => {
+    if (Maybe.isNone(o)) {
       throw new Error(makeErrorMessage())
     }
     return o.value

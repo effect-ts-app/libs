@@ -18,10 +18,10 @@ import {
   unit,
 } from "@effect-ts/core/Effect"
 import * as Ex from "@effect-ts/core/Effect/Exit"
-import type * as Ei from "@effect-ts/core/Either"
-import * as O from "@effect-ts/core/Option"
 
+import type * as Ei from "./Either.js"
 import { constant, curry, flow, Lazy, pipe } from "./Function.js"
+import * as O from "./Maybe.js"
 
 export * as $ from "./EffectAspects.js"
 
@@ -116,12 +116,12 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
       }, succeed)
     )
   )
-export function encaseOption_<E, A>(o: O.Option<A>, onError: Lazy<E>): IO<E, A> {
+export function encaseMaybe_<E, A>(o: O.Maybe<A>, onError: Lazy<E>): IO<E, A> {
   return O.fold_(o, () => fail(onError()), succeed)
 }
 
-export function encaseOption<E>(onError: Lazy<E>) {
-  return <A>(o: O.Option<A>) => encaseOption_<E, A>(o, onError)
+export function encaseMaybe<E>(onError: Lazy<E>) {
+  return <A>(o: O.Maybe<A>) => encaseMaybe_<E, A>(o, onError)
 }
 
 export function liftM<A, B>(a: (a: A) => B) {

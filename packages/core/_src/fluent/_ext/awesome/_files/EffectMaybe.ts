@@ -31,7 +31,7 @@ import {
   getOrFail_,
   map_,
   toNullable,
-} from "@effect-ts-app/core/EffectOption"
+} from "@effect-ts-app/core/EffectMaybe"
 import { modify_, prop_ } from "@effect-ts-app/core/fluent/_ext/Lens"
 
 /**
@@ -150,17 +150,17 @@ export const ext_orDie = orDie
 export const ext_mapError_ = mapError_
 
 /**
- * @tsplus fluent ets/Effect mapOption
+ * @tsplus fluent ets/Effect mapMaybe
  */
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent ets/Effect flatMapOption
+ * @tsplus fluent ets/Effect flatMapMaybe
  */
 export const ext_flatMap_ = flatMap_
 
 /**
- * @tsplus fluent ets/Effect flatMapOptionEffect
+ * @tsplus fluent ets/Effect flatMapMaybeEffect
  */
 export const ext_flatMapEffect_ = flatMapEffect_
 
@@ -184,35 +184,35 @@ export const ext_getOrElse_ = getOrElse_
  */
 export const ext_getOrFail_ = getOrFail_
 
-// declare module "@effect-ts-app/core/EffectOption" {
-//   export interface Base<R, E, A> extends EffectOption<R, E, A> {}
+// declare module "@effect-ts-app/core/EffectMaybe" {
+//   export interface Base<R, E, A> extends EffectMaybe<R, E, A> {}
 
-//   export interface EffectOption<R, E, A> {
+//   export interface EffectMaybe<R, E, A> {
 //     //  /**
-//     //  * @ets_rewrite_method map_ from "@effect-ts-app/core/EffectOption"
+//     //  * @ets_rewrite_method map_ from "@effect-ts-app/core/EffectMaybe"
 //     //  */
 //     //  map<RX, EX, AX, B>(
-//     //   this: EffectOption<RX, EX, AX>,
+//     //   this: EffectMaybe<RX, EX, AX>,
 //     //   f: (a: AX) => B,
 //     //   __trace?: string
-//     // ): EffectOption<RX, EX, B>
+//     // ): EffectMaybe<RX, EX, B>
 
 //     // /**
-//     //  * @ets_rewrite_method chain_ from "@effect-ts-app/core/EffectOption"
+//     //  * @ets_rewrite_method chain_ from "@effect-ts-app/core/EffectMaybe"
 //     //  */
 //     // chain<RX, EX, AX, R2, E2, B>(
-//     //   this: EffectOption<RX, EX, AX>,
-//     //   f: (a: AX) => EffectOption<R2, E2, B>,
+//     //   this: EffectMaybe<RX, EX, AX>,
+//     //   f: (a: AX) => EffectMaybe<R2, E2, B>,
 //     //   __trace?: string
-//     // ): EffectOption<RX & R2, EX | E2, B>
+//     // ): EffectMaybe<RX & R2, EX | E2, B>
 
 //     /**
-//      * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectOption"
+//      * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectMaybe"
 //      */
 //      chainEffect<RX, EX, AX, R2, E2, B>(
-//       this: EffectOption<RX, EX, AX>,
+//       this: EffectMaybe<RX, EX, AX>,
 //       f: (a: AX) => Effect<R2, E2, B>,
 //       __trace?: string
-//     ): EffectOption<RX & R2, EX | E2, B>
+//     ): EffectMaybe<RX & R2, EX | E2, B>
 //   }
 // }

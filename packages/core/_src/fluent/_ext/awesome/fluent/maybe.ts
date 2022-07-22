@@ -29,121 +29,121 @@ import {
 } from "@effect-ts/core/Option"
 
 /**
- * @tsplus fluent ets/Option ap
+ * @tsplus fluent ets/Maybe ap
  */
 export const ext_ap_ = ap_
 
 /**
- * @tsplus fluent ets/Option flatMap
+ * @tsplus fluent ets/Maybe flatMap
  */
 export const ext_chain_ = chain_
 
 /**
- * @tsplus fluent ets/Option duplicate
+ * @tsplus fluent ets/Maybe duplicate
  */
 export const ext_duplicate = duplicate
 
 /**
- * @tsplus fluent ets/Option exists
+ * @tsplus fluent ets/Maybe exists
  */
 export const ext_exists_ = exists_
 
 /**
- * @tsplus fluent ets/Option extend
+ * @tsplus fluent ets/Maybe extend
  */
 export const ext_extend_ = extend_
 
 /**
- * @tsplus fluent ets/Option flatten
+ * @tsplus fluent ets/Maybe flatten
  */
 export const ext_flatten = flatten
 
 /**
- * @tsplus fluent ets/Option filter
+ * @tsplus fluent ets/Maybe filter
  */
 export const ext_filter_ = filter_
 
 /**
- * @tsplus fluent ets/Option filter
+ * @tsplus fluent ets/Maybe filter
  */
 export const ext_filterMap_ = filterMap_
 
 /**
- * @tsplus fluent ets/Option fold
+ * @tsplus fluent ets/Maybe fold
  */
 export const ext_fold_ = fold_
 
 /**
- * @tsplus fluent ets/Option getOrElse
+ * @tsplus fluent ets/Maybe getOrElse
  */
 export const ext_getOrElse_ = getOrElse_
 
 /**
- * @tsplus fluent ets/Option isSome
+ * @tsplus fluent ets/Maybe isSome
  */
 export const ext_isSome = isSome
 
 /**
- * @tsplus fluent ets/Option isNone
+ * @tsplus fluent ets/Maybe isNone
  */
 export const ext_isNone = isNone
 
 /**
- * @tsplus fluent ets/Option map
+ * @tsplus fluent ets/Maybe map
  */
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent ets/Option partition
+ * @tsplus fluent ets/Maybe partition
  */
 export const ext_partitionMap_ = partitionMap_
 
 /**
- * @tsplus fluent ets/Option partition
+ * @tsplus fluent ets/Maybe partition
  */
 export const ext_partition_ = partition_
 
 /**
- * @tsplus fluent ets/Option separate
+ * @tsplus fluent ets/Maybe separate
  */
 export const ext_separate = separate
 
 /**
- * @tsplus fluent ets/Option tap
+ * @tsplus fluent ets/Maybe tap
  */
 export const ext_tap_ = tap_
 
 /**
- * @tsplus fluent ets/Option toUndefined
+ * @tsplus fluent ets/Maybe toUndefined
  */
 export const ext_toUndefined = toUndefined
 
 /**
- * @tsplus fluent ets/Option zip
+ * @tsplus fluent ets/Maybe zip
  */
 export const ext_zip_ = zip_
 
 /**
- * @tsplus fluent ets/Option zipLeft
+ * @tsplus fluent ets/Maybe zipLeft
  */
 export const ext_zipFirst_ = zipFirst_
 
 /**
- * @tsplus fluent ets/Option zipRight
+ * @tsplus fluent ets/Maybe zipRight
  */
 export const ext_zipSecond_ = zipSecond_
 
 /**
- * @tsplus static ets/Option.Ops some
+ * @tsplus static ets/Maybe.Ops some
  */
 export const ext_some = some
 
 /**
- * @tsplus static ets/Option.Ops none
+ * @tsplus static ets/Maybe.Ops none
  */
 export const ext_none = none
 
 /**
- * @tsplus static ets/Option.Ops Applicative
+ * @tsplus static ets/Maybe.Ops Applicative
  */
 export const ext_Applicative = Applicative

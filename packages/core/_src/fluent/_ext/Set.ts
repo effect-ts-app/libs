@@ -1,7 +1,8 @@
 import * as ARR from "@effect-ts/core/Collections/Immutable/Array"
 import { Set } from "@effect-ts/core/Collections/Immutable/Set"
-import { Option } from "@effect-ts/core/Option"
 import { Predicate, Refinement } from "@effect-ts/system/Function"
+
+import { Maybe } from "../../Maybe.js"
 
 export function find_<A, B extends A>(
   as: Set<A>,
@@ -15,12 +16,12 @@ export function find_<A>(set: Set<A>, predicate: Predicate<A>) {
 export function findFirst_<A, B extends A>(
   set: Set<A>,
   refinement: Refinement<A, B>
-): Option<B>
-export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Option<A>
-export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Option<A> {
+): Maybe<B>
+export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Maybe<A>
+export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Maybe<A> {
   return ARR.find_([...set], predicate)
 }
 
-export function findFirstMap_<A, B>(set: Set<A>, f: (a: A) => Option<B>): Option<B> {
+export function findFirstMap_<A, B>(set: Set<A>, f: (a: A) => Maybe<B>): Maybe<B> {
   return ARR.findFirstMap_([...set], f)
 }

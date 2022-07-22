@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import { Effect, EffectOption, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/prelude/Prelude"
 import * as MO from "@effect-ts-app/schema"
 import { Lock } from "redlock"
 
@@ -36,7 +36,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(id: string) {
       return RED.hmgetAll(getKey(id))
-        .flatMapOptionEffect((v) =>
+        .flatMapMaybeEffect((v) =>
           pipe(
             RedisSerializedDBRecord.Parser,
             MO.condemnFail
@@ -49,17 +49,17 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         )
         .orDie()
     }
-    function store(record: A, currentVersion: Option<string>) {
+    function store(record: A, currentVersion: Maybe<string>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      return Option.fold_(
+      return Maybe.fold_(
         currentVersion,
         () =>
           Managed.use_(lockIndex(record), () =>
             pipe(
               getIndex(record),
-              EffectOption.zipRight(
+              EffectMaybe.zipRight(
                 Effect.fail(() => new Error("Combination already exists, abort"))
               )
             )
@@ -106,7 +106,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).mapOption((i) => i as TKey)
+      return RED.hget(getIdxKey(index), index.key).mapMaybe((i) => i as TKey)
     }
 
     function setIdx(index: Index, r: A) {

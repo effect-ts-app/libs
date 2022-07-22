@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as TUP from "@effect-ts-app/core/Tuple"
 import { Tuple } from "@effect-ts-app/core/Tuple"
-import { Effect, EffectOption, Option, ROArray } from "@effect-ts-app/prelude/Prelude"
+import { Effect, EffectMaybe, Maybe, ROArray } from "@effect-ts-app/prelude/Prelude"
 import * as MO from "@effect-ts-app/schema"
 import { Methods } from "@effect-ts-app/schema"
 
@@ -111,19 +111,19 @@ export function makeFromSchema<ResA>(
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = EffectOption.fromNullable(Req.Query).flatMapOptionEffect(
+  const makeReqQuerySchema = EffectMaybe.fromNullable(Req.Query).flatMapMaybeEffect(
     jsonSchema
   )
-  const makeReqHeadersSchema = EffectOption.fromNullable(
+  const makeReqHeadersSchema = EffectMaybe.fromNullable(
     Req.Headers
-  ).flatMapOptionEffect(jsonSchema)
-  const makeReqCookieSchema = EffectOption.fromNullable(Req.Cookie).flatMapOptionEffect(
+  ).flatMapMaybeEffect(jsonSchema)
+  const makeReqCookieSchema = EffectMaybe.fromNullable(Req.Cookie).flatMapMaybeEffect(
     jsonSchema
   )
-  const makeReqPathSchema = EffectOption.fromNullable(Req.Path).flatMapOptionEffect(
+  const makeReqPathSchema = EffectMaybe.fromNullable(Req.Path).flatMapMaybeEffect(
     jsonSchema
   )
-  const makeReqBodySchema = EffectOption.fromNullable(Req.Body).flatMapOptionEffect(
+  const makeReqBodySchema = EffectMaybe.fromNullable(Req.Body).flatMapMaybeEffect(
     jsonSchema
   )
   //const makeReqSchema = schema(Req)
@@ -131,9 +131,9 @@ export function makeFromSchema<ResA>(
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
-    return (a: Option<JSONSchema | SubSchema>) => {
+    return (a: Maybe<JSONSchema | SubSchema>) => {
       return a
-        .flatMap((o) => (isObjectSchema(o) ? Option.some(o) : Option.none))
+        .flatMap((o) => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
         .map((x) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map((p) => {

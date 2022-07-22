@@ -7,20 +7,20 @@ import {
   getOrFail_,
   map_,
   toNullable,
-} from "@effect-ts-app/core/SyncOption"
+} from "@effect-ts-app/core/SyncMaybe"
 
 import { applyFunctions } from "./util.js"
 
 const BasePrototype = XPureBase.prototype as any
 
 const funcs = {
-  flatMapOption: chain_,
+  flatMapMaybe: chain_,
   alt: alt_,
   getOrElse: getOrElse_,
-  mapOption: map_,
-  flatMapOptionSync: chainSync_,
+  mapMaybe: map_,
+  flatMapMaybeSync: chainSync_,
   getOrFail: getOrFail_,
   toNullable,
 }
 
-applyFunctions(funcs, BasePrototype, "SyncOption")
+applyFunctions(funcs, BasePrototype, "SyncMaybe")

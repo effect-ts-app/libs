@@ -19,7 +19,7 @@ import {
 } from "@effect-ts-app/core/Array"
 import { sort_, sortBy_, uniq_ } from "@effect-ts-app/core/fluent/_ext/Array"
 // import { mapM_, mapM_, mapM_, mapM_ } from "@effect-ts-app/core/fluent/_ext/mapM"
-import { mapEither_, mapOption_ } from "@effect-ts-app/core/fluent/fluent/Array"
+import { mapEither_, mapMaybe_ } from "@effect-ts-app/core/fluent/fluent/Array"
 
 /**
  * @tsplus fluent ets/Array mapRA
@@ -87,9 +87,9 @@ export const ext_mapSync_ = mapSync_
 export const ext_mapEither_ = mapEither_
 
 /**
- * @tsplus fluent ets/Array mapOption
+ * @tsplus fluent ets/Array mapMaybe
  */
-export const ext_mapOption_ = mapOption_
+export const ext_mapMaybe_ = mapMaybe_
 
 // /**
 //  * @tsplus fluent ets/Array mapM

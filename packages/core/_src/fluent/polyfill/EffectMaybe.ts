@@ -7,20 +7,20 @@ import {
   getOrFail_,
   map_,
   toNullable,
-} from "@effect-ts-app/core/EffectOption"
+} from "@effect-ts-app/core/EffectMaybe"
 
 import { applyFunctions } from "./util.js"
 
 const BasePrototype = Base.prototype as any
 
 const funcs = {
-  flatMapOption: chain_,
+  flatMapMaybe: chain_,
   alt: alt_,
   getOrElse: getOrElse_,
-  mapOption: map_,
-  flatMapOptionEffect: chainEffect_,
+  mapMaybe: map_,
+  flatMapMaybeEffect: chainEffect_,
   toNullable,
   getOrFail: getOrFail_,
 }
 
-applyFunctions(funcs, BasePrototype, "EffectOption")
+applyFunctions(funcs, BasePrototype, "EffectMaybe")

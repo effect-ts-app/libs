@@ -92,7 +92,7 @@ export interface DataInput {
 export type Headers = Record<string, string>
 
 export interface Response<Body> {
-  body: Option<Body>
+  body: Maybe<Body>
   headers: Headers
   status: number
 }
@@ -154,11 +154,11 @@ export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Has.tag<HttpHeaders>()
 const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
+  eff: (h: Maybe<HttpHeaders>) => Effect<R, E, A>
 ) {
   return accessHttpHeaders_.flatMap(eff)
 }
-export function accessHttpHeaders<A>(eff: (h: Option<HttpHeaders>) => A) {
+export function accessHttpHeaders<A>(eff: (h: Maybe<HttpHeaders>) => A) {
   return accessHttpHeaders_.map(eff)
 }
 
@@ -201,11 +201,11 @@ export const MiddlewareStack = Has.tag<MiddlewareStack>()
 
 const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
+  eff: (h: Maybe<MiddlewareStack>) => Effect<R, E, A>
 ) {
   return accessMiddlewareStack_.flatMap(eff)
 }
-export function accessMiddlewareStack<A>(eff: (h: Option<MiddlewareStack>) => A) {
+export function accessMiddlewareStack<A>(eff: (h: Maybe<MiddlewareStack>) => A) {
   return accessMiddlewareStack_.map(eff)
 }
 
@@ -249,7 +249,7 @@ export function requestInner<
         url,
         requestType,
         responseType,
-        Option.getOrElse_(headers, () => ({})),
+        Maybe.getOrElse_(headers, () => ({})),
         body
       )
     )
@@ -300,7 +300,7 @@ export function request<
 ) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return (url, body) =>
     accessMiddlewareStackM((s) =>
-      foldMiddlewareStack(Option.toNullable(s), requestInner)<R, M, Req, Resp>(
+      foldMiddlewareStack(Maybe.toNullable(s), requestInner)<R, M, Req, Resp>(
         method,
         url,
         requestType,

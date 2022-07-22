@@ -4,7 +4,7 @@ import * as Ei from "@effect-ts-app/core/Either"
 import { identity } from "@effect-ts-app/core/Function"
 import { encaseEither as encaseEitherInSync } from "@effect-ts-app/core/Sync"
 
-import { alt_ } from "../_ext/Option.js"
+import { alt_ } from "../_ext/Maybe.js"
 import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const exceptions: Partial<Record<keyof typeof Ei, string | null>> = {

@@ -13,7 +13,7 @@ import {
 
 import { sort_, sortBy_, uniq_ } from "../_ext/Array.js"
 import { mapM } from "../_ext/mapM.js"
-import { mapEither_, mapOption_ } from "../fluent/Array.js"
+import { mapEither_, mapMaybe_ } from "../fluent/Array.js"
 import { applyFunctions, makeAutoFuncs } from "./util.js"
 
 const BasePrototype = Array.prototype as any
@@ -43,10 +43,10 @@ const funcs = {
   sortWith: sort_,
   sortBy: sortBy_,
   uniq: uniq_,
-  mapM, // works differently than the original one, for Option and Sync.
+  mapM, // works differently than the original one, for Maybe and Sync.
   toChunk: from,
   mapEither: mapEither_,
-  mapOption: mapOption_,
+  mapMaybe: mapMaybe_,
 
   // IterableOps
   collectAll,

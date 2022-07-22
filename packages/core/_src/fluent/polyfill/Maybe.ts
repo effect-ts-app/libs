@@ -1,23 +1,23 @@
 import { pipe } from "@effect-ts/core"
 import { tryCatchOption_ } from "@effect-ts/core/Sync"
-import { encaseOption_ } from "@effect-ts-app/core/Effect"
-import * as Option from "@effect-ts-app/core/Option"
+import { encaseMaybe_ } from "@effect-ts-app/core/Effect"
+import * as Maybe from "@effect-ts-app/core/Maybe"
 
-import { alt_ } from "../_ext/Option.js"
+import { alt_ } from "../_ext/Maybe.js"
 import { applyFunctions, makeAutoFuncs } from "./util.js"
 
-const exceptions: Partial<Record<keyof typeof Option, string | null>> = {
+const exceptions: Partial<Record<keyof typeof Maybe, string | null>> = {
   none: null,
   some: null,
 }
 
 const funcs = {
-  ...makeAutoFuncs(Option, exceptions),
+  ...makeAutoFuncs(Maybe, exceptions),
 
   // custom
   alt: alt_,
   encaseInSync: tryCatchOption_,
-  encaseInEffect: encaseOption_,
+  encaseInEffect: encaseMaybe_,
   pipe,
 }
 
@@ -26,7 +26,7 @@ function apply(BasePrototype: any) {
   if (!BasePrototype.val) {
     Object.defineProperty(BasePrototype, "val", {
       get() {
-        return Option.toNullable(this)
+        return Maybe.toNullable(this)
       },
       enumerable: false,
       configurable: true,
@@ -34,8 +34,8 @@ function apply(BasePrototype: any) {
   }
 
   // functions
-  applyFunctions(funcs, BasePrototype, "Option")
+  applyFunctions(funcs, BasePrototype, "Maybe")
 }
 
-apply(Option.None.prototype)
-apply(Option.Some.prototype)
+apply(Maybe.None.prototype)
+apply(Maybe.Some.prototype)

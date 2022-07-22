@@ -16,14 +16,14 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as T from "@effect-ts-app/core/Effect"
 import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 import type * as QUEUE from "@effect-ts/core/Effect/Queue"
-import type * as EO from "@effect-ts-app/core/EffectOption"
+import type * as EO from "@effect-ts-app/core/EffectMaybe"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
 import type * as A from "@effect-ts-app/core/Array"
-import type * as O from "@effect-ts-app/core/Option"
+import type * as O from "@effect-ts-app/core/Maybe"
 import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
-import type * as SO from "@effect-ts-app/core/SyncOption"
+import type * as SO from "@effect-ts-app/core/SyncMaybe"
 import type * as HAS from "@effect-ts/core/Has"
 import type * as TUP from "@effect-ts-app/core/Tuple"
 
@@ -78,19 +78,19 @@ export namespace Ord {
 /** @tsplus type ets/Ord */
 export type Ord<A> = ORD.Ord<A>
 
-export namespace EffectOption {
-  export * from "@effect-ts-app/core/EffectOption"
+export namespace EffectMaybe {
+  export * from "@effect-ts-app/core/EffectMaybe"
 }
-/** @tsplus type ets/EffectOption */
-export type EffectOption<R, E, A> = EO.EffectOption<R, E, A>
-export { UIO as EffectOptionU, IO as EffectOptionE, RIO as EffectOptionR } from "@effect-ts-app/core/EffectOption"
+/** @tsplus type ets/EffectMaybe */
+export type EffectMaybe<R, E, A> = EO.EffectMaybe<R, E, A>
+export { UIO as EffectMaybeU, IO as EffectMaybeE, RIO as EffectMaybeR } from "@effect-ts-app/core/EffectMaybe"
 
-export namespace SyncOption {
-  export * from "@effect-ts-app/core/SyncOption"
+export namespace SyncMaybe {
+  export * from "@effect-ts-app/core/SyncMaybe"
 }
-/** @tsplus type ets/SyncOption */
-export type SyncOption<R, E, A> = SO.SyncOption<R, E, A>
-export { UIO as SyncOptionU, IO as SyncOptionE, RIO as SyncOptionR } from "@effect-ts-app/core/SyncOption"
+/** @tsplus type ets/SyncMaybe */
+export type SyncMaybe<R, E, A> = SO.SyncMaybe<R, E, A>
+export { UIO as SyncMaybeU, IO as SyncMaybeE, RIO as SyncMaybeR } from "@effect-ts-app/core/SyncMaybe"
 
 export namespace Managed {
   export * from "@effect-ts/core/Effect/Managed"
@@ -112,11 +112,11 @@ export namespace Schedule {
 /** @tsplus type ets/Schedule */
 export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 
-export namespace Option {
-  export * from "@effect-ts-app/core/Option"
+export namespace Maybe {
+  export * from "@effect-ts-app/core/Maybe"
 }
-/** @tsplus type ets/Option */
-export type Option<A> = O.Option<A>
+/** @tsplus type ets/Maybe */
+export type Maybe<A> = O.Maybe<A>
 
 export namespace Sync {
   export * from "@effect-ts-app/core/Sync"

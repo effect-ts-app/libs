@@ -1,5 +1,5 @@
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import { Effect, Option } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Maybe } from "@effect-ts-app/prelude/Prelude"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
@@ -38,7 +38,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       save: simpledb.store(find(type), store, lockRecordOnDisk(type), type),
     }
 
-    function store(record: A, currentVersion: Option<Version>) {
+    function store(record: A, currentVersion: Maybe<Version>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
@@ -49,7 +49,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       )
 
       const idx = makeIndexKey(record)
-      return Option.isSome(currentVersion)
+      return Maybe.isSome(currentVersion)
         ? Managed.use_(lockIndex(record), () =>
             readIndex(idx)
               .flatMap((x) =>
@@ -116,19 +116,19 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(type: string) {
       return (id: string) => {
-        return tryRead(getFilename(type, id)).mapOption(
+        return tryRead(getFilename(type, id)).mapMaybe(
           (s) => JSON.parse(s) as CachedRecord<EA>
         )
       }
     }
 
     function getIdx(index: Index) {
-      return readIndex(index).map((idx) => Option.fromNullable(idx[index.key]))
+      return readIndex(index).map((idx) => Maybe.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Option.fold(
+        Maybe.fold(
           () => ({} as Record<string, TKey>),
           (x) => JSON.parse(x) as Record<string, TKey>
         )
@@ -145,7 +145,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return fu
         .fileExists(filePath)
         .flatMap((exists) =>
-          !exists ? Effect.succeed(Option.none) : readFile(filePath).map(Option.some)
+          !exists ? Effect.succeed(Maybe.none) : readFile(filePath).map(Maybe.some)
         )
     }
 

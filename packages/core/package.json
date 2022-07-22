@@ -174,33 +174,33 @@
             },
             "require": "./Object.js"
         },
-        "./Option": {
+        "./Maybe": {
             "import": {
-                "types": "./Option.d.ts",
-                "default": "./_mjs/Option.mjs"
+                "types": "./Maybe.d.ts",
+                "default": "./_mjs/Maybe.mjs"
             },
-            "require": "./Option.js"
+            "require": "./Maybe.js"
         },
-        "./OptionAspects": {
+        "./MaybeAspects": {
             "import": {
-                "types": "./OptionAspects.d.ts",
-                "default": "./_mjs/OptionAspects.mjs"
+                "types": "./MaybeAspects.d.ts",
+                "default": "./_mjs/MaybeAspects.mjs"
             },
-            "require": "./OptionAspects.js"
+            "require": "./MaybeAspects.js"
         },
-        "./EffectOption": {
+        "./EffectMaybe": {
             "import": {
-                "types": "./EffectOption.d.ts",
-                "default": "./_mjs/EffectOption.mjs"
+                "types": "./EffectMaybe.d.ts",
+                "default": "./_mjs/EffectMaybe.mjs"
             },
-            "require": "./EffectOption.js"
+            "require": "./EffectMaybe.js"
         },
-        "./EffectOptionAspects": {
+        "./EffectMaybeAspects": {
             "import": {
-                "types": "./EffectOptionAspects.d.ts",
-                "default": "./_mjs/EffectOptionAspects.mjs"
+                "types": "./EffectMaybeAspects.d.ts",
+                "default": "./_mjs/EffectMaybeAspects.mjs"
             },
-            "require": "./EffectOptionAspects.js"
+            "require": "./EffectMaybeAspects.js"
         },
         "./Tuple": {
             "import": {
@@ -244,12 +244,12 @@
             },
             "require": "./validation/validators.js"
         },
-        "./SyncOption": {
+        "./SyncMaybe": {
             "import": {
-                "types": "./SyncOption.d.ts",
-                "default": "./_mjs/SyncOption.mjs"
+                "types": "./SyncMaybe.d.ts",
+                "default": "./_mjs/SyncMaybe.mjs"
             },
-            "require": "./SyncOption.js"
+            "require": "./SyncMaybe.js"
         },
         "./Sync": {
             "import": {
@@ -258,12 +258,12 @@
             },
             "require": "./Sync.js"
         },
-        "./SyncOptionAspects": {
+        "./SyncMaybeAspects": {
             "import": {
-                "types": "./SyncOptionAspects.d.ts",
-                "default": "./_mjs/SyncOptionAspects.mjs"
+                "types": "./SyncMaybeAspects.d.ts",
+                "default": "./_mjs/SyncMaybeAspects.mjs"
             },
-            "require": "./SyncOptionAspects.js"
+            "require": "./SyncMaybeAspects.js"
         },
         "./SyncAspects": {
             "import": {
@@ -294,68 +294,68 @@
         "./fluent/polyfill/Chunk.js",
         "./fluent/polyfill/Effect.js",
         "./fluent/polyfill/EffectNode.js",
-        "./fluent/polyfill/EffectOption.js",
+        "./fluent/polyfill/EffectMaybe.js",
         "./fluent/polyfill/Either.js",
         "./fluent/polyfill/index.js",
         "./fluent/polyfill/Lens.js",
         "./fluent/polyfill/Managed.js",
         "./fluent/polyfill/node.js",
-        "./fluent/polyfill/Option.js",
+        "./fluent/polyfill/Maybe.js",
         "./fluent/polyfill/Set.js",
         "./fluent/polyfill/state.js",
         "./fluent/polyfill/Sync.js",
-        "./fluent/polyfill/SyncOption.js",
+        "./fluent/polyfill/SyncMaybe.js",
         "./fluent/polyfill/util.js",
         "./_cjs/fluent/polyfill/Array.cjs",
         "./_cjs/fluent/polyfill/browser.cjs",
         "./_cjs/fluent/polyfill/Chunk.cjs",
         "./_cjs/fluent/polyfill/Effect.cjs",
         "./_cjs/fluent/polyfill/EffectNode.cjs",
-        "./_cjs/fluent/polyfill/EffectOption.cjs",
+        "./_cjs/fluent/polyfill/EffectMaybe.cjs",
         "./_cjs/fluent/polyfill/Either.cjs",
         "./_cjs/fluent/polyfill/index.cjs",
         "./_cjs/fluent/polyfill/Lens.cjs",
         "./_cjs/fluent/polyfill/Managed.cjs",
         "./_cjs/fluent/polyfill/node.cjs",
-        "./_cjs/fluent/polyfill/Option.cjs",
+        "./_cjs/fluent/polyfill/Maybe.cjs",
         "./_cjs/fluent/polyfill/Set.cjs",
         "./_cjs/fluent/polyfill/state.cjs",
         "./_cjs/fluent/polyfill/Sync.cjs",
-        "./_cjs/fluent/polyfill/SyncOption.cjs",
+        "./_cjs/fluent/polyfill/SyncMaybe.cjs",
         "./_cjs/fluent/polyfill/util.cjs",
         "./_esm/fluent/polyfill/Array.js",
         "./_esm/fluent/polyfill/browser.js",
         "./_esm/fluent/polyfill/Chunk.js",
         "./_esm/fluent/polyfill/Effect.js",
         "./_esm/fluent/polyfill/EffectNode.js",
-        "./_esm/fluent/polyfill/EffectOption.js",
+        "./_esm/fluent/polyfill/EffectMaybe.js",
         "./_esm/fluent/polyfill/Either.js",
         "./_esm/fluent/polyfill/index.js",
         "./_esm/fluent/polyfill/Lens.js",
         "./_esm/fluent/polyfill/Managed.js",
         "./_esm/fluent/polyfill/node.js",
-        "./_esm/fluent/polyfill/Option.js",
+        "./_esm/fluent/polyfill/Maybe.js",
         "./_esm/fluent/polyfill/Set.js",
         "./_esm/fluent/polyfill/state.js",
         "./_esm/fluent/polyfill/Sync.js",
-        "./_esm/fluent/polyfill/SyncOption.js",
+        "./_esm/fluent/polyfill/SyncMaybe.js",
         "./_esm/fluent/polyfill/util.js",
         "./_mjs/fluent/polyfill/Array.mjs",
         "./_mjs/fluent/polyfill/browser.mjs",
         "./_mjs/fluent/polyfill/Chunk.mjs",
         "./_mjs/fluent/polyfill/Effect.mjs",
         "./_mjs/fluent/polyfill/EffectNode.mjs",
-        "./_mjs/fluent/polyfill/EffectOption.mjs",
+        "./_mjs/fluent/polyfill/EffectMaybe.mjs",
         "./_mjs/fluent/polyfill/Either.mjs",
         "./_mjs/fluent/polyfill/index.mjs",
         "./_mjs/fluent/polyfill/Lens.mjs",
         "./_mjs/fluent/polyfill/Managed.mjs",
         "./_mjs/fluent/polyfill/node.mjs",
-        "./_mjs/fluent/polyfill/Option.mjs",
+        "./_mjs/fluent/polyfill/Maybe.mjs",
         "./_mjs/fluent/polyfill/Set.mjs",
         "./_mjs/fluent/polyfill/state.mjs",
         "./_mjs/fluent/polyfill/Sync.mjs",
-        "./_mjs/fluent/polyfill/SyncOption.mjs",
+        "./_mjs/fluent/polyfill/SyncMaybe.mjs",
         "./_mjs/fluent/polyfill/util.mjs"
     ],
     "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"

@@ -7,8 +7,8 @@ import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.j
 
 export type Gen<T> = { (_: typeof fc): fc.Arbitrary<T> }
 
-export const interpreters: ((schema: S.SchemaAny) => Option<() => Gen<unknown>>)[] = [
-  Option.partial((miss) => (schema: S.SchemaAny): (() => Gen<unknown>) => {
+export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Gen<unknown>>)[] = [
+  Maybe.partial((miss) => (schema: S.SchemaAny): (() => Gen<unknown>) => {
     if (schema instanceof S.SchemaIdentity) {
       return () => (_) => _.anything().filter(schema.guard)
     }

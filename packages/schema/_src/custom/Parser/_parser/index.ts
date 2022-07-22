@@ -27,8 +27,8 @@ export type Parser<I, E, A> = {
 
 export const interpreters: ((
   schema: SchemaAny
-) => Option<() => Parser<unknown, unknown, unknown>>)[] = [
-  Option.partial(
+) => Maybe<() => Parser<unknown, unknown, unknown>>)[] = [
+  Maybe.partial(
     (miss) =>
       (schema: S.SchemaAny): (() => Parser<unknown, unknown, unknown>) => {
         if (schema instanceof S.SchemaNamed) {

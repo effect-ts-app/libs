@@ -22,8 +22,8 @@ export function optionFromNull<
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ): DefaultSchema<
   ParserInput | null,
-  Option<ParsedShape>,
-  Option<ConstructorInput>,
+  Maybe<ParsedShape>,
+  Maybe<ConstructorInput>,
   Encoded | null,
   Api
 > {
@@ -31,7 +31,7 @@ export function optionFromNull<
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is Option<ParsedShape> =>
+  const refinement = (u: unknown): u is Maybe<ParsedShape> =>
     typeof u === "object" &&
     u !== null &&
     ["None", "Some"].indexOf(u["_tag"]) !== -1 &&
@@ -40,20 +40,20 @@ export function optionFromNull<
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary((_) => _.option(arb(_)).map(Option.fromNullable)),
+    S.arbitrary((_) => _.option(arb(_)).map(Maybe.fromNullable)),
     S.parser((i: ParserInput | null, env) =>
       i === null
-        ? Th.succeed(Option.none)
+        ? Th.succeed(Maybe.none)
         : Th.map_(
             (env?.cache ? env.cache.getOrSetParser(parse) : parse)(i),
-            Option.some
+            Maybe.some
           )
     ),
-    S.constructor((x: Option<ConstructorInput>) =>
-      Option.fold_(
+    S.constructor((x: Maybe<ConstructorInput>) =>
+      Maybe.fold_(
         x,
-        () => Th.succeed(Option.none),
-        (v) => Th.map_(create(v), Option.some)
+        () => Th.succeed(Maybe.none),
+        (v) => Th.map_(create(v), Maybe.some)
       )
     ),
     S.encoder((_) => _.map(encode).val),

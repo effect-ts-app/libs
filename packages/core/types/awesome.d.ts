@@ -46,18 +46,18 @@ declare module "@effect-ts/system/Either/core" {
 
 declare module "@effect-ts/system/Option/core" {
   /**
-   * @tsplus type ets/Option/Some
+   * @tsplus type ets/Maybe/Some
    */
   export interface Some<A> {}
 
   /**
-   * @tsplus type ets/Option/None
+   * @tsplus type ets/Maybe/None
    */
 
   export interface None {}
 
   /**
-   * @tsplus type ets/Option
+   * @tsplus type ets/Maybe
    */
   export type Option<A> = None | Some<A>
 }
