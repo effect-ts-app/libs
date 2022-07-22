@@ -53,7 +53,7 @@ export function decodeErrors(x: unknown) {
 }
 
 const ValidationApplicative = Effect.getValidationApplicative(
-  makeAssociative<ImmutableArray<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
+  makeAssociative<ROArray<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
     (l, r) => l.concat(r)
   )
 )

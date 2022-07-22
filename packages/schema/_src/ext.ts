@@ -5,7 +5,7 @@ import { ComputeFlat } from "@effect-ts/core/Utils"
 import { constant, Lazy, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
-import { ImmutableArray } from "@effect-ts-app/prelude/Prelude"
+import { ROArray } from "@effect-ts-app/prelude/Prelude"
 import { v4 } from "uuid"
 
 import { FromProperty, set, setIdentifier } from "./_api/index.js"
@@ -162,8 +162,8 @@ export function defaultConstructor<
 }
 
 type SupportedDefaults =
-  | ImmutableSet<any>
-  | ImmutableArray<any>
+  | ROSet<any>
+  | ROArray<any>
   | Maybe.Some<any>
   | Maybe.None
   | Date
@@ -542,7 +542,7 @@ export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const eq = eq_ ?? Ord.getEqual(ord)
   const s = set(type, ord, eq)
-  return Object.assign(s, ImmutableSet.make(ord, eq))
+  return Object.assign(s, ROSet.make(ord, eq))
 }
 
 export function makeUnorderedContramappedStringSet<
@@ -656,7 +656,7 @@ export function makeContramappedNonEmptySet<
   )
 }
 
-export const constArray = constant(ImmutableArray.empty)
+export const constArray = constant(ROArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }
