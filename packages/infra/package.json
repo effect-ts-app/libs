@@ -1,10 +1,10 @@
 {
     "name": "@effect-ts-app/infra",
-    "version": "0.74.4",
+    "version": "0.75.0",
     "license": "MIT",
     "dependencies": {
-        "@effect-ts-app/core": "^0.74.4",
-        "@effect-ts-app/schema": "^0.74.4",
+        "@effect-ts-app/core": "^0.75.0",
+        "@effect-ts-app/schema": "^0.75.0",
         "proper-lockfile": "^4.1.2",
         "query-string": "^7.1.1",
         "winston": "^3.8.0"
