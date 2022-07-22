@@ -10,7 +10,7 @@ import { flow, pipe, tuple } from "@effect-ts-app/core/Function"
  * @tsplus global
  */
 import {
-  ROArray,
+  ImmutableArray,
   Cause,
   Chunk,
   Effect,
@@ -23,7 +23,7 @@ import {
   Layer,
   Lens,
   Managed,
-  ROMap,
+  ImmutableMap,
   NonEmptyArray,
   NonEmptySet,
   Maybe,
@@ -34,7 +34,7 @@ import {
   Schedule,
   Schema,
   Semaphore,
-  ROSet,
+  ImmutableSet,
   Sync,
   SyncMaybe,
   Tuple,

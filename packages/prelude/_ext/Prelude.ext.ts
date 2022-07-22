@@ -6,10 +6,10 @@ import {
   Effect,
   EffectMaybe,
   Either,
+  ImmutableSet,
   Managed,
   Maybe,
   NonEmptyArray,
-  ROSet,
   Sync,
 } from "@effect-ts-app/prelude/Prelude"
 
@@ -281,7 +281,7 @@ export const naSucceed = NonEmptyArray.fromArray
 /**
  * @tsplus static ets/Set __call
  */
-export const setSucceed = ROSet.fromArray
+export const setSucceed = ImmutableSet.fromArray
 
 /**
  * @tsplus static ets/Chunk __call

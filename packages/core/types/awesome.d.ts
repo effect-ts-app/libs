@@ -63,7 +63,7 @@ declare module "@effect-ts/system/Option/core" {
 }
 
 declare global {
-    /**
+  /**
    * @tsplus type ets/Array
    */
   interface ReadonlyArray<T> { }
@@ -79,7 +79,7 @@ declare global {
   interface Set<T> {}
   
   /**
-   * @tsplus type ets/ROSet
+   * @tsplus type ets/ImmutableSet
    * @tsplus type ets/Set
    */
   interface ReadonlySet<T> { }

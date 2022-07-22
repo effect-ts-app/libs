@@ -17,7 +17,7 @@ export const References = tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
-  constructor(readonly errors: ROArray<string>) {}
+  constructor(readonly errors: ImmutableArray<string>) {}
 }
 
 export interface ConfigExtensionRef {
