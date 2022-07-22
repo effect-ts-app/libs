@@ -1,5 +1,5 @@
-import type { Array as ROArray } from "../index.js"
-import { Array as ROArrayOps } from "../index.js"
+import type { Array as ROArray } from "../Prelude.js"
+import { Array as ROArrayOps } from "../Prelude.js"
 
 /**
  * @tsplus operator ets/Array &

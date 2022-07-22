@@ -40,8 +40,8 @@ import {
   Tuple,
   Utils,
   XPure,
-} from "@effect-ts-app/prelude/Prelude"
+} from "@effect-ts-app/core/Prelude"
 
 import type {
   LazyArg
-} from "@effect-ts-app/prelude/_ext/Prelude.ext"
+} from "@effect-ts-app/core/_ext/Prelude.ext"
