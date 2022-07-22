@@ -4,7 +4,7 @@ import * as TRef from "@effect-ts/core/Effect/Ref"
 import type { Has } from "@effect-ts/core/Has"
 import { tag } from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts/system/Function"
-import { Effect } from "@effect-ts-app/prelude/Prelude"
+import { Effect } from "@effect-ts-app/core/Prelude"
 
 import type { JSONSchema, SubSchema } from "../../JsonSchema/index.js"
 import { Ref } from "../../JsonSchema/index.js"

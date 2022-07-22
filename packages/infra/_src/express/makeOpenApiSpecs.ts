@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { makeRef } from "@effect-ts/core/Effect/Ref"
-import { Effect } from "@effect-ts-app/prelude/Prelude"
+import { Effect } from "@effect-ts-app/core/Prelude"
 
 import * as Plutus from "../Openapi/atlas-plutus/index.js"
 import { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"

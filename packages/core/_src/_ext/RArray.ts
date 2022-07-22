@@ -1,5 +1,5 @@
-import type { Array as ROArray } from "@effect-ts-app/core/Array"
-import { Array as ROArrayOps } from "@effect-ts-app/prelude"
+import type { Array as ROArray } from "../index.js"
+import { Array as ROArrayOps } from "../index.js"
 
 /**
  * @tsplus operator ets/Array &

@@ -11,7 +11,7 @@ import {
   NonEmptyArray,
   ROSet,
   Sync,
-} from "@effect-ts-app/prelude/Prelude"
+} from "@effect-ts-app/core/Prelude"
 
 import { pipe } from "./pipe.js"
 

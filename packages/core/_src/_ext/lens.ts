@@ -1,6 +1,4 @@
 import { identity } from "@effect-ts-app/core/Function"
-import type { Lens } from "@effect-ts-app/prelude"
-import { Effect, Sync } from "@effect-ts-app/prelude"
 
 export function setIfDefined_<S, A>(lens: Lens<S, A>) {
   return <B>(b: B | undefined, map: (b: B) => A) =>

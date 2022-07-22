@@ -49,6 +49,23 @@
             },
             "require": "./index.js"
         },
+        "./Prelude": {
+            "import": {
+                "types": "./Prelude.d.ts",
+                "default": "./_mjs/Prelude.mjs"
+            },
+            "require": {
+                "types": "./Prelude.d.ts",
+                "default": "./Prelude.js"
+            }
+        },
+        "./_ext/*": {
+            "import": {
+                "types": "./_ext/*.d.ts",
+                "default": "./_mjs/_ext/*.mjs"
+            },
+            "require": "./_ext/*.js"
+        },
         "./Array/ext": {
             "import": {
                 "types": "./Array/ext.d.ts",

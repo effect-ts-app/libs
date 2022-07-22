@@ -1,5 +1,5 @@
 import { _A } from "@effect-ts/core/Utils"
-import { Effect, Layer, Maybe } from "@effect-ts-app/prelude/Prelude"
+import { Effect, Layer, Maybe } from "@effect-ts-app/core/Prelude"
 import { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
