@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { Numbers } from "@effect-ts-app/core/FastCheck"
 import { pipe, Refinement } from "@effect-ts-app/core/Function"
 import { isValidPhone } from "@effect-ts-app/core/validation"
 
@@ -14,6 +13,7 @@ import {
   parseUuidE,
   string,
 } from "../_schema.js"
+import { Numbers } from "../FastCheck.js"
 import { extendWithUtils } from "./_shared.js"
 
 // TODO: openapi meta: format: phone

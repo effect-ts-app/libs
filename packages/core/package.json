@@ -123,13 +123,6 @@
             },
             "require": "./EffectAspects.js"
         },
-        "./FastCheck": {
-            "import": {
-                "types": "./FastCheck.d.ts",
-                "default": "./_mjs/FastCheck.mjs"
-            },
-            "require": "./FastCheck.js"
-        },
         "./Set": {
             "import": {
                 "types": "./Set.d.ts",

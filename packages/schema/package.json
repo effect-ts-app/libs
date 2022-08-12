@@ -51,6 +51,13 @@
             },
             "require": "./index.js"
         },
+        "./FastCheck": {
+            "import": {
+                "types": "./FastCheck.d.ts",
+                "default": "./_mjs/FastCheck.mjs"
+            },
+            "require": "./FastCheck.js"
+        },
         "./_api": {
             "import": {
                 "types": "./_api/index.d.ts",

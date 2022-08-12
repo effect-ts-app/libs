@@ -42,7 +42,7 @@ export const stringNumberFromString: DefaultSchema<string, number, number, strin
       pipe(
         number,
         S.encoder((_) => String(_)),
-        S.parser((s) =>
+        S.parser((s: string) =>
           pipe(Number.parseFloat(s), (n) =>
             Number.isNaN(n) ? Th.fail(S.leafE(S.parseNumberE(s))) : Th.succeed(n)
           )
