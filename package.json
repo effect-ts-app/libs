@@ -11,7 +11,6 @@
     "scripts": {
         "autofix": "ultra -r autofix",
         "build": "ultra -r build",
-        "postinstall": "patch-package",
         "test": "ultra -r yarn test",
         "testsuite": "ultra -r yarn testsuite",
         "ncu": "ncu",
@@ -21,7 +20,7 @@
         "client": "cd packages/client && yarn client"
     },
     "resolutions": {
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz"
     },
     "devDependencies": {
         "@babel/cli": "^7.18.9",
@@ -69,7 +68,7 @@
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.0.0",
         "ttypescript": "^1.5.13",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz",
         "ultra-runner": "^3.10.5"
     }
 }

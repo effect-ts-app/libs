@@ -9345,9 +9345,9 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript@^3.9.10, typescript@^3.9.5, typescript@^3.9.7, "typescript@https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz":
-  version "4.8.0-tsplus.20220710"
-  resolved "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.127/compiler/typescript.tgz#41c201ba5ed2e68ae3ff968fde265e5ae0182d56"
+typescript@^3.9.10, typescript@^3.9.5, typescript@^3.9.7, "typescript@https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz":
+  version "4.8.0-tsplus.20220811"
+  resolved "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz#6f4b053dc5966adea815685d4be9b3cc5ebdbf55"
 
 uglify-js@^3.1.4:
   version "3.16.2"

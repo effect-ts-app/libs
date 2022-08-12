@@ -1,3 +1,4 @@
+import { Left, Right } from "../Either.js"
 import { pipe } from "./pipe.js"
 
 /**
@@ -8,8 +9,8 @@ import { pipe } from "./pipe.js"
 export function unifyEither<X extends Either<any, any>>(
   self: X
 ): Either<
-  [X] extends [Either<infer EX, any>] ? EX : never,
-  [X] extends [Either<any, infer AX>] ? AX : never
+  X extends Left<infer EX> ? EX : never,
+  X extends Right<infer AX> ? AX : never
 > {
   return self
 }

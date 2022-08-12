@@ -1,3 +1,4 @@
+import { Some } from "../Maybe.js"
 import { pipe } from "./pipe.js"
 
 /**
@@ -7,7 +8,7 @@ import { pipe } from "./pipe.js"
  */
 export function unifyMaybe<X extends Maybe<any>>(
   self: X
-): Maybe<[X] extends [Maybe<infer A>] ? A : never> {
+): Maybe<X extends Some<infer A> ? A : never> {
   return self
 }
 
