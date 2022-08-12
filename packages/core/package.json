@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "0.78.1",
+    "version": "0.79.0",
     "license": "MIT",
     "dependencies": {
         "cross-fetch": "^3.1.5",
