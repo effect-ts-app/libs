@@ -4,6 +4,7 @@
 import "./Effect.js"
 import "./EffectMaybe.js"
 import "./Either.js"
+import "./Layer.js"
 import "./Managed.js"
 import "./Maybe.js"
 import "./Misc.js"
