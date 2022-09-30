@@ -101,3 +101,10 @@ declare module "@effect-ts/system/Sync/core" {
    */
   export interface Sync<R, E, A> extends XPure<unknown, unknown, unknown, R, E, A> {}
 }
+
+declare module "@effect-ts/system/Managed/managed" {
+  /**
+   * @tsplus type ets/Managed
+   */
+  export interface Managed<R, E, A> {}
+}
