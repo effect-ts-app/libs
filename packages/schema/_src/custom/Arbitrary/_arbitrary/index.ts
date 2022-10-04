@@ -5,6 +5,9 @@ import type * as fc from "fast-check"
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 
+/**
+ * @tsplus type ets/Schema/Arbitrary/Gen
+ */
 export type Gen<T> = { (_: typeof fc): fc.Arbitrary<T> }
 
 export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Gen<unknown>>)[] = [
