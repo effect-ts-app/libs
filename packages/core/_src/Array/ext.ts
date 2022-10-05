@@ -67,7 +67,7 @@ export function sortByO<A>(
 export function groupByT_<A, Key extends PropertyKey>(
   as: ImmutableArray<A>,
   f: (a: A) => Key
-): ImmutableArray<Tuple<[Key, NonEmptyArray<A>]>> {
+): ImmutableArray<readonly [Key, NonEmptyArray<A>]> {
   const r: Record<Key, Array<A> & { 0: A }> = {} as any
   for (const a of as) {
     const k = f(a)
@@ -79,12 +79,12 @@ export function groupByT_<A, Key extends PropertyKey>(
     }
   }
   return Object.entries(r).map(([k, items]) =>
-    Tuple.tuple(k as unknown as Key, items as NonEmptyArray<A>)
+    tuple(k as unknown as Key, items as NonEmptyArray<A>)
   )
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {
-  return (as: ImmutableArray<A>): ImmutableArray<Tuple<[Key, NonEmptyArray<A>]>> =>
+  return (as: ImmutableArray<A>): ImmutableArray<readonly [Key, NonEmptyArray<A>]> =>
     groupByT_(as, f)
 }
 
