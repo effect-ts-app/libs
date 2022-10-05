@@ -1,5 +1,5 @@
 import type { Array as ImmutableArray } from "../Prelude.js"
-import { Array as ImmutableArrayOps } from "../Prelude.js"
+import { Array as ImmutableArrayOps, Tuple } from "../Prelude.js"
 
 /**
  * @tsplus operator ets/Array &
@@ -85,3 +85,9 @@ export function append_<A, B>(init: ImmutableArray<A>, end: B): ImmutableArray<A
  */
 export const appendOperator: <A>(self: ImmutableArray<A>, a: A) => ImmutableArray<A> =
   append_
+
+/**
+ * Converts from native tuple type
+ * @tsplus getter ets/Array asTup
+ */
+export const toTuple = Tuple.fromNative
