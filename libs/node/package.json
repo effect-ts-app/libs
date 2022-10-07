@@ -1,5 +1,5 @@
 {
-  "name": "@effect/node",
+  "name": "@effect-ts-app/node",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "https://github.com/Effect-TS/node.git",
