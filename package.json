@@ -43,6 +43,7 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.18.6",
         "@babel/preset-typescript": "^7.18.6",
+        "@effect-ts/core": "^0.60.4",
         "@effect/core": "^0.0.15",
         "@tsplus/stdlib": "^0.2.8",
         "@types/jest": "^28.1.6",

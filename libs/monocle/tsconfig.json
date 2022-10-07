@@ -1,10 +1,18 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM"],
+    "lib": [
+      "DOM"
+    ],
     "target": "ES2018",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["src/**/*", "scripts/**/*", "bench/**/*", "test/**/*", "demo/**/*"]
+  "include": [
+    "src/**/*",
+    "scripts/**/*",
+    "bench/**/*",
+    "test/**/*",
+    "demo/**/*"
+  ]
 }

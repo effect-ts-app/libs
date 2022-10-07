@@ -848,6 +848,7 @@ __metadata:
     "@babel/plugin-proposal-object-rest-spread": ^7.18.9
     "@babel/plugin-transform-modules-commonjs": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@effect-ts/core": ^0.60.4
     "@effect/core": ^0.0.15
     "@tsplus/stdlib": ^0.2.8
     "@types/jest": ^28.1.6
@@ -956,10 +957,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@effect-ts/core@npm:^0.60.4":
+  version: 0.60.4
+  resolution: "@effect-ts/core@npm:0.60.4"
+  dependencies:
+    "@effect-ts/system": ^0.57.4
+  checksum: b7b88d40c5b53e6cedec88bd88bb68298ad06f2240a2024a36aba745767b18230bf596b90c3f1efceb7053711ac574018d6c2c242edc15b30972e43a05d274d4
+  languageName: node
+  linkType: hard
+
 "@effect-ts/system@npm:^0.57.2":
   version: 0.57.2
   resolution: "@effect-ts/system@npm:0.57.2"
   checksum: 27c14a7e47862902723991bc661efe544cd3359f1970e1516a7cc6c4d500705f7adebf06008276f2c36b8a868a4c19284eabde01ad24a4b43670ce0619f8dc7f
+  languageName: node
+  linkType: hard
+
+"@effect-ts/system@npm:^0.57.4":
+  version: 0.57.4
+  resolution: "@effect-ts/system@npm:0.57.4"
+  checksum: fb3cbe2f06936732c3451c326ebfecda29ae9472881450cc45e7cb6f1fa2bf4806e32fa766de727e8c855500da5a31850bf78c0602558b51d92a787edcd25655
   languageName: node
   linkType: hard
 
