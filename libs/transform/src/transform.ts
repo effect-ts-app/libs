@@ -1,4 +1,4 @@
-module.exports = function(fileInfo: { source: string }, api, options) {
+module.exports = function (fileInfo: { source: string }, api, options) {
   // transform `fileInfo.source` here
   // ...
   // return changed source
@@ -13,7 +13,7 @@ module.exports = function(fileInfo: { source: string }, api, options) {
     "@effect-ts/core/Support/AtomicBoolean": "@tsplus/stdlib/data/AtomicBoolean",
     "@effect-ts/core/Effect/Supervisor": "@effect/core/io/Supervisor",
     "@effect-ts/core/Function": "@tsplus/stdlib/data/Function",
-    "@effect-ts/system/Function": "@tsplus/stdlib/data/Function"
+    "@effect-ts/system/Function": "@tsplus/stdlib/data/Function",
   }
 
   // TODO
@@ -22,16 +22,19 @@ module.exports = function(fileInfo: { source: string }, api, options) {
 
   // TODO: scope
   //const removedModules = ["@effect-ts/core/Effect/Managed"]
-  let source = fileInfo.source
+  let { source } = fileInfo
   for (const k of Object.keys(moduleMap)) {
     source = source.replaceAll(`"${k}"`, `"${moduleMap[k]}"`)
   }
   source = source
-    .replaceAll(/RIO<\s*(\w+),\s*(\w+)>/g, (_, ...args) => `Effect<${args[0]}, never, ${args[1]}>`)
+    .replaceAll(
+      /RIO<\s*(\w+),\s*(\w+)>/g,
+      (_, ...args) => `Effect<${args[0]}, never, ${args[1]}>`
+    )
     .replaceAll(/& Has<(\w+)>/g, (_, ...m) => `| ${m[0]}`)
     .replaceAll(/Has<(\w+)>/g, (_, ...m) => `${m[0]}`)
     .replaceAll(".succeedWith(", ".sync(")
     .replaceAll(/.effectAsync([(<])/g, (_, m) => `.async${m[0]}`)
-  .replaceAll(".chain", ".flatMap")
-  return source;
-};
+    .replaceAll(".chain", ".flatMap")
+  return source
+}
