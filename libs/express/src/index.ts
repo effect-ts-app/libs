@@ -2,7 +2,10 @@
 
 // tracing: off
 
-import type { NonEmptyArray } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
+export type NonEmptyArray<A> = ReadonlyArray<A> & {
+  readonly 0: A
+}
+
 import * as T from "@effect-ts/core/Effect"
 import type { Cause } from "@effect-ts/core/Effect/Cause"
 import * as F from "@effect-ts/core/Effect/Fiber"
