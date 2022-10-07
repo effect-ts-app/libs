@@ -12,15 +12,15 @@
         "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.60.2",
         "@effect-ts-app/monocle": "*",
+        "@effect-ts/core": "^0.60.2",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.7.4",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.60.2",
         "@effect-ts-app/monocle": "*",
+        "@effect-ts/core": "^0.60.2",
         "node-libcurl": "^2.3.4"
     },
     "scripts": {

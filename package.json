@@ -9,6 +9,7 @@
         ]
     },
     "private": true,
+    "packageManager": "yarn@3.2.4",
     "scripts": {
         "autofix": "ultra -r autofix",
         "build": "ultra -r build",
