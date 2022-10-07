@@ -1,0 +1,41 @@
+{
+  "name": "@effect-ts/monocle",
+  "version": "0.43.0",
+  "license": "MIT",
+  "repository": "https://github.com/Effect-TS/monocle.git",
+  "homepage": "https://www.matechs.com",
+  "scripts": {
+    "clean": "yarn ets:rimraf build tsbuildinfo dist",
+    "build-cjs": "yarn ets:babel build/esm --config-file ./.babel.cjs.json --out-dir build/cjs --out-file-extension .js --source-maps",
+    "build-mjs": "yarn ets:babel build/esm --config-file ./.babel.mjs.json --out-dir build/mjs --out-file-extension .mjs --source-maps",
+    "build-ts": "yarn ets:tsc -p tsconfig.build.esm.json",
+    "build-post": "yarn ets:build-utils pack",
+    "build": "yarn build-ts && yarn ets:concurrently \"yarn build-cjs\" \"yarn build-mjs\" && yarn build-post",
+    "lint": "yarn ets:eslint . --ext .ts,.tsx",
+    "autofix": "yarn prettier && yarn lint --fix && yarn prettier",
+    "prettier": "yarn ets:prettier --write \"./{src,test,demo}/**/*.ts\"",
+    "tc": "yarn ets:tsc --noEmit",
+    "circular": "yarn ets:madge --circular --no-color --no-spinner build/esm"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "@effect-ts/core": "^0.58.0"
+  },
+  "config": {
+    "side": [],
+    "modules": [
+      "At",
+      "Internal",
+      "Iso",
+      "Ix",
+      "Lens",
+      "Optional",
+      "Prism",
+      "Traversal"
+    ]
+  }
+}
