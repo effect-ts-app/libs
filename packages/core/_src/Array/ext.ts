@@ -65,9 +65,9 @@ export function sortByO<A>(
 }
 
 export function groupByT_<A, Key extends PropertyKey>(
-  as: ImmutableArray<A>,
+  as: ROArray<A>,
   f: (a: A) => Key
-): ImmutableArray<readonly [Key, NonEmptyArray<A>]> {
+): ROArray<readonly [Key, NonEmptyArray<A>]> {
   const r: Record<Key, Array<A> & { 0: A }> = {} as any
   for (const a of as) {
     const k = f(a)
@@ -84,7 +84,7 @@ export function groupByT_<A, Key extends PropertyKey>(
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {
-  return (as: ImmutableArray<A>): ImmutableArray<readonly [Key, NonEmptyArray<A>]> =>
+  return (as: ROArray<A>): ROArray<readonly [Key, NonEmptyArray<A>]> =>
     groupByT_(as, f)
 }
 

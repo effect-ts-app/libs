@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { _A } from "@effect-ts/core/Utils"
-import { Chunk, ImmutableArray } from "@effect-ts-app/core/Prelude"
+import { Chunk, ROArray } from "@effect-ts-app/core/Prelude"
 
 import * as RS from "./schema/routing.js"
 
@@ -19,7 +19,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
-          responses: ImmutableArray.reduce_(
+          responses: ROArray.reduce_(
             responses,
             {} as Record<Response["statusCode"], Response["type"]>,
             (prev, cur) => {

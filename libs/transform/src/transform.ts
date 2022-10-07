@@ -10,6 +10,7 @@ module.exports = function (fileInfo: { source: string }, api, options) {
     "@effect-ts/system/Cause": "@effect/core/io/Cause",
     "@effect-ts/core/Has": "@tsplus/stdlib/service/Tag",
     "@effect-ts/system/Has": "@tsplus/stdlib/service/Tag",
+    "@effect-ts/core/Collections/Immutable/Chunk": "@tsplus/stdlib/collections/Chunk",
     "@effect-ts/core/Support/AtomicBoolean": "@tsplus/stdlib/data/AtomicBoolean",
     "@effect-ts/core/Effect/Supervisor": "@effect/core/io/Supervisor",
     "@effect-ts/core/Function": "@tsplus/stdlib/data/Function",

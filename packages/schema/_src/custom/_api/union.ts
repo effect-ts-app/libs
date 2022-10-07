@@ -167,14 +167,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
     values: readonly string[]
-  }> = ImmutableArray.findFirstMap_(Object.keys(firstMemberTags), (tagField) => {
+  }> = ROArray.findFirstMap_(Object.keys(firstMemberTags), (tagField) => {
     const tags =
-      ImmutableArray.collect_(entriesTags, ([member, tags]) => {
+      ROArray.collect_(entriesTags, ([member, tags]) => {
         if (tagField in tags) {
           return Maybe.some(tuple(tags[tagField], member))
         }
         return Maybe.none
-      }) >= ImmutableArray.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
+      }) >= ROArray.uniq({ equals: (x, y) => x.get(0) === y.get(0) })
 
     if (tags.length === entries.length) {
       return Maybe.some({

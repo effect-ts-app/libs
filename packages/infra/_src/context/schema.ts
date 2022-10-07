@@ -21,8 +21,8 @@ export function makeCodec<
 }
 
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Sync.UIO<E>) {
-  return (a: ImmutableArray<A>) =>
-    ImmutableArray.map_(a, (task) =>
+  return (a: ROArray<A>) =>
+    ROArray.map_(a, (task) =>
       Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))
     )
       .collectAllSync()
