@@ -35,7 +35,7 @@ export { ModifyF, Traversal }
 export const id = <S>(): Traversal<S, S> =>
   new Traversal({
     modifyF:
-      <F extends P.URIS, C = P.Auto>(F: P.Applicative<F, C>) =>
+      <F extends P.URIS, C = P.Auto>(_F: P.Applicative<F, C>) =>
       <FK, FQ, FW, FX, FI, FS, FR, FE>(
         f: (a: S) => P.Kind<F, C, FK, FQ, FW, FX, FI, FS, FR, FE, S>
       ): ((s: S) => P.Kind<F, C, FK, FQ, FW, FX, FI, FS, FR, FE, S>) =>
