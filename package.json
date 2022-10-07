@@ -28,7 +28,8 @@
         "ets:build-utils": "cd $INIT_CWD && build-utils",
         "ets:ts-node": "cd $INIT_CWD && ts-node",
         "ets:babel": "cd $INIT_CWD && babel",
-        "ets:madge": "cd $INIT_CWD && madge"
+        "ets:madge": "cd $INIT_CWD && madge",
+        "ets:jest": "cd $INIT_CWD && jest"
     },
     "resolutions": {
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.139/compiler/typescript.tgz"
