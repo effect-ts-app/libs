@@ -1,18 +1,18 @@
 // ets_tracing: off
 
-import * as L from "@effect/core/Collections/Immutable/List"
 import { defaultRuntime } from "@effect/core/io/Effect"
-import * as S from "@effect/core/Sync"
+import { FiberId } from "@effect/core/io/FiberId"
+import * as L from "@tsplus/stdlib/collections/List"
 import * as path from "path"
 
 export function defaultTeardown(
   status: number,
-  id: Fiber.FiberID,
+  id: FiberId,
   onExit: (status: number) => void
 ) {
-  Fiber.interruptAllAs(Supervisor.mainFibers, id).unsafeRunAsyncWith(() => {
+  Fiber.interruptAllAs(FiberScope._roots.value, id).unsafeRunAsyncWith(() => {
     setTimeout(() => {
-      if (Supervisor.mainFibers.size === 0) {
+      if (FiberScope._roots.value.size === 0) {
         onExit(status)
       } else {
         defaultTeardown(status, id, onExit)
@@ -35,7 +35,7 @@ export function prettyTraceNode(
   trace: Fiber.Trace,
   adapt: (path: string, mod?: string) => string
 ): string {
-  return S.run(prettyTraceNodeSafe(trace, adapt))
+  return Effect.run(prettyTraceNodeSafe(trace, adapt))
 }
 
 export function prettyLocationNode(
@@ -69,8 +69,8 @@ export function prettyLocationNode(
 export function prettyTraceNodeSafe(
   trace: Fiber.Trace,
   adapt: (path: string, mod?: string) => string
-): S.UIO<string> {
-  return S.gen(function* ($) {
+): Effect<never, never, string> {
+  return Effect.gen(function* ($) {
     const exec = L.filter_(
       trace.executionTrace,
       (t): t is Fiber.SourceLocation => t._tag === "SourceLocation"
@@ -86,7 +86,7 @@ export function prettyTraceNodeSafe(
       ? [
           `Fiber: ${Fiber.prettyFiberId(trace.fiberId)} Execution trace:`,
           "",
-          ...L.toArray(L.map_(exec, (a) => `  ${prettyLocationNode(a, adapt)}`))
+          ...L.toArray(L.map_(exec, (a) => `  ${prettyLocationNode(a, adapt)}`)),
         ]
       : [`Fiber: ${Fiber.prettyFiberId(trace.fiberId)} Execution trace: <empty trace>`]
 
@@ -99,12 +99,12 @@ export function prettyTraceNodeSafe(
               stack,
               (e) => `  a future continuation at ${prettyLocationNode(e, adapt)}`
             )
-          )
+          ),
         ]
       : [
           `Fiber: ${Fiber.prettyFiberId(
             trace.fiberId
-          )} was supposed to continue to: <empty trace>`
+          )} was supposed to continue to: <empty trace>`,
         ]
 
     const parent = trace.parentTrace
@@ -114,7 +114,7 @@ export function prettyTraceNodeSafe(
         ? [`Fiber: ${Fiber.prettyFiberId(trace.fiberId)} was spawned by: <empty trace>`]
         : [
             `Fiber: ${Fiber.prettyFiberId(trace.fiberId)} was spawned by:\n`,
-            yield* $(prettyTraceNodeSafe(parent.value, adapt))
+            yield* $(prettyTraceNodeSafe(parent.value, adapt)),
           ]
 
     return ["", ...stackPrint, "", ...execPrint, "", ...ancestry].join("\n")
@@ -187,11 +187,11 @@ export const nodeRuntime = new NodeRuntime(
   defaultRuntime.traceRenderer({
     renderTrace: nodeTracer,
     renderError: Cause.defaultRenderer.renderError,
-    renderUnknown: Cause.defaultRenderer.renderUnknown
+    renderUnknown: Cause.defaultRenderer.renderUnknown,
   })
 )
 
 export const {
   custom: { run, runCancel, runFiber, runPromise, runPromiseExit },
-  runMain
+  runMain,
 } = nodeRuntime

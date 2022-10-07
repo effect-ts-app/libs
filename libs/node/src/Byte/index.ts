@@ -5,6 +5,7 @@ import type { Brand } from "@tsplus/runtime/Brand"
 /**
  * @tsplus type effect/node/Byte.Ops
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ByteOps {}
 export const Byte: ByteOps = {}
 export type Byte = number & Brand<"Byte">

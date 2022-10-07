@@ -9,7 +9,7 @@ export interface NodeFSOps {
   Tag: Tag<NodeFS>
 }
 export const NodeFS: NodeFSOps = {
-  Tag: Service.Tag<NodeFS>()
+  Tag: Service.Tag<NodeFS>(),
 }
 
 // LEGACY:begin
@@ -20,13 +20,13 @@ function makeCase<K extends string>(k: K) {
     constructor(args: A) {
       Object.assign(this, c(args as any))
     }
-    [Equals.sym](this: this, other: unknown): boolean {
+    [Equals.sym](this: this, _other: unknown): boolean {
       throw new Error("Method not implemented.")
     }
     [Hash.sym](this: this): number {
       throw new Error("Method not implemented.")
     }
-    [Copy.sym](this: this, that: Partial<this>): this {
+    [Copy.sym](this: this, _that: Partial<this>): this {
       throw new Error("Method not implemented.")
     }
   }
@@ -189,7 +189,7 @@ export const makeLiveFS = Effect.succeedWith(() => {
     access,
     fileExists,
     rm,
-    rmDir
+    rmDir,
   } as const
 })
 
@@ -203,31 +203,31 @@ export const accessors = Effect.deriveLifted(NodeFS.Tag)(
 /**
  * @tsplus static effect/node/NodeFS.Ops access
  */
-export const access = accessors.access
+export const { access } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops fileExists
  */
-export const fileExists = accessors.fileExists
+export const { fileExists } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops readFile
  */
-export const readFile = accessors.readFile
+export const { readFile } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops rm
  */
-export const rm = accessors.rm
+export const { rm } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops rmDir
  */
-export const rmDir = accessors.rmDir
+export const { rmDir } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops stat
  */
-export const stat = accessors.stat
+export const { stat } = accessors
 /**
  * @tsplus static effect/node/NodeFS.Ops writeFile
  */
-export const writeFile = accessors.writeFile
+export const { writeFile } = accessors
 
 /**
  * @tsplus static effect/node/NodeFS.Ops LiveFS

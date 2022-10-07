@@ -13,8 +13,8 @@ export class StdinError {
  * Creates a stream that reads from the standard input
  */
 export const stdin: Stream<never, StdinError, Byte> = Stream.fromEffect(() =>
-  Effect.succeedWith(() => Tuple(P.stdin.resume(), new Array<Function>()))
-).flatMap(({ tuple: [rs, cleanup] }) =>
+  Effect.succeedWith(() => [P.stdin.resume(), new Array<Function>()] as const)
+).flatMap(([rs, cleanup]) =>
   Stream.async<never, StdinError, Byte>((cb) => {
     const onData = (data: Buffer): void => {
       cb(Effect.succeed(Byte.chunk(data)))
