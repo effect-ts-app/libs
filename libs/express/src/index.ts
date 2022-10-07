@@ -2,15 +2,9 @@
 
 // tracing: off
 
-import type { Cause } from "@effect/core/io/Cause"
-import { died, pretty } from "@effect/core/io/Cause"
-import * as F from "@effect/core/io/Fiber"
-import * as Supervisor from "@effect/core/io/Supervisor"
 import * as M from "@effect-ts/core/Effect/Managed"
 import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
-import { literal, pipe } from "@tsplus/stdlib/data/Function"
-import { Env } from "@tsplus/stdlib/service/Env"
-import { Tag } from "@tsplus/stdlib/service/Tag"
+import { literal } from "@tsplus/stdlib/data/Function"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
@@ -20,11 +14,11 @@ import type { Socket } from "net"
 export type NonEmptyArray<A> = ReadonlyArray<A> & {
   readonly 0: A
 }
-export type _A<T extends Effect<any, any, any>> = [T] extends [
-  Effect<infer R, infer E, infer A>
-]
-  ? A
-  : never
+// export type _A<T extends Effect<any, any, any>> = [T] extends [
+//   Effect<infer R, infer E, infer A>
+// ]
+//   ? A
+//   : never
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, infer E, infer A>
 ]
@@ -72,7 +66,7 @@ export function LiveExpressAppConfig<R>(
       host,
       port,
       exitHandler: (req, res, next) => (cause) =>
-        pipe(exitHandler(req, res, next)(cause), Effect.provideEnvironment(r)),
+        exitHandler(req, res, next)(cause).provideEnvironment(r),
     }))
   )
 }
@@ -132,40 +126,36 @@ export const makeExpressApp = M.gen(function* (_) {
   )
 
   const supervisor = yield* _(
-    Supervisor.track["|>"](
-      M.makeExit((s) => s.value["|>"](Effect.flatMap(F.interruptAll)))
-    )
+    Supervisor.track["|>"](M.makeExit((s) => s.value.flatMap(Fiber.interruptAll)))
   )
 
   function runtime<
     Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
   >(handlers: Handlers) {
-    return pipe(
-      Effect.runtime<
-        _R<
-          {
-            [k in keyof Handlers]: [Handlers[k]] extends [
-              EffectRequestHandler<infer R, any, any, any, any, any>
-            ]
-              ? Effect<R, never, void>
-              : never
-          }[number]
-        >
-      >()["|>"](Effect.map((r) => r.supervised(supervisor))),
-      Effect.map((r) =>
+    return Effect.runtime<
+      _R<
+        {
+          [k in keyof Handlers]: [Handlers[k]] extends [
+            EffectRequestHandler<infer R, any, any, any, any, any>
+          ]
+            ? Effect<R, never, void>
+            : never
+        }[number]
+      >
+    >()
+      .map((r) => r.supervised(supervisor))
+      .map((r) =>
         handlers.map(
           (handler): RequestHandler =>
             (req, res, next) => {
               r.runFiber(
-                pipe(
-                  open.get ? handler(req, res, next) : Effect.interrupt,
-                  Effect.onTermination(exitHandler(req, res, next))
+                (open.get ? handler(req, res, next) : Effect.interrupt).onTermination(
+                  exitHandler(req, res, next)
                 )
               )
             }
         )
       )
-    )
   }
 
   return {
@@ -177,7 +167,7 @@ export const makeExpressApp = M.gen(function* (_) {
   }
 })
 
-export interface ExpressApp extends _A<typeof makeExpressApp> {}
+export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
 export const LiveExpressApp = Layer.fromEffect(ExpressApp)(makeExpressApp)
 
@@ -186,7 +176,7 @@ export type ExpressEnv = ExpressAppConfig | ExpressApp
 export function LiveExpress(
   host: string,
   port: number
-): Layer.Layer<unknown, never, ExpressEnv>
+): Layer<unknown, never, ExpressEnv>
 export function LiveExpress<R>(
   host: string,
   port: number,
@@ -195,7 +185,7 @@ export function LiveExpress<R>(
     res: Response,
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
-): Layer.Layer<R, never, ExpressEnv>
+): Layer<R, never, ExpressEnv>
 export function LiveExpress<R>(
   host: string,
   port: number,
@@ -204,7 +194,7 @@ export function LiveExpress<R>(
     res: Response,
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
-): Layer.Layer<R, never, ExpressEnv> {
+): Layer<R, never, ExpressEnv> {
   return LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler)[">+>"](
     LiveExpressApp
   )
@@ -317,8 +307,9 @@ export function defaultExitHandler(
 ): (cause: Cause<never>) => Effect<unknown, never, void> {
   return (cause) =>
     Effect.sync(() => {
-      if (died(cause)) {
-        console.error(pretty(cause))
+      if (cause.isDie) {
+        // Cause.died
+        console.error(Cause.pretty(cause))
       }
       _res.status(500).end()
     })
@@ -368,20 +359,14 @@ export function use(...args: any[]): Effect<ExpressEnv, never, void> {
         args as unknown as NonEmptyArray<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      )["|>"](
-        Effect.flatMap((expressHandlers) =>
-          Effect.sync(() => app.use(...expressHandlers))
-        )
-      )
+      ).flatMap((expressHandlers) => Effect.sync(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArray<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      )["|>"](
-        Effect.flatMap((expressHandlers) =>
-          Effect.sync(() => app.use(args[0], ...expressHandlers))
-        )
+      ).flatMap((expressHandlers) =>
+        Effect.sync(() => app.use(args[0], ...expressHandlers))
       )
     }
   })
