@@ -1,5 +1,5 @@
 import { Base } from "@effect-ts/core/Effect"
-import { runMain } from "@effect-ts/node/Runtime"
+import { runMain } from "@effect-ts-app/node/Runtime"
 
 const BasePrototype = Base.prototype as any
 

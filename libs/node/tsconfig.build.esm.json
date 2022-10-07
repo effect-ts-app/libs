@@ -16,7 +16,7 @@
       {
         "transform": "@effect-ts/tracing-plugin",
         "moduleMap": {
-          "^src/(.*)": "(@effect-ts/node): _src/$1"
+          "^src/(.*)": "(@effect-ts-app/node): _src/$1"
         }
       }
     ]

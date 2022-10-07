@@ -34,7 +34,7 @@ function makeCase<K extends string>(k: K) {
 // LEGACY:end
 
 export const tagName = <K extends string>(k: K) =>
-  `@effect-ts/node/FileSystem/${k}` as const
+  `@effect-ts-app/node/FileSystem/${k}` as const
 
 export const FSError = <K extends string>(k: K) => makeCase(k)
 

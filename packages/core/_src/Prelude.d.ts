@@ -12,7 +12,7 @@ import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
 import type * as Sy from "@effect-ts-app/core/Sync"
 import type * as XPURE from "@effect-ts/core/XPure"
-import type * as LNS from "@effect-ts/monocle/Lens"
+import type * as LNS from "@effect-ts-app/monocle/Lens"
 import type * as T from "@effect-ts-app/core/Effect"
 import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 import type * as QUEUE from "@effect-ts/core/Effect/Queue"
@@ -218,7 +218,7 @@ export type ImmutableMap<K, A> = MAP.Map<K, A>
 
 
 export namespace Lens {
-  export * from "@effect-ts/monocle/Lens"
+  export * from "@effect-ts-app/monocle/Lens"
 }
 /** @tsplus type ets/Lens */
 export type Lens<S, A> = LNS.Lens<S, A>

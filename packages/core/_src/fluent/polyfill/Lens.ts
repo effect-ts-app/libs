@@ -1,4 +1,4 @@
-import { Lens } from "@effect-ts/monocle/Lens"
+import { Lens } from "@effect-ts-app/monocle/Lens"
 
 import { modify_, prop_ } from "../_ext/Lens.js"
 import { applyFunctions } from "./util.js"

@@ -31,7 +31,7 @@ export class NodeServerListenError {
   constructor(readonly error: Error) {}
 }
 
-export const ExpressAppConfigTag = literal("@effect-ts/express/AppConfig")
+export const ExpressAppConfigTag = literal("@effect-ts-app/express/AppConfig")
 
 export interface ExpressAppConfig {
   readonly _tag: typeof ExpressAppConfigTag
@@ -62,7 +62,7 @@ export function LiveExpressAppConfig<R>(
   )
 }
 
-export const ExpressAppTag = literal("@effect-ts/express/App")
+export const ExpressAppTag = literal("@effect-ts-app/express/App")
 
 export const makeExpressApp = M.gen(function* (_) {
   const open = yield* _(
