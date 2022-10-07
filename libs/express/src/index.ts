@@ -5,6 +5,12 @@
 export type NonEmptyArray<A> = ReadonlyArray<A> & {
   readonly 0: A
 }
+export type _A<T extends T.Effect<any, any, any>> = [T] extends
+  [T.Effect<infer R, infer E, infer A>] ? A : never
+export type _R<T extends T.Effect<any, any, any>> = [T] extends
+  [T.Effect<infer R, infer E, infer A>] ? R : never
+export type _E<T extends T.Effect<any, any, any>> = [T] extends
+  [T.Effect<infer R, infer E, infer A>] ? E : never
 
 import * as T from "@effect-ts/core/Effect"
 import type { Cause } from "@effect-ts/core/Effect/Cause"
@@ -17,7 +23,6 @@ import { AtomicBoolean } from "@effect-ts/core/Support/AtomicBoolean"
 import { died, pretty } from "@effect-ts/system/Cause"
 import { literal } from "@effect-ts/system/Function"
 import { tag } from "@effect-ts/system/Has"
-import type { _A, _R } from "@effect-ts/system/Utils"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
