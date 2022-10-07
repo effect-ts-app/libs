@@ -2,32 +2,39 @@
 
 // tracing: off
 
-export type NonEmptyArray<A> = ReadonlyArray<A> & {
-  readonly 0: A
-}
-export type _A<T extends T.Effect<any, any, any>> = [T] extends
-  [T.Effect<infer R, infer E, infer A>] ? A : never
-export type _R<T extends T.Effect<any, any, any>> = [T] extends
-  [T.Effect<infer R, infer E, infer A>] ? R : never
-export type _E<T extends T.Effect<any, any, any>> = [T] extends
-  [T.Effect<infer R, infer E, infer A>] ? E : never
-
-import * as T from "@effect-ts/core/Effect"
-import type { Cause } from "@effect-ts/core/Effect/Cause"
-import * as F from "@effect-ts/core/Effect/Fiber"
-import * as L from "@effect-ts/core/Effect/Layer"
+import type { Cause } from "@effect/core/io/Cause"
+import { died, pretty } from "@effect/core/io/Cause"
+import * as F from "@effect/core/io/Fiber"
+import * as Supervisor from "@effect/core/io/Supervisor"
 import * as M from "@effect-ts/core/Effect/Managed"
-import * as Supervisor from "@effect-ts/core/Effect/Supervisor"
-import type { Has } from "@effect-ts/core/Has"
-import { AtomicBoolean } from "@effect-ts/core/Support/AtomicBoolean"
-import { died, pretty } from "@effect-ts/system/Cause"
-import { literal } from "@effect-ts/system/Function"
-import { tag } from "@effect-ts/system/Has"
+import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
+import { literal, pipe } from "@tsplus/stdlib/data/Function"
+import { Env } from "@tsplus/stdlib/service/Env"
+import { Tag } from "@tsplus/stdlib/service/Tag"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
 import type { Server } from "http"
 import type { Socket } from "net"
+
+export type NonEmptyArray<A> = ReadonlyArray<A> & {
+  readonly 0: A
+}
+export type _A<T extends Effect<any, any, any>> = [T] extends [
+  Effect<infer R, infer E, infer A>
+]
+  ? A
+  : never
+export type _R<T extends Effect<any, any, any>> = [T] extends [
+  Effect<infer R, infer E, infer A>
+]
+  ? R
+  : never
+export type _E<T extends Effect<any, any, any>> = [T] extends [
+  Effect<infer R, infer E, infer A>
+]
+  ? E
+  : never
 
 export class NodeServerCloseError {
   readonly _tag = "NodeServerCloseError"
@@ -48,7 +55,7 @@ export interface ExpressAppConfig {
   readonly exitHandler: typeof defaultExitHandler
 }
 
-export const ExpressAppConfig = tag<ExpressAppConfig>(ExpressAppConfigTag)
+export const ExpressAppConfig = Tag<ExpressAppConfig>()
 
 export function LiveExpressAppConfig<R>(
   host: string,
@@ -57,15 +64,15 @@ export function LiveExpressAppConfig<R>(
     req: Request,
     res: Response,
     next: NextFunction
-  ) => (cause: Cause<never>) => T.RIO<R, void>
+  ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
-  return L.fromEffect(ExpressAppConfig)(
-    T.access((r: R) => ({
+  return Layer.fromEffect(ExpressAppConfig)(
+    Effect.environmentWith((r: Env<R>) => ({
       _tag: ExpressAppConfigTag,
       host,
       port,
       exitHandler: (req, res, next) => (cause) =>
-        T.provideAll_(exitHandler(req, res, next)(cause), r)
+        pipe(exitHandler(req, res, next)(cause), Effect.provideEnvironment(r)),
     }))
   )
 }
@@ -74,12 +81,12 @@ export const ExpressAppTag = literal("@effect-ts-app/express/App")
 
 export const makeExpressApp = M.gen(function* (_) {
   const open = yield* _(
-    T.succeedWith(() => new AtomicBoolean(true))["|>"](
-      M.makeExit((_) => T.succeedWith(() => _.set(false)))
+    Effect.sync(() => new AtomicBoolean(true))["|>"](
+      M.makeExit((_) => Effect.sync(() => _.set(false)))
     )
   )
 
-  const app = yield* _(T.succeedWith(() => express()))
+  const app = yield* _(Effect.sync(() => express()))
 
   const { exitHandler, host, port } = yield* _(ExpressAppConfig)
 
@@ -87,13 +94,13 @@ export const makeExpressApp = M.gen(function* (_) {
 
   const server = yield* _(
     M.make_(
-      T.effectAsync<unknown, never, Server>((cb) => {
+      Effect.async<unknown, never, Server>((cb) => {
         const onError = (err: Error) => {
-          cb(T.die(new NodeServerListenError(err)))
+          cb(Effect.die(new NodeServerListenError(err)))
         }
         const server = app.listen(port, host, () => {
           cb(
-            T.succeedWith(() => {
+            Effect.sync(() => {
               server.removeListener("error", onError)
               return server
             })
@@ -108,16 +115,16 @@ export const makeExpressApp = M.gen(function* (_) {
         })
       }),
       (server) =>
-        T.effectAsync<unknown, never, void>((cb) => {
+        Effect.async<unknown, never, void>((cb) => {
           connections.forEach((s) => {
             s.end()
             s.destroy()
           })
           server.close((err) => {
             if (err) {
-              cb(T.die(new NodeServerCloseError(err)))
+              cb(Effect.die(new NodeServerCloseError(err)))
             } else {
-              cb(T.unit)
+              cb(Effect.unit)
             }
           })
         })
@@ -125,36 +132,39 @@ export const makeExpressApp = M.gen(function* (_) {
   )
 
   const supervisor = yield* _(
-    Supervisor.track["|>"](M.makeExit((s) => s.value["|>"](T.chain(F.interruptAll))))
+    Supervisor.track["|>"](
+      M.makeExit((s) => s.value["|>"](Effect.flatMap(F.interruptAll)))
+    )
   )
 
   function runtime<
     Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
   >(handlers: Handlers) {
-    return T.map_(
-      T.runtime<
+    return pipe(
+      Effect.runtime<
         _R<
           {
             [k in keyof Handlers]: [Handlers[k]] extends [
               EffectRequestHandler<infer R, any, any, any, any, any>
             ]
-              ? T.RIO<R, void>
+              ? Effect<R, never, void>
               : never
           }[number]
         >
-      >()["|>"](T.map((r) => r.supervised(supervisor))),
-      (r) =>
+      >()["|>"](Effect.map((r) => r.supervised(supervisor))),
+      Effect.map((r) =>
         handlers.map(
           (handler): RequestHandler =>
             (req, res, next) => {
               r.runFiber(
-                T.onTermination_(
-                  open.get ? handler(req, res, next) : T.interrupt,
-                  exitHandler(req, res, next)
+                pipe(
+                  open.get ? handler(req, res, next) : Effect.interrupt,
+                  Effect.onTermination(exitHandler(req, res, next))
                 )
               )
             }
         )
+      )
     )
   }
 
@@ -163,20 +173,20 @@ export const makeExpressApp = M.gen(function* (_) {
     app,
     supervisor,
     server,
-    runtime
+    runtime,
   }
 })
 
 export interface ExpressApp extends _A<typeof makeExpressApp> {}
-export const ExpressApp = tag<ExpressApp>(ExpressAppTag)
-export const LiveExpressApp = L.fromManaged(ExpressApp)(makeExpressApp)
+export const ExpressApp = Tag<ExpressApp>()
+export const LiveExpressApp = Layer.fromEffect(ExpressApp)(makeExpressApp)
 
-export type ExpressEnv = Has<ExpressAppConfig> & Has<ExpressApp>
+export type ExpressEnv = ExpressAppConfig | ExpressApp
 
 export function LiveExpress(
   host: string,
   port: number
-): L.Layer<unknown, never, ExpressEnv>
+): Layer.Layer<unknown, never, ExpressEnv>
 export function LiveExpress<R>(
   host: string,
   port: number,
@@ -184,8 +194,8 @@ export function LiveExpress<R>(
     req: Request,
     res: Response,
     next: NextFunction
-  ) => (cause: Cause<never>) => T.RIO<R, void>
-): L.Layer<R, never, ExpressEnv>
+  ) => (cause: Cause<never>) => Effect<R, never, void>
+): Layer.Layer<R, never, ExpressEnv>
 export function LiveExpress<R>(
   host: string,
   port: number,
@@ -193,20 +203,19 @@ export function LiveExpress<R>(
     req: Request,
     res: Response,
     next: NextFunction
-  ) => (cause: Cause<never>) => T.RIO<R, void>
-): L.Layer<R, never, ExpressEnv> {
+  ) => (cause: Cause<never>) => Effect<R, never, void>
+): Layer.Layer<R, never, ExpressEnv> {
   return LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler)[">+>"](
     LiveExpressApp
   )
 }
 
-export const expressApp = T.accessService(ExpressApp)((_) => _.app)
+export const expressApp = Effect.serviceWith(ExpressApp, (_) => _.app)
 
-export const expressServer = T.accessService(ExpressApp)((_) => _.server)
+export const expressServer = Effect.serviceWith(ExpressApp, (_) => _.server)
 
-export const { app: withExpressApp, server: withExpressServer } = T.deriveAccessM(
-  ExpressApp
-)(["app", "server"])
+export const { app: withExpressApp, server: withExpressServer } =
+  Effect.deriveAccessEffect(ExpressApp)(["app", "server"])
 
 export const methods = [
   "all",
@@ -235,7 +244,7 @@ export const methods = [
   "subscribe",
   "trace",
   "unlock",
-  "unsubscribe"
+  "unsubscribe",
 ] as const
 
 export type Methods = typeof methods[number]
@@ -262,41 +271,40 @@ export interface EffectRequestHandler<
     req: Request<P, ResBody, ReqBody, ReqQuery, Locals>,
     res: Response<ResBody, Locals>,
     next: NextFunction
-  ): T.RIO<R, void>
+  ): Effect<R, never, void>
 }
 
 export function expressRuntime<
   Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return T.accessServiceM(ExpressApp)((_) => _.runtime(handlers))
+  return Effect.serviceWithEffect(ExpressApp, (_) => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
   <Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>>(
     path: PathParams,
     ...handlers: Handlers
-  ): T.RIO<
+  ): Effect<
     ExpressEnv &
       _R<
         {
           [k in keyof Handlers]: [Handlers[k]] extends [
             EffectRequestHandler<infer R, any, any, any, any, any>
           ]
-            ? T.RIO<R, void>
+            ? Effect<R, never, void>
             : never
         }[number]
       >,
+    never,
     void
   >
 } {
   return function (path, ...handlers) {
-    return expressRuntime(handlers)["|>"](
-      T.chain((expressHandlers) =>
-        withExpressApp((app) =>
-          T.succeedWith(() => {
-            app[method](path, ...expressHandlers)
-          })
-        )
+    return expressRuntime(handlers).flatMap((expressHandlers) =>
+      withExpressApp((app) =>
+        Effect.sync(() => {
+          app[method](path, ...expressHandlers)
+        })
       )
     )
   }
@@ -306,9 +314,9 @@ export function defaultExitHandler(
   _req: Request,
   _res: Response,
   _next: NextFunction
-): (cause: Cause<never>) => T.RIO<unknown, void> {
+): (cause: Cause<never>) => Effect<unknown, never, void> {
   return (cause) =>
-    T.succeedWith(() => {
+    Effect.sync(() => {
       if (died(cause)) {
         console.error(pretty(cause))
       }
@@ -320,17 +328,18 @@ export function use<
   Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   ...handlers: Handlers
-): T.RIO<
+): Effect<
   ExpressEnv &
     _R<
       {
         [k in keyof Handlers]: [Handlers[k]] extends [
           EffectRequestHandler<infer R, any, any, any, any, any>
         ]
-          ? T.RIO<R, void>
+          ? Effect<R, never, void>
           : never
       }[number]
     >,
+  never,
   void
 >
 export function use<
@@ -338,20 +347,21 @@ export function use<
 >(
   path: PathParams,
   ...handlers: Handlers
-): T.RIO<
+): Effect<
   ExpressEnv &
     _R<
       {
         [k in keyof Handlers]: [Handlers[k]] extends [
           EffectRequestHandler<infer R, any, any, any, any, any>
         ]
-          ? T.RIO<R, void>
+          ? Effect<R, never, void>
           : never
       }[number]
     >,
+  never,
   void
 >
-export function use(...args: any[]): T.RIO<ExpressEnv, void> {
+export function use(...args: any[]): Effect<ExpressEnv, never, void> {
   return withExpressApp((app) => {
     if (typeof args[0] === "function") {
       return expressRuntime(
@@ -359,7 +369,9 @@ export function use(...args: any[]): T.RIO<ExpressEnv, void> {
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )["|>"](
-        T.chain((expressHandlers) => T.succeedWith(() => app.use(...expressHandlers)))
+        Effect.flatMap((expressHandlers) =>
+          Effect.sync(() => app.use(...expressHandlers))
+        )
       )
     } else {
       return expressRuntime(
@@ -367,8 +379,8 @@ export function use(...args: any[]): T.RIO<ExpressEnv, void> {
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )["|>"](
-        T.chain((expressHandlers) =>
-          T.succeedWith(() => app.use(args[0], ...expressHandlers))
+        Effect.flatMap((expressHandlers) =>
+          Effect.sync(() => app.use(args[0], ...expressHandlers))
         )
       )
     }
@@ -419,10 +431,10 @@ export function classic(
   _: RequestHandler | NextHandleFunction,
   __trace?: string
 ): EffectRequestHandler<unknown> {
-  return (req, res, next) => T.succeedWith(() => _(req, res, next), __trace)
+  return (req, res, next) => Effect.sync(() => _(req, res, next), __trace)
 }
 
 /**
- * The same as T.never, keeps the main fiber alive until interrupted
+ * The same as Effect.never, keeps the main fiber alive until interrupted
  */
-export const listen = T.never
+export const listen = Effect.never
