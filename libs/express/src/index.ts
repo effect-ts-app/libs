@@ -1,8 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // ets_tracing: off
-
 // tracing: off
 
-import * as M from "@effect-ts/core/Effect/Managed"
 import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
 import { literal } from "@tsplus/stdlib/data/Function"
 import type { NextHandleFunction } from "connect"
@@ -19,13 +18,15 @@ export type NonEmptyArray<A> = ReadonlyArray<A> & {
 // ]
 //   ? A
 //   : never
+
 export type _R<T extends Effect<any, any, any>> = [T] extends [
-  Effect<infer R, infer E, infer A>
+  Effect<infer R, any, any>
 ]
   ? R
   : never
+
 export type _E<T extends Effect<any, any, any>> = [T] extends [
-  Effect<infer R, infer E, infer A>
+  Effect<any, infer E, any>
 ]
   ? E
   : never
@@ -73,10 +74,12 @@ export function LiveExpressAppConfig<R>(
 
 export const ExpressAppTag = literal("@effect-ts-app/express/App")
 
-export const makeExpressApp = M.gen(function* (_) {
+export const makeExpressApp = Effect.gen(function* (_) {
+  // if scope closes, set open to false
   const open = yield* _(
-    Effect.sync(() => new AtomicBoolean(true))["|>"](
-      M.makeExit((_) => Effect.sync(() => _.set(false)))
+    Effect.acquireRelease(
+      Effect.sync(() => new AtomicBoolean(true)),
+      (a) => Effect.sync(() => a.set(false))
     )
   )
 
@@ -86,9 +89,10 @@ export const makeExpressApp = M.gen(function* (_) {
 
   const connections = new Set<Socket>()
 
+  // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
-    M.make_(
-      Effect.async<unknown, never, Server>((cb) => {
+    Effect.acquireRelease(
+      Effect.async<never, never, Server>((cb) => {
         const onError = (err: Error) => {
           cb(Effect.die(new NodeServerListenError(err)))
         }
@@ -109,7 +113,7 @@ export const makeExpressApp = M.gen(function* (_) {
         })
       }),
       (server) =>
-        Effect.async<unknown, never, void>((cb) => {
+        Effect.async<never, never, void>((cb) => {
           connections.forEach((s) => {
             s.end()
             s.destroy()
@@ -126,36 +130,33 @@ export const makeExpressApp = M.gen(function* (_) {
   )
 
   const supervisor = yield* _(
-    Supervisor.track["|>"](M.makeExit((s) => s.value.flatMap(Fiber.interruptAll)))
+    Effect.acquireRelease(Supervisor.track, (s) => s.value.flatMap(Fiber.interruptAll))
   )
 
   function runtime<
     Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
   >(handlers: Handlers) {
-    return Effect.runtime<
-      _R<
-        {
-          [k in keyof Handlers]: [Handlers[k]] extends [
-            EffectRequestHandler<infer R, any, any, any, any, any>
-          ]
-            ? Effect<R, never, void>
-            : never
-        }[number]
-      >
-    >()
-      .map((r) => r.supervised(supervisor))
-      .map((r) =>
-        handlers.map(
-          (handler): RequestHandler =>
-            (req, res, next) => {
-              r.runFiber(
-                (open.get ? handler(req, res, next) : Effect.interrupt).onTermination(
-                  exitHandler(req, res, next)
-                )
-              )
-            }
-        )
+    type Env = _R<
+      {
+        [k in keyof Handlers]: [Handlers[k]] extends [
+          EffectRequestHandler<infer R, any, any, any, any, any>
+        ]
+          ? Effect<R, never, void>
+          : never
+      }[number]
+    >
+    return Effect.runtime<Env>().map((r) =>
+      handlers.map(
+        (handler): RequestHandler =>
+          (req, res, next) => {
+            r.unsafeRunAsync(
+              (open.get ? handler(req, res, next) : Effect.interrupt)
+                .onTermination(exitHandler(req, res, next))
+                .supervised(supervisor)
+            )
+          }
       )
+    )
   }
 
   return {
@@ -169,14 +170,11 @@ export const makeExpressApp = M.gen(function* (_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = Layer.fromEffect(ExpressApp)(makeExpressApp)
+export const LiveExpressApp = Layer.scoped(ExpressApp, makeExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 
-export function LiveExpress(
-  host: string,
-  port: number
-): Layer<unknown, never, ExpressEnv>
+export function LiveExpress(host: string, port: number): Layer<never, never, ExpressEnv>
 export function LiveExpress<R>(
   host: string,
   port: number,
@@ -195,8 +193,8 @@ export function LiveExpress<R>(
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ): Layer<R, never, ExpressEnv> {
-  return LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler)[">+>"](
-    LiveExpressApp
+  return (
+    LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler) > LiveExpressApp
   )
 }
 
@@ -275,8 +273,8 @@ export function match(method: Methods): {
     path: PathParams,
     ...handlers: Handlers
   ): Effect<
-    ExpressEnv &
-      _R<
+    | ExpressEnv
+    | _R<
         {
           [k in keyof Handlers]: [Handlers[k]] extends [
             EffectRequestHandler<infer R, any, any, any, any, any>
@@ -304,12 +302,11 @@ export function defaultExitHandler(
   _req: Request,
   _res: Response,
   _next: NextFunction
-): (cause: Cause<never>) => Effect<unknown, never, void> {
+): (cause: Cause<never>) => Effect<never, never, void> {
   return (cause) =>
     Effect.sync(() => {
       if (cause.isDie) {
-        // Cause.died
-        console.error(Cause.pretty(cause))
+        console.error(JSON.stringify(cause, undefined, 2))
       }
       _res.status(500).end()
     })
@@ -339,8 +336,8 @@ export function use<
   path: PathParams,
   ...handlers: Handlers
 ): Effect<
-  ExpressEnv &
-    _R<
+  | ExpressEnv
+  | _R<
       {
         [k in keyof Handlers]: [Handlers[k]] extends [
           EffectRequestHandler<infer R, any, any, any, any, any>
@@ -404,19 +401,12 @@ export const unsubscribe = match("unsubscribe")
 /**
  * Lift an express requestHandler into an effectified variant
  */
+export function classic(_: NextHandleFunction): EffectRequestHandler<never>
+export function classic(_: RequestHandler): EffectRequestHandler<never>
 export function classic(
-  _: NextHandleFunction,
-  __trace?: string
-): EffectRequestHandler<unknown>
-export function classic(
-  _: RequestHandler,
-  __trace?: string
-): EffectRequestHandler<unknown>
-export function classic(
-  _: RequestHandler | NextHandleFunction,
-  __trace?: string
-): EffectRequestHandler<unknown> {
-  return (req, res, next) => Effect.sync(() => _(req, res, next), __trace)
+  _: RequestHandler | NextHandleFunction
+): EffectRequestHandler<never> {
+  return (req, res, next) => Effect.sync(() => _(req, res, next))
 }
 
 /**
