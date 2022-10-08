@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Erase } from "@effect-ts-app/core/Effect"
-import * as Ex from "@effect-ts-app/express"
 import * as MO from "@effect-ts-app/schema"
 import { Encoder, extractSchema } from "@effect-ts-app/schema"
 import express from "express"
@@ -11,6 +9,7 @@ import {
   UnauthorizedError,
   ValidationError,
 } from "../errors.js"
+import * as Ex from "./index"
 import {
   Encode,
   makeRequestParsers,
@@ -99,7 +98,7 @@ export function makeRequestHandler<
   PR = unknown
 >(
   handle: RequestHandlerOptRes<
-    R & PR,
+    R | PR,
     PathA,
     CookieA,
     QueryA,
@@ -146,7 +145,7 @@ export function handleRequest<
 >(
   requestParsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>,
   encodeResponse: (r: ReqA) => Encode<ResA, ResE>,
-  handle: (r: ReqA) => Effect<R & PR, SupportedErrors, ResA>,
+  handle: (r: ReqA) => Effect<R | PR, SupportedErrors, ResA>,
   h?: (req: express.Request, res: express.Response) => Layer<R2, SupportedErrors, PR>
 ) {
   const parseRequest = parseRequestParams(requestParsers)
@@ -163,9 +162,9 @@ export function handleRequest<
       })
       .flatMap((inp) => {
         const hn = handle(inp)
-        const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
+        const r = h ? hn.provideSomeLayer(h(req, res)) : hn
         return (
-          r as unknown as Effect<Erase<R | R2, PR>, SupportedErrors, ResA>
+          r as unknown as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
         ).flatMap((outp) => respond(inp, res)(outp))
       })
       .catch("_tag", "ValidationError", (err) =>

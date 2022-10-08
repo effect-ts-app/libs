@@ -85,9 +85,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        Managed.make_(
-          Effect.bimap_(
-            lockFile(getFilename(type, id)),
+        Effect.acquireRelease(
+          lockFile(getFilename(type, id)).mapBoth(
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
           ),
@@ -97,9 +96,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        Managed.make_(
-          Effect.bimap_(
-            lockFile(getIdxName(type, id)),
+        Effect.acquireRelease(
+          lockFile(getIdxName(type, id)).mapBoth(
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
           ),
@@ -160,7 +158,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
 function lockFile(fileName: string) {
   return Effect.tryPromise(() =>
-    PLF.lock(fileName).then(flow(Effect.tryPromise, Effect.orDie))
+    PLF.lock(fileName).then(flow(Effect.tryPromise, (_) => _.orDie))
   )
 }
 

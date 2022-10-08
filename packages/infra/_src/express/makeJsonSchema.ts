@@ -6,6 +6,8 @@ type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 
 const rx = /:(\w+)/g
 
+type _A<C> = C extends Chunk<infer A> ? A : never
+
 /**
  * Work in progress JSONSchema generator.
  */
@@ -13,7 +15,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk.from(r)
     .forEachEffect(RS.makeFromSchema)
     .map((e) => {
-      const map = ({ method, path, responses, ...rest }: Effect.Success<typeof e>) => ({
+      const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
           responses: ROArray.reduce_(
