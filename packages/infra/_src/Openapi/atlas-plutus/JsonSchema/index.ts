@@ -4,8 +4,8 @@
 // https://github.com/sledorze/morphic-ts/blob/master/packages/morphic-json-schema-interpreters/src/json-schema/json-schema.ts
 
 /* eslint-disable no-prototype-builtins */
-import * as Lens from "@effect-ts-app/monocle/Lens"
-import * as Prism from "@effect-ts-app/monocle/Prism"
+import * as Lens from "@effect-ts/monocle/Lens"
+import * as Prism from "@effect-ts/monocle/Prism"
 
 export interface BaseConstructor {
   new <T>(args: /*{} extends T ? void : */ T): T

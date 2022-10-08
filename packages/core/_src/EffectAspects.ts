@@ -1,14 +1,4 @@
-import {
-  chain,
-  Effect,
-  ifDiff_,
-  tapBothInclAbort_,
-  tapErrorInclAbort_,
-} from "./EffectBase.js"
-
-export * from "@effect-ts/core/Effect"
-
-export const flatMap = chain
+import { Effect, ifDiff_, tapBothInclAbort_, tapErrorInclAbort_ } from "./EffectBase.js"
 
 export const tapBothInclAbort =
   <A, ER, EE, EA, SR, SE, SA>(

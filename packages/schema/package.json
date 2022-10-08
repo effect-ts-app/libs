@@ -12,19 +12,19 @@
         "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@effect-ts-app/monocle": "*",
         "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "*",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.7.4",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts-app/monocle": "*",
         "@effect-ts/core": "^0.60.2",
+        "@effect-ts/monocle": "*",
         "node-libcurl": "^2.3.4"
     },
     "scripts": {
-        "build": "yarn clean && ttsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
+        "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
         "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
         "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
         "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
@@ -32,7 +32,7 @@
         "postpublish": "yarn clean",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
-        "compile": "ttsc --noEmit",
+        "compile": "yarn ets:tsc --noEmit",
         "lint": "eslint .",
         "prettier": "prettier \"**/*.ts\"",
         "autofix": "yarn lint --fix && yarn prettier --write",

@@ -1,14 +1,11 @@
 import type { Array as ROArray } from "../Prelude.js"
-import { Array as ROArrayOps, Tuple } from "../Prelude.js"
+import { Array as ROArrayOps } from "../Prelude.js"
 
 /**
  * @tsplus operator ets/Array &
  * @tsplus fluent ets/Array concat
  */
-export function concat_<A, B>(
-  self: ROArray<A>,
-  that: ROArray<B>
-): ROArray<A | B> {
+export function concat_<A, B>(self: ROArray<A>, that: ROArray<B>): ROArray<A | B> {
   return ROArrayOps.concat_(self, that)
 }
 
@@ -17,20 +14,15 @@ export function concat_<A, B>(
  *
  * @tsplus operator ets/Array +
  */
-export const concatOperator: <A>(
-  self: ROArray<A>,
-  that: ROArray<A>
-) => ROArray<A> = concat_
+export const concatOperator: <A>(self: ROArray<A>, that: ROArray<A>) => ROArray<A> =
+  concat_
 
 /**
  * Prepends `a` to ROArray<A>
  *
  * @tsplus operator ets/Array + 1.0
  */
-export function prependOperatorStrict<A>(
-  a: A,
-  self: ROArray<A>
-): ROArray<A> {
+export function prependOperatorStrict<A>(a: A, self: ROArray<A>): ROArray<A> {
   return ROArrayOps.prepend_(self, a)
 }
 
@@ -39,10 +31,7 @@ export function prependOperatorStrict<A>(
  *
  * @tsplus operator ets/Array >
  */
-export function prependOperator<A, B>(
-  a: A,
-  self: ROArray<B>
-): ROArray<A | B> {
+export function prependOperator<A, B>(a: A, self: ROArray<B>): ROArray<A | B> {
   return prepend_(self, a)
 }
 
@@ -51,10 +40,7 @@ export function prependOperator<A, B>(
  *
  * @tsplus fluent ets/Array prepend
  */
-export function prepend_<A, B>(
-  tail: ROArray<A>,
-  head: B
-): ROArray<A | B> {
+export function prepend_<A, B>(tail: ROArray<A>, head: B): ROArray<A | B> {
   const len = tail.length
   const r = Array(len + 1)
   for (let i = 0; i < len; i++) {
@@ -83,11 +69,4 @@ export function append_<A, B>(init: ROArray<A>, end: B): ROArray<A | B> {
 /**
  * @tsplus operator ets/Array + 1.0
  */
-export const appendOperator: <A>(self: ROArray<A>, a: A) => ROArray<A> =
-  append_
-
-/**
- * Converts from native tuple type
- * @tsplus getter ets/Array asTup
- */
-export const toTuple = Tuple.fromNative
+export const appendOperator: <A>(self: ROArray<A>, a: A) => ROArray<A> = append_

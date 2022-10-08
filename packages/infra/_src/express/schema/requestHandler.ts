@@ -219,11 +219,12 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph =
+  const ph = EffectMaybe.fromMaybe(
     Maybe.fromNullable(Request.Headers)
       .map((s) => s)
       .map(Parser.for)
-      .map(MO.condemn) >= EffectMaybe.fromMaybe
+      .map(MO.condemn)
+  )
   const parseHeaders = (u: unknown) =>
     ph.flatMapMaybe((d) => d(u) >= EffectMaybe.fromEffect)
 

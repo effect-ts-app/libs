@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Effect, service } from "@effect-ts/core/Effect"
-import type { Either } from "@effect-ts/core/Either"
 import type { Has, Tag } from "@effect-ts/core/Has"
-import * as MaybeT from "@effect-ts/core/OptionT"
 import * as P from "@effect-ts/core/Prelude"
 import * as DSL from "@effect-ts/core/Prelude/DSL"
 import { intersect } from "@effect-ts/core/Utils"
 import * as Utils from "@effect-ts/core/Utils"
 import { _A, _E, _R, fromEither } from "@effect-ts/system/Effect"
+import * as Ei from "@tsplus/stdlib/data/Either"
 
 import * as T from "./Effect.js"
 import * as F from "./Function.js"
 import { flow, pipe } from "./Function.js"
-import type { Maybe } from "./Maybe.js"
 import * as O from "./Maybe.js"
 
-export const Monad = MaybeT.monad(T.Monad)
-export const Applicative = MaybeT.applicative(T.Applicative)
+export const Monad = Ei.monad(T.Monad)
+export const Applicative = Maybe.applicative(T.Applicative)
 
 export const { any, both, flatten, map } = intersect(Monad, Applicative)
 

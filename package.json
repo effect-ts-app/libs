@@ -4,8 +4,7 @@
     "license": "MIT",
     "workspaces": {
         "packages": [
-            "packages/*",
-            "libs/*"
+            "packages/*"
         ]
     },
     "private": true,
@@ -32,7 +31,7 @@
         "ets:jest": "cd $INIT_CWD && jest"
     },
     "resolutions": {
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.139/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.146/compiler/typescript.tgz"
     },
     "devDependencies": {
         "@babel/cli": "^7.18.9",
@@ -80,8 +79,7 @@
         "prettier": "^2.7.1",
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.0.0",
-        "ttypescript": "^1.5.13",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.139/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.146/compiler/typescript.tgz",
         "ultra-runner": "^3.10.5"
     }
 }
