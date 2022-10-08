@@ -152,7 +152,9 @@ export function foldHttpError<A, B, ErrorBody>(
 
 export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Tag<HttpHeaders>()
-const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
+const accessHttpHeaders_ = Effect.environmentWith((env: Env<never>) =>
+  env.getMaybe(HttpHeaders)
+)
 export function accessHttpHeadersM<R, E, A>(
   eff: (h: Maybe<HttpHeaders>) => Effect<R, E, A>
 ) {
@@ -198,7 +200,9 @@ export interface MiddlewareStack {
 
 export const MiddlewareStack = Tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
+const accessMiddlewareStack_ = Effect.environmentWith((env: Env<never>) =>
+  env.getMaybe(MiddlewareStack)
+)
 export function accessMiddlewareStackM<R, E, A>(
   eff: (h: Maybe<MiddlewareStack>) => Effect<R, E, A>
 ) {
@@ -392,10 +396,12 @@ export function withHeaders(
           Effect.$.provideEnvironment(r.add(HttpHeaders, headers))(eff)
         )
       : Effect.environmentWithEffect((r: Env<R>) =>
-          Effect.$.provideEnvironment({
-            ...r,
-            [HttpHeaders.key]: { ...(r as any)[HttpHeaders.key], ...headers },
-          })(eff)
+          Effect.$.provideEnvironment(
+            r.add(HttpHeaders, {
+              ...(r.getMaybe(HttpHeaders).value ?? {}),
+              ...headers,
+            })
+          )(eff)
         )
 }
 

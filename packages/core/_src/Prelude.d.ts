@@ -16,7 +16,7 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as T from "@effect-ts-app/core/Effect"
 import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 import type * as QUEUE from "@effect-ts/core/Effect/Queue"
-import type * as EO from "@effect-ts-app/core/EffectMaybe"
+//import type * as EO from "@effect-ts-app/core/EffectMaybe"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
 import type * as A from "@effect-ts-app/core/Array"
@@ -78,12 +78,12 @@ import type * as TUP from "@effect-ts-app/core/Tuple"
 // /** @tsplus type ets/Ord */
 // export type Ord<A> = ORD.Ord<A>
 
-export namespace EffectMaybe {
-  export * from "@effect-ts-app/core/EffectMaybe"
-}
-/** @tsplus type ets/EffectMaybe */
-export type EffectMaybe<R, E, A> = EO.EffectMaybe<R, E, A>
-export { UIO as EffectMaybeU, IO as EffectMaybeE, RIO as EffectMaybeR } from "@effect-ts-app/core/EffectMaybe"
+// export namespace EffectMaybe {
+//   export * from "@effect-ts-app/core/EffectMaybe"
+// }
+// /** @tsplus type ets/EffectMaybe */
+// export type EffectMaybe<R, E, A> = EO.EffectMaybe<R, E, A>
+// export { UIO as EffectMaybeU, IO as EffectMaybeE, RIO as EffectMaybeR } from "@effect-ts-app/core/EffectMaybe"
 
 // export namespace SyncMaybe {
 //   export * from "@effect-ts-app/core/SyncMaybe"

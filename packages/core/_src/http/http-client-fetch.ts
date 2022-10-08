@@ -39,7 +39,7 @@ export const Client = (fetchApi: typeof fetch) =>
       responseType: H.ResponseType,
       headers: Record<string, string>,
       body: unknown
-    ): Effect.IO<H.HttpError<string>, H.Response<any>> {
+    ): Effect<never, H.HttpError<string>, H.Response<any>> {
       const input: RequestInit = {
         headers: {
           "Content-Type": getContentType(requestType),

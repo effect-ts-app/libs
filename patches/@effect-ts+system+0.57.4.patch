@@ -1,0 +1,1251 @@
+diff --git a/node_modules/@effect-ts/system/Effect/effect.d.ts b/node_modules/@effect-ts/system/Effect/effect.d.ts
+index b6b9ff1..1304a7e 100644
+--- a/node_modules/@effect-ts/system/Effect/effect.d.ts
++++ b/node_modules/@effect-ts/system/Effect/effect.d.ts
+@@ -3,6 +3,7 @@ import { _A, _E, _R, _S1, _S2, _U, _W } from "./commons.js";
+ import type { Instruction } from "./primitives.js";
+ export declare const EffectURI = "Effect";
+ export declare type EffectURI = typeof EffectURI;
++/** @tsplus type ets/Effect */
+ export interface Effect<R, E, A> extends HasUnify {
+     readonly [_U]: EffectURI;
+     readonly [_E]: () => E;
+diff --git a/node_modules/@effect-ts/system/Either/core.d.ts b/node_modules/@effect-ts/system/Either/core.d.ts
+index 7d338d9..589ad39 100644
+--- a/node_modules/@effect-ts/system/Either/core.d.ts
++++ b/node_modules/@effect-ts/system/Either/core.d.ts
+@@ -8,6 +8,7 @@ import * as St from "../Structural/index.js";
+ /**
+  * Definitions
+  */
++/** @tsplus type ets/Either/Left */
+ export declare class Left<E> {
+     readonly left: E;
+     readonly _tag = "Left";
+@@ -15,6 +16,8 @@ export declare class Left<E> {
+     [St.equalsSym](that: unknown): boolean;
+     get [St.hashSym](): number;
+ }
++
++/** @tsplus type ets/Either/Right */
+ export declare class Right<A> {
+     readonly right: A;
+     readonly _tag = "Right";
+@@ -22,6 +25,7 @@ export declare class Right<A> {
+     [St.equalsSym](that: unknown): boolean;
+     get [St.hashSym](): number;
+ }
++/** @tsplus type ets/Either */
+ export declare type Either<E, A> = Left<E> | Right<A>;
+ /**
+  * Constructs a new `Either` holding a `Right` value. This usually represents a successful value due to the right bias
+diff --git a/node_modules/@effect-ts/system/Option/core.d.ts b/node_modules/@effect-ts/system/Option/core.d.ts
+index 962c0ab..ef04c16 100644
+--- a/node_modules/@effect-ts/system/Option/core.d.ts
++++ b/node_modules/@effect-ts/system/Option/core.d.ts
+@@ -6,11 +6,14 @@ import type { HasUnify } from "../Utils/index.js";
+ /**
+  * Definitions
+  */
++/** @tsplus type ets/Option/None */
+ export declare class None implements HasUnify {
+     readonly _tag = "None";
+     [St.equalsSym](that: unknown): boolean;
+     get [St.hashSym](): number;
+ }
++
++/** @tsplus type ets/Option/Some */
+ export declare class Some<A> implements HasUnify {
+     readonly value: A;
+     readonly _tag = "Some";
+@@ -18,6 +21,7 @@ export declare class Some<A> implements HasUnify {
+     [St.equalsSym](that: unknown): boolean;
+     get [St.hashSym](): number;
+ }
++/** @tsplus type ets/Option */
+ export declare type Option<A> = None | Some<A>;
+ /**
+  * Constructs none
+diff --git a/node_modules/@effect-ts/system/Sync/core.d.ts b/node_modules/@effect-ts/system/Sync/core.d.ts
+index bd214af..d2becb8 100644
+--- a/node_modules/@effect-ts/system/Sync/core.d.ts
++++ b/node_modules/@effect-ts/system/Sync/core.d.ts
+@@ -2,6 +2,7 @@ import type * as Tp from "../Collections/Immutable/Tuple/index.js";
+ import type { Either } from "../Either/core.js";
+ import type { _A, _E, _R, HasUnify } from "../Utils/index.js";
+ import * as X from "../XPure/index.js";
++/** @tsplus type ets/Sync */
+ export interface Sync<R, E, A> extends X.XPure<unknown, unknown, unknown, R, E, A>, HasUnify {
+ }
+ export interface UIO<A> extends Sync<unknown, never, A> {
+diff --git a/node_modules/@effect-ts/system/XPure/core.d.ts b/node_modules/@effect-ts/system/XPure/core.d.ts
+index 2f597d2..ff1d6e3 100644
+--- a/node_modules/@effect-ts/system/XPure/core.d.ts
++++ b/node_modules/@effect-ts/system/XPure/core.d.ts
+@@ -5,6 +5,7 @@ import type { EffectURI } from "../Effect/effect.js";
+ import * as E from "../Either/core.js";
+ import type { HasUnify } from "../Utils/index.js";
+ /**
++ * @tsplus type ets/XPure
+  * `XPure[W, S1, S2, R, E, A]` is a purely functional description of a
+  * computation that requires an environment `R` and an initial state `S1` and
+  * may either fail with an `E` or succeed with an updated state `S2` and an `A`
+diff --git a/node_modules/@effect-ts/system/package.json b/node_modules/@effect-ts/system/package.json
+index 145a30c..43ead79 100644
+--- a/node_modules/@effect-ts/system/package.json
++++ b/node_modules/@effect-ts/system/package.json
+@@ -14,575 +14,1011 @@
+   ],
+   "exports": {
+     "./Async": {
+-      "import": "./_mjs/Async/index.mjs",
++      "import": {
++        "types": "./Async/index.d.ts",
++        "default": "./_mjs/Async/index.mjs"
++      },
+       "require": "./Async/index.js"
+     },
+     "./Case": {
+-      "import": "./_mjs/Case/index.mjs",
++      "import": {
++        "types": "./Case/index.d.ts",
++        "default": "./_mjs/Case/index.mjs"
++      },
+       "require": "./Case/index.js"
+     },
+     "./Cause": {
+-      "import": "./_mjs/Cause/index.mjs",
++      "import": {
++        "types": "./Cause/index.d.ts",
++        "default": "./_mjs/Cause/index.mjs"
++      },
+       "require": "./Cause/index.js"
+     },
+     "./Cause/Pretty": {
+-      "import": "./_mjs/Cause/Pretty/index.mjs",
++      "import": {
++        "types": "./Cause/Pretty/index.d.ts",
++        "default": "./_mjs/Cause/Pretty/index.mjs"
++      },
+       "require": "./Cause/Pretty/index.js"
+     },
+     "./Clock": {
+-      "import": "./_mjs/Clock/index.mjs",
++      "import": {
++        "types": "./Clock/index.d.ts",
++        "default": "./_mjs/Clock/index.mjs"
++      },
+       "require": "./Clock/index.js"
+     },
+     "./Collections": {
+-      "import": "./_mjs/Collections/index.mjs",
++      "import": {
++        "types": "./Collections/index.d.ts",
++        "default": "./_mjs/Collections/index.mjs"
++      },
+       "require": "./Collections/index.js"
+     },
+     "./Collections/Immutable": {
+-      "import": "./_mjs/Collections/Immutable/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/index.mjs"
++      },
+       "require": "./Collections/Immutable/index.js"
+     },
+     "./Collections/Immutable/Array": {
+-      "import": "./_mjs/Collections/Immutable/Array/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Array/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Array/index.mjs"
++      },
+       "require": "./Collections/Immutable/Array/index.js"
+     },
+     "./Collections/Immutable/Chunk": {
+-      "import": "./_mjs/Collections/Immutable/Chunk/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Chunk/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Chunk/index.mjs"
++      },
+       "require": "./Collections/Immutable/Chunk/index.js"
+     },
+     "./Collections/Immutable/Dictionary": {
+-      "import": "./_mjs/Collections/Immutable/Dictionary/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Dictionary/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Dictionary/index.mjs"
++      },
+       "require": "./Collections/Immutable/Dictionary/index.js"
+     },
+     "./Collections/Immutable/HashMap": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/index.js"
+     },
+     "./Collections/Immutable/HashMap/Array": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/Array/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/Array/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/Array/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/Array/index.js"
+     },
+     "./Collections/Immutable/HashMap/Bitwise": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/Bitwise/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/Bitwise/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/Bitwise/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/Bitwise/index.js"
+     },
+     "./Collections/Immutable/HashMap/Config": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/Config/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/Config/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/Config/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/Config/index.js"
+     },
+     "./Collections/Immutable/HashMap/Nodes": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/Nodes/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/Nodes/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/Nodes/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/Nodes/index.js"
+     },
+     "./Collections/Immutable/HashSet": {
+-      "import": "./_mjs/Collections/Immutable/HashSet/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashSet/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashSet/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashSet/index.js"
+     },
+     "./Collections/Immutable/List": {
+-      "import": "./_mjs/Collections/Immutable/List/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/List/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/List/index.mjs"
++      },
+       "require": "./Collections/Immutable/List/index.js"
+     },
+     "./Collections/Immutable/Map": {
+-      "import": "./_mjs/Collections/Immutable/Map/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Map/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Map/index.mjs"
++      },
+       "require": "./Collections/Immutable/Map/index.js"
+     },
+     "./Collections/Immutable/NonEmptyArray": {
+-      "import": "./_mjs/Collections/Immutable/NonEmptyArray/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/NonEmptyArray/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/NonEmptyArray/index.mjs"
++      },
+       "require": "./Collections/Immutable/NonEmptyArray/index.js"
+     },
+     "./Collections/Immutable/ParSeq": {
+-      "import": "./_mjs/Collections/Immutable/ParSeq/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/ParSeq/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/ParSeq/index.mjs"
++      },
+       "require": "./Collections/Immutable/ParSeq/index.js"
+     },
+     "./Collections/Immutable/RedBlackTree": {
+-      "import": "./_mjs/Collections/Immutable/RedBlackTree/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/RedBlackTree/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/RedBlackTree/index.mjs"
++      },
+       "require": "./Collections/Immutable/RedBlackTree/index.js"
+     },
+     "./Collections/Immutable/SortedSet": {
+-      "import": "./_mjs/Collections/Immutable/SortedSet/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/SortedSet/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/SortedSet/index.mjs"
++      },
+       "require": "./Collections/Immutable/SortedSet/index.js"
+     },
+     "./Collections/Immutable/Tuple": {
+-      "import": "./_mjs/Collections/Immutable/Tuple/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Tuple/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Tuple/index.mjs"
++      },
+       "require": "./Collections/Immutable/Tuple/index.js"
+     },
+     "./Collections/Mutable": {
+-      "import": "./_mjs/Collections/Mutable/index.mjs",
++      "import": {
++        "types": "./Collections/Mutable/index.d.ts",
++        "default": "./_mjs/Collections/Mutable/index.mjs"
++      },
+       "require": "./Collections/Mutable/index.js"
+     },
+     "./Collections/Mutable/HashMap": {
+-      "import": "./_mjs/Collections/Mutable/HashMap/index.mjs",
++      "import": {
++        "types": "./Collections/Mutable/HashMap/index.d.ts",
++        "default": "./_mjs/Collections/Mutable/HashMap/index.mjs"
++      },
+       "require": "./Collections/Mutable/HashMap/index.js"
+     },
+     "./Collections/Mutable/HashSet": {
+-      "import": "./_mjs/Collections/Mutable/HashSet/index.mjs",
++      "import": {
++        "types": "./Collections/Mutable/HashSet/index.d.ts",
++        "default": "./_mjs/Collections/Mutable/HashSet/index.mjs"
++      },
+       "require": "./Collections/Mutable/HashSet/index.js"
+     },
+     "./Effect": {
+-      "import": "./_mjs/Effect/index.mjs",
++      "import": {
++        "types": "./Effect/index.d.ts",
++        "default": "./_mjs/Effect/index.mjs"
++      },
+       "require": "./Effect/index.js"
+     },
+     "./Either": {
+-      "import": "./_mjs/Either/index.mjs",
++      "import": {
++        "types": "./Either/index.d.ts",
++        "default": "./_mjs/Either/index.mjs"
++      },
+       "require": "./Either/index.js"
+     },
+     "./Equal": {
+-      "import": "./_mjs/Equal/index.mjs",
++      "import": {
++        "types": "./Equal/index.d.ts",
++        "default": "./_mjs/Equal/index.mjs"
++      },
+       "require": "./Equal/index.js"
+     },
+     "./Exit": {
+-      "import": "./_mjs/Exit/index.mjs",
++      "import": {
++        "types": "./Exit/index.d.ts",
++        "default": "./_mjs/Exit/index.mjs"
++      },
+       "require": "./Exit/index.js"
+     },
+     "./Experimental": {
+-      "import": "./_mjs/Experimental/index.mjs",
++      "import": {
++        "types": "./Experimental/index.d.ts",
++        "default": "./_mjs/Experimental/index.mjs"
++      },
+       "require": "./Experimental/index.js"
+     },
+     "./Experimental/Stream": {
+-      "import": "./_mjs/Experimental/Stream/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/index.mjs"
++      },
+       "require": "./Experimental/Stream/index.js"
+     },
+     "./Experimental/Stream/_internal": {
+-      "import": "./_mjs/Experimental/Stream/_internal/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/_internal/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/_internal/index.mjs"
++      },
+       "require": "./Experimental/Stream/_internal/index.js"
+     },
+     "./Experimental/Stream/Channel": {
+-      "import": "./_mjs/Experimental/Stream/Channel/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/Channel/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/Channel/index.mjs"
++      },
+       "require": "./Experimental/Stream/Channel/index.js"
+     },
+     "./Experimental/Stream/Sink": {
+-      "import": "./_mjs/Experimental/Stream/Sink/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/Sink/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/Sink/index.mjs"
++      },
+       "require": "./Experimental/Stream/Sink/index.js"
+     },
+     "./Experimental/Stream/Take": {
+-      "import": "./_mjs/Experimental/Stream/Take/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/Take/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/Take/index.mjs"
++      },
+       "require": "./Experimental/Stream/Take/index.js"
+     },
+     "./Experimental/Stream/Pull": {
+-      "import": "./_mjs/Experimental/Stream/Pull/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/Pull/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/Pull/index.mjs"
++      },
+       "require": "./Experimental/Stream/Pull/index.js"
+     },
+     "./Experimental/Stream/GroupBy": {
+-      "import": "./_mjs/Experimental/Stream/GroupBy/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/GroupBy/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/GroupBy/index.mjs"
++      },
+       "require": "./Experimental/Stream/GroupBy/index.js"
+     },
+     "./Experimental/Stream/SortedByKey": {
+-      "import": "./_mjs/Experimental/Stream/SortedByKey/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/SortedByKey/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/SortedByKey/index.mjs"
++      },
+       "require": "./Experimental/Stream/SortedByKey/index.js"
+     },
+     "./Experimental/Stream/SubscriptionRef": {
+-      "import": "./_mjs/Experimental/Stream/SubscriptionRef/index.mjs",
++      "import": {
++        "types": "./Experimental/Stream/SubscriptionRef/index.d.ts",
++        "default": "./_mjs/Experimental/Stream/SubscriptionRef/index.mjs"
++      },
+       "require": "./Experimental/Stream/SubscriptionRef/index.js"
+     },
+     "./Fiber": {
+-      "import": "./_mjs/Fiber/index.mjs",
++      "import": {
++        "types": "./Fiber/index.d.ts",
++        "default": "./_mjs/Fiber/index.mjs"
++      },
+       "require": "./Fiber/index.js"
+     },
+     "./FiberRef": {
+-      "import": "./_mjs/FiberRef/index.mjs",
++      "import": {
++        "types": "./FiberRef/index.d.ts",
++        "default": "./_mjs/FiberRef/index.mjs"
++      },
+       "require": "./FiberRef/index.js"
+     },
+     "./FreeAssociative": {
+-      "import": "./_mjs/FreeAssociative/index.mjs",
++      "import": {
++        "types": "./FreeAssociative/index.d.ts",
++        "default": "./_mjs/FreeAssociative/index.mjs"
++      },
+       "require": "./FreeAssociative/index.js"
+     },
+     "./Function": {
+-      "import": "./_mjs/Function/index.mjs",
++      "import": {
++        "types": "./Function/index.d.ts",
++        "default": "./_mjs/Function/index.mjs"
++      },
+       "require": "./Function/index.js"
+     },
+     "./GlobalExceptions": {
+-      "import": "./_mjs/GlobalExceptions/index.mjs",
++      "import": {
++        "types": "./GlobalExceptions/index.d.ts",
++        "default": "./_mjs/GlobalExceptions/index.mjs"
++      },
+       "require": "./GlobalExceptions/index.js"
+     },
+     "./Has": {
+-      "import": "./_mjs/Has/index.mjs",
++      "import": {
++        "types": "./Has/index.d.ts",
++        "default": "./_mjs/Has/index.mjs"
++      },
+       "require": "./Has/index.js"
+     },
+     "./Hub": {
+-      "import": "./_mjs/Hub/index.mjs",
++      "import": {
++        "types": "./Hub/index.d.ts",
++        "default": "./_mjs/Hub/index.mjs"
++      },
+       "require": "./Hub/index.js"
+     },
+     "./Hash": {
+-      "import": "./_mjs/Hash/index.mjs",
++      "import": {
++        "types": "./Hash/index.d.ts",
++        "default": "./_mjs/Hash/index.mjs"
++      },
+       "require": "./Hash/index.js"
+     },
+     "./IO": {
+-      "import": "./_mjs/IO/index.mjs",
++      "import": {
++        "types": "./IO/index.d.ts",
++        "default": "./_mjs/IO/index.mjs"
++      },
+       "require": "./IO/index.js"
+     },
+     "./Iterable": {
+-      "import": "./_mjs/Iterable/index.mjs",
++      "import": {
++        "types": "./Iterable/index.d.ts",
++        "default": "./_mjs/Iterable/index.mjs"
++      },
+       "require": "./Iterable/index.js"
+     },
+     "./Layer": {
+-      "import": "./_mjs/Layer/index.mjs",
++      "import": {
++        "types": "./Layer/index.d.ts",
++        "default": "./_mjs/Layer/index.mjs"
++      },
+       "require": "./Layer/index.js"
+     },
+     "./Managed": {
+-      "import": "./_mjs/Managed/index.mjs",
++      "import": {
++        "types": "./Managed/index.d.ts",
++        "default": "./_mjs/Managed/index.mjs"
++      },
+       "require": "./Managed/index.js"
+     },
+     "./Managed/ReleaseMap": {
+-      "import": "./_mjs/Managed/ReleaseMap/index.mjs",
++      "import": {
++        "types": "./Managed/ReleaseMap/index.d.ts",
++        "default": "./_mjs/Managed/ReleaseMap/index.mjs"
++      },
+       "require": "./Managed/ReleaseMap/index.js"
+     },
+     "./Operator": {
+-      "import": "./_mjs/Operator/index.mjs",
++      "import": {
++        "types": "./Operator/index.d.ts",
++        "default": "./_mjs/Operator/index.mjs"
++      },
+       "require": "./Operator/index.js"
+     },
+     "./Option": {
+-      "import": "./_mjs/Option/index.mjs",
++      "import": {
++        "types": "./Option/index.d.ts",
++        "default": "./_mjs/Option/index.mjs"
++      },
+       "require": "./Option/index.js"
+     },
+     "./Ord": {
+-      "import": "./_mjs/Ord/index.mjs",
++      "import": {
++        "types": "./Ord/index.d.ts",
++        "default": "./_mjs/Ord/index.mjs"
++      },
+       "require": "./Ord/index.js"
+     },
+     "./Ordering": {
+-      "import": "./_mjs/Ordering/index.mjs",
++      "import": {
++        "types": "./Ordering/index.d.ts",
++        "default": "./_mjs/Ordering/index.mjs"
++      },
+       "require": "./Ordering/index.js"
+     },
+     "./Pool": {
+-      "import": "./_mjs/Pool/index.mjs",
++      "import": {
++        "types": "./Pool/index.d.ts",
++        "default": "./_mjs/Pool/index.mjs"
++      },
+       "require": "./Pool/index.js"
+     },
+     "./Promise": {
+-      "import": "./_mjs/Promise/index.mjs",
++      "import": {
++        "types": "./Promise/index.d.ts",
++        "default": "./_mjs/Promise/index.mjs"
++      },
+       "require": "./Promise/index.js"
+     },
+     "./Queue": {
+-      "import": "./_mjs/Queue/index.mjs",
++      "import": {
++        "types": "./Queue/index.d.ts",
++        "default": "./_mjs/Queue/index.mjs"
++      },
+       "require": "./Queue/index.js"
+     },
+     "./Random": {
+-      "import": "./_mjs/Random/index.mjs",
++      "import": {
++        "types": "./Random/index.d.ts",
++        "default": "./_mjs/Random/index.mjs"
++      },
+       "require": "./Random/index.js"
+     },
+     "./Ref": {
+-      "import": "./_mjs/Ref/index.mjs",
++      "import": {
++        "types": "./Ref/index.d.ts",
++        "default": "./_mjs/Ref/index.mjs"
++      },
+       "require": "./Ref/index.js"
+     },
+     "./RefM": {
+-      "import": "./_mjs/RefM/index.mjs",
++      "import": {
++        "types": "./RefM/index.d.ts",
++        "default": "./_mjs/RefM/index.mjs"
++      },
+       "require": "./RefM/index.js"
+     },
+     "./Schedule": {
+-      "import": "./_mjs/Schedule/index.mjs",
++      "import": {
++        "types": "./Schedule/index.d.ts",
++        "default": "./_mjs/Schedule/index.mjs"
++      },
+       "require": "./Schedule/index.js"
+     },
+     "./Scope": {
+-      "import": "./_mjs/Scope/index.mjs",
++      "import": {
++        "types": "./Scope/index.d.ts",
++        "default": "./_mjs/Scope/index.mjs"
++      },
+       "require": "./Scope/index.js"
+     },
+     "./Semaphore": {
+-      "import": "./_mjs/Semaphore/index.mjs",
++      "import": {
++        "types": "./Semaphore/index.d.ts",
++        "default": "./_mjs/Semaphore/index.mjs"
++      },
+       "require": "./Semaphore/index.js"
+     },
+     "./Stack": {
+-      "import": "./_mjs/Stack/index.mjs",
++      "import": {
++        "types": "./Stack/index.d.ts",
++        "default": "./_mjs/Stack/index.mjs"
++      },
+       "require": "./Stack/index.js"
+     },
+     "./Stream": {
+-      "import": "./_mjs/Stream/index.mjs",
++      "import": {
++        "types": "./Stream/index.d.ts",
++        "default": "./_mjs/Stream/index.mjs"
++      },
+       "require": "./Stream/index.js"
+     },
+     "./Stream/BufferedPull": {
+-      "import": "./_mjs/Stream/BufferedPull/index.mjs",
++      "import": {
++        "types": "./Stream/BufferedPull/index.d.ts",
++        "default": "./_mjs/Stream/BufferedPull/index.mjs"
++      },
+       "require": "./Stream/BufferedPull/index.js"
+     },
+     "./Stream/Pull": {
+-      "import": "./_mjs/Stream/Pull/index.mjs",
++      "import": {
++        "types": "./Stream/Pull/index.d.ts",
++        "default": "./_mjs/Stream/Pull/index.mjs"
++      },
+       "require": "./Stream/Pull/index.js"
+     },
+     "./Stream/Push": {
+-      "import": "./_mjs/Stream/Push/index.mjs",
++      "import": {
++        "types": "./Stream/Push/index.d.ts",
++        "default": "./_mjs/Stream/Push/index.mjs"
++      },
+       "require": "./Stream/Push/index.js"
+     },
+     "./Stream/Sink": {
+-      "import": "./_mjs/Stream/Sink/index.mjs",
++      "import": {
++        "types": "./Stream/Sink/index.d.ts",
++        "default": "./_mjs/Stream/Sink/index.mjs"
++      },
+       "require": "./Stream/Sink/index.js"
+     },
+     "./Stream/Stream": {
+-      "import": "./_mjs/Stream/Stream/index.mjs",
++      "import": {
++        "types": "./Stream/Stream/index.d.ts",
++        "default": "./_mjs/Stream/Stream/index.mjs"
++      },
+       "require": "./Stream/Stream/index.js"
+     },
+     "./Stream/SubscriptionRef": {
+-      "import": "./_mjs/Stream/SubscriptionRef/index.mjs",
++      "import": {
++        "types": "./Stream/SubscriptionRef/index.d.ts",
++        "default": "./_mjs/Stream/SubscriptionRef/index.mjs"
++      },
+       "require": "./Stream/SubscriptionRef/index.js"
+     },
+     "./Stream/Take": {
+-      "import": "./_mjs/Stream/Take/index.mjs",
++      "import": {
++        "types": "./Stream/Take/index.d.ts",
++        "default": "./_mjs/Stream/Take/index.mjs"
++      },
+       "require": "./Stream/Take/index.js"
+     },
+     "./Stream/Transducer": {
+-      "import": "./_mjs/Stream/Transducer/index.mjs",
++      "import": {
++        "types": "./Stream/Transducer/index.d.ts",
++        "default": "./_mjs/Stream/Transducer/index.mjs"
++      },
+       "require": "./Stream/Transducer/index.js"
+     },
+     "./Structural": {
+-      "import": "./_mjs/Structural/index.mjs",
++      "import": {
++        "types": "./Structural/index.d.ts",
++        "default": "./_mjs/Structural/index.mjs"
++      },
+       "require": "./Structural/index.js"
+     },
+     "./Structural/HasHash": {
+-      "import": "./_mjs/Structural/HasHash/index.mjs",
++      "import": {
++        "types": "./Structural/HasHash/index.d.ts",
++        "default": "./_mjs/Structural/HasHash/index.mjs"
++      },
+       "require": "./Structural/HasHash/index.js"
+     },
+     "./Structural/HasEquals": {
+-      "import": "./_mjs/Structural/HasEquals/index.mjs",
++      "import": {
++        "types": "./Structural/HasEquals/index.d.ts",
++        "default": "./_mjs/Structural/HasEquals/index.mjs"
++      },
+       "require": "./Structural/HasEquals/index.js"
+     },
+     "./Supervisor": {
+-      "import": "./_mjs/Supervisor/index.mjs",
++      "import": {
++        "types": "./Supervisor/index.d.ts",
++        "default": "./_mjs/Supervisor/index.mjs"
++      },
+       "require": "./Supervisor/index.js"
+     },
+     "./Support/AtomicBoolean": {
+-      "import": "./_mjs/Support/AtomicBoolean/index.mjs",
++      "import": {
++        "types": "./Support/AtomicBoolean/index.d.ts",
++        "default": "./_mjs/Support/AtomicBoolean/index.mjs"
++      },
+       "require": "./Support/AtomicBoolean/index.js"
+     },
+     "./Support/AtomicNumber": {
+-      "import": "./_mjs/Support/AtomicNumber/index.mjs",
++      "import": {
++        "types": "./Support/AtomicNumber/index.d.ts",
++        "default": "./_mjs/Support/AtomicNumber/index.mjs"
++      },
+       "require": "./Support/AtomicNumber/index.js"
+     },
+     "./Support/AtomicReference": {
+-      "import": "./_mjs/Support/AtomicReference/index.mjs",
++      "import": {
++        "types": "./Support/AtomicReference/index.d.ts",
++        "default": "./_mjs/Support/AtomicReference/index.mjs"
++      },
+       "require": "./Support/AtomicReference/index.js"
+     },
+     "./Support/DoublyLinkedList": {
+-      "import": "./_mjs/Support/DoublyLinkedList/index.mjs",
++      "import": {
++        "types": "./Support/DoublyLinkedList/index.d.ts",
++        "default": "./_mjs/Support/DoublyLinkedList/index.mjs"
++      },
+       "require": "./Support/DoublyLinkedList/index.js"
+     },
+     "./Support/ImmutableQueue": {
+-      "import": "./_mjs/Support/ImmutableQueue/index.mjs",
++      "import": {
++        "types": "./Support/ImmutableQueue/index.d.ts",
++        "default": "./_mjs/Support/ImmutableQueue/index.mjs"
++      },
+       "require": "./Support/ImmutableQueue/index.js"
+     },
+     "./Support/LinkedList": {
+-      "import": "./_mjs/Support/LinkedList/index.mjs",
++      "import": {
++        "types": "./Support/LinkedList/index.d.ts",
++        "default": "./_mjs/Support/LinkedList/index.mjs"
++      },
+       "require": "./Support/LinkedList/index.js"
+     },
+     "./Support/Mutable": {
+-      "import": "./_mjs/Support/Mutable/index.mjs",
++      "import": {
++        "types": "./Support/Mutable/index.d.ts",
++        "default": "./_mjs/Support/Mutable/index.mjs"
++      },
+       "require": "./Support/Mutable/index.js"
+     },
+     "./Support/MutableQueue": {
+-      "import": "./_mjs/Support/MutableQueue/index.mjs",
++      "import": {
++        "types": "./Support/MutableQueue/index.d.ts",
++        "default": "./_mjs/Support/MutableQueue/index.mjs"
++      },
+       "require": "./Support/MutableQueue/index.js"
+     },
+     "./Support/OneShot": {
+-      "import": "./_mjs/Support/OneShot/index.mjs",
++      "import": {
++        "types": "./Support/OneShot/index.d.ts",
++        "default": "./_mjs/Support/OneShot/index.mjs"
++      },
+       "require": "./Support/OneShot/index.js"
+     },
+     "./Support/RingBuffer": {
+-      "import": "./_mjs/Support/RingBuffer/index.mjs",
++      "import": {
++        "types": "./Support/RingBuffer/index.d.ts",
++        "default": "./_mjs/Support/RingBuffer/index.mjs"
++      },
+       "require": "./Support/RingBuffer/index.js"
+     },
+     "./Support/Scheduler": {
+-      "import": "./_mjs/Support/Scheduler/index.mjs",
++      "import": {
++        "types": "./Support/Scheduler/index.d.ts",
++        "default": "./_mjs/Support/Scheduler/index.mjs"
++      },
+       "require": "./Support/Scheduler/index.js"
+     },
+     "./Sync": {
+-      "import": "./_mjs/Sync/index.mjs",
++      "import": {
++        "types": "./Sync/index.d.ts",
++        "default": "./_mjs/Sync/index.mjs"
++      },
+       "require": "./Sync/index.js"
+     },
+     "./Tracing": {
+-      "import": "./_mjs/Tracing/index.mjs",
++      "import": {
++        "types": "./Tracing/index.d.ts",
++        "default": "./_mjs/Tracing/index.mjs"
++      },
+       "require": "./Tracing/index.js"
+     },
+     "./Tracing/Enable": {
+-      "import": "./_mjs/Tracing/Enable/index.mjs",
++      "import": {
++        "types": "./Tracing/Enable/index.d.ts",
++        "default": "./_mjs/Tracing/Enable/index.mjs"
++      },
+       "require": "./Tracing/Enable/index.js"
+     },
+     "./Tracing/Global": {
+-      "import": "./_mjs/Tracing/Global/index.mjs",
++      "import": {
++        "types": "./Tracing/Global/index.d.ts",
++        "default": "./_mjs/Tracing/Global/index.mjs"
++      },
+       "require": "./Tracing/Global/index.js"
+     },
+     "./Transactional": {
+-      "import": "./_mjs/Transactional/index.mjs",
++      "import": {
++        "types": "./Transactional/index.d.ts",
++        "default": "./_mjs/Transactional/index.mjs"
++      },
+       "require": "./Transactional/index.js"
+     },
+     "./Transactional/STM": {
+-      "import": "./_mjs/Transactional/STM/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/index.d.ts",
++        "default": "./_mjs/Transactional/STM/index.mjs"
++      },
+       "require": "./Transactional/STM/index.js"
+     },
+     "./Transactional/STM/Entry": {
+-      "import": "./_mjs/Transactional/STM/Entry/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/Entry/index.d.ts",
++        "default": "./_mjs/Transactional/STM/Entry/index.mjs"
++      },
+       "require": "./Transactional/STM/Entry/index.js"
+     },
+     "./Transactional/STM/Journal": {
+-      "import": "./_mjs/Transactional/STM/Journal/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/Journal/index.d.ts",
++        "default": "./_mjs/Transactional/STM/Journal/index.mjs"
++      },
+       "require": "./Transactional/STM/Journal/index.js"
+     },
+     "./Transactional/STM/TExit": {
+-      "import": "./_mjs/Transactional/STM/TExit/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/TExit/index.d.ts",
++        "default": "./_mjs/Transactional/STM/TExit/index.mjs"
++      },
+       "require": "./Transactional/STM/TExit/index.js"
+     },
+     "./Transactional/STM/TryCommit": {
+-      "import": "./_mjs/Transactional/STM/TryCommit/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/TryCommit/index.d.ts",
++        "default": "./_mjs/Transactional/STM/TryCommit/index.mjs"
++      },
+       "require": "./Transactional/STM/TryCommit/index.js"
+     },
+     "./Transactional/STM/TxnId": {
+-      "import": "./_mjs/Transactional/STM/TxnId/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/TxnId/index.d.ts",
++        "default": "./_mjs/Transactional/STM/TxnId/index.mjs"
++      },
+       "require": "./Transactional/STM/TxnId/index.js"
+     },
+     "./Transactional/STM/Versioned": {
+-      "import": "./_mjs/Transactional/STM/Versioned/index.mjs",
++      "import": {
++        "types": "./Transactional/STM/Versioned/index.d.ts",
++        "default": "./_mjs/Transactional/STM/Versioned/index.mjs"
++      },
+       "require": "./Transactional/STM/Versioned/index.js"
+     },
+     "./Transactional/TArray": {
+-      "import": "./_mjs/Transactional/TArray/index.mjs",
++      "import": {
++        "types": "./Transactional/TArray/index.d.ts",
++        "default": "./_mjs/Transactional/TArray/index.mjs"
++      },
+       "require": "./Transactional/TArray/index.js"
+     },
+     "./Transactional/TRef": {
+-      "import": "./_mjs/Transactional/TRef/index.mjs",
++      "import": {
++        "types": "./Transactional/TRef/index.d.ts",
++        "default": "./_mjs/Transactional/TRef/index.mjs"
++      },
+       "require": "./Transactional/TRef/index.js"
+     },
+     "./Testing": {
+-      "import": "./_mjs/Testing/index.mjs",
++      "import": {
++        "types": "./Testing/index.d.ts",
++        "default": "./_mjs/Testing/index.mjs"
++      },
+       "require": "./Testing/index.js"
+     },
+     "./Testing/Annotations": {
+-      "import": "./_mjs/Testing/Annotations/index.mjs",
++      "import": {
++        "types": "./Testing/Annotations/index.d.ts",
++        "default": "./_mjs/Testing/Annotations/index.mjs"
++      },
+       "require": "./Testing/Annotations/index.js"
+     },
+     "./Testing/Api": {
+-      "import": "./_mjs/Testing/Api/index.mjs",
++      "import": {
++        "types": "./Testing/Api/index.d.ts",
++        "default": "./_mjs/Testing/Api/index.mjs"
++      },
+       "require": "./Testing/Api/index.js"
+     },
+     "./Testing/Assertion": {
+-      "import": "./_mjs/Testing/Assertion/index.mjs",
++      "import": {
++        "types": "./Testing/Assertion/index.d.ts",
++        "default": "./_mjs/Testing/Assertion/index.mjs"
++      },
+       "require": "./Testing/Assertion/index.js"
+     },
+     "./Testing/AssertionData": {
+-      "import": "./_mjs/Testing/AssertionData/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionData/index.d.ts",
++        "default": "./_mjs/Testing/AssertionData/index.mjs"
++      },
+       "require": "./Testing/AssertionData/index.js"
+     },
+     "./Testing/AssertionM": {
+-      "import": "./_mjs/Testing/AssertionM/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionM/index.d.ts",
++        "default": "./_mjs/Testing/AssertionM/index.mjs"
++      },
+       "require": "./Testing/AssertionM/index.js"
+     },
+     "./Testing/AssertionMData": {
+-      "import": "./_mjs/Testing/AssertionMData/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionMData/index.d.ts",
++        "default": "./_mjs/Testing/AssertionMData/index.mjs"
++      },
+       "require": "./Testing/AssertionMData/index.js"
+     },
+     "./Testing/AssertionResult": {
+-      "import": "./_mjs/Testing/AssertionResult/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionResult/index.d.ts",
++        "default": "./_mjs/Testing/AssertionResult/index.mjs"
++      },
+       "require": "./Testing/AssertionResult/index.js"
+     },
+     "./Testing/AssertionResultM": {
+-      "import": "./_mjs/Testing/AssertionResultM/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionResultM/index.d.ts",
++        "default": "./_mjs/Testing/AssertionResultM/index.mjs"
++      },
+       "require": "./Testing/AssertionResultM/index.js"
+     },
+     "./Testing/AssertionValue": {
+-      "import": "./_mjs/Testing/AssertionValue/index.mjs",
++      "import": {
++        "types": "./Testing/AssertionValue/index.d.ts",
++        "default": "./_mjs/Testing/AssertionValue/index.mjs"
++      },
+       "require": "./Testing/AssertionValue/index.js"
+     },
+     "./Testing/BoolAlgebra": {
+-      "import": "./_mjs/Testing/BoolAlgebra/index.mjs",
++      "import": {
++        "types": "./Testing/BoolAlgebra/index.d.ts",
++        "default": "./_mjs/Testing/BoolAlgebra/index.mjs"
++      },
+       "require": "./Testing/BoolAlgebra/index.js"
+     },
+     "./Testing/BoolAlgebraM": {
+-      "import": "./_mjs/Testing/BoolAlgebraM/index.mjs",
++      "import": {
++        "types": "./Testing/BoolAlgebraM/index.d.ts",
++        "default": "./_mjs/Testing/BoolAlgebraM/index.mjs"
++      },
+       "require": "./Testing/BoolAlgebraM/index.js"
+     },
+     "./Testing/ExecutedSpec": {
+-      "import": "./_mjs/Testing/ExecutedSpec/index.mjs",
++      "import": {
++        "types": "./Testing/ExecutedSpec/index.d.ts",
++        "default": "./_mjs/Testing/ExecutedSpec/index.mjs"
++      },
+       "require": "./Testing/ExecutedSpec/index.js"
+     },
+     "./Testing/FailureDetails": {
+-      "import": "./_mjs/Testing/FailureDetails/index.mjs",
++      "import": {
++        "types": "./Testing/FailureDetails/index.d.ts",
++        "default": "./_mjs/Testing/FailureDetails/index.mjs"
++      },
+       "require": "./Testing/FailureDetails/index.js"
+     },
+     "./Testing/FiberSet": {
+-      "import": "./_mjs/Testing/FiberSet/index.mjs",
++      "import": {
++        "types": "./Testing/FiberSet/index.d.ts",
++        "default": "./_mjs/Testing/FiberSet/index.mjs"
++      },
+       "require": "./Testing/FiberSet/index.js"
+     },
+     "./Testing/FibersPerTest": {
+-      "import": "./_mjs/Testing/FibersPerTest/index.mjs",
++      "import": {
++        "types": "./Testing/FibersPerTest/index.d.ts",
++        "default": "./_mjs/Testing/FibersPerTest/index.mjs"
++      },
+       "require": "./Testing/FibersPerTest/index.js"
+     },
+     "./Testing/Int": {
+-      "import": "./_mjs/Testing/Int/index.mjs",
++      "import": {
++        "types": "./Testing/Int/index.d.ts",
++        "default": "./_mjs/Testing/Int/index.mjs"
++      },
+       "require": "./Testing/Int/index.js"
+     },
+     "./Testing/Live": {
+-      "import": "./_mjs/Testing/Live/index.mjs",
++      "import": {
++        "types": "./Testing/Live/index.d.ts",
++        "default": "./_mjs/Testing/Live/index.mjs"
++      },
+       "require": "./Testing/Live/index.js"
+     },
+     "./Testing/Primitives": {
+-      "import": "./_mjs/Testing/Primitives/index.mjs",
++      "import": {
++        "types": "./Testing/Primitives/index.d.ts",
++        "default": "./_mjs/Testing/Primitives/index.mjs"
++      },
+       "require": "./Testing/Primitives/index.js"
+     },
+     "./Testing/Render": {
+-      "import": "./_mjs/Testing/Render/index.mjs",
++      "import": {
++        "types": "./Testing/Render/index.d.ts",
++        "default": "./_mjs/Testing/Render/index.mjs"
++      },
+       "require": "./Testing/Render/index.js"
+     },
+     "./Testing/Restorable": {
+-      "import": "./_mjs/Testing/Restorable/index.mjs",
++      "import": {
++        "types": "./Testing/Restorable/index.d.ts",
++        "default": "./_mjs/Testing/Restorable/index.mjs"
++      },
+       "require": "./Testing/Restorable/index.js"
+     },
+     "./Testing/Spec": {
+-      "import": "./_mjs/Testing/Spec/index.mjs",
++      "import": {
++        "types": "./Testing/Spec/index.d.ts",
++        "default": "./_mjs/Testing/Spec/index.mjs"
++      },
+       "require": "./Testing/Spec/index.js"
+     },
+     "./Testing/TestAnnotation": {
+-      "import": "./_mjs/Testing/TestAnnotation/index.mjs",
++      "import": {
++        "types": "./Testing/TestAnnotation/index.d.ts",
++        "default": "./_mjs/Testing/TestAnnotation/index.mjs"
++      },
+       "require": "./Testing/TestAnnotation/index.js"
+     },
+     "./Testing/TestAnnotationMap": {
+-      "import": "./_mjs/Testing/TestAnnotationMap/index.mjs",
++      "import": {
++        "types": "./Testing/TestAnnotationMap/index.d.ts",
++        "default": "./_mjs/Testing/TestAnnotationMap/index.mjs"
++      },
+       "require": "./Testing/TestAnnotationMap/index.js"
+     },
+     "./Testing/TestAnnotationRenderer": {
+-      "import": "./_mjs/Testing/TestAnnotationRenderer/index.mjs",
++      "import": {
++        "types": "./Testing/TestAnnotationRenderer/index.d.ts",
++        "default": "./_mjs/Testing/TestAnnotationRenderer/index.mjs"
++      },
+       "require": "./Testing/TestAnnotationRenderer/index.js"
+     },
+     "./Testing/TestAspect": {
+-      "import": "./_mjs/Testing/TestAspect/index.mjs",
++      "import": {
++        "types": "./Testing/TestAspect/index.d.ts",
++        "default": "./_mjs/Testing/TestAspect/index.mjs"
++      },
+       "require": "./Testing/TestAspect/index.js"
+     },
+     "./Testing/TestClock": {
+-      "import": "./_mjs/Testing/TestClock/index.mjs",
++      "import": {
++        "types": "./Testing/TestClock/index.d.ts",
++        "default": "./_mjs/Testing/TestClock/index.mjs"
++      },
+       "require": "./Testing/TestClock/index.js"
+     },
+     "./Testing/TestEnvironment": {
+-      "import": "./_mjs/Testing/TestEnvironment/index.mjs",
++      "import": {
++        "types": "./Testing/TestEnvironment/index.d.ts",
++        "default": "./_mjs/Testing/TestEnvironment/index.mjs"
++      },
+       "require": "./Testing/TestEnvironment/index.js"
+     },
+     "./Testing/TestExecutor": {
+-      "import": "./_mjs/Testing/TestExecutor/index.mjs",
++      "import": {
++        "types": "./Testing/TestExecutor/index.d.ts",
++        "default": "./_mjs/Testing/TestExecutor/index.mjs"
++      },
+       "require": "./Testing/TestExecutor/index.js"
+     },
+     "./Testing/TestFailure": {
+-      "import": "./_mjs/Testing/TestFailure/index.mjs",
++      "import": {
++        "types": "./Testing/TestFailure/index.d.ts",
++        "default": "./_mjs/Testing/TestFailure/index.mjs"
++      },
+       "require": "./Testing/TestFailure/index.js"
+     },
+     "./Testing/TestLogger": {
+-      "import": "./_mjs/Testing/TestLogger/index.mjs",
++      "import": {
++        "types": "./Testing/TestLogger/index.d.ts",
++        "default": "./_mjs/Testing/TestLogger/index.mjs"
++      },
+       "require": "./Testing/TestLogger/index.js"
+     },
+     "./Testing/TestReporter": {
+-      "import": "./_mjs/Testing/TestReporter/index.mjs",
++      "import": {
++        "types": "./Testing/TestReporter/index.d.ts",
++        "default": "./_mjs/Testing/TestReporter/index.mjs"
++      },
+       "require": "./Testing/TestReporter/index.js"
+     },
+     "./Testing/TestResult": {
+-      "import": "./_mjs/Testing/TestResult/index.mjs",
++      "import": {
++        "types": "./Testing/TestResult/index.d.ts",
++        "default": "./_mjs/Testing/TestResult/index.mjs"
++      },
+       "require": "./Testing/TestResult/index.js"
+     },
+     "./Testing/TestRunner": {
+-      "import": "./_mjs/Testing/TestRunner/index.mjs",
++      "import": {
++        "types": "./Testing/TestRunner/index.d.ts",
++        "default": "./_mjs/Testing/TestRunner/index.mjs"
++      },
+       "require": "./Testing/TestRunner/index.js"
+     },
+     "./Testing/TestSuccess": {
+-      "import": "./_mjs/Testing/TestSuccess/index.mjs",
++      "import": {
++        "types": "./Testing/TestSuccess/index.d.ts",
++        "default": "./_mjs/Testing/TestSuccess/index.mjs"
++      },
+       "require": "./Testing/TestSuccess/index.js"
+     },
+     "./Utils": {
+-      "import": "./_mjs/Utils/index.mjs",
++      "import": {
++        "types": "./Utils/index.d.ts",
++        "default": "./_mjs/Utils/index.mjs"
++      },
+       "require": "./Utils/index.js"
+     },
+     "./XPure": {
+-      "import": "./_mjs/XPure/index.mjs",
++      "import": {
++        "types": "./XPure/index.d.ts",
++        "default": "./_mjs/XPure/index.mjs"
++      },
+       "require": "./XPure/index.js"
+     },
++    "./*.js": {
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
++      "require": "./*.js"
++    },
+     "./*": {
+-      "import": "./_mjs/*.mjs",
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
+       "require": "./*.js"
+     }
+   }

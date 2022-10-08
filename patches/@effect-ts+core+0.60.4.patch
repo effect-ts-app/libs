@@ -1,0 +1,1399 @@
+diff --git a/node_modules/@effect-ts/core/package.json b/node_modules/@effect-ts/core/package.json
+index 703b60d..3c12fb1 100644
+--- a/node_modules/@effect-ts/core/package.json
++++ b/node_modules/@effect-ts/core/package.json
+@@ -18,695 +18,1221 @@
+   ],
+   "exports": {
+     ".": {
+-      "import": "./_mjs/index.mjs",
++      "import": {
++        "types": "./index.d.ts",
++        "default": "./_mjs/index.mjs"
++      },
+       "require": "./index.js"
+     },
+     "./Async": {
+-      "import": "./_mjs/Async/index.mjs",
++      "import": {
++        "types": "./Async/index.d.ts",
++        "default": "./_mjs/Async/index.mjs"
++      },
+       "require": "./Async/index.js"
+     },
+     "./Associative": {
+-      "import": "./_mjs/Associative/index.mjs",
++      "import": {
++        "types": "./Associative/index.d.ts",
++        "default": "./_mjs/Associative/index.mjs"
++      },
+       "require": "./Associative/index.js"
+     },
+     "./Boolean": {
+-      "import": "./_mjs/Boolean/index.mjs",
++      "import": {
++        "types": "./Boolean/index.d.ts",
++        "default": "./_mjs/Boolean/index.mjs"
++      },
+       "require": "./Boolean/index.js"
+     },
+     "./Bounded": {
+-      "import": "./_mjs/Bounded/index.mjs",
++      "import": {
++        "types": "./Bounded/index.d.ts",
++        "default": "./_mjs/Bounded/index.mjs"
++      },
+       "require": "./Bounded/index.js"
+     },
+     "./Branded": {
+-      "import": "./_mjs/Branded/index.mjs",
++      "import": {
++        "types": "./Branded/index.d.ts",
++        "default": "./_mjs/Branded/index.mjs"
++      },
+       "require": "./Branded/index.js"
+     },
+     "./Case": {
+-      "import": "./_mjs/Case/index.mjs",
++      "import": {
++        "types": "./Case/index.d.ts",
++        "default": "./_mjs/Case/index.mjs"
++      },
+       "require": "./Case/index.js"
+     },
+     "./Closure": {
+-      "import": "./_mjs/Closure/index.mjs",
++      "import": {
++        "types": "./Closure/index.d.ts",
++        "default": "./_mjs/Closure/index.mjs"
++      },
+       "require": "./Closure/index.js"
+     },
+     "./Collections": {
+-      "import": "./_mjs/Collections/index.mjs",
++      "import": {
++        "types": "./Collections/index.d.ts",
++        "default": "./_mjs/Collections/index.mjs"
++      },
+       "require": "./Collections/index.js"
+     },
+     "./Collections/Immutable": {
+-      "import": "./_mjs/Collections/Immutable/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/index.mjs"
++      },
+       "require": "./Collections/Immutable/index.js"
+     },
+     "./Collections/Immutable/Array": {
+-      "import": "./_mjs/Collections/Immutable/Array/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Array/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Array/index.mjs"
++      },
+       "require": "./Collections/Immutable/Array/index.js"
+     },
+     "./Collections/Immutable/Chunk": {
+-      "import": "./_mjs/Collections/Immutable/Chunk/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Chunk/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Chunk/index.mjs"
++      },
+       "require": "./Collections/Immutable/Chunk/index.js"
+     },
+     "./Collections/Immutable/Dictionary": {
+-      "import": "./_mjs/Collections/Immutable/Dictionary/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Dictionary/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Dictionary/index.mjs"
++      },
+       "require": "./Collections/Immutable/Dictionary/index.js"
+     },
+     "./Collections/Immutable/HashMap": {
+-      "import": "./_mjs/Collections/Immutable/HashMap/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashMap/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashMap/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashMap/index.js"
+     },
+     "./Collections/Immutable/HashSet": {
+-      "import": "./_mjs/Collections/Immutable/HashSet/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/HashSet/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/HashSet/index.mjs"
++      },
+       "require": "./Collections/Immutable/HashSet/index.js"
+     },
+     "./Collections/Immutable/List": {
+-      "import": "./_mjs/Collections/Immutable/List/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/List/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/List/index.mjs"
++      },
+       "require": "./Collections/Immutable/List/index.js"
+     },
+     "./Collections/Immutable/Map": {
+-      "import": "./_mjs/Collections/Immutable/Map/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Map/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Map/index.mjs"
++      },
+       "require": "./Collections/Immutable/Map/index.js"
+     },
+     "./Collections/Immutable/NonEmptyArray": {
+-      "import": "./_mjs/Collections/Immutable/NonEmptyArray/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/NonEmptyArray/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/NonEmptyArray/index.mjs"
++      },
+       "require": "./Collections/Immutable/NonEmptyArray/index.js"
+     },
+     "./Collections/Immutable/ParSeq": {
+-      "import": "./_mjs/Collections/Immutable/ParSeq/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/ParSeq/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/ParSeq/index.mjs"
++      },
+       "require": "./Collections/Immutable/ParSeq/index.js"
+     },
+     "./Collections/Immutable/RedBlackTree": {
+-      "import": "./_mjs/Collections/Immutable/RedBlackTree/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/RedBlackTree/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/RedBlackTree/index.mjs"
++      },
+       "require": "./Collections/Immutable/RedBlackTree/index.js"
+     },
+     "./Collections/Immutable/Set": {
+-      "import": "./_mjs/Collections/Immutable/Set/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Set/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Set/index.mjs"
++      },
+       "require": "./Collections/Immutable/Set/index.js"
+     },
+     "./Collections/Immutable/SortedSet": {
+-      "import": "./_mjs/Collections/Immutable/SortedSet/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/SortedSet/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/SortedSet/index.mjs"
++      },
+       "require": "./Collections/Immutable/SortedSet/index.js"
+     },
+     "./Collections/Immutable/Tuple": {
+-      "import": "./_mjs/Collections/Immutable/Tuple/index.mjs",
++      "import": {
++        "types": "./Collections/Immutable/Tuple/index.d.ts",
++        "default": "./_mjs/Collections/Immutable/Tuple/index.mjs"
++      },
+       "require": "./Collections/Immutable/Tuple/index.js"
+     },
+     "./Collections/Mutable": {
+-      "import": "./_mjs/Collections/Mutable/index.mjs",
++      "import": {
++        "types": "./Collections/Mutable/index.d.ts",
++        "default": "./_mjs/Collections/Mutable/index.mjs"
++      },
+       "require": "./Collections/Mutable/index.js"
+     },
+     "./Collections/Mutable/HashMap": {
+-      "import": "./_mjs/Collections/Mutable/HashMap/index.mjs",
++      "import": {
++        "types": "./Collections/Mutable/HashMap/index.d.ts",
++        "default": "./_mjs/Collections/Mutable/HashMap/index.mjs"
++      },
+       "require": "./Collections/Mutable/HashMap/index.js"
+     },
+     "./Commutative": {
+-      "import": "./_mjs/Commutative/index.mjs",
++      "import": {
++        "types": "./Commutative/index.d.ts",
++        "default": "./_mjs/Commutative/index.mjs"
++      },
+       "require": "./Commutative/index.js"
+     },
+     "./Const": {
+-      "import": "./_mjs/Const/index.mjs",
++      "import": {
++        "types": "./Const/index.d.ts",
++        "default": "./_mjs/Const/index.mjs"
++      },
+       "require": "./Const/index.js"
+     },
+     "./Either": {
+-      "import": "./_mjs/Either/index.mjs",
++      "import": {
++        "types": "./Either/index.d.ts",
++        "default": "./_mjs/Either/index.mjs"
++      },
+       "require": "./Either/index.js"
+     },
+     "./EitherT": {
+-      "import": "./_mjs/EitherT/index.mjs",
++      "import": {
++        "types": "./EitherT/index.d.ts",
++        "default": "./_mjs/EitherT/index.mjs"
++      },
+       "require": "./EitherT/index.js"
+     },
+     "./Equal": {
+-      "import": "./_mjs/Equal/index.mjs",
++      "import": {
++        "types": "./Equal/index.d.ts",
++        "default": "./_mjs/Equal/index.mjs"
++      },
+       "require": "./Equal/index.js"
+     },
+     "./FreeAssociative": {
+-      "import": "./_mjs/FreeAssociative/index.mjs",
++      "import": {
++        "types": "./FreeAssociative/index.d.ts",
++        "default": "./_mjs/FreeAssociative/index.mjs"
++      },
+       "require": "./FreeAssociative/index.js"
+     },
+     "./Hash": {
+-      "import": "./_mjs/Hash/index.mjs",
++      "import": {
++        "types": "./Hash/index.d.ts",
++        "default": "./_mjs/Hash/index.mjs"
++      },
+       "require": "./Hash/index.js"
+     },
+     "./Id": {
+-      "import": "./_mjs/Id/index.mjs",
++      "import": {
++        "types": "./Id/index.d.ts",
++        "default": "./_mjs/Id/index.mjs"
++      },
+       "require": "./Id/index.js"
+     },
+     "./Identity": {
+-      "import": "./_mjs/Identity/index.mjs",
++      "import": {
++        "types": "./Identity/index.d.ts",
++        "default": "./_mjs/Identity/index.mjs"
++      },
+       "require": "./Identity/index.js"
+     },
+     "./IndexedT": {
+-      "import": "./_mjs/IndexedT/index.mjs",
++      "import": {
++        "types": "./IndexedT/index.d.ts",
++        "default": "./_mjs/IndexedT/index.mjs"
++      },
+       "require": "./IndexedT/index.js"
+     },
+     "./InvariantT": {
+-      "import": "./_mjs/InvariantT/index.mjs",
++      "import": {
++        "types": "./InvariantT/index.d.ts",
++        "default": "./_mjs/InvariantT/index.mjs"
++      },
+       "require": "./InvariantT/index.js"
+     },
+     "./Inverse": {
+-      "import": "./_mjs/Inverse/index.mjs",
++      "import": {
++        "types": "./Inverse/index.d.ts",
++        "default": "./_mjs/Inverse/index.mjs"
++      },
+       "require": "./Inverse/index.js"
+     },
+     "./IO": {
+-      "import": "./_mjs/IO/index.mjs",
++      "import": {
++        "types": "./IO/index.d.ts",
++        "default": "./_mjs/IO/index.mjs"
++      },
+       "require": "./IO/index.js"
+     },
+     "./Iterable": {
+-      "import": "./_mjs/Iterable/index.mjs",
++      "import": {
++        "types": "./Iterable/index.d.ts",
++        "default": "./_mjs/Iterable/index.mjs"
++      },
+       "require": "./Iterable/index.js"
+     },
+     "./Option": {
+-      "import": "./_mjs/Option/index.mjs",
++      "import": {
++        "types": "./Option/index.d.ts",
++        "default": "./_mjs/Option/index.mjs"
++      },
+       "require": "./Option/index.js"
+     },
+     "./OptionT": {
+-      "import": "./_mjs/OptionT/index.mjs",
++      "import": {
++        "types": "./OptionT/index.d.ts",
++        "default": "./_mjs/OptionT/index.mjs"
++      },
+       "require": "./OptionT/index.js"
+     },
+     "./Ord": {
+-      "import": "./_mjs/Ord/index.mjs",
++      "import": {
++        "types": "./Ord/index.d.ts",
++        "default": "./_mjs/Ord/index.mjs"
++      },
+       "require": "./Ord/index.js"
+     },
+     "./Ordering": {
+-      "import": "./_mjs/Ordering/index.mjs",
++      "import": {
++        "types": "./Ordering/index.d.ts",
++        "default": "./_mjs/Ordering/index.mjs"
++      },
+       "require": "./Ordering/index.js"
+     },
+     "./Reader": {
+-      "import": "./_mjs/Reader/index.mjs",
++      "import": {
++        "types": "./Reader/index.d.ts",
++        "default": "./_mjs/Reader/index.mjs"
++      },
+       "require": "./Reader/index.js"
+     },
+     "./ReaderT": {
+-      "import": "./_mjs/ReaderT/index.mjs",
++      "import": {
++        "types": "./ReaderT/index.d.ts",
++        "default": "./_mjs/ReaderT/index.mjs"
++      },
+       "require": "./ReaderT/index.js"
+     },
+     "./RoseTree": {
+-      "import": "./_mjs/RoseTree/index.mjs",
++      "import": {
++        "types": "./RoseTree/index.d.ts",
++        "default": "./_mjs/RoseTree/index.mjs"
++      },
+       "require": "./RoseTree/index.js"
+     },
+     "./Show": {
+-      "import": "./_mjs/Show/index.mjs",
++      "import": {
++        "types": "./Show/index.d.ts",
++        "default": "./_mjs/Show/index.mjs"
++      },
+       "require": "./Show/index.js"
+     },
+     "./StateT": {
+-      "import": "./_mjs/StateT/index.mjs",
++      "import": {
++        "types": "./StateT/index.d.ts",
++        "default": "./_mjs/StateT/index.mjs"
++      },
+       "require": "./StateT/index.js"
+     },
+     "./String": {
+-      "import": "./_mjs/String/index.mjs",
++      "import": {
++        "types": "./String/index.d.ts",
++        "default": "./_mjs/String/index.mjs"
++      },
+       "require": "./String/index.js"
+     },
+     "./Effect": {
+-      "import": "./_mjs/Effect/index.mjs",
++      "import": {
++        "types": "./Effect/index.d.ts",
++        "default": "./_mjs/Effect/index.mjs"
++      },
+       "require": "./Effect/index.js"
+     },
+     "./Effect/Cause": {
+-      "import": "./_mjs/Effect/Cause/index.mjs",
++      "import": {
++        "types": "./Effect/Cause/index.d.ts",
++        "default": "./_mjs/Effect/Cause/index.mjs"
++      },
+       "require": "./Effect/Cause/index.js"
+     },
+     "./Effect/Cause/Pretty": {
+-      "import": "./_mjs/Effect/Cause/Pretty/index.mjs",
++      "import": {
++        "types": "./Effect/Cause/Pretty/index.d.ts",
++        "default": "./_mjs/Effect/Cause/Pretty/index.mjs"
++      },
+       "require": "./Effect/Cause/Pretty/index.js"
+     },
+     "./Effect/Clock": {
+-      "import": "./_mjs/Effect/Clock/index.mjs",
++      "import": {
++        "types": "./Effect/Clock/index.d.ts",
++        "default": "./_mjs/Effect/Clock/index.mjs"
++      },
+       "require": "./Effect/Clock/index.js"
+     },
+     "./Effect/Exit": {
+-      "import": "./_mjs/Effect/Exit/index.mjs",
++      "import": {
++        "types": "./Effect/Exit/index.d.ts",
++        "default": "./_mjs/Effect/Exit/index.mjs"
++      },
+       "require": "./Effect/Exit/index.js"
+     },
+     "./Effect/Experimental": {
+-      "import": "./_mjs/Effect/Experimental/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/index.mjs"
++      },
+       "require": "./Effect/Experimental/index.js"
+     },
+     "./Effect/Experimental/Stream": {
+-      "import": "./_mjs/Effect/Experimental/Stream/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/index.js"
+     },
+     "./Effect/Experimental/Stream/Channel": {
+-      "import": "./_mjs/Effect/Experimental/Stream/Channel/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/Channel/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/Channel/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/Channel/index.js"
+     },
+     "./Effect/Experimental/Stream/GroupBy": {
+-      "import": "./_mjs/Effect/Experimental/Stream/GroupBy/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/GroupBy/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/GroupBy/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/GroupBy/index.js"
+     },
+     "./Effect/Experimental/Stream/Sink": {
+-      "import": "./_mjs/Effect/Experimental/Stream/Sink/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/Sink/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/Sink/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/Sink/index.js"
+     },
+     "./Effect/Experimental/Stream/Pull": {
+-      "import": "./_mjs/Effect/Experimental/Stream/Pull/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/Pull/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/Pull/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/Pull/index.js"
+     },
+     "./Effect/Experimental/Stream/Take": {
+-      "import": "./_mjs/Effect/Experimental/Stream/Take/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/Take/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/Take/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/Take/index.js"
+     },
+     "./Effect/Experimental/Stream/SortedByKey": {
+-      "import": "./_mjs/Effect/Experimental/Stream/SortedByKey/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/SortedByKey/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/SortedByKey/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/SortedByKey/index.js"
+     },
+     "./Effect/Experimental/Stream/SubscriptionRef": {
+-      "import": "./_mjs/Effect/Experimental/Stream/SubscriptionRef/index.mjs",
++      "import": {
++        "types": "./Effect/Experimental/Stream/SubscriptionRef/index.d.ts",
++        "default": "./_mjs/Effect/Experimental/Stream/SubscriptionRef/index.mjs"
++      },
+       "require": "./Effect/Experimental/Stream/SubscriptionRef/index.js"
+     },
+     "./Effect/Fiber": {
+-      "import": "./_mjs/Effect/Fiber/index.mjs",
++      "import": {
++        "types": "./Effect/Fiber/index.d.ts",
++        "default": "./_mjs/Effect/Fiber/index.mjs"
++      },
+       "require": "./Effect/Fiber/index.js"
+     },
+     "./Effect/FiberRef": {
+-      "import": "./_mjs/Effect/FiberRef/index.mjs",
++      "import": {
++        "types": "./Effect/FiberRef/index.d.ts",
++        "default": "./_mjs/Effect/FiberRef/index.mjs"
++      },
+       "require": "./Effect/FiberRef/index.js"
+     },
+     "./Effect/FiberState": {
+-      "import": "./_mjs/Effect/FiberState/index.mjs",
++      "import": {
++        "types": "./Effect/FiberState/index.d.ts",
++        "default": "./_mjs/Effect/FiberState/index.mjs"
++      },
+       "require": "./Effect/FiberState/index.js"
+     },
+     "./Effect/Hub": {
+-      "import": "./_mjs/Effect/Hub/index.mjs",
++      "import": {
++        "types": "./Effect/Hub/index.d.ts",
++        "default": "./_mjs/Effect/Hub/index.mjs"
++      },
+       "require": "./Effect/Hub/index.js"
+     },
+     "./Effect/Layer": {
+-      "import": "./_mjs/Effect/Layer/index.mjs",
++      "import": {
++        "types": "./Effect/Layer/index.d.ts",
++        "default": "./_mjs/Effect/Layer/index.mjs"
++      },
+       "require": "./Effect/Layer/index.js"
+     },
+     "./Effect/Managed": {
+-      "import": "./_mjs/Effect/Managed/index.mjs",
++      "import": {
++        "types": "./Effect/Managed/index.d.ts",
++        "default": "./_mjs/Effect/Managed/index.mjs"
++      },
+       "require": "./Effect/Managed/index.js"
+     },
+     "./Effect/Managed/ReleaseMap": {
+-      "import": "./_mjs/Effect/Managed/ReleaseMap/index.mjs",
++      "import": {
++        "types": "./Effect/Managed/ReleaseMap/index.d.ts",
++        "default": "./_mjs/Effect/Managed/ReleaseMap/index.mjs"
++      },
+       "require": "./Effect/Managed/ReleaseMap/index.js"
+     },
+     "./Effect/Pool": {
+-      "import": "./_mjs/Effect/Pool/index.mjs",
++      "import": {
++        "types": "./Effect/Pool/index.d.ts",
++        "default": "./_mjs/Effect/Pool/index.mjs"
++      },
+       "require": "./Effect/Pool/index.js"
+     },
+     "./Effect/Promise": {
+-      "import": "./_mjs/Effect/Promise/index.mjs",
++      "import": {
++        "types": "./Effect/Promise/index.d.ts",
++        "default": "./_mjs/Effect/Promise/index.mjs"
++      },
+       "require": "./Effect/Promise/index.js"
+     },
+     "./Effect/Queue": {
+-      "import": "./_mjs/Effect/Queue/index.mjs",
++      "import": {
++        "types": "./Effect/Queue/index.d.ts",
++        "default": "./_mjs/Effect/Queue/index.mjs"
++      },
+       "require": "./Effect/Queue/index.js"
+     },
+     "./Effect/Random": {
+-      "import": "./_mjs/Effect/Random/index.mjs",
++      "import": {
++        "types": "./Effect/Random/index.d.ts",
++        "default": "./_mjs/Effect/Random/index.mjs"
++      },
+       "require": "./Effect/Random/index.js"
+     },
+     "./Effect/Ref": {
+-      "import": "./_mjs/Effect/Ref/index.mjs",
++      "import": {
++        "types": "./Effect/Ref/index.d.ts",
++        "default": "./_mjs/Effect/Ref/index.mjs"
++      },
+       "require": "./Effect/Ref/index.js"
+     },
+     "./Effect/RefM": {
+-      "import": "./_mjs/Effect/RefM/index.mjs",
++      "import": {
++        "types": "./Effect/RefM/index.d.ts",
++        "default": "./_mjs/Effect/RefM/index.mjs"
++      },
+       "require": "./Effect/RefM/index.js"
+     },
+     "./Effect/Schedule": {
+-      "import": "./_mjs/Effect/Schedule/index.mjs",
++      "import": {
++        "types": "./Effect/Schedule/index.d.ts",
++        "default": "./_mjs/Effect/Schedule/index.mjs"
++      },
+       "require": "./Effect/Schedule/index.js"
+     },
+     "./Effect/Scope": {
+-      "import": "./_mjs/Effect/Scope/index.mjs",
++      "import": {
++        "types": "./Effect/Scope/index.d.ts",
++        "default": "./_mjs/Effect/Scope/index.mjs"
++      },
+       "require": "./Effect/Scope/index.js"
+     },
+     "./Effect/Semaphore": {
+-      "import": "./_mjs/Effect/Semaphore/index.mjs",
++      "import": {
++        "types": "./Effect/Semaphore/index.d.ts",
++        "default": "./_mjs/Effect/Semaphore/index.mjs"
++      },
+       "require": "./Effect/Semaphore/index.js"
+     },
+     "./Effect/State": {
+-      "import": "./_mjs/Effect/State/index.mjs",
++      "import": {
++        "types": "./Effect/State/index.d.ts",
++        "default": "./_mjs/Effect/State/index.mjs"
++      },
+       "require": "./Effect/State/index.js"
+     },
+     "./Effect/Stream": {
+-      "import": "./_mjs/Effect/Stream/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/index.d.ts",
++        "default": "./_mjs/Effect/Stream/index.mjs"
++      },
+       "require": "./Effect/Stream/index.js"
+     },
+     "./Effect/Stream/BufferedPull": {
+-      "import": "./_mjs/Effect/Stream/BufferedPull/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/BufferedPull/index.d.ts",
++        "default": "./_mjs/Effect/Stream/BufferedPull/index.mjs"
++      },
+       "require": "./Effect/Stream/BufferedPull/index.js"
+     },
+     "./Effect/Stream/Pull": {
+-      "import": "./_mjs/Effect/Stream/Pull/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/Pull/index.d.ts",
++        "default": "./_mjs/Effect/Stream/Pull/index.mjs"
++      },
+       "require": "./Effect/Stream/Pull/index.js"
+     },
+     "./Effect/Stream/Push": {
+-      "import": "./_mjs/Effect/Stream/Push/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/Push/index.d.ts",
++        "default": "./_mjs/Effect/Stream/Push/index.mjs"
++      },
+       "require": "./Effect/Stream/Push/index.js"
+     },
+     "./Effect/Stream/Sink": {
+-      "import": "./_mjs/Effect/Stream/Sink/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/Sink/index.d.ts",
++        "default": "./_mjs/Effect/Stream/Sink/index.mjs"
++      },
+       "require": "./Effect/Stream/Sink/index.js"
+     },
+     "./Effect/Stream/SubscriptionRef": {
+-      "import": "./_mjs/Effect/Stream/SubscriptionRef/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/SubscriptionRef/index.d.ts",
++        "default": "./_mjs/Effect/Stream/SubscriptionRef/index.mjs"
++      },
+       "require": "./Effect/Stream/SubscriptionRef/index.js"
+     },
+     "./Effect/Stream/Take": {
+-      "import": "./_mjs/Effect/Stream/Take/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/Take/index.d.ts",
++        "default": "./_mjs/Effect/Stream/Take/index.mjs"
++      },
+       "require": "./Effect/Stream/Take/index.js"
+     },
+     "./Effect/Stream/Transducer": {
+-      "import": "./_mjs/Effect/Stream/Transducer/index.mjs",
++      "import": {
++        "types": "./Effect/Stream/Transducer/index.d.ts",
++        "default": "./_mjs/Effect/Stream/Transducer/index.mjs"
++      },
+       "require": "./Effect/Stream/Transducer/index.js"
+     },
+     "./Effect/Supervisor": {
+-      "import": "./_mjs/Effect/Supervisor/index.mjs",
++      "import": {
++        "types": "./Effect/Supervisor/index.d.ts",
++        "default": "./_mjs/Effect/Supervisor/index.mjs"
++      },
+       "require": "./Effect/Supervisor/index.js"
+     },
+     "./Effect/Transactional/STM": {
+-      "import": "./_mjs/Effect/Transactional/STM/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/index.js"
+     },
+     "./Effect/Transactional/STM/Entry": {
+-      "import": "./_mjs/Effect/Transactional/STM/Entry/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/Entry/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/Entry/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/Entry/index.js"
+     },
+     "./Effect/Transactional/STM/Journal": {
+-      "import": "./_mjs/Effect/Transactional/STM/Journal/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/Journal/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/Journal/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/Journal/index.js"
+     },
+     "./Effect/Transactional/STM/TExit": {
+-      "import": "./_mjs/Effect/Transactional/STM/TExit/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/TExit/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/TExit/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/TExit/index.js"
+     },
+     "./Effect/Transactional/STM/TryCommit": {
+-      "import": "./_mjs/Effect/Transactional/STM/TryCommit/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/TryCommit/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/TryCommit/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/TryCommit/index.js"
+     },
+     "./Effect/Transactional/STM/TxnId": {
+-      "import": "./_mjs/Effect/Transactional/STM/TxnId/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/TxnId/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/TxnId/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/TxnId/index.js"
+     },
+     "./Effect/Transactional/STM/Versioned": {
+-      "import": "./_mjs/Effect/Transactional/STM/Versioned/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/STM/Versioned/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/STM/Versioned/index.mjs"
++      },
+       "require": "./Effect/Transactional/STM/Versioned/index.js"
+     },
+     "./Effect/Transactional/TArray": {
+-      "import": "./_mjs/Effect/Transactional/TArray/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/TArray/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/TArray/index.mjs"
++      },
+       "require": "./Effect/Transactional/TArray/index.js"
+     },
+     "./Effect/Transactional/TRef": {
+-      "import": "./_mjs/Effect/Transactional/TRef/index.mjs",
++      "import": {
++        "types": "./Effect/Transactional/TRef/index.d.ts",
++        "default": "./_mjs/Effect/Transactional/TRef/index.mjs"
++      },
+       "require": "./Effect/Transactional/TRef/index.js"
+     },
+     "./Function": {
+-      "import": "./_mjs/Function/index.mjs",
++      "import": {
++        "types": "./Function/index.d.ts",
++        "default": "./_mjs/Function/index.mjs"
++      },
+       "require": "./Function/index.js"
+     },
+     "./Has": {
+-      "import": "./_mjs/Has/index.mjs",
++      "import": {
++        "types": "./Has/index.d.ts",
++        "default": "./_mjs/Has/index.mjs"
++      },
+       "require": "./Has/index.js"
+     },
+     "./Modules": {
+-      "import": "./_mjs/Modules/index.mjs",
++      "import": {
++        "types": "./Modules/index.d.ts",
++        "default": "./_mjs/Modules/index.mjs"
++      },
+       "require": "./Modules/index.js"
+     },
+     "./Newtype": {
+-      "import": "./_mjs/Newtype/index.mjs",
++      "import": {
++        "types": "./Newtype/index.d.ts",
++        "default": "./_mjs/Newtype/index.mjs"
++      },
+       "require": "./Newtype/index.js"
+     },
+     "./Operator": {
+-      "import": "./_mjs/Operator/index.mjs",
++      "import": {
++        "types": "./Operator/index.d.ts",
++        "default": "./_mjs/Operator/index.mjs"
++      },
+       "require": "./Operator/index.js"
+     },
+     "./Prelude": {
+-      "import": "./_mjs/Prelude/index.mjs",
++      "import": {
++        "types": "./Prelude/index.d.ts",
++        "default": "./_mjs/Prelude/index.mjs"
++      },
+       "require": "./Prelude/index.js"
+     },
+     "./Prelude/Any": {
+-      "import": "./_mjs/Prelude/Any/index.mjs",
++      "import": {
++        "types": "./Prelude/Any/index.d.ts",
++        "default": "./_mjs/Prelude/Any/index.mjs"
++      },
+       "require": "./Prelude/Any/index.js"
+     },
+     "./Prelude/Apply": {
+-      "import": "./_mjs/Prelude/Apply/index.mjs",
++      "import": {
++        "types": "./Prelude/Apply/index.d.ts",
++        "default": "./_mjs/Prelude/Apply/index.mjs"
++      },
+       "require": "./Prelude/Apply/index.js"
+     },
+     "./Prelude/Applicative": {
+-      "import": "./_mjs/Prelude/Applicative/index.mjs",
++      "import": {
++        "types": "./Prelude/Applicative/index.d.ts",
++        "default": "./_mjs/Prelude/Applicative/index.mjs"
++      },
+       "require": "./Prelude/Applicative/index.js"
+     },
+     "./Prelude/AssociativeBoth": {
+-      "import": "./_mjs/Prelude/AssociativeBoth/index.mjs",
++      "import": {
++        "types": "./Prelude/AssociativeBoth/index.d.ts",
++        "default": "./_mjs/Prelude/AssociativeBoth/index.mjs"
++      },
+       "require": "./Prelude/AssociativeBoth/index.js"
+     },
+     "./Prelude/AssociativeCompose": {
+-      "import": "./_mjs/Prelude/AssociativeCompose/index.mjs",
++      "import": {
++        "types": "./Prelude/AssociativeCompose/index.d.ts",
++        "default": "./_mjs/Prelude/AssociativeCompose/index.mjs"
++      },
+       "require": "./Prelude/AssociativeCompose/index.js"
+     },
+     "./Prelude/AssociativeEither": {
+-      "import": "./_mjs/Prelude/AssociativeEither/index.mjs",
++      "import": {
++        "types": "./Prelude/AssociativeEither/index.d.ts",
++        "default": "./_mjs/Prelude/AssociativeEither/index.mjs"
++      },
+       "require": "./Prelude/AssociativeEither/index.js"
+     },
+     "./Prelude/AssociativeFlatten": {
+-      "import": "./_mjs/Prelude/AssociativeFlatten/index.mjs",
++      "import": {
++        "types": "./Prelude/AssociativeFlatten/index.d.ts",
++        "default": "./_mjs/Prelude/AssociativeFlatten/index.mjs"
++      },
+       "require": "./Prelude/AssociativeFlatten/index.js"
+     },
+     "./Prelude/Category": {
+-      "import": "./_mjs/Prelude/Category/index.mjs",
++      "import": {
++        "types": "./Prelude/Category/index.d.ts",
++        "default": "./_mjs/Prelude/Category/index.mjs"
++      },
+       "require": "./Prelude/Category/index.js"
+     },
+     "./Prelude/ChainRec": {
+-      "import": "./_mjs/Prelude/ChainRec/index.mjs",
++      "import": {
++        "types": "./Prelude/ChainRec/index.d.ts",
++        "default": "./_mjs/Prelude/ChainRec/index.mjs"
++      },
+       "require": "./Prelude/ChainRec/index.js"
+     },
+     "./Prelude/Collection": {
+-      "import": "./_mjs/Prelude/Collection/index.mjs",
++      "import": {
++        "types": "./Prelude/Collection/index.d.ts",
++        "default": "./_mjs/Prelude/Collection/index.mjs"
++      },
+       "require": "./Prelude/Collection/index.js"
+     },
+     "./Prelude/CommutativeBoth": {
+-      "import": "./_mjs/Prelude/CommutativeBoth/index.mjs",
++      "import": {
++        "types": "./Prelude/CommutativeBoth/index.d.ts",
++        "default": "./_mjs/Prelude/CommutativeBoth/index.mjs"
++      },
+       "require": "./Prelude/CommutativeBoth/index.js"
+     },
+     "./Prelude/CommutativeEither": {
+-      "import": "./_mjs/Prelude/CommutativeEither/index.mjs",
++      "import": {
++        "types": "./Prelude/CommutativeEither/index.d.ts",
++        "default": "./_mjs/Prelude/CommutativeEither/index.mjs"
++      },
+       "require": "./Prelude/CommutativeEither/index.js"
+     },
+     "./Prelude/Compact": {
+-      "import": "./_mjs/Prelude/Compact/index.mjs",
++      "import": {
++        "types": "./Prelude/Compact/index.d.ts",
++        "default": "./_mjs/Prelude/Compact/index.mjs"
++      },
+       "require": "./Prelude/Compact/index.js"
+     },
+     "./Prelude/Compactable": {
+-      "import": "./_mjs/Prelude/Compactable/index.mjs",
++      "import": {
++        "types": "./Prelude/Compactable/index.d.ts",
++        "default": "./_mjs/Prelude/Compactable/index.mjs"
++      },
+       "require": "./Prelude/Compactable/index.js"
+     },
+     "./Prelude/Contravariant": {
+-      "import": "./_mjs/Prelude/Contravariant/index.mjs",
++      "import": {
++        "types": "./Prelude/Contravariant/index.d.ts",
++        "default": "./_mjs/Prelude/Contravariant/index.mjs"
++      },
+       "require": "./Prelude/Contravariant/index.js"
+     },
+     "./Prelude/Covariant": {
+-      "import": "./_mjs/Prelude/Covariant/index.mjs",
++      "import": {
++        "types": "./Prelude/Covariant/index.d.ts",
++        "default": "./_mjs/Prelude/Covariant/index.mjs"
++      },
+       "require": "./Prelude/Covariant/index.js"
+     },
+     "./Prelude/CovariantWithIndex": {
+-      "import": "./_mjs/Prelude/CovariantWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/CovariantWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/CovariantWithIndex/index.mjs"
++      },
+       "require": "./Prelude/CovariantWithIndex/index.js"
+     },
+     "./Prelude/Derive": {
+-      "import": "./_mjs/Prelude/Derive/index.mjs",
++      "import": {
++        "types": "./Prelude/Derive/index.d.ts",
++        "default": "./_mjs/Prelude/Derive/index.mjs"
++      },
+       "require": "./Prelude/Derive/index.js"
+     },
+     "./Prelude/DSL": {
+-      "import": "./_mjs/Prelude/DSL/index.mjs",
++      "import": {
++        "types": "./Prelude/DSL/index.d.ts",
++        "default": "./_mjs/Prelude/DSL/index.mjs"
++      },
+       "require": "./Prelude/DSL/index.js"
+     },
+     "./Prelude/Extend": {
+-      "import": "./_mjs/Prelude/Extend/index.mjs",
++      "import": {
++        "types": "./Prelude/Extend/index.d.ts",
++        "default": "./_mjs/Prelude/Extend/index.mjs"
++      },
+       "require": "./Prelude/Extend/index.js"
+     },
+     "./Prelude/Foldable": {
+-      "import": "./_mjs/Prelude/Foldable/index.mjs",
++      "import": {
++        "types": "./Prelude/Foldable/index.d.ts",
++        "default": "./_mjs/Prelude/Foldable/index.mjs"
++      },
+       "require": "./Prelude/Foldable/index.js"
+     },
+     "./Prelude/FoldableWithIndex": {
+-      "import": "./_mjs/Prelude/FoldableWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/FoldableWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/FoldableWithIndex/index.mjs"
++      },
+       "require": "./Prelude/FoldableWithIndex/index.js"
+     },
+     "./Prelude/FoldMap": {
+-      "import": "./_mjs/Prelude/FoldMap/index.mjs",
++      "import": {
++        "types": "./Prelude/FoldMap/index.d.ts",
++        "default": "./_mjs/Prelude/FoldMap/index.mjs"
++      },
+       "require": "./Prelude/FoldMap/index.js"
+     },
+     "./Prelude/FoldMapWithIndex": {
+-      "import": "./_mjs/Prelude/FoldMapWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/FoldMapWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/FoldMapWithIndex/index.mjs"
++      },
+       "require": "./Prelude/FoldMapWithIndex/index.js"
+     },
+     "./Prelude/FX": {
+-      "import": "./_mjs/Prelude/FX/index.mjs",
++      "import": {
++        "types": "./Prelude/FX/index.d.ts",
++        "default": "./_mjs/Prelude/FX/index.mjs"
++      },
+       "require": "./Prelude/FX/index.js"
+     },
+     "./Prelude/FX/Access": {
+-      "import": "./_mjs/Prelude/FX/Access/index.mjs",
++      "import": {
++        "types": "./Prelude/FX/Access/index.d.ts",
++        "default": "./_mjs/Prelude/FX/Access/index.mjs"
++      },
+       "require": "./Prelude/FX/Access/index.js"
+     },
+     "./Prelude/FX/Fail": {
+-      "import": "./_mjs/Prelude/FX/Fail/index.mjs",
++      "import": {
++        "types": "./Prelude/FX/Fail/index.d.ts",
++        "default": "./_mjs/Prelude/FX/Fail/index.mjs"
++      },
+       "require": "./Prelude/FX/Fail/index.js"
+     },
+     "./Prelude/FX/Provide": {
+-      "import": "./_mjs/Prelude/FX/Provide/index.mjs",
++      "import": {
++        "types": "./Prelude/FX/Provide/index.d.ts",
++        "default": "./_mjs/Prelude/FX/Provide/index.mjs"
++      },
+       "require": "./Prelude/FX/Provide/index.js"
+     },
+     "./Prelude/FX/Run": {
+-      "import": "./_mjs/Prelude/FX/Run/index.mjs",
++      "import": {
++        "types": "./Prelude/FX/Run/index.d.ts",
++        "default": "./_mjs/Prelude/FX/Run/index.mjs"
++      },
+       "require": "./Prelude/FX/Run/index.js"
+     },
+     "./Prelude/HKT": {
+-      "import": "./_mjs/Prelude/HKT/index.mjs",
++      "import": {
++        "types": "./Prelude/HKT/index.d.ts",
++        "default": "./_mjs/Prelude/HKT/index.mjs"
++      },
+       "require": "./Prelude/HKT/index.js"
+     },
+     "./Prelude/IdentityBoth": {
+-      "import": "./_mjs/Prelude/IdentityBoth/index.mjs",
++      "import": {
++        "types": "./Prelude/IdentityBoth/index.d.ts",
++        "default": "./_mjs/Prelude/IdentityBoth/index.mjs"
++      },
+       "require": "./Prelude/IdentityBoth/index.js"
+     },
+     "./Prelude/IdentityEither": {
+-      "import": "./_mjs/Prelude/IdentityEither/index.mjs",
++      "import": {
++        "types": "./Prelude/IdentityEither/index.d.ts",
++        "default": "./_mjs/Prelude/IdentityEither/index.mjs"
++      },
+       "require": "./Prelude/IdentityEither/index.js"
+     },
+     "./Prelude/IdentityFlatten": {
+-      "import": "./_mjs/Prelude/IdentityFlatten/index.mjs",
++      "import": {
++        "types": "./Prelude/IdentityFlatten/index.d.ts",
++        "default": "./_mjs/Prelude/IdentityFlatten/index.mjs"
++      },
+       "require": "./Prelude/IdentityFlatten/index.js"
+     },
+     "./Prelude/Invariant": {
+-      "import": "./_mjs/Prelude/Invariant/index.mjs",
++      "import": {
++        "types": "./Prelude/Invariant/index.d.ts",
++        "default": "./_mjs/Prelude/Invariant/index.mjs"
++      },
+       "require": "./Prelude/Invariant/index.js"
+     },
+     "./Prelude/Monad": {
+-      "import": "./_mjs/Prelude/Monad/index.mjs",
++      "import": {
++        "types": "./Prelude/Monad/index.d.ts",
++        "default": "./_mjs/Prelude/Monad/index.mjs"
++      },
+       "require": "./Prelude/Monad/index.js"
+     },
+     "./Prelude/None": {
+-      "import": "./_mjs/Prelude/None/index.mjs",
++      "import": {
++        "types": "./Prelude/None/index.d.ts",
++        "default": "./_mjs/Prelude/None/index.mjs"
++      },
+       "require": "./Prelude/None/index.js"
+     },
+     "./Prelude/Reduce": {
+-      "import": "./_mjs/Prelude/Reduce/index.mjs",
++      "import": {
++        "types": "./Prelude/Reduce/index.d.ts",
++        "default": "./_mjs/Prelude/Reduce/index.mjs"
++      },
+       "require": "./Prelude/Reduce/index.js"
+     },
+     "./Prelude/ReduceRight": {
+-      "import": "./_mjs/Prelude/ReduceRight/index.mjs",
++      "import": {
++        "types": "./Prelude/ReduceRight/index.d.ts",
++        "default": "./_mjs/Prelude/ReduceRight/index.mjs"
++      },
+       "require": "./Prelude/ReduceRight/index.js"
+     },
+     "./Prelude/ReduceRightWithIndex": {
+-      "import": "./_mjs/Prelude/ReduceRightWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/ReduceRightWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/ReduceRightWithIndex/index.mjs"
++      },
+       "require": "./Prelude/ReduceRightWithIndex/index.js"
+     },
+     "./Prelude/ReduceWithIndex": {
+-      "import": "./_mjs/Prelude/ReduceWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/ReduceWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/ReduceWithIndex/index.mjs"
++      },
+       "require": "./Prelude/ReduceWithIndex/index.js"
+     },
+     "./Prelude/Selective": {
+-      "import": "./_mjs/Prelude/Selective/index.mjs",
++      "import": {
++        "types": "./Prelude/Selective/index.d.ts",
++        "default": "./_mjs/Prelude/Selective/index.mjs"
++      },
+       "require": "./Prelude/Selective/index.js"
+     },
+     "./Prelude/Separate": {
+-      "import": "./_mjs/Prelude/Separate/index.mjs",
++      "import": {
++        "types": "./Prelude/Separate/index.d.ts",
++        "default": "./_mjs/Prelude/Separate/index.mjs"
++      },
+       "require": "./Prelude/Separate/index.js"
+     },
+     "./Prelude/ForEach": {
+-      "import": "./_mjs/Prelude/ForEach/index.mjs",
++      "import": {
++        "types": "./Prelude/ForEach/index.d.ts",
++        "default": "./_mjs/Prelude/ForEach/index.mjs"
++      },
+       "require": "./Prelude/ForEach/index.js"
+     },
+     "./Prelude/ForEachWithIndex": {
+-      "import": "./_mjs/Prelude/ForEachWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/ForEachWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/ForEachWithIndex/index.mjs"
++      },
+       "require": "./Prelude/ForEachWithIndex/index.js"
+     },
+     "./Prelude/Wiltable": {
+-      "import": "./_mjs/Prelude/Wiltable/index.mjs",
++      "import": {
++        "types": "./Prelude/Wiltable/index.d.ts",
++        "default": "./_mjs/Prelude/Wiltable/index.mjs"
++      },
+       "require": "./Prelude/Wiltable/index.js"
+     },
+     "./Prelude/WiltableWithIndex": {
+-      "import": "./_mjs/Prelude/WiltableWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/WiltableWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/WiltableWithIndex/index.mjs"
++      },
+       "require": "./Prelude/WiltableWithIndex/index.js"
+     },
+     "./Prelude/Witherable": {
+-      "import": "./_mjs/Prelude/Witherable/index.mjs",
++      "import": {
++        "types": "./Prelude/Witherable/index.d.ts",
++        "default": "./_mjs/Prelude/Witherable/index.mjs"
++      },
+       "require": "./Prelude/Witherable/index.js"
+     },
+     "./Prelude/WitherableWithIndex": {
+-      "import": "./_mjs/Prelude/WitherableWithIndex/index.mjs",
++      "import": {
++        "types": "./Prelude/WitherableWithIndex/index.d.ts",
++        "default": "./_mjs/Prelude/WitherableWithIndex/index.mjs"
++      },
+       "require": "./Prelude/WitherableWithIndex/index.js"
+     },
+     "./Sync": {
+-      "import": "./_mjs/Sync/index.mjs",
++      "import": {
++        "types": "./Sync/index.d.ts",
++        "default": "./_mjs/Sync/index.mjs"
++      },
+       "require": "./Sync/index.js"
+     },
+     "./Structural": {
+-      "import": "./_mjs/Structural/index.mjs",
++      "import": {
++        "types": "./Structural/index.d.ts",
++        "default": "./_mjs/Structural/index.mjs"
++      },
+       "require": "./Structural/index.js"
+     },
+     "./Support/AtomicBoolean": {
+-      "import": "./_mjs/Support/AtomicBoolean/index.mjs",
++      "import": {
++        "types": "./Support/AtomicBoolean/index.d.ts",
++        "default": "./_mjs/Support/AtomicBoolean/index.mjs"
++      },
+       "require": "./Support/AtomicBoolean/index.js"
+     },
+     "./Support/AtomicNumber": {
+-      "import": "./_mjs/Support/AtomicNumber/index.mjs",
++      "import": {
++        "types": "./Support/AtomicNumber/index.d.ts",
++        "default": "./_mjs/Support/AtomicNumber/index.mjs"
++      },
+       "require": "./Support/AtomicNumber/index.js"
+     },
+     "./Support/AtomicReference": {
+-      "import": "./_mjs/Support/AtomicReference/index.mjs",
++      "import": {
++        "types": "./Support/AtomicReference/index.d.ts",
++        "default": "./_mjs/Support/AtomicReference/index.mjs"
++      },
+       "require": "./Support/AtomicReference/index.js"
+     },
+     "./Support/DoublyLinkedList": {
+-      "import": "./_mjs/Support/DoublyLinkedList/index.mjs",
++      "import": {
++        "types": "./Support/DoublyLinkedList/index.d.ts",
++        "default": "./_mjs/Support/DoublyLinkedList/index.mjs"
++      },
+       "require": "./Support/DoublyLinkedList/index.js"
+     },
+     "./Support/ImmutableQueue": {
+-      "import": "./_mjs/Support/ImmutableQueue/index.mjs",
++      "import": {
++        "types": "./Support/ImmutableQueue/index.d.ts",
++        "default": "./_mjs/Support/ImmutableQueue/index.mjs"
++      },
+       "require": "./Support/ImmutableQueue/index.js"
+     },
+     "./Support/LinkedList": {
+-      "import": "./_mjs/Support/LinkedList/index.mjs",
++      "import": {
++        "types": "./Support/LinkedList/index.d.ts",
++        "default": "./_mjs/Support/LinkedList/index.mjs"
++      },
+       "require": "./Support/LinkedList/index.js"
+     },
+     "./Support/Mutable": {
+-      "import": "./_mjs/Support/Mutable/index.mjs",
++      "import": {
++        "types": "./Support/Mutable/index.d.ts",
++        "default": "./_mjs/Support/Mutable/index.mjs"
++      },
+       "require": "./Support/Mutable/index.js"
+     },
+     "./Support/MutableQueue": {
+-      "import": "./_mjs/Support/MutableQueue/index.mjs",
++      "import": {
++        "types": "./Support/MutableQueue/index.d.ts",
++        "default": "./_mjs/Support/MutableQueue/index.mjs"
++      },
+       "require": "./Support/MutableQueue/index.js"
+     },
+     "./Support/OneShot": {
+-      "import": "./_mjs/Support/OneShot/index.mjs",
++      "import": {
++        "types": "./Support/OneShot/index.d.ts",
++        "default": "./_mjs/Support/OneShot/index.mjs"
++      },
+       "require": "./Support/OneShot/index.js"
+     },
+     "./Support/RingBuffer": {
+-      "import": "./_mjs/Support/RingBuffer/index.mjs",
++      "import": {
++        "types": "./Support/RingBuffer/index.d.ts",
++        "default": "./_mjs/Support/RingBuffer/index.mjs"
++      },
+       "require": "./Support/RingBuffer/index.js"
+     },
+     "./Tracing": {
+-      "import": "./_mjs/Tracing/index.mjs",
++      "import": {
++        "types": "./Tracing/index.d.ts",
++        "default": "./_mjs/Tracing/index.mjs"
++      },
+       "require": "./Tracing/index.js"
+     },
+     "./Tracing/Enable": {
+-      "import": "./_mjs/Tracing/Enable/index.mjs",
++      "import": {
++        "types": "./Tracing/Enable/index.d.ts",
++        "default": "./_mjs/Tracing/Enable/index.mjs"
++      },
+       "require": "./Tracing/Enable/index.js"
+     },
+     "./Utils": {
+-      "import": "./_mjs/Utils/index.mjs",
++      "import": {
++        "types": "./Utils/index.d.ts",
++        "default": "./_mjs/Utils/index.mjs"
++      },
+       "require": "./Utils/index.js"
+     },
+     "./XPure": {
+-      "import": "./_mjs/XPure/index.mjs",
++      "import": {
++        "types": "./XPure/index.d.ts",
++        "default": "./_mjs/XPure/index.mjs"
++      },
+       "require": "./XPure/index.js"
+     },
+     "./XPure/XIO": {
+-      "import": "./_mjs/XPure/XIO/index.mjs",
++      "import": {
++        "types": "./XPure/XIO/index.d.ts",
++        "default": "./_mjs/XPure/XIO/index.mjs"
++      },
+       "require": "./XPure/XIO/index.js"
+     },
+     "./XPure/XReader": {
+-      "import": "./_mjs/XPure/XReader/index.mjs",
++      "import": {
++        "types": "./XPure/XReader/index.d.ts",
++        "default": "./_mjs/XPure/XReader/index.mjs"
++      },
+       "require": "./XPure/XReader/index.js"
+     },
+     "./XPure/XReaderT": {
+-      "import": "./_mjs/XPure/XReaderT/index.mjs",
++      "import": {
++        "types": "./XPure/XReaderT/index.d.ts",
++        "default": "./_mjs/XPure/XReaderT/index.mjs"
++      },
+       "require": "./XPure/XReaderT/index.js"
+     },
+     "./XPure/XState": {
+-      "import": "./_mjs/XPure/XState/index.mjs",
++      "import": {
++        "types": "./XPure/XState/index.d.ts",
++        "default": "./_mjs/XPure/XState/index.mjs"
++      },
+       "require": "./XPure/XState/index.js"
+     },
++    "./*.js": {
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
++      "require": "./*.js"
++    },
+     "./*": {
+-      "import": "./_mjs/*.mjs",
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
+       "require": "./*.js"
+     }
+   }
