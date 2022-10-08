@@ -46,7 +46,7 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return pipe(
     MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    MO.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
     MO.encoder((u) => toArray_(u).map(encodeSelf)),
     MO.mapApi(() => ({ self: self.Api, eq: eq_, ord })),

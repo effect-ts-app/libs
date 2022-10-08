@@ -14,8 +14,8 @@ export function makeConstrainedFromString<Brand>(minLength: number, maxLength: n
     MO.fromString,
     MO.arbitrary((FC) => FC.string({ minLength, maxLength })),
     constrained<Brand>(minLength, maxLength),
-    MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-    MO.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    MO.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+    MO.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
     // NOTE: brand must come after, to reap benefits of showing Opaque types in editor
     // if combining types further down the line, must re-apply brand.
     MO.brand<Brand>()

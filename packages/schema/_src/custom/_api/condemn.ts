@@ -1,6 +1,5 @@
 // tracing: off
 
-
 import { Case } from "@effect-ts/system/Case"
 
 import type { AnyError } from "../_schema/index.js"
@@ -13,9 +12,9 @@ import { Parser, ParserEnv } from "../Parser/index.js"
  */
 export function condemn<X, E, A>(
   self: Parser<X, E, A>
-): (a: X, env?: ParserEnv) => Effect.IO<E, A> {
+): (a: X, env?: ParserEnv) => Effect<never, E, A> {
   return (x, env?: ParserEnv) =>
-    Effect.suspend(() => {
+    Effect.suspendSucceed(() => {
       const y = self(x, env).effect
       if (y._tag === "Left") {
         return Effect.fail(y.left)
@@ -48,18 +47,18 @@ export class ThrowableCondemnException extends Error {
  * Otherwise succeeds with the valid result.
  */
 export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
-  return (a: X, env?: ParserEnv, __trace?: string) =>
-    Effect.fromEither(() => {
+  return (a: X, env?: ParserEnv) =>
+    Effect.suspendSucceed(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
-        return Either.left(new CondemnException({ message: drawError(res.left) }))
+        return Effect.fail(new CondemnException({ message: drawError(res.left) }))
       }
       const warn = res.right.get(1)
       if (warn._tag === "Some") {
-        return Either.left(new CondemnException({ message: drawError(warn.value) }))
+        return Effect.fail(new CondemnException({ message: drawError(warn.value) }))
       }
-      return Either.right(res.right.get(0))
-    }, __trace)
+      return Effect(res.right.get(0))
+    })
 }
 
 /**
@@ -68,7 +67,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
  */
 export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
   const orFail = condemnFail(self)
-  return (a: X, env?: ParserEnv, __trace?: string) => Effect.orDie(orFail(a, env, __trace))
+  return (a: X, env?: ParserEnv) => orFail(a, env).orDie
 }
 
 /**

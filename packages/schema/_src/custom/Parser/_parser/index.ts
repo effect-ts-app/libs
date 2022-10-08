@@ -66,15 +66,13 @@ export const interpreters: ((
                         w._tag === "Some"
                           ? Th.warn(
                               a,
-                              S.compositionE(Chunk.append_(w.value.errors, S.nextE(e)))
+                              S.compositionE(w.value.errors.append(S.nextE(e)))
                             )
                           : Th.warn(a, e),
                       (e) =>
                         w._tag === "None"
                           ? Th.fail(S.compositionE(Chunk.single(S.nextE(e))))
-                          : Th.fail(
-                              S.compositionE(Chunk.append_(w.value.errors, S.nextE(e)))
-                            )
+                          : Th.fail(S.compositionE(w.value.errors.append(S.nextE(e))))
                     )
                   )
               )
@@ -112,8 +110,7 @@ export const interpreters: ((
                             S.compositionE(
                               w._tag === "None"
                                 ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
-                                : Chunk.append_(
-                                    w.value.errors,
+                                : w.value.errors.append(
                                     S.nextE(S.refinementE(schema.error(a)))
                                   )
                             )

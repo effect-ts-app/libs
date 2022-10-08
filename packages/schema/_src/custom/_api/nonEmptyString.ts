@@ -23,8 +23,8 @@ export const nonEmptyStringFromString: DefaultSchema<
   fromString,
   S.arbitrary((FC) => FC.string({ minLength: 1 })),
   nonEmpty,
-  S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  S.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   brand<NonEmptyString>(),
   S.annotate(nonEmptyStringFromStringIdentifier, {})
 )

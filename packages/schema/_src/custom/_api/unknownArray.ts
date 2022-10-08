@@ -21,8 +21,8 @@ export const unknownArray: DefaultSchema<
     (u): u is readonly unknown[] => Array.isArray(u),
     (val) => S.leafE(S.unknownArrayE(val))
   ),
-  S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  S.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+  S.mapConstructorError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
   S.encoder((_) => _),
   withDefaults,
   S.annotate(unknownArrayIdentifier, {})

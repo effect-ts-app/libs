@@ -38,8 +38,8 @@ export const PhoneNumberFromString: DefaultSchema<
   fromString,
   MO.arbitrary((FC) => Numbers(7, 10)(FC)),
   nonEmpty,
-  MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  MO.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  MO.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  MO.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   MO.refine(isPhoneNumber, (n) => MO.leafE(parseUuidE(n))),
   brand<PhoneNumber>(),
   MO.annotate(PhoneNumberFromStringIdentifier, {})

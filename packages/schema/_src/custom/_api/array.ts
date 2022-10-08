@@ -37,7 +37,7 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return pipe(
     chunk(self)[">>>"](fromChunk),
-    S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
     S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),

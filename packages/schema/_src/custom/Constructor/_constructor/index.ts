@@ -59,8 +59,7 @@ export const interpreters: ((
                         S.compositionE(
                           w._tag === "None"
                             ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
-                            : Chunk.append_(
-                                w.value.errors,
+                            : w.value.errors.append(
                                 S.nextE(S.refinementE(schema.error(a)))
                               )
                         )

@@ -7,9 +7,6 @@
         "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
-        "types": [
-            "@effect-ts-app/core/_src/_ext/index"
-        ],
         "paths": {
             "@effect-ts-app/core/*": [
                 "./_src/*"

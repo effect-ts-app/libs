@@ -4,7 +4,7 @@ import { curry, flow, Lazy, pipe } from "./Function.js"
 import * as O from "./Maybe.js"
 
 /**
- * @tsplus static effect/Effect.Ops flatMapEither
+ * @tsplus static effect/core/io/Effect.Ops flatMapEither
  */
 export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
   Effect.$.flatMap((a: A2) => Effect.fromEither(ei(a)))

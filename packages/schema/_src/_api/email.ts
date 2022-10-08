@@ -31,8 +31,8 @@ export const EmailFromString: DefaultSchema<string, Email, string, string, {}> =
   fromString,
   MO.arbitrary((FC) => FC.emailAddress()),
   nonEmpty,
-  MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  MO.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+  MO.mapConstructorError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
   MO.refine(isEmail, (n) => MO.leafE(parseUuidE(n))),
   brand<Email>(),
   MO.annotate(EmailFromStringIdentifier, {})

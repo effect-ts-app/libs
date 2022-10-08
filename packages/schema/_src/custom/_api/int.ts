@@ -24,8 +24,8 @@ export const intFromNumber: DefaultSchema<number, Int, number, number, {}> = pip
     (n) => S.leafE(S.invalidIntegerE(n))
   ),
   S.encoder((_) => _ as number),
-  S.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   S.mapApi(() => ({})),
   brand<Int>(),
   S.annotate(intFromNumberIdentifier, {})

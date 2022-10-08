@@ -29,13 +29,9 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
         Array.isArray(u) && u.length > 0 && u.every(guardSelf)
     ),
     S.parser((u: Chunk<ParsedShape>) => {
-      const ar = Chunk.toArray(u)
+      const ar = u.toArray
       const nar = NonEmptyArray.fromArray(ar)
-      return Maybe.fold_(
-        nar,
-        () => Th.fail(leafE(unknownArrayE(u)) as any),
-        Th.succeed
-      )
+      return Maybe.fold_(nar, () => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
     }),
     S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary(
@@ -48,7 +44,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return pipe(
     S.chunk(self)[">>>"](fromChunk),
-    S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     S.constructor((_: NonEmptyArray<ParsedShape>) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
