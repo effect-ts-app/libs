@@ -48,7 +48,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       )
 
       const idx = makeIndexKey(record)
-      return Maybe.isSome(currentVersion)
+      return currentVersion.isSome()
         ? Managed.use_(lockIndex(record), () =>
             readIndex(idx)
               .flatMap((x) =>

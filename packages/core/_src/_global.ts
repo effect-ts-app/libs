@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "@effect/core/global"
 import "@tsplus/stdlib/global"
-import "./_ext/Prelude.ext.js"
+import "@effect-ts-app/core/_ext/Prelude.ext"
 
 /**
  * @tsplus global

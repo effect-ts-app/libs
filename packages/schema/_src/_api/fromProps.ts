@@ -5,6 +5,7 @@ import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
 import { pipe } from "@effect-ts/core/Function"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
+import { None, Some } from "@tsplus/stdlib/data/Maybe"
 import type * as fc from "fast-check"
 
 import type { Annotation } from "../custom/_schema/annotation.js"
@@ -34,8 +35,8 @@ export class FromProperty<
   // Disabled because it sends the compiler down into rabbit holes..
   // schema<That extends S.SchemaAny>(
   //   schema: That
-  // ): FromProperty<That, Optional, As, Maybe.None> {
-  //   return new FromProperty(this._as, schema, this._optional, new Maybe.None(), this._map)
+  // ): FromProperty<That, Optional, As, None> {
+  //   return new FromProperty(this._as, schema, this._optional, Maybe.none, this._map)
   // }
 
   // opt(): FromProperty<Self, "optional", As, Def> {
@@ -48,9 +49,9 @@ export class FromProperty<
 
   // from<As1 extends PropertyKey>(
   //   as: As1
-  // ): FromProperty<Self, Optional, Maybe.Some<As1>, Def> {
+  // ): FromProperty<Self, Optional, Some<As1>, Def> {
   //   return new FromProperty(
-  //     new Maybe.Some(as),
+  //     Maybe.some(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -58,9 +59,9 @@ export class FromProperty<
   //   )
   // }
 
-  // removeFrom(): FromProperty<Self, Optional, Maybe.None, Def> {
+  // removeFrom(): FromProperty<Self, Optional, None, Def> {
   //   return new FromProperty(
-  //     new Maybe.None(),
+  //     Maybe.none,
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -72,13 +73,13 @@ export class FromProperty<
   //   _: Optional extends "required"
   //     ? () => S.ParsedShapeOf<Self>
   //     : ["default can be set only for required properties", never]
-  // ): FromProperty<Self, Optional, As, Maybe.Some<["both", () => S.ParsedShapeOf<Self>]>>
+  // ): FromProperty<Self, Optional, As, Some<["both", () => S.ParsedShapeOf<Self>]>>
   // def<K extends "parser" | "constructor" | "both">(
   //   _: Optional extends "required"
   //     ? () => S.ParsedShapeOf<Self>
   //     : ["default can be set only for required properties", never],
   //   k: K
-  // ): FromProperty<Self, Optional, As, Maybe.Some<[K, () => S.ParsedShapeOf<Self>]>>
+  // ): FromProperty<Self, Optional, As, Some<[K, () => S.ParsedShapeOf<Self>]>>
   // def(
   //   _: Optional extends "required"
   //     ? () => S.ParsedShapeOf<Self>
@@ -88,7 +89,7 @@ export class FromProperty<
   //   Self,
   //   Optional,
   //   As,
-  //   Maybe.Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  //   Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
   // > {
   //   // @ts-expect-error
   //   return new FromProperty(
@@ -96,17 +97,17 @@ export class FromProperty<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     new Maybe.Some([k ?? "both", _]),
+  //     Maybe.some([k ?? "both", _]),
   //     this._map
   //   )
   // }
 
-  // removeDef(): FromProperty<Self, Optional, As, Maybe.None> {
+  // removeDef(): FromProperty<Self, Optional, As, None> {
   //   return new FromProperty(
   //     this._as,
   //     this._schema,
   //     this._optional,
-  //     new Maybe.None(),
+  //     Maybe.none,
   //     this._map
   //   )
   // }
@@ -133,16 +134,14 @@ export function fromPropFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Maybe<PropertyKey>,
-  Def extends Maybe<
-    ["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]
-  >,
+  Def extends Maybe<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
   As1 extends PropertyKey
 >(
   prop: FromProperty<Self, Optional, As, Def>,
   as: As1
-): FromProperty<Self, Optional, Maybe.Some<As1>, Def> {
+): FromProperty<Self, Optional, Some<As1>, Def> {
   return new FromProperty(
-    new Maybe.Some(as),
+    Maybe.some(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -152,12 +151,12 @@ export function fromPropFrom<
 
 export function fromProp<Self extends S.SchemaAny>(
   schema: Self
-): FromProperty<Self, "required", Maybe.None, Maybe.None> {
+): FromProperty<Self, "required", None, None> {
   return new FromProperty(
-    new Maybe.None(),
+    Maybe.none as None,
     schema,
     "required",
-    new Maybe.None(),
+    Maybe.none as None,
     HashMap.make()
   )
 }
@@ -193,7 +192,7 @@ export type ConstructorFromFromProperties<Props extends FromPropertyRecord> = Co
           ? {
               readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
             }
-          : Props[k]["_def"] extends Maybe.Some<["constructor" | "both", any]>
+          : Props[k]["_def"] extends Some<["constructor" | "both", any]>
           ? {
               readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
             }
@@ -212,12 +211,12 @@ export type EncodedFromFromProperties<Props extends FromPropertyRecord> = Comput
       [k in keyof Props]: Props[k] extends AnyFromProperty
         ? Props[k]["_optional"] extends "optional"
           ? {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]?: S.EncodedOf<Props[k]["_schema"]>
             }
           : {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]: S.EncodedOf<Props[k]["_schema"]>
             }
@@ -250,9 +249,9 @@ export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
 //                       [k in keyof Props]: Props[k] extends AnyFromProperty
 //                         ? Props[k]["_optional"] extends "optional"
 //                           ? never
-//                           : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+//                           : Props[k]["_def"] extends Some<["parser" | "both", any]>
 //                           ? never
-//                           : Props[k]["_as"] extends Maybe.Some<any>
+//                           : Props[k]["_as"] extends Some<any>
 //                           ? Props[k]["_as"]["value"]
 //                           : k
 //                         : never
@@ -265,20 +264,20 @@ export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
 //                       [k in keyof Props]: Props[k] extends AnyFromProperty
 //                         ? Props[k]["_optional"] extends "optional"
 //                           ? S.OptionalKeyE<
-//                               Props[k]["_as"] extends Maybe.Some<any>
+//                               Props[k]["_as"] extends Some<any>
 //                                 ? Props[k]["_as"]["value"]
 //                                 : k,
 //                               S.ParserErrorOf<Props[k]["_schema"]>
 //                             >
-//                           : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+//                           : Props[k]["_def"] extends Some<["parser" | "both", any]>
 //                           ? S.OptionalKeyE<
-//                               Props[k]["_as"] extends Maybe.Some<any>
+//                               Props[k]["_as"] extends Some<any>
 //                                 ? Props[k]["_as"]["value"]
 //                                 : k,
 //                               S.ParserErrorOf<Props[k]["_schema"]>
 //                             >
 //                           : S.RequiredKeyE<
-//                               Props[k]["_as"] extends Maybe.Some<any>
+//                               Props[k]["_as"] extends Some<any>
 //                                 ? Props[k]["_as"]["value"]
 //                                 : k,
 //                               S.ParserErrorOf<Props[k]["_schema"]>
@@ -293,20 +292,20 @@ export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
 //                 [k in keyof Props]: Props[k] extends AnyFromProperty
 //                   ? Props[k]["_optional"] extends "optional"
 //                     ? S.OptionalKeyE<
-//                         Props[k]["_as"] extends Maybe.Some<any>
+//                         Props[k]["_as"] extends Some<any>
 //                           ? Props[k]["_as"]["value"]
 //                           : k,
 //                         S.ParserErrorOf<Props[k]["_schema"]>
 //                       >
-//                     : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+//                     : Props[k]["_def"] extends Some<["parser" | "both", any]>
 //                     ? S.OptionalKeyE<
-//                         Props[k]["_as"] extends Maybe.Some<any>
+//                         Props[k]["_as"] extends Some<any>
 //                           ? Props[k]["_as"]["value"]
 //                           : k,
 //                         S.ParserErrorOf<Props[k]["_schema"]>
 //                       >
 //                     : S.RequiredKeyE<
-//                         Props[k]["_as"] extends Maybe.Some<any>
+//                         Props[k]["_as"] extends Some<any>
 //                           ? Props[k]["_as"]["value"]
 //                           : k,
 //                         S.ParserErrorOf<Props[k]["_schema"]>
@@ -317,8 +316,9 @@ export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
 //       >
 //   >
 
-export const fromPropertiesIdentifier =
-  S.makeAnnotation<{ props: FromPropertyRecord }>()
+export const fromPropertiesIdentifier = S.makeAnnotation<{
+  props: FromPropertyRecord
+}>()
 
 export type SchemaFromProperties<Props extends FromPropertyRecord> = S.DefaultSchema<
   ParserInputFromFromProperties<Props>,
@@ -329,7 +329,7 @@ export type SchemaFromProperties<Props extends FromPropertyRecord> = S.DefaultSc
 >
 
 export type TagsFromFromProps<Props extends FromPropertyRecord> = {
-  [k in keyof Props]: Props[k]["_as"] extends Maybe.None
+  [k in keyof Props]: Props[k]["_as"] extends None
     ? Props[k]["_optional"] extends "required"
       ? S.ApiOf<Props[k]["_schema"]> extends S.LiteralApi<infer KS>
         ? KS extends [string]
@@ -357,8 +357,8 @@ export function tagsFromFromProps<Props extends FromPropertyRecord>(
     const s: S.SchemaAny = props[key]._schema
 
     if (
-      Maybe.isNone(props[key]._as) &&
-      Maybe.isNone(props[key]._def) &&
+      props[key]._as.isNone() &&
+      props[key]._def.isNone() &&
       props[key]._optional === "required" &&
       "literals" in s.Api &&
       Array.isArray(s.Api["literals"]) &&
@@ -390,13 +390,13 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     if (props[key]._optional === "required") {
       if (
-        Maybe.isNone(props[key]._def) ||
-        (Maybe.isSome(props[key]._def) && props[key]._def.value[0] === "constructor")
+        props[key]._def.isNone() ||
+        (props[key]._def.isSome() && props[key]._def.value[0] === "constructor")
       ) {
-        required.push(Maybe.getOrElse_(props[key]._as, () => key))
+        required.push(props[key]._as.getOrElse(() => key))
       }
       if (
-        Maybe.isSome(props[key]._def) &&
+        props[key]._def.isSome() &&
         (props[key]._def.value[0] === "constructor" ||
           props[key]._def.value[0] === "both")
       ) {
@@ -440,13 +440,13 @@ export function fromProps<Props extends FromPropertyRecord>(
         S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
-    let missingKeys = Chunk.empty()
+    let missingKeys = Chunk.empty<string>()
     for (const k of required) {
       if (!(k in _)) {
-        missingKeys = Chunk.append_(missingKeys, k)
+        missingKeys = missingKeys.append(k)
       }
     }
-    if (!Chunk.isEmpty(missingKeys)) {
+    if (!missingKeys.isEmpty) {
       return Th.fail(
         S.compositionE(
           Chunk.single(
@@ -468,14 +468,13 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       const prop = props[key]
-      const _as: string = Maybe.getOrElse_(props[key]._as, () => key)
+      const _as: string = props[key]._as.getOrElse(() => key)
 
       if (_as in _) {
         const res = parsersv2[key](_[_as])
 
         if (res.effect._tag === "Left") {
-          errors = Chunk.append_(
-            errors,
+          errors = errors.append(
             prop._optional === "required"
               ? S.requiredKeyE(_as, res.effect.left)
               : S.optionalKeyE(_as, res.effect.left)
@@ -487,8 +486,7 @@ export function fromProps<Props extends FromPropertyRecord>(
           const warnings = res.effect.right.get(1)
 
           if (warnings._tag === "Some") {
-            errors = Chunk.append_(
-              errors,
+            errors = errors.append(
               prop._optional === "required"
                 ? S.requiredKeyE(_as, warnings.value)
                 : S.optionalKeyE(_as, warnings.value)
@@ -497,7 +495,7 @@ export function fromProps<Props extends FromPropertyRecord>(
         }
       } else {
         if (
-          Maybe.isSome(prop._def) &&
+          prop._def.isSome() &&
           // @ts-expect-error
           (prop._def.value[0] === "parser" || prop._def.value[0] === "both")
         ) {
@@ -511,7 +509,7 @@ export function fromProps<Props extends FromPropertyRecord>(
       augmentRecord(result)
     }
 
-    if (Chunk.isEmpty(errors)) {
+    if (errors.isEmpty) {
       return Th.succeed(result as ShapeFromFromProperties<Props>)
     }
 
@@ -533,7 +531,7 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const _as: string = Maybe.getOrElse_(props[key]._as, () => key)
+        const _as: string = props[key]._as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }
     }
@@ -632,18 +630,18 @@ export type ParserInputFromFromProperties<Props extends FromPropertyRecord> = Co
       [k in keyof Props]: Props[k] extends AnyFromProperty
         ? Props[k]["_optional"] extends "optional"
           ? {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
             }
-          : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+          : Props[k]["_def"] extends Some<["parser" | "both", any]>
           ? {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
             }
           : {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]: S.ParsedShapeOf<Props[k]["_schema"]>
             }
@@ -664,16 +662,16 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
       [k in keyof Props]: Props[k] extends AnyFromProperty
         ? Props[k]["_optional"] extends "optional"
           ? {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]?: AorB<
                 S.ParserInputOf<Props[k]["_schema"]>,
                 S.EncodedOf<Props[k]["_schema"]>
               >
             }
-          : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+          : Props[k]["_def"] extends Some<["parser" | "both", any]>
           ? {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]?: AorB<
                 S.ParserInputOf<Props[k]["_schema"]>,
@@ -681,7 +679,7 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
               >
             }
           : {
-              readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+              readonly [h in Props[k]["_as"] extends Some<any>
                 ? Props[k]["_as"]["value"]
                 : k]: AorB<
                 S.ParserInputOf<Props[k]["_schema"]>,
@@ -709,18 +707,18 @@ export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecor
         [k in keyof Props]: Props[k] extends AnyFromProperty
           ? Props[k]["_optional"] extends "optional"
             ? {
-                readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+                readonly [h in Props[k]["_as"] extends Some<any>
                   ? Props[k]["_as"]["value"]
                   : k]?: S.EncodedOf<Props[k]["_schema"]>
               }
-            : Props[k]["_def"] extends Maybe.Some<["parser" | "both", any]>
+            : Props[k]["_def"] extends Some<["parser" | "both", any]>
             ? {
-                readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+                readonly [h in Props[k]["_as"] extends Some<any>
                   ? Props[k]["_as"]["value"]
                   : k]?: S.EncodedOf<Props[k]["_schema"]>
               }
             : {
-                readonly [h in Props[k]["_as"] extends Maybe.Some<any>
+                readonly [h in Props[k]["_as"] extends Some<any>
                   ? Props[k]["_as"]["value"]
                   : k]: S.EncodedOf<Props[k]["_schema"]>
               }

@@ -238,7 +238,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             oneOf: (yield* $(
               Effect.collectAll(
                 [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-              ).map(Chunk.toArray)
+              ).map((_) => _.toArray)
             )).map((v, i) => ({
               properties: {
                 _tag: { enum: [i === 0 ? "Left" : "Right"] },

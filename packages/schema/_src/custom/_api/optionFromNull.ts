@@ -44,19 +44,15 @@ export function optionFromNull<
     S.parser((i: ParserInput | null, env) =>
       i === null
         ? Th.succeed(Maybe.none)
-        : Th.map_(
-            (env?.cache ? env.cache.getOrSetParser(parse) : parse)(i),
-            Maybe.some
-          )
+        : Th.map_((env?.cache ? env.cache.getOrSetParser(parse) : parse)(i), Maybe.some)
     ),
     S.constructor((x: Maybe<ConstructorInput>) =>
-      Maybe.fold_(
-        x,
+      x.fold(
         () => Th.succeed(Maybe.none),
         (v) => Th.map_(create(v), Maybe.some)
       )
     ),
-    S.encoder((_) => _.map(encode).val),
+    S.encoder((_) => _.map(encode).value ?? null),
     S.mapApi(() => self.Api as Api),
     withDefaults,
     S.annotate(optionFromNullIdentifier, { self })

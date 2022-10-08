@@ -27,7 +27,9 @@ export function fromArray<ParserInput, ParsedShape, ConstructorInput, Encoded, A
     S.identity(
       (u): u is readonly ParsedShape[] => Array.isArray(u) && u.every(guardSelf)
     ),
-    S.parser((u: Chunk<ParsedShape>) => Th.succeed(u.toArray)),
+    S.parser((u: Chunk<ParsedShape>) =>
+      Th.succeed(u.toArray as readonly ParsedShape[])
+    ),
     S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary((_) => _.array(arbitrarySelf(_)))
   )
