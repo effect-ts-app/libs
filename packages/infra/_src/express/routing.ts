@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as Ex from "@effect-ts-app/express"
 import { Erase } from "@effect-ts-app/core/Effect"
+import * as Ex from "@effect-ts-app/express"
 import * as MO from "@effect-ts-app/schema"
 import { Encoder, extractSchema } from "@effect-ts-app/schema"
 import express from "express"
@@ -155,9 +155,9 @@ export function handleRequest<
     parseRequest(req)
       .map(({ body, path, query }) => {
         const hn = {
-          ...Maybe.toUndefined(body),
-          ...Maybe.toUndefined(query),
-          ...Maybe.toUndefined(path),
+          ...body.value,
+          ...query.value,
+          ...path.value,
         } as ReqA
         return hn
       })

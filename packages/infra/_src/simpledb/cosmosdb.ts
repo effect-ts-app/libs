@@ -23,7 +23,7 @@ const setup = (type: string, indexingPolicy: IndexingPolicy) =>
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     //schemaVersion: string,
     indexes: IndexingPolicy
@@ -40,7 +40,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
         )
         .map((i) => Maybe.fromNullable(i.resource))
-        .mapMaybe(({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>))
+        .map(
+          Maybe.$.map(
+            ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
+          )
+        )
     }
 
     function findBy(parameters: Record<string, string>) {
@@ -68,7 +72,7 @@ WHERE (
           )
         )
         .map((x) => ROArray.head(x.resources))
-        .mapMaybe(({ id }) => id)
+        .map(Maybe.$.map((_) => _.id))
     }
 
     function store(record: A, currentVersion: Maybe<Version>) {
@@ -79,8 +83,7 @@ WHERE (
         const data = yield* $(encode(record))
 
         yield* $(
-          Maybe.fold_(
-            currentVersion,
+          currentVersion.fold(
             () =>
               Effect.tryPromise(() =>
                 db.container(type).items.create({
@@ -88,9 +91,7 @@ WHERE (
                   timestamp: new Date(),
                   data,
                 })
-              )
-                .asUnit()
-                .orDie(),
+              ).unit.orDie,
             (currentVersion) =>
               Effect.tryPromise(() =>
                 db
@@ -109,21 +110,19 @@ WHERE (
                       },
                     }
                   )
-              )
-                .orDie()
-                .flatMap((x) => {
-                  if (x.statusCode === 412) {
-                    return Effect.fail(new OptimisticLockException(type, record.id))
-                  }
-                  if (x.statusCode > 299 || x.statusCode < 200) {
-                    return Effect.die(
-                      new CosmosDbOperationError(
-                        "not able to update record: " + x.statusCode
-                      )
+              ).orDie.flatMap((x) => {
+                if (x.statusCode === 412) {
+                  return Effect.fail(new OptimisticLockException(type, record.id))
+                }
+                if (x.statusCode > 299 || x.statusCode < 200) {
+                  return Effect.die(
+                    new CosmosDbOperationError(
+                      "not able to update record: " + x.statusCode
                     )
-                  }
-                  return Effect.unit
-                })
+                  )
+                }
+                return Effect.unit
+              })
           )
         )
         return { version, data: record } as CachedRecord<A>

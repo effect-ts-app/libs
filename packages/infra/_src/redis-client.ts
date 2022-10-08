@@ -19,7 +19,7 @@ const makeRedisClient = (makeClient: () => Client) =>
         Effect.effectAsync<unknown, Error, void>((res) => {
           cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
         })
-      ).orDie()
+      ).orDie
   )
 
 export interface RedisClient extends _A<ReturnType<typeof makeRedisClient>> {}

@@ -113,9 +113,9 @@ export function makeFromSchema<ResA>(
   const makeReqQuerySchema = EffectMaybe.fromNullable(Req.Query).flatMapMaybeEffect(
     jsonSchema
   )
-  const makeReqHeadersSchema = EffectMaybe.fromNullable(
-    Req.Headers
-  ).flatMapMaybeEffect(jsonSchema)
+  const makeReqHeadersSchema = EffectMaybe.fromNullable(Req.Headers).flatMapMaybeEffect(
+    jsonSchema
+  )
   const makeReqCookieSchema = EffectMaybe.fromNullable(Req.Cookie).flatMapMaybeEffect(
     jsonSchema
   )
@@ -165,10 +165,10 @@ export function makeFromSchema<ResA>(
       summary: _.req?.summary,
       operationId: _.req?.title,
       parameters: [
-        ...(_.reqPath >= makeParameters("path")),
-        ...(_.reqQuery >= makeParameters("query")),
-        ...(_.reqHeaders >= makeParameters("header")),
-        ...(_.reqCookie >= makeParameters("cookie")),
+        ...makeParameters("path")(_.reqPath),
+        ...makeParameters("query")(_.reqQuery),
+        ...makeParameters("header")(_.reqHeaders),
+        ...makeParameters("cookie")(_.reqCookie),
       ],
       requestBody: _.reqBody
         .map((schema) => ({ content: { "application/json": { schema } } }))

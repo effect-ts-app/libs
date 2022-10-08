@@ -21,7 +21,7 @@ const ttl = 10 * 1000
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
@@ -34,19 +34,17 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id))
-        .flatMapMaybeEffect((v) =>
-          pipe(
-            RedisSerializedDBRecord.Parser,
-            MO.condemnFail
-          )(v)
-            .map(({ data, version }) => ({
-              data: JSON.parse(data) as EA,
-              version,
-            }))
-            .mapError((e) => new ConnectionException(new Error(e.toString())))
-        )
-        .orDie()
+      return RED.hmgetAll(getKey(id)).flatMapMaybeEffect((v) =>
+        pipe(
+          RedisSerializedDBRecord.Parser,
+          MO.condemnFail
+        )(v)
+          .map(({ data, version }) => ({
+            data: JSON.parse(data) as EA,
+            version,
+          }))
+          .mapError((e) => new ConnectionException(new Error(e.toString())))
+      ).orDie
     }
     function store(record: A, currentVersion: Maybe<string>) {
       const version = currentVersion
@@ -72,8 +70,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 })
               )
               .zipRight(setIndex(record))
-              .orDie()
-              .map(() => ({ version, data: record } as CachedRecord<A>))
+              .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
           ),
         () =>
           getData(record)
@@ -84,8 +81,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 data,
               })
             )
-            .orDie()
-            .map(() => ({ version, data: record } as CachedRecord<A>))
+            .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
       )
     }
 
@@ -123,9 +119,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           (lock) => ({
-            release: Effect.tryPromise(
-              () => lock.unlock() as any as Promise<void>
-            ).orDie(),
+            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+              .orDie,
           })
         ),
         (l) => l.release
@@ -145,9 +140,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           // release
           (lock) => ({
             // TODO
-            release: Effect.tryPromise(
-              () => lock.unlock() as any as Promise<void>
-            ).orDie(),
+            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+              .orDie,
           })
         ),
         (l) => l.release

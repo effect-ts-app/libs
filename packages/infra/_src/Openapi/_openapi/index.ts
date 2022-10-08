@@ -51,7 +51,7 @@ import {
   StringSchema,
 } from "../atlas-plutus/index.js"
 
-export type Gen = Effect.UIO<JSONSchema>
+export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Maybe<Gen>)[] = [
   Maybe.partial((_miss) => (schema: MO.SchemaAny): Gen => {

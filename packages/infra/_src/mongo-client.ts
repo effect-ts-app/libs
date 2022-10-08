@@ -16,13 +16,14 @@ const withClient = (url: string) =>
         Effect.effectAsync<unknown, Error, void>((res) => {
           cl.close((err, r) => res(err ? Effect.fail(err) : Effect.succeed(r)))
         })
-      ).orDie()
+      ).orDie
   )
 
 const makeMongoClient = (url: string, dbName?: string) =>
   withClient(url).map((x) => ({ db: x.db(dbName) }))
 
-export interface MongoClient extends _A<ReturnType<typeof makeMongoClient>> {}
+export interface MongoClient
+  extends Effect.Success<ReturnType<typeof makeMongoClient>> {}
 
 export const MongoClient = Tag<MongoClient>()
 

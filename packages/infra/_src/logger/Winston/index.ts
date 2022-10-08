@@ -4,7 +4,7 @@ import * as W from "winston"
 import * as LOG from "../Logger/index.js"
 
 export interface WinstonFactory {
-  logger: Effect.UIO<W.Logger>
+  logger: Effect<never, never, W.Logger>
 }
 
 export const WinstonFactory = Tag<WinstonFactory>()
@@ -34,11 +34,13 @@ export const Child = (meta: LOG.Meta) =>
   Layer.fromEffect(WinstonInstance)(makeChild(meta))
 
 export const provideChildLogger = (meta: LOG.Meta) =>
-  Effect.replaceServiceM(WinstonInstance, () => makeChild(meta))
+  Effect.environmentWithEffect((env) =>
+    makeChild(meta).map((child) => env.add(WinstonInstance, child))
+  )
 
 /* istanbul ignore next */
 export const LoggerFactory = (loggerOpts: W.LoggerOptions) =>
-  Layer.fromValue(WinstonFactory)({
+  Layer.fromValue(WinstonFactory, {
     logger: Effect.sync(() => W.createLogger(loggerOpts)),
   })
 
@@ -49,31 +51,31 @@ export const makeWinstonLogger = Effect.gen(function* ($) {
   yield* $(WinstonInstance)
   return {
     debug: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("debug", message, meta))
       ) as any,
     http: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("http", message, meta))
       ) as any,
     silly: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("silly", message, meta))
       ) as any,
     error: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("error", message, meta))
       ) as any,
     info: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("info", message, meta))
       ) as any,
     verbose: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("verbose", message, meta))
       ) as any,
     warn: (message, meta) =>
-      Effect.accessServiceM(WinstonInstance)((_) =>
+      Effect.serviceWithEffect(WinstonInstance, (_) =>
         Effect.sync(() => _.logger.log("warn", message, meta))
       ) as any,
   } as LOG.Logger

@@ -21,7 +21,7 @@ const parseSDB = SerializedDBRecord.Parser >= MO.condemnFail
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>
   ) => {
     return {
@@ -33,7 +33,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .mapMaybe((s) => JSON.parse(s) as unknown)
+        .map(Maybe.$.map((s) => JSON.parse(s) as unknown))
         .flatMapMaybeEffect(parseSDB)
         .mapMaybe(({ data, version }) => ({
           data: JSON.parse(data) as EA,

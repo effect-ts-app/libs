@@ -60,7 +60,7 @@ export const fromEffectIf = <R, E, A>(eff: T.Effect<R, E, A>) =>
 export const encaseNullableTask = <T>(
   taskCreator: F.Lazy<Promise<T | null>>
 ): EffectMaybe<unknown, never, NonNullable<T>> =>
-  T.tryPromise(taskCreator).orDie().map(O.fromNullable)
+  T.tryPromise(taskCreator).orDie.map(O.fromNullable)
 
 export const encaseNullableTaskErrorIfNull = <T, E>(
   taskCreator: F.Lazy<Promise<T | null>>,
@@ -81,7 +81,7 @@ export function asUnit<R, E, X>(self: EffectMaybe<R, E, X>, __trace?: string) {
  * But then ignore the final result.
  * Useful for use in generators, not to short-circuit the operation on the None case.
  */
-export const asUnitDiscard = T.asUnit
+export const asUnitDiscard = T.unit
 
 export const map_ = <R, E, A, B>(
   fa: EffectMaybe<R, E, A>,

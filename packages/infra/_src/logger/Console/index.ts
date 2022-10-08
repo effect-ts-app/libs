@@ -11,7 +11,7 @@ function log(
   level: LOG.Level,
   message: string,
   meta?: LOG.Meta
-): Effect.UIO<void> {
+): Effect<never, never, void> {
   return pipe(
     Effect.do,
     Effect.let("config", () => config),
@@ -69,7 +69,7 @@ export interface ConsoleLoggerConfig extends Config {}
 export const ConsoleLoggerConfig = Tag<ConsoleLoggerConfig>()
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  Layer.fromValue(ConsoleLoggerConfig)(config)
+  Layer.fromValue(ConsoleLoggerConfig, config)
 
 export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
   Effect.gen(function* ($) {

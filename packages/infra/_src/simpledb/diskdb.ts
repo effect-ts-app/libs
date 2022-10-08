@@ -18,7 +18,7 @@ import { Version } from "./simpledb.js"
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index,
@@ -49,9 +49,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
       const idx = makeIndexKey(record)
       return currentVersion.isSome()
-        ? Managed.use_(lockIndex(record), () =>
-            readIndex(idx)
-              .flatMap((x) =>
+        ? Managed.use_(
+            lockIndex(record),
+            () =>
+              readIndex(idx).flatMap((x) =>
                 x[record.id]
                   ? Effect.fail(() => new Error("Combination already exists, abort"))
                   : getData(record)
@@ -59,8 +60,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                         fu.writeTextFile(getFilename(type, record.id), serialised)
                       )
                       .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
-              )
-              .orDie()
+              ).orDie
           ).map(() => ({ version, data: record } as CachedRecord<A>))
         : getData(record)
             .flatMap((serialised) =>
@@ -115,8 +115,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(type: string) {
       return (id: string) => {
-        return tryRead(getFilename(type, id)).mapMaybe(
-          (s) => JSON.parse(s) as CachedRecord<EA>
+        return tryRead(getFilename(type, id)).map(
+          Maybe.$.map((s) => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
@@ -127,7 +127,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Maybe.fold(
+        Maybe.$.fold(
           () => ({} as Record<string, TKey>),
           (x) => JSON.parse(x) as Record<string, TKey>
         )
