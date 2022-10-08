@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { makeRef } from "@effect-ts/core/Effect/Ref"
-
 import * as Plutus from "../Openapi/atlas-plutus/index.js"
 import { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"
 import { References } from "../Openapi/atlas-plutus/Schema/index.js"
@@ -12,8 +10,8 @@ export function makeOpenApiSpecs(
   info: Plutus.Info
 ) {
   return Effect.gen(function* ($) {
-    const ref = yield* $(makeRef<Map<string, JSONSchema | SubSchema>>(new Map()))
-    const withRef = Effect.provideService(References)({ ref })
+    const ref = yield* $(Ref.make<Map<string, JSONSchema | SubSchema>>(new Map()))
+    const withRef = Effect.$.provideService(References, { ref })
     const paths = yield* $(pipe(makeJsonSchema(rdescs), withRef))
     const refs = yield* $(ref.get)
     const parameterRefs: Record<string, any> = {} // todos

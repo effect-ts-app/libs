@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import * as TRef from "@effect-ts/core/Effect/Ref"
-import type { Has } from "@effect-ts/core/Has"
-import { tag } from "@effect-ts/core/Has"
-import { pipe } from "@effect-ts/system/Function"
-
 import type { JSONSchema, SubSchema } from "../../JsonSchema/index.js"
-import { Ref } from "../../JsonSchema/index.js"
+import { Ref as SchemaRef } from "../../JsonSchema/index.js"
 
 export interface References {
-  ref: TRef.Ref<Map<string, SubSchema>>
+  ref: Ref<Map<string, SubSchema>>
 }
 
-export const References = tag<References>()
+export const References = Tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
@@ -39,13 +34,8 @@ export function referenced(x?: ConfigExtensionRef) {
       return Effect.gen(function* (_) {
         const { ref } = yield* _(References)
         const jsonSchema = yield* _(schema)
-        yield* _(
-          pipe(
-            ref,
-            TRef.update((m) => m.set(openapiRef, jsonSchema))
-          )
-        )
-        return Ref(`#/components/schemas/${openapiRef}`)
+        yield* _(ref.update((m) => m.set(openapiRef, jsonSchema)))
+        return SchemaRef(`#/components/schemas/${openapiRef}`)
       })
     }
     return schema

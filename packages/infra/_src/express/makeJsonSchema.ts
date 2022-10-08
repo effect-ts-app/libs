@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { _A } from "@effect-ts/core/Utils"
-
 import * as RS from "./schema/routing.js"
 
 type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
@@ -15,7 +13,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk.from(r)
     .forEachEffect(RS.makeFromSchema)
     .map((e) => {
-      const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
+      const map = ({ method, path, responses, ...rest }: Effect.Success<typeof e>) => ({
         [method]: {
           ...rest,
           responses: ROArray.reduce_(
@@ -28,8 +26,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
           ),
         },
       })
-      return Chunk.reduce_(
-        e,
+      return e.reduce(
         {} as Record<string, Record<Methods, ReturnType<typeof map>>>,
         (prev, e) => {
           const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)

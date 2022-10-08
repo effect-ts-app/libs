@@ -1,4 +1,3 @@
-
 import {
   CachedRecord,
   DBRecord,
@@ -34,7 +33,7 @@ export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 // module tag
 export const RecordCache = Tag<RecordCache>()
 
-export const LiveRecordCache = Layer.fromFunction(RecordCache)(makeLiveRecordCache)
+export const LiveRecordCache = Layer.fromFunction(RecordCache, makeLiveRecordCache)
 
 const getM =
   <T>(type: string) =>

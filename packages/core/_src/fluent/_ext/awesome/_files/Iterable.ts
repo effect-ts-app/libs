@@ -3,21 +3,30 @@
  * @tsplus fluent ets/Chunk forEachPar
  * @tsplus fluent ets/Set forEachPar
  */
-export const ext_forEachPar_ = Effect.forEachPar
+export function ext_forEachPar<A, R, E, B>(
+  as: Iterable<A>,
+  f: (a: A) => Effect<R, E, B>
+) {
+  return Effect.forEachPar(Collection(...as), f)
+}
 
 /**
  * @tsplus fluent ets/Array forEachEffect
  * @tsplus fluent ets/Chunk forEachEffect
  * @tsplus fluent ets/Set forEachEffect
  */
-export const ext_forEach_ = Effect.forEach
+export function ext_forEach<A, R, E, B>(as: Iterable<A>, f: (a: A) => Effect<R, E, B>) {
+  return Effect.forEach(Collection(...as), f)
+}
 
 /**
  * @tsplus fluent ets/Array collectAll
  * @tsplus fluent ets/Chunk collectAll
  * @tsplus fluent ets/Set collectAll
  */
-export const ext_collectAll = Effect.collectAll
+export function ext_collectAll<A, R, E>(as: Iterable<Effect<R, E, A>>) {
+  return Effect.collectAll(Collection(...as))
+}
 
 // /**
 //  * @tsplus fluent ets/Array forEachSync

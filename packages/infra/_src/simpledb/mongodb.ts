@@ -70,8 +70,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          Maybe.fold_(
-            currentVersion,
+          currentVersion.fold(
             () =>
               Effect.tryPromise(() =>
                 db
@@ -82,7 +81,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       checkKeys: false, // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
                     } as InsertOneOptions
                   )
-              ).unit().orDie,
+              ).unit.orDie,
             (currentVersion) =>
               Effect.tryPromise(() =>
                 db.collection(type).replaceOne(

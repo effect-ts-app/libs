@@ -101,7 +101,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).mapMaybe((i) => i as TKey)
+      return RED.hget(getIdxKey(index), index.key).map(Maybe.$.map((i) => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {
@@ -110,40 +110,42 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
-      return Managed.make_(
-        Effect.bimap_(
-          // acquire
-          Effect.flatMap_(RED.lock, (lock) =>
+      return Effect.acquireRelease(
+        // acquire
+        RED.lock
+          .flatMap((lock) =>
             Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
+          )
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+            // release
+            (lock) => ({
+              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+                .orDie,
+            })
           ),
-          (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
-          // release
-          (lock) => ({
-            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
-              .orDie,
-          })
-        ),
         (l) => l.release
       )
     }
 
     function lockRedisRecord(id: string) {
-      return Managed.make_(
-        Effect.bimap_(
-          // acquire
-          Effect.flatMap_(RED.lock, (lock) =>
+      return Effect.acquireRelease(
+        // acquire
+        RED.lock
+          .flatMap((lock) =>
             Effect.tryPromise(
               () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
             )
+          )
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+            // release
+            (lock) => ({
+              // TODO
+              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+                .orDie,
+            })
           ),
-          (err) => new CouldNotAquireDbLockException(type, id, err as Error),
-          // release
-          (lock) => ({
-            // TODO
-            release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
-              .orDie,
-          })
-        ),
         (l) => l.release
       )
     }
@@ -166,9 +168,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return Effect.flatMap_(RED.client, (client) =>
-      Effect.uninterruptible(
-        Effect.effectAsync<unknown, ConnectionException, void>((res) => {
+    return RED.client.flatMap(
+      (client) =>
+        Effect.async<unknown, ConnectionException, void>((res) => {
           client.hmset(
             key,
             "version",
@@ -182,8 +184,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 ? res(Effect.fail(new ConnectionException(err)))
                 : res(Effect.succeed(void 0))
           )
-        })
-      )
+        }).uninterruptible
     )
   }
 }
