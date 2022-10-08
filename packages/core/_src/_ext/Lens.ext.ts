@@ -1,3 +1,5 @@
+import * as Lens from "@effect-ts-app/core/fluent/_ext/Lens"
+
 import * as L from "./lens.js"
 
 /**
@@ -49,3 +51,13 @@ export const { modify2M_ } = L
  * @tsplus fluent ets/Lens modify2
  */
 export const { modify2_ } = L
+
+/**
+ * @tsplus fluent ets/Lens modify
+ */
+export const ext_modify_ = Lens.modify_
+
+/**
+ * @tsplus fluent ets/Lens prop
+ */
+export const ext_prop_ = Lens.prop_

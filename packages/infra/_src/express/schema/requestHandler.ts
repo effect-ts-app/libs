@@ -78,7 +78,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .parseBody(body)
         .exit.flatMap((_) =>
           _._tag === "Failure" && !_.cause.isFailure
-            ? Effect.failCause(_.cause)
+            ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
                 _._tag === "Success"
                   ? { _tag: "Success" as const, value: _.value }
@@ -89,7 +89,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .parseCookie(cookies)
         .exit.flatMap((_) =>
           _._tag === "Failure" && !_.cause.isFailure
-            ? Effect.failCause(_.cause)
+            ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
                 _._tag === "Success"
                   ? { _tag: "Success" as const, value: _.value }
@@ -100,7 +100,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .parseHeaders(headers)
         .exit.flatMap((_) =>
           _._tag === "Failure" && !_.cause.isFailure
-            ? Effect.failCause(_.cause)
+            ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
                 _._tag === "Success"
                   ? { _tag: "Success" as const, value: _.value }
@@ -111,7 +111,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .parseQuery(query)
         .exit.flatMap((_) =>
           _._tag === "Failure" && !_.cause.isFailure
-            ? Effect.failCause(_.cause)
+            ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
                 _._tag === "Success"
                   ? { _tag: "Success" as const, value: _.value }
@@ -122,7 +122,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .parsePath(params)
         .exit.flatMap((_) =>
           _._tag === "Failure" && !_.cause.isFailure
-            ? Effect.failCause(_.cause)
+            ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
                 _._tag === "Success"
                   ? { _tag: "Success" as const, value: _.value }
@@ -324,7 +324,7 @@ export function makeRequestParsers<
   )
   const parseBody = (u: unknown) => pb.flatMapMaybe((d) => d(u))
 
-  const pp = EFfect(
+  const pp = Effect(
     Maybe.fromNullable(Request.Path)
       .map((s) => s)
       .map(Parser.for)

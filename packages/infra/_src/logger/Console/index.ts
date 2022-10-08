@@ -1,5 +1,3 @@
-import { pipe } from "@effect-ts-app/core/Function"
-
 import * as LOG from "../Logger/index.js"
 
 function format(level: LOG.Level, message: string, meta?: LOG.Meta) {
@@ -12,14 +10,20 @@ function log(
   message: string,
   meta?: LOG.Meta
 ): Effect<never, never, void> {
-  return pipe(
-    Effect.do,
-    Effect.let("config", () => config),
-    Effect.bind("formatter", (s) => Effect.succeed(s.config.formatter ?? format)),
-    Effect.bind("level", (s) => Effect.succeed(s.config.level ?? "silly")),
-    Effect.bind("msg", (s) => Effect.succeed(s.formatter(level, message, meta))),
-    Effect.tap(({ level: configLevel, msg }) =>
-      Effect.when(() => LOG.severity[configLevel] >= LOG.severity[level])(
+  return Effect.sync(() => {
+    const formatter = config.formatter ?? format
+    const level = config.level ?? "silly"
+    const msg = formatter(level, message, meta)
+    return {
+      config,
+      formatter,
+      level,
+      msg,
+    }
+  })
+    .tap(({ level: configLevel, msg }) =>
+      Effect.when(
+        () => LOG.severity[configLevel] >= LOG.severity[level],
         Effect.sync(() => {
           switch (level) {
             case "info":
@@ -53,10 +57,8 @@ function log(
           }
         })
       )
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    Effect.map(() => {})
-  )
+    ) // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .map(() => {})
 }
 
 export interface Config {

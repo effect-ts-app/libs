@@ -238,8 +238,7 @@ export function lensFromProps<T>() {
   return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
-      // TODO: why id.prop doesn't work?
-      prev[cur] = pipe(id, Lens.prop(cur as any))
+      prev[cur] = id.prop(cur as any)
       return prev
     }, {} as any)
   }
