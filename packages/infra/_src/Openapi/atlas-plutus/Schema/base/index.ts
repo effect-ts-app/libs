@@ -4,7 +4,6 @@ import * as TRef from "@effect-ts/core/Effect/Ref"
 import type { Has } from "@effect-ts/core/Has"
 import { tag } from "@effect-ts/core/Has"
 import { pipe } from "@effect-ts/system/Function"
-import { Effect } from "@effect-ts-app/core/Prelude"
 
 import type { JSONSchema, SubSchema } from "../../JsonSchema/index.js"
 import { Ref } from "../../JsonSchema/index.js"
@@ -28,7 +27,7 @@ export interface ConfigExtensionMeta {
   openapiMeta?: any
 }
 
-export type Schema = Effect.RIO<Has<References>, JSONSchema | SubSchema>
+export type Schema = Effect<References, never, JSONSchema | SubSchema>
 
 export const SchemaURI = "SchemaURI" as const
 export type SchemaURI = typeof SchemaURI

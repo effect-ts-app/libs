@@ -1,5 +1,4 @@
 import { _A } from "@effect-ts/core/Utils"
-import { Effect, Layer, Maybe } from "@effect-ts-app/core/Prelude"
 import { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
@@ -7,7 +6,7 @@ import { ConnectionException } from "./simpledb/shared.js"
 
 const makeRedisClient = (makeClient: () => Client) =>
   Managed.make_(
-    Effect.succeedWith(() => {
+    Effect.sync(() => {
       const client = createClient(makeClient)
       const lock = new Redlock([client])
       return {
@@ -25,7 +24,7 @@ const makeRedisClient = (makeClient: () => Client) =>
 
 export interface RedisClient extends _A<ReturnType<typeof makeRedisClient>> {}
 
-export const RedisClient = Has.tag<RedisClient>()
+export const RedisClient = Tag<RedisClient>()
 
 export const { client, lock } = Effect.deriveLifted(RedisClient)(
   [],

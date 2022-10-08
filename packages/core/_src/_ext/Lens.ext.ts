@@ -31,16 +31,6 @@ export const { modifyM__ } = L
 export const { modify__ } = L
 
 /**
- * @tsplus fluent ets/Lens modifyS
- */
-export const { modifyS_ } = L
-
-/**
- * @tsplus fluent ets/Lens modifyS_
- */
-export const { modifyS__ } = L
-
-/**
  * @tsplus fluent ets/Lens modify2M_
  */
 export const { modify2M__ } = L
@@ -59,13 +49,3 @@ export const { modify2M_ } = L
  * @tsplus fluent ets/Lens modify2
  */
 export const { modify2_ } = L
-
-/**
- * @tsplus fluent ets/Lens modify2S_
- */
-export const { modify2S__ } = L
-
-/**
- * @tsplus fluent ets/Lens modify2S
- */
-export const { modify2S_ } = L

@@ -4,7 +4,6 @@ import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
 import { constant, Lazy, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
-import { ROArray } from "@effect-ts-app/core/Prelude"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 import { v4 } from "uuid"
 

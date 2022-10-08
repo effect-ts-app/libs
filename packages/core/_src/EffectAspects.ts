@@ -1,4 +1,4 @@
-import { Effect, ifDiff_, tapBothInclAbort_, tapErrorInclAbort_ } from "./EffectBase.js"
+import { ifDiff_, tapBothInclAbort_, tapErrorInclAbort_ } from "./EffectBase.js"
 
 export const tapBothInclAbort =
   <A, ER, EE, EA, SR, SE, SA>(

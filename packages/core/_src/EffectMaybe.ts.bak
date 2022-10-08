@@ -92,7 +92,7 @@ export const flatMap_ = <R, E, A, R2, E2, B>(
   fa: EffectMaybe<R, E, A>,
   f: (a: A) => EffectMaybe<R2, E2, B>,
   __trace?: string
-): EffectMaybe<R & R2, E | E2, B> =>
+): EffectMaybe<R | R2, E | E2, B> =>
   T.chain_(
     fa,
     O.fold(() => none, f),
@@ -104,7 +104,7 @@ export const chain_ = flatMap_
 export const tap_ = <R, E, A, R2, E2>(
   inner: EffectMaybe<R, E, A>,
   bind: FunctionN<[A], T.Effect<R2, E2, unknown>>
-): EffectMaybe<R & R2, E | E2, A> =>
+): EffectMaybe<R | R2, E | E2, A> =>
   T.tap_(
     inner,
     O.fold(() => none, bind)
@@ -113,11 +113,11 @@ export const tap_ = <R, E, A, R2, E2>(
 export const ap_ = <R, E, A, B, R2, E2>(
   fab: EffectMaybe<R, E, (a: A) => B>,
   fa: EffectMaybe<R2, E2, A>
-): EffectMaybe<R & R2, E | E2, B> => T.zipWith_(fab, fa, O.ap_)
+): EffectMaybe<R | R2, E | E2, B> => T.zipWith_(fab, fa, O.ap_)
 
 export const apFirst: <R, E, B>(
   fb: EffectMaybe<R, E, B>
-) => <A, R2, E2>(fa: EffectMaybe<R2, E2, A>) => EffectMaybe<R & R2, E | E2, A> =
+) => <A, R2, E2>(fa: EffectMaybe<R2, E2, A>) => EffectMaybe<R | R2, E | E2, A> =
   (fb) => (fa) =>
     ap_(
       map_(fa, (a) => () => a),
@@ -127,7 +127,7 @@ export const apFirst: <R, E, B>(
 export const apFirst_: <A, R2, E2, R, E, B>(
   fa: EffectMaybe<R2, E2, A>,
   fb: EffectMaybe<R, E, B>
-) => EffectMaybe<R & R2, E | E2, A> = (fa, fb) =>
+) => EffectMaybe<R | R2, E | E2, A> = (fa, fb) =>
   ap_(
     map_(fa, (a) => () => a),
     fb
@@ -135,7 +135,7 @@ export const apFirst_: <A, R2, E2, R, E, B>(
 
 export const apSecond =
   <R, E, B>(fb: EffectMaybe<R, E, B>) =>
-  <A, R2, E2>(fa: EffectMaybe<R2, E2, A>): EffectMaybe<R & R2, E | E2, B> =>
+  <A, R2, E2>(fa: EffectMaybe<R2, E2, A>): EffectMaybe<R | R2, E | E2, B> =>
     ap_(
       map_(fa, () => (b: B) => b),
       fb
@@ -144,7 +144,7 @@ export const apSecond =
 export const apSecond_ = <A, R2, E2, R, E, B>(
   fa: EffectMaybe<R2, E2, A>,
   fb: EffectMaybe<R, E, B>
-): EffectMaybe<R & R2, E | E2, B> =>
+): EffectMaybe<R | R2, E | E2, B> =>
   ap_(
     map_(fa, () => (b: B) => b),
     fb
@@ -176,7 +176,7 @@ export const alt_ = <R, E, A, R2, E2, A2>(
 
 export const alt =
   <R2, E2, A2>(f: () => EffectMaybe<R2, E2, A2>) =>
-  <R, E, A>(_: EffectMaybe<R, E, A>): EffectMaybe<R & R2, E | E2, A | A2> =>
+  <R, E, A>(_: EffectMaybe<R, E, A>): EffectMaybe<R | R2, E | E2, A | A2> =>
     alt_(_, f)
 
 export const getOrElse_ = <R, E, A, A2>(

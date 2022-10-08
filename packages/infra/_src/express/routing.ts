@@ -82,7 +82,7 @@ export function match<
       h
     )
   ).zipRight(
-    Effect.succeedWith(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
+    Effect.sync(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
   )
 }
 
@@ -165,39 +165,39 @@ export function handleRequest<
         const hn = handle(inp)
         const r = h ? Effect.provideSomeLayer(h(req, res))(hn) : hn
         return (
-          r as unknown as Effect<Erase<R & R2, PR>, SupportedErrors, ResA>
+          r as unknown as Effect<Erase<R | R2, PR>, SupportedErrors, ResA>
         ).flatMap((outp) => respond(inp, res)(outp))
       })
       .catch("_tag", "ValidationError", (err) =>
-        Effect.succeedWith(() => {
+        Effect.sync(() => {
           res.status(400).send(err.errors)
         })
       )
       .catch("_tag", "NotFoundError", (err) =>
-        Effect.succeedWith(() => {
+        Effect.sync(() => {
           res.status(404).send(err)
         })
       )
       .catch("_tag", "NotLoggedInError", (err) =>
-        Effect.succeedWith(() => {
+        Effect.sync(() => {
           res.status(401).send(err)
         })
       )
       .catch("_tag", "UnauthorizedError", (err) =>
-        Effect.succeedWith(() => {
+        Effect.sync(() => {
           res.status(403).send(err)
         })
       )
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
-        Effect.succeedWith(() =>
+        Effect.sync(() =>
           console.error(
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
             err
           )
         ).flatMap(Effect.die)
       )
-      .tapCause(() => Effect.succeedWith(() => res.status(500).send()))
+      .tapCause(() => Effect.sync(() => res.status(500).send()))
 }
 
 // Additional convenience helpers
@@ -252,7 +252,7 @@ export function get<
       r,
       h
     )
-  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "GET", r)))
+  ).zipRight(Effect.sync(() => makeRouteDescriptor(path, "GET", r)))
 }
 
 export function post<
@@ -305,7 +305,7 @@ export function post<
       r,
       h
     )
-  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "POST", r)))
+  ).zipRight(Effect.sync(() => makeRouteDescriptor(path, "POST", r)))
 }
 
 export function put<
@@ -358,7 +358,7 @@ export function put<
       r,
       h
     )
-  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PUT", r)))
+  ).zipRight(Effect.sync(() => makeRouteDescriptor(path, "PUT", r)))
 }
 
 export function patch<
@@ -411,7 +411,7 @@ export function patch<
       r,
       h
     )
-  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "PATCH", r)))
+  ).zipRight(Effect.sync(() => makeRouteDescriptor(path, "PATCH", r)))
 }
 
 function del<
@@ -464,7 +464,7 @@ function del<
       r,
       h
     )
-  ).zipRight(Effect.succeedWith(() => makeRouteDescriptor(path, "DELETE", r)))
+  ).zipRight(Effect.sync(() => makeRouteDescriptor(path, "DELETE", r)))
 }
 
 export { del as delete }

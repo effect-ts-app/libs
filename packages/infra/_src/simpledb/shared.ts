@@ -65,10 +65,10 @@ export function getRecordName(type: string, id: string) {
 export function makeMap<TKey, T>() {
   const map = new Map<TKey, T>()
   return {
-    find: (k: TKey) => Effect.succeedWith(() => Maybe.fromNullable(map.get(k))),
+    find: (k: TKey) => Effect.sync(() => Maybe.fromNullable(map.get(k))),
     [Symbol.iterator]: () => map[Symbol.iterator](),
     set: (k: TKey, v: T) =>
-      Effect.succeedWith(() => {
+      Effect.sync(() => {
         map.set(k, v)
       }),
   } as EffectMap<TKey, T>

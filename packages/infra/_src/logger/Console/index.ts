@@ -1,5 +1,4 @@
 import { pipe } from "@effect-ts-app/core/Function"
-import { Effect, Layer } from "@effect-ts-app/core/Prelude"
 
 import * as LOG from "../Logger/index.js"
 
@@ -21,7 +20,7 @@ function log(
     Effect.bind("msg", (s) => Effect.succeed(s.formatter(level, message, meta))),
     Effect.tap(({ level: configLevel, msg }) =>
       Effect.when(() => LOG.severity[configLevel] >= LOG.severity[level])(
-        Effect.succeedWith(() => {
+        Effect.sync(() => {
           switch (level) {
             case "info":
               // tslint:disable-next-line: no-console
@@ -67,7 +66,7 @@ export interface Config {
 
 export interface ConsoleLoggerConfig extends Config {}
 
-export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>()
+export const ConsoleLoggerConfig = Tag<ConsoleLoggerConfig>()
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
   Layer.fromValue(ConsoleLoggerConfig)(config)

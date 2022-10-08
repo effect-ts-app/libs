@@ -1,21 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { Either, Maybe } from "@effect-ts-app/core/Prelude"
-
-import { flow, identity, pipe } from "../Function.js"
 
 export * from "./extend.js"
 
-export const unsafe = flow(
-  Sync.runEither,
-  Either.fold(() => {
-    throw new Error("Invalid data")
-  }, identity)
-)
+/**
+ * @deprecated use Effect.$.unsafeRunSync
+ */
+export const unsafe = Effect.$.unsafeRunSync
 
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
-  if (Either.isLeft(ei)) {
+  if (ei.isLeft()) {
     console.error(ei.left)
     throw ei.left
   }
@@ -25,7 +20,7 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
 export const unsafeSome =
   (makeErrorMessage: () => string) =>
   <A>(o: Maybe<A>) => {
-    if (Maybe.isNone(o)) {
+    if (o.isNone()) {
       throw new Error(makeErrorMessage())
     }
     return o.value

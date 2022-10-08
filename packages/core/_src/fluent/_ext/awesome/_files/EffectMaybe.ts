@@ -204,7 +204,7 @@ export const ext_getOrFail_ = getOrFail_
 //     //   this: EffectMaybe<RX, EX, AX>,
 //     //   f: (a: AX) => EffectMaybe<R2, E2, B>,
 //     //   __trace?: string
-//     // ): EffectMaybe<RX & R2, EX | E2, B>
+//     // ): EffectMaybe<RX | R2, EX | E2, B>
 
 //     /**
 //      * @ets_rewrite_method chainEffect_ from "@effect-ts-app/core/EffectMaybe"
@@ -213,6 +213,6 @@ export const ext_getOrFail_ = getOrFail_
 //       this: EffectMaybe<RX, EX, AX>,
 //       f: (a: AX) => Effect<R2, E2, B>,
 //       __trace?: string
-//     ): EffectMaybe<RX & R2, EX | E2, B>
+//     ): EffectMaybe<RX | R2, EX | E2, B>
 //   }
 // }

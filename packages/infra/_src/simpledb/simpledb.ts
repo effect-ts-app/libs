@@ -1,4 +1,3 @@
-import { Effect, Layer, Maybe } from "@effect-ts-app/core/Prelude"
 
 import {
   CachedRecord,
@@ -18,7 +17,7 @@ export function makeLiveRecordCache() {
   const m = new Map<string, EffectMap<string, unknown>>()
   return {
     get: <T>(type: string) =>
-      Effect.succeedWith(() => {
+      Effect.sync(() => {
         const ex = m.get(type)
         if (!ex) {
           const nm = makeMap<string, unknown>()
@@ -33,7 +32,7 @@ export function makeLiveRecordCache() {
 export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 
 // module tag
-export const RecordCache = Has.tag<RecordCache>()
+export const RecordCache = Tag<RecordCache>()
 
 export const LiveRecordCache = Layer.fromFunction(RecordCache)(makeLiveRecordCache)
 

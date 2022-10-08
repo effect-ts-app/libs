@@ -1,6 +1,5 @@
 import * as Eq from "@effect-ts/core/Equal"
 import { flow } from "@effect-ts-app/core/Function"
-import { Effect, Maybe } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 
 import {

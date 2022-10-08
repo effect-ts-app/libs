@@ -42,25 +42,6 @@ export function modifyM<A, B>(l: Lens<A, B>) {
   return <R, E>(mod: (b: B) => Effect<R, E, B>) => modifyM_(l, mod)
 }
 
-export function modifyS_<R, E, A, B>(l: Lens<A, B>, mod: (b: B) => Sync<R, E, B>) {
-  return (a: A) => modifyS__(l, a, mod)
-}
-
-export function modifyS__<R, E, A, B>(
-  l: Lens<A, B>,
-  a: A,
-  mod: (b: B) => Sync<R, E, B>
-) {
-  return Sync.gen(function* ($) {
-    const b = yield* $(mod(l.get(a)))
-    return l.set(b)(a)
-  })
-}
-
-export function modifyS<A, B>(l: Lens<A, B>) {
-  return <R, E>(mod: (b: B) => Sync<R, E, B>) => modifyS_(l, mod)
-}
-
 export function modify2M_<R, E, A, B, EVT>(
   l: Lens<A, B>,
   mod: (b: B) => Effect<R, E, readonly [B, EVT]>
@@ -81,27 +62,6 @@ export function modify2M__<R, E, A, B, EVT>(
 export function modify2M<A, B>(l: Lens<A, B>) {
   return <R, E, EVT>(mod: (b: B) => Effect<R, E, readonly [B, EVT]>) =>
     modify2M_(l, mod)
-}
-
-export function modify2S_<R, E, A, B, EVT>(
-  l: Lens<A, B>,
-  mod: (b: B) => Sync<R, E, readonly [B, EVT]>
-) {
-  return (a: A) => modify2S__(l, a, mod)
-}
-export function modify2S__<R, E, A, B, EVT>(
-  l: Lens<A, B>,
-  a: A,
-  mod: (b: B) => Sync<R, E, readonly [B, EVT]>
-) {
-  return Sync.gen(function* ($) {
-    const [b, evt] = yield* $(mod(l.get(a)))
-    return [l.set(b)(a), evt] as const
-  })
-}
-
-export function modify2S<A, B>(l: Lens<A, B>) {
-  return <R, E, EVT>(mod: (b: B) => Sync<R, E, readonly [B, EVT]>) => modify2S_(l, mod)
 }
 
 export function modify2_<EVT, A, B>(l: Lens<A, B>, mod: (b: B) => readonly [B, EVT]) {

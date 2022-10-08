@@ -1903,7 +1903,7 @@ export const ext_provideServiceM_ = provideServiceM_
 export const ext_inject_ = <RX, EX, AX, R2, E2, A2>(
   self: Effect<RX, EX, AX>,
   layer: Layer<R2, E2, A2>
-): Effect<Erase<RX, A2> & R2, EX | E2, AX> => provideSomeLayer_(self as any, layer)
+): Effect<Erase<RX, A2> | R2, EX | E2, AX> => provideSomeLayer_(self as any, layer)
 
 /**
  * @tsplus fluent ets/Effect ignore

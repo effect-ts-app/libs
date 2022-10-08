@@ -24,7 +24,7 @@ const makeMongoClient = (url: string, dbName?: string) =>
 
 export interface MongoClient extends _A<ReturnType<typeof makeMongoClient>> {}
 
-export const MongoClient = Has.tag<MongoClient>()
+export const MongoClient = Tag<MongoClient>()
 
 export const { db } = Effect.deriveLifted(MongoClient)([], [], ["db"])
 

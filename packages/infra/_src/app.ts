@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow } from "@effect-ts-app/core/Function"
-import { Effect } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 
 import { NotFoundError, UnauthorizedError } from "./errors.js"

@@ -18,7 +18,7 @@ export interface Logger {
 
 export type Level = keyof Logger
 
-export const Logger = Has.tag<Logger>()
+export const Logger = Tag<Logger>()
 
 export const severity: Record<Level, number> = {
   error: 0,
