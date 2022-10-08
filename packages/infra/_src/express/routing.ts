@@ -196,7 +196,7 @@ export function handleRequest<
           )
         ).flatMap(Effect.die)
       )
-      .tapCause(() => Effect.sync(() => res.status(500).send()))
+  //.tapCause(() => Effect.sync(() => res.status(500).send()))
 }
 
 // Additional convenience helpers

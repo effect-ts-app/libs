@@ -49,9 +49,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
       const idx = makeIndexKey(record)
       return currentVersion.isSome()
-        ? Managed.use_(
-            lockIndex(record),
-            () =>
+        ? lockIndex(record)
+            .zipRight(
               readIndex(idx).flatMap((x) =>
                 x[record.id]
                   ? Effect.fail(() => new Error("Combination already exists, abort"))
@@ -61,7 +60,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       )
                       .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
               ).orDie
-          ).map(() => ({ version, data: record } as CachedRecord<A>))
+            )
+            .scoped.map(() => ({ version, data: record } as CachedRecord<A>))
         : getData(record)
             .flatMap((serialised) =>
               fu.writeTextFile(getFilename(type, record.id), serialised)

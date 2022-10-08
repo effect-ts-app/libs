@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 import { curry, flow, Lazy, pipe } from "./Function.js"
 import * as O from "./Maybe.js"
 
@@ -8,6 +9,63 @@ import * as O from "./Maybe.js"
  */
 export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
   Effect.$.flatMap((a: A2) => Effect.fromEither(ei(a)))
+
+/**
+ * @tsplus fluent effect/core/io/Effect flatMapMaybe
+ */
+export function flatMapMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: (a: A) => Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm(_).map(Maybe.some)
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect tapMaybe
+ */
+export function tapMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: (a: A) => Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm(_).map(() => Maybe.some(_))
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect zipRightMaybe
+ */
+export function zipRightMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm.map(() => Maybe.some(_))
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect mapMaybe
+ */
+export function mapMaybe<R, E, A, A2>(self: Effect<R, E, Maybe<A>>, fm: (a: A) => A2) {
+  return self.map((d) =>
+    d.fold(
+      () => Maybe.none,
+      (_) => Maybe.some(fm(_))
+    )
+  )
+}
 
 export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 

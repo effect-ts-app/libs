@@ -34,7 +34,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return storage
         .find(getRecordName(type, id))
         .map(Maybe.$.map((s) => JSON.parse(s) as unknown))
-        .flatMapMaybeEffect(parseSDB)
+        .flatMapMaybe(parseSDB)
         .mapMaybe(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version,
@@ -51,9 +51,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           const r = yield* $(
             decode(cr.data).flatMap((d) =>
               eq.equals(keys, d as unknown as V)
-                ? Sync.succeed(d)
-                : Sync.fail("not equals")
-            ).result
+                ? Effect.succeed(d)
+                : Effect.fail("not equals")
+            ).exit
           )
           if (r._tag === "Success") {
             return r.value
@@ -83,5 +83,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function bogusLock() {
-  return Managed.make_(Effect.unit, () => Effect.unit)
+  return Effect.acquireRelease(Effect.unit, () => Effect.unit)
 }

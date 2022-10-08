@@ -34,7 +34,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id)).flatMapMaybeEffect((v) =>
+      return RED.hmgetAll(getKey(id)).flatMapMaybe((v) =>
         pipe(
           RedisSerializedDBRecord.Parser,
           MO.condemnFail
@@ -50,16 +50,13 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      return Maybe.fold_(
-        currentVersion,
+      return currentVersion.fold(
         () =>
-          Managed.use_(lockIndex(record), () =>
-            pipe(
-              getIndex(record),
-              EffectMaybe.zipRight(
+          lockIndex(record).zipRight(
+            getIndex(record)
+              .zipRightMaybe(
                 Effect.fail(() => new Error("Combination already exists, abort"))
               )
-            )
               .zipRight(getData(record))
               // TODO: instead use MULTI & EXEC to make it in one command?
               .flatMap((data) =>
@@ -71,7 +68,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               )
               .zipRight(setIndex(record))
               .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
-          ),
+          ).scoped,
         () =>
           getData(record)
             .flatMap((data) =>

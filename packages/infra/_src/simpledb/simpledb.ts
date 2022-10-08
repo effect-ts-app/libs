@@ -33,7 +33,7 @@ export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 // module tag
 export const RecordCache = Tag<RecordCache>()
 
-export const LiveRecordCache = Layer.fromFunction(RecordCache, makeLiveRecordCache)
+export const LiveRecordCache = Effect(makeLiveRecordCache()).toLayer(RecordCache)
 
 const getM =
   <T>(type: string) =>
@@ -51,8 +51,8 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const getCache = getM<A>(type)
   const read = (id: string) =>
     tryRead(id)
-      .flatMapMaybeEffect(({ data, version }) =>
-        decode(data).bimap(
+      .flatMapMaybe(({ data, version }) =>
+        decode(data).mapBoth(
           (err) => new InvalidStateError("DB serialisation Issue", err),
           (data) => ({ data, version })
         )
@@ -65,7 +65,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
       c
         .find(id)
         .mapMaybe((existing) => existing.data)
-        .alt(() => read(id))
+        .orElse(() => read(id))
     )
 }
 
@@ -88,7 +88,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
   tryRead: (id: string) => Effect<R, E, Maybe<CachedRecord<EA>>>,
   save: (r: A, version: Maybe<Version>) => Effect<R, E, CachedRecord<A>>,
-  lock: (id: string) => Managed<R2, E2, unknown>,
+  lock: (id: string) => Effect<R2 | Scope, E2, unknown>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -97,8 +97,8 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapMaybe((x) => x.version)
-        .flatMap(
-          Maybe.fold(() => save(record, Maybe.none), confirmVersionAndSave(record))
+        .flatMap((_) =>
+          _.fold(() => save(record, Maybe.none), confirmVersionAndSave(record))
         )
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
@@ -106,10 +106,10 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
 
   function confirmVersionAndSave(record: A) {
     return (cv: Version) =>
-      Managed.use_(lock(record.id), () =>
+      lock(record.id).zipRight(
         tryRead(record.id)
-          .flatMap(
-            Maybe.fold(
+          .flatMap((_) =>
+            _.fold(
               () => Effect.fail(new InvalidStateError("record is gone")),
               Effect.succeed
             )
@@ -120,6 +120,6 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
               : Effect.unit
           )
           .zipRight(save(record, Maybe.some(cv)))
-      )
+      ).scoped
   }
 }

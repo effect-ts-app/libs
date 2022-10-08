@@ -101,7 +101,7 @@ export function makeFromSchema<ResA>(
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
-  // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybeEffect(jsonSchema)
+  // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
   const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap((_) =>
     _.fold(
