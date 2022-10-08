@@ -496,10 +496,10 @@ export function fromProps<Props extends FromPropertyRecord>(
       } else {
         if (
           prop._def.isSome() &&
-          // @ts-expect-error
+          // // @ts-expect-error
           (prop._def.value[0] === "parser" || prop._def.value[0] === "both")
         ) {
-          // @ts-expect-error
+          // // @ts-expect-error
           result[key] = prop._def.value[1]()
         }
       }

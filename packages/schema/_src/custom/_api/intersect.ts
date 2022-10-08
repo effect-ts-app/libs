@@ -185,14 +185,16 @@ export function intersect_<
     }),
     S.mapApi(() => {
       const props = {}
-      if ("props" in self.Api) {
-        for (const k of Object.keys(self.Api["props"])) {
+      const anySelfApi = self.Api as any
+      if ("props" in anySelfApi) {
+        for (const k of Object.keys(anySelfApi["props"])) {
           props[k] = self.Api["props"][k]
         }
       }
-      if ("props" in that.Api) {
-        for (const k of Object.keys(that.Api["props"])) {
-          props[k] = that.Api["props"][k]
+      const anyThatApi = that.Api as any
+      if ("props" in anyThatApi) {
+        for (const k of Object.keys(anyThatApi["props"] as any)) {
+          props[k] = anyThatApi["props"][k]
         }
       }
       if (Object.keys(props).length > 0) {
