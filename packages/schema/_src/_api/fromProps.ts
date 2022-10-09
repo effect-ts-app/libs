@@ -355,10 +355,13 @@ export function tagsFromFromProps<Props extends FromPropertyRecord>(
   const tags = {}
   for (const key of keys) {
     const s: S.SchemaAny = props[key]._schema
-
+    const def = props[key]._def as Maybe<
+      ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+    >
+    const as = props[key]._as as Maybe<PropertyKey>
     if (
-      props[key]._as.isNone() &&
-      props[key]._def.isNone() &&
+      as.isNone() &&
+      def.isNone() &&
       props[key]._optional === "required" &&
       "literals" in s.Api &&
       Array.isArray(s.Api["literals"]) &&
@@ -389,18 +392,15 @@ export function fromProps<Props extends FromPropertyRecord>(
     guards[key] = Guard.for(props[key]._schema)
 
     if (props[key]._optional === "required") {
-      if (
-        props[key]._def.isNone() ||
-        (props[key]._def.isSome() && props[key]._def.value[0] === "constructor")
-      ) {
+      const def = props[key]._def as Maybe<
+        ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+      >
+
+      if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
         required.push(props[key]._as.getOrElse(() => key))
       }
-      if (
-        props[key]._def.isSome() &&
-        (props[key]._def.value[0] === "constructor" ||
-          props[key]._def.value[0] === "both")
-      ) {
-        defaults.push([key, props[key]._def.value])
+      if (def.isSome() && (def.value[0] === "constructor" || def.value[0] === "both")) {
+        defaults.push([key, def.value])
       }
 
       arbitrariesReq[key] = Arbitrary.for(props[key]._schema)
@@ -470,7 +470,27 @@ export function fromProps<Props extends FromPropertyRecord>(
       const prop = props[key]
       const _as: string = props[key]._as.getOrElse(() => key)
 
+      const def = prop._def as Maybe<
+        ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+      >
+
+      // TODO: support actual optionallity vs explicit `| undefined`
       if (_as in _) {
+        const isUndefined = typeof _[_as] === "undefined"
+        if (prop._optional === "optional" && isUndefined) {
+          continue
+        }
+        if (
+          isUndefined &&
+          def.isSome() &&
+          // TODO: why def any
+          // // @ts-expect-error
+          (def.value[0] === "parser" || def.value[0] === "both")
+        ) {
+          // // @ts-expect-error
+          result[key] = def.value[1]()
+          continue
+        }
         const res = parsersv2[key](_[_as])
 
         if (res.effect._tag === "Left") {
@@ -495,12 +515,12 @@ export function fromProps<Props extends FromPropertyRecord>(
         }
       } else {
         if (
-          prop._def.isSome() &&
+          def.isSome() &&
           // // @ts-expect-error
-          (prop._def.value[0] === "parser" || prop._def.value[0] === "both")
+          (def.value[0] === "parser" || def.value[0] === "both")
         ) {
           // // @ts-expect-error
-          result[key] = prop._def.value[1]()
+          result[key] = def.value[1]()
         }
       }
     }
