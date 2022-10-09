@@ -25,7 +25,7 @@ import type * as O from "@effect-ts-app/core/Maybe"
 import type * as SET from "@effect-ts-app/core/Set"
 import type * as SO from "@effect-ts-app/core/SyncMaybe"
 import type * as HAS from "@effect-ts/core/Has"
-import type * as TUP from "@effect-ts-app/core/Tuple"
+import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
 // export namespace Equal {
 //   export * from "@effect-ts/core/Equal"
@@ -49,7 +49,7 @@ import type * as TUP from "@effect-ts-app/core/Tuple"
 // }
 
 export namespace Tuple {
-  export * from "@effect-ts-app/core/Tuple"
+  export * from "@effect-ts/core/Collections/Immutable/Tuple"
 }
 /** @tsplus type ets/Tuple */
 export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
