@@ -19,7 +19,7 @@ export function defaultTeardown(
 
 /**
  * A dumbed down version of effect-ts/node's runtime, in preparation of new effect-ts
- * @tsplus fluent ets/Effect runMain
+ * @tsplus fluent effect/core/io/Effect runMain
  */
 export function runMain<E, A>(eff: Effect<never, E, A>) {
   const onExit = (s: number) => {

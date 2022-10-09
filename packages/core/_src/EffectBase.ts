@@ -86,7 +86,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
 }
 
 /**
- * @tsplus fluent ets/Effect tapBoth
+ * @tsplus fluent effect/core/io/Effect tapBoth
  */
 export const tapBoth_ = <R, E, A, R2, R3, E3>(
   self: Effect<R, E, A>,
@@ -104,7 +104,7 @@ export const tapBoth =
     tapBoth_(self, f, g)
 
 /**
- * @tsplus fluent ets/Effect tapBothInclAbort
+ * @tsplus fluent effect/core/io/Effect tapBothInclAbort
  */
 export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   self: Effect<R, E, A>,
@@ -140,7 +140,7 @@ export function getFirstError<E>(cause: Cause<E>) {
 }
 
 /**
- * @tsplus fluent ets/Effect tapErrorInclAbort
+ * @tsplus fluent effect/core/io/Effect tapErrorInclAbort
  */
 export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   self: Effect<R, E, A>,
