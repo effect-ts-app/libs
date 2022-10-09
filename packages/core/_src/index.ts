@@ -1,8 +1,10 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
 export * as Array from "@effect-ts-app/core/Array"
 export * as ROArray from "@effect-ts-app/core/Array"
+export * as Lens from "@effect-ts/monocle/Lens"
 export * as Map from "@effect-ts/core/Collections/Immutable/Map"
 export * as ROMap from "@effect-ts/core/Collections/Immutable/Map"
+export * as Tuple from "@effect-ts/core/Collections/Immutable/Tuple"
 
 export {} from "@effect-ts-app/core/Effect"
 //export * as EffectMaybe from "@effect-ts-app/core/EffectMaybe"

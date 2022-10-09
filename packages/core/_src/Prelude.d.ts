@@ -48,11 +48,11 @@ import type * as TUP from "@effect-ts-app/core/Tuple"
 //   export * from "@effect-ts/core/Effect/Fiber"
 // }
 
-// export namespace Tuple {
-//   export * from "@effect-ts-app/core/Tuple"
-// }
-// /** @tsplus type ets/Tuple */
-// export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
+export namespace Tuple {
+  export * from "@effect-ts-app/core/Tuple"
+}
+/** @tsplus type ets/Tuple */
+export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 
 // /** @tsplus type ets/Cause */
 // export type Cause<A> = CAUSE.Cause<A>
