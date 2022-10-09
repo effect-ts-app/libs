@@ -81,6 +81,5 @@ export const makeWinstonLogger = Effect.gen(function* ($) {
   } as LOG.Logger
 })
 
-export const WinstonLogger = Layer.fromEffect(LOG.Logger)(makeWinstonLogger)["<+<"](
-  LiveWinstonInstance
-)
+export const WinstonLogger =
+  LiveWinstonInstance > Layer.fromEffect(LOG.Logger)(makeWinstonLogger)
