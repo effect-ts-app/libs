@@ -42,11 +42,6 @@ export const naSucceed = NonEmptyArray.fromArray
 export const setSucceed = ROSet.fromArray
 
 /**
- * @tsplus static ets/Chunk __call
- */
-export const chunkSucceed = Chunk.from
-
-/**
  * @tsplus operator ets/Schema/Schema >=
  * @tsplus fluent ets/Schema/Schema apply
  * @tsplus fluent ets/Schema/Schema __call
