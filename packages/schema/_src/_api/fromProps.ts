@@ -395,9 +395,10 @@ export function fromProps<Props extends FromPropertyRecord>(
       const def = props[key]._def as Maybe<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
+      const as = props[key]._as as Maybe<string>
 
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
-        required.push(props[key]._as.getOrElse(() => key))
+        required.push(as.getOrElse(() => key))
       }
       if (def.isSome() && (def.value[0] === "constructor" || def.value[0] === "both")) {
         defaults.push([key, def.value])
@@ -468,7 +469,8 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       const prop = props[key]
-      const _as: string = props[key]._as.getOrElse(() => key)
+      const as = props[key]._as as Maybe<string>
+      const _as: string = as.getOrElse(() => key)
 
       const def = prop._def as Maybe<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
@@ -551,7 +553,8 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const _as: string = props[key]._as.getOrElse(() => key)
+        const as = props[key]._as as Maybe<string>
+        const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }
     }
