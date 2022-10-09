@@ -1,15 +1,12 @@
-import type { Array as ImmutableArray } from "../Prelude.js"
-import { Array as ImmutableArrayOps, Tuple } from "../Prelude.js"
+import type { Array as ROArray } from "../Prelude.js"
+import { Array as ROArrayOps } from "../Prelude.js"
 
 /**
  * @tsplus operator ets/Array &
  * @tsplus fluent ets/Array concat
  */
-export function concat_<A, B>(
-  self: ImmutableArray<A>,
-  that: ImmutableArray<B>
-): ImmutableArray<A | B> {
-  return ImmutableArrayOps.concat_(self, that)
+export function concat_<A, B>(self: ROArray<A>, that: ROArray<B>): ROArray<A | B> {
+  return ROArrayOps.concat_(self, that)
 }
 
 /**
@@ -17,77 +14,59 @@ export function concat_<A, B>(
  *
  * @tsplus operator ets/Array +
  */
-export const concatOperator: <A>(
-  self: ImmutableArray<A>,
-  that: ImmutableArray<A>
-) => ImmutableArray<A> = concat_
+export const concatOperator: <A>(self: ROArray<A>, that: ROArray<A>) => ROArray<A> =
+  concat_
 
 /**
- * Prepends `a` to ImmutableArray<A>
+ * Prepends `a` to ROArray<A>
  *
  * @tsplus operator ets/Array + 1.0
  */
-export function prependOperatorStrict<A>(
-  a: A,
-  self: ImmutableArray<A>
-): ImmutableArray<A> {
-  return ImmutableArrayOps.prepend_(self, a)
+export function prependOperatorStrict<A>(a: A, self: ROArray<A>): ROArray<A> {
+  return ROArrayOps.prepend_(self, a)
 }
 
 /**
- * Prepends `a` to ImmutableArray<A>
+ * Prepends `a` to ROArray<A>
  *
  * @tsplus operator ets/Array >
  */
-export function prependOperator<A, B>(
-  a: A,
-  self: ImmutableArray<B>
-): ImmutableArray<A | B> {
+export function prependOperator<A, B>(a: A, self: ROArray<B>): ROArray<A | B> {
   return prepend_(self, a)
 }
 
 /**
- * Prepends `a` to ImmutableArray<A>
+ * Prepends `a` to ROArray<A>
  *
  * @tsplus fluent ets/Array prepend
  */
-export function prepend_<A, B>(
-  tail: ImmutableArray<A>,
-  head: B
-): ImmutableArray<A | B> {
+export function prepend_<A, B>(tail: ROArray<A>, head: B): ROArray<A | B> {
   const len = tail.length
   const r = Array(len + 1)
   for (let i = 0; i < len; i++) {
     r[i + 1] = tail[i]
   }
   r[0] = head
-  return r as unknown as ImmutableArray<A | B>
+  return r as unknown as ROArray<A | B>
 }
 
 /**
- * Appends `a` to ImmutableArray<A>
+ * Appends `a` to ROArray<A>
  *
  * @tsplus fluent ets/Array append
  * @tsplus operator ets/Array <
  */
-export function append_<A, B>(init: ImmutableArray<A>, end: B): ImmutableArray<A | B> {
+export function append_<A, B>(init: ROArray<A>, end: B): ROArray<A | B> {
   const len = init.length
   const r = Array(len + 1)
   for (let i = 0; i < len; i++) {
     r[i] = init[i]
   }
   r[len] = end
-  return r as unknown as ImmutableArray<A | B>
+  return r as unknown as ROArray<A | B>
 }
 
 /**
  * @tsplus operator ets/Array + 1.0
  */
-export const appendOperator: <A>(self: ImmutableArray<A>, a: A) => ImmutableArray<A> =
-  append_
-
-/**
- * Converts from native tuple type
- * @tsplus getter ets/Array asTup
- */
-export const toTuple = Tuple.fromNative
+export const appendOperator: <A>(self: ROArray<A>, a: A) => ROArray<A> = append_

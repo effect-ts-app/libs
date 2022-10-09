@@ -8,6 +8,7 @@
         ]
     },
     "private": true,
+    "packageManager": "yarn@3.2.4",
     "scripts": {
         "autofix": "ultra -r autofix",
         "build": "ultra -r build",
@@ -17,10 +18,20 @@
         "update": "ultra -r --root ncu -u --packageFile package.json -x @types/node",
         "up": "yarn update && yarn",
         "pub": "yarn lerna publish --no-private",
-        "client": "cd packages/client && yarn client"
+        "client": "cd packages/client && yarn client",
+        "ets:rimraf": "cd $INIT_CWD && rimraf",
+        "ets:tsc": "cd $INIT_CWD && tsc",
+        "ets:eslint": "cd $INIT_CWD && eslint",
+        "ets:prettier": "cd $INIT_CWD && prettier",
+        "ets:concurrently": "cd $INIT_CWD && concurrently",
+        "ets:build-utils": "cd $INIT_CWD && build-utils",
+        "ets:ts-node": "cd $INIT_CWD && ts-node",
+        "ets:babel": "cd $INIT_CWD && babel",
+        "ets:madge": "cd $INIT_CWD && madge",
+        "ets:jest": "cd $INIT_CWD && jest"
     },
     "resolutions": {
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.146/compiler/typescript.tgz"
     },
     "devDependencies": {
         "@babel/cli": "^7.18.9",
@@ -32,8 +43,10 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.18.6",
         "@babel/preset-typescript": "^7.18.6",
-        "@effect-ts/jest": "^0.35.2",
-        "@effect-ts/tracing-plugin": "^0.20.0",
+        "@effect-ts/core": "^0.60.4",
+        "@effect-ts/monocle": "^0.43.0",
+        "@effect/core": "^0.0.15",
+        "@tsplus/stdlib": "^0.2.8",
         "@types/jest": "^28.1.6",
         "@types/lodash-es": "^4.17.6",
         "@types/node": "^16.9.1",
@@ -67,8 +80,7 @@
         "prettier": "^2.7.1",
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.0.0",
-        "ttypescript": "^1.5.13",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.135/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.146/compiler/typescript.tgz",
         "ultra-runner": "^3.10.5"
     }
 }

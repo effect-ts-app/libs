@@ -151,8 +151,10 @@ export function foldHttpError<A, B, ErrorBody>(
 }
 
 export interface HttpHeaders extends Record<string, string> {}
-export const HttpHeaders = Has.tag<HttpHeaders>()
-const accessHttpHeaders_ = Effect.access(HttpHeaders.readOption)
+export const HttpHeaders = Tag<HttpHeaders>()
+const accessHttpHeaders_ = Effect.environmentWith((env: Env<never>) =>
+  env.getMaybe(HttpHeaders)
+)
 export function accessHttpHeadersM<R, E, A>(
   eff: (h: Maybe<HttpHeaders>) => Effect<R, E, A>
 ) {
@@ -170,13 +172,12 @@ export interface HttpOps {
     responseType: Resp,
     headers: Record<string, string>,
     body: RequestBodyTypes[Req][M]
-  ): Effect.IO<HttpError<string>, Response<ResponseTypes[Resp][M]>>
+  ): Effect<never, HttpError<string>, Response<ResponseTypes[Resp][M]>>
 }
 
 export interface Http extends HttpOps {}
-export const Http = Has.tag<HttpOps>()
+export const Http = Tag<HttpOps>()
 // const accessHttp = Effect.accessService(Http)
-const accessHttpM = Effect.accessServiceM(Http)
 
 export type RequestF = <
   R,
@@ -189,7 +190,7 @@ export type RequestF = <
   requestType: Req,
   responseType: Resp,
   body?: RequestBodyTypes[Req][M]
-) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
+) => Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
 
 export type RequestMiddleware = (request: RequestF) => RequestF
 
@@ -197,9 +198,11 @@ export interface MiddlewareStack {
   stack: RequestMiddleware[] // todo; is optional.
 }
 
-export const MiddlewareStack = Has.tag<MiddlewareStack>()
+export const MiddlewareStack = Tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = Effect.access(MiddlewareStack.readOption)
+const accessMiddlewareStack_ = Effect.environmentWith((env: Env<never>) =>
+  env.getMaybe(MiddlewareStack)
+)
 export function accessMiddlewareStackM<R, E, A>(
   eff: (h: Maybe<MiddlewareStack>) => Effect<R, E, A>
 ) {
@@ -210,11 +213,11 @@ export function accessMiddlewareStack<A>(eff: (h: Maybe<MiddlewareStack>) => A) 
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  Layer.fromValue(MiddlewareStack)({
+  Layer.fromValue(MiddlewareStack, {
     stack,
   })
 
-export type RequestEnv = Has<Http>
+export type RequestEnv = Http
 
 function foldMiddlewareStack(env: MiddlewareStack | null, request: RequestF): RequestF {
   if (env && env.stack.length > 0) {
@@ -241,15 +244,15 @@ export function requestInner<
   requestType: Req,
   responseType: Resp,
   body: RequestBodyTypes[Req][M]
-): Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+): Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM((headers) =>
-    accessHttpM((h) =>
+    Effect.serviceWithEffect(Http, (h) =>
       h.request<M, Req, Resp>(
         method,
         url,
         requestType,
         responseType,
-        Maybe.getOrElse_(headers, () => ({})),
+        headers.getOrElse(() => ({})),
         body
       )
     )
@@ -263,7 +266,7 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
 ): (
   url: string,
   body?: RequestBodyTypes[Req]["GET"]
-) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp]["GET"]>>
+) => Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp]["GET"]>>
 export function request<R, Req extends RequestType, Resp extends ResponseType>(
   method: "DELETE",
   requestType: Req,
@@ -271,7 +274,7 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
 ): (
   url: string,
   body?: RequestBodyTypes[Req]["DELETE"]
-) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp]["DELETE"]>>
+) => Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp]["DELETE"]>>
 export function request<
   R,
   M extends Method,
@@ -284,7 +287,7 @@ export function request<
 ): (
   url: string,
   body: RequestBodyTypes[Req][M]
-) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
+) => Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>>
 export function request<
   R,
   M extends Method,
@@ -297,10 +300,10 @@ export function request<
 ): (
   url: string,
   body: RequestBodyTypes[Req][M]
-) => Effect<RequestEnv & R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+) => Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return (url, body) =>
     accessMiddlewareStackM((s) =>
-      foldMiddlewareStack(Maybe.toNullable(s), requestInner)<R, M, Req, Resp>(
+      foldMiddlewareStack(s.toNullable, requestInner)<R, M, Req, Resp>(
         method,
         url,
         requestType,
@@ -382,20 +385,23 @@ export const delBinaryGetBinary =
   /*#__PURE__*/
   (() => request("DELETE", "BINARY", "BINARY"))()
 
+// TODO !!!
 export function withHeaders(
   headers: Record<string, string>,
   replace = false
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.accessM((r: R) =>
-          Effect.provide({ ...r, [HttpHeaders.key]: headers })(eff)
+      ? Effect.environmentWithEffect((r: Env<R>) =>
+          Effect.$.provideEnvironment(r.add(HttpHeaders, headers))(eff)
         )
-      : Effect.accessM((r: R) =>
-          Effect.provide({
-            ...r,
-            [HttpHeaders.key]: { ...(r as any)[HttpHeaders.key], ...headers },
-          })(eff)
+      : Effect.environmentWithEffect((r: Env<R>) =>
+          Effect.$.provideEnvironment(
+            r.add(HttpHeaders, {
+              ...(r.getMaybe(HttpHeaders).value ?? {}),
+              ...headers,
+            })
+          )(eff)
         )
 }
 

@@ -1,5 +1,4 @@
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import { Effect, Maybe } from "@effect-ts-app/core/Prelude"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
@@ -19,7 +18,7 @@ import { Version } from "./simpledb.js"
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index,
@@ -49,10 +48,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       )
 
       const idx = makeIndexKey(record)
-      return Maybe.isSome(currentVersion)
-        ? Managed.use_(lockIndex(record), () =>
-            readIndex(idx)
-              .flatMap((x) =>
+      return currentVersion.isSome()
+        ? lockIndex(record)
+            .zipRight(
+              readIndex(idx).flatMap((x) =>
                 x[record.id]
                   ? Effect.fail(() => new Error("Combination already exists, abort"))
                   : getData(record)
@@ -60,9 +59,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                         fu.writeTextFile(getFilename(type, record.id), serialised)
                       )
                       .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
-              )
-              .orDie()
-          ).map(() => ({ version, data: record } as CachedRecord<A>))
+              ).orDie
+            )
+            .scoped.map(() => ({ version, data: record } as CachedRecord<A>))
         : getData(record)
             .flatMap((serialised) =>
               fu.writeTextFile(getFilename(type, record.id), serialised)
@@ -86,9 +85,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        Managed.make_(
-          Effect.bimap_(
-            lockFile(getFilename(type, id)),
+        Effect.acquireRelease(
+          lockFile(getFilename(type, id)).mapBoth(
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
           ),
@@ -98,9 +96,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        Managed.make_(
-          Effect.bimap_(
-            lockFile(getIdxName(type, id)),
+        Effect.acquireRelease(
+          lockFile(getIdxName(type, id)).mapBoth(
             (err) => new CouldNotAquireDbLockException(type, id, err as Error),
             (release) => ({ release })
           ),
@@ -116,8 +113,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(type: string) {
       return (id: string) => {
-        return tryRead(getFilename(type, id)).mapMaybe(
-          (s) => JSON.parse(s) as CachedRecord<EA>
+        return tryRead(getFilename(type, id)).map(
+          Maybe.$.map((s) => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
@@ -128,7 +125,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Maybe.fold(
+        Maybe.$.fold(
           () => ({} as Record<string, TKey>),
           (x) => JSON.parse(x) as Record<string, TKey>
         )
@@ -161,7 +158,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
 function lockFile(fileName: string) {
   return Effect.tryPromise(() =>
-    PLF.lock(fileName).then(flow(Effect.tryPromise, Effect.orDie))
+    PLF.lock(fileName).then(flow(Effect.tryPromise, (_) => _.orDie))
   )
 }
 

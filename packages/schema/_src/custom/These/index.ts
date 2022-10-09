@@ -32,8 +32,7 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
   onFail: (e: E) => These<E3, A3>
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
-    Either.fold_(
-      self.effect,
+    self.effect.fold(
       (x): Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Maybe<E1 | E2 | E3>]>> =>
         onFail(x).effect,
       ({ tuple: [result, warnings] }) =>

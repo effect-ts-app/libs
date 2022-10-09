@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { _A } from "@effect-ts/core/Utils"
-import { Chunk, ImmutableArray } from "@effect-ts-app/core/Prelude"
-
 import * as RS from "./schema/routing.js"
 
 type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 
 const rx = /:(\w+)/g
+
+type _A<C> = C extends Chunk<infer A> ? A : never
 
 /**
  * Work in progress JSONSchema generator.
@@ -19,7 +18,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
-          responses: ImmutableArray.reduce_(
+          responses: ROArray.reduce_(
             responses,
             {} as Record<Response["statusCode"], Response["type"]>,
             (prev, cur) => {
@@ -29,8 +28,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
           ),
         },
       })
-      return Chunk.reduce_(
-        e,
+      return e.reduce(
         {} as Record<string, Record<Methods, ReturnType<typeof map>>>,
         (prev, e) => {
           const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)

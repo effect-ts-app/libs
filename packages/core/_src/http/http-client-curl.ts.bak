@@ -132,7 +132,7 @@ export const Client = (
 
             req.perform()
 
-            return Effect.succeedWith(() => {
+            return Effect.sync(() => {
               req.close()
             })
           }),

@@ -30,8 +30,10 @@ export type IntersectionSchema<
   Api
 >
 
-export const intersectIdentifier =
-  S.makeAnnotation<{ self: S.SchemaUPI; that: S.SchemaUPI }>()
+export const intersectIdentifier = S.makeAnnotation<{
+  self: S.SchemaUPI
+  that: S.SchemaUPI
+}>()
 
 export function intersect_<
   ParsedShape extends {},
@@ -84,26 +86,26 @@ export function intersect_<
       const intersection = {} as unknown as ParsedShape & ThatParsedShape
 
       if (left._tag === "Left") {
-        errors = Chunk.append_(errors, S.memberE(0, left.left as any))
+        errors = errors.append(S.memberE(0, left.left as any))
 
         errored = true
       } else {
         const warnings = left.right.get(1)
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, S.memberE(0, warnings.value as any))
+          errors = errors.append(S.memberE(0, warnings.value as any))
 
           warned = true
         }
         Object.assign(intersection, left.right.get(0))
       }
       if (right._tag === "Left") {
-        errors = Chunk.append_(errors, S.memberE(1, right.left as any))
+        errors = errors.append(S.memberE(1, right.left as any))
 
         errored = true
       } else {
         const warnings = right.right.get(1)
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, S.memberE(1, warnings.value as any))
+          errors = errors.append(S.memberE(1, warnings.value as any))
 
           warned = true
         }
@@ -134,26 +136,26 @@ export function intersect_<
       const intersection = {} as unknown as ParsedShape & ThatParsedShape
 
       if (left._tag === "Left") {
-        errors = Chunk.append_(errors, S.memberE(0, left.left as any))
+        errors = errors.append(S.memberE(0, left.left as any))
 
         errored = true
       } else {
         const warnings = left.right.get(1)
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, S.memberE(0, warnings.value as any))
+          errors = errors.append(S.memberE(0, warnings.value as any))
 
           warned = true
         }
         Object.assign(intersection, left.right.get(0))
       }
       if (right._tag === "Left") {
-        errors = Chunk.append_(errors, S.memberE(1, right.left as any))
+        errors = errors.append(S.memberE(1, right.left as any))
 
         errored = true
       } else {
         const warnings = right.right.get(1)
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, S.memberE(1, warnings.value as any))
+          errors = errors.append(S.memberE(1, warnings.value as any))
 
           warned = true
         }
@@ -183,14 +185,16 @@ export function intersect_<
     }),
     S.mapApi(() => {
       const props = {}
-      if ("props" in self.Api) {
-        for (const k of Object.keys(self.Api["props"])) {
+      const anySelfApi = self.Api as any
+      if ("props" in anySelfApi) {
+        for (const k of Object.keys(anySelfApi["props"])) {
           props[k] = self.Api["props"][k]
         }
       }
-      if ("props" in that.Api) {
-        for (const k of Object.keys(that.Api["props"])) {
-          props[k] = that.Api["props"][k]
+      const anyThatApi = that.Api as any
+      if ("props" in anyThatApi) {
+        for (const k of Object.keys(anyThatApi["props"] as any)) {
+          props[k] = anyThatApi["props"][k]
         }
       }
       if (Object.keys(props).length > 0) {

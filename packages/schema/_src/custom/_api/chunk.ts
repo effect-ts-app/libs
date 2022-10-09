@@ -35,7 +35,7 @@ export function fromChunk<
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
   const refinement = (_: unknown): _ is Chunk<ParsedShape> =>
-    Chunk.isChunk(_) && Chunk.forAll_(_, guard)
+    Chunk.isChunk(_) && _.forAll(guard)
   const encode = Encoder.for(self)
 
   return pipe(
@@ -74,7 +74,7 @@ export function fromChunk<
       return Th.succeed(b.build())
     }),
     S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.from(i))),
-    S.encoder((_) => Chunk.toArray(Chunk.map_(_, encode)) as readonly Encoded[]),
+    S.encoder((_) => _.map(encode).toArray as readonly Encoded[]),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,
     S.annotate(fromChunkIdentifier, { self })
@@ -95,7 +95,7 @@ export function chunk<ParsedShape, ConstructorInput, Encoded, Api>(
   const encodeSelf = Encoder.for(self)
   return pipe(
     unknownArray[">>>"](fromChunk(self)),
-    S.encoder((_) => Chunk.toArray(Chunk.map_(_, encodeSelf))),
+    S.encoder((_) => _.map(encodeSelf).toArray),
     withDefaults,
     S.annotate(chunkIdentifier, { self })
   )

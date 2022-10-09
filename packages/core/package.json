@@ -1,8 +1,9 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "0.79.5",
+    "version": "1.0.10",
     "license": "MIT",
     "dependencies": {
+        "@effect-ts/monocle": "^0.43.0",
         "cross-fetch": "^3.1.5",
         "lodash": "^4.17.21",
         "path-parser": "^6.1.0",
@@ -12,7 +13,6 @@
     },
     "devDependencies": {
         "@effect-ts/core": "^0.60.2",
-        "@effect-ts/node": "^0.39.0",
         "@types/uuid": "^8.3.4",
         "@types/validator": "^13.7.4",
         "ts-toolbelt": "^9.6.0"
@@ -22,16 +22,16 @@
         "node-libcurl": "^2.3.4"
     },
     "scripts": {
-        "build": "yarn clean && ttsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh && cp -f ./_src/Prelude.d.ts ./Prelude.d.ts && mv -f ./index.js ./Prelude.js && mv -f ./_mjs/index.mjs ./_mjs/Prelude.mjs",
-        "build2:cjs": "babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
-        "build2:mjs": "babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
+        "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh && cp -f ./_src/Prelude.d.ts ./Prelude.d.ts && mv -f ./index.js ./Prelude.js && mv -f ./_mjs/index.mjs ./_mjs/Prelude.mjs",
+        "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
+        "build2:mjs": "yarn ets:babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
         "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /types/ | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
         "generate-exports": "sh ../../utils/extract.sh > package.log",
         "postpublish": "yarn clean",
         "prepare": "yarn build",
         "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./_src",
         "circular:dist": "madge --circular --extensions js ./",
-        "compile": "ttsc --noEmit",
+        "compile": "yarn ets:tsc --noEmit",
         "lint": "eslint .",
         "prettier": "prettier \"**/*.ts\"",
         "autofix": "yarn lint --fix && yarn prettier --write",

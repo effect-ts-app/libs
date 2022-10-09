@@ -1,4 +1,3 @@
-import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/core/Prelude"
 import { IndexDescription, InsertOneOptions } from "mongodb"
 
 import * as Mongo from "../mongo-client.js"
@@ -25,7 +24,7 @@ const setup = (type: string, indexes: IndexDescription[]) =>
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     //schemaVersion: string,
     indexes: IndexDescription[]
@@ -37,18 +36,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }))
 
     function find(id: string) {
-      return (
-        Mongo.db
-          .flatMap((db) =>
-            Effect.tryPromise(() =>
-              db
-                .collection(type)
-                .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
-            )
+      return Mongo.db
+        .flatMap((db) =>
+          Effect.tryPromise(() =>
+            db
+              .collection(type)
+              .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
           )
-          .map(Maybe.fromNullable) >=
-        EffectMaybe.map(({ data, version }) => ({ version, data } as CachedRecord<EA>))
-      )
+        )
+        .map(Maybe.fromNullable)
+        .mapMaybe(({ data, version }) => ({ version, data } as CachedRecord<EA>))
     }
 
     function findBy(keys: Record<string, string>) {
@@ -71,8 +68,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          Maybe.fold_(
-            currentVersion,
+          currentVersion.fold(
             () =>
               Effect.tryPromise(() =>
                 db
@@ -83,9 +79,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       checkKeys: false, // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
                     } as InsertOneOptions
                   )
-              )
-                .asUnit()
-                .orDie(),
+              ).unit.orDie,
             (currentVersion) =>
               Effect.tryPromise(() =>
                 db.collection(type).replaceOne(
@@ -97,14 +91,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                   },
                   { upsert: false }
                 )
-              )
-                .orDie()
-                .flatMap((x) => {
-                  if (!x.modifiedCount) {
-                    return Effect.fail(new OptimisticLockException(type, record.id))
-                  }
-                  return Effect.unit
-                })
+              ).orDie.flatMap((x) => {
+                if (!x.modifiedCount) {
+                  return Effect.fail(new OptimisticLockException(type, record.id))
+                }
+                return Effect.unit
+              })
           )
         )
         return { version, data: record } as CachedRecord<A>

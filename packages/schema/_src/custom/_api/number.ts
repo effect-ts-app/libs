@@ -49,7 +49,7 @@ export const stringNumberFromString: DefaultSchema<string, number, number, strin
         )
       )
     ),
-    S.mapParserError((e) => (Chunk.unsafeHead((e as any).errors) as any).error),
+    S.mapParserError((e) => ((e as any).errors as Chunk<any>).unsafeHead.error),
     withDefaults,
     S.annotate(stringNumberFromStringIdentifier, {})
   )

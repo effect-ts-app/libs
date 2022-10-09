@@ -39,14 +39,14 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     MO.identity(refinement),
-    MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(Chunk.toArray(u)))),
+    MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(u.toArray))),
     MO.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
     MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+    MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
     MO.encoder((u) => toArray_(u).map(encodeSelf)),
     MO.mapApi(() => ({ self: self.Api, eq: eq_, ord })),

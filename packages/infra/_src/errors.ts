@@ -9,7 +9,7 @@ export class NotFoundError {
 
 export class ValidationError {
   public readonly _tag = "ValidationError"
-  constructor(public readonly errors: ImmutableArray<unknown>) {}
+  constructor(public readonly errors: ROArray<unknown>) {}
 }
 
 export class NotLoggedInError {

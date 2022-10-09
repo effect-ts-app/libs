@@ -16,11 +16,11 @@ export function writeTextFile(fileName: string, content: string) {
   return (
     Effect.tryPromise(() => writeFile(tmp, content, "utf-8")) >
     Effect.tryPromise(() => rename(tmp, fileName))
-  ).orDie()
+  ).orDie
 }
 
 export function fileExists(fileName: string) {
-  return Effect.tryPromise(() => exists(fileName)).orDie()
+  return Effect.tryPromise(() => exists(fileName)).orDie
 }
 
 export function readTextFile(fileName: string) {

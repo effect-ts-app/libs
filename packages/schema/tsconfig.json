@@ -8,7 +8,6 @@
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "types": [
-            "@effect-ts-app/core/_src/_ext/index",
             "@effect-ts-app/core/fluent/_ext/awesome/node"
         ],
         "paths": {

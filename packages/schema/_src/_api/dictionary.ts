@@ -58,7 +58,7 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
       const res = parsev2(_[key])
 
       if (res.effect._tag === "Left") {
-        errors = Chunk.append_(errors, MO.requiredKeyE(key, res.effect.left))
+        errors = errors.append(MO.requiredKeyE(key, res.effect.left))
         isError = true
       } else {
         result[key] = res.effect.right.get(0)
@@ -66,7 +66,7 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
         const warnings = res.effect.right.get(1)
 
         if (warnings._tag === "Some") {
-          errors = Chunk.append_(errors, MO.requiredKeyE(key, warnings.value))
+          errors = errors.append(MO.requiredKeyE(key, warnings.value))
         }
       }
     }
@@ -75,7 +75,7 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
       augmentRecord(result)
     }
 
-    if (Chunk.isEmpty(errors)) {
+    if (errors.isEmpty) {
       return Th.succeed(result as Dictionary<ParsedShape>)
     }
 

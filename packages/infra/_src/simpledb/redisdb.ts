@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { flow, pipe } from "@effect-ts-app/core/Function"
-import { Effect, EffectMaybe, Maybe } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 import { Lock } from "redlock"
 
@@ -22,7 +21,7 @@ const ttl = 10 * 1000
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
@@ -35,34 +34,29 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id))
-        .flatMapMaybeEffect((v) =>
-          pipe(
-            RedisSerializedDBRecord.Parser,
-            MO.condemnFail
-          )(v)
-            .map(({ data, version }) => ({
-              data: JSON.parse(data) as EA,
-              version,
-            }))
-            .mapError((e) => new ConnectionException(new Error(e.toString())))
-        )
-        .orDie()
+      return RED.hmgetAll(getKey(id)).flatMapMaybe((v) =>
+        pipe(
+          RedisSerializedDBRecord.Parser,
+          MO.condemnFail
+        )(v)
+          .map(({ data, version }) => ({
+            data: JSON.parse(data) as EA,
+            version,
+          }))
+          .mapError((e) => new ConnectionException(new Error(e.toString())))
+      ).orDie
     }
     function store(record: A, currentVersion: Maybe<string>) {
       const version = currentVersion
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      return Maybe.fold_(
-        currentVersion,
+      return currentVersion.fold(
         () =>
-          Managed.use_(lockIndex(record), () =>
-            pipe(
-              getIndex(record),
-              EffectMaybe.zipRight(
+          lockIndex(record).zipRight(
+            getIndex(record)
+              .zipRightMaybe(
                 Effect.fail(() => new Error("Combination already exists, abort"))
               )
-            )
               .zipRight(getData(record))
               // TODO: instead use MULTI & EXEC to make it in one command?
               .flatMap((data) =>
@@ -73,9 +67,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 })
               )
               .zipRight(setIndex(record))
-              .orDie()
-              .map(() => ({ version, data: record } as CachedRecord<A>))
-          ),
+              .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
+          ).scoped,
         () =>
           getData(record)
             .flatMap((data) =>
@@ -85,8 +78,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 data,
               })
             )
-            .orDie()
-            .map(() => ({ version, data: record } as CachedRecord<A>))
+            .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
       )
     }
 
@@ -106,7 +98,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).mapMaybe((i) => i as TKey)
+      return RED.hget(getIdxKey(index), index.key).map(Maybe.$.map((i) => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {
@@ -115,42 +107,42 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
-      return Managed.make_(
-        Effect.bimap_(
-          // acquire
-          Effect.flatMap_(RED.lock, (lock) =>
+      return Effect.acquireRelease(
+        // acquire
+        RED.lock
+          .flatMap((lock) =>
             Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
+          )
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+            // release
+            (lock) => ({
+              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+                .orDie,
+            })
           ),
-          (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
-          // release
-          (lock) => ({
-            release: Effect.tryPromise(
-              () => lock.unlock() as any as Promise<void>
-            ).orDie(),
-          })
-        ),
         (l) => l.release
       )
     }
 
     function lockRedisRecord(id: string) {
-      return Managed.make_(
-        Effect.bimap_(
-          // acquire
-          Effect.flatMap_(RED.lock, (lock) =>
+      return Effect.acquireRelease(
+        // acquire
+        RED.lock
+          .flatMap((lock) =>
             Effect.tryPromise(
               () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
             )
+          )
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+            // release
+            (lock) => ({
+              // TODO
+              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+                .orDie,
+            })
           ),
-          (err) => new CouldNotAquireDbLockException(type, id, err as Error),
-          // release
-          (lock) => ({
-            // TODO
-            release: Effect.tryPromise(
-              () => lock.unlock() as any as Promise<void>
-            ).orDie(),
-          })
-        ),
         (l) => l.release
       )
     }
@@ -173,9 +165,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return Effect.flatMap_(RED.client, (client) =>
-      Effect.uninterruptible(
-        Effect.effectAsync<unknown, ConnectionException, void>((res) => {
+    return RED.client.flatMap(
+      (client) =>
+        Effect.async<unknown, ConnectionException, void>((res) => {
           client.hmset(
             key,
             "version",
@@ -189,8 +181,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 ? res(Effect.fail(new ConnectionException(err)))
                 : res(Effect.succeed(void 0))
           )
-        })
-      )
+        }).uninterruptible
     )
   }
 }

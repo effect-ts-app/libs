@@ -4,8 +4,8 @@ import * as Ord from "@effect-ts/core/Ord"
 import { ComputeFlat } from "@effect-ts/core/Utils"
 import { constant, Lazy, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
-import { ImmutableArray } from "@effect-ts-app/core/Prelude"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
+import { None, Some } from "@tsplus/stdlib/data/Maybe"
 import { v4 } from "uuid"
 
 import { FromProperty, set, setIdentifier } from "./_api/index.js"
@@ -162,10 +162,10 @@ export function defaultConstructor<
 }
 
 type SupportedDefaults =
-  | ImmutableSet<any>
-  | ImmutableArray<any>
-  | Maybe.Some<any>
-  | Maybe.None
+  | ROSet<any>
+  | ROArray<any>
+  | Some<any>
+  | None
   | Date
   | boolean
   | UUID
@@ -200,7 +200,7 @@ export type WithDefault<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  Maybe.Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => ParsedShape]>
 >
 
 export type WithInputDefault<
@@ -213,7 +213,7 @@ export type WithInputDefault<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
   As,
-  Maybe.Some<["both", () => ParsedShape]>
+  Some<["both", () => ParsedShape]>
 >
 
 export function withDefault<
@@ -314,30 +314,20 @@ function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "parser"
-): MO.Property<
-  Self,
-  "required",
-  Maybe.None,
-  Maybe.Some<["parser", () => MO.ParsedShapeOf<Self>]>
->
+): MO.Property<Self, "required", None, Some<["parser", () => MO.ParsedShapeOf<Self>]>>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "both"
-): MO.Property<
-  Self,
-  "required",
-  Maybe.None,
-  Maybe.Some<["both", () => MO.ParsedShapeOf<Self>]>
->
+): MO.Property<Self, "required", None, Some<["both", () => MO.ParsedShapeOf<Self>]>>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
 ): MO.Property<
   Self,
   "required",
-  Maybe.None,
-  Maybe.Some<["constructor", () => MO.ParsedShapeOf<Self>]>
+  None,
+  Some<["constructor", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
@@ -349,7 +339,7 @@ function defProp<Self extends MO.SchemaUPI>(
 
 export function optProp<Self extends MO.SchemaUPI>(
   schema: Self
-): Property<Self, "optional", Maybe.None, Maybe.None> {
+): Property<Self, "optional", None, None> {
   return propOpt(MO.prop(schema))
 }
 
@@ -359,8 +349,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["constructor", () => ParsedShape]>
+  None,
+  Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -372,8 +362,8 @@ export function defaultProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["constructor", () => ParsedShape]>
+  None,
+  Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -381,8 +371,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Maybe.None,
-      Maybe.Some<["constructor", () => ParsedShape]>
+      None,
+      Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -391,8 +381,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["constructor", () => ParsedShape]>
+  None,
+  Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
   ParsedShape extends SupportedDefaults,
@@ -404,8 +394,8 @@ export function defaultProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["constructor", () => ParsedShape]>
+  None,
+  Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -413,8 +403,8 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Maybe.None,
-      Maybe.Some<["constructor", () => ParsedShape]>
+      None,
+      Some<["constructor", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
@@ -430,8 +420,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["both", () => ParsedShape]>
+  None,
+  Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -443,8 +433,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["both", () => ParsedShape]>
+  None,
+  Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -452,8 +442,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Maybe.None,
-      Maybe.Some<["both", () => ParsedShape]>
+      None,
+      Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -462,8 +452,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["both", () => ParsedShape]>
+  None,
+  Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
   ParsedShape extends SupportedDefaults,
@@ -475,8 +465,8 @@ export function defaultInputProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  Maybe.None,
-  Maybe.Some<["both", () => ParsedShape]>
+  None,
+  Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
@@ -484,8 +474,8 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   ? FromProperty<
       MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
       "required",
-      Maybe.None,
-      Maybe.Some<["both", () => ParsedShape]>
+      None,
+      Some<["both", () => ParsedShape]>
     >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
@@ -542,7 +532,7 @@ export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const eq = eq_ ?? Ord.getEqual(ord)
   const s = set(type, ord, eq)
-  return Object.assign(s, ImmutableSet.make(ord, eq))
+  return Object.assign(s, ROSet.make(ord, eq))
 }
 
 export function makeUnorderedContramappedStringSet<
@@ -656,7 +646,7 @@ export function makeContramappedNonEmptySet<
   )
 }
 
-export const constArray = constant(ImmutableArray.empty)
+export const constArray = constant(ROArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }

@@ -17,18 +17,13 @@ export interface CollectAnnotations {
 export const interpreters: ((schema: S.SchemaAny) => Maybe<() => any>)[] = [
   Maybe.partial(
     (miss) =>
-      (
-        schema: S.SchemaAny
-      ): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {
+      (schema: S.SchemaAny): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {
         if (S.isAnnotatedSchema(schema)) {
           return () =>
             (...xs) => {
               for (const x of xs) {
                 if (schema.annotation === x) {
-                  return Chunk.append_(
-                    collectAnnotationsFor(schema.self)(...xs),
-                    schema.meta
-                  )
+                  return collectAnnotationsFor(schema.self)(...xs).append(schema.meta)
                 }
               }
               return collectAnnotationsFor(schema.self)(...xs)
@@ -46,8 +41,7 @@ export const interpreters: ((schema: S.SchemaAny) => Maybe<() => any>)[] = [
         if (schema instanceof S.SchemaPipe) {
           return () =>
             (...xs) =>
-              Chunk.concat_(
-                collectAnnotationsFor(schema.self)(...xs),
+              collectAnnotationsFor(schema.self)(...xs).concat(
                 collectAnnotationsFor(schema.that)(...xs)
               )
         }

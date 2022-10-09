@@ -20,7 +20,7 @@ export function findIndexOrElse<A>(predicate: Predicate<A>): (as: Array<A>) => n
 }
 
 export function modifyAtOrOriginal_<A>(as: A.Array<A>, i: number, f: (a: A) => A) {
-  return A.modifyAt_(as, i, f).getOrElse(() => as)
+  return A.modifyAt_(as, i, f).toMaybe.getOrElse(() => as)
 }
 
 export function modifyOrOriginal_<A>(as: A.Array<A>, a: A, f: (a: A) => A) {
@@ -40,7 +40,7 @@ export function modifyOrOriginal<A>(a: A, f: (a: A) => A) {
 }
 
 export function deleteAtOrOriginal_<A>(as: A.Array<A>, i: number) {
-  return A.deleteAt_(as, i).getOrElse(() => as)
+  return A.deleteAt_(as, i).toMaybe.getOrElse(() => as)
 }
 
 export function deleteOrOriginal_<A>(as: A.Array<A>, a: A) {
@@ -61,13 +61,13 @@ export function deleteOrOriginal<A>(a: A) {
 export function sortByO<A>(
   ords: O.Maybe<NA.NonEmptyArray<Ord<A>>>
 ): (a: A.Array<A>) => A.Array<A> {
-  return ords.fold(() => identity, A.sortBy)
+  return ords.toMaybe.fold(() => identity, A.sortBy)
 }
 
 export function groupByT_<A, Key extends PropertyKey>(
-  as: ImmutableArray<A>,
+  as: ROArray<A>,
   f: (a: A) => Key
-): ImmutableArray<readonly [Key, NonEmptyArray<A>]> {
+): ROArray<readonly [Key, NonEmptyArray<A>]> {
   const r: Record<Key, Array<A> & { 0: A }> = {} as any
   for (const a of as) {
     const k = f(a)
@@ -84,8 +84,7 @@ export function groupByT_<A, Key extends PropertyKey>(
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {
-  return (as: ImmutableArray<A>): ImmutableArray<readonly [Key, NonEmptyArray<A>]> =>
-    groupByT_(as, f)
+  return (as: ROArray<A>): ROArray<readonly [Key, NonEmptyArray<A>]> => groupByT_(as, f)
 }
 
 export * from "@effect-ts/core/Collections/Immutable/Array"

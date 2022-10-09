@@ -51,7 +51,7 @@ import {
   StringSchema,
 } from "../atlas-plutus/index.js"
 
-export type Gen = Effect.UIO<JSONSchema>
+export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Maybe<Gen>)[] = [
   Maybe.partial((_miss) => (schema: MO.SchemaAny): Gen => {
@@ -160,11 +160,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
                 Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
               )
             ) as any,
-            discriminator: (schemaMeta.tag as Maybe<any>)
-              .map((_: any) => ({
-                propertyName: _.key, // TODO
-              }))
-              .toUndefined(),
+            discriminator: (schemaMeta.tag as Maybe<any>).map((_: any) => ({
+              propertyName: _.key, // TODO
+            })).value,
           })
         }
         case fromStringIdentifier:
@@ -238,7 +236,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             oneOf: (yield* $(
               Effect.collectAll(
                 [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-              ).map(Chunk.toArray)
+              ).map((_) => _.toArray)
             )).map((v, i) => ({
               properties: {
                 _tag: { enum: [i === 0 ? "Left" : "Right"] },

@@ -1,6 +1,5 @@
 import * as Eq from "@effect-ts/core/Equal"
 import { flow } from "@effect-ts-app/core/Function"
-import { Effect, Maybe } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 
 import {
@@ -22,7 +21,7 @@ const parseSDB = SerializedDBRecord.Parser >= MO.condemnFail
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect.RIO<REncode, EA>,
+    encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>
   ) => {
     return {
@@ -34,8 +33,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .mapMaybe((s) => JSON.parse(s) as unknown)
-        .flatMapMaybeEffect(parseSDB)
+        .map(Maybe.$.map((s) => JSON.parse(s) as unknown))
+        .flatMapMaybe(parseSDB)
         .mapMaybe(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version,
@@ -52,9 +51,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           const r = yield* $(
             decode(cr.data).flatMap((d) =>
               eq.equals(keys, d as unknown as V)
-                ? Sync.succeed(d)
-                : Sync.fail("not equals")
-            ).result
+                ? Effect.succeed(d)
+                : Effect.fail("not equals")
+            ).exit
           )
           if (r._tag === "Success") {
             return r.value
@@ -84,5 +83,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function bogusLock() {
-  return Managed.make_(Effect.unit, () => Effect.unit)
+  return Effect.acquireRelease(Effect.unit, () => Effect.unit)
 }

@@ -1,6 +1,3 @@
-import { pipe } from "@effect-ts-app/core/Function"
-import { Effect, Layer } from "@effect-ts-app/core/Prelude"
-
 import * as LOG from "../Logger/index.js"
 
 function format(level: LOG.Level, message: string, meta?: LOG.Meta) {
@@ -12,16 +9,22 @@ function log(
   level: LOG.Level,
   message: string,
   meta?: LOG.Meta
-): Effect.UIO<void> {
-  return pipe(
-    Effect.do,
-    Effect.let("config", () => config),
-    Effect.bind("formatter", (s) => Effect.succeed(s.config.formatter ?? format)),
-    Effect.bind("level", (s) => Effect.succeed(s.config.level ?? "silly")),
-    Effect.bind("msg", (s) => Effect.succeed(s.formatter(level, message, meta))),
-    Effect.tap(({ level: configLevel, msg }) =>
-      Effect.when(() => LOG.severity[configLevel] >= LOG.severity[level])(
-        Effect.succeedWith(() => {
+): Effect<never, never, void> {
+  return Effect.sync(() => {
+    const formatter = config.formatter ?? format
+    const level = config.level ?? "silly"
+    const msg = formatter(level, message, meta)
+    return {
+      config,
+      formatter,
+      level,
+      msg,
+    }
+  })
+    .tap(({ level: configLevel, msg }) =>
+      Effect.when(
+        () => LOG.severity[configLevel] >= LOG.severity[level],
+        Effect.sync(() => {
           switch (level) {
             case "info":
               // tslint:disable-next-line: no-console
@@ -54,10 +57,8 @@ function log(
           }
         })
       )
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    Effect.map(() => {})
-  )
+    ) // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .map(() => {})
 }
 
 export interface Config {
@@ -67,10 +68,10 @@ export interface Config {
 
 export interface ConsoleLoggerConfig extends Config {}
 
-export const ConsoleLoggerConfig = Has.tag<ConsoleLoggerConfig>()
+export const ConsoleLoggerConfig = Tag<ConsoleLoggerConfig>()
 
 export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  Layer.fromValue(ConsoleLoggerConfig)(config)
+  Layer.fromValue(ConsoleLoggerConfig, config)
 
 export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
   Effect.gen(function* ($) {

@@ -4,7 +4,7 @@ export interface Meta {
   [k: string]: any
 }
 
-export type LogFn = (message: string, meta?: Meta) => Effect.UIO<void>
+export type LogFn = (message: string, meta?: Meta) => Effect<never, never, void>
 
 export interface Logger {
   silly: LogFn
@@ -18,7 +18,7 @@ export interface Logger {
 
 export type Level = keyof Logger
 
-export const Logger = Has.tag<Logger>()
+export const Logger = Tag<Logger>()
 
 export const severity: Record<Level, number> = {
   error: 0,

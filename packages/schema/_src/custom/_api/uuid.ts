@@ -28,8 +28,8 @@ export const UUIDFromString: DefaultSchema<string, UUID, string, string, {}> = p
   fromString,
   S.arbitrary((FC) => FC.uuid()),
   nonEmpty,
-  S.mapParserError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
-  S.mapConstructorError((_) => (Chunk.unsafeHead((_ as any).errors) as any).error),
+  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   S.refine(isUUID, (n) => S.leafE(parseUuidE(n))),
   brand<UUID>(),
   S.annotate(UUIDFromStringIdentifier, {})

@@ -1,56 +1,99 @@
+/* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Cause } from "@effect-ts/core"
-import {
-  chain,
-  chain_,
-  Effect,
-  effectAsyncInterrupt,
-  fail,
-  fromEither,
-  halt,
-  if_,
-  IO,
-  result,
-  succeed,
-  succeedWith,
-  tap,
-  tapError,
-  unit,
-} from "@effect-ts/core/Effect"
-import * as Ex from "@effect-ts/core/Effect/Exit"
 
-import type * as Ei from "./Either.js"
-import { constant, curry, flow, Lazy, pipe } from "./Function.js"
+import { curry, flow, Lazy, pipe } from "./Function.js"
 import * as O from "./Maybe.js"
 
-export const encaseEither = <E, A>(ei: Ei.Either<E, A>) => fromEither(() => ei)
-export const flatMapEither = <E, A, A2>(ei: (a: A2) => Ei.Either<E, A>) =>
-  chain((a: A2) => fromEither(() => ei(a)))
+/**
+ * @tsplus static effect/core/io/Effect.Ops flatMapEither
+ */
+export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
+  Effect.$.flatMap((a: A2) => Effect.fromEither(ei(a)))
 
-export const chainEither = flatMapEither
+/**
+ * @tsplus fluent effect/core/io/Effect flatMapMaybe
+ */
+export function flatMapMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: (a: A) => Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm(_).map(Maybe.some)
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect tapMaybe
+ */
+export function tapMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: (a: A) => Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm(_).map(() => Maybe.some(_))
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect zipRightMaybe
+ */
+export function zipRightMaybe<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: Effect<R2, E2, A2>
+) {
+  return self.flatMap((d) =>
+    d.fold(
+      () => Effect(Maybe.none),
+      (_) => fm.map(() => Maybe.some(_))
+    )
+  )
+}
+
+/**
+ * @tsplus fluent effect/core/io/Effect mapMaybe
+ */
+export function mapMaybe<R, E, A, A2>(self: Effect<R, E, Maybe<A>>, fm: (a: A) => A2) {
+  return self.map((d) =>
+    d.fold(
+      () => Maybe.none,
+      (_) => Maybe.some(fm(_))
+    )
+  )
+}
 
 export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
+/**
+ * @tsplus static effect/core/io/Effect.Ops tryCatchPromiseWithInterrupt
+ */
 export function tryCatchPromiseWithInterrupt<E, A>(
   promise: Lazy<Promise<A>>,
   onReject: (reason: unknown) => E,
-  canceller: () => void,
-  __trace?: string
-): IO<E, A> {
-  return effectAsyncInterrupt((resolve) => {
+  canceller: () => void
+): Effect<never, E, A> {
+  return Effect.asyncInterrupt((resolve) => {
     promise()
-      .then((x) => pipe(x, succeed, resolve))
-      .catch((x) => pipe(x, onReject, fail, resolve))
-    return succeedWith(canceller)
-  }, __trace)
+      .then((x) => pipe(x, Effect.succeed, resolve))
+      .catch((x) => pipe(x, onReject, Effect.fail, resolve))
+    return Either.left(Effect.sync(canceller))
+  })
 }
 
+/**
+ * @tsplus fluent effect/core/io/Effect tapBoth
+ */
 export const tapBoth_ = <R, E, A, R2, R3, E3>(
   self: Effect<R, E, A>,
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
   g: (a: A) => Effect<R3, E3, any>
-) => pipe(self, tapError(f), tap(g))
+) => pipe(self, Effect.$.tapError(f), Effect.$.tap(g))
 export const tapBoth =
   <E, A, R2, R3, E3>(
     // official tapBoth has E2 instead of never
@@ -60,62 +103,69 @@ export const tapBoth =
   <R>(self: Effect<R, E, A>) =>
     tapBoth_(self, f, g)
 
+/**
+ * @tsplus fluent effect/core/io/Effect tapBothInclAbort
+ */
 export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   self: Effect<R, E, A>,
   onError: (err: unknown) => Effect<ER, EE, EA>,
   onSuccess: (a: A) => Effect<SR, SE, SA>
 ) =>
   pipe(
-    self,
-    result,
-    chain(
-      Ex.foldM((cause) => {
+    self.exit,
+    Effect.$.flatMap(
+      Exit.$.foldEffect((cause) => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
             onError(firstError),
-            chain(() => halt(cause))
+            Effect.$.flatMap(() => Effect.failCause(cause))
           )
         }
-        return halt(cause)
-      }, flow(succeed, tap(onSuccess)))
+        return Effect.failCause(cause)
+      }, flow(Effect.succeed, Effect.$.tap(onSuccess)))
     )
   )
 
-export function getFirstError<E>(cause: Cause.Cause<E>) {
-  if (Cause.died(cause)) {
-    const defects = Cause.defects(cause)
+export function getFirstError<E>(cause: Cause<E>) {
+  if (cause.isDie) {
+    const defects = cause.defects
     return defects[0]
   }
-  if (Cause.failed(cause)) {
-    const failures = Cause.failures(cause)
+  if (cause.isFailure) {
+    const failures = cause.failures
     return failures[0]
   }
   return null
 }
 
+/**
+ * @tsplus fluent effect/core/io/Effect tapErrorInclAbort
+ */
 export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   self: Effect<R, E, A>,
   onError: (err: unknown) => Effect<ER, EE, EA>
 ) =>
   pipe(
-    self,
-    result,
-    chain(
-      Ex.foldM((cause) => {
+    self.exit,
+    Effect.$.flatMap(
+      Exit.$.foldEffect((cause) => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
             onError(firstError),
-            chain(() => halt(cause))
+            Effect.$.flatMap(() => Effect.failCauseSync(cause))
           )
         }
-        return halt(cause)
-      }, succeed)
+        return Effect.failCauseSync(cause)
+      }, Effect.succeed)
     )
   )
-export function encaseMaybe_<E, A>(o: O.Maybe<A>, onError: Lazy<E>): IO<E, A> {
-  return O.fold_(o, () => fail(onError()), succeed)
+export function encaseMaybe_<E, A>(
+  o: O.Maybe<A>,
+  onError: Lazy<E>
+): Effect<never, E, A> {
+  return O.fold_(o, () => Effect.fail(onError()), Effect.succeed)
 }
 
 export function encaseMaybe<E>(onError: Lazy<E>) {
@@ -123,7 +173,7 @@ export function encaseMaybe<E>(onError: Lazy<E>) {
 }
 
 export function liftM<A, B>(a: (a: A) => B) {
-  return flow(a, succeed)
+  return flow(a, Effect.succeed)
 }
 
 /**
@@ -131,7 +181,7 @@ export function liftM<A, B>(a: (a: A) => B) {
  * taps the Effect, returning A.
  */
 export function tupleTap<A, B, R, E, C>(f: (b: B) => (a: A) => Effect<R, E, C>) {
-  return (t: readonly [A, B]) => succeed(t[0]).tap(f(t[1]))
+  return (t: readonly [A, B]) => Effect.succeed(t[0]).tap(f(t[1]))
 }
 
 /**
@@ -147,12 +197,5 @@ export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<R, E, A>) {
 }
 
 export function ifDiff_<I, R, E, A>(n: I, orig: I, f: (i: I) => Effect<R, E, A>) {
-  return if_(n !== orig, () => f(n), constUnit)
+  return n !== orig ? f(n) : Effect.unit
 }
-
-const constUnit = constant(unit)
-
-export const flatMap = chain
-export const flatMap_ = chain_
-
-export * from "@effect-ts/core/Effect"

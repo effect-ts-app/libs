@@ -15,16 +15,16 @@ export function makeCodec<
   const decode = (e: Encoded, env?: ParserEnv) => parse(e, env)
   const enc = Encoder.for(self)
 
-  const encode = (u: ParsedShape) => Sync.succeedWith(() => enc(u))
+  const encode = (u: ParsedShape) => Effect.sync(() => enc(u))
   const encodeToMap = toMap(encode)
   return [decode, encode, encodeToMap] as const
 }
 
-function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Sync.UIO<E>) {
-  return (a: ImmutableArray<A>) =>
-    ImmutableArray.map_(a, (task) =>
-      Sync.tuple(Sync.succeed(task.id as A["id"]), encode(task))
+function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Effect<never, never, E>) {
+  return (a: ROArray<A>) =>
+    ROArray.map_(a, (task) =>
+      Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task))
     )
-      .collectAllSync()
+      .collectAll()
       .map(Map.make)
 }

@@ -1,41 +1,47 @@
-import { Some } from "../Maybe.js"
-import { pipe } from "./pipe.js"
+import { Option } from "@effect-ts/core"
 
 /**
- * @tsplus unify ets/Maybe
- * @tsplus unify ets/Maybe/Some
- * @tsplus unify ets/Maybe/None
+ * @tsplus getter Maybe.Ops toOption
+ * @tsplus getter ets/Maybe toMaybe
  */
-export function unifyMaybe<X extends Maybe<any>>(
-  self: X
-): Maybe<X extends Some<infer A> ? A : never> {
-  return self
+export function toOption<A>(o: Maybe<A>) {
+  return o._tag === "None" ? Option.none : Option.some(o.value)
 }
 
 /**
- * @tsplus fluent ets/Maybe flatMap
+ * @tsplus static Maybe.Ops fromOption
+ * @tsplus getter ets/Maybe toMaybe
  */
-export const flatMapMaybe = Maybe.chain_
+export function fromOption<A>(o: Option.Option<A>) {
+  return o._tag === "None" ? Maybe.none : Maybe.some(o.value)
+}
+
+export const PartialExceptionTypeId = Symbol()
+export type PartialExceptionTypeId = typeof PartialExceptionTypeId
+
+export class PartialException {
+  readonly _typeId: PartialExceptionTypeId = PartialExceptionTypeId
+}
+
+function raisePartial<X>(): X {
+  throw new PartialException()
+}
 
 /**
- * @tsplus fluent ets/Maybe map
+ * Simulates a partial function
+ * @tsplus static Maybe.Ops partial
  */
-export const mapMaybe = Maybe.map_
-
-/**
- * @tsplus fluent ets/Maybe encaseInEither
- */
-export const optionEncaseEither = Either.fromOption_
-
-/**
- * @tsplus static ets/Maybe __call
- */
-export const optionSome = Maybe.some
-
-/**
- * @tsplus operator ets/Maybe >=
- * @tsplus fluent ets/Maybe apply
- * @tsplus fluent ets/Maybe __call
- * @tsplus macro pipe
- */
-export const pipeMaybe = pipe
+export function partial<ARGS extends any[], A>(
+  f: (miss: <X>() => X) => (...args: ARGS) => A
+): (...args: ARGS) => Maybe<A> {
+  return (...args) => {
+    try {
+      return Maybe.some(f(raisePartial)(...args))
+    } catch (e) {
+      if (e instanceof PartialException) {
+        return Maybe.none
+      }
+      throw e
+    }
+  }
+}

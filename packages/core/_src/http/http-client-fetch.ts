@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Layer } from "@effect-ts-app/core/Prelude"
 import fetch from "cross-fetch"
 import querystring from "query-string"
 
@@ -29,10 +28,10 @@ function getBody(
   )
 }
 
-const makeAbort = Effect.succeedWith(() => new AbortController())
+const makeAbort = Effect.sync(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
-  Layer.fromValue(H.Http)({
+  Layer.fromValue(H.Http, {
     request(
       method: H.Method,
       url: string,
@@ -40,7 +39,7 @@ export const Client = (fetchApi: typeof fetch) =>
       responseType: H.ResponseType,
       headers: Record<string, string>,
       body: unknown
-    ): Effect.IO<H.HttpError<string>, H.Response<any>> {
+    ): Effect<never, H.HttpError<string>, H.Response<any>> {
       const input: RequestInit = {
         headers: {
           "Content-Type": getContentType(requestType),

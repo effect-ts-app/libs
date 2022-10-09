@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as TUP from "@effect-ts-app/core/Tuple"
-import { Tuple } from "@effect-ts-app/core/Tuple"
-import { Effect, EffectMaybe, Maybe, ImmutableArray } from "@effect-ts-app/core/Prelude"
 import * as MO from "@effect-ts-app/schema"
 import { Methods } from "@effect-ts-app/schema"
 
@@ -18,16 +15,10 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
   return i as RouteDescriptorAny
 }
 
-export function tupAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  tup: Tuple<ImmutableArray<R>>
-) {
-  return TUP.map_(tup, asRouteDescriptionAny)
-}
-
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  arr: ImmutableArray<R>
+  arr: ROArray<R>
 ) {
-  return ImmutableArray.map_(arr, asRouteDescriptionAny)
+  return ROArray.map_(arr, asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -46,7 +37,7 @@ export interface RouteDescriptor<
   method: METHOD
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
-    tags: ImmutableArray<string>
+    tags: ROArray<string>
   }
 }
 
@@ -110,21 +101,37 @@ export function makeFromSchema<ResA>(
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
+  // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = EffectMaybe.fromNullable(Req.Query).flatMapMaybeEffect(
-    jsonSchema
+  const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap((_) =>
+    _.fold(
+      () => Effect(Maybe.none),
+      (_) => jsonSchema(_).map(Maybe.some)
+    )
   )
-  const makeReqHeadersSchema = EffectMaybe.fromNullable(
-    Req.Headers
-  ).flatMapMaybeEffect(jsonSchema)
-  const makeReqCookieSchema = EffectMaybe.fromNullable(Req.Cookie).flatMapMaybeEffect(
-    jsonSchema
+  const makeReqHeadersSchema = Effect(Maybe.fromNullable(Req.Headers)).flatMap((_) =>
+    _.fold(
+      () => Effect(Maybe.none),
+      (_) => jsonSchema(_).map(Maybe.some)
+    )
   )
-  const makeReqPathSchema = EffectMaybe.fromNullable(Req.Path).flatMapMaybeEffect(
-    jsonSchema
+  const makeReqCookieSchema = Effect(Maybe.fromNullable(Req.Cookie)).flatMap((_) =>
+    _.fold(
+      () => Effect(Maybe.none),
+      (_) => jsonSchema(_).map(Maybe.some)
+    )
   )
-  const makeReqBodySchema = EffectMaybe.fromNullable(Req.Body).flatMapMaybeEffect(
-    jsonSchema
+  const makeReqPathSchema = Effect(Maybe.fromNullable(Req.Path)).flatMap((_) =>
+    _.fold(
+      () => Effect(Maybe.none),
+      (_) => jsonSchema(_).map(Maybe.some)
+    )
+  )
+  const makeReqBodySchema = Effect(Maybe.fromNullable(Req.Body)).flatMap((_) =>
+    _.fold(
+      () => Effect(Maybe.none),
+      (_) => jsonSchema(_).map(Maybe.some)
+    )
   )
   //const makeReqSchema = schema(Req)
 
@@ -166,15 +173,15 @@ export function makeFromSchema<ResA>(
       summary: _.req?.summary,
       operationId: _.req?.title,
       parameters: [
-        ...(_.reqPath >= makeParameters("path")),
-        ...(_.reqQuery >= makeParameters("query")),
-        ...(_.reqHeaders >= makeParameters("header")),
-        ...(_.reqCookie >= makeParameters("cookie")),
+        ...makeParameters("path")(_.reqPath),
+        ...makeParameters("query")(_.reqQuery),
+        ...makeParameters("header")(_.reqHeaders),
+        ...makeParameters("cookie")(_.reqCookie),
       ],
-      requestBody: _.reqBody
-        .map((schema) => ({ content: { "application/json": { schema } } }))
-        .toUndefined(),
-      responses: ImmutableArray.concat_(
+      requestBody: _.reqBody.map((schema) => ({
+        content: { "application/json": { schema } },
+      })).value,
+      responses: ROArray.concat_(
         [
           isEmpty
             ? new Response(204, { description: "Empty" })

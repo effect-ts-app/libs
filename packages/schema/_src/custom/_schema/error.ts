@@ -557,18 +557,18 @@ export function toTreeWith<E>(
       case "Collection":
         return tree(
           `${de.errors.length} error(s) found while processing a collection`,
-          Chunk.map_(de.errors, go)
+          de.errors.map(go)
         )
       case "Struct": {
         return tree(
           `${de.errors.length} error(s) found while processing a struct`,
-          Chunk.map_(de.errors, go)
+          de.errors.map(go)
         )
       }
       case "Union": {
         return tree(
           `${de.errors.length} error(s) found while processing a union`,
-          Chunk.map_(de.errors, go)
+          de.errors.map(go)
         )
       }
       case "Named": {
@@ -580,9 +580,7 @@ export function toTreeWith<E>(
       case "Missing": {
         return tree(
           `${de.keys.length} error(s) found while checking keys`,
-          Chunk.map_(de.keys, (key) =>
-            tree(`missing required key ${JSON.stringify(key)}`)
-          )
+          de.keys.map((key) => tree(`missing required key ${JSON.stringify(key)}`))
         )
       }
       case "Member":
@@ -593,7 +591,7 @@ export function toTreeWith<E>(
       case "Intersection":
         return tree(
           `${de.errors.length} error(s) found while processing an intersection`,
-          Chunk.map_(de.errors, go)
+          de.errors.map(go)
         )
       case "Prev":
         return go(de.error)
@@ -601,10 +599,10 @@ export function toTreeWith<E>(
         return go(de.error)
       case "Composition": {
         return de.errors.length === 1
-          ? go(Chunk.unsafeGet_(de.errors, 0)) // less noise in the output if there's only one error
+          ? go(de.errors.unsafeGet(0)) // less noise in the output if there's only one error
           : tree(
               `${de.errors.length} error(s) found while processing a composition`,
-              Chunk.map_(de.errors, go)
+              de.errors.map(go)
             )
       }
     }
@@ -621,7 +619,7 @@ function drawForest(indentation: string, forest: Chunk<Tree<string>>): string {
   const len = forest.length
   let tree: Tree<string>
   for (let i = 0; i < len; i++) {
-    tree = Chunk.unsafeGet_(forest, i)
+    tree = forest.unsafeGet(i)
     const isLast = i === len - 1
     r += indentation + (isLast ? "└" : "├") + "─ " + tree.value
     r += drawForest(indentation + (len > 1 && !isLast ? "│  " : "   "), tree.forest)

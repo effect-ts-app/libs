@@ -65,10 +65,10 @@ export function getRecordName(type: string, id: string) {
 export function makeMap<TKey, T>() {
   const map = new Map<TKey, T>()
   return {
-    find: (k: TKey) => Effect.succeedWith(() => Maybe.fromNullable(map.get(k))),
+    find: (k: TKey) => Effect.sync(() => Maybe.fromNullable(map.get(k))),
     [Symbol.iterator]: () => map[Symbol.iterator](),
     set: (k: TKey, v: T) =>
-      Effect.succeedWith(() => {
+      Effect.sync(() => {
         map.set(k, v)
       }),
   } as EffectMap<TKey, T>
@@ -76,8 +76,8 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => Effect.UIO<Maybe<T>>
-  set: (k: TKey, v: T) => Effect.UIO<void>
+  find: (k: TKey) => Effect<never, never, Maybe<T>>
+  set: (k: TKey, v: T) => Effect<never, never, void>
 }
 
 // export function encodeOnlyWhenStrictMatch<A, E>(

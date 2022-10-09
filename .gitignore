@@ -1,3 +1,9 @@
+/.yarn/*
+!/.yarn/releases
+!/.yarn/plugins
+!/.yarn/sdks
+!/.yarn/patches
+
 .DS_Store
 node_modules/
 *.log
