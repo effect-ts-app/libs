@@ -5,14 +5,14 @@ import { MongoClient as MongoClient_ } from "mongodb"
 
 const withClient = (url: string) =>
   Effect.acquireRelease(
-    Effect.async<unknown, Error, MongoClient_>((res) => {
+    Effect.async<never, Error, MongoClient_>((res) => {
       const client = new MongoClient_(url)
       client.connect((err) => {
         err ? res(Effect.fail(err)) : res(Effect.succeed(client))
       })
     }),
     (cl) =>
-      Effect.async<unknown, Error, void>((res) => {
+      Effect.async<never, Error, void>((res) => {
         cl.close((err, r) => res(err ? Effect.fail(err) : Effect.succeed(r)))
       }).uninterruptible.orDie
   )

@@ -14,7 +14,7 @@ const makeRedisClient = (makeClient: () => Client) =>
       }
     }),
     (cl) =>
-      Effect.async<unknown, Error, void>((res) => {
+      Effect.async<never, Error, void>((res) => {
         cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
       }).uninterruptible.orDie
   )
@@ -44,7 +44,7 @@ function createClient(makeClient: () => Client) {
 export function get(key: string) {
   return client.flatMap(
     (client) =>
-      Effect.async<unknown, ConnectionException, Maybe<string>>((res) => {
+      Effect.async<never, ConnectionException, Maybe<string>>((res) => {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -57,7 +57,7 @@ export function get(key: string) {
 export function set(key: string, val: string) {
   return client.flatMap(
     (client) =>
-      Effect.async<unknown, ConnectionException, void>((res) => {
+      Effect.async<never, ConnectionException, void>((res) => {
         client.set(key, val, (err) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -70,7 +70,7 @@ export function set(key: string, val: string) {
 export function hset(key: string, field: string, value: string) {
   return client.flatMap(
     (client) =>
-      Effect.async<unknown, ConnectionException, void>((res) => {
+      Effect.async<never, ConnectionException, void>((res) => {
         client.hset(key, field, value, (err) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -83,7 +83,7 @@ export function hset(key: string, field: string, value: string) {
 export function hget(key: string, field: string) {
   return client.flatMap(
     (client) =>
-      Effect.async<unknown, ConnectionException, Maybe<string>>((res) => {
+      Effect.async<never, ConnectionException, Maybe<string>>((res) => {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -95,7 +95,7 @@ export function hget(key: string, field: string) {
 export function hmgetAll(key: string) {
   return client.flatMap(
     (client) =>
-      Effect.async<unknown, ConnectionException, Maybe<{ [key: string]: string }>>(
+      Effect.async<never, ConnectionException, Maybe<{ [key: string]: string }>>(
         (res) => {
           client.hgetall(key, (err, v) =>
             err
