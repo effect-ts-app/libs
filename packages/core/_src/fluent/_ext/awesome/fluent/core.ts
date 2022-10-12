@@ -39,12 +39,12 @@ export const ext_fromMutable = fromMutable
 // export const ext_mapEffect_ = mapEffect_
 
 /**
- * @tsplus fluent ets/Array toChunk
+ * @tsplus getter ets/Array toChunk
  */
 export const ext_from = from
 
 /**
- * @tsplus fluent ets/Array mutable
+ * @tsplus getter ets/Array mutable
  */
 export const ext_toMutable = toMutable
 
