@@ -309,7 +309,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           // @ts-ignore
           matchS: (matcher, def) => (ks) => {
             if (tag.isSome()) {
-              return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
+              return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
             }
             for (const k of keys) {
               if (guards[k](ks)) {
@@ -321,7 +321,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           // @ts-ignore
           matchW: (matcher, def) => (ks) => {
             if (tag.isSome()) {
-              return (matcher[ks[tag.value.key]] ?? def)(ks, ks)
+              return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
             }
             for (const k of keys) {
               if (guards[k](ks)) {
