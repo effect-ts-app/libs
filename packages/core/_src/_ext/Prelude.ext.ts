@@ -1,4 +1,4 @@
-import "./Lens.ext"
+import "./Lens.ext.js"
 // import "./Schema.ext.js"
 //import "./EffectMaybe.js"
 import "./Maybe.js"
