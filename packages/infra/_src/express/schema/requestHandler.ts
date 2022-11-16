@@ -254,8 +254,8 @@ export type Middleware<
   ReqA extends PathA & QueryA & BodyA,
   ResA,
   ResE,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 > = (
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE>
 ) => {
@@ -263,7 +263,7 @@ export type Middleware<
   handle: (req: express.Request, res: express.Response) => Layer<R2, ResE, PR>
 }
 
-export type Middleware2<R, ReqA, ResA, R2 = unknown, PR = unknown> = Middleware<
+export type Middleware2<R, ReqA, ResA, R2 = never, PR = never> = Middleware<
   R,
   any,
   any,

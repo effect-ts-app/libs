@@ -40,8 +40,8 @@ export function match<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   r: RequestHandler<
     R,
@@ -94,8 +94,8 @@ export function makeRequestHandler<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   handle: RequestHandlerOptRes<
     R | PR,
@@ -124,7 +124,7 @@ export function makeRequestHandler<
     BodyA,
     HeaderA,
     ResA,
-    unknown,
+    never,
     ReqA,
     R2,
     PR
@@ -140,8 +140,8 @@ export function handleRequest<
   ResA,
   ResE,
   ReqA extends {} & PathA & BodyA & QueryA,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   requestParsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>,
   encodeResponse: (r: ReqA) => Encode<ResA, ResE>,
@@ -164,7 +164,7 @@ export function handleRequest<
         const hn = handle(inp)
         const r = h ? hn.provideSomeLayer(h(req, res)) : hn
         return (
-          r as unknown as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
+          r as never as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
         ).flatMap((outp) => respond(inp, res)(outp))
       })
       .catch("_tag", "ValidationError", (err) =>
@@ -210,8 +210,8 @@ export function get<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   path: string,
   r: RequestHandler<
@@ -263,8 +263,8 @@ export function post<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   path: string,
   r: RequestHandler<
@@ -316,8 +316,8 @@ export function put<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   path: string,
   r: RequestHandler<
@@ -369,8 +369,8 @@ export function patch<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   path: string,
   r: RequestHandler<
@@ -422,8 +422,8 @@ function del<
   HeaderA,
   ReqA extends {} & PathA & QueryA & BodyA,
   ResA = void,
-  R2 = unknown,
-  PR = unknown
+  R2 = never,
+  PR = never
 >(
   path: string,
   r: RequestHandler<

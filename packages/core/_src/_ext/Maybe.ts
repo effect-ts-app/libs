@@ -1,10 +1,10 @@
 import { Option } from "@effect-ts/core"
 
 /**
- * @tsplus getter Maybe.Ops toOption
- * @tsplus getter ets/Maybe toMaybe
+ * @tsplus getter Maybe toOption
+ * @tsplus static ets/Maybe.Ops toOption
  */
-export function toOption<A>(o: Maybe<A>) {
+export function toOption<A>(o: Maybe<A>): Option.Option<A> {
   return o._tag === "None" ? Option.none : Option.some(o.value)
 }
 
