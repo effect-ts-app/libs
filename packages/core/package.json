@@ -1,6 +1,6 @@
 {
     "name": "@effect-ts-app/core",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "license": "MIT",
     "dependencies": {
         "@effect-ts/monocle": "^0.43.0",
