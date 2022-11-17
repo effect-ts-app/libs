@@ -226,3 +226,6 @@ export type Lens<S, A> = LNS.Lens<S, A>
 // /** @tsplus type ets/Schema/Schema */
 // export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
 //   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+
+
+export type NonEmptyArguments<T> = [T, ...T[]]

@@ -134,7 +134,9 @@ export const makeExpressApp = Effect.gen(function* (_) {
   )
 
   function runtime<
-    Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
+    Handlers extends NonEmptyArguments<
+      EffectRequestHandler<any, any, any, any, any, any>
+    >
   >(handlers: Handlers) {
     type Env = _R<
       {
@@ -263,13 +265,17 @@ export interface EffectRequestHandler<
 }
 
 export function expressRuntime<
-  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
   return Effect.serviceWithEffect(ExpressApp, (_) => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
-  <Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>>(
+  <
+    Handlers extends NonEmptyArguments<
+      EffectRequestHandler<any, any, any, any, any, any>
+    >
+  >(
     path: PathParams,
     ...handlers: Handlers
   ): Effect<
@@ -313,7 +319,7 @@ export function defaultExitHandler(
 }
 
 export function use<
-  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   ...handlers: Handlers
 ): Effect<
@@ -331,7 +337,7 @@ export function use<
   void
 >
 export function use<
-  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   path: PathParams,
   ...handlers: Handlers
@@ -353,13 +359,13 @@ export function use(...args: any[]): Effect<ExpressEnv, never, void> {
   return withExpressApp((app) => {
     if (typeof args[0] === "function") {
       return expressRuntime(
-        args as unknown as NonEmptyArray<
+        args as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       ).flatMap((expressHandlers) => Effect.sync(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
-        args.slice(1) as unknown as NonEmptyArray<
+        args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       ).flatMap((expressHandlers) =>
