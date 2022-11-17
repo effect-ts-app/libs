@@ -128,7 +128,7 @@ export function makeRequestHandler<
     ReqA,
     R2,
     PR
-  >(makeRequestParsers(Request), encodeResponse, handle.h, h)
+  >(makeRequestParsers(Request), encodeResponse as any, handle.h, h)
 }
 export function handleRequest<
   R,
