@@ -19,7 +19,7 @@
     "@types/validator": "^13.7.10",
     "ts-toolbelt": "^9.6.0"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "node-libcurl": "^2.3.4"
   },
   "overrides": {
