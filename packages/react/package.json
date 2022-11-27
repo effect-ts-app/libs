@@ -3,11 +3,13 @@
   "version": "1.2.0",
   "license": "MIT",
   "dependencies": {
-    "@effect-ts/core": "*",
-    "@effect/core": "*",
-    "@tsplus/stdlib": "*",
     "cross-fetch": "^3.1.5",
     "path-parser": "^6.1.0"
+  },
+  "peerDependencies": {
+    "@effect-ts/core": "*",
+    "@effect/core": "*",
+    "@tsplus/stdlib": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
