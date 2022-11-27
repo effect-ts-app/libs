@@ -4,6 +4,9 @@
   "license": "MIT",
   "dependencies": {
     "@effect-ts-app/core": "^1.1.4",
+    "@effect-ts/core": "*",
+    "@effect-ts/monocle": "*",
+    "@effect/core": "*",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -12,13 +15,14 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@effect-ts/core": "^0.60.4",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.10",
     "ts-toolbelt": "^9.6.0"
   },
-  "peerDependencies": {
-    "node-libcurl": "^2.3.4"
+  "overrides": {
+    "@effect-ts/monocle": {
+      "@effect-ts/core": "*"
+    }
   },
   "scripts": {
     "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
