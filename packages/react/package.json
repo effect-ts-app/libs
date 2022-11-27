@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/react",
-  "version": "1.2.0",
+  "version": "1.2.6",
   "license": "MIT",
   "dependencies": {
     "@effect-ts/core": "*",
