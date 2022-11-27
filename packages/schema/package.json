@@ -18,7 +18,6 @@
     "ts-toolbelt": "^9.6.0"
   },
   "peerDependencies": {
-    "@effect-ts/core": "^0.60.4",
     "node-libcurl": "^2.3.4"
   },
   "scripts": {

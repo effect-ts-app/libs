@@ -13,10 +13,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "react": "^18.2.0"
   },
-  "peerDependencies": {
-    "@effect-ts/core": "^0.60.4",
-    "react": "^18.2.0"
-  },
   "scripts": {
     "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
     "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
