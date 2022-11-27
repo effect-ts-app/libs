@@ -13,14 +13,12 @@
   },
   "devDependencies": {
     "@effect-ts/core": "^0.60.4",
-    "@effect-ts/monocle": "*",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.10",
     "ts-toolbelt": "^9.6.0"
   },
   "peerDependencies": {
     "@effect-ts/core": "^0.60.4",
-    "@effect-ts/monocle": "*",
     "node-libcurl": "^2.3.4"
   },
   "scripts": {
