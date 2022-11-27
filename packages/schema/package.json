@@ -7,19 +7,19 @@
         "cross-fetch": "^3.1.5",
         "lodash": "^4.17.21",
         "path-parser": "^6.1.0",
-        "short-uuid": "^4.2.0",
-        "uuid": "^8.3.2",
+        "short-uuid": "^4.2.2",
+        "uuid": "^9.0.0",
         "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/core": "^0.60.4",
         "@effect-ts/monocle": "*",
         "@types/uuid": "^8.3.4",
-        "@types/validator": "^13.7.4",
+        "@types/validator": "^13.7.10",
         "ts-toolbelt": "^9.6.0"
     },
     "peerDependencies": {
-        "@effect-ts/core": "^0.60.2",
+        "@effect-ts/core": "^0.60.4",
         "@effect-ts/monocle": "*",
         "node-libcurl": "^2.3.4"
     },
