@@ -1,10 +1,10 @@
 {
   "name": "@effect-ts-app/infra",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "dependencies": {
-    "@effect-ts-app/core": "^1.2.1",
-    "@effect-ts-app/schema": "^1.2.1",
+    "@effect-ts-app/core": "^1.2.2",
+    "@effect-ts-app/schema": "^1.2.2",
     "@effect-ts/core": "*",
     "@effect-ts/monocle": "*",
     "@effect/core": "*",
