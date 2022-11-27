@@ -1,9 +1,9 @@
 {
   "name": "@effect-ts-app/schema",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "dependencies": {
-    "@effect-ts-app/core": "^1.2.0",
+    "@effect-ts-app/core": "^1.2.1",
     "@effect-ts/core": "*",
     "@effect-ts/monocle": "*",
     "@effect/core": "*",
