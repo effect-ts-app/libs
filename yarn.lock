@@ -1838,7 +1838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effect-ts-app/core@^1.2.3, @effect-ts-app/core@workspace:packages/core":
+"@effect-ts-app/core@^1.2.6, @effect-ts-app/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@effect-ts-app/core@workspace:packages/core"
   dependencies:
@@ -1863,8 +1863,8 @@ __metadata:
   resolution: "@effect-ts-app/infra@workspace:packages/infra"
   dependencies:
     "@azure/cosmos": ^3.17.2
-    "@effect-ts-app/core": ^1.2.3
-    "@effect-ts-app/schema": ^1.2.3
+    "@effect-ts-app/core": ^1.2.6
+    "@effect-ts-app/schema": ^1.2.6
     "@effect-ts/core": "*"
     "@effect-ts/monocle": "*"
     "@effect/core": "*"
@@ -1957,11 +1957,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@effect-ts-app/schema@^1.2.3, @effect-ts-app/schema@workspace:packages/schema":
+"@effect-ts-app/schema@^1.2.6, @effect-ts-app/schema@workspace:packages/schema":
   version: 0.0.0-use.local
   resolution: "@effect-ts-app/schema@workspace:packages/schema"
   dependencies:
-    "@effect-ts-app/core": ^1.2.3
+    "@effect-ts-app/core": ^1.2.6
     "@effect-ts/core": "*"
     "@effect-ts/monocle": "*"
     "@effect/core": "*"
