@@ -1,86 +1,86 @@
 {
-    "name": "@effect-ts-app/react",
-    "version": "1.0.12",
-    "license": "MIT",
-    "dependencies": {
-        "cross-fetch": "^3.1.5",
-        "path-parser": "^6.1.0"
+  "name": "@effect-ts-app/react",
+  "version": "1.1.1",
+  "license": "MIT",
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "path-parser": "^6.1.0"
+  },
+  "devDependencies": {
+    "@effect-ts/core": "^0.60.4",
+    "@types/react": "^18.0.25",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "react": "^18.2.0"
+  },
+  "peerDependencies": {
+    "@effect-ts/core": "^0.60.4",
+    "react": "^18.2.0"
+  },
+  "scripts": {
+    "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
+    "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
+    "build2:mjs": "yarn ets:babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
+    "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
+    "postpublish": "yarn clean",
+    "generate-exports": "sh ../../utils/extract.sh > package.log",
+    "prepare": "yarn build",
+    "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
+    "compile": "yarn ets:tsc --noEmit",
+    "lint": "eslint .",
+    "prettier": "prettier \"**/*.ts\"",
+    "autofix": "yarn lint --fix && yarn prettier --write",
+    "test": "echo 'no tests yet'",
+    "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
+    "ncu": "ncu"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./_mjs/index.mjs"
+      },
+      "require": "./index.js"
     },
-    "devDependencies": {
-        "@effect-ts/core": "^0.60.4",
-        "@types/react": "^18.0.25",
-        "eslint-plugin-react": "^7.31.11",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "react": "^18.2.0"
+    "./data": {
+      "import": {
+        "types": "./data.d.ts",
+        "default": "./_mjs/data.mjs"
+      },
+      "require": "./data.js"
     },
-    "peerDependencies": {
-        "@effect-ts/core": "^0.60.4",
-        "react": "^18.2.0"
+    "./hooks": {
+      "import": {
+        "types": "./hooks.d.ts",
+        "default": "./_mjs/hooks.mjs"
+      },
+      "require": "./hooks.js"
     },
-    "scripts": {
-        "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
-        "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
-        "build2:mjs": "yarn ets:babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
-        "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
-        "postpublish": "yarn clean",
-        "generate-exports": "sh ../../utils/extract.sh > package.log",
-        "prepare": "yarn build",
-        "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
-        "compile": "yarn ets:tsc --noEmit",
-        "lint": "eslint .",
-        "prettier": "prettier \"**/*.ts\"",
-        "autofix": "yarn lint --fix && yarn prettier --write",
-        "test": "echo 'no tests yet'",
-        "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
-        "ncu": "ncu"
+    "./context": {
+      "import": {
+        "types": "./context.d.ts",
+        "default": "./_mjs/context.mjs"
+      },
+      "require": "./context.js"
     },
-    "publishConfig": {
-        "access": "public"
+    "./*.js": {
+      "import": {
+        "types": "./*.d.ts",
+        "default": "./_mjs/*.mjs"
+      },
+      "require": "./*.js"
     },
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./index.d.ts",
-                "default": "./_mjs/index.mjs"
-            },
-            "require": "./index.js"
-        },
-        "./data": {
-            "import": {
-                "types": "./data.d.ts",
-                "default": "./_mjs/data.mjs"
-            },
-            "require": "./data.js"
-        },
-        "./hooks": {
-            "import": {
-                "types": "./hooks.d.ts",
-                "default": "./_mjs/hooks.mjs"
-            },
-            "require": "./hooks.js"
-        },
-        "./context": {
-            "import": {
-                "types": "./context.d.ts",
-                "default": "./_mjs/context.mjs"
-            },
-            "require": "./context.js"
-        },
-        "./*.js": {
-            "import": {
-                "types": "./*.d.ts",
-                "default": "./_mjs/*.mjs"
-            },
-            "require": "./*.js"
-        },
-        "./*": {
-            "import": {
-                "types": "./*.d.ts",
-                "default": "./_mjs/*.mjs"
-            },
-            "require": "./*.js"
-        }
-    },
-    "sideEffects": false,
-    "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
+    "./*": {
+      "import": {
+        "types": "./*.d.ts",
+        "default": "./_mjs/*.mjs"
+      },
+      "require": "./*.js"
+    }
+  },
+  "sideEffects": false,
+  "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
 }
