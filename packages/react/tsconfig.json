@@ -1,21 +1,14 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "../../tsconfig.lib.json",
     "compilerOptions": {
-        "moduleResolution": "node",
-        "outDir": "./_esm",
+        "moduleResolution": "Node16",
+        "outDir": "./dist",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "noEmit": false,
         "jsx": "react",
         "tsPlusConfig": "../../tsplus.config.json",
         "baseUrl": "./",
         "rootDir": "./_src",
-        "paths": {
-            "@effect-ts-app/react/*": [
-                "./_src/*"
-            ],
-            "@effect-ts-app/react": [
-                "./_src"
-            ],
-        }
     },
     "include": [
         "./_src"

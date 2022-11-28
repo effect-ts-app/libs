@@ -130,7 +130,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
               )
         ),
     }).flatMap(({ body, cookie, headers, path, query }) => {
-      const errors = []
+      const errors: unknown[] = []
       if (body._tag === "Failure") {
         errors.push(makeError("body")(body.errors))
       }
@@ -244,6 +244,12 @@ export interface RequestHandler2<
   Response: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
 }
 
+export type MiddlewareHandler<ResE, R2 = never, PR = never> = (
+  req: express.Request,
+  res: express.Response,
+) => Layer<R2, ResE, PR>
+
+
 export type Middleware<
   R,
   PathA,
@@ -260,7 +266,7 @@ export type Middleware<
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE>
 ) => {
   handler: typeof handler
-  handle: (req: express.Request, res: express.Response) => Layer<R2, ResE, PR>
+  handle: MiddlewareHandler<ResE, R2, PR>
 }
 
 export type Middleware2<R, ReqA, ResA, R2 = never, PR = never> = Middleware<

@@ -1,32 +1,48 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib",
-    //     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-    "eslint.workingDirectories": [
-        {
-            "pattern": "apps/*"
-        },
-        {
-            "pattern": "packages/*"
-        }
-    ],
-    "editor.formatOnSave": true,
-    "eslint.format.enable": true,
-    "[javascript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  // would prefer on in frontend, so might want to use a specialised frontend config..
+  "volar.updateImportsOnFileMove.enabled": false,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "node_modules/@sentry/node",
+    "node_modules/@azure/cosmos",
+    "node_modules/@effect-ts-app/schema",
+    "node_modules/lodash",
+    "node_modules/@types/lodash"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.workingDirectories": [
+    {
+      "pattern": "apps/*"
     },
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-    "prettier.disableLanguages": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact"
-    ]
+    {
+      "pattern": "packages/*"
+    }
+  ],
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports"
+  ],
+  "csv-preview.separator": ";",
+  "cSpell.words": [
+    "codegen",
+    "composables",
+    "pipeable",
+    "tsplus"
+  ]
 }

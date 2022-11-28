@@ -21,7 +21,10 @@ export const jwtFromString: MO.Schema<string, unknown, unknown, string, {}> = pi
   //   }),
   MO.parser((p: any) => {
     try {
-      return Th.succeed(jwt_decode(p))
+      return Th.succeed(
+        // @ts-expect-error
+        jwt_decode(p)
+      )
     } catch (err) {
       return Th.fail(MO.leafE(MO.parseStringE(p))) // "not a JWT: " + err as anyw
     }

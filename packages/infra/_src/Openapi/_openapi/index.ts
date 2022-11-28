@@ -266,7 +266,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case fromPropertiesIdentifier:
         case propertiesIdentifier: {
           const properties: Record<string, any> = {}
-          const required = []
+          const required: string[] = []
           for (const k in schemaMeta.props) {
             const p: MO.AnyProperty = schemaMeta.props[k]
             properties[k] = yield* $(processId(p["_schema"]))

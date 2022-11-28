@@ -9,11 +9,12 @@ import {
   UnauthorizedError,
   ValidationError,
 } from "../errors.js"
-import * as Ex from "./index"
+import * as Ex from "./index.js"
 import {
   Encode,
   makeRequestParsers,
   Middleware,
+  MiddlewareHandler,
   parseRequestParams,
   RequestHandler,
   RequestHandlerOptRes,
@@ -68,7 +69,7 @@ export function match<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined  = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -239,7 +240,7 @@ export function get<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -292,7 +293,7 @@ export function post<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -345,7 +346,7 @@ export function put<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -398,7 +399,7 @@ export function patch<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -451,7 +452,7 @@ function del<
     PR
   >
 ) {
-  let h = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler

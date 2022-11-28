@@ -1,0 +1,12 @@
+diff --git a/node_modules/ts-pattern/package.json b/node_modules/ts-pattern/package.json
+index 20400e7..d144252 100644
+--- a/node_modules/ts-pattern/package.json
++++ b/node_modules/ts-pattern/package.json
+@@ -2,7 +2,6 @@
+   "name": "ts-pattern",
+   "version": "4.0.6",
+   "description": " The exhaustive Pattern Matching library for TypeScript.",
+-  "type": "module",
+   "source": "src/index.ts",
+   "exports": {
+     "./package.json": "./package.json",

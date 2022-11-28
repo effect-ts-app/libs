@@ -1,0 +1,14 @@
+diff --git a/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js b/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
+index 9680809..dfd3bec 100644
+--- a/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
++++ b/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
+@@ -32,6 +32,9 @@ exports.unusedImportsPredicate = (problem, context) => {
+ 		return problem;
+ 	}
+ 
++	// workaround recent issue with decorator imports..
++	if (problem.message.includes("useClassNameForSchema")) { return false }
++
+ 	// Only handle these 3 cases.
+ 	switch (parent.type) {
+ 		case "ImportSpecifier":

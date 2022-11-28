@@ -1,0 +1,15 @@
+*.test.js
+*.test.d.ts
+tsconfig.json
+tsconfig.build.json
+*.log
+tslint.json
+.eslintrc.js
+.eslintignore
+.madgerc
+coverage/
+.tsbuildinfo
+.build/
+!dist/
+!_cjs/
+.swcrc

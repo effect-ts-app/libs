@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        // "moduleResolution": "Node16",
+        // "outDir": "./dist",
+        // "baseUrl": "./",
+        // "rootDir": "./_src",
+        // "noEmit": false,
+        // "tsPlusConfig": "../../tsplus.config.json",
+        // temp
+        "noImplicitAny": false,
+        "importsNotUsedAsValues": "remove",
+        "noPropertyAccessFromIndexSignature": false,
+        "noUncheckedIndexedAccess": false,
+    },
+}

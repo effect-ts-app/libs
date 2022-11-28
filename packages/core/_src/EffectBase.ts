@@ -130,11 +130,11 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
 export function getFirstError<E>(cause: Cause<E>) {
   if (cause.isDie) {
     const defects = cause.defects
-    return defects[0]
+    return defects.unsafeHead
   }
   if (cause.isFailure) {
     const failures = cause.failures
-    return failures[0]
+    return failures.unsafeHead
   }
   return null
 }

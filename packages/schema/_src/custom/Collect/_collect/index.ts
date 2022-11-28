@@ -71,7 +71,7 @@ export function collectAnnotationsFor<
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    // @ts-expect-error
+    //// @ts-expect-error
     const parser: any = (...__): any => collectAnnotationsFor(schema.self())(...__)
 
     cache.set(schema, parser)
@@ -81,7 +81,7 @@ export function collectAnnotationsFor<
     const _ = interpreter(schema)
     if (_._tag === "Some") {
       let x: any
-      // @ts-expect-error
+      //// @ts-expect-error
       const parser: any = (...__): any => {
         if (!x) {
           x = _.value()
@@ -93,7 +93,7 @@ export function collectAnnotationsFor<
   }
   if (S.hasContinuation(schema)) {
     let x: any
-    // @ts-expect-error
+    //// @ts-expect-error
     const parser: any = (...__): any => {
       if (!x) {
         x = collectAnnotationsFor(schema[S.SchemaContinuationSymbol])

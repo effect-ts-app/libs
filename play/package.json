@@ -1,0 +1,67 @@
+{
+  "name": "@effect-ts-app/playground",
+  "version": "0.6.3",
+  "license": "MIT",
+  "type": "module",
+  "resolutions": {
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
+  },
+  "peerDependencies": {
+    "@effect-ts-app/boilerplate-prelude": "^0.7.1"
+  },
+  "dependencies": {
+    "@fp-ts/optic": "^0.0.3",
+    "change-case": "^4.1.2",
+    "cross-fetch": "^3.1.5",
+    "path-parser": "^6.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  },
+  "exports": {
+    "./*.js": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
+      }
+    },
+    "./*": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "build2:cjs": "rm -rf _cjs && babel dist --config-file ../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
+    "watch": "pnpm build --watch",
+    "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
+    "clean": "rm -rf dist && rm -rf _cjs",
+    "clean-dist": "sh ../scripts/clean-dist.sh",
+    "circular": "pnpm circular:src && pnpm circular:dist",
+    "circular:src": "madge --circular --ts-config ./tsconfig.json --extensions ts ./_src",
+    "circular:dist": "madge --circular --extensions js ./dist",
+    "compile": "NODE_OPTIONS=--max-old-space-size=6144 tsc --noEmit",
+    "lint": "NODE_OPTIONS=--max-old-space-size=6144 ESLINT_TS=1 eslint ./_src",
+    "lint:watch": "ESLINT_TS=1 esw -w --changed --clear --ext ts,tsx .",
+    "prettier": "prettier \"**/*.ts\"",
+    "autofix": "pnpm lint --fix",
+    "test": "vitest",
+    "test:run": "pnpm run test run --passWithNoTests",
+    "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
+    "client": "node --experimental-specifier-resolution=node -r source-map-support/register ./dist/client.bin.js",
+    "ncu": "ncu -x date-fns",
+    "pub": "pnpm build && npm publish --access public"
+  },
+  "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
+  "sideEffects": false
+}

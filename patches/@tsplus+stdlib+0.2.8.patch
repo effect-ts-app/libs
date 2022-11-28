@@ -1,0 +1,222 @@
+diff --git a/node_modules/@tsplus/stdlib/package.json b/node_modules/@tsplus/stdlib/package.json
+index f8ca47b..84f63b7 100644
+--- a/node_modules/@tsplus/stdlib/package.json
++++ b/node_modules/@tsplus/stdlib/package.json
+@@ -19,6 +19,86 @@
+         "default": "./index.js"
+       }
+     },
++    "./prelude/Equivalence": {
++      "import": {
++        "types": "./prelude/Equivalence.d.ts",
++        "default": "./_mjs/prelude/Equivalence.mjs"
++      },
++      "require": {
++        "types": "./prelude/Equivalence.d.ts",
++        "default": "./prelude/Equivalence.js"
++      }
++    },
++    "./prelude/Ord": {
++      "import": {
++        "types": "./prelude/Ord.d.ts",
++        "default": "./_mjs/prelude/Ord.mjs"
++      },
++      "require": {
++        "types": "./prelude/Ord.d.ts",
++        "default": "./prelude/Ord.js"
++      }
++    },
++    "./collections/Collection": {
++      "import": {
++        "types": "./collections/Collection.d.ts",
++        "default": "./_mjs/collections/Collection.mjs"
++      },
++      "require": {
++        "types": "./collections/Collection.d.ts",
++        "default": "./collections/Collection.js"
++      }
++    },
++    "./collections/Chunk": {
++      "import": {
++        "types": "./collections/Chunk.d.ts",
++        "default": "./_mjs/collections/Chunk.mjs"
++      },
++      "require": {
++        "types": "./collections/Chunk.d.ts",
++        "default": "./collections/Chunk.js"
++      }
++    },
++    "./data/Either": {
++      "import": {
++        "types": "./data/Either.d.ts",
++        "default": "./_mjs/data/Either.mjs"
++      },
++      "require": {
++        "types": "./data/Either.d.ts",
++        "default": "./data/Either.js"
++      }
++    },
++    "./data/Maybe": {
++      "import": {
++        "types": "./data/Maybe.d.ts",
++        "default": "./_mjs/data/Maybe.mjs"
++      },
++      "require": {
++        "types": "./data/Maybe.d.ts",
++        "default": "./data/Maybe.js"
++      }
++    },
++    "./service/Tag": {
++      "import": {
++        "types": "./service/Tag.d.ts",
++        "default": "./_mjs/service/Tag.mjs"
++      },
++      "require": {
++        "types": "./service/Tag.d.ts",
++        "default": "./service/Tag.js"
++      }
++    },
++    "./*.js": {
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
++      "require": {
++        "types": "./*.d.ts",
++        "default": "./*.js"
++      }
++    },
+     "./*": {
+       "import": {
+         "types": "./*.d.ts",
+diff --git a/node_modules/@tsplus/stdlib/tsconfig.base.json b/node_modules/@tsplus/stdlib/tsconfig.base.json
+new file mode 100644
+index 0000000..cc7c28d
+--- /dev/null
++++ b/node_modules/@tsplus/stdlib/tsconfig.base.json
+@@ -0,0 +1,62 @@
++{
++    "compilerOptions": {
++        "moduleDetection": "force",
++        "composite": true,
++        "downlevelIteration": true,
++        "resolveJsonModule": true,
++        "esModuleInterop": true,
++        "declaration": true,
++        "skipLibCheck": true,
++        "emitDecoratorMetadata": true,
++        "experimentalDecorators": true,
++        "preserveSymlinks": true,
++        "moduleResolution": "node",
++        "noEmit": false,
++        "lib": [
++            "ES2021"
++        ],
++        "sourceMap": true,
++        "declarationMap": true,
++        "strict": true,
++        "noImplicitReturns": false,
++        "noUnusedLocals": true,
++        "noUnusedParameters": false,
++        "noFallthroughCasesInSwitch": true,
++        "noEmitOnError": false,
++        "noErrorTruncation": false,
++        "allowJs": false,
++        "checkJs": false,
++        "forceConsistentCasingInFileNames": true,
++        "suppressImplicitAnyIndexErrors": true,
++        "stripInternal": true,
++        "noImplicitAny": true,
++        "noImplicitThis": true,
++        "noUncheckedIndexedAccess": true,
++        "strictNullChecks": true,
++        "baseUrl": ".",
++        "target": "ES2021",
++        "module": "ES6",
++        "incremental": true,
++        "removeComments": false,
++        // "paths": {
++        //     "@effect/core": [
++        //         "./packages/core/src/index.ts"
++        //     ],
++        //     "@effect/core/test/*": [
++        //         "./packages/core/test/*"
++        //     ],
++        //     "@effect/core/examples/*": [
++        //         "./packages/core/examples/*"
++        //     ],
++        //     "@effect/core/*": [
++        //         "./packages/core/src/*"
++        //     ],
++        // }
++    },
++    "include": [],
++    "exclude": [
++        "node_modules",
++        "build",
++        "lib"
++    ]
++}
+\ No newline at end of file
+diff --git a/node_modules/@tsplus/stdlib/tsconfig.build.json b/node_modules/@tsplus/stdlib/tsconfig.build.json
+new file mode 100644
+index 0000000..148b428
+--- /dev/null
++++ b/node_modules/@tsplus/stdlib/tsconfig.build.json
+@@ -0,0 +1,13 @@
++{
++    "extends": "./tsconfig.base.json",
++    "compilerOptions": {
++        "outDir": "build/esm",
++        "declarationDir": "build/dts",
++        "tsBuildInfoFile": "build/tsbuildinfo/esm.tsbuildinfo",
++        "tsPlusConfig": "./tsplus.config.json",
++        "rootDir": "_src"
++    },
++    "include": [
++        "_src/**/*.ts"
++    ]
++}
+\ No newline at end of file
+diff --git a/node_modules/@tsplus/stdlib/tsconfig.json b/node_modules/@tsplus/stdlib/tsconfig.json
+new file mode 100644
+index 0000000..597ce10
+--- /dev/null
++++ b/node_modules/@tsplus/stdlib/tsconfig.json
+@@ -0,0 +1,18 @@
++{
++  "extends": "./tsconfig.base.json",
++  "compilerOptions": {
++    "tsPlusConfig": "./tsplus.config.json",
++    "tsBuildInfoFile": "build/tsbuildinfo/tsconfig.tsbuildinfo"
++  },
++  "references": [
++    {
++      "path": "./tsconfig.build.json"
++    }
++  ],
++  "ts-node": {
++    "files": true,
++    "require": [
++      "tsconfig-paths/register"
++    ]
++  }
++}
+\ No newline at end of file
+diff --git a/node_modules/@tsplus/stdlib/tsplus.config.json b/node_modules/@tsplus/stdlib/tsplus.config.json
+new file mode 100644
+index 0000000..1f1ceb8
+--- /dev/null
++++ b/node_modules/@tsplus/stdlib/tsplus.config.json
+@@ -0,0 +1,11 @@
++{
++  "importMap": {
++    "^(.*)/packages/([^/]*)/src(.*)/index\\.ts$": "@effect/$2$3",
++    "^(.*)/packages/([^/]*)/src(.*)\\.ts$": "@effect/$2$3",
++    "^(.*)/packages/([^/]*)/test/(.*)\\.ts$": "@effect/$2/test/$3",
++    "^(.*)/packages/([^/]*)/examples/(.*)\\.ts$": "@effect/$2/examples/$3"
++  },
++  "traceMap": {
++    "^(.*)/packages/([^/]*)/(.*)$": "(@effect/$2) $3"
++  }
++}

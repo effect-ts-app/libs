@@ -1,0 +1,37 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "lib": [
+            "esnext",
+        ],
+        "tsPlusConfig": "../../tsplus.config.json",
+        //        "tsPlusGlobalFiles": [
+        //            "./_src/_global.ts"
+        //        ],
+        "moduleResolution": "Node16",
+        "outDir": "./dist",
+        "rootDir": "./_src",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        // "paths": {
+        //     "@effect-ts-app/boilerplate-prelude": [
+        //         "./_src"
+        //     ],
+        //     "@effect-ts-app/boilerplate-prelude/*": [
+        //         "./_src/*"
+        //     ],
+        // },
+    },
+    "include": [
+        // "./_src/**/*.mts",
+        "./_src/**/*.ts"
+    ],
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ],
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+    "references": []
+}

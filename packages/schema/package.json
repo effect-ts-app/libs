@@ -1,9 +1,10 @@
 {
   "name": "@effect-ts-app/schema",
-  "version": "1.2.6",
+  "version": "1.3.2",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
-    "@effect-ts-app/core": "^1.2.6",
+    "@effect-ts-app/core": "^1.3.2",
     "@effect-ts/core": "*",
     "@effect-ts/monocle": "*",
     "@effect/core": "*",
@@ -25,571 +26,571 @@
     }
   },
   "scripts": {
-    "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh",
-    "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
-    "build2:mjs": "yarn ets:babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
-    "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
+    "build": "pnpm clean-dist && tsc --build && pnpm build2:cjs",
+    "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
+    "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
+    "clean": "rm -rf dist && rm -rf _cjs",
+    "clean-dist": "sh ../../scripts/clean-dist.sh",
     "generate-exports": "sh ../../utils/extract.sh > package.log",
-    "postpublish": "yarn clean",
-    "prepare": "yarn build",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
-    "compile": "yarn ets:tsc --noEmit",
+    "compile": "tsc --noEmit",
     "lint": "eslint .",
     "prettier": "prettier \"**/*.ts\"",
-    "autofix": "yarn lint --fix && yarn prettier --write",
+    "autofix": "pnpm lint --fix && pnpm prettier --write",
     "test": "echo 'no tests yet'",
-    "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
-    "ncu": "ncu"
+    "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",
+    "ncu": "ncu",
+    "pub": "pnpm build && npm publish --access public"
   },
   "publishConfig": {
     "access": "public"
   },
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./_mjs/index.mjs"
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
       },
-      "require": "./index.js"
+      "import": "./dist/index.js"
     },
     "./FastCheck": {
-      "import": {
-        "types": "./FastCheck.d.ts",
-        "default": "./_mjs/FastCheck.mjs"
+      "require": {
+        "types": "./dist/FastCheck.d.ts",
+        "default": "./_cjs/FastCheck.cjs"
       },
-      "require": "./FastCheck.js"
+      "import": "./dist/FastCheck.js"
     },
     "./_api": {
-      "import": {
-        "types": "./_api/index.d.ts",
-        "default": "./_mjs/_api/index.mjs"
+      "require": {
+        "types": "./dist/_api/index.d.ts",
+        "default": "./_cjs/_api/index.cjs"
       },
-      "require": "./_api/index.js"
+      "import": "./dist/_api/index.js"
     },
     "./custom": {
-      "import": {
-        "types": "./custom/index.d.ts",
-        "default": "./_mjs/custom/index.mjs"
+      "require": {
+        "types": "./dist/custom/index.d.ts",
+        "default": "./_cjs/custom/index.cjs"
       },
-      "require": "./custom/index.js"
+      "import": "./dist/custom/index.js"
     },
     "./custom/_utils": {
-      "import": {
-        "types": "./custom/_utils/index.d.ts",
-        "default": "./_mjs/custom/_utils/index.mjs"
+      "require": {
+        "types": "./dist/custom/_utils/index.d.ts",
+        "default": "./_cjs/custom/_utils/index.cjs"
       },
-      "require": "./custom/_utils/index.js"
+      "import": "./dist/custom/_utils/index.js"
     },
     "./custom/Collect": {
-      "import": {
-        "types": "./custom/Collect/index.d.ts",
-        "default": "./_mjs/custom/Collect/index.mjs"
+      "require": {
+        "types": "./dist/custom/Collect/index.d.ts",
+        "default": "./_cjs/custom/Collect/index.cjs"
       },
-      "require": "./custom/Collect/index.js"
+      "import": "./dist/custom/Collect/index.js"
     },
     "./custom/Collect/_collect": {
-      "import": {
-        "types": "./custom/Collect/_collect/index.d.ts",
-        "default": "./_mjs/custom/Collect/_collect/index.mjs"
+      "require": {
+        "types": "./dist/custom/Collect/_collect/index.d.ts",
+        "default": "./_cjs/custom/Collect/_collect/index.cjs"
       },
-      "require": "./custom/Collect/_collect/index.js"
+      "import": "./dist/custom/Collect/_collect/index.js"
     },
     "./custom/These": {
-      "import": {
-        "types": "./custom/These/index.d.ts",
-        "default": "./_mjs/custom/These/index.mjs"
+      "require": {
+        "types": "./dist/custom/These/index.d.ts",
+        "default": "./_cjs/custom/These/index.cjs"
       },
-      "require": "./custom/These/index.js"
+      "import": "./dist/custom/These/index.js"
     },
     "./custom/_schema": {
-      "import": {
-        "types": "./custom/_schema/index.d.ts",
-        "default": "./_mjs/custom/_schema/index.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/index.d.ts",
+        "default": "./_cjs/custom/_schema/index.cjs"
       },
-      "require": "./custom/_schema/index.js"
+      "import": "./dist/custom/_schema/index.js"
     },
     "./custom/Encoder": {
-      "import": {
-        "types": "./custom/Encoder/index.d.ts",
-        "default": "./_mjs/custom/Encoder/index.mjs"
+      "require": {
+        "types": "./dist/custom/Encoder/index.d.ts",
+        "default": "./_cjs/custom/Encoder/index.cjs"
       },
-      "require": "./custom/Encoder/index.js"
+      "import": "./dist/custom/Encoder/index.js"
     },
     "./custom/Encoder/_encoder": {
-      "import": {
-        "types": "./custom/Encoder/_encoder/index.d.ts",
-        "default": "./_mjs/custom/Encoder/_encoder/index.mjs"
+      "require": {
+        "types": "./dist/custom/Encoder/_encoder/index.d.ts",
+        "default": "./_cjs/custom/Encoder/_encoder/index.cjs"
       },
-      "require": "./custom/Encoder/_encoder/index.js"
+      "import": "./dist/custom/Encoder/_encoder/index.js"
     },
     "./custom/Arbitrary": {
-      "import": {
-        "types": "./custom/Arbitrary/index.d.ts",
-        "default": "./_mjs/custom/Arbitrary/index.mjs"
+      "require": {
+        "types": "./dist/custom/Arbitrary/index.d.ts",
+        "default": "./_cjs/custom/Arbitrary/index.cjs"
       },
-      "require": "./custom/Arbitrary/index.js"
+      "import": "./dist/custom/Arbitrary/index.js"
     },
     "./custom/Arbitrary/_arbitrary": {
-      "import": {
-        "types": "./custom/Arbitrary/_arbitrary/index.d.ts",
-        "default": "./_mjs/custom/Arbitrary/_arbitrary/index.mjs"
+      "require": {
+        "types": "./dist/custom/Arbitrary/_arbitrary/index.d.ts",
+        "default": "./_cjs/custom/Arbitrary/_arbitrary/index.cjs"
       },
-      "require": "./custom/Arbitrary/_arbitrary/index.js"
+      "import": "./dist/custom/Arbitrary/_arbitrary/index.js"
     },
     "./custom/_api": {
-      "import": {
-        "types": "./custom/_api/index.d.ts",
-        "default": "./_mjs/custom/_api/index.mjs"
+      "require": {
+        "types": "./dist/custom/_api/index.d.ts",
+        "default": "./_cjs/custom/_api/index.cjs"
       },
-      "require": "./custom/_api/index.js"
+      "import": "./dist/custom/_api/index.js"
     },
     "./custom/Parser": {
-      "import": {
-        "types": "./custom/Parser/index.d.ts",
-        "default": "./_mjs/custom/Parser/index.mjs"
+      "require": {
+        "types": "./dist/custom/Parser/index.d.ts",
+        "default": "./_cjs/custom/Parser/index.cjs"
       },
-      "require": "./custom/Parser/index.js"
+      "import": "./dist/custom/Parser/index.js"
     },
     "./custom/Parser/_parser": {
-      "import": {
-        "types": "./custom/Parser/_parser/index.d.ts",
-        "default": "./_mjs/custom/Parser/_parser/index.mjs"
+      "require": {
+        "types": "./dist/custom/Parser/_parser/index.d.ts",
+        "default": "./_cjs/custom/Parser/_parser/index.cjs"
       },
-      "require": "./custom/Parser/_parser/index.js"
+      "import": "./dist/custom/Parser/_parser/index.js"
     },
     "./custom/Guard": {
-      "import": {
-        "types": "./custom/Guard/index.d.ts",
-        "default": "./_mjs/custom/Guard/index.mjs"
+      "require": {
+        "types": "./dist/custom/Guard/index.d.ts",
+        "default": "./_cjs/custom/Guard/index.cjs"
       },
-      "require": "./custom/Guard/index.js"
+      "import": "./dist/custom/Guard/index.js"
     },
     "./custom/Guard/_guard": {
-      "import": {
-        "types": "./custom/Guard/_guard/index.d.ts",
-        "default": "./_mjs/custom/Guard/_guard/index.mjs"
+      "require": {
+        "types": "./dist/custom/Guard/_guard/index.d.ts",
+        "default": "./_cjs/custom/Guard/_guard/index.cjs"
       },
-      "require": "./custom/Guard/_guard/index.js"
+      "import": "./dist/custom/Guard/_guard/index.js"
     },
     "./custom/TS": {
-      "import": {
-        "types": "./custom/TS/index.d.ts",
-        "default": "./_mjs/custom/TS/index.mjs"
+      "require": {
+        "types": "./dist/custom/TS/index.d.ts",
+        "default": "./_cjs/custom/TS/index.cjs"
       },
-      "require": "./custom/TS/index.js"
+      "import": "./dist/custom/TS/index.js"
     },
     "./custom/Constructor": {
-      "import": {
-        "types": "./custom/Constructor/index.d.ts",
-        "default": "./_mjs/custom/Constructor/index.mjs"
+      "require": {
+        "types": "./dist/custom/Constructor/index.d.ts",
+        "default": "./_cjs/custom/Constructor/index.cjs"
       },
-      "require": "./custom/Constructor/index.js"
+      "import": "./dist/custom/Constructor/index.js"
     },
     "./custom/Constructor/_constructor": {
-      "import": {
-        "types": "./custom/Constructor/_constructor/index.d.ts",
-        "default": "./_mjs/custom/Constructor/_constructor/index.mjs"
+      "require": {
+        "types": "./dist/custom/Constructor/_constructor/index.d.ts",
+        "default": "./_cjs/custom/Constructor/_constructor/index.cjs"
       },
-      "require": "./custom/Constructor/_constructor/index.js"
+      "import": "./dist/custom/Constructor/_constructor/index.js"
     },
     "./ext": {
-      "import": {
-        "types": "./ext.d.ts",
-        "default": "./_mjs/ext.mjs"
+      "require": {
+        "types": "./dist/ext.d.ts",
+        "default": "./_cjs/ext.cjs"
       },
-      "require": "./ext.js"
+      "import": "./dist/ext.js"
     },
     "./adapt": {
-      "import": {
-        "types": "./adapt.d.ts",
-        "default": "./_mjs/adapt.mjs"
+      "require": {
+        "types": "./dist/adapt.d.ts",
+        "default": "./_cjs/adapt.cjs"
       },
-      "require": "./adapt.js"
+      "import": "./dist/adapt.js"
     },
     "./_api/_shared": {
-      "import": {
-        "types": "./_api/_shared.d.ts",
-        "default": "./_mjs/_api/_shared.mjs"
+      "require": {
+        "types": "./dist/_api/_shared.d.ts",
+        "default": "./_cjs/_api/_shared.cjs"
       },
-      "require": "./_api/_shared.js"
+      "import": "./dist/_api/_shared.js"
     },
     "./_api/phoneNumber": {
-      "import": {
-        "types": "./_api/phoneNumber.d.ts",
-        "default": "./_mjs/_api/phoneNumber.mjs"
+      "require": {
+        "types": "./dist/_api/phoneNumber.d.ts",
+        "default": "./_cjs/_api/phoneNumber.cjs"
       },
-      "require": "./_api/phoneNumber.js"
+      "import": "./dist/_api/phoneNumber.js"
     },
     "./_api/futureDate": {
-      "import": {
-        "types": "./_api/futureDate.d.ts",
-        "default": "./_mjs/_api/futureDate.mjs"
+      "require": {
+        "types": "./dist/_api/futureDate.d.ts",
+        "default": "./_cjs/_api/futureDate.cjs"
       },
-      "require": "./_api/futureDate.js"
+      "import": "./dist/_api/futureDate.js"
     },
     "./_api/set": {
-      "import": {
-        "types": "./_api/set.d.ts",
-        "default": "./_mjs/_api/set.mjs"
+      "require": {
+        "types": "./dist/_api/set.d.ts",
+        "default": "./_cjs/_api/set.cjs"
       },
-      "require": "./_api/set.js"
+      "import": "./dist/_api/set.js"
     },
     "./_api/dictionary": {
-      "import": {
-        "types": "./_api/dictionary.d.ts",
-        "default": "./_mjs/_api/dictionary.mjs"
+      "require": {
+        "types": "./dist/_api/dictionary.d.ts",
+        "default": "./_cjs/_api/dictionary.cjs"
       },
-      "require": "./_api/dictionary.js"
+      "import": "./dist/_api/dictionary.js"
     },
     "./_api/string": {
-      "import": {
-        "types": "./_api/string.d.ts",
-        "default": "./_mjs/_api/string.mjs"
+      "require": {
+        "types": "./dist/_api/string.d.ts",
+        "default": "./_cjs/_api/string.cjs"
       },
-      "require": "./_api/string.js"
+      "import": "./dist/_api/string.js"
     },
     "./_api/email": {
-      "import": {
-        "types": "./_api/email.d.ts",
-        "default": "./_mjs/_api/email.mjs"
+      "require": {
+        "types": "./dist/_api/email.d.ts",
+        "default": "./_cjs/_api/email.cjs"
       },
-      "require": "./_api/email.js"
+      "import": "./dist/_api/email.js"
     },
     "./_api/map": {
-      "import": {
-        "types": "./_api/map.d.ts",
-        "default": "./_mjs/_api/map.mjs"
+      "require": {
+        "types": "./dist/_api/map.d.ts",
+        "default": "./_cjs/_api/map.cjs"
       },
-      "require": "./_api/map.js"
+      "import": "./dist/_api/map.js"
     },
     "./_api/fromArray": {
-      "import": {
-        "types": "./_api/fromArray.d.ts",
-        "default": "./_mjs/_api/fromArray.mjs"
+      "require": {
+        "types": "./dist/_api/fromArray.d.ts",
+        "default": "./_cjs/_api/fromArray.cjs"
       },
-      "require": "./_api/fromArray.js"
+      "import": "./dist/_api/fromArray.js"
     },
     "./_api/fromProps": {
-      "import": {
-        "types": "./_api/fromProps.d.ts",
-        "default": "./_mjs/_api/fromProps.mjs"
+      "require": {
+        "types": "./dist/_api/fromProps.d.ts",
+        "default": "./_cjs/_api/fromProps.cjs"
       },
-      "require": "./_api/fromProps.js"
+      "import": "./dist/_api/fromProps.js"
     },
     "./_api/length": {
-      "import": {
-        "types": "./_api/length.d.ts",
-        "default": "./_mjs/_api/length.mjs"
+      "require": {
+        "types": "./dist/_api/length.d.ts",
+        "default": "./_cjs/_api/length.cjs"
       },
-      "require": "./_api/length.js"
+      "import": "./dist/_api/length.js"
     },
     "./_api/futureDate.test": {
-      "import": {
-        "types": "./_api/futureDate.test.d.ts",
-        "default": "./_mjs/_api/futureDate.test.mjs"
+      "require": {
+        "types": "./dist/_api/futureDate.test.d.ts",
+        "default": "./_cjs/_api/futureDate.test.cjs"
       },
-      "require": "./_api/futureDate.test.js"
+      "import": "./dist/_api/futureDate.test.js"
     },
     "./_api/either": {
-      "import": {
-        "types": "./_api/either.d.ts",
-        "default": "./_mjs/_api/either.mjs"
+      "require": {
+        "types": "./dist/_api/either.d.ts",
+        "default": "./_cjs/_api/either.cjs"
       },
-      "require": "./_api/either.js"
+      "import": "./dist/_api/either.js"
     },
     "./_api/tuple": {
-      "import": {
-        "types": "./_api/tuple.d.ts",
-        "default": "./_mjs/_api/tuple.mjs"
+      "require": {
+        "types": "./dist/_api/tuple.d.ts",
+        "default": "./_cjs/_api/tuple.cjs"
       },
-      "require": "./_api/tuple.js"
+      "import": "./dist/_api/tuple.js"
     },
     "./_api/nonEmptyArray": {
-      "import": {
-        "types": "./_api/nonEmptyArray.d.ts",
-        "default": "./_mjs/_api/nonEmptyArray.mjs"
+      "require": {
+        "types": "./dist/_api/nonEmptyArray.d.ts",
+        "default": "./_cjs/_api/nonEmptyArray.cjs"
       },
-      "require": "./_api/nonEmptyArray.js"
+      "import": "./dist/_api/nonEmptyArray.js"
     },
     "./_api/nonEmptySet": {
-      "import": {
-        "types": "./_api/nonEmptySet.d.ts",
-        "default": "./_mjs/_api/nonEmptySet.mjs"
+      "require": {
+        "types": "./dist/_api/nonEmptySet.d.ts",
+        "default": "./_cjs/_api/nonEmptySet.cjs"
       },
-      "require": "./_api/nonEmptySet.js"
+      "import": "./dist/_api/nonEmptySet.js"
     },
     "./utils": {
-      "import": {
-        "types": "./utils.d.ts",
-        "default": "./_mjs/utils.mjs"
+      "require": {
+        "types": "./dist/utils.d.ts",
+        "default": "./_cjs/utils.cjs"
       },
-      "require": "./utils.js"
+      "import": "./dist/utils.js"
     },
     "./Model": {
-      "import": {
-        "types": "./Model.d.ts",
-        "default": "./_mjs/Model.mjs"
+      "require": {
+        "types": "./dist/Model.d.ts",
+        "default": "./_cjs/Model.cjs"
       },
-      "require": "./Model.js"
+      "import": "./dist/Model.js"
     },
     "./REST": {
-      "import": {
-        "types": "./REST.d.ts",
-        "default": "./_mjs/REST.mjs"
+      "require": {
+        "types": "./dist/REST.d.ts",
+        "default": "./_cjs/REST.cjs"
       },
-      "require": "./REST.js"
+      "import": "./dist/REST.js"
     },
     "./custom/_schema/schema": {
-      "import": {
-        "types": "./custom/_schema/schema.d.ts",
-        "default": "./_mjs/custom/_schema/schema.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/schema.d.ts",
+        "default": "./_cjs/custom/_schema/schema.cjs"
       },
-      "require": "./custom/_schema/schema.js"
+      "import": "./dist/custom/_schema/schema.js"
     },
     "./custom/_schema/matchers": {
-      "import": {
-        "types": "./custom/_schema/matchers.d.ts",
-        "default": "./_mjs/custom/_schema/matchers.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/matchers.d.ts",
+        "default": "./_cjs/custom/_schema/matchers.cjs"
       },
-      "require": "./custom/_schema/matchers.js"
+      "import": "./dist/custom/_schema/matchers.js"
     },
     "./custom/_schema/primitives": {
-      "import": {
-        "types": "./custom/_schema/primitives.d.ts",
-        "default": "./_mjs/custom/_schema/primitives.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/primitives.d.ts",
+        "default": "./_cjs/custom/_schema/primitives.cjs"
       },
-      "require": "./custom/_schema/primitives.js"
+      "import": "./dist/custom/_schema/primitives.js"
     },
     "./custom/_schema/error": {
-      "import": {
-        "types": "./custom/_schema/error.d.ts",
-        "default": "./_mjs/custom/_schema/error.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/error.d.ts",
+        "default": "./_cjs/custom/_schema/error.cjs"
       },
-      "require": "./custom/_schema/error.js"
+      "import": "./dist/custom/_schema/error.js"
     },
     "./custom/_schema/annotation": {
-      "import": {
-        "types": "./custom/_schema/annotation.d.ts",
-        "default": "./_mjs/custom/_schema/annotation.mjs"
+      "require": {
+        "types": "./dist/custom/_schema/annotation.d.ts",
+        "default": "./_cjs/custom/_schema/annotation.cjs"
       },
-      "require": "./custom/_schema/annotation.js"
+      "import": "./dist/custom/_schema/annotation.js"
     },
     "./custom/_api/union": {
-      "import": {
-        "types": "./custom/_api/union.d.ts",
-        "default": "./_mjs/custom/_api/union.mjs"
+      "require": {
+        "types": "./dist/custom/_api/union.d.ts",
+        "default": "./_cjs/custom/_api/union.cjs"
       },
-      "require": "./custom/_api/union.js"
+      "import": "./dist/custom/_api/union.js"
     },
     "./custom/_api/unknown": {
-      "import": {
-        "types": "./custom/_api/unknown.d.ts",
-        "default": "./_mjs/custom/_api/unknown.mjs"
+      "require": {
+        "types": "./dist/custom/_api/unknown.d.ts",
+        "default": "./_cjs/custom/_api/unknown.cjs"
       },
-      "require": "./custom/_api/unknown.js"
+      "import": "./dist/custom/_api/unknown.js"
     },
     "./custom/_api/int": {
-      "import": {
-        "types": "./custom/_api/int.d.ts",
-        "default": "./_mjs/custom/_api/int.mjs"
+      "require": {
+        "types": "./dist/custom/_api/int.d.ts",
+        "default": "./_cjs/custom/_api/int.cjs"
       },
-      "require": "./custom/_api/int.js"
+      "import": "./dist/custom/_api/int.js"
     },
     "./custom/_api/date": {
-      "import": {
-        "types": "./custom/_api/date.d.ts",
-        "default": "./_mjs/custom/_api/date.mjs"
+      "require": {
+        "types": "./dist/custom/_api/date.d.ts",
+        "default": "./_cjs/custom/_api/date.cjs"
       },
-      "require": "./custom/_api/date.js"
+      "import": "./dist/custom/_api/date.js"
     },
     "./custom/_api/json": {
-      "import": {
-        "types": "./custom/_api/json.d.ts",
-        "default": "./_mjs/custom/_api/json.mjs"
+      "require": {
+        "types": "./dist/custom/_api/json.d.ts",
+        "default": "./_cjs/custom/_api/json.cjs"
       },
-      "require": "./custom/_api/json.js"
+      "import": "./dist/custom/_api/json.js"
     },
     "./custom/_api/array": {
-      "import": {
-        "types": "./custom/_api/array.d.ts",
-        "default": "./_mjs/custom/_api/array.mjs"
+      "require": {
+        "types": "./dist/custom/_api/array.d.ts",
+        "default": "./_cjs/custom/_api/array.cjs"
       },
-      "require": "./custom/_api/array.js"
+      "import": "./dist/custom/_api/array.js"
     },
     "./custom/_api/condemn": {
-      "import": {
-        "types": "./custom/_api/condemn.d.ts",
-        "default": "./_mjs/custom/_api/condemn.mjs"
+      "require": {
+        "types": "./dist/custom/_api/condemn.d.ts",
+        "default": "./_cjs/custom/_api/condemn.cjs"
       },
-      "require": "./custom/_api/condemn.js"
+      "import": "./dist/custom/_api/condemn.js"
     },
     "./custom/_api/lazy": {
-      "import": {
-        "types": "./custom/_api/lazy.d.ts",
-        "default": "./_mjs/custom/_api/lazy.mjs"
+      "require": {
+        "types": "./dist/custom/_api/lazy.d.ts",
+        "default": "./_cjs/custom/_api/lazy.cjs"
       },
-      "require": "./custom/_api/lazy.js"
+      "import": "./dist/custom/_api/lazy.js"
     },
     "./custom/_api/string": {
-      "import": {
-        "types": "./custom/_api/string.d.ts",
-        "default": "./_mjs/custom/_api/string.mjs"
+      "require": {
+        "types": "./dist/custom/_api/string.d.ts",
+        "default": "./_cjs/custom/_api/string.cjs"
       },
-      "require": "./custom/_api/string.js"
+      "import": "./dist/custom/_api/string.js"
     },
     "./custom/_api/optionFromNull": {
-      "import": {
-        "types": "./custom/_api/optionFromNull.d.ts",
-        "default": "./_mjs/custom/_api/optionFromNull.mjs"
+      "require": {
+        "types": "./dist/custom/_api/optionFromNull.d.ts",
+        "default": "./_cjs/custom/_api/optionFromNull.cjs"
       },
-      "require": "./custom/_api/optionFromNull.js"
+      "import": "./dist/custom/_api/optionFromNull.js"
     },
     "./custom/_api/intersect": {
-      "import": {
-        "types": "./custom/_api/intersect.d.ts",
-        "default": "./_mjs/custom/_api/intersect.mjs"
+      "require": {
+        "types": "./dist/custom/_api/intersect.d.ts",
+        "default": "./_cjs/custom/_api/intersect.cjs"
       },
-      "require": "./custom/_api/intersect.js"
+      "import": "./dist/custom/_api/intersect.js"
     },
     "./custom/_api/model": {
-      "import": {
-        "types": "./custom/_api/model.d.ts",
-        "default": "./_mjs/custom/_api/model.mjs"
+      "require": {
+        "types": "./dist/custom/_api/model.d.ts",
+        "default": "./_cjs/custom/_api/model.cjs"
       },
-      "require": "./custom/_api/model.js"
+      "import": "./dist/custom/_api/model.js"
     },
     "./custom/_api/chunk": {
-      "import": {
-        "types": "./custom/_api/chunk.d.ts",
-        "default": "./_mjs/custom/_api/chunk.mjs"
+      "require": {
+        "types": "./dist/custom/_api/chunk.d.ts",
+        "default": "./_cjs/custom/_api/chunk.cjs"
       },
-      "require": "./custom/_api/chunk.js"
+      "import": "./dist/custom/_api/chunk.js"
     },
     "./custom/_api/refinement": {
-      "import": {
-        "types": "./custom/_api/refinement.d.ts",
-        "default": "./_mjs/custom/_api/refinement.mjs"
+      "require": {
+        "types": "./dist/custom/_api/refinement.d.ts",
+        "default": "./_cjs/custom/_api/refinement.cjs"
       },
-      "require": "./custom/_api/refinement.js"
+      "import": "./dist/custom/_api/refinement.js"
     },
     "./custom/_api/unknownArray": {
-      "import": {
-        "types": "./custom/_api/unknownArray.d.ts",
-        "default": "./_mjs/custom/_api/unknownArray.mjs"
+      "require": {
+        "types": "./dist/custom/_api/unknownArray.d.ts",
+        "default": "./_cjs/custom/_api/unknownArray.cjs"
       },
-      "require": "./custom/_api/unknownArray.js"
+      "import": "./dist/custom/_api/unknownArray.js"
     },
     "./custom/_api/withDefaults": {
-      "import": {
-        "types": "./custom/_api/withDefaults.d.ts",
-        "default": "./_mjs/custom/_api/withDefaults.mjs"
+      "require": {
+        "types": "./dist/custom/_api/withDefaults.d.ts",
+        "default": "./_cjs/custom/_api/withDefaults.cjs"
       },
-      "require": "./custom/_api/withDefaults.js"
+      "import": "./dist/custom/_api/withDefaults.js"
     },
     "./custom/_api/number": {
-      "import": {
-        "types": "./custom/_api/number.d.ts",
-        "default": "./_mjs/custom/_api/number.mjs"
+      "require": {
+        "types": "./dist/custom/_api/number.d.ts",
+        "default": "./_cjs/custom/_api/number.cjs"
       },
-      "require": "./custom/_api/number.js"
+      "import": "./dist/custom/_api/number.js"
     },
     "./custom/_api/bool": {
-      "import": {
-        "types": "./custom/_api/bool.d.ts",
-        "default": "./_mjs/custom/_api/bool.mjs"
+      "require": {
+        "types": "./dist/custom/_api/bool.d.ts",
+        "default": "./_cjs/custom/_api/bool.cjs"
       },
-      "require": "./custom/_api/bool.js"
+      "import": "./dist/custom/_api/bool.js"
     },
     "./custom/_api/positiveInt": {
-      "import": {
-        "types": "./custom/_api/positiveInt.d.ts",
-        "default": "./_mjs/custom/_api/positiveInt.mjs"
+      "require": {
+        "types": "./dist/custom/_api/positiveInt.d.ts",
+        "default": "./_cjs/custom/_api/positiveInt.cjs"
       },
-      "require": "./custom/_api/positiveInt.js"
+      "import": "./dist/custom/_api/positiveInt.js"
     },
     "./custom/_api/ensure": {
-      "import": {
-        "types": "./custom/_api/ensure.d.ts",
-        "default": "./_mjs/custom/_api/ensure.mjs"
+      "require": {
+        "types": "./dist/custom/_api/ensure.d.ts",
+        "default": "./_cjs/custom/_api/ensure.cjs"
       },
-      "require": "./custom/_api/ensure.js"
+      "import": "./dist/custom/_api/ensure.js"
     },
     "./custom/_api/object": {
-      "import": {
-        "types": "./custom/_api/object.d.ts",
-        "default": "./_mjs/custom/_api/object.mjs"
+      "require": {
+        "types": "./dist/custom/_api/object.d.ts",
+        "default": "./_cjs/custom/_api/object.cjs"
       },
-      "require": "./custom/_api/object.js"
+      "import": "./dist/custom/_api/object.js"
     },
     "./custom/_api/positive": {
-      "import": {
-        "types": "./custom/_api/positive.d.ts",
-        "default": "./_mjs/custom/_api/positive.mjs"
+      "require": {
+        "types": "./dist/custom/_api/positive.d.ts",
+        "default": "./_cjs/custom/_api/positive.cjs"
       },
-      "require": "./custom/_api/positive.js"
+      "import": "./dist/custom/_api/positive.js"
     },
     "./custom/_api/properties": {
-      "import": {
-        "types": "./custom/_api/properties.d.ts",
-        "default": "./_mjs/custom/_api/properties.mjs"
+      "require": {
+        "types": "./dist/custom/_api/properties.d.ts",
+        "default": "./_cjs/custom/_api/properties.cjs"
       },
-      "require": "./custom/_api/properties.js"
+      "import": "./dist/custom/_api/properties.js"
     },
     "./custom/_api/nullable": {
-      "import": {
-        "types": "./custom/_api/nullable.d.ts",
-        "default": "./_mjs/custom/_api/nullable.mjs"
+      "require": {
+        "types": "./dist/custom/_api/nullable.d.ts",
+        "default": "./_cjs/custom/_api/nullable.cjs"
       },
-      "require": "./custom/_api/nullable.js"
+      "import": "./dist/custom/_api/nullable.js"
     },
     "./custom/_api/literal": {
-      "import": {
-        "types": "./custom/_api/literal.d.ts",
-        "default": "./_mjs/custom/_api/literal.mjs"
+      "require": {
+        "types": "./dist/custom/_api/literal.d.ts",
+        "default": "./_cjs/custom/_api/literal.cjs"
       },
-      "require": "./custom/_api/literal.js"
+      "import": "./dist/custom/_api/literal.js"
     },
     "./custom/_api/nonEmpty": {
-      "import": {
-        "types": "./custom/_api/nonEmpty.d.ts",
-        "default": "./_mjs/custom/_api/nonEmpty.mjs"
+      "require": {
+        "types": "./dist/custom/_api/nonEmpty.d.ts",
+        "default": "./_cjs/custom/_api/nonEmpty.cjs"
       },
-      "require": "./custom/_api/nonEmpty.js"
+      "import": "./dist/custom/_api/nonEmpty.js"
     },
     "./custom/_api/nonEmptyString": {
-      "import": {
-        "types": "./custom/_api/nonEmptyString.d.ts",
-        "default": "./_mjs/custom/_api/nonEmptyString.mjs"
+      "require": {
+        "types": "./dist/custom/_api/nonEmptyString.d.ts",
+        "default": "./_cjs/custom/_api/nonEmptyString.cjs"
       },
-      "require": "./custom/_api/nonEmptyString.js"
+      "import": "./dist/custom/_api/nonEmptyString.js"
     },
     "./vendor": {
-      "import": {
-        "types": "./vendor.d.ts",
-        "default": "./_mjs/vendor.mjs"
+      "require": {
+        "types": "./dist/vendor.d.ts",
+        "default": "./_cjs/vendor.cjs"
       },
-      "require": "./vendor.js"
+      "import": "./dist/vendor.js"
     },
     "./_schema": {
-      "import": {
-        "types": "./_schema.d.ts",
-        "default": "./_mjs/_schema.mjs"
+      "require": {
+        "types": "./dist/_schema.d.ts",
+        "default": "./_cjs/_schema.cjs"
       },
-      "require": "./_schema.js"
+      "import": "./dist/_schema.js"
     },
     "./*.js": {
-      "import": {
-        "types": "./*.d.ts",
-        "default": "./_mjs/*.mjs"
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
       },
-      "require": "./*.js"
+      "import": "./dist/*.js"
     },
     "./*": {
-      "import": {
-        "types": "./*.d.ts",
-        "default": "./_mjs/*.mjs"
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
       },
-      "require": "./*.js"
+      "import": "./dist/*.js"
     }
   },
   "sideEffects": false,

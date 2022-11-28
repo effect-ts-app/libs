@@ -1,4 +1,28 @@
 {
+    "ModelConstructor": {
+        "prefix": "mocns",
+        "body": [
+            "/** @ignore @internal @deprecated */",
+            "export type $1Constructor = typeof $1"
+        ]
+    },
+    "ModelCodegen": {
+        "prefix": "genmod",
+        "body": [
+            "// codegen:start {preset: model}"
+        ]
+    },
+    "ModelComplete": {
+        "prefix": "moc",
+        "body": [
+            "export class $1 extends ModelEnc<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.Encoded, $1.Props> ()({",
+            "$2",
+            "}) {}",
+            "/** @ignore @internal @deprecated */",
+            "export type $1Constructor = typeof $1"
+        ],
+        "description": "Defines a Model signature"
+    },
     "Model": {
         "prefix": "mo",
         "body": [
@@ -6,6 +30,19 @@
             ""
         ],
         "description": "Defines a Model signature"
+    },
+    "UnionOpaque": {
+        "prefix": "un",
+        "body": [
+            "const $1__ = union({ $2 })",
+            "const $1_ = enhanceClassUnion(OpaqueSchema<$1, $1.Encoded>()($1__))",
+            "export type $1 = ParsedShapeOfCustom<typeof $1__> & UnionBrand",
+            "export interface $1Schema extends Identity<typeof $1_> {}",
+            "export const $1: $1Schema = $1_",
+            "export namespace $1 {",
+            "  export type Encoded = EncodedOf<typeof $1__> & UnionBrand",
+            "}"
+        ]
     },
     "GetRequest": {
         "prefix": "gr",
@@ -55,4 +92,17 @@
         ],
         "description": "Defines a Response signature"
     },
+    "handle": {
+        "prefix": "handle",
+        "body": [
+            "import { handle } from \"@effect-ts-app/infra/app\"",
+            "import { $2s } from \"@effect-ts-app/boilerplate-demo-client/$2s\"",
+            "import { Effect, NonEmptyArray, Maybe, Sync } from \"@effect-ts-app/boilerplate-demo-types/Prelude\"",
+            "",
+            "export const $1$2 = handle($2s.$1)((req) =>",
+            "Effect.gen(function* ($) {",
+            "   yield* $(Effect(null))",
+            "}))"
+        ]
+    }
 }
