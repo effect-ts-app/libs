@@ -18,7 +18,9 @@
   "devDependencies": {
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.10",
-    "ts-toolbelt": "^9.6.0"
+    "@babel/cli": "^7.19.3",
+    "ts-toolbelt": "^9.6.0",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "overrides": {
     "@effect-ts/monocle": {

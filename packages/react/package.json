@@ -11,10 +11,12 @@
     "path-parser": "^6.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
     "@types/react": "^18.0.25",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "scripts": {
     "build": "pnpm clean-dist && tsc --build && pnpm build2:cjs",
