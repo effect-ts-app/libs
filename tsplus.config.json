@@ -1,6 +1,8 @@
 {
   "importMap": {
-    "^(.*)/packages/(.*)/_src/(.*)\\.ts$": "@effect-ts-app/$2/$3",
-    "^(.*)/packages/(.*)/(.*)\\.ts$": "@effect-ts-app/$2/$3"
+    "^(.*)/packages/(.*)/_src/(.*)\\.[cm]?[tj]s$": "@effect-ts-app/$2/$3",
+    "^(.*)/node_modules/@effect-ts-app/(.*)/_src/(.*)\\.[cm]?[tj]s$": "@effect-ts-app/$2/$3",
+    "^(.*)/node_modules/@effect-ts-app/(.*)/(.*)\\.[cm]?[tj]s$": "@effect-ts-app/$2/$3",
+    "^(.*)/node_modules/(.*)$": "$2"
   }
 }

@@ -1,0 +1,321 @@
+/*
+Problems and thoughts:
+- get should not write to eventlog, nor change state
+  but we need to lock the `W` because of the variance of PureEnv in R.
+  this is something that can be more easily solved via XPure.
+  in S1 and out S2 also was smart that way as you could indicate you read, not write.
+
+- get - do other EffectProgram Ops - set, is dangerous, because you may set back an old state if you're not careful
+  - GMU helpers help a bit with this, but it's still possible..
+- maybe we can workaround the variance issue of PureEnv<W, S> by making 2 separate: PureState<S>, PureLog<W>
+  then functions can depend on just what they need, and the env gets properly merged?
+  The problem is if you want to read from the state (but not write).
+
+*/
+import { type PureEnv, type PureLog, type PureState, makePureEnv } from "./Pure.js"
+
+// /**
+//  * @tsplus type PureEnv
+//  */
+// export interface PureState<S> {
+//   readonly [Effect._S1]: () => S
+
+//   readonly state: Ref<S>
+// }
+
+// /**
+//  * @tsplus type PureEnv
+//  */
+// export interface PureLog<W> {
+//   readonly [Effect._W]: () => W
+//   readonly log: Ref<Chunk<W>>
+// }
+
+// /**
+//  * @tsplus type PureEnv
+//  */
+// export type PureEnv<W, S> = PureState<S> & PureLog<W>
+
+// class PureEnvBase<W, S> implements PureEnv<W, S> {
+//   readonly [Effect._W]!: () => W
+//   readonly [Effect._S1]!: () => S
+//   readonly state: Ref<S>
+//   readonly log: Ref<Chunk<W>>
+
+//   constructor(s: S) {
+//     this.state = Ref.make(s)
+//     this.log = Ref.make(Chunk.empty<W>())
+//   }
+// }
+
+// export function makePureEnv<W, S>(s: S): PureEnv<W, S> {
+//   return new PureEnvBase<W, S>(s)
+// }
+
+// /**
+//  * @tsplus unify PureEnv
+//  */
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// export function unifyPureEnv<X extends PureEnv<any, any>>(
+//   self: X
+// ): PureEnv<
+//   [X] extends [{ [Effect._W]: () => infer W }] ? W : never,
+//   [X] extends [{ [Effect._S1]: () => infer S }] ? S : never
+// > {
+//   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+//   return self
+// }
+
+export type EffectProgram<W, S, R, E, A> = Effect<PureEnv<W, S> & R, E, A>
+type dsl<W,S> = DSL<W,S>
+
+export namespace EffectProgram {
+  export type DSL<W,S> = dsl<W,S>
+
+  // play with;
+  // well a PureLogger may also want to access State, then it would be a combination of PureLogger & Reader, but not Writer?
+  // actually a Logger may read from State..
+  // export interface XReader<R, A> extends XPure<unknown, unknown, unknown, R, never, A> {}
+  // export interface XIO<A> extends XPure<unknown, unknown, unknown, unknown, never, A> {}
+  // export interface XState<S, A> extends XPure<unknown, S, S, unknown, never, A> {}
+  // type State[S, +A] = zio.prelude.fx.ZPure[Nothing, S, S, Any, Nothing, A]
+  // type Reader[-R, +A] = zio.prelude.fx.ZPure[Nothing, Unit, Unit, R, Nothing, A]
+  // type Writer[+W, +A] = zio.prelude.fx.ZPure[W, Unit, Unit, Any, Nothing, A]
+  // Unit(void?) for S, Nothing(never) for W+, Any(unknown) for -R
+
+  export type Logger<W, A> = Effect<PureLog<W>, never, A>
+  // export type PureReader<S, R, E, A> = Effect<R, E, A>
+  // This is a problem then cause of missing S1 vs S2...
+  // export type PureWriter<S, R, E, A> = Effect<PureState<S> & R, E, A>
+  // this is why you need XPure
+}
+
+/**
+ * @tsplus static EffectProgram.Ops GMUA_
+ */
+export function GMUA_<W, S, GR, GE, GA, MR, ME, MA, UR, UE, UA>(
+  get: EffectProgram<W, S, GR, GE, GA>,
+  modify: (i: GA) => EffectProgram<W, S, MR, ME, readonly [GA, MA]>,
+  update: (i: GA) => EffectProgram<W, S, UR, UE, UA>
+): EffectProgram<W, S, GR | MR | UR, GE | ME | UE, MA> {
+  return get.flatMap(modify).flatMap(([s, a]) => update(s).map(() => a))
+}
+
+/**
+ * @tsplus static EffectProgram.Ops GMUA
+ */
+export function GMUA<W, S, GA, MR, ME, MA>(modify: (i: GA) => EffectProgram<W, S, MR, ME, readonly [GA, MA]>) {
+  return <GR, GE, UR, UE, UA>(
+    get: EffectProgram<W, S, GR, GE, GA>,
+    update: (i: GA) => EffectProgram<W, S, UR, UE, UA>
+  ) => GMUA_(get, modify, update)
+}
+
+/**
+ * @tsplus static EffectProgram.Ops GMU_
+ */
+
+export function GMU_<W, S, GR, GE, GA, MR, ME, UR, UE, UA>(
+  get: EffectProgram<W, S, GR, GE, GA>,
+  modify: (i: GA) => EffectProgram<W, S, MR, ME, GA>,
+  update: (i: GA) => EffectProgram<W, S, UR, UE, UA>
+): EffectProgram<W, S, GR | MR | UR, GE | ME | UE, UA> {
+  return get.flatMap(modify).flatMap(update)
+}
+
+/**
+ * @tsplus static EffectProgram.Ops GMU
+ */
+export function GMU<W, S, GA, MR, ME>(modify: (i: GA) => EffectProgram<W, S, MR, ME, GA>) {
+  return <GR, GE, UR, UE, UA>(
+    get: EffectProgram<W, S, GR, GE, GA>,
+    update: (i: GA) => EffectProgram<W, S, UR, UE, UA>
+  ) => GMU_(get, modify, update)
+}
+
+/**
+ * @tsplus static EffectProgram.Ops modifyM
+ */
+export function modifyM<W, S, R, E>(mod: (s: S) => EffectProgram<W, S, R, E, S>) {
+  return GMU(mod)(get(), set)
+}
+
+/**
+ * @tsplus static EffectProgram.Ops modify
+ */
+export function modify<W, S>(mod: (s: S) => S): EffectProgram<W, S, unknown, never, S> {
+  return get<W, S>().map(mod).flatMap(set)
+}
+
+/**
+ * @tsplus static EffectProgram.Ops set
+ */
+export function set<W, S>(s: S): EffectProgram<W, S, unknown, never, S> {
+  return Effect.accessM((_: PureState<S>) => Ref.set_(_.state, s))
+}
+
+/**
+ * @tsplus static EffectProgram.Ops get
+ */
+export function get<W, S>(): EffectProgram<W, S, unknown, never, S> {
+  return Effect.accessM((_: PureState<S>) => Ref.get(_.state))
+}
+
+export function getMA<W, S, A>(self: (s: S) => A): EffectProgram<W, S, unknown, never, A> {
+  return Effect.accessM((_: PureState<S>) => Ref.get(_.state).map(self))
+}
+
+/**
+ * @tsplus static EffectProgram.Ops getM
+ */
+export function getM<W, S, R, E, A>(self: (s: S) => EffectProgram<W, S, R, E, A>): EffectProgram<W, S, R, E, A> {
+  return Effect.accessM((_: PureState<S>) => Ref.get(_.state).asEffect.flatMap(self))
+}
+
+// export function getTM__<W, S, R, E, A>(self: (s: S) => EffectProgram<W, S, R, E, A>) {
+//   return (tag: Tag<PureEnv<W, S>>) => Effect.accessServiceM(tag)(_ => Ref.get(_.state).flatMap(self))
+// }
+
+// export function getTM_<W, S, R, E, A>(tag: Tag<PureEnv<W, S>>, self: (s: S) => EffectProgram<W, S, R, E, A>) {
+//   return Effect.accessServiceM(tag)(_ => Ref.get(_.state).flatMap(self))
+// }
+
+// export function getTM<W, S, R, E, A>(tag: Tag<PureEnv<W, S>>) {
+//   const access = Effect.accessServiceM(tag)
+//   return (self: (s: S) => EffectProgram<W, S, R, E, A>) => access(_ => Ref.get(_.state).flatMap(self))
+// }
+
+/**
+ * @tsplus type EffectProgram.Ops
+ */
+export interface EffectProgramOps {
+  $: EffectProgramAspects
+}
+
+/**
+ * @tsplus type EffectProgram.Aspects
+ */
+
+export interface EffectProgramAspects {}
+export const EffectProgram: EffectProgramOps = {
+  $: {}
+}
+
+/**
+ * @tsplus static EffectProgram.Ops log
+ */
+export function log<W>(w: W): EffectProgram.Logger<W, void> {
+  return Effect.accessM((_: PureLog<W>) => Ref.modify_(_.log, l => l.append(w)))
+}
+
+/**
+ * @tsplus static EffectProgram.Ops makeDSL
+ */
+export function makeDSL<W, S>(): DSL<W, S> {
+  return makeDSL_<W,S>()
+}
+
+function makeDSL_<W, S>() {
+  // const tag = Tag<PureEnv<W, S>>()
+
+  const get = Effect.accessM((_: PureState<S>) => Ref.get(_.state))
+  function getM<R, E, A>(self: (s: S) => Effect<R, E, A>) { return get.flatMap(self) }
+  function get_<A>(self: (s: S) => A) { return get.map(self)}
+
+  function set(s: S) {
+    return Effect.accessM((_: PureState<S>) => Ref.set_(_.state, s))
+  }
+  function log(w: W) {
+    return EffectProgram.log<W>(w)
+  }
+  function provide(s: S) {
+    return Effect.provide(makePureEnv<W, S>(s))
+  }
+
+  const baseDSL = {
+    get,
+    log,
+    set
+  }
+
+  function modify<A>(mod: (s: S) => readonly [S, A]) {
+    return Effect.accessM((_: PureState<S>) =>
+      Ref.get(_.state).map(_ => mod(_)).flatMap(([s, a]) => Ref.set_(_.state, s).map(() => a))
+    )
+  }
+
+  function modifyM<R, E, A>(mod: (s: S) => Effect<R, E, readonly [S, A]>) {
+    // return accessM(_ => Ref.modifyM_(_.state, mod))
+    return Effect.accessM((_: PureState<S>) =>
+      Ref.get(_.state).asEffect.flatMap(_ => mod(_)).flatMap(([s, a]) => Ref.set_(_.state, s).map(() => a))
+    )
+  }
+
+  function update(mod: (s: S) => S) {
+    return modify(_ => tuple(mod(_), void 0 as void))
+  }
+
+  function updateM<R, E>(mod: (s: S) => Effect<R, E, S>) {
+    return modifyM(_ => mod(_).map(_ => tuple(_, void 0 as void)))
+  }
+
+  function runAll<R, E, A>(
+    self: Effect<R & PureEnv<W, S>, E, A>,
+    s: S
+  ): Effect<R, E, readonly [Chunk<W>, Either<E, readonly [S, A]>]> {
+    return provide(s)(
+      Effect.catchAll_(
+        self.flatMap(x =>
+          Effect.environmentWith((_: PureEnv<W, S>) =>
+            // TODO: not sure why this is broken atm
+            // Effect.struct({ log: Ref.get(_.log), state: Ref.get(_.state) })
+            Ref.get(_.log).asEffect.flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
+          ).map(
+            (
+              { log, state }
+            ) => tuple(log, Either(tuple(state, x)) as Either<E, readonly [S, A]>)
+          )
+        ),
+        err =>
+          Effect.accessM((_: PureEnv<W, S>) => Ref.get(_.log)).map(log =>
+            tuple(log, Either.left(err) as Either<E, readonly [S, A]>)
+          )
+      )
+    )
+  }
+
+  function runResult<R, E, A>(
+    self: Effect<R & PureEnv<W, S>, E, A>,
+    s: S
+  ): Effect<R, E, readonly [Chunk<W>, Either<E, S>]> {
+    return runAll(self, s).map(([log, r]) => tuple(log, r.map(([s]) => s)))
+  }
+
+  function runA<R, E, A>(
+    self: Effect<R & PureEnv<W, S>, E, A>,
+    s: S
+  ): Effect<R, E, readonly [Chunk<W>, Either<E, A>]> {
+    return runAll(self, s).map(([log, r]) => tuple(log, r.map(([, a]) => a)))
+  }
+
+  return {
+    ...baseDSL,
+
+    getM,
+    get_,
+
+    runAll,
+    runA,
+    runResult,
+
+    modify,
+    modifyM,
+    update,
+    updateM
+  }
+}
+
+/**
+ * @tsplus type EffectProgram/DSL
+ */
+export interface DSL<W, S> extends ReturnType<typeof makeDSL_<W, S>> { }

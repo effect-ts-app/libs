@@ -8,6 +8,9 @@
     "wallabyjs.quokka-vscode",
     "wallabyjs.wallaby-vscode",
     "MS-vsliveshare.vsliveshare-pack",
-    "hbenl.vscode-test-explorer-liveshare"
+    "hbenl.vscode-test-explorer-liveshare",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

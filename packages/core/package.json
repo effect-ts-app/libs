@@ -1,7 +1,8 @@
 {
   "name": "@effect-ts-app/core",
-  "version": "1.2.6",
+  "version": "1.3.2",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@effect-ts/core": "^0.60.4",
     "@effect-ts/monocle": "^0.43.0",
@@ -25,302 +26,299 @@
     }
   },
   "scripts": {
-    "build": "yarn clean && yarn ets:tsc --build && yarn build2:mjs && yarn build2:cjs && yarn generate-exports && sh ../../utils/rename.sh && cp -f ./_src/Prelude.d.ts ./Prelude.d.ts && mv -f ./index.js ./Prelude.js && mv -f ./_mjs/index.mjs ./_mjs/Prelude.mjs",
-    "build2:cjs": "yarn ets:babel _esm --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
-    "build2:mjs": "yarn ets:babel _esm --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
-    "clean": "rm -rf ./_esm && rm -rf ./_mjs && rm -rf ./_cjs && find . | egrep '\\.m?js(\\.map)?$|\\.ts(\\.map)?$|\\.tsbuildinfo' | grep -v /types/ | grep -v /_src/ | grep -v .eslint | grep -v jest.config | xargs rm -f",
+    "build": "pnpm clean-dist && tsc --build && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
+    "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
+    "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
+    "clean": "rm -rf dist && rm -rf _cjs",
+    "clean-dist": "sh ../../scripts/clean-dist.sh",
     "generate-exports": "sh ../../utils/extract.sh > package.log",
-    "postpublish": "yarn clean",
-    "prepare": "yarn build",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./_src",
     "circular:dist": "madge --circular --extensions js ./",
-    "compile": "yarn ets:tsc --noEmit",
+    "compile": "tsc --noEmit",
     "lint": "eslint .",
     "prettier": "prettier \"**/*.ts\"",
-    "autofix": "yarn lint --fix && yarn prettier --write",
+    "autofix": "pnpm lint --fix && pnpm prettier --write",
     "test": "echo 'no tests yet'",
-    "testsuite": "yarn compile && yarn lint && yarn test && yarn circular",
-    "ncu": "ncu"
+    "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",
+    "ncu": "ncu",
+    "pub": "pnpm build && npm publish --access public"
   },
   "publishConfig": {
     "access": "public"
   },
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./_mjs/index.mjs"
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
       },
-      "require": "./index.js"
+      "import": "./dist/index.js"
     },
     "./Prelude": {
-      "import": {
-        "types": "./Prelude.d.ts",
-        "default": "./_mjs/Prelude.mjs"
-      },
       "require": {
-        "types": "./Prelude.d.ts",
-        "default": "./Prelude.js"
-      }
+        "types": "./dist/Prelude.d.ts",
+        "default": "./_cjs/Prelude.cjs"
+      },
+      "import": "./dist/Prelude.js"
     },
     "./_ext/*": {
-      "import": {
-        "types": "./_ext/*.d.ts",
-        "default": "./_mjs/_ext/*.mjs"
+      "require": {
+        "types": "./dist/_ext/*.d.ts",
+        "default": "./_cjs/_ext/*.cjs"
       },
-      "require": "./_ext/*.js"
+      "import": "./dist/_ext/*.js"
     },
     "./Array/ext": {
-      "import": {
-        "types": "./Array/ext.d.ts",
-        "default": "./_mjs/Array/ext.mjs"
+      "require": {
+        "types": "./dist/Array/ext.d.ts",
+        "default": "./_cjs/Array/ext.cjs"
       },
-      "require": "./Array/ext.js"
+      "import": "./dist/Array/ext.js"
     },
     "./Array/aspects": {
-      "import": {
-        "types": "./Array/aspects.d.ts",
-        "default": "./_mjs/Array/aspects.mjs"
+      "require": {
+        "types": "./dist/Array/aspects.d.ts",
+        "default": "./_cjs/Array/aspects.cjs"
       },
-      "require": "./Array/aspects.js"
+      "import": "./dist/Array/aspects.js"
     },
     "./utils": {
-      "import": {
-        "types": "./utils/index.d.ts",
-        "default": "./_mjs/utils/index.mjs"
+      "require": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./_cjs/utils/index.cjs"
       },
-      "require": "./utils/index.js"
+      "import": "./dist/utils/index.js"
     },
     "./http": {
-      "import": {
-        "types": "./http/index.d.ts",
-        "default": "./_mjs/http/index.mjs"
+      "require": {
+        "types": "./dist/http/index.d.ts",
+        "default": "./_cjs/http/index.cjs"
       },
-      "require": "./http/index.js"
+      "import": "./dist/http/index.js"
     },
     "./validation": {
-      "import": {
-        "types": "./validation/index.d.ts",
-        "default": "./_mjs/validation/index.mjs"
+      "require": {
+        "types": "./dist/validation/index.d.ts",
+        "default": "./_cjs/validation/index.cjs"
       },
-      "require": "./validation/index.js"
+      "import": "./dist/validation/index.js"
     },
     "./Function": {
-      "import": {
-        "types": "./Function.d.ts",
-        "default": "./_mjs/Function.mjs"
+      "require": {
+        "types": "./dist/Function.d.ts",
+        "default": "./_cjs/Function.cjs"
       },
-      "require": "./Function.js"
+      "import": "./dist/Function.js"
     },
     "./Effect": {
-      "import": {
-        "types": "./Effect.d.ts",
-        "default": "./_mjs/Effect.mjs"
+      "require": {
+        "types": "./dist/Effect.d.ts",
+        "default": "./_cjs/Effect.cjs"
       },
-      "require": "./Effect.js"
+      "import": "./dist/Effect.js"
     },
     "./EffectAspects": {
-      "import": {
-        "types": "./EffectAspects.d.ts",
-        "default": "./_mjs/EffectAspects.mjs"
+      "require": {
+        "types": "./dist/EffectAspects.d.ts",
+        "default": "./_cjs/EffectAspects.cjs"
       },
-      "require": "./EffectAspects.js"
+      "import": "./dist/EffectAspects.js"
     },
     "./Set": {
-      "import": {
-        "types": "./Set.d.ts",
-        "default": "./_mjs/Set.mjs"
+      "require": {
+        "types": "./dist/Set.d.ts",
+        "default": "./_cjs/Set.cjs"
       },
-      "require": "./Set.js"
+      "import": "./dist/Set.js"
     },
     "./Array": {
-      "import": {
-        "types": "./Array.d.ts",
-        "default": "./_mjs/Array.mjs"
+      "require": {
+        "types": "./dist/Array.d.ts",
+        "default": "./_cjs/Array.cjs"
       },
-      "require": "./Array.js"
+      "import": "./dist/Array.js"
     },
     "./transform": {
-      "import": {
-        "types": "./transform.d.ts",
-        "default": "./_mjs/transform.mjs"
+      "require": {
+        "types": "./dist/transform.d.ts",
+        "default": "./_cjs/transform.cjs"
       },
-      "require": "./transform.js"
+      "import": "./dist/transform.js"
     },
     "./Chunk": {
-      "import": {
-        "types": "./Chunk.d.ts",
-        "default": "./_mjs/Chunk.mjs"
+      "require": {
+        "types": "./dist/Chunk.d.ts",
+        "default": "./_cjs/Chunk.cjs"
       },
-      "require": "./Chunk.js"
+      "import": "./dist/Chunk.js"
     },
     "./ChunkAspects": {
-      "import": {
-        "types": "./ChunkAspects.d.ts",
-        "default": "./_mjs/ChunkAspects.mjs"
+      "require": {
+        "types": "./dist/ChunkAspects.d.ts",
+        "default": "./_cjs/ChunkAspects.cjs"
       },
-      "require": "./ChunkAspects.js"
+      "import": "./dist/ChunkAspects.js"
     },
     "./http/http-client-fetch": {
-      "import": {
-        "types": "./http/http-client-fetch.d.ts",
-        "default": "./_mjs/http/http-client-fetch.mjs"
+      "require": {
+        "types": "./dist/http/http-client-fetch.d.ts",
+        "default": "./_cjs/http/http-client-fetch.cjs"
       },
-      "require": "./http/http-client-fetch.js"
+      "import": "./dist/http/http-client-fetch.js"
     },
     "./http/http-client": {
-      "import": {
-        "types": "./http/http-client.d.ts",
-        "default": "./_mjs/http/http-client.mjs"
+      "require": {
+        "types": "./dist/http/http-client.d.ts",
+        "default": "./_cjs/http/http-client.cjs"
       },
-      "require": "./http/http-client.js"
+      "import": "./dist/http/http-client.js"
     },
     "./Order": {
-      "import": {
-        "types": "./Order.d.ts",
-        "default": "./_mjs/Order.mjs"
+      "require": {
+        "types": "./dist/Order.d.ts",
+        "default": "./_cjs/Order.cjs"
       },
-      "require": "./Order.js"
+      "import": "./dist/Order.js"
     },
     "./Object": {
-      "import": {
-        "types": "./Object.d.ts",
-        "default": "./_mjs/Object.mjs"
+      "require": {
+        "types": "./dist/Object.d.ts",
+        "default": "./_cjs/Object.cjs"
       },
-      "require": "./Object.js"
+      "import": "./dist/Object.js"
     },
     "./Maybe": {
-      "import": {
-        "types": "./Maybe.d.ts",
-        "default": "./_mjs/Maybe.mjs"
+      "require": {
+        "types": "./dist/Maybe.d.ts",
+        "default": "./_cjs/Maybe.cjs"
       },
-      "require": "./Maybe.js"
+      "import": "./dist/Maybe.js"
     },
     "./MaybeAspects": {
-      "import": {
-        "types": "./MaybeAspects.d.ts",
-        "default": "./_mjs/MaybeAspects.mjs"
+      "require": {
+        "types": "./dist/MaybeAspects.d.ts",
+        "default": "./_cjs/MaybeAspects.cjs"
       },
-      "require": "./MaybeAspects.js"
+      "import": "./dist/MaybeAspects.js"
     },
     "./EffectMaybe": {
-      "import": {
-        "types": "./EffectMaybe.d.ts",
-        "default": "./_mjs/EffectMaybe.mjs"
+      "require": {
+        "types": "./dist/EffectMaybe.d.ts",
+        "default": "./_cjs/EffectMaybe.cjs"
       },
-      "require": "./EffectMaybe.js"
+      "import": "./dist/EffectMaybe.js"
     },
     "./EffectMaybeAspects": {
-      "import": {
-        "types": "./EffectMaybeAspects.d.ts",
-        "default": "./_mjs/EffectMaybeAspects.mjs"
+      "require": {
+        "types": "./dist/EffectMaybeAspects.d.ts",
+        "default": "./_cjs/EffectMaybeAspects.cjs"
       },
-      "require": "./EffectMaybeAspects.js"
+      "import": "./dist/EffectMaybeAspects.js"
     },
     "./Tuple": {
-      "import": {
-        "types": "./Tuple.d.ts",
-        "default": "./_mjs/Tuple.mjs"
+      "require": {
+        "types": "./dist/Tuple.d.ts",
+        "default": "./_cjs/Tuple.cjs"
       },
-      "require": "./Tuple.js"
+      "import": "./dist/Tuple.js"
     },
     "./NonEmptyArray": {
-      "import": {
-        "types": "./NonEmptyArray.d.ts",
-        "default": "./_mjs/NonEmptyArray.mjs"
+      "require": {
+        "types": "./dist/NonEmptyArray.d.ts",
+        "default": "./_cjs/NonEmptyArray.cjs"
       },
-      "require": "./NonEmptyArray.js"
+      "import": "./dist/NonEmptyArray.js"
     },
     "./NonEmptyArrayAspects": {
-      "import": {
-        "types": "./NonEmptyArrayAspects.d.ts",
-        "default": "./_mjs/NonEmptyArrayAspects.mjs"
+      "require": {
+        "types": "./dist/NonEmptyArrayAspects.d.ts",
+        "default": "./_cjs/NonEmptyArrayAspects.cjs"
       },
-      "require": "./NonEmptyArrayAspects.js"
+      "import": "./dist/NonEmptyArrayAspects.js"
     },
     "./NonEmptySet": {
-      "import": {
-        "types": "./NonEmptySet.d.ts",
-        "default": "./_mjs/NonEmptySet.mjs"
+      "require": {
+        "types": "./dist/NonEmptySet.d.ts",
+        "default": "./_cjs/NonEmptySet.cjs"
       },
-      "require": "./NonEmptySet.js"
+      "import": "./dist/NonEmptySet.js"
     },
     "./NonEmptySetAspects": {
-      "import": {
-        "types": "./NonEmptySetAspects.d.ts",
-        "default": "./_mjs/NonEmptySetAspects.mjs"
+      "require": {
+        "types": "./dist/NonEmptySetAspects.d.ts",
+        "default": "./_cjs/NonEmptySetAspects.cjs"
       },
-      "require": "./NonEmptySetAspects.js"
+      "import": "./dist/NonEmptySetAspects.js"
     },
     "./validation/validators": {
-      "import": {
-        "types": "./validation/validators.d.ts",
-        "default": "./_mjs/validation/validators.mjs"
+      "require": {
+        "types": "./dist/validation/validators.d.ts",
+        "default": "./_cjs/validation/validators.cjs"
       },
-      "require": "./validation/validators.js"
+      "import": "./dist/validation/validators.js"
     },
     "./SyncMaybe": {
-      "import": {
-        "types": "./SyncMaybe.d.ts",
-        "default": "./_mjs/SyncMaybe.mjs"
+      "require": {
+        "types": "./dist/SyncMaybe.d.ts",
+        "default": "./_cjs/SyncMaybe.cjs"
       },
-      "require": "./SyncMaybe.js"
+      "import": "./dist/SyncMaybe.js"
     },
     "./Sync": {
-      "import": {
-        "types": "./Sync.d.ts",
-        "default": "./_mjs/Sync.mjs"
+      "require": {
+        "types": "./dist/Sync.d.ts",
+        "default": "./_cjs/Sync.cjs"
       },
-      "require": "./Sync.js"
+      "import": "./dist/Sync.js"
     },
     "./SyncMaybeAspects": {
-      "import": {
-        "types": "./SyncMaybeAspects.d.ts",
-        "default": "./_mjs/SyncMaybeAspects.mjs"
+      "require": {
+        "types": "./dist/SyncMaybeAspects.d.ts",
+        "default": "./_cjs/SyncMaybeAspects.cjs"
       },
-      "require": "./SyncMaybeAspects.js"
+      "import": "./dist/SyncMaybeAspects.js"
     },
     "./SyncAspects": {
-      "import": {
-        "types": "./SyncAspects.d.ts",
-        "default": "./_mjs/SyncAspects.mjs"
+      "require": {
+        "types": "./dist/SyncAspects.d.ts",
+        "default": "./_cjs/SyncAspects.cjs"
       },
-      "require": "./SyncAspects.js"
+      "import": "./dist/SyncAspects.js"
     },
     "./types/*": "./types/*.js",
     "./*.js": {
-      "import": {
-        "types": "./*.d.ts",
-        "default": "./_mjs/*.mjs"
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
       },
-      "require": "./*.js"
+      "import": "./dist/*.js"
     },
     "./*": {
-      "import": {
-        "types": "./*.d.ts",
-        "default": "./_mjs/*.mjs"
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./_cjs/*.cjs"
       },
-      "require": "./*.js"
+      "import": "./dist/*.js"
     }
   },
   "sideEffects": [
-    "./fluent/polyfill/Array.js",
-    "./fluent/polyfill/browser.js",
-    "./fluent/polyfill/Chunk.js",
-    "./fluent/polyfill/Effect.js",
-    "./fluent/polyfill/EffectNode.js",
-    "./fluent/polyfill/EffectMaybe.js",
-    "./fluent/polyfill/Either.js",
-    "./fluent/polyfill/index.js",
-    "./fluent/polyfill/Lens.js",
-    "./fluent/polyfill/Managed.js",
-    "./fluent/polyfill/node.js",
-    "./fluent/polyfill/Maybe.js",
-    "./fluent/polyfill/Set.js",
-    "./fluent/polyfill/state.js",
-    "./fluent/polyfill/Sync.js",
-    "./fluent/polyfill/SyncMaybe.js",
-    "./fluent/polyfill/util.js",
+    "./dist/fluent/polyfill/Array.js",
+    "./dist/fluent/polyfill/browser.js",
+    "./dist/fluent/polyfill/Chunk.js",
+    "./dist/fluent/polyfill/Effect.js",
+    "./dist/fluent/polyfill/EffectNode.js",
+    "./dist/fluent/polyfill/EffectMaybe.js",
+    "./dist/fluent/polyfill/Either.js",
+    "./dist/fluent/polyfill/index.js",
+    "./dist/fluent/polyfill/Lens.js",
+    "./dist/fluent/polyfill/Managed.js",
+    "./dist/fluent/polyfill/node.js",
+    "./dist/fluent/polyfill/Maybe.js",
+    "./dist/fluent/polyfill/Set.js",
+    "./dist/fluent/polyfill/state.js",
+    "./dist/fluent/polyfill/Sync.js",
+    "./dist/fluent/polyfill/SyncMaybe.js",
+    "./dist/fluent/polyfill/util.js",
     "./_cjs/fluent/polyfill/Array.cjs",
     "./_cjs/fluent/polyfill/browser.cjs",
     "./_cjs/fluent/polyfill/Chunk.cjs",
@@ -337,41 +335,7 @@
     "./_cjs/fluent/polyfill/state.cjs",
     "./_cjs/fluent/polyfill/Sync.cjs",
     "./_cjs/fluent/polyfill/SyncMaybe.cjs",
-    "./_cjs/fluent/polyfill/util.cjs",
-    "./_esm/fluent/polyfill/Array.js",
-    "./_esm/fluent/polyfill/browser.js",
-    "./_esm/fluent/polyfill/Chunk.js",
-    "./_esm/fluent/polyfill/Effect.js",
-    "./_esm/fluent/polyfill/EffectNode.js",
-    "./_esm/fluent/polyfill/EffectMaybe.js",
-    "./_esm/fluent/polyfill/Either.js",
-    "./_esm/fluent/polyfill/index.js",
-    "./_esm/fluent/polyfill/Lens.js",
-    "./_esm/fluent/polyfill/Managed.js",
-    "./_esm/fluent/polyfill/node.js",
-    "./_esm/fluent/polyfill/Maybe.js",
-    "./_esm/fluent/polyfill/Set.js",
-    "./_esm/fluent/polyfill/state.js",
-    "./_esm/fluent/polyfill/Sync.js",
-    "./_esm/fluent/polyfill/SyncMaybe.js",
-    "./_esm/fluent/polyfill/util.js",
-    "./_mjs/fluent/polyfill/Array.mjs",
-    "./_mjs/fluent/polyfill/browser.mjs",
-    "./_mjs/fluent/polyfill/Chunk.mjs",
-    "./_mjs/fluent/polyfill/Effect.mjs",
-    "./_mjs/fluent/polyfill/EffectNode.mjs",
-    "./_mjs/fluent/polyfill/EffectMaybe.mjs",
-    "./_mjs/fluent/polyfill/Either.mjs",
-    "./_mjs/fluent/polyfill/index.mjs",
-    "./_mjs/fluent/polyfill/Lens.mjs",
-    "./_mjs/fluent/polyfill/Managed.mjs",
-    "./_mjs/fluent/polyfill/node.mjs",
-    "./_mjs/fluent/polyfill/Maybe.mjs",
-    "./_mjs/fluent/polyfill/Set.mjs",
-    "./_mjs/fluent/polyfill/state.mjs",
-    "./_mjs/fluent/polyfill/Sync.mjs",
-    "./_mjs/fluent/polyfill/SyncMaybe.mjs",
-    "./_mjs/fluent/polyfill/util.mjs"
+    "./_cjs/fluent/polyfill/util.cjs"
   ],
   "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
 }

@@ -4,7 +4,10 @@ const enforceSingleVersion = [
     "@effect/cache",
     "@effect-ts/core",
     "@effect-ts/system",
-    "react"
+    "@effect-ts-app/core",
+    "@effect-ts-app/infra",
+    "@effect-ts-app/schema",
+    //"vue",
 ]
 
 function afterAllResolved(lockfile, context) {

@@ -1,0 +1,49 @@
+diff --git a/node_modules/eslint-plugin-codegen/dist/index.js b/node_modules/eslint-plugin-codegen/dist/index.js
+index f133678..dbf2e67 100644
+--- a/node_modules/eslint-plugin-codegen/dist/index.js
++++ b/node_modules/eslint-plugin-codegen/dist/index.js
+@@ -126,7 +126,7 @@ const codegen = {
+                 const normalise = (val) => val.trim().replace(/\r?\n/g, os.EOL);
+                 const result = Either_1.tryCatch(() => {
+                     const meta = { filename: context.getFilename(), existingContent };
+-                    return preset({ meta, options: opts });
++                    return preset({ meta, options: opts }, context);
+                 }, err => `${err}`);
+                 if (result._tag === 'Left') {
+                     context.report({ message: result.left, loc: startMarkerLoc });
+diff --git a/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts b/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
+index d96092b..2fe1e09 100644
+--- a/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
++++ b/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
+@@ -4,7 +4,7 @@ export declare type Preset<Options> = (params: {
+         existingContent: string;
+     };
+     options: Options;
+-}) => string;
++}, context: any) => string;
+ export * from './barrel';
+ export * from './custom';
+ export * from './empty';
+diff --git a/node_modules/eslint-plugin-codegen/src/index.ts b/node_modules/eslint-plugin-codegen/src/index.ts
+index 0f21acd..0cba17c 100644
+--- a/node_modules/eslint-plugin-codegen/src/index.ts
++++ b/node_modules/eslint-plugin-codegen/src/index.ts
+@@ -131,7 +131,7 @@ const codegen: eslint.Rule.RuleModule = {
+         const result = tryCatch(
+           () => {
+             const meta = {filename: context.getFilename(), existingContent}
+-            return preset({meta, options: opts})
++            return preset({meta, options: opts}, context)
+           },
+           err => `${err}`
+         )
+diff --git a/node_modules/eslint-plugin-codegen/src/presets/index.ts b/node_modules/eslint-plugin-codegen/src/presets/index.ts
+index 52bd259..1446064 100644
+--- a/node_modules/eslint-plugin-codegen/src/presets/index.ts
++++ b/node_modules/eslint-plugin-codegen/src/presets/index.ts
+@@ -1,4 +1,4 @@
+-export type Preset<Options> = (params: {meta: {filename: string; existingContent: string}; options: Options}) => string
++export type Preset<Options> = (params: {meta: {filename: string; existingContent: string}; options: Options}, context: any) => string
+ 
+ // codegen:start {preset: barrel}
+ export * from './barrel'

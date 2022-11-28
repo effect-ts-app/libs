@@ -29,7 +29,7 @@ export function condemn<X, E, A>(
 export class CondemnException extends Case<{ readonly message: string }> {
   readonly _tag = "CondemnException"
 
-  toString() {
+  override toString() {
     return this.message
   }
 }

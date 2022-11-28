@@ -1,4 +1,4 @@
 // ets_tracing: off
 
-export {} from "./core"
-export {} from "./data"
+export {} from "./core.js"
+export {} from "./data.js"

@@ -1,43 +1,13 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "../../tsconfig.lib.json",
     "compilerOptions": {
-        "moduleResolution": "node",
-        "outDir": "./_esm",
+        "moduleResolution": "Node16",
+        "outDir": "./dist",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "baseUrl": "./",
         "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
-        "types": [
-            "@effect-ts-app/core/fluent/_ext/awesome/node"
-        ],
-        "paths": {
-            "@effect-ts-app/core/*": [
-                "../core/_src/*"
-            ],
-            "@effect-ts-app/core": [
-                "../core/_src"
-            ],
-            "@effect-ts-app/schema/*": [
-                "./_src/*"
-            ],
-            "@effect-ts-app/schema": [
-                "./_src"
-            ]
-        },
-        "plugins": [
-            // // Transform paths in output .js files
-            // {
-            //     "transform": "ts-transform-paths"
-            // },
-            // // Transform paths in output .d.ts files (Include this line if you output declarations files)
-            // {
-            //     "transform": "ts-transform-paths",
-            //     "afterDeclarations": true
-            // },
-            {
-                "transform": "@effect-ts/tracing-plugin"
-            }
-        ]
     },
     "include": [
         "./_src"

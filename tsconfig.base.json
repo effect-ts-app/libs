@@ -1,46 +1,64 @@
 {
+    "extends": "./tsconfig.strictest.json",
     "compilerOptions": {
-        "module": "ES2020",
+        "module": "ESNext",
         "lib": [
-            "es2020"
+            "esnext"
         ],
-        "target": "es2020",
-        "noErrorTruncation": true,
-        "noEmit": true,
+        "target": "es2021",
+        // inline source maps stay better in sync with the source, which should aid with watchers.
+        //"sourceMap": true,
+        "inlineSourceMap": true,
         "incremental": true,
-        "allowJs": false,
+        "composite": true,
+        "declarationMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "declaration": true,
-        "skipLibCheck": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "useUnknownInCatchVariables": true,
+        // This needs some more plumbing, especially with Schema
+        "exactOptionalPropertyTypes": false,
+        // This is not desirable, as it's useful in generators.
+        "noImplicitReturns": false,
+        "noImplicitThis": true,
         "outDir": "build/dist",
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "strict": true,
         "resolveJsonModule": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node16",
         "downlevelIteration": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "composite": true,
-        "declarationMap": true
+        "noErrorTruncation": true,
+        "forceConsistentCasingInFileNames": true,
+        //"preserveSymlinks": true
     },
-    // NEW: Options for file/directory watching
     "watchOptions": {
         // Use native file system events for files and directories
+        // This actually detect changes in parent directories ... not great!
+        // however it seems that the response is very fast on the non-related projects figuring out their files are unchanged...
         "watchFile": "useFsEvents",
         "watchDirectory": "useFsEvents",
-        // Poll files for updates more frequently
-        // when they're updated a lot.
-        "fallbackPolling": "dynamicPriority"
+        //     // Poll files for updates more frequently
+        //     // when they're updated a lot.
+        "fallbackPolling": "dynamicPriority",
+        "excludeDirectories": [
+            "**/node_modules",
+            "**/dist",
+            "**/.build",
+            "**/.git",
+            "**/.data",
+            "**/.logs",
+            "**/.*",
+        ],
+        "excludeFiles": [
+            "**/*.tmp",
+            "openapi.json",
+            "*.json"
+        ]
     },
     "files": [],
     "include": [],
     "exclude": [
-        "node_modules",
-        "build",
-        "lib",
-        "_esm"
+        "**/node_modules",
+        "**/build",
+        "**/dist",
+        "**/.*"
     ]
 }
