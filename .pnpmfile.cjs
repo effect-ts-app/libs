@@ -1,12 +1,10 @@
 // TODO: Write a marker to package.json instead?
 const enforceSingleVersion = [
+    "@tsplus/stdlib",
     "@effect/core",
     "@effect/cache",
     "@effect-ts/core",
     "@effect-ts/system",
-    "@effect-ts-app/core",
-    "@effect-ts-app/infra",
-    "@effect-ts-app/schema",
     //"vue",
 ]
 
