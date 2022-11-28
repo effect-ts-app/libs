@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import fetch from "cross-fetch"
+import type fetch from "cross-fetch"
 import querystring from "query-string"
 
 import * as H from "./http-client.js"
@@ -43,83 +43,85 @@ export const Client = (fetchApi: typeof fetch) =>
       const input: RequestInit = {
         headers: {
           "Content-Type": getContentType(requestType),
-          ...headers,
+          ...headers
         },
         body: body ? getBody(body, requestType) : undefined,
-        method: H.getMethodAsString(method),
+        method: H.getMethodAsString(method)
       }
 
       function makeFetch(abort: AbortController) {
-        return fetchApi(url, { ...input, signal: abort.signal }).then((resp) => {
-          const h: Record<string, string> = {}
+        return fetchApi(url, { ...input, signal: abort.signal }).then(
+          resp => {
+            const h: Record<string, string> = {}
 
-          resp.headers.forEach((val, key) => {
-            h[key] = val
-          })
+            resp.headers.forEach((val, key) => {
+              h[key] = val
+            })
 
-          if (resp.status >= 200 && resp.status < 300) {
-            return H.foldResponseType(
-              responseType,
-              () =>
-                resp.status === 204
-                  ? {
+            if (resp.status >= 200 && resp.status < 300) {
+              return H.foldResponseType(
+                responseType,
+                () =>
+                  resp.status === 204
+                    ? {
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(void 0),
+                      body: Maybe.fromNullable(void 0)
                     }
-                  : resp.json().then((json: unknown) => ({
+                    : resp.json().then((json: unknown) => ({
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(json),
+                      body: Maybe.fromNullable(json)
                     })),
-              () =>
-                resp.text().then((text) => ({
-                  headers: h,
-                  status: resp.status,
-                  body: Maybe.fromNullable(text),
-                })),
-              () => {
-                if (resp["arrayBuffer"]) {
-                  return resp.arrayBuffer().then((arrayBuffer) => ({
+                () =>
+                  resp.text().then(text => ({
                     headers: h,
                     status: resp.status,
-                    body: Maybe.fromNullable(Buffer.from(arrayBuffer)),
-                  }))
-                } else {
-                  return ((resp as any).buffer() as Promise<Buffer>).then(
-                    (buffer: Buffer) => ({
+                    body: Maybe.fromNullable(text)
+                  })),
+                () => {
+                  if (resp["arrayBuffer"]) {
+                    return resp.arrayBuffer().then(arrayBuffer => ({
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(Buffer.from(buffer)),
-                    })
-                  )
+                      body: Maybe.fromNullable(Buffer.from(arrayBuffer))
+                    }))
+                  } else {
+                    return ((resp as any).buffer() as Promise<Buffer>).then(
+                      (buffer: Buffer) => ({
+                        headers: h,
+                        status: resp.status,
+                        body: Maybe.fromNullable(Buffer.from(buffer))
+                      })
+                    )
+                  }
                 }
-              }
-            )
-          } else {
-            return resp.text().then((text) => {
-              throw {
-                _tag: H.HttpErrorReason.Response,
-                response: {
-                  headers: h,
-                  status: resp.status,
-                  body: Maybe.fromNullable(text),
-                },
-              }
-            })
+              )
+            } else {
+              return resp.text().then(text => {
+                throw {
+                  _tag: H.HttpErrorReason.Response,
+                  response: {
+                    headers: h,
+                    status: resp.status,
+                    body: Maybe.fromNullable(text)
+                  }
+                }
+              })
+            }
           }
-        })
+        )
       }
 
-      return makeAbort.flatMap((abort) =>
+      return makeAbort.flatMap(abort =>
         Effect.tryCatchPromiseWithInterrupt(
           () => makeFetch(abort),
-          (err) =>
+          err =>
             H.isHttpResponseError(err)
               ? (err as H.HttpResponseError<string>)
               : { _tag: H.HttpErrorReason.Request, error: err as Error },
           () => abort.abort()
         )
       )
-    },
+    }
   })

@@ -16,12 +16,14 @@ export function p<T, K extends KeysMatching<T, Maybe<any>>>(
 ): (v: Maybe<T>) => Maybe<_A<T[K]>>
 export function p<T, K extends keyof T>(k: K): (v: Maybe<T>) => Maybe<T[K]>
 export function p(k: any) {
-  return (v: any) => O.chain_<any, any>(v, (a) => convert(a[k]))
+  return (v: any) => O.chain_<any, any>(v, a => convert(a[k]))
 }
 function convert(a: any) {
   return O.isSome(a) || O.isNone(a) ? a : O.fromNullable(a)
 }
 export type _A<A> = A extends O.Some<infer Y> ? Y : never
-type KeysMatching<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T]
+type KeysMatching<T, V> = {
+  [K in keyof T]: T[K] extends V ? K : never
+}[keyof T]
 
 export * as $ from "./MaybeAspects.js"

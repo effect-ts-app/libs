@@ -13,7 +13,7 @@ export const fromNumberIdentifier = S.makeAnnotation<{}>()
 
 export const fromNumber: DefaultSchema<number, number, number, number, {}> = pipe(
   S.identity((u): u is number => typeof u === "number"),
-  S.arbitrary((_) => _.double()),
+  S.arbitrary(_ => _.double()),
   S.mapApi(() => ({})),
   withDefaults,
   S.annotate(fromNumberIdentifier, {})
@@ -24,11 +24,11 @@ export const numberIdentifier = S.makeAnnotation<{}>()
 export const number: DefaultSchema<unknown, number, number, number, {}> = pipe(
   refinement(
     (u): u is number => typeof u === "number",
-    (v) => S.leafE(S.parseNumberE(v))
+    v => S.leafE(S.parseNumberE(v))
   ),
-  S.arbitrary((_) => _.double()),
+  S.arbitrary(_ => _.double()),
   S.constructor((n: number) => Th.succeed(n)),
-  S.encoder((_) => _),
+  S.encoder(_ => _),
   S.mapApi(() => ({})),
   withDefaults,
   S.annotate(numberIdentifier, {})
@@ -36,23 +36,20 @@ export const number: DefaultSchema<unknown, number, number, number, {}> = pipe(
 
 export const stringNumberFromStringIdentifier = S.makeAnnotation<{}>()
 
-export const stringNumberFromString: DefaultSchema<string, number, number, string, {}> =
-  pipe(
-    fromString[">>>"](
-      pipe(
-        number,
-        S.encoder((_) => String(_)),
-        S.parser((s: string) =>
-          pipe(Number.parseFloat(s), (n) =>
-            Number.isNaN(n) ? Th.fail(S.leafE(S.parseNumberE(s))) : Th.succeed(n)
-          )
-        )
+export const stringNumberFromString: DefaultSchema<string, number, number, string, {}> = pipe(
+  fromString[">>>"](
+    pipe(
+      number,
+      S.encoder(_ => String(_)),
+      S.parser((s: string) =>
+        pipe(Number.parseFloat(s), n => Number.isNaN(n) ? Th.fail(S.leafE(S.parseNumberE(s))) : Th.succeed(n))
       )
-    ),
-    S.mapParserError((e) => ((e as any).errors as Chunk<any>).unsafeHead.error),
-    withDefaults,
-    S.annotate(stringNumberFromStringIdentifier, {})
-  )
+    )
+  ),
+  S.mapParserError(e => ((e as any).errors as Chunk<any>).unsafeHead.error),
+  withDefaults,
+  S.annotate(stringNumberFromStringIdentifier, {})
+)
 
 export const stringNumberIdentifier = S.makeAnnotation<{}>()
 

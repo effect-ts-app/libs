@@ -1,11 +1,12 @@
-import { Effect } from "@effect-ts/core/Effect"
+import type { Effect } from "@effect-ts/core/Effect"
 import * as T from "@effect-ts/core/Effect"
 import { pretty } from "@effect-ts/core/Effect/Cause"
-import { Exit } from "@effect-ts/core/Effect/Exit"
-import { Layer } from "@effect-ts/core/Effect/Layer"
+import type { Exit } from "@effect-ts/core/Effect/Exit"
+import type { Layer } from "@effect-ts/core/Effect/Layer"
 import * as L from "@effect-ts/core/Effect/Layer"
 import { pipe } from "@effect-ts/core/Function"
-import React, { createContext, ReactNode, useContext, useEffect, useMemo } from "react"
+import type { ReactNode } from "react"
+import React, { createContext, useContext, useEffect, useMemo } from "react"
 
 export type GetProvider<P> = P extends Layer<unknown, unknown, infer TP> ? TP : never
 
@@ -43,12 +44,12 @@ export function makeApp<R>() {
     provide: () => MissingContext,
     runWithErrorLog: () => runWithErrorLog(MissingContext),
     runPromiseWithErrorLog: () => runPromiseWithErrorLog(MissingContext),
-    runPromiseExit: () => runPromiseExit(MissingContext),
+    runPromiseExit: () => runPromiseExit(MissingContext)
   })
 
   const LiveServiceContext = ({
     children,
-    env,
+    env
   }: {
     children: ReactNode
     env: Layer<unknown, never, R>
@@ -58,12 +59,10 @@ export function makeApp<R>() {
     const ctx = useMemo(
       () => ({
         provide: provider.provide,
-        runWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
-          runWithErrorLog(provider.provide(self)),
+        runWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) => runWithErrorLog(provider.provide(self)),
         runPromiseWithErrorLog: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
           runPromiseWithErrorLog(provider.provide(self)),
-        runPromiseExit: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) =>
-          runPromiseExit(provider.provide(self)),
+        runPromiseExit: <E, A>(self: Effect<R & T.DefaultEnv, E, A>) => runPromiseExit(provider.provide(self))
       }),
       [provider]
     )
@@ -83,12 +82,12 @@ export function makeApp<R>() {
 
   return {
     LiveServiceContext,
-    useServiceContext,
+    useServiceContext
   }
 }
 
 function runWithErrorLog<E, A>(self: Effect<unknown, E, A>) {
-  const cancel = T.runCancel(self, (ex) => {
+  const cancel = T.runCancel(self, ex => {
     if (ex._tag === "Failure") {
       console.error(pretty(ex.cause))
     }
@@ -103,7 +102,7 @@ function runPromiseExit<E, A>(self: Effect<unknown, E, A>) {
 }
 
 function runPromiseWithErrorLog<E, A>(self: Effect<unknown, E, A>) {
-  return runPromiseExit(self).then((ex) => {
+  return runPromiseExit(self).then(ex => {
     if (ex._tag === "Failure") {
       console.error(pretty(ex.cause))
     }

@@ -6,11 +6,12 @@ import * as Constructor from "../Constructor/index.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
-export type OptionalKey<ConstructorInput, Key extends keyof ConstructorInput> = Omit<
-  ConstructorInput,
-  Key
-> &
-  Partial<Pick<ConstructorInput, Key>>
+export type OptionalKey<ConstructorInput, Key extends keyof ConstructorInput> =
+  & Omit<
+    ConstructorInput,
+    Key
+  >
+  & Partial<Pick<ConstructorInput, Key>>
 
 export const withDefaultConstructorFieldIdentifier = S.makeAnnotation<{
   key: PropertyKey
@@ -33,13 +34,11 @@ export function withDefaultConstructorField<
   Encoded,
   Api
 > {
-  return (self) => {
+  return self => {
     const constructSelf = Constructor.for(self)
     return pipe(
       self,
-      S.constructor((u: any) =>
-        constructSelf(typeof u[key] !== "undefined" ? u : { ...u, [key]: value() })
-      ),
+      S.constructor((u: any) => constructSelf(typeof u[key] !== "undefined" ? u : { ...u, [key]: value() })),
       withDefaults,
       S.annotate(withDefaultConstructorFieldIdentifier, { self, key, value })
     )

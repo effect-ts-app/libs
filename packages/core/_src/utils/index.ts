@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
+import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 
 export * from "./extend.js"
 
@@ -17,8 +18,7 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   return ei.right
 }
 
-export const unsafeSome =
-  (makeErrorMessage: () => string) =>
+export const unsafeSome = (makeErrorMessage: () => string) =>
   <A>(o: Maybe<A>) => {
     if (o.isNone()) {
       throw new Error(makeErrorMessage())
@@ -32,18 +32,18 @@ export function toString(v: unknown) {
 
 export const isTruthy = <T>(item: T | null | undefined): item is T => Boolean(item)
 export const typedKeysOf = <T extends {}>(obj: T) => Object.keys(obj) as (keyof T)[]
-export const typedValuesOf = <T extends {}>(obj: T) =>
-  Object.values(obj) as ValueOf<T>[]
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+export const typedValuesOf = <T extends {}>(obj: T) => Object.values(obj) as ValueOf<T>[]
 type ValueOf<T> = T[keyof T]
 
-export type Constructor<T = any> = { new (...args: any[]): T }
-export type ThenArg<T> = T extends Promise<infer U>
-  ? U
-  : T extends (...args: any[]) => Promise<infer V>
-  ? V
+export type Constructor<T = any> = { new(...args: any[]): T }
+export type ThenArg<T> = T extends Promise<infer U> ? U
+  : T extends (...args: any[]) => Promise<infer V> ? V
   : T
 
-export function dropUndefined<A>(input: Dictionary<A | undefined>): Dictionary<A> {
+export function dropUndefined<A>(
+  input: Dictionary<A | undefined>
+): Dictionary<A> {
   const newR = pipe(
     input,
     D.filter((x): x is A => x !== undefined)
@@ -52,10 +52,7 @@ export function dropUndefined<A>(input: Dictionary<A | undefined>): Dictionary<A
 }
 
 type GetTag<T> = T extends { _tag: infer K } ? K : never
-export const isOfType =
-  <T extends { _tag: string }>(tag: GetTag<T>) =>
-  (e: { _tag: string }): e is T =>
-    e._tag === tag
+export const isOfType = <T extends { _tag: string }>(tag: GetTag<T>) => (e: { _tag: string }): e is T => e._tag === tag
 
 export function capitalize<T extends string>(string: T): Capitalize<T> {
   return (string.charAt(0).toUpperCase() + string.slice(1)) as Capitalize<T>

@@ -21,14 +21,12 @@ export type NonEmptyArray<A> = ReadonlyArray<A> & {
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
-]
-  ? R
+] ? R
   : never
 
 export type _E<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, infer E, any>
-]
-  ? E
+] ? E
   : never
 
 export class NodeServerCloseError {
@@ -66,20 +64,19 @@ export function LiveExpressAppConfig<R>(
       _tag: ExpressAppConfigTag,
       host,
       port,
-      exitHandler: (req, res, next) => (cause) =>
-        exitHandler(req, res, next)(cause).provideEnvironment(r),
+      exitHandler: (req, res, next) => cause => exitHandler(req, res, next)(cause).provideEnvironment(r)
     }))
   )
 }
 
 export const ExpressAppTag = literal("@effect-ts-app/express/App")
 
-export const makeExpressApp = Effect.gen(function* (_) {
+export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
   const open = yield* _(
     Effect.acquireRelease(
       Effect.sync(() => new AtomicBoolean(true)),
-      (a) => Effect.sync(() => a.set(false))
+      a => Effect.sync(() => a.set(false))
     )
   )
 
@@ -92,7 +89,7 @@ export const makeExpressApp = Effect.gen(function* (_) {
   // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
     Effect.acquireRelease(
-      Effect.async<never, never, Server>((cb) => {
+      Effect.async<never, never, Server>(cb => {
         const onError = (err: Error) => {
           cb(Effect.die(new NodeServerListenError(err)))
         }
@@ -105,20 +102,20 @@ export const makeExpressApp = Effect.gen(function* (_) {
           )
         })
         server.addListener("error", onError)
-        server.on("connection", (connection) => {
+        server.on("connection", connection => {
           connections.add(connection)
           connection.on("close", () => {
             connections.delete(connection)
           })
         })
       }),
-      (server) =>
-        Effect.async<never, never, void>((cb) => {
-          connections.forEach((s) => {
+      server =>
+        Effect.async<never, never, void>(cb => {
+          connections.forEach(s => {
             s.end()
             s.destroy()
           })
-          server.close((err) => {
+          server.close(err => {
             if (err) {
               cb(Effect.die(new NodeServerCloseError(err)))
             } else {
@@ -130,7 +127,7 @@ export const makeExpressApp = Effect.gen(function* (_) {
   )
 
   const supervisor = yield* _(
-    Effect.acquireRelease(Supervisor.track, (s) => s.value.flatMap(Fiber.interruptAll))
+    Effect.acquireRelease(Supervisor.track, s => s.value.flatMap(Fiber.interruptAll))
   )
 
   function runtime<
@@ -142,12 +139,11 @@ export const makeExpressApp = Effect.gen(function* (_) {
       {
         [k in keyof Handlers]: [Handlers[k]] extends [
           EffectRequestHandler<infer R, any, any, any, any, any>
-        ]
-          ? Effect<R, never, void>
+        ] ? Effect<R, never, void>
           : never
       }[number]
     >
-    return Effect.runtime<Env>().map((r) =>
+    return Effect.runtime<Env>().map(r =>
       handlers.map(
         (handler): RequestHandler =>
           (req, res, next) => {
@@ -166,7 +162,7 @@ export const makeExpressApp = Effect.gen(function* (_) {
     app,
     supervisor,
     server,
-    runtime,
+    runtime
   }
 })
 
@@ -200,12 +196,14 @@ export function LiveExpress<R>(
   )
 }
 
-export const expressApp = Effect.serviceWith(ExpressApp, (_) => _.app)
+export const expressApp = Effect.serviceWith(ExpressApp, _ => _.app)
 
-export const expressServer = Effect.serviceWith(ExpressApp, (_) => _.server)
+export const expressServer = Effect.serviceWith(ExpressApp, _ => _.server)
 
-export const { app: withExpressApp, server: withExpressServer } =
-  Effect.deriveAccessEffect(ExpressApp)(["app", "server"])
+export const { app: withExpressApp, server: withExpressServer } = Effect.deriveAccessEffect(ExpressApp)([
+  "app",
+  "server"
+])
 
 export const methods = [
   "all",
@@ -234,7 +232,7 @@ export const methods = [
   "subscribe",
   "trace",
   "unlock",
-  "unsubscribe",
+  "unsubscribe"
 ] as const
 
 export type Methods = typeof methods[number]
@@ -267,7 +265,7 @@ export interface EffectRequestHandler<
 export function expressRuntime<
   Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return Effect.serviceWithEffect(ExpressApp, (_) => _.runtime(handlers))
+  return Effect.serviceWithEffect(ExpressApp, _ => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
@@ -281,21 +279,20 @@ export function match(method: Methods): {
   ): Effect<
     | ExpressEnv
     | _R<
-        {
-          [k in keyof Handlers]: [Handlers[k]] extends [
-            EffectRequestHandler<infer R, any, any, any, any, any>
-          ]
-            ? Effect<R, never, void>
-            : never
-        }[number]
-      >,
+      {
+        [k in keyof Handlers]: [Handlers[k]] extends [
+          EffectRequestHandler<infer R, any, any, any, any, any>
+        ] ? Effect<R, never, void>
+          : never
+      }[number]
+    >,
     never,
     void
   >
 } {
-  return function (path, ...handlers) {
-    return expressRuntime(handlers).flatMap((expressHandlers) =>
-      withExpressApp((app) =>
+  return function(path, ...handlers) {
+    return expressRuntime(handlers).flatMap(expressHandlers =>
+      withExpressApp(app =>
         Effect.sync(() => {
           app[method](path, ...expressHandlers)
         })
@@ -309,7 +306,7 @@ export function defaultExitHandler(
   _res: Response,
   _next: NextFunction
 ): (cause: Cause<never>) => Effect<never, never, void> {
-  return (cause) =>
+  return cause =>
     Effect.sync(() => {
       if (cause.isDie) {
         console.error(JSON.stringify(cause, undefined, 2))
@@ -323,16 +320,15 @@ export function use<
 >(
   ...handlers: Handlers
 ): Effect<
-  ExpressEnv &
-    _R<
-      {
-        [k in keyof Handlers]: [Handlers[k]] extends [
-          EffectRequestHandler<infer R, any, any, any, any, any>
-        ]
-          ? Effect<R, never, void>
-          : never
-      }[number]
-    >,
+  & ExpressEnv
+  & _R<
+    {
+      [k in keyof Handlers]: [Handlers[k]] extends [
+        EffectRequestHandler<infer R, any, any, any, any, any>
+      ] ? Effect<R, never, void>
+        : never
+    }[number]
+  >,
   never,
   void
 >
@@ -344,33 +340,30 @@ export function use<
 ): Effect<
   | ExpressEnv
   | _R<
-      {
-        [k in keyof Handlers]: [Handlers[k]] extends [
-          EffectRequestHandler<infer R, any, any, any, any, any>
-        ]
-          ? Effect<R, never, void>
-          : never
-      }[number]
-    >,
+    {
+      [k in keyof Handlers]: [Handlers[k]] extends [
+        EffectRequestHandler<infer R, any, any, any, any, any>
+      ] ? Effect<R, never, void>
+        : never
+    }[number]
+  >,
   never,
   void
 >
 export function use(...args: any[]): Effect<ExpressEnv, never, void> {
-  return withExpressApp((app) => {
+  return withExpressApp(app => {
     if (typeof args[0] === "function") {
       return expressRuntime(
         args as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap((expressHandlers) => Effect.sync(() => app.use(...expressHandlers)))
+      ).flatMap(expressHandlers => Effect.sync(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap((expressHandlers) =>
-        Effect.sync(() => app.use(args[0], ...expressHandlers))
-      )
+      ).flatMap(expressHandlers => Effect.sync(() => app.use(args[0], ...expressHandlers)))
     }
   })
 }

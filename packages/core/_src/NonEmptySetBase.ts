@@ -1,9 +1,9 @@
-import * as Eq from "@effect-ts/core/Equal"
+import type * as Eq from "@effect-ts/core/Equal"
 
 import { flow } from "./Function.js"
 import * as Maybe from "./Maybe.js"
-import { NonEmptyArray } from "./NonEmptyArray.js"
-import * as Ord from "./Order.js"
+import type { NonEmptyArray } from "./NonEmptyArray.js"
+import type * as Ord from "./Order.js"
 import {
   filter_,
   filterMap,
@@ -18,7 +18,7 @@ import {
   remove,
   remove_,
   Set,
-  toArray as toArrayOriginal,
+  toArray as toArrayOriginal
 } from "./Set.js"
 
 export interface NonEmptyBrand {
@@ -40,7 +40,8 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const insert_: (set: NonEmptySet<A>, a: A) => NonEmptySet<A> = insert_Original as any
 
   function replace_(set: NonEmptySet<A>, a: A) {
-    return (filter_(set, (x) => !eq.equals(x, a)) >= insert__(a)) as NonEmptySet<A>
+    return (filter_(set, x => !eq.equals(x, a)) >=
+      insert__(a)) as NonEmptySet<A>
   }
 
   const toArray__ = toArrayOriginal(ord)
@@ -78,7 +79,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       f: (x: A) => A
     ) => NonEmptySet<A>,
     filterMap: (f: (a: A) => Maybe.Maybe<A>) => flow(filterMap__(f), fromSet),
-    filterMap_: flow(filterMap_(eq), fromSet),
+    filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
 }
@@ -89,8 +90,7 @@ class Wrapper<A> {
   }
 }
 
-export interface NonEmptySetSchemaExtensions<A>
-  extends ReturnType<Wrapper<A>["wrapped"]> {}
+export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
   ord: Ord.Ord<A>,

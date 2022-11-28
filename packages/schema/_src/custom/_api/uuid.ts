@@ -13,8 +13,7 @@ export interface UUIDBrand {
   readonly UUID: unique symbol
 }
 
-export const regexUUID =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+export const regexUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 export type UUID = NonEmptyString & UUIDBrand
 
@@ -26,11 +25,11 @@ const isUUID: Refinement<string, UUID> = (s: string): s is UUID => {
 
 export const UUIDFromString: DefaultSchema<string, UUID, string, string, {}> = pipe(
   fromString,
-  S.arbitrary((FC) => FC.uuid()),
+  S.arbitrary(FC => FC.uuid()),
   nonEmpty,
-  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.refine(isUUID, (n) => S.leafE(parseUuidE(n))),
+  S.mapParserError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapConstructorError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.refine(isUUID, n => S.leafE(parseUuidE(n))),
   brand<UUID>(),
   S.annotate(UUIDFromStringIdentifier, {})
 )

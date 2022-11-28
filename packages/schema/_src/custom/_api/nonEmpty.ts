@@ -1,7 +1,7 @@
 // tracing: off
 
 import { pipe } from "@effect-ts-app/core/Function"
-import { NonEmptyBrand } from "@effect-ts-app/core/NonEmptySet"
+import type { NonEmptyBrand } from "@effect-ts-app/core/NonEmptySet"
 
 import * as S from "../_schema/index.js"
 import type { DefaultSchema } from "./withDefaults.js"
@@ -30,7 +30,7 @@ export function nonEmpty<
     self,
     S.refine(
       (n): n is ParsedShape & NonEmptyBrand => n.length > 0,
-      (n) => S.leafE(S.nonEmptyE(n))
+      n => S.leafE(S.nonEmptyE(n))
     ),
     withDefaults,
     S.annotate(nonEmptyIdentifier, { self })

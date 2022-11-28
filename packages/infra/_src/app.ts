@@ -7,7 +7,7 @@ import { NotFoundError, UnauthorizedError } from "./errors.js"
 export function handle<
   TModule extends Record<
     string,
-    any //{ Model: MO.SchemaAny; new (...args: any[]): any } | MO.SchemaAny
+    any // { Model: MO.SchemaAny; new (...args: any[]): any } | MO.SchemaAny
   >
 >(
   _: TModule & { ResponseOpenApi?: any },
@@ -15,8 +15,7 @@ export function handle<
 ): <R, E>(
   h: (
     r: InstanceType<
-      MO.GetRequest<TModule> extends { new (...args: any[]): any }
-        ? MO.GetRequest<TModule>
+      MO.GetRequest<TModule> extends { new(...args: any[]): any } ? MO.GetRequest<TModule>
         : never
     >
   ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
@@ -33,25 +32,21 @@ export function handle<
   return <R, E>(
     h: (
       r: InstanceType<
-        MO.GetRequest<TModule> extends { new (...args: any[]): any }
-          ? MO.GetRequest<TModule>
+        MO.GetRequest<TModule> extends { new(...args: any[]): any } ? MO.GetRequest<TModule>
           : never
       >
     ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
-  ) =>
-    ({
-      adaptResponse,
-      h,
-      Request,
-      Response,
-      ResponseOpenApi: _.ResponseOpenApi ?? Response,
-    } as any)
+  ) => ({
+    adaptResponse,
+    h,
+    Request,
+    Response,
+    ResponseOpenApi: _.ResponseOpenApi ?? Response
+  } as any)
 }
 
-type Extr<T> = T extends { Model: MO.SchemaAny }
-  ? T["Model"]
-  : T extends MO.SchemaAny
-  ? T
+type Extr<T> = T extends { Model: MO.SchemaAny } ? T["Model"]
+  : T extends MO.SchemaAny ? T
   : never
 
 export function accessM_<T, UserId, Err>(
@@ -75,8 +70,7 @@ export function access_<T, UserId, Err>(
   bad: (rsc: T, userId: UserId) => Err
 ) {
   const auth = accessM_(canAccess, bad)
-  return <A>(rsc: T, userId: UserId, ok: (rsc: T) => A) =>
-    auth(rsc, userId, flow(ok, Effect.succeed))
+  return <A>(rsc: T, userId: UserId, ok: (rsc: T) => A) => auth(rsc, userId, flow(ok, Effect.succeed))
 }
 
 export function accessM<T, UserId, Err>(
@@ -97,8 +91,7 @@ export function access<T, UserId, Err>(
   bad: (rsc: T, userId: UserId) => Err
 ) {
   const auth = accessM(canAccess, bad)
-  return <A>(userId: UserId, ok: (rsc: T) => A) =>
-    auth(userId, flow(ok, Effect.succeed))
+  return <A>(userId: UserId, ok: (rsc: T) => A) => auth(userId, flow(ok, Effect.succeed))
 }
 
 export function makeAuthorize<T, UserId>(
@@ -114,19 +107,19 @@ export function makeAuthorize<T, UserId>(
 
     accessOrHide_: access_(
       canAccess,
-      (r) => new NotFoundError(type, getId(r).toString())
+      r => new NotFoundError(type, getId(r).toString())
     ),
     accessOrHide: access(
       canAccess,
-      (r) => new NotFoundError(type, getId(r).toString())
+      r => new NotFoundError(type, getId(r).toString())
     ),
     accessOrHideM_: accessM_(
       canAccess,
-      (r) => new NotFoundError(type, getId(r).toString())
+      r => new NotFoundError(type, getId(r).toString())
     ),
     accessOrHideM: accessM(
       canAccess,
-      (r) => new NotFoundError(type, getId(r).toString())
-    ),
+      r => new NotFoundError(type, getId(r).toString())
+    )
   }
 }

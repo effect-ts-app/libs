@@ -1,11 +1,6 @@
 // ets_tracing: off
 
-import {
-  fromMutable,
-  getEqual,
-  map_,
-  toMutable,
-} from "@effect-ts/core/Collections/Immutable/Array"
+import { fromMutable, getEqual, map_, toMutable } from "@effect-ts/core/Collections/Immutable/Array"
 import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
 
 /**

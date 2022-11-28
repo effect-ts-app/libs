@@ -1,9 +1,6 @@
-import {
-  HasContinuation,
-  Schema,
-  SchemaAny,
-  SchemaContinuationSymbol,
-} from "@effect-ts-app/schema"
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import type { HasContinuation, SchemaAny } from "@effect-ts-app/schema"
+import { Schema, SchemaContinuationSymbol } from "@effect-ts-app/schema"
 
 import type { JSONSchema } from "./atlas-plutus/index.js"
 
@@ -11,7 +8,7 @@ export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, 
   extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
   implements HasContinuation
 {
-  readonly Api = this.self.Api;
+  readonly Api = this.self.Api
   readonly [SchemaContinuationSymbol]: SchemaAny
   constructor(
     readonly self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
@@ -25,14 +22,7 @@ export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, 
 export function openapi<ParsedShape>(f: () => JSONSchema) {
   return <ParserInput, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  > => new SchemaOpenApi(self, f) as any
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaOpenApi(self, f) as any
 }
 
 export function openapi_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(

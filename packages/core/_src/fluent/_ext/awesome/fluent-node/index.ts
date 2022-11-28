@@ -1,5 +1,5 @@
-import { FiberId } from "@effect/core/io/FiberId"
 import * as Supervisor from "@effect-ts/system/Supervisor"
+import type { FiberId } from "@effect/core/io/FiberId"
 
 export function defaultTeardown(
   status: number,
@@ -27,9 +27,9 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
   }
 
   Fiber.fromEffect(eff)
-    .map((context) => {
+    .map(context => {
       context.await
-        .map((exit) => {
+        .map(exit => {
           switch (exit._tag) {
             case "Failure": {
               if (exit.cause.isInterruptedOnly) {

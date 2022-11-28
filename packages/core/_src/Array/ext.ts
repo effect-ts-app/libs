@@ -1,7 +1,8 @@
 import * as A from "@effect-ts/core/Collections/Immutable/Array"
-import * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
-import { flow, identity, Predicate } from "@effect-ts/core/Function"
-import { Ord } from "@effect-ts/core/Ord"
+import type * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
+import type { Predicate } from "@effect-ts/core/Function"
+import { flow, identity } from "@effect-ts/core/Function"
+import type { Ord } from "@effect-ts/core/Ord"
 
 import * as O from "../Maybe.js"
 
@@ -15,18 +16,24 @@ export const findIndexOrElse_ = flow(
   O.getOrElse(() => -1)
 )
 
-export function findIndexOrElse<A>(predicate: Predicate<A>): (as: Array<A>) => number {
-  return (as) => findIndexOrElse_(as, predicate)
+export function findIndexOrElse<A>(
+  predicate: Predicate<A>
+): (as: Array<A>) => number {
+  return as => findIndexOrElse_(as, predicate)
 }
 
-export function modifyAtOrOriginal_<A>(as: A.Array<A>, i: number, f: (a: A) => A) {
+export function modifyAtOrOriginal_<A>(
+  as: A.Array<A>,
+  i: number,
+  f: (a: A) => A
+) {
   return A.modifyAt_(as, i, f).toMaybe.getOrElse(() => as)
 }
 
 export function modifyOrOriginal_<A>(as: A.Array<A>, a: A, f: (a: A) => A) {
   return modifyAtOrOriginal_(
     as,
-    findIndexOrElse_(as, (x) => x === a),
+    findIndexOrElse_(as, x => x === a),
     f
   )
 }
@@ -46,7 +53,7 @@ export function deleteAtOrOriginal_<A>(as: A.Array<A>, i: number) {
 export function deleteOrOriginal_<A>(as: A.Array<A>, a: A) {
   return deleteAtOrOriginal_(
     as,
-    findIndexOrElse_(as, (x) => x === a)
+    findIndexOrElse_(as, x => x === a)
   )
 }
 
@@ -78,9 +85,7 @@ export function groupByT_<A, Key extends PropertyKey>(
       r[k] = [a]
     }
   }
-  return Object.entries(r).map(([k, items]) =>
-    tuple(k as unknown as Key, items as NonEmptyArray<A>)
-  )
+  return Object.entries(r).map(([k, items]) => tuple(k as unknown as Key, items as NonEmptyArray<A>))
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {

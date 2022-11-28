@@ -10,7 +10,7 @@ import * as Encoder from "../custom/Encoder/index.js"
 import * as Guard from "../custom/Guard/index.js"
 import * as MO from "../custom/index.js"
 import * as Parser from "../custom/Parser/index.js"
-import { ParserEnv } from "../custom/Parser/index.js"
+import type { ParserEnv } from "../custom/Parser/index.js"
 import * as Th from "../custom/These/index.js"
 
 export const dictionaryIdentifier = MO.makeAnnotation<{}>()
@@ -94,14 +94,14 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
   const refine = (u: unknown): u is Dictionary<ParsedShape> =>
     typeof u === "object" &&
     u != null &&
-    !Object.keys(u).every((x) => typeof x === "string" && Object.values(u).every(guard))
+    !Object.keys(u).every(x => typeof x === "string" && Object.values(u).every(guard))
 
   return pipe(
-    MO.refinement(refine, (v) => MO.leafE(MO.parseObjectE(v))),
+    MO.refinement(refine, v => MO.leafE(MO.parseObjectE(v))),
     MO.constructor((s: Dictionary<ParsedShape>) => Th.succeed(s)),
-    MO.arbitrary((_) => _.dictionary<ParsedShape>(_.string(), arb(_))),
+    MO.arbitrary(_ => _.dictionary<ParsedShape>(_.string(), arb(_))),
     MO.parser(parser),
-    MO.encoder((_) =>
+    MO.encoder(_ =>
       Object.keys(_).reduce((prev, cur) => {
         prev[cur] = encode(_[cur])
         return prev

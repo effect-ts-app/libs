@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { flow } from "@effect-ts/core/Function"
 import { ValidationError } from "@effect-ts-app/infra/errors"
 import * as MO from "@effect-ts-app/schema"
-import { Methods, Parser } from "@effect-ts-app/schema"
-import express from "express"
+import type { Methods } from "@effect-ts-app/schema"
+import { Parser } from "@effect-ts-app/schema"
+import { flow } from "@effect-ts/core/Function"
+import type express from "express"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
-]
-  ? R
+] ? R
   : never
 
 export type _E<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, infer E, any>
-]
-  ? E
+] ? E
   : never
 
 export type Request<
@@ -76,59 +75,59 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
     Effect.struct({
       body: parsers
         .parseBody(body)
-        .exit.flatMap((_) =>
+        .exit.flatMap(_ =>
           _._tag === "Failure" && !_.cause.isFailure
             ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
-                _._tag === "Success"
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
+              _._tag === "Success"
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: _.cause.failures }
+            )
         ),
       cookie: parsers
         .parseCookie(cookies)
-        .exit.flatMap((_) =>
+        .exit.flatMap(_ =>
           _._tag === "Failure" && !_.cause.isFailure
             ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
-                _._tag === "Success"
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
+              _._tag === "Success"
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: _.cause.failures }
+            )
         ),
       headers: parsers
         .parseHeaders(headers)
-        .exit.flatMap((_) =>
+        .exit.flatMap(_ =>
           _._tag === "Failure" && !_.cause.isFailure
             ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
-                _._tag === "Success"
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
+              _._tag === "Success"
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: _.cause.failures }
+            )
         ),
       query: parsers
         .parseQuery(query)
-        .exit.flatMap((_) =>
+        .exit.flatMap(_ =>
           _._tag === "Failure" && !_.cause.isFailure
             ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
-                _._tag === "Success"
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
+              _._tag === "Success"
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: _.cause.failures }
+            )
         ),
       path: parsers
         .parsePath(params)
-        .exit.flatMap((_) =>
+        .exit.flatMap(_ =>
           _._tag === "Failure" && !_.cause.isFailure
             ? (Effect.failCause(_.cause) as Effect<never, ValidationError, never>)
             : Effect(
-                _._tag === "Success"
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-        ),
+              _._tag === "Success"
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: _.cause.failures }
+            )
+        )
     }).flatMap(({ body, cookie, headers, path, query }) => {
       const errors: unknown[] = []
       if (body._tag === "Failure") {
@@ -154,7 +153,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         cookie: cookie.value!,
         headers: headers.value!,
         path: path.value!,
-        query: query.value!,
+        query: query.value!
       })
     })
 }
@@ -185,15 +184,14 @@ export function respondSuccess<ReqA, A, E>(
   encodeResponse: (req: ReqA) => Encode<A, E>
 ) {
   return (req: ReqA, res: express.Response) =>
-    flow(encodeResponse(req), Effect.succeed, (_) =>
-      _.flatMap((r) =>
+    flow(encodeResponse(req), Effect.succeed, _ =>
+      _.flatMap(r =>
         Effect.sync(() => {
           r === undefined
             ? res.status(204).send()
             : res.status(200).send(r === null ? JSON.stringify(null) : r)
         })
-      )
-    )
+      ))
 }
 
 export interface RequestHandlerOptRes<
@@ -246,9 +244,8 @@ export interface RequestHandler2<
 
 export type MiddlewareHandler<ResE, R2 = never, PR = never> = (
   req: express.Request,
-  res: express.Response,
+  res: express.Response
 ) => Layer<R2, ResE, PR>
-
 
 export type Middleware<
   R,
@@ -308,50 +305,50 @@ export function makeRequestParsers<
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph = Effect(
     Maybe.fromNullable(Request.Headers)
-      .map((s) => s)
+      .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseHeaders = (u: unknown) => ph.flatMapMaybe((d) => d(u))
+  const parseHeaders = (u: unknown) => ph.flatMapMaybe(d => d(u))
 
   const pq = Effect(
     Maybe.fromNullable(Request.Query)
-      .map((s) => s)
+      .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseQuery = (u: unknown) => pq.flatMapMaybe((d) => d(u))
+  const parseQuery = (u: unknown) => pq.flatMapMaybe(d => d(u))
 
   const pb = Effect(
     Maybe.fromNullable(Request.Body)
-      .map((s) => s)
+      .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseBody = (u: unknown) => pb.flatMapMaybe((d) => d(u))
+  const parseBody = (u: unknown) => pb.flatMapMaybe(d => d(u))
 
   const pp = Effect(
     Maybe.fromNullable(Request.Path)
-      .map((s) => s)
+      .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parsePath = (u: unknown) => pp.flatMapMaybe((d) => d(u))
+  const parsePath = (u: unknown) => pp.flatMapMaybe(d => d(u))
 
   const pc = Effect(
     Maybe.fromNullable(Request.Cookie)
-      .map((s) => s)
+      .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseCookie = (u: unknown) => pc.flatMapMaybe((d) => d(u))
+  const parseCookie = (u: unknown) => pc.flatMapMaybe(d => d(u))
 
   return {
     parseBody,
     parseCookie,
     parseHeaders,
     parsePath,
-    parseQuery,
+    parseQuery
   }
 }
 

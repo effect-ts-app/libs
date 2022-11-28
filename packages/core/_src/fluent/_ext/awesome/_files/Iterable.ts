@@ -16,7 +16,10 @@ export function ext_forEachPar<A, R, E, B>(
  * @tsplus fluent Chunk forEachEffect
  * @tsplus fluent ets/Set forEachEffect
  */
-export function ext_forEach<A, R, E, B>(as: Iterable<A>, f: (a: A) => Effect<R, E, B>) {
+export function ext_forEach<A, R, E, B>(
+  as: Iterable<A>,
+  f: (a: A) => Effect<R, E, B>
+) {
   return Effect.forEach(Chunk.from(as), f)
 }
 

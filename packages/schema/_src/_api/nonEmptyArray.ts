@@ -25,8 +25,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     S.identity(
-      (u): u is NonEmptyArray<ParsedShape> =>
-        Array.isArray(u) && u.length > 0 && u.every(guardSelf)
+      (u): u is NonEmptyArray<ParsedShape> => Array.isArray(u) && u.length > 0 && u.every(guardSelf)
     ),
     S.parser((u: Chunk<ParsedShape>) => {
       const ar = u.toArray
@@ -35,7 +34,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     }),
     S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary(
-      (_) =>
+      _ =>
         _.array(arbitrarySelf(_), { minLength: 1 }) as any as Arbitrary.Arbitrary<
           NonEmptyArray<ParsedShape>
         >
@@ -44,9 +43,9 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return pipe(
     S.chunk(self)[">>>"](fromChunk),
-    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    S.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     S.constructor((_: NonEmptyArray<ParsedShape>) => Th.succeed(_)),
-    S.encoder((u) => u.map(encodeSelf)),
+    S.encoder(u => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     S.withDefaults,
     S.annotate(minLengthIdentifier, { self, minLength: 1 }),

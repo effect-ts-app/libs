@@ -1,21 +1,20 @@
 import { pipe } from "@effect-ts-app/core/Function"
 
 import * as MO from "../vendor.js"
-import { NonEmptyBrand } from "../vendor.js"
+import type { NonEmptyBrand } from "../vendor.js"
 import { extendWithUtils } from "./_shared.js"
 import { constrained } from "./length.js"
 
 // TODO: Word, for lorem ipsum generation, but as composition?
 
-export const constrainedStringIdentifier =
-  MO.makeAnnotation<{ minLength: number; maxLength: number }>()
+export const constrainedStringIdentifier = MO.makeAnnotation<{ minLength: number; maxLength: number }>()
 export function makeConstrainedFromString<Brand>(minLength: number, maxLength: number) {
   return pipe(
     MO.fromString,
-    MO.arbitrary((FC) => FC.string({ minLength, maxLength })),
+    MO.arbitrary(FC => FC.string({ minLength, maxLength })),
     constrained<Brand>(minLength, maxLength),
-    MO.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-    MO.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+    MO.mapParserError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+    MO.mapConstructorError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
     // NOTE: brand must come after, to reap benefits of showing Opaque types in editor
     // if combining types further down the line, must re-apply brand.
     MO.brand<Brand>()
@@ -50,10 +49,10 @@ export type ReasonableString = string & ReasonableStringBrand
  */
 export const reasonableStringFromString = pipe(
   makeConstrainedFromString<ReasonableString>(1, 256 - 1),
-  MO.arbitrary((FC) =>
+  MO.arbitrary(FC =>
     FC.lorem({ mode: "words", maxCount: 2 })
-      .filter((x) => x.length < 256 - 1 && x.length > 0)
-      .map((x) => x as ReasonableString)
+      .filter(x => x.length < 256 - 1 && x.length > 0)
+      .map(x => x as ReasonableString)
   ),
   // arbitrary removes brand benefit
   MO.brand<ReasonableString>()
@@ -83,10 +82,10 @@ export type LongString = string & LongStringBrand
  */
 export const longStringFromString = pipe(
   makeConstrainedFromString<LongString>(1, 2048 - 1),
-  MO.arbitrary((FC) =>
+  MO.arbitrary(FC =>
     FC.lorem({ mode: "words", maxCount: 25 })
-      .filter((x) => x.length < 2048 - 1 && x.length > 0)
-      .map((x) => x as LongString)
+      .filter(x => x.length < 2048 - 1 && x.length > 0)
+      .map(x => x as LongString)
   ),
   // arbitrary removes brand benefit
   MO.brand<LongString>()
@@ -117,10 +116,10 @@ export type TextString = string & TextStringBrand
  */
 export const textStringFromString = pipe(
   makeConstrainedFromString<TextString>(1, 64 * 1024),
-  MO.arbitrary((FC) =>
+  MO.arbitrary(FC =>
     FC.lorem({ mode: "sentences", maxCount: 25 })
-      .filter((x) => x.length < 64 * 1024 && x.length > 0)
-      .map((x) => x as TextString)
+      .filter(x => x.length < 64 * 1024 && x.length > 0)
+      .map(x => x as TextString)
   ),
   // arbitrary removes brand benefit
   MO.brand<TextString>()

@@ -25,7 +25,7 @@ export const positiveIntFromNumber: DefaultSchema<
 > = pipe(
   intFromNumber,
   positive,
-  S.arbitrary((FC) => FC.integer({ min: 1 }).map((_) => _ as PositiveInt)),
+  S.arbitrary(FC => FC.integer({ min: 1 }).map(_ => _ as PositiveInt)),
   brand<PositiveInt>(),
   S.annotate(positiveIntFromNumberIdentifier, {})
 )

@@ -39,19 +39,19 @@ export type ArbitraryFor<Self extends MO.SchemaAny> = Arbitrary.Gen<
   MO.ParsedShapeOf<Self>
 >
 
-export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self>
-  ? SchemaForModel<M, Self>
+export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? SchemaForModel<M, Self>
   : SchemaForModel<MO.ParsedShapeOf<Self>, Self>
 
-export interface Model<M, Self extends MO.SchemaAny>
-  extends S.Schemed<Self>,
-    MO.Schema<
-      MO.ParserInputOf<Self>,
-      M,
-      MO.ConstructorInputOf<Self>,
-      MO.EncodedOf<Self>,
-      MO.ApiOf<Self>
-    > {
+export interface Model<M, Self extends MO.SchemaAny> extends
+  S.Schemed<Self>,
+  MO.Schema<
+    MO.ParserInputOf<Self>,
+    M,
+    MO.ConstructorInputOf<Self>,
+    MO.EncodedOf<Self>,
+    MO.ApiOf<Self>
+  >
+{
   [S.schemaField]: Self
 
   readonly Parser: ParserFor<SchemaForModel<M, Self>>
@@ -74,42 +74,41 @@ export function Model<M>(__name?: string) {
     const schema = S.schema(schemed)
 
     Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
-      value: schema,
+      value: schema
     })
 
     Object.defineProperty(schemed, "Api", {
       get() {
         return self.Api
-      },
+      }
     })
 
     Object.defineProperty(schemed, ">>>", {
-      value: self[">>>"],
+      value: self[">>>"]
     })
 
     Object.defineProperty(schemed, "Parser", {
-      value: Parser.for(schema),
+      value: Parser.for(schema)
     })
 
     Object.defineProperty(schemed, "Constructor", {
-      value: Constructor.for(schema),
+      value: Constructor.for(schema)
     })
 
     Object.defineProperty(schemed, "Encoder", {
-      value: Encoder.for(schema),
+      value: Encoder.for(schema)
     })
 
     Object.defineProperty(schemed, "Guard", {
-      value: Guard.for(schema),
+      value: Guard.for(schema)
     })
 
     Object.defineProperty(schemed, "Arbitrary", {
-      value: Arbitrary.for(schema),
+      value: Arbitrary.for(schema)
     })
 
     Object.defineProperty(schemed, "annotate", {
-      value: <Meta>(identifier: Annotation<Meta>, meta: Meta) =>
-        new MO.SchemaAnnotated(schema, identifier, meta),
+      value: <Meta>(identifier: Annotation<Meta>, meta: Meta) => new MO.SchemaAnnotated(schema, identifier, meta)
     })
 
     // @ts-expect-error the following is correct

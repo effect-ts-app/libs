@@ -1,26 +1,20 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as MO from "@effect-ts-app/schema"
 import { Encoder, extractSchema } from "@effect-ts-app/schema"
-import express from "express"
+import type express from "express"
 
-import {
-  NotFoundError,
-  NotLoggedInError,
-  UnauthorizedError,
-  ValidationError,
-} from "../errors.js"
+import type { NotFoundError, NotLoggedInError, UnauthorizedError, ValidationError } from "../errors.js"
 import * as Ex from "./index.js"
-import {
+import type {
   Encode,
-  makeRequestParsers,
   Middleware,
   MiddlewareHandler,
-  parseRequestParams,
   RequestHandler,
   RequestHandlerOptRes,
-  RequestParsers,
-  respondSuccess,
+  RequestParsers
 } from "./schema/requestHandler.js"
+import { makeRequestParsers, parseRequestParams, respondSuccess } from "./schema/requestHandler.js"
 import { makeRouteDescriptor } from "./schema/routing.js"
 
 /*
@@ -69,7 +63,7 @@ export function match<
     PR
   >
 ) {
-  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined  = undefined
+  let h: MiddlewareHandler<SupportedErrors, R2, PR> | undefined = undefined
   if (mw) {
     const { handle, handler } = mw(r)
     r = handler
@@ -157,37 +151,33 @@ export function handleRequest<
         const hn = {
           ...body.value,
           ...query.value,
-          ...path.value,
+          ...path.value
         } as ReqA
         return hn
       })
-      .flatMap((inp) => {
+      .flatMap(inp => {
         const hn = handle(inp)
         const r = h ? hn.provideSomeLayer(h(req, res)) : hn
         return (
           r as never as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
-        ).flatMap((outp) => respond(inp, res)(outp))
+        ).flatMap(outp => respond(inp, res)(outp))
       })
-      .catch("_tag", "ValidationError", (err) =>
+      .catch("_tag", "ValidationError", err =>
         Effect.sync(() => {
           res.status(400).send(err.errors)
-        })
-      )
-      .catch("_tag", "NotFoundError", (err) =>
+        }))
+      .catch("_tag", "NotFoundError", err =>
         Effect.sync(() => {
           res.status(404).send(err)
-        })
-      )
-      .catch("_tag", "NotLoggedInError", (err) =>
+        }))
+      .catch("_tag", "NotLoggedInError", err =>
         Effect.sync(() => {
           res.status(401).send(err)
-        })
-      )
-      .catch("_tag", "UnauthorizedError", (err) =>
+        }))
+      .catch("_tag", "UnauthorizedError", err =>
         Effect.sync(() => {
           res.status(403).send(err)
-        })
-      )
+        }))
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
         Effect.sync(() =>
@@ -197,7 +187,7 @@ export function handleRequest<
           )
         ).flatMap(Effect.die)
       )
-  //.tapCause(() => Effect.sync(() => res.status(500).send()))
+  // .tapCause(() => Effect.sync(() => res.status(500).send()))
 }
 
 // Additional convenience helpers

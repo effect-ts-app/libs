@@ -1,6 +1,6 @@
+import { describe, expect, test } from "vitest"
 import { Constructor, Parser, unsafe } from "../vendor.js"
 import { FutureDate } from "./futureDate.js"
-import { describe, expect, test } from "vitest"
 
 const makeFutureDateUnsafe = Constructor.for(FutureDate) >= unsafe
 const parseFutureDateUnsafe = Parser.for(FutureDate) >= unsafe

@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as MO from "@effect-ts-app/schema"
-import { Methods } from "@effect-ts-app/schema"
+import type { Methods } from "@effect-ts-app/schema"
 
-import {
-  isObjectSchema,
-  JSONSchema,
-  ParameterLocation,
-  SubSchema,
-} from "../../Openapi/atlas-plutus/index.js"
+import type { JSONSchema, ParameterLocation, SubSchema } from "../../Openapi/atlas-plutus/index.js"
+import { isObjectSchema } from "../../Openapi/atlas-plutus/index.js"
 import * as OpenApi from "../../Openapi/index.js"
-import { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
+import type { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
 
 export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
   return i as RouteDescriptorAny
@@ -103,47 +99,47 @@ export function makeFromSchema<ResA>(
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap((_) =>
+  const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap(_ =>
     _.fold(
       () => Effect(Maybe.none),
-      (_) => jsonSchema(_).map(Maybe.some)
+      _ => jsonSchema(_).map(Maybe.some)
     )
   )
-  const makeReqHeadersSchema = Effect(Maybe.fromNullable(Req.Headers)).flatMap((_) =>
+  const makeReqHeadersSchema = Effect(Maybe.fromNullable(Req.Headers)).flatMap(_ =>
     _.fold(
       () => Effect(Maybe.none),
-      (_) => jsonSchema(_).map(Maybe.some)
+      _ => jsonSchema(_).map(Maybe.some)
     )
   )
-  const makeReqCookieSchema = Effect(Maybe.fromNullable(Req.Cookie)).flatMap((_) =>
+  const makeReqCookieSchema = Effect(Maybe.fromNullable(Req.Cookie)).flatMap(_ =>
     _.fold(
       () => Effect(Maybe.none),
-      (_) => jsonSchema(_).map(Maybe.some)
+      _ => jsonSchema(_).map(Maybe.some)
     )
   )
-  const makeReqPathSchema = Effect(Maybe.fromNullable(Req.Path)).flatMap((_) =>
+  const makeReqPathSchema = Effect(Maybe.fromNullable(Req.Path)).flatMap(_ =>
     _.fold(
       () => Effect(Maybe.none),
-      (_) => jsonSchema(_).map(Maybe.some)
+      _ => jsonSchema(_).map(Maybe.some)
     )
   )
-  const makeReqBodySchema = Effect(Maybe.fromNullable(Req.Body)).flatMap((_) =>
+  const makeReqBodySchema = Effect(Maybe.fromNullable(Req.Body)).flatMap(_ =>
     _.fold(
       () => Effect(Maybe.none),
-      (_) => jsonSchema(_).map(Maybe.some)
+      _ => jsonSchema(_).map(Maybe.some)
     )
   )
-  //const makeReqSchema = schema(Req)
+  // const makeReqSchema = schema(Req)
 
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
     return (a: Maybe<JSONSchema | SubSchema>) => {
       return a
-        .flatMap((o) => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
-        .map((x) => {
+        .flatMap(o => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
+        .map(x => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          return Object.keys(x.properties!).map((p) => {
+          return Object.keys(x.properties!).map(p => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const schema = x.properties![p]
             const required = Boolean(x.required?.includes(p))
@@ -161,9 +157,9 @@ export function makeFromSchema<ResA>(
     reqBody: makeReqBodySchema,
     reqPath: makeReqPathSchema,
     reqCookie: makeReqCookieSchema,
-    res: makeResSchema,
-  }).map((_) => {
-    //console.log("$$$ REQ", _.req)
+    res: makeResSchema
+  }).map(_ => {
+    // console.log("$$$ REQ", _.req)
     const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
     return {
       path: e.path,
@@ -176,25 +172,25 @@ export function makeFromSchema<ResA>(
         ...makeParameters("path")(_.reqPath),
         ...makeParameters("query")(_.reqQuery),
         ...makeParameters("header")(_.reqHeaders),
-        ...makeParameters("cookie")(_.reqCookie),
+        ...makeParameters("cookie")(_.reqCookie)
       ],
-      requestBody: _.reqBody.map((schema) => ({
-        content: { "application/json": { schema } },
+      requestBody: _.reqBody.map(schema => ({
+        content: { "application/json": { schema } }
       })).value,
       responses: ROArray.concat_(
         [
           isEmpty
             ? new Response(204, { description: "Empty" })
             : new Response(200, {
-                description: "OK",
-                content: { "application/json": { schema: _.res } },
-              }),
-          new Response(400, { description: "ValidationError" }),
+              description: "OK",
+              content: { "application/json": { schema: _.res } }
+            }),
+          new Response(400, { description: "ValidationError" })
         ],
         e.path.includes(":") && isEmpty
           ? [new Response(404, { description: "NotFoundError" })]
           : []
-      ),
+      )
     }
   })
 }
@@ -202,6 +198,6 @@ export function makeFromSchema<ResA>(
 class Response {
   constructor(
     public readonly statusCode: number,
-    public readonly type: any //string | JSONSchema | SubSchema
+    public readonly type: any // string | JSONSchema | SubSchema
   ) {}
 }

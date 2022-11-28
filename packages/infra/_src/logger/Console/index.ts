@@ -18,7 +18,7 @@ function log(
       config,
       formatter,
       level,
-      msg,
+      msg
     }
   })
     .tap(({ level: configLevel, msg }) =>
@@ -70,11 +70,10 @@ export interface ConsoleLoggerConfig extends Config {}
 
 export const ConsoleLoggerConfig = Tag<ConsoleLoggerConfig>()
 
-export const LiveConsoleLoggerConfig = (config: Config = {}) =>
-  Layer.fromValue(ConsoleLoggerConfig, config)
+export const LiveConsoleLoggerConfig = (config: Config = {}) => Layer.fromValue(ConsoleLoggerConfig, config)
 
 export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
-  Effect.gen(function* ($) {
+  Effect.gen(function*($) {
     const config = yield* $(ConsoleLoggerConfig)
     return {
       debug: (message, meta) => log(config, "debug", message, meta),
@@ -83,7 +82,7 @@ export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
       error: (message, meta) => log(config, "error", message, meta),
       info: (message, meta) => log(config, "info", message, meta),
       verbose: (message, meta) => log(config, "verbose", message, meta),
-      warn: (message, meta) => log(config, "warn", message, meta),
+      warn: (message, meta) => log(config, "warn", message, meta)
     }
   })
 )

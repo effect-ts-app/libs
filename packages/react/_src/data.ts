@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tagged } from "@effect-ts/core/Case"
-import { Effect } from "@effect-ts/core/Effect"
+import type { Effect } from "@effect-ts/core/Effect"
 import * as T from "@effect-ts/core/Effect"
-import { Either } from "@effect-ts/core/Either"
+import type { Either } from "@effect-ts/core/Either"
 import * as Ei from "@effect-ts/core/Either"
 import { pipe } from "@effect-ts/core/Function"
 import * as O from "@effect-ts/core/Option"
-import { Option } from "@effect-ts/core/Option"
+import type { Option } from "@effect-ts/core/Option"
 import { matchTag } from "@effect-ts/core/Utils"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { ServiceContext } from "./context.js"
+import type { ServiceContext } from "./context.js"
 
 export { matchTag } from "@effect-ts/core/Utils"
 
@@ -22,13 +22,13 @@ export class Done<E, A> extends Tagged("Done")<{
   readonly current: Either<E, A>
   readonly previous: Option<A>
 }> {
-  static succeed<A, E = never>(a: A) {
+  static succeed<A, E = never>(this: void, a: A) {
     return new Done<E, A>({ current: Ei.right(a), previous: O.none })
   }
-  static fail<E, A = never>(e: E, previous?: A) {
+  static fail<E, A = never>(this: void, e: E, previous?: A) {
     return new Done<E, A>({
       current: Ei.left(e),
-      previous: previous === undefined ? O.none : O.some(previous),
+      previous: previous === undefined ? O.none : O.some(previous)
     })
   }
 
@@ -47,7 +47,7 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
       current: Ei.left(e),
-      previous: previous === undefined ? O.none : O.some(previous),
+      previous: previous === undefined ? O.none : O.some(previous)
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -55,21 +55,34 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
   }
 }
 
-export type QueryResult<E, A> = Initial | Loading | Refreshing<E, A> | Done<E, A>
+export type QueryResult<E, A> =
+  | Initial
+  | Loading
+  | Refreshing<E, A>
+  | Done<E, A>
 
 export function isSuccess<E, A>(
   qr: QueryResult<E, A>
 ): qr is (Done<E, A> | Refreshing<E, A>) & { current: Ei.Right<A> } {
-  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Right"
+  return (
+    (qr._tag === "Done" || qr._tag === "Refreshing") &&
+    qr.current._tag === "Right"
+  )
 }
 
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
 ): qr is (Done<E, A> | Refreshing<E, A>) & { current: Ei.Left<E> } {
-  return (qr._tag === "Done" || qr._tag === "Refreshing") && qr.current._tag === "Left"
+  return (
+    (qr._tag === "Done" || qr._tag === "Refreshing") &&
+    qr.current._tag === "Left"
+  )
 }
 
-export type ResultTuple<Result> = readonly [result: Result, refresh: () => void]
+export type ResultTuple<Result> = readonly [
+  result: Result,
+  refresh: () => void
+]
 export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 
 export const { fail, succeed } = Done
@@ -89,13 +102,14 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
   return <E, A>(self: Effect<R, E, A>): QueryResultTuple<E, A> => {
     const { runWithErrorLog } = useServiceContext()
     const resultInternal = useRef<QueryResult<E, A>>(new Initial())
-    const [result, setResult] = useState<QueryResult<E, A>>(resultInternal.current)
+    const [result, setResult] = useState<QueryResult<E, A>>(
+      resultInternal.current
+    )
     const [signal, setSignal] = useState(() => Symbol())
     const refresh = useCallback(() => setSignal(Symbol()), [])
 
     useEffect(() => {
-      const set = (result: QueryResult<E, A>) =>
-        setResult((resultInternal.current = result))
+      const set = (result: QueryResult<E, A>) => setResult(resultInternal.current = result)
 
       set(
         resultInternal.current._tag === "Initial" ||
@@ -129,22 +143,22 @@ export function matchQuery<E, A, Result>(_: {
       matchTag({
         Initial: _.Initial,
         Loading: _.Loading,
-        Refreshing: (r) =>
+        Refreshing: r =>
           pipe(
             r.current,
             Ei.fold(
-              (e) => _.Error(e, true, r.previous),
-              (a) => _.Success(a, true)
+              e => _.Error(e, true, r.previous),
+              a => _.Success(a, true)
             )
           ),
-        Done: (r) =>
+        Done: r =>
           pipe(
             r.current,
             Ei.fold(
-              (e) => _.Error(e, false, r.previous),
-              (a) => _.Success(a, false)
+              e => _.Error(e, false, r.previous),
+              a => _.Success(a, false)
             )
-          ),
+          )
       })
     )
 }

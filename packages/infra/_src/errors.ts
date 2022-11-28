@@ -1,4 +1,3 @@
-
 export class NotFoundError {
   public readonly _tag = "NotFoundError"
   public readonly message: string

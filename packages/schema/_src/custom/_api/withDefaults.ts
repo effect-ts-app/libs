@@ -36,8 +36,8 @@ export interface SchemaDefaultSchema<
 }
 
 export type DefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
-  SchemaDefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> &
-    CarryFromApi<Api>
+  & SchemaDefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  & CarryFromApi<Api>
 
 const carryOver = ["matchW", "matchS", "props"] as const
 
@@ -59,49 +59,48 @@ export function withDefaults<ParserInput, ParsedShape, ConstructorInput, Encoded
   }
 
   Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
-    value: self,
+    value: self
   })
 
   Object.defineProperty(schemed, "Api", {
     get() {
       return self.Api
-    },
+    }
   })
 
   Object.defineProperty(schemed, ">>>", {
-    value: self[">>>"],
+    value: self[">>>"]
   })
 
   Object.defineProperty(schemed, "Parser", {
-    value: Parser.for(self),
+    value: Parser.for(self)
   })
 
   Object.defineProperty(schemed, "Constructor", {
-    value: Constructor.for(self),
+    value: Constructor.for(self)
   })
 
   Object.defineProperty(schemed, "Encoder", {
-    value: Encoder.for(self),
+    value: Encoder.for(self)
   })
 
   Object.defineProperty(schemed, "Guard", {
-    value: Guard.for(self),
+    value: Guard.for(self)
   })
 
   Object.defineProperty(schemed, "Arbitrary", {
-    value: Arbitrary.for(self),
+    value: Arbitrary.for(self)
   })
 
   Object.defineProperty(schemed, "annotate", {
-    value: <Meta>(annotation: Annotation<Meta>, meta: Meta) =>
-      withDefaults(self.annotate(annotation, meta)),
+    value: <Meta>(annotation: Annotation<Meta>, meta: Meta) => withDefaults(self.annotate(annotation, meta))
   })
 
   for (const k of carryOver) {
     Object.defineProperty(schemed, k, {
       get() {
         return self.Api[k]
-      },
+      }
     })
   }
 

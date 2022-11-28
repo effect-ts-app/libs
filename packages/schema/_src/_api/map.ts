@@ -9,7 +9,7 @@ import * as Encoder from "../custom/Encoder/index.js"
 import * as Guard from "../custom/Guard/index.js"
 import * as MO from "../custom/index.js"
 import * as Parser from "../custom/Parser/index.js"
-import { ParserEnv } from "../custom/Parser/index.js"
+import type { ParserEnv } from "../custom/Parser/index.js"
 import * as Th from "../custom/These/index.js"
 import { tuple } from "./tuple.js"
 
@@ -50,13 +50,13 @@ export function map<
   return pipe(
     MO.identity(refinement),
     MO.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
-    MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
+    MO.arbitrary(_ => mapArb(_).map(x => new Map(x))),
     MO.parser(
       (i: unknown, env?: ParserEnv) =>
         mapParse(i, env) >=
-        Th.map((x) => new Map(x) as Map<KeyParsedShape, ParsedShape>)
+          Th.map(x => new Map(x) as Map<KeyParsedShape, ParsedShape>)
     ),
-    MO.encoder((_) => ROArray.from(_.entries()) >= mapEncode),
+    MO.encoder(_ => ROArray.from(_.entries()) >= mapEncode),
     MO.mapApi(() => ({})),
     MO.withDefaults,
     MO.annotate(mapIdentifier, {})

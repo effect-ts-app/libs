@@ -1,4 +1,4 @@
-import { Ordering } from "@effect-ts/core/Ordering"
+import type { Ordering } from "@effect-ts/core/Ordering"
 
 export type { Ordering }
 

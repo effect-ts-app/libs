@@ -21,10 +21,10 @@ export const nonEmptyStringFromString: DefaultSchema<
   {}
 > = pipe(
   fromString,
-  S.arbitrary((FC) => FC.string({ minLength: 1 })),
+  S.arbitrary(FC => FC.string({ minLength: 1 })),
   nonEmpty,
-  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapParserError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapConstructorError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   brand<NonEmptyString>(),
   S.annotate(nonEmptyStringFromStringIdentifier, {})
 )

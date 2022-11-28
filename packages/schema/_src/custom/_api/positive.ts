@@ -33,7 +33,7 @@ export function positive<
     self,
     S.refine(
       (n): n is ParsedShape & Positive => n >= 0,
-      (n) => S.leafE(S.positiveE(n))
+      n => S.leafE(S.positiveE(n))
     ),
     withDefaults,
     S.annotate(positiveIdentifier, { self })

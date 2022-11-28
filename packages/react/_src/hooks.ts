@@ -1,6 +1,6 @@
-import { Cause } from "@effect-ts/core/Effect/Cause"
+import type { Cause } from "@effect-ts/core/Effect/Cause"
 import * as Ex from "@effect-ts/core/Effect/Exit"
-import { Exit } from "@effect-ts/core/Effect/Exit"
+import type { Exit } from "@effect-ts/core/Effect/Exit"
 import * as Ei from "@effect-ts/core/Either"
 import * as O from "@effect-ts/core/Option"
 import { equals } from "@effect-ts/system/Structural/HasEquals"
@@ -82,7 +82,10 @@ export function memo<T extends React.ComponentType<any>>(f: T) {
   return React.memo(f, shallowEqual)
 }
 
-export function useEffect(effect: React.EffectCallback, deps: React.DependencyList) {
+export function useEffect(
+  effect: React.EffectCallback,
+  deps: React.DependencyList
+) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useEffect(effect, mapDeps(deps))
 }

@@ -40,7 +40,7 @@ export function optionFromNull<
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary((_) => _.option(arb(_)).map(Maybe.fromNullable)),
+    S.arbitrary(_ => _.option(arb(_)).map(Maybe.fromNullable)),
     S.parser((i: ParserInput | null, env) =>
       i === null
         ? Th.succeed(Maybe.none)
@@ -49,11 +49,11 @@ export function optionFromNull<
     S.constructor((x: Maybe<ConstructorInput>) =>
       x.fold(
         () => Th.succeed(Maybe.none),
-        (v) => Th.map_(create(v), Maybe.some)
+        v => Th.map_(create(v), Maybe.some)
       )
     ),
-    S.encoder((_) => _.map(encode).value ?? null),
-    S.mapApi(() => self.Api as Api),
+    S.encoder(_ => _.map(encode).value ?? null),
+    S.mapApi(() => self.Api),
     withDefaults,
     S.annotate(optionFromNullIdentifier, { self })
   )

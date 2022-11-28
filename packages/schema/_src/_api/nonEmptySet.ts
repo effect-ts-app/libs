@@ -1,9 +1,9 @@
 // tracing: off
 
+import type { NonEmptySet } from "@effect-ts-app/core/NonEmptySet"
 import type * as Eq from "@effect-ts/core/Equal"
 import { pipe } from "@effect-ts/core/Function"
-import * as Ord from "@effect-ts/core/Ord"
-import type { NonEmptySet } from "@effect-ts-app/core/NonEmptySet"
+import type * as Ord from "@effect-ts/core/Ord"
 
 import * as MO from "../custom/index.js"
 import { minSize } from "./length.js"

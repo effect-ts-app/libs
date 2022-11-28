@@ -49,14 +49,12 @@ export abstract class Schema<ParserInput, ParsedShape, ConstructorInput, Encoded
       ParsedShape,
       ThatApi
     >
-  ): Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> =>
-    new SchemaPipe(this, that)
+  ): Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> => new SchemaPipe(this, that)
 
   readonly annotate = <Meta>(
     identifier: Annotation<Meta>,
     meta: Meta
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaAnnotated(this, identifier, meta)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaAnnotated(this, identifier, meta)
 }
 
 export type SchemaAny = Schema<any, any, any, any, any>
@@ -68,8 +66,7 @@ export interface ApiSelfType<AS = unknown> {
   _AS: AS
 }
 
-export type GetApiSelfType<T extends ApiSelfType<unknown>, D> = unknown extends T["_AS"]
-  ? D
+export type GetApiSelfType<T extends ApiSelfType<unknown>, D> = unknown extends T["_AS"] ? D
   : T["_AS"]
 
 export const SchemaContinuationSymbol = Symbol()
@@ -93,35 +90,33 @@ export function hasContinuation<
   Api
 >(
   schema: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-): schema is Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> &
-  HasContinuation {
+): schema is
+  & Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  & HasContinuation
+{
   return SchemaContinuationSymbol in schema
 }
 
 export type ParserInputOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<infer Y, any, any, any, any>
-]
-  ? Y
+] ? Y
   : never
 
 export type ParserErrorOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, any, any>
-]
-  ? any /*Y extends AnyError
+] ? any /*Y extends AnyError
     ? Y
     : never*/
   : never
 
 export type ConstructorInputOf<X extends Schema<any, any, any, any, any>> = [
   X
-] extends [Schema<any, any, infer Y, any, any>]
-  ? Y
+] extends [Schema<any, any, infer Y, any, any>] ? Y
   : never
 
 export type ConstructorErrorOf<X extends Schema<any, any, any, any, any>> = [
   X
-] extends [Schema<any, any, any, any, any>]
-  ? any /*Y extends AnyError
+] extends [Schema<any, any, any, any, any>] ? any /*Y extends AnyError
     ? Y
     : never
     */
@@ -129,20 +124,17 @@ export type ConstructorErrorOf<X extends Schema<any, any, any, any, any>> = [
 
 export type EncodedOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, infer Y, any>
-]
-  ? Y
+] ? Y
   : never
 
 export type ParsedShapeOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, infer Y, any, any, any>
-]
-  ? Y
+] ? Y
   : never
 
 export type ApiOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, any, infer Y>
-]
-  ? Y
+] ? Y
   : never
 
 export class SchemaIdentity<A> extends Schema<A, A, A, A, {}> {
@@ -154,16 +146,13 @@ export class SchemaIdentity<A> extends Schema<A, A, A, A, {}> {
 }
 
 export class SchemaConstructor<
-    NewConstructorInput,
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api
-  >
-  extends Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  NewConstructorInput,
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api
+> extends Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -179,16 +168,13 @@ export class SchemaConstructor<
 }
 
 export class SchemaParser<
-    NewParserInput,
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api
-  >
-  extends Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  NewParserInput,
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api
+> extends Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -224,16 +210,13 @@ export class SchemaArbitrary<ParserInput, ParsedShape, ConstructorInput, Encoded
 }
 
 export class SchemaEncoder<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api,
-    Encoded2
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded2, Api>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  Encoded2
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded2, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -272,18 +255,15 @@ export class SchemaRefinement<
 }
 
 export class SchemaPipe<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api,
-    ThatParsedShape,
-    ThatConstructorInput,
-    ThatApi
-  >
-  extends Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  ThatParsedShape,
+  ThatConstructorInput,
+  ThatApi
+> extends Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> implements HasContinuation {
   get Api() {
     return this.that.Api
   }
@@ -305,15 +285,12 @@ export class SchemaPipe<
 }
 
 export class SchemaMapParserError<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -329,15 +306,12 @@ export class SchemaMapParserError<
 }
 
 export class SchemaMapConstructorError<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -353,16 +327,13 @@ export class SchemaMapConstructorError<
 }
 
 export class SchemaMapApi<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api,
-    Api2
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api2>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  Api2
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api2> implements HasContinuation {
   @LazyGetter()
   get Api() {
     return this.mapApi(this.self.Api)
@@ -379,16 +350,13 @@ export class SchemaMapApi<
 }
 
 export class SchemaNamed<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api,
-    Name extends string
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  Name extends string
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -436,21 +404,18 @@ export function isAnnotatedSchema<Self extends SchemaAny>(
 }
 
 export class SchemaAnnotated<
-    ParserInput,
-    ParsedShape,
-    ConstructorInput,
-    Encoded,
-    Api,
-    Meta
-  >
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  implements HasContinuation
-{
+  ParserInput,
+  ParsedShape,
+  ConstructorInput,
+  Encoded,
+  Api,
+  Meta
+> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
 
-  readonly [Identifiable] = Identifiable;
+  readonly [Identifiable] = Identifiable
 
   readonly [SchemaContinuationSymbol]: SchemaAny = this.self
 

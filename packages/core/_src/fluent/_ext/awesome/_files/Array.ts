@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 // ets_tracing: off
-import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import {
   append_,
   collect_,
@@ -16,10 +15,11 @@ import {
   mapEffect_,
   mapSync_,
   mapWithIndex_,
-  tail,
+  tail
 } from "@effect-ts-app/core/Array"
 import { sort_, sortBy_, uniq_ } from "@effect-ts-app/core/fluent/_ext/Array"
 import { mapEither_, mapMaybe_ } from "@effect-ts-app/core/fluent/fluent/Array"
+import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 
 /**
  * @tsplus fluent ets/Array mapRA

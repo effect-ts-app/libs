@@ -1,5 +1,5 @@
 import * as MO from "@effect-ts-app/schema"
-import { SchemaAny } from "@effect-ts-app/schema"
+import type { SchemaAny } from "@effect-ts-app/schema"
 
 class BaseError {
   constructor(public message: string) {}
@@ -32,7 +32,7 @@ export interface DBRecord<TKey extends string> {
 export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
   version: MO.prop(MO.string),
   timestamp: MO.prop(MO.date),
-  data: MO.prop(MO.string),
+  data: MO.prop(MO.string)
 }) {}
 
 // unknown -> string -> SDB?
@@ -40,7 +40,7 @@ export function makeSerialisedDBRecord(s: SchemaAny) {
   return MO.props({
     version: MO.prop(MO.number),
     timestamp: MO.prop(MO.date),
-    data: MO.prop(s),
+    data: MO.prop(s)
   })
 }
 
@@ -70,7 +70,7 @@ export function makeMap<TKey, T>() {
     set: (k: TKey, v: T) =>
       Effect.sync(() => {
         map.set(k, v)
-      }),
+      })
   } as EffectMap<TKey, T>
 }
 

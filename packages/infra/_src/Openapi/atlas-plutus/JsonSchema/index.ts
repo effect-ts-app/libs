@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // CREDITS:
@@ -8,7 +9,7 @@ import * as Lens from "@effect-ts/monocle/Lens"
 import * as Prism from "@effect-ts/monocle/Prism"
 
 export interface BaseConstructor {
-  new <T>(args: /*{} extends T ? void : */ T): T
+  new<T>(args: /*{} extends T ? void : */ T): T
 }
 
 // @ts-expect-error
@@ -112,8 +113,7 @@ export class ObjectSchema extends Base<
 
 export const objectSchemaOnRequired = Lens.id<ObjectSchema>().prop("required")
 
-export const isObjectSchema = (x: SubSchema): x is ObjectSchema =>
-  "type" in x && x.type === "object"
+export const isObjectSchema = (x: SubSchema): x is ObjectSchema => "type" in x && x.type === "object"
 
 export const jsonToObjectSchemaPrism = Prism.fromPredicate(isObjectSchema)
 
@@ -166,11 +166,9 @@ export const isTypeArray = (schema: JSONSchema | SubSchema): schema is ArraySche
   schema.type !== undefined &&
   schema.type === "array"
 
-export const isTypeRef = (schema: JSONSchema | SubSchema): schema is Ref =>
-  schema.hasOwnProperty("$ref")
+export const isTypeRef = (schema: JSONSchema | SubSchema): schema is Ref => schema.hasOwnProperty("$ref")
 
-export const isnotTypeRef = (schema: JSONSchema | SubSchema): schema is JSONSchema =>
-  !schema.hasOwnProperty("$ref")
+export const isnotTypeRef = (schema: JSONSchema | SubSchema): schema is JSONSchema => !schema.hasOwnProperty("$ref")
 
 export const isNotPrimitive = (schema: JSONSchema | SubSchema) =>
   isTypeObject(schema) || isTypeArray(schema) || isTypeRef(schema)

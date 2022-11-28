@@ -1,7 +1,8 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import { curry, flow, Lazy, pipe } from "./Function.js"
+import type { Lazy } from "./Function.js"
+import { curry, flow, pipe } from "./Function.js"
 import * as O from "./Maybe.js"
 
 /**
@@ -17,10 +18,10 @@ export function flatMapMaybe<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Maybe<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
 ) {
-  return self.flatMap((d) =>
+  return self.flatMap(d =>
     d.fold(
       () => Effect(Maybe.none),
-      (_) => fm(_).map(Maybe.some)
+      _ => fm(_).map(Maybe.some)
     )
   )
 }
@@ -32,10 +33,10 @@ export function tapMaybe<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Maybe<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
 ) {
-  return self.flatMap((d) =>
+  return self.flatMap(d =>
     d.fold(
       () => Effect(Maybe.none),
-      (_) => fm(_).map(() => Maybe.some(_))
+      _ => fm(_).map(() => Maybe.some(_))
     )
   )
 }
@@ -47,10 +48,10 @@ export function zipRightMaybe<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Maybe<A>>,
   fm: Effect<R2, E2, A2>
 ) {
-  return self.flatMap((d) =>
+  return self.flatMap(d =>
     d.fold(
       () => Effect(Maybe.none),
-      (_) => fm.map(() => Maybe.some(_))
+      _ => fm.map(() => Maybe.some(_))
     )
   )
 }
@@ -58,11 +59,14 @@ export function zipRightMaybe<R, E, A, R2, E2, A2>(
 /**
  * @tsplus fluent effect/core/io/Effect mapMaybe
  */
-export function mapMaybe<R, E, A, A2>(self: Effect<R, E, Maybe<A>>, fm: (a: A) => A2) {
-  return self.map((d) =>
+export function mapMaybe<R, E, A, A2>(
+  self: Effect<R, E, Maybe<A>>,
+  fm: (a: A) => A2
+) {
+  return self.map(d =>
     d.fold(
       () => Maybe.none,
-      (_) => Maybe.some(fm(_))
+      _ => Maybe.some(fm(_))
     )
   )
 }
@@ -77,10 +81,10 @@ export function tryCatchPromiseWithInterrupt<E, A>(
   onReject: (reason: unknown) => E,
   canceller: () => void
 ): Effect<never, E, A> {
-  return Effect.asyncInterrupt((resolve) => {
+  return Effect.asyncInterrupt(resolve => {
     promise()
-      .then((x) => pipe(x, Effect.succeed, resolve))
-      .catch((x) => pipe(x, onReject, Effect.fail, resolve))
+      .then(x => pipe(x, Effect.succeed, resolve))
+      .catch(x => pipe(x, onReject, Effect.fail, resolve))
     return Either.left(Effect.sync(canceller))
   })
 }
@@ -94,14 +98,11 @@ export const tapBoth_ = <R, E, A, R2, R3, E3>(
   f: (e: E) => Effect<R2, never, any>,
   g: (a: A) => Effect<R3, E3, any>
 ) => pipe(self, Effect.$.tapError(f), Effect.$.tap(g))
-export const tapBoth =
-  <E, A, R2, R3, E3>(
-    // official tapBoth has E2 instead of never
-    f: (e: E) => Effect<R2, never, any>,
-    g: (a: A) => Effect<R3, E3, any>
-  ) =>
-  <R>(self: Effect<R, E, A>) =>
-    tapBoth_(self, f, g)
+export const tapBoth = <E, A, R2, R3, E3>(
+  // official tapBoth has E2 instead of never
+  f: (e: E) => Effect<R2, never, any>,
+  g: (a: A) => Effect<R3, E3, any>
+) => <R>(self: Effect<R, E, A>) => tapBoth_(self, f, g)
 
 /**
  * @tsplus fluent effect/core/io/Effect tapBothInclAbort
@@ -114,7 +115,7 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   pipe(
     self.exit,
     Effect.$.flatMap(
-      Exit.$.foldEffect((cause) => {
+      Exit.$.foldEffect(cause => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
@@ -149,7 +150,7 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   pipe(
     self.exit,
     Effect.$.flatMap(
-      Exit.$.foldEffect((cause) => {
+      Exit.$.foldEffect(cause => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
@@ -180,7 +181,9 @@ export function liftM<A, B>(a: (a: A) => B) {
  * Takes [A, B], applies it to a curried Effect function,
  * taps the Effect, returning A.
  */
-export function tupleTap<A, B, R, E, C>(f: (b: B) => (a: A) => Effect<R, E, C>) {
+export function tupleTap<A, B, R, E, C>(
+  f: (b: B) => (a: A) => Effect<R, E, C>
+) {
   return (t: readonly [A, B]) => Effect.succeed(t[0]).tap(f(t[1]))
 }
 
@@ -196,6 +199,10 @@ export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<R, E, A>) {
   return (n: I, orig: I) => ifDiff_(n, orig, f)
 }
 
-export function ifDiff_<I, R, E, A>(n: I, orig: I, f: (i: I) => Effect<R, E, A>) {
+export function ifDiff_<I, R, E, A>(
+  n: I,
+  orig: I,
+  f: (i: I) => Effect<R, E, A>
+) {
   return n !== orig ? f(n) : Effect.unit
 }

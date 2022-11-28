@@ -1,9 +1,8 @@
 import { pipe } from "@effect-ts-app/core/Function"
 import * as MO from "../_schema.js"
-import { NonEmptyBrand } from "../custom/index.js"
+import type { NonEmptyBrand } from "../custom/index.js"
 
-export const maxLengthIdentifier =
-  MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
+export const maxLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
 
 // TODO: proper errors.
 
@@ -21,14 +20,13 @@ export function maxLength<Brand>(maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand => n.length <= maxLength,
-        (n) => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.nonEmptyE(n))
       ),
       MO.annotate(maxLengthIdentifier, { self, maxLength })
     )
 }
 
-export const minLengthIdentifier =
-  MO.makeAnnotation<{ self: MO.SchemaAny; minLength: number }>()
+export const minLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; minLength: number }>()
 
 export function minLength<Brand>(minLength: number) {
   if (minLength < 1) {
@@ -53,7 +51,7 @@ export function minLength<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
-        (n) => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.nonEmptyE(n))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength })
     )
@@ -82,7 +80,7 @@ export function minSize<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
-        (n) => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.nonEmptyE(n))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength })
     )
@@ -105,9 +103,8 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
     return pipe(
       self,
       MO.refine(
-        (n): n is ParsedShape & Brand & NonEmptyBrand =>
-          n.length >= minLength && n.length <= maxLength,
-        (n) => MO.leafE(MO.nonEmptyE(n))
+        (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
+        n => MO.leafE(MO.nonEmptyE(n))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength }),
       MO.annotate(maxLengthIdentifier, { self, maxLength })

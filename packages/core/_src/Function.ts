@@ -73,7 +73,7 @@ export function curriedMagix<A, B, C>(f: (b: B) => (a: A) => C) {
     /**
      * Reverse curried version of the parent function
      */
-    r: reverseCurry(f),
+    r: reverseCurry(f)
   })
 }
 
@@ -111,7 +111,7 @@ export function uncurriedMagix<A, B, C>(f: (a: A, b: B) => C) {
     /**
      * Reverse curried version of the parent function
      */
-    r: reverseCurry(curried),
+    r: reverseCurry(curried)
   })
 }
 
@@ -149,6 +149,6 @@ export function reverseCurriedMagix<A, B, C>(f: (a: A) => (b: B) => C) {
     /**
      * Reverse curried version of the parent function
      */
-    r: f,
+    r: f
   })
 }

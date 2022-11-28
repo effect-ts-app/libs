@@ -26,8 +26,7 @@ export function onParseOrConstruct<
   Api,
   Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) =>
-    onParseOrConstruct_(self, mod)
+  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onParseOrConstruct_(self, mod)
 }
 
 export function onParseOrConstruct_<
@@ -52,8 +51,7 @@ export function onParse<
   Api,
   Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) =>
-    onParse_(self, mod)
+  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onParse_(self, mod)
 }
 
 export function onParse_<
@@ -78,8 +76,7 @@ export function onConstruct<
   Api,
   Errors extends MO.AnyError
 >(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) =>
-    onConstruct_(self, mod)
+  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onConstruct_(self, mod)
 }
 
 export function onConstruct_<

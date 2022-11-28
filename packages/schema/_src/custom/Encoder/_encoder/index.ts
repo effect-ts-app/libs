@@ -1,6 +1,5 @@
 // tracing: off
 
-
 import * as S from "../../_schema/index.js"
 
 /**
@@ -13,24 +12,26 @@ export type Encoder<Output, Encoded> = {
 export const interpreters: ((
   schema: S.SchemaAny
 ) => Maybe<() => Encoder<unknown, unknown>>)[] = [
-  Maybe.partial((miss) => (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
-    if (schema instanceof S.SchemaIdentity) {
-      return () => (_) => _
-    }
-    if (schema instanceof S.SchemaPipe) {
-      const encodeSelf = encoderFor(schema.that)
-      const encodeThat = encoderFor(schema.self)
+  Maybe.partial(miss =>
+    (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
+      if (schema instanceof S.SchemaIdentity) {
+        return () => _ => _
+      }
+      if (schema instanceof S.SchemaPipe) {
+        const encodeSelf = encoderFor(schema.that)
+        const encodeThat = encoderFor(schema.self)
 
-      return () => (_) => encodeThat(encodeSelf(_))
+        return () => _ => encodeThat(encodeSelf(_))
+      }
+      if (schema instanceof S.SchemaRefinement) {
+        return () => encoderFor(schema.self)
+      }
+      if (schema instanceof S.SchemaEncoder) {
+        return () => schema.encoder
+      }
+      return miss()
     }
-    if (schema instanceof S.SchemaRefinement) {
-      return () => encoderFor(schema.self)
-    }
-    if (schema instanceof S.SchemaEncoder) {
-      return () => schema.encoder
-    }
-    return miss()
-  }),
+  )
 ]
 
 const cache = new WeakMap()
@@ -42,7 +43,7 @@ function encoderFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    const encoder: Encoder<unknown, unknown> = (__) => encoderFor(schema.self())(__)
+    const encoder: Encoder<unknown, unknown> = __ => encoderFor(schema.self())(__)
     cache.set(schema, encoder)
     return encoder as Encoder<ParsedShape, Encoded>
   }
@@ -50,7 +51,7 @@ function encoderFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     const _ = interpreter(schema)
     if (_._tag === "Some") {
       let x: Encoder<unknown, unknown>
-      const encoder: Encoder<unknown, unknown> = (u) => {
+      const encoder: Encoder<unknown, unknown> = u => {
         if (!x) {
           x = _.value()
         }
@@ -62,7 +63,7 @@ function encoderFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   }
   if (S.hasContinuation(schema)) {
     let x: Encoder<unknown, unknown>
-    const encoder: Encoder<unknown, unknown> = (u) => {
+    const encoder: Encoder<unknown, unknown> = u => {
       if (!x) {
         x = encoderFor(schema[S.SchemaContinuationSymbol])
       }

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { _R } from "@effect-ts/core/Utils"
 
 export type Untagged<A> = Omit<A, "_tag">
 
@@ -50,10 +49,8 @@ export interface ExternalDocs {
   readonly url: string
 }
 
-export type ExtractRouteParams<T extends string> = string extends T
-  ? Record<string, string>
-  : T extends `${infer _Start}{${infer Param}}${infer Rest}`
-  ? { [k in Param | keyof ExtractRouteParams<Rest>]: string }
+export type ExtractRouteParams<T extends string> = string extends T ? Record<string, string>
+  : T extends `${infer _Start}{${infer Param}}${infer Rest}` ? { [k in Param | keyof ExtractRouteParams<Rest>]: string }
   : {}
 
 export interface ContactInfo {
@@ -78,14 +75,14 @@ export interface License {
 export function contact(_: Untagged<ContactInfo>): ContactInfo {
   return {
     _tag: "ContactInfo",
-    ..._,
+    ..._
   }
 }
 
 export function license(_: Untagged<License>): License {
   return {
     _tag: "License",
-    ..._,
+    ..._
   }
 }
 
@@ -118,7 +115,7 @@ export interface TagElement<N extends string> {
 export function tag<N extends string>(x: Untagged<TagElement<N>>): TagElement<N> {
   return {
     _tag: "TagElement",
-    ...x,
+    ...x
   }
 }
 
@@ -163,4 +160,4 @@ export { ResponseCode } from "./code.js"
 const true_ = true
 const false_ = false
 
-export { true_ as true, false_ as false }
+export { false_ as false, true_ as true }

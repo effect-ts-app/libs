@@ -5,7 +5,7 @@ import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
 import { pipe } from "@effect-ts/core/Function"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
-import { None, Some } from "@tsplus/stdlib/data/Maybe"
+import type { None, Some } from "@tsplus/stdlib/data/Maybe"
 import type * as fc from "fast-check"
 
 import type { Annotation } from "../custom/_schema/annotation.js"
@@ -15,7 +15,7 @@ import * as Encoder from "../custom/Encoder/index.js"
 import * as Guard from "../custom/Guard/index.js"
 import * as S from "../custom/index.js"
 import * as Parser from "../custom/Parser/index.js"
-import { ParserEnv } from "../custom/Parser/index.js"
+import type { ParserEnv } from "../custom/Parser/index.js"
 import * as Th from "../custom/These/index.js"
 
 export class FromProperty<
@@ -168,14 +168,12 @@ export type FromPropertyRecord = Record<PropertyKey, AnyFromProperty>
 export type ShapeFromFromProperties<Props extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyFromProperty
-        ? Props[k]["_optional"] extends "optional"
-          ? {
-              readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
-          : {
-              readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
+      [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+        readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+      }
+      : {
+        readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
+      }
         : never
     }[keyof Props]
   >,
@@ -185,20 +183,16 @@ export type ShapeFromFromProperties<Props extends FromPropertyRecord> = Compute<
 export type ConstructorFromFromProperties<Props extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: k extends TagsFromFromProps<Props>
-        ? never
-        : Props[k] extends AnyFromProperty
-        ? Props[k]["_optional"] extends "optional"
-          ? {
-              readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
-          : Props[k]["_def"] extends Some<["constructor" | "both", any]>
-          ? {
-              readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
-          : {
-              readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
+      [k in keyof Props]: k extends TagsFromFromProps<Props> ? never
+        : Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+          readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+        }
+        : Props[k]["_def"] extends Some<["constructor" | "both", any]> ? {
+          readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+        }
+        : {
+          readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
+        }
         : never
     }[keyof Props]
   >,
@@ -208,34 +202,30 @@ export type ConstructorFromFromProperties<Props extends FromPropertyRecord> = Co
 export type EncodedFromFromProperties<Props extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyFromProperty
-        ? Props[k]["_optional"] extends "optional"
-          ? {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]?: S.EncodedOf<Props[k]["_schema"]>
-            }
-          : {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]: S.EncodedOf<Props[k]["_schema"]>
-            }
+      [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: S.EncodedOf<Props[k]["_schema"]>
+      }
+      : {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]: S.EncodedOf<Props[k]["_schema"]>
+      }
         : never
     }[keyof Props]
   >,
   "flat"
 >
 
-export type HasRequiredFromProperty<Props extends FromPropertyRecord> =
-  unknown extends {
-    [k in keyof Props]: Props[k] extends AnyFromProperty
-      ? Props[k]["_optional"] extends "required"
-        ? unknown
-        : never
-      : never
-  }[keyof Props]
-    ? true
-    : false
+export type HasRequiredFromProperty<Props extends FromPropertyRecord> = unknown extends {
+  [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "required" ? unknown
+  : never
+    : never
+}[keyof Props] ? true
+  : false
 
 // export type ParserErrorFromFromProperties<Props extends FromPropertyRecord> =
 //   S.CompositionE<
@@ -331,12 +321,10 @@ export type SchemaFromProperties<Props extends FromPropertyRecord> = S.DefaultSc
 export type TagsFromFromProps<Props extends FromPropertyRecord> = {
   [k in keyof Props]: Props[k]["_as"] extends None
     ? Props[k]["_optional"] extends "required"
-      ? S.ApiOf<Props[k]["_schema"]> extends S.LiteralApi<infer KS>
-        ? KS extends [string]
-          ? k
-          : never
-        : never
+      ? S.ApiOf<Props[k]["_schema"]> extends S.LiteralApi<infer KS> ? KS extends [string] ? k
       : never
+      : never
+    : never
     : never
 }[keyof Props]
 
@@ -344,7 +332,7 @@ export function isFromPropertyRecord(u: unknown): u is FromPropertyRecord {
   return (
     typeof u === "object" &&
     u !== null &&
-    Object.keys(u).every((k) => u[k] instanceof FromProperty)
+    Object.keys(u).every(k => u[k] instanceof FromProperty)
   )
 }
 
@@ -563,13 +551,11 @@ export function fromProps<Props extends FromPropertyRecord>(
   }
 
   function arb(_: typeof fc): fc.Arbitrary<ShapeFromFromProperties<Props>> {
-    const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
-    const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
+    const req = Dictionary.map_(arbitrariesReq, g => g(_))
+    const par = Dictionary.map_(arbitrariesPar, g => g(_))
 
     // @ts-expect-error
-    return _.record(req).chain((a) =>
-      _.record(par, { withDeletedKeys: true }).map((b) => intersect(a, b))
-    )
+    return _.record(req).chain(a => _.record(par, { withDeletedKeys: true }).map(b => intersect(a, b)))
   }
 
   const tags = tagsFromFromProps(props)
@@ -579,7 +565,7 @@ export function fromProps<Props extends FromPropertyRecord>(
     S.parser(parser),
     S.encoder(encoder),
     S.arbitrary(arb),
-    S.constructor((_) => {
+    S.constructor(_ => {
       const res = {} as ShapeFromFromProperties<Props>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
@@ -650,24 +636,24 @@ export function fromPropsOmit<
 export type ParserInputFromFromProperties<Props extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyFromProperty
-        ? Props[k]["_optional"] extends "optional"
-          ? {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
-          : Props[k]["_def"] extends Some<["parser" | "both", any]>
-          ? {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]?: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
-          : {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]: S.ParsedShapeOf<Props[k]["_schema"]>
-            }
+      [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: S.ParsedShapeOf<Props[k]["_schema"]>
+      }
+      : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: S.ParsedShapeOf<Props[k]["_schema"]>
+      }
+      : {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]: S.ParsedShapeOf<Props[k]["_schema"]>
+      }
         : never
     }[keyof Props]
   >,
@@ -682,33 +668,33 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
 > = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyFromProperty
-        ? Props[k]["_optional"] extends "optional"
-          ? {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]?: AorB<
-                S.ParserInputOf<Props[k]["_schema"]>,
-                S.EncodedOf<Props[k]["_schema"]>
-              >
-            }
-          : Props[k]["_def"] extends Some<["parser" | "both", any]>
-          ? {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]?: AorB<
-                S.ParserInputOf<Props[k]["_schema"]>,
-                S.EncodedOf<Props[k]["_schema"]>
-              >
-            }
-          : {
-              readonly [h in Props[k]["_as"] extends Some<any>
-                ? Props[k]["_as"]["value"]
-                : k]: AorB<
-                S.ParserInputOf<Props[k]["_schema"]>,
-                S.EncodedOf<Props[k]["_schema"]>
-              >
-            }
+      [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: AorB<
+          S.ParserInputOf<Props[k]["_schema"]>,
+          S.EncodedOf<Props[k]["_schema"]>
+        >
+      }
+      : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: AorB<
+          S.ParserInputOf<Props[k]["_schema"]>,
+          S.EncodedOf<Props[k]["_schema"]>
+        >
+      }
+      : {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]: AorB<
+          S.ParserInputOf<Props[k]["_schema"]>,
+          S.EncodedOf<Props[k]["_schema"]>
+        >
+      }
         : never
     }[keyof Props]
   >,
@@ -717,44 +703,39 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
 
 export type ParserInputFromParserInputOrEncodedFromSchema<T> = T extends {
   Api: { props: infer Props }
-}
-  ? Props extends FromPropertyRecord
-    ? ParserInputFromParserInputOrEncodedFromProperties<Props>
-    : never
+} ? Props extends FromPropertyRecord ? ParserInputFromParserInputOrEncodedFromProperties<Props>
+: never
   : never
 
-export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecord> =
-  Compute<
-    UnionToIntersection<
-      {
-        [k in keyof Props]: Props[k] extends AnyFromProperty
-          ? Props[k]["_optional"] extends "optional"
-            ? {
-                readonly [h in Props[k]["_as"] extends Some<any>
-                  ? Props[k]["_as"]["value"]
-                  : k]?: S.EncodedOf<Props[k]["_schema"]>
-              }
-            : Props[k]["_def"] extends Some<["parser" | "both", any]>
-            ? {
-                readonly [h in Props[k]["_as"] extends Some<any>
-                  ? Props[k]["_as"]["value"]
-                  : k]?: S.EncodedOf<Props[k]["_schema"]>
-              }
-            : {
-                readonly [h in Props[k]["_as"] extends Some<any>
-                  ? Props[k]["_as"]["value"]
-                  : k]: S.EncodedOf<Props[k]["_schema"]>
-              }
-          : never
-      }[keyof Props]
-    >,
-    "flat"
-  >
+export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecord> = Compute<
+  UnionToIntersection<
+    {
+      [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: S.EncodedOf<Props[k]["_schema"]>
+      }
+      : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]?: S.EncodedOf<Props[k]["_schema"]>
+      }
+      : {
+        readonly [
+          h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            : k
+        ]: S.EncodedOf<Props[k]["_schema"]>
+      }
+        : never
+    }[keyof Props]
+  >,
+  "flat"
+>
 
 export type ParserInputFromEncodedFromSchema<T> = T extends {
   Api: { props: infer Props }
-}
-  ? Props extends FromPropertyRecord
-    ? ParserInputFromEncodedFromProperties<Props>
-    : never
+} ? Props extends FromPropertyRecord ? ParserInputFromEncodedFromProperties<Props>
+: never
   : never

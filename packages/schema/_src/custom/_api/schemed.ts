@@ -13,7 +13,7 @@ export type schemaField = typeof schemaField
 
 export interface SchemedOut<Self extends S.SchemaAny> {
   [schemaField]: Self
-  new (_: any): S.ParsedShapeOf<Self>
+  new(_: any): S.ParsedShapeOf<Self>
 }
 
 export const schemedBrand = Symbol()
@@ -24,26 +24,24 @@ export function isSchemed(u: unknown): u is SchemedOut<any> {
 
 export type ShapeFromSchemedOut<
   C extends {
-    new (_: any): any
+    new(_: any): any
   }
 > = C extends {
-  new (_: any): infer T
-}
-  ? T
+  new(_: any): infer T
+} ? T
   : never
 
 export type SchemaForSchemed<Self extends SchemedOut<S.SchemaAny>> = [
   Self[schemaField]
 ] extends [
   S.Schema<infer ParserInput, any, infer ConstructorInput, infer Encoded, infer Api>
-]
-  ? S.Schema<
-      ParserInput,
-      ShapeFromSchemedOut<Self>,
-      ConstructorInput,
-      Encoded,
-      Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
-    >
+] ? S.Schema<
+  ParserInput,
+  ShapeFromSchemedOut<Self>,
+  ConstructorInput,
+  Encoded,
+  Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
+>
   : never
 
 export interface Copy {
@@ -52,17 +50,16 @@ export interface Copy {
 
 export interface Schemed<Self extends S.SchemaAny> {
   [schemaField]: Self
-  new (_: S.ConstructorInputOf<Self>): S.ParsedShapeOf<Self> & Copy
+  new(_: S.ConstructorInputOf<Self>): S.ParsedShapeOf<Self> & Copy
 }
 
 type ShapeFromClass<
   C extends {
-    new (_: any): any
+    new(_: any): any
   }
 > = C extends {
-  new (_: any): infer T
-}
-  ? T
+  new(_: any): infer T
+} ? T
   : never
 
 export const fromFields = Symbol()
@@ -169,8 +166,8 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       }
       return Th.succeed(x)
     }),
-    S.arbitrary((_) =>
-      arb(_).map((out) => {
+    S.arbitrary(_ =>
+      arb(_).map(out => {
         // @ts-expect-error
         const x = new self() as ShapeFromClass<Self>
         x[fromFields](out)

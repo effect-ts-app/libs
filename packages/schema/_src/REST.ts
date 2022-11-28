@@ -1,22 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Erase } from "@effect-ts-app/core/Effect"
+import type { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Void } from "./_api/index.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import {
-  AnyRecord,
-  AnyRecordSchema,
-  GetProps,
-  Model,
-  ModelSpecial,
-  PropsExtensions,
-  setSchema,
-  StringRecord,
-} from "./Model.js"
+import type { AnyRecord, AnyRecordSchema, GetProps, Model, PropsExtensions, StringRecord } from "./Model.js"
+import { ModelSpecial, setSchema } from "./Model.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
@@ -61,8 +53,7 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Model<M, Self>,
-    PropsExtensions<GetProps<Self>> {
+> extends Model<M, Self>, PropsExtensions<GetProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -80,8 +71,7 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Model<M, Self>,
-    PropsExtensions<GetProps<Self>> {
+> extends Model<M, Self>, PropsExtensions<GetProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
@@ -95,10 +85,9 @@ type ResponseString = "Response" | `${string}Response`
 type RequestString = "Request" | "default" | `${string}Request`
 
 type FilterRequest<U> = U extends RequestString ? U : never
-export type GetRequestKey<U extends Record<RequestString | "Response", any>> =
-  FilterRequest<keyof U>
-export type GetRequest<U extends Record<RequestString | "Response", any>> =
-  FilterRequest<keyof U> extends never ? never : U[FilterRequest<keyof U>]
+export type GetRequestKey<U extends Record<RequestString | "Response", any>> = FilterRequest<keyof U>
+export type GetRequest<U extends Record<RequestString | "Response", any>> = FilterRequest<keyof U> extends never ? never
+  : U[FilterRequest<keyof U>]
 
 type FilterResponse<U> = U extends ResponseString ? U : never
 export type GetResponseKey<U extends Record<ResponseString, any>> = FilterResponse<
@@ -106,16 +95,14 @@ export type GetResponseKey<U extends Record<ResponseString, any>> = FilterRespon
 >
 export type GetResponse<U extends Record<ResponseString, any>> = FilterResponse<
   keyof U
-> extends never
-  ? typeof Void
+> extends never ? typeof Void
   : U[FilterResponse<keyof U>]
 
 export function extractRequest<TModule extends Record<string, any>>(
   h: TModule
 ): GetRequest<TModule> {
-  const reqKey =
-    Object.keys(h).find((x) => x.endsWith("Request")) ||
-    Object.keys(h).find((x) => x === "default")
+  const reqKey = Object.keys(h).find(x => x.endsWith("Request")) ||
+    Object.keys(h).find(x => x === "default")
   if (!reqKey) {
     throw new Error("Module appears to have no Request: " + Object.keys(h).join(", "))
   }
@@ -126,7 +113,7 @@ export function extractRequest<TModule extends Record<string, any>>(
 export function extractResponse<TModule extends Record<string, any>>(
   h: TModule
 ): GetResponse<TModule> | typeof Void {
-  const resKey = Object.keys(h).find((x) => x.endsWith("Response"))
+  const resKey = Object.keys(h).find(x => x.endsWith("Response"))
   if (!resKey) {
     return Void
   }
@@ -137,10 +124,10 @@ export function extractResponse<TModule extends Record<string, any>>(
 export const reqId = MO.makeAnnotation()
 
 type OrAny<T> = T extends MO.SchemaAny ? T : MO.SchemaAny
-//type OrUndefined<T> = T extends MO.SchemaAny ? undefined : MO.SchemaAny
+// type OrUndefined<T> = T extends MO.SchemaAny ? undefined : MO.SchemaAny
 
 // TODO: Somehow ensure that Self and M are related..
-//type Ensure<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? M : never
+// type Ensure<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StringRecordSchema>(
     method: ReadMethods,
@@ -162,7 +149,7 @@ export function QueryRequest<M>(__name?: string) {
     path: string,
     {
       headers,
-      query,
+      query
     }: {
       headers?: Headers
       query: Query
@@ -232,7 +219,7 @@ export function QueryRequest<M>(__name?: string) {
   > {
     const self: MO.SchemaAny = MO.props({
       ..._.query?.Api.props,
-      ..._.path?.Api.props,
+      ..._.path?.Api.props
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
@@ -484,7 +471,7 @@ export function BodyRequest<M>(__name?: string) {
     const self: MO.SchemaAny = MO.props({
       ..._.body?.Api.props,
       ..._.query?.Api.props,
-      ..._.path?.Api.props,
+      ..._.path?.Api.props
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
@@ -512,22 +499,17 @@ export interface Request<
 }
 
 type Separator = "/" | "&" | "?.js"
-export type PathParams<Path extends string> =
-  Path extends `:${infer Param}${Separator}${infer Rest}`
-    ? Param | PathParams<Rest>
-    : Path extends `:${infer Param}`
-    ? Param
-    : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Path extends `${infer _Prefix}:${infer Rest}`
-    ? PathParams<`:${Rest}`>
-    : never
+export type PathParams<Path extends string> = Path extends `:${infer Param}${Separator}${infer Rest}`
+  ? Param | PathParams<Rest>
+  : Path extends `:${infer Param}` ? Param
+  : // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  Path extends `${infer _Prefix}:${infer Rest}` ? PathParams<`:${Rest}`>
+  : never
 
 export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord, C> =
   // Must test the PathParams inside here, as when they evaluate to never, the whole type would otherwise automatically resolve to never
-  PathParams<Path> extends never
-    ? C
-    : PathParams<Path> extends keyof B
-    ? C
+  PathParams<Path> extends never ? C
+    : PathParams<Path> extends keyof B ? C
     : ["You must specify the properties that you expect in the path", never]
 
 /**
@@ -721,22 +703,21 @@ type BuildRequest<
 > = IfPathPropsProvided<
   Path,
   Props,
-  Method extends "GET" | "DELETE"
-    ? QueryRequest<
-        M,
-        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
-        undefined,
-        MO.SchemaProperties<Props>
-      >
+  Method extends "GET" | "DELETE" ? QueryRequest<
+    M,
+    MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
+    MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
+    undefined,
+    MO.SchemaProperties<Props>
+  >
     : BodyRequest<
-        M,
-        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
-        undefined,
-        undefined,
-        MO.SchemaProperties<Props>
-      >
+      M,
+      MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
+      MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
+      undefined,
+      undefined,
+      MO.SchemaProperties<Props>
+    >
 >
 
 // NOTE: This ignores the original schema after building the new
@@ -756,10 +737,10 @@ export function makeRequest<
   const remainProps = { ...self.Api.props }
   const pathProps = pathParams.length
     ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
-        prev[cur] = self.Api.props[cur]
-        delete remainProps[cur]
-        return prev
-      }, {} as Record<PathParams<Path>, any>)
+      prev[cur] = self.Api.props[cur]
+      delete remainProps[cur]
+      return prev
+    }, {} as Record<PathParams<Path>, any>)
     : null
 
   const dest = method === "GET" || method === "DELETE" ? "query" : "body"
@@ -767,7 +748,7 @@ export function makeRequest<
     path: pathProps ? MO.props(pathProps) : undefined,
     // TODO: query props must be parsed "from string"
 
-    [dest]: MO.props(remainProps),
+    [dest]: MO.props(remainProps)
   }
   if (method === "GET" || method === "DELETE") {
     return class extends QueryRequest<M>(__name)(
@@ -801,21 +782,21 @@ export function meta<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     self.annotate(metaIdentifier, meta)
 }
 export const metaC = (m: Meta) => {
-  return function (cls: any) {
+  return function(cls: any) {
     setSchema(cls, pipe(cls[schemaField], meta(m)) as any)
     return cls
   }
 }
 
 export type ReqRes<E, A> = MO.Schema<
-  unknown, //ParserInput,
-  A, //ParsedShape,
-  any, //ConstructorInput,
-  E, //Encoded,
-  any //Api
+  unknown, // ParserInput,
+  A, // ParsedShape,
+  any, // ConstructorInput,
+  E, // Encoded,
+  any // Api
 >
 export type ReqResSchemed<E, A> = {
-  new (...args: any[]): any
+  new(...args: any[]): any
   Encoder: MO.Encoder.Encoder<A, E>
   Model: ReqRes<E, A>
 }

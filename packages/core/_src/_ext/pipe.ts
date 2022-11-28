@@ -225,7 +225,28 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S>(
   qr: (q: Q) => R,
   rs: (r: R) => S
 ): S
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>(
+export function pipe<
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
+  K,
+  L,
+  M,
+  N,
+  O,
+  P,
+  Q,
+  R,
+  S,
+  T
+>(
   a: A,
   ab: (a: A) => B,
   bc: (b: B) => C,
@@ -299,26 +320,42 @@ export function pipe(
     case 14:
       return mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))
     case 15:
-      return no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a))))))))))))))
+      return no!(
+        mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))
+      )
     case 16:
       return op!(
         no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a))))))))))))))
       )
     case 17:
       return pq!(
-        op!(no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))))
+        op!(
+          no!(
+            mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))
+          )
+        )
       )
     case 18:
       return qr!(
         pq!(
-          op!(no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))))
+          op!(
+            no!(
+              mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))
+            )
+          )
         )
       )
     case 19:
       return rs!(
         qr!(
           pq!(
-            op!(no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))))))
+            op!(
+              no!(
+                mn!(
+                  lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a))))))))))))
+                )
+              )
+            )
           )
         )
       )
@@ -328,13 +365,21 @@ export function pipe(
           qr!(
             pq!(
               op!(
-                no!(mn!(lm!(kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a))))))))))))))
+                no!(
+                  mn!(
+                    lm!(
+                      kl!(jk!(ij!(hi!(gh!(fg!(ef!(de!(cd!(bc!(ab!(a)))))))))))
+                    )
+                  )
+                )
               )
             )
           )
         )
       )
     default:
-      throw new Error("BUG: pipe() has been called with more than 20 arguments")
+      throw new Error(
+        "BUG: pipe() has been called with more than 20 arguments"
+      )
   }
 }

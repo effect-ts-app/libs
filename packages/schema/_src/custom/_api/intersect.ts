@@ -14,8 +14,7 @@ import { lazy } from "./lazy.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
-export type IntersectionApi<Self, That> = Self & That extends { props: infer X }
-  ? { props: { [k in keyof X]: X[k] } }
+export type IntersectionApi<Self, That> = Self & That extends { props: infer X } ? { props: { [k in keyof X]: X[k] } }
   : {}
 
 export type IntersectionSchema<
@@ -65,8 +64,7 @@ export function intersect_<
   const arbSelf = Arbitrary.for(self)
   const arbThat = Arbitrary.for(that)
 
-  const guard = (u: unknown): u is ParsedShape & ThatParsedShape =>
-    guardSelf(u) && guardThat(u)
+  const guard = (u: unknown): u is ParsedShape & ThatParsedShape => guardSelf(u) && guardThat(u)
 
   return pipe(
     S.identity(guard),
@@ -86,26 +84,26 @@ export function intersect_<
       const intersection = {} as unknown as ParsedShape & ThatParsedShape
 
       if (left._tag === "Left") {
-        errors = errors.append(S.memberE(0, left.left as any))
+        errors = errors.append(S.memberE(0, left.left))
 
         errored = true
       } else {
         const warnings = left.right.get(1)
         if (warnings._tag === "Some") {
-          errors = errors.append(S.memberE(0, warnings.value as any))
+          errors = errors.append(S.memberE(0, warnings.value))
 
           warned = true
         }
         Object.assign(intersection, left.right.get(0))
       }
       if (right._tag === "Left") {
-        errors = errors.append(S.memberE(1, right.left as any))
+        errors = errors.append(S.memberE(1, right.left))
 
         errored = true
       } else {
         const warnings = right.right.get(1)
         if (warnings._tag === "Some") {
-          errors = errors.append(S.memberE(1, warnings.value as any))
+          errors = errors.append(S.memberE(1, warnings.value))
 
           warned = true
         }
@@ -136,26 +134,26 @@ export function intersect_<
       const intersection = {} as unknown as ParsedShape & ThatParsedShape
 
       if (left._tag === "Left") {
-        errors = errors.append(S.memberE(0, left.left as any))
+        errors = errors.append(S.memberE(0, left.left))
 
         errored = true
       } else {
         const warnings = left.right.get(1)
         if (warnings._tag === "Some") {
-          errors = errors.append(S.memberE(0, warnings.value as any))
+          errors = errors.append(S.memberE(0, warnings.value))
 
           warned = true
         }
         Object.assign(intersection, left.right.get(0))
       }
       if (right._tag === "Left") {
-        errors = errors.append(S.memberE(1, right.left as any))
+        errors = errors.append(S.memberE(1, right.left))
 
         errored = true
       } else {
         const warnings = right.right.get(1)
         if (warnings._tag === "Some") {
-          errors = errors.append(S.memberE(1, warnings.value as any))
+          errors = errors.append(S.memberE(1, warnings.value))
 
           warned = true
         }
@@ -176,12 +174,12 @@ export function intersect_<
     }),
     S.encoder((_): Encoded & ThatEncoded => ({
       ...encodeSelf(_),
-      ...encodeThat(_),
+      ...encodeThat(_)
     })),
-    S.arbitrary((FC) => {
+    S.arbitrary(FC => {
       const self = arbSelf(FC)
       const that = arbThat(FC)
-      return self.chain((a) => that.map((b) => ({ ...a, ...b })))
+      return self.chain(a => that.map(b => ({ ...a, ...b })))
     }),
     S.mapApi(() => {
       const props = {}
@@ -193,7 +191,7 @@ export function intersect_<
       }
       const anyThatApi = that.Api as any
       if ("props" in anyThatApi) {
-        for (const k of Object.keys(anyThatApi["props"] as any)) {
+        for (const k of Object.keys(anyThatApi["props"])) {
           props[k] = anyThatApi["props"][k]
         }
       }
@@ -223,7 +221,7 @@ export function intersect<
   Encoded & ThatEncoded,
   IntersectionApi<Api, ThatApi>
 > {
-  return (self) => intersect_(self, that)
+  return self => intersect_(self, that)
 }
 
 export function intersectLazy<

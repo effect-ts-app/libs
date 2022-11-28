@@ -1,4 +1,7 @@
-//import type * as CNK from "@effect-ts-app/core/Chunk"
+/* eslint-disable unused-imports/no-unused-imports */
+
+import type * as A from "@effect-ts-app/core/Array"
+// import type * as CNK from "@effect-ts-app/core/Chunk"
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 // import type * as CAUSE from "@effect-ts/core/Effect/Cause"
 // import type * as EX from "@effect-ts/core/Effect/Exit"
@@ -16,19 +19,17 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 // import type * as T from "@effect-ts-app/core/Effect"
 // import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 // import type * as QUEUE from "@effect-ts/core/Effect/Queue"
-//import type * as EO from "@effect-ts-app/core/EffectMaybe"
+// import type * as EO from "@effect-ts-app/core/EffectMaybe"
 import type * as NA from "@effect-ts-app/core/NonEmptyArray"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
-import type * as A from "@effect-ts-app/core/Array"
-//import type * as O from "@effect-ts-app/core/Maybe"
-//import type * as SCHEMA from "@effect-ts-app/schema"
+// import type * as O from "@effect-ts-app/core/Maybe"
+// import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
 // import type * as SO from "@effect-ts-app/core/SyncMaybe"
 // import type * as HAS from "@effect-ts/core/Has"
 import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
 import "@effect-ts-app/core/types/awesome"
-
 
 // export namespace Equal {
 //   export * from "@effect-ts/core/Equal"
@@ -176,7 +177,7 @@ export namespace ROSet {
   // @ts-expect-error
   export * from "@effect-ts-app/core/Set"
 }
-/** 
+/**
  * @tsplus type ets/Set
  * @tsplus type ets/ROSet
  */
@@ -221,7 +222,6 @@ export namespace ROMap {
 /** @tsplus type ets/Map */
 export type ROMap<K, A> = MAP.Map<K, A>
 
-
 export namespace Lens {
   // @ts-expect-error
   export * from "@effect-ts/monocle/Lens"
@@ -236,6 +236,5 @@ export type Lens<S, A> = LNS.Lens<S, A>
 // /** @tsplus type ets/Schema/Schema */
 // export type Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
 //   SCHEMA.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-
 
 export type NonEmptyArguments<T> = [T, ...T[]]

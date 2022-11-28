@@ -9,7 +9,7 @@ import * as Encoder from "../custom/Encoder/index.js"
 import * as Guard from "../custom/Guard/index.js"
 import * as MO from "../custom/index.js"
 import * as Parser from "../custom/Parser/index.js"
-import { ParserEnv } from "../custom/Parser/index.js"
+import type { ParserEnv } from "../custom/Parser/index.js"
 import * as Th from "../custom/These/index.js"
 
 export const fromEitherIdentifier = MO.makeAnnotation<{
@@ -82,14 +82,14 @@ export function fromEither<
   return pipe(
     MO.identity(refinement),
     MO.arbitrary(
-      (_) => _.oneof(leftArb(_).map(Either.left), arb(_).map(Either.right)) as any
+      _ => _.oneof(leftArb(_).map(Either.left), arb(_).map(Either.right)) as any
     ),
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
-    MO.encoder((_) =>
+    MO.encoder(_ =>
       _.fold(
-        (x) => ({ _tag: "Left", left: leftEncode(x) }),
-        (x) => ({ _tag: "Right", right: encode(x) })
+        x => ({ _tag: "Left", left: leftEncode(x) }),
+        x => ({ _tag: "Right", right: encode(x) })
       )
     ),
     MO.mapApi(() => ({ left: left.Api, right: right.Api })),
@@ -129,7 +129,7 @@ export function either<
   const encodeSelf = Encoder.for(right)
   return pipe(
     MO.object[">>>"](fromEither(left, right)),
-    MO.encoder((_) => _.mapBoth(encodeLeft, encodeSelf)),
+    MO.encoder(_ => _.mapBoth(encodeLeft, encodeSelf)),
     MO.withDefaults,
     MO.annotate(eitherIdentifier, { left, right })
   ) as any

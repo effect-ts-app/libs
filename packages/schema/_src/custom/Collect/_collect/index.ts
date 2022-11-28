@@ -7,8 +7,7 @@ export interface CollectAnnotations {
     ...annotations: Annotations
   ): Chunk<
     {
-      [k in keyof Annotations]: [Annotations[k]] extends [S.Annotation<infer A>]
-        ? A
+      [k in keyof Annotations]: [Annotations[k]] extends [S.Annotation<infer A>] ? A
         : never
     }[number]
   >
@@ -16,7 +15,7 @@ export interface CollectAnnotations {
 
 export const interpreters: ((schema: S.SchemaAny) => Maybe<() => any>)[] = [
   Maybe.partial(
-    (miss) =>
+    miss =>
       (schema: S.SchemaAny): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {
         if (S.isAnnotatedSchema(schema)) {
           return () =>
@@ -53,7 +52,7 @@ export const interpreters: ((schema: S.SchemaAny) => Maybe<() => any>)[] = [
         }
         return miss()
       }
-  ),
+  )
 ]
 
 const cache = new WeakMap()
@@ -75,7 +74,7 @@ export function collectAnnotationsFor<
     const parser: any = (...__): any => collectAnnotationsFor(schema.self())(...__)
 
     cache.set(schema, parser)
-    return parser as any
+    return parser
   }
   for (const interpreter of interpreters) {
     const _ = interpreter(schema)
@@ -88,7 +87,7 @@ export function collectAnnotationsFor<
         }
         return x(...__)
       }
-      return parser as any
+      return parser
     }
   }
   if (S.hasContinuation(schema)) {
@@ -101,7 +100,7 @@ export function collectAnnotationsFor<
       return x(...__)
     }
     cache.set(schema, parser)
-    return parser as any
+    return parser
   }
   throw new Error(`Missing collect annotations integration for: ${schema.constructor}`)
 }

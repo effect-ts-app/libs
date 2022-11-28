@@ -34,52 +34,54 @@ import {
   stringIdentifier,
   unionIdentifier,
   unknownIdentifier,
-  UUIDFromStringIdentifier,
+  UUIDFromStringIdentifier
 } from "@effect-ts-app/schema"
 import * as MO from "@effect-ts-app/schema"
 
+import type { JSONSchema } from "../atlas-plutus/index.js"
 import {
   AllOfSchema,
   ArraySchema,
   BooleanSchema,
   EnumSchema,
-  JSONSchema,
   NumberSchema,
   ObjectSchema,
   OneOfSchema,
   referenced,
-  StringSchema,
+  StringSchema
 } from "../atlas-plutus/index.js"
 
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Maybe<Gen>)[] = [
-  Maybe.partial((_miss) => (schema: MO.SchemaAny): Gen => {
-    // if (schema instanceof MO.SchemaOpenApi) {
-    //   const cfg = schema.jsonSchema()
-    //   return processId(schema, cfg)
-    // }
+  Maybe.partial(_miss =>
+    (schema: MO.SchemaAny): Gen => {
+      // if (schema instanceof MO.SchemaOpenApi) {
+      //   const cfg = schema.jsonSchema()
+      //   return processId(schema, cfg)
+      // }
 
-    // if (schema instanceof MO.SchemaRecur) {
-    //   if (interpreterCache.has(schema)) {
-    //     return interpreterCache.get(schema)
-    //   }
-    //   const parser = () => {
-    //     if (interpretedCache.has(schema)) {
-    //       return interpretedCache.get(schema)
-    //     }
-    //     const e = for_(schema.self(schema))()
-    //     interpretedCache.set(schema, e)
-    //     return e
-    //   }
-    //   interpreterCache.set(schema, parser)
-    //   return parser
-    // }
+      // if (schema instanceof MO.SchemaRecur) {
+      //   if (interpreterCache.has(schema)) {
+      //     return interpreterCache.get(schema)
+      //   }
+      //   const parser = () => {
+      //     if (interpretedCache.has(schema)) {
+      //       return interpretedCache.get(schema)
+      //     }
+      //     const e = for_(schema.self(schema))()
+      //     interpretedCache.set(schema, e)
+      //     return e
+      //   }
+      //   interpreterCache.set(schema, parser)
+      //   return parser
+      // }
 
-    return processId(schema)
+      return processId(schema)
 
-    //return miss()
-  }),
+      // return miss()
+    }
+  )
 ]
 
 // TODO: Cache
@@ -99,7 +101,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
     // TODO: Support recursive structures
     return Effect.succeed(new ObjectSchema({}))
   }
-  return Effect.gen(function* ($) {
+  return Effect.gen(function*($) {
     if (schema instanceof MO.SchemaRefinement) {
       return yield* $(processId(schema.self, meta))
     }
@@ -110,7 +112,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
     //     return processId(schema.self, meta)
     //   }
 
-    //console.log("$$$", schema.annotation)
+    // console.log("$$$", schema.annotation)
 
     // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
@@ -122,7 +124,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
 
     if (schema instanceof SchemaAnnotated) {
       // TODO: proper narrow the types
-      const schemaMeta = schema.meta as any
+      const schemaMeta = schema.meta
       switch (schema.annotation) {
         case MO.reqId: {
           meta = { noRef: true, ...meta }
@@ -139,8 +141,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             ...rest,
             allOf: [
               yield* $(processId(schemaMeta.self)) as any,
-              yield* $(processId(schemaMeta.that)) as any,
-            ],
+              yield* $(processId(schemaMeta.that)) as any
+            ]
           })
           // If this is a named intersection, we assume that merging the intersected types
           // is desired. Lets make it configurable if someone needs it :)
@@ -157,12 +159,12 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             ...meta,
             oneOf: yield* $(
               Effect.collectAll(
-                Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
+                Object.keys(schemaMeta.props).map(x => processId(schemaMeta.props[x]))
               )
             ) as any,
             discriminator: (schemaMeta.tag as Maybe<any>).map((_: any) => ({
-              propertyName: _.key, // TODO
-            })).value,
+              propertyName: _.key // TODO
+            })).value
           })
         }
         case fromStringIdentifier:
@@ -206,46 +208,46 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case optionFromNullIdentifier:
           return {
             ...((yield* $(processId(schemaMeta.self, meta))) as any),
-            nullable: true,
+            nullable: true
           }
         case nullableIdentifier:
           return {
             ...((yield* $(processId(schemaMeta.self, meta))) as any),
-            nullable: true,
+            nullable: true
           }
         case arrayIdentifier:
           return new ArraySchema({
-            items: yield* $(processId(schemaMeta.self, meta)) as any,
+            items: yield* $(processId(schemaMeta.self, meta)) as any
           })
         case setIdentifier:
           return new ArraySchema({
             items: yield* $(processId(schemaMeta.self, meta)) as any,
-            uniqueItems: true,
+            uniqueItems: true
           })
         case chunkIdentifier:
           return new ArraySchema({
-            items: yield* $(processId(schemaMeta.self, meta)) as any,
+            items: yield* $(processId(schemaMeta.self, meta)) as any
           })
         case fromChunkIdentifier:
           return new ArraySchema({
-            items: yield* $(processId(schemaMeta.self, meta)) as any,
+            items: yield* $(processId(schemaMeta.self, meta)) as any
           })
         case eitherIdentifier: {
           return new OneOfSchema({
             ...meta,
             oneOf: (yield* $(
               Effect.collectAll(
-                [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-              ).map((_) => _.toArray)
+                [schemaMeta.left, schemaMeta.right].map(x => processId(x))
+              ).map(_ => _.toArray)
             )).map((v, i) => ({
               properties: {
                 _tag: { enum: [i === 0 ? "Left" : "Right"] },
-                [i === 0 ? "left" : "right"]: v,
+                [i === 0 ? "left" : "right"]: v
               },
               required: ["_tag", i === 0 ? "left" : "right"],
-              type: "object",
+              type: "object"
             })) as any,
-            discriminator: { propertyName: "_tag" },
+            discriminator: { propertyName: "_tag" }
           })
         }
         case unknownIdentifier: {
@@ -253,14 +255,14 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const obj = new ObjectSchema({
             ...rest,
             properties: {},
-            required: undefined,
+            required: undefined
           })
           return yield* $(
             noRef
               ? Effect.succeed(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                  Effect.succeed(obj)
-                )
+                Effect.succeed(obj)
+              )
           )
         }
         case fromPropertiesIdentifier:
@@ -278,14 +280,14 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const obj = new ObjectSchema({
             ...rest,
             properties,
-            required: required.length ? required : undefined,
+            required: required.length ? required : undefined
           })
           return yield* $(
             noRef
               ? Effect.succeed(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                  Effect.succeed(obj)
-                )
+                Effect.succeed(obj)
+              )
           )
         }
       }
@@ -315,18 +317,17 @@ function merge(schema: any) {
   }
   const a = b as any as AllOfSchema
   if (a.allOf) {
-    const [{ description: ____, nullable: ___, title: __, type: _____, ...first }] =
-      a.allOf as any
+    const [{ description: ____, nullable: ___, title: __, type: _____, ...first }] = a.allOf as any
     const nb = {
       title: a.title,
       type: "object",
       description: a.description,
       summary: a.summary,
       nullable: a.nullable,
-      ...first,
+      ...first
     }
     recurseAllOf(a.allOf.slice(1), nb)
-    b = nb as any
+    b = nb
   }
   return b
 }
@@ -349,7 +350,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   if (hasContinuation(schema)) {
     const arb = for_(schema[SchemaContinuationSymbol])
     cache.set(schema, arb)
-    return arb as Gen
+    return arb
   }
   throw new Error(`Missing openapi integration for: ${schema.constructor}`)
 }

@@ -2,18 +2,11 @@
 
 import { flow, pipe } from "@effect-ts-app/core/Function"
 import * as MO from "@effect-ts-app/schema"
-import { Lock } from "redlock"
+import type { Lock } from "redlock"
 
 import * as RED from "../redis-client.js"
-import {
-  CachedRecord,
-  ConnectionException,
-  CouldNotAquireDbLockException,
-  DBRecord,
-  getIndexName,
-  getRecordName,
-  Index,
-} from "./shared.js"
+import type { CachedRecord, DBRecord, Index } from "./shared.js"
+import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
 import * as simpledb from "./simpledb.js"
 
 const ttl = 10 * 1000
@@ -26,29 +19,29 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
   ) => {
-    const getData = flow(encode, (_) => _.map(JSON.stringify))
+    const getData = flow(encode, _ => _.map(JSON.stringify))
     return {
       find: simpledb.find(find, decode, type),
       findByIndex: getIdx,
-      save: simpledb.store(find, store, lockRedisRecord, type),
+      save: simpledb.store(find, store, lockRedisRecord, type)
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id)).flatMapMaybe((v) =>
+      return RED.hmgetAll(getKey(id)).flatMapMaybe(v =>
         pipe(
           RedisSerializedDBRecord.Parser,
           MO.condemnFail
         )(v)
           .map(({ data, version }) => ({
             data: JSON.parse(data) as EA,
-            version,
+            version
           }))
-          .mapError((e) => new ConnectionException(new Error(e.toString())))
+          .mapError(e => new ConnectionException(new Error(e.toString())))
       ).orDie
     }
     function store(record: A, currentVersion: Maybe<string>) {
       const version = currentVersion
-        .map((cv) => (parseInt(cv) + 1).toString())
+        .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
       return currentVersion.fold(
         () =>
@@ -59,11 +52,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               )
               .zipRight(getData(record))
               // TODO: instead use MULTI & EXEC to make it in one command?
-              .flatMap((data) =>
+              .flatMap(data =>
                 hmSetRec(getKey(record.id), {
                   version,
                   timestamp: new Date(),
-                  data,
+                  data
                 })
               )
               .zipRight(setIndex(record))
@@ -71,11 +64,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           ).scoped,
         () =>
           getData(record)
-            .flatMap((data) =>
+            .flatMap(data =>
               hmSetRec(getKey(record.id), {
                 version,
                 timestamp: new Date(),
-                data,
+                data
               })
             )
             .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
@@ -98,7 +91,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).map(Maybe.$.map((i) => i as TKey))
+      return RED.hget(getIdxKey(index), index.key).map(Maybe.$.map(i => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {
@@ -110,18 +103,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Effect.acquireRelease(
         // acquire
         RED.lock
-          .flatMap((lock) =>
-            Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>)
-          )
+          .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>))
           .mapBoth(
-            (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+            err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
             // release
-            (lock) => ({
+            lock => ({
               release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
-                .orDie,
+                .orDie
             })
           ),
-        (l) => l.release
+        l => l.release
       )
     }
 
@@ -129,21 +120,21 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Effect.acquireRelease(
         // acquire
         RED.lock
-          .flatMap((lock) =>
+          .flatMap(lock =>
             Effect.tryPromise(
               () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
             )
           )
           .mapBoth(
-            (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+            err => new CouldNotAquireDbLockException(type, id, err as Error),
             // release
-            (lock) => ({
+            lock => ({
               // TODO
               release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
-                .orDie,
+                .orDie
             })
           ),
-        (l) => l.release
+        l => l.release
       )
     }
 
@@ -166,8 +157,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
     return RED.client.flatMap(
-      (client) =>
-        Effect.async<never, ConnectionException, void>((res) => {
+      client =>
+        Effect.async<never, ConnectionException, void>(res => {
           client.hmset(
             key,
             "version",
@@ -176,7 +167,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             enc.timestamp,
             "data",
             enc.data,
-            (err) =>
+            err =>
               err
                 ? res(Effect.fail(new ConnectionException(err)))
                 : res(Effect.succeed(void 0))
@@ -189,5 +180,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 export class RedisSerializedDBRecord extends MO.Model<RedisSerializedDBRecord>()({
   version: MO.prop(MO.string),
   timestamp: MO.prop(MO.date),
-  data: MO.prop(MO.string),
+  data: MO.prop(MO.string)
 }) {}

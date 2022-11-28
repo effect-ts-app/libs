@@ -1,7 +1,7 @@
-import type * as Eq from "@effect-ts/core/Equal"
-import type * as Ord from "@effect-ts/core/Ord"
 import type { Array } from "@effect-ts-app/core/Array"
 import { sort, sortBy, uniq } from "@effect-ts-app/core/Array"
+import type * as Eq from "@effect-ts/core/Equal"
+import type * as Ord from "@effect-ts/core/Ord"
 
 export function mapOriginal_<AX, B>(
   a: Array<AX>,

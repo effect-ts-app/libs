@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
 import type { Refinement } from "@effect-ts/system/Function"
@@ -21,21 +22,19 @@ import {
   SchemaNamed,
   SchemaParser,
   SchemaPipe,
-  SchemaRefinement,
+  SchemaRefinement
 } from "./schema.js"
 
 export function opaque<Shape>() {
   return <ConstructorInput, ParserInput, Encoded, Api>(
     schema: Schema<ParserInput, Shape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, Shape, ConstructorInput, Encoded, Api & ApiSelfType<Shape>> =>
-    schema as any
+  ): Schema<ParserInput, Shape, ConstructorInput, Encoded, Api & ApiSelfType<Shape>> => schema as any
 }
 
 export function named<Name extends string>(name: Name) {
   return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaNamed(self, name)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaNamed(self, name)
 }
 
 export function identity<A>(guard: (_: unknown) => _ is A): Schema<A, A, A, A, {}> {
@@ -52,8 +51,7 @@ export function constructor<
 >(f: (_: NewConstructorInput) => Th.These<any, ParsedShape>) {
   return (
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api> =>
-    new SchemaConstructor(self, f)
+  ): Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api> => new SchemaConstructor(self, f)
 }
 
 export function constructor_<
@@ -80,8 +78,7 @@ export function parser<
 >(f: (_: NewParserInput, env?: ParserEnv) => Th.These<any, ParsedShape>) {
   return (
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaParser(self, f)
+  ): Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaParser(self, f)
 }
 
 export function parser_<
@@ -103,8 +100,7 @@ export function arbitrary<A extends ParsedShape, ParsedShape>(
 ) {
   return <ParserInput, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaArbitrary(self, f) as any
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaArbitrary(self, f) as any
 }
 
 export function arbitrary_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
@@ -117,8 +113,7 @@ export function arbitrary_<ParserInput, ParsedShape, ConstructorInput, Encoded, 
 export function encoder<ParsedShape, A>(f: (_: ParsedShape) => A) {
   return <ParserInput, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, A, Api> =>
-    new SchemaEncoder(self, f)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, A, Api> => new SchemaEncoder(self, f)
 }
 
 export function encoder_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api, A>(
@@ -138,7 +133,7 @@ export function refine<
 ): <ParserInput, ConstructorInput, Encoded, Api>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, NewParsedShape, ConstructorInput, Encoded, Api> {
-  return (self) => new SchemaRefinement(self, refinement, error)
+  return self => new SchemaRefinement(self, refinement, error)
 }
 
 export function mapParserError<E extends AnyError, E1 extends AnyError>(
@@ -146,8 +141,7 @@ export function mapParserError<E extends AnyError, E1 extends AnyError>(
 ) {
   return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaMapParserError(self, f)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaMapParserError(self, f)
 }
 
 export function mapConstructorError<E extends AnyError, E1 extends AnyError>(
@@ -155,15 +149,13 @@ export function mapConstructorError<E extends AnyError, E1 extends AnyError>(
 ) {
   return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =>
-    new SchemaMapConstructorError(self, f)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaMapConstructorError(self, f)
 }
 
 export function mapApi<E, E1>(f: (e: E) => E1) {
   return <ParserInput, ParsedShape, ConstructorInput, Encoded>(
     self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, E>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, E1> =>
-    new SchemaMapApi(self, f)
+  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, E1> => new SchemaMapApi(self, f)
 }
 
 export function identified_<
@@ -192,7 +184,7 @@ export function annotate<Meta>(
   self: Self
 ) => ReturnType<Self["annotate"]> {
   // @ts-expect-error
-  return (self) => self.annotate(annotation, meta)
+  return self => self.annotate(annotation, meta)
 }
 
 export function guard_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
@@ -207,7 +199,7 @@ export function guard<ParsedShape>(
 ): <ParserInput, ConstructorInput, Encoded, Api>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
-  return (self) => new SchemaGuard(self, guard)
+  return self => new SchemaGuard(self, guard)
 }
 
 export function into_<
@@ -231,5 +223,5 @@ export function into<Api, ThatParsedShape, ThatConstructorInput, ThatApi, Parsed
 ): <ParserInput, ConstructorInput, Encoded>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> {
-  return (self) => new SchemaPipe(self, that)
+  return self => new SchemaPipe(self, that)
 }

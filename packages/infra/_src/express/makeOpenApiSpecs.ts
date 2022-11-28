@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as Plutus from "../Openapi/atlas-plutus/index.js"
-import { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"
+import type * as Plutus from "../Openapi/atlas-plutus/index.js"
+import type { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"
 import { References } from "../Openapi/atlas-plutus/Schema/index.js"
 import { makeJsonSchema } from "./makeJsonSchema.js"
-import { RouteDescriptorAny } from "./schema/routing.js"
+import type { RouteDescriptorAny } from "./schema/routing.js"
 
 export function makeOpenApiSpecs(
   rdescs: Iterable<RouteDescriptorAny>,
   info: Plutus.Info
 ) {
-  return Effect.gen(function* ($) {
+  return Effect.gen(function*($) {
     const ref = yield* $(Ref.make<Map<string, JSONSchema | SubSchema>>(new Map()))
     const withRef = Effect.$.provideService(References, { ref })
     const paths = yield* $(pipe(makeJsonSchema(rdescs), withRef))
@@ -20,8 +20,8 @@ export function makeOpenApiSpecs(
       bearerAuth: {
         type: "http",
         scheme: "bearer",
-        bearerFormat: "JWT",
-      },
+        bearerFormat: "JWT"
+      }
     } // { basicAuth: { type: "http", scheme: "basic" } }
     const components = { securitySchemes, schemas, parameters: parameterRefs }
 
@@ -38,23 +38,23 @@ export function makeOpenApiSpecs(
         termsOfService: info.tos,
         contact: info.contact
           ? {
-              name: info.contact.name,
-              email: info.contact.email,
-              url: info.contact.url,
-            }
+            name: info.contact.name,
+            email: info.contact.email,
+            url: info.contact.url
+          }
           : undefined,
         license: info.license
           ? {
-              name: info.license.name,
-              url: info.license.url,
-            }
+            name: info.license.name,
+            url: info.license.url
+          }
           : undefined,
-        version: info.version,
+        version: info.version
       },
       tags: [],
       paths,
-      components,
-      //test,
+      components
+      // test,
     }
   })
 }

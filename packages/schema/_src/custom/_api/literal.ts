@@ -11,9 +11,11 @@ import { withDefaults } from "./withDefaults.js"
 
 export interface LiteralApi<KS extends readonly string[]> extends ApiSelfType {
   readonly literals: KS
-  readonly matchS: <A>(_: {
-    [K in KS[number]]: (_: K) => A
-  }) => (ks: S.GetApiSelfType<this, KS[number]>) => A
+  readonly matchS: <A>(
+    _: {
+      [K in KS[number]]: (_: K) => A
+    }
+  ) => (ks: S.GetApiSelfType<this, KS[number]>) => A
   readonly matchW: <
     M extends {
       [K in KS[number]]: (_: K) => any
@@ -37,17 +39,17 @@ export function literal<KS extends readonly string[]>(
   return pipe(
     refinement(
       (u): u is KS[number] => typeof u === "string" && u in ko,
-      (actual) => S.leafE(S.literalE(literals, actual))
+      actual => S.leafE(S.literalE(literals, actual))
     ),
     S.constructor((s: KS[number]) => Th.succeed(s)),
-    S.arbitrary((_) => _.oneof(...literals.map((k) => _.constant(k)))),
-    S.encoder((_) => _ as string),
+    S.arbitrary(_ => _.oneof(...literals.map(k => _.constant(k)))),
+    S.encoder(_ => _ as string),
     S.mapApi(
       (): LiteralApi<KS> => ({
         _AS: undefined as any,
         literals,
-        matchS: (m) => (k) => m[k](k),
-        matchW: (m) => (k) => m[k](k),
+        matchS: m => k => m[k](k),
+        matchW: m => k => m[k](k)
       })
     ),
     withDefaults,

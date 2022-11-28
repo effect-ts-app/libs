@@ -7,7 +7,7 @@ export const Void = pipe(
   MO.encoder(() => void 0),
   MO.refine(
     (_u: unknown): _u is void => true,
-    (n) => MO.leafE(MO.nonEmptyE(n))
+    n => MO.leafE(MO.nonEmptyE(n))
   ),
   MO.named("void"),
   withDefaults

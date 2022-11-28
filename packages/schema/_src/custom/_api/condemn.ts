@@ -4,7 +4,7 @@ import { Case } from "@effect-ts/system/Case"
 
 import type { AnyError } from "../_schema/index.js"
 import { drawError } from "../_schema/index.js"
-import { Parser, ParserEnv } from "../Parser/index.js"
+import type { Parser, ParserEnv } from "../Parser/index.js"
 
 /**
  * The Effect fails with the generic `E` type when the parser produces an invalid result
@@ -20,7 +20,7 @@ export function condemn<X, E, A>(
         return Effect.fail(y.left)
       }
       const {
-        tuple: [a, w],
+        tuple: [a, w]
       } = y.right
       return w._tag === "Some" ? Effect.fail(w.value) : Effect.succeed(a)
     })

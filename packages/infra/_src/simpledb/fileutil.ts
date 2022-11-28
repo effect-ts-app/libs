@@ -15,7 +15,7 @@ export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
   return (
     Effect.tryPromise(() => writeFile(tmp, content, "utf-8")) >
-    Effect.tryPromise(() => rename(tmp, fileName))
+      Effect.tryPromise(() => rename(tmp, fileName))
   ).orDie
 }
 

@@ -1,4 +1,3 @@
-
 export interface Meta {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: any
@@ -27,7 +26,7 @@ export const severity: Record<Level, number> = {
   http: 3,
   verbose: 4,
   debug: 5,
-  silly: 6,
+  silly: 6
 }
 
 export const { debug, error, http, info, silly, verbose, warn } = Effect.deriveLifted(

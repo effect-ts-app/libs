@@ -5,7 +5,10 @@ import { Array as ROArrayOps } from "../Prelude.js"
  * @tsplus operator ets/Array &
  * @tsplus fluent ets/Array concat
  */
-export function concat_<A, B>(self: ROArray<A>, that: ROArray<B>): ROArray<A | B> {
+export function concat_<A, B>(
+  self: ROArray<A>,
+  that: ROArray<B>
+): ROArray<A | B> {
   return ROArrayOps.concat_(self, that)
 }
 
@@ -14,8 +17,10 @@ export function concat_<A, B>(self: ROArray<A>, that: ROArray<B>): ROArray<A | B
  *
  * @tsplus operator ets/Array +
  */
-export const concatOperator: <A>(self: ROArray<A>, that: ROArray<A>) => ROArray<A> =
-  concat_
+export const concatOperator: <A>(
+  self: ROArray<A>,
+  that: ROArray<A>
+) => ROArray<A> = concat_
 
 /**
  * Prepends `a` to ROArray<A>

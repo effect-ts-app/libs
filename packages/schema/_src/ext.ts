@@ -1,28 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as Eq from "@effect-ts/core/Equal"
-import * as Ord from "@effect-ts/core/Ord"
-import { ComputeFlat } from "@effect-ts/core/Utils"
-import { constant, Lazy, pipe } from "@effect-ts-app/core/Function"
+import type { Lazy } from "@effect-ts-app/core/Function"
+import { constant, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
-import { None, Some } from "@tsplus/stdlib/data/Maybe"
+import * as Eq from "@effect-ts/core/Equal"
+import * as Ord from "@effect-ts/core/Ord"
+import type { ComputeFlat } from "@effect-ts/core/Utils"
+import type { None, Some } from "@tsplus/stdlib/data/Maybe"
 import { v4 } from "uuid"
 
-import { FromProperty, set, setIdentifier } from "./_api/index.js"
+import type { FromProperty } from "./_api/index.js"
+import { set, setIdentifier } from "./_api/index.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
 import * as MO from "./_schema.js"
-import { propDef, Property, propOpt, propReq, UUID } from "./_schema.js"
+import type { Property, UUID } from "./_schema.js"
+import { propDef, propOpt, propReq } from "./_schema.js"
 
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
-  new (inp: ConstructorInput): ParsedShape
+  new(inp: ConstructorInput): ParsedShape
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (partConstructor) => (restConstructor) =>
-    partialConstructor_(model, partConstructor)(restConstructor)
+  return partConstructor => restConstructor => partialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function partialConstructor_<
@@ -31,15 +33,14 @@ export function partialConstructor_<
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
   model: {
-    new (inp: ConstructorInput): ParsedShape
+    new(inp: ConstructorInput): ParsedShape
   },
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (restConstructor) =>
-    new model({ ...partConstructor, ...restConstructor } as any)
+  return restConstructor => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
 export function partialConstructorF<ConstructorInput, ParsedShape>(
@@ -50,8 +51,7 @@ export function partialConstructorF<ConstructorInput, ParsedShape>(
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (partConstructor) => (restConstructor) =>
-    partialConstructorF_(constr, partConstructor)(restConstructor)
+  return partConstructor => restConstructor => partialConstructorF_(constr, partConstructor)(restConstructor)
 }
 
 export function partialConstructorF_<
@@ -65,21 +65,20 @@ export function partialConstructorF_<
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (restConstructor) => constr({ ...partConstructor, ...restConstructor } as any)
+  return restConstructor => constr({ ...partConstructor, ...restConstructor } as any)
 }
 
 // TODO: morph the schema instead.
 export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
   [MO.schemaField]: MO.Schema<any, ParsedShape, ConstructorInput, any, any>
-  new (inp: ConstructorInput): ParsedShape
+  new(inp: ConstructorInput): ParsedShape
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (partConstructor) => (restConstructor) =>
-    derivePartialConstructor_(model, partConstructor)(restConstructor)
+  return partConstructor => restConstructor => derivePartialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function derivePartialConstructor_<
@@ -89,15 +88,14 @@ export function derivePartialConstructor_<
 >(
   model: {
     [MO.schemaField]: MO.Schema<any, ParsedShape, ConstructorInput, any, any>
-    new (inp: ConstructorInput): ParsedShape
+    new(inp: ConstructorInput): ParsedShape
   },
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return (restConstructor) =>
-    new model({ ...partConstructor, ...restConstructor } as any)
+  return restConstructor => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
 export type GetPartialConstructor<A extends (...args: any) => any> = Parameters<
@@ -125,9 +123,9 @@ export function withDefaultConstructorFields<
   ): MO.Schema<
     ParserInput,
     ParsedShape,
-    Omit<ConstructorInput, keyof Changes> &
-      // @ts-expect-error we know keyof Changes matches
-      Partial<Pick<ConstructorInput, keyof Changes>>,
+    & Omit<ConstructorInput, keyof Changes>
+    & // @ts-expect-error we know keyof Changes matches
+    Partial<Pick<ConstructorInput, keyof Changes>>,
     Encoded,
     Api
   > => {
@@ -142,8 +140,8 @@ export function withDefaultConstructorFields<
               prev[cur] = kvs[cur]()
             }
             return prev
-          }, {} as any),
-        } as any)
+          }, {} as any)
+        })
       )
     )
   }
@@ -157,8 +155,7 @@ export function defaultConstructor<
   As extends Maybe<PropertyKey>,
   Def extends Maybe<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
-  return (makeDefault: () => MO.ParsedShapeOf<Self>) =>
-    propDef(p, makeDefault, "constructor")
+  return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
 }
 
 type SupportedDefaults =
@@ -367,13 +364,12 @@ export function defaultProp<
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape
-  ? FromProperty<
-      MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-      "required",
-      None,
-      Some<["constructor", () => ParsedShape]>
-    >
+): null extends ParsedShape ? FromProperty<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  None,
+  Some<["constructor", () => ParsedShape]>
+>
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
@@ -399,13 +395,12 @@ export function defaultProp<
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape
-  ? FromProperty<
-      MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-      "required",
-      None,
-      Some<["constructor", () => ParsedShape]>
-    >
+): null extends ParsedShape ? FromProperty<
+  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  None,
+  Some<["constructor", () => ParsedShape]>
+>
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
   schema: MO.Schema<unknown, any, any, any, any>,
@@ -438,13 +433,12 @@ export function defaultInputProp<
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape
-  ? FromProperty<
-      MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-      "required",
-      None,
-      Some<["both", () => ParsedShape]>
-    >
+): null extends ParsedShape ? FromProperty<
+  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  None,
+  Some<["both", () => ParsedShape]>
+>
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
@@ -470,13 +464,12 @@ export function defaultInputProp<
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape
-  ? FromProperty<
-      MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-      "required",
-      None,
-      Some<["both", () => ParsedShape]>
-    >
+): null extends ParsedShape ? FromProperty<
+  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  "required",
+  None,
+  Some<["both", () => ParsedShape]>
+>
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
   schema: MO.Schema<unknown, any, any, any, any>,
@@ -521,7 +514,7 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
 
 export function createUnorder<T>(): Ord.Ord<T> {
   return {
-    compare: (_a: T, _b: T) => 0,
+    compare: (_a: T, _b: T) => 0
   }
 }
 export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -552,11 +545,11 @@ export function makeUnorderedContramappedStringSet<
 export function makeUnorderedStringSet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<
-    unknown, //ParserInput,
+    unknown, // ParserInput,
     A,
-    any, //ConstructorInput,
-    any, //Encoded
-    any //Api
+    any, // ConstructorInput,
+    any, // Encoded
+    any // Api
   >
 ) {
   return makeUnorderedSet(type, Eq.string)
@@ -608,11 +601,11 @@ export function makeUnorderedContramappedStringNonEmptySet<
 export function makeUnorderedStringNonEmptySet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<
-    unknown, //ParserInput,
+    unknown, // ParserInput,
     A,
-    any, //ConstructorInput,
-    any, //Encoded
-    any //Api
+    any, // ConstructorInput,
+    any, // Encoded
+    any // Api
   >
 ) {
   return makeUnorderedNonEmptySet(type, Eq.string)
@@ -650,10 +643,8 @@ export const constArray = constant(ROArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }
-}
-  ? Props extends MO.PropertyRecord
-    ? MO.ParserInputFromProperties<Props>
-    : never
+} ? Props extends MO.PropertyRecord ? MO.ParserInputFromProperties<Props>
+: never
   : never
 
 /**

@@ -21,11 +21,10 @@ export default function augmentName(_program: ts.Program) {
             if (
               signature &&
               signature
-                .getJsDocTags()
-                .findIndex(
-                  (_) =>
-                    _.name === "inject" && _.text?.map((_) => _.text === "genericName")
-                ) !== -1 &&
+                  .getJsDocTags()
+                  .findIndex(
+                    _ => _.name === "inject" && _.text?.map(_ => _.text === "genericName")
+                  ) !== -1 &&
               signature?.parameters.length === 1 &&
               signature?.parameters[0].name === "__name"
             ) {
@@ -55,6 +54,6 @@ export default function augmentName(_program: ts.Program) {
 
         return ts.visitEachChild(sourceFile, visitor, ctx)
       }
-    },
+    }
   }
 }

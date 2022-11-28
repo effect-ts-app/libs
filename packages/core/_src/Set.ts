@@ -12,11 +12,11 @@ import {
   remove,
   remove_,
   Set,
-  toArray,
+  toArray
 } from "@effect-ts/core/Collections/Immutable/Set"
-import * as Eq from "@effect-ts/core/Equal"
+import type * as Eq from "@effect-ts/core/Equal"
 
-import * as Ord from "./Order.js"
+import type * as Ord from "./Order.js"
 
 function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const fromArray = fromArray_(eq)
@@ -24,7 +24,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const insert = insertOriginal(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, (x) => !eq.equals(x, a)) >= insert(a)
+    return filter_(set, x => !eq.equals(x, a)) >= insert(a)
   }
 
   return {
@@ -47,7 +47,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
     map: map(eq),
     map_: map_(eq),
     filterMap: filterMap(eq),
-    filterMap_: filterMap_(eq),
+    filterMap_: filterMap_(eq)
   }
   // TODO: extend
 }
@@ -60,7 +60,9 @@ class Wrapper<A> {
 
 export interface SetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
-export const make: <A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) => SetSchemaExtensions<A> =
-  make_
+export const make: <A>(
+  ord: Ord.Ord<A>,
+  eq: Eq.Equal<A>
+) => SetSchemaExtensions<A> = make_
 
 export * from "@effect-ts/core/Collections/Immutable/Set"

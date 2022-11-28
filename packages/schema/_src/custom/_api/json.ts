@@ -8,8 +8,7 @@ import { withDefaults } from "./withDefaults.js"
 
 export const jsonFromStringIdentifier = S.makeAnnotation<{}>()
 
-export class JsonDecodingE
-  extends S.DefaultLeafE<{ readonly actual: string; readonly error: unknown }>
+export class JsonDecodingE extends S.DefaultLeafE<{ readonly actual: string; readonly error: unknown }>
   implements S.Actual<string>
 {
   readonly _tag = "NotJsonString"
@@ -23,9 +22,9 @@ export class JsonDecodingE
 
 export const jsonString: DefaultSchema<string, unknown, unknown, string, {}> = pipe(
   S.identity((u): u is string => typeof u === "string"),
-  S.constructor((n) => Th.succeed(n)),
-  S.arbitrary((_) => _.anything()),
-  S.encoder((_) => JSON.stringify(_)),
+  S.constructor(n => Th.succeed(n)),
+  S.arbitrary(_ => _.anything()),
+  S.encoder(_ => JSON.stringify(_)),
   S.parser((p: string) => {
     try {
       return Th.succeed(JSON.parse(p as any))

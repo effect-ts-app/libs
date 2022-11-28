@@ -1,14 +1,13 @@
 // tracing: off
 
-
 import * as S from "../../_schema/index.js"
 import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
 
 export type Guard<T> = { (u: unknown): u is T }
 
-export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Guard<unknown>>)[] =
-  [
-    Maybe.partial((miss) => (schema: S.SchemaAny): (() => Guard<unknown>) => {
+export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Guard<unknown>>)[] = [
+  Maybe.partial(miss =>
+    (schema: S.SchemaAny): (() => Guard<unknown>) => {
       if (schema instanceof S.SchemaGuard) {
         return () => schema.guard
       }
@@ -22,8 +21,9 @@ export const interpreters: ((schema: S.SchemaAny) => Maybe<() => Guard<unknown>>
         }
       }
       return miss()
-    }),
-  ]
+    }
+  )
+]
 
 const cache = new WeakMap()
 

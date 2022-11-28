@@ -1,45 +1,44 @@
-import { IndexingPolicy } from "@azure/cosmos"
+import type { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 
 import * as Cosmos from "../cosmos-client.js"
-import { CachedRecord, DBRecord, OptimisticLockException } from "./shared.js"
+import type { CachedRecord, DBRecord } from "./shared.js"
+import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"
-import { Version } from "./simpledb.js"
+import type { Version } from "./simpledb.js"
 
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
 }
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
-  Cosmos.db.tap((db) =>
+  Cosmos.db.tap(db =>
     Effect.tryPromise(() =>
       db.containers
         .create({ id: type, indexingPolicy })
-        .catch((err) => console.warn(err))
+        .catch(err => console.warn(err))
     )
   )
 // TODO: Error if current indexingPolicy does not match
-//Effect.flatMap((db) => Effect.tryPromise(() => db.container(type).(indexes)))
+// Effect.flatMap((db) => Effect.tryPromise(() => db.container(type).(indexes)))
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
     encode: (record: A) => Effect<REncode, never, EA>,
     decode: (d: EA) => Effect<RDecode, EDecode, A>,
-    //schemaVersion: string,
+    // schemaVersion: string,
     indexes: IndexingPolicy
   ) => {
     return setup(type, indexes).map(() => ({
       find: simpledb.find(find, decode, type),
       findBy,
-      save: simpledb.storeDirectly(store, type),
+      save: simpledb.storeDirectly(store, type)
     }))
 
     function find(id: string) {
       return Cosmos.db
-        .flatMap((db) =>
-          Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>())
-        )
-        .map((i) => Maybe.fromNullable(i.resource))
+        .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
+        .map(i => Maybe.fromNullable(i.resource))
         .map(
           Maybe.$.map(
             ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
@@ -49,7 +48,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function findBy(parameters: Record<string, string>) {
       return Cosmos.db
-        .flatMap((db) =>
+        .flatMap(db =>
           Effect.tryPromise(() =>
             db
               .container(type)
@@ -58,25 +57,27 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 SELECT TOP 1 ${type}.id
 FROM ${type} i
 WHERE (
-  ${typedKeysOf(parameters)
-    .map((k) => `i.${k} = @${k}`)
-    .join(" and ")}
+  ${
+                  typedKeysOf(parameters)
+                    .map(k => `i.${k} = @${k}`)
+                    .join(" and ")
+                }
 )
 `,
-                parameters: typedKeysOf(parameters).map((p) => ({
+                parameters: typedKeysOf(parameters).map(p => ({
                   name: `@${p}`,
-                  value: parameters[p],
-                })),
+                  value: parameters[p]
+                }))
               })
               .fetchAll()
           )
         )
-        .map((x) => ROArray.head(x.resources))
-        .map(Maybe.$.map((_) => _.id))
+        .map(x => ROArray.head(x.resources))
+        .map(Maybe.$.map(_ => _.id))
     }
 
     function store(record: A, currentVersion: Maybe<Version>) {
-      return Effect.gen(function* ($) {
+      return Effect.gen(function*($) {
         const version = "_etag" // we get this from the etag anyway.
 
         const db = yield* $(Cosmos.db)
@@ -89,10 +90,10 @@ WHERE (
                 db.container(type).items.create({
                   id: record.id,
                   timestamp: new Date(),
-                  data,
+                  data
                 })
               ).unit.orDie,
-            (currentVersion) =>
+            currentVersion =>
               Effect.tryPromise(() =>
                 db
                   .container(type)
@@ -101,16 +102,16 @@ WHERE (
                     {
                       id: record.id,
                       timestamp: new Date(),
-                      data,
+                      data
                     },
                     {
                       accessCondition: {
                         type: "IfMatch",
-                        condition: currentVersion,
-                      },
+                        condition: currentVersion
+                      }
                     }
                   )
-              ).orDie.flatMap((x) => {
+              ).orDie.flatMap(x => {
                 if (x.statusCode === 412) {
                   return Effect.fail(new OptimisticLockException(type, record.id))
                 }

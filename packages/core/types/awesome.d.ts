@@ -1,4 +1,4 @@
-import { XPure } from "@effect-ts/core/XPure/index"
+import { XPure } from "@effect-ts/core/XPure/index";
 
 // TODO: move gloal
 
@@ -6,29 +6,29 @@ declare global {
   /**
    * @tsplus type ets/Array
    */
-  interface ReadonlyArray<T> { }
+  interface ReadonlyArray<T> {}
 
   /**
    * @tsplus type ets/Array
    */
-  interface Array<T> { }
+  interface Array<T> {}
 
   /**
    * @tsplus type ets/Set
    */
   interface Set<T> {}
-  
+
   /**
    * @tsplus type ets/ROSet
    * @tsplus type ets/Set
    */
-  interface ReadonlySet<T> { }
-  
+  interface ReadonlySet<T> {}
+
   /**
    * @tsplus type ets/Map
    */
-  interface Map<K, V> { }
-  
+  interface Map<K, V> {}
+
   /**
    * @tsplus type ets/Map
    */
@@ -63,7 +63,6 @@ declare global {
    */
   interface Function {}
 }
-
 
 declare module "@effect-ts/monocle/Lens" {
   export interface Base<S, A> extends Lens<S, A> {}
@@ -106,7 +105,7 @@ declare module "@effect-ts/system/Either/core" {
   /**
    * @tsplus type ets/Either
    */
-  export type Either<E, A> = Left<E> | Right<A>
+  export type Either<E, A> = Left<E> | Right<A>;
 }
 
 declare module "@effect-ts/system/Option/core" {
@@ -124,14 +123,15 @@ declare module "@effect-ts/system/Option/core" {
   /**
    * @tsplus type ets/Maybe
    */
-  export type Option<A> = None | Some<A>
+  export type Option<A> = None | Some<A>;
 }
 
 declare module "@effect-ts/system/Sync/core" {
   /**
    * @tsplus type ets/Sync
    */
-  export interface Sync<R, E, A> extends XPure<unknown, unknown, unknown, R, E, A> {}
+  export interface Sync<R, E, A>
+    extends XPure<unknown, unknown, unknown, R, E, A> {}
 }
 
 declare module "@effect-ts/system/Managed/managed" {

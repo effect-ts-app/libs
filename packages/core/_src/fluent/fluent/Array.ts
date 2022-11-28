@@ -1,6 +1,6 @@
 // ets_tracing: off
 
-import * as Arr from "@effect-ts/core/Collections/Immutable/Array"
+import type * as Arr from "@effect-ts/core/Collections/Immutable/Array"
 import * as E from "@effect-ts/core/Either"
 
 import * as O from "../../Maybe.js"

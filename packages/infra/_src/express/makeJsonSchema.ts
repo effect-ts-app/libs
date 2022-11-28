@@ -14,7 +14,7 @@ type _A<C> = C extends Chunk<infer A> ? A : never
 export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk.from(r)
     .forEachEffect(RS.makeFromSchema)
-    .map((e) => {
+    .map(e => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
@@ -25,8 +25,8 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
               prev[cur.statusCode] = cur.type
               return prev
             }
-          ),
-        },
+          )
+        }
       })
       return e.reduce(
         {} as Record<string, Record<Methods, ReturnType<typeof map>>>,
@@ -34,7 +34,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
           const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)
           prev[path] = {
             ...prev[path],
-            ...map(e),
+            ...map(e)
           }
           return prev
         }
@@ -45,6 +45,6 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
 class Response {
   constructor(
     public readonly statusCode: number,
-    public readonly type: any //string | JSONSchema | SubSchema
+    public readonly type: any // string | JSONSchema | SubSchema
   ) {}
 }

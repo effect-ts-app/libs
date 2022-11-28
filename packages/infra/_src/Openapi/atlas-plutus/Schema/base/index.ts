@@ -31,10 +31,10 @@ export function referenced(x?: ConfigExtensionRef) {
   return (schema: Schema): Schema => {
     if (x && typeof x.openapiRef !== "undefined") {
       const { openapiRef } = x
-      return Effect.gen(function* (_) {
+      return Effect.gen(function*(_) {
         const { ref } = yield* _(References)
         const jsonSchema = yield* _(schema)
-        yield* _(ref.update((m) => m.set(openapiRef, jsonSchema)))
+        yield* _(ref.update(m => m.set(openapiRef, jsonSchema)))
         return SchemaRef(`#/components/schemas/${openapiRef}`)
       })
     }
@@ -56,7 +56,7 @@ export function described(description: string) {
   return Effect.$.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
-      description,
+      description
     })
   )
 }
@@ -65,7 +65,7 @@ export function titled(title: string) {
   return Effect.$.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
-      title,
+      title
     })
   )
 }

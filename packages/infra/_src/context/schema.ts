@@ -1,7 +1,7 @@
-import * as Map from "@effect-ts/core/Collections/Immutable/Map"
 import * as MO from "@effect-ts-app/schema"
 import { Encoder, Parser } from "@effect-ts-app/schema"
-import { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
+import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
+import * as Map from "@effect-ts/core/Collections/Immutable/Map"
 
 export function makeCodec<
   ParsedShape extends { id: Id },
@@ -22,9 +22,7 @@ export function makeCodec<
 
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Effect<never, never, E>) {
   return (a: ROArray<A>) =>
-    ROArray.map_(a, (task) =>
-      Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task))
-    )
+    ROArray.map_(a, task => Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task)))
       .collectAll()
       .map(Map.make)
 }
