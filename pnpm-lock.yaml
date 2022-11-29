@@ -278,6 +278,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
+      vitest: ^0.25.3
     dependencies:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/schema': link:../schema
@@ -300,6 +301,7 @@ importers:
       fast-check: 3.3.0
       ts-node: 10.9.1_qw2qu2y5zutvljq5wrg6zvdxhy
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_5c5lniklgvqsg5wn7ificdyohu'
+      vitest: 0.25.3
 
   packages/boilerplate-react:
     specifiers:
@@ -309,6 +311,7 @@ importers:
       react-intl: ^6.2.1
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
+      vitest: ^0.25.3
     dependencies:
       '@effect-ts-app/react': link:../react
     devDependencies:
@@ -317,6 +320,7 @@ importers:
       react-intl: 6.2.1_atfpk6h5myfikbojzh5nbn4vxy
       ts-node: 10.9.1_qw2qu2y5zutvljq5wrg6zvdxhy
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_5c5lniklgvqsg5wn7ificdyohu'
+      vitest: 0.25.3
 
   packages/boilerplate-vue:
     specifiers:
@@ -330,6 +334,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
       vite: ^3.2.4
+      vitest: ^0.25.3
       vue: ^3.2.45
       vue2: npm:vue@3.2.45
     dependencies:
@@ -346,6 +351,7 @@ importers:
       ts-node: 10.9.1_qw2qu2y5zutvljq5wrg6zvdxhy
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_5c5lniklgvqsg5wn7ificdyohu'
       vite: 3.2.4_@types+node@18.11.9
+      vitest: 0.25.3
 
   packages/core:
     specifiers:
