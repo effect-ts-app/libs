@@ -20,7 +20,7 @@ import type {
 import { StoreMaker } from "./service.js"
 
 // TODO: Retry operation when running into RU limit.
-function makeCosmosStore({ STORAGE_PREFIX }: StorageConfig) {
+function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient.CosmosClient)
     return {
@@ -30,7 +30,7 @@ function makeCosmosStore({ STORAGE_PREFIX }: StorageConfig) {
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
-          const containerId = `${STORAGE_PREFIX}${name}`
+          const containerId = `${prefix}${name}`
           yield* $(
             Effect.promise(() =>
               db.containers.createIfNotExists({

@@ -157,7 +157,6 @@ export interface PersistenceModelType<Id extends string> {
 }
 
 export interface StorageConfig {
-  STORAGE_PREFIX: string
-  env: string
-  serviceName: string
+  prefix: string
+  dbName: string
 }

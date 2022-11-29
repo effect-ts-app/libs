@@ -7,7 +7,7 @@ import type { Filter, FilterJoinSelect, PersistenceModelType, StorageConfig, Sto
 import { StoreMaker } from "./service.js"
 import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
-function makeRedisStore({ STORAGE_PREFIX }: StorageConfig) {
+function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const redis = yield* $(RedisClient.RedisClient)
     return {
@@ -19,7 +19,7 @@ function makeRedisStore({ STORAGE_PREFIX }: StorageConfig) {
         Effect.gen(function*($) {
           const updateETag = makeUpdateETag(name)
           // Very naive implementation of course.
-          const key = `${STORAGE_PREFIX}${name}`
+          const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
             const m = yield* $(existing ?? Effect(ROMap.empty))

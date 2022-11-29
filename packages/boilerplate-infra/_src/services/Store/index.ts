@@ -49,7 +49,7 @@ function makeRedis(storageUrl: string, config: StorageConfig) {
 function makeCosmos(storageUrl: string, config: StorageConfig) {
   return CosmosClient.CosmosClientLive(
     storageUrl,
-    `${config.serviceName}${config.env === "prod" ? "" : config.env === "local-dev" ? "-local-dev" : "-dev"}`
+    config.dbName
   ).provideTo(CosmosStoreLive(config))
 }
 

@@ -11,7 +11,7 @@ import { StoreMaker } from "./service.js"
  * The Disk-backed store, flushes writes in background, but keeps the data in memory
  * and should therefore be as fast as the Memory Store.
  */
-function makeDiskStore({ STORAGE_PREFIX }: StorageConfig) {
+function makeDiskStore({ prefix }: StorageConfig) {
   return Effect.sync(() => {
     const dir = "./.data"
     if (!fs.existsSync(dir)) {
@@ -24,7 +24,7 @@ function makeDiskStore({ STORAGE_PREFIX }: StorageConfig) {
         _config?: StoreConfig<E>
       ) =>
         Effect.gen(function*($) {
-          const file = dir + "/" + STORAGE_PREFIX + name + ".json"
+          const file = dir + "/" + prefix + name + ".json"
           const fsStore = {
             get: fu
               .readTextFile(file)
