@@ -20,13 +20,16 @@
       "path": "packages/core"
     },
     {
-      "path": "packages/boilerplate-vue"
-    },
-    {
       "path": "packages/boilerplate-prelude"
     },
     {
       "path": "packages/boilerplate-infra"
+    },
+    {
+      "path": "packages/boilerplate-vue"
+    },
+    {
+      "path": "packages/boilerplate-react"
     },
   ]
 }
