@@ -1,5 +1,6 @@
 import * as Supervisor from "@effect-ts/system/Supervisor"
 import type { FiberId } from "@effect/core/io/FiberId"
+import { inspect } from "util"
 
 export function defaultTeardown(
   status: number,
@@ -36,7 +37,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
                 defaultTeardown(0, context.id, onExit)
                 break
               } else {
-                console.error(JSON.stringify(exit.cause, undefined, 2))
+                console.error(inspect(exit.cause))
                 defaultTeardown(1, context.id, onExit)
                 break
               }
