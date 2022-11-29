@@ -1,14 +1,14 @@
 {
   "name": "@effect-ts-app/boilerplate-prelude",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "type": "module",
   "resolutions": {
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "dependencies": {
-    "@effect-ts-app/core": "^1.3.2",
-    "@effect-ts-app/schema": "^1.3.2",
+    "@effect-ts-app/core": "^1.4.0",
+    "@effect-ts-app/schema": "^1.4.0",
     "@effect-ts/core": "^0.60.4",
     "@effect/core": "^0.0.16",
     "@tsplus/stdlib": "^0.2.8",

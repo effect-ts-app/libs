@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-infra",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "type": "module",
   "resolutions": {
@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "*",
-    "@effect-ts-app/core": "^1.3.2",
-    "@effect-ts-app/infra": "^1.3.2",
-    "@effect-ts-app/schema": "^1.3.2",
+    "@effect-ts-app/core": "^1.4.0",
+    "@effect-ts-app/infra": "^1.4.0",
+    "@effect-ts-app/schema": "^1.4.0",
     "@effect/cache": "^0.0.4",
     "@effect/core": "^0.0.16",
     "change-case": "^4.1.2",
