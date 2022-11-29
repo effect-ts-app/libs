@@ -251,7 +251,7 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
   const error = ref<E>()
   const value = ref<A>()
   const handle = handleExit(loading, error, value)
-  const exec = (i: I) =>
+  const exec = (i: I, abortSignal?: AbortSignal) =>
     Effect.sync(() => {
       loading.value = true
       value.value = undefined
@@ -259,8 +259,15 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
     })
       .zipRight(self(i))
       .provideSomeLayer(Layers)
-      .unsafeRunPromiseExit()
-      .then(handle)
+      .exit
+      .flatMap(exit => Effect.sync(() => handle(exit)))
+      .fork
+      .flatMap(f => {
+        const cancel = () => f.interrupt.unsafeRunPromise()
+        abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
+        return f.join
+      })
+      .unsafeRunPromise()
 
   const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
 
@@ -280,11 +287,18 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
 
   const handle = handleExit(loading, error, value)
 
-  const exec = () => {
+  const exec = (abortSignal?: AbortSignal) => {
     loading.value = true
     return self.provideSomeLayer(Layers)
-      .unsafeRunPromiseExit()
-      .then(handle)
+      .exit
+      .flatMap(exit => Effect.sync(() => handle(exit)))
+      .fork
+      .flatMap(f => {
+        const cancel = () => f.interrupt.unsafeRunPromise()
+        abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
+        return f.join
+      })
+      .unsafeRunPromise()
   }
   const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
   return tuple(
