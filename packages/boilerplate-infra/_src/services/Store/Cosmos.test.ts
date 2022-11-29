@@ -48,6 +48,10 @@ test("works", () => {
   )).toEqual({
     "parameters": [
       {
+        "name": "@id",
+        "value": "importedMarkerId"
+      },
+      {
         "name": "@v0",
         "value": "b2"
       }
@@ -55,7 +59,7 @@ test("works", () => {
     "query": `
     SELECT * FROM Somethings f
     
-    WHERE LOWER(f.b) = LOWER(@v0)
+    WHERE f.id != @id AND LOWER(f.b) = LOWER(@v0)
     OFFSET 0 LIMIT 10`
   })
 
@@ -68,6 +72,10 @@ test("works", () => {
   )).toEqual({
     "parameters": [
       {
+        "name": "@id",
+        "value": "importedMarkerId"
+      },
+      {
         "name": "@v0",
         "value": "a2"
       }
@@ -75,7 +83,7 @@ test("works", () => {
     "query": `
     SELECT * FROM Somethings f
     JOIN d IN c.d
-    WHERE LOWER(d.a) = LOWER(@v0)
+    WHERE f.id != @id AND LOWER(d.a) <> LOWER(@v0)
     OFFSET 0 LIMIT 10`
   })
 })
