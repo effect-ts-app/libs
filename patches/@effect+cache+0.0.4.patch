@@ -1,7 +1,7 @@
-diff --git a/node_modules/@effect/cache/Cache/_internal/CacheInternal.d.ts b/node_modules/@effect/cache/Cache/_internal/CacheInternal.d.ts
+diff --git a/Cache/_internal/CacheInternal.d.ts b/Cache/_internal/CacheInternal.d.ts
 index 9dba4bf..140d4c2 100644
---- a/node_modules/@effect/cache/Cache/_internal/CacheInternal.d.ts
-+++ b/node_modules/@effect/cache/Cache/_internal/CacheInternal.d.ts
+--- a/Cache/_internal/CacheInternal.d.ts
++++ b/Cache/_internal/CacheInternal.d.ts
 @@ -7,7 +7,6 @@ import { Service } from "@tsplus/stdlib/service/Service";
  import { FiberId } from "@effect/core/io/FiberId/definition";
  import { Effect } from "@effect/core/io/Effect/definition";
@@ -19,10 +19,10 @@ index 9dba4bf..140d4c2 100644
      get values(): Effect<never, never, Chunk<Value>>;
      get cacheStats(): Effect<never, never, CacheStats>;
      entryStats(k: Key): Effect<never, never, Maybe<EntryStats>>;
-diff --git a/node_modules/@effect/cache/Cache/_internal/CacheInternal.js b/node_modules/@effect/cache/Cache/_internal/CacheInternal.js
+diff --git a/Cache/_internal/CacheInternal.js b/Cache/_internal/CacheInternal.js
 index d9a378d..3fc71fb 100644
---- a/node_modules/@effect/cache/Cache/_internal/CacheInternal.js
-+++ b/node_modules/@effect/cache/Cache/_internal/CacheInternal.js
+--- a/Cache/_internal/CacheInternal.js
++++ b/Cache/_internal/CacheInternal.js
 @@ -10,8 +10,6 @@ var tsplus_module_1 = /*#__PURE__*/_interopRequireWildcard( /*#__PURE__*/require
  
  var tsplus_module_2 = /*#__PURE__*/_interopRequireWildcard( /*#__PURE__*/require("@effect/core/io/Effect/operations/sync"));
@@ -57,10 +57,10 @@ index d9a378d..3fc71fb 100644
          if (value._tag === "Complete" && value.exit._tag === "Success") {
            values.push(value.exit.value);
          }
-diff --git a/node_modules/@effect/cache/_mjs/Cache/_internal/CacheInternal.mjs b/node_modules/@effect/cache/_mjs/Cache/_internal/CacheInternal.mjs
+diff --git a/_mjs/Cache/_internal/CacheInternal.mjs b/_mjs/Cache/_internal/CacheInternal.mjs
 index a68b98c..549ffed 100644
---- a/node_modules/@effect/cache/_mjs/Cache/_internal/CacheInternal.mjs
-+++ b/node_modules/@effect/cache/_mjs/Cache/_internal/CacheInternal.mjs
+--- a/_mjs/Cache/_internal/CacheInternal.mjs
++++ b/_mjs/Cache/_internal/CacheInternal.mjs
 @@ -2,7 +2,6 @@ var _a;
  
  import * as tsplus_module_1 from "@effect/cache/Cache/_internal/CacheState";
@@ -98,11 +98,11 @@ index a68b98c..549ffed 100644
          if (value._tag === "Complete" && value.exit._tag === "Success") {
            values.push(value.exit.value);
          }
-diff --git a/node_modules/@effect/cache/tsconfig.base.json b/node_modules/@effect/cache/tsconfig.base.json
+diff --git a/tsconfig.base.json b/tsconfig.base.json
 new file mode 100644
 index 0000000..cc7c28d
 --- /dev/null
-+++ b/node_modules/@effect/cache/tsconfig.base.json
++++ b/tsconfig.base.json
 @@ -0,0 +1,62 @@
 +{
 +    "compilerOptions": {
@@ -167,11 +167,11 @@ index 0000000..cc7c28d
 +    ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/cache/tsconfig.build.json b/node_modules/@effect/cache/tsconfig.build.json
+diff --git a/tsconfig.build.json b/tsconfig.build.json
 new file mode 100644
 index 0000000..148b428
 --- /dev/null
-+++ b/node_modules/@effect/cache/tsconfig.build.json
++++ b/tsconfig.build.json
 @@ -0,0 +1,13 @@
 +{
 +    "extends": "./tsconfig.base.json",
@@ -187,11 +187,11 @@ index 0000000..148b428
 +    ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/cache/tsconfig.json b/node_modules/@effect/cache/tsconfig.json
+diff --git a/tsconfig.json b/tsconfig.json
 new file mode 100644
 index 0000000..597ce10
 --- /dev/null
-+++ b/node_modules/@effect/cache/tsconfig.json
++++ b/tsconfig.json
 @@ -0,0 +1,18 @@
 +{
 +  "extends": "./tsconfig.base.json",
@@ -212,11 +212,11 @@ index 0000000..597ce10
 +  }
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/cache/tsplus.config.json b/node_modules/@effect/cache/tsplus.config.json
+diff --git a/tsplus.config.json b/tsplus.config.json
 new file mode 100644
 index 0000000..1f1ceb8
 --- /dev/null
-+++ b/node_modules/@effect/cache/tsplus.config.json
++++ b/tsplus.config.json
 @@ -0,0 +1,11 @@
 +{
 +  "importMap": {

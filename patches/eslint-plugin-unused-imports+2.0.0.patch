@@ -1,7 +1,7 @@
-diff --git a/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js b/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
+diff --git a/lib/rules/predicates.js b/lib/rules/predicates.js
 index 9680809..dfd3bec 100644
---- a/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
-+++ b/node_modules/eslint-plugin-unused-imports/lib/rules/predicates.js
+--- a/lib/rules/predicates.js
++++ b/lib/rules/predicates.js
 @@ -32,6 +32,9 @@ exports.unusedImportsPredicate = (problem, context) => {
  		return problem;
  	}

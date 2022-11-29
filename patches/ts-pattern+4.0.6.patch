@@ -1,7 +1,7 @@
-diff --git a/node_modules/ts-pattern/package.json b/node_modules/ts-pattern/package.json
+diff --git a/package.json b/package.json
 index 20400e7..d144252 100644
---- a/node_modules/ts-pattern/package.json
-+++ b/node_modules/ts-pattern/package.json
+--- a/package.json
++++ b/package.json
 @@ -2,7 +2,6 @@
    "name": "ts-pattern",
    "version": "4.0.6",

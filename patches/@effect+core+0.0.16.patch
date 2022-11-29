@@ -1,7 +1,7 @@
-diff --git a/node_modules/@effect/core/package.json b/node_modules/@effect/core/package.json
+diff --git a/package.json b/package.json
 index 104a4f2..f56919e 100644
---- a/node_modules/@effect/core/package.json
-+++ b/node_modules/@effect/core/package.json
+--- a/package.json
++++ b/package.json
 @@ -22,6 +22,86 @@
          "default": "./index.js"
        }
@@ -89,11 +89,11 @@ index 104a4f2..f56919e 100644
      "./*": {
        "import": {
          "types": "./*.d.ts",
-diff --git a/node_modules/@effect/core/tsconfig.base.json b/node_modules/@effect/core/tsconfig.base.json
+diff --git a/tsconfig.base.json b/tsconfig.base.json
 new file mode 100644
 index 0000000..cc7c28d
 --- /dev/null
-+++ b/node_modules/@effect/core/tsconfig.base.json
++++ b/tsconfig.base.json
 @@ -0,0 +1,62 @@
 +{
 +    "compilerOptions": {
@@ -158,11 +158,11 @@ index 0000000..cc7c28d
 +    ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/core/tsconfig.build.json b/node_modules/@effect/core/tsconfig.build.json
+diff --git a/tsconfig.build.json b/tsconfig.build.json
 new file mode 100644
 index 0000000..148b428
 --- /dev/null
-+++ b/node_modules/@effect/core/tsconfig.build.json
++++ b/tsconfig.build.json
 @@ -0,0 +1,13 @@
 +{
 +    "extends": "./tsconfig.base.json",
@@ -178,11 +178,11 @@ index 0000000..148b428
 +    ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/core/tsconfig.json b/node_modules/@effect/core/tsconfig.json
+diff --git a/tsconfig.json b/tsconfig.json
 new file mode 100644
 index 0000000..597ce10
 --- /dev/null
-+++ b/node_modules/@effect/core/tsconfig.json
++++ b/tsconfig.json
 @@ -0,0 +1,18 @@
 +{
 +  "extends": "./tsconfig.base.json",
@@ -203,11 +203,11 @@ index 0000000..597ce10
 +  }
 +}
 \ No newline at end of file
-diff --git a/node_modules/@effect/core/tsplus.config.json b/node_modules/@effect/core/tsplus.config.json
+diff --git a/tsplus.config.json b/tsplus.config.json
 new file mode 100644
 index 0000000..1f1ceb8
 --- /dev/null
-+++ b/node_modules/@effect/core/tsplus.config.json
++++ b/tsplus.config.json
 @@ -0,0 +1,11 @@
 +{
 +  "importMap": {

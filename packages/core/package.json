@@ -5,12 +5,14 @@
   "type": "module",
   "dependencies": {
     "@effect-ts/core": "^0.60.4",
+    "@effect-ts/system": "^0.57.4",
     "@effect-ts/monocle": "^0.43.0",
     "@effect/core": "*",
     "@tsplus/stdlib": "*",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
+    "query-string": "^7.1.1",
     "short-uuid": "^4.2.2",
     "uuid": "^9.0.0",
     "validator": "^13.7.0"
@@ -18,9 +20,9 @@
   "devDependencies": {
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.10",
-    "@babel/cli": "^7.19.3",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
+    "winston": "^3.8.2"
   },
   "overrides": {
     "@effect-ts/monocle": {

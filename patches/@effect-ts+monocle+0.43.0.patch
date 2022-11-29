@@ -1,7 +1,7 @@
-diff --git a/node_modules/@effect-ts/monocle/package.json b/node_modules/@effect-ts/monocle/package.json
+diff --git a/package.json b/package.json
 index d78ce96..fc4caaa 100644
---- a/node_modules/@effect-ts/monocle/package.json
-+++ b/node_modules/@effect-ts/monocle/package.json
+--- a/package.json
++++ b/package.json
 @@ -13,43 +13,73 @@
    "sideEffects": [],
    "exports": {

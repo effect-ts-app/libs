@@ -6,8 +6,10 @@
   "dependencies": {
     "@effect-ts-app/core": "^1.3.2",
     "@effect-ts/core": "*",
+    "@effect-ts/system": "*",
     "@effect-ts/monocle": "*",
     "@effect/core": "*",
+    "@tsplus/stdlib": "*",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -16,7 +18,6 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.10",
     "ts-toolbelt": "^9.6.0",

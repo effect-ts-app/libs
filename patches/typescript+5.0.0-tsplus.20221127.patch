@@ -1,7 +1,7 @@
-diff --git a/node_modules/typescript/lib/tsc.js b/node_modules/typescript/lib/tsc.js
+diff --git a/lib/tsc.js b/lib/tsc.js
 index 4cfd775..29f7c54 100644
---- a/node_modules/typescript/lib/tsc.js
-+++ b/node_modules/typescript/lib/tsc.js
+--- a/lib/tsc.js
++++ b/lib/tsc.js
 @@ -44919,6 +44919,15 @@ function createTypeChecker(host) {
        return top;
      }
@@ -45,10 +45,10 @@ index 4cfd775..29f7c54 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-diff --git a/node_modules/typescript/lib/tsserver.js b/node_modules/typescript/lib/tsserver.js
+diff --git a/lib/tsserver.js b/lib/tsserver.js
 index 953136d..12448cb 100644
---- a/node_modules/typescript/lib/tsserver.js
-+++ b/node_modules/typescript/lib/tsserver.js
+--- a/lib/tsserver.js
++++ b/lib/tsserver.js
 @@ -49277,6 +49277,15 @@ ${lanes.join("\n")}
          return top;
        }

@@ -1,7 +1,7 @@
-diff --git a/node_modules/@typescript-eslint/scope-manager/dist/referencer/Referencer.js b/node_modules/@typescript-eslint/scope-manager/dist/referencer/Referencer.js
+diff --git a/dist/referencer/Referencer.js b/dist/referencer/Referencer.js
 index 7588225..8f454d5 100644
---- a/node_modules/@typescript-eslint/scope-manager/dist/referencer/Referencer.js
-+++ b/node_modules/@typescript-eslint/scope-manager/dist/referencer/Referencer.js
+--- a/dist/referencer/Referencer.js
++++ b/dist/referencer/Referencer.js
 @@ -60,6 +60,8 @@ class Referencer extends Visitor_1.Visitor {
          for (const lib of __classPrivateFieldGet(this, _Referencer_lib, "f")) {
              const variables = lib_1.lib[lib];

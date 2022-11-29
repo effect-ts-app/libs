@@ -1,6 +1,21 @@
 {
     "name": "@effect-ts-app/boilerplate-root",
     "private": true,
+    "pnpm": {
+        "patchedDependencies": {
+            "@effect-ts/core@0.60.4": "patches/@effect-ts+core+0.60.4.patch",
+            "@effect-ts/monocle@0.43.0": "patches/@effect-ts+monocle+0.43.0.patch",
+            "@effect-ts/system@0.57.4": "patches/@effect-ts+system+0.57.4.patch",
+            "@effect/cache@0.0.4": "patches/@effect+cache+0.0.4.patch",
+            "@effect/core@0.0.16": "patches/@effect+core+0.0.16.patch",
+            "@tsplus/stdlib@0.2.8": "patches/@tsplus+stdlib+0.2.8.patch",
+            "@typescript-eslint/scope-manager@5.44.0": "patches/@typescript-eslint+scope-manager+5.44.0.patch",
+            "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen+0.16.1.patch",
+            "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports+2.0.0.patch",
+            "ts-pattern@4.0.6": "patches/ts-pattern+4.0.6.patch",
+            "typescript@5.0.0-tsplus.20221127": "patches/typescript+5.0.0-tsplus.20221127.patch"
+        }
+    },
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "clean": "ultra -r clean",
@@ -9,7 +24,6 @@
         "autofix": "NODE_OPTIONS=--max-old-space-size=6144 ultra -r autofix",
         "lint": "ultra -r lint",
         "circular:dist": "ultra -r circular:dist",
-        "postinstall": "patch-package",
         "test": "ultra -r pnpm test",
         "testsuite": "ultra -r pnpm testsuite",
         "up-all": "pnpm --recursive update",
@@ -50,13 +64,14 @@
         "@swc/helpers": "0.4.14",
         "cross-env": "^7.0.3",
         "http-proxy": "npm:http-proxy-node16@^1.0.0",
-        "patch-package": "^6.5.0",
-        "postinstall-postinstall": "^2.1.0",
         "ts-lib": "^0.0.5",
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.19.3",
+        "@babel/core": "^7.20.5",
+        "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+        "@babel/plugin-transform-modules-commonjs": "^7.19.6",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@swc/core": "1.3.20",
         "@swc/register": "^0.1.10",

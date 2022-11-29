@@ -1,7 +1,7 @@
-diff --git a/node_modules/@effect-ts/system/Effect/effect.d.ts b/node_modules/@effect-ts/system/Effect/effect.d.ts
+diff --git a/Effect/effect.d.ts b/Effect/effect.d.ts
 index b6b9ff1..1304a7e 100644
---- a/node_modules/@effect-ts/system/Effect/effect.d.ts
-+++ b/node_modules/@effect-ts/system/Effect/effect.d.ts
+--- a/Effect/effect.d.ts
++++ b/Effect/effect.d.ts
 @@ -3,6 +3,7 @@ import { _A, _E, _R, _S1, _S2, _U, _W } from "./commons.js";
  import type { Instruction } from "./primitives.js";
  export declare const EffectURI = "Effect";
@@ -10,10 +10,10 @@ index b6b9ff1..1304a7e 100644
  export interface Effect<R, E, A> extends HasUnify {
      readonly [_U]: EffectURI;
      readonly [_E]: () => E;
-diff --git a/node_modules/@effect-ts/system/Either/core.d.ts b/node_modules/@effect-ts/system/Either/core.d.ts
+diff --git a/Either/core.d.ts b/Either/core.d.ts
 index 7d338d9..589ad39 100644
---- a/node_modules/@effect-ts/system/Either/core.d.ts
-+++ b/node_modules/@effect-ts/system/Either/core.d.ts
+--- a/Either/core.d.ts
++++ b/Either/core.d.ts
 @@ -8,6 +8,7 @@ import * as St from "../Structural/index.js";
  /**
   * Definitions
@@ -39,10 +39,10 @@ index 7d338d9..589ad39 100644
  export declare type Either<E, A> = Left<E> | Right<A>;
  /**
   * Constructs a new `Either` holding a `Right` value. This usually represents a successful value due to the right bias
-diff --git a/node_modules/@effect-ts/system/Option/core.d.ts b/node_modules/@effect-ts/system/Option/core.d.ts
+diff --git a/Option/core.d.ts b/Option/core.d.ts
 index 962c0ab..ef04c16 100644
---- a/node_modules/@effect-ts/system/Option/core.d.ts
-+++ b/node_modules/@effect-ts/system/Option/core.d.ts
+--- a/Option/core.d.ts
++++ b/Option/core.d.ts
 @@ -6,11 +6,14 @@ import type { HasUnify } from "../Utils/index.js";
  /**
   * Definitions
@@ -66,10 +66,10 @@ index 962c0ab..ef04c16 100644
  export declare type Option<A> = None | Some<A>;
  /**
   * Constructs none
-diff --git a/node_modules/@effect-ts/system/Sync/core.d.ts b/node_modules/@effect-ts/system/Sync/core.d.ts
+diff --git a/Sync/core.d.ts b/Sync/core.d.ts
 index bd214af..d2becb8 100644
---- a/node_modules/@effect-ts/system/Sync/core.d.ts
-+++ b/node_modules/@effect-ts/system/Sync/core.d.ts
+--- a/Sync/core.d.ts
++++ b/Sync/core.d.ts
 @@ -2,6 +2,7 @@ import type * as Tp from "../Collections/Immutable/Tuple/index.js";
  import type { Either } from "../Either/core.js";
  import type { _A, _E, _R, HasUnify } from "../Utils/index.js";
@@ -78,10 +78,10 @@ index bd214af..d2becb8 100644
  export interface Sync<R, E, A> extends X.XPure<unknown, unknown, unknown, R, E, A>, HasUnify {
  }
  export interface UIO<A> extends Sync<unknown, never, A> {
-diff --git a/node_modules/@effect-ts/system/XPure/core.d.ts b/node_modules/@effect-ts/system/XPure/core.d.ts
+diff --git a/XPure/core.d.ts b/XPure/core.d.ts
 index 2f597d2..ff1d6e3 100644
---- a/node_modules/@effect-ts/system/XPure/core.d.ts
-+++ b/node_modules/@effect-ts/system/XPure/core.d.ts
+--- a/XPure/core.d.ts
++++ b/XPure/core.d.ts
 @@ -5,6 +5,7 @@ import type { EffectURI } from "../Effect/effect.js";
  import * as E from "../Either/core.js";
  import type { HasUnify } from "../Utils/index.js";
@@ -90,10 +90,10 @@ index 2f597d2..ff1d6e3 100644
   * `XPure[W, S1, S2, R, E, A]` is a purely functional description of a
   * computation that requires an environment `R` and an initial state `S1` and
   * may either fail with an `E` or succeed with an updated state `S2` and an `A`
-diff --git a/node_modules/@effect-ts/system/package.json b/node_modules/@effect-ts/system/package.json
+diff --git a/package.json b/package.json
 index 145a30c..43ead79 100644
---- a/node_modules/@effect-ts/system/package.json
-+++ b/node_modules/@effect-ts/system/package.json
+--- a/package.json
++++ b/package.json
 @@ -14,575 +14,1011 @@
    ],
    "exports": {

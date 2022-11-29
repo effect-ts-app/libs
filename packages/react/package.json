@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-ts/core": "*",
+    "@effect-ts/system": "*",
     "@effect/core": "*",
     "@tsplus/stdlib": "*",
     "cross-fetch": "^3.1.5",
@@ -12,6 +13,9 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.19.6",
     "@types/react": "^18.0.25",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",

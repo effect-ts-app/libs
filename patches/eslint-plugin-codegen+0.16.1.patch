@@ -1,7 +1,7 @@
-diff --git a/node_modules/eslint-plugin-codegen/dist/index.js b/node_modules/eslint-plugin-codegen/dist/index.js
+diff --git a/dist/index.js b/dist/index.js
 index f133678..dbf2e67 100644
---- a/node_modules/eslint-plugin-codegen/dist/index.js
-+++ b/node_modules/eslint-plugin-codegen/dist/index.js
+--- a/dist/index.js
++++ b/dist/index.js
 @@ -126,7 +126,7 @@ const codegen = {
                  const normalise = (val) => val.trim().replace(/\r?\n/g, os.EOL);
                  const result = Either_1.tryCatch(() => {
@@ -11,10 +11,10 @@ index f133678..dbf2e67 100644
                  }, err => `${err}`);
                  if (result._tag === 'Left') {
                      context.report({ message: result.left, loc: startMarkerLoc });
-diff --git a/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts b/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
+diff --git a/dist/presets/index.d.ts b/dist/presets/index.d.ts
 index d96092b..2fe1e09 100644
---- a/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
-+++ b/node_modules/eslint-plugin-codegen/dist/presets/index.d.ts
+--- a/dist/presets/index.d.ts
++++ b/dist/presets/index.d.ts
 @@ -4,7 +4,7 @@ export declare type Preset<Options> = (params: {
          existingContent: string;
      };
@@ -24,10 +24,10 @@ index d96092b..2fe1e09 100644
  export * from './barrel';
  export * from './custom';
  export * from './empty';
-diff --git a/node_modules/eslint-plugin-codegen/src/index.ts b/node_modules/eslint-plugin-codegen/src/index.ts
+diff --git a/src/index.ts b/src/index.ts
 index 0f21acd..0cba17c 100644
---- a/node_modules/eslint-plugin-codegen/src/index.ts
-+++ b/node_modules/eslint-plugin-codegen/src/index.ts
+--- a/src/index.ts
++++ b/src/index.ts
 @@ -131,7 +131,7 @@ const codegen: eslint.Rule.RuleModule = {
          const result = tryCatch(
            () => {
@@ -37,10 +37,10 @@ index 0f21acd..0cba17c 100644
            },
            err => `${err}`
          )
-diff --git a/node_modules/eslint-plugin-codegen/src/presets/index.ts b/node_modules/eslint-plugin-codegen/src/presets/index.ts
+diff --git a/src/presets/index.ts b/src/presets/index.ts
 index 52bd259..1446064 100644
---- a/node_modules/eslint-plugin-codegen/src/presets/index.ts
-+++ b/node_modules/eslint-plugin-codegen/src/presets/index.ts
+--- a/src/presets/index.ts
++++ b/src/presets/index.ts
 @@ -1,4 +1,4 @@
 -export type Preset<Options> = (params: {meta: {filename: string; existingContent: string}; options: Options}) => string
 +export type Preset<Options> = (params: {meta: {filename: string; existingContent: string}; options: Options}, context: any) => string
