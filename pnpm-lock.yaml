@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 overrides:
   '@effect/core': ^0.0.16
   '@types/node': ~18.11.9
-  '@types/react': ^18.0.25
   http-proxy: npm:http-proxy-node16@1.0.0
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
 
@@ -29,7 +28,6 @@ importers:
       '@tsplus/installer': 0.0.159
       '@types/lodash': ^4.14.190
       '@types/node': ~18.11.9
-      '@types/react': ^18.0.25
       '@typescript-eslint/eslint-plugin': ^5.44.0
       '@typescript-eslint/parser': ^5.44.0
       '@typescript-eslint/scope-manager': ^5.44.0
@@ -79,7 +77,6 @@ importers:
       '@effect-ts/monocle': 0.43.0_@effect-ts+core@0.60.4
       '@effect-ts/system': 0.57.4
       '@swc/helpers': 0.4.14
-      '@types/react': 18.0.25
       cross-env: 7.0.3
       http-proxy: /http-proxy-node16/1.0.0
       patch-package: 6.5.0
@@ -3484,6 +3481,7 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
+    dev: true
 
   /@types/proper-lockfile/4.1.2:
     resolution: {integrity: sha512-kd4LMvcnpYkspDcp7rmXKedn8iJSCoa331zRRamUp5oanKt/CefbEGPQP7G89enz7sKD4bvsr8mHSsC8j5WOvA==}
@@ -3505,6 +3503,7 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
+    dev: true
 
   /@types/redis/2.8.32:
     resolution: {integrity: sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==}
@@ -3526,6 +3525,7 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
 
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
@@ -4914,6 +4914,7 @@ packages:
 
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+    dev: true
 
   /dargs/7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}

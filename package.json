@@ -34,7 +34,6 @@
     "resolutions": {
         "@effect/core": "^0.0.16",
         "@types/node": "~18.11.9",
-        "@types/react": "^18.0.25",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
     },
@@ -49,7 +48,6 @@
         "@effect-ts/monocle": "^0.43.0",
         "@effect-ts/system": "^0.57.4",
         "@swc/helpers": "0.4.14",
-        "@types/react": "^18.0.25",
         "cross-env": "^7.0.3",
         "http-proxy": "npm:http-proxy-node16@^1.0.0",
         "patch-package": "^6.5.0",
