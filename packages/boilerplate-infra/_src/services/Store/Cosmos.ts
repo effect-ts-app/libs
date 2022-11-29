@@ -6,6 +6,7 @@ import { OptimisticConcurrencyException } from "../../errors.js"
 
 import { omit } from "@effect-ts-app/boilerplate-prelude/utils"
 
+import { inspect } from "util"
 import type {
   Filter,
   FilterJoinSelect,
@@ -180,27 +181,35 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect.promise(() =>
-              container.items
-                .query<PM>({
-                  query: `SELECT * FROM ${name} f WHERE f.id != @id`,
-                  parameters: [{ name: "@id", value: importedMarkerId }]
-                })
-                .fetchAll()
-                .then(({ resources }) => resources.toChunk)
-            ),
+            all: Effect.sync(() => ({
+              query: `SELECT * FROM ${name} f WHERE f.id != @id`,
+              parameters: [{ name: "@id", value: importedMarkerId }]
+            }))
+              .tap(q => Effect.logDebug("cosmos query: " + inspect(q)))
+              .flatMap(q =>
+                Effect.promise(() =>
+                  container.items
+                    .query<PM>(q)
+                    .fetchAll()
+                    .then(({ resources }) => resources.toChunk)
+                )
+              ),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
             ) =>
               filter.keys
                 .forEachEffect(k =>
-                  Effect.promise(() =>
-                    container.items
-                      .query<T>(buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
-                      .fetchAll()
-                      .then(({ resources }) => resources.toChunk)
-                  )
+                  Effect.sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                    .tap(q => Effect.logDebug("cosmos query: " + inspect(q)))
+                    .flatMap(q =>
+                      Effect.promise(() =>
+                        container.items
+                          .query<T>(q)
+                          .fetchAll()
+                          .then(({ resources }) => resources.toChunk)
+                      )
+                    )
                 )
                 .map(a => {
                   const v = a
@@ -225,22 +234,29 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 // so we use multiple queries instead.
                   filter.keys
                     .forEachEffect(k =>
-                      Effect.promise(() =>
-                        container.items
-                          .query<PM>(buildFindJoinCosmosQuery(filter, k, name, skip, limit))
-                          .fetchAll()
-                          .then(({ resources }) => resources.toChunk)
-                      )
+                      Effect.sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                        .tap(q => Effect.logDebug("cosmos query: " + inspect(q)))
+                        .flatMap(q =>
+                          Effect.promise(() =>
+                            container.items
+                              .query<PM>(q)
+                              .fetchAll()
+                              .then(({ resources }) => resources.toChunk)
+                          )
+                        )
                     )
                     .map(_ => _.flatMap(_ => _))
-                : Effect.promise(() =>
-                  container.items
-                    .query<PM>(
-                      buildCosmosQuery(filter, name, importedMarkerId, skip, limit)
+                : Effect.sync(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                  .tap(q => Effect.logDebug("cosmos query: " + inspect(q)))
+                  .flatMap(q =>
+                    Effect.promise(() =>
+                      container.items.query<PM>(
+                        q
+                      )
+                        .fetchAll()
+                        .then(({ resources }) => resources.toChunk)
                     )
-                    .fetchAll()
-                    .then(({ resources }) => resources.toChunk)
-                )
+                  )
             },
             find: id =>
               Effect.promise(() =>
@@ -411,6 +427,7 @@ export function buildLegacyCosmosQuery<PM>(
 export function buildWhereCosmosQuery(
   filter: StoreWhereFilter,
   name: string,
+  importedMarkerId: string,
   skip?: number,
   limit?: number
 ) {
@@ -423,7 +440,7 @@ export function buildWhereCosmosQuery(
         .map(_ => _.key.split(".-1.")[0])
         .map(_ => `JOIN ${_} IN c.${_}`)
     }
-    WHERE ${
+    WHERE f.id != @id AND ${
       filter.where
         .map(_ =>
           _.key.includes(".-1.") ?
@@ -436,17 +453,26 @@ export function buildWhereCosmosQuery(
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}, false)`
+              : x.t === "not-eq"
+              ? x.value === null
+                ? `IS_NULL(${x.f}.${x.key}) = false`
+                : `LOWER(${x.f}.${x.key}) <> LOWER(@v${i})`
+              : x.value === null
+              ? `IS_NULL(${x.f}.${x.key}) = true`
               : `LOWER(${x.f}.${x.key}) = LOWER(@v${i})`
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
     }
     ${lm}`,
-    parameters: filter.where
-      .mapWithIndex((i, x) => ({
-        name: `@v${i}`,
-        value: x.value
-      }))
-      .mutable
+    parameters: [
+      { name: "@id", value: importedMarkerId },
+      ...filter.where
+        .mapWithIndex((i, x) => ({
+          name: `@v${i}`,
+          value: x.value
+        }))
+        .mutable
+    ]
   }
 }
 
@@ -461,7 +487,7 @@ export function buildCosmosQuery<PM>(
       filter.type === "endsWith" ||
       filter.type === "contains"
     ? buildLegacyCosmosQuery(filter, name, importedMarkerId, skip, limit)
-    : buildWhereCosmosQuery(filter, name, skip, limit)
+    : buildWhereCosmosQuery(filter, name, importedMarkerId, skip, limit)
 }
 
 class CosmosDbOperationError {

@@ -42,6 +42,7 @@ test("works", () => {
   expect(buildWhereCosmosQuery(
     somethingsWhere(_ => _("b", _ => "b2")),
     "Somethings",
+    "importedMarkerId",
     undefined,
     10
   )).toEqual({
@@ -61,6 +62,7 @@ test("works", () => {
   expect(buildWhereCosmosQuery(
     somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a2"))),
     "Somethings",
+    "importedMarkerId",
     undefined,
     10
   )).toEqual({
