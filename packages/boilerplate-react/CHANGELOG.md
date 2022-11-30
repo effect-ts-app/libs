@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-react
 
+## 1.2.0
+
+### Minor Changes
+
+- 5c41057: Fix build
+
+### Patch Changes
+
+- Updated dependencies [5c41057]
+  - @effect-ts-app/react@1.5.0
+
 ## 1.1.1
 
 ### Patch Changes
