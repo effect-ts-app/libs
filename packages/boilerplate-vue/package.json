@@ -7,9 +7,9 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "dependencies": {
-    "@effect-ts-app/core": "^1.4.2",
-    "@effect-ts-app/schema": "^1.4.1",
-    "@effect-ts-app/boilerplate-prelude": "*",
+    "@effect-ts-app/core": "workspace:*",
+    "@effect-ts-app/schema": "workspace:*",
+    "@effect-ts-app/boilerplate-prelude": "workspace:*",
     "swrv": "^1.0.1",
     "vue": "^3.2.45",
     "vue2": "npm:vue@3.2.45"

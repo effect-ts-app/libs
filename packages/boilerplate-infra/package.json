@@ -7,10 +7,10 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "dependencies": {
-    "@effect-ts-app/boilerplate-prelude": "*",
-    "@effect-ts-app/core": "^1.4.2",
-    "@effect-ts-app/infra": "^1.4.1",
-    "@effect-ts-app/schema": "^1.4.1",
+    "@effect-ts-app/boilerplate-prelude": "workspace:*",
+    "@effect-ts-app/core": "workspace:*",
+    "@effect-ts-app/infra": "workspace:*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect/cache": "^0.0.4",
     "@effect/core": "^0.0.16",
     "change-case": "^4.1.2",

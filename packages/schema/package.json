@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-ts-app/core": "^1.4.2",
+    "@effect-ts-app/core": "workspace:*",
     "@effect-ts/core": "*",
     "@effect-ts/system": "*",
     "@effect-ts/monocle": "*",
