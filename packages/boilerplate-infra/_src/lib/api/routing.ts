@@ -303,95 +303,104 @@ export function makeRequestHandler<
   }
 
   return (req: express.Request, res: express.Response) => {
-    const requestContext = makeContext(req)
-    if (req.method === "GET") {
-      res.setHeader("Cache-Control", "no-store")
-    }
-    res.setHeader("Content-Language", requestContext.locale)
     // get params once
-    return getParams(req)
-      .exit
-      .flatMap(ex => {
-        const handleRequest = ex
-          .toEffect
-          .tap(pars =>
-            Effect.logInfo(
-              `Processing Request: ${req.method} ${req.originalUrl} parameters: ${pars.$$.pretty}`
-            )
-          )
-          .zipRight(
-            parseRequest(req)
-              .map(({ body, path, query }) => {
-                const hn = {
-                  ...body.value,
-                  ...query.value,
-                  ...path.value
-                } as unknown as ReqA
-                return hn
-              })
-            // .instrument("Performance.ParseRequest")
-          )
-          .flatMap(parsedReq =>
-            handle(parsedReq as any)
-              // .instrument("Performance.HandleRequest")
-              .flatMap(r => respond(parsedReq, res, r) // .instrument("Performance.EncodeResponse")
+    return Effect.sync(() => {
+      const requestContext = makeContext(req)
+      if (req.method === "GET") {
+        res.setHeader("Cache-Control", "no-store")
+      }
+      res.setHeader("Content-Language", requestContext.locale)
+      return requestContext
+    })
+      .flatMap(requestContext =>
+        getParams(req)
+          .exit
+          .flatMap(ex => {
+            return Effect.suspendSucceed(() => {
+              const handleRequest = ex
+                .toEffect
+                .tap(pars =>
+                  Effect.logInfo(
+                    `Processing Request: ${req.method} ${req.originalUrl} parameters: ${pars.$$.pretty}`
+                  )
+                )
+                .zipRight(
+                  parseRequest(req)
+                    .map(({ body, path, query }) => {
+                      const hn = {
+                        ...body.value,
+                        ...query.value,
+                        ...path.value
+                      } as unknown as ReqA
+                      return hn
+                    })
+                  // .instrument("Performance.ParseRequest")
+                )
+                .flatMap(parsedReq =>
+                  handle(parsedReq as any)
+                    // .instrument("Performance.HandleRequest")
+                    .flatMap(r => respond(parsedReq, res, r) // .instrument("Performance.EncodeResponse")
+                    )
+                )
+              // Commands should not be interruptable.
+              const r = (
+                req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
+              ) // .instrument("Performance.RequestResponse")
+              const r2 = makeMiddlewareLayer ? r.provideSomeLayer(makeMiddlewareLayer(req, res, requestContext)) : r
+              return errorHandler(
+                req,
+                res,
+                requestContext,
+                r2
               )
-          )
-        // Commands should not be interruptable.
-        const r = (
-          req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
-        ) // .instrument("Performance.RequestResponse")
-        const r2 = makeMiddlewareLayer ? r.provideSomeLayer(makeMiddlewareLayer(req, res, requestContext)) : r
-        return errorHandler(
-          req,
-          res,
-          requestContext,
-          r2.setupRequest(requestContext)
-        )
-      })
-      .tapErrorCause(cause =>
-        Effect.sync(() => {
-          res.status(500).send()
-          reportRequestError(cause, {
-            requestContext,
-            originalUrl: req.originalUrl,
-            method: req.method
+            })
           })
-        })
-      )
-      .tapBothInclAbort(
-        () => {
-          const headers = res.getHeaders()
-          return Effect.logError(
-            `Processed request: ${req.method} ${req.originalUrl} ${
-              {
-                statusCode: res.statusCode,
-                headers: headers
-                  ? Object.entries(headers).reduce((prev, [key, value]) => {
-                    prev[key] = value && typeof value === "string" ? snipString(value) : value
-                    return prev
-                  }, {} as Record<string, any>)
-                  : headers
-              }.$$.pretty
-            }`
+          .tapErrorCause(cause =>
+            Effect.sync(() => {
+              res.status(500).send()
+              reportRequestError(cause, {
+                requestContext,
+                originalUrl: req.originalUrl,
+                method: req.method
+              })
+            }) >
+              Effect.suspendSucceed(() => {
+                const headers = res.getHeaders()
+                return Effect.logErrorCauseMessage(
+                  `Processed request: ${req.method} ${req.originalUrl} ${
+                    {
+                      statusCode: res.statusCode,
+                      headers: headers
+                        ? Object.entries(headers).reduce((prev, [key, value]) => {
+                          prev[key] = value && typeof value === "string" ? snipString(value) : value
+                          return prev
+                        }, {} as Record<string, any>)
+                        : headers
+                    }.$$.pretty
+                  }`,
+                  cause
+                )
+              })
           )
-        },
-        () => {
-          const headers = res.getHeaders()
-          return Effect.logInfo(
-            `Processed request ${req.method} ${req.originalUrl} ${
-              {
-                statusCode: res.statusCode,
-                headers: headers
-                  ? Object.entries(headers).reduce((prev, [key, value]) => {
-                    prev[key] = value && typeof value === "string" ? snipString(value) : value
-                    return prev
-                  }, {} as Record<string, any>)
-                  : headers
-              }.$$.pretty
-            }`
+          .tap(() =>
+            Effect.suspendSucceed(() => {
+              const headers = res.getHeaders()
+              return Effect.logInfo(
+                `Processed request ${req.method} ${req.originalUrl} ${
+                  {
+                    statusCode: res.statusCode,
+                    headers: headers
+                      ? Object.entries(headers).reduce((prev, [key, value]) => {
+                        prev[key] = value && typeof value === "string" ? snipString(value) : value
+                        return prev
+                      }, {} as Record<string, any>)
+                      : headers
+                  }.$$.pretty
+                }`
+              )
+            })
           )
-        }
+          .setupRequest(requestContext)
       )
   }
 }
