@@ -1,14 +1,14 @@
 {
   "name": "@effect-ts-app/boilerplate-vue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "type": "module",
   "resolutions": {
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "dependencies": {
-    "@effect-ts-app/core": "^1.4.0",
-    "@effect-ts-app/schema": "^1.4.0",
+    "@effect-ts-app/core": "^1.4.2",
+    "@effect-ts-app/schema": "^1.4.1",
     "@effect-ts-app/boilerplate-prelude": "*",
     "swrv": "^1.0.1",
     "vue": "^3.2.45",
