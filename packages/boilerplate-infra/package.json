@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-infra",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "type": "module",
   "resolutions": {
