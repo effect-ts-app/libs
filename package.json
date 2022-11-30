@@ -49,7 +49,7 @@
     },
     "resolutions": {
         "@effect/core": "^0.0.16",
-        "@types/node": "~18.11.9",
+        "@types/node": "~18.11.10",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
     },
@@ -79,8 +79,8 @@
         "@swc/register": "^0.1.10",
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.159",
-        "@types/lodash": "^4.14.190",
-        "@types/node": "~18.11.9",
+        "@types/lodash": "^4.14.191",
+        "@types/node": "~18.11.10",
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
         "@typescript-eslint/scope-manager": "^5.45.0",
@@ -107,7 +107,7 @@
         "npm-check-updates": "^16.4.3",
         "ts-transform-paths": "^2.0.3",
         "tsc-watch": "^5.0.3",
-        "tsconfig-paths": "^4.1.0",
+        "tsconfig-paths": "^4.1.1",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.4",
         "ultra-runner": "^3.10.5",
