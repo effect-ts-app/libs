@@ -184,8 +184,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     })
                   )
               )
-            })
-              .instrument("cosmos.batchSet")
+            }).instrument("cosmos.batchSet")
               .apply(annotate)
           }
 
