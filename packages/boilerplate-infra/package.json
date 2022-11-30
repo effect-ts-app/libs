@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-infra",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "license": "MIT",
   "type": "module",
   "resolutions": {
@@ -202,7 +202,8 @@
     "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
     "client": "node --experimental-specifier-resolution=node -r source-map-support/register ./dist/client.bin.js",
     "ncu": "ncu -x date-fns",
-    "pub": "pnpm build && npm publish --access public"
+    "pub": "pnpm prepublish && npm publish --access public",
+    "prepublish": "pnpm build"
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": false
