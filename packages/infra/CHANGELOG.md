@@ -1,5 +1,17 @@
 # @effect-ts-app/infra
 
+## 1.5.0
+
+### Minor Changes
+
+- 5c41057: Fix build
+
+### Patch Changes
+
+- Updated dependencies [5c41057]
+  - @effect-ts-app/core@1.5.0
+  - @effect-ts-app/schema@1.5.0
+
 ## 1.4.1
 
 ### Patch Changes
