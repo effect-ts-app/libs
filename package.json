@@ -7,7 +7,7 @@
             "@effect-ts/monocle@0.43.0": "patches/@effect-ts+monocle+0.43.0.patch",
             "@effect-ts/system@0.57.4": "patches/@effect-ts+system+0.57.4.patch",
             "@effect/cache@0.0.4": "patches/@effect+cache+0.0.4.patch",
-            "@effect/core@0.0.16": "patches/@effect+core+0.0.16.patch",
+            "@effect/core@0.0.16": "patches/@effect__core@0.0.16.patch",
             "@tsplus/stdlib@0.2.8": "patches/@tsplus+stdlib+0.2.8.patch",
             "@typescript-eslint/scope-manager@5.44.0": "patches/@typescript-eslint+scope-manager+5.44.0.patch",
             "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen+0.16.1.patch",

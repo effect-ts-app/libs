@@ -1,0 +1,139 @@
+diff --git a/_mjs/stm/STM/definition/primitives.mjs b/_mjs/stm/STM/definition/primitives.mjs
+index 67cc8d7cccef3bfbbd49c8bb0843bb30526d9199..74dbb30e57c5a40496e3b5a942560d4192e29c23 100644
+--- a/_mjs/stm/STM/definition/primitives.mjs
++++ b/_mjs/stm/STM/definition/primitives.mjs
+@@ -749,8 +749,9 @@ export function collectTodos(journal) {
+  */
+ 
+ export function execTodos(todos) {
+-  for (const todo of todos) {
+-    todo[1]();
++  const todosSorted = Array.from(todos.entries()).sort((x, y) => x[0] - y[0])
++  for (const [, todo] of todosSorted) {
++    todo()
+   }
+ }
+ /**
+diff --git a/_src/stm/STM/definition/primitives.ts b/_src/stm/STM/definition/primitives.ts
+index 89cd5b2c19817dbc594b777a2b08c4b47b5d67c2..ac1b73296c4f4c92f3d80a9babe8d764ebc97819 100644
+--- a/_src/stm/STM/definition/primitives.ts
++++ b/_src/stm/STM/definition/primitives.ts
+@@ -710,8 +710,9 @@ export function collectTodos(journal: Journal): Map<TxnId, Todo> {
+  * Executes the todos in the current thread, sequentially.
+  */
+ export function execTodos(todos: Map<TxnId, Todo>) {
+-  for (const todo of todos) {
+-    todo[1]()
++  const todosSorted = Array.from(todos.entries()).sort((x, y) => x[0] - y[0])
++  for (const [, todo] of todosSorted) {
++    todo()
+   }
+ }
+ 
+diff --git a/package.json b/package.json
+index 40398e0d105bdbc8636f881eed67eb38011c7da8..c620c0d43793a6f23206b4ecdd9757a2e470ceb1 100644
+--- a/package.json
++++ b/package.json
+@@ -23,6 +23,86 @@
+         "default": "./index.js"
+       }
+     },
++    "./io/Layer": {
++      "import": {
++        "types": "./io/Layer.d.ts",
++        "default": "./_mjs/io/Layer.mjs"
++      },
++      "require": {
++        "types": "./io/Layer.d.ts",
++        "default": "./io/Layer.js"
++      }
++    },
++    "./io/Effect": {
++      "import": {
++        "types": "./io/Effect.d.ts",
++        "default": "./_mjs/io/Effect.mjs"
++      },
++      "require": {
++        "types": "./io/Effect.d.ts",
++        "default": "./io/Effect.js"
++      }
++    },
++    "./io/Exit": {
++      "import": {
++        "types": "./io/Exit.d.ts",
++        "default": "./_mjs/io/Exit.mjs"
++      },
++      "require": {
++        "types": "./io/Exit.d.ts",
++        "default": "./io/Exit.js"
++      }
++    },
++    "./io/Cause": {
++      "import": {
++        "types": "./io/Cause.d.ts",
++        "default": "./_mjs/io/Cause.mjs"
++      },
++      "require": {
++        "types": "./io/Cause.d.ts",
++        "default": "./io/Cause.js"
++      }
++    },
++    "./io/Fiber": {
++      "import": {
++        "types": "./io/Fiber.d.ts",
++        "default": "./_mjs/io/Fiber.mjs"
++      },
++      "require": {
++        "types": "./io/Fiber.d.ts",
++        "default": "./io/Fiber.js"
++      }
++    },
++    "./io/FiberRef": {
++      "import": {
++        "types": "./io/FiberRef.d.ts",
++        "default": "./_mjs/io/FiberRef.mjs"
++      },
++      "require": {
++        "types": "./io/FiberRef.d.ts",
++        "default": "./io/FiberRef.js"
++      }
++    },
++    "./io/Scope": {
++      "import": {
++        "types": "./io/Scope.d.ts",
++        "default": "./_mjs/io/Scope.mjs"
++      },
++      "require": {
++        "types": "./io/Scope.d.ts",
++        "default": "./io/Scope.js"
++      }
++    },
++    "./*.js": {
++      "import": {
++        "types": "./*.d.ts",
++        "default": "./_mjs/*.mjs"
++      },
++      "require": {
++        "types": "./*.d.ts",
++        "default": "./*.js"
++      }
++    },
+     "./*": {
+       "import": {
+         "types": "./*.d.ts",
+diff --git a/stm/STM/definition/primitives.js b/stm/STM/definition/primitives.js
+index 2139a623e0f05c192d52b522cf9675fd8b57b1c9..58053d6338185bf6733a318aa4c77138b0241696 100644
+--- a/stm/STM/definition/primitives.js
++++ b/stm/STM/definition/primitives.js
+@@ -873,8 +873,9 @@ function collectTodos(journal) {
+ 
+ 
+ function execTodos(todos) {
+-  for (const todo of todos) {
+-    todo[1]();
++  const todosSorted = Array.from(todos.entries()).sort((x, y) => x[0] - y[0])
++  for (const [, todo] of todosSorted) {
++    todo()
+   }
+ }
+ /**
