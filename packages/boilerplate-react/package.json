@@ -7,10 +7,13 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "dependencies": {
-    "@effect-ts-app/react": "^1.4.0"
+    "@effect-ts-app/react": "^1.4.0",
+    "date-fns": "^2.29.3"
   },
   "devDependencies": {
     "@types/node": "~18.11.9",
+    "@types/react": "^18.0.25",
+    "react": "^18.2.0",
     "react-hook-form": "^7.39.7",
     "react-intl": "^6.2.1",
     "ts-node": "^10.9.1",

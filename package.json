@@ -9,7 +9,7 @@
             "@effect/cache@0.0.4": "patches/@effect+cache+0.0.4.patch",
             "@effect/core@0.0.16": "patches/@effect__core@0.0.16.patch",
             "@tsplus/stdlib@0.2.8": "patches/@tsplus+stdlib+0.2.8.patch",
-            "@typescript-eslint/scope-manager@5.44.0": "patches/@typescript-eslint+scope-manager+5.44.0.patch",
+            "@typescript-eslint/scope-manager@5.45.0": "patches/@typescript-eslint+scope-manager+5.45.0.patch",
             "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen+0.16.1.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports+2.0.0.patch",
             "ts-pattern@4.0.6": "patches/ts-pattern+4.0.6.patch",
