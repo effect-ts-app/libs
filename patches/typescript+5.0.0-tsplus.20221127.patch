@@ -55,7 +55,7 @@ index 953136d..12448cb 100644
        function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
 +        let specifier = getSpecifierForModuleSymbol_(symbol, context, overrideImportMode)
 +        // ts plus import workaround
-+        if (specifier && specifier.indexOf("/node_modules/") > 0 && specifier.endsWith(".js")) {
++        if (specifier && specifier.indexOf("/node_modules/") > 0) {
 +          const r = tryGetImportLocation(fileMap.map, specifier)
 +          if (r) { specifier = r }
 +        }

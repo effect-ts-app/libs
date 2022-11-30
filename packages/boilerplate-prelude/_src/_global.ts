@@ -7,7 +7,7 @@
 /**
  * @tsplus global
  */
-import { Duration as DUR } from "@tsplus/stdlib/data/Duration"
+import { DUR } from "@effect-ts-app/boilerplate-prelude/duration"
 
 /* eslint-disable unused-imports/no-unused-imports */
 /**
