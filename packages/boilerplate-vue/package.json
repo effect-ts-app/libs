@@ -35,6 +35,56 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
+      },
+      "require": {
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./form": {
+      "import": {
+        "types": "./dist/form.d.ts",
+        "default": "./dist/form.js"
+      },
+      "require": {
+        "types": "./dist/form.d.ts",
+        "default": "./_cjs/form.cjs"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./routeParams": {
+      "import": {
+        "types": "./dist/routeParams.d.ts",
+        "default": "./dist/routeParams.js"
+      },
+      "require": {
+        "types": "./dist/routeParams.d.ts",
+        "default": "./_cjs/routeParams.cjs"
+      }
+    },
+    "./vitePlugin": {
+      "import": {
+        "types": "./dist/vitePlugin.d.ts",
+        "default": "./dist/vitePlugin.js"
+      },
+      "require": {
+        "types": "./dist/vitePlugin.d.ts",
+        "default": "./_cjs/vitePlugin.cjs"
+      }
+    },
     "./vue2": {
       "import": {
         "types": "./dist/vue2.d.ts",
@@ -44,30 +94,10 @@
         "types": "./dist/vue2.d.ts",
         "default": "./_cjs/vue2.cjs"
       }
-    },
-    "./*.js": {
-      "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
-      },
-      "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
-      }
-    },
-    "./*": {
-      "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
-      },
-      "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
-      }
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "build": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",

@@ -1,6 +1,6 @@
 // tracing: off
 
-import * as S from "../../_schema/index.js"
+import * as S from "./_schema.js"
 
 export interface CollectAnnotations {
   <Annotations extends readonly S.Annotation<any>[]>(

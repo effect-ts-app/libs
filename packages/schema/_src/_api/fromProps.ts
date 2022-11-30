@@ -9,14 +9,14 @@ import type { None, Some } from "@tsplus/stdlib/data/Maybe"
 import type * as fc from "fast-check"
 
 import type { Annotation } from "../custom/_schema/annotation.js"
-import { augmentRecord } from "../custom/_utils/index.js"
-import * as Arbitrary from "../custom/Arbitrary/index.js"
-import * as Encoder from "../custom/Encoder/index.js"
-import * as Guard from "../custom/Guard/index.js"
-import * as S from "../custom/index.js"
-import * as Parser from "../custom/Parser/index.js"
-import type { ParserEnv } from "../custom/Parser/index.js"
-import * as Th from "../custom/These/index.js"
+import { augmentRecord } from "../custom/_utils.js"
+import * as Arbitrary from "../custom/Arbitrary.js"
+import * as Encoder from "../custom/Encoder.js"
+import * as Guard from "../custom/Guard.js"
+import * as S from "../custom.js"
+import * as Parser from "../custom/Parser.js"
+import type { ParserEnv } from "../custom/Parser.js"
+import * as Th from "../custom/These.js"
 
 export class FromProperty<
   Self extends S.SchemaAny,

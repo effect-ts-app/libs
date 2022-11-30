@@ -38,7 +38,7 @@ import {
 } from "@effect-ts-app/schema"
 import * as MO from "@effect-ts-app/schema"
 
-import type { JSONSchema } from "../atlas-plutus/index.js"
+import type { JSONSchema } from "../atlas-plutus.js"
 import {
   AllOfSchema,
   ArraySchema,
@@ -49,7 +49,7 @@ import {
   OneOfSchema,
   referenced,
   StringSchema
-} from "../atlas-plutus/index.js"
+} from "../atlas-plutus.js"
 
 export type Gen = Effect<never, never, JSONSchema>
 

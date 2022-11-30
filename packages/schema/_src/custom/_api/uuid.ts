@@ -1,8 +1,8 @@
 import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema/index.js"
-import { parseUuidE } from "../_schema/index.js"
+import * as S from "../_schema.js"
+import { parseUuidE } from "../_schema.js"
 import { brand } from "./brand.js"
 import { nonEmpty } from "./nonEmpty.js"
 import type { NonEmptyString } from "./nonEmptyString.js"

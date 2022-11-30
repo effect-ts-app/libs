@@ -1,6 +1,6 @@
 // tracing: off
 
-import * as S from "../../_schema/index.js"
+import * as S from "./_schema.js"
 
 /**
  * @tsplus type ets/Schema/Encoder

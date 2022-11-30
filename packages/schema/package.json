@@ -29,7 +29,7 @@
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && tsc --build && pnpm build2:cjs",
+    "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -50,550 +50,864 @@
   },
   "exports": {
     ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
-      },
-      "import": "./dist/index.js"
+      }
     },
     "./FastCheck": {
+      "import": {
+        "types": "./dist/FastCheck.d.ts",
+        "default": "./dist/FastCheck.js"
+      },
       "require": {
         "types": "./dist/FastCheck.d.ts",
         "default": "./_cjs/FastCheck.cjs"
-      },
-      "import": "./dist/FastCheck.js"
-    },
-    "./_api": {
-      "require": {
-        "types": "./dist/_api/index.d.ts",
-        "default": "./_cjs/_api/index.cjs"
-      },
-      "import": "./dist/_api/index.js"
-    },
-    "./custom": {
-      "require": {
-        "types": "./dist/custom/index.d.ts",
-        "default": "./_cjs/custom/index.cjs"
-      },
-      "import": "./dist/custom/index.js"
-    },
-    "./custom/_utils": {
-      "require": {
-        "types": "./dist/custom/_utils/index.d.ts",
-        "default": "./_cjs/custom/_utils/index.cjs"
-      },
-      "import": "./dist/custom/_utils/index.js"
-    },
-    "./custom/Collect": {
-      "require": {
-        "types": "./dist/custom/Collect/index.d.ts",
-        "default": "./_cjs/custom/Collect/index.cjs"
-      },
-      "import": "./dist/custom/Collect/index.js"
-    },
-    "./custom/Collect/_collect": {
-      "require": {
-        "types": "./dist/custom/Collect/_collect/index.d.ts",
-        "default": "./_cjs/custom/Collect/_collect/index.cjs"
-      },
-      "import": "./dist/custom/Collect/_collect/index.js"
-    },
-    "./custom/These": {
-      "require": {
-        "types": "./dist/custom/These/index.d.ts",
-        "default": "./_cjs/custom/These/index.cjs"
-      },
-      "import": "./dist/custom/These/index.js"
-    },
-    "./custom/_schema": {
-      "require": {
-        "types": "./dist/custom/_schema/index.d.ts",
-        "default": "./_cjs/custom/_schema/index.cjs"
-      },
-      "import": "./dist/custom/_schema/index.js"
-    },
-    "./custom/Encoder": {
-      "require": {
-        "types": "./dist/custom/Encoder/index.d.ts",
-        "default": "./_cjs/custom/Encoder/index.cjs"
-      },
-      "import": "./dist/custom/Encoder/index.js"
-    },
-    "./custom/Encoder/_encoder": {
-      "require": {
-        "types": "./dist/custom/Encoder/_encoder/index.d.ts",
-        "default": "./_cjs/custom/Encoder/_encoder/index.cjs"
-      },
-      "import": "./dist/custom/Encoder/_encoder/index.js"
-    },
-    "./custom/Arbitrary": {
-      "require": {
-        "types": "./dist/custom/Arbitrary/index.d.ts",
-        "default": "./_cjs/custom/Arbitrary/index.cjs"
-      },
-      "import": "./dist/custom/Arbitrary/index.js"
-    },
-    "./custom/Arbitrary/_arbitrary": {
-      "require": {
-        "types": "./dist/custom/Arbitrary/_arbitrary/index.d.ts",
-        "default": "./_cjs/custom/Arbitrary/_arbitrary/index.cjs"
-      },
-      "import": "./dist/custom/Arbitrary/_arbitrary/index.js"
-    },
-    "./custom/_api": {
-      "require": {
-        "types": "./dist/custom/_api/index.d.ts",
-        "default": "./_cjs/custom/_api/index.cjs"
-      },
-      "import": "./dist/custom/_api/index.js"
-    },
-    "./custom/Parser": {
-      "require": {
-        "types": "./dist/custom/Parser/index.d.ts",
-        "default": "./_cjs/custom/Parser/index.cjs"
-      },
-      "import": "./dist/custom/Parser/index.js"
-    },
-    "./custom/Parser/_parser": {
-      "require": {
-        "types": "./dist/custom/Parser/_parser/index.d.ts",
-        "default": "./_cjs/custom/Parser/_parser/index.cjs"
-      },
-      "import": "./dist/custom/Parser/_parser/index.js"
-    },
-    "./custom/Guard": {
-      "require": {
-        "types": "./dist/custom/Guard/index.d.ts",
-        "default": "./_cjs/custom/Guard/index.cjs"
-      },
-      "import": "./dist/custom/Guard/index.js"
-    },
-    "./custom/Guard/_guard": {
-      "require": {
-        "types": "./dist/custom/Guard/_guard/index.d.ts",
-        "default": "./_cjs/custom/Guard/_guard/index.cjs"
-      },
-      "import": "./dist/custom/Guard/_guard/index.js"
-    },
-    "./custom/TS": {
-      "require": {
-        "types": "./dist/custom/TS/index.d.ts",
-        "default": "./_cjs/custom/TS/index.cjs"
-      },
-      "import": "./dist/custom/TS/index.js"
-    },
-    "./custom/Constructor": {
-      "require": {
-        "types": "./dist/custom/Constructor/index.d.ts",
-        "default": "./_cjs/custom/Constructor/index.cjs"
-      },
-      "import": "./dist/custom/Constructor/index.js"
-    },
-    "./custom/Constructor/_constructor": {
-      "require": {
-        "types": "./dist/custom/Constructor/_constructor/index.d.ts",
-        "default": "./_cjs/custom/Constructor/_constructor/index.cjs"
-      },
-      "import": "./dist/custom/Constructor/_constructor/index.js"
-    },
-    "./ext": {
-      "require": {
-        "types": "./dist/ext.d.ts",
-        "default": "./_cjs/ext.cjs"
-      },
-      "import": "./dist/ext.js"
-    },
-    "./adapt": {
-      "require": {
-        "types": "./dist/adapt.d.ts",
-        "default": "./_cjs/adapt.cjs"
-      },
-      "import": "./dist/adapt.js"
-    },
-    "./_api/_shared": {
-      "require": {
-        "types": "./dist/_api/_shared.d.ts",
-        "default": "./_cjs/_api/_shared.cjs"
-      },
-      "import": "./dist/_api/_shared.js"
-    },
-    "./_api/phoneNumber": {
-      "require": {
-        "types": "./dist/_api/phoneNumber.d.ts",
-        "default": "./_cjs/_api/phoneNumber.cjs"
-      },
-      "import": "./dist/_api/phoneNumber.js"
-    },
-    "./_api/futureDate": {
-      "require": {
-        "types": "./dist/_api/futureDate.d.ts",
-        "default": "./_cjs/_api/futureDate.cjs"
-      },
-      "import": "./dist/_api/futureDate.js"
-    },
-    "./_api/set": {
-      "require": {
-        "types": "./dist/_api/set.d.ts",
-        "default": "./_cjs/_api/set.cjs"
-      },
-      "import": "./dist/_api/set.js"
-    },
-    "./_api/dictionary": {
-      "require": {
-        "types": "./dist/_api/dictionary.d.ts",
-        "default": "./_cjs/_api/dictionary.cjs"
-      },
-      "import": "./dist/_api/dictionary.js"
-    },
-    "./_api/string": {
-      "require": {
-        "types": "./dist/_api/string.d.ts",
-        "default": "./_cjs/_api/string.cjs"
-      },
-      "import": "./dist/_api/string.js"
-    },
-    "./_api/email": {
-      "require": {
-        "types": "./dist/_api/email.d.ts",
-        "default": "./_cjs/_api/email.cjs"
-      },
-      "import": "./dist/_api/email.js"
-    },
-    "./_api/map": {
-      "require": {
-        "types": "./dist/_api/map.d.ts",
-        "default": "./_cjs/_api/map.cjs"
-      },
-      "import": "./dist/_api/map.js"
-    },
-    "./_api/fromArray": {
-      "require": {
-        "types": "./dist/_api/fromArray.d.ts",
-        "default": "./_cjs/_api/fromArray.cjs"
-      },
-      "import": "./dist/_api/fromArray.js"
-    },
-    "./_api/fromProps": {
-      "require": {
-        "types": "./dist/_api/fromProps.d.ts",
-        "default": "./_cjs/_api/fromProps.cjs"
-      },
-      "import": "./dist/_api/fromProps.js"
-    },
-    "./_api/length": {
-      "require": {
-        "types": "./dist/_api/length.d.ts",
-        "default": "./_cjs/_api/length.cjs"
-      },
-      "import": "./dist/_api/length.js"
-    },
-    "./_api/futureDate.test": {
-      "require": {
-        "types": "./dist/_api/futureDate.test.d.ts",
-        "default": "./_cjs/_api/futureDate.test.cjs"
-      },
-      "import": "./dist/_api/futureDate.test.js"
-    },
-    "./_api/either": {
-      "require": {
-        "types": "./dist/_api/either.d.ts",
-        "default": "./_cjs/_api/either.cjs"
-      },
-      "import": "./dist/_api/either.js"
-    },
-    "./_api/tuple": {
-      "require": {
-        "types": "./dist/_api/tuple.d.ts",
-        "default": "./_cjs/_api/tuple.cjs"
-      },
-      "import": "./dist/_api/tuple.js"
-    },
-    "./_api/nonEmptyArray": {
-      "require": {
-        "types": "./dist/_api/nonEmptyArray.d.ts",
-        "default": "./_cjs/_api/nonEmptyArray.cjs"
-      },
-      "import": "./dist/_api/nonEmptyArray.js"
-    },
-    "./_api/nonEmptySet": {
-      "require": {
-        "types": "./dist/_api/nonEmptySet.d.ts",
-        "default": "./_cjs/_api/nonEmptySet.cjs"
-      },
-      "import": "./dist/_api/nonEmptySet.js"
-    },
-    "./utils": {
-      "require": {
-        "types": "./dist/utils.d.ts",
-        "default": "./_cjs/utils.cjs"
-      },
-      "import": "./dist/utils.js"
+      }
     },
     "./Model": {
+      "import": {
+        "types": "./dist/Model.d.ts",
+        "default": "./dist/Model.js"
+      },
       "require": {
         "types": "./dist/Model.d.ts",
         "default": "./_cjs/Model.cjs"
-      },
-      "import": "./dist/Model.js"
+      }
     },
     "./REST": {
+      "import": {
+        "types": "./dist/REST.d.ts",
+        "default": "./dist/REST.js"
+      },
       "require": {
         "types": "./dist/REST.d.ts",
         "default": "./_cjs/REST.cjs"
-      },
-      "import": "./dist/REST.js"
+      }
     },
-    "./custom/_schema/schema": {
-      "require": {
-        "types": "./dist/custom/_schema/schema.d.ts",
-        "default": "./_cjs/custom/_schema/schema.cjs"
+    "./Schema.ext": {
+      "import": {
+        "types": "./dist/Schema.ext.d.ts",
+        "default": "./dist/Schema.ext.js"
       },
-      "import": "./dist/custom/_schema/schema.js"
+      "require": {
+        "types": "./dist/Schema.ext.d.ts",
+        "default": "./_cjs/Schema.ext.cjs"
+      }
     },
-    "./custom/_schema/matchers": {
-      "require": {
-        "types": "./dist/custom/_schema/matchers.d.ts",
-        "default": "./_cjs/custom/_schema/matchers.cjs"
+    "./_api": {
+      "import": {
+        "types": "./dist/_api.d.ts",
+        "default": "./dist/_api.js"
       },
-      "import": "./dist/custom/_schema/matchers.js"
+      "require": {
+        "types": "./dist/_api.d.ts",
+        "default": "./_cjs/_api.cjs"
+      }
     },
-    "./custom/_schema/primitives": {
-      "require": {
-        "types": "./dist/custom/_schema/primitives.d.ts",
-        "default": "./_cjs/custom/_schema/primitives.cjs"
+    "./_api/Void": {
+      "import": {
+        "types": "./dist/_api/Void.d.ts",
+        "default": "./dist/_api/Void.js"
       },
-      "import": "./dist/custom/_schema/primitives.js"
+      "require": {
+        "types": "./dist/_api/Void.d.ts",
+        "default": "./_cjs/_api/Void.cjs"
+      }
     },
-    "./custom/_schema/error": {
-      "require": {
-        "types": "./dist/custom/_schema/error.d.ts",
-        "default": "./_cjs/custom/_schema/error.cjs"
+    "./_api/_shared": {
+      "import": {
+        "types": "./dist/_api/_shared.d.ts",
+        "default": "./dist/_api/_shared.js"
       },
-      "import": "./dist/custom/_schema/error.js"
+      "require": {
+        "types": "./dist/_api/_shared.d.ts",
+        "default": "./_cjs/_api/_shared.cjs"
+      }
     },
-    "./custom/_schema/annotation": {
-      "require": {
-        "types": "./dist/custom/_schema/annotation.d.ts",
-        "default": "./_cjs/custom/_schema/annotation.cjs"
+    "./_api/dictionary": {
+      "import": {
+        "types": "./dist/_api/dictionary.d.ts",
+        "default": "./dist/_api/dictionary.js"
       },
-      "import": "./dist/custom/_schema/annotation.js"
+      "require": {
+        "types": "./dist/_api/dictionary.d.ts",
+        "default": "./_cjs/_api/dictionary.cjs"
+      }
     },
-    "./custom/_api/union": {
-      "require": {
-        "types": "./dist/custom/_api/union.d.ts",
-        "default": "./_cjs/custom/_api/union.cjs"
+    "./_api/either": {
+      "import": {
+        "types": "./dist/_api/either.d.ts",
+        "default": "./dist/_api/either.js"
       },
-      "import": "./dist/custom/_api/union.js"
+      "require": {
+        "types": "./dist/_api/either.d.ts",
+        "default": "./_cjs/_api/either.cjs"
+      }
     },
-    "./custom/_api/unknown": {
-      "require": {
-        "types": "./dist/custom/_api/unknown.d.ts",
-        "default": "./_cjs/custom/_api/unknown.cjs"
+    "./_api/email": {
+      "import": {
+        "types": "./dist/_api/email.d.ts",
+        "default": "./dist/_api/email.js"
       },
-      "import": "./dist/custom/_api/unknown.js"
+      "require": {
+        "types": "./dist/_api/email.d.ts",
+        "default": "./_cjs/_api/email.cjs"
+      }
     },
-    "./custom/_api/int": {
-      "require": {
-        "types": "./dist/custom/_api/int.d.ts",
-        "default": "./_cjs/custom/_api/int.cjs"
+    "./_api/fromArray": {
+      "import": {
+        "types": "./dist/_api/fromArray.d.ts",
+        "default": "./dist/_api/fromArray.js"
       },
-      "import": "./dist/custom/_api/int.js"
+      "require": {
+        "types": "./dist/_api/fromArray.d.ts",
+        "default": "./_cjs/_api/fromArray.cjs"
+      }
     },
-    "./custom/_api/date": {
-      "require": {
-        "types": "./dist/custom/_api/date.d.ts",
-        "default": "./_cjs/custom/_api/date.cjs"
+    "./_api/fromProps": {
+      "import": {
+        "types": "./dist/_api/fromProps.d.ts",
+        "default": "./dist/_api/fromProps.js"
       },
-      "import": "./dist/custom/_api/date.js"
+      "require": {
+        "types": "./dist/_api/fromProps.d.ts",
+        "default": "./_cjs/_api/fromProps.cjs"
+      }
     },
-    "./custom/_api/json": {
-      "require": {
-        "types": "./dist/custom/_api/json.d.ts",
-        "default": "./_cjs/custom/_api/json.cjs"
+    "./_api/futureDate": {
+      "import": {
+        "types": "./dist/_api/futureDate.d.ts",
+        "default": "./dist/_api/futureDate.js"
       },
-      "import": "./dist/custom/_api/json.js"
+      "require": {
+        "types": "./dist/_api/futureDate.d.ts",
+        "default": "./_cjs/_api/futureDate.cjs"
+      }
     },
-    "./custom/_api/array": {
-      "require": {
-        "types": "./dist/custom/_api/array.d.ts",
-        "default": "./_cjs/custom/_api/array.cjs"
+    "./_api/futureDate.test": {
+      "import": {
+        "types": "./dist/_api/futureDate.test.d.ts",
+        "default": "./dist/_api/futureDate.test.js"
       },
-      "import": "./dist/custom/_api/array.js"
+      "require": {
+        "types": "./dist/_api/futureDate.test.d.ts",
+        "default": "./_cjs/_api/futureDate.test.cjs"
+      }
     },
-    "./custom/_api/condemn": {
-      "require": {
-        "types": "./dist/custom/_api/condemn.d.ts",
-        "default": "./_cjs/custom/_api/condemn.cjs"
+    "./_api/index": {
+      "import": {
+        "types": "./dist/_api/index.d.ts",
+        "default": "./dist/_api/index.js"
       },
-      "import": "./dist/custom/_api/condemn.js"
+      "require": {
+        "types": "./dist/_api/index.d.ts",
+        "default": "./_cjs/_api/index.cjs"
+      }
     },
-    "./custom/_api/lazy": {
-      "require": {
-        "types": "./dist/custom/_api/lazy.d.ts",
-        "default": "./_cjs/custom/_api/lazy.cjs"
+    "./_api/length": {
+      "import": {
+        "types": "./dist/_api/length.d.ts",
+        "default": "./dist/_api/length.js"
       },
-      "import": "./dist/custom/_api/lazy.js"
+      "require": {
+        "types": "./dist/_api/length.d.ts",
+        "default": "./_cjs/_api/length.cjs"
+      }
     },
-    "./custom/_api/string": {
-      "require": {
-        "types": "./dist/custom/_api/string.d.ts",
-        "default": "./_cjs/custom/_api/string.cjs"
+    "./_api/map": {
+      "import": {
+        "types": "./dist/_api/map.d.ts",
+        "default": "./dist/_api/map.js"
       },
-      "import": "./dist/custom/_api/string.js"
+      "require": {
+        "types": "./dist/_api/map.d.ts",
+        "default": "./_cjs/_api/map.cjs"
+      }
     },
-    "./custom/_api/optionFromNull": {
-      "require": {
-        "types": "./dist/custom/_api/optionFromNull.d.ts",
-        "default": "./_cjs/custom/_api/optionFromNull.cjs"
+    "./_api/nonEmptyArray": {
+      "import": {
+        "types": "./dist/_api/nonEmptyArray.d.ts",
+        "default": "./dist/_api/nonEmptyArray.js"
       },
-      "import": "./dist/custom/_api/optionFromNull.js"
+      "require": {
+        "types": "./dist/_api/nonEmptyArray.d.ts",
+        "default": "./_cjs/_api/nonEmptyArray.cjs"
+      }
     },
-    "./custom/_api/intersect": {
-      "require": {
-        "types": "./dist/custom/_api/intersect.d.ts",
-        "default": "./_cjs/custom/_api/intersect.cjs"
+    "./_api/nonEmptySet": {
+      "import": {
+        "types": "./dist/_api/nonEmptySet.d.ts",
+        "default": "./dist/_api/nonEmptySet.js"
       },
-      "import": "./dist/custom/_api/intersect.js"
+      "require": {
+        "types": "./dist/_api/nonEmptySet.d.ts",
+        "default": "./_cjs/_api/nonEmptySet.cjs"
+      }
     },
-    "./custom/_api/model": {
-      "require": {
-        "types": "./dist/custom/_api/model.d.ts",
-        "default": "./_cjs/custom/_api/model.cjs"
+    "./_api/phoneNumber": {
+      "import": {
+        "types": "./dist/_api/phoneNumber.d.ts",
+        "default": "./dist/_api/phoneNumber.js"
       },
-      "import": "./dist/custom/_api/model.js"
+      "require": {
+        "types": "./dist/_api/phoneNumber.d.ts",
+        "default": "./_cjs/_api/phoneNumber.cjs"
+      }
     },
-    "./custom/_api/chunk": {
-      "require": {
-        "types": "./dist/custom/_api/chunk.d.ts",
-        "default": "./_cjs/custom/_api/chunk.cjs"
+    "./_api/set": {
+      "import": {
+        "types": "./dist/_api/set.d.ts",
+        "default": "./dist/_api/set.js"
       },
-      "import": "./dist/custom/_api/chunk.js"
+      "require": {
+        "types": "./dist/_api/set.d.ts",
+        "default": "./_cjs/_api/set.cjs"
+      }
     },
-    "./custom/_api/refinement": {
-      "require": {
-        "types": "./dist/custom/_api/refinement.d.ts",
-        "default": "./_cjs/custom/_api/refinement.cjs"
+    "./_api/string": {
+      "import": {
+        "types": "./dist/_api/string.d.ts",
+        "default": "./dist/_api/string.js"
       },
-      "import": "./dist/custom/_api/refinement.js"
+      "require": {
+        "types": "./dist/_api/string.d.ts",
+        "default": "./_cjs/_api/string.cjs"
+      }
     },
-    "./custom/_api/unknownArray": {
-      "require": {
-        "types": "./dist/custom/_api/unknownArray.d.ts",
-        "default": "./_cjs/custom/_api/unknownArray.cjs"
+    "./_api/tuple": {
+      "import": {
+        "types": "./dist/_api/tuple.d.ts",
+        "default": "./dist/_api/tuple.js"
       },
-      "import": "./dist/custom/_api/unknownArray.js"
+      "require": {
+        "types": "./dist/_api/tuple.d.ts",
+        "default": "./_cjs/_api/tuple.cjs"
+      }
     },
-    "./custom/_api/withDefaults": {
-      "require": {
-        "types": "./dist/custom/_api/withDefaults.d.ts",
-        "default": "./_cjs/custom/_api/withDefaults.cjs"
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
       },
-      "import": "./dist/custom/_api/withDefaults.js"
-    },
-    "./custom/_api/number": {
       "require": {
-        "types": "./dist/custom/_api/number.d.ts",
-        "default": "./_cjs/custom/_api/number.cjs"
-      },
-      "import": "./dist/custom/_api/number.js"
-    },
-    "./custom/_api/bool": {
-      "require": {
-        "types": "./dist/custom/_api/bool.d.ts",
-        "default": "./_cjs/custom/_api/bool.cjs"
-      },
-      "import": "./dist/custom/_api/bool.js"
-    },
-    "./custom/_api/positiveInt": {
-      "require": {
-        "types": "./dist/custom/_api/positiveInt.d.ts",
-        "default": "./_cjs/custom/_api/positiveInt.cjs"
-      },
-      "import": "./dist/custom/_api/positiveInt.js"
-    },
-    "./custom/_api/ensure": {
-      "require": {
-        "types": "./dist/custom/_api/ensure.d.ts",
-        "default": "./_cjs/custom/_api/ensure.cjs"
-      },
-      "import": "./dist/custom/_api/ensure.js"
-    },
-    "./custom/_api/object": {
-      "require": {
-        "types": "./dist/custom/_api/object.d.ts",
-        "default": "./_cjs/custom/_api/object.cjs"
-      },
-      "import": "./dist/custom/_api/object.js"
-    },
-    "./custom/_api/positive": {
-      "require": {
-        "types": "./dist/custom/_api/positive.d.ts",
-        "default": "./_cjs/custom/_api/positive.cjs"
-      },
-      "import": "./dist/custom/_api/positive.js"
-    },
-    "./custom/_api/properties": {
-      "require": {
-        "types": "./dist/custom/_api/properties.d.ts",
-        "default": "./_cjs/custom/_api/properties.cjs"
-      },
-      "import": "./dist/custom/_api/properties.js"
-    },
-    "./custom/_api/nullable": {
-      "require": {
-        "types": "./dist/custom/_api/nullable.d.ts",
-        "default": "./_cjs/custom/_api/nullable.cjs"
-      },
-      "import": "./dist/custom/_api/nullable.js"
-    },
-    "./custom/_api/literal": {
-      "require": {
-        "types": "./dist/custom/_api/literal.d.ts",
-        "default": "./_cjs/custom/_api/literal.cjs"
-      },
-      "import": "./dist/custom/_api/literal.js"
-    },
-    "./custom/_api/nonEmpty": {
-      "require": {
-        "types": "./dist/custom/_api/nonEmpty.d.ts",
-        "default": "./_cjs/custom/_api/nonEmpty.cjs"
-      },
-      "import": "./dist/custom/_api/nonEmpty.js"
-    },
-    "./custom/_api/nonEmptyString": {
-      "require": {
-        "types": "./dist/custom/_api/nonEmptyString.d.ts",
-        "default": "./_cjs/custom/_api/nonEmptyString.cjs"
-      },
-      "import": "./dist/custom/_api/nonEmptyString.js"
-    },
-    "./vendor": {
-      "require": {
-        "types": "./dist/vendor.d.ts",
-        "default": "./_cjs/vendor.cjs"
-      },
-      "import": "./dist/vendor.js"
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
+      }
     },
     "./_schema": {
+      "import": {
+        "types": "./dist/_schema.d.ts",
+        "default": "./dist/_schema.js"
+      },
       "require": {
         "types": "./dist/_schema.d.ts",
         "default": "./_cjs/_schema.cjs"
-      },
-      "import": "./dist/_schema.js"
+      }
     },
-    "./*.js": {
-      "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
+    "./adapt": {
+      "import": {
+        "types": "./dist/adapt.d.ts",
+        "default": "./dist/adapt.js"
       },
-      "import": "./dist/*.js"
+      "require": {
+        "types": "./dist/adapt.d.ts",
+        "default": "./_cjs/adapt.cjs"
+      }
     },
-    "./*": {
-      "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
+    "./custom": {
+      "import": {
+        "types": "./dist/custom.d.ts",
+        "default": "./dist/custom.js"
       },
-      "import": "./dist/*.js"
+      "require": {
+        "types": "./dist/custom.d.ts",
+        "default": "./_cjs/custom.cjs"
+      }
+    },
+    "./custom/Arbitrary": {
+      "import": {
+        "types": "./dist/custom/Arbitrary.d.ts",
+        "default": "./dist/custom/Arbitrary.js"
+      },
+      "require": {
+        "types": "./dist/custom/Arbitrary.d.ts",
+        "default": "./_cjs/custom/Arbitrary.cjs"
+      }
+    },
+    "./custom/Collect": {
+      "import": {
+        "types": "./dist/custom/Collect.d.ts",
+        "default": "./dist/custom/Collect.js"
+      },
+      "require": {
+        "types": "./dist/custom/Collect.d.ts",
+        "default": "./_cjs/custom/Collect.cjs"
+      }
+    },
+    "./custom/Constructor": {
+      "import": {
+        "types": "./dist/custom/Constructor.d.ts",
+        "default": "./dist/custom/Constructor.js"
+      },
+      "require": {
+        "types": "./dist/custom/Constructor.d.ts",
+        "default": "./_cjs/custom/Constructor.cjs"
+      }
+    },
+    "./custom/Encoder": {
+      "import": {
+        "types": "./dist/custom/Encoder.d.ts",
+        "default": "./dist/custom/Encoder.js"
+      },
+      "require": {
+        "types": "./dist/custom/Encoder.d.ts",
+        "default": "./_cjs/custom/Encoder.cjs"
+      }
+    },
+    "./custom/Guard": {
+      "import": {
+        "types": "./dist/custom/Guard.d.ts",
+        "default": "./dist/custom/Guard.js"
+      },
+      "require": {
+        "types": "./dist/custom/Guard.d.ts",
+        "default": "./_cjs/custom/Guard.cjs"
+      }
+    },
+    "./custom/Parser": {
+      "import": {
+        "types": "./dist/custom/Parser.d.ts",
+        "default": "./dist/custom/Parser.js"
+      },
+      "require": {
+        "types": "./dist/custom/Parser.d.ts",
+        "default": "./_cjs/custom/Parser.cjs"
+      }
+    },
+    "./custom/TS": {
+      "import": {
+        "types": "./dist/custom/TS.d.ts",
+        "default": "./dist/custom/TS.js"
+      },
+      "require": {
+        "types": "./dist/custom/TS.d.ts",
+        "default": "./_cjs/custom/TS.cjs"
+      }
+    },
+    "./custom/These": {
+      "import": {
+        "types": "./dist/custom/These.d.ts",
+        "default": "./dist/custom/These.js"
+      },
+      "require": {
+        "types": "./dist/custom/These.d.ts",
+        "default": "./_cjs/custom/These.cjs"
+      }
+    },
+    "./custom/_api": {
+      "import": {
+        "types": "./dist/custom/_api.d.ts",
+        "default": "./dist/custom/_api.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api.d.ts",
+        "default": "./_cjs/custom/_api.cjs"
+      }
+    },
+    "./custom/_api/array": {
+      "import": {
+        "types": "./dist/custom/_api/array.d.ts",
+        "default": "./dist/custom/_api/array.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/array.d.ts",
+        "default": "./_cjs/custom/_api/array.cjs"
+      }
+    },
+    "./custom/_api/bool": {
+      "import": {
+        "types": "./dist/custom/_api/bool.d.ts",
+        "default": "./dist/custom/_api/bool.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/bool.d.ts",
+        "default": "./_cjs/custom/_api/bool.cjs"
+      }
+    },
+    "./custom/_api/brand": {
+      "import": {
+        "types": "./dist/custom/_api/brand.d.ts",
+        "default": "./dist/custom/_api/brand.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/brand.d.ts",
+        "default": "./_cjs/custom/_api/brand.cjs"
+      }
+    },
+    "./custom/_api/chunk": {
+      "import": {
+        "types": "./dist/custom/_api/chunk.d.ts",
+        "default": "./dist/custom/_api/chunk.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/chunk.d.ts",
+        "default": "./_cjs/custom/_api/chunk.cjs"
+      }
+    },
+    "./custom/_api/condemn": {
+      "import": {
+        "types": "./dist/custom/_api/condemn.d.ts",
+        "default": "./dist/custom/_api/condemn.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/condemn.d.ts",
+        "default": "./_cjs/custom/_api/condemn.cjs"
+      }
+    },
+    "./custom/_api/date": {
+      "import": {
+        "types": "./dist/custom/_api/date.d.ts",
+        "default": "./dist/custom/_api/date.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/date.d.ts",
+        "default": "./_cjs/custom/_api/date.cjs"
+      }
+    },
+    "./custom/_api/ensure": {
+      "import": {
+        "types": "./dist/custom/_api/ensure.d.ts",
+        "default": "./dist/custom/_api/ensure.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/ensure.d.ts",
+        "default": "./_cjs/custom/_api/ensure.cjs"
+      }
+    },
+    "./custom/_api/int": {
+      "import": {
+        "types": "./dist/custom/_api/int.d.ts",
+        "default": "./dist/custom/_api/int.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/int.d.ts",
+        "default": "./_cjs/custom/_api/int.cjs"
+      }
+    },
+    "./custom/_api/intersect": {
+      "import": {
+        "types": "./dist/custom/_api/intersect.d.ts",
+        "default": "./dist/custom/_api/intersect.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/intersect.d.ts",
+        "default": "./_cjs/custom/_api/intersect.cjs"
+      }
+    },
+    "./custom/_api/json": {
+      "import": {
+        "types": "./dist/custom/_api/json.d.ts",
+        "default": "./dist/custom/_api/json.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/json.d.ts",
+        "default": "./_cjs/custom/_api/json.cjs"
+      }
+    },
+    "./custom/_api/lazy": {
+      "import": {
+        "types": "./dist/custom/_api/lazy.d.ts",
+        "default": "./dist/custom/_api/lazy.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/lazy.d.ts",
+        "default": "./_cjs/custom/_api/lazy.cjs"
+      }
+    },
+    "./custom/_api/literal": {
+      "import": {
+        "types": "./dist/custom/_api/literal.d.ts",
+        "default": "./dist/custom/_api/literal.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/literal.d.ts",
+        "default": "./_cjs/custom/_api/literal.cjs"
+      }
+    },
+    "./custom/_api/model": {
+      "import": {
+        "types": "./dist/custom/_api/model.d.ts",
+        "default": "./dist/custom/_api/model.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/model.d.ts",
+        "default": "./_cjs/custom/_api/model.cjs"
+      }
+    },
+    "./custom/_api/nonEmpty": {
+      "import": {
+        "types": "./dist/custom/_api/nonEmpty.d.ts",
+        "default": "./dist/custom/_api/nonEmpty.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/nonEmpty.d.ts",
+        "default": "./_cjs/custom/_api/nonEmpty.cjs"
+      }
+    },
+    "./custom/_api/nonEmptyString": {
+      "import": {
+        "types": "./dist/custom/_api/nonEmptyString.d.ts",
+        "default": "./dist/custom/_api/nonEmptyString.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/nonEmptyString.d.ts",
+        "default": "./_cjs/custom/_api/nonEmptyString.cjs"
+      }
+    },
+    "./custom/_api/nullable": {
+      "import": {
+        "types": "./dist/custom/_api/nullable.d.ts",
+        "default": "./dist/custom/_api/nullable.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/nullable.d.ts",
+        "default": "./_cjs/custom/_api/nullable.cjs"
+      }
+    },
+    "./custom/_api/number": {
+      "import": {
+        "types": "./dist/custom/_api/number.d.ts",
+        "default": "./dist/custom/_api/number.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/number.d.ts",
+        "default": "./_cjs/custom/_api/number.cjs"
+      }
+    },
+    "./custom/_api/object": {
+      "import": {
+        "types": "./dist/custom/_api/object.d.ts",
+        "default": "./dist/custom/_api/object.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/object.d.ts",
+        "default": "./_cjs/custom/_api/object.cjs"
+      }
+    },
+    "./custom/_api/optionFromNull": {
+      "import": {
+        "types": "./dist/custom/_api/optionFromNull.d.ts",
+        "default": "./dist/custom/_api/optionFromNull.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/optionFromNull.d.ts",
+        "default": "./_cjs/custom/_api/optionFromNull.cjs"
+      }
+    },
+    "./custom/_api/positive": {
+      "import": {
+        "types": "./dist/custom/_api/positive.d.ts",
+        "default": "./dist/custom/_api/positive.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/positive.d.ts",
+        "default": "./_cjs/custom/_api/positive.cjs"
+      }
+    },
+    "./custom/_api/positiveInt": {
+      "import": {
+        "types": "./dist/custom/_api/positiveInt.d.ts",
+        "default": "./dist/custom/_api/positiveInt.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/positiveInt.d.ts",
+        "default": "./_cjs/custom/_api/positiveInt.cjs"
+      }
+    },
+    "./custom/_api/properties": {
+      "import": {
+        "types": "./dist/custom/_api/properties.d.ts",
+        "default": "./dist/custom/_api/properties.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/properties.d.ts",
+        "default": "./_cjs/custom/_api/properties.cjs"
+      }
+    },
+    "./custom/_api/refinement": {
+      "import": {
+        "types": "./dist/custom/_api/refinement.d.ts",
+        "default": "./dist/custom/_api/refinement.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/refinement.d.ts",
+        "default": "./_cjs/custom/_api/refinement.cjs"
+      }
+    },
+    "./custom/_api/schemed": {
+      "import": {
+        "types": "./dist/custom/_api/schemed.d.ts",
+        "default": "./dist/custom/_api/schemed.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/schemed.d.ts",
+        "default": "./_cjs/custom/_api/schemed.cjs"
+      }
+    },
+    "./custom/_api/string": {
+      "import": {
+        "types": "./dist/custom/_api/string.d.ts",
+        "default": "./dist/custom/_api/string.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/string.d.ts",
+        "default": "./_cjs/custom/_api/string.cjs"
+      }
+    },
+    "./custom/_api/union": {
+      "import": {
+        "types": "./dist/custom/_api/union.d.ts",
+        "default": "./dist/custom/_api/union.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/union.d.ts",
+        "default": "./_cjs/custom/_api/union.cjs"
+      }
+    },
+    "./custom/_api/unknown": {
+      "import": {
+        "types": "./dist/custom/_api/unknown.d.ts",
+        "default": "./dist/custom/_api/unknown.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/unknown.d.ts",
+        "default": "./_cjs/custom/_api/unknown.cjs"
+      }
+    },
+    "./custom/_api/unknownArray": {
+      "import": {
+        "types": "./dist/custom/_api/unknownArray.d.ts",
+        "default": "./dist/custom/_api/unknownArray.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/unknownArray.d.ts",
+        "default": "./_cjs/custom/_api/unknownArray.cjs"
+      }
+    },
+    "./custom/_api/uuid": {
+      "import": {
+        "types": "./dist/custom/_api/uuid.d.ts",
+        "default": "./dist/custom/_api/uuid.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/uuid.d.ts",
+        "default": "./_cjs/custom/_api/uuid.cjs"
+      }
+    },
+    "./custom/_api/withDefaultConstructorField": {
+      "import": {
+        "types": "./dist/custom/_api/withDefaultConstructorField.d.ts",
+        "default": "./dist/custom/_api/withDefaultConstructorField.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/withDefaultConstructorField.d.ts",
+        "default": "./_cjs/custom/_api/withDefaultConstructorField.cjs"
+      }
+    },
+    "./custom/_api/withDefaults": {
+      "import": {
+        "types": "./dist/custom/_api/withDefaults.d.ts",
+        "default": "./dist/custom/_api/withDefaults.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/withDefaults.d.ts",
+        "default": "./_cjs/custom/_api/withDefaults.cjs"
+      }
+    },
+    "./custom/_arbitrary": {
+      "import": {
+        "types": "./dist/custom/_arbitrary.d.ts",
+        "default": "./dist/custom/_arbitrary.js"
+      },
+      "require": {
+        "types": "./dist/custom/_arbitrary.d.ts",
+        "default": "./_cjs/custom/_arbitrary.cjs"
+      }
+    },
+    "./custom/_collect": {
+      "import": {
+        "types": "./dist/custom/_collect.d.ts",
+        "default": "./dist/custom/_collect.js"
+      },
+      "require": {
+        "types": "./dist/custom/_collect.d.ts",
+        "default": "./_cjs/custom/_collect.cjs"
+      }
+    },
+    "./custom/_constructor": {
+      "import": {
+        "types": "./dist/custom/_constructor.d.ts",
+        "default": "./dist/custom/_constructor.js"
+      },
+      "require": {
+        "types": "./dist/custom/_constructor.d.ts",
+        "default": "./_cjs/custom/_constructor.cjs"
+      }
+    },
+    "./custom/_encoder": {
+      "import": {
+        "types": "./dist/custom/_encoder.d.ts",
+        "default": "./dist/custom/_encoder.js"
+      },
+      "require": {
+        "types": "./dist/custom/_encoder.d.ts",
+        "default": "./_cjs/custom/_encoder.cjs"
+      }
+    },
+    "./custom/_guard": {
+      "import": {
+        "types": "./dist/custom/_guard.d.ts",
+        "default": "./dist/custom/_guard.js"
+      },
+      "require": {
+        "types": "./dist/custom/_guard.d.ts",
+        "default": "./_cjs/custom/_guard.cjs"
+      }
+    },
+    "./custom/_parser": {
+      "import": {
+        "types": "./dist/custom/_parser.d.ts",
+        "default": "./dist/custom/_parser.js"
+      },
+      "require": {
+        "types": "./dist/custom/_parser.d.ts",
+        "default": "./_cjs/custom/_parser.cjs"
+      }
+    },
+    "./custom/_schema": {
+      "import": {
+        "types": "./dist/custom/_schema.d.ts",
+        "default": "./dist/custom/_schema.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema.d.ts",
+        "default": "./_cjs/custom/_schema.cjs"
+      }
+    },
+    "./custom/_schema/annotation": {
+      "import": {
+        "types": "./dist/custom/_schema/annotation.d.ts",
+        "default": "./dist/custom/_schema/annotation.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema/annotation.d.ts",
+        "default": "./_cjs/custom/_schema/annotation.cjs"
+      }
+    },
+    "./custom/_schema/error": {
+      "import": {
+        "types": "./dist/custom/_schema/error.d.ts",
+        "default": "./dist/custom/_schema/error.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema/error.d.ts",
+        "default": "./_cjs/custom/_schema/error.cjs"
+      }
+    },
+    "./custom/_schema/matchers": {
+      "import": {
+        "types": "./dist/custom/_schema/matchers.d.ts",
+        "default": "./dist/custom/_schema/matchers.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema/matchers.d.ts",
+        "default": "./_cjs/custom/_schema/matchers.cjs"
+      }
+    },
+    "./custom/_schema/primitives": {
+      "import": {
+        "types": "./dist/custom/_schema/primitives.d.ts",
+        "default": "./dist/custom/_schema/primitives.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema/primitives.d.ts",
+        "default": "./_cjs/custom/_schema/primitives.cjs"
+      }
+    },
+    "./custom/_schema/schema": {
+      "import": {
+        "types": "./dist/custom/_schema/schema.d.ts",
+        "default": "./dist/custom/_schema/schema.js"
+      },
+      "require": {
+        "types": "./dist/custom/_schema/schema.d.ts",
+        "default": "./_cjs/custom/_schema/schema.cjs"
+      }
+    },
+    "./custom/_utils": {
+      "import": {
+        "types": "./dist/custom/_utils.d.ts",
+        "default": "./dist/custom/_utils.js"
+      },
+      "require": {
+        "types": "./dist/custom/_utils.d.ts",
+        "default": "./_cjs/custom/_utils.cjs"
+      }
+    },
+    "./custom/index": {
+      "import": {
+        "types": "./dist/custom/index.d.ts",
+        "default": "./dist/custom/index.js"
+      },
+      "require": {
+        "types": "./dist/custom/index.d.ts",
+        "default": "./_cjs/custom/index.cjs"
+      }
+    },
+    "./ext": {
+      "import": {
+        "types": "./dist/ext.d.ts",
+        "default": "./dist/ext.js"
+      },
+      "require": {
+        "types": "./dist/ext.d.ts",
+        "default": "./_cjs/ext.cjs"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      },
+      "require": {
+        "types": "./dist/utils.d.ts",
+        "default": "./_cjs/utils.cjs"
+      }
+    },
+    "./vendor": {
+      "import": {
+        "types": "./dist/vendor.d.ts",
+        "default": "./dist/vendor.js"
+      },
+      "require": {
+        "types": "./dist/vendor.d.ts",
+        "default": "./_cjs/vendor.cjs"
+      }
     }
   },
   "sideEffects": false,

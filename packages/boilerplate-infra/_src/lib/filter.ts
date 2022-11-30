@@ -1,4 +1,4 @@
-import { Where } from "@effect-ts-app/boilerplate-infra/services/Store"
+import type { Where } from "../services/Store.js"
 import type { FieldValues } from "./filter/types/fields.js"
 import type { FieldPath, FieldPathValue } from "./filter/types/path/eager.js"
 

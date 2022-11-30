@@ -2,9 +2,9 @@ import strip from "strip-ansi"
 import * as winston from "winston"
 import { format } from "winston"
 
-import * as console from "./Console/index.js"
-import * as logger from "./Logger/index.js"
-import { prettyJson } from "./util.js"
+import * as console from "./logger/Console.js"
+import * as logger from "./logger/Logger.js"
+import { prettyJson } from "./logger/util.js"
 
 export { console, logger }
 

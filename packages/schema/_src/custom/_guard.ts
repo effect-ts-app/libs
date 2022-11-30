@@ -1,7 +1,7 @@
 // tracing: off
 
-import * as S from "../../_schema/index.js"
-import { hasContinuation, SchemaContinuationSymbol } from "../../_schema/index.js"
+import * as S from "./_schema.js"
+import { hasContinuation, SchemaContinuationSymbol } from "./_schema.js"
 
 export type Guard<T> = { (u: unknown): u is T }
 

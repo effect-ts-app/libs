@@ -2,8 +2,8 @@
 import * as MO from "@effect-ts-app/schema"
 import type { Methods } from "@effect-ts-app/schema"
 
-import type { JSONSchema, ParameterLocation, SubSchema } from "../../Openapi/atlas-plutus/index.js"
-import { isObjectSchema } from "../../Openapi/atlas-plutus/index.js"
+import type { JSONSchema, ParameterLocation, SubSchema } from "../../Openapi/atlas-plutus.js"
+import { isObjectSchema } from "../../Openapi/atlas-plutus.js"
 import * as OpenApi from "../../Openapi/index.js"
 import type { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
 

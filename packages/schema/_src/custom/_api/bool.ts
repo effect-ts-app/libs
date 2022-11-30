@@ -1,8 +1,8 @@
 import { pipe } from "@effect-ts/core/Function"
 
-import { makeAnnotation, parseBoolE } from "../_schema/index.js"
-import * as S from "../_schema/index.js"
-import * as Th from "../These/index.js"
+import { makeAnnotation, parseBoolE } from "../_schema.js"
+import * as S from "../_schema.js"
+import * as Th from "../These.js"
 import { refinement } from "./refinement.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"

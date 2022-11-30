@@ -45,7 +45,7 @@
         "testsuite-libs": "pnpm ultra-libs testsuite",
         "testsuite-libs-manual": "cd packages/boilerplate-prelude && pnpm testsuite && cd ../types && pnpm testsuite && cd ../client && pnpm testsuite && cd ../infra && pnpm testsuite && cd ../messages && pnpm testsuite && cd ../vue && pnpm testsuite",
         "watch-libs": "pnpm build-libs && ultra -r --filter \"packages/*\" watch",
-        "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build ./tsconfig.all.json"
+        "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build && node ../../scripts/package.js ./tsconfig.all.json"
     },
     "resolutions": {
         "@effect/core": "^0.0.16",

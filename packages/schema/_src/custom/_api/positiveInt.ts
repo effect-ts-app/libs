@@ -2,7 +2,7 @@
 
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema/index.js"
+import * as S from "../_schema.js"
 import { brand } from "./brand.js"
 import type { Int } from "./int.js"
 import { intFromNumber } from "./int.js"

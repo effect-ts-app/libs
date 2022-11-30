@@ -3,7 +3,7 @@
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 
-export * from "./extend.js"
+export * from "./utils/extend.js"
 
 /**
  * @deprecated use Effect.$.unsafeRunSync

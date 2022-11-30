@@ -1,6 +1,6 @@
 import { pipe } from "@effect-ts-app/core/Function"
 import * as MO from "../_schema.js"
-import type { NonEmptyBrand } from "../custom/index.js"
+import type { NonEmptyBrand } from "../custom.js"
 
 export const maxLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
 

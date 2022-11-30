@@ -1,4 +1,4 @@
-import * as LOG from "../Logger/index.js"
+import * as LOG from "./Logger.js"
 
 function format(level: LOG.Level, message: string, meta?: LOG.Meta) {
   return `${level}: ${message}${meta ? `(${JSON.stringify({ meta })})` : ""}`

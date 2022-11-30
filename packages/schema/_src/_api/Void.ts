@@ -1,6 +1,6 @@
 import { pipe } from "@effect-ts-app/core/Function"
-import * as MO from "../custom/index.js"
-import { withDefaults } from "../custom/index.js"
+import * as MO from "../custom.js"
+import { withDefaults } from "../custom.js"
 
 export const Void = pipe(
   MO.unknown,

@@ -2,9 +2,9 @@
 
 import { Case } from "@effect-ts/system/Case"
 
-import type { AnyError } from "../_schema/index.js"
-import { drawError } from "../_schema/index.js"
-import type { Parser, ParserEnv } from "../Parser/index.js"
+import type { AnyError } from "../_schema.js"
+import { drawError } from "../_schema.js"
+import type { Parser, ParserEnv } from "../Parser.js"
 
 /**
  * The Effect fails with the generic `E` type when the parser produces an invalid result

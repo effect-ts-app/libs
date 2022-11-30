@@ -1,8 +1,8 @@
 import type { Lazy } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/system/Function"
 
-import * as S from "../_schema/index.js"
-import * as Constructor from "../Constructor/index.js"
+import * as S from "../_schema.js"
+import * as Constructor from "../Constructor.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 

@@ -31,39 +31,39 @@
         "default": "./_cjs/index.cjs"
       }
     },
-    "./vue2": {
+    "./_global": {
       "import": {
-        "types": "./dist/vue2.d.ts",
-        "default": "./dist/vue2.js"
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
       },
       "require": {
-        "types": "./dist/vue2.d.ts",
-        "default": "./_cjs/vue2.cjs"
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
       }
     },
-    "./*.js": {
+    "./form": {
       "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
+        "types": "./dist/form.d.ts",
+        "default": "./dist/form.js"
       },
       "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
+        "types": "./dist/form.d.ts",
+        "default": "./_cjs/form.cjs"
       }
     },
-    "./*": {
+    "./utils": {
       "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
       },
       "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
+        "types": "./dist/utils.d.ts",
+        "default": "./_cjs/utils.cjs"
       }
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "build": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",

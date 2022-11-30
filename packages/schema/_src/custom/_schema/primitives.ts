@@ -4,8 +4,8 @@
 import type { Refinement } from "@effect-ts/system/Function"
 import type * as fc from "fast-check"
 
-import type { ParserEnv } from "../Parser/index.js"
-import type * as Th from "../These/index.js"
+import type { ParserEnv } from "../Parser.js"
+import type * as Th from "../These.js"
 import type { Annotation } from "./annotation.js"
 import type { AnyError } from "./error.js"
 import type { ApiSelfType, Schema, SchemaAny } from "./schema.js"

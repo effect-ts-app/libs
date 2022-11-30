@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as W from "winston"
 
-import * as LOG from "../Logger/index.js"
+import * as LOG from "./Logger.js"
 
 export interface WinstonFactory {
   logger: Effect<never, never, W.Logger>

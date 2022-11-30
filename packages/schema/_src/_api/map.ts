@@ -4,13 +4,13 @@
 import { Map } from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as Arbitrary from "../custom/Arbitrary/index.js"
-import * as Encoder from "../custom/Encoder/index.js"
-import * as Guard from "../custom/Guard/index.js"
-import * as MO from "../custom/index.js"
-import * as Parser from "../custom/Parser/index.js"
-import type { ParserEnv } from "../custom/Parser/index.js"
-import * as Th from "../custom/These/index.js"
+import * as Arbitrary from "../custom/Arbitrary.js"
+import * as Encoder from "../custom/Encoder.js"
+import * as Guard from "../custom/Guard.js"
+import * as MO from "../custom.js"
+import * as Parser from "../custom/Parser.js"
+import type { ParserEnv } from "../custom/Parser.js"
+import * as Th from "../custom/These.js"
 import { tuple } from "./tuple.js"
 
 export const mapIdentifier = MO.makeAnnotation<{}>()

@@ -3,7 +3,7 @@
 import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 
-import * as S from "../_schema/index.js"
+import * as S from "../_schema.js"
 // import type { RefinementE } from "../_schema/error.js"
 import { unknown } from "./unknown.js"
 import type { DefaultSchema } from "./withDefaults.js"

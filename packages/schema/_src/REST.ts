@@ -4,7 +4,7 @@
 import type { Erase } from "@effect-ts-app/core/Effect"
 import { Path } from "path-parser"
 
-import { Void } from "./_api/index.js"
+import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
 import type { AnyRecord, AnyRecordSchema, GetProps, Model, PropsExtensions, StringRecord } from "./Model.js"
