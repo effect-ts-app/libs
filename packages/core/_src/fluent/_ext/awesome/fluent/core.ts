@@ -1,7 +1,6 @@
 // ets_tracing: off
 
 import { fromMutable, getEqual, map_, toMutable } from "@effect-ts/core/Collections/Immutable/Array"
-import { from } from "@effect-ts/core/Collections/Immutable/Chunk"
 
 /**
  * @tsplus static ets/Array.Ops getEqual
@@ -32,11 +31,6 @@ export const ext_fromMutable = fromMutable
 //  * @tsplus fluent ets/Array mapM
 //  */
 // export const ext_mapEffect_ = mapEffect_
-
-/**
- * @tsplus getter ets/Array toChunk
- */
-export const ext_from = from
 
 /**
  * @tsplus getter ets/Array mutable
