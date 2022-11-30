@@ -1,5 +1,15 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.2.1
+
+### Patch Changes
+
+- 559b383: Cleanup package json exports
+- Updated dependencies [559b383]
+  - @effect-ts-app/boilerplate-prelude@1.2.1
+  - @effect-ts-app/core@1.5.1
+  - @effect-ts-app/schema@1.5.1
+
 ## 1.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 1.1.1
+
+### Patch Changes
+
+- 559b383: Cleanup package json exports
+
 ## 1.1.0
 
 ### Minor Changes
