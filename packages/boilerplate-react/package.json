@@ -80,7 +80,8 @@
     "test:run": "pnpm run test run --passWithNoTests",
     "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
     "ncu": "ncu -x @types/faker,faker,date-fns",
-    "pub": "pnpm build && npm publish --access public"
+    "pub": "pnpm prepublish && npm publish --access public",
+    "prepublish": "pnpm build"
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": [

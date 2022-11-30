@@ -44,7 +44,8 @@
     "test": "echo 'no tests yet'",
     "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",
     "ncu": "ncu",
-    "pub": "pnpm build && npm publish --access public"
+    "pub": "pnpm prepublish && npm publish --access public",
+    "prepublish": "pnpm build"
   },
   "publishConfig": {
     "access": "public"
