@@ -122,6 +122,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               )
               return batchResult.toArray.flatten()
             }).instrument("cosmos.bulkSet")
+              .withSpan("cosmos.db." + containerId)
 
           const batchSet = <T extends Collection<PM>>(items: T) => {
             return Do($ => {
@@ -183,6 +184,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   )
               )
             }).instrument("cosmos.batchSet")
+              .withSpan("cosmos.db." + containerId)
           }
 
           const s: Store<PM, Id> = {
@@ -198,7 +200,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     .fetchAll()
                     .then(({ resources }) => resources.toChunk)
                 )
-              ).instrument("cosmos.all"),
+              ).instrument("cosmos.all")
+              .withSpan("cosmos.db." + containerId),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -226,7 +229,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   return Chunk.from(v)
-                }).instrument("cosmos.filterJoinSelect"),
+                }).instrument("cosmos.filterJoinSelect")
+                .withSpan("cosmos.db." + containerId),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -262,6 +266,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.toChunk)
                     )
                   )).instrument("cosmos.filter")
+                .withSpan("cosmos.db." + containerId)
             },
             find: id =>
               Effect.promise(() =>
@@ -269,7 +274,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   .item(id, config?.partitionValue({ id } as PM))
                   .read<PM>()
                   .then(({ resource }) => Maybe.fromNullable(resource))
-              ).instrument("cosmos.find"),
+              ).instrument("cosmos.find")
+                .withSpan("cosmos.db." + containerId),
             set: e =>
               Maybe.fromNullable(e._etag)
                 .fold(
@@ -308,11 +314,15 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     ...e,
                     _etag: x.etag
                   })
-                }),
+                })
+                .instrument("cosmos.set")
+                .withSpan("cosmos.db." + containerId),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
-              Effect.promise(() => container.item(e.id, config?.partitionValue(e)).delete()).instrument("cosmos.remove")
+              Effect.promise(() => container.item(e.id, config?.partitionValue(e)).delete())
+                .instrument("cosmos.remove")
+                .withSpan("cosmos.db." + containerId)
           }
 
           // handle mock data
