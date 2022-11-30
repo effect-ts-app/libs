@@ -25,6 +25,12 @@
     "references": [
         {
             "path": "../boilerplate-prelude"
-        }
+        },
+        {
+            "path": "../schema"
+        },
+        {
+            "path": "../core"
+        },
     ]
 }

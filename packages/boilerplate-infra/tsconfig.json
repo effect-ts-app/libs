@@ -33,6 +33,15 @@
     "references": [
         {
             "path": "../boilerplate-prelude"
-        }
+        },
+        {
+            "path": "../infra"
+        },
+        {
+            "path": "../schema"
+        },
+        {
+            "path": "../core"
+        },
     ]
 }
