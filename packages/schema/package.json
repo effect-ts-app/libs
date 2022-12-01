@@ -23,13 +23,6 @@
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
-  "pnpm": {
-    "overrides": {
-      "@effect/cache": {
-        "@effect/core": "*"
-      }
-    }
-  },
   "scripts": {
     "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",

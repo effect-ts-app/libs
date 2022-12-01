@@ -24,13 +24,6 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
     "winston": "^3.8.2"
   },
-  "pnpm": {
-    "overrides": {
-      "@effect/cache": {
-        "@effect/core": "*"
-      }
-    }
-  },
   "scripts": {
     "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
