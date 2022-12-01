@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.5.2
+
+### Patch Changes
+
+- c2dac67: Fix NEA ext
+
 ## 1.5.1
 
 ### Patch Changes
