@@ -91,6 +91,7 @@ importers:
       tsconfig-paths: ^4.1.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
       typescript-transform-paths: ^3.4.4
+      vite: ^3.2.4
       vitest: ^0.25.3
     dependencies:
       '@swc/helpers': 0.4.14
@@ -140,6 +141,7 @@ importers:
       tsconfig-paths: 4.1.1
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_kyfkgfj7k5hkivbrkqy4lsobg4'
       typescript-transform-paths: 3.4.4_atfpk6h5myfikbojzh5nbn4vxy
+      vite: 3.2.4_@types+node@18.11.10
       vitest: 0.25.3
 
   packages/boilerplate-eslint:
