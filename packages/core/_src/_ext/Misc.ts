@@ -32,11 +32,6 @@ export const pipeSet = pipe
 export const pipeArray = pipe
 
 /**
- * @tsplus static ets/NonEmptyArray __call
- */
-export const naSucceed = NonEmptyArray.fromArray
-
-/**
  * @tsplus static ets/Set __call
  */
 export const setSucceed = ROSet.fromArray
