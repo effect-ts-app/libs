@@ -32,9 +32,11 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
     "winston": "^3.8.2"
   },
-  "overrides": {
-    "@effect-ts/monocle": {
-      "@effect-ts/core": "*"
+  "pnpm": {
+    "overrides": {
+      "@effect/cache": {
+        "@effect/core": "*"
+      }
     }
   },
   "scripts": {

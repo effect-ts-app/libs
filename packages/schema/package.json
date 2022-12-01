@@ -23,9 +23,11 @@
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
-  "overrides": {
-    "@effect-ts/monocle": {
-      "@effect-ts/core": "*"
+  "pnpm": {
+    "overrides": {
+      "@effect/cache": {
+        "@effect/core": "*"
+      }
     }
   },
   "scripts": {
