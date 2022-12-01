@@ -1,5 +1,5 @@
 module.exports = (dirName, forceTS = false) => {
-  const enableTS = !!dirName && (forceTS || process.env.ESLINT_TS || process.env.GITHUB_ACTIONS)
+  const enableTS = !!dirName && (forceTS || process.env.ESLINT_TS)
   return {
     parser: "@typescript-eslint/parser", // Specifies the ESLint parser
     parserOptions: {
