@@ -13,7 +13,7 @@
             "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen+0.16.1.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports+2.0.0.patch",
             "ts-pattern@4.0.6": "patches/ts-pattern+4.0.6.patch",
-            "typescript@5.0.0-tsplus.20221127": "patches/typescript+5.0.0-tsplus.20221127.patch"
+            "typescript@5.0.0-tsplus.20221127": "patches/typescript@5.0.0-tsplus.20221127.patch"
         }
     },
     "scripts": {
@@ -41,7 +41,8 @@
         "testsuite-libs": "pnpm libs testsuite",
         "testsuite-libs-manual": "cd packages/boilerplate-prelude && pnpm testsuite && cd ../types && pnpm testsuite && cd ../client && pnpm testsuite && cd ../infra && pnpm testsuite && cd ../messages && pnpm testsuite && cd ../vue && pnpm testsuite",
         "watch-libs": "pnpm build-libs && pnpm -r --filter \"packages/*\" watch",
-        "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build ./tsconfig.all.json"
+        "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build ./tsconfig.all.json",
+        "rebuild": "pnpm clean && pnpm build"
     },
     "resolutions": {
         "@effect/core": "^0.0.16",
@@ -98,7 +99,7 @@
         "tsconfig-paths": "^4.1.1",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.4",
-        "vitest": "^0.25.3",
-        "vite": "^3.2.4"
+        "vite": "^3.2.4",
+        "vitest": "^0.25.3"
     }
 }

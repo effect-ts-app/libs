@@ -1,0 +1,252 @@
+diff --git a/lib/tsc.js b/lib/tsc.js
+index 50e2bad..aaa1f70 100644
+--- a/lib/tsc.js
++++ b/lib/tsc.js
+@@ -38973,7 +38973,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
+       for (const key of getOwnKeys(exports)) {
+         if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+           const subTarget = exports[key];
+-          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++          const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+           if (result) {
+             return result;
+           }
+@@ -39044,7 +39045,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
+   if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+     return void 0;
+   }
+-  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+   const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+   return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+   function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -44914,6 +44915,15 @@ function createTypeChecker(host) {
+       }
+       return top;
+     }
++    function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++      let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode)
++      // ts plus import workaround
++      if (specifier && specifier.indexOf("/node_modules/") > 0) {
++        const r = tryGetImportLocation(fileMap.map, specifier)
++        if (r) { specifier = r; }
++      }
++      return specifier
++    }
+     function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+       var _a2;
+       let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
+@@ -44991,7 +45001,7 @@ function createTypeChecker(host) {
+         let assertion;
+         if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+           if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+             assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+               factory.createAssertEntry(
+                 factory.createStringLiteral("resolution-mode"),
+@@ -45002,7 +45012,7 @@ function createTypeChecker(host) {
+           }
+         }
+         if (!specifier) {
+-          specifier = getSpecifierForModuleSymbol(chain[0], context);
++          specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+         }
+         if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+           const oldSpecifier = specifier;
+@@ -79824,13 +79834,23 @@ function getOriginalNodeId(node) {
+   node = getOriginalNode(node);
+   return node ? getNodeId(node) : 0;
+ }
+-function getImportLocation(fileMap, source) {
++const cache = {}
++function tryGetImportLocation(fileMap, source) {
++  if (source in cache) { return cache[source] }
+   for (const [path, reg] of fileMap) {
+     if (source.match(reg)) {
+-      return source.replace(reg, path);
++      const r = source.replace(reg, path)
++      cache[source] = r
++      return r;
+     }
+   }
+-  throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++  cache[source] = undefined
++  return undefined
++}
++function getImportLocation(fileMap, source) {
++  const found = tryGetImportLocation(fileMap, source)
++  if (!found) { throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`); }
++  return found
+ }
+ function getTraceLocation(traceMap, source) {
+   for (const [path, reg] of traceMap) {
+diff --git a/lib/tsserver.js b/lib/tsserver.js
+index a5b79af..6fb973b 100644
+--- a/lib/tsserver.js
++++ b/lib/tsserver.js
+@@ -43331,7 +43331,8 @@ ${lanes.join("\n")}
+         for (const key of getOwnKeys(exports)) {
+           if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+             const subTarget = exports[key];
+-            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++            const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+             if (result) {
+               return result;
+             }
+@@ -43402,7 +43403,7 @@ ${lanes.join("\n")}
+     if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+       return void 0;
+     }
+-    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+     const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+     return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+     function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -49272,6 +49273,15 @@ ${lanes.join("\n")}
+         }
+         return top;
+       }
++      function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++        let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode)
++        // ts plus import workaround
++        if (specifier && specifier.indexOf("/node_modules/") > 0) {
++          const r = tryGetImportLocation(fileMap.map, specifier)
++          if (r) { specifier = r; }
++        }
++        return specifier
++      }
+       function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+         var _a2;
+         let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
+@@ -49349,7 +49359,7 @@ ${lanes.join("\n")}
+           let assertion;
+           if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+             if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-              specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++              specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+               assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+                 factory.createAssertEntry(
+                   factory.createStringLiteral("resolution-mode"),
+@@ -49360,7 +49370,7 @@ ${lanes.join("\n")}
+             }
+           }
+           if (!specifier) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+           }
+           if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+             const oldSpecifier = specifier;
+@@ -84396,13 +84406,23 @@ ${lanes.join("\n")}
+     node = getOriginalNode(node);
+     return node ? getNodeId(node) : 0;
+   }
+-  function getImportLocation(fileMap, source) {
++  const cache = {}
++  function tryGetImportLocation(fileMap, source) {
++    if (source in cache) { return cache[source] }
+     for (const [path, reg] of fileMap) {
+       if (source.match(reg)) {
+-        return source.replace(reg, path);
++        const r = source.replace(reg, path)
++        cache[source] = r
++        return r;
+       }
+     }
+-    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    cache[source] = undefined
++    return undefined
++  }
++  function getImportLocation(fileMap, source) {
++    const found = tryGetImportLocation(fileMap, source)
++    if (!found) { throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`); }
++    return found
+   }
+   function getTraceLocation(traceMap, source) {
+     for (const [path, reg] of traceMap) {
+diff --git a/lib/typescript.js b/lib/typescript.js
+index 20ea5b4..cc26547 100644
+--- a/lib/typescript.js
++++ b/lib/typescript.js
+@@ -40869,7 +40869,8 @@ ${lanes.join("\n")}
+         for (const key of getOwnKeys(exports)) {
+           if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+             const subTarget = exports[key];
+-            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++            const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+             if (result) {
+               return result;
+             }
+@@ -40940,7 +40941,7 @@ ${lanes.join("\n")}
+     if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+       return void 0;
+     }
+-    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+     const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+     return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+     function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -46688,6 +46689,15 @@ ${lanes.join("\n")}
+         }
+         return top;
+       }
++      function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++        let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode)
++        // ts plus import workaround
++        if (specifier && specifier.indexOf("/node_modules/") > 0) {
++          const r = tryGetImportLocation(fileMap.map, specifier)
++          if (r) { specifier = r; }
++        }
++        return specifier
++      }
+       function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+         var _a2;
+         let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
+@@ -46765,7 +46775,7 @@ ${lanes.join("\n")}
+           let assertion;
+           if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+             if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-              specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++              specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+               assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+                 factory.createAssertEntry(
+                   factory.createStringLiteral("resolution-mode"),
+@@ -46776,7 +46786,7 @@ ${lanes.join("\n")}
+             }
+           }
+           if (!specifier) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+           }
+           if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+             const oldSpecifier = specifier;
+@@ -81984,13 +81994,23 @@ ${lanes.join("\n")}
+     node = getOriginalNode(node);
+     return node ? getNodeId(node) : 0;
+   }
+-  function getImportLocation(fileMap, source) {
++  const cache = {}
++  function tryGetImportLocation(fileMap, source) {
++    if (source in cache) { return cache[source] }
+     for (const [path, reg] of fileMap) {
+       if (source.match(reg)) {
+-        return source.replace(reg, path);
++        const r = source.replace(reg, path)
++        cache[source] = r
++        return r;
+       }
+     }
+-    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    cache[source] = undefined
++    return undefined
++  }
++  function getImportLocation(fileMap, source) {
++    const found = tryGetImportLocation(fileMap, source)
++    if (!found) { throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`); }
++    return found
+   }
+   function getTraceLocation(traceMap, source) {
+     for (const [path, reg] of traceMap) {
