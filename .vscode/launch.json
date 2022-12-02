@@ -1,53 +1,22 @@
 {
+  "type": "node",
+  "request": "launch",
+  "name": "Debug TSC",
+  "program": "${workspaceFolder}/node_modules/tsc.js",
+  "args": [
+    "--build tsconfig.all.json",
+  ],
+  "sourceMaps": false,
+  "protocol": "inspector",
   "configurations": [
     {
-      "name": "API debug",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/apps/api",
-      "runtimeArgs": [
-        "debug"
-      ],
-      "runtimeExecutable": "pnpm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "pwa-node"
-    },
-    // {
-    //   "name": "UI debug",
-    //   "request": "launch",
-    //   "cwd": "${workspaceFolder}/apps/frontend-nuxt",
-    //   "runtimeArgs": [
-    //     "dev:debug"
-    //   ],
-    //   "runtimeExecutable": "pnpm",
-    //   "skipFiles": [
-    //     "<node_internals>/**"
-    //   ],
-    //   "type": "pwa-node",
-    // },
-    {
-      "name": "API Debug Attach",
-      "port": 9229,
-      "cwd": "${workspaceFolder}/apps/api",
+      "name": "Attach by Process ID",
+      "processId": "${command:PickProcess}",
       "request": "attach",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "type": "pwa-node",
-      "sourceMaps": true
-    },
-    {
-      "name": "UI Debug Attach",
-      "port": 9230,
-      "cwd": "${workspaceFolder}/apps/frontend-nuxt",
-      "request": "attach",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "pwa-node",
-      "webRoot": "${workspaceFolder}/apps/frontend-nuxt",
-      "sourceMaps": true
-    },
+      "type": "node"
+    }
   ]
 }

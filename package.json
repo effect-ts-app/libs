@@ -3,16 +3,16 @@
     "private": true,
     "pnpm": {
         "patchedDependencies": {
-            "@effect-ts/core@0.60.4": "patches/@effect-ts+core+0.60.4.patch",
-            "@effect-ts/monocle@0.43.0": "patches/@effect-ts+monocle+0.43.0.patch",
-            "@effect-ts/system@0.57.4": "patches/@effect-ts+system+0.57.4.patch",
-            "@effect/cache@0.0.4": "patches/@effect+cache+0.0.4.patch",
+            "@effect-ts/core@0.60.4": "patches/@effect-ts__core@0.60.4.patch",
+            "@effect-ts/monocle@0.43.0": "patches/@effect-ts__monocle@0.43.0.patch",
+            "@effect-ts/system@0.57.4": "patches/@effect-ts__system@0.57.4.patch",
+            "@effect/cache@0.0.4": "patches/@effect__cache@0.0.4.patch",
             "@effect/core@0.0.16": "patches/@effect__core@0.0.16.patch",
-            "@tsplus/stdlib@0.2.8": "patches/@tsplus+stdlib+0.2.8.patch",
-            "@typescript-eslint/scope-manager@5.45.0": "patches/@typescript-eslint+scope-manager+5.45.0.patch",
-            "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen+0.16.1.patch",
-            "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports+2.0.0.patch",
-            "ts-pattern@4.0.6": "patches/ts-pattern+4.0.6.patch",
+            "@tsplus/stdlib@0.2.8": "patches/@tsplus__stdlib@0.2.8.patch",
+            "@typescript-eslint/scope-manager@5.45.0": "patches/@typescript-eslint__scope-manager@5.45.0.patch",
+            "eslint-plugin-codegen@0.16.1": "patches/eslint-plugin-codegen@0.16.1.patch",
+            "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
+            "ts-pattern@4.0.6": "patches/ts-pattern@4.0.6.patch",
             "typescript@5.0.0-tsplus.20221127": "patches/typescript@5.0.0-tsplus.20221127.patch"
         }
     },
