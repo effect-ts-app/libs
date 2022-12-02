@@ -289,7 +289,10 @@ importers:
 
   packages/boilerplate-react:
     specifiers:
+      '@effect-ts-app/boilerplate-prelude': workspace:*
+      '@effect-ts-app/core': workspace:*
       '@effect-ts-app/react': workspace:*
+      '@effect-ts-app/schema': workspace:*
       '@types/node': ~18.11.10
       '@types/react': ^18.0.26
       date-fns: ^2.29.3
@@ -300,7 +303,10 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
       vitest: ^0.25.3
     dependencies:
+      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
+      '@effect-ts-app/core': link:../core
       '@effect-ts-app/react': link:../react
+      '@effect-ts-app/schema': link:../schema
       date-fns: 2.29.3
     devDependencies:
       '@types/node': 18.11.10
