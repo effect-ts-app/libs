@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.2.3
+
+### Patch Changes
+
+- e4735a7: Add refinement extensions
+
 ## 1.2.2
 
 ### Patch Changes
