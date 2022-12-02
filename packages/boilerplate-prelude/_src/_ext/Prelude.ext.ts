@@ -10,6 +10,8 @@ import { Option } from "@effect-ts/core"
 import { asUnit } from "@effect/core/io/Effect"
 import { concreteChunkId } from "@tsplus/stdlib/collections/Chunk"
 
+import "./refinements.js"
+
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
 ] ? R
