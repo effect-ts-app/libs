@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-react
 
+## 1.2.2
+
+### Patch Changes
+
+- 157ca49: Fixes
+- Updated dependencies [157ca49]
+  - @effect-ts-app/boilerplate-prelude@1.2.4
+
 ## 1.2.1
 
 ### Patch Changes

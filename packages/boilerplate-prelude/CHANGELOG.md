@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.2.4
+
+### Patch Changes
+
+- 157ca49: Fixes
+
 ## 1.2.3
 
 ### Patch Changes
