@@ -183,6 +183,16 @@
         "default": "./_cjs/_ext/pipe.cjs"
       }
     },
+    "./_ext/refinements": {
+      "import": {
+        "types": "./dist/_ext/refinements.d.ts",
+        "default": "./dist/_ext/refinements.js"
+      },
+      "require": {
+        "types": "./dist/_ext/refinements.d.ts",
+        "default": "./_cjs/_ext/refinements.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",
