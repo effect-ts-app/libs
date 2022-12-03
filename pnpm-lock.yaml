@@ -263,6 +263,7 @@ importers:
       fast-check: ^3.3.0
       lodash: ^4.17.21
       path-parser: ^6.1.0
+      query-string: ^7.1.3
       ts-node: ^10.9.1
       ts-pattern: ^4.0.6
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
@@ -280,6 +281,7 @@ importers:
       date-fns: 2.29.3
       lodash: 4.17.21
       path-parser: 6.1.0
+      query-string: 7.1.3
       ts-pattern: 4.0.6_hpfuegunz5yvcuwfbyr4pr7fdy
       uuid: 9.0.0
       validator: 13.7.0
@@ -340,6 +342,8 @@ importers:
       '@rollup/pluginutils': ^5.0.2
       '@tsplus/stdlib': ^0.2.8
       '@types/node': ~18.11.10
+      json5: ^2.2.1
+      query-string: ^7.1.3
       swrv: ^1.0.1
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
@@ -357,6 +361,7 @@ importers:
       '@effect-ts/system': 0.57.4_aliyesjnd2rt7ef7234i2dw2t4
       '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
       '@tsplus/stdlib': 0.2.8_74hyor7buze5mn466flzrp35ie
+      query-string: 7.1.3
       swrv: 1.0.1_vue@3.2.45
       vue: 3.2.45
       vue2: /vue/3.2.45
@@ -364,6 +369,7 @@ importers:
       '@babel/cli': 7.19.3
       '@rollup/pluginutils': 5.0.2
       '@types/node': 18.11.10
+      json5: 2.2.1
       ts-node: 10.9.1_t2jg5t3irunlma5rfl6e5hoa34
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_zp2rvqzoyfh6keedrnyccdmbaa'
       vite: 3.2.4_@types+node@18.11.10
@@ -7834,6 +7840,16 @@ packages:
 
   /query-string/7.1.2:
     resolution: {integrity: sha512-KPbFzz/8pmtYOMH6zlYZgqTYJKQ18FxwfW3RLHIBwHWQ0iQG18X16XtIOk68ddfaM6j3grjYSnMPMrqQEjwR4w==}
+    engines: {node: '>=6'}
+    dependencies:
+      decode-uri-component: 0.2.2
+      filter-obj: 1.1.0
+      split-on-first: 1.1.0
+      strict-uri-encode: 2.0.0
+    dev: false
+
+  /query-string/7.1.3:
+    resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
     dependencies:
       decode-uri-component: 0.2.2
