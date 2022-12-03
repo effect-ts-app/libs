@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.3.3
+
+### Patch Changes
+
+- e130a4e: Update for tsconfig fix
+- Updated dependencies [e130a4e]
+  - @effect-ts-app/boilerplate-prelude@1.3.2
+  - @effect-ts-app/core@1.6.2
+  - @effect-ts-app/infra@1.6.2
+  - @effect-ts-app/schema@1.6.2
+
 ## 1.3.2
 
 ### Patch Changes

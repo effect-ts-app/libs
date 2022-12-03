@@ -1,5 +1,13 @@
 # @effect-ts-app/playground
 
+## 0.0.3
+
+### Patch Changes
+
+- e130a4e: Update for tsconfig fix
+- Updated dependencies [e130a4e]
+  - @effect-ts-app/boilerplate-prelude@1.3.2
+
 ## 0.0.2
 
 ### Patch Changes
