@@ -1,8 +1,8 @@
 import type { ParsedShapeOfCustom, ReqRes, SchemaAny } from "@effect-ts-app/boilerplate-prelude/schema"
 import { EParserFor, Parser, unsafe } from "@effect-ts-app/boilerplate-prelude/schema"
-import type { ParsedUrlQuery } from "querystring"
+import type { ParsedQuery } from "query-string"
 
-export function getQueryParam(search: ParsedUrlQuery, param: string) {
+export function getQueryParam(search: ParsedQuery, param: string) {
   const v = search[param]
   if (Array.isArray(v)) {
     return v[0]

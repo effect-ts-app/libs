@@ -1,10 +1,9 @@
 import { createFilter } from "@rollup/pluginutils"
 import fs from "fs"
+import json5 from "json5"
 import path from "path"
 import ts from "typescript"
 import type * as V from "vite"
-
-import json5 from "json5"
 
 function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }): V.Plugin {
   const filter = createFilter(options?.include, options?.exclude)
