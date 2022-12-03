@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.6.0
+
+### Minor Changes
+
+- e315f43: Cleanup deps
+
 ## 1.5.2
 
 ### Patch Changes

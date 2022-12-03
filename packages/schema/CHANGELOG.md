@@ -1,5 +1,16 @@
 # @effect-ts-app/schema
 
+## 1.6.0
+
+### Minor Changes
+
+- e315f43: Cleanup deps
+
+### Patch Changes
+
+- Updated dependencies [e315f43]
+  - @effect-ts-app/core@1.6.0
+
 ## 1.5.2
 
 ### Patch Changes

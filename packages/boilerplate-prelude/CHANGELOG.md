@@ -1,5 +1,17 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.3.0
+
+### Minor Changes
+
+- e315f43: Cleanup deps
+
+### Patch Changes
+
+- Updated dependencies [e315f43]
+  - @effect-ts-app/core@1.6.0
+  - @effect-ts-app/schema@1.6.0
+
 ## 1.2.4
 
 ### Patch Changes

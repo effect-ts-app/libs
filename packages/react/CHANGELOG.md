@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.6.0
+
+### Minor Changes
+
+- e315f43: Cleanup deps
+
 ## 1.5.1
 
 ### Patch Changes
