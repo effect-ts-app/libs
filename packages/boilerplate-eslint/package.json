@@ -8,7 +8,7 @@
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "ncu": "ncu",
     "pub": "pnpm prepublish && npm publish --access public",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm build && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json"
   },
   "dependencies": {
     "@babel/generator": "7.20.5",

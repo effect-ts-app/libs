@@ -47,7 +47,7 @@
     "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",
     "ncu": "ncu -x redis,@types/redis",
     "pub": "pnpm prepublish && npm publish --access public",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm build && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json"
   },
   "publishConfig": {
     "access": "public"

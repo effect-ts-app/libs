@@ -415,7 +415,7 @@
     "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
     "ncu": "ncu -x @types/faker,faker,date-fns",
     "pub": "pnpm prepublish && npm publish --access public",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm build && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json"
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": [
