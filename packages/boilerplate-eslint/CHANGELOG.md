@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 1.2.1
+
+### Patch Changes
+
+- 326cc4e: Include tsconfigs for better DX
+
 ## 1.2.0
 
 ### Minor Changes

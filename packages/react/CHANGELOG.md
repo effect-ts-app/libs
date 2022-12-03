@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.6.1
+
+### Patch Changes
+
+- 326cc4e: Include tsconfigs for better DX
+
 ## 1.6.0
 
 ### Minor Changes
