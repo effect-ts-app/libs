@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 1.2.0
+
+### Minor Changes
+
+- e315f43: Cleanup deps
+
 ## 1.1.1
 
 ### Patch Changes
