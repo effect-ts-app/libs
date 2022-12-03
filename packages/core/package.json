@@ -596,6 +596,9 @@
         "types": "./dist/validation/validators.d.ts",
         "default": "./_cjs/validation/validators.cjs"
       }
+    },
+    "./types/awesome": {
+      "types": "./types/awesome.d.ts"
     }
   },
   "sideEffects": [

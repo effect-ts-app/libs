@@ -5,10 +5,9 @@ const cp = require("child_process")
 const r = cp.execSync("sh ../../scripts/extract.sh", { encoding: "utf-8" })
 const s = r.split("\n").sort((a, b) => a < b ? -1 : 1).join("\n")
 const items = JSON.parse(`{${s.substring(0, s.length - 1)} }`)
-console.log(items)
 
 const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"))
-pkg.exports = {
+const exps = {
   ".": {
     "import": {
       "types": "./dist/index.d.ts",
@@ -19,6 +18,11 @@ pkg.exports = {
       "default": "./_cjs/index.cjs"
     }
   },
-  ...items
+  ...items,
+  ...pkg.name === "@effect-ts-app/core" ? {
+    "./types/awesome": { "types": "./types/awesome.d.ts" }
+  } : {},
 }
+console.log(exps)
+pkg.exports = exps
 fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2))

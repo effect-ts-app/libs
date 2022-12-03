@@ -29,7 +29,7 @@ import type * as SET from "@effect-ts-app/core/Set"
 // import type * as HAS from "@effect-ts/core/Has"
 import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
-import "@effect-ts-app/core/types/awesome"
+import type {} from "@effect-ts-app/core/types/awesome"
 
 // export namespace Equal {
 //   export * from "@effect-ts/core/Equal"
