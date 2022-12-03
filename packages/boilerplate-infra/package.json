@@ -571,7 +571,8 @@
     "client": "node --experimental-specifier-resolution=node -r source-map-support/register ./dist/client.bin.js",
     "ncu": "ncu -x date-fns,redis,@types/redis,jwks-rsa",
     "pub": "pnpm prepublish && npm publish --access public",
-    "prepublish": "pnpm build && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json"
+    "prepublish": "pnpm build && cp -f ./tsconfig.json ./tsconfig.json.bak && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json",
+    "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json"
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": false
