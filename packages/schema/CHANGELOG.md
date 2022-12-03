@@ -1,5 +1,13 @@
 # @effect-ts-app/schema
 
+## 1.6.1
+
+### Patch Changes
+
+- 326cc4e: Include tsconfigs for better DX
+- Updated dependencies [326cc4e]
+  - @effect-ts-app/core@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes

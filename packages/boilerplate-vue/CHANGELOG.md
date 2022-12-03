@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.3.1
+
+### Patch Changes
+
+- 326cc4e: Include tsconfigs for better DX
+- Updated dependencies [326cc4e]
+  - @effect-ts-app/boilerplate-prelude@1.3.1
+  - @effect-ts-app/boilerplate-vue@1.3.1
+  - @effect-ts-app/core@1.6.1
+  - @effect-ts-app/schema@1.6.1
+
 ## 1.3.0
 
 ### Minor Changes
