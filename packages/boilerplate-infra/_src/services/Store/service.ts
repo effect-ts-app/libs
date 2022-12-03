@@ -61,12 +61,12 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
   ) => Effect<never, never, Chunk<T & { _rootId: string }>>
   find: (id: Id) => Effect<never, never, Maybe<PM>>
   set: (e: PM) => Effect<never, OptimisticConcurrencyException, PM>
-  batchSet: <T extends Collection<PM>>(
-    items: T
-  ) => Effect<never, OptimisticConcurrencyException, readonly PM[]>
-  bulkSet: <T extends Collection<PM>>(
-    items: T
-  ) => Effect<never, OptimisticConcurrencyException, readonly PM[]>
+  batchSet: (
+    items: NonEmptyArray<PM>
+  ) => Effect<never, OptimisticConcurrencyException, NonEmptyArray<PM>>
+  bulkSet: (
+    items: NonEmptyArray<PM>
+  ) => Effect<never, OptimisticConcurrencyException, NonEmptyArray<PM>>
   /**
    * Requires the PM type, not Id, because various stores may need to calculate e.g partition keys.
    */

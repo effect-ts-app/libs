@@ -48,7 +48,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           const execBatch = container.items.batch.bind(container.items)
           const importedMarkerId = containerId
 
-          const bulkSet = <T extends Collection<PM>>(items: T) =>
+          const bulkSet = (items: NonEmptyArray<PM>) =>
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
@@ -121,11 +121,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                 )
               )
-              return batchResult.toArray.flatten()
+              return batchResult.toArray.flatten() as NonEmptyArray<PM>
             }).instrument("cosmos.bulkSet")
               .apply(annotate)
 
-          const batchSet = <T extends Collection<PM>>(items: T) => {
+          const batchSet = (items: NonEmptyArray<PM>) => {
             return Do($ => {
               const batch = [...items].map(
                 x =>
@@ -180,7 +180,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       return batch.mapWithIndex((i, [e]) => ({
                         ...e,
                         _etag: result[i]?.eTag
-                      }))
+                      })) as NonEmptyArray<PM>
                     })
                   )
               )
@@ -341,11 +341,14 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             if (existing) {
               const m = yield* $(existing)
               yield* $(
-                s
-                  .bulkSet([...m.values()])
-                  .orDie
-                  // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                  .delay(DUR.millis(1100))
+                Effect([...m.values()].toNonEmpty)
+                  .flatMapMaybe(a =>
+                    s
+                      .bulkSet(a)
+                      .orDie
+                      // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
+                      .delay(DUR.millis(1100))
+                  )
               )
             }
             // Mark as imported

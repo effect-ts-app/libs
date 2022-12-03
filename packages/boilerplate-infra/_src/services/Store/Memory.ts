@@ -40,11 +40,10 @@ export const makeMemoryStore = () => ({
       const semaphore = TSemaphore.unsafeMake(1)
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.from)
-      const batchSet = <T extends Collection<PM>>(items: T) =>
+      const batchSet = (items: NonEmptyArray<PM>) =>
         semaphore.withPermit(
-          items.toArray
+          items
             .forEachEffect(i => s.find(i.id).flatMap(current => updateETag(i, current)))
-            .map(c => c.toArray)
             .tap(items =>
               store.get
                 .map(m => {
