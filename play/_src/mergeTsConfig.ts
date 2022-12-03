@@ -34,6 +34,7 @@ if (config.compilerOptions.tsPlusConfig) {
   fs.cpSync(config.compilerOptions.tsPlusConfig, "./tsplus.config.json")
   Object.assign(config.compilerOptions, {
     tsPlusConfig: "./tsplus.config.json",
+    noEmit: true
   })
 }
 

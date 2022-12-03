@@ -36,7 +36,8 @@ const config = [...configs].reverse().reduce((prev, cur) => {
 if (config.compilerOptions.tsPlusConfig) {
   _fs.default.cpSync(config.compilerOptions.tsPlusConfig, "./tsplus.config.json");
   Object.assign(config.compilerOptions, {
-    tsPlusConfig: "./tsplus.config.json"
+    tsPlusConfig: "./tsplus.config.json",
+    noEmit: true
   });
 }
 Object.assign(config, {
