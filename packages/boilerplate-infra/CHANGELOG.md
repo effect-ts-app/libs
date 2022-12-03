@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.3.1
+
+### Patch Changes
+
+- b07037a: Tighten batch and bulkSet to take NonEmptyArray as input
+
 ## 1.3.0
 
 ### Minor Changes
