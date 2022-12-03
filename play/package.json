@@ -1,13 +1,13 @@
 {
   "name": "@effect-ts-app/playground",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "type": "module",
   "resolutions": {
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "peerDependencies": {
-    "@effect-ts-app/boilerplate-prelude": "^1.3.1"
+    "@effect-ts-app/boilerplate-prelude": "^1.3.2"
   },
   "dependencies": {
     "change-case": "^4.1.2",

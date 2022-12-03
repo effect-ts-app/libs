@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.6.2
+
+### Patch Changes
+
+- e130a4e: Update for tsconfig fix
+
 ## 1.6.1
 
 ### Patch Changes

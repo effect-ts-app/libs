@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 1.2.2
+
+### Patch Changes
+
+- e130a4e: Update for tsconfig fix
+
 ## 1.2.1
 
 ### Patch Changes

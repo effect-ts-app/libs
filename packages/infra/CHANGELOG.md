@@ -1,5 +1,14 @@
 # @effect-ts-app/infra
 
+## 1.6.2
+
+### Patch Changes
+
+- e130a4e: Update for tsconfig fix
+- Updated dependencies [e130a4e]
+  - @effect-ts-app/core@1.6.2
+  - @effect-ts-app/schema@1.6.2
+
 ## 1.6.1
 
 ### Patch Changes
