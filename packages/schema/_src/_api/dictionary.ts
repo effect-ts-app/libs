@@ -4,11 +4,11 @@
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { pipe } from "@effect-ts/core/Function"
 
+import * as MO from "../custom.js"
 import { augmentRecord } from "../custom/_utils.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
-import * as MO from "../custom.js"
 import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"

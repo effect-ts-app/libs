@@ -1,7 +1,7 @@
 import fs from "fs"
 import json5 from "json5"
 import path from "path"
-//import ts from "typescript"
+// import ts from "typescript"
 
 const configPath = process.argv[2]!
 console.log(configPath)

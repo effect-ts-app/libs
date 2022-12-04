@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable unused-imports/no-unused-imports */
 
 import type * as A from "@effect-ts-app/core/Array"
