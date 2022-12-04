@@ -43,6 +43,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {

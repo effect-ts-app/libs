@@ -32,6 +32,13 @@
     "vitest": "^0.25.3",
     "vue": "^3.2.45"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {
