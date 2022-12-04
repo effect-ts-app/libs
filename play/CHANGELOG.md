@@ -1,5 +1,13 @@
 # @effect-ts-app/playground
 
+## 0.0.4
+
+### Patch Changes
+
+- 0c684da: Add typesVersions for legacy moduleResolution support
+- Updated dependencies [0c684da]
+  - @effect-ts-app/boilerplate-prelude@1.3.3
+
 ## 0.0.3
 
 ### Patch Changes

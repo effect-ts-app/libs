@@ -1,5 +1,14 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.3.3
+
+### Patch Changes
+
+- 0c684da: Add typesVersions for legacy moduleResolution support
+- Updated dependencies [0c684da]
+  - @effect-ts-app/core@1.6.3
+  - @effect-ts-app/schema@1.6.3
+
 ## 1.3.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.6.3
+
+### Patch Changes
+
+- 0c684da: Add typesVersions for legacy moduleResolution support
+
 ## 1.6.2
 
 ### Patch Changes
