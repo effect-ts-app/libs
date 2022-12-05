@@ -9,7 +9,7 @@
     "ncu": "ncu",
     "pub": "pnpm prepublish && npm publish --access public",
     "prepublish": "pnpm build && cp -f ./tsconfig.json ./tsconfig.json.bak && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json",
-    "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json"
+    "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"
   },
   "dependencies": {
     "@babel/generator": "7.20.5",
