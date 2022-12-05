@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.7.0
+
+### Minor Changes
+
+- 47e188e: Improved custom errors for Schemas
+
 ## 1.6.4
 
 ### Patch Changes
