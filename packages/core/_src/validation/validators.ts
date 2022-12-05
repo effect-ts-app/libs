@@ -1,4 +1,5 @@
 // Not importing from /es/lib because they are .js files and bundlers probably assume they're cjs :(
+import type { IsEmailOptions } from "validator/lib/isEmail.js"
 import isEmail from "validator/lib/isEmail.js"
 
 // Source https://emailregex.com/
@@ -13,10 +14,7 @@ const PHONE_LENGTH = 7
 /**
  * Validate emails according to RFC 5322
  */
-// export const isValidEmail = (email: string): boolean => {
-//   return EMAIL_REGEX.test(email.toLowerCase())
-// }
-export const isValidEmail = isEmail
+export const isValidEmail = isEmail as any as (str: string, options?: IsEmailOptions) => boolean
 
 /**
  * Validates that phone number contains at least 7 numbers.

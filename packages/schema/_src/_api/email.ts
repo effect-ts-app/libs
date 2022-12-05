@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import type { Refinement } from "@effect-ts-app/core/Function"
 import { pipe } from "@effect-ts-app/core/Function"
 import { isValidEmail } from "@effect-ts-app/core/validation"
 
 import * as MO from "../_schema.js"
 import type { DefaultSchema, NonEmptyString } from "../_schema.js"
-import { brand, fromString, nonEmpty, parseUuidE, string } from "../_schema.js"
+import { brand, customE, fromString, string } from "../_schema.js"
 import { extendWithUtils } from "./_shared.js"
 
 // TODO: openapi meta: format: email
@@ -19,15 +18,14 @@ export type Email = NonEmptyString & EmailBrand
 
 export const EmailFromStringIdentifier = MO.makeAnnotation<{}>()
 
-const isEmail: Refinement<string, Email> = isValidEmail as any
+function isEmail(str: string): str is Email {
+  return isValidEmail(str)
+}
 
 export const EmailFromString: DefaultSchema<string, Email, string, string, {}> = pipe(
   fromString,
   MO.arbitrary(FC => FC.emailAddress()),
-  nonEmpty,
-  MO.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-  MO.mapConstructorError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-  MO.refine(isEmail, n => MO.leafE(parseUuidE(n))),
+  MO.refine(isEmail, n => MO.leafE(customE(n, "a valid Email according to RFC 5322"))),
   brand<Email>(),
   MO.annotate(EmailFromStringIdentifier, {})
 )

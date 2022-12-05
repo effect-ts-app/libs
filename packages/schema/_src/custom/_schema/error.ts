@@ -357,8 +357,25 @@ export class NonEmptyE<A> extends DefaultLeafE<{
   }
 }
 
+export class CustomE<A> extends DefaultLeafE<{
+  readonly actual: A
+  readonly expected: string
+}> implements Actual<A> {
+  readonly _tag = "Custom"
+
+  get [toTreeSymbol]() {
+    return tree(
+      `cannot process ${JSON.stringify(this.actual)}, expected ${this.expected}`
+    )
+  }
+}
+
 export function nonEmptyE<A>(actual: A): NonEmptyE<A> {
   return new NonEmptyE({ actual })
+}
+
+export function customE<A>(actual: A, expected: string): CustomE<A> {
+  return new CustomE({ actual, expected })
 }
 
 export class ParseNumberE extends DefaultLeafE<{
@@ -425,10 +442,6 @@ export class ParseUuidE extends DefaultLeafE<{
   get [toTreeSymbol]() {
     return tree(`cannot process ${JSON.stringify(this.actual)}, expected an UUID`)
   }
-}
-
-export function parseUuidE(actual: unknown): ParseUuidE {
-  return new ParseUuidE({ actual })
 }
 
 //

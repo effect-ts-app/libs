@@ -2,9 +2,8 @@ import type { Refinement } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as S from "../_schema.js"
-import { parseUuidE } from "../_schema.js"
+import { customE } from "../_schema.js"
 import { brand } from "./brand.js"
-import { nonEmpty } from "./nonEmpty.js"
 import type { NonEmptyString } from "./nonEmptyString.js"
 import { fromString, string } from "./string.js"
 import type { DefaultSchema } from "./withDefaults.js"
@@ -26,10 +25,7 @@ const isUUID: Refinement<string, UUID> = (s: string): s is UUID => {
 export const UUIDFromString: DefaultSchema<string, UUID, string, string, {}> = pipe(
   fromString,
   S.arbitrary(FC => FC.uuid()),
-  nonEmpty,
-  S.mapParserError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.mapConstructorError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.refine(isUUID, n => S.leafE(parseUuidE(n))),
+  S.refine(isUUID, n => S.leafE(customE(n, "a valid UUID"))),
   brand<UUID>(),
   S.annotate(UUIDFromStringIdentifier, {})
 )

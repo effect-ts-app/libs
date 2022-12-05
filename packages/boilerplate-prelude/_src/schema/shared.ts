@@ -18,12 +18,8 @@ import {
   literal,
   makeAnnotation,
   makeUuid,
-  mapConstructorError,
-  mapParserError,
   named,
-  nonEmpty,
   nonEmptyStringFromString,
-  parseUuidE,
   prop,
   refine
 } from "@effect-ts-app/schema"
@@ -36,6 +32,7 @@ import type { ParsedShapeOfCustom, ReasonableStringBrand, UnionBrand } from "./_
 import {
   Arbitrary,
   arbitrary,
+  customE,
   Email as Email_,
   fakerArb,
   fromString,
@@ -207,7 +204,10 @@ export function prefixedStringId<Brand extends StringId>() {
     const refinement = (x: StringId): x is Brand => x.startsWith(pref)
     const fromString = pipe(
       stringIdFromString,
-      refine(refinement, n => leafE(parseUuidE(n))),
+      refine(
+        refinement,
+        n => leafE(customE(n, `a StringId prefixed with '${pref}'`))
+      ),
       arbitrary(FC =>
         stringIdArb(FC).map(
           x => (pref + x.substring(0, MAX_LENGTH - pref.length)) as Brand
@@ -268,12 +268,7 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
 export const UrlFromString: DefaultSchema<string, Url, string, string, {}> = pipe(
   fromString,
   arbitrary(FC => FC.webUrl()),
-  nonEmpty,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
-  mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead().error),
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
-  mapConstructorError(_ => ((_ as any).errors as Chunk<any>).unsafeHead().error),
-  refine(isUrl, n => leafE(parseUuidE(n))),
+  refine(isUrl, n => leafE(customE(n, "a valid Web URL according to | RFC 3986 and | WHATWG URL Standard"))),
   brand<Url>(),
   annotate(UrlFromStringIdentifier, {})
 )

@@ -4,8 +4,6 @@ import type { NonEmptyBrand } from "../custom.js"
 
 export const maxLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
 
-// TODO: proper errors.
-
 export function maxLength<Brand>(maxLength: number) {
   return <
     ParserInput,
@@ -20,7 +18,7 @@ export function maxLength<Brand>(maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand => n.length <= maxLength,
-        n => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
       ),
       MO.annotate(maxLengthIdentifier, { self, maxLength })
     )
@@ -51,7 +49,7 @@ export function minLength<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
-        n => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength })
     )
@@ -80,9 +78,38 @@ export function minSize<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
-        n => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength })
+    )
+}
+
+export function maxSize<Brand>(maxLength: number) {
+  if (maxLength < 1) {
+    throw new Error("Must be at least 1")
+  }
+  return <
+    ParserInput,
+    ParsedShape extends { size: number },
+    ConstructorInput,
+    Encoded,
+    Api
+  >(
+    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  ): MO.Schema<
+    ParserInput,
+    ParsedShape & Brand,
+    ConstructorInput,
+    Encoded,
+    Api
+  > =>
+    pipe(
+      self,
+      MO.refine(
+        (n): n is ParsedShape & Brand => n.size <= maxLength,
+        n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+      ),
+      MO.annotate(maxLengthIdentifier, { self, maxLength })
     )
 }
 
@@ -104,7 +131,7 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
-        n => MO.leafE(MO.nonEmptyE(n))
+        n => MO.leafE(MO.customE(n, `at least a size of ${minLength} and at most ${maxLength}`))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength }),
       MO.annotate(maxLengthIdentifier, { self, maxLength })
