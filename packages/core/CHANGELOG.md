@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.6.4
+
+### Patch Changes
+
+- 526441e: Add Chunk pipe
+
 ## 1.6.3
 
 ### Patch Changes
