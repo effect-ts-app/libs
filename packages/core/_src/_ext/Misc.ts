@@ -32,6 +32,14 @@ export const pipeSet = pipe
 export const pipeArray = pipe
 
 /**
+ * @tsplus operator Chunk >=
+ * @tsplus fluent Chunk apply
+ * @tsplus fluent Chunk __call
+ * @tsplus macro pipe
+ */
+export const pipeChunk = pipe
+
+/**
  * @tsplus static ets/Set __call
  */
 export const setSucceed = ROSet.fromArray
