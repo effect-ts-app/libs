@@ -38,7 +38,7 @@ export class CauseException<E> extends Error {
       message: this.message,
       pretty: this.pretty,
       cause: this.cause,
-      exitCause: inspect(this.exitCause, undefined, 5)
+      exitCause: inspect(this.exitCause, undefined, 10)
     }
   }
 }

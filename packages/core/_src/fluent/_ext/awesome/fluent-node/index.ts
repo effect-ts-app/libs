@@ -37,7 +37,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
                 defaultTeardown(0, context.id, onExit)
                 break
               } else {
-                console.error(inspect(exit.cause))
+                console.error(inspect(exit.cause, true, 25))
                 defaultTeardown(1, context.id, onExit)
                 break
               }
