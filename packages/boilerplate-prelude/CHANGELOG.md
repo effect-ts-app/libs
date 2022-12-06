@@ -1,5 +1,17 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.5.0
+
+### Minor Changes
+
+- d3c1c40: Cleanup Chunk/Array extensions and prelude builtin/exts.
+
+### Patch Changes
+
+- Updated dependencies [d3c1c40]
+  - @effect-ts-app/core@1.8.0
+  - @effect-ts-app/schema@1.7.1
+
 ## 1.4.0
 
 ### Minor Changes

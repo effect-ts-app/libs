@@ -1,5 +1,12 @@
 # @effect-ts-app/schema
 
+## 1.7.1
+
+### Patch Changes
+
+- Updated dependencies [d3c1c40]
+  - @effect-ts-app/core@1.8.0
+
 ## 1.7.0
 
 ### Minor Changes

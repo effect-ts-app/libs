@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.8.0
+
+### Minor Changes
+
+- d3c1c40: Cleanup Chunk/Array extensions and prelude builtin/exts.
+
 ## 1.7.0
 
 ### Minor Changes
