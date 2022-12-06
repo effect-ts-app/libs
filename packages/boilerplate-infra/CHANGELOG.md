@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.3.8
+
+### Patch Changes
+
+- d3030c4: Improve error inspection
+- Updated dependencies [d3030c4]
+  - @effect-ts-app/core@1.8.1
+  - @effect-ts-app/boilerplate-prelude@1.5.1
+  - @effect-ts-app/infra@1.6.7
+  - @effect-ts-app/schema@1.7.2
+
 ## 1.3.7
 
 ### Patch Changes

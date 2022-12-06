@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.8.1
+
+### Patch Changes
+
+- d3030c4: Improve error inspection
+
 ## 1.8.0
 
 ### Minor Changes

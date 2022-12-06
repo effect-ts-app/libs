@@ -1,5 +1,12 @@
 # @effect-ts-app/schema
 
+## 1.7.2
+
+### Patch Changes
+
+- Updated dependencies [d3030c4]
+  - @effect-ts-app/core@1.8.1
+
 ## 1.7.1
 
 ### Patch Changes
