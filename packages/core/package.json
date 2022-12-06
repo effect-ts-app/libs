@@ -305,14 +305,14 @@
         "default": "./_cjs/_ext/RArray.cjs"
       }
     },
-    "./_ext/index.d": {
+    "./_ext/builtIn": {
       "import": {
-        "types": "./dist/_ext/index.d.d.ts",
-        "default": "./dist/_ext/index.d.js"
+        "types": "./dist/_ext/builtIn.d.ts",
+        "default": "./dist/_ext/builtIn.js"
       },
       "require": {
-        "types": "./dist/_ext/index.d.d.ts",
-        "default": "./_cjs/_ext/index.d.cjs"
+        "types": "./dist/_ext/builtIn.d.ts",
+        "default": "./_cjs/_ext/builtIn.cjs"
       }
     },
     "./_ext/lens": {

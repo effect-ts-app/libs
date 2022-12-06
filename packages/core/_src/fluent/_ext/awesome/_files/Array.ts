@@ -1,22 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 // ets_tracing: off
-import {
-  append_,
-  collect_,
-  concat_,
-  filter_,
-  find_,
-  findFirstMap_,
-  flatten,
-  head,
-  last,
-  map_,
-  mapEffect_,
-  mapSync_,
-  mapWithIndex_,
-  tail
-} from "@effect-ts-app/core/Array"
+import { append_, concat_, filter_, flatten, head, last, map_, mapWithIndex_, tail } from "@effect-ts-app/core/Array"
 import { sort_, sortBy_, uniq_ } from "@effect-ts-app/core/fluent/_ext/Array"
 import { mapEither_, mapMaybe_ } from "@effect-ts-app/core/fluent/fluent/Array"
 import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
@@ -72,16 +57,6 @@ export const ext_sortBy_ = sortBy_
 export const ext_append_ = append_
 
 /**
- * @tsplus fluent ets/Array mapEffect
- */
-export const ext_mapEffect_ = mapEffect_
-
-/**
- * @tsplus fluent ets/Array mapSync
- */
-export const ext_mapSync_ = mapSync_
-
-/**
  * @tsplus fluent ets/Array mapEither
  */
 export const ext_mapEither_ = mapEither_
@@ -135,21 +110,6 @@ export const ext_mapMaybe_ = mapMaybe_
  * @tsplus fluent ets/Array flatten
  */
 export const ext_flatten = flatten
-
-/**
- * @tsplus fluent ets/Array collect
- */
-export const ext_collect_ = collect_
-
-/**
- * @tsplus fluent ets/Array findFirst
- */
-export const ext_find_ = find_
-
-/**
- * @tsplus fluent ets/Array findFirstMap
- */
-export const ext_findFirstMap_ = findFirstMap_
 
 // /**
 //  * @tsplus fluent ets/Array filterRA

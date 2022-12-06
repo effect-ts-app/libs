@@ -1,14 +1,16 @@
 import "@effect-ts-app/core/_ext/Prelude.ext"
 
 // import "./EffectMaybe.ext.js"
+import "./builtIn.js"
+import "./date.js"
 import "./Has.ext.js"
 import "./Lens.ext.js"
+import "./RArray.js"
 import "./Ref.js"
 import "./Schema.ext.js"
 
 import { Option } from "@effect-ts/core"
 import { asUnit } from "@effect/core/io/Effect"
-import { concreteChunkId } from "@tsplus/stdlib/collections/Chunk"
 
 import "./refinements.js"
 
@@ -231,35 +233,6 @@ export function logAnnotatesScoped(kvps: Record<string, string>) {
         )
       )
     )
-}
-
-/**
- * Returns the first element that satisfies the predicate.
- *
- * @tsplus static Chunk.Aspects findMap
- * @tsplus pipeable Chunk findMap
- */
-export function findMap<A, B>(f: (a: A) => Maybe<B>): (self: Chunk<A>) => Maybe<B> {
-  return (self: Chunk<A>): Maybe<B> => {
-    const iterator = concreteChunkId(self)._arrayLikeIterator()
-    let next
-
-    while ((next = iterator.next()) && !next.done) {
-      const array = next.value
-      const len = array.length
-      let i = 0
-      while (i < len) {
-        const a = array[i]!
-        const r = f(a)
-        if (r._tag === "Some") {
-          return r
-        }
-        i++
-      }
-    }
-
-    return Maybe.none
-  }
 }
 
 /**

@@ -73,28 +73,9 @@ import { ServiceTagged } from "@effect-ts-app/boilerplate-prelude/service"
  */
 import { match, Pattern } from "ts-pattern"
 
-/**
- * @tsplus global
- */
-import {
-  Email,
-  LongString,
-  PositiveDecimal,
-  PositiveInt,
-  PositiveNumber,
-  ReasonableString,
-  StringId,
-  // unsafe,
-  UUID
-} from "@effect-ts-app/boilerplate-prelude/schema"
-
 // import { LazyArg } from "@effect-ts-app/boilerplate-prelude/_ext/lazyArg"
 
-import "@effect-ts-app/boilerplate-prelude/_ext/date"
-import "@effect-ts-app/boilerplate-prelude/_ext/Object"
 import "@effect-ts-app/boilerplate-prelude/_ext/Prelude.ext"
-import "@effect-ts-app/boilerplate-prelude/_ext/RArray"
-
 import "@effect-ts-app/core/_global"
 import "@effect-ts-app/core/fluent/_ext/awesome/node"
 import "@effect-ts-app/core/Prelude"
