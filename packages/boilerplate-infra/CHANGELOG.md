@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.6.0
+
+### Minor Changes
+
+- 1911060: Improve request handling, log and scope.
+
 ## 1.5.2
 
 ### Patch Changes
