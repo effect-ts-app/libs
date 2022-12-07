@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.4.1
+
+### Patch Changes
+
+- 21ad7f1: Add improved logfmt logger
+
 ## 1.4.0
 
 ### Minor Changes
