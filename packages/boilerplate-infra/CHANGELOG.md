@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.5.1
+
+### Patch Changes
+
+- fb957b3: Fix global import for infra missing
+
 ## 1.5.0
 
 ### Minor Changes
