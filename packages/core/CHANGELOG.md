@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.9.0
+
+### Minor Changes
+
+- e8a75b6: Cleanup logging/pretty, add $.inspect.
+
 ## 1.8.1
 
 ### Patch Changes

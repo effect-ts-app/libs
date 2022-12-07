@@ -1,5 +1,17 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.6.0
+
+### Minor Changes
+
+- e8a75b6: Cleanup logging/pretty, add $.inspect.
+
+### Patch Changes
+
+- Updated dependencies [e8a75b6]
+  - @effect-ts-app/core@1.9.0
+  - @effect-ts-app/schema@1.8.0
+
 ## 1.5.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.7.0
+
+### Minor Changes
+
+- e8a75b6: Cleanup logging/pretty, add $.inspect.
+
 ## 1.6.3
 
 ### Patch Changes
