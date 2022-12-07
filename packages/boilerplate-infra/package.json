@@ -347,6 +347,16 @@
         "default": "./_cjs/lib/rateLimit.cjs"
       }
     },
+    "./logger": {
+      "import": {
+        "types": "./dist/logger.d.ts",
+        "default": "./dist/logger.js"
+      },
+      "require": {
+        "types": "./dist/logger.d.ts",
+        "default": "./_cjs/logger.cjs"
+      }
+    },
     "./services/CUPS": {
       "import": {
         "types": "./dist/services/CUPS.d.ts",
