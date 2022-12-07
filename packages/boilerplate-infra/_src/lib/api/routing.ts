@@ -323,7 +323,7 @@ export function makeRequestHandler<
                 .tap(pars =>
                   Effect.logInfo("Processing request").apply(Effect.logAnnotates({
                     method: req.method,
-                    originalUrl: req.originalUrl,
+                    path: req.originalUrl,
                     reqPath: pars.path.$$.pretty,
                     reqQuery: pars.query.$$.pretty,
                     reqBody: pretty(pars.body),
@@ -367,7 +367,7 @@ export function makeRequestHandler<
               res.status(500).send()
               reportRequestError(cause, {
                 requestContext,
-                originalUrl: req.originalUrl,
+                path: req.originalUrl,
                 method: req.method
               })
             }) >
@@ -378,7 +378,7 @@ export function makeRequestHandler<
                   cause
                 ).apply(Effect.logAnnotates({
                   method: req.method,
-                  originalUrl: req.originalUrl,
+                  path: req.originalUrl,
                   statusCode: res.statusCode.toString(),
                   resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
                     prev[key] = value && typeof value === "string" ? snipString(value) : value
@@ -393,7 +393,7 @@ export function makeRequestHandler<
               const headers = res.getHeaders()
               return Effect.logInfo("Processed request").apply(Effect.logAnnotates({
                 method: req.method,
-                originalUrl: req.originalUrl,
+                path: req.originalUrl,
                 statusCode: res.statusCode.toString(),
                 resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
                   prev[key] = value && typeof value === "string" ? snipString(value) : value
