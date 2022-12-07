@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.7.0
+
+### Minor Changes
+
+- d66c1c9: Switch StringId to nanoid: fast check generator uses short-uuid instead.
+
 ## 1.6.0
 
 ### Minor Changes
