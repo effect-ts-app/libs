@@ -16,7 +16,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `[scan] [${ENV}] ${renderedMsg_.subject}` }
-          yield* $(Effect.logDebug("Sending email: " + inspect(renderedMsg, false, 5)))
+          yield* $(Effect.logDebug("Sending email").apply(Effect.logAnnotate("msg", inspect(renderedMsg, false, 5))))
 
           const ret = yield* $(
             Effect.async<
@@ -35,7 +35,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
           //     templateId: msg.templateId
           //   }
           // }
-          // yield* $(Effect.logDebug("Tracking email event " + event.$$.pretty, ))
+          // yield* $(Effect.logDebug("Tracking email event").apply(Effect.logAnnotate("event", event.$$.pretty)))
           // const { trackEvent } = yield* $(AiContextService)
           // trackEvent(event)
           return ret

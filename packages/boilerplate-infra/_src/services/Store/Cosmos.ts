@@ -193,7 +193,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               query: `SELECT * FROM ${name} f WHERE f.id != @id`,
               parameters: [{ name: "@id", value: importedMarkerId }]
             }))
-              .tap(q => Effect.logDebug("cosmos query: " + formatQueryForPrinting(q)))
+              .tap(q => logQuery(q))
               .flatMap(q =>
                 Effect.promise(() =>
                   container.items
@@ -210,7 +210,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               filter.keys
                 .forEachEffect(k =>
                   Effect.sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
-                    .tap(q => Effect.logDebug("cosmos query: " + formatQueryForPrinting(q)))
+                    .tap(q => logQuery(q))
                     .flatMap(q =>
                       Effect.promise(() =>
                         container.items
@@ -245,7 +245,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   filter.keys
                     .forEachEffect(k =>
                       Effect.sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
-                        .tap(q => Effect.logDebug("cosmos query: " + formatQueryForPrinting(q)))
+                        .tap(q => logQuery(q))
                         .flatMap(q =>
                           Effect.promise(() =>
                             container.items
@@ -257,7 +257,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                     .map(_ => _.flatMap(_ => _))
                 : Effect.sync(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
-                  .tap(q => Effect.logDebug("cosmos query: " + formatQueryForPrinting(q)))
+                  .tap(q => logQuery(q))
                   .flatMap(q =>
                     Effect.promise(() =>
                       container.items.query<PM>(
@@ -367,8 +367,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   })
 }
 
-function formatQueryForPrinting(q: { query: string; parameters: unknown[] }) {
-  return `\nQuery: ${q.query}\nParameters: ${inspect(q.parameters)}`
+function logQuery(q: { query: string; parameters: unknown[] }) {
+  return Effect.logDebug("cosmos query")
+    .apply(Effect.logAnnotates({ query: q.query, parameters: inspect(q.parameters) }))
 }
 
 /**

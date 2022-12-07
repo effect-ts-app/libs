@@ -1,9 +1,10 @@
+import { pretty } from "@effect-ts-app/boilerplate-prelude/utils"
 import { Emailer } from "./service.js"
 
 const makeFake = Effect.logDebug("FAKE Emailer Service enabled")
   .map((): Emailer => ({
     sendMail(msg) {
-      return Effect.logDebug(`Fake send mail ${JSON.stringify(msg, undefined, 2)}`)
+      return Effect.logDebug(`Fake send mail`).apply(Effect.logAnnotate("msg", pretty(msg)))
     }
   }))
 

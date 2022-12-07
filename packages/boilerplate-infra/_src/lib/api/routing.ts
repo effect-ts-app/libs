@@ -320,9 +320,11 @@ export function makeRequestHandler<
               const handleRequest = ex
                 .toEffect
                 .tap(pars =>
-                  Effect.logInfo(
-                    `Processing Request: ${req.method} ${req.originalUrl} parameters: ${pars.$$.pretty}`
-                  )
+                  Effect.logInfo("Processing request").apply(Effect.logAnnotates({
+                    method: req.method,
+                    originalUrl: req.originalUrl,
+                    parameters: pars.$$.pretty
+                  }))
                 )
                 .zipRight(
                   parseRequest(req)
@@ -367,37 +369,33 @@ export function makeRequestHandler<
               Effect.suspendSucceed(() => {
                 const headers = res.getHeaders()
                 return Effect.logErrorCauseMessage(
-                  `Processed request: ${req.method} ${req.originalUrl} ${
-                    {
-                      statusCode: res.statusCode,
-                      headers: headers
-                        ? Object.entries(headers).reduce((prev, [key, value]) => {
-                          prev[key] = value && typeof value === "string" ? snipString(value) : value
-                          return prev
-                        }, {} as Record<string, any>)
-                        : headers
-                    }.$$.pretty
-                  }`,
+                  "Processed request",
                   cause
-                )
+                ).apply(Effect.logAnnotates({
+                  method: req.method,
+                  originalUrl: req.originalUrl,
+                  statusCode: res.statusCode.toString(),
+                  responseHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
+                    prev[key] = value && typeof value === "string" ? snipString(value) : value
+                    return prev
+                  }, {} as Record<string, any>)
+                    .$$.pretty
+                }))
               })
           )
           .tap(() =>
             Effect.suspendSucceed(() => {
               const headers = res.getHeaders()
-              return Effect.logInfo(
-                `Processed request ${req.method} ${req.originalUrl} ${
-                  {
-                    statusCode: res.statusCode,
-                    headers: headers
-                      ? Object.entries(headers).reduce((prev, [key, value]) => {
-                        prev[key] = value && typeof value === "string" ? snipString(value) : value
-                        return prev
-                      }, {} as Record<string, any>)
-                      : headers
-                  }.$$.pretty
-                }`
-              )
+              return Effect.logInfo("Processed request").apply(Effect.logAnnotates({
+                method: req.method,
+                originalUrl: req.originalUrl,
+                statusCode: res.statusCode.toString(),
+                responseHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
+                  prev[key] = value && typeof value === "string" ? snipString(value) : value
+                  return prev
+                }, {} as Record<string, any>)
+                  .$$.pretty
+              }))
             })
           )
           .setupRequest(requestContext)
