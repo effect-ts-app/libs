@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.4.0
+
+### Minor Changes
+
+- 667b1a8: Improve log usage
+
 ## 1.3.8
 
 ### Patch Changes
