@@ -33,7 +33,7 @@
     "winston": "^3.8.2"
   },
   "scripts": {
-    "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
+    "build": "node ../../scripts/package.js && pnpm clean-dist && tsc --build && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -331,16 +331,6 @@
         "default": "./_cjs/logger/Winston.cjs"
       }
     },
-    "./logger/util": {
-      "import": {
-        "types": "./dist/logger/util.d.ts",
-        "default": "./dist/logger/util.js"
-      },
-      "require": {
-        "types": "./dist/logger/util.d.ts",
-        "default": "./_cjs/logger/util.cjs"
-      }
-    },
     "./mongo-client": {
       "import": {
         "types": "./dist/mongo-client.d.ts",
@@ -359,6 +349,16 @@
       "require": {
         "types": "./dist/redis-client.d.ts",
         "default": "./_cjs/redis-client.cjs"
+      }
+    },
+    "./runMain": {
+      "import": {
+        "types": "./dist/runMain.d.ts",
+        "default": "./dist/runMain.js"
+      },
+      "require": {
+        "types": "./dist/runMain.d.ts",
+        "default": "./_cjs/runMain.cjs"
       }
     },
     "./simpledb/cosmosdb": {

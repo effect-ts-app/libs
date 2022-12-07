@@ -1,3 +1,5 @@
+import type { ObjectOps } from "@effect-ts-app/boilerplate-prelude/utils"
+import { inspect } from "util"
 import { NotFoundError } from "../../errors.js"
 
 /**
@@ -15,4 +17,16 @@ export function getFirstById_<A extends { id: Id }, Id extends string, Type exte
   return Chunk.from(a)
     .find(_ => _.id === id)
     .encaseInEffect(() => new NotFoundError(type, id))
+}
+
+/**
+ * @tsplus fluent Object.Ops inspect
+ */
+export function RecordInspect<TT extends object>(
+  o: ObjectOps<TT>,
+  showHidden?: boolean | undefined,
+  depth?: number | null | undefined,
+  color?: boolean | undefined
+) {
+  return inspect(o.subject, showHidden, depth, color)
 }

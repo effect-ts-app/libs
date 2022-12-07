@@ -3,6 +3,7 @@ import type { _E, _R } from "@effect-ts-app/boilerplate-prelude/_ext/Prelude.ext
 import type { GetRequest, GetResponse } from "@effect-ts-app/boilerplate-prelude/schema"
 import { extractSchema, SchemaNamed } from "@effect-ts-app/boilerplate-prelude/schema"
 import * as MO from "@effect-ts-app/boilerplate-prelude/schema"
+import { pretty } from "@effect-ts-app/boilerplate-prelude/utils"
 import * as Ex from "@effect-ts-app/infra/express/index"
 import type {
   Encode,
@@ -323,7 +324,11 @@ export function makeRequestHandler<
                   Effect.logInfo("Processing request").apply(Effect.logAnnotates({
                     method: req.method,
                     originalUrl: req.originalUrl,
-                    parameters: pars.$$.pretty
+                    reqPath: pars.path.$$.pretty,
+                    reqQuery: pars.query.$$.pretty,
+                    reqBody: pretty(pars.body),
+                    reqCookies: pretty(pars.cookies),
+                    reqHeaders: pars.headers.$$.pretty
                   }))
                 )
                 .zipRight(
@@ -375,7 +380,7 @@ export function makeRequestHandler<
                   method: req.method,
                   originalUrl: req.originalUrl,
                   statusCode: res.statusCode.toString(),
-                  responseHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
+                  resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
                     prev[key] = value && typeof value === "string" ? snipString(value) : value
                     return prev
                   }, {} as Record<string, any>)
@@ -390,7 +395,7 @@ export function makeRequestHandler<
                 method: req.method,
                 originalUrl: req.originalUrl,
                 statusCode: res.statusCode.toString(),
-                responseHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
+                resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
                   prev[key] = value && typeof value === "string" ? snipString(value) : value
                   return prev
                 }, {} as Record<string, any>)

@@ -61,3 +61,7 @@ export function capitalize<T extends string>(string: T): Capitalize<T> {
 export function uncapitalize<T extends string>(string: T): Uncapitalize<T> {
   return (string.charAt(0).toLowerCase() + string.slice(1)) as Uncapitalize<T>
 }
+
+export function pretty(o: unknown) {
+  return JSON.stringify(o, undefined, 2)
+}

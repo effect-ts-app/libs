@@ -26,7 +26,7 @@
     "winston": "^3.8.2"
   },
   "scripts": {
-    "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
+    "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -415,16 +415,6 @@
         "default": "./_cjs/fluent/_ext/awesome/_files/Set.cjs"
       }
     },
-    "./fluent/_ext/awesome/_files/node": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/node.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/node.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/node.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/node.cjs"
-      }
-    },
     "./fluent/_ext/awesome/_files/shared": {
       "import": {
         "types": "./dist/fluent/_ext/awesome/_files/shared.d.ts",
@@ -433,26 +423,6 @@
       "require": {
         "types": "./dist/fluent/_ext/awesome/_files/shared.d.ts",
         "default": "./_cjs/fluent/_ext/awesome/_files/shared.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/browser": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/browser.d.ts",
-        "default": "./dist/fluent/_ext/awesome/browser.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/browser.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/browser.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/fluent-node/index": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/fluent-node/index.d.ts",
-        "default": "./dist/fluent/_ext/awesome/fluent-node/index.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/fluent-node/index.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/fluent-node/index.cjs"
       }
     },
     "./fluent/_ext/awesome/fluent/core": {
@@ -493,16 +463,6 @@
       "require": {
         "types": "./dist/fluent/_ext/awesome/lib.d.ts",
         "default": "./_cjs/fluent/_ext/awesome/lib.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/node": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/node.d.ts",
-        "default": "./dist/fluent/_ext/awesome/node.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/node.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/node.cjs"
       }
     },
     "./fluent/fluent/Array": {

@@ -24,7 +24,7 @@
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
   },
   "scripts": {
-    "build": "pnpm clean-dist && tsc --build && node ../../scripts/package.js && pnpm build2:cjs",
+    "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .js --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",

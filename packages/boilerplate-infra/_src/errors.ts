@@ -1,5 +1,4 @@
 import { NotLoggedInError } from "@effect-ts-app/infra/errors"
-import { inspect } from "util"
 
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
@@ -38,7 +37,7 @@ export class CauseException<E> extends Error {
       message: this.message,
       pretty: this.pretty,
       cause: this.cause,
-      exitCause: inspect(this.exitCause, undefined, 10)
+      exitCause: this.exitCause.$$.inspect(undefined, 10)
     }
   }
 }

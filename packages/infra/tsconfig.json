@@ -11,9 +11,6 @@
         "noEmit": false,
         "rootDir": "./_src",
         "tsPlusConfig": "../../tsplus.config.json",
-        // "types": [
-        //     "@effect-ts-app/core/fluent/_ext/awesome/node"
-        // ],
     },
     "include": [
         "./_src"

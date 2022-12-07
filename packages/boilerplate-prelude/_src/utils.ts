@@ -1,4 +1,4 @@
-import { typedKeysOf } from "@effect-ts-app/core/utils"
+import { pretty, typedKeysOf } from "@effect-ts-app/core/utils"
 import * as Tuple from "@effect-ts/core/Collections/Immutable/Tuple"
 
 export function assertUnreachable(x: never): never {
@@ -199,11 +199,6 @@ export function lazyGetter<T extends object, T2>(creator: (target: T) => T2) {
   })
   return f
 }
-
-export function pretty(o: unknown) {
-  return JSON.stringify(o, undefined, 2)
-}
-
 
 // added readonly or it won't work with readonly types
 export function isTuple(self: unknown): self is Tuple.Tuple<readonly unknown[]> {

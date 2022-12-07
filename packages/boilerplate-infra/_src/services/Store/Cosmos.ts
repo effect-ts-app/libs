@@ -6,7 +6,6 @@ import { OptimisticConcurrencyException } from "../../errors.js"
 
 import { omit } from "@effect-ts-app/boilerplate-prelude/utils"
 
-import { inspect } from "util"
 import type {
   Filter,
   FilterJoinSelect,
@@ -16,7 +15,8 @@ import type {
   StorageConfig,
   Store,
   StoreConfig,
-  StoreWhereFilter
+  StoreWhereFilter,
+  SupportedValues
 } from "./service.js"
 import { StoreMaker } from "./service.js"
 
@@ -367,9 +367,21 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   })
 }
 
-function logQuery(q: { query: string; parameters: unknown[] }) {
+function logQuery(q: {
+  query: string
+  parameters: {
+    name: string
+    value: SupportedValues | readonly SupportedValues[]
+  }[]
+}) {
   return Effect.logDebug("cosmos query")
-    .apply(Effect.logAnnotates({ query: q.query, parameters: inspect(q.parameters) }))
+    .apply(Effect.logAnnotates({
+      query: q.query,
+      parameters: q.parameters.reduce((acc, v) => {
+        acc[v.name] = v.value
+        return acc
+      }, {} as Record<string, SupportedValues | readonly SupportedValues[]>).$$.pretty
+    }))
 }
 
 /**

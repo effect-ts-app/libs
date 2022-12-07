@@ -2,6 +2,7 @@ import { flow, pipe } from "@effect-ts-app/core/Function"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
+import { pretty } from "@effect-ts-app/core/utils"
 import * as fu from "./fileutil.js"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
@@ -36,7 +37,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .getOrElse(() => "1")
       const getData = flow(
         encode,
-        _ => _.map(data => JSON.stringify({ version, timestamp: new Date(), data }, undefined, 2))
+        _ => _.map(data => pretty({ version, timestamp: new Date(), data }))
       )
 
       const idx = makeIndexKey(record)

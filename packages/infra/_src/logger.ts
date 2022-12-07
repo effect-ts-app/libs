@@ -1,10 +1,10 @@
+import { pretty } from "@effect-ts-app/core/utils"
 import strip from "strip-ansi"
 import * as winston from "winston"
 import { format } from "winston"
 
 import * as console from "./logger/Console.js"
 import * as logger from "./logger/Logger.js"
-import { prettyJson } from "./logger/util.js"
 
 export { console, logger }
 
@@ -26,12 +26,12 @@ const fileFormat = winston.format.combine(
   winston.format.timestamp(),
   stripAnsi(),
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  winston.format.printf(i => `${i.timestamp} | ${i.message}. ${prettyJson(i)}`)
+  winston.format.printf(i => `${i.timestamp} | ${i.message}. ${pretty(i)}`)
 )
 
 const reformatMetadataJson = winston.format(info => {
   if (info.metadata) {
-    info.metadata = prettyJson(info.metadata)
+    info.metadata = pretty(info.metadata)
   }
   return info
 })

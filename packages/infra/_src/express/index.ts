@@ -2,6 +2,7 @@
 // ets_tracing: off
 // tracing: off
 
+import { pretty } from "@effect-ts-app/core/utils"
 import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
 import { literal } from "@tsplus/stdlib/data/Function"
 import type { NextHandleFunction } from "connect"
@@ -309,7 +310,7 @@ export function defaultExitHandler(
   return cause =>
     Effect.sync(() => {
       if (cause.isDie) {
-        console.error(JSON.stringify(cause, undefined, 2))
+        console.error(pretty(cause))
       }
       _res.status(500).end()
     })
