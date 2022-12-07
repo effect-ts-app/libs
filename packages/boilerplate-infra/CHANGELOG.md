@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.5.2
+
+### Patch Changes
+
+- 8ff7327: Improve request log
+
 ## 1.5.1
 
 ### Patch Changes
