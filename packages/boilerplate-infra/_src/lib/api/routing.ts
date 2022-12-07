@@ -304,64 +304,55 @@ export function makeRequestHandler<
   }
 
   return (req: express.Request, res: express.Response) => {
-    // get params once
-    return Effect.sync(() => {
-      const requestContext = makeContext(req)
-      if (req.method === "GET") {
-        res.setHeader("Cache-Control", "no-store")
-      }
-      res.setHeader("Content-Language", requestContext.locale)
-      return requestContext
+    return Effect.struct({
+      requestContext: Effect.sync(() => {
+        const requestContext = makeContext(req)
+        if (req.method === "GET") {
+          res.setHeader("Cache-Control", "no-store")
+        }
+        res.setHeader("Content-Language", requestContext.locale)
+        return requestContext
+      }),
+      pars: getParams(req)
     })
-      .flatMap(requestContext =>
-        getParams(req)
-          .exit
-          .flatMap(ex => {
-            return Effect.suspendSucceed(() => {
-              const handleRequest = ex
-                .toEffect
-                .tap(pars =>
-                  Effect.logInfo("Processing request").apply(Effect.logAnnotates({
-                    method: req.method,
-                    path: req.originalUrl,
-                    reqPath: pars.path.$$.pretty,
-                    reqQuery: pars.query.$$.pretty,
-                    reqBody: pretty(pars.body),
-                    reqCookies: pretty(pars.cookies),
-                    reqHeaders: pars.headers.$$.pretty
-                  }))
-                )
-                .zipRight(
-                  parseRequest(req)
-                    .map(({ body, path, query }) => {
-                      const hn = {
-                        ...body.value,
-                        ...query.value,
-                        ...path.value
-                      } as unknown as ReqA
-                      return hn
-                    })
-                  // .instrument("Performance.ParseRequest")
-                )
-                .flatMap(parsedReq =>
-                  handle(parsedReq as any)
-                    // .instrument("Performance.HandleRequest")
-                    .flatMap(r => respond(parsedReq, res, r) // .instrument("Performance.EncodeResponse")
-                    )
-                )
-              // Commands should not be interruptable.
-              const r = (
-                req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
-              ) // .instrument("Performance.RequestResponse")
-              const r2 = makeMiddlewareLayer ? r.provideSomeLayer(makeMiddlewareLayer(req, res, requestContext)) : r
-              return errorHandler(
-                req,
-                res,
-                requestContext,
-                r2
+      .flatMap(({ pars, requestContext }) =>
+        Effect.logInfo("Processing request").apply(Effect.logAnnotates({
+          method: req.method,
+          path: req.originalUrl,
+          reqPath: pars.path.$$.pretty,
+          reqQuery: pars.query.$$.pretty,
+          reqBody: pretty(pars.body),
+          reqCookies: pretty(pars.cookies),
+          reqHeaders: pars.headers.$$.pretty
+        })).zipRight(
+          Effect.suspendSucceed(() => {
+            const handleRequest = parseRequest(req)
+              .map(({ body, path, query }) => {
+                const hn = {
+                  ...body.value,
+                  ...query.value,
+                  ...path.value
+                } as unknown as ReqA
+                return hn
+              })
+              .flatMap(parsedReq =>
+                handle(parsedReq as any)
+                  .flatMap(r => respond(parsedReq, res, r))
               )
-            })
+            // Commands should not be interruptable.
+            const r = (
+              req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
+            ) // .instrument("Performance.RequestResponse")
+            // the first log entry should be of the request start.
+            const r2 = makeMiddlewareLayer ? r.provideSomeLayer(makeMiddlewareLayer(req, res, requestContext)) : r
+            return errorHandler(
+              req,
+              res,
+              requestContext,
+              r2
+            )
           })
+        )
           .tapErrorCause(cause =>
             Effect.sync(() => {
               res.status(500).send()
