@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.5.0
+
+### Minor Changes
+
+- 5270bc8: Add compiler plugin
+
+### Patch Changes
+
+- Updated dependencies [5270bc8]
+  - @effect-ts-app/boilerplate-vue@1.5.0
+
 ## 1.4.2
 
 ### Patch Changes
