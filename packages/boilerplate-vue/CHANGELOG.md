@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.4.2
+
+### Patch Changes
+
+- d38e830: Improve viteplugin
+- Updated dependencies [d38e830]
+  - @effect-ts-app/boilerplate-vue@1.4.2
+
 ## 1.4.1
 
 ### Patch Changes
