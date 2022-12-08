@@ -62,16 +62,17 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
       getScriptFileNames: () => tsconfig.fileNames,
       getScriptVersion: fileName => files[fileName]! && files[fileName]!.version.toString(),
       getScriptSnapshot: fileName => {
-        if (!fs.existsSync(fileName)) {
+        if (!ts.sys.fileExists(fileName)) {
           return undefined
         }
-        return ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString())
+        return ts.ScriptSnapshot.fromString(ts.sys.readFile(fileName)!.toString())
       },
       getCurrentDirectory: () => process.cwd(),
       getCompilationSettings: () => tsconfig.options,
       getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
-      fileExists: fileName => fs.existsSync(fileName),
-      readFile: fileName => fs.readFileSync(fileName).toString()
+      fileExists: fileName => ts.sys.fileExists(fileName),
+      readFile: fileName => ts.sys.readFile(fileName),
+      realpath: ts.sys.realpath ? fileName => ts.sys.realpath!(fileName) : undefined
     }
 
     services = ts.createLanguageService(servicesHost, registry)
