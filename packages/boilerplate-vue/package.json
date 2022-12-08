@@ -90,16 +90,6 @@
         "default": "./_cjs/routeParams.cjs"
       }
     },
-    "./vitePlugin": {
-      "import": {
-        "types": "./dist/vitePlugin.d.ts",
-        "default": "./dist/vitePlugin.js"
-      },
-      "require": {
-        "types": "./dist/vitePlugin.d.ts",
-        "default": "./_cjs/vitePlugin.cjs"
-      }
-    },
     "./vue2": {
       "import": {
         "types": "./dist/vue2.d.ts",
