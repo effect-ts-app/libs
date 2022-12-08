@@ -145,7 +145,7 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
     },
     transform(code, id) {
       const split = id.split("?")
-      id = split[0]
+      id = split[0]!
 
       if (filter(id)) {
         if (/\.tsx?/.test(id)) {

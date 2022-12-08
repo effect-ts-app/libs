@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { tsPlugin } from "@effect-ts-app/boilerplate-vue/vitePlugin"
+import { tsPlugin } from "@effect-ts-app/compiler/vitePlugin"
 import path from "path"
 import { defineConfig } from "vite"
 
