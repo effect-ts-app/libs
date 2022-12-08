@@ -22,13 +22,5 @@
         "lib",
         "dist",
         "**/*.d.ts.map"
-    ],
-    "references": [
-        {
-            "path": "../core"
-        },
-        {
-            "path": "../schema"
-        }
     ]
 }

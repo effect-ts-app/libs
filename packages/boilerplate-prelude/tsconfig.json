@@ -33,12 +33,4 @@
             "module": "CommonJS"
         }
     },
-    "references": [
-        {
-            "path": "../schema"
-        },
-        {
-            "path": "../core"
-        },
-    ]
 }
