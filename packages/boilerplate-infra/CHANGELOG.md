@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.7.1
+
+### Patch Changes
+
+- 76ac610: Fix fast-check ref
+
 ## 1.7.0
 
 ### Minor Changes
