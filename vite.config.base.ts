@@ -1,10 +1,7 @@
 /// <reference types="vitest" />
 import { tsPlugin } from "@effect-ts-app/compiler/vitePlugin"
-import path from "path"
-import { defineConfig } from "vite"
-
 export default function makeConfig() {
-  return defineConfig({
+  return {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     plugins: [tsPlugin({})],
     test: {
@@ -19,5 +16,5 @@ export default function makeConfig() {
     //     "@effect/io": path.resolve(__dirname, "/src")
     //   }
     // }
-  })
+  }
 }
