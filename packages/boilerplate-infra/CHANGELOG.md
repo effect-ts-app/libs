@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.7.0
+
+### Minor Changes
+
+- 5cfb4ac: Add CUPS print options support
+
 ## 1.6.1
 
 ### Patch Changes
