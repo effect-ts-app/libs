@@ -2,7 +2,7 @@ export const PrinterId = ReasonableString
 export type PrinterId = ReasonableString
 
 export interface CUPS {
-  print: (buffer: ArrayBuffer, printerId: PrinterId) => Effect<never, unknown, {
+  print: (buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) => Effect<never, unknown, {
     stdout: string
     stderr: string
   }>

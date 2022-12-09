@@ -3,6 +3,9 @@ import util from "util"
 import { tempFile } from "../lib/fileUtil.js"
 
 import { isTruthy } from "@effect-ts-app/core/utils"
+import { ReasonableString } from "@effect-ts-app/schema"
+import { Effect } from "@effect/core/io/Effect"
+import { Layer } from "@effect/core/io/Layer"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -20,11 +23,11 @@ export function LiveCUPS(cupsServer?: URL) {
 
 function makeCUPS(cupsServer?: URL) {
   return Effect.sync(() => {
-    function print_(buffer: ArrayBuffer, printerId: PrinterId) {
+    function print_(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
       const print = printBuffer({
         id: printerId,
         url: cupsServer
-      })
+      }, options)
       return print(buffer)
     }
     return {
@@ -41,15 +44,15 @@ const exec = (command: string) =>
       .tap(r => (Effect.logDebug(`Executed`).apply(Effect.logAnnotate("result", r.$$.pretty))))
 type PrinterConfig = { url?: URL; id: string }
 
-function printFile(printer?: PrinterConfig) {
-  return (filePath: string) => printFile_(filePath, printer)
+function printFile(printer: PrinterConfig | undefined, options: string[]) {
+  return (filePath: string) => printFile_(filePath, printer, options)
 }
 
-function printFile_(filePath: string, printer?: PrinterConfig) {
-  return exec(["lp", ...buildPrintArgs(filePath, printer)].join(" "))
+function printFile_(filePath: string, printer: PrinterConfig | undefined, options: string[]) {
+  return exec(["lp", ...buildPrintArgs(filePath, printer, options)].join(" "))
 }
 
-function* buildPrintArgs(filePath: string, printer?: PrinterConfig) {
+function* buildPrintArgs(filePath: string, printer: PrinterConfig | undefined, options: string[]) {
   if (printer) {
     if (printer.url) {
       yield `-h ${printer.url.host}`
@@ -58,6 +61,9 @@ function* buildPrintArgs(filePath: string, printer?: PrinterConfig) {
       }
     }
     yield `-d "${printer.id}"`
+    for (const o of options) {
+      yield `-o ${o}`
+    }
   }
   yield `"${filePath}"`
 }
@@ -77,10 +83,10 @@ export const prepareTempDir = Effect.sync(() => {
 const makeTempFile = tempFile("effect-ts-app")
 const makePrintJobTempFile = makeTempFile("print-job")
 
-function printBuffer(printer: PrinterConfig) {
+function printBuffer(printer: PrinterConfig, options: string[]) {
   return (buffer: ArrayBuffer) =>
     makePrintJobTempFile(Buffer.from(buffer))
-      .flatMapScoped(printFile(printer))
+      .flatMapScoped(printFile(printer, options))
 }
 
 function getAvailablePrinters(host?: string) {
