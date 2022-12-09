@@ -16,7 +16,7 @@
     "@babel/parser": "7.20.5",
     "eslint-plugin-codegen": "0.16.1",
     "glob": "8.0.3",
-    "io-ts": "2.2.19",
+    "io-ts": "2.2.20",
     "io-ts-extra": "0.11.6",
     "js-yaml": "4.1.0",
     "lodash": "4.17.21"
