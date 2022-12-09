@@ -26,16 +26,6 @@
     }
   },
   "exports": {
-    "./*.js": {
-      "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
-      },
-      "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./_cjs/*.cjs"
-      }
-    },
     "./*": {
       "import": {
         "types": "./dist/*.d.ts",

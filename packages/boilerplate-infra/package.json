@@ -17,6 +17,7 @@
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
     "faker": "^5.5.3",
+    "fast-check": "^3.3.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "pure-rand": "^5.0.5"
