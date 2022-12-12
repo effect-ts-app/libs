@@ -324,16 +324,6 @@
         "default": "./_cjs/lens.cjs"
       }
     },
-    "./nanoId.test": {
-      "import": {
-        "types": "./dist/nanoId.test.d.ts",
-        "default": "./dist/nanoId.test.js"
-      },
-      "require": {
-        "types": "./dist/nanoId.test.d.ts",
-        "default": "./_cjs/nanoId.test.cjs"
-      }
-    },
     "./schema": {
       "import": {
         "types": "./dist/schema.d.ts",
