@@ -16,7 +16,7 @@
     "@tsplus/stdlib": "^0.2.8",
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
-    "faker": "^6.6.6",
+    "faker": "^5.5.3",
     "fast-check": "^3.3.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
@@ -589,7 +589,7 @@
     "test:run": "pnpm run test run --passWithNoTests",
     "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
     "client": "node --experimental-specifier-resolution=node -r source-map-support/register ./dist/client.bin.js",
-    "ncu": "ncu -x date-fns,redis,@types/redis,jwks-rsa",
+    "ncu": "ncu -x date-fns,faker,redis,@types/redis,jwks-rsa",
     "pub": "pnpm prepublish && npm publish --access public",
     "prepublish": "pnpm build && cp -f ./tsconfig.json ./tsconfig.json.bak && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json",
     "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"

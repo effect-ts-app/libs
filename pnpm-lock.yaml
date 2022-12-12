@@ -205,7 +205,7 @@ importers:
       express: ^4.18.2
       express-jwt: ^7.7.7
       express-jwt-authz: ^2.4.1
-      faker: ^6.6.6
+      faker: ^5.5.3
       fast-check: ^3.3.0
       jwks-rsa: 2.1.4
       object-hash: ^3.0.0
@@ -225,7 +225,7 @@ importers:
       '@tsplus/stdlib': 0.2.8_74hyor7buze5mn466flzrp35ie
       change-case: 4.1.2
       cross-fetch: 3.1.5
-      faker: 6.6.6
+      faker: 5.5.3
       fast-check: 3.3.0
       object-hash: 3.0.0
       path-parser: 6.1.0
@@ -5214,11 +5214,6 @@ packages:
 
   /faker/5.5.3:
     resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
-    dev: true
-
-  /faker/6.6.6:
-    resolution: {integrity: sha512-9tCqYEDHI5RYFQigXFwF1hnCwcWCOJl/hmll0lr5D2Ljjb0o4wphb69wikeJDz5qCEzXCoPvG6ss5SDP6IfOdg==}
-    dev: false
 
   /fast-check/3.3.0:
     resolution: {integrity: sha512-Zu6tZ4g0T4H9Tiz3tdNPEHrSbuICj7yhdOM9RCZKNMkpjZ9avDV3ORklXaEmh4zvkX24/bGZ9DxKKqWfXttUqw==}
