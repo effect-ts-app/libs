@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { pipe } from "@effect-ts-app/core/Function"
 import type {
   ApiSelfType,
   DefaultSchema,
@@ -24,12 +25,9 @@ import {
 } from "@effect-ts-app/schema"
 import type { Refinement } from "@effect-ts/core/Function"
 import type * as FC from "fast-check"
-import { nanoid } from "nanoid"
+import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { curriedMagix } from "../Function.js"
-
-import short from "short-uuid"
-
 import type { ParsedShapeOfCustom, ReasonableStringBrand, UnionBrand } from "./_schema.js"
 import {
   Arbitrary,
@@ -45,10 +43,6 @@ import {
   stringNumber,
   withDefaults
 } from "./_schema.js"
-
-import { pipe } from "@effect-ts-app/core/Function"
-
-const shortId = short()
 
 export function tag<K extends string>(tag: K) {
   return prop(literal(tag))
@@ -143,13 +137,13 @@ export type StringId = string & StringIdBrand
 
 const MIN_LENGTH = 6
 const MAX_LENGTH = 50
+const size = 21
+const length = 10 * size
 export const stringIdFromString = pipe(
   makeConstrainedFromString<StringId>(MIN_LENGTH, MAX_LENGTH),
   arbitrary(FC =>
-    // FC.base64String({ minLength: MIN_LENGTH, maxLength: MAX_LENGTH }).map(
-    //   (x) => x.replace(/\+/g, ".").replace(/\//g, "_").replace(/=/g, "-") as StringId
-    // )
-    FC.uuid().map(x => shortId.fromUUID(x) as string as StringId)
+    FC.uint8Array({ minLength: length, maxLength: length })
+      .map(_ => customRandom(urlAlphabet, size, size => _.subarray(0, size))() as StringId)
   ),
   // arbitrary removes the benefit of Brand,
   brand<StringId>()
