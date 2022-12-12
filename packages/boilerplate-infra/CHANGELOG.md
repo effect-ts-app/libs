@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.7.3
+
+### Patch Changes
+
+- 40481fe: fix faker dep
+
 ## 1.7.2
 
 ### Patch Changes
