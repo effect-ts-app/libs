@@ -71,7 +71,7 @@
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.159",
         "@types/lodash": "^4.14.191",
-        "@types/node": "~18.11.12",
+        "@types/node": "~18.11.13",
         "@typescript-eslint/eslint-plugin": "^5.46.0",
         "@typescript-eslint/parser": "^5.46.0",
         "@typescript-eslint/scope-manager": "^5.46.0",
@@ -94,13 +94,13 @@
         "madge": "^5.0.1",
         "module-alias": "^2.2.2",
         "nodemon": "^2.0.20",
-        "npm-check-updates": "^16.5.3",
+        "npm-check-updates": "^16.5.6",
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.1.1",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.4",
-        "vite": "^3.2.5",
-        "vitest": "^0.25.6"
+        "vite": "^4.0.0",
+        "vitest": "^0.25.7"
     }
 }

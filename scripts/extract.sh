@@ -6,7 +6,7 @@
 # echo "\"${d}\": { \"import\": { \"types\": \"${d}/index.d.ts\", \"default\": \"./_esm${d#.}/index.mjs\" }, \"require\": \"${d}/index.js\" },"
 # done
 
-for f in `find _src -type f | grep .ts$`
+for f in `find _src -type f | grep .ts$ | grep -v .test.ts`
 do
 f=`echo $f | cut -c 6-`
 f=./$f
