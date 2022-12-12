@@ -25,6 +25,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@effect-ts-app/compiler": "workspace:*",
     "@babel/cli": "^7.19.3",
     "@types/faker": "5.5.9",
     "@types/node": "~18.11.12",
@@ -322,6 +323,16 @@
       "require": {
         "types": "./dist/lens.d.ts",
         "default": "./_cjs/lens.cjs"
+      }
+    },
+    "./nanoId.test": {
+      "import": {
+        "types": "./dist/nanoId.test.d.ts",
+        "default": "./dist/nanoId.test.js"
+      },
+      "require": {
+        "types": "./dist/nanoId.test.d.ts",
+        "default": "./_cjs/nanoId.test.cjs"
       }
     },
     "./schema": {

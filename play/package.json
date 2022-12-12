@@ -16,7 +16,9 @@
     "xstate": "^4.35.0"
   },
   "devDependencies": {
-    "ts-node": "^10.9.1"
+    "@effect-ts-app/compiler": "workspace:*",
+    "ts-node": "^10.9.1",
+    "vitest": "^0.25.7"
   },
   "typesVersions": {
     "*": {

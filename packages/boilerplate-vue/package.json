@@ -22,6 +22,7 @@
     "vue2": "npm:vue@3.2.45"
   },
   "devDependencies": {
+    "@effect-ts-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
     "@babel/cli": "^7.19.3",
     "@types/node": "~18.11.12",
