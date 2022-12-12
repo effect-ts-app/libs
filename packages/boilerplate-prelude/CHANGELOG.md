@@ -1,5 +1,17 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.8.0
+
+### Minor Changes
+
+- 3c1a60c: Use nanoid for StringId Arbitrary.
+
+### Patch Changes
+
+- Updated dependencies [3c1a60c]
+  - @effect-ts-app/core@1.10.0
+  - @effect-ts-app/schema@1.9.0
+
 ## 1.7.0
 
 ### Minor Changes

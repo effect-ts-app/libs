@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 1.10.0
+
+### Minor Changes
+
+- 3c1a60c: Use nanoid for StringId Arbitrary.
+
 ## 1.9.0
 
 ### Minor Changes
