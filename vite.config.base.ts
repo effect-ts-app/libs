@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { tsPlugin } from "@effect-ts-app/compiler/vitePlugin"
-export default function makeConfig() {
+import path from "path"
+import fs from "fs"
+export default function makeConfig(dirName?: string) {
   return {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     plugins: [tsPlugin({})],
@@ -10,11 +12,9 @@ export default function makeConfig() {
       reporters: "verbose",
       globals: true
     },
-    // resolve: {
-    //   alias: {
-    //     "@effect/io/test": path.resolve(__dirname, "/test"),
-    //     "@effect/io": path.resolve(__dirname, "/src")
-    //   }
-    // }
+    resolve: dirName ? {
+      alias: {
+        [JSON.parse(fs.readFileSync(dirName + "/package.json", "utf-8")).name]: path.resolve(dirName, "/_src")
+      } } : undefined,
   }
 }
