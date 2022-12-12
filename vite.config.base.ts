@@ -12,9 +12,11 @@ export default function makeConfig(dirName?: string) {
       reporters: "verbose",
       globals: true
     },
-    resolve: dirName ? {
-      alias: {
-        [JSON.parse(fs.readFileSync(dirName + "/package.json", "utf-8")).name]: path.resolve(dirName, "/_src")
-      } } : undefined,
+    resolve: dirName
+      ? {
+        alias: {
+          [JSON.parse(fs.readFileSync(dirName + "/package.json", "utf-8")).name]: path.resolve(dirName, "/_src")
+        } }
+      : undefined,
   }
 }
