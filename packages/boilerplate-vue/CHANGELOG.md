@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.5.3
+
+### Patch Changes
+
+- 4e8746c: Add emptyString<>null conversion
+- Updated dependencies [4e8746c]
+  - @effect-ts-app/boilerplate-vue@1.5.3
+
 ## 1.5.2
 
 ### Patch Changes
