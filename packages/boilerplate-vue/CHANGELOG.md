@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.5.2
+
+### Patch Changes
+
+- 71b36cb: Improve vue form field empty check
+- Updated dependencies [71b36cb]
+  - @effect-ts-app/boilerplate-vue@1.5.2
+
 ## 1.5.1
 
 ### Patch Changes
