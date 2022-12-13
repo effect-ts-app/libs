@@ -59,7 +59,7 @@ function buildFieldInfo(propOrSchema: AnyProperty | SchemaAny, fieldKey: Propert
   const info = {
     type: "text", // TODO: various types
     rules: [
-      (v: string) => !metadata.required || !!v || "The field cannot be empty",
+      (v: string) => !metadata.required || (v !== "" && v !== null && v !== undefined) || "The field cannot be empty",
       (v: string) =>
         metadata.minLength === undefined || v.length >= metadata.minLength ||
         `The field requires at least ${metadata.minLength} characters`,
