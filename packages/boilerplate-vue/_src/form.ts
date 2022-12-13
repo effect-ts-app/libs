@@ -14,6 +14,15 @@ import {
 } from "@effect-ts-app/boilerplate-prelude/schema"
 import { capitalize } from "vue"
 
+export function convertIn(v: string | null) {
+  return v === null ? "" : v
+}
+
+export function convertOut(v: string, set: (v: string | null) => void) {
+  v = v.trim()
+  return set(v === "" ? null : v)
+}
+
 export function buildFieldInfoFromProps<Props extends PropertyRecord>(
   props: Props
 ) {
@@ -38,7 +47,10 @@ export interface FieldMetadata {
 }
 
 const f = Symbol()
-abstract class PhantomTypeParameter<Identifier extends keyof any, InstantiatedType> {
+abstract class PhantomTypeParameter<
+  Identifier extends keyof any,
+  InstantiatedType
+> {
   protected abstract readonly _: {
     readonly [NameP in Identifier]: (_: InstantiatedType) => InstantiatedType
   }
@@ -49,9 +61,13 @@ export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { i
   type: "text"
 }
 
-type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S : never
+type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
+  : never
 
-function buildFieldInfo(propOrSchema: AnyProperty | SchemaAny, fieldKey: PropertyKey): FieldInfo<any, any> {
+function buildFieldInfo(
+  propOrSchema: AnyProperty | SchemaAny,
+  fieldKey: PropertyKey
+): FieldInfo<any, any> {
   const metadata = getMetadataFromSchemaOrProp(propOrSchema)
   const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
   const parse = Parser.for(schema)
@@ -59,22 +75,35 @@ function buildFieldInfo(propOrSchema: AnyProperty | SchemaAny, fieldKey: Propert
   const info = {
     type: "text", // TODO: various types
     rules: [
-      (v: string) => !metadata.required || (v !== "" && v !== null && v !== undefined) || "The field cannot be empty",
+      (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
       (v: string) =>
-        metadata.minLength === undefined || v.length >= metadata.minLength ||
+        v === "" ||
+        metadata.minLength === undefined ||
+        v.length >= metadata.minLength ||
         `The field requires at least ${metadata.minLength} characters`,
       (v: string) =>
-        metadata.maxLength === undefined || v.length <= metadata.maxLength ||
+        v === "" ||
+        metadata.maxLength === undefined ||
+        v.length <= metadata.maxLength ||
         `The field cannot have more than ${metadata.maxLength} characters`,
       (v: unknown) =>
         pipe(
-          parse(v),
+          parse(v === "" ? null : v),
           These.result,
           Either.$.fold(
-            () => `The entered value is not a valid ${capitalize(fieldKey.toString())}`,
+            () =>
+              `The entered value is not a valid ${
+                capitalize(
+                  fieldKey.toString()
+                )
+              }`,
             ({ tuple: [_, optErr] }) =>
               optErr.isSome()
-                ? `The entered value is not a valid ${capitalize(fieldKey.toString())}`
+                ? `The entered value is not a valid ${
+                  capitalize(
+                    fieldKey.toString()
+                  )
+                }`
                 : true
           )
         )
