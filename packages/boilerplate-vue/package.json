@@ -71,6 +71,16 @@
         "default": "./_cjs/form.cjs"
       }
     },
+    "./hooks": {
+      "import": {
+        "types": "./dist/hooks.d.ts",
+        "default": "./dist/hooks.js"
+      },
+      "require": {
+        "types": "./dist/hooks.d.ts",
+        "default": "./_cjs/hooks.cjs"
+      }
+    },
     "./index": {
       "import": {
         "types": "./dist/index.d.ts",
@@ -81,6 +91,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./internal": {
+      "import": {
+        "types": "./dist/internal.d.ts",
+        "default": "./dist/internal.js"
+      },
+      "require": {
+        "types": "./dist/internal.d.ts",
+        "default": "./_cjs/internal.cjs"
+      }
+    },
     "./routeParams": {
       "import": {
         "types": "./dist/routeParams.d.ts",
@@ -89,6 +109,16 @@
       "require": {
         "types": "./dist/routeParams.d.ts",
         "default": "./_cjs/routeParams.cjs"
+      }
+    },
+    "./runtime": {
+      "import": {
+        "types": "./dist/runtime.d.ts",
+        "default": "./dist/runtime.js"
+      },
+      "require": {
+        "types": "./dist/runtime.d.ts",
+        "default": "./_cjs/runtime.cjs"
       }
     }
   },
