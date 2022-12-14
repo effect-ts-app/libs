@@ -192,16 +192,6 @@
         "default": "./_cjs/_api/futureDate.cjs"
       }
     },
-    "./_api/futureDate.test": {
-      "import": {
-        "types": "./dist/_api/futureDate.test.d.ts",
-        "default": "./dist/_api/futureDate.test.js"
-      },
-      "require": {
-        "types": "./dist/_api/futureDate.test.d.ts",
-        "default": "./_cjs/_api/futureDate.test.cjs"
-      }
-    },
     "./_api/index": {
       "import": {
         "types": "./dist/_api/index.d.ts",

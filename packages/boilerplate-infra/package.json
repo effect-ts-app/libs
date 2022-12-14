@@ -27,11 +27,11 @@
     "@azure/service-bus": "^7.7.3",
     "@babel/cli": "^7.19.3",
     "@effect-ts-app/compiler": "workspace:*",
-    "@sentry/node": "^7.25.0",
+    "@sentry/node": "^7.26.0",
     "@sendgrid/helpers": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
-    "@types/express": "^4.17.14",
-    "@types/node": "~18.11.13",
+    "@types/express": "^4.17.15",
+    "@types/node": "~18.11.15",
     "@types/redis": "^2.8.32",
     "express": "^4.18.2",
     "express-jwt": "^7.7.7",
@@ -40,7 +40,7 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
-    "vitest": "^0.25.7"
+    "vitest": "^0.25.8"
   },
   "typesVersions": {
     "*": {
@@ -470,16 +470,6 @@
         "default": "./_cjs/services/Store/Cosmos.cjs"
       }
     },
-    "./services/Store/Cosmos.test": {
-      "import": {
-        "types": "./dist/services/Store/Cosmos.test.d.ts",
-        "default": "./dist/services/Store/Cosmos.test.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Cosmos.test.d.ts",
-        "default": "./_cjs/services/Store/Cosmos.test.cjs"
-      }
-    },
     "./services/Store/Disk": {
       "import": {
         "types": "./dist/services/Store/Disk.d.ts",
@@ -508,16 +498,6 @@
       "require": {
         "types": "./dist/services/Store/Redis.d.ts",
         "default": "./_cjs/services/Store/Redis.cjs"
-      }
-    },
-    "./services/Store/codeFilter.test": {
-      "import": {
-        "types": "./dist/services/Store/codeFilter.test.d.ts",
-        "default": "./dist/services/Store/codeFilter.test.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/codeFilter.test.d.ts",
-        "default": "./_cjs/services/Store/codeFilter.test.cjs"
       }
     },
     "./services/Store/index": {

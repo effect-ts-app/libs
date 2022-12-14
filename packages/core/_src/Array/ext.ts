@@ -72,9 +72,9 @@ export function sortByO<A>(
 }
 
 export function groupByT_<A, Key extends PropertyKey>(
-  as: ROArray<A>,
+  as: A.Array<A>,
   f: (a: A) => Key
-): ROArray<readonly [Key, NonEmptyArray<A>]> {
+): A.Array<readonly [Key, NA.NonEmptyArray<A>]> {
   const r: Record<Key, Array<A> & { 0: A }> = {} as any
   for (const a of as) {
     const k = f(a)
@@ -85,11 +85,11 @@ export function groupByT_<A, Key extends PropertyKey>(
       r[k] = [a]
     }
   }
-  return Object.entries(r).map(([k, items]) => tuple(k as unknown as Key, items as NonEmptyArray<A>))
+  return Object.entries(r).map(([k, items]) => tuple(k as unknown as Key, items as NA.NonEmptyArray<A>))
 }
 
 export function groupByT<A, Key extends PropertyKey>(f: (a: A) => Key) {
-  return (as: ROArray<A>): ROArray<readonly [Key, NonEmptyArray<A>]> => groupByT_(as, f)
+  return (as: A.Array<A>): A.Array<readonly [Key, NA.NonEmptyArray<A>]> => groupByT_(as, f)
 }
 
 export * from "@effect-ts/core/Collections/Immutable/Array"
