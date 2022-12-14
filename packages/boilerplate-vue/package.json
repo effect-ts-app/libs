@@ -90,16 +90,6 @@
         "types": "./dist/routeParams.d.ts",
         "default": "./_cjs/routeParams.cjs"
       }
-    },
-    "./vue2": {
-      "import": {
-        "types": "./dist/vue2.d.ts",
-        "default": "./dist/vue2.js"
-      },
-      "require": {
-        "types": "./dist/vue2.d.ts",
-        "default": "./_cjs/vue2.cjs"
-      }
     }
   },
   "scripts": {

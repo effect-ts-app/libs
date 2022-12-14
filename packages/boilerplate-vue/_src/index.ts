@@ -34,9 +34,9 @@ type MutateType = {
 const useSWRV = (swrv.default.default ? swrv.default.default : swrv.default) as unknown as useSWRVType
 export const mutate = (swrv.default.mutate ? swrv.default.mutate : swrv.mutate) as unknown as MutateType
 
-const Layers = HF.Client(fetch) + (ApiConfig.Live({
-  apiUrl: "/api"
-}))
+export function makeApiLayers(apiUrl = "/api") {
+  return HF.Client(fetch) + (ApiConfig.Live({ apiUrl }))
+}
 
 function swrToQuery<E, A>(
   r: { error: E | undefined; data: A | undefined; isValidating: boolean }
@@ -206,8 +206,13 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
   return tuple(result, latestSuccess, execute)
 }
 
-export function run<E, A>(self: Effect<ApiConfig | Http, E, A>) {
-  return self.provideSomeLayer(Layers).unsafeRunPromise()
+let run = function<E, A>(_: Effect<ApiConfig | Http, E, A>): Promise<A> {
+  throw new Error("Runtime not initialized, please run `initRuntime` first")
+}
+export function initRuntime(rt: Runtime<ApiConfig | Http>) {
+  run = function<E, A>(self: Effect<ApiConfig | Http, E, A>): Promise<A> {
+    return rt.unsafeRunPromise(self)
+  }
 }
 
 function handleExit<E, A>(
@@ -252,22 +257,22 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
   const value = ref<A>()
   const handle = handleExit(loading, error, value)
   const exec = (i: I, abortSignal?: AbortSignal) =>
-    Effect.sync(() => {
-      loading.value = true
-      value.value = undefined
-      error.value = undefined
-    })
-      .zipRight(self(i))
-      .provideSomeLayer(Layers)
-      .exit
-      .flatMap(exit => Effect.sync(() => handle(exit)))
-      .fork
-      .flatMap(f => {
-        const cancel = () => f.interrupt.unsafeRunPromise()
-        abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-        return f.join
+    run(
+      Effect.sync(() => {
+        loading.value = true
+        value.value = undefined
+        error.value = undefined
       })
-      .unsafeRunPromise()
+        .zipRight(self(i))
+        .exit
+        .flatMap(exit => Effect.sync(() => handle(exit)))
+        .fork
+        .flatMap(f => {
+          const cancel = () => run(f.interrupt)
+          abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
+          return f.join
+        })
+    )
 
   const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
 
@@ -289,16 +294,17 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
 
   const exec = (abortSignal?: AbortSignal) => {
     loading.value = true
-    return self.provideSomeLayer(Layers)
-      .exit
-      .flatMap(exit => Effect.sync(() => handle(exit)))
-      .fork
-      .flatMap(f => {
-        const cancel = () => f.interrupt.unsafeRunPromise()
-        abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-        return f.join
-      })
-      .unsafeRunPromise()
+    return run(
+      self
+        .exit
+        .flatMap(exit => Effect.sync(() => handle(exit)))
+        .fork
+        .flatMap(f => {
+          const cancel = () => f.interrupt.unsafeRunPromise()
+          abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
+          return f.join
+        })
+    )
   }
   const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
   return tuple(
