@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.6.1
+
+### Patch Changes
+
+- 18dc737: Cleanup
+- Updated dependencies [18dc737]
+  - @effect-ts-app/boilerplate-vue@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes
