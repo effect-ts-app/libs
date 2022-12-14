@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.6.0
+
+### Minor Changes
+
+- 9b4f512: Vue: Use Effect Runtime, drop vue2 support.
+
+### Patch Changes
+
+- Updated dependencies [9b4f512]
+  - @effect-ts-app/boilerplate-vue@1.6.0
+
 ## 1.5.3
 
 ### Patch Changes
