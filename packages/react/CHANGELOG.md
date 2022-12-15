@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.7.1
+
+### Patch Changes
+
+- 28d5de4: Fix .cjs extension
+
 ## 1.7.0
 
 ### Minor Changes

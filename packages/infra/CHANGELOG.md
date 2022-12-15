@@ -1,5 +1,13 @@
 # @effect-ts-app/infra
 
+## 1.7.2
+
+### Patch Changes
+
+- 28d5de4: Fix .cjs extension
+- Updated dependencies [28d5de4]
+  - @effect-ts-app/schema@1.9.1
+
 ## 1.7.1
 
 ### Patch Changes

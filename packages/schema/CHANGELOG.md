@@ -1,5 +1,11 @@
 # @effect-ts-app/schema
 
+## 1.9.1
+
+### Patch Changes
+
+- 28d5de4: Fix .cjs extension
+
 ## 1.9.0
 
 ### Minor Changes

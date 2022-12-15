@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.8.1
+
+### Patch Changes
+
+- Updated dependencies [28d5de4]
+  - @effect-ts-app/infra@1.7.2
+  - @effect-ts-app/schema@1.9.1
+
 ## 1.8.0
 
 ### Minor Changes
