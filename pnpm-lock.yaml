@@ -53,9 +53,6 @@ importers:
       '@effect-ts-app/boilerplate-eslint': workspace:*
       '@effect-ts-app/compiler': workspace:*
       '@phaphoso/eslint-plugin-dprint': ^0.5.2
-      '@swc/core': 1.3.22
-      '@swc/helpers': 0.4.14
-      '@swc/register': ^0.1.10
       '@tsconfig/strictest': ^1.0.2
       '@tsplus/installer': 0.0.159
       '@types/lodash': ^4.14.191
@@ -84,7 +81,7 @@ importers:
       madge: ^5.0.1
       module-alias: ^2.2.2
       nodemon: ^2.0.20
-      npm-check-updates: ^16.5.6
+      npm-check-updates: ^16.6.0
       ts-node: ^10.9.1
       ts-transform-paths: ^3.0.0
       tsc-watch: ^6.0.0
@@ -94,10 +91,9 @@ importers:
       vite: ^4.0.1
       vitest: ^0.25.8
     dependencies:
-      '@swc/helpers': 0.4.14
       cross-env: 7.0.3
       http-proxy: /http-proxy-node16/1.0.0
-      ts-node: 10.9.1_yjk67g7mc7gef3e43z52vletj4
+      ts-node: 10.9.1_vjeozswelslmnchk3wfvqm3x6a
     devDependencies:
       '@babel/cli': 7.19.3_@babel+core@7.20.5
       '@babel/core': 7.20.5
@@ -107,10 +103,8 @@ importers:
       '@effect-ts-app/boilerplate-eslint': link:packages/boilerplate-eslint
       '@effect-ts-app/compiler': link:packages/compiler
       '@phaphoso/eslint-plugin-dprint': 0.5.2_eslint@8.29.0
-      '@swc/core': 1.3.22
-      '@swc/register': 0.1.10_@swc+core@1.3.22
       '@tsconfig/strictest': 1.0.2
-      '@tsplus/installer': 0.0.159_yjk67g7mc7gef3e43z52vletj4
+      '@tsplus/installer': 0.0.159_vjeozswelslmnchk3wfvqm3x6a
       '@types/lodash': 4.14.191
       '@types/node': 18.11.12
       '@typescript-eslint/eslint-plugin': 5.46.1_wnbd3iogwb2o4y42jg7dbonxcu
@@ -135,7 +129,7 @@ importers:
       madge: 5.0.1
       module-alias: 2.2.2
       nodemon: 2.0.20
-      npm-check-updates: 16.5.6
+      npm-check-updates: 16.6.0
       ts-transform-paths: 3.0.0
       tsc-watch: 6.0.0_atfpk6h5myfikbojzh5nbn4vxy
       tsconfig-paths: 4.1.1
@@ -271,7 +265,7 @@ importers:
       lodash: ^4.17.21
       nanoid: ^4.0.0
       path-parser: ^6.1.0
-      query-string: ^8.0.2
+      query-string: ^8.0.3
       ts-node: ^10.9.1
       ts-pattern: ^4.0.6
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
@@ -290,7 +284,7 @@ importers:
       lodash: 4.17.21
       nanoid: 4.0.0
       path-parser: 6.1.0
-      query-string: 8.0.2
+      query-string: 8.0.3
       ts-pattern: 4.0.6_hpfuegunz5yvcuwfbyr4pr7fdy
       uuid: 9.0.0
       validator: 13.7.0
@@ -356,7 +350,7 @@ importers:
       '@tsplus/stdlib': ^0.2.8
       '@types/node': ~18.11.12
       json5: ^2.2.1
-      query-string: ^8.0.2
+      query-string: ^8.0.3
       swrv: ^1.0.1
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
@@ -374,7 +368,7 @@ importers:
       '@effect-ts/system': 0.57.4_aliyesjnd2rt7ef7234i2dw2t4
       '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
       '@tsplus/stdlib': 0.2.8_74hyor7buze5mn466flzrp35ie
-      query-string: 8.0.2
+      query-string: 8.0.3
       swrv: 1.0.1_vue@3.2.45
       vue: 3.2.45
       vue2: /vue/3.2.45
@@ -423,7 +417,7 @@ importers:
       cross-fetch: ^3.1.5
       lodash: ^4.17.21
       path-parser: ^6.1.0
-      query-string: ^8.0.2
+      query-string: ^8.0.3
       ts-toolbelt: ^9.6.0
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz
       uuid: ^9.0.0
@@ -438,7 +432,7 @@ importers:
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
-      query-string: 8.0.2
+      query-string: 8.0.3
       uuid: 9.0.0
       validator: 13.7.0
     devDependencies:
@@ -470,7 +464,7 @@ importers:
       jwt-decode: ^3.1.2
       mongodb: 4.12.1
       proper-lockfile: ^4.1.2
-      query-string: ^8.0.2
+      query-string: ^8.0.3
       redis: ^3.1.2
       redlock: ^4.2.0
       strip-ansi: ^7.0.1
@@ -485,7 +479,7 @@ importers:
       '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
       '@tsplus/stdlib': 0.2.8_74hyor7buze5mn466flzrp35ie
       proper-lockfile: 4.1.2
-      query-string: 8.0.2
+      query-string: 8.0.3
     devDependencies:
       '@azure/cosmos': 3.17.2
       '@types/connect': 3.4.35
@@ -2689,121 +2683,6 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /@swc/core-darwin-arm64/1.3.22:
-    resolution: {integrity: sha512-MMhtPsuXp8gpUgr9bs+RZQ2IyFGiUNDG93usCDAFgAF+6VVp+YaAVjET/3/Bx5Lk2WAt0RxT62C9KTEw1YMo3w==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-darwin-x64/1.3.22:
-    resolution: {integrity: sha512-SG6QbNat4GZ5VJU3Zo6a54oQOtbhJVE6BCQw4JjOCZJmAeBzNebGy9wsT4+fCJNHC3C5qtaRw7ToXJvLniXwfg==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-linux-arm-gnueabihf/1.3.22:
-    resolution: {integrity: sha512-4E+TdQT1oHnHjDaPs/DyrRy9lOuFd6ncEd67yYA4j9lFqt6nuz/jnXss45k8KU7wR5kOTtdW73xPwkU4NbOWdw==}
-    engines: {node: '>=10'}
-    cpu: [arm]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-linux-arm64-gnu/1.3.22:
-    resolution: {integrity: sha512-6VcynOMbOBcbLutIPENI3Ejvg5LGz/Pwvzm25hM0FoiEtPxHA+tawQUwLx8Alk1Yr+Rnqid06UEZ0veJOGn2pQ==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-linux-arm64-musl/1.3.22:
-    resolution: {integrity: sha512-86RxGy0L3qa4De3xWHx8vL2caTxvSLSWTlgUW/Yd4l1pvrCFibMjhkImGu5ViKiReX9DlBtJ7CBs4dln2kHidw==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-linux-x64-gnu/1.3.22:
-    resolution: {integrity: sha512-FLkbiqsdXsVIFZi6iedx4rSBGX8x0vo/5aDlklSxJAAYOcQpO0QADKP5Yr65iMT1d6ABCt2d+/StpGLF7GWOcA==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-linux-x64-musl/1.3.22:
-    resolution: {integrity: sha512-giBuw+Z0Bq6fpZ0Y5TcfpcQwf9p/cE1fOQyO/K1XSTn/haQOqFi7421Jq/dFThSARZiXw1u9Om9VFbwxr8VI+A==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-win32-arm64-msvc/1.3.22:
-    resolution: {integrity: sha512-loKGO+ZM2By6VdrmVJk1G79jVgDPaee93qLFuis5KyeoLLb4m1MlNMc/6SIDZUSuYg6NqaGP1spFeiFetMQ4Zg==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-win32-ia32-msvc/1.3.22:
-    resolution: {integrity: sha512-lvNWAZ3QjXMsrsch6oLLQVikT/hC/4ZcLrTBXa14HwQylaYigkGElgp3ekJr78HjWDPwB46GXwBbNMG0VNAfvA==}
-    engines: {node: '>=10'}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core-win32-x64-msvc/1.3.22:
-    resolution: {integrity: sha512-ESyn4lZXAKEE3mcTaDfXatsolCiEfVGstsXdgBmZYa6o1IE1bDW8FE7Ob/Y+82WTpm9+A9ZYXYjZ62t67POHZg==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    optional: true
-
-  /@swc/core/1.3.22:
-    resolution: {integrity: sha512-oQ9EPEb7NgWcGIDoVfLCuffvtC4MzVtrwjqwKzFHP8FUh1fn8+2wraOjkkDXW74BB4Hgve5ykkaHix9bebB9Ww==}
-    engines: {node: '>=10'}
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      '@swc/core-darwin-arm64': 1.3.22
-      '@swc/core-darwin-x64': 1.3.22
-      '@swc/core-linux-arm-gnueabihf': 1.3.22
-      '@swc/core-linux-arm64-gnu': 1.3.22
-      '@swc/core-linux-arm64-musl': 1.3.22
-      '@swc/core-linux-x64-gnu': 1.3.22
-      '@swc/core-linux-x64-musl': 1.3.22
-      '@swc/core-win32-arm64-msvc': 1.3.22
-      '@swc/core-win32-ia32-msvc': 1.3.22
-      '@swc/core-win32-x64-msvc': 1.3.22
-
-  /@swc/helpers/0.4.14:
-    resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
-    dependencies:
-      tslib: 2.4.1
-    dev: false
-
-  /@swc/register/0.1.10_@swc+core@1.3.22:
-    resolution: {integrity: sha512-6STwH/q4dc3pitXLVkV7sP0Hiy+zBsU2wOF1aXpXR95pnH3RYHKIsDC+gvesfyB7jxNT9OOZgcqOp9RPxVTx9A==}
-    hasBin: true
-    peerDependencies:
-      '@swc/core': ^1.0.46
-    dependencies:
-      '@swc/core': 1.3.22
-      lodash.clonedeep: 4.5.0
-      pirates: 4.0.5
-      source-map-support: 0.5.21
-    dev: true
-
   /@szmarczak/http-timer/5.0.1:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
@@ -2832,14 +2711,14 @@ packages:
     resolution: {integrity: sha512-IRKlC8cnP7zMz1SDBjyIVyPapkEGWLZ6wkF6Z8T+xU80P9sO5uGXlIUvtzjx+7ehPJRWxkB6CeIDwUfyqNtYkQ==}
     dev: true
 
-  /@tsplus/installer/0.0.159_yjk67g7mc7gef3e43z52vletj4:
+  /@tsplus/installer/0.0.159_vjeozswelslmnchk3wfvqm3x6a:
     resolution: {integrity: sha512-EZZuxFLJC40czLECUCIAYCc0qD9kDAIV6+WpX1jCdcPRK15noYkWT64sBSXAJbvdUoyxkwdSFjOE4BLIQw9Rwg==}
     hasBin: true
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
       tar: 6.1.12
-      ts-node: 10.9.1_yjk67g7mc7gef3e43z52vletj4
+      ts-node: 10.9.1_vjeozswelslmnchk3wfvqm3x6a
       zlib: 1.0.5
     transitivePeerDependencies:
       - '@swc/core'
@@ -3296,7 +3175,7 @@ packages:
       '@vue/shared': 3.2.45
       estree-walker: 2.0.2
       magic-string: 0.25.9
-      postcss: 8.4.19
+      postcss: 8.4.20
       source-map: 0.6.1
 
   /@vue/compiler-ssr/3.2.45:
@@ -7180,8 +7059,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates/16.5.6:
-    resolution: {integrity: sha512-Obrza1omHC2hqpGAHikNj5+15XAwfzdnDRhiqdsLk7oVrmEm7RPiuhmdzbIrtdYEFrmv37kBdU0uwsVljG5Urg==}
+  /npm-check-updates/16.6.0:
+    resolution: {integrity: sha512-uYvGP8zTmMdPhXL1tjvvhIeWlAdbkejwzcIYNIJDjtvjbS5pbKh15V2E/bP6DjqTPqDCQcqgP//jxo2DJ8/pxA==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -7641,11 +7520,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /pirates/4.0.5:
-    resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}
-    engines: {node: '>= 6'}
-    dev: true
-
   /pkg-dir/4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
@@ -7686,6 +7560,7 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
 
   /postcss/8.4.20:
     resolution: {integrity: sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==}
@@ -7880,8 +7755,8 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /query-string/8.0.2:
-    resolution: {integrity: sha512-clIYj8NRVQzKAfyESeANUl+YHHVsl+QzGta8ndvqeGaJK/2RMDHiEI7iuu3erIWVdK27aePhuXUHCVojWT+Tjw==}
+  /query-string/8.0.3:
+    resolution: {integrity: sha512-RtRwkRFCLPQWz27ETbeqIA9UdaLv2Ps7EiNjIS57BaZyx/gWi4QKq7K4+rYBEHToSo/dvLZ+S1fEOKcacojA/Q==}
     engines: {node: '>=14.16'}
     dependencies:
       decode-uri-component: 0.2.2
@@ -8991,38 +8866,6 @@ packages:
         optional: true
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.9
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.3
-      '@types/node': 18.11.12
-      acorn: 8.8.1
-      acorn-walk: 8.2.0
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz_zp2rvqzoyfh6keedrnyccdmbaa'
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    dev: true
-
-  /ts-node/10.9.1_yjk67g7mc7gef3e43z52vletj4:
-    resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
-    hasBin: true
-    peerDependencies:
-      '@swc/core': '>=1.2.50'
-      '@swc/wasm': '>=1.2.50'
-      '@types/node': '*'
-      typescript: '>=2.7'
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      '@swc/wasm':
-        optional: true
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@swc/core': 1.3.22
       '@tsconfig/node10': 1.0.9
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3

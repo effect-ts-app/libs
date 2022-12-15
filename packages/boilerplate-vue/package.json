@@ -16,7 +16,7 @@
     "@effect-ts/system": "^0.57.4",
     "@effect/core": "^0.0.16",
     "@tsplus/stdlib": "^0.2.8",
-    "query-string": "^8.0.2",
+    "query-string": "^8.0.3",
     "swrv": "^1.0.1",
     "vue": "^3.2.45",
     "vue2": "npm:vue@3.2.45"

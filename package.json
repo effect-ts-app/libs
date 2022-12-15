@@ -17,8 +17,9 @@
         }
     },
     "scripts": {
+        "all": "pnpm -r --filter=!./play",
         "ci:version": "pnpm changeset version",
-        "ci:publish": "pnpm publish --access=public -r --filter=!./play",
+        "ci:publish": "pnpm all publish --access=public",
         "preinstall": "npx only-allow pnpm",
         "clean": "pnpm -r clean",
         "clean-dist": "pnpm -r clean-dist",
@@ -32,15 +33,13 @@
         "up-ncu": "pnpm run update && pnpm i",
         "update": "ncu -u && pnpm -r ncu -u",
         "ncu": "ncu",
-        "build-packages": "cd packages/boilerplate-prelude && pnpm build && cd ../types && pnpm build && cd ../client && pnpm build && cd ../vue && pnpm build && cd ../infra && pnpm build && cd ../messages && pnpm build && cd ../../packages/eslint && pnpm build",
         "lint:watch": "ESLINT_TS=1 esw -w --changed --clear --ext ts,tsx",
         "packages": "pnpm -r --workspace-concurrency 1",
         "circular-packages": "pnpm packages circular",
         "lint-packages": "pnpm packages lint",
         "test-packages": "pnpm packages test:run",
         "testsuite-packages": "pnpm packages testsuite",
-        "testsuite-packages-manual": "cd packages/boilerplate-prelude && pnpm testsuite && cd ../types && pnpm testsuite && cd ../client && pnpm testsuite && cd ../infra && pnpm testsuite && cd ../messages && pnpm testsuite && cd ../vue && pnpm testsuite",
-        "watch-packages": "pnpm build-packages && pnpm -r --filter \"packages/*\" watch",
+        "watch-packages": "pnpm packages build && pnpm packages watch",
         "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build ./tsconfig.all.json",
         "rebuild": "pnpm -r clean && pnpm -r build",
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
@@ -52,7 +51,6 @@
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
     },
     "dependencies": {
-        "@swc/helpers": "0.4.14",
         "cross-env": "^7.0.3",
         "http-proxy": "npm:http-proxy-node16@^1.0.0",
         "ts-node": "^10.9.1"
@@ -66,8 +64,6 @@
         "@effect-ts-app/boilerplate-eslint": "workspace:*",
         "@effect-ts-app/compiler": "workspace:*",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
-        "@swc/core": "1.3.22",
-        "@swc/register": "^0.1.10",
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.159",
         "@types/lodash": "^4.14.191",
@@ -94,7 +90,7 @@
         "madge": "^5.0.1",
         "module-alias": "^2.2.2",
         "nodemon": "^2.0.20",
-        "npm-check-updates": "^16.5.6",
+        "npm-check-updates": "^16.6.0",
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.1.1",
