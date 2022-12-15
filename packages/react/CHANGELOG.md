@@ -1,5 +1,11 @@
 # @effect-ts-app/react
 
+## 1.7.2
+
+### Patch Changes
+
+- 4dae7d0: Fix missing context js
+
 ## 1.7.1
 
 ### Patch Changes
