@@ -1,4 +1,4 @@
-export const RequestId = LongString
+export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 
 export class RequestContextParent extends MNModel<
@@ -17,7 +17,7 @@ export class RequestContextParent extends MNModel<
 export type RequestContextParentConstructor = typeof RequestContextParent
 
 export function makeRequestId() {
-  return RequestId(StringId.make())
+  return RequestId.make()
 }
 
 /**
@@ -74,7 +74,7 @@ export const LiveRequestContext = (pars: RequestContext) => Layer.fromValue(tag,
 /* eslint-disable */
 export interface RequestContextParent {
   readonly createdAt: Date
-  readonly id: LongString
+  readonly id: RequestId
   readonly locale: "de" | "en"
   readonly name: ReasonableString
 }
@@ -103,11 +103,11 @@ export namespace RequestContextParent {
 }
 export interface RequestContext {
   readonly createdAt: Date
-  readonly id: LongString
+  readonly id: RequestId
   readonly locale: "de" | "en"
   readonly name: ReasonableString
   readonly parent?: RequestContextParent | undefined
-  readonly rootId: LongString
+  readonly rootId: RequestId
 }
 export namespace RequestContext {
   /**

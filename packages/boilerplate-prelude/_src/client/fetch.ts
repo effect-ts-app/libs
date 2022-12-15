@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { constant, flow } from "@effect-ts-app/boilerplate-prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-ts-app/boilerplate-prelude/schema"
+import { StringId } from "@effect-ts-app/boilerplate-prelude/schema"
 import * as H from "@effect-ts-app/core/http/http-client"
 import { Path } from "path-parser"
-import { stringify } from "query-string"
+import qs from "query-string"
 import { getConfig } from "./config.js"
 
 export type FetchError = H.HttpError<string>
@@ -104,7 +105,7 @@ export function makePathWithQuery(
 ) {
   return (
     path.build(pars, { ignoreSearch: true, ignoreConstraints: true }) +
-    (Object.keys(pars).length ? "?" + stringify(pars) : "")
+    (Object.keys(pars).length ? "?" + qs.stringify(pars) : "")
   )
 }
 

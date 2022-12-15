@@ -282,8 +282,11 @@ export function makeRequestHandler<
     //   throw new Error("AI Context missing")
     // }
 
+    const requestId = req.headers["request-id"]
+    const rootId = requestId ? RequestId.parseUnsafe(requestId) : RequestId.make()
+
     const requestContext = new RequestContext({
-      rootId: RequestId(StringId.make()),
+      rootId,
       name: ReasonableString(
         Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
       ),

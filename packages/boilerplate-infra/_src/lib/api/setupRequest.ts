@@ -6,7 +6,11 @@ import { RequestContext } from "../RequestContext.js"
 export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext) {
   return pipe(
     self.withSpan("request"),
-    Effect.logAnnotates({ requestId: requestContext.id, requestName: requestContext.name })
+    Effect.logAnnotates({
+      requestRootId: requestContext.rootId,
+      requestId: requestContext.id,
+      requestName: requestContext.name
+    })
   )
 }
 
