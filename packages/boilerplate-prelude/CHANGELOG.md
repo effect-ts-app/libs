@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.9.0
+
+### Minor Changes
+
+- 5804ac6: Include requestRootId
+
 ## 1.8.0
 
 ### Minor Changes

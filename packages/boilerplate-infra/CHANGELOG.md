@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.8.0
+
+### Minor Changes
+
+- 5804ac6: Include requestRootId
+
+### Patch Changes
+
+- Updated dependencies [5804ac6]
+  - @effect-ts-app/boilerplate-prelude@1.9.0
+
 ## 1.7.3
 
 ### Patch Changes
