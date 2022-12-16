@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.9.1
+
+### Patch Changes
+
+- 6dbcf48: Remove connection header from fetch request
+
 ## 1.9.0
 
 ### Minor Changes
