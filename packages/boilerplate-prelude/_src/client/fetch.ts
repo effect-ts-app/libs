@@ -22,7 +22,6 @@ export function fetchApi(method: H.Method, path: string, body?: unknown) {
   const request = H.request(method, "JSON", "JSON")
   return getConfig(({ apiUrl, headers }) =>
     H.withHeaders({
-      Connection: "keep-alive",
       "request-id": (headers ? headers["request-id"] : null) ?? StringId.make(),
       ...headers
     })(request(`${apiUrl}${path}`, body))
