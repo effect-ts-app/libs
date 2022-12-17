@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz"
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
@@ -39,7 +39,7 @@
     "jwks-rsa": "2.1.4",
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.159/compiler/typescript.tgz",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
     "vitest": "^0.25.8"
   },
   "typesVersions": {
