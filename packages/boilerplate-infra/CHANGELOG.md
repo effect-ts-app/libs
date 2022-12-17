@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.8.3
+
+### Patch Changes
+
+- c14fa43: Update packages
+- Updated dependencies [c14fa43]
+  - @effect-ts-app/boilerplate-prelude@1.9.2
+
 ## 1.8.2
 
 ### Patch Changes

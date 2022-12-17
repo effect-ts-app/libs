@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 1.9.2
+
+### Patch Changes
+
+- c14fa43: Update packages
+
 ## 1.9.1
 
 ### Patch Changes
