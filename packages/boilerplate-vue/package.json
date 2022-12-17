@@ -18,14 +18,13 @@
     "@tsplus/stdlib": "^0.2.8",
     "query-string": "^8.0.3",
     "swrv": "^1.0.1",
-    "vue": "^3.2.45",
-    "vue2": "npm:vue@3.2.45"
+    "vue": "^3.2.45"
   },
   "devDependencies": {
     "@effect-ts-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
     "@babel/cli": "^7.19.3",
-    "@types/node": "~18.11.15",
+    "@types/node": "~18.11.16",
     "json5": "^2.2.2",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
