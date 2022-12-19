@@ -8,6 +8,7 @@ import type {
   ValidationError
 } from "../../errors.js"
 import type { RequestContext } from "../RequestContext.js"
+import { logRequestError } from "./reportError.js"
 
 export function defaultBasicErrorHandler<R>(
   _req: express.Request,
@@ -16,6 +17,7 @@ export function defaultBasicErrorHandler<R>(
   r2: Effect<R, ValidationError, void>
 ) {
   return r2
+    .tapErrorCause(cause => cause.isFailure ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", err =>
       Effect.sync(() => {
         res.status(400).send(err.errors)
@@ -45,6 +47,7 @@ export function defaultErrorHandler<R>(
       : r2
   )
   return r3
+    .tapErrorCause(cause => cause.isFailure ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", err =>
       Effect.sync(() => {
         res.status(400).send(err.errors)

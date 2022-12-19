@@ -357,9 +357,9 @@ export function makeRequestHandler<
           })
         )
           .tapErrorCause(cause =>
-            Effect.sync(() => {
+            Effect.suspendSucceed(() => {
               res.status(500).send()
-              reportRequestError(cause, {
+              return reportRequestError(cause, {
                 requestContext,
                 path: req.originalUrl,
                 method: req.method
