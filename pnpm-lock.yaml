@@ -89,7 +89,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       typescript-transform-paths: ^3.4.4
       vite: ^4.0.2
-      vitest: ^0.25.8
+      vitest: ^0.26.0
     dependencies:
       cross-env: 7.0.3
       http-proxy: /http-proxy-node16/1.0.0
@@ -136,7 +136,7 @@ importers:
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
       typescript-transform-paths: 3.4.4_anapuzksqcf7xz3i7gzsbghhh4
       vite: 4.0.2_@types+node@18.11.12
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/boilerplate-eslint:
     specifiers:
@@ -208,7 +208,7 @@ importers:
       redis: ^3.1.2
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
-      vitest: ^0.25.8
+      vitest: ^0.26.0
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
@@ -242,7 +242,7 @@ importers:
       redis: 3.1.2
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/boilerplate-prelude:
     specifiers:
@@ -271,7 +271,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
-      vitest: ^0.25.8
+      vitest: ^0.26.0
     dependencies:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/schema': link:../schema
@@ -299,7 +299,7 @@ importers:
       fast-check: 3.4.0
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/boilerplate-react:
     specifiers:
@@ -316,7 +316,7 @@ importers:
       react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
-      vitest: ^0.25.8
+      vitest: ^0.26.0
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
@@ -332,7 +332,7 @@ importers:
       react-intl: 6.2.5_mp35o7nua5uk62fn7qbxouavgi
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/boilerplate-vue:
     specifiers:
@@ -355,7 +355,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       vite: ^4.0.2
-      vitest: ^0.25.8
+      vitest: ^0.26.0
       vue: ^3.2.45
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
@@ -379,7 +379,7 @@ importers:
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
       vite: 4.0.2_@types+node@18.11.12
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/compiler:
     specifiers:
@@ -390,7 +390,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       vite: ^4.0.2
-      vitest: ^0.25.8
+      vitest: ^0.26.0
     dependencies:
       '@rollup/pluginutils': 5.0.2
       vite: 4.0.2_@types+node@18.11.12
@@ -400,7 +400,7 @@ importers:
       json5: 2.2.2
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
-      vitest: 0.25.8
+      vitest: 0.26.0
 
   packages/core:
     specifiers:
@@ -575,7 +575,7 @@ importers:
       cross-fetch: ^3.1.5
       path-parser: ^6.1.0
       ts-node: ^10.9.1
-      vitest: ^0.25.8
+      vitest: ^0.26.0
       xstate: ^4.35.0
     dependencies:
       change-case: 4.1.2
@@ -585,7 +585,7 @@ importers:
     devDependencies:
       '@effect-ts-app/compiler': link:../packages/compiler
       ts-node: 10.9.1
-      vitest: 0.25.8
+      vitest: 0.26.0
 
 packages:
 
@@ -6238,6 +6238,10 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  /jsonc-parser/3.2.0:
+    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
+    dev: true
+
   /jsonfile/4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
     optionalDependencies:
@@ -6852,6 +6856,15 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+    dev: true
+
+  /mlly/1.0.0:
+    resolution: {integrity: sha512-QL108Hwt+u9bXdWgOI0dhzZfACovn5Aen4Xvc8Jasd9ouRH4NjnrXEiyP3nVvJo91zPlYjVRckta0Nt2zfoR6g==}
+    dependencies:
+      acorn: 8.8.1
+      pathe: 1.0.0
+      pkg-types: 1.0.1
+      ufo: 1.0.1
     dev: true
 
   /module-alias/2.2.2:
@@ -7496,6 +7509,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /pathe/0.2.0:
+    resolution: {integrity: sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==}
+    dev: true
+
+  /pathe/1.0.0:
+    resolution: {integrity: sha512-nPdMG0Pd09HuSsr7QOKUXO2Jr9eqaDiZvDwdyIhNG5SHYujkQHYKDfGQkulBxvbDHz8oHLsTgKN86LSwYzSHAg==}
+    dev: true
+
   /pathval/1.1.1:
     resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
     dev: true
@@ -7527,6 +7548,14 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       find-up: 4.1.0
+    dev: true
+
+  /pkg-types/1.0.1:
+    resolution: {integrity: sha512-jHv9HB+Ho7dj6ItwppRDDl0iZRYBD0jsakHXtFgoLr+cHSF6xC+QL54sJmWxyGxOLYSHm0afhXhXcQDQqH9z8g==}
+    dependencies:
+      jsonc-parser: 3.2.0
+      mlly: 1.0.0
+      pathe: 1.0.0
     dev: true
 
   /pluralize/8.0.0:
@@ -9028,6 +9057,10 @@ packages:
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
     dev: true
 
+  /ufo/1.0.1:
+    resolution: {integrity: sha512-boAm74ubXHY7KJQZLlXrtMz52qFvpsbOxDcZOnw/Wf+LS4Mmyu7JxmzD4tDLtUQtmZECypJ0FrCz4QIe6dvKRA==}
+    dev: true
+
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
     dependencies:
@@ -9208,38 +9241,25 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite/4.0.1_@types+node@18.11.12:
-    resolution: {integrity: sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==}
-    engines: {node: ^14.18.0 || >=16.0.0}
+  /vite-node/0.26.0_@types+node@18.11.12:
+    resolution: {integrity: sha512-nLtHWCv6reONl1oFsKhQ/LT7n3UNLpvVARAJlmGrQV6qSElht/9AdN41Pa+WSkw2Winh682UzM0Yw0GNlfqejw==}
+    engines: {node: '>=v14.16.0'}
     hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
     dependencies:
-      '@types/node': 18.11.12
-      esbuild: 0.16.4
-      postcss: 8.4.20
-      resolve: 1.22.1
-      rollup: 3.7.3
-    optionalDependencies:
-      fsevents: 2.3.2
+      debug: 4.3.4
+      mlly: 1.0.0
+      pathe: 0.2.0
+      source-map: 0.6.1
+      source-map-support: 0.5.21
+      vite: 4.0.2_@types+node@18.11.12
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
     dev: true
 
   /vite/4.0.2_@types+node@18.11.12:
@@ -9275,8 +9295,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.25.8:
-    resolution: {integrity: sha512-X75TApG2wZTJn299E/TIYevr4E9/nBo1sUtZzn0Ci5oK8qnpZAZyhwg0qCeMSakGIWtc6oRwcQFyFfW14aOFWg==}
+  /vitest/0.26.0:
+    resolution: {integrity: sha512-5kUnms5WOa0qrDCJePEPB13v9mhr+ZT1Qy0qNg0eVj1X7/Fx4GY4L1e5s3OH+BQ/J7M5WtaKsUGv9l1pbC7v2Q==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -9310,7 +9330,8 @@ packages:
       tinybench: 2.3.1
       tinypool: 0.3.0
       tinyspy: 1.0.2
-      vite: 4.0.1_@types+node@18.11.12
+      vite: 4.0.2_@types+node@18.11.12
+      vite-node: 0.26.0_@types+node@18.11.12
     transitivePeerDependencies:
       - less
       - sass
