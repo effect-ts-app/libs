@@ -97,6 +97,6 @@
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.4",
         "vite": "^4.0.2",
-        "vitest": "^0.26.0"
+        "vitest": "^0.25.8"
     }
 }
