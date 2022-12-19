@@ -27,7 +27,7 @@
     "@effect-ts-app/compiler": "workspace:*",
     "@babel/cli": "^7.19.3",
     "@types/faker": "5.5.9",
-    "@types/node": "~18.11.16",
+    "@types/node": "~18.11.17",
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.10",
     "faker": "^5.5.3",
