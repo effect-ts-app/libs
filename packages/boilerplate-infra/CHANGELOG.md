@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.9.0
+
+### Minor Changes
+
+- c178907: Improve request error logging and handling
+
 ## 1.8.3
 
 ### Patch Changes
