@@ -312,7 +312,7 @@ importers:
       '@types/react': ^18.0.26
       date-fns: ^2.29.3
       react: ^18.2.0
-      react-hook-form: ^7.41.0
+      react-hook-form: 7.40.0
       react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
@@ -328,7 +328,7 @@ importers:
       '@types/node': 18.11.12
       '@types/react': 18.0.26
       react: 18.2.0
-      react-hook-form: 7.41.0_react@18.2.0
+      react-hook-form: 7.40.0_react@18.2.0
       react-intl: 6.2.5_mp35o7nua5uk62fn7qbxouavgi
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
@@ -7826,8 +7826,8 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-hook-form/7.41.0_react@18.2.0:
-    resolution: {integrity: sha512-u1cHOXujr+AsNBoeCtcCuRwPh87mXAgKtXqd3qTCBgNFYzVZLXjYgLcynORpAgqhe24r5scucR8+6gfWaXBtHQ==}
+  /react-hook-form/7.40.0_react@18.2.0:
+    resolution: {integrity: sha512-0rokdxMPJs0k9bvFtY6dbcSydyNhnZNXCR49jgDr/aR03FDHFOK6gfh8ccqB3fl696Mk7lqh04xdm+agqWXKSw==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
