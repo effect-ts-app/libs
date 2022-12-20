@@ -1,3 +1,51 @@
+diff --git a/_mjs/collections/Chunk/definition.mjs b/_mjs/collections/Chunk/definition.mjs
+index 5c5e300e42504603d77ebcfe62c11f088833535f..1b5541b8d5878db68da138df8fd853f291c3b459 100644
+--- a/_mjs/collections/Chunk/definition.mjs
++++ b/_mjs/collections/Chunk/definition.mjs
+@@ -23,6 +23,8 @@ export const Chunk = {
+ export function unifyChunk(self) {
+   return self;
+ }
++
++const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom')
+ /**
+  * Internal base class
+  */
+@@ -74,6 +76,10 @@ export class ChunkInternal {
+     return this._array();
+   }
+ 
++  [customInspectSymbol](depth, inspectOptions, inspect) {
++    return this.toString();
++  }
++
+   _buckets() {
+     return {
+       [Symbol.iterator]: () => this._arrayLikeIterator()
+diff --git a/collections/Chunk/definition.js b/collections/Chunk/definition.js
+index d38a07d364595b764ed19881d56c1c7800326a68..57c24953e81a657be6d00eb72ea63d621dd047f2 100644
+--- a/collections/Chunk/definition.js
++++ b/collections/Chunk/definition.js
+@@ -56,6 +56,8 @@ exports.Chunk = Chunk;
+ function unifyChunk(self) {
+   return self;
+ }
++
++const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom')
+ /**
+  * Internal base class
+  */
+@@ -100,6 +102,10 @@ class ChunkInternal {
+     return tsplus_module_2.hashIterator(this[Symbol.iterator]());
+   }
+ 
++  [customInspectSymbol](depth, inspectOptions, inspect) {
++    return this.toString();
++  }
++
+   toString() {
+     return `Chunk(${this._array().join(", ")})`;
+   }
 diff --git a/tsconfig.base.json b/tsconfig.base.json
 new file mode 100644
 index 0000000..cc7c28d
