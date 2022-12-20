@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 1.9.1
+
+### Patch Changes
+
+- 511232d: Able to configure the max bulk size for Cosmos
+
 ## 1.9.0
 
 ### Minor Changes
