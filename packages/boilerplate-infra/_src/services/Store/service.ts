@@ -7,6 +7,7 @@ import type { OptimisticConcurrencyException } from "../../errors.js"
 
 export type StoreConfig<E> = {
   uniqueKeys?: UniqueKey[]
+  maxBulkSize?: number
   partitionValue: (e: E) => string | undefined
 }
 

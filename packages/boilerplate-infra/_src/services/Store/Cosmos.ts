@@ -79,7 +79,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     ] as const
                 ),
-                4
+                config?.maxBulkSize ?? 10
               )
 
               const batchResult = yield* $(
