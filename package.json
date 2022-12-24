@@ -63,6 +63,7 @@
         "@changesets/cli": "^2.26.0",
         "@effect-ts-app/boilerplate-eslint": "workspace:*",
         "@effect-ts-app/compiler": "workspace:*",
+        "@effect-ts-app/pnpm-singleton": "workspace:*",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.161",
