@@ -9,23 +9,23 @@
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
     "@effect-ts-app/schema": "*",
-    "@effect-ts/core": "^0.60.4",
+    "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
-    "@effect-ts/system": "^0.57.4",
+    "@effect-ts/system": "^0.57.5",
     "@effect/core": "^0.0.16",
     "@tsplus/stdlib": "^0.2.8",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "path-parser": "^6.1.0",
-    "query-string": "^8.0.3",
+    "query-string": "^8.1.0",
     "ts-pattern": "^4.0.6",
     "uuid": "^9.0.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
     "@effect-ts-app/compiler": "workspace:*",
-    "@babel/cli": "^7.19.3",
+    "@babel/cli": "^7.20.7",
     "@types/faker": "5.5.9",
     "@types/node": "~18.11.17",
     "@types/uuid": "^9.0.0",
@@ -34,7 +34,7 @@
     "fast-check": "^3.4.0",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vitest": "^0.25.8"
+    "vitest": "^0.26.2"
   },
   "typesVersions": {
     "*": {

@@ -44,7 +44,7 @@
     "react-intl": "^6.2.5",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vitest": "^0.25.8"
+    "vitest": "^0.26.2"
   },
   "typesVersions": {
     "*": {

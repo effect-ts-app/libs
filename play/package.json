@@ -13,12 +13,12 @@
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
     "path-parser": "^6.1.0",
-    "xstate": "^4.35.0"
+    "xstate": "^4.35.1"
   },
   "devDependencies": {
     "@effect-ts-app/compiler": "workspace:*",
     "ts-node": "^10.9.1",
-    "vitest": "^0.25.8"
+    "vitest": "^0.26.2"
   },
   "typesVersions": {
     "*": {
