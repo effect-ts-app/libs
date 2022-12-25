@@ -1,2 +1,2 @@
-export * from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
+export * from "@fp-ts/data/ReadonlyArray"
 export * as $ from "./NonEmptyArrayAspects.js"

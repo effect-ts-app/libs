@@ -1,1 +1,1 @@
-export * from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
+export * from "@fp-ts/data/ReadonlyArray"

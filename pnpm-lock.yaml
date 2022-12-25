@@ -140,6 +140,47 @@ importers:
       vite: 4.0.3_@types+node@18.11.12
       vitest: 0.26.2
 
+  packages/bla:
+    specifiers:
+      '@babel/cli': ^7.20.7
+      '@effect-ts/core': ^0.60.5
+      '@effect-ts/monocle': ^0.43.0
+      '@effect-ts/system': ^0.57.5
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
+      '@types/uuid': ^9.0.0
+      '@types/validator': ^13.7.10
+      cross-fetch: ^3.1.5
+      lodash: ^4.17.21
+      path-parser: ^6.1.0
+      query-string: ^8.1.0
+      ts-toolbelt: ^9.6.0
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
+      uuid: ^9.0.0
+      validator: ^13.7.0
+      winston: ^3.8.2
+    dependencies:
+      '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
+      '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
+      '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
+      cross-fetch: 3.1.5
+      lodash: 4.17.21
+      path-parser: 6.1.0
+      query-string: 8.1.0
+      uuid: 9.0.0
+      validator: 13.7.0
+    devDependencies:
+      '@babel/cli': 7.20.7
+      '@types/uuid': 9.0.0
+      '@types/validator': 13.7.10
+      ts-toolbelt: 9.6.0
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
+      winston: 3.8.2
+
   packages/boilerplate-eslint:
     specifiers:
       '@babel/generator': 7.20.7
@@ -213,7 +254,7 @@ importers:
       vitest: ^0.26.2
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
       '@effect/cache': 0.0.4_7kikn4jap3advk4vkjfpcm7hli
@@ -275,7 +316,7 @@ importers:
       validator: ^13.7.0
       vitest: ^0.26.2
     dependencies:
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/schema': link:../schema
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
@@ -321,7 +362,7 @@ importers:
       vitest: ^0.26.2
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/react': link:../react
       '@effect-ts-app/schema': link:../schema
       date-fns: 2.29.3
@@ -362,7 +403,7 @@ importers:
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/boilerplate-vue': 'link:'
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/schema': link:../schema
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
@@ -473,7 +514,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       winston: ^3.8.2
     dependencies:
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/schema': link:../schema
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
@@ -518,7 +559,7 @@ importers:
       vitest: ^0.26.2
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts-app/react': link:../react
       '@effect-ts-app/schema': link:../schema
       date-fns: 2.29.3
@@ -587,7 +628,7 @@ importers:
       uuid: ^9.0.0
       validator: ^13.7.0
     dependencies:
-      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/core': link:../bla
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
@@ -1588,6 +1629,7 @@ packages:
   /@babel/cli/7.20.7:
     resolution: {integrity: sha512-WylgcELHB66WwQqItxNILsMlaTd8/SO6SgTTjMp4uCI7P4QyH1r3nqgFmO3BfM4AtfniHgFMH3EpYFj/zynBkQ==}
     engines: {node: '>=6.9.0'}
+    hasBin: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -1606,6 +1648,7 @@ packages:
   /@babel/cli/7.20.7_@babel+core@7.20.7:
     resolution: {integrity: sha512-WylgcELHB66WwQqItxNILsMlaTd8/SO6SgTTjMp4uCI7P4QyH1r3nqgFmO3BfM4AtfniHgFMH3EpYFj/zynBkQ==}
     engines: {node: '>=6.9.0'}
+    hasBin: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -4927,6 +4970,7 @@ packages:
   /eslint-watch/8.0.0_eslint@8.30.0:
     resolution: {integrity: sha512-piws/uE4gkZdz1pwkaEFx+kSWvoGnVX8IegFRrE1NUvlXjtU0rg7KhT1QDj/NzhAwbiLEfdRHWz5q738R4zDKA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
     peerDependencies:
       eslint: '>=8 <9.0.0'
     dependencies:
@@ -8245,12 +8289,14 @@ packages:
 
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
+    hasBin: true
 
   /semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
 
   /semver/7.0.0:
     resolution: {integrity: sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==}
+    hasBin: true
     dev: true
 
   /semver/7.3.8:
@@ -8827,6 +8873,7 @@ packages:
 
   /ts-node/10.9.1:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8855,6 +8902,7 @@ packages:
 
   /ts-node/10.9.1_anapuzksqcf7xz3i7gzsbghhh4:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8884,6 +8932,7 @@ packages:
 
   /ts-node/10.9.1_hrbnv223vo4o2fk7isweuz3nju:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8927,6 +8976,7 @@ packages:
   /tsc-watch/6.0.0_anapuzksqcf7xz3i7gzsbghhh4:
     resolution: {integrity: sha512-zgpju+/z5z29/kK5V28Nz16CMkX2voFOUxkTlCim/R25hxzbyUqu2NfTnmJBQfESBSPbEQUGqDdB9A8opAcB4A==}
     engines: {node: '>=12.12.0'}
+    hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
@@ -9130,6 +9180,7 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -9207,6 +9258,7 @@ packages:
 
   /uuid/9.0.0:
     resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /v8-compile-cache-lib/3.0.1:
@@ -9258,6 +9310,7 @@ packages:
   /vite/4.0.3_@types+node@18.11.12:
     resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
     peerDependencies:
       '@types/node': '>= 14'
       less: '*'
@@ -9290,6 +9343,7 @@ packages:
   /vitest/0.26.2:
     resolution: {integrity: sha512-Jvqxh6SDy9SsuslkDjts0iDewDIdq4rveEt69YgDuAb1tVDGV0lDepVaeAFraoySWqneJmOt4TngFFNhlw7GfA==}
     engines: {node: '>=v14.16.0'}
+    hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@vitest/browser': '*'
