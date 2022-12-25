@@ -27,6 +27,10 @@
         "downlevelIteration": true,
         "noErrorTruncation": true,
         "forceConsistentCasingInFileNames": true,
+        "tsPlusTypes": [
+            "./vendor/effect-io-tsplus.json",
+            "./vendor/effect-ts.json"
+        ],
         //"preserveSymlinks": true
     },
     "watchOptions": {
