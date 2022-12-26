@@ -50,7 +50,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "dist/*"
+        "_src/*"
       ]
     }
   },
@@ -73,26 +73,6 @@
       "require": {
         "types": "./dist/Array.d.ts",
         "default": "./_cjs/Array.cjs"
-      }
-    },
-    "./Array/aspects": {
-      "import": {
-        "types": "./dist/Array/aspects.d.ts",
-        "default": "./dist/Array/aspects.js"
-      },
-      "require": {
-        "types": "./dist/Array/aspects.d.ts",
-        "default": "./_cjs/Array/aspects.cjs"
-      }
-    },
-    "./Array/ext": {
-      "import": {
-        "types": "./dist/Array/ext.d.ts",
-        "default": "./dist/Array/ext.js"
-      },
-      "require": {
-        "types": "./dist/Array/ext.d.ts",
-        "default": "./_cjs/Array/ext.cjs"
       }
     },
     "./Effect": {
@@ -135,56 +115,6 @@
         "default": "./_cjs/Function.cjs"
       }
     },
-    "./Maybe": {
-      "import": {
-        "types": "./dist/Maybe.d.ts",
-        "default": "./dist/Maybe.js"
-      },
-      "require": {
-        "types": "./dist/Maybe.d.ts",
-        "default": "./_cjs/Maybe.cjs"
-      }
-    },
-    "./MaybeAspects": {
-      "import": {
-        "types": "./dist/MaybeAspects.d.ts",
-        "default": "./dist/MaybeAspects.js"
-      },
-      "require": {
-        "types": "./dist/MaybeAspects.d.ts",
-        "default": "./_cjs/MaybeAspects.cjs"
-      }
-    },
-    "./MaybeBase": {
-      "import": {
-        "types": "./dist/MaybeBase.d.ts",
-        "default": "./dist/MaybeBase.js"
-      },
-      "require": {
-        "types": "./dist/MaybeBase.d.ts",
-        "default": "./_cjs/MaybeBase.cjs"
-      }
-    },
-    "./NonEmptyArray": {
-      "import": {
-        "types": "./dist/NonEmptyArray.d.ts",
-        "default": "./dist/NonEmptyArray.js"
-      },
-      "require": {
-        "types": "./dist/NonEmptyArray.d.ts",
-        "default": "./_cjs/NonEmptyArray.cjs"
-      }
-    },
-    "./NonEmptyArrayAspects": {
-      "import": {
-        "types": "./dist/NonEmptyArrayAspects.d.ts",
-        "default": "./dist/NonEmptyArrayAspects.js"
-      },
-      "require": {
-        "types": "./dist/NonEmptyArrayAspects.d.ts",
-        "default": "./_cjs/NonEmptyArrayAspects.cjs"
-      }
-    },
     "./NonEmptySet": {
       "import": {
         "types": "./dist/NonEmptySet.d.ts",
@@ -223,6 +153,16 @@
       "require": {
         "types": "./dist/Object.d.ts",
         "default": "./_cjs/Object.cjs"
+      }
+    },
+    "./Option": {
+      "import": {
+        "types": "./dist/Option.d.ts",
+        "default": "./dist/Option.js"
+      },
+      "require": {
+        "types": "./dist/Option.d.ts",
+        "default": "./_cjs/Option.cjs"
       }
     },
     "./Order": {
@@ -333,16 +273,6 @@
       "require": {
         "types": "./dist/_ext/pipe.d.ts",
         "default": "./_cjs/_ext/pipe.cjs"
-      }
-    },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
       }
     },
     "./fluent/_ext/Array": {
@@ -475,6 +405,16 @@
         "default": "./_cjs/fluent/fluent/Array.cjs"
       }
     },
+    "./global": {
+      "import": {
+        "types": "./dist/global.d.ts",
+        "default": "./dist/global.js"
+      },
+      "require": {
+        "types": "./dist/global.d.ts",
+        "default": "./_cjs/global.cjs"
+      }
+    },
     "./http/http-client": {
       "import": {
         "types": "./dist/http/http-client.d.ts",
@@ -564,9 +504,6 @@
         "types": "./dist/validation/validators.d.ts",
         "default": "./_cjs/validation/validators.cjs"
       }
-    },
-    "./types/awesome": {
-      "types": "./types/awesome.d.ts"
     }
   },
   "sideEffects": [

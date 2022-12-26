@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable unused-imports/no-unused-imports */
 
+import "./global.ts"
+
 import type * as A from "@effect-ts-app/core/Array"
 // import type * as CNK from "@effect-ts-app/core/Chunk"
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
@@ -31,6 +33,15 @@ import type * as SET from "@effect-ts-app/core/Set"
 import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
 import type {} from "@effect-ts-app/core/types/awesome"
+
+/**
+ * @tsplus type ReadonlyArray
+ * @tsplus type Iterable
+ * @tsplus companion fp-ts/data/ReadonlyArray.Ops
+ * @tsplus companion ReadonlyArray.Ops
+ */
+export type ROA<A> = ReadonlyArray<A>
+export type { ROA as ReadonlyArray }
 
 // export namespace Equal {
 //   export * from "@effect-ts/core/Equal"

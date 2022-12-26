@@ -1576,7 +1576,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Option",
           "name": "isNone"
         }
@@ -1587,7 +1587,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Option",
           "name": "isSome"
         }
