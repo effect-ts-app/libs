@@ -27,7 +27,7 @@ export const fromStringOrDate: MO.DefaultSchema<string | Date, Date, Date, strin
   MO.annotate(fromStringOrDateIdentifier, {})
 )
 
-export const FutureDateFromDate = fromDate >=
+export const FutureDateFromDate = fromDate.apply(
   onParseOrConstruct(i => {
     const errors: MO.AnyError[] = []
     if (i < new Date()) {
@@ -35,8 +35,9 @@ export const FutureDateFromDate = fromDate >=
     }
     return domainResponse2(errors, () => i)
   })
+)
 
-export const FutureDateFromStringOrDate = fromStringOrDate >=
+export const FutureDateFromStringOrDate = fromStringOrDate.apply(
   onParseOrConstruct(i => {
     const errors: MO.AnyError[] = []
     if (i < new Date()) {
@@ -44,6 +45,7 @@ export const FutureDateFromStringOrDate = fromStringOrDate >=
     }
     return domainResponse2(errors, () => i)
   })
+)
 
 export const FutureDate = extendWithUtils(MO.date[">>>"](FutureDateFromDate))
 export type FutureDate = MO.ParsedShapeOf<typeof FutureDate>

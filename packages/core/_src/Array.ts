@@ -42,6 +42,38 @@ export function findFirstMap<A, B>(
 }
 
 /**
+ * @tsplus pipeable Array uniq
+ * @tsplus pipeable ReadonlyArray uniq
+ */
+export function uniq<A>(E: Equal<A>) {
+  return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
+    const includes = arrayIncludes(E)
+    const result: Array<A> = []
+    const length = self.length
+    let i = 0
+    for (; i < length; i = i + 1) {
+      const a = self[i]!
+      if (!includes(result, a)) {
+        result.push(a)
+      }
+    }
+    return length === result.length ? self : result
+  }
+}
+
+function arrayIncludes<A>(E: Equal<A>) {
+  return (array: ReadonlyArray<A>, value: A): boolean => {
+    for (let i = 0; i < array.length; i = i + 1) {
+      const element = array[i]!
+      if (E.equals(value, element)) {
+        return true
+      }
+    }
+    return false
+  }
+}
+
+/**
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {

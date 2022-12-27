@@ -3270,6 +3270,16 @@
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",
           "name": "uniq"
+        },
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/ReadonlyArray",
+          "name": "uniq"
+        },
+        {
+          "kind": "getter",
+          "typeName": "Array",
+          "name": "uniq"
         }
       ]
     },
@@ -3490,6 +3500,16 @@
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",
           "name": "filterMapWithIndex"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray",
+          "name": "filterMapWithIndex"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "Array",
+          "name": "filterMapWithIndex"
         }
       ]
     },
@@ -3500,6 +3520,16 @@
         {
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",
+          "name": "filterMap"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray",
+          "name": "filterMap"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "Array",
           "name": "filterMap"
         }
       ]

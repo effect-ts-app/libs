@@ -28,7 +28,7 @@ export function encaseMaybeInEffect_<E, A>(
   o: Opt<A>,
   onError: LazyArg<E>
 ): Effect<never, E, A> {
-  return o.fold(() => Effect.fail(onError()), Effect.succeed)
+  return o.match(() => Effect.fail(onError()), Effect.succeed)
 }
 
 /**
@@ -43,7 +43,7 @@ export function encaseMaybeEither_<E, A>(
   o: Opt<A>,
   onError: LazyArg<E>
 ): Either<E, A> {
-  return o.fold(() => Either.left(onError()), Either.right)
+  return o.match(() => Either.left(onError()), Either.right)
 }
 
 type Service<T> = T extends Tag<infer S> ? S : never

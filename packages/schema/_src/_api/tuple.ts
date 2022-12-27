@@ -56,7 +56,7 @@ export function fromTuple<
     Array.isArray(_) && keyGuard(_[0]) && guard(_[1])
 
   const parseTup = (i: readonly (KeyParserInput | ParserInput)[], env?: ParserEnv) => {
-    const e = Chunk.builder<MO.OptionalIndexE<number, any>>()
+    const e: MO.OptionalIndexE<number, any>[] = []
     let err = false
     let warn = false
 
@@ -72,30 +72,30 @@ export function fromTuple<
         const keyW = keyRes.right.get(1)
         if (keyW._tag === "Some") {
           warn = true
-          e.append(MO.optionalIndexE(0, keyW.value))
+          e.push(MO.optionalIndexE(0, keyW.value))
         }
         const w = res.right.get(1)
         if (w._tag === "Some") {
           warn = true
-          e.append(MO.optionalIndexE(1, w.value))
+          e.push(MO.optionalIndexE(1, w.value))
         }
         v = [keyRes.right.get(0), res.right.get(0)] as const
       }
     } else {
       err = true
       if (keyRes._tag === "Left") {
-        e.append(MO.optionalIndexE(0, keyRes.left))
+        e.push(MO.optionalIndexE(0, keyRes.left))
       }
 
       if (res._tag === "Left") {
-        e.append(MO.optionalIndexE(1, res.left))
+        e.push(MO.optionalIndexE(1, res.left))
       }
     }
     if (err) {
-      return Th.fail(MO.chunkE(e.build()))
+      return Th.fail(MO.chunkE(e.toChunk))
     }
     if (warn) {
-      return Th.warn(v!, MO.chunkE(e.build()))
+      return Th.warn(v!, MO.chunkE(e.toChunk))
     }
     return Th.succeed(v!)
   }
