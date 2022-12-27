@@ -144,15 +144,6 @@ index 7d407f6..cac4d9f 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -2685,7 +2686,7 @@ __export(ts_server_exports3, {
- 
- // src/compiler/corePublic.ts
- var versionMajorMinor = "5.0";
--var version = `${versionMajorMinor}.0-tsplus.20221227`;
-+var version = `${versionMajorMinor}.0-dev`;
- var Comparison = /* @__PURE__ */ ((Comparison3) => {
-   Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-   Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -29150,10 +29151,11 @@ var Parser;
    function getTsPlusExternalTypesPaths(fileName2, options) {
      var _a2;
@@ -318,15 +309,6 @@ diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
 index 7d63e87..dacc8de 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20221227`;
-+      version = `${versionMajorMinor}.0-dev`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -26870,10 +26870,11 @@ ${lanes.join("\n")}
          function getTsPlusExternalTypesPaths(fileName2, options) {
            var _a2;
@@ -504,15 +486,6 @@ diff --git a/lib/typescript.js b/lib/typescript.js
 index b94ffd8..2666cb7 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20221227`;
-+      version = `${versionMajorMinor}.0-dev`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -26870,10 +26870,11 @@ ${lanes.join("\n")}
          function getTsPlusExternalTypesPaths(fileName2, options) {
            var _a2;
