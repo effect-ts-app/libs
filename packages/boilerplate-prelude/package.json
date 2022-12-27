@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz"
   },
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
@@ -33,7 +33,7 @@
     "faker": "^5.5.3",
     "fast-check": "^3.4.0",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz",
     "vitest": "^0.26.2"
   },
   "typesVersions": {

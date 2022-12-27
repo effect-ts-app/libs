@@ -99,15 +99,6 @@ index 0aef626..403bfad 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -2685,7 +2686,7 @@ __export(ts_server_exports3, {
- 
- // src/compiler/corePublic.ts
- var versionMajorMinor = "5.0";
--var version = `${versionMajorMinor}.0-tsplus.20221217`;
-+var version = `${versionMajorMinor}.0-dev`;
- var Comparison = /* @__PURE__ */ ((Comparison3) => {
-   Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-   Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -44374,7 +44375,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -228,15 +219,6 @@ diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
 index 4100ca4..4e88a41 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20221217`;
-+      version = `${versionMajorMinor}.0-dev`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -41891,7 +41891,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -369,15 +351,6 @@ diff --git a/lib/typescript.js b/lib/typescript.js
 index b0a9414..65b5d30 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20221217`;
-+      version = `${versionMajorMinor}.0-dev`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -41891,7 +41891,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {

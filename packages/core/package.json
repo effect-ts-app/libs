@@ -1,5 +1,5 @@
 {
-  "name": "@effect-ts-app/bla",
+  "name": "@effect-ts-app/core",
   "version": "1.10.0",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
     "@types/validator": "^13.7.10",
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {
