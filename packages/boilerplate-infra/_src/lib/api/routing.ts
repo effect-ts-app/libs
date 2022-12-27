@@ -46,7 +46,7 @@ export function makeRequestParsers<
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph = Effect(
-    Maybe.fromNullable(Request.Headers)
+    Opt.fromNullable(Request.Headers)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
@@ -54,7 +54,7 @@ export function makeRequestParsers<
   const parseHeaders = (u: unknown) => ph.flatMapMaybe(d => d(u))
 
   const pq = Effect(
-    Maybe.fromNullable(Request.Query)
+    Opt.fromNullable(Request.Query)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
@@ -62,7 +62,7 @@ export function makeRequestParsers<
   const parseQuery = (u: unknown) => pq.flatMapMaybe(d => d(u))
 
   const pb = Effect(
-    Maybe.fromNullable(Request.Body)
+    Opt.fromNullable(Request.Body)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
@@ -70,7 +70,7 @@ export function makeRequestParsers<
   const parseBody = (u: unknown) => pb.flatMapMaybe(d => d(u))
 
   const pp = Effect(
-    Maybe.fromNullable(Request.Path)
+    Opt.fromNullable(Request.Path)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
@@ -78,7 +78,7 @@ export function makeRequestParsers<
   const parsePath = (u: unknown) => pp.flatMapMaybe(d => d(u))
 
   const pc = Effect(
-    Maybe.fromNullable(Request.Cookie)
+    Opt.fromNullable(Request.Cookie)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)

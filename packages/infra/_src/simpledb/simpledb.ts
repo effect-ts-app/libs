@@ -91,7 +91,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapMaybe(x => x.version)
-        .flatMap(_ => _.fold(() => save(record, Maybe.none), confirmVersionAndSave(record)))
+        .flatMap(_ => _.fold(() => save(record, Opt.none), confirmVersionAndSave(record)))
         .tap(r => c.set(record.id, r))
         .map(r => r.data)
     )
@@ -111,7 +111,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
               ? Effect.fail(new OptimisticLockException(type, record.id))
               : Effect.unit
           )
-          .zipRight(save(record, Maybe.some(cv)))
+          .zipRight(save(record, Opt.some(cv)))
       ).scoped
   }
 }

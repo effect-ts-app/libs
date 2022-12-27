@@ -5,6 +5,10 @@
             "esnext",
         ],
         "tsPlusConfig": "../../tsplus.config.json",
+        "tsPlusTypes": [
+            "../../vendor/effect-io-tsplus.json",
+            "../../vendor/fp-ts-data-tsplus.json"
+        ],
         //        "tsPlusGlobalFiles": [
         //            "./_src/_global.ts"
         //        ],

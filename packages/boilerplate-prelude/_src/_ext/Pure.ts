@@ -1,3 +1,5 @@
+import { Chunk, Either, Ref } from "@effect-ts/core"
+import type { Collection } from "@effect-ts/core/Prelude"
 import type { ServiceTagged } from "../service.js"
 
 const S1 = Symbol()
@@ -125,14 +127,14 @@ export interface PureEnvEnv<W, S, S2> extends ServiceTagged<typeof PureEnvEnv> {
  * @tsplus static Pure.Ops get
  */
 export function get<S>(): Pure<never, S, S, never, never, S> {
-  return Effect.serviceWithEffect(castTag<never, S, S>(), _ => _.env.state.get)
+  return castTag<never, S, S>().withEffect(_ => _.env.state.get)
 }
 
 /**
  * @tsplus static Pure.Ops set
  */
 export function set<S>(s: S): Pure<never, S, S, never, never, void> {
-  return Effect.serviceWithEffect(castTag<never, S, S>(), _ => _.env.state.set(s))
+  return castTag<never, S, S>().withEffect(_ => _.env.state.set(s))
 }
 
 export type PureLogT<W> = Pure<W, unknown, never, never, never, void>
@@ -141,14 +143,14 @@ export type PureLogT<W> = Pure<W, unknown, never, never, never, void>
  * @tsplus static Pure.Ops log
  */
 export function log<W>(w: W): PureLogT<W> {
-  return Effect.serviceWithEffect(castTag<W, unknown, never>(), _ => _.env.log.update(l => l.append(w)))
+  return castTag<W, unknown, never>().withEffect(_ => _.env.log.update(l => l.append(w)))
 }
 
 /**
  * @tsplus static Pure.Ops logMany
  */
 export function logMany<W>(w: Collection<W>): PureLogT<W> {
-  return Effect.serviceWithEffect(castTag<W, unknown, never>(), _ => _.env.log.update(l => l.concat(w.toChunk)))
+  return castTag<W, unknown, never>().withEffect(_ => _.env.log.update(l => l.concat(w.toChunk)))
 }
 
 /**
@@ -160,8 +162,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   s: S4
 ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
   return self.flatMap(x =>
-    Effect.serviceWithEffect(
-      castTag<W3, S1, S3>(),
+    castTag<W3, S1, S3>().withEffect(
       ({ env: _ }) => Effect.struct({ log: _.log.get, state: _.state.get }) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
     ).map(
       (
@@ -225,9 +226,8 @@ export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
  * @tsplus static Pure.Ops modifyWith
  */
 export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<{ env: PureEnv<never, S2, S3> }, never, A> {
-  return Effect.serviceWithEffect(
-    castTag<never, S3, S2>(),
-    _ => _.env.state.get.map(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s as any).map(() => a))
+  return castTag<never, S3, S2>().withEffect(
+    _ => _.env.state.get.map(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s).map(() => a))
   ) as any
 }
 
@@ -238,9 +238,8 @@ export function modifyM<W, R, E, A, S2, S3>(
   mod: (s: S2) => Effect<FixEnv<R, W, S2, S3>, E, readonly [S3, A]>
 ): Effect<FixEnv<R, W, S2, S3>, E, A> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
-  return Effect.serviceWithEffect(
-    castTag<W, S3, S2>(),
-    _ => _.env.state.get.flatMap(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s as any).map(() => a))
+  return castTag<W, S3, S2>().withEffect(
+    _ => _.env.state.get.flatMap(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s).map(() => a))
   ) as any
 }
 

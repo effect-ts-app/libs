@@ -39,7 +39,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
           )
         )
-        .map(Maybe.fromNullable)
+        .map(Opt.fromNullable)
         .mapMaybe(({ data, version }) => ({ version, data } as CachedRecord<EA>))
     }
 
@@ -48,7 +48,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap(db =>
           Effect.tryPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
         )
-        .map(Maybe.fromNullable)
+        .map(Opt.fromNullable)
         .mapMaybe(({ _id }) => _id)
     }
 

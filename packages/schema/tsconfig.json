@@ -8,6 +8,10 @@
         "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
+        "tsPlusTypes": [
+            "../../vendor/effect-io-tsplus.json",
+            "../../vendor/fp-ts-data-tsplus.json"
+        ],
     },
     "include": [
         "./_src"

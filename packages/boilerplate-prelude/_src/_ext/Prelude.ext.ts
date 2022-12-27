@@ -1,6 +1,6 @@
 import "@effect-ts-app/core/_ext/Prelude.ext"
 
-// import "./EffectMaybe.ext.js"
+// import "./EffectOpt.ext.js"
 import "./builtIn.js"
 import "./date.js"
 import "./Has.ext.js"
@@ -169,7 +169,7 @@ export const asUnitE = asUnit
 
 /**
  * @tsplus getter Maybe toOption
- * @tsplus static ets/Maybe.Ops toOption
+ * @tsplus static ets/Opt.Ops toOption
  */
 export function toOption<A>(o: Opt<A>): Option.Option<A> {
   return o._tag === "None" ? Option.none : Option.some(o.value)

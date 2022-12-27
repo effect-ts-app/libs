@@ -28,7 +28,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .map(Maybe.map(s => JSON.parse(s) as unknown))
+        .map(Opt.map(s => JSON.parse(s) as unknown))
         .flatMapMaybe(parseSDB)
         .mapMaybe(({ data, version }) => ({
           data: JSON.parse(data) as EA,
@@ -55,7 +55,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           }
         }
         return null
-      }).map(Maybe.fromNullable)
+      }).map(Opt.fromNullable)
     }
 
     function store(record: A, currentVersion: Opt<Version>) {

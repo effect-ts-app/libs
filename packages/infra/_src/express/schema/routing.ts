@@ -97,36 +97,36 @@ export function makeFromSchema<ResA>(
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
-  // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
+  // TODO EffectOpt.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap(_ =>
+  const makeReqQuerySchema = Effect(Opt.fromNullable(Req.Query)).flatMap(_ =>
     _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+      () => Effect(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqHeadersSchema = Effect(Maybe.fromNullable(Req.Headers)).flatMap(_ =>
+  const makeReqHeadersSchema = Effect(Opt.fromNullable(Req.Headers)).flatMap(_ =>
     _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+      () => Effect(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqCookieSchema = Effect(Maybe.fromNullable(Req.Cookie)).flatMap(_ =>
+  const makeReqCookieSchema = Effect(Opt.fromNullable(Req.Cookie)).flatMap(_ =>
     _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+      () => Effect(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqPathSchema = Effect(Maybe.fromNullable(Req.Path)).flatMap(_ =>
+  const makeReqPathSchema = Effect(Opt.fromNullable(Req.Path)).flatMap(_ =>
     _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+      () => Effect(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqBodySchema = Effect(Maybe.fromNullable(Req.Body)).flatMap(_ =>
+  const makeReqBodySchema = Effect(Opt.fromNullable(Req.Body)).flatMap(_ =>
     _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+      () => Effect(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
   // const makeReqSchema = schema(Req)
@@ -136,7 +136,7 @@ export function makeFromSchema<ResA>(
   function makeParameters(inn: ParameterLocation) {
     return (a: Opt<JSONSchema | SubSchema>) => {
       return a
-        .flatMap(o => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
+        .flatMap(o => (isObjectSchema(o) ? Opt.some(o) : Opt.none))
         .map(x => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map(p => {

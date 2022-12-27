@@ -39,7 +39,7 @@ export class Property<
 
   // Disabled because it sends the compiler down into rabbit holes..
   // schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, None> {
-  //   return new Property(this._as, schema, this._optional, Maybe.none, this._map)
+  //   return new Property(this._as, schema, this._optional, Opt.none, this._map)
   // }
 
   // opt(): Property<Self, "optional", As, Def> {
@@ -52,7 +52,7 @@ export class Property<
 
   // from<As1 extends PropertyKey>(as: As1): Property<Self, Optional, Some<As1>, Def> {
   //   return new Property(
-  //     Maybe.some(as),
+  //     Opt.some(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -62,7 +62,7 @@ export class Property<
 
   // removeFrom(): Property<Self, Optional, None, Def> {
   //   return new Property(
-  //     Maybe.none,
+  //     Opt.none,
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -98,13 +98,13 @@ export class Property<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Maybe.some([k ?? "both", _]),
+  //     Opt.some([k ?? "both", _]),
   //     this._map
   //   )
   // }
 
   // removeDef(): Property<Self, Optional, As, None> {
-  //   return new Property(this._as, this._schema, this._optional, Maybe.none, this._map)
+  //   return new Property(this._as, this._schema, this._optional, Opt.none, this._map)
   // }
 
   // getAnnotation<A>(annotation: Annotation<A>): Opt<A> {
@@ -166,7 +166,7 @@ export function propDef<
     prop._schema,
     prop._optional,
     // @ts-expect-error
-    Maybe.some([k ?? "both", _]),
+    Opt.some([k ?? "both", _]),
     prop._map
   )
 }
@@ -200,7 +200,7 @@ export function propFrom<
   as: As1
 ): Property<Self, Optional, Some<As1>, Def> {
   return new Property(
-    Maybe.some(as) as Some<As1>,
+    Opt.some(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -212,10 +212,10 @@ export function prop<Self extends S.SchemaUPI>(
   schema: Self
 ): Property<Self, "required", None, None> {
   return new Property(
-    Maybe.none as None,
+    Opt.none as None,
     schema,
     "required",
-    Maybe.none as None,
+    Opt.none as None,
     HashMap.make()
   )
 }

@@ -54,7 +54,7 @@ import {
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Opt<Gen>)[] = [
-  Maybe.partial(_miss =>
+  Opt.partial(_miss =>
     (schema: MO.SchemaAny): Gen => {
       // if (schema instanceof MO.SchemaOpenApi) {
       //   const cfg = schema.jsonSchema()

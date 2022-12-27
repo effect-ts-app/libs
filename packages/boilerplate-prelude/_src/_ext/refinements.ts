@@ -4,7 +4,7 @@ import { InvalidStateError } from "../client.js"
  * @tsplus getter function asCollectable
  */
 export function asCollectable<T, T2 extends T>(refinement: Refinement<T, T2>) {
-  return (item: T) => Maybe.fromPredicate(item, refinement)
+  return (item: T) => Opt.fromPredicate(item, refinement)
 }
 
 /**

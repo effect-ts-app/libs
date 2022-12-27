@@ -12,7 +12,7 @@ export type Encoder<Output, Encoded> = {
 export const interpreters: ((
   schema: S.SchemaAny
 ) => Opt<() => Encoder<unknown, unknown>>)[] = [
-  Maybe.partial(miss =>
+  Opt.partial(miss =>
     (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
       if (schema instanceof S.SchemaIdentity) {
         return () => _ => _

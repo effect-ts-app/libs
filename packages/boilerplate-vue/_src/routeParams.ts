@@ -10,15 +10,15 @@ export function getQueryParam(search: ParsedQuery, param: string) {
   return v ?? null
 }
 
-export const getQueryParamO = flow(getQueryParam, Maybe.fromNullable)
+export const getQueryParamO = flow(getQueryParam, Opt.fromNullable)
 
 export const parseMaybe = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(EParserFor(t), x =>
     x.effect._tag === "Right"
       ? x.effect.right.tuple[1]._tag === "None"
-        ? Maybe.some(x.effect.right.tuple[0])
-        : Maybe.none
-      : Maybe.none)
+        ? Opt.some(x.effect.right.tuple[0])
+        : Opt.none
+      : Opt.none)
   return dec
 }
 
@@ -26,9 +26,9 @@ export const parseMaybeUnknown = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(Parser.for(t), x =>
     x.effect._tag === "Right"
       ? x.effect.right.tuple[1]._tag === "None"
-        ? Maybe.some(x.effect.right.tuple[0])
-        : Maybe.none
-      : Maybe.none)
+        ? Opt.some(x.effect.right.tuple[0])
+        : Opt.none
+      : Opt.none)
   return dec
 }
 

@@ -7,6 +7,10 @@
         "noEmit": false,
         "jsx": "react",
         "tsPlusConfig": "../../tsplus.config.json",
+        "tsPlusTypes": [
+            "../../vendor/effect-io-tsplus.json",
+            "../../vendor/fp-ts-data-tsplus.json"
+        ],
         "baseUrl": "./",
         "rootDir": "./_src",
     },

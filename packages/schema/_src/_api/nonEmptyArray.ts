@@ -30,7 +30,7 @@ export function NonEmptyReadonlyArray<ParsedShape, ConstructorInput, Encoded, Ap
     S.parser((u: Chunk<ParsedShape>) => {
       const ar = u.toArray
       const nar = NonEmptyArray.fromArray(ar)
-      return nar.toMaybe.fold(() => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
+      return nar.toOpt.fold(() => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
     }),
     S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
     S.arbitrary(

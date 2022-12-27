@@ -22,6 +22,11 @@ import { flow, pipe, tuple, tupled } from "@effect-ts-app/core/Function"
 /**
  * @tsplus global
  */
+import { Lens, NonEmptyArguments, NonEmptySet, ROMap, ROSet } from "@effect-ts-app/core/Prelude"
+
+/**
+ * @tsplus global
+ */
 import { Effect } from "@effect/io/Effect"
 
 /**

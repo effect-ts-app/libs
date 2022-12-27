@@ -10,4 +10,4 @@ export const ApiConfig = {
   Live
 }
 
-export const getConfig = <R, E, A>(self: (cfg: ApiConfig) => Effect<R, E, A>) => Effect.serviceWithEffect(tag, self)
+export const getConfig = <R, E, A>(self: (cfg: ApiConfig) => Effect<R, E, A>) => tag.withEffect(self)

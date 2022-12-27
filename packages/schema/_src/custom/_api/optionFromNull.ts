@@ -40,16 +40,16 @@ export function optionFromNull<
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary(_ => _.option(arb(_)).map(Maybe.fromNullable)),
+    S.arbitrary(_ => _.option(arb(_)).map(Opt.fromNullable)),
     S.parser((i: ParserInput | null, env) =>
       i === null
-        ? Th.succeed(Maybe.none)
-        : Th.map_((env?.cache ? env.cache.getOrSetParser(parse) : parse)(i), Maybe.some)
+        ? Th.succeed(Opt.none)
+        : Th.map_((env?.cache ? env.cache.getOrSetParser(parse) : parse)(i), Opt.some)
     ),
     S.constructor((x: Opt<ConstructorInput>) =>
       x.fold(
-        () => Th.succeed(Maybe.none),
-        v => Th.map_(create(v), Maybe.some)
+        () => Th.succeed(Opt.none),
+        v => Th.map_(create(v), Opt.some)
       )
     ),
     S.encoder(_ => _.map(encode).value ?? null),

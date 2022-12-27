@@ -103,18 +103,18 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(type: string) {
       return (id: string) => {
         return tryRead(getFilename(type, id)).map(
-          Maybe.map(s => JSON.parse(s) as CachedRecord<EA>)
+          Opt.map(s => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
 
     function getIdx(index: Index) {
-      return readIndex(index).map(idx => Maybe.fromNullable(idx[index.key]))
+      return readIndex(index).map(idx => Opt.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Maybe.fold(
+        Opt.fold(
           () => ({} as Record<string, TKey>),
           x => JSON.parse(x) as Record<string, TKey>
         )
@@ -128,7 +128,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .flatMap(exists => !exists ? Effect.succeed(Maybe.none) : readFile(filePath).map(Maybe.some))
+        .flatMap(exists => !exists ? Effect.succeed(Opt.none) : readFile(filePath).map(Opt.some))
     }
 
     function getFilename(type: string, id: string) {

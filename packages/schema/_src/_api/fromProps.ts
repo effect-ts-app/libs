@@ -36,7 +36,7 @@ export class FromProperty<
   // schema<That extends S.SchemaAny>(
   //   schema: That
   // ): FromProperty<That, Optional, As, None> {
-  //   return new FromProperty(this._as, schema, this._optional, Maybe.none, this._map)
+  //   return new FromProperty(this._as, schema, this._optional, Opt.none, this._map)
   // }
 
   // opt(): FromProperty<Self, "optional", As, Def> {
@@ -51,7 +51,7 @@ export class FromProperty<
   //   as: As1
   // ): FromProperty<Self, Optional, Some<As1>, Def> {
   //   return new FromProperty(
-  //     Maybe.some(as),
+  //     Opt.some(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -61,7 +61,7 @@ export class FromProperty<
 
   // removeFrom(): FromProperty<Self, Optional, None, Def> {
   //   return new FromProperty(
-  //     Maybe.none,
+  //     Opt.none,
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -97,7 +97,7 @@ export class FromProperty<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Maybe.some([k ?? "both", _]),
+  //     Opt.some([k ?? "both", _]),
   //     this._map
   //   )
   // }
@@ -107,7 +107,7 @@ export class FromProperty<
   //     this._as,
   //     this._schema,
   //     this._optional,
-  //     Maybe.none,
+  //     Opt.none,
   //     this._map
   //   )
   // }
@@ -141,7 +141,7 @@ export function fromPropFrom<
   as: As1
 ): FromProperty<Self, Optional, Some<As1>, Def> {
   return new FromProperty(
-    Maybe.some(as) as Some<As1>,
+    Opt.some(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -153,10 +153,10 @@ export function fromProp<Self extends S.SchemaAny>(
   schema: Self
 ): FromProperty<Self, "required", None, None> {
   return new FromProperty(
-    Maybe.none as None,
+    Opt.none as None,
     schema,
     "required",
-    Maybe.none as None,
+    Opt.none as None,
     HashMap.make()
   )
 }

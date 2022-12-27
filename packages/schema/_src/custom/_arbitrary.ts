@@ -11,7 +11,7 @@ import { hasContinuation, SchemaContinuationSymbol } from "./_schema.js"
 export type Gen<T> = { (_: typeof fc): fc.Arbitrary<T> }
 
 export const interpreters: ((schema: S.SchemaAny) => Opt<() => Gen<unknown>>)[] = [
-  Maybe.partial(miss =>
+  Opt.partial(miss =>
     (schema: S.SchemaAny): (() => Gen<unknown>) => {
       if (schema instanceof S.SchemaIdentity) {
         return () => _ => _.anything().filter(schema.guard)

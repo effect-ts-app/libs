@@ -46,7 +46,7 @@ export function get(key: string) {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Maybe.fromNullable(v))))
+            : res(Effect.succeed(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
@@ -82,7 +82,7 @@ export function hget(key: string, field: string) {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Maybe.fromNullable(v))))
+            : res(Effect.succeed(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
@@ -94,7 +94,7 @@ export function hmgetAll(key: string) {
           client.hgetall(key, (err, v) =>
             err
               ? res(Effect.fail(new ConnectionException(err)))
-              : res(Effect.succeed(Maybe.fromNullable(v))))
+              : res(Effect.succeed(Opt.fromNullable(v))))
         }
       ).uninterruptible
   )

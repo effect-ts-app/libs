@@ -6,7 +6,7 @@ import { hasContinuation, SchemaContinuationSymbol } from "./_schema.js"
 export type Guard<T> = { (u: unknown): u is T }
 
 export const interpreters: ((schema: S.SchemaAny) => Opt<() => Guard<unknown>>)[] = [
-  Maybe.partial(miss =>
+  Opt.partial(miss =>
     (schema: S.SchemaAny): (() => Guard<unknown>) => {
       if (schema instanceof S.SchemaGuard) {
         return () => schema.guard

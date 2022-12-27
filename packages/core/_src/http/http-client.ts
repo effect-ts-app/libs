@@ -259,7 +259,7 @@ export function requestInner<
   body: RequestBodyTypes[Req][M]
 ): Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM(headers =>
-    Effect.serviceWithEffect(Http, h =>
+    Http.withEffect(h =>
       h.request<M, Req, Resp>(
         method,
         url,
@@ -267,7 +267,8 @@ export function requestInner<
         responseType,
         headers.getOrElse(() => ({})),
         body
-      ))
+      )
+    )
   )
 }
 

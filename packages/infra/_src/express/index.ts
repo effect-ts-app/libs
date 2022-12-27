@@ -2,9 +2,12 @@
 // ets_tracing: off
 // tracing: off
 
+import { NonEmptyArguments } from "@effect-ts-app/core/Prelude"
 import { pretty } from "@effect-ts-app/core/utils"
+import { Cause, Supervisor, Fiber } from "@effect-ts/core"
 import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
 import { literal } from "@tsplus/stdlib/data/Function"
+import { Env } from "@tsplus/stdlib/service/Env"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
@@ -266,7 +269,7 @@ export interface EffectRequestHandler<
 export function expressRuntime<
   Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return Effect.serviceWithEffect(ExpressApp, _ => _.runtime(handlers))
+  return ExpressApp.withEffect(_ => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
