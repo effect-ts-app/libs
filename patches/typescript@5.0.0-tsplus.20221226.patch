@@ -1,8 +1,76 @@
 diff --git a/lib/tsc.js b/lib/tsc.js
-index ba306fe..eb6c182 100644
+index 6e314d7..491e88d 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
-@@ -39943,7 +39943,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
+@@ -24630,6 +24630,10 @@ function updateSourceFile(sourceFile, newText, textChangeRange, aggressiveChecks
+   newSourceFile.flags |= sourceFile.flags & 6291456 /* PermanentlySetIncrementalFlags */;
+   return newSourceFile;
+ }
++const tsPlusTypeCache = {}
++const resolvedPathsCache = {}
++const resolvedModuleCache = {}
++
+ var Parser;
+ ((Parser2) => {
+   const scanner2 = createScanner(99 /* Latest */, true);
+@@ -24862,16 +24866,15 @@ var Parser;
+       parseDiagnostics.push(createDetachedDiagnostic(fileName, pos, end, diagnostic));
+     }
+   }
+-  function parseTsPlusExternalTypes(fileName2, options) {
+-    if (options.configFilePath) {
+-      let resolvedPaths = [];
++  function getResolvedPaths(options) {
++    if (options.configFilePath in resolvedPathsCache) { return resolvedPathsCache[options.configFilePath] }
++    let resolvedPaths = [];
+       if (options.tsPlusTypes) {
+         for (const path of options.tsPlusTypes) {
+           if (pathIsRelative(path)) {
+             resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
+           } else {
+-            let resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+-            resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(path, fileName2, options, sys).resolvedModule;
++            const resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+             if (resolvedModule) {
+               resolvedPaths.push(resolvedModule.resolvedFileName);
+               break;
+@@ -24879,7 +24882,7 @@ var Parser;
+           }
+         }
+       }
+-      const packagePath = removeExtension(fileName2.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
++      const packagePath = removeExtension(options.configFilePath.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
+       if (packagePath) {
+         let packageName;
+         if (packagePath.startsWith("@")) {
+@@ -24909,16 +24912,21 @@ var Parser;
+           resolvedPaths.push(resolvedModule.resolvedFileName);
+         }
+       }
++      resolvedPathsCache[options.configFilePath] = resolvedPaths
++      return resolvedPaths
++  }
++  function parseTsPlusExternalTypes(fileName2, options) {
++    if (options.configFilePath) {
++      const resolvedPaths = getResolvedPaths(options)
+       if (resolvedPaths.length === 0) {
+         return;
+       }
+       for (const resolvedPath of resolvedPaths) {
+-        const text = sys.readFile(resolvedPath);
+-        if (text) {
+-          const json = JSON.parse(text);
++        const json = resolvedPath in tsPlusTypeCache ? tsPlusTypeCache[resolvedPath] : (() => { const text = sys.readFile(resolvedPath); if (text) { const json = JSON.parse(text); tsPlusTypeCache[resolvedPath] = json; return json}})()
++        if (json) {
+           for (const moduleName in json) {
+-            let resolvedModule = resolveModuleName(moduleName, resolvedPath, options, sys).resolvedModule;
+-            resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(moduleName, fileName2, options, sys).resolvedModule;
++            const key = `${options.configFilePath}+${moduleName}`
++            const resolvedModule = key in resolvedModuleCache ? resolvedModuleCache[key] : (resolvedModuleCache[key] = resolveModuleName(moduleName, options.configFilePath, options, sys).resolvedModule);
+             if (resolvedModule && resolvedModule.resolvedFileName === fileName2) {
+               currentTsPlusTypes = json[moduleName];
+               currentTsPlusFile = moduleName;
+@@ -39945,7 +39953,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
            const subTarget = exports[key];
@@ -12,7 +80,7 @@ index ba306fe..eb6c182 100644
            if (result) {
              return result;
            }
-@@ -40015,7 +40016,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
+@@ -40017,7 +40026,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
    if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
      return void 0;
    }
@@ -21,7 +89,7 @@ index ba306fe..eb6c182 100644
    const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
    return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
    function tryDirectoryWithPackageJson(packageRootIndex) {
-@@ -45886,6 +45887,16 @@ function createTypeChecker(host) {
+@@ -45888,6 +45897,16 @@ function createTypeChecker(host) {
        }
        return top;
      }
@@ -38,7 +106,7 @@ index ba306fe..eb6c182 100644
      function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
        var _a2;
        let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
-@@ -45960,7 +45971,7 @@ function createTypeChecker(host) {
+@@ -45962,7 +45981,7 @@ function createTypeChecker(host) {
          let assertion;
          if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
            if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
@@ -47,7 +115,7 @@ index ba306fe..eb6c182 100644
              assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
                factory.createAssertEntry(
                  factory.createStringLiteral("resolution-mode"),
-@@ -45971,7 +45982,7 @@ function createTypeChecker(host) {
+@@ -45973,7 +45992,7 @@ function createTypeChecker(host) {
            }
          }
          if (!specifier) {
@@ -56,7 +124,7 @@ index ba306fe..eb6c182 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -80953,13 +80964,27 @@ function getOriginalNodeId(node) {
+@@ -80955,13 +80974,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -88,7 +156,7 @@ index ba306fe..eb6c182 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 0aef626..403bfad 100644
+index 08495cd..dd49fe3 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2384,6 +2384,7 @@ __export(server_exports, {
@@ -99,7 +167,75 @@ index 0aef626..403bfad 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -44374,7 +44375,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
+@@ -28913,6 +28914,10 @@ function parseIsolatedJSDocComment(content, start2, length2) {
+ function parseJSDocTypeExpressionForTests(content, start2, length2) {
+   return Parser.JSDocParser.parseJSDocTypeExpressionForTests(content, start2, length2);
+ }
++const tsPlusTypeCache = {}
++const resolvedPathsCache = {}
++const resolvedModuleCache = {}
++
+ var Parser;
+ ((Parser2) => {
+   const scanner2 = createScanner(99 /* Latest */, true);
+@@ -29145,16 +29150,15 @@ var Parser;
+       parseDiagnostics.push(createDetachedDiagnostic(fileName, pos, end, diagnostic));
+     }
+   }
+-  function parseTsPlusExternalTypes(fileName2, options) {
+-    if (options.configFilePath) {
+-      let resolvedPaths = [];
++  function getResolvedPaths(options) {
++    if (options.configFilePath in resolvedPathsCache) { return resolvedPathsCache[options.configFilePath] }
++    let resolvedPaths = [];
+       if (options.tsPlusTypes) {
+         for (const path of options.tsPlusTypes) {
+           if (pathIsRelative(path)) {
+             resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
+           } else {
+-            let resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+-            resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(path, fileName2, options, sys).resolvedModule;
++            const resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+             if (resolvedModule) {
+               resolvedPaths.push(resolvedModule.resolvedFileName);
+               break;
+@@ -29162,7 +29166,7 @@ var Parser;
+           }
+         }
+       }
+-      const packagePath = removeExtension(fileName2.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
++      const packagePath = removeExtension(options.configFilePath.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
+       if (packagePath) {
+         let packageName;
+         if (packagePath.startsWith("@")) {
+@@ -29192,16 +29196,21 @@ var Parser;
+           resolvedPaths.push(resolvedModule.resolvedFileName);
+         }
+       }
++      resolvedPathsCache[options.configFilePath] = resolvedPaths
++      return resolvedPaths
++  }
++  function parseTsPlusExternalTypes(fileName2, options) {
++    if (options.configFilePath) {
++      const resolvedPaths = getResolvedPaths(options)
+       if (resolvedPaths.length === 0) {
+         return;
+       }
+       for (const resolvedPath of resolvedPaths) {
+-        const text = sys.readFile(resolvedPath);
+-        if (text) {
+-          const json = JSON.parse(text);
++        const json = resolvedPath in tsPlusTypeCache ? tsPlusTypeCache[resolvedPath] : (() => { const text = sys.readFile(resolvedPath); if (text) { const json = JSON.parse(text); tsPlusTypeCache[resolvedPath] = json; return json}})()
++        if (json) {
+           for (const moduleName in json) {
+-            let resolvedModule = resolveModuleName(moduleName, resolvedPath, options, sys).resolvedModule;
+-            resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(moduleName, fileName2, options, sys).resolvedModule;
++            const key = `${options.configFilePath}+${moduleName}`
++            const resolvedModule = key in resolvedModuleCache ? resolvedModuleCache[key] : (resolvedModuleCache[key] = resolveModuleName(moduleName, options.configFilePath, options, sys).resolvedModule);
+             if (resolvedModule && resolvedModule.resolvedFileName === fileName2) {
+               currentTsPlusTypes = json[moduleName];
+               currentTsPlusFile = moduleName;
+@@ -44376,7 +44385,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
            const subTarget = exports[key];
@@ -109,7 +245,7 @@ index 0aef626..403bfad 100644
            if (result) {
              return result;
            }
-@@ -44446,7 +44448,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
+@@ -44448,7 +44458,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
    if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
      return void 0;
    }
@@ -118,7 +254,7 @@ index 0aef626..403bfad 100644
    const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
    return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
    function tryDirectoryWithPackageJson(packageRootIndex) {
-@@ -50317,6 +50319,16 @@ function createTypeChecker(host) {
+@@ -50319,6 +50329,16 @@ function createTypeChecker(host) {
        }
        return top;
      }
@@ -135,7 +271,7 @@ index 0aef626..403bfad 100644
      function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
        var _a2;
        let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
-@@ -50391,7 +50403,7 @@ function createTypeChecker(host) {
+@@ -50393,7 +50413,7 @@ function createTypeChecker(host) {
          let assertion;
          if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
            if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
@@ -144,7 +280,7 @@ index 0aef626..403bfad 100644
              assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
                factory.createAssertEntry(
                  factory.createStringLiteral("resolution-mode"),
-@@ -50402,7 +50414,7 @@ function createTypeChecker(host) {
+@@ -50404,7 +50424,7 @@ function createTypeChecker(host) {
            }
          }
          if (!specifier) {
@@ -153,7 +289,7 @@ index 0aef626..403bfad 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -85598,13 +85610,27 @@ function getOriginalNodeId(node) {
+@@ -85600,13 +85620,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -184,7 +320,7 @@ index 0aef626..403bfad 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-@@ -121688,6 +121714,7 @@ __export(ts_exports3, {
+@@ -121690,6 +121724,7 @@ __export(ts_exports3, {
    tryGetDirectories: () => tryGetDirectories,
    tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
    tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -192,7 +328,7 @@ index 0aef626..403bfad 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -172999,6 +173026,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -173001,6 +173036,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -216,10 +352,10 @@ index 663097f..95571ff 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index 4100ca4..4e88a41 100644
+index a7efbf3..9b80db7 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
-@@ -41891,7 +41891,8 @@ ${lanes.join("\n")}
+@@ -41893,7 +41893,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
              const subTarget = exports[key];
@@ -229,7 +365,7 @@ index 4100ca4..4e88a41 100644
              if (result) {
                return result;
              }
-@@ -41963,7 +41964,7 @@ ${lanes.join("\n")}
+@@ -41965,7 +41966,7 @@ ${lanes.join("\n")}
      if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
        return void 0;
      }
@@ -238,7 +374,7 @@ index 4100ca4..4e88a41 100644
      const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
      return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
      function tryDirectoryWithPackageJson(packageRootIndex) {
-@@ -47710,6 +47711,16 @@ ${lanes.join("\n")}
+@@ -47712,6 +47713,16 @@ ${lanes.join("\n")}
          }
          return top;
        }
@@ -255,7 +391,7 @@ index 4100ca4..4e88a41 100644
        function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
          var _a2;
          let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
-@@ -47784,7 +47795,7 @@ ${lanes.join("\n")}
+@@ -47786,7 +47797,7 @@ ${lanes.join("\n")}
            let assertion;
            if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
              if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
@@ -264,7 +400,7 @@ index 4100ca4..4e88a41 100644
                assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
                  factory.createAssertEntry(
                    factory.createStringLiteral("resolution-mode"),
-@@ -47795,7 +47806,7 @@ ${lanes.join("\n")}
+@@ -47797,7 +47808,7 @@ ${lanes.join("\n")}
              }
            }
            if (!specifier) {
@@ -273,7 +409,7 @@ index 4100ca4..4e88a41 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -83165,13 +83176,26 @@ ${lanes.join("\n")}
+@@ -83167,13 +83178,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -303,7 +439,7 @@ index 4100ca4..4e88a41 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -83580,10 +83604,12 @@ ${lanes.join("\n")}
+@@ -83582,10 +83606,12 @@ ${lanes.join("\n")}
      }
      return { decorators };
    }
@@ -316,7 +452,7 @@ index 4100ca4..4e88a41 100644
      }
    });
  
-@@ -169125,6 +169151,7 @@ ${e.message}`;
+@@ -169127,6 +169153,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -324,7 +460,7 @@ index 4100ca4..4e88a41 100644
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
      tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -171789,6 +171816,7 @@ ${e.message}`;
+@@ -171791,6 +171818,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -348,10 +484,76 @@ index 0efd888..a6b5088 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index b0a9414..65b5d30 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
-@@ -41891,7 +41891,8 @@ ${lanes.join("\n")}
+@@ -26199,6 +26199,9 @@ ${lanes.join("\n")}
+     return lhs.name.escapedText === rhs.name.escapedText && tagNamesAreEquivalent(lhs.expression, rhs.expression);
+   }
+   var tsPlusExportedExtensionRegex, NodeConstructor, TokenConstructor, IdentifierConstructor, PrivateIdentifierConstructor, SourceFileConstructor, parseBaseNodeFactory, parseNodeFactory, forEachChildTable, Parser, IncrementalParser, namedArgRegExCache, tripleSlashXMLCommentStartRegEx, singleLinePragmaRegEx;
++  const tsPlusTypeCache = {}
++  const resolvedPathsCache = {}
++  const resolvedModuleCache = {}
+   var init_parser = __esm({
+     "src/compiler/parser.ts"() {
+       "use strict";
+@@ -26865,16 +26868,15 @@ ${lanes.join("\n")}
+             parseDiagnostics.push(createDetachedDiagnostic(fileName, pos, end, diagnostic));
+           }
+         }
+-        function parseTsPlusExternalTypes(fileName2, options) {
+-          if (options.configFilePath) {
+-            let resolvedPaths = [];
++        function getResolvedPaths(options) {
++          if (options.configFilePath in resolvedPathsCache) { return resolvedPathsCache[options.configFilePath] }
++          let resolvedPaths = [];
+             if (options.tsPlusTypes) {
+               for (const path of options.tsPlusTypes) {
+                 if (pathIsRelative(path)) {
+                   resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
+                 } else {
+-                  let resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+-                  resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(path, fileName2, options, sys).resolvedModule;
++                  const resolvedModule = resolveModuleName(path, options.configFilePath, options, sys).resolvedModule;
+                   if (resolvedModule) {
+                     resolvedPaths.push(resolvedModule.resolvedFileName);
+                     break;
+@@ -26882,7 +26884,7 @@ ${lanes.join("\n")}
+                 }
+               }
+             }
+-            const packagePath = removeExtension(fileName2.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
++            const packagePath = removeExtension(options.configFilePath.split("node_modules").slice(-1)[0].substring(1), ".d.ts");
+             if (packagePath) {
+               let packageName;
+               if (packagePath.startsWith("@")) {
+@@ -26912,16 +26914,21 @@ ${lanes.join("\n")}
+                 resolvedPaths.push(resolvedModule.resolvedFileName);
+               }
+             }
++            resolvedPathsCache[options.configFilePath] = resolvedPaths
++            return resolvedPaths
++        }
++        function parseTsPlusExternalTypes(fileName2, options) {
++          if (options.configFilePath) {
++            const resolvedPaths = getResolvedPaths(options)
+             if (resolvedPaths.length === 0) {
+               return;
+             }
+             for (const resolvedPath of resolvedPaths) {
+-              const text = sys.readFile(resolvedPath);
+-              if (text) {
+-                const json = JSON.parse(text);
++              const json = resolvedPath in tsPlusTypeCache ? tsPlusTypeCache[resolvedPath] : (() => { const text = sys.readFile(resolvedPath); if (text) { const json = JSON.parse(text); tsPlusTypeCache[resolvedPath] = json; return json}})()
++              if (json) {
+                 for (const moduleName in json) {
+-                  let resolvedModule = resolveModuleName(moduleName, resolvedPath, options, sys).resolvedModule;
+-                  resolvedModule != null ? resolvedModule : resolvedModule = resolveModuleName(moduleName, fileName2, options, sys).resolvedModule;
++                  const key = `${options.configFilePath}+${moduleName}`
++                  const resolvedModule = key in resolvedModuleCache ? resolvedModuleCache[key] : (resolvedModuleCache[key] = resolveModuleName(moduleName, options.configFilePath, options, sys).resolvedModule);
+                   if (resolvedModule && resolvedModule.resolvedFileName === fileName2) {
+                     currentTsPlusTypes = json[moduleName];
+                     currentTsPlusFile = moduleName;
+@@ -41893,7 +41900,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
              const subTarget = exports[key];
@@ -361,7 +563,7 @@ index b0a9414..65b5d30 100644
              if (result) {
                return result;
              }
-@@ -41963,7 +41964,7 @@ ${lanes.join("\n")}
+@@ -41965,7 +41973,7 @@ ${lanes.join("\n")}
      if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
        return void 0;
      }
@@ -370,7 +572,7 @@ index b0a9414..65b5d30 100644
      const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
      return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
      function tryDirectoryWithPackageJson(packageRootIndex) {
-@@ -47710,6 +47711,16 @@ ${lanes.join("\n")}
+@@ -47712,6 +47720,16 @@ ${lanes.join("\n")}
          }
          return top;
        }
@@ -387,7 +589,7 @@ index b0a9414..65b5d30 100644
        function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
          var _a2;
          let file = getDeclarationOfKind(symbol, 308 /* SourceFile */);
-@@ -47784,7 +47795,7 @@ ${lanes.join("\n")}
+@@ -47786,7 +47804,7 @@ ${lanes.join("\n")}
            let assertion;
            if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
              if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
@@ -396,7 +598,7 @@ index b0a9414..65b5d30 100644
                assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
                  factory.createAssertEntry(
                    factory.createStringLiteral("resolution-mode"),
-@@ -47795,7 +47806,7 @@ ${lanes.join("\n")}
+@@ -47797,7 +47815,7 @@ ${lanes.join("\n")}
              }
            }
            if (!specifier) {
@@ -405,7 +607,7 @@ index b0a9414..65b5d30 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -83165,13 +83176,26 @@ ${lanes.join("\n")}
+@@ -83167,13 +83185,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -435,7 +637,7 @@ index b0a9414..65b5d30 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -83580,10 +83604,12 @@ ${lanes.join("\n")}
+@@ -83582,10 +83613,12 @@ ${lanes.join("\n")}
      }
      return { decorators };
    }
@@ -448,7 +650,7 @@ index b0a9414..65b5d30 100644
      }
    });
  
-@@ -159501,6 +159527,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -159503,6 +159536,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
