@@ -89,6 +89,20 @@ index 6e314d7..491e88d 100644
    const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
    return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
    function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -43681,7 +43681,12 @@ function createTypeChecker(host) {
+     if (!nodeIsSynthesized(name) && isEntityName(name) && (symbol.flags & 2097152 /* Alias */ || name.parent.kind === 274 /* ExportAssignment */)) {
+       markSymbolOfAliasDeclarationIfTypeOnly(getAliasDeclarationFromName(name), symbol, void 0, true);
+     }
+-    return symbol.flags & meaning || dontResolveAlias ? symbol : resolveAlias(symbol);
++    return (symbol.flags & meaning) || dontResolveAlias ||
++            // TSPLUS EXTENSION BEGIN
++            (getGlobalSymbol(symbol.escapedName, SymbolFlags.Type, undefined) && getSymbolLinks(symbol).isPossibleCompanionReference)
++            // TSPLUS EXTENSION END
++                ? symbol
++                : resolveAlias(symbol);
+   }
+   function resolveEntityNameFromAssignmentDeclaration(name, meaning) {
+     if (isJSDocTypeReference(name.parent)) {    
 @@ -45888,6 +45897,16 @@ function createTypeChecker(host) {
        }
        return top;

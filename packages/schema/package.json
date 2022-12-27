@@ -293,6 +293,16 @@
         "default": "./_cjs/_global.cjs"
       }
     },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
+      }
+    },
     "./_schema": {
       "import": {
         "types": "./dist/_schema.d.ts",
