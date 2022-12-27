@@ -74,22 +74,20 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        Effect.acquireRelease(
-          lockFile(getFilename(type, id)).mapBoth(
-            err => new CouldNotAquireDbLockException(type, id, err as Error),
-            release => ({ release })
-          ),
+        lockFile(getFilename(type, id)).mapBoth(
+          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          release => ({ release })
+        ).acquireRelease(
           l => l.release
         )
     }
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        Effect.acquireRelease(
-          lockFile(getIdxName(type, id)).mapBoth(
-            err => new CouldNotAquireDbLockException(type, id, err as Error),
-            release => ({ release })
-          ),
+        lockFile(getIdxName(type, id)).mapBoth(
+          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          release => ({ release })
+        ).acquireRelease(
           l => l.release
         )
     }

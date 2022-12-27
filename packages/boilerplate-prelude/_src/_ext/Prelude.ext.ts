@@ -164,14 +164,6 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
 export const asUnitE = asUnit
 
 /**
- * @tsplus getter Maybe toOption
- * @tsplus static ets/Opt.Ops toOption
- */
-export function toOption<A>(o: Opt<A>): Option.Option<A> {
-  return o._tag === "None" ? Option.none : Option.some(o.value)
-}
-
-/**
  * @tsplus fluent effect/io/Effect withSpan
  */
 export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
