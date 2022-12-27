@@ -1,5 +1,3 @@
-import * as ARR from "@effect-ts/core/Collections/Immutable/Array"
-
 export function find_<A, B extends A>(
   as: ROSet<A>,
   refinement: Refinement<A, B>

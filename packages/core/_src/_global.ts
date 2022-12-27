@@ -57,6 +57,16 @@ import { Chunk } from "@fp-ts/data/Chunk"
 /**
  * @tsplus global
  */
+import { Ord } from "@effect-ts/core/Ord"
+
+/**
+ * @tsplus global
+ */
+import { Equal } from "@effect-ts/core/Equal"
+
+/**
+ * @tsplus global
+ */
 import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
 
 /**
