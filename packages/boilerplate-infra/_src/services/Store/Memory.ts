@@ -40,7 +40,7 @@ export const makeMemoryStore = () => ({
       const semaphore = TSemaphore.unsafeMake(1)
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.from)
-      const batchSet = (items: NonEmptyArray<PM>) =>
+      const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
         semaphore.withPermit(
           items
             .forEachEffect(i => s.find(i.id).flatMap(current => updateETag(i, current)))
@@ -75,4 +75,4 @@ export const makeMemoryStore = () => ({
     })
 })
 
-export const MemoryStoreLive = Layer.fromValue(StoreMaker, makeMemoryStore())
+export const MemoryStoreLive = StoreMaker.of(makeMemoryStore())

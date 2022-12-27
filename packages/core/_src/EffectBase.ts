@@ -1,72 +1,74 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
+import type { Cause } from "@effect-ts/core"
+import { Either, Exit } from "@effect-ts/core"
 import type { Lazy } from "./Function.js"
 import { curry, flow, pipe } from "./Function.js"
-import * as O from "./Maybe.js"
+import * as O from "./Option.js"
 
 /**
  * @tsplus static effect/core/io/Effect.Ops flatMapEither
  */
 export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
-  Effect.$.flatMap((a: A2) => Effect.fromEither(ei(a)))
+  Effect.flatMap((a: A2) => Effect.fromEither(ei(a)))
 
 /**
- * @tsplus fluent effect/core/io/Effect flatMapMaybe
+ * @tsplus fluent effect/core/io/Effect flatMapOpt
  */
-export function flatMapMaybe<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Maybe<A>>,
+export function flatMapOpt<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Opt<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
 ) {
   return self.flatMap(d =>
-    d.fold(
-      () => Effect(Maybe.none),
-      _ => fm(_).map(Maybe.some)
+    d.match(
+      () => Effect(Opt.none),
+      _ => fm(_).map(Opt.some)
     )
   )
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect tapMaybe
+ * @tsplus fluent effect/core/io/Effect tapOpt
  */
-export function tapMaybe<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Maybe<A>>,
+export function tapOpt<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Opt<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
 ) {
   return self.flatMap(d =>
-    d.fold(
-      () => Effect(Maybe.none),
-      _ => fm(_).map(() => Maybe.some(_))
+    d.match(
+      () => Effect(Opt.none),
+      _ => fm(_).map(() => Opt.some(_))
     )
   )
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect zipRightMaybe
+ * @tsplus fluent effect/core/io/Effect zipRightOpt
  */
-export function zipRightMaybe<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Maybe<A>>,
+export function zipRightOpt<R, E, A, R2, E2, A2>(
+  self: Effect<R, E, Opt<A>>,
   fm: Effect<R2, E2, A2>
 ) {
   return self.flatMap(d =>
-    d.fold(
-      () => Effect(Maybe.none),
-      _ => fm.map(() => Maybe.some(_))
+    d.match(
+      () => Effect(Opt.none),
+      _ => fm.map(() => Opt.some(_))
     )
   )
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect mapMaybe
+ * @tsplus fluent effect/core/io/Effect mapOpt
  */
-export function mapMaybe<R, E, A, A2>(
-  self: Effect<R, E, Maybe<A>>,
+export function mapOpt<R, E, A, A2>(
+  self: Effect<R, E, Opt<A>>,
   fm: (a: A) => A2
 ) {
   return self.map(d =>
-    d.fold(
-      () => Maybe.none,
-      _ => Maybe.some(fm(_))
+    d.match(
+      () => Opt.none,
+      _ => Opt.some(fm(_))
     )
   )
 }
@@ -97,7 +99,7 @@ export const tapBoth_ = <R, E, A, R2, R3, E3>(
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
   g: (a: A) => Effect<R3, E3, any>
-) => pipe(self, Effect.$.tapError(f), Effect.$.tap(g))
+) => pipe(self, Effect.tapError(f), Effect.tap(g))
 export const tapBoth = <E, A, R2, R3, E3>(
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
@@ -114,17 +116,17 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
 ) =>
   pipe(
     self.exit,
-    Effect.$.flatMap(
-      Exit.$.foldEffect(cause => {
+    Effect.flatMap(
+      Exit.matchEffect(cause => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
             onError(firstError),
-            Effect.$.flatMap(() => Effect.failCause(cause))
+            Effect.flatMap(() => Effect.failCause(cause))
           )
         }
         return Effect.failCause(cause)
-      }, flow(Effect.succeed, Effect.$.tap(onSuccess)))
+      }, flow(Effect.succeed, Effect.tap(onSuccess)))
     )
   )
 
@@ -149,28 +151,28 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
 ) =>
   pipe(
     self.exit,
-    Effect.$.flatMap(
-      Exit.$.foldEffect(cause => {
+    Effect.flatMap(
+      Exit.matchEffect(cause => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return pipe(
             onError(firstError),
-            Effect.$.flatMap(() => Effect.failCauseSync(cause))
+            Effect.flatMap(() => Effect.failCauseSync(cause))
           )
         }
         return Effect.failCauseSync(cause)
       }, Effect.succeed)
     )
   )
-export function encaseMaybe_<E, A>(
-  o: O.Maybe<A>,
+export function encaseOpt_<E, A>(
+  o: O.Opt<A>,
   onError: Lazy<E>
 ): Effect<never, E, A> {
-  return O.fold_(o, () => Effect.fail(onError()), Effect.succeed)
+  return O.match_(o, () => Effect.fail(onError()), Effect.succeed)
 }
 
-export function encaseMaybe<E>(onError: Lazy<E>) {
-  return <A>(o: O.Maybe<A>) => encaseMaybe_<E, A>(o, onError)
+export function encaseOpt<E>(onError: Lazy<E>) {
+  return <A>(o: O.Opt<A>) => encaseOpt_<E, A>(o, onError)
 }
 
 export function liftM<A, B>(a: (a: A) => B) {

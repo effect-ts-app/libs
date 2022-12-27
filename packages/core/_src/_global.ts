@@ -17,4 +17,24 @@ import { Layer } from "@effect/io/Layer"
 /**
  * @tsplus global
  */
-import { ROArray } from "@effect-ts-app/core/Array.global"
+import { Scope } from "@effect/io/Scope"
+
+/**
+ * @tsplus global
+ */
+import { Context, Tag } from "@fp-ts/data/Context"
+
+/**
+ * @tsplus global
+ */
+import { Chunk } from "@fp-ts/data/Chunk"
+
+/**
+ * @tsplus global
+ */
+import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
+
+/**
+ * @tsplus global
+ */
+import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"

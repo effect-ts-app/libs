@@ -37,7 +37,7 @@ export const provideChildLogger = (meta: LOG.Meta) =>
 
 /* istanbul ignore next */
 export const LoggerFactory = (loggerOpts: W.LoggerOptions) =>
-  Layer.fromValue(WinstonFactory, {
+  WinstonFactory.of({
     logger: Effect.sync(() => W.createLogger(loggerOpts))
   })
 

@@ -10,12 +10,12 @@ import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 import { minLengthIdentifier } from "./length.js"
 
-export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
+export function NonEmptyReadonlyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): S.DefaultSchema<
   unknown,
-  NonEmptyArray<ParsedShape>,
-  NonEmptyArray<ParsedShape>,
+  NonEmptyReadonlyArray<ParsedShape>,
+  NonEmptyReadonlyArray<ParsedShape>,
   readonly Encoded[],
   { self: Api }
 > {
@@ -25,7 +25,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     S.identity(
-      (u): u is NonEmptyArray<ParsedShape> => Array.isArray(u) && u.length > 0 && u.every(guardSelf)
+      (u): u is NonEmptyReadonlyArray<ParsedShape> => Array.isArray(u) && u.length > 0 && u.every(guardSelf)
     ),
     S.parser((u: Chunk<ParsedShape>) => {
       const ar = u.toArray
@@ -36,7 +36,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     S.arbitrary(
       _ =>
         _.array(arbitrarySelf(_), { minLength: 1 }) as any as Arbitrary.Arbitrary<
-          NonEmptyArray<ParsedShape>
+          NonEmptyReadonlyArray<ParsedShape>
         >
     )
   )
@@ -44,7 +44,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   return pipe(
     S.chunk(self)[">>>"](fromChunk),
     S.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-    S.constructor((_: NonEmptyArray<ParsedShape>) => Th.succeed(_)),
+    S.constructor((_: NonEmptyReadonlyArray<ParsedShape>) => Th.succeed(_)),
     S.encoder(u => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     S.withDefaults,

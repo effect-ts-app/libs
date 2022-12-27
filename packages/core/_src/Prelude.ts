@@ -3,7 +3,6 @@
 
 import "./global.ts"
 
-import type * as A from "@effect-ts-app/core/Array"
 // import type * as CNK from "@effect-ts-app/core/Chunk"
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 // import type * as CAUSE from "@effect-ts/core/Effect/Cause"
@@ -22,13 +21,12 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 // import type * as T from "@effect-ts-app/core/Effect"
 // import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 // import type * as QUEUE from "@effect-ts/core/Effect/Queue"
-// import type * as EO from "@effect-ts-app/core/EffectMaybe"
-import type * as NA from "@effect-ts-app/core/NonEmptyArray"
+// import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
-// import type * as O from "@effect-ts-app/core/Maybe"
+// import type * as O from "@effect-ts-app/core/Opt"
 // import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
-// import type * as SO from "@effect-ts-app/core/SyncMaybe"
+// import type * as SO from "@effect-ts-app/core/SyncOpt"
 // import type * as HAS from "@effect-ts/core/Has"
 import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
@@ -95,19 +93,19 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 // /** @tsplus type ets/Ord */
 // export type Ord<A> = ORD.Ord<A>
 
-// export namespace EffectMaybe {
-//   export * from "@effect-ts-app/core/EffectMaybe"
+// export namespace EffectOption {
+//   export * from "@effect-ts-app/core/EffectOption"
 // }
-// /** @tsplus type ets/EffectMaybe */
-// export type EffectMaybe<R, E, A> = EO.EffectMaybe<R, E, A>
-// export { UIO as EffectMaybeU, IO as EffectMaybeE, RIO as EffectMaybeR } from "@effect-ts-app/core/EffectMaybe"
+// /** @tsplus type ets/EffectOption */
+// export type EffectOption<R, E, A> = EO.EffectOption<R, E, A>
+// export { UIO as EffectOptionU, IO as EffectOptionE, RIO as EffectOptionR } from "@effect-ts-app/core/EffectOption"
 
-// export namespace SyncMaybe {
-//   export * from "@effect-ts-app/core/SyncMaybe"
+// export namespace SyncOpt {
+//   export * from "@effect-ts-app/core/SyncOpt"
 // }
-// /** @tsplus type ets/SyncMaybe */
-// export type SyncMaybe<R, E, A> = SO.SyncMaybe<R, E, A>
-// export { UIO as SyncMaybeU, IO as SyncMaybeE, RIO as SyncMaybeR } from "@effect-ts-app/core/SyncMaybe"
+// /** @tsplus type ets/SyncOpt */
+// export type SyncOpt<R, E, A> = SO.SyncOpt<R, E, A>
+// export { UIO as SyncOptU, IO as SyncOptE, RIO as SyncOptR } from "@effect-ts-app/core/SyncOpt"
 
 // export namespace Managed {
 //   export * from "@effect-ts/core/Effect/Managed"
@@ -129,11 +127,11 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 // /** @tsplus type ets/Schedule */
 // export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 
-// export namespace Maybe {
-//   export * from "@effect-ts-app/core/Maybe"
+// export namespace Opt {
+//   export * from "@effect-ts-app/core/Opt"
 // }
-// /** @tsplus type ets/Maybe */
-// export type Maybe<A> = O.Maybe<A>
+// /** @tsplus type ets/Opt */
+// export type Opt<A> = O.Opt<A>
 
 // export namespace Sync {
 //   export * from "@effect-ts-app/core/Sync"
@@ -150,12 +148,12 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 // /** @tsplus type ets/XPure */
 // export type XPure<W, S1, S2, R, E, A> = XPURE.XPure<W, S1, S2, R, E, A>
 
-export namespace NonEmptyArray {
-  // @ts-expect-error
-  export * from "@effect-ts-app/core/NonEmptyArray"
-}
-/** @tsplus type ets/NonEmptyArray */
-export type NonEmptyArray<A> = NA.NonEmptyArray<A>
+// export namespace NonEmptyArray {
+//   // @ts-expect-error
+//   export * from "@effect-ts-app/core/NonEmptyArray"
+// }
+// /** @tsplus type ets/NonEmptyArray */
+// export type NonEmptyReadonlyArray<A> = NA.NonEmptyReadonlyArray<A>
 
 export namespace NonEmptySet {
   // @ts-expect-error
@@ -164,19 +162,19 @@ export namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-export namespace Array {
-  // @ts-expect-error
-  export * from "@effect-ts-app/core/Array"
-}
-/** @tsplus type ets/Array */
-export type Array<A> = A.Array<A>
+// export namespace Array {
+//   // @ts-expect-error
+//   export * from "@effect-ts-app/core/Array"
+// }
+// /** @tsplus type ets/Array */
+// export type Array<A> = A.Array<A>
 
-export namespace ROArray {
-  // @ts-expect-error
-  export * from "@effect-ts-app/core/Array"
-}
-/** @tsplus type ets/Array */
-export type ROArray<A> = A.Array<A>
+// export namespace ROArray {
+//   // @ts-expect-error
+//   export * from "@effect-ts-app/core/Array"
+// }
+// /** @tsplus type ets/Array */
+// export type ROArray<A> = A.Array<A>
 
 export namespace Set {
   // @ts-expect-error

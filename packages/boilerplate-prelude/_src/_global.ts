@@ -23,7 +23,7 @@ import { Pure, PureEnv, PureEnvEnv } from "@effect-ts-app/boilerplate-prelude/_e
 /**
  * @tsplus global
  */
-import { flow, pipe, tuple, tupled } from "@effect-ts-app/boilerplate-prelude/Function"
+import { flow, pipe, tupled } from "@effect-ts-app/boilerplate-prelude/Function"
 /**
  * @tsplus global
  */
@@ -46,7 +46,6 @@ import {
   Lens,
   // Managed,
   // Maybe,
-  NonEmptyArray,
   NonEmptySet,
   // Ord,
   // Queue,

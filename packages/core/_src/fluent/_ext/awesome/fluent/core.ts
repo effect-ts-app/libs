@@ -25,7 +25,7 @@ export const ext_fromMutable = fromMutable
 // /**
 //  * @tsplus fluent ets/Array mapM
 //  */
-// export const ext_mapMaybe_ = mapMaybe_
+// export const ext_mapOpt_ = mapOpt_
 
 // /**
 //  * @tsplus fluent ets/Array mapM
@@ -55,7 +55,7 @@ export const ext_map_ = map_
 // /**
 //  * @tsplus fluent ets/Array mapM
 //  */
-// export const ext_mapMaybe_ = mapMaybe_
+// export const ext_mapOpt_ = mapOpt_
 
 // /**
 //  * @tsplus fluent ets/Array mapM

@@ -103,7 +103,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(type: string) {
       return (id: string) => {
         return tryRead(getFilename(type, id)).map(
-          Maybe.$.map(s => JSON.parse(s) as CachedRecord<EA>)
+          Maybe.map(s => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
@@ -114,7 +114,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Maybe.$.fold(
+        Maybe.fold(
           () => ({} as Record<string, TKey>),
           x => JSON.parse(x) as Record<string, TKey>
         )

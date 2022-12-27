@@ -39,7 +39,7 @@ export const Kilogram = positive(number)["|>"](brand<Kilogram>())
 // TODO: dictionary, map
 const MAX_LENGTH = 6
 
-export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
+export function NonEmptyReadonlyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
@@ -50,7 +50,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
         _.array(arbitrarySelf(_), {
           minLength: 1,
           maxLength: MAX_LENGTH
-        }) as any as Arbitrary.Arbitrary<NonEmptyArray<ParsedShape>>
+        }) as any as Arbitrary.Arbitrary<NonEmptyReadonlyArray<ParsedShape>>
     )
   )
 }

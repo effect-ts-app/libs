@@ -14,7 +14,7 @@ export class ResponseError {
   constructor(public readonly error: unknown) {}
 }
 
-export const mapResponseErrorS = Effect.$.mapError(
+export const mapResponseErrorS = Effect.mapError(
   (err: unknown) => new ResponseError(err)
 )
 
@@ -34,7 +34,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
 ) {
   const decodeRes = flow(
     decodeResponse,
-    Effect.$.mapError(err => new ResponseError(err))
+    Effect.mapError(err => new ResponseError(err))
   )
   return (method: H.Method, path: Path) =>
     (req: RequestA) =>

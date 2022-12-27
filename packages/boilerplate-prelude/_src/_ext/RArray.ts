@@ -11,7 +11,7 @@ export function randomElement<A>(a: ROArray<A>) {
 /**
  * @tsplus fluent ets/NonEmptyArray randomElement 2
  */
-export function randomElementNA<A>(a: NonEmptyArray<A>): A {
+export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
   return a[Math.floor(Math.random() * a.length)] as A
 }
 
@@ -23,14 +23,14 @@ export const mapRA = NonEmptyArray.map_
 /**
  * @tsplus fluent ets/NonEmptyArray sortBy
  */
-export function sortBy<A>(na: NonEmptyArray<A>, ords: readonly Ord<A>[]) {
-  return ROArray.sortBy(ords)(na) as NonEmptyArray<A>
+export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[]) {
+  return ROArray.sortBy(ords)(na) as NonEmptyReadonlyArray<A>
 }
 
 /**
  * @tsplus fluent ets/NonEmptyArray sortWith
  */
-export function sortWith<A>(na: NonEmptyArray<A>, ord: Ord<A>) {
+export function sortWith<A>(na: NonEmptyReadonlyArray<A>, ord: Ord<A>) {
   return NonEmptyArray.sort(ord)(na)
 }
 
@@ -170,14 +170,14 @@ export const toNonEmptyArray = flow(NonEmptyArray.fromArray, _ => _.toMaybe)
 /**
  * @tsplus getter Collection toNonEmptyArray
  */
-export function CollectionToNonEmptyArray<A>(c: Collection<A>) {
+export function CollectionToNonEmptyReadonlyArray<A>(c: Collection<A>) {
   return c.toArray.toNonEmpty
 }
 
 /**
  * @tsplus getter Chunk toNonEmptyArray
  */
-export function ChunkToNonEmptyArray<A>(c: Chunk<A>) {
+export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
   return c.toArray.toNonEmpty
 }
 
@@ -205,7 +205,7 @@ export function ext_CNKforEachEffectPar<A, R, E, B>(
  * @tsplus fluent ets/NonEmptyArray forEachEffectPar
  */
 export function ext_NAforEachEffectPar<A, R, E, B>(
-  as: NonEmptyArray<A>,
+  as: NonEmptyReadonlyArray<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
   return Effect.forEachPar(as, f).map(_ => _.toNonEmptyArray.value!)
@@ -214,7 +214,7 @@ export function ext_NAforEachEffectPar<A, R, E, B>(
 /**
  * @tsplus fluent ets/NonEmptyArray forEachEffect
  */
-export function ext_NAforEach<A, R, E, B>(as: NonEmptyArray<A>, f: (a: A) => Effect<R, E, B>) {
+export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
   return Effect.forEach(as, f).map(_ => _.toNonEmptyArray.value!)
 }
 
@@ -222,7 +222,7 @@ export function ext_NAforEach<A, R, E, B>(as: NonEmptyArray<A>, f: (a: A) => Eff
  * @tsplus fluent ets/NonEmptyArray forEachEffectWithIndexPar
  */
 export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
-  as: NonEmptyArray<A>,
+  as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
   return Effect.forEachParWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
@@ -231,7 +231,7 @@ export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
 /**
  * @tsplus fluent ets/NonEmptyArray forEachEffectWithIndex
  */
-export function ext_NAforEachWithIndex<A, R, E, B>(as: NonEmptyArray<A>, f: (a: A, i: number) => Effect<R, E, B>) {
+export function ext_NAforEachWithIndex<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A, i: number) => Effect<R, E, B>) {
   return Effect.forEachWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
 }
 

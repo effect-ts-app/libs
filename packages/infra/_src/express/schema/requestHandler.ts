@@ -50,7 +50,7 @@ export type Encode<A, E> = (a: A) => E
 //     case "NonEmptyString":
 //       return "Must not be empty"
 //   }
-//   if (current.type.name?.startsWith("NonEmptyArray<")) {
+//   if (current.type.name?.startsWith("NonEmptyReadonlyArray<")) {
 //     return "Must not be empty"
 //   }
 //   return `Invalid value specified`

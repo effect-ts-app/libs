@@ -75,6 +75,16 @@
         "default": "./_cjs/Array.cjs"
       }
     },
+    "./Array.global": {
+      "import": {
+        "types": "./dist/Array.global.d.ts",
+        "default": "./dist/Array.global.js"
+      },
+      "require": {
+        "types": "./dist/Array.global.d.ts",
+        "default": "./_cjs/Array.global.cjs"
+      }
+    },
     "./Effect": {
       "import": {
         "types": "./dist/Effect.d.ts",
@@ -195,6 +205,16 @@
         "default": "./_cjs/Set.cjs"
       }
     },
+    "./Tag": {
+      "import": {
+        "types": "./dist/Tag.d.ts",
+        "default": "./dist/Tag.js"
+      },
+      "require": {
+        "types": "./dist/Tag.d.ts",
+        "default": "./_cjs/Tag.cjs"
+      }
+    },
     "./_ext/Lens.ext": {
       "import": {
         "types": "./dist/_ext/Lens.ext.d.ts",
@@ -273,6 +293,16 @@
       "require": {
         "types": "./dist/_ext/pipe.d.ts",
         "default": "./_cjs/_ext/pipe.cjs"
+      }
+    },
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
+      },
+      "require": {
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
       }
     },
     "./fluent/_ext/Array": {
@@ -504,6 +534,9 @@
         "types": "./dist/validation/validators.d.ts",
         "default": "./_cjs/validation/validators.cjs"
       }
+    },
+    "./types/awesome": {
+      "types": "./types/awesome.d.ts"
     }
   },
   "sideEffects": [

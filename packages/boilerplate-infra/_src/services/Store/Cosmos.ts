@@ -48,7 +48,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           const execBatch = container.items.batch.bind(container.items)
           const importedMarkerId = containerId
 
-          const bulkSet = (items: NonEmptyArray<PM>) =>
+          const bulkSet = (items: NonEmptyReadonlyArray<PM>) =>
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
@@ -121,11 +121,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                 )
               )
-              return batchResult.toArray.flatten() as NonEmptyArray<PM>
+              return batchResult.toArray.flatten() as NonEmptyReadonlyArray<PM>
             }).instrument("cosmos.bulkSet")
               .apply(annotate)
 
-          const batchSet = (items: NonEmptyArray<PM>) => {
+          const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Do($ => {
               const batch = [...items].map(
                 x =>
@@ -180,7 +180,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       return batch.mapWithIndex((i, [e]) => ({
                         ...e,
                         _etag: result[i]?.eTag
-                      })) as NonEmptyArray<PM>
+                      })) as NonEmptyReadonlyArray<PM>
                     })
                   )
               )

@@ -91,7 +91,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).map(Maybe.$.map(i => i as TKey))
+      return RED.hget(getIdxKey(index), index.key).map(Maybe.map(i => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {

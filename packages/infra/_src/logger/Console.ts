@@ -70,7 +70,7 @@ export interface ConsoleLoggerConfig extends Config {}
 
 export const ConsoleLoggerConfig = Tag<ConsoleLoggerConfig>()
 
-export const LiveConsoleLoggerConfig = (config: Config = {}) => Layer.fromValue(ConsoleLoggerConfig, config)
+export const LiveConsoleLoggerConfig = (config: Config = {}) => ConsoleLoggerConfig.of(config)
 
 export const LiveConsoleLogger = Layer.fromEffect(LOG.Logger)(
   Effect.gen(function*($) {

@@ -1,7 +1,7 @@
 import type * as Eq from "@effect-ts/core/Equal"
 
 import { flow } from "./Function.js"
-import * as Maybe from "./Maybe.js"
+import * as Opt from "./Option.js"
 import type { NonEmptyArray } from "./NonEmptyArray.js"
 import type * as Ord from "./Order.js"
 import {
@@ -33,7 +33,7 @@ export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
-  const fromNonEmptyArray = (arr: NonEmptyArray<A>) => fromArray_(arr) as NonEmptySet<A>
+  const fromNonEmptyArray = (arr: NonEmptyReadonlyArray<A>) => fromArray_(arr) as NonEmptySet<A>
   const concat_ = (set: NonEmptySet<A>, it: Iterable<A>) => fromArray([...set, ...it])
   const insert__ = insertOriginal(eq)
   const insert: (a: A) => (set: NonEmptySet<A>) => NonEmptySet<A> = insert__ as any
@@ -47,7 +47,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const toArray__ = toArrayOriginal(ord)
 
   function toArray(s: NonEmptySet<A>) {
-    return toArray__(s) as NonEmptyArray<A>
+    return toArray__(s) as NonEmptyReadonlyArray<A>
   }
 
   const remove__ = remove(eq)
@@ -78,7 +78,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Maybe.Maybe<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Opt.Opt<A>) => flow(filterMap__(f), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
@@ -99,9 +99,9 @@ export const make: <A>(
 
 export function fromSet<A>(set: Set<A>) {
   if (set.size > 0) {
-    return Maybe.some(set as NonEmptySet<A>)
+    return Opt.some(set as NonEmptySet<A>)
   } else {
-    return Maybe.none
+    return Opt.none
   }
 }
 

@@ -28,6 +28,6 @@ export type EmailTemplateMsg = MailData & { templateId: string }
 export type EmailMsgOptionalFrom =
   & Omit<MailData, "from">
   & (
-    { text: string } | { html: string } | { templateId: string } | { content: NonEmptyArray<MailContent> }
+    { text: string } | { html: string } | { templateId: string } | { content: NonEmptyReadonlyArray<MailContent> }
   )
   & Partial<Pick<EmailMsg, "from">>

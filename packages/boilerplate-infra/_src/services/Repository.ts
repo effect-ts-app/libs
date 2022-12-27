@@ -501,13 +501,13 @@ export function makeDSL<S1, S2, Evt>() {
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> { }
 
 
-export function ifAny<T, R, E, A>(fn: (items: NonEmptyArray<T>) => Effect<R, E, A>) {
+export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
   return (items: Collection<T>) => Effect(items.toNonEmptyArray).flatMapMaybe(fn)
 }
 
 /**
  * @tsplus fluent Collection ifAny
  */
-export function ifAny_<T, R, E, A>(items: Collection<T>, fn: (items: NonEmptyArray<T>) => Effect<R, E, A>) {
+export function ifAny_<T, R, E, A>(items: Collection<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
   return Effect(items.toNonEmptyArray).flatMapMaybe(fn)
 }

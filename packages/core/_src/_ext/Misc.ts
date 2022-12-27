@@ -92,13 +92,13 @@ export const pipeSchemaThese = pipe
 // /**
 //  * @tsplus getter global asOpt
 //  */
-// export function asOpt<A>(a: A | null | undefined): Maybe<A> | undefined
-// export function asOpt<A>(a: A | null): Maybe<A>
+// export function asOpt<A>(a: A | null | undefined): Opt<A> | undefined
+// export function asOpt<A>(a: A | null): Opt<A>
 // export function asOpt<A>(a: A | null | undefined) {
-//   return a === undefined ? a : Maybe.fromNullable(a)
+//   return a === undefined ? a : Opt.fromNullable(a)
 // }
 
 // /**
 //  * @tsplus getter global asOpt2
 //  */
-// export const optionFromNullable = Maybe.fromNullable
+// export const optionFromNullable = Opt.fromNullable

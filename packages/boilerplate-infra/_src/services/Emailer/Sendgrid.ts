@@ -90,7 +90,7 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equivalence.$.contramap((to: { name?: string; email: string } | string) =>
+const eq = Equivalence.contramap((to: { name?: string; email: string } | string) =>
   typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
 )(Equivalence.string)
 

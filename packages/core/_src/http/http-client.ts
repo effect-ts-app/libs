@@ -96,7 +96,7 @@ export interface DataInput {
 export type Headers = Record<string, string>
 
 export interface Response<Body> {
-  body: Maybe<Body>
+  body: Opt<Body>
   headers: Headers
   status: number
 }
@@ -160,13 +160,13 @@ export function foldHttpError<A, B, ErrorBody>(
 
 export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Tag<HttpHeaders>()
-const accessHttpHeaders_ = Effect.environmentWith((env: Env<never>) => env.getMaybe(HttpHeaders))
+const accessHttpHeaders_ = Effect.environmentWith((env: Context<never>) => env.getOpt(HttpHeaders))
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: Maybe<HttpHeaders>) => Effect<R, E, A>
+  eff: (h: Opt<HttpHeaders>) => Effect<R, E, A>
 ) {
   return accessHttpHeaders_.flatMap(eff)
 }
-export function accessHttpHeaders<A>(eff: (h: Maybe<HttpHeaders>) => A) {
+export function accessHttpHeaders<A>(eff: (h: Opt<HttpHeaders>) => A) {
   return accessHttpHeaders_.map(eff)
 }
 
@@ -210,20 +210,20 @@ export interface MiddlewareStack {
 
 export const MiddlewareStack = Tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = Effect.environmentWith((env: Env<never>) => env.getMaybe(MiddlewareStack))
+const accessMiddlewareStack_ = Effect.environmentWith((env: Context<never>) => env.getOpt(MiddlewareStack))
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: Maybe<MiddlewareStack>) => Effect<R, E, A>
+  eff: (h: Opt<MiddlewareStack>) => Effect<R, E, A>
 ) {
   return accessMiddlewareStack_.flatMap(eff)
 }
 export function accessMiddlewareStack<A>(
-  eff: (h: Maybe<MiddlewareStack>) => A
+  eff: (h: Opt<MiddlewareStack>) => A
 ) {
   return accessMiddlewareStack_.map(eff)
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  Layer.fromValue(MiddlewareStack, {
+  MiddlewareStack.of({
     stack
   })
 
@@ -420,11 +420,11 @@ export function withHeaders(
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.environmentWithEffect((r: Env<R>) => Effect.$.provideEnvironment(r.add(HttpHeaders, headers))(eff))
-      : Effect.environmentWithEffect((r: Env<R>) =>
-        Effect.$.provideEnvironment(
+      ? Effect.environmentWithEffect((r: Context<R>) => Effect.provideEnvironment(r.add(HttpHeaders, headers))(eff))
+      : Effect.environmentWithEffect((r: Context<R>) =>
+        Effect.provideEnvironment(
           r.add(HttpHeaders, {
-            ...(r.getMaybe(HttpHeaders).value ?? {}),
+            ...(r.getOpt(HttpHeaders).value ?? {}),
             ...headers
           })
         )(eff)

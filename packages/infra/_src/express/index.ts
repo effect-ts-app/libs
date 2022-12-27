@@ -11,7 +11,7 @@ import express from "express"
 import type { Server } from "http"
 import type { Socket } from "net"
 
-export type NonEmptyArray<A> = ReadonlyArray<A> & {
+export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
   readonly 0: A
 }
 // export type _A<T extends Effect<any, any, any>> = [T] extends [

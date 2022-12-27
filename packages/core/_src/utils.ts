@@ -6,9 +6,9 @@ import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionar
 export * from "./utils/extend.js"
 
 /**
- * @deprecated use Effect.$.unsafeRunSync
+ * @deprecated use Effect.unsafeRunSync
  */
-export const unsafe = Effect.$.unsafeRunSync
+export const unsafe = Effect.unsafeRunSync
 
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   if (ei.isLeft()) {
@@ -19,7 +19,7 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
 }
 
 export const unsafeSome = (makeErrorMessage: () => string) =>
-  <A>(o: Maybe<A>) => {
+  <A>(o: Opt<A>) => {
     if (o.isNone()) {
       throw new Error(makeErrorMessage())
     }

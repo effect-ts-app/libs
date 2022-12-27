@@ -1,3 +1,5 @@
+import { Tag } from "@tsplus/stdlib/service/Tag"
+
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 
@@ -69,7 +71,7 @@ export const tag = Tag<RequestContext>()
 /**
  * @tsplus static RequestContext.Ops Live
  */
-export const LiveRequestContext = (pars: RequestContext) => Layer.fromValue(tag, pars)
+export const LiveRequestContext = (pars: RequestContext) => tag.of(pars)
 
 /* eslint-disable */
 export interface RequestContextParent {

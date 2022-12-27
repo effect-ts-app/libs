@@ -40,7 +40,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
         .map(i => Maybe.fromNullable(i.resource))
         .map(
-          Maybe.$.map(
+          Maybe.map(
             ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
           )
         )
@@ -73,7 +73,7 @@ WHERE (
           )
         )
         .map(x => ROArray.head(x.resources))
-        .map(Maybe.$.map(_ => _.id))
+        .map(Maybe.map(_ => _.id))
     }
 
     function store(record: A, currentVersion: Maybe<Version>) {

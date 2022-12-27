@@ -3,7 +3,7 @@
 // ets_tracing: off
 import { append_, concat_, filter_, flatten, head, last, map_, mapWithIndex_, tail } from "@effect-ts-app/core/Array"
 import { sort_, sortBy_, uniq_ } from "@effect-ts-app/core/fluent/_ext/Array"
-import { mapEither_, mapMaybe_ } from "@effect-ts-app/core/fluent/fluent/Array"
+import { mapEither_, mapOpt_ } from "@effect-ts-app/core/fluent/fluent/Array"
 import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 
 /**
@@ -62,9 +62,9 @@ export const ext_append_ = append_
 export const ext_mapEither_ = mapEither_
 
 /**
- * @tsplus fluent ets/Array mapMaybe
+ * @tsplus fluent ets/Array mapOpt
  */
-export const ext_mapMaybe_ = mapMaybe_
+export const ext_mapOpt_ = mapOpt_
 
 // /**
 //  * @tsplus fluent ets/Array mapM

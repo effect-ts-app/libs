@@ -42,7 +42,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
 
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
           const all = get.map(Chunk.from)
-          const batchSet = (items: NonEmptyArray<PM>) =>
+          const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             semaphore.withPermit(
               items
                 .forEachEffect(e => s.find(e.id).flatMap(current => updateETag(e, current)))

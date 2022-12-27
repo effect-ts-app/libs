@@ -1,4 +1,4 @@
-export * from "@effect-ts/core/Function"
+export * from "@fp-ts/data/Function"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 

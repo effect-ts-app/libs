@@ -4,7 +4,7 @@ export interface ApiConfig {
 }
 
 const tag = Tag<ApiConfig>()
-export const Live = (config: ApiConfig) => Layer.fromValue(tag, config)
+export const Live = (config: ApiConfig) => tag.of(config)
 export const ApiConfig = {
   Tag: tag,
   Live

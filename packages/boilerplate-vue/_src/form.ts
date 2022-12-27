@@ -90,7 +90,7 @@ function buildFieldInfo(
         pipe(
           parse(v === "" ? null : v),
           These.result,
-          Either.$.fold(
+          Either.fold(
             () =>
               `The entered value is not a valid ${
                 capitalize(
