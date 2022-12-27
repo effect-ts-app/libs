@@ -9,7 +9,7 @@ import "./Ref.js"
 import "./Schema.ext.js"
 
 import { Option } from "@effect-ts/core"
-import { asUnit } from "@effect/core/io/Effect"
+import { asUnit } from "@effect/io/Effect"
 
 import "./refinements.js"
 
@@ -53,7 +53,7 @@ type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 type Services<T extends Record<string, Tag<any>>> = { [key in keyof T]: Service<T[key]> }
 
 /**
- * @tsplus static effect/core/io/Effect.Ops servicesWith
+ * @tsplus static effect/io/Effect.Ops servicesWith
  */
 export function accessServices_<T extends Record<string, Tag<any>>, A>(
   services: T,
@@ -68,7 +68,7 @@ export function accessServices_<T extends Record<string, Tag<any>>, A>(
 }
 
 /**
- * @tsplus static effect/core/io/Effect.Ops servicesWithEffect
+ * @tsplus static effect/io/Effect.Ops servicesWithEffect
  */
 export function accessServicesM_<T extends Record<string, Tag<any>>, R, E, A>(
   services: T,
@@ -103,7 +103,7 @@ export function accessServicesM<T extends Record<string, Tag<any>>>(services: T)
 }
 
 /**
- * @tsplus getter effect/core/io/Effect toNullable
+ * @tsplus getter effect/io/Effect toNullable
  */
 export function toNullable<R, E, A>(
   self: Effect<R, E, Opt<A>>
@@ -112,7 +112,7 @@ export function toNullable<R, E, A>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect scope
+ * @tsplus fluent effect/io/Effect scope
  */
 export function scope<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
@@ -122,7 +122,7 @@ export function scope<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect flatMapScoped
+ * @tsplus fluent effect/io/Effect flatMapScoped
  */
 export function flatMapScoped<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
@@ -132,7 +132,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 }
 
 // /**
-//  * @tsplus fluent effect/core/io/Effect withScoped
+//  * @tsplus fluent effect/io/Effect withScoped
 //  */
 // export function withScoped<R, E, A, R2, E2, A2>(
 //   effect: Effect<R2, E2, A2>,
@@ -142,7 +142,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 // }
 
 // /**
-//  * @tsplus fluent effect/core/io/Effect withScoped
+//  * @tsplus fluent effect/io/Effect withScoped
 //  */
 // export function withScopedFlatMap<R, E, A, R2, E2, A2>(
 //   effect: (a: A) => Effect<R2, E2, A2>,
@@ -154,15 +154,15 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 /**
  * Recovers from all errors.
  *
- * @tsplus static effect/core/io/Effect.Aspects catchAllMap
- * @tsplus pipeable effect/core/io/Effect catchAllMap
+ * @tsplus static effect/io/Effect.Aspects catchAllMap
+ * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
   return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect(f(err)))
 }
 
 /**
- * @tsplus static effect/core/io/Effect.Aspects asUnit
+ * @tsplus static effect/io/Effect.Aspects asUnit
  */
 export const asUnitE = asUnit
 
@@ -175,7 +175,7 @@ export function toOption<A>(o: Opt<A>): Option.Option<A> {
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect withSpan
+ * @tsplus fluent effect/io/Effect withSpan
  */
 export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
   return self.apply(Effect.logSpan(label))
@@ -183,7 +183,7 @@ export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
 
 /**
  * Annotates each log in this effect with the specified log annotations.
- * @tsplus static effect/core/io/Effect.Ops logAnnotates
+ * @tsplus static effect/io/Effect.Ops logAnnotates
  */
 export function logAnnotates(kvps: Record<string, string>) {
   return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
@@ -203,7 +203,7 @@ export function logAnnotates(kvps: Record<string, string>) {
 /**
  * Annotates each log in this scope with the specified log annotation.
  *
- * @tsplus static effect/core/io/Effect.Ops logAnnotateScoped
+ * @tsplus static effect/io/Effect.Ops logAnnotateScoped
  */
 export function logAnnotateScoped(key: string, value: string) {
   return FiberRef.currentLogAnnotations
@@ -220,7 +220,7 @@ export function logAnnotateScoped(key: string, value: string) {
 /**
  * Annotates each log in this scope with the specified log annotations.
  *
- * @tsplus static effect/core/io/Effect.Ops logAnnotatesScoped
+ * @tsplus static effect/io/Effect.Ops logAnnotatesScoped
  */
 export function logAnnotatesScoped(kvps: Record<string, string>) {
   return FiberRef.currentLogAnnotations

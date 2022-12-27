@@ -1,5 +1,5 @@
 /**
- * @tsplus static effect/core/io/Logger.Ops default
+ * @tsplus static effect/io/Logger.Ops default
  */
 export const defaultLogger: Logger<string, string> = {
   apply: (fiberId, logLevel, message, cause, _context, spans, annotations) => {
@@ -78,20 +78,20 @@ function escapeLineBreaks(label: string): string {
 // }
 
 /**
- * @tsplus static effect/core/io/Logger.Ops console
+ * @tsplus static effect/io/Logger.Ops console
  */
 export const consoleLogger: Logger<string, void> = defaultLogger.map(message => {
   console.log(message)
 })
 
 /**
- * @tsplus static effect/core/io/Logger.Ops consoleLoggerLayer
+ * @tsplus static effect/io/Logger.Ops consoleLoggerLayer
  */
 export const consoleLoggerLayer = Layer.scopedDiscard(
   FiberRef.currentLoggers.locallyScopedWith(loggers => loggers.add(consoleLogger))
 )
 
 /**
- * @tsplus static effect/core/io/Logger.Ops withConsoleLogger
+ * @tsplus static effect/io/Logger.Ops withConsoleLogger
  */
 export const withConsoleLogger = FiberRef.currentLoggers.locallyWith(loggers => loggers.add(consoleLogger))

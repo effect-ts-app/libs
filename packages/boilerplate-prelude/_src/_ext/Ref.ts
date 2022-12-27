@@ -1,6 +1,6 @@
 /**
  * Ref has atomic modify support if synchronous, for Effect we need a TSemaphore.
- * @tsplus fluent effect/core/io/Ref modifyWithEffect
+ * @tsplus fluent effect/io/Ref modifyWithEffect
  */
 export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: TSemaphore) {
   return <R, E, A2>(mod: (a: A) => Effect<R, E, readonly [A2, A]>) =>

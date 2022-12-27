@@ -5,13 +5,13 @@ import type { Lazy } from "./Function.js"
 import { curry, flow, pipe } from "./Function.js"
 
 /**
- * @tsplus static effect/core/io/Effect.Ops flatMapEither
+ * @tsplus static effect/io/Effect.Ops flatMapEither
  */
 export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
   Effect.flatMap((a: A2) => Effect.fromEither(ei(a)))
 
 /**
- * @tsplus fluent effect/core/io/Effect flatMapOpt
+ * @tsplus fluent effect/io/Effect flatMapOpt
  */
 export function flatMapOpt<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Opt<A>>,
@@ -26,7 +26,7 @@ export function flatMapOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect tapOpt
+ * @tsplus fluent effect/io/Effect tapOpt
  */
 export function tapOpt<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Opt<A>>,
@@ -41,7 +41,7 @@ export function tapOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect zipRightOpt
+ * @tsplus fluent effect/io/Effect zipRightOpt
  */
 export function zipRightOpt<R, E, A, R2, E2, A2>(
   self: Effect<R, E, Opt<A>>,
@@ -56,7 +56,7 @@ export function zipRightOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect mapOpt
+ * @tsplus fluent effect/io/Effect mapOpt
  */
 export function mapOpt<R, E, A, A2>(
   self: Effect<R, E, Opt<A>>,
@@ -73,9 +73,9 @@ export function mapOpt<R, E, A, A2>(
 export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
 /**
- * @tsplus static effect/core/io/Effect.Ops tryCatchPromiseInterrupt
+ * @tsplus static effect/io/Effect.Ops tryCatchPromiseWithInterrupt
  */
-export function tryCatchPromiseInterrupt<E, A>(
+export function tryCatchPromiseWithInterrupt<E, A>(
   promise: Lazy<Promise<A>>,
   onReject: (reason: unknown) => E,
   canceller: () => void
@@ -89,7 +89,7 @@ export function tryCatchPromiseInterrupt<E, A>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect tapBoth
+ * @tsplus fluent effect/io/Effect tapBoth
  */
 export const tapBoth_ = <R, E, A, R2, R3, E3>(
   self: Effect<R, E, A>,
@@ -104,7 +104,7 @@ export const tapBoth = <E, A, R2, R3, E3>(
 ) => <R>(self: Effect<R, E, A>) => tapBoth_(self, f, g)
 
 /**
- * @tsplus fluent effect/core/io/Effect tapBothInclAbort
+ * @tsplus fluent effect/io/Effect tapBothInclAbort
  */
 export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   self: Effect<R, E, A>,
@@ -140,7 +140,7 @@ export function getFirstError<E>(cause: Cause<E>) {
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect tapErrorInclAbort
+ * @tsplus fluent effect/io/Effect tapErrorInclAbort
  */
 export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   self: Effect<R, E, A>,

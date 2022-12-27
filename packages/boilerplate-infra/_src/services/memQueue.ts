@@ -1,4 +1,4 @@
-import { Queue as Q } from "@effect/core/io/Queue"
+import { Queue as Q } from "@effect/io/Queue"
 
 export interface MemQueue {
   getOrCreateQueue: (k: string) => Effect<never, never, Queue<string>>

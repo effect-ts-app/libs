@@ -153,7 +153,7 @@ export function logMany<W>(w: Iterable<W>): PureLogT<W> {
 
 /**
  * @tsplus static Pure.Ops runAll
- * @tsplus fluent effect/core/io/Effect runAll
+ * @tsplus fluent effect/io/Effect runAll
  */
 export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
@@ -174,7 +174,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
 
 /**
  * @tsplus static Pure.Ops runResult
- * @tsplus fluent effect/core/io/Effect runResult
+ * @tsplus fluent effect/io/Effect runResult
  */
 export function runResult<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
@@ -185,7 +185,7 @@ export function runResult<R, E, A, W3, S1, S3, S4 extends S1>(
 
 /**
  * @tsplus static Pure.Ops runTerm
- * @tsplus fluent effect/core/io/Effect runTerm
+ * @tsplus fluent effect/io/Effect runTerm
  */
 export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
@@ -200,7 +200,7 @@ export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
 
 /**
  * @tsplus static Pure.Ops runTermDiscard
- * @tsplus fluent effect/core/io/Effect runTermDiscard
+ * @tsplus fluent effect/io/Effect runTermDiscard
  */
 export function runTermDiscard<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
@@ -211,7 +211,7 @@ export function runTermDiscard<R, E, A, W3, S1, S3, S4 extends S1>(
 
 /**
  * @tsplus static Pure.Ops runA
- * @tsplus fluent effect/core/io/Effect runA
+ * @tsplus fluent effect/io/Effect runA
  */
 export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,

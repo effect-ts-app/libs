@@ -37,6 +37,16 @@ import { Layer } from "@effect/io/Layer"
 /**
  * @tsplus global
  */
+import { Fiber } from "@effect/io/Fiber"
+
+/**
+ * @tsplus global
+ */
+import { Supervisor } from "@effect/io/Supervisor"
+
+/**
+ * @tsplus global
+ */
 import { Exit } from "@effect/io/Exit"
 
 /**

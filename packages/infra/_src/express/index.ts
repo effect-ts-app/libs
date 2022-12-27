@@ -2,12 +2,8 @@
 // ets_tracing: off
 // tracing: off
 
-import { NonEmptyArguments } from "@effect-ts-app/core/Prelude"
 import { pretty } from "@effect-ts-app/core/utils"
-import { Cause, Supervisor, Fiber } from "@effect-ts/core"
-import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
 import { literal } from "@tsplus/stdlib/data/Function"
-import { Env } from "@tsplus/stdlib/service/Env"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
@@ -64,7 +60,7 @@ export function LiveExpressAppConfig<R>(
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
   return Layer.fromEffect(ExpressAppConfig)(
-    Effect.environmentWith((r: Env<R>) => ({
+    Effect.environmentWith((r: Context<R>) => ({
       _tag: ExpressAppConfigTag,
       host,
       port,
@@ -79,7 +75,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
   const open = yield* _(
     Effect.acquireRelease(
-      Effect.sync(() => new AtomicBoolean(true)),
+      Effect.sync(() => Ref.make(true)),
       a => Effect.sync(() => a.set(false))
     )
   )
@@ -152,7 +148,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
         (handler): RequestHandler =>
           (req, res, next) => {
             r.unsafeRunAsync(
-              (open.get ? handler(req, res, next) : Effect.interrupt)
+              open.get.flatMap(open => open ? handler(req, res, next) : Effect.interrupt)
                 .onTermination(exitHandler(req, res, next))
                 .supervised(supervisor)
             )

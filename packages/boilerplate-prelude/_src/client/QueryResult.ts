@@ -115,7 +115,7 @@ export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 export const { fail, succeed } = Done
 
 /**
- * @tsplus getter effect/core/io/Effect asQueryResult
+ * @tsplus getter effect/io/Effect asQueryResult
  */
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>

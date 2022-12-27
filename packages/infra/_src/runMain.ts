@@ -1,5 +1,5 @@
 import * as Supervisor from "@effect-ts/system/Supervisor"
-import type { FiberId } from "@effect/core/io/FiberId"
+import type { FiberId } from "@effect/io/FiberId"
 import { inspect } from "util"
 
 export function defaultTeardown(
@@ -20,7 +20,7 @@ export function defaultTeardown(
 
 /**
  * A dumbed down version of effect-ts/node's runtime, in preparation of new effect-ts
- * @tsplus fluent effect/core/io/Effect runMain
+ * @tsplus fluent effect/io/Effect runMain
  */
 export function runMain<E, A>(eff: Effect<never, E, A>) {
   const onExit = (s: number) => {
