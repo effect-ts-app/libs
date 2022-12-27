@@ -21,7 +21,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "react": "^18.2.0",
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "scripts": {
     "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs",

@@ -22,7 +22,7 @@
     "@types/validator": "^13.7.10",
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {
