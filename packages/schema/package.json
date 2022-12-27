@@ -22,7 +22,7 @@
     "@types/validator": "^13.7.10",
     "fast-check": "^3.4.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "scripts": {
     "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs",
@@ -291,6 +291,16 @@
       "require": {
         "types": "./dist/_global.d.ts",
         "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
       }
     },
     "./_schema": {

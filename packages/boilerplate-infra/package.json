@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
@@ -40,7 +40,7 @@
     "jwks-rsa": "2.1.4",
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz",
     "vitest": "^0.26.2"
   },
   "typesVersions": {

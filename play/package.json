@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://github.com/0x706b/typescript/raw/815e859542/typescript-5.0.0-tsplus.20221226.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "peerDependencies": {
     "@effect-ts-app/boilerplate-prelude": "^1.9.2"
