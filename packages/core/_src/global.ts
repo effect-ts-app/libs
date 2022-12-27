@@ -1,19 +1,66 @@
 declare global {
   /**
-   * @tsplus type ReadonlyArray
-   * @tsplus type Iterable
-   * @tsplus companion fp-ts/data/ReadonlyArray.Ops
-   * @tsplus companion ReadonlyArray.Ops
+   * @tsplus type ets/Array
    */
   interface ReadonlyArray<T> {}
 
   /**
-   * @tsplus type Iterable
+   * @tsplus type ets/Array
    */
   interface Array<T> {}
 
   /**
-   * @tsplus type Iterable
+   * @tsplus type ets/Set
    */
-  interface Iterable<T> {}
+  interface Set<T> {}
+
+  /**
+   * @tsplus type ets/ROSet
+   * @tsplus type ets/Set
+   */
+  interface ReadonlySet<T> {}
+
+  /**
+   * @tsplus type ets/Map
+   */
+  interface Map<K, V> {}
+
+  /**
+   * @tsplus type ets/Map
+   */
+  interface ReadonlyMap<K, V> {}
+  /**
+   * @tsplus type Date
+   */
+  interface Date {}
+
+  // /**
+  //  * @tsplus type Record
+  //  */
+  // interface Record<K, V> {}
+
+  /**
+   * @tsplus type Object
+   */
+  interface Object {}
+
+  /**
+   * @tsplus type Generator
+   */
+  interface Generator<T = unknown, TReturn = any, TNext = unknown> {}
+
+  /**
+   * @tsplus type Iterator
+   */
+  interface Iterator<T, TReturn = any, TNext = undefined> {}
+
+  /**
+   * @tsplus type function
+   */
+  interface Function {}
+
+  /**
+   * @tsplus type Date
+   */
+  interface Date {}
 }

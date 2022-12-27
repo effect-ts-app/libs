@@ -5,11 +5,6 @@ import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionar
 
 export * from "./utils/extend.js"
 
-/**
- * @deprecated use Effect.unsafeRunSync
- */
-export const unsafe = Effect.unsafeRunSync
-
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   if (ei.isLeft()) {
     console.error(ei.left)

@@ -1,8 +1,6 @@
 import type * as Eq from "@effect-ts/core/Equal"
 
 import { flow } from "./Function.js"
-import * as Opt from "./Option.js"
-import type { NonEmptyArray } from "./NonEmptyArray.js"
 import type * as Ord from "./Order.js"
 import {
   filter_,

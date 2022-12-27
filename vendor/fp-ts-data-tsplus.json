@@ -2393,7 +2393,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Either",
           "name": "isLeft"
         }
@@ -2404,7 +2404,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Either",
           "name": "isRight"
         }
@@ -10915,7 +10915,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isLeft"
         }
@@ -10926,7 +10926,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isLeftOrBoth"
         }
@@ -10937,7 +10937,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isRight"
         }
@@ -10948,7 +10948,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isRightOrBoth"
         }
@@ -10959,7 +10959,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isBoth"
         }

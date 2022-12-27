@@ -37,6 +37,16 @@ import { Layer } from "@effect/io/Layer"
 /**
  * @tsplus global
  */
+import { Exit } from "@effect/io/Exit"
+
+/**
+ * @tsplus global
+ */
+import { Cause } from "@effect/io/Cause"
+
+/**
+ * @tsplus global
+ */
 import { Ref } from "@effect/io/Ref"
 
 /**
@@ -74,4 +84,7 @@ import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
  */
 import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
 
+import "./Array.js"
+import "./Chunk.js"
+import "./global.js"
 import "./Option.js"

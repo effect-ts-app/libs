@@ -1,11 +1,8 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import type { Cause } from "@effect-ts/core"
-import { Either, Exit } from "@effect-ts/core"
 import type { Lazy } from "./Function.js"
 import { curry, flow, pipe } from "./Function.js"
-import * as O from "./Option.js"
 
 /**
  * @tsplus static effect/core/io/Effect.Ops flatMapEither
@@ -165,14 +162,14 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
     )
   )
 export function encaseOpt_<E, A>(
-  o: O.Opt<A>,
+  o: Opt<A>,
   onError: Lazy<E>
 ): Effect<never, E, A> {
-  return O.match_(o, () => Effect.fail(onError()), Effect.succeed)
+  return o.match(() => Effect.fail(onError()), Effect.succeed)
 }
 
 export function encaseOpt<E>(onError: Lazy<E>) {
-  return <A>(o: O.Opt<A>) => encaseOpt_<E, A>(o, onError)
+  return <A>(o: Opt<A>) => encaseOpt_<E, A>(o, onError)
 }
 
 export function liftM<A, B>(a: (a: A) => B) {

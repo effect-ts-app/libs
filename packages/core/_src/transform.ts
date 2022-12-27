@@ -1,34 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type * as NA from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 import type { Misc, Union } from "ts-toolbelt"
 
-import * as O from "./Option.js"
 import type * as SET from "./Set.js"
 
 // type SomeObject = {
-//   0: O.Opt<string>
+//   0: Opt<string>
 //   a: {
-//     b: O.Opt<string>
-//     g: O.Opt<O.Opt<string>>
-//     h: O.Opt<{ i: O.Opt<boolean> }>
+//     b: Opt<string>
+//     g: Opt<Opt<string>>
+//     h: Opt<{ i: Opt<boolean> }>
 //   }
-//   c: { d: Array<O.Opt<{ e: O.Opt<boolean> }>> }
+//   c: { d: Array<Opt<{ e: Opt<boolean> }>> }
 // }
 // type test0 = Transform<SomeObject>
 // type test1 = Transform<SomeObject[]>
 
 type OptOf<A> = Union.Exclude<
-  A extends O.Some<infer X> ? X | null : A,
-  O.None
+  A extends Some<infer X> ? X | null : A,
+  None
 >
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-export type TransformRoot<O> = O extends O.Opt<any> ? Transform<OptOf<O>>
+export type TransformRoot<O> = O extends Opt<any> ? Transform<OptOf<O>>
   : Transform<O>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive ? O
   : {
     [K in keyof O]: OptOf<O[K]> extends infer X ? X extends (infer Y)[] ? OptOf<Transform<Y>>[]
-    : X extends NA.NonEmptyReadonlyArray<infer Y> ? NA.NonEmptyReadonlyArray<OptOf<Transform<Y>>>
+    : X extends NonEmptyReadonlyArray<infer Y> ? NonEmptyReadonlyArray<OptOf<Transform<Y>>>
     : X extends SET.Set<infer Y> ? SET.Set<OptOf<Transform<Y>>>
     : X extends readonly (infer Y)[] ? readonly OptOf<Transform<Y>>[]
     : Transform<X>
@@ -66,7 +64,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      return encodeOptsAsNullable_(O.getOrNull(value), cacheMap)
+      return encodeOptsAsNullable_(Opt.getOrNull(value), cacheMap)
     }
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)

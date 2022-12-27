@@ -85,6 +85,16 @@
         "default": "./_cjs/Array.global.cjs"
       }
     },
+    "./Chunk": {
+      "import": {
+        "types": "./dist/Chunk.d.ts",
+        "default": "./dist/Chunk.js"
+      },
+      "require": {
+        "types": "./dist/Chunk.d.ts",
+        "default": "./_cjs/Chunk.cjs"
+      }
+    },
     "./Effect": {
       "import": {
         "types": "./dist/Effect.d.ts",
@@ -253,26 +263,6 @@
       "require": {
         "types": "./dist/_ext/Prelude.ext.d.ts",
         "default": "./_cjs/_ext/Prelude.ext.cjs"
-      }
-    },
-    "./_ext/RArray": {
-      "import": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./dist/_ext/RArray.js"
-      },
-      "require": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./_cjs/_ext/RArray.cjs"
-      }
-    },
-    "./_ext/builtIn": {
-      "import": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./dist/_ext/builtIn.js"
-      },
-      "require": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./_cjs/_ext/builtIn.cjs"
       }
     },
     "./_ext/lens": {

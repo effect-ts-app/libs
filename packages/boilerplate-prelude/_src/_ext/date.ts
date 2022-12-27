@@ -1,12 +1,5 @@
 import { addDays, addHours, subDays, subHours } from "date-fns"
 
-declare global {
-  /**
-   * @tsplus type Date
-   */
-  interface Date {}
-}
-
 /**
  * @tsplus fluent Date addDays
  */
