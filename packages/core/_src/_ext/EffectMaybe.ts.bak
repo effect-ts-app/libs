@@ -1,9 +1,0 @@
-/**
- * @tsplus static effect/core/io/EffectMaybe __call
- */
-export const effectMaybeSome = EffectMaybe.some
-
-/**
- * @tsplus fluent effect/core/io/Effect tapMaybe
- */
-export const tapEffectMaybe = EffectMaybe.tap_

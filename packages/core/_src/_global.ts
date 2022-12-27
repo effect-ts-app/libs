@@ -2,7 +2,22 @@
 /**
  * @tsplus global
  */
-import { Option as Opt } from "@fp-ts/data/Option"
+import { None, Option as Opt, Some } from "@fp-ts/data/Option"
+
+/**
+ * @tsplus global
+ */
+import { Either, Left, Right } from "@fp-ts/data/Either"
+
+/**
+ * @tsplus global
+ */
+import { Predicate, Refinement } from "@fp-ts/data/Predicate"
+
+/**
+ * @tsplus global
+ */
+import { flow, pipe, tuple, tupled } from "@effect-ts-app/core/Function"
 
 /**
  * @tsplus global
@@ -38,3 +53,5 @@ import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
  * @tsplus global
  */
 import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
+
+import "./Option.js"

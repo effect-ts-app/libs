@@ -134,7 +134,7 @@ export function makeFromSchema<ResA>(
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
-    return (a: Maybe<JSONSchema | SubSchema>) => {
+    return (a: Opt<JSONSchema | SubSchema>) => {
       return a
         .flatMap(o => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
         .map(x => {

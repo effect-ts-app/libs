@@ -53,7 +53,7 @@ import {
 
 export type Gen = Effect<never, never, JSONSchema>
 
-export const interpreters: ((schema: MO.SchemaAny) => Maybe<Gen>)[] = [
+export const interpreters: ((schema: MO.SchemaAny) => Opt<Gen>)[] = [
   Maybe.partial(_miss =>
     (schema: MO.SchemaAny): Gen => {
       // if (schema instanceof MO.SchemaOpenApi) {
@@ -162,7 +162,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
                 Object.keys(schemaMeta.props).map(x => processId(schemaMeta.props[x]))
               )
             ) as any,
-            discriminator: (schemaMeta.tag as Maybe<any>).map((_: any) => ({
+            discriminator: (schemaMeta.tag as Opt<any>).map((_: any) => ({
               propertyName: _.key // TODO
             })).value
           })

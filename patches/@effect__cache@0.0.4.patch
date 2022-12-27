@@ -18,7 +18,7 @@ index 9dba4bf..140d4c2 100644
 +    get entries(): Effect<never, never, Chunk<readonly [Key, Value]>>;
      get values(): Effect<never, never, Chunk<Value>>;
      get cacheStats(): Effect<never, never, CacheStats>;
-     entryStats(k: Key): Effect<never, never, Maybe<EntryStats>>;
+     entryStats(k: Key): Effect<never, never, Opt<EntryStats>>;
 diff --git a/Cache/_internal/CacheInternal.js b/Cache/_internal/CacheInternal.js
 index d9a378d..3fc71fb 100644
 --- a/Cache/_internal/CacheInternal.js

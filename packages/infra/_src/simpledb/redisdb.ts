@@ -39,7 +39,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           .mapError(e => new ConnectionException(new Error(e.toString())))
       ).orDie
     }
-    function store(record: A, currentVersion: Maybe<string>) {
+    function store(record: A, currentVersion: Opt<string>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
@@ -103,12 +103,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return Effect.acquireRelease(
         // acquire
         RED.lock
-          .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as any as Promise<Lock>))
+          .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as Promise<Lock>))
           .mapBoth(
             err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
             // release
             lock => ({
-              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+              release: Effect.tryPromise(() => lock.unlock() as Promise<void>)
                 .orDie
             })
           ),
@@ -122,7 +122,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         RED.lock
           .flatMap(lock =>
             Effect.tryPromise(
-              () => lock.lock(getLockKey(id), ttl) as any as Promise<Lock>
+              () => lock.lock(getLockKey(id), ttl) as Promise<Lock>
             )
           )
           .mapBoth(
@@ -130,7 +130,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             // release
             lock => ({
               // TODO
-              release: Effect.tryPromise(() => lock.unlock() as any as Promise<void>)
+              release: Effect.tryPromise(() => lock.unlock() as Promise<void>)
                 .orDie
             })
           ),

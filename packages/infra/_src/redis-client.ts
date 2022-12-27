@@ -42,7 +42,7 @@ function createClient(makeClient: () => Client) {
 export function get(key: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<string>>(res => {
+      Effect.async<never, ConnectionException, Opt<string>>(res => {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -78,7 +78,7 @@ export function hset(key: string, field: string, value: string) {
 export function hget(key: string, field: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<string>>(res => {
+      Effect.async<never, ConnectionException, Opt<string>>(res => {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
@@ -89,7 +89,7 @@ export function hget(key: string, field: string) {
 export function hmgetAll(key: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<{ [key: string]: string }>>(
+      Effect.async<never, ConnectionException, Opt<{ [key: string]: string }>>(
         res => {
           client.hgetall(key, (err, v) =>
             err

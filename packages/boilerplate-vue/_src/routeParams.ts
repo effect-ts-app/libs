@@ -36,7 +36,7 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: Maybe<ParsedShapeOfCustom<NER[K]>>
+  [K in keyof NER]: Opt<ParsedShapeOfCustom<NER[K]>>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -46,7 +46,7 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: Maybe<ParsedShapeOfCustom<NER[K]>>
+      [K in keyof NER]: Opt<ParsedShapeOfCustom<NER[K]>>
     }
   )
 }

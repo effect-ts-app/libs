@@ -21,8 +21,8 @@ import * as Th from "../custom/These.js"
 export class FromProperty<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Opt<PropertyKey>,
+  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 > {
   constructor(
     readonly _as: As,
@@ -112,7 +112,7 @@ export class FromProperty<
   //   )
   // }
 
-  // getAnnotation<A>(annotation: Annotation<A>): Maybe<A> {
+  // getAnnotation<A>(annotation: Annotation<A>): Opt<A> {
   //   return HashMap.get_(this._map, annotation)
   // }
 
@@ -133,8 +133,8 @@ export class FromProperty<
 export function fromPropFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
+  As extends Opt<PropertyKey>,
+  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
   As1 extends PropertyKey
 >(
   prop: FromProperty<Self, Optional, As, Def>,
@@ -343,10 +343,10 @@ export function tagsFromFromProps<Props extends FromPropertyRecord>(
   const tags = {}
   for (const key of keys) {
     const s: S.SchemaAny = props[key]._schema
-    const def = props[key]._def as Maybe<
+    const def = props[key]._def as Opt<
       ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
     >
-    const as = props[key]._as as Maybe<PropertyKey>
+    const as = props[key]._as as Opt<PropertyKey>
     if (
       as.isNone() &&
       def.isNone() &&
@@ -380,10 +380,10 @@ export function fromProps<Props extends FromPropertyRecord>(
     guards[key] = Guard.for(props[key]._schema)
 
     if (props[key]._optional === "required") {
-      const def = props[key]._def as Maybe<
+      const def = props[key]._def as Opt<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
-      const as = props[key]._as as Maybe<string>
+      const as = props[key]._as as Opt<string>
 
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
         required.push(as.getOrElse(() => key))
@@ -457,10 +457,10 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       const prop = props[key]
-      const as = props[key]._as as Maybe<string>
+      const as = props[key]._as as Opt<string>
       const _as: string = as.getOrElse(() => key)
 
-      const def = prop._def as Maybe<
+      const def = prop._def as Opt<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
 
@@ -541,7 +541,7 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const as = props[key]._as as Maybe<string>
+        const as = props[key]._as as Opt<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }

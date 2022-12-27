@@ -140,7 +140,7 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
 
 export const unionIdentifier = S.makeAnnotation<{
   props: Record<PropertyKey, S.SchemaUPI>
-  tag: Maybe<{
+  tag: Opt<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -172,12 +172,12 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   const firstMemberTags = entriesTags[0]![1]
 
-  const tag: Maybe<{
+  const tag: Opt<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
     values: readonly string[]
-  }> = ROArray.findFirstMap_(Object.keys(firstMemberTags), tagField => {
+  }> = Object.keys(firstMemberTags).findFirstMap(tagField => {
     const tags = ROArray.collect_(entriesTags, ([member, tags]) => {
       if (tagField in tags) {
         return Option.some(tuple(tags[tagField], member)) as Option.Some<

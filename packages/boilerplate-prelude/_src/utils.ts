@@ -146,7 +146,7 @@ export function arrayMoveDropUndefined<T>(
 }
 
 export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlyArray<T | undefined>): Maybe<ReadonlyArray<T>> => {
+  return (arrInput: ReadonlyArray<T | undefined>): Opt<ReadonlyArray<T>> => {
     const ar = [...arrInput]
     const index = ar.findIndex(x => x === el)
     if (index === -1) {
@@ -157,7 +157,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
 }
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlySet<T | undefined>): Maybe<ReadonlySet<T>> =>
+  return (arrInput: ReadonlySet<T | undefined>): Opt<ReadonlySet<T>> =>
     [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map(ar => new Set(ar))
 }
 export * from "@effect-ts-app/core/utils"

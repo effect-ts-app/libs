@@ -13,7 +13,7 @@ export type Constructor<Input, Output, ConstructorError> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => Maybe<() => Constructor<unknown, unknown, unknown>>)[] = [
+) => Opt<() => Constructor<unknown, unknown, unknown>>)[] = [
   Maybe.partial(
     miss =>
       (schema: S.SchemaAny): (() => Constructor<unknown, unknown, unknown>) => {

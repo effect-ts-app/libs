@@ -31,7 +31,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       save: simpledb.store(find(type), store, lockRecordOnDisk(type), type)
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")

@@ -1,5 +1,12 @@
 export * from "@fp-ts/data/Function"
 
+/**
+ * Construct tuples
+ */
+export function tuple<T extends ReadonlyArray<any>>(...t: T): Readonly<T> {
+  return t
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function tupledCurry<A, B, C>(f: (b: B) => (a: A) => C) {

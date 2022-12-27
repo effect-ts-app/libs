@@ -152,8 +152,8 @@ export function makeCurrentDate() {
 }
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
+  As extends Opt<PropertyKey>,
+  Def extends Opt<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
 }
@@ -192,7 +192,7 @@ export type WithDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>
+  As extends Opt<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -205,7 +205,7 @@ export type WithInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>
+  As extends Opt<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -218,8 +218,8 @@ export function withDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<
+  As extends Opt<PropertyKey>,
+  Def extends Opt<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -264,8 +264,8 @@ export function withInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<
+  As extends Opt<PropertyKey>,
+  Def extends Opt<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<

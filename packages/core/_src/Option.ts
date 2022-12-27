@@ -31,13 +31,14 @@ export function p<T, K extends KeysMatching<T, Opt<any>>>(
   k: K
 ): (v: Opt<T>) => Opt<_A<T[K]>>
 export function p<T, K extends keyof T>(k: K): (v: Opt<T>) => Opt<T[K]>
-export function p(k: any) {
-  return (v: any) => Opt.flatMap<any, any>(a => convert(a[k]))(v)
+export function p<T>(k: any) {
+  return (v: Opt<T>) => v.flatMap(a => convert(a[k]))
 }
 function convert(a: any) {
-  return Opt.isSome(a) || Opt.isNone(a) ? a : Opt.fromNullable(a)
+  const aa = a as Opt<any>
+  return aa.isSome() || aa.isNone() ? a : Opt.fromNullable(a)
 }
-export type _A<A> = A extends Opt.Some<infer Y> ? Y : never
+export type _A<A> = A extends Some<infer Y> ? Y : never
 type KeysMatching<T, V> = {
   [K in keyof T]: T[K] extends V ? K : never
 }[keyof T]

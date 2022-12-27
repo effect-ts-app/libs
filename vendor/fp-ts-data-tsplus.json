@@ -1614,6 +1614,17 @@
           "name": "getOrUndefined"
         }
       ]
+    },
+    {
+      "definitionName": "getOrUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/Option",
+          "name": "value"
+        }
+      ]
     }
   ],
   "@fp-ts/data/Either": [
@@ -2484,6 +2495,17 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
           "name": "getOrNull"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/Either",
+          "name": "right"
         }
       ]
     },

@@ -55,7 +55,7 @@ export function arrayFindFirst_<A, B extends A>(
 ): Opt<B>
 export function arrayFindFirst_<A>(as: ROArray<A>, predicate: Predicate<A>): Opt<A>
 export function arrayFindFirst_<A>(as: ROArray<A>, predicate: Predicate<A>): Opt<A> {
-  return Chunk.from(as).find(predicate)
+  return Chunk.fromIterable(as).find(predicate)
 }
 
 /**

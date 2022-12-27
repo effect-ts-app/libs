@@ -50,13 +50,13 @@ export function makeAwesome<T, T2 extends T>(refinement: Refinement<T, T2>, name
 
 // The idea is that such refinements are dynamic
 export interface Collect<A, B extends A> {
-  (a: A): Maybe<B>
+  (a: A): Opt<B>
 }
 
 /**
  * @tsplus fluent function as
  */
-export function asMaybe<T, T2 extends T>(collect: Collect<T, T2>, name: string) {
+export function asOpt<T, T2 extends T>(collect: Collect<T, T2>, name: string) {
   return flow(collect, _ => _.encaseInEither(() => new InvalidStateError({ message: `Cannot be ${name}` })))
 }
 

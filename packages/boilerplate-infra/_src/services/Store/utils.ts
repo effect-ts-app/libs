@@ -14,7 +14,7 @@ export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
     _etag: objectHash(e)
   }) as any
 export const makeUpdateETag = (name: string) =>
-  <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Maybe<E>) =>
+  <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Opt<E>) =>
     Effect.gen(function*($) {
       if (current.isSome() && current.value._etag !== e._etag) {
         return yield* $(

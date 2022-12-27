@@ -355,9 +355,9 @@ export function makeRequestParsers<
 type Decode<A> = (u: unknown) => Effect<never, unknown, A>
 
 export interface RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  parseHeaders: Decode<Maybe<HeaderA>>
-  parseQuery: Decode<Maybe<QueryA>>
-  parseBody: Decode<Maybe<BodyA>>
-  parsePath: Decode<Maybe<PathA>>
-  parseCookie: Decode<Maybe<CookieA>>
+  parseHeaders: Decode<Opt<HeaderA>>
+  parseQuery: Decode<Opt<QueryA>>
+  parseBody: Decode<Opt<BodyA>>
+  parsePath: Decode<Opt<PathA>>
+  parseCookie: Decode<Opt<CookieA>>
 }

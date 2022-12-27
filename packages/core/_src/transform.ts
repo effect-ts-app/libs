@@ -66,7 +66,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      return encodeOptsAsNullable_(O.toNullable(value), cacheMap)
+      return encodeOptsAsNullable_(O.getOrNull(value), cacheMap)
     }
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)

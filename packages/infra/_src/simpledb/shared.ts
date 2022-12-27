@@ -76,7 +76,7 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => Effect<never, never, Maybe<T>>
+  find: (k: TKey) => Effect<never, never, Opt<T>>
   set: (k: TKey, v: T) => Effect<never, never, void>
 }
 

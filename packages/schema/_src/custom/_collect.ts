@@ -13,7 +13,7 @@ export interface CollectAnnotations {
   >
 }
 
-export const interpreters: ((schema: S.SchemaAny) => Maybe<() => any>)[] = [
+export const interpreters: ((schema: S.SchemaAny) => Opt<() => any>)[] = [
   Maybe.partial(
     miss =>
       (schema: S.SchemaAny): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {

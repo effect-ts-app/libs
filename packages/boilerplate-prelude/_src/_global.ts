@@ -23,10 +23,6 @@ import { Pure, PureEnv, PureEnvEnv } from "@effect-ts-app/boilerplate-prelude/_e
 /**
  * @tsplus global
  */
-import { flow, pipe, tupled } from "@effect-ts-app/boilerplate-prelude/Function"
-/**
- * @tsplus global
- */
 import { exhaustiveMatch, exhaustiveMatch_, spread, spreadS } from "@effect-ts-app/boilerplate-prelude/utils"
 /**
  * @tsplus global
@@ -51,7 +47,6 @@ import {
   // Queue,
   Record,
   // Ref,
-  ROArray,
   ROMap,
   ROSet,
   // Schedule,

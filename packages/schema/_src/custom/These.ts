@@ -10,7 +10,7 @@ import { _A, _E } from "@effect-ts/core/Effect"
 export class These<E, A> {
   readonly [_E]!: () => E
   readonly [_A]!: () => A
-  constructor(readonly effect: Either<E, Tp.Tuple<[A, Maybe<E>]>>) {}
+  constructor(readonly effect: Either<E, Tp.Tuple<[A, Opt<E>]>>) {}
 }
 
 export function succeed<A>(a: A) {
@@ -33,7 +33,7 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
     self.effect.fold(
-      (x): Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Maybe<E1 | E2 | E3>]>> => onFail(x).effect,
+      (x): Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Opt<E1 | E2 | E3>]>> => onFail(x).effect,
       ({ tuple: [result, warnings] }) =>
         warnings._tag === "None"
           ? onSuccess(result).effect
@@ -80,7 +80,7 @@ export function mapError<E0, E>(
 
 export function chain_<E0, A0, E, A>(
   self: These<E0, A0>,
-  f: (a: A0, w: Maybe<E0>) => These<E, A>
+  f: (a: A0, w: Opt<E0>) => These<E, A>
 ) {
   return foldM_(
     self,
@@ -90,10 +90,10 @@ export function chain_<E0, A0, E, A>(
   )
 }
 
-export function chain<E0, A0, E, A>(f: (a: A0, w: Maybe<E0>) => These<E, A>) {
+export function chain<E0, A0, E, A>(f: (a: A0, w: Opt<E0>) => These<E, A>) {
   return (self: These<E0, A0>) => chain_(self, f)
 }
 
-export function result<E, A>(self: These<E, A>): Either<E, Tp.Tuple<[A, Maybe<E>]>> {
+export function result<E, A>(self: These<E, A>): Either<E, Tp.Tuple<[A, Opt<E>]>> {
   return self.effect
 }

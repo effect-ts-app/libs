@@ -52,7 +52,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .mapMaybe(({ _id }) => _id)
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       return Effect.gen(function*($) {
         const version = currentVersion
           .map(cv => (parseInt(cv) + 1).toString())

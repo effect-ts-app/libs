@@ -113,7 +113,7 @@ function convertDep(x: any) {
   return typeof x !== "object" || x === null
     ? x
     : O.isSome(x) || O.isNone(x)
-    ? O.toNullable(x)
+    ? O.getOrNull(x)
     : Ei.isLeft(x)
     ? x.left
     : Ei.isRight(x)

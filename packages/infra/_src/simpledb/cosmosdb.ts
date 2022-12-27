@@ -76,7 +76,7 @@ WHERE (
         .map(Maybe.map(_ => _.id))
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       return Effect.gen(function*($) {
         const version = "_etag" // we get this from the etag anyway.
 

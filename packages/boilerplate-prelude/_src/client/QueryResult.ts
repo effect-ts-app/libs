@@ -13,7 +13,7 @@ export class Loading extends Tagged("Loading")<{}> {}
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: Either<E, A>
-  readonly previous: Maybe<A>
+  readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(a: A) {
     return new Refreshing<E, A>({ current: Either.right(a), previous: Maybe.none })
@@ -31,7 +31,7 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
 
 export class Done<E, A> extends Tagged("Done")<{
   readonly current: Either<E, A>
-  readonly previous: Maybe<A>
+  readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {
     return new Done<E, A>({ current: Either.right(a), previous: Maybe.none })

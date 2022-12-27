@@ -28,7 +28,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
  * @tsplus fluent Maybe encaseInEffect
  */
 export function encaseMaybeInEffect_<E, A>(
-  o: Maybe<A>,
+  o: Opt<A>,
   onError: Lazy<E>
 ): Effect<never, E, A> {
   return o.fold(() => Effect.fail(onError()), Effect.succeed)
@@ -43,7 +43,7 @@ export const EitherasEffect = Effect.fromEither
  * @tsplus fluent Maybe encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
-  o: Maybe<A>,
+  o: Opt<A>,
   onError: Lazy<E>
 ): Either<E, A> {
   return o.fold(() => Either.left(onError()), Either.right)
@@ -107,9 +107,9 @@ export function accessServicesM<T extends Record<string, Tag<any>>>(services: T)
  * @tsplus getter effect/core/io/Effect toNullable
  */
 export function toNullable<R, E, A>(
-  self: Effect<R, E, Maybe<A>>
+  self: Effect<R, E, Opt<A>>
 ) {
-  return self.map(_ => _.toNullable)
+  return self.map(_ => _.getOrNull)
 }
 
 /**
@@ -171,7 +171,7 @@ export const asUnitE = asUnit
  * @tsplus getter Maybe toOption
  * @tsplus static ets/Maybe.Ops toOption
  */
-export function toOption<A>(o: Maybe<A>): Option.Option<A> {
+export function toOption<A>(o: Opt<A>): Option.Option<A> {
   return o._tag === "None" ? Option.none : Option.some(o.value)
 }
 
