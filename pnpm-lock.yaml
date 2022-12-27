@@ -188,11 +188,12 @@ importers:
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': '*'
       '@effect/cache': ^0.0.4
-      '@effect/core': ^0.0.16
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
       '@sentry/node': ^7.28.1
-      '@tsplus/stdlib': ^0.2.8
       '@types/express': ^4.17.15
       '@types/node': ~18.11.12
       '@types/redis': ^2.8.32
@@ -217,8 +218,9 @@ importers:
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
       '@effect/cache': 0.0.4_7kikn4jap3advk4vkjfpcm7hli
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
       change-case: 4.1.2
       cross-fetch: 3.1.5
       faker: 5.5.3
@@ -255,8 +257,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/core': ^0.0.16
-      '@tsplus/stdlib': ^0.2.8
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.0
@@ -280,8 +283,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
       date-fns: 2.29.3
       lodash: 4.17.21
       nanoid: 4.0.0
@@ -347,9 +351,10 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/core': ^0.0.16
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
       '@rollup/pluginutils': ^5.0.2
-      '@tsplus/stdlib': ^0.2.8
       '@types/node': ~18.11.12
       json5: ^2.2.2
       query-string: ^8.1.0
@@ -367,8 +372,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
       query-string: 8.1.0
       swrv: 1.0.1_vue@3.2.45
       vue: 3.2.45
@@ -541,8 +547,9 @@ importers:
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@effect-ts/core': ^0.60.5
       '@effect-ts/system': ^0.57.5
-      '@effect/core': ^0.0.16
-      '@tsplus/stdlib': '*'
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
       '@types/react': ^18.0.26
       cross-fetch: ^3.1.5
       eslint-plugin-react: ^7.31.11
@@ -553,8 +560,9 @@ importers:
     dependencies:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
       cross-fetch: 3.1.5
       path-parser: 6.1.0
     devDependencies:
@@ -574,8 +582,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/core': ^0.0.16
-      '@tsplus/stdlib': '*'
+      '@effect/io': ^0.0.42
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.30
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -591,8 +600,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
+      '@effect/io': 0.0.42
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0

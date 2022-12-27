@@ -54,7 +54,7 @@ export const interpreters: ((
               Th.chain_(
                 pipe(
                   self(u, env),
-                  Th.mapError(e => S.compositionE(Chunk.single(S.prevE(e))))
+                  Th.mapError(e => S.compositionE(Chunk.make(S.prevE(e))))
                 ),
                 (a, w) =>
                   pipe(
@@ -70,7 +70,7 @@ export const interpreters: ((
                           : Th.warn(a, e),
                       e =>
                         w._tag === "None"
-                          ? Th.fail(S.compositionE(Chunk.single(S.nextE(e))))
+                          ? Th.fail(S.compositionE(Chunk.make(S.nextE(e))))
                           : Th.fail(S.compositionE(w.value.errors.append(S.nextE(e))))
                     )
                   )
@@ -90,7 +90,7 @@ export const interpreters: ((
                 : Th.chain_(
                   pipe(
                     self(u, env),
-                    Th.mapError(e => S.compositionE(Chunk.single(S.prevE(e))))
+                    Th.mapError(e => S.compositionE(Chunk.make(S.prevE(e))))
                   ),
                   (
                     a,
@@ -108,7 +108,7 @@ export const interpreters: ((
                       : Th.fail(
                         S.compositionE(
                           w._tag === "None"
-                            ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
+                            ? Chunk.make(S.nextE(S.refinementE(schema.error(a))))
                             : w.value.errors.append(
                               S.nextE(S.refinementE(schema.error(a)))
                             )

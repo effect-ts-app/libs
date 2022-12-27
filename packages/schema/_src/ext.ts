@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Lazy } from "@effect-ts-app/core/Function"
 import { constant, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
 import * as Eq from "@effect-ts/core/Equal"
 import * as Ord from "@effect-ts/core/Ord"
 import type { ComputeFlat } from "@effect-ts/core/Utils"
-import type { None, Some } from "@tsplus/stdlib/data/Maybe"
+import type { None, Some } from "@fp-ts/data/Option"
 import { v4 } from "uuid"
 
 import type { FromProperty } from "./_api.js"
@@ -107,7 +106,7 @@ export function makeUuid() {
 }
 
 type LazyPartial<T> = {
-  [P in keyof T]?: Lazy<T[P]>
+  [P in keyof T]?: LazyArg<T[P]>
 }
 
 export function withDefaultConstructorFields<

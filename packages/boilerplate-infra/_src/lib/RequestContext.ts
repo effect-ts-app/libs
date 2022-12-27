@@ -1,5 +1,3 @@
-import { Tag } from "@tsplus/stdlib/service/Tag"
-
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 

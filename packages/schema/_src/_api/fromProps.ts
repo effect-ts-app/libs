@@ -426,7 +426,7 @@ export function fromProps<Props extends FromPropertyRecord>(
   ): Th.These<any, ShapeFromFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        S.compositionE(Chunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
     let missingKeys = Chunk.empty<string>()
@@ -438,8 +438,8 @@ export function fromProps<Props extends FromPropertyRecord>(
     if (!missingKeys.isEmpty) {
       return Th.fail(
         S.compositionE(
-          Chunk.single(
-            S.nextE(S.compositionE(Chunk.single(S.prevE(S.missingKeysE(missingKeys)))))
+          Chunk.make(
+            S.nextE(S.compositionE(Chunk.make(S.prevE(S.missingKeysE(missingKeys)))))
           )
         )
       )
@@ -523,8 +523,8 @@ export function fromProps<Props extends FromPropertyRecord>(
       return Th.succeed(result as ShapeFromFromProperties<Props>)
     }
 
-    const error_ = S.compositionE(Chunk.single(S.nextE(S.structE(errors))))
-    const error = hasRequired ? S.compositionE(Chunk.single(S.nextE(error_))) : error_
+    const error_ = S.compositionE(Chunk.make(S.nextE(S.structE(errors))))
+    const error = hasRequired ? S.compositionE(Chunk.make(S.nextE(error_))) : error_
 
     if (isError) {
       return Th.fail(error)

@@ -9,7 +9,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {
-      return c.findMap(codeFilter(filter)).map(Chunk.single).getOrElse(() => Chunk.empty())
+      return c.findMap(codeFilter(filter)).map(Chunk.make).getOrElse(() => Chunk.empty())
     }
     let r: Collection<T> = c.collect(codeFilter(filter))
     if (skip) {

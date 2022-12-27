@@ -1,5 +1,3 @@
-import "@effect-ts-app/core/_ext/Prelude.ext"
-
 // import "./EffectOpt.ext.js"
 import "./builtIn.js"
 import "./date.js"
@@ -8,11 +6,8 @@ import "./Lens.ext.js"
 import "./Ref.js"
 import "./Schema.ext.js"
 
-import { FiberRef, Option } from "@effect-ts/core"
 import { asUnit } from "@effect/io/Effect"
 
-import type { Lazy } from "@effect-ts/core/Function"
-import { ImmutableMap } from "@tsplus/stdlib/collections/ImmutableMap"
 import "./refinements.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
@@ -30,7 +25,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
  */
 export function encaseMaybeInEffect_<E, A>(
   o: Opt<A>,
-  onError: Lazy<E>
+  onError: LazyArg<E>
 ): Effect<never, E, A> {
   return o.fold(() => Effect.fail(onError()), Effect.succeed)
 }
@@ -45,7 +40,7 @@ export const EitherasEffect = Effect.fromEither
  */
 export function encaseMaybeEither_<E, A>(
   o: Opt<A>,
-  onError: Lazy<E>
+  onError: LazyArg<E>
 ): Either<E, A> {
   return o.fold(() => Either.left(onError()), Either.right)
 }
@@ -195,7 +190,7 @@ export function logAnnotates(kvps: Record<string, string>) {
         Effect.suspendSucceed(() =>
           effect.apply(
             FiberRef.currentLogAnnotations.locally(
-              ImmutableMap.from([...annotations, ...kvps.$$.entries])
+              new Map([...annotations, ...kvps.$$.entries])
             )
           )
         )

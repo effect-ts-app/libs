@@ -465,7 +465,7 @@ export function props<Props extends PropertyRecord>(
   ): Th.These<ParserErrorFromProperties<Props>, ShapeFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk.single(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        S.compositionE(Chunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
     let missingKeys = Chunk.empty<string>()
@@ -478,8 +478,8 @@ export function props<Props extends PropertyRecord>(
       // @ts-expect-error
       return Th.fail(
         S.compositionE(
-          Chunk.single(
-            S.nextE(S.compositionE(Chunk.single(S.prevE(S.missingKeysE(missingKeys)))))
+          Chunk.make(
+            S.nextE(S.compositionE(Chunk.make(S.prevE(S.missingKeysE(missingKeys)))))
           )
         )
       )
@@ -562,8 +562,8 @@ export function props<Props extends PropertyRecord>(
       return Th.succeed(result as ShapeFromProperties<Props>)
     }
 
-    const error_ = S.compositionE(Chunk.single(S.nextE(S.structE(errors))))
-    const error = hasRequired ? S.compositionE(Chunk.single(S.nextE(error_))) : error_
+    const error_ = S.compositionE(Chunk.make(S.nextE(S.structE(errors))))
+    const error = hasRequired ? S.compositionE(Chunk.make(S.nextE(error_))) : error_
 
     if (isError) {
       // @ts-expect-error

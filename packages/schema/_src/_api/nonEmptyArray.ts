@@ -10,7 +10,7 @@ import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 import { minLengthIdentifier } from "./length.js"
 
-export function NonEmptyReadonlyArray<ParsedShape, ConstructorInput, Encoded, Api>(
+export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): S.DefaultSchema<
   unknown,

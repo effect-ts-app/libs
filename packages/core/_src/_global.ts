@@ -32,6 +32,11 @@ import { Effect } from "@effect/io/Effect"
 /**
  * @tsplus global
  */
+import { FiberRef } from "@effect/io/FiberRef"
+
+/**
+ * @tsplus global
+ */
 import { Layer } from "@effect/io/Layer"
 
 /**
@@ -94,6 +99,12 @@ import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
  */
 import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
 
+/**
+ * @tsplus global
+ */
+import { Duration as DUR } from "@fp-ts/data/Duration"
+
+import "./_ext/Prelude.ext.js"
 import "./Array.js"
 import "./Chunk.js"
 import "./global.js"

@@ -1,4 +1,5 @@
 /**
+ * @tsplus type fp-ts/data/ReadonlyArray
  * @tsplus type ReadonlyArray
  * @tsplus type Iterable
  * @tsplus companion fp-ts/data/ReadonlyArray.Ops

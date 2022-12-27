@@ -4,11 +4,6 @@
 //  */
 // import { Predicate } from "@effect-ts/core/Function"
 
-/**
- * @tsplus global
- */
-import { DUR } from "@effect-ts-app/boilerplate-prelude/duration"
-
 /* eslint-disable unused-imports/no-unused-imports */
 /**
  * @tsplus global
@@ -73,3 +68,4 @@ import "@effect-ts-app/boilerplate-prelude/_ext/Prelude.ext"
 import "@effect-ts-app/core/_global"
 import "@effect-ts-app/core/fluent/_ext/awesome/lib"
 import "@effect-ts-app/core/Prelude"
+import "@effect-ts-app/schema/_global"
