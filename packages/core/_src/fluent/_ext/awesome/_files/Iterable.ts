@@ -7,7 +7,7 @@ export function ext_forEachPar<A, R, E, B>(
   as: Iterable<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEachPar(Chunk.from(as), f)
+  return Effect.forEachPar(Chunk.fromIterable(as), f)
 }
 
 /**
@@ -20,7 +20,7 @@ export function ext_forEach<A, R, E, B>(
   as: Iterable<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEach(Chunk.from(as), f)
+  return Effect.forEach(Chunk.fromIterable(as), f)
 }
 
 /**
@@ -29,7 +29,7 @@ export function ext_forEach<A, R, E, B>(
  * @tsplus fluent ets/Set collectAll
  */
 export function ext_collectAll<A, R, E>(as: Iterable<Effect<R, E, A>>) {
-  return Effect.collectAll(Chunk.from(as))
+  return Effect.collectAll(Chunk.fromIterable(as))
 }
 
 // /**
@@ -50,4 +50,4 @@ export function ext_collectAll<A, R, E>(as: Iterable<Effect<R, E, A>>) {
  * @tsplus fluent ets/Array toChunk
  * @tsplus fluent ets/Set toChunk
  */
-export const ext_from = Chunk.from
+export const ext_from = Chunk.fromIterable

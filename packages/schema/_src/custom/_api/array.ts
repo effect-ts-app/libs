@@ -31,7 +31,7 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
       (u): u is readonly ParsedShape[] => Array.isArray(u) && u.every(guardSelf)
     ),
     S.parser((u: Chunk<ParsedShape>) => Th.succeed(u.toArray as readonly ParsedShape[])),
-    S.encoder((u): Chunk<ParsedShape> => Chunk.from(u)),
+    S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
     S.arbitrary(_ => _.array(arbitrarySelf(_)))
   )
 

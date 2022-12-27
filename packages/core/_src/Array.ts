@@ -17,6 +17,17 @@ export const { isArray } = Array
 // }
 
 /**
+ * @tsplus pipeable ReadonlyArray findFirstMap
+ * @tsplus pipeable NonEmptyArray findFirstMap
+ * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
+ */
+export function findFirstMap<A, B>(
+  f: (a: A) => Option<B>
+) {
+  return (a: ReadonlyArray<A>) => a.findFirst((a): a is B => f(a).isSome())
+}
+
+/**
  * @tsplus pipeable ReadonlyArray sortByO
  * @tsplus pipeable NonEmptyArray sortByO
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO

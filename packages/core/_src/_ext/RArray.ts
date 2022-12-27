@@ -1,6 +1,4 @@
 import { concreteChunkId } from "@tsplus/stdlib/collections/Chunk"
-import type { Array as ROArray } from "../Prelude.js"
-import { Array as ROArrayOps } from "../Prelude.js"
 
 /**
  * Returns the first element that satisfies the predicate.
@@ -35,14 +33,14 @@ export function findMap<A, B>(f: (a: A) => Opt<B>): (self: Chunk<A>) => Opt<B> {
  * @tsplus fluent ets/Array collect
  */
 export function arrayCollect<A, B>(ar: readonly A[], collector: (a: A) => Opt<B>): readonly B[] {
-  return Chunk.from(ar).collect(collector).toArray
+  return Chunk.fromIterable(ar).collect(collector).toArray
 }
 
 /**
  * @tsplus fluent ets/Array findMap
  */
 export function arrayFindMap<A, B>(ar: readonly A[], collector: (a: A) => Opt<B>): Opt<B> {
-  return Chunk.from(ar).findMap(collector)
+  return Chunk.fromIterable(ar).findMap(collector)
 }
 
 /**
@@ -66,7 +64,7 @@ export function concat_<A, B>(
   self: ROArray<A>,
   that: ROArray<B>
 ): ROArray<A | B> {
-  return ROArrayOps.concat_(self, that)
+  return ROArray.concat(that)(self)
 }
 
 /**
@@ -85,7 +83,7 @@ export const concatOperator: <A>(
  * @tsplus operator ets/Array + 1.0
  */
 export function prependOperatorStrict<A>(a: A, self: ROArray<A>): ROArray<A> {
-  return ROArrayOps.prepend_(self, a)
+  return ROArray.prepend(a)(self)
 }
 
 /**

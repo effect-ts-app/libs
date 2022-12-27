@@ -229,7 +229,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         ({ r, ...rest }: any) => ({ ...rest, ...r } as T & { _rootId: string })
                       )
                     )
-                  return Chunk.from(v)
+                  return Chunk.fromIterable(v)
                 }).instrument("cosmos.filterJoinSelect")
                 .apply(annotate),
             /**

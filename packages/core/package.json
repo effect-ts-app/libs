@@ -325,16 +325,6 @@
         "default": "./_cjs/fluent/_ext/Lens.cjs"
       }
     },
-    "./fluent/_ext/Maybe": {
-      "import": {
-        "types": "./dist/fluent/_ext/Maybe.d.ts",
-        "default": "./dist/fluent/_ext/Maybe.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/Maybe.d.ts",
-        "default": "./_cjs/fluent/_ext/Maybe.cjs"
-      }
-    },
     "./fluent/_ext/Set": {
       "import": {
         "types": "./dist/fluent/_ext/Set.d.ts",
@@ -343,16 +333,6 @@
       "require": {
         "types": "./dist/fluent/_ext/Set.d.ts",
         "default": "./_cjs/fluent/_ext/Set.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/_files/Array": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/Array.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/Array.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/Array.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/Array.cjs"
       }
     },
     "./fluent/_ext/awesome/_files/Iterable": {

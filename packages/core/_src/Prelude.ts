@@ -23,7 +23,7 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 // import type * as QUEUE from "@effect-ts/core/Effect/Queue"
 // import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
-// import type * as O from "@effect-ts-app/core/Opt"
+// import type * as O from "@effect-ts-app/core/Option"
 // import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
 // import type * as SO from "@effect-ts-app/core/SyncOpt"
@@ -128,7 +128,7 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 // export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 
 // export namespace Opt {
-//   export * from "@effect-ts-app/core/Opt"
+//   export * from "@effect-ts-app/core/Option"
 // }
 // /** @tsplus type ets/Opt */
 // export type Opt<A> = O.Opt<A>

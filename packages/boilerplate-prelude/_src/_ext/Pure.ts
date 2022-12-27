@@ -1,5 +1,3 @@
-import { Chunk, Either, Ref } from "@effect-ts/core"
-import type { Collection } from "@effect-ts/core/Prelude"
 import type { ServiceTagged } from "../service.js"
 
 const S1 = Symbol()
@@ -149,7 +147,7 @@ export function log<W>(w: W): PureLogT<W> {
 /**
  * @tsplus static Pure.Ops logMany
  */
-export function logMany<W>(w: Collection<W>): PureLogT<W> {
+export function logMany<W>(w: Iterable<W>): PureLogT<W> {
   return castTag<W, unknown, never>().withEffect(_ => _.env.log.update(l => l.concat(w.toChunk)))
 }
 

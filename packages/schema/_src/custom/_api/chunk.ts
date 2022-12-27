@@ -72,7 +72,7 @@ export function fromChunk<
       }
       return Th.succeed(b.build())
     }),
-    S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.from(i))),
+    S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.fromIterable(i))),
     S.encoder(_ => _.map(encode).toArray as readonly Encoded[]),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,

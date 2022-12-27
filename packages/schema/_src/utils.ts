@@ -102,13 +102,13 @@ export function domainResponse<A>(errors: DomainError[], success: () => A) {
 
 export function domainResponse2<A>(errors: MO.AnyError[], success: () => A) {
   if (errors.length) {
-    return Th.fail(MO.compositionE(Chunk.from(errors)))
+    return Th.fail(MO.compositionE(Chunk.fromIterable(errors)))
   }
   return Th.succeed(success())
 }
 
 export function domainError(errors: DomainError[]) {
-  return MO.compositionE(Chunk.from([MO.nextE(MO.structE(Chunk.from(errors)))]))
+  return MO.compositionE(Chunk.fromIterable([MO.nextE(MO.structE(Chunk.fromIterable(errors)))]))
 }
 
 export function domainE(key: string, message: string) {

@@ -114,7 +114,7 @@ export const Client = (fetchApi: typeof fetch) =>
       }
 
       return makeAbort.flatMap(abort =>
-        Effect.tryCatchPromiseWithInterrupt(
+        Effect.tryCatchPromiseInterrupt(
           () => makeFetch(abort),
           err =>
             H.isHttpResponseError(err)

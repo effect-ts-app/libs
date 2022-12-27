@@ -40,6 +40,6 @@ export function results<Key, Error, Value>(
         values.push([key, value.exit])
       }
     }
-    return Chunk.from(values)
+    return Chunk.fromIterable(values)
   })
 }

@@ -37,6 +37,11 @@ import { Layer } from "@effect/io/Layer"
 /**
  * @tsplus global
  */
+import { Ref } from "@effect/io/Ref"
+
+/**
+ * @tsplus global
+ */
 import { Scope } from "@effect/io/Scope"
 
 /**

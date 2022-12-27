@@ -151,7 +151,7 @@ export function* _chunk_<T>(items_: Iterable<T>, size: number) {
  * @tsplus fluent Collection chunk
  */
 export function chunk_<T>(items_: Iterable<T>, size: number) {
-  return Chunk.from(_chunk_(items_, size))
+  return Chunk.fromIterable(_chunk_(items_, size))
 }
 
 /**
@@ -159,7 +159,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
  * @tsplus getter Collection toChunk
  */
 export function toChunk<T>(items: Iterable<T>) {
-  return Chunk.from(items)
+  return Chunk.fromIterable(items)
 }
 
 /**
