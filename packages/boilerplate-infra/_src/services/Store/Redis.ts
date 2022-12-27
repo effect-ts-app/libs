@@ -22,7 +22,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
-            const m = yield* $(existing ?? Effect(ROMap.empty))
+            const m = yield* $(existing ?? Effect.succeed(ROMap.empty))
             yield* $(
               RedisClient.set(key, JSON.stringify({ data: [...m.values()].map(e => makeETag(e)) }))
                 .orDie

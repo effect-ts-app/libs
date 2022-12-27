@@ -134,15 +134,15 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
   return (r: FetchResponse<T>): Effect<R, E, FetchResponse<A>> => {
     return Effect.struct({
       body: map(r.body),
-      headers: Effect(r.headers),
-      status: Effect(r.status)
+      headers: Effect.succeed(r.headers),
+      status: Effect.succeed(r.status)
     })
   }
 }
 export type FetchResponse<T> = { body: T; headers: H.Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
-export const EmptyResponseM = Effect(EmptyResponse)
+export const EmptyResponseM = Effect.succeed(EmptyResponse)
 const EmptyResponseMThunk_ = constant(EmptyResponseM)
 export function EmptyResponseMThunk<T>(): Effect<
   unknown,
@@ -158,5 +158,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<R, E, FetchResponse<A | null>>) {
-  return eff.flatMap(r => r.body === null ? Effect.die("Not found") : Effect(r.body))
+  return eff.flatMap(r => r.body === null ? Effect.die("Not found") : Effect.succeed(r.body))
 }

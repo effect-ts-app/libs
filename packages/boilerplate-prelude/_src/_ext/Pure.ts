@@ -165,7 +165,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
     ).map(
       (
         { log, state }
-      ) => tuple(log, Either(tuple(state, x)) as Either<E, readonly [S3, A]>)
+      ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
     )
   ).catchAll(
     err => Effect.serviceWith(tagg, env => tuple(env.env.log, Either.left(err) as Either<E, readonly [S3, A]>))
@@ -369,7 +369,7 @@ export const Pure: PureOps = {
 //       ).map(
 //         (
 //           { log, state }
-//         ) => tuple(log, Either(tuple(state, x)) as Either<E, readonly [S3, A]>)
+//         ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
 //       )
 //     ).catchAll(
 //       err =>

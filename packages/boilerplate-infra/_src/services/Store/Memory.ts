@@ -30,7 +30,7 @@ export const makeMemoryStore = () => ({
   ) =>
     Effect.gen(function*($) {
       const updateETag = makeUpdateETag(name)
-      const items = yield* $(existing ?? Effect(ROMap.empty))
+      const items = yield* $(existing ?? Effect.succeed(ROMap.empty))
       const store = yield* $(
         Ref.make<ROMap<Id, PM>>(
           ROMap.make([...items.entries()].map(([id, e]) => [id, makeETag(e)]))

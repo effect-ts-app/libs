@@ -43,7 +43,7 @@ Layer.fromEffect(UserProfile)(
   )
   return (
     cfg.AUTH_DISABLED
-      ? Effect(null)
+      ? Effect.succeed(null)
       : // eslint-disable-next-line @typescript-eslint/no-empty-function
         handleJwt(req, res, () => scopes(req, res, () => {}))
   ).zipRight(

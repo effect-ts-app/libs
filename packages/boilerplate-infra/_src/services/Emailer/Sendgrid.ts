@@ -25,7 +25,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
               [sgMail.ClientResponse, Record<string, unknown>]
             >(
               cb =>
-                void sgMail.send(renderedMsg, false, (err, result) => err ? cb(Effect.fail(err)) : cb(Effect(result)))
+                void sgMail.send(renderedMsg, false, (err, result) => err ? cb(Effect.fail(err)) : cb(Effect.succeed(result)))
             )
           )
 

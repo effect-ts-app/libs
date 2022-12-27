@@ -17,7 +17,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect(existing)))
+        const store = yield* $(make("test", Effect.succeed(existing)))
 
         const result1 = yield* $(store.set({ id: "1", a: "string", _etag: undefined }))
         const result2_1 = yield* $(
@@ -51,7 +51,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect(existing)))
+        const store = yield* $(make("test", Effect.succeed(existing)))
 
         const [result1] = yield* $(
           store.bulkSet([{ id: "1", a: "string", _etag: undefined }])
@@ -89,7 +89,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect(existing)))
+        const store = yield* $(make("test", Effect.succeed(existing)))
 
         const item1 = { id: "1", a: "string", _etag: undefined }
         const item2 = { id: "2", a: "string", _etag: undefined }

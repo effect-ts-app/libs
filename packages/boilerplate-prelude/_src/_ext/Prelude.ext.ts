@@ -160,7 +160,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect(f(err)))
+  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect.succeed(f(err)))
 }
 
 /**

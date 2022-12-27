@@ -1,5 +1,6 @@
 import type * as Eq from "@effect-ts/core/Equal"
 
+import { Option } from "@effect-ts/core"
 import { flow } from "./Function.js"
 import type * as Ord from "./Order.js"
 import {
@@ -21,6 +22,10 @@ import {
 
 export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
+}
+
+function convertOpt<A>(a: Opt<A>) {
+  return a.isSome() ? Option.some(a.value) : Option.none
 }
 
 /**
@@ -76,7 +81,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Opt.Opt<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Opt<A>) => flow(filterMap__<A>(a => convertOpt(f(a))), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend

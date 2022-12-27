@@ -147,7 +147,7 @@ export function project<
   self: Repository<T, PM, Evt, Id, ItemType>,
   map: { filter?: Filter<PM>; collect: (t: PM) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.projectEffect(Effect(map))
+  return self.projectEffect(Effect.succeed(map))
 }
 
 
@@ -226,7 +226,7 @@ export function query<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.queryEffect(Effect(map))
+  return self.queryEffect(Effect.succeed(map))
 }
 
 /**
@@ -244,7 +244,7 @@ export function queryOne<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect: (t: T) => Opt<S> }
 ) {
-  return self.queryOneEffect(Effect(map))
+  return self.queryOneEffect(Effect.succeed(map))
 }
 
 /**
@@ -284,7 +284,7 @@ export function queryAndSavePure<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.queryAndSavePureEffect(Effect(map))
+  return self.queryAndSavePureEffect(Effect.succeed(map))
 }
 
 /**
@@ -438,14 +438,14 @@ export interface OneDSLExt<T, Evt> {
  * @tsplus fluent DSLExt updateWith
  */
 export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T, Evt>, upd: (item: S1) => S2) {
-  return self.update((_: S1) => Effect(upd(_)))
+  return self.update((_: S1) => Effect.succeed(upd(_)))
 }
 
 /**
  * @tsplus fluent DSLExt updateWith
  */
 export function updateWith<T, Evt, S1 extends T, S2 extends T>(self: AllDSL<T, Evt>, upd: (item: Chunk<S1>) => Collection<S2>) {
-  return self.update((_: Chunk<S1>) => Effect(upd(_)))
+  return self.update((_: Chunk<S1>) => Effect.succeed(upd(_)))
 }
 
 export function makeOneDSL<T, Evt>(): OneDSL<T, Evt>  {
@@ -502,12 +502,12 @@ export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, E
 
 
 export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return (items: Collection<T>) => Effect(items.toNonEmptyArray).flatMapMaybe(fn)
+  return (items: Collection<T>) => Effect.succeed(items.toNonEmptyArray).flatMapMaybe(fn)
 }
 
 /**
  * @tsplus fluent Collection ifAny
  */
 export function ifAny_<T, R, E, A>(items: Collection<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return Effect(items.toNonEmptyArray).flatMapMaybe(fn)
+  return Effect.succeed(items.toNonEmptyArray).flatMapMaybe(fn)
 }

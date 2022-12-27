@@ -1,14 +1,13 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import type { Lazy } from "./Function.js"
+import * as Eff from "@effect/io/Effect"
 import { curry, flow, pipe } from "./Function.js"
 
 /**
  * @tsplus static effect/io/Effect.Ops flatMapEither
  */
-export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
-  Effect.flatMap((a: A2) => Effect.fromEither(ei(a)))
+export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) => Eff.flatMap((a: A2) => Effect.fromEither(ei(a)))
 
 /**
  * @tsplus fluent effect/io/Effect flatMapOpt
@@ -19,7 +18,7 @@ export function flatMapOpt<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap(d =>
     d.match(
-      () => Effect(Opt.none),
+      () => Effect.succeed(Opt.none),
       _ => fm(_).map(Opt.some)
     )
   )
@@ -34,7 +33,7 @@ export function tapOpt<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap(d =>
     d.match(
-      () => Effect(Opt.none),
+      () => Effect.succeed(Opt.none),
       _ => fm(_).map(() => Opt.some(_))
     )
   )
@@ -49,7 +48,7 @@ export function zipRightOpt<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap(d =>
     d.match(
-      () => Effect(Opt.none),
+      () => Effect.succeed(Opt.none),
       _ => fm.map(() => Opt.some(_))
     )
   )
@@ -76,11 +75,11 @@ export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
  * @tsplus static effect/io/Effect.Ops tryCatchPromiseWithInterrupt
  */
 export function tryCatchPromiseWithInterrupt<E, A>(
-  promise: Lazy<Promise<A>>,
+  promise: LazyArg<Promise<A>>,
   onReject: (reason: unknown) => E,
   canceller: () => void
 ): Effect<never, E, A> {
-  return Effect.asyncInterrupt(resolve => {
+  return Effect.asyncInterruptEither(resolve => {
     promise()
       .then(x => pipe(x, Effect.succeed, resolve))
       .catch(x => pipe(x, onReject, Effect.fail, resolve))
@@ -96,7 +95,7 @@ export const tapBoth_ = <R, E, A, R2, R3, E3>(
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
   g: (a: A) => Effect<R3, E3, any>
-) => pipe(self, Effect.tapError(f), Effect.tap(g))
+) => self.tapError(f).tap(g)
 export const tapBoth = <E, A, R2, R3, E3>(
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
@@ -111,20 +110,14 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   onError: (err: unknown) => Effect<ER, EE, EA>,
   onSuccess: (a: A) => Effect<SR, SE, SA>
 ) =>
-  pipe(
-    self.exit,
-    Effect.flatMap(
-      Exit.matchEffect(cause => {
-        const firstError = getFirstError(cause)
-        if (firstError) {
-          return pipe(
-            onError(firstError),
-            Effect.flatMap(() => Effect.failCause(cause))
-          )
-        }
-        return Effect.failCause(cause)
-      }, flow(Effect.succeed, Effect.tap(onSuccess)))
-    )
+  self.exit.flatMap(_ =>
+    _.matchEffect(cause => {
+      const firstError = getFirstError(cause)
+      if (firstError) {
+        return onError(firstError).flatMap(() => Effect.failCauseSync(() => cause))
+      }
+      return Effect.failCauseSync(() => cause)
+    }, _ => Effect.succeed(_).tap(onSuccess))
   )
 
 export function getFirstError<E>(cause: Cause<E>) {
@@ -146,29 +139,24 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   self: Effect<R, E, A>,
   onError: (err: unknown) => Effect<ER, EE, EA>
 ) =>
-  pipe(
-    self.exit,
-    Effect.flatMap(
-      Exit.matchEffect(cause => {
-        const firstError = getFirstError(cause)
-        if (firstError) {
-          return pipe(
-            onError(firstError),
-            Effect.flatMap(() => Effect.failCauseSync(cause))
-          )
-        }
-        return Effect.failCauseSync(cause)
-      }, Effect.succeed)
-    )
+  self.exit.flatMap(_ =>
+    _.matchEffect(cause => {
+      const firstError = getFirstError(cause)
+      if (firstError) {
+        return onError(firstError)
+          .flatMap(() => Effect.failCauseSync(() => cause))
+      }
+      return Effect.failCauseSync(() => cause)
+    }, Effect.succeed)
   )
 export function encaseOpt_<E, A>(
   o: Opt<A>,
-  onError: Lazy<E>
+  onError: LazyArg<E>
 ): Effect<never, E, A> {
   return o.match(() => Effect.fail(onError()), Effect.succeed)
 }
 
-export function encaseOpt<E>(onError: Lazy<E>) {
+export function encaseOpt<E>(onError: LazyArg<E>) {
   return <A>(o: Opt<A>) => encaseOpt_<E, A>(o, onError)
 }
 

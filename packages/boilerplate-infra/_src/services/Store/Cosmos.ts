@@ -311,7 +311,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect({
+                  return Effect.succeed({
                     ...e,
                     _etag: x.etag
                   })
@@ -341,7 +341,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             if (existing) {
               const m = yield* $(existing)
               yield* $(
-                Effect([...m.values()].toNonEmpty)
+                Effect.succeed([...m.values()].toNonEmpty)
                   .flatMapMaybe(a =>
                     s
                       .bulkSet(a)

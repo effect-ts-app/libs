@@ -57,7 +57,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
       if (warn._tag === "Some") {
         return Effect.fail(new CondemnException({ message: drawError(warn.value) }))
       }
-      return Effect(res.right.get(0))
+      return Effect.succeed(res.right.get(0))
     })
 }
 

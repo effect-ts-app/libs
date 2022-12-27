@@ -103,7 +103,7 @@ export function condemnCustom_<X, A>(
     if (warn._tag === "Some") {
       return Effect.fail(new CustomSchemaException(warn.value))
     }
-    return Effect(res.right.get(0))
+    return Effect.succeed(res.right.get(0))
   })
 }
 
@@ -126,7 +126,7 @@ export function condemn_<X, E, A>(
     } = y.right
     return w._tag === "Some"
       ? Effect.fail(w.value)
-      : Effect(a)
+      : Effect.succeed(a)
   })
 }
 
@@ -147,7 +147,7 @@ export function condemnLeft_<X, A>(
   if (warn._tag === "Some") {
     return Either.left(new CustomSchemaException(warn.value))
   }
-  return Either(res.right.get(0))
+  return Either.right(res.right.get(0))
 }
 
 export function condemnLeft<X, A>(self: Parser.Parser<X, AnyError, A>) {
@@ -696,7 +696,7 @@ export function validate<X, A>(
     } = y.right
     return w._tag === "Some"
       ? Either.left(new CustomSchemaException(w.value))
-      : Either(a)
+      : Either.right(a)
   }
 }
 

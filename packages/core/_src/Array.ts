@@ -19,6 +19,8 @@ export const { isArray } = Array
 /**
  * @tsplus static fp-ts/data/ReadonlyArray.Ops findFirstMap
  * @tsplus static ReadonlyArray.Ops findFirstMap
+ * @tsplus static Array.Ops findFirstMap
+ * @tsplus pipeable Array findFirstMap
  * @tsplus pipeable fp-ts/data/ReadonlyArray findFirstMap
  * @tsplus pipeable ReadonlyArray findFirstMap
  * @tsplus pipeable NonEmptyArray findFirstMap
@@ -190,7 +192,7 @@ export function sortWith<A>(na: NonEmptyReadonlyArray<A>, ord: Ord<A>) {
 /**
  * @tsplus static ets/NonEmptyArray __call
  */
-export const makeNA = ReadonlyArray.make
+export const makeNA = ROA.make
 
 /**
  * @tsplus fluent fp-ts/data/Chunk groupByT
@@ -237,6 +239,8 @@ export function toChunk<T>(items: Iterable<T>) {
 
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
+ * @tsplus getter Array toNonEmpty
+ * @tsplus getter fp-ts/data/ReadonlyArray toNonEmpty
  */
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) => a.length ? Opt.some(a as NonEmptyReadonlyArray<A>) : Opt.none
 
@@ -288,14 +292,14 @@ export function ext_NAforEachEffectPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEachPar(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
+  return Effect.forEachPar(f)(as).map(_ => _.toNonEmptyArray.value!)
 }
 
 /**
  * @tsplus fluent ets/NonEmptyArray forEachEffect
  */
 export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
-  return Effect.forEach(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
+  return Effect.forEach(f)(as).map(_ => _.toNonEmptyArray.value!)
 }
 
 /**
@@ -305,7 +309,7 @@ export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return Effect.forEachParWithIndex(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
+  return Effect.forEachParWithIndex(f)(as).map(_ => _.toNonEmptyArray.value!)
 }
 
 /**
@@ -315,7 +319,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return Effect.forEachWithIndex(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
+  return Effect.forEachWithIndex(f)(as).map(_ => _.toNonEmptyArray.value!)
 }
 
 /**

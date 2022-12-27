@@ -8,7 +8,7 @@ export function findFirstMap<A, B>(
   f: (a: A) => Opt<B>
 ) {
   return (as: Chunk<A>) => {
-    const ass = as.toReadonlyArray
+    const ass = as.toReadonlyArray()
     const len = ass.length
     for (let i = 0; i < len; i++) {
       const v = f(ass[i]!)
