@@ -3,7 +3,6 @@
 // tracing: off
 
 import { pretty } from "@effect-ts-app/core/utils"
-import { literal } from "@tsplus/stdlib/data/Function"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
@@ -39,7 +38,7 @@ export class NodeServerListenError {
   constructor(readonly error: Error) {}
 }
 
-export const ExpressAppConfigTag = literal("@effect-ts-app/express/AppConfig")
+export const ExpressAppConfigTag = "@effect-ts-app/express/AppConfig" as const
 
 export interface ExpressAppConfig {
   readonly _tag: typeof ExpressAppConfigTag

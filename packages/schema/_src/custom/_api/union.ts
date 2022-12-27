@@ -178,7 +178,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     reverse: D.Dictionary<string>
     values: readonly string[]
   }> = Object.keys(firstMemberTags).findFirstMap(tagField => {
-    const tags = ROArray.collect_(entriesTags, ([member, tags]) => {
+    const tags = entriesTags.filterMap(([member, tags]) => {
       if (tagField in tags) {
         return Option.some(tuple(tags[tagField], member)) as Option.Some<
           Tuple<[string, string]>
@@ -271,7 +271,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       ) {
         return Th.fail(
           S.compositionE(
-            Chunk.make(
+            NonEmptyChunk.make(
               S.prevE(S.leafE(S.extractKeyE(tag.value.key, tag.value.values, u)))
             )
           )
@@ -280,9 +280,9 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         // // @ts-expect-error
         return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), e =>
           S.compositionE(
-            Chunk.make(
+            NonEmptyChunk.make(
               S.nextE(
-                S.unionE(Chunk.make(S.memberE(tag.value.index[u[tag.value.key]], e)))
+                S.unionE(NonEmptyChunk.make(S.memberE(tag.value.index[u[tag.value.key]], e)))
               )
             )
           ))
@@ -295,13 +295,16 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       const res = parsersv2[k](u)
 
       if (res.effect._tag === "Right") {
-        return Th.mapError_(res, e => S.compositionE(Chunk.make(S.nextE(S.unionE(Chunk.make(S.memberE(k, e)))))))
+        return Th.mapError_(
+          res,
+          e => S.compositionE(NonEmptyChunk.make(S.nextE(S.unionE(NonEmptyChunk.make(S.memberE(k, e))))))
+        )
       } else {
         errors = errors.append(S.memberE(k, res.effect.left))
       }
     }
 
-    return Th.fail(S.compositionE(Chunk.make(S.nextE(S.unionE(errors)))))
+    return Th.fail(S.compositionE(NonEmptyChunk.make(S.nextE(S.unionE(errors)))))
   }
 
   return pipe(

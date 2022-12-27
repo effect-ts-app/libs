@@ -8,6 +8,7 @@ import "./Schema.ext.js"
 
 import { asUnit } from "@effect/io/Effect"
 
+import { Either, FiberRef, Option, Option } from "@effect-ts/core"
 import "./refinements.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
@@ -31,7 +32,7 @@ export function encaseMaybeInEffect_<E, A>(
 }
 
 /**
- * @tsplus getter Either asEffect
+ * @tsplus getter fp-ts/data/Either asEffect
  */
 export const EitherasEffect = Effect.fromEither
 

@@ -42,7 +42,7 @@ export const interpreters: ((
               Th.chain_(
                 pipe(
                   self(u),
-                  Th.mapError(e => S.compositionE(Chunk.make(S.prevE(e))))
+                  Th.mapError(e => S.compositionE(NonEmptyChunk.make(S.prevE(e))))
                 ),
                 (
                   a,
@@ -58,7 +58,7 @@ export const interpreters: ((
                     : Th.fail(
                       S.compositionE(
                         w._tag === "None"
-                          ? Chunk.make(S.nextE(S.refinementE(schema.error(a))))
+                          ? NonEmptyChunk.make(S.nextE(S.refinementE(schema.error(a))))
                           : w.value.errors.append(
                             S.nextE(S.refinementE(schema.error(a)))
                           )

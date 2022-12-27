@@ -42,6 +42,20 @@ export function findFirstMap<A, B>(
 }
 
 /**
+ * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyArray.Ops fromArray
+ */
+export function NEAFromArray<T>(ar: Array<T>) {
+  return ar.length ? Opt.some(ar as NonEmptyArray<T>) : Opt.none
+}
+
+/**
+ * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray.Ops fromArray
+ */
+export function NEROAFromArray<T>(ar: ReadonlyArray<T>) {
+  return ar.length ? Opt.some(ar as NonEmptyReadonlyArray<T>) : Opt.none
+}
+
+/**
  * @tsplus pipeable ReadonlyArray sortByO
  * @tsplus pipeable NonEmptyArray sortByO
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO

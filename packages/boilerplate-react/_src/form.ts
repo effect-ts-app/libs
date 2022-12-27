@@ -462,7 +462,7 @@ function useGetMeta<
           ["|>"](These.result)
           ["|>"](
             r =>
-              r.fold(
+              r.match(
                 () =>
                   intl.formatMessage(
                     {

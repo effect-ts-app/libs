@@ -3,7 +3,6 @@ import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
 import { pipe } from "@effect-ts/core/Function"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
-import type { None, Some } from "@tsplus/stdlib/data/Maybe"
 import type * as fc from "fast-check"
 
 import * as S from "../_schema.js"
@@ -465,7 +464,7 @@ export function props<Props extends PropertyRecord>(
   ): Th.These<ParserErrorFromProperties<Props>, ShapeFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        S.compositionE(NonEmptyChunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
     let missingKeys = Chunk.empty<string>()
@@ -474,12 +473,12 @@ export function props<Props extends PropertyRecord>(
         missingKeys = missingKeys.append(k)
       }
     }
-    if (!missingKeys.isEmpty) {
+    if (!missingKeys.isEmpty()) {
       // @ts-expect-error
       return Th.fail(
         S.compositionE(
-          Chunk.make(
-            S.nextE(S.compositionE(Chunk.make(S.prevE(S.missingKeysE(missingKeys)))))
+          NonEmptyChunk.make(
+            S.nextE(S.compositionE(NonEmptyChunk.make(S.prevE(S.missingKeysE(missingKeys)))))
           )
         )
       )
@@ -558,12 +557,12 @@ export function props<Props extends PropertyRecord>(
       augmentRecord(result)
     }
 
-    if (errors.isEmpty) {
+    if (errors.isEmpty()) {
       return Th.succeed(result as ShapeFromProperties<Props>)
     }
 
-    const error_ = S.compositionE(Chunk.make(S.nextE(S.structE(errors))))
-    const error = hasRequired ? S.compositionE(Chunk.make(S.nextE(error_))) : error_
+    const error_ = S.compositionE(NonEmptyChunk.make(S.nextE(S.structE(errors))))
+    const error = hasRequired ? S.compositionE(NonEmptyChunk.make(S.nextE(error_))) : error_
 
     if (isError) {
       // @ts-expect-error

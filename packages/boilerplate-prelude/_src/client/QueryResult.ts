@@ -120,5 +120,5 @@ export const { fail, succeed } = Done
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>
 ): Effect<R, never, QueryResult<E, A>> {
-  return self.fold(fail, succeed)
+  return self.match(fail, succeed)
 }

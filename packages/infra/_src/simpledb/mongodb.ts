@@ -61,7 +61,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          currentVersion.fold(
+          currentVersion.match(
             () =>
               Effect.tryPromise(() =>
                 db

@@ -47,7 +47,7 @@ export function optionFromNull<
         : Th.map_((env?.cache ? env.cache.getOrSetParser(parse) : parse)(i), Opt.some)
     ),
     S.constructor((x: Opt<ConstructorInput>) =>
-      x.fold(
+      x.match(
         () => Th.succeed(Opt.none),
         v => Th.map_(create(v), Opt.some)
       )

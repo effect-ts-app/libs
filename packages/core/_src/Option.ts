@@ -42,3 +42,33 @@ export type _A<A> = A extends Some<infer Y> ? Y : never
 type KeysMatching<T, V> = {
   [K in keyof T]: T[K] extends V ? K : never
 }[keyof T]
+
+export const PartialExceptionTypeId = Symbol()
+export type PartialExceptionTypeId = typeof PartialExceptionTypeId
+
+export class PartialException {
+  readonly _typeId: PartialExceptionTypeId = PartialExceptionTypeId
+}
+
+function raisePartial<X>(): X {
+  throw new PartialException()
+}
+
+/**
+ * Simulates a partial function
+ * @tsplus static fp-ts/data/Option.Ops partial
+ */
+export function partial<ARGS extends any[], A>(
+  f: (miss: <X>() => X) => (...args: ARGS) => A
+): (...args: ARGS) => Opt<A> {
+  return (...args) => {
+    try {
+      return Opt.some(f(raisePartial)(...args))
+    } catch (e) {
+      if (e instanceof PartialException) {
+        return Opt.none
+      }
+      throw e
+    }
+  }
+}

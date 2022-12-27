@@ -57,7 +57,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   x =>
                     [
                       x,
-                      Opt.fromNullable(x._etag).fold(
+                      Opt.fromNullable(x._etag).match(
                         () => ({
                           operationType: "Create" as const,
                           resourceBody: {
@@ -131,7 +131,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 x =>
                   [
                     x,
-                    Opt.fromNullable(x._etag).fold(
+                    Opt.fromNullable(x._etag).match(
                       () => ({
                         operationType: "Create" as const,
                         resourceBody: {
@@ -279,7 +279,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 .apply(annotate),
             set: e =>
               Opt.fromNullable(e._etag)
-                .fold(
+                .match(
                   () =>
                     Effect.promise(() =>
                       container.items.create({

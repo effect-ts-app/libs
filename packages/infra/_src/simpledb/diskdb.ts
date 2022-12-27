@@ -114,7 +114,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Opt.fold(
+        Opt.match(
           () => ({} as Record<string, TKey>),
           x => JSON.parse(x) as Record<string, TKey>
         )

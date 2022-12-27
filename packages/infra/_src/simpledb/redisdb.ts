@@ -43,7 +43,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
-      return currentVersion.fold(
+      return currentVersion.match(
         () =>
           lockIndex(record).zipRight(
             getIndex(record)

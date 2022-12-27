@@ -41,7 +41,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const semaphore = TSemaphore.unsafeMake(1)
 
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
-          const all = get.map(Chunk.from)
+          const all = get.map(Chunk.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             semaphore.withPermit(
               items

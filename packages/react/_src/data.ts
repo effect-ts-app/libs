@@ -128,7 +128,7 @@ export function makeUseQuery<R>(useServiceContext: () => ServiceContext<R>) {
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>
 ): Effect<R, never, QueryResult<E, A>> {
-  return pipe(self, T.fold(fail, succeed))
+  return pipe(self, T.match(fail, succeed))
 }
 
 export function matchQuery<E, A, Result>(_: {
@@ -146,7 +146,7 @@ export function matchQuery<E, A, Result>(_: {
         Refreshing: r =>
           pipe(
             r.current,
-            Ei.fold(
+            Ei.match(
               e => _.Error(e, true, r.previous),
               a => _.Success(a, true)
             )
@@ -154,7 +154,7 @@ export function matchQuery<E, A, Result>(_: {
         Done: r =>
           pipe(
             r.current,
-            Ei.fold(
+            Ei.match(
               e => _.Error(e, false, r.previous),
               a => _.Success(a, false)
             )

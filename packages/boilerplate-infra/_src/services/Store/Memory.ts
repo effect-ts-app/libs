@@ -9,7 +9,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {
-      return c.findMap(codeFilter(filter)).map(Chunk.make).getOrElse(() => Chunk.empty())
+      return c.findMap(codeFilter(filter)).map(NonEmptyChunk.make).getOrElse(() => Chunk.empty())
     }
     let r: Collection<T> = c.collect(codeFilter(filter))
     if (skip) {
@@ -39,7 +39,7 @@ export const makeMemoryStore = () => ({
       const storeSet = store.set.bind(store)
       const semaphore = TSemaphore.unsafeMake(1)
       const values = store.get.map(s => s.values())
-      const all = values.map(Chunk.from)
+      const all = values.map(Chunk.fromIterable)
       const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
         semaphore.withPermit(
           items

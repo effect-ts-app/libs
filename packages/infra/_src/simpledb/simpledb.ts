@@ -91,7 +91,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapMaybe(x => x.version)
-        .flatMap(_ => _.fold(() => save(record, Opt.none), confirmVersionAndSave(record)))
+        .flatMap(_ => _.match(() => save(record, Opt.none), confirmVersionAndSave(record)))
         .tap(r => c.set(record.id, r))
         .map(r => r.data)
     )
@@ -101,7 +101,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       lock(record.id).zipRight(
         tryRead(record.id)
           .flatMap(_ =>
-            _.fold(
+            _.match(
               () => Effect.fail(new InvalidStateError("record is gone")),
               Effect.succeed
             )

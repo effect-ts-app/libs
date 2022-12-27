@@ -84,7 +84,7 @@ WHERE (
         const data = yield* $(encode(record))
 
         yield* $(
-          currentVersion.fold(
+          currentVersion.match(
             () =>
               Effect.tryPromise(() =>
                 db.container(type).items.create({

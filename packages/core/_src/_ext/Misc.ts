@@ -27,6 +27,9 @@ export const pipeSet = pipe
  * @tsplus operator Array >=
  * @tsplus fluent Array apply
  * @tsplus fluent Array __call
+ * @tsplus operator ReadonlyArray >=
+ * @tsplus fluent ReadonlyArray apply
+ * @tsplus fluent ReadonlyArray __call
  * @tsplus macro pipe
  */
 export const pipeArray = pipe

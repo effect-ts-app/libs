@@ -29,8 +29,8 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     ),
     S.parser((u: Chunk<ParsedShape>) => {
       const ar = u.toArray
-      const nar = NonEmptyArray.fromArray(ar)
-      return nar.toOpt.fold(() => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
+      const nar = ar.toNonEmpty
+      return nar.match(() => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
     }),
     S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
     S.arbitrary(

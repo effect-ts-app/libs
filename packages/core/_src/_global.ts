@@ -77,7 +77,7 @@ import { Context, Tag } from "@fp-ts/data/Context"
 /**
  * @tsplus global
  */
-import { Chunk } from "@fp-ts/data/Chunk"
+import { Chunk, NonEmptyChunk } from "@fp-ts/data/Chunk"
 
 /**
  * @tsplus global
