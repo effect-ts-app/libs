@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/79d32bc01c2ce3a56f06f6fc3ae27fc7f7a1f48a/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@rollup/pluginutils": "^5.0.2",
@@ -15,7 +15,7 @@
     "@types/node": "~18.11.17",
     "json5": "^2.2.2",
     "ts-node": "^10.9.1",
-    "typescript": "https://github.com/0x706b/typescript/raw/e1fd13c490/typescript-5.0.0-tsplus.20221227.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/79d32bc01c2ce3a56f06f6fc3ae27fc7f7a1f48a/typescript-5.0.0-tsplus.20221227.tgz",
     "vitest": "^0.26.2"
   },
   "typesVersions": {

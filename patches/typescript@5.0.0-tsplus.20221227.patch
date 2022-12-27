@@ -2,51 +2,6 @@ diff --git a/lib/tsc.js b/lib/tsc.js
 index 1ac57a7..37b28c2 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
-@@ -24867,10 +24867,11 @@ var Parser;
-   function getTsPlusExternalTypesPaths(fileName2, options) {
-     var _a2;
-     if (options.configFilePath) {
--      let resolvedPaths = [];
-       if (tsPlusResolvedPathsCache.has(options.configFilePath)) {
--        resolvedPaths = tsPlusResolvedPathsCache.get(options.configFilePath);
--      } else if (options.tsPlusTypes) {
-+        return tsPlusResolvedPathsCache.get(options.configFilePath);
-+      }
-+      let resolvedPaths = [];
-+      if (options.tsPlusTypes) {
-         for (const path of options.tsPlusTypes) {
-           if (pathIsRelative(path)) {
-             resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
-@@ -24945,9 +24946,15 @@ var Parser;
-     }
-   }
-   function addTsPlusTagsFromExternalTypes(declaration, jsDocNode) {
--    var _a2;
-+    var _a2, _b, _c, _d;
-     if (currentTsPlusTypes !== null) {
-       if (declaration.name && declaration.name.kind === 79 /* Identifier */) {
-+        if (!jsDocNode) {
-+          jsDocNode = declaration;
-+        }
-+        if ((_c = (_b = (_a2 = jsDocNode.jsDoc) == null ? void 0 : _a2[0]) == null ? void 0 : _b.tags) == null ? void 0 : _c.find((tag) => tag.tagName.escapedText === "tsplus")) {
-+          return;
-+        }
-         const extensions = currentTsPlusTypes.filter(
-           (type) => (declaration.kind === 257 /* VariableDeclaration */ ? type.definitionKind === "const" : declaration.kind === 259 /* FunctionDeclaration */ ? type.definitionKind === "function" : declaration.kind === 261 /* InterfaceDeclaration */ ? type.definitionKind === "interface" : declaration.kind === 260 /* ClassDeclaration */ ? type.definitionKind === "class" : declaration.kind === 262 /* TypeAliasDeclaration */ ? type.definitionKind === "type" : false) && type.definitionName === declaration.name.escapedText.toString()
-         ).flatMap((definition) => definition.extensions);
-@@ -24961,11 +24968,8 @@ var Parser;
-           newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), comment));
-         }
-         newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), `location "${currentTsPlusFile}"`));
--        if (!jsDocNode) {
--          jsDocNode = declaration;
--        }
-         if (jsDocNode.jsDoc && jsDocNode.jsDoc[0]) {
--          const jsDocTags = factory2.createNodeArray(Array.from((_a2 = jsDocNode.jsDoc[0].tags) != null ? _a2 : []).concat(newTags));
-+          const jsDocTags = factory2.createNodeArray(Array.from((_d = jsDocNode.jsDoc[0].tags) != null ? _d : []).concat(newTags));
-           jsDocNode.jsDoc[0].tags = jsDocTags;
-         } else {
-           jsDocNode.jsDoc = [factory2.createJSDocComment(void 0, newTags)];
 @@ -39960,7 +39964,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -144,51 +99,6 @@ index 7d407f6..cac4d9f 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -29150,10 +29151,11 @@ var Parser;
-   function getTsPlusExternalTypesPaths(fileName2, options) {
-     var _a2;
-     if (options.configFilePath) {
--      let resolvedPaths = [];
-       if (tsPlusResolvedPathsCache.has(options.configFilePath)) {
--        resolvedPaths = tsPlusResolvedPathsCache.get(options.configFilePath);
--      } else if (options.tsPlusTypes) {
-+        return tsPlusResolvedPathsCache.get(options.configFilePath);
-+      }
-+      let resolvedPaths = [];
-+      if (options.tsPlusTypes) {
-         for (const path of options.tsPlusTypes) {
-           if (pathIsRelative(path)) {
-             resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
-@@ -29228,9 +29230,15 @@ var Parser;
-     }
-   }
-   function addTsPlusTagsFromExternalTypes(declaration, jsDocNode) {
--    var _a2;
-+    var _a2, _b, _c, _d;
-     if (currentTsPlusTypes !== null) {
-       if (declaration.name && declaration.name.kind === 79 /* Identifier */) {
-+        if (!jsDocNode) {
-+          jsDocNode = declaration;
-+        }
-+        if ((_c = (_b = (_a2 = jsDocNode.jsDoc) == null ? void 0 : _a2[0]) == null ? void 0 : _b.tags) == null ? void 0 : _c.find((tag) => tag.tagName.escapedText === "tsplus")) {
-+          return;
-+        }
-         const extensions = currentTsPlusTypes.filter(
-           (type) => (declaration.kind === 257 /* VariableDeclaration */ ? type.definitionKind === "const" : declaration.kind === 259 /* FunctionDeclaration */ ? type.definitionKind === "function" : declaration.kind === 261 /* InterfaceDeclaration */ ? type.definitionKind === "interface" : declaration.kind === 260 /* ClassDeclaration */ ? type.definitionKind === "class" : declaration.kind === 262 /* TypeAliasDeclaration */ ? type.definitionKind === "type" : false) && type.definitionName === declaration.name.escapedText.toString()
-         ).flatMap((definition) => definition.extensions);
-@@ -29244,11 +29252,8 @@ var Parser;
-           newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), comment));
-         }
-         newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), `location "${currentTsPlusFile}"`));
--        if (!jsDocNode) {
--          jsDocNode = declaration;
--        }
-         if (jsDocNode.jsDoc && jsDocNode.jsDoc[0]) {
--          const jsDocTags = factory2.createNodeArray(Array.from((_a2 = jsDocNode.jsDoc[0].tags) != null ? _a2 : []).concat(newTags));
-+          const jsDocTags = factory2.createNodeArray(Array.from((_d = jsDocNode.jsDoc[0].tags) != null ? _d : []).concat(newTags));
-           jsDocNode.jsDoc[0].tags = jsDocTags;
-         } else {
-           jsDocNode.jsDoc = [factory2.createJSDocComment(void 0, newTags)];
 @@ -44391,7 +44396,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -309,51 +219,6 @@ diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
 index 7d63e87..dacc8de 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
-@@ -26870,10 +26870,11 @@ ${lanes.join("\n")}
-         function getTsPlusExternalTypesPaths(fileName2, options) {
-           var _a2;
-           if (options.configFilePath) {
--            let resolvedPaths = [];
-             if (tsPlusResolvedPathsCache.has(options.configFilePath)) {
--              resolvedPaths = tsPlusResolvedPathsCache.get(options.configFilePath);
--            } else if (options.tsPlusTypes) {
-+              return tsPlusResolvedPathsCache.get(options.configFilePath);
-+            }
-+            let resolvedPaths = [];
-+            if (options.tsPlusTypes) {
-               for (const path of options.tsPlusTypes) {
-                 if (pathIsRelative(path)) {
-                   resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
-@@ -26948,9 +26949,15 @@ ${lanes.join("\n")}
-           }
-         }
-         function addTsPlusTagsFromExternalTypes(declaration, jsDocNode) {
--          var _a2;
-+          var _a2, _b, _c, _d;
-           if (currentTsPlusTypes !== null) {
-             if (declaration.name && declaration.name.kind === 79 /* Identifier */) {
-+              if (!jsDocNode) {
-+                jsDocNode = declaration;
-+              }
-+              if ((_c = (_b = (_a2 = jsDocNode.jsDoc) == null ? void 0 : _a2[0]) == null ? void 0 : _b.tags) == null ? void 0 : _c.find((tag) => tag.tagName.escapedText === "tsplus")) {
-+                return;
-+              }
-               const extensions = currentTsPlusTypes.filter(
-                 (type) => (declaration.kind === 257 /* VariableDeclaration */ ? type.definitionKind === "const" : declaration.kind === 259 /* FunctionDeclaration */ ? type.definitionKind === "function" : declaration.kind === 261 /* InterfaceDeclaration */ ? type.definitionKind === "interface" : declaration.kind === 260 /* ClassDeclaration */ ? type.definitionKind === "class" : declaration.kind === 262 /* TypeAliasDeclaration */ ? type.definitionKind === "type" : false) && type.definitionName === declaration.name.escapedText.toString()
-               ).flatMap((definition) => definition.extensions);
-@@ -26964,11 +26971,8 @@ ${lanes.join("\n")}
-                 newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), comment));
-               }
-               newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), `location "${currentTsPlusFile}"`));
--              if (!jsDocNode) {
--                jsDocNode = declaration;
--              }
-               if (jsDocNode.jsDoc && jsDocNode.jsDoc[0]) {
--                const jsDocTags = factory2.createNodeArray(Array.from((_a2 = jsDocNode.jsDoc[0].tags) != null ? _a2 : []).concat(newTags));
-+                const jsDocTags = factory2.createNodeArray(Array.from((_d = jsDocNode.jsDoc[0].tags) != null ? _d : []).concat(newTags));
-                 jsDocNode.jsDoc[0].tags = jsDocTags;
-               } else {
-                 jsDocNode.jsDoc = [factory2.createJSDocComment(void 0, newTags)];
 @@ -41908,7 +41912,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -486,51 +351,6 @@ diff --git a/lib/typescript.js b/lib/typescript.js
 index b94ffd8..2666cb7 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
-@@ -26870,10 +26870,11 @@ ${lanes.join("\n")}
-         function getTsPlusExternalTypesPaths(fileName2, options) {
-           var _a2;
-           if (options.configFilePath) {
--            let resolvedPaths = [];
-             if (tsPlusResolvedPathsCache.has(options.configFilePath)) {
--              resolvedPaths = tsPlusResolvedPathsCache.get(options.configFilePath);
--            } else if (options.tsPlusTypes) {
-+              return tsPlusResolvedPathsCache.get(options.configFilePath);
-+            }
-+            let resolvedPaths = [];
-+            if (options.tsPlusTypes) {
-               for (const path of options.tsPlusTypes) {
-                 if (pathIsRelative(path)) {
-                   resolvedPaths.push(resolvePath(options.configFilePath.split("/").slice(0, -1).join("/"), path));
-@@ -26948,9 +26949,15 @@ ${lanes.join("\n")}
-           }
-         }
-         function addTsPlusTagsFromExternalTypes(declaration, jsDocNode) {
--          var _a2;
-+          var _a2, _b, _c, _d;
-           if (currentTsPlusTypes !== null) {
-             if (declaration.name && declaration.name.kind === 79 /* Identifier */) {
-+              if (!jsDocNode) {
-+                jsDocNode = declaration;
-+              }
-+              if ((_c = (_b = (_a2 = jsDocNode.jsDoc) == null ? void 0 : _a2[0]) == null ? void 0 : _b.tags) == null ? void 0 : _c.find((tag) => tag.tagName.escapedText === "tsplus")) {
-+                return;
-+              }
-               const extensions = currentTsPlusTypes.filter(
-                 (type) => (declaration.kind === 257 /* VariableDeclaration */ ? type.definitionKind === "const" : declaration.kind === 259 /* FunctionDeclaration */ ? type.definitionKind === "function" : declaration.kind === 261 /* InterfaceDeclaration */ ? type.definitionKind === "interface" : declaration.kind === 260 /* ClassDeclaration */ ? type.definitionKind === "class" : declaration.kind === 262 /* TypeAliasDeclaration */ ? type.definitionKind === "type" : false) && type.definitionName === declaration.name.escapedText.toString()
-               ).flatMap((definition) => definition.extensions);
-@@ -26964,11 +26971,8 @@ ${lanes.join("\n")}
-                 newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), comment));
-               }
-               newTags.push(factory2.createJSDocUnknownTag(factory2.createIdentifier("tsplus"), `location "${currentTsPlusFile}"`));
--              if (!jsDocNode) {
--                jsDocNode = declaration;
--              }
-               if (jsDocNode.jsDoc && jsDocNode.jsDoc[0]) {
--                const jsDocTags = factory2.createNodeArray(Array.from((_a2 = jsDocNode.jsDoc[0].tags) != null ? _a2 : []).concat(newTags));
-+                const jsDocTags = factory2.createNodeArray(Array.from((_d = jsDocNode.jsDoc[0].tags) != null ? _d : []).concat(newTags));
-                 jsDocNode.jsDoc[0].tags = jsDocTags;
-               } else {
-                 jsDocNode.jsDoc = [factory2.createJSDocComment(void 0, newTags)];
 @@ -41908,7 +41912,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
