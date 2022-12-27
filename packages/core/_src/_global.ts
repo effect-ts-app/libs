@@ -77,7 +77,7 @@ import { Chunk } from "@fp-ts/data/Chunk"
 /**
  * @tsplus global
  */
-import { Ord } from "@effect-ts/core/Ord"
+import { Order as Ord } from "@fp-ts/core/typeclass/Order"
 
 /**
  * @tsplus global

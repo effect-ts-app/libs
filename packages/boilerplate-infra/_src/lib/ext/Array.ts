@@ -3,7 +3,7 @@ import { inspect } from "util"
 import { NotFoundError } from "../../errors.js"
 
 /**
- * @tsplus fluent ets/Array getFirstById
+ * @tsplus fluent Array getFirstById
  * @tsplus fluent Chunk getFirstById
  * @tsplus fluent ets/Set getFirstById
  * @tsplus fluent Array getFirstById

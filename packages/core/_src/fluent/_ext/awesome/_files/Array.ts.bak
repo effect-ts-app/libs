@@ -7,7 +7,7 @@ import { mapEither_, mapOpt_ } from "@effect-ts-app/core/fluent/fluent/Array"
 import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyArray"
 
 /**
- * @tsplus fluent ets/Array mapRA
+ * @tsplus fluent Array mapRA
  */
 export const ext_map_ = map_
 
@@ -17,62 +17,62 @@ export const ext_map_ = map_
 export const ext_map_NA_ = NEMap_
 
 /**
- * @tsplus fluent ets/Array mapWithIndex
+ * @tsplus fluent Array mapWithIndex
  */
 export const ext_mapWithIndex_ = mapWithIndex_
 
 // /**
-//  * @tsplus fluent ets/Array concatRA
+//  * @tsplus fluent Array concatRA
 //  */
 // export const ext_concat_ = concat_
 
 /**
- * @tsplus fluent ets/Array concatRA
+ * @tsplus fluent Array concatRA
  */
 export const ext_concat_ = concat_
 
 // /**
-//  * @tsplus fluent ets/Array sortWith
+//  * @tsplus fluent Array sortWith
 //  */
 // export const ext_sort_ = sort_
 
 /**
- * @tsplus fluent ets/Array sortWith
+ * @tsplus fluent Array sortWith
  */
 export const ext_sort_ = sort_
 
 /**
- * @tsplus fluent ets/Array sortBy
+ * @tsplus fluent Array sortBy
  */
 export const ext_sortBy_ = sortBy_
 
 // /**
-//  * @tsplus fluent ets/Array append
+//  * @tsplus fluent Array append
 //  */
 // export const ext_append_ = append_
 
 /**
- * @tsplus fluent ets/Array append
+ * @tsplus fluent Array append
  */
 export const ext_append_ = append_
 
 /**
- * @tsplus fluent ets/Array mapEither
+ * @tsplus fluent Array mapEither
  */
 export const ext_mapEither_ = mapEither_
 
 /**
- * @tsplus fluent ets/Array mapOpt
+ * @tsplus fluent Array mapOpt
  */
 export const ext_mapOpt_ = mapOpt_
 
 // /**
-//  * @tsplus fluent ets/Array mapM
+//  * @tsplus fluent Array mapM
 //  */
 // export const ext_mapEffect_ = mapEffect_
 
 // /**
-//  * @tsplus fluent ets/Array mapM
+//  * @tsplus fluent Array mapM
 //  */
 // export const ext_mapEffect_ = mapEffect_
 
@@ -87,12 +87,12 @@ export const ext_mapOpt_ = mapOpt_
 // export const ext_mapM_ = mapM_
 
 // /**
-//  * @tsplus fluent ets/Array mapM
+//  * @tsplus fluent Array mapM
 //  */
 // export const ext_mapEffect_ = mapEffect_
 
 // /**
-//  * @tsplus fluent ets/Array mapM
+//  * @tsplus fluent Array mapM
 //  */
 // export const ext_mapEffect_ = mapEffect_
 
@@ -107,36 +107,36 @@ export const ext_mapOpt_ = mapOpt_
 // export const ext_mapM_ = mapM_
 
 /**
- * @tsplus fluent ets/Array flatten
+ * @tsplus fluent Array flatten
  */
 export const ext_flatten = flatten
 
 // /**
-//  * @tsplus fluent ets/Array filterRA
+//  * @tsplus fluent Array filterRA
 //  */
 // export const ext_filter_ = filter_
 
 /**
- * @tsplus fluent ets/Array filterRA
+ * @tsplus fluent Array filterRA
  */
 export const ext_filter_ = filter_
 
 /**
- * @tsplus fluent ets/Array uniq
+ * @tsplus fluent Array uniq
  */
 export const ext_uniq_ = uniq_
 
 /**
- * @tsplus fluent ets/Array head
+ * @tsplus fluent Array head
  */
 export const ext_head = head
 
 /**
- * @tsplus fluent ets/Array last
+ * @tsplus fluent Array last
  */
 export const ext_last = last
 
 /**
- * @tsplus fluent ets/Array tail
+ * @tsplus fluent Array tail
  */
 export const ext_tail = tail

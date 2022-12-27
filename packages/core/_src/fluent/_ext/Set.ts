@@ -13,7 +13,7 @@ export function findFirst_<A, B extends A>(
 ): Opt<B>
 export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Opt<A>
 export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Opt<A> {
-  return [...set].find(predicate)
+  return Opt.fromNullable([...set].find(predicate))
 }
 
 export function findFirstMap_<A, B>(

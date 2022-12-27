@@ -24,10 +24,18 @@ export function mapOpt_<A, B>(
   const res = [] as B[]
   for (const a of self) {
     const x = f(a)
-    if (Opt.isNone(x)) {
+    if (x.isNone()) {
       return x
     }
     res.push(x.value)
   }
   return Opt.some(res)
+}
+
+/**
+ * @tsplus fluent fp-ts/data/ReadonlyArray toChunk
+ * @tsplus fluent ReadonlyArray toChunk
+ */
+export function toChunk<T>(self: ReadonlyArray<T>) {
+  return Chunk.fromIterable(self)
 }

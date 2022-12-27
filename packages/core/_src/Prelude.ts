@@ -166,14 +166,14 @@ export type NonEmptySet<A> = NS.NonEmptySet<A>
 //   // @ts-expect-error
 //   export * from "@effect-ts-app/core/Array"
 // }
-// /** @tsplus type ets/Array */
+// /** @tsplus type Array */
 // export type Array<A> = A.Array<A>
 
 // export namespace ROArray {
 //   // @ts-expect-error
 //   export * from "@effect-ts-app/core/Array"
 // }
-// /** @tsplus type ets/Array */
+// /** @tsplus type Array */
 // export type ROArray<A> = A.Array<A>
 
 export namespace Set {

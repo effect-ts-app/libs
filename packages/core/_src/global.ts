@@ -1,32 +1,43 @@
 declare global {
   /**
-   * @tsplus type ets/Array
+   * @tsplus type ReadonlyArray
+   * @tsplus type Iterable
    */
   interface ReadonlyArray<T> {}
 
   /**
-   * @tsplus type ets/Array
+   * @tsplus type Iterable
+   */
+  interface Iterable<T> {}
+
+  /**
+   * @tsplus type Array
+   * @tsplus type Iterable
    */
   interface Array<T> {}
 
   /**
    * @tsplus type ets/Set
+   * @tsplus type Iterable
    */
   interface Set<T> {}
 
   /**
    * @tsplus type ets/ROSet
    * @tsplus type ets/Set
+   * @tsplus type Iterable
    */
   interface ReadonlySet<T> {}
 
   /**
    * @tsplus type ets/Map
+   * @tsplus type Iterable
    */
   interface Map<K, V> {}
 
   /**
    * @tsplus type ets/Map
+   * @tsplus type Iterable
    */
   interface ReadonlyMap<K, V> {}
   /**

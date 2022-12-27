@@ -8,9 +8,11 @@ import "./Lens.ext.js"
 import "./Ref.js"
 import "./Schema.ext.js"
 
-import { Option } from "@effect-ts/core"
+import { FiberRef, Option } from "@effect-ts/core"
 import { asUnit } from "@effect/io/Effect"
 
+import type { Lazy } from "@effect-ts/core/Function"
+import { ImmutableMap } from "@tsplus/stdlib/collections/ImmutableMap"
 import "./refinements.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [

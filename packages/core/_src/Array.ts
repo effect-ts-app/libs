@@ -1,6 +1,6 @@
-import type { Ord } from "@effect-ts/core/Ord"
-import { tuple } from "@effect-ts/core/Ord"
 import { identity } from "./Function.js"
+
+import * as ROA from "@fp-ts/data/ReadonlyArray"
 
 export const { isArray } = Array
 
@@ -17,14 +17,26 @@ export const { isArray } = Array
 // }
 
 /**
+ * @tsplus static fp-ts/data/ReadonlyArray.Ops findFirstMap
+ * @tsplus static ReadonlyArray.Ops findFirstMap
+ * @tsplus pipeable fp-ts/data/ReadonlyArray findFirstMap
  * @tsplus pipeable ReadonlyArray findFirstMap
  * @tsplus pipeable NonEmptyArray findFirstMap
  * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
  */
 export function findFirstMap<A, B>(
-  f: (a: A) => Option<B>
+  f: (a: A) => Opt<B>
 ) {
-  return (a: ReadonlyArray<A>) => a.findFirst((a): a is B => f(a).isSome())
+  return (as: ReadonlyArray<A>) => {
+    const len = as.length
+    for (let i = 0; i < len; i++) {
+      const v = f(as[i]!)
+      if (v.isSome()) {
+        return v
+      }
+    }
+    return Opt.none
+  }
 }
 
 /**
@@ -35,13 +47,13 @@ export function findFirstMap<A, B>(
 export function sortByO<A>(
   ords: Opt<NonEmptyReadonlyArray<Ord<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match(() => identity, ROArray.sortBy)
+  return ords.match(() => identity, _ => ROA.sortBy(..._))
 }
 
 /**
- * @tsplus pipeable ReadonlyArray groupByT
- * @tsplus pipeable NonEmptyArray groupByT
- * @tsplus pipeable NonEmptyArrayReadonlyArray groupByT
+ * @tsplus fluent ReadonlyArray groupByT
+ * @tsplus fluent NonEmptyArray groupByT
+ * @tsplus fluent NonEmptyArrayReadonlyArray groupByT
  */
 export function groupByT<A, Key extends PropertyKey>(
   as: ReadonlyArray<A>,
@@ -75,7 +87,7 @@ export function concat_<A, B>(
   self: ROArray<A>,
   that: ROArray<B>
 ): ROArray<A | B> {
-  return ROArray.concat(that)(self)
+  return [...self, ...that]
 }
 
 /**
@@ -94,7 +106,7 @@ export const concatOperator: <A>(
  * @tsplus operator ReadonlyArray + 1.0
  */
 export function prependOperatorStrict<A>(a: A, self: ROArray<A>): ROArray<A> {
-  return ROArray.prepend(a)(self)
+  return ROA.prepend(a)(self)
 }
 
 /**
@@ -157,61 +169,41 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
 }
 
 /**
- * @tsplus fluent ets/NonEmptyArray mapRA
+ * @tsplus pipeable ets/NonEmptyArray mapRA
  */
-export const mapRA = NonEmptyArray.map_
+export const mapRA = ROA.mapNonEmpty
 
 /**
  * @tsplus fluent ets/NonEmptyArray sortBy
  */
 export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[]) {
-  return ROArray.sortBy(ords)(na) as NonEmptyReadonlyArray<A>
+  return ROA.sortBy(...ords)(na) as unknown as NonEmptyReadonlyArray<A>
 }
 
 /**
  * @tsplus fluent ets/NonEmptyArray sortWith
  */
 export function sortWith<A>(na: NonEmptyReadonlyArray<A>, ord: Ord<A>) {
-  return NonEmptyArray.sort(ord)(na)
+  return ROA.sortNonEmpty(ord)(na as readonly [A, ...A[]])
 }
 
 /**
  * @tsplus static ets/NonEmptyArray __call
  */
-export const makeNA = NonEmptyArray.make
-
-/**
- * @tsplus fluent ReadonlyArray groupByT
- */
-export const groupByT_ = ROArray.groupByT_
+export const makeNA = ReadonlyArray.make
 
 /**
  * @tsplus fluent fp-ts/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk<A>, f: (a: A) => Key) {
-  return c.toArray.groupByT(f).toChunk
+  return c.toReadonlyArray().groupByT(f).toChunk
 }
-
-/**
- * Concatenates two ReadonlyArray together
- *
- * @tsplus operator ReadonlyArray +
- */
-export const concatOperator: <A>(
-  self: ROArray<A>,
-  that: ROArray<A>
-) => ROArray<A> = concat_
-
-/**
- * @tsplus operator ReadonlyArray + 1.0
- */
-export const appendOperator: <A>(self: ROArray<A>, a: A) => ROArray<A> = append_
 
 /**
  * @tsplus fluent ReadonlyArray filterWith
  */
 export function filterWith<A>(self: ROArray<A>, predicates: ROArray<Predicate<A>>) {
-  return self.filterRA(_ => predicates.every(f => f(_)))
+  return self.filter(_ => predicates.every(f => f(_)))
 }
 
 /**
@@ -246,13 +238,20 @@ export function toChunk<T>(items: Iterable<T>) {
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
  */
-export const toNonEmptyArray = flow(NonEmptyArray.fromArray, _ => _.toMaybe)
+export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) => a.length ? Opt.some(a as NonEmptyReadonlyArray<A>) : Opt.none
+
+/**
+ * @tsplus getter Iterable toArray
+ * @tsplus getter Iterator toArray
+ * @tsplus getter Generator toArray
+ */
+export const iterableToArray = Array.from
 
 /**
  * @tsplus getter Collection toNonEmptyArray
  */
-export function CollectionToNonEmptyReadonlyArray<A>(c: Collection<A>) {
-  return c.toArray.toNonEmpty
+export function CollectionToNonEmptyReadonlyArray<A>(c: Iterable<A>) {
+  return iterableToArray(c).toNonEmpty
 }
 
 /**
@@ -269,7 +268,7 @@ export function ext_forEachEffectPar<A, R, E, B>(
   as: ReadonlyArray<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEachPar(as, f)
+  return Effect.forEachPar(f)(as)
 }
 
 /**
@@ -279,7 +278,7 @@ export function ext_CNKforEachEffectPar<A, R, E, B>(
   as: Chunk<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEachPar(as, f)
+  return Effect.forEachPar(f)(as)
 }
 
 /**
@@ -289,14 +288,14 @@ export function ext_NAforEachEffectPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEachPar(as, f).map(_ => _.toNonEmptyArray.value!)
+  return Effect.forEachPar(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
 }
 
 /**
  * @tsplus fluent ets/NonEmptyArray forEachEffect
  */
 export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
-  return Effect.forEach(as, f).map(_ => _.toNonEmptyArray.value!)
+  return Effect.forEach(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
 }
 
 /**
@@ -306,7 +305,7 @@ export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return Effect.forEachParWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
+  return Effect.forEachParWithIndex(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
 }
 
 /**
@@ -316,7 +315,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return Effect.forEachWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
+  return Effect.forEachWithIndex(f)(as).map(_ => _.toNonEmptyReadonlyArray.value!)
 }
 
 /**
@@ -326,7 +325,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
  * @tsplus fluent ets/Set forEachEffectWithIndex
  */
 export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {
-  return Effect.forEachWithIndex(as, f)
+  return Effect.forEachWithIndex(f)(as)
 }
 
 /**
@@ -336,19 +335,12 @@ export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: n
  * @tsplus fluent ets/Set forEachEffectParWithIndex
  */
 export function ext_forEachParWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {
-  return Effect.forEachParWithIndex(as, f)
+  return Effect.forEachParWithIndex(f)(as)
 }
-
-/**
- * @tsplus getter Iterable toArray
- * @tsplus getter Iterator toArray
- * @tsplus getter Generator toArray
- */
-export const ext_itToArray = ROArray.from
 
 /**
  * @tsplus getter Iterable toChunk
  * @tsplus getter Iterator toChunk
  * @tsplus getter Generator toChunk
  */
-export const ext_itToChunk = Chunk.from
+export const ext_itToChunk = Chunk.fromIterable

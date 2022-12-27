@@ -24,9 +24,9 @@ export const pipeNESet = pipe
 export const pipeSet = pipe
 
 /**
- * @tsplus operator ets/Array >=
- * @tsplus fluent ets/Array apply
- * @tsplus fluent ets/Array __call
+ * @tsplus operator Array >=
+ * @tsplus fluent Array apply
+ * @tsplus fluent Array __call
  * @tsplus macro pipe
  */
 export const pipeArray = pipe
