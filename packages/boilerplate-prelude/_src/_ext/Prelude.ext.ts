@@ -8,7 +8,6 @@ import "./Schema.ext.js"
 
 import { asUnit } from "@effect/io/Effect"
 
-import { Either, FiberRef, Option, Option } from "@effect-ts/core"
 import "./refinements.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [

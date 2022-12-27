@@ -125,16 +125,6 @@
         "default": "./_cjs/_ext/Pure.cjs"
       }
     },
-    "./_ext/RArray": {
-      "import": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./dist/_ext/RArray.js"
-      },
-      "require": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./_cjs/_ext/RArray.cjs"
-      }
-    },
     "./_ext/Ref": {
       "import": {
         "types": "./dist/_ext/Ref.d.ts",
@@ -283,16 +273,6 @@
       "require": {
         "types": "./dist/client/fetch.d.ts",
         "default": "./_cjs/client/fetch.cjs"
-      }
-    },
-    "./duration": {
-      "import": {
-        "types": "./dist/duration.d.ts",
-        "default": "./dist/duration.js"
-      },
-      "require": {
-        "types": "./dist/duration.d.ts",
-        "default": "./_cjs/duration.cjs"
       }
     },
     "./faker": {

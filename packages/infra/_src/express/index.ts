@@ -68,7 +68,7 @@ export function LiveExpressAppConfig<R>(
   )
 }
 
-export const ExpressAppTag = literal("@effect-ts-app/express/App")
+export const ExpressAppTag = "@effect-ts-app/express/App" as const
 
 export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
