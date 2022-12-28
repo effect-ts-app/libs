@@ -1,9 +1,15 @@
-import { CacheState } from "@effect/cache/Cache/_internal/CacheState"
-import { MapKey } from "@effect/cache/Cache/_internal/MapKey"
-import type { MapValue } from "@effect/cache/Cache/_internal/MapValue"
-import { Complete, Pending, Refreshing } from "@effect/cache/Cache/_internal/MapValue"
-import { CacheURI } from "@effect/cache/Cache/definition"
-import { EmptyMutableQueue } from "@tsplus/stdlib/collections/mutable/MutableQueue"
+import type { Clock } from "@effect/io/Clock"
+import { Deferred } from "@effect/io/Deferred"
+import type { FiberId } from "@effect/io/Fiber/Id"
+import { CacheStats } from "../../CacheStats.js"
+import { EntryStats } from "../../EntryStats.js"
+import type { Lookup } from "../../Lookup.js"
+import type { Cache } from "../definition.js"
+import { CacheURI } from "../definition.js"
+import { CacheState } from "./CacheState.js"
+import { MapKey } from "./MapKey.js"
+import type { MapValue } from "./MapValue.js"
+import { Complete, Pending, Refreshing } from "./MapValue.js"
 
 export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key, Error, Value> {
   readonly [CacheURI] = {
@@ -19,7 +25,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     readonly lookup: Lookup<Key, Environment, Error, Value>,
     readonly timeToLive: (exit: Exit<Error, Value>) => Duration,
     readonly clock: Clock,
-    readonly environment: Service.Env<Environment>,
+    readonly environment: Context<Environment>,
     readonly fiberId: FiberId
   ) {
     this.cacheState = CacheState.initial<Key, Error, Value>()
@@ -29,27 +35,27 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return Effect.sync(() => this.cacheState.map.size)
   }
 
-  get entries(): Effect<never, never, Chunk<Tuple<[Key, Value]>>> {
+  get entries(): Effect<never, never, Chunk<readonly [Key, Value]>> {
     return Effect.sync(() => {
-      const entries: Array<Tuple<[Key, Value]>> = []
-      for (const { tuple: [key, value] } of this.cacheState.map) {
+      const entries: Array<readonly [Key, Value]> = []
+      for (const [key, value] of this.cacheState.map) {
         if (value._tag === "Complete" && value.exit._tag === "Success") {
-          entries.push(Tuple(key, value.exit.value))
+          entries.push([key, value.exit.value] as const)
         }
       }
-      return Chunk.from(entries)
+      return Chunk.fromIterable(entries)
     })
   }
 
   get values(): Effect<never, never, Chunk<Value>> {
     return Effect.sync(() => {
       const values: Array<Value> = []
-      for (const { tuple: [_, value] } of this.cacheState.map) {
+      for (const [_, value] of this.cacheState.map) {
         if (value._tag === "Complete" && value.exit._tag === "Success") {
           values.push(value.exit.value)
         }
       }
-      return Chunk.from(values)
+      return Chunk.fromIterable(values)
     })
   }
 
@@ -61,21 +67,21 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     ))
   }
 
-  entryStats(k: Key): Effect<never, never, Maybe<EntryStats>> {
+  entryStats(k: Key): Effect<never, never, Opt<EntryStats>> {
     return Effect.sync(() => {
       const value = this.cacheState.map.get(k).value
       if (value == null) {
-        return Maybe.none
+        return Opt.none
       }
       switch (value._tag) {
         case "Pending": {
-          return Maybe.none
+          return Opt.none
         }
         case "Complete": {
-          return Maybe.some(EntryStats(value.entryStats.loadedMillis))
+          return Opt.some(EntryStats(value.entryStats.loadedMillis))
         }
         case "Refreshing": {
-          return Maybe.some(EntryStats(value.complete.entryStats.loadedMillis))
+          return Opt.some(EntryStats(value.complete.entryStats.loadedMillis))
         }
       }
     })
@@ -98,7 +104,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
       if (value == null) {
         this.trackAccess(key!)
         this.trackMiss()
-        return this.lookupValueOf(k, deferred!)
+        return this.lookupValueOf(k, deferred)
       }
       switch (value._tag) {
         case "Pending": {
@@ -250,7 +256,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return this.lookup(key)
       .provideEnvironment(this.environment)
       .exit
-      .flatMap((exit) => {
+      .flatMap(exit => {
         const now = this.clock.unsafeCurrentTime
         const entryStats = EntryStats(now)
         this.cacheState.map.set(

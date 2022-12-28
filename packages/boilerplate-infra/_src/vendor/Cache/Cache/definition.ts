@@ -1,3 +1,6 @@
+import type { CacheStats } from "../CacheStats.js"
+import type { EntryStats } from "../EntryStats.js"
+
 export const CacheURI = Symbol.for("@effect/cache/Cache")
 export type CacheURI = typeof CacheURI
 
@@ -36,7 +39,7 @@ export interface Cache<Key, Error, Value> {
   /**
    * Returns an approximation of the entries in the cache.
    */
-  readonly entries: Effect<never, never, Chunk<Tuple<[Key, Value]>>>
+  readonly entries: Effect<never, never, Chunk<readonly [Key, Value]>>
 
   /**
    * Returns an approximation of the values in the cache.
@@ -51,7 +54,7 @@ export interface Cache<Key, Error, Value> {
   /**
    * Returns statistics for the specified entry, if it exists.
    */
-  readonly entryStats: (key: Key) => Effect<never, never, Maybe<EntryStats>>
+  readonly entryStats: (key: Key) => Effect<never, never, Opt<EntryStats>>
 
   /**
    * Retrieves the value associated with the specified key if it exists.

@@ -104,6 +104,15 @@ import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
  */
 import { Duration as DUR } from "@fp-ts/data/Duration"
 
+/**
+ * @tsplus global
+ */
+import { MutableHashMap } from "@fp-ts/data/MutableHashMap"
+/**
+ * @tsplus global
+ */
+import { MutableQueue } from "@fp-ts/data/MutableQueue"
+
 import "./_ext/Prelude.ext.js"
 import "./Array.js"
 import "./Chunk.js"

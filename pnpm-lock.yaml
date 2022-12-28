@@ -7,24 +7,15 @@ overrides:
   typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
 
 patchedDependencies:
-  '@effect-ts/core@0.60.5':
-    hash: jx4drcbvzaxoqqasybnfxdx44i
-    path: patches/@effect-ts__core@0.60.5.patch
-  '@effect-ts/monocle@0.43.0':
-    hash: d3hhxwnoq64fw5ljkjpzykj2mi
-    path: patches/@effect-ts__monocle@0.43.0.patch
-  '@effect/core@0.0.16':
-    hash: mcu4jngcsmcxuzourkatyefoeq
-    path: patches/@effect__core@0.0.16.patch
-  '@tsplus/stdlib@0.2.8':
-    hash: bedxpgqlc3ev3vyasctaqixngu
-    path: patches/@tsplus__stdlib@0.2.8.patch
-  '@effect/cache@0.0.4':
-    hash: 7kikn4jap3advk4vkjfpcm7hli
-    path: patches/@effect__cache@0.0.4.patch
   '@typescript-eslint/scope-manager@5.47.0':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.47.0.patch
+  '@effect-ts/monocle@0.43.0':
+    hash: d3hhxwnoq64fw5ljkjpzykj2mi
+    path: patches/@effect-ts__monocle@0.43.0.patch
+  '@effect-ts/core@0.60.5':
+    hash: jx4drcbvzaxoqqasybnfxdx44i
+    path: patches/@effect-ts__core@0.60.5.patch
   eslint-plugin-codegen@0.16.1:
     hash: ynbtpbmwzuvjrurltfyj25fcjm
     path: patches/eslint-plugin-codegen@0.16.1.patch
@@ -187,7 +178,6 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': '*'
-      '@effect/cache': ^0.0.4
       '@effect/io': ^0.0.42
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.30
@@ -217,7 +207,6 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/cache': 0.0.4_7kikn4jap3advk4vkjfpcm7hli
       '@effect/io': 0.0.42
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.30
@@ -2138,33 +2127,11 @@ packages:
     dev: false
     patched: true
 
-  /@effect/cache/0.0.4_7kikn4jap3advk4vkjfpcm7hli:
-    resolution: {integrity: sha512-Crt+Urzu0rxUOnZEySq6o8rAL/fB4f5pg766QSb1rrUonqd00tslJeCZ3UwBhkiKVPikSR52txppEG/9HLzoDA==}
-    dependencies:
-      '@effect/core': 0.0.16_mcu4jngcsmcxuzourkatyefoeq
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
-    dev: false
-    patched: true
-
-  /@effect/core/0.0.16_mcu4jngcsmcxuzourkatyefoeq:
-    resolution: {integrity: sha512-JugbKcqo9CPdm4n7t/buO4nYxKwThafh0tXVvPgRC3RcwuOS1dzo3tIk6RVq1wYh8Kg4df5SwmdED2VvN4c/RA==}
-    dependencies:
-      '@effect/printer': 0.0.4
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
-    dev: false
-    patched: true
-
   /@effect/io/0.0.42:
     resolution: {integrity: sha512-l6Mtm8KadL1pbV9BmyO7q0sz2oZn1mmSdLOYLtKe3A74t8h6+zEVB7XcUvTFa3U6wqtbg+sjxTT+FMM9k3o4rw==}
     dependencies:
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.30
-    dev: false
-
-  /@effect/printer/0.0.4:
-    resolution: {integrity: sha512-oTn6U9GCg01E+kYwUBs4LM6k6hVq0pA7ZAYKdj972n2LjYeqg4+We6ZqoYWH2Pw5TDHOavtIEdYqt61uUxiZgg==}
-    dependencies:
-      '@tsplus/stdlib': 0.2.8_bedxpgqlc3ev3vyasctaqixngu
     dev: false
 
   /@esbuild/android-arm/0.16.4:
@@ -2824,11 +2791,6 @@ packages:
       - '@types/node'
       - typescript
     dev: true
-
-  /@tsplus/stdlib/0.2.8_bedxpgqlc3ev3vyasctaqixngu:
-    resolution: {integrity: sha512-UKAN06h9V/wUflSbOU1WwACisXEi4+PHwGqR+bwxqcClrEAA8KKTTLZ0ATMbqbVAVTudE0vW4pd5iY6vGvSFBw==}
-    dev: false
-    patched: true
 
   /@types/babel__generator/7.6.4:
     resolution: {integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==}
