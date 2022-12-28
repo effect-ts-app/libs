@@ -13,6 +13,7 @@
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
     "@effect/io": "^0.0.42",
+    "@effect/stm": "^0.0.6",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.30",
     "date-fns": "^2.29.3",
@@ -123,16 +124,6 @@
       "require": {
         "types": "./dist/_ext/Pure.d.ts",
         "default": "./_cjs/_ext/Pure.cjs"
-      }
-    },
-    "./_ext/Ref": {
-      "import": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./dist/_ext/Ref.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./_cjs/_ext/Ref.cjs"
       }
     },
     "./_ext/Schema.ext": {

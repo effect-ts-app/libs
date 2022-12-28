@@ -247,6 +247,7 @@ importers:
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
       '@effect/io': ^0.0.42
+      '@effect/stm': ^0.0.6
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.30
       '@types/faker': 5.5.9
@@ -273,6 +274,7 @@ importers:
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
       '@effect/io': 0.0.42
+      '@effect/stm': 0.0.6
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.30
       date-fns: 2.29.3
@@ -2130,6 +2132,14 @@ packages:
   /@effect/io/0.0.42:
     resolution: {integrity: sha512-l6Mtm8KadL1pbV9BmyO7q0sz2oZn1mmSdLOYLtKe3A74t8h6+zEVB7XcUvTFa3U6wqtbg+sjxTT+FMM9k3o4rw==}
     dependencies:
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.30
+    dev: false
+
+  /@effect/stm/0.0.6:
+    resolution: {integrity: sha512-E0rgPfA4BX87xizZAoqPqTp7ctxqIB/ti9Emg/uQslkZY/knVVv6VXlM+OZbg3DmmjgxC80+T9fhgBfdDf3DgQ==}
+    dependencies:
+      '@effect/io': 0.0.42
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.30
     dev: false
