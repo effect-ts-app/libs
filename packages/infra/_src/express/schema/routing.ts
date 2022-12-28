@@ -12,9 +12,9 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
 }
 
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  arr: ROArray<R>
+  arr: ReadonlyArray<R>
 ) {
-  return ROArray.map_(arr, asRouteDescriptionAny)
+  return ReadonlyArray.map_(arr, asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -33,7 +33,7 @@ export interface RouteDescriptor<
   method: METHOD
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
-    tags: ROArray<string>
+    tags: ReadonlyArray<string>
   }
 }
 
@@ -177,7 +177,7 @@ export function makeFromSchema<ResA>(
       requestBody: _.reqBody.map(schema => ({
         content: { "application/json": { schema } }
       })).value,
-      responses: ROArray.concat_(
+      responses: ReadonlyArray.concat_(
         [
           isEmpty
             ? new Response(204, { description: "Empty" })

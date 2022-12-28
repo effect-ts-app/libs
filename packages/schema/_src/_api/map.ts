@@ -57,7 +57,7 @@ export function map<
           Th.map(x => new Map(x) as Map<KeyParsedShape, ParsedShape>)
         )
     ),
-    MO.encoder(_ => mapEncode(ROArray.fromIterable(_.entries()))),
+    MO.encoder(_ => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
     MO.mapApi(() => ({})),
     MO.withDefaults,
     MO.annotate(mapIdentifier, {})

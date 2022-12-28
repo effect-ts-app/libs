@@ -92,11 +92,6 @@ import { Equal } from "@effect-ts/core/Equal"
 /**
  * @tsplus global
  */
-import { ReadonlyArray as ROArray } from "@effect-ts-app/core/Array.global"
-
-/**
- * @tsplus global
- */
 import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
 
 /**

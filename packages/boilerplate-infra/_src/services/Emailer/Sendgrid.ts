@@ -97,7 +97,7 @@ const eq = Equivalence.contramap((to: { name?: string; email: string } | string)
 // TODO: should just not add any already added email address
 // https://stackoverflow.com/a/53603076/11595834
 function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
-  return ROArray.isArray(addr)
+  return ReadonlyArray.isArray(addr)
     ? addr
       .map(x => (isTestAddress(x) ? renderFake(x, makeId) : x))
       .uniq(eq)
@@ -108,7 +108,7 @@ function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
 }
 
 function renderMailData(md: NonNullable<EmailMsg["to"]>): string {
-  if (ROArray.isArray(md)) {
+  if (ReadonlyArray.isArray(md)) {
     return md.map(renderMailData).join(", ")
   }
   if (typeof md === "string") {

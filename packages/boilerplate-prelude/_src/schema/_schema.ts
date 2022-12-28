@@ -66,7 +66,7 @@ export function fitIntoLongString(str: string) {
 
 export class CustomSchemaException extends Error {
   readonly _tag = "ValidationError"
-  readonly errors: ROArray<unknown>
+  readonly errors: ReadonlyArray<unknown>
   constructor(error: S.AnyError) {
     super(S.drawError(error))
     this.errors = [error]

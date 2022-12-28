@@ -21,8 +21,8 @@ export function makeCodec<
 }
 
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Effect<never, never, E>) {
-  return (a: ROArray<A>) =>
-    ROArray.map_(a, task => Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task)))
+  return (a: ReadonlyArray<A>) =>
+    ReadonlyArray.map_(a, task => Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task)))
       .collectAll()
       .map(Map.make)
 }

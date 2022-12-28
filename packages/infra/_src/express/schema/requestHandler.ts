@@ -60,7 +60,7 @@ export function decodeErrors(x: unknown) {
 }
 
 // const ValidationApplicative = Effect.getValidationApplicative(
-//   makeAssociative<ROArray<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
+//   makeAssociative<ReadonlyArray<{ type: string; errors: ReturnType<typeof decodeErrors> }>>(
 //     (l, r) => l.concat(r)
 //   )
 // )

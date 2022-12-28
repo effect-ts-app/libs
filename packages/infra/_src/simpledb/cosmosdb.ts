@@ -72,7 +72,7 @@ WHERE (
               .fetchAll()
           )
         )
-        .map(x => ROArray.head(x.resources))
+        .map(x => ReadonlyArray.head(x.resources))
         .map(Opt.map(_ => _.id))
     }
 

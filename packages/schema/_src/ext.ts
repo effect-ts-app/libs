@@ -159,7 +159,7 @@ export function defaultConstructor<
 
 type SupportedDefaults =
   | ROSet<any>
-  | ROArray<any>
+  | ReadonlyArray<any>
   | Some<any>
   | None
   | Date
@@ -636,7 +636,7 @@ export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded,
 //   )
 // }
 
-export const constArray = constant(ROArray.empty)
+export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }

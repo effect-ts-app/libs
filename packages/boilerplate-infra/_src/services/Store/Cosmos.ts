@@ -52,7 +52,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
-              const batches = ROArray.split_(
+              const batches = ReadonlyArray.split_(
                 [...items].map(
                   x =>
                     [
