@@ -1,9 +1,6 @@
 // tracing: off
 
 import { every_, fromArray, Set, toArray } from "@effect-ts/core/Collections/Immutable/Set"
-import type * as Eq from "@effect-ts/core/Equal"
-import { pipe } from "@effect-ts/core/Function"
-import * as Ord from "@effect-ts/core/Ord"
 
 import * as MO from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
@@ -11,18 +8,20 @@ import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 
+import type { Ord as LegacyOrd } from "@effect-ts/core"
+
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord.Ord<ParsedShape>,
-  eq?: Eq.Equal<ParsedShape>
+  ord_: Ord<ParsedShape>,
+  eq_?: Equal<ParsedShape>
 ): MO.DefaultSchema<
   unknown,
   Set<ParsedShape>,
   Set<ParsedShape>,
   readonly Encoded[],
-  { self: Api; eq: Eq.Equal<ParsedShape>; ord: Ord.Ord<ParsedShape> }
+  { self: Api; eq: Equal<ParsedShape>; ord: Ord<ParsedShape> }
 > {
   const refinement = (_: unknown): _ is Set<ParsedShape> => _ instanceof Set && every_(_, guardSelf)
 
@@ -30,9 +29,11 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 
-  const eq_ = eq ?? Ord.getEqual(ord)
+  const ord: LegacyOrd.Ord<ParsedShape> = { compare: (x, y) => ord_.compare(x)(y) }
 
-  const fromArray_ = fromArray(eq_)
+  const eq = eq_ ?? <Equal<ParsedShape>> { equals: (x, y) => ord.compare(x, y) === 0 }
+
+  const fromArray_ = fromArray(eq)
   const toArray_ = toArray(ord)
 
   const fromChunk = pipe(
@@ -47,7 +48,7 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
     MO.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
     MO.encoder(u => toArray_(u).map(encodeSelf)),
-    MO.mapApi(() => ({ self: self.Api, eq: eq_, ord })),
+    MO.mapApi(() => ({ self: self.Api, eq, ord: ord_ })),
     MO.withDefaults,
     MO.annotate(setIdentifier, { self })
   )

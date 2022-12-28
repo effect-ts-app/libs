@@ -1,34 +1,30 @@
 /**
- * @tsplus getter Tag get
+ * @tsplus getter fp-ts/data/Context.Tag get
  */
 export function get<T>(self: Tag<T>) {
   return Effect.service(self)
 }
 
 /**
- * @tsplus getter Tag with
+ * @tsplus getter fp-ts/data/Context.Tag with
  */
-export function with_<T>(self: Tag<T>) {
-  return <B>(f: (x: T) => B) => Effect.serviceWith(self, f)
-}
+export const with_ = Effect.serviceWith
 
 /**
- * @tsplus getter Tag withEffect
+ * @tsplus getter fp-ts/data/Context.Tag withEffect
  */
-export function accessM<T>(self: Tag<T>) {
-  return <R, E, A>(f: (x: T) => Effect<R, E, A>) => Effect.serviceWithEffect(self, f)
-}
+export const withEffect = Effect.serviceWithEffect
 
 /**
- * @tsplus fluent Tag withEffect_
+ * @tsplus fluent fp-ts/data/Context.Tag withEffect_
  */
 export function accessM_<T, R, E, A>(self: Tag<T>, f: (x: T) => Effect<R, E, A>) {
-  return Effect.serviceWithEffect(self, f)
+  return Effect.serviceWithEffect(self)(f)
 }
 
 /**
- * @tsplus fluent Tag with_
+ * @tsplus fluent fp-ts/data/Context.Tag with_
  */
 export function access_<T, B>(self: Tag<T>, f: (x: T) => B) {
-  return Effect.serviceWith(self, f)
+  return Effect.serviceWith(self)(f)
 }

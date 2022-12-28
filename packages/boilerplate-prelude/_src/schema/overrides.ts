@@ -14,7 +14,6 @@ import {
 } from "@effect-ts-app/schema"
 
 import { ROSet } from "@effect-ts-app/core/Prelude"
-import type { NonEmptyArray } from "@effect-ts-app/core/Prelude"
 
 export const PositiveNumber = positive(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
@@ -39,7 +38,7 @@ export const Kilogram = positive(number)["|>"](brand<Kilogram>())
 // TODO: dictionary, map
 const MAX_LENGTH = 6
 
-export function NonEmptyReadonlyArray<ParsedShape, ConstructorInput, Encoded, Api>(
+export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
@@ -73,11 +72,10 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq?: Equivalence<ParsedShape>
+  eq: Equal<ParsedShape>
 ) {
-  const eq_ = eq ?? ord.equivalence
   const arbitrarySelf = Arbitrary.for(self)
   return setOriginal(self, ord, eq)["|>"](
-    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq_)))
+    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
   )
 }

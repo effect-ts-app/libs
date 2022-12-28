@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tagged } from "@effect-ts/core/Case"
 
-import type { Left, Right } from "@tsplus/stdlib/data/Either"
-
 export { matchTag } from "@effect-ts/core/Utils"
 
 export class Initial extends Tagged("Initial")<{}> {}
@@ -120,5 +118,5 @@ export const { fail, succeed } = Done
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>
 ): Effect<R, never, QueryResult<E, A>> {
-  return self.match(fail, succeed)
+  return self.fold(fail, succeed)
 }

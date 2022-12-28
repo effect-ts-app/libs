@@ -37,7 +37,6 @@ import type * as Th from "@effect-ts-app/schema/custom/These"
 import type { EnforceNonEmptyRecord } from "@effect-ts/core/Utils"
 import type * as faker from "faker"
 
-import type { ROArray } from "@effect-ts-app/core/Prelude"
 import * as S from "@effect-ts-app/schema"
 import { fakerToArb, getFaker } from "../faker.js"
 

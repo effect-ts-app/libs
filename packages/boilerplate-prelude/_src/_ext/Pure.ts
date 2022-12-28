@@ -168,8 +168,9 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
       ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
     )
   ).catchAll(
-    err => Effect.serviceWith(tagg, env => tuple(env.env.log, Either.left(err) as Either<E, readonly [S3, A]>))
-  ).provideService(tagg, { env: makePureEnv<W3, S3, S4>(s) as any }) as any
+    err =>
+      tagg.withEffect(env => env.env.log.get.map(log => tuple(log, Either.left(err) as Either<E, readonly [S3, A]>)))
+  ).provideSomeLayer(tagg.of({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
 }
 
 /**
@@ -225,7 +226,7 @@ export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
  */
 export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<{ env: PureEnv<never, S2, S3> }, never, A> {
   return castTag<never, S3, S2>().withEffect(
-    _ => _.env.state.get.map(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s).map(() => a))
+    _ => _.env.state.get.map(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s as any).map(() => a))
   ) as any
 }
 
@@ -237,7 +238,7 @@ export function modifyM<W, R, E, A, S2, S3>(
 ): Effect<FixEnv<R, W, S2, S3>, E, A> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
   return castTag<W, S3, S2>().withEffect(
-    _ => _.env.state.get.flatMap(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s).map(() => a))
+    _ => _.env.state.get.flatMap(_ => mod(_)).flatMap(([s, a]) => _.env.state.set(s as any).map(() => a))
   ) as any
 }
 
