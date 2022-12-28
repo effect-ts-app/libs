@@ -25,16 +25,5 @@
         "compilerOptions": {
             "module": "CommonJS"
         }
-    },
-    "references": [
-        {
-            "path": "../boilerplate-prelude"
-        },
-        {
-            "path": "../schema"
-        },
-        {
-            "path": "../core"
-        },
-    ]
+    }
 }
