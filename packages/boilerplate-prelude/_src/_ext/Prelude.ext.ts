@@ -164,10 +164,11 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
 export const asUnitE = asUnit
 
 /**
+ * @depracted use `logSpan`
  * @tsplus fluent effect/io/Effect withSpan
  */
 export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
-  return self.apply(Effect.logSpan(label))
+  return self.logSpan(label)
 }
 
 /**
@@ -180,10 +181,11 @@ export function logAnnotates(kvps: Record<string, string>) {
       .get
       .flatMap(annotations =>
         Effect.suspendSucceed(() =>
-          effect.apply(
-            FiberRef.currentLogAnnotations.locally(
-              new Map([...annotations, ...kvps.$$.entries])
-            )
+          pipe(
+            effect,
+            FiberRef.locally(
+              new Map([...annotations, ...kvps.$$.entries]) as ReadonlyMap<string, string>
+            )(FiberRef.currentLogAnnotations)
           )
         )
       )
@@ -200,7 +202,7 @@ export function logAnnotateScoped(key: string, value: string) {
     .flatMap(annotations =>
       Effect.suspendSucceed(() =>
         FiberRef.currentLogAnnotations.locallyScoped(
-          annotations.set(key, value)
+          (annotations as Map<string, string>).set(key, value)
         )
       )
     )
@@ -217,7 +219,7 @@ export function logAnnotatesScoped(kvps: Record<string, string>) {
     .flatMap(annotations =>
       Effect.suspendSucceed(() =>
         FiberRef.currentLogAnnotations.locallyScoped(
-          ImmutableMap.from([...annotations, ...kvps.$$.entries])
+          new Map([...annotations, ...kvps.$$.entries])
         )
       )
     )

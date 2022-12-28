@@ -43,6 +43,14 @@ export const pipeArray = pipe
 export const pipeChunk = pipe
 
 /**
+ * @tsplus operator effect/io/Effect >=
+ * @tsplus fluent effect/io/Effect apply
+ * @tsplus fluent effect/io/Effect __call
+ * @tsplus macro pipe
+ */
+export const pipeEffect = pipe
+
+/**
  * @tsplus static ets/Set __call
  */
 export const setSucceed = ROSet.fromArray
