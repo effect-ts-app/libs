@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install pnpm plugin
+        run: npm i -g @effect-ts-app/pnpm-singleton
+
       - uses: pnpm/action-setup@v2
         name: Install pnpm
         id: pnpm-install

@@ -500,33 +500,12 @@ importers:
 
   packages/pnpm-singleton:
     specifiers:
-      '@effect-ts-app/boilerplate-prelude': workspace:*
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/react': workspace:*
-      '@effect-ts-app/schema': '*'
       '@types/node': ~18.11.12
-      '@types/react': ^18.0.26
-      date-fns: ^2.29.3
-      react: ^18.2.0
-      react-hook-form: 7.40.0
-      react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz
       vitest: ^0.26.2
-    dependencies:
-      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/react': link:../react
-      '@effect-ts-app/schema': link:../schema
-      date-fns: 2.29.3
     devDependencies:
-      '@effect-ts-app/compiler': link:../compiler
       '@types/node': 18.11.12
-      '@types/react': 18.0.26
-      react: 18.2.0
-      react-hook-form: 7.40.0_react@18.2.0
-      react-intl: 6.2.5_mp35o7nua5uk62fn7qbxouavgi
       ts-node: 10.9.1_hrbnv223vo4o2fk7isweuz3nju
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz_jeydujcqrd2nzo2xcybzi5otr4'
       vitest: 0.26.2
@@ -1586,6 +1565,7 @@ packages:
   /@babel/cli/7.20.7:
     resolution: {integrity: sha512-WylgcELHB66WwQqItxNILsMlaTd8/SO6SgTTjMp4uCI7P4QyH1r3nqgFmO3BfM4AtfniHgFMH3EpYFj/zynBkQ==}
     engines: {node: '>=6.9.0'}
+    hasBin: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -1604,6 +1584,7 @@ packages:
   /@babel/cli/7.20.7_@babel+core@7.20.7:
     resolution: {integrity: sha512-WylgcELHB66WwQqItxNILsMlaTd8/SO6SgTTjMp4uCI7P4QyH1r3nqgFmO3BfM4AtfniHgFMH3EpYFj/zynBkQ==}
     engines: {node: '>=6.9.0'}
+    hasBin: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -4908,6 +4889,7 @@ packages:
   /eslint-watch/8.0.0_eslint@8.30.0:
     resolution: {integrity: sha512-piws/uE4gkZdz1pwkaEFx+kSWvoGnVX8IegFRrE1NUvlXjtU0rg7KhT1QDj/NzhAwbiLEfdRHWz5q738R4zDKA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
     peerDependencies:
       eslint: '>=8 <9.0.0'
     dependencies:
@@ -8808,6 +8790,7 @@ packages:
 
   /ts-node/10.9.1:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8836,6 +8819,7 @@ packages:
 
   /ts-node/10.9.1_anapuzksqcf7xz3i7gzsbghhh4:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8865,6 +8849,7 @@ packages:
 
   /ts-node/10.9.1_hrbnv223vo4o2fk7isweuz3nju:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
@@ -8908,6 +8893,7 @@ packages:
   /tsc-watch/6.0.0_anapuzksqcf7xz3i7gzsbghhh4:
     resolution: {integrity: sha512-zgpju+/z5z29/kK5V28Nz16CMkX2voFOUxkTlCim/R25hxzbyUqu2NfTnmJBQfESBSPbEQUGqDdB9A8opAcB4A==}
     engines: {node: '>=12.12.0'}
+    hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
@@ -9111,6 +9097,7 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -9239,6 +9226,7 @@ packages:
   /vite/4.0.3_@types+node@18.11.12:
     resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
     peerDependencies:
       '@types/node': '>= 14'
       less: '*'
@@ -9271,6 +9259,7 @@ packages:
   /vitest/0.26.2:
     resolution: {integrity: sha512-Jvqxh6SDy9SsuslkDjts0iDewDIdq4rveEt69YgDuAb1tVDGV0lDepVaeAFraoySWqneJmOt4TngFFNhlw7GfA==}
     engines: {node: '>=v14.16.0'}
+    hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@vitest/browser': '*'

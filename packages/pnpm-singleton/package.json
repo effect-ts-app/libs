@@ -28,20 +28,9 @@
   "resolutions": {
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
   },
-  "dependencies": {
-    "@effect-ts-app/boilerplate-prelude": "workspace:*",
-    "@effect-ts-app/react": "workspace:*",
-    "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
-    "date-fns": "^2.29.3"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@effect-ts-app/compiler": "workspace:*",
     "@types/node": "~18.11.17",
-    "@types/react": "^18.0.26",
-    "react": "^18.2.0",
-    "react-hook-form": "7.40.0",
-    "react-intl": "^6.2.5",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
     "vitest": "^0.26.2"
