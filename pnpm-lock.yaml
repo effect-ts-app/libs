@@ -7,30 +7,30 @@ overrides:
   typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
 
 patchedDependencies:
-  '@typescript-eslint/scope-manager@5.47.0':
-    hash: tp5r7mwyjl4dxldk2tuwbgrsum
-    path: patches/@typescript-eslint__scope-manager@5.47.0.patch
-  '@effect-ts/monocle@0.43.0':
-    hash: d3hhxwnoq64fw5ljkjpzykj2mi
-    path: patches/@effect-ts__monocle@0.43.0.patch
-  '@effect-ts/core@0.60.5':
-    hash: jx4drcbvzaxoqqasybnfxdx44i
-    path: patches/@effect-ts__core@0.60.5.patch
   eslint-plugin-codegen@0.16.1:
     hash: ynbtpbmwzuvjrurltfyj25fcjm
     path: patches/eslint-plugin-codegen@0.16.1.patch
-  '@effect-ts/system@0.57.5':
-    hash: aliyesjnd2rt7ef7234i2dw2t4
-    path: patches/@effect-ts__system@0.57.5.patch
+  '@typescript-eslint/scope-manager@5.47.0':
+    hash: tp5r7mwyjl4dxldk2tuwbgrsum
+    path: patches/@typescript-eslint__scope-manager@5.47.0.patch
   eslint-plugin-unused-imports@2.0.0:
     hash: tnum7sl7jcutfljbv5jztcescq
     path: patches/eslint-plugin-unused-imports@2.0.0.patch
-  typescript@5.0.0-tsplus.20221227:
-    hash: wbuoq7eauijk342tvgfm6ycsgm
-    path: patches/typescript@5.0.0-tsplus.20221227.patch
   ts-pattern@4.0.6:
     hash: hpfuegunz5yvcuwfbyr4pr7fdy
     path: patches/ts-pattern@4.0.6.patch
+  typescript@5.0.0-tsplus.20221227:
+    hash: wbuoq7eauijk342tvgfm6ycsgm
+    path: patches/typescript@5.0.0-tsplus.20221227.patch
+  '@effect-ts/system@0.57.5':
+    hash: aliyesjnd2rt7ef7234i2dw2t4
+    path: patches/@effect-ts__system@0.57.5.patch
+  '@effect-ts/core@0.60.5':
+    hash: jx4drcbvzaxoqqasybnfxdx44i
+    path: patches/@effect-ts__core@0.60.5.patch
+  '@effect-ts/monocle@0.43.0':
+    hash: d3hhxwnoq64fw5ljkjpzykj2mi
+    path: patches/@effect-ts__monocle@0.43.0.patch
 
 importers:
 
@@ -501,33 +501,12 @@ importers:
 
   packages/pnpm-singleton:
     specifiers:
-      '@effect-ts-app/boilerplate-prelude': workspace:*
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/react': workspace:*
-      '@effect-ts-app/schema': '*'
       '@types/node': ~18.11.12
-      '@types/react': ^18.0.26
-      date-fns: ^2.29.3
-      react: ^18.2.0
-      react-hook-form: 7.40.0
-      react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       vitest: ^0.26.2
-    dependencies:
-      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/react': link:../react
-      '@effect-ts-app/schema': link:../schema
-      date-fns: 2.29.3
     devDependencies:
-      '@effect-ts-app/compiler': link:../compiler
       '@types/node': 18.11.12
-      '@types/react': 18.0.26
-      react: 18.2.0
-      react-hook-form: 7.40.0_react@18.2.0
-      react-intl: 6.2.5_wrrkv27jmmk3f3genuudvh34gu
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
       vitest: 0.26.2
