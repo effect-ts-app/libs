@@ -1,6 +1,6 @@
 module.exports = {
     hooks: {
-        ...require("@effect-ts-app/pnpm-singleton").makeHooks({ specificPackages: [
+        ...require("./packages/pnpm-singleton/_cjs/index.cjs").makeHooks({ specificPackages: [
             "@tsplus/stdlib",
             "@effect/core",
             "@effect/cache",
@@ -10,3 +10,4 @@ module.exports = {
         ]})
     }
 }
+ 

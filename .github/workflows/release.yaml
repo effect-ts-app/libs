@@ -11,13 +11,15 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Install pnpm plugin
-        run: npm i -g @effect-ts-app/pnpm-singleton
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -31,11 +33,6 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: checkout code repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - uses: actions/cache@v3
         name: Setup pnpm cache
