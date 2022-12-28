@@ -35,8 +35,7 @@ export function p<T>(k: any) {
   return (v: Opt<T>) => v.flatMap(a => convert(a[k]))
 }
 function convert(a: any) {
-  const aa = a as Opt<any>
-  return aa.isSome() || aa.isNone() ? a : Opt.fromNullable(a)
+  return Opt.isSome(a) || Opt.isNone(a) ? a : Opt.fromNullable(a)
 }
 export type _A<A> = A extends Some<infer Y> ? Y : never
 type KeysMatching<T, V> = {

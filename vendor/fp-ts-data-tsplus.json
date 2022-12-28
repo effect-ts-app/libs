@@ -1579,6 +1579,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/Option",
           "name": "isNone"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Ops",
+          "name": "isNone"
         }
       ]
     },
@@ -1589,6 +1594,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/Option",
+          "name": "isSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Ops",
           "name": "isSome"
         }
       ]
