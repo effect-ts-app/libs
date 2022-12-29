@@ -4713,7 +4713,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "ReadonlyArray.Ops",
           "name": "head"
         }
       ]

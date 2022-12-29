@@ -1,7 +1,6 @@
 import * as MO from "@effect-ts-app/schema"
 import { Encoder, Parser } from "@effect-ts-app/schema"
 import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
-import * as Map from "@effect-ts/core/Collections/Immutable/Map"
 
 export function makeCodec<
   ParsedShape extends { id: Id },
@@ -10,7 +9,7 @@ export function makeCodec<
   Api,
   Id
 >(self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>) {
-  const parse = Parser.for(self) >= MO.condemnDie
+  const parse = MO.condemnDie(Parser.for(self))
   // TODO: strict
   const decode = (e: Encoded, env?: ParserEnv) => parse(e, env)
   const enc = Encoder.for(self)
@@ -22,7 +21,7 @@ export function makeCodec<
 
 function toMap<E, A extends { id: Id }, Id>(encode: (a: A) => Effect<never, never, E>) {
   return (a: ReadonlyArray<A>) =>
-    ReadonlyArray.map_(a, task => Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task)))
+    a.map(task => Effect.tuple(Effect.succeed(task.id as A["id"]), encode(task)))
       .collectAll()
-      .map(Map.make)
+      .map(_ => new Map(_))
 }
