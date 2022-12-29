@@ -1,6 +1,7 @@
 import type { Clock } from "@effect/io/Clock"
 import { Deferred } from "@effect/io/Deferred"
 import type { FiberId } from "@effect/io/Fiber/Id"
+import { EmptyMutableQueue } from "@fp-ts/data/MutableQueue"
 import { CacheStats } from "../../CacheStats.js"
 import { EntryStats } from "../../EntryStats.js"
 import type { Lookup } from "../../Lookup.js"
@@ -168,11 +169,11 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
         }
       }
       if (value == null) {
-        return this.lookupValueOf(k, deferred).unit
+        return this.lookupValueOf(k, deferred).asUnit
       }
       switch (value._tag) {
         case "Pending": {
-          return value.deferred.await.unit
+          return value.deferred.await.asUnit
         }
         case "Complete": {
           if (this.hasExpired(value.timeToLiveMillis)) {
@@ -180,7 +181,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             if (Equals.equals(found, value)) {
               this.cacheState.map.remove(k)
             }
-            return this.get(k).unit
+            return this.get(k).asUnit
           }
           // Only trigger the lookup if we're still the current value
           return Effect.when(
@@ -196,10 +197,10 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
               return false
             },
             this.lookupValueOf(value.key.value, deferred)
-          ).unit
+          ).asUnit
         }
         case "Refreshing": {
-          return value.deferred.await.unit
+          return value.deferred.await.asUnit
         }
       }
     })

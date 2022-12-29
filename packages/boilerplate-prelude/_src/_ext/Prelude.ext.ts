@@ -4,11 +4,8 @@ import "./date.js"
 import "./Has.ext.js"
 import "./Lens.ext.js"
 // import "./Ref.js"
-import "./Schema.ext.js"
-
-import { asUnit } from "@effect/io/Effect"
-
 import "./refinements.js"
+import "./Schema.ext.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
@@ -157,11 +154,6 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
   return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect.succeed(f(err)))
 }
-
-/**
- * @tsplus static effect/io/Effect.Aspects asUnit
- */
-export const asUnitE = asUnit
 
 /**
  * @depracted use `logSpan`

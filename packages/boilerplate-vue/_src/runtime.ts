@@ -12,9 +12,9 @@ export function makeApiLayers(apiUrl = "/api") {
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
   return Effect.gen(function*($) {
-    const scope = yield* $(Scope.make)
+    const scope = yield* $(Scope.make())
     const env = yield* $(layer.buildWithScope(scope))
-    const runtime = yield* $(Effect.scoped(Effect.runtime<A>()).provideEnvironment(env))
+    const runtime = yield* $(Effect.runtime<A>().scoped.provideEnvironment(env))
 
     return {
       runtime,

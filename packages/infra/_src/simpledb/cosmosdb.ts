@@ -92,7 +92,7 @@ WHERE (
                   timestamp: new Date(),
                   data
                 })
-              ).unit.orDie,
+              ).asUnit.orDie,
             currentVersion =>
               Effect.tryPromise(() =>
                 db

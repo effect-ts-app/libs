@@ -302,36 +302,6 @@
         "default": "./_cjs/logger.cjs"
       }
     },
-    "./logger/Console": {
-      "import": {
-        "types": "./dist/logger/Console.d.ts",
-        "default": "./dist/logger/Console.js"
-      },
-      "require": {
-        "types": "./dist/logger/Console.d.ts",
-        "default": "./_cjs/logger/Console.cjs"
-      }
-    },
-    "./logger/Logger": {
-      "import": {
-        "types": "./dist/logger/Logger.d.ts",
-        "default": "./dist/logger/Logger.js"
-      },
-      "require": {
-        "types": "./dist/logger/Logger.d.ts",
-        "default": "./_cjs/logger/Logger.cjs"
-      }
-    },
-    "./logger/Winston": {
-      "import": {
-        "types": "./dist/logger/Winston.d.ts",
-        "default": "./dist/logger/Winston.js"
-      },
-      "require": {
-        "types": "./dist/logger/Winston.d.ts",
-        "default": "./_cjs/logger/Winston.cjs"
-      }
-    },
     "./mongo-client": {
       "import": {
         "types": "./dist/mongo-client.d.ts",
