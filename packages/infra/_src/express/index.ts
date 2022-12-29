@@ -195,9 +195,9 @@ export function LiveExpress<R>(
   )
 }
 
-export const expressApp = Effect.serviceWith(ExpressApp, _ => _.app)
+export const expressApp = ExpressApp.with(_ => _.app)
 
-export const expressServer = Effect.serviceWith(ExpressApp, _ => _.server)
+export const expressServer = ExpressApp.with(_ => _.server)
 
 export const { app: withExpressApp, server: withExpressServer } = Effect.deriveAccessEffect(ExpressApp)([
   "app",

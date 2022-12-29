@@ -1,0 +1,3246 @@
+{
+  "@effect/stm/TRef": [
+    {
+      "definitionName": "TRef",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRef"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRef.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRefTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRef.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRef.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRefTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.TypeId.Ops",
+          "name": "TRefTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndUpdate"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndUpdateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "modify",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "modify"
+        }
+      ]
+    },
+    {
+      "definitionName": "modifySome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "modifySome"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "setAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "setAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "update",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "update"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "updateAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "updateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSomeAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "updateSomeAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "unsafeGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TRef",
+          "name": "unsafeSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TRef",
+          "name": "get"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/STM": [
+    {
+      "definitionName": "STM",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/STM"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/STM.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "STMTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/STM.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/STM.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fromEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fromOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquireUseRelease",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "acquireUseRelease"
+        }
+      ]
+    },
+    {
+      "definitionName": "attempt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "attempt"
+        }
+      ]
+    },
+    {
+      "definitionName": "check",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "check"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "collectAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectAllDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "collectAllDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "collectFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "cond",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "cond"
+        }
+      ]
+    },
+    {
+      "definitionName": "die",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "die"
+        }
+      ]
+    },
+    {
+      "definitionName": "dieMessage",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "dieMessage"
+        }
+      ]
+    },
+    {
+      "definitionName": "dieSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "dieSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "environment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "environment"
+        }
+      ]
+    },
+    {
+      "definitionName": "environmentWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "environmentWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "environmentWithSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "environmentWithSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "every",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "every"
+        }
+      ]
+    },
+    {
+      "definitionName": "exists",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "exists"
+        }
+      ]
+    },
+    {
+      "definitionName": "fail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fail"
+        }
+      ]
+    },
+    {
+      "definitionName": "failSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "failSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "fiberId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fiberId"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterNot",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "filterNot"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEachDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "forEachDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "interrupt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "interrupt"
+        }
+      ]
+    },
+    {
+      "definitionName": "interruptWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "interruptWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "iterate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "iterate"
+        }
+      ]
+    },
+    {
+      "definitionName": "loop",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "loop"
+        }
+      ]
+    },
+    {
+      "definitionName": "loopDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "loopDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "mergeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "mergeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "partition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "partition"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "reduceRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "retry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "retry"
+        }
+      ]
+    },
+    {
+      "definitionName": "service",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "service"
+        }
+      ]
+    },
+    {
+      "definitionName": "serviceWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "serviceWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "serviceWithSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "serviceWithSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedLeft"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedNone",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedNone"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "suspend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "suspend"
+        }
+      ]
+    },
+    {
+      "definitionName": "sync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "sync"
+        }
+      ]
+    },
+    {
+      "definitionName": "tryCatch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "tryCatch"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "tuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "unit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "unit"
+        }
+      ]
+    },
+    {
+      "definitionName": "validateAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "validateAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "validateFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "validateFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "whenCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "STMTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.TypeId.Ops",
+          "name": "STMTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "catchAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "catchAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "catchSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "catchSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "collect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "collect"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "collectSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "ensuring",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "ensuring"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterOrDie",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "filterOrDie"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterOrDieMessage",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "filterOrDieMessage"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterOrElse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "filterOrElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterOrElseWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "filterOrElseWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterOrFail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "filterOrFail"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "flatMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMapError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "flatMapError"
+        }
+      ]
+    },
+    {
+      "definitionName": "flattenErrorOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "flattenErrorOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "flipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "flipWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "fold",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "fold"
+        }
+      ]
+    },
+    {
+      "definitionName": "foldSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "foldSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "ifSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "ifSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapAttempt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "mapAttempt"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapBoth",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "mapBoth"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "mapError"
+        }
+      ]
+    },
+    {
+      "definitionName": "orDieWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orDieWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElseEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orElseEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElseFail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orElseFail"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElseOptional",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orElseOptional"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElseSucceed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orElseSucceed"
+        }
+      ]
+    },
+    {
+      "definitionName": "orTry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "orTry"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideEnvironment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "provideEnvironment"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideSomeEnvironment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "provideSomeEnvironment"
+        }
+      ]
+    },
+    {
+      "definitionName": "refineOrDie",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "refineOrDie"
+        }
+      ]
+    },
+    {
+      "definitionName": "refineOrDieWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "refineOrDieWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "reject",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "reject"
+        }
+      ]
+    },
+    {
+      "definitionName": "rejectSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "rejectSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "repeatUntil",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "repeatUntil"
+        }
+      ]
+    },
+    {
+      "definitionName": "repeatWhile",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "repeatWhile"
+        }
+      ]
+    },
+    {
+      "definitionName": "replicate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "replicate"
+        }
+      ]
+    },
+    {
+      "definitionName": "replicateSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "replicateSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "replicateSTMDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "replicateSTMDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "retryUntil",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "retryUntil"
+        }
+      ]
+    },
+    {
+      "definitionName": "retryWhile",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "retryWhile"
+        }
+      ]
+    },
+    {
+      "definitionName": "someOrElse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "someOrElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "someOrElseSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "someOrElseSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "someOrFail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "someOrFail"
+        }
+      ]
+    },
+    {
+      "definitionName": "summarized",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "summarized"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "tap"
+        }
+      ]
+    },
+    {
+      "definitionName": "tapBoth",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "tapBoth"
+        }
+      ]
+    },
+    {
+      "definitionName": "tapError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "tapError"
+        }
+      ]
+    },
+    {
+      "definitionName": "unless",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "unless"
+        }
+      ]
+    },
+    {
+      "definitionName": "unlessSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "unlessSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "zip",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "zip"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "zipLeft"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "zipRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "zipWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "when",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "when"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenCaseSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "whenCaseSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/STM",
+          "name": "whenSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "reduceAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "absolve",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "absolve"
+        }
+      ]
+    },
+    {
+      "definitionName": "asSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "asSomeError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asSomeError"
+        }
+      ]
+    },
+    {
+      "definitionName": "commit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "commit"
+        }
+      ]
+    },
+    {
+      "definitionName": "commitEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "commitEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "either",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "either"
+        }
+      ]
+    },
+    {
+      "definitionName": "eventually",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "eventually"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatten",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "flatten"
+        }
+      ]
+    },
+    {
+      "definitionName": "flip",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "flip"
+        }
+      ]
+    },
+    {
+      "definitionName": "head",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "head"
+        }
+      ]
+    },
+    {
+      "definitionName": "ignore",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "ignore"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFailure",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "isFailure"
+        }
+      ]
+    },
+    {
+      "definitionName": "isSuccess",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "isSuccess"
+        }
+      ]
+    },
+    {
+      "definitionName": "left",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "left"
+        }
+      ]
+    },
+    {
+      "definitionName": "merge",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "merge"
+        }
+      ]
+    },
+    {
+      "definitionName": "negate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "negate"
+        }
+      ]
+    },
+    {
+      "definitionName": "none",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "none"
+        }
+      ]
+    },
+    {
+      "definitionName": "option",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "option"
+        }
+      ]
+    },
+    {
+      "definitionName": "orDie",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "orDie"
+        }
+      ]
+    },
+    {
+      "definitionName": "right",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "right"
+        }
+      ]
+    },
+    {
+      "definitionName": "some",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "some"
+        }
+      ]
+    },
+    {
+      "definitionName": "someOrFailException",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "someOrFailException"
+        }
+      ]
+    },
+    {
+      "definitionName": "unleft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unleft"
+        }
+      ]
+    },
+    {
+      "definitionName": "unright",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unright"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unsome"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TArray": [
+    {
+      "definitionName": "TArray",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TArray"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TArray.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TArrayTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TArray.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TArray.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "TArrayTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.TypeId.Ops",
+          "name": "TArrayTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "collectFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "collectFirstSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "collectFirstSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "contains",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "contains"
+        }
+      ]
+    },
+    {
+      "definitionName": "count",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "count"
+        }
+      ]
+    },
+    {
+      "definitionName": "countSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "countSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "every",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "every"
+        }
+      ]
+    },
+    {
+      "definitionName": "everySTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "everySTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirstIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirstIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirstIndexWhere",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirstIndexWhere"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirstIndexWhereSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirstIndexWhereSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirstSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirstSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "findLast",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findLast"
+        }
+      ]
+    },
+    {
+      "definitionName": "findLastIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findLastIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "findLastSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "findLastSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "maxOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "maxOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "minOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "minOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "reduceOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceOptionSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "reduceOptionSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "reduceSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "some",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "some"
+        }
+      ]
+    },
+    {
+      "definitionName": "someSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "someSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "transformSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "update",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "update"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TArray",
+          "name": "updateSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "headOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "headOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "lastOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "lastOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "toChunk"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TDeferred": [
+    {
+      "definitionName": "TDeferred",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TDeferred"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TDeferred.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDeferredTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TDeferred.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TDeferred.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDeferredTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.TypeId.Ops",
+          "name": "TDeferredTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "done",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TDeferred",
+          "name": "done"
+        }
+      ]
+    },
+    {
+      "definitionName": "fail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TDeferred",
+          "name": "fail"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TDeferred",
+          "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "poll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TDeferred",
+          "name": "poll"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TQueue": [
+    {
+      "definitionName": "TQueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue.TEnqueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.TEnqueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue.TDequeue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.TDequeue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "BaseTQueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue.BaseTQueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.BaseTQueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeueTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue.TDequeueTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.TDequeueTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueueTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue.TEnqueueTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.TEnqueueTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTQueue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTQueue"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTDequeue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTDequeue"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTEnqueue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTEnqueue"
+        }
+      ]
+    },
+    {
+      "definitionName": "bounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "bounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "dropping",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "dropping"
+        }
+      ]
+    },
+    {
+      "definitionName": "sliding",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "sliding"
+        }
+      ]
+    },
+    {
+      "definitionName": "unbounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "unbounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeueTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeueTypeId.Ops",
+          "name": "TDequeueTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueueTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TEnqueueTypeId.Ops",
+          "name": "TEnqueueTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "offer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TEnqueue",
+          "name": "offer"
+        }
+      ]
+    },
+    {
+      "definitionName": "offerAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TEnqueue",
+          "name": "offerAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "seek",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "seek"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeBetween",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeBetween"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeN"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeUpTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeUpTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "awaitShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "awaitShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "capacity",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "capacity"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isFull"
+        }
+      ]
+    },
+    {
+      "definitionName": "isShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "peek",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "peek"
+        }
+      ]
+    },
+    {
+      "definitionName": "peekOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "peekOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "poll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "poll"
+        }
+      ]
+    },
+    {
+      "definitionName": "shutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "shutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "take",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "take"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeAll"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/THub": [
+    {
+      "definitionName": "THub",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/THub"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/THub.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "THubTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/THub.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/THub.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "bounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "bounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "dropping",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "dropping"
+        }
+      ]
+    },
+    {
+      "definitionName": "sliding",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "sliding"
+        }
+      ]
+    },
+    {
+      "definitionName": "unbounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "unbounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "THubTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.TypeId.Ops",
+          "name": "THubTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "publish",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/THub",
+          "name": "publish"
+        }
+      ]
+    },
+    {
+      "definitionName": "publishAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/THub",
+          "name": "publishAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "awaitShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "awaitShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "capacity",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "capacity"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isFull"
+        }
+      ]
+    },
+    {
+      "definitionName": "isShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "subscribe",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "subscribe"
+        }
+      ]
+    },
+    {
+      "definitionName": "subscribeScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "subscribeScoped"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TPriorityQueue": [
+    {
+      "definitionName": "TPriorityQueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TPriorityQueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TPriorityQueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TPriorityQueueTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TPriorityQueue.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TPriorityQueue.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "TPriorityQueueTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.TypeId.Ops",
+          "name": "TPriorityQueueTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "offer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "offer"
+        }
+      ]
+    },
+    {
+      "definitionName": "offerAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "offerAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "removeIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "retainIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeUpTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "takeUpTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "isNonEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "isNonEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "peek",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "peek"
+        }
+      ]
+    },
+    {
+      "definitionName": "peekOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "peekOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "take",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "take"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "takeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "takeOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "toChunk"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "toReadonlyArray"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TSemaphore": [
+    {
+      "definitionName": "TSemaphore",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TSemaphore"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TSemaphore.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TSemaphoreTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TSemaphore.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TSemaphore.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeMake",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "unsafeMake"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "withPermit"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermits",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "withPermits"
+        }
+      ]
+    },
+    {
+      "definitionName": "TSemaphoreTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.TypeId.Ops",
+          "name": "TSemaphoreTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquireN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "acquireN"
+        }
+      ]
+    },
+    {
+      "definitionName": "releaseN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "releaseN"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermitsScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "withPermitsScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquire",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "acquire"
+        }
+      ]
+    },
+    {
+      "definitionName": "available",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "available"
+        }
+      ]
+    },
+    {
+      "definitionName": "release",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "release"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermitScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "withPermitScoped"
+        }
+      ]
+    }
+  ]
+}

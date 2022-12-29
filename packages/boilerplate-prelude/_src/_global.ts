@@ -4,6 +4,21 @@
 //  */
 // import { Predicate } from "@effect-ts/core/Function"
 
+/**
+ * @tsplus global
+ */
+import { TSemaphore } from "@effect/stm/TSemaphore"
+
+/**
+ * @tsplus global
+ */
+import { TRef } from "@effect/stm/TRef"
+
+/**
+ * @tsplus global
+ */
+import { STM } from "@effect/stm/STM"
+
 /* eslint-disable unused-imports/no-unused-imports */
 /**
  * @tsplus global
