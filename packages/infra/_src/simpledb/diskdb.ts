@@ -101,7 +101,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(type: string) {
       return (id: string) => {
         return tryRead(getFilename(type, id)).map(
-          Opt.map(s => JSON.parse(s) as CachedRecord<EA>)
+          _ => _.map(s => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
@@ -112,10 +112,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Opt.match(
-          () => ({} as Record<string, TKey>),
-          x => JSON.parse(x) as Record<string, TKey>
-        )
+        _ =>
+          _.match(
+            () => ({} as Record<string, TKey>),
+            x => JSON.parse(x) as Record<string, TKey>
+          )
       )
     }
 

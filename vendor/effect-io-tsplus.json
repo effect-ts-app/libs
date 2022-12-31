@@ -11964,6 +11964,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "map"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "map"

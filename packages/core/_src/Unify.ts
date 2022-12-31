@@ -1,6 +1,9 @@
 // TODO: Add effect cause/exit etc
 
-import type { EffectTypeId } from "@effect/io/Effect"
+import type { Effect, EffectTypeId } from "@effect/io/Effect"
+import type { Chunk } from "@fp-ts/data/Chunk"
+import type { Either } from "@fp-ts/data/Either"
+import type { Option } from "@fp-ts/data/Option"
 
 /**
  * @tsplus unify effect/io/Effect
@@ -39,12 +42,12 @@ export function unifyEither<X extends Either<any, any>>(
 }
 
 /**
- * @tsplus unify fp-ts/data/Opt
- * @tsplus unify fp-ts/data/Opt.Some
- * @tsplus unify fp-ts/data/Opt.None
+ * @tsplus unify fp-ts/data/Option
+ * @tsplus unify fp-ts/data/Option.Some
+ * @tsplus unify fp-ts/data/Option.None
  */
-export function unifyOpt<X extends Opt<any>>(
+export function unifyOpt<X extends Option<any>>(
   self: X
-): Opt<X extends Some<infer A> ? A : never> {
+): Option<X extends Some<infer A> ? A : never> {
   return self
 }

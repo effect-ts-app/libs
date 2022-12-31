@@ -9,7 +9,7 @@ export function defaultTeardown(
   Fiber.roots().flatMap(_ => _.interruptAllWith(id))
     .unsafeRun(() => {
       setTimeout(() => {
-        if (Supervisor.mainFibers.size === 0) {
+        if ((globalThis["@effect/io/FiberScope/Global"].roots as Chunk<any>).size === 0) {
           onExit(status)
         } else {
           defaultTeardown(status, id, onExit)

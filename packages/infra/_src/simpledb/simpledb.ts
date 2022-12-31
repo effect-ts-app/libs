@@ -33,7 +33,7 @@ export const LiveRecordCache = Effect.succeed(makeLiveRecordCache()).toLayer(Rec
 const getM = <T>(type: string) =>
   <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
     Effect.gen(function*($) {
-      const { get } = yield* $(RecordCache)
+      const { get } = yield* $(RecordCache.get)
       return yield* $(get<T>(type).flatMap(eff))
     })
 

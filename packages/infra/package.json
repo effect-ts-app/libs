@@ -294,16 +294,6 @@
         "default": "./_cjs/index.cjs"
       }
     },
-    "./logger": {
-      "import": {
-        "types": "./dist/logger.d.ts",
-        "default": "./dist/logger.js"
-      },
-      "require": {
-        "types": "./dist/logger.d.ts",
-        "default": "./_cjs/logger.cjs"
-      }
-    },
     "./mongo-client": {
       "import": {
         "types": "./dist/mongo-client.d.ts",

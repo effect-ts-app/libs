@@ -72,7 +72,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       checkKeys: false // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
                     } as InsertOneOptions
                   )
-              ).unit.orDie,
+              ).asUnit.orDie,
             currentVersion =>
               Effect.tryPromise(() =>
                 db.collection(type).replaceOne(

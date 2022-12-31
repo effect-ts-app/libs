@@ -147,11 +147,11 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         return Effect.fail(new ValidationError(errors))
       }
       return Effect.succeed({
-        body: body.value,
-        cookie: cookie.value,
-        headers: headers.value,
-        path: path.value,
-        query: query.value
+        body: body.value!,
+        cookie: cookie.value!,
+        headers: headers.value!,
+        path: path.value!,
+        query: query.value!
       })
     })
 }

@@ -57,14 +57,14 @@ export function sendMessages(
   options?: OperationOptionsBase
 ) {
   return Effect.gen(function*($) {
-    const s = yield* $(Sender)
+    const s = yield* $(Sender.get)
     return yield* $(Effect.promise(() => s.sendMessages(messages, options)))
   })
 }
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return Effect.gen(function*($) {
-    const r = yield* $(Receiver)
+    const r = yield* $(Receiver.get)
 
     const env = yield* $(Effect.environment<RMsg | RErr>())
 
@@ -92,7 +92,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
 const SubscribeTag = Tag<Effect.Success<ReturnType<typeof subscribe>>>()
 
 export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
-  return Layer.scoped(SubscribeTag, subscribe(hndlr))
+  return Layer.scoped(SubscribeTag)(subscribe(hndlr))
 }
 
 export interface MessageHandlers<RMsg, RErr> {

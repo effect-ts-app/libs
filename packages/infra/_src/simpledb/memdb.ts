@@ -28,7 +28,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .map(Opt.map(s => JSON.parse(s) as unknown))
+        .map(_ => _.map(s => JSON.parse(s) as unknown))
         .flatMapOpt(parseSDB)
         .mapOpt(({ data, version }) => ({
           data: JSON.parse(data) as EA,
@@ -50,7 +50,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 : Effect.fail("not equals")
             ).exit
           )
-          if (r._tag === "Success") {
+          if (Exit.isSuccess(r)) {
             return r.value
           }
         }

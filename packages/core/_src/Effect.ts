@@ -4,6 +4,7 @@
 import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
+import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 
 /**
@@ -30,9 +31,9 @@ export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) => Eff.flat
  * @tsplus fluent effect/io/Effect flatMapOpt
  */
 export function flatMapOpt<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Opt<A>>,
+  self: Effect<R, E, Option<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
-) {
+): Effect<R | R2, E | E2, Option<A2>> {
   return self.flatMap(d =>
     d.match(
       () => Effect.succeed(Opt.none),
@@ -45,9 +46,9 @@ export function flatMapOpt<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect tapOpt
  */
 export function tapOpt<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Opt<A>>,
+  self: Effect<R, E, Option<A>>,
   fm: (a: A) => Effect<R2, E2, A2>
-) {
+): Effect<R | R2, E | E2, Option<A>> {
   return self.flatMap(d =>
     d.match(
       () => Effect.succeed(Opt.none),
@@ -60,7 +61,7 @@ export function tapOpt<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect zipRightOpt
  */
 export function zipRightOpt<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Opt<A>>,
+  self: Effect<R, E, Option<A>>,
   fm: Effect<R2, E2, A2>
 ) {
   return self.flatMap(d =>
@@ -75,9 +76,9 @@ export function zipRightOpt<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect mapOpt
  */
 export function mapOpt<R, E, A, A2>(
-  self: Effect<R, E, Opt<A>>,
+  self: Effect<R, E, Option<A>>,
   fm: (a: A) => A2
-) {
+): Effect<R, E, Option<A2>> {
   return self.map(d =>
     d.match(
       () => Opt.none,
@@ -167,14 +168,14 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
     }, Effect.succeed)
   )
 export function encaseOpt_<E, A>(
-  o: Opt<A>,
+  o: Option<A>,
   onError: LazyArg<E>
 ): Effect<never, E, A> {
   return o.match(() => Effect.fail(onError()), Effect.succeed)
 }
 
 export function encaseOpt<E>(onError: LazyArg<E>) {
-  return <A>(o: Opt<A>) => encaseOpt_<E, A>(o, onError)
+  return <A>(o: Option<A>) => encaseOpt_<E, A>(o, onError)
 }
 
 export function liftM<A, B>(a: (a: A) => B) {
