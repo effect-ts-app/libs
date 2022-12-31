@@ -38,7 +38,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
           //     templateId: msg.templateId
           //   }
           // }
-          // yield* $(Effect.logDebug("Tracking email event").apply(Effect.logAnnotate("event", event.$$.pretty)))
+          // yield* $(Effect.logDebug("Tracking email event").logAnnotate("event", event.$$.pretty))
           // const { trackEvent } = yield* $(AiContextService.get)
           // trackEvent(event)
           return ret

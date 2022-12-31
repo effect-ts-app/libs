@@ -28,7 +28,7 @@ export class CauseException<E> extends Error {
   readonly pretty: string
   constructor(readonly exitCause: Cause<E>, readonly _tag: string) {
     super(`An unexpected ${_tag} Exception occurred, see \`pretty\` for details.`)
-    this.pretty = exitCause.$$.pretty
+    this.pretty = (exitCause as {}).$$.pretty
   }
 
   toJSON() {
@@ -37,7 +37,7 @@ export class CauseException<E> extends Error {
       message: this.message,
       pretty: this.pretty,
       cause: this.cause,
-      exitCause: this.exitCause.$$.inspect(undefined, 10)
+      exitCause: (this.exitCause as {}).$$.inspect(undefined, 10)
     }
   }
 }

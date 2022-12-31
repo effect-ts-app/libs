@@ -9,11 +9,11 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {
-      return c.findMap(codeFilter(filter)).map(NonEmptyChunk.make).getOrElse(() => Chunk.empty())
+      return c.findFirstMap(codeFilter(filter)).map(NonEmptyChunk.make).getOrElse(() => Chunk.empty())
     }
-    let r: Collection<T> = c.collect(codeFilter(filter))
+    let r = c.filterMap(codeFilter(filter))
     if (skip) {
-      r = r.skip(skip)
+      r = r.drop(skip)
     }
     if (limit !== undefined) {
       r = r.take(limit)
@@ -36,7 +36,6 @@ export const makeMemoryStore = () => ({
           ROMap.make([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
         )
       )
-      const storeSet = store.set.bind(store)
       const semaphore = TSemaphore.unsafeMake(1)
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.fromIterable)
@@ -51,8 +50,9 @@ export const makeMemoryStore = () => ({
                   items.forEach(e => mut.set(e.id, e))
                   return ROMap.fromMutable(mut)
                 })
-                .flatMap(storeSet)
+                .flatMap(_ => store.set(_))
             )
+            .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
         )
       const s: Store<PM, Id> = {
         all,
@@ -65,11 +65,11 @@ export const makeMemoryStore = () => ({
             s
               .find(e.id)
               .flatMap(current => updateETag(e, current))
-              .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(storeSet))
+              .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(_ => store.set(_)))
           ),
         batchSet,
         bulkSet: batchSet,
-        remove: (e: PM) => semaphore.withPermit(store.get.map(ROMap.remove(e.id)).flatMap(storeSet))
+        remove: (e: PM) => semaphore.withPermit(store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)))
       }
       return s
     })

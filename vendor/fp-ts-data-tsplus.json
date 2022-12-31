@@ -5414,6 +5414,22 @@
       ]
     },
     {
+      "definitionName": "filterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/Chunk",
+          "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
+          "name": "filterMap"
+        }
+      ]
+    },
+    {
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [

@@ -2,6 +2,13 @@ import { identity } from "./Function.js"
 
 import * as ROA from "@fp-ts/data/ReadonlyArray"
 
+import * as Dur from "@fp-ts/data/Duration"
+
+/**
+ * @tsplus static fp-ts/data/Duration.Ops makeMillis
+ */
+export const millis_ = Dur.millis
+
 export const { isArray } = Array
 
 // export function deleteOrOriginal_<A>(as: ReadonlyArray<A>, a: A) {
@@ -269,7 +276,7 @@ export function* _chunk_<T>(items_: Iterable<T>, size: number) {
  * Split the `items` array into multiple, smaller chunks of the given `size`.
  * @tsplus fluent ReadonlyArray chunk
  * @tsplus fluent fp-ts/data/Chunk chunk
- * @tsplus fluent Collection chunk
+ * @tsplus fluent Iterable chunk
  */
 export function chunk_<T>(items_: Iterable<T>, size: number) {
   return Chunk.fromIterable(_chunk_(items_, size))
@@ -277,7 +284,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
 
 /**
  * @tsplus getter ReadonlyArray toChunk
- * @tsplus getter Collection toChunk
+ * @tsplus getter Iterable toChunk
  */
 export function toChunk<T>(items: Iterable<T>) {
   return Chunk.fromIterable(items)
@@ -298,7 +305,7 @@ export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) => a.length ? Opt.some(a
 export const iterableToArray = Array.from
 
 /**
- * @tsplus getter Collection toNonEmptyArray
+ * @tsplus getter Iterable toNonEmptyArray
  */
 export function CollectionToNonEmptyReadonlyArray<A>(c: Iterable<A>) {
   return iterableToArray(c).toNonEmpty
@@ -312,6 +319,7 @@ export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
 }
 
 /**
+ * @tsplus fluent Array forEachEffectPar
  * @tsplus fluent ReadonlyArray forEachEffectPar
  */
 export function ext_forEachEffectPar<A, R, E, B>(

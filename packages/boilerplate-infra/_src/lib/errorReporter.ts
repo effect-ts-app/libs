@@ -13,9 +13,7 @@ export function reportError<E, E2 extends { toJSON(): Record<string, unknown> }>
       const extras = { context, error: error.toJSON() }
       reportSentry(error, extras)
       yield* $(
-        Effect.logErrorCause(cause)["|>"](
-          Effect.logAnnotate("extras", JSON.stringify(extras))
-        )
+        cause.logErrorCause.logAnnotate("extras", JSON.stringify(extras))
       )
     })
 }
@@ -38,9 +36,7 @@ export function logError<E, E2 extends { toJSON(): Record<string, unknown> }>(
       const error = makeError(cause)
       const extras = { context, error: error.toJSON() }
       yield* $(
-        Effect.logWarningCause(cause)["|>"](
-          Effect.logAnnotate("extras", JSON.stringify(extras))
-        )
+        cause.logWarningCause.logAnnotate("extras", JSON.stringify(extras))
       )
     })
 }

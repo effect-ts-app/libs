@@ -41,7 +41,7 @@ const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
     > Effect.tryPromise(() => exec_(command))
-      .tap(r => (Effect.logDebug(`Executed`).apply(Effect.logAnnotate("result", r.$$.pretty))))
+      .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", r.$$.pretty)))
 type PrinterConfig = { url?: URL; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {

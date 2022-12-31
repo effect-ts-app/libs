@@ -4,6 +4,8 @@ export * as ROMap from "@effect-ts/core/Collections/Immutable/Map"
 export * as Tuple from "@effect-ts/core/Collections/Immutable/Tuple"
 export * as Lens from "@effect-ts/monocle/Lens"
 
+export * as Equal from "@effect-ts/core/Equal"
+
 export {} from "@effect-ts-app/core/Effect"
 // export * as EffectOption from "@effect-ts-app/core/EffectOption"
 export * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"

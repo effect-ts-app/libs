@@ -13,7 +13,7 @@ import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 // import type * as REF from "@effect-ts/core/Effect/Ref"
 // import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
 // import type * as EITHER from "@effect-ts/core/Either"
-// import type * as EQ from "@effect-ts/core/Equal"
+import type * as EQ from "@effect-ts/core/Equal"
 // import type * as ORD from "@effect-ts/core/Ord"
 // import type * as Sy from "@effect-ts-app/core/Sync"
 // import type * as XPURE from "@effect-ts/core/XPure"
@@ -41,11 +41,12 @@ import type {} from "@effect-ts-app/core/types/awesome"
 export type ROA<A> = ReadonlyArray<A>
 export type { ROA as ReadonlyArray }
 
-// export namespace Equal {
-//   export * from "@effect-ts/core/Equal"
-// }
-// /** @tsplus type ets/Equal */
-// export type Equal<A> = EQ.Equal<A>
+export namespace Equal {
+  // @ts-expect-error abc
+  export * from "@effect-ts/core/Equal"
+}
+/** @tsplus type ets/Equal */
+export type Equal<A> = EQ.Equal<A>
 
 // export namespace Has {
 //   export * from "@effect-ts/core/Has"

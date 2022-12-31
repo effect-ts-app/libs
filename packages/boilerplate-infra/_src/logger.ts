@@ -1,8 +1,13 @@
+import type { Logger } from "@effect/io/Logger"
+import { addLogger, LoggerTypeId } from "@effect/io/Logger"
+
 /**
  * @tsplus static effect/io/Logger.Ops default
  */
 export const defaultLogger: Logger<string, string> = {
-  apply: (fiberId, logLevel, message, cause, _context, spans, annotations) => {
+  [LoggerTypeId]: {} as any,
+  // [LoggerTypeId]: loggerVariance,
+  log: (fiberId, logLevel, message, cause, _context, spans, annotations) => {
     const now = new Date()
     const nowMillis = now.getTime()
 
@@ -87,11 +92,9 @@ export const consoleLogger: Logger<string, void> = defaultLogger.map(message => 
 /**
  * @tsplus static effect/io/Logger.Ops consoleLoggerLayer
  */
-export const consoleLoggerLayer = Layer.scopedDiscard(
-  FiberRef.currentLoggers.locallyScopedWith(loggers => loggers.add(consoleLogger))
-)
+export const consoleLoggerLayer = addLogger(consoleLogger)
 
-/**
- * @tsplus static effect/io/Logger.Ops withConsoleLogger
- */
-export const withConsoleLogger = FiberRef.currentLoggers.locallyWith(loggers => loggers.add(consoleLogger))
+// /**
+//  * @tsplus static effect/io/Logger.Ops withConsoleLogger
+//  */
+// export const withConsoleLogger = FiberRef.currentLoggers.locallyWith(loggers => loggers.add(consoleLogger))

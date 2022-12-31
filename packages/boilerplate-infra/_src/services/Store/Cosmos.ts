@@ -84,7 +84,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 batches.map((x, i) => [i, x] as const).forEachEffect(
                   ([i, batch]) =>
                     Effect.promise(() => bulk(batch.map(([, op]) => op)))
-                      .delay(DUR.millis(i === 0 ? 0 : 1100))
+                      .delay(DUR.makeMillis(i === 0 ? 0 : 1100))
                       .flatMap(responses =>
                         Effect.gen(function*($) {
                           const r = responses.find(x => x.statusCode === 412)
@@ -110,7 +110,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                               )
                             )
                           }
-                          return batch.mapWithIndex((i, [e]) => ({
+                          return batch.map(([e], i) => ({
                             ...e,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             _etag: responses[i]!.eTag
@@ -175,7 +175,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                       }
 
-                      return batch.mapWithIndex((i, [e]) => ({
+                      return batch.map(([e], i) => ({
                         ...e,
                         _etag: result[i]?.eTag
                       })) as NonEmptyReadonlyArray<PM>
@@ -345,7 +345,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       .bulkSet(a)
                       .orDie
                       // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                      .delay(DUR.millis(1100))
+                      .delay(DUR.makeMillis(1100))
                   )
               )
             }
@@ -482,8 +482,8 @@ export function buildWhereCosmosQuery(
             { ..._, f: _.key.split(".-1.")[0], key: _.key.split(".-1.")[1]! } :
             { ..._, f: "f" }
         )
-        .mapWithIndex(
-          (i, x) =>
+        .map(
+          (x, i) =>
             x.t === "in"
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
@@ -502,7 +502,7 @@ export function buildWhereCosmosQuery(
     parameters: [
       { name: "@id", value: importedMarkerId },
       ...filter.where
-        .mapWithIndex((i, x) => ({
+        .map((x, i) => ({
           name: `@v${i}`,
           value: x.value
         }))
