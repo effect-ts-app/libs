@@ -330,16 +330,6 @@
         "default": "./_cjs/lib/instrument.cjs"
       }
     },
-    "./lib/logger": {
-      "import": {
-        "types": "./dist/lib/logger.d.ts",
-        "default": "./dist/lib/logger.js"
-      },
-      "require": {
-        "types": "./dist/lib/logger.d.ts",
-        "default": "./_cjs/lib/logger.cjs"
-      }
-    },
     "./lib/rateLimit": {
       "import": {
         "types": "./dist/lib/rateLimit.d.ts",

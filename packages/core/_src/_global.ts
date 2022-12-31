@@ -27,6 +27,11 @@ import { Equal, Lens, NonEmptyArguments, NonEmptySet, ROMap, ROSet } from "@effe
 /**
  * @tsplus global
  */
+import { Schedule } from "@effect/io/Schedule"
+
+/**
+ * @tsplus global
+ */
 import { Effect } from "@effect/io/Effect"
 
 /**
