@@ -162,19 +162,19 @@ export function handleRequest<
           r as never as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
         ).flatMap(outp => respond(inp, res)(outp))
       })
-      .catch("_tag", "ValidationError", err =>
+      .catchTag("ValidationError", err =>
         Effect.sync(() => {
           res.status(400).send(err.errors)
         }))
-      .catch("_tag", "NotFoundError", err =>
+      .catchTag("NotFoundError", err =>
         Effect.sync(() => {
           res.status(404).send(err)
         }))
-      .catch("_tag", "NotLoggedInError", err =>
+      .catchTag("NotLoggedInError", err =>
         Effect.sync(() => {
           res.status(401).send(err)
         }))
-      .catch("_tag", "UnauthorizedError", err =>
+      .catchTag("UnauthorizedError", err =>
         Effect.sync(() => {
           res.status(403).send(err)
         }))

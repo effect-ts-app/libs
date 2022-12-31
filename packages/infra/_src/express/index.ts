@@ -6,7 +6,7 @@ import { pretty } from "@effect-ts-app/core/utils"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
-import type { Server } from "http"
+import type { IncomingMessage, Server, ServerResponse } from "http"
 import type { Socket } from "net"
 
 export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
@@ -73,10 +73,10 @@ export const ExpressAppTag = "@effect-ts-app/express/App" as const
 export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
   const open = yield* _(
-    Effect.acquireRelease(
-      Effect.sync(() => Ref.make(true)),
-      a => Effect.sync(() => a.set(false))
-    )
+    Ref.make(true)
+      .acquireRelease(
+        a => Effect.sync(() => a.set(false))
+      )
   )
 
   const app = yield* _(Effect.sync(() => express()))
@@ -87,27 +87,26 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
   // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
-    Effect.acquireRelease(
-      Effect.async<never, never, Server>(cb => {
-        const onError = (err: Error) => {
-          cb(Effect.die(new NodeServerListenError(err)))
-        }
-        const server = app.listen(port, host, () => {
-          cb(
-            Effect.sync(() => {
-              server.removeListener("error", onError)
-              return server
-            })
-          )
-        })
-        server.addListener("error", onError)
-        server.on("connection", connection => {
-          connections.add(connection)
-          connection.on("close", () => {
-            connections.delete(connection)
+    Effect.async<never, never, Server>(cb => {
+      const onError = (err: Error) => {
+        cb(Effect.die(new NodeServerListenError(err)))
+      }
+      const server = app.listen(port, host, () => {
+        cb(
+          Effect.sync(() => {
+            server.removeListener("error", onError)
+            return server
           })
+        )
+      })
+      server.addListener("error", onError)
+      server.on("connection", connection => {
+        connections.add(connection)
+        connection.on("close", () => {
+          connections.delete(connection)
         })
-      }),
+      })
+    }).acquireRelease(
       server =>
         Effect.async<never, never, void>(cb => {
           connections.forEach(s => {
@@ -126,7 +125,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   )
 
   const supervisor = yield* _(
-    Effect.acquireRelease(Supervisor.track, s => s.value.flatMap(Fiber.interruptAll))
+    Supervisor.track().acquireRelease(s => s.value().flatMap(_ => _.interruptAll))
   )
 
   function runtime<
@@ -146,9 +145,10 @@ export const makeExpressApp = Effect.gen(function*(_) {
       handlers.map(
         (handler): RequestHandler =>
           (req, res, next) => {
-            r.unsafeRunAsync(
-              open.get.flatMap(open => open ? handler(req, res, next) : Effect.interrupt)
-                .onTermination(exitHandler(req, res, next))
+            void r.unsafeRunPromise(
+              open.get
+                .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
+                .onError(exitHandler(req, res, next))
                 .supervised(supervisor)
             )
           }
@@ -167,7 +167,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = Layer.scoped(ExpressApp, makeExpressApp)
+export const LiveExpressApp = Layer.scoped(ExpressApp)(makeExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 
@@ -199,10 +199,14 @@ export const expressApp = ExpressApp.with(_ => _.app)
 
 export const expressServer = ExpressApp.with(_ => _.server)
 
-export const { app: withExpressApp, server: withExpressServer } = Effect.deriveAccessEffect(ExpressApp)([
-  "app",
-  "server"
-])
+export function withExpressApp<R, E, A>(self: (app: express.Express) => Effect<R, E, A>) {
+  return ExpressApp.withEffect(_ => self(_.app))
+}
+export function withExpressServer<R, E, A>(
+  self: (server: Server<typeof IncomingMessage, typeof ServerResponse>) => Effect<R, E, A>
+) {
+  return ExpressApp.withEffect(_ => self(_.server))
+}
 
 export const methods = [
   "all",

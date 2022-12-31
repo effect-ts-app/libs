@@ -4,7 +4,7 @@ import { NotFoundError } from "../../errors.js"
 
 /**
  * @tsplus fluent Array getFirstById
- * @tsplus fluent Chunk getFirstById
+ * @tsplus fluent fp-ts/data/Chunk getFirstById
  * @tsplus fluent ets/Set getFirstById
  * @tsplus fluent Array getFirstById
  * @tsplus fluent ReadonlyArray getFirstById

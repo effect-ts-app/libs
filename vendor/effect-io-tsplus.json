@@ -663,7 +663,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "effect/io/Exit",
           "name": "isFailure"
         },
@@ -6943,6 +6943,17 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "isLayer"
+        }
+      ]
+    },
+    {
+      "definitionName": "scoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scoped"
         }
       ]
     },
@@ -13929,7 +13940,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "isFailure"
         }
@@ -13940,7 +13951,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "isSuccess"
         }

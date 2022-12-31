@@ -35,9 +35,9 @@ export const pipeSet = pipe
 export const pipeArray = pipe
 
 /**
- * @tsplus operator Chunk >=
- * @tsplus fluent Chunk apply
- * @tsplus fluent Chunk __call
+ * @tsplus operator fp-ts/data/Chunk >=
+ * @tsplus fluent fp-ts/data/Chunk apply
+ * @tsplus fluent fp-ts/data/Chunk __call
  * @tsplus macro pipe
  */
 export const pipeChunk = pipe
