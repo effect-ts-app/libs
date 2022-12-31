@@ -7,9 +7,9 @@
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "^0.43.0",
-    "@effect/io": "^0.0.42",
+    "@effect/io": "^0.0.45",
     "@fp-ts/core": "^0.0.11",
-    "@fp-ts/data": "^0.0.30",
+    "@fp-ts/data": "^0.0.31",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -77,16 +77,6 @@
         "default": "./_cjs/Array.cjs"
       }
     },
-    "./Array.global": {
-      "import": {
-        "types": "./dist/Array.global.d.ts",
-        "default": "./dist/Array.global.js"
-      },
-      "require": {
-        "types": "./dist/Array.global.d.ts",
-        "default": "./_cjs/Array.global.cjs"
-      }
-    },
     "./Chunk": {
       "import": {
         "types": "./dist/Chunk.d.ts",
@@ -105,26 +95,6 @@
       "require": {
         "types": "./dist/Effect.d.ts",
         "default": "./_cjs/Effect.cjs"
-      }
-    },
-    "./EffectAspects": {
-      "import": {
-        "types": "./dist/EffectAspects.d.ts",
-        "default": "./dist/EffectAspects.js"
-      },
-      "require": {
-        "types": "./dist/EffectAspects.d.ts",
-        "default": "./_cjs/EffectAspects.cjs"
-      }
-    },
-    "./EffectBase": {
-      "import": {
-        "types": "./dist/EffectBase.d.ts",
-        "default": "./dist/EffectBase.js"
-      },
-      "require": {
-        "types": "./dist/EffectBase.d.ts",
-        "default": "./_cjs/EffectBase.cjs"
       }
     },
     "./Either": {
@@ -235,6 +205,16 @@
       "require": {
         "types": "./dist/Tag.d.ts",
         "default": "./_cjs/Tag.cjs"
+      }
+    },
+    "./Unify": {
+      "import": {
+        "types": "./dist/Unify.d.ts",
+        "default": "./dist/Unify.js"
+      },
+      "require": {
+        "types": "./dist/Unify.d.ts",
+        "default": "./_cjs/Unify.cjs"
       }
     },
     "./_ext/Lens.ext": {
