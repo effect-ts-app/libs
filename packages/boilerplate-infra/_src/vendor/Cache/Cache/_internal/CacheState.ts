@@ -1,6 +1,7 @@
-import { KeySet } from "@effect/cache/Cache/_internal/KeySet"
-import type { MapKey } from "@effect/cache/Cache/_internal/MapKey"
-import type { MapValue } from "@effect/cache/Cache/_internal/MapValue"
+import { AtomicBoolean } from "./AtomicBoolean.js"
+import { KeySet } from "./KeySet.js"
+import type { MapKey } from "./MapKey.js"
+import type { MapValue } from "./MapValue.js"
 
 /**
  * The `CacheState` represents the mutable state underlying the cache.

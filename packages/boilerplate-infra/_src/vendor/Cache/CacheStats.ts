@@ -1,3 +1,3 @@
 // codegen:start {preset: barrel, include: ./CacheStats/*.ts, prefix: "@effect/cache"}
-export * from "@effect/cache/CacheStats/definition"
+export * from "./CacheStats/definition.js"
 // codegen:end

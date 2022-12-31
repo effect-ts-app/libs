@@ -74,6 +74,38 @@ declare global {
   interface Function {}
 
   /**
+   * @tsplus type string
+   */
+  export interface String {}
+  /**
+   * @tsplus type number
+   */
+  export interface Number {}
+  /**
+   * @tsplus type boolean
+   */
+  export interface Boolean {}
+  /**
+   * @tsplus type bigint
+   */
+  export interface BigInt {}
+
+  /**
+   * @tsplus type regexp
+   */
+  export interface RegExp {}
+
+  /**
+   * @tsplus type string.Ops
+   */
+  export interface StringConstructor {}
+
+  /**
+   * @tsplus type number
+   */
+  export interface Number {}
+
+  /**
    * @tsplus type Date
    */
   interface Date {}

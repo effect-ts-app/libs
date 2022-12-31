@@ -32,6 +32,11 @@ import { Effect } from "@effect/io/Effect"
 /**
  * @tsplus global
  */
+import { Deferred } from "@effect/io/Deferred"
+
+/**
+ * @tsplus global
+ */
 import { FiberRef } from "@effect/io/FiberRef"
 
 /**
@@ -88,6 +93,11 @@ import { Order as Ord } from "@fp-ts/core/typeclass/Order"
  * @tsplus global
  */
 import { Equal } from "@effect-ts/core/Equal"
+
+/**
+ * @tsplus global
+ */
+import { Equal as Equals } from "@fp-ts/data/Equal"
 
 /**
  * @tsplus global

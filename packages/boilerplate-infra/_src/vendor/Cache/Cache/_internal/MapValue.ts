@@ -1,4 +1,5 @@
-import type { MapKey } from "@effect/cache/Cache/_internal/MapKey"
+import type { EntryStats } from "../../EntryStats/definition.js"
+import type { MapKey } from "./MapKey.js"
 
 /**
  * A `MapValue` represents a value in the cache. A value may either be

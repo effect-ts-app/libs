@@ -46,28 +46,28 @@ type Something = {
 }
 
 test("works", () => {
-  expect(somethings.toChunk.collect(codeFilter(
+  expect(somethings.filterMap(codeFilter(
     somethingsWhere(_ => _("b", _ => "b2"))
   )).toArray)
   .toEqual([somethings[1]])
 
-  expect(somethings.toChunk.collect(codeFilter(
+  expect(somethings.filterMap(codeFilter(
     somethingsWhere(_ => _("b", _ => "b"))
   )).toArray)
   .toEqual([somethings[0]])
 
 
-  expect(somethings.toChunk.collect(codeFilter(
+  expect(somethings.filterMap(codeFilter(
     somethingsWhere(_ => _("d.-1.a", _ => "a5"))
   )).toArray)
   .toEqual([somethings[1]])
 
-  expect(somethings.toChunk.collect(codeFilter(
+  expect(somethings.filterMap(codeFilter(
     somethingsWhere(_ => _("d.-1.a", _ => "a"))
   )).toArray)
   .toEqual([somethings[0]])
 
-  expect(somethings.toChunk.collect(codeFilter(
+  expect(somethings.filterMap(codeFilter(
     somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a")))
   )).toArray)
   .toEqual([somethings[1]])

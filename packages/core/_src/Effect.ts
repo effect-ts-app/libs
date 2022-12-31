@@ -1,11 +1,18 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
+import * as Def from "@effect/io/Deferred"
 import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
+
+/**
+ * @tsplus static effect/io/Deferred.Ops await
+ * @tsplus getter effect/io/Deferred await
+ */
+export const await_ = Def.await
 
 /**
  * @tsplus static effect/io/Effect.Ops unit

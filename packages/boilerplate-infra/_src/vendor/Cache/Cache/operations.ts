@@ -1,4 +1,4 @@
 // codegen:start {preset: barrel, include: ./operations/*.ts, prefix: "@effect/cache/Cache"}
-export * from "@effect/cache/Cache/operations/make"
-export * from "@effect/cache/Cache/operations/makeWith"
+export * from "./operations/make.js"
+export * from "./operations/makeWith.js"
 // codegen:end

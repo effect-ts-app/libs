@@ -1016,6 +1016,22 @@
           "name": "poll"
         }
       ]
+    },
+    {
+      "definitionName": "await",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Ops",
+          "name": "await"
+        },
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Deferred",
+          "name": "await"
+        }
+      ]
     }
   ],
   "@effect/io/ExecutionStrategy": [
@@ -9977,6 +9993,17 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Effect.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "done",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "done"
         }
       ]
     },

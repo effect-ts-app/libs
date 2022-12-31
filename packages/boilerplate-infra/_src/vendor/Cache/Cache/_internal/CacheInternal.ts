@@ -24,7 +24,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   constructor(
     readonly capacity: number,
     readonly lookup: Lookup<Key, Environment, Error, Value>,
-    readonly timeToLive: (exit: Exit<Error, Value>) => Duration,
+    readonly timeToLive: (exit: Exit<Error, Value>) => DUR,
     readonly clock: Clock,
     readonly environment: Context<Environment>,
     readonly fiberId: FiberId
@@ -40,7 +40,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return Effect.sync(() => {
       const entries: Array<readonly [Key, Value]> = []
       for (const [key, value] of this.cacheState.map) {
-        if (value._tag === "Complete" && value.exit._tag === "Success") {
+        if (value._tag === "Complete" && Exit.isSuccess(value.exit)) {
           entries.push([key, value.exit.value] as const)
         }
       }
@@ -52,7 +52,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return Effect.sync(() => {
       const values: Array<Value> = []
       for (const [_, value] of this.cacheState.map) {
-        if (value._tag === "Complete" && value.exit._tag === "Success") {
+        if (value._tag === "Complete" && Exit.isSuccess(value.exit)) {
           values.push(value.exit.value)
         }
       }
@@ -105,7 +105,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
       if (value == null) {
         this.trackAccess(key!)
         this.trackMiss()
-        return this.lookupValueOf(k, deferred)
+        return this.lookupValueOf(k, deferred!)
       }
       switch (value._tag) {
         case "Pending": {
@@ -139,7 +139,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
 
   set(key: Key, value: Value): Effect<never, never, void> {
     return Effect.sync(() => {
-      const now = this.clock.unsafeCurrentTime
+      const now = this.clock.currentTimeMillis().unsafeRunSync
       const lookupResult = Exit.succeed(value)
       this.cacheState.map.set(
         key,
@@ -184,8 +184,8 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             return this.get(k).asUnit
           }
           // Only trigger the lookup if we're still the current value
-          return Effect.when(
-            () => {
+          return this.lookupValueOf(value.key.value, deferred)
+            .when(() => {
               const current = this.cacheState.map.get(k).value
               if (Equals.equals(current, value)) {
                 this.cacheState.map.set(
@@ -195,9 +195,8 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
                 return true
               }
               return false
-            },
-            this.lookupValueOf(value.key.value, deferred)
-          ).asUnit
+            })
+            .asUnit
         }
         case "Refreshing": {
           return value.deferred.await.asUnit
@@ -258,7 +257,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
       .provideEnvironment(this.environment)
       .exit
       .flatMap(exit => {
-        const now = this.clock.unsafeCurrentTime
+        const now = this.clock.currentTimeMillis().unsafeRunSync
         const entryStats = EntryStats(now)
         this.cacheState.map.set(
           key,
@@ -279,7 +278,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   private hasExpired(timeToLiveMillis: number): boolean {
-    return this.clock.unsafeCurrentTime > timeToLiveMillis
+    return this.clock.currentTimeMillis().unsafeRunSync > timeToLiveMillis
   }
 }
 

@@ -1,4 +1,6 @@
-import { CacheInternal } from "@effect/cache/Cache/_internal/CacheInternal"
+import type { Lookup } from "../../Lookup/definition.js"
+import { CacheInternal } from "../_internal/CacheInternal.js"
+import type { Cache } from "../definition.js"
 
 /**
  * Constructs a new cache with the specified capacity, time to live, and
@@ -10,12 +12,12 @@ import { CacheInternal } from "@effect/cache/Cache/_internal/CacheInternal"
 export function makeWith<Key, Environment, Error, Value>(
   capacity: number,
   lookup: Lookup<Key, Environment, Error, Value>,
-  timeToLive: (exit: Exit<Error, Value>) => Duration,
+  timeToLive: (exit: Exit<Error, Value>) => DUR,
   __tsplusTrace?: string
 ): Effect<Environment, never, Cache<Key, Error, Value>> {
-  return Effect.clockWith((clock) =>
-    Effect.environment<Environment>().flatMap((environment) =>
-      Effect.fiberId.map((fiberId) =>
+  return Effect.clockWith(clock =>
+    Effect.environment<Environment>().flatMap(environment =>
+      Effect.fiberId().map(fiberId =>
         new CacheInternal(
           capacity,
           lookup,
