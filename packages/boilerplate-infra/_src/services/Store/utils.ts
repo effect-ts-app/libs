@@ -94,12 +94,12 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
   filter: FilterJoinSelect
 ) {
   return (x: E) =>
-    filter.keys.toChunk.collect(k => {
+    filter.keys.filterMap(k => {
       const value = get(x, k)
       // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
       return value
         ? Opt.some(
-          (value as readonly NE[]).toChunk.collect(v =>
+          (value as readonly NE[]).filterMap(v =>
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             compareCaseInsensitive((v as any)[filter.valueKey], filter.value)
               ? Opt.some({ ...v, _rootId: x.id })
@@ -109,6 +109,7 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
         : Opt.none
     })
       .flatMap(_ => _)
+      .toChunk
 }
 
 function lowercaseIfString<T>(val: T) {

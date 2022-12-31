@@ -23,7 +23,7 @@ import { StoreMaker } from "./service.js"
 // TODO: Retry operation when running into RU limit.
 function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const { db } = yield* $(CosmosClient.CosmosClient)
+    const { db } = yield* $(CosmosClient.CosmosClient.get)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
@@ -32,7 +32,6 @@ function makeCosmosStore({ prefix }: StorageConfig) {
       ) =>
         Effect.gen(function*($) {
           const containerId = `${prefix}${name}`
-          const annotate = Effect.logAnnotate("cosmos.db", containerId)
           yield* $(
             Effect.promise(() =>
               db.containers.createIfNotExists({
@@ -52,7 +51,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
-              const batches = ReadonlyArray.split_(
+              const batches = ReadonlyArray.chunksOf(config?.maxBulkSize ?? 10)(
                 [...items].map(
                   x =>
                     [
@@ -78,12 +77,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         })
                       )
                     ] as const
-                ),
-                config?.maxBulkSize ?? 10
+                )
               )
 
               const batchResult = yield* $(
-                batches.mapWithIndex((i, x) => [i, x] as const).forEachEffect(
+                batches.map((x, i) => [i, x] as const).forEachEffect(
                   ([i, batch]) =>
                     Effect.promise(() => bulk(batch.map(([, op]) => op)))
                       .delay(DUR.millis(i === 0 ? 0 : 1100))
@@ -121,9 +119,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                 )
               )
-              return batchResult.toArray.flatten() as NonEmptyReadonlyArray<PM>
+              return batchResult.toArray.flatten as NonEmptyReadonlyArray<PM>
             }).instrument("cosmos.bulkSet")
-              .apply(annotate)
+              .logAnnotate("cosmos.db", containerId)
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Do($ => {
@@ -185,7 +183,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   )
               )
             }).instrument("cosmos.batchSet")
-              .apply(annotate)
+              .logAnnotate("cosmos.db", containerId)
           }
 
           const s: Store<PM, Id> = {
@@ -202,7 +200,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resources }) => resources.toChunk)
                 )
               ).instrument("cosmos.all")
-              .apply(annotate),
+              .logAnnotate("cosmos.db", containerId),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -231,7 +229,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   return Chunk.fromIterable(v)
                 }).instrument("cosmos.filterJoinSelect")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -267,7 +265,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.toChunk)
                     )
                   )).instrument("cosmos.filter")
-                .apply(annotate)
+                .logAnnotate("cosmos.db", containerId)
             },
             find: id =>
               Effect.promise(() =>
@@ -276,7 +274,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   .read<PM>()
                   .then(({ resource }) => Opt.fromNullable(resource))
               ).instrument("cosmos.find")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             set: e =>
               Opt.fromNullable(e._etag)
                 .match(
@@ -317,13 +315,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   })
                 })
                 .instrument("cosmos.set")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect.promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .instrument("cosmos.remove")
-                .apply(annotate)
+                .logAnnotate("cosmos.db", containerId)
           }
 
           // handle mock data

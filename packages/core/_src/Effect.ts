@@ -9,6 +9,17 @@ import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 
 /**
+ * @tsplus fluent effect/io/Effect provideService
+ */
+export function provideService<T, R, E, A>(
+  self: Effect<R, E, A>,
+  tag: Tag<T>,
+  resource: T
+): Effect<Exclude<R, T>, E, A> {
+  return Eff.provideService(tag)(resource)(self)
+}
+
+/**
  * @tsplus static effect/io/Deferred.Ops await
  * @tsplus getter effect/io/Deferred await
  */

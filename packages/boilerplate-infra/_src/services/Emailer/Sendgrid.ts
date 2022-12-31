@@ -16,7 +16,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `[scan] [${ENV}] ${renderedMsg_.subject}` }
-          yield* $(Effect.logDebug("Sending email").apply(Effect.logAnnotate("msg", inspect(renderedMsg, false, 5))))
+          yield* $(Effect.logDebug("Sending email").logAnnotate("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* $(
             Effect.async<
@@ -25,7 +25,10 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
               [sgMail.ClientResponse, Record<string, unknown>]
             >(
               cb =>
-                void sgMail.send(renderedMsg, false, (err, result) => err ? cb(Effect.fail(err)) : cb(Effect.succeed(result)))
+                void sgMail.send(renderedMsg, false, (err, result) =>
+                  err ?
+                    cb(Effect.fail(err)) :
+                    cb(Effect.succeed(result)))
             )
           )
 
@@ -36,7 +39,7 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
           //   }
           // }
           // yield* $(Effect.logDebug("Tracking email event").apply(Effect.logAnnotate("event", event.$$.pretty)))
-          // const { trackEvent } = yield* $(AiContextService)
+          // const { trackEvent } = yield* $(AiContextService.get)
           // trackEvent(event)
           return ret
         })
@@ -90,25 +93,25 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equivalence.contramap((to: { name?: string; email: string } | string) =>
+const eq = Equal.contramap((to: { name?: string; email: string } | string) =>
   typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
-)(Equivalence.string)
+)(Equal.string)
 
 // TODO: should just not add any already added email address
 // https://stackoverflow.com/a/53603076/11595834
 function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
-  return ReadonlyArray.isArray(addr)
+  return Array.isArray(addr)
     ? addr
       .map(x => (isTestAddress(x) ? renderFake(x, makeId) : x))
       .uniq(eq)
-      .mutable
+      .toArray
     : isTestAddress(addr)
     ? renderFake(addr, makeId)
     : addr
 }
 
 function renderMailData(md: NonNullable<EmailMsg["to"]>): string {
-  if (ReadonlyArray.isArray(md)) {
+  if (Array.isArray(md)) {
     return md.map(renderMailData).join(", ")
   }
   if (typeof md === "string") {

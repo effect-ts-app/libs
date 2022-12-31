@@ -3140,6 +3140,11 @@
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.Ops",
           "name": "withPermit"
+        },
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "withPermit"
         }
       ]
     },
@@ -3150,6 +3155,11 @@
         {
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "withPermits"
+        },
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
           "name": "withPermits"
         }
       ]

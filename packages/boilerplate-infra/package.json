@@ -560,6 +560,36 @@
         "default": "./_cjs/vendor/Cache/Cache.cjs"
       }
     },
+    "./vendor/Cache/Cache/_internal/AtomicBoolean": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicBoolean.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicNumber": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicNumber.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicReference": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicReference.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicReference.cjs"
+      }
+    },
     "./vendor/Cache/Cache/_internal/CacheInternal": {
       "import": {
         "types": "./dist/vendor/Cache/Cache/_internal/CacheInternal.d.ts",

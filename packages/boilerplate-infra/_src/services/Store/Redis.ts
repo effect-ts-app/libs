@@ -9,7 +9,7 @@ import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const redis = yield* $(RedisClient.RedisClient)
+    const redis = yield* $(RedisClient.RedisClient.get)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
@@ -55,6 +55,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
                     })
                     .flatMap(set)
                 )
+                .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
             ).provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
