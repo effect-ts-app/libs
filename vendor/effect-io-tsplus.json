@@ -11700,46 +11700,46 @@
       ]
     },
     {
-      "definitionName": "fold",
+      "definitionName": "match",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "fold"
+          "name": "match"
         }
       ]
     },
     {
-      "definitionName": "foldCause",
+      "definitionName": "matchCause",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "foldCause"
+          "name": "matchCause"
         }
       ]
     },
     {
-      "definitionName": "foldCauseEffect",
+      "definitionName": "matchCauseEffect",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "foldCauseEffect"
+          "name": "matchCauseEffect"
         }
       ]
     },
     {
-      "definitionName": "foldEffect",
+      "definitionName": "matchEffect",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "foldEffect"
+          "name": "matchEffect"
         }
       ]
     },
