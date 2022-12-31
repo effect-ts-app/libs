@@ -37,7 +37,7 @@
         "test-packages": "pnpm packages test:run",
         "testsuite-packages": "pnpm packages testsuite",
         "watch-packages": "pnpm packages build && pnpm packages watch",
-        "build": "NODE_OPTIONS=--max-old-space-size=6144 tsc --build ./tsconfig.all.json",
+        "build": "pnpm build:tsc ./tsconfig.all.json",
         "rebuild": "pnpm -r clean && pnpm -r build",
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },

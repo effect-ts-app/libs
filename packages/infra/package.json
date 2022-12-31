@@ -34,7 +34,9 @@
     "winston": "^3.8.2"
   },
   "scripts": {
-    "build": "node ../../scripts/package.js && pnpm clean-dist && tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm clean-dist && pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
