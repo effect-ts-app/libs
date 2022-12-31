@@ -29,8 +29,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return storage
         .find(getRecordName(type, id))
         .map(Opt.map(s => JSON.parse(s) as unknown))
-        .flatMapMaybe(parseSDB)
-        .mapMaybe(({ data, version }) => ({
+        .flatMapOpt(parseSDB)
+        .mapOpt(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version
         }))
@@ -75,5 +75,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function bogusLock() {
-  return Effect.acquireRelease(Effect.unit, () => Effect.unit)
+  return Effect.unit.acquireRelease(() => Effect.unit)
 }

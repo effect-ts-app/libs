@@ -4,15 +4,14 @@ import Redlock from "redlock"
 import { ConnectionException } from "./simpledb/shared.js"
 
 const makeRedisClient = (makeClient: () => Client) =>
-  Effect.acquireRelease(
-    Effect.sync(() => {
-      const client = createClient(makeClient)
-      const lock = new Redlock([client])
-      return {
-        client,
-        lock
-      }
-    }),
+  Effect.sync(() => {
+    const client = createClient(makeClient)
+    const lock = new Redlock([client])
+    return {
+      client,
+      lock
+    }
+  }).acquireRelease(
     cl =>
       Effect.async<never, Error, void>(res => {
         cl.client.quit(err => res(err ? Effect.fail(err) : Effect.unit))
@@ -23,13 +22,10 @@ export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisC
 
 export const RedisClient = Tag<RedisClient>()
 
-export const { client, lock } = Effect.deriveLifted(RedisClient)(
-  [],
-  [],
-  ["client", "lock"]
-)
+export const client = RedisClient.with(_ => _.client)
+export const lock = RedisClient.with(_ => _.lock)
 
-export const RedisClientLive = (makeClient: () => Client) => Layer.scoped(RedisClient, makeRedisClient(makeClient))
+export const RedisClientLive = (makeClient: () => Client) => Layer.scoped(RedisClient)(makeRedisClient(makeClient))
 
 function createClient(makeClient: () => Client) {
   const client = makeClient()

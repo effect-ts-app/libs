@@ -145,7 +145,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
       handlers.map(
         (handler): RequestHandler =>
           (req, res, next) => {
-            void r.unsafeRunPromise(
+            r.unsafeRun(
               open.get
                 .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
                 .onError(exitHandler(req, res, next))

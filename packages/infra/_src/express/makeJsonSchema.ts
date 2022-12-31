@@ -18,13 +18,12 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
           ...rest,
-          responses: ReadonlyArray.reduce_(
-            responses,
-            {} as Record<Response["statusCode"], Response["type"]>,
+          responses: (responses as Array<any>).reduce(
             (prev, cur) => {
               prev[cur.statusCode] = cur.type
               return prev
-            }
+            },
+            {} as Record<Response["statusCode"], Response["type"]>
           )
         }
       })

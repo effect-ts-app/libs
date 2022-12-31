@@ -10,22 +10,20 @@ import type {
 import { ServiceBusClient } from "@azure/service-bus"
 
 function makeClient(url: string) {
-  return Effect.acquireRelease(
-    Effect.sync(() => new ServiceBusClient(url)),
+  return Effect.sync(() => new ServiceBusClient(url)).acquireRelease(
     client => Effect.promise(() => client.close())
   )
 }
 
 const Client = Tag<ServiceBusClient>()
-export const LiveServiceBusClient = (url: string) => Layer.scoped(Client, makeClient(url))
+export const LiveServiceBusClient = (url: string) => Layer.scoped(Client)(makeClient(url))
 
 function makeSender(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client)
+    const serviceBusClient = yield* $(Client.get)
 
     return yield* $(
-      Effect.acquireRelease(
-        Effect.sync(() => serviceBusClient.createSender(queueName)),
+      Effect.sync(() => serviceBusClient.createSender(queueName)).acquireRelease(
         subscription => Effect.promise(() => subscription.close())
       )
     )
@@ -34,16 +32,15 @@ function makeSender(queueName: string) {
 export const Sender = Tag<ServiceBusSender>()
 
 export function LiveSender(queueName: string) {
-  return Layer.scoped(Sender, makeSender(queueName))
+  return Layer.scoped(Sender)(makeSender(queueName))
 }
 
 function makeReceiver(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client)
+    const serviceBusClient = yield* $(Client.get)
 
     return yield* $(
-      Effect.acquireRelease(
-        Effect.sync(() => serviceBusClient.createReceiver(queueName)),
+      Effect.sync(() => serviceBusClient.createReceiver(queueName)).acquireRelease(
         r => Effect.promise(() => r.close())
       )
     )
@@ -52,7 +49,7 @@ function makeReceiver(queueName: string) {
 
 export const Receiver = Tag<ServiceBusReceiver>()
 export function LiveReceiver(queueName: string) {
-  return Layer.scoped(Receiver, makeReceiver(queueName))
+  return Layer.scoped(Receiver)(makeReceiver(queueName))
 }
 
 export function sendMessages(
@@ -72,21 +69,20 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
     const env = yield* $(Effect.environment<RMsg | RErr>())
 
     yield* $(
-      Effect.acquireRelease(
-        Effect.sync(() =>
-          r.subscribe({
-            processError: err =>
-              hndlr.processError(err)
-                .provideEnvironment(env)
-                .unsafeRunPromise()
-                .catch(console.error),
-            processMessage: msg =>
-              hndlr.processMessage(msg)
-                .provideEnvironment(env)
-                .unsafeRunPromise()
-            // DO NOT CATCH ERRORS here as they should return to the queue!
-          })
-        ),
+      Effect.sync(() =>
+        r.subscribe({
+          processError: err =>
+            hndlr.processError(err)
+              .provideEnvironment(env)
+              .unsafeRunPromise
+              .catch(console.error),
+          processMessage: msg =>
+            hndlr.processMessage(msg)
+              .provideEnvironment(env)
+              .unsafeRunPromise
+          // DO NOT CATCH ERRORS here as they should return to the queue!
+        })
+      ).acquireRelease(
         subscription => Effect.promise(() => subscription.close())
       )
     )

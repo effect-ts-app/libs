@@ -40,7 +40,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           )
         )
         .map(Opt.fromNullable)
-        .mapMaybe(({ data, version }) => ({ version, data } as CachedRecord<EA>))
+        .mapOpt(({ data, version }) => ({ version, data } as CachedRecord<EA>))
     }
 
     function findBy(keys: Record<string, string>) {
@@ -49,7 +49,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           Effect.tryPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
         )
         .map(Opt.fromNullable)
-        .mapMaybe(({ _id }) => _id)
+        .mapOpt(({ _id }) => _id)
     }
 
     function store(record: A, currentVersion: Opt<Version>) {

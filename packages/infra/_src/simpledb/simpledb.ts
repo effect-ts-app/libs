@@ -45,20 +45,20 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const getCache = getM<A>(type)
   const read = (id: string) =>
     tryRead(id)
-      .flatMapMaybe(({ data, version }) =>
+      .flatMapOpt(({ data, version }) =>
         decode(data).mapBoth(
           err => new InvalidStateError("DB serialisation Issue", err),
           data => ({ data, version })
         )
       )
-      .tapMaybe(r => getCache(c => c.set(id, r)))
-      .mapMaybe(r => r.data)
+      .tapOpt(r => getCache(c => c.set(id, r)))
+      .mapOpt(r => r.data)
 
   return (id: string) =>
     getCache(c =>
       c
         .find(id)
-        .mapMaybe(existing => existing.data)
+        .mapOpt(existing => existing.data)
         .orElse(() => read(id))
     )
 }
@@ -72,7 +72,7 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
     getCache(c =>
       c
         .find(record.id)
-        .mapMaybe(x => x.version)
+        .mapOpt(x => x.version)
         .flatMap(cv => save(record, cv))
         .tap(r => c.set(record.id, r))
         .map(r => r.data)
@@ -90,7 +90,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
     getCache(c =>
       c
         .find(record.id)
-        .mapMaybe(x => x.version)
+        .mapOpt(x => x.version)
         .flatMap(_ => _.match(() => save(record, Opt.none), confirmVersionAndSave(record)))
         .tap(r => c.set(record.id, r))
         .map(r => r.data)

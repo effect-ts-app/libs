@@ -1,4 +1,3 @@
-import * as Supervisor from "@effect-ts/system/Supervisor"
 import type { FiberId } from "@effect/io/Fiber/Id"
 import { inspect } from "util"
 
@@ -7,8 +6,8 @@ export function defaultTeardown(
   id: FiberId,
   onExit: (status: number) => void
 ) {
-  void Fiber.roots().flatMap(_ => _.interruptAllWith(id))
-    .unsafeRunPromiseExit.then(() => {
+  Fiber.roots().flatMap(_ => _.interruptAllWith(id))
+    .unsafeRun(() => {
       setTimeout(() => {
         if (Supervisor.mainFibers.size === 0) {
           onExit(status)
@@ -28,9 +27,9 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
     process.exit(s)
   }
 
-  void Fiber.fromEffect(eff)
+  Fiber.fromEffect(eff)
     .map(context => {
-      void context.await()
+      context.await()
         .map(exit => {
           if (exit.isFailure()) {
             if (exit.cause.isInterruptedOnly) {
@@ -45,15 +44,15 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
             defaultTeardown(0, context.id(), onExit)
           }
         })
-        .unsafeRunPromise
+        .unsafeRun()
 
       function handler() {
         process.removeListener("SIGTERM", handler)
         process.removeListener("SIGINT", handler)
-        void context.interruptWith(context.id()).unsafeRunPromise
+        context.interruptWith(context.id()).unsafeRun()
       }
       process.once("SIGTERM", handler)
       process.once("SIGINT", handler)
     })
-    .unsafeRunPromise
+    .unsafeRun()
 }

@@ -342,7 +342,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               const m = yield* $(existing)
               yield* $(
                 Effect([...m.values()].toNonEmpty)
-                  .flatMapMaybe(a =>
+                  .flatMapOpt(a =>
                     s
                       .bulkSet(a)
                       .orDie

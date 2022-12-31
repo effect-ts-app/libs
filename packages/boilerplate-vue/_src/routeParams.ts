@@ -41,7 +41,7 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
   return t.$$.keys.reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      prev[cur] = getQueryParamO(query, cur as string).flatMap(parseMaybe(t[cur]!))
+      prev[cur] = getQueryParamO(query, cur as string).flatMap(parseOpt(t[cur]!))
 
       return prev
     },

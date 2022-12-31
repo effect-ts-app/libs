@@ -40,9 +40,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
         .map(i => Opt.fromNullable(i.resource))
         .map(
-          Opt.map(
-            ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
-          )
+          _ =>
+            _.map(
+              ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
+            )
         )
     }
 
@@ -73,7 +74,7 @@ WHERE (
           )
         )
         .map(x => ReadonlyArray.head(x.resources))
-        .map(Opt.map(_ => _.id))
+        .map(_ => _.map(_ => _.id))
     }
 
     function store(record: A, currentVersion: Opt<Version>) {

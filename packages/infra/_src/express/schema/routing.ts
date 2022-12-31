@@ -14,7 +14,7 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
   arr: ReadonlyArray<R>
 ) {
-  return ReadonlyArray.map_(arr, asRouteDescriptionAny)
+  return arr.map(asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -97,7 +97,7 @@ export function makeFromSchema<ResA>(
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
-  // TODO EffectOpt.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
+  // TODO EffectOpt.fromNullable(Req.Headers).flatMapOpt(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
   const makeReqQuerySchema = Effect.succeed(Opt.fromNullable(Req.Query)).flatMap(_ =>
     _.match(
@@ -177,16 +177,15 @@ export function makeFromSchema<ResA>(
       requestBody: _.reqBody.map(schema => ({
         content: { "application/json": { schema } }
       })).value,
-      responses: ReadonlyArray.concat_(
-        [
-          isEmpty
-            ? new Response(204, { description: "Empty" })
-            : new Response(200, {
-              description: "OK",
-              content: { "application/json": { schema: _.res } }
-            }),
-          new Response(400, { description: "ValidationError" })
-        ],
+      responses: [
+        isEmpty
+          ? new Response(204, { description: "Empty" })
+          : new Response(200, {
+            description: "OK",
+            content: { "application/json": { schema: _.res } }
+          }),
+        new Response(400, { description: "ValidationError" })
+      ].concat(
         e.path.includes(":") && isEmpty
           ? [new Response(404, { description: "NotFoundError" })]
           : []

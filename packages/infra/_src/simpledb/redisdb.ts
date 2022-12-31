@@ -27,7 +27,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id)).flatMapMaybe(v =>
+      return RED.hmgetAll(getKey(id)).flatMapOpt(v =>
         pipe(
           RedisSerializedDBRecord.Parser,
           MO.condemnFail
@@ -47,7 +47,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         () =>
           lockIndex(record).zipRight(
             getIndex(record)
-              .zipRightMaybe(
+              .zipRightOpt(
                 Effect.fail(() => new Error("Combination already exists, abort"))
               )
               .zipRight(getData(record))
@@ -91,7 +91,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).map(Opt.map(i => i as TKey))
+      return RED.hget(getIdxKey(index), index.key).map(_ => _.map(i => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {
@@ -100,42 +100,40 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
-      return Effect.acquireRelease(
-        // acquire
-        RED.lock
-          .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as Promise<Lock>))
-          .mapBoth(
-            err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
-            // release
-            lock => ({
-              release: Effect.tryPromise(() => lock.unlock() as Promise<void>)
-                .orDie
-            })
-          ),
-        l => l.release
-      )
+      // acquire
+      return RED.lock
+        .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
+        .mapBoth(
+          err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+          // release
+          lock => ({
+            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
+              .orDie
+          })
+        ).acquireRelease(
+          l => l.release
+        )
     }
 
     function lockRedisRecord(id: string) {
-      return Effect.acquireRelease(
-        // acquire
-        RED.lock
-          .flatMap(lock =>
-            Effect.tryPromise(
-              () => lock.lock(getLockKey(id), ttl) as Promise<Lock>
-            )
+      // acquire
+      return RED.lock
+        .flatMap(lock =>
+          Effect.tryPromise(
+            () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
-          .mapBoth(
-            err => new CouldNotAquireDbLockException(type, id, err as Error),
-            // release
-            lock => ({
-              // TODO
-              release: Effect.tryPromise(() => lock.unlock() as Promise<void>)
-                .orDie
-            })
-          ),
-        l => l.release
-      )
+        )
+        .mapBoth(
+          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          // release
+          lock => ({
+            // TODO
+            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
+              .orDie
+          })
+        ).acquireRelease(
+          l => l.release
+        )
     }
 
     function getKey(id: string) {

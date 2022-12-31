@@ -502,12 +502,12 @@ export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, E
 
 
 export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return (items: Collection<T>) => Effect.succeed(items.toNonEmptyArray).flatMapMaybe(fn)
+  return (items: Collection<T>) => Effect.succeed(items.toNonEmptyArray).flatMapOpt(fn)
 }
 
 /**
  * @tsplus fluent Collection ifAny
  */
 export function ifAny_<T, R, E, A>(items: Collection<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return Effect.succeed(items.toNonEmptyArray).flatMapMaybe(fn)
+  return Effect.succeed(items.toNonEmptyArray).flatMapOpt(fn)
 }
