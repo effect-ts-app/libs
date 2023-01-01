@@ -81,7 +81,7 @@ importers:
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       typescript-transform-paths: ^3.4.4
       vite: ^4.0.3
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     dependencies:
       cross-env: 7.0.3
       http-proxy: /http-proxy-node16/1.0.0
@@ -129,7 +129,7 @@ importers:
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
       typescript-transform-paths: 3.4.4_2rwizplngdp4tcbdbqen4vluwe
       vite: 4.0.3_@types+node@18.11.12
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/boilerplate-eslint:
     specifiers:
@@ -178,7 +178,7 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': '*'
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@sendgrid/helpers': ^7.7.0
@@ -201,13 +201,13 @@ importers:
       redis: ^3.1.2
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       change-case: 4.1.2
@@ -235,7 +235,7 @@ importers:
       redis: 3.1.2
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/boilerplate-prelude:
     specifiers:
@@ -246,7 +246,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@effect/stm': ^0.0.8
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
@@ -266,14 +266,14 @@ importers:
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     dependencies:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/schema': link:../schema
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@effect/stm': 0.0.8
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
@@ -296,7 +296,7 @@ importers:
       fast-check: 3.5.0
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/boilerplate-react:
     specifiers:
@@ -313,7 +313,7 @@ importers:
       react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
@@ -329,7 +329,7 @@ importers:
       react-intl: 6.2.5_wrrkv27jmmk3f3genuudvh34gu
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/boilerplate-vue:
     specifiers:
@@ -342,7 +342,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@rollup/pluginutils': ^5.0.2
@@ -353,7 +353,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       vite: ^4.0.3
-      vitest: ^0.26.2
+      vitest: ^0.26.3
       vue: ^3.2.45
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
@@ -363,7 +363,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       query-string: 8.1.0
@@ -378,7 +378,7 @@ importers:
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
       vite: 4.0.3_@types+node@18.11.12
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/compiler:
     specifiers:
@@ -389,7 +389,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       vite: ^4.0.3
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     dependencies:
       '@rollup/pluginutils': 5.0.2
       vite: 4.0.3_@types+node@18.11.12
@@ -399,7 +399,7 @@ importers:
       json5: 2.2.3
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/core:
     specifiers:
@@ -407,7 +407,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/uuid': ^9.0.0
@@ -425,7 +425,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       cross-fetch: 3.1.5
@@ -450,7 +450,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/connect': ^3.4.35
@@ -476,7 +476,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       proper-lockfile: 4.1.2
@@ -504,12 +504,12 @@ importers:
       '@types/node': ~18.11.12
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
-      vitest: ^0.26.2
+      vitest: ^0.26.3
     devDependencies:
       '@types/node': 18.11.12
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
-      vitest: 0.26.2
+      vitest: 0.26.3
 
   packages/schema:
     specifiers:
@@ -517,7 +517,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.46
+      '@effect/io': ^0.0.47
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/uuid': ^9.0.0
@@ -535,7 +535,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       cross-fetch: 3.1.5
@@ -557,7 +557,7 @@ importers:
       cross-fetch: ^3.1.5
       path-parser: ^6.1.0
       ts-node: ^10.9.1
-      vitest: ^0.26.2
+      vitest: ^0.26.3
       xstate: ^4.35.1
     dependencies:
       change-case: 4.1.2
@@ -567,7 +567,7 @@ importers:
     devDependencies:
       '@effect-ts-app/compiler': link:../packages/compiler
       ts-node: 10.9.1
-      vitest: 0.26.2
+      vitest: 0.26.3
 
 packages:
 
@@ -2071,8 +2071,8 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.46:
-    resolution: {integrity: sha512-CzhNrERjFe4LGcRZ+qrNMm91ydIb2INm8JRv+GoWGyqFrO6zNiIR3ztk0Yd97tevo5u2L+GkvNncUUK+8cfxuA==}
+  /@effect/io/0.0.47:
+    resolution: {integrity: sha512-MHQzfr2OS94JJvZ7IVXp+EsumCJfm59IoV67yIPFuxMLnZPUQdVOU02zeWu1kQwW9LZjxN+Opc3Cuq9UsqBBoA==}
     dependencies:
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
@@ -2081,7 +2081,7 @@ packages:
   /@effect/stm/0.0.8:
     resolution: {integrity: sha512-r5i73DOQvHfXIoVp3YQy5aRoIAwDToTgYhYz3wQcTmjzlswc3tnYXfI+Wey0IbWhGMVI/769fcnoQqOZ71OGVQ==}
     dependencies:
-      '@effect/io': 0.0.46
+      '@effect/io': 0.0.47
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
     dev: false
@@ -9079,9 +9079,10 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node/0.26.2_@types+node@18.11.12:
-    resolution: {integrity: sha512-4M/zlatItZAyvrQG+82zQBhgDjRZRhVJYFW4T9wcAKh7eMmSiPOVSeI5zsV9UzHXgCcIDKX0o0r3s4OxExTHqg==}
+  /vite-node/0.26.3_@types+node@18.11.12:
+    resolution: {integrity: sha512-Te2bq0Bfvq6XiO718I+1EinMjpNYKws6SNHKOmVbILAQimKoZKDd+IZLlkaYcBXPpK3HFe2U80k8Zw+m3w/a2w==}
     engines: {node: '>=v14.16.0'}
+    hasBin: true
     dependencies:
       debug: 4.3.4
       mlly: 1.0.0
@@ -9132,8 +9133,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.26.2:
-    resolution: {integrity: sha512-Jvqxh6SDy9SsuslkDjts0iDewDIdq4rveEt69YgDuAb1tVDGV0lDepVaeAFraoySWqneJmOt4TngFFNhlw7GfA==}
+  /vitest/0.26.3:
+    resolution: {integrity: sha512-FmHxU9aUCxTi23keF3vxb/Qp0lYXaaJ+jRLGOUmMS3qVTOJvgGE+f1VArupA6pEhaG2Ans4X+zV9dqM5WISMbg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -9168,7 +9169,7 @@ packages:
       tinypool: 0.3.0
       tinyspy: 1.0.2
       vite: 4.0.3_@types+node@18.11.12
-      vite-node: 0.26.2_@types+node@18.11.12
+      vite-node: 0.26.3_@types+node@18.11.12
     transitivePeerDependencies:
       - less
       - sass

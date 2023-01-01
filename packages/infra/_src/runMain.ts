@@ -1,3 +1,4 @@
+import { unsafeRootFibers } from "@effect/io/Effect"
 import type { FiberId } from "@effect/io/Fiber/Id"
 import { inspect } from "util"
 
@@ -9,7 +10,7 @@ export function defaultTeardown(
   Fiber.roots().flatMap(_ => _.interruptAllWith(id))
     .unsafeRun(() => {
       setTimeout(() => {
-        if (Fiber.roots().unsafeRunSync.length === 0) {
+        if (unsafeRootFibers().length === 0) {
           onExit(status)
         } else {
           defaultTeardown(status, id, onExit)
