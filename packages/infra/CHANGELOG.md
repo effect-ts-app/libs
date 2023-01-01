@@ -1,5 +1,11 @@
 # @effect-ts-app/infra
 
+## 2.0.9
+
+### Patch Changes
+
+- Fix logging and openapi
+
 ## 2.0.8
 
 ### Patch Changes

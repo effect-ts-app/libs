@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-infra
 
+## 2.0.9
+
+### Patch Changes
+
+- Fix logging and openapi
+- Updated dependencies
+  - @effect-ts-app/infra@2.0.9
+
 ## 2.0.8
 
 ### Patch Changes
