@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.4
+
+### Patch Changes
+
+- 0f18481: Opt cleanup
+
 ## 2.0.3
 
 ### Patch Changes
