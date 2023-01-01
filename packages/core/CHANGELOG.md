@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.3
+
+### Patch Changes
+
+- 21ed348: Hub
+
 ## 2.0.2
 
 ### Patch Changes
