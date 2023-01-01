@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.2
+
+### Patch Changes
+
+- fe517f0: NEA
+
 ## 2.0.1
 
 ### Patch Changes
