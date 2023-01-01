@@ -1,9 +1,7 @@
 // TODO: Add effect cause/exit etc
 
 import type { Effect, EffectTypeId } from "@effect/io/Effect"
-import type { Chunk } from "@fp-ts/data/Chunk"
-import type { Either } from "@fp-ts/data/Either"
-import type { Option } from "@fp-ts/data/Option"
+import type { Chunk, Either, Option } from "./Prelude.js"
 
 /**
  * @tsplus unify effect/io/Effect
@@ -35,8 +33,8 @@ export function unifyChunk<X extends Chunk<any>>(
 export function unifyEither<X extends Either<any, any>>(
   self: X
 ): Either<
-  X extends Left<infer EX> ? EX : never,
-  X extends Right<infer AX> ? AX : never
+  X extends Either.Left<infer EX> ? EX : never,
+  X extends Either.Right<infer AX> ? AX : never
 > {
   return self
 }
@@ -48,6 +46,6 @@ export function unifyEither<X extends Either<any, any>>(
  */
 export function unifyOpt<X extends Option<any>>(
   self: X
-): Option<X extends Some<infer A> ? A : never> {
+): Option<X extends Option.Some<infer A> ? A : never> {
   return self
 }

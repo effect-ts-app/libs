@@ -2935,6 +2935,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray",
+          "name": "findFirstIndex"
+        },
+        {
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",
           "name": "findFirstIndex"
@@ -4030,6 +4035,11 @@
       "definitionName": "findFirst",
       "definitionKind": "function",
       "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray",
+          "name": "findFirstIndex"
+        },
         {
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",

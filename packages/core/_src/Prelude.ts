@@ -12,9 +12,9 @@ import type * as CNK from "@fp-ts/data/Chunk"
 // import type * as FIBER from "@effect-ts/core/Effect/Fiber"
 // import type * as REF from "@effect-ts/core/Effect/Ref"
 // import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
-// import type * as EITHER from "@effect-ts/core/Either"
 import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
+import type * as EITHER from "@fp-ts/data/Either"
 // import type * as Sy from "@effect-ts-app/core/Sync"
 // import type * as XPURE from "@effect-ts/core/XPure"
 import type * as LNS from "@effect-ts/monocle/Lens"
@@ -74,11 +74,12 @@ export type Equal<A> = EQ.Equal<A>
 // /** @tsplus type ets/Exit */
 // export type Exit<E, A> = EX.Exit<E, A>
 
-// export namespace Either {
-//   export * from "@effect-ts/core/Either"
-// }
-// /** @tsplus type ets/Either */
-// export type Either<E, A> = EITHER.Either<E, A>
+export namespace Either {
+  // @ts-expect-error abc
+  export * from "@fp-ts/data/Either"
+}
+/** @tsplus type ets/Either */
+export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Ord {
   // @ts-expect-error abc
