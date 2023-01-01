@@ -4,6 +4,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Option } from "@fp-ts/data/Option"
 
+export { Option as Opt } from "@fp-ts/data/Option"
+
 /**
  * @tsplus static fp-ts/data/Option.Ops omitableToNullable
  */

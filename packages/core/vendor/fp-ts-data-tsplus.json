@@ -4038,7 +4038,7 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/ReadonlyArray",
-          "name": "findFirstIndex"
+          "name": "findFirst"
         },
         {
           "kind": "static",

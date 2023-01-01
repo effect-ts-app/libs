@@ -1,8 +1,14 @@
 /* eslint-disable unused-imports/no-unused-imports */
+
 /**
  * @tsplus global
  */
-import { None, Option as Opt, Some } from "@fp-ts/data/Option"
+import { Opt } from "@effect-ts-app/core/Option"
+
+/**
+ * @tsplus global
+ */
+import { None, Some } from "@fp-ts/data/Option"
 
 /**
  * @tsplus global
