@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 2.0.1
+
+### Patch Changes
+
+- af52e05: vendor
+
 ## 2.0.0
 
 ### Major Changes

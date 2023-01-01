@@ -1,5 +1,13 @@
 # @effect-ts-app/schema
 
+## 2.0.6
+
+### Patch Changes
+
+- af52e05: vendor
+- Updated dependencies [af52e05]
+  - @effect-ts-app/core@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes

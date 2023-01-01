@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.6
+
+### Patch Changes
+
+- af52e05: vendor
+
 ## 2.0.5
 
 ### Patch Changes

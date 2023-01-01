@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.0.3
+
+### Patch Changes
+
+- af52e05: vendor
+
 ## 1.0.2
 
 ### Patch Changes
