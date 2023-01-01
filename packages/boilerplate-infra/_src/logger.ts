@@ -1,4 +1,3 @@
-import type { Logger } from "@effect/io/Logger"
 import { addLogger, LoggerTypeId } from "@effect/io/Logger"
 
 /**

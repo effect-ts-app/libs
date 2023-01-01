@@ -15,10 +15,7 @@ import {
   toArray
 } from "@effect-ts/core/Collections/Immutable/Set"
 
-import type { Ord as LegacyOrd } from "@effect-ts/core"
-
-function make_<A>(ord_: Ord<A>, eq_?: Equal<A>) {
-  const ord: LegacyOrd.Ord<A> = { compare: (x, y) => ord_.compare(x)(y) }
+function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
   const eq = eq_ ?? <Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
 
   const fromArray = fromArray_(eq)

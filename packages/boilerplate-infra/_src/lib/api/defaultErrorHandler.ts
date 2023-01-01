@@ -32,7 +32,7 @@ export function defaultBasicErrorHandler<R>(
     )
 }
 
-const optimisticConcurrencySchedule = Schedule.once &&
+const optimisticConcurrencySchedule = Schedule.once() &&
   Schedule.recurWhile<SupportedErrors>(a => a._tag === "OptimisticConcurrencyException")
 
 export function defaultErrorHandler<R>(

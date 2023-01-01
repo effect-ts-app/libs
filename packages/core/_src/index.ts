@@ -5,6 +5,7 @@ export * as Tuple from "@effect-ts/core/Collections/Immutable/Tuple"
 export * as Lens from "@effect-ts/monocle/Lens"
 
 export * as Equal from "@effect-ts/core/Equal"
+export * as Ord from "@effect-ts/core/Ord"
 
 export {} from "@effect-ts-app/core/Effect"
 // export * as EffectOption from "@effect-ts-app/core/EffectOption"

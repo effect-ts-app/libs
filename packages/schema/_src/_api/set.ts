@@ -8,13 +8,11 @@ import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 
-import type { Ord as LegacyOrd } from "@effect-ts/core"
-
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord_: Ord<ParsedShape>,
+  ord: Ord<ParsedShape>,
   eq_?: Equal<ParsedShape>
 ): MO.DefaultSchema<
   unknown,
@@ -28,8 +26,6 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   const guardSelf = Guard.for(self)
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
-
-  const ord: LegacyOrd.Ord<ParsedShape> = { compare: (x, y) => ord_.compare(x)(y) }
 
   const eq = eq_ ?? <Equal<ParsedShape>> { equals: (x, y) => ord.compare(x, y) === 0 }
 
@@ -48,7 +44,7 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
     MO.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
     MO.encoder(u => toArray_(u).map(encodeSelf)),
-    MO.mapApi(() => ({ self: self.Api, eq, ord: ord_ })),
+    MO.mapApi(() => ({ self: self.Api, eq, ord })),
     MO.withDefaults,
     MO.annotate(setIdentifier, { self })
   )

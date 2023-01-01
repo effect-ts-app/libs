@@ -260,7 +260,7 @@ export function makeRequestHandler<
         : req.headers,
       cookies: req.cookies
         ? Object.entries(req.cookies).reduce((prev, [key, value]) => {
-          prev[key] = typeof value === "string" || ReadonlyArray.isArray(value)
+          prev[key] = typeof value === "string" || Array.isArray(value)
             ? snipValue(value)
             : value
           return prev

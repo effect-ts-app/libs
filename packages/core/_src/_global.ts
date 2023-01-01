@@ -22,7 +22,7 @@ import { flow, LazyArg, pipe, tuple, tupled } from "@effect-ts-app/core/Function
 /**
  * @tsplus global
  */
-import { Equal, Lens, NonEmptyArguments, NonEmptySet, ROMap, ROSet } from "@effect-ts-app/core/Prelude"
+import { Equal, Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-ts-app/core/Prelude"
 
 /**
  * @tsplus global
@@ -92,7 +92,7 @@ import { Chunk, NonEmptyChunk } from "@fp-ts/data/Chunk"
 /**
  * @tsplus global
  */
-import { Order as Ord } from "@fp-ts/core/typeclass/Order"
+import { Order } from "@fp-ts/core/typeclass/Order"
 
 /**
  * @tsplus global

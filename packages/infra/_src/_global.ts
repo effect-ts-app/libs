@@ -6,4 +6,9 @@ import "@effect-ts-app/schema/_global"
 /**
  * @tsplus global
  */
+import { Logger } from "@effect/io/Logger"
+
+/**
+ * @tsplus global
+ */
 import {} from "@effect-ts-app/infra/runMain"

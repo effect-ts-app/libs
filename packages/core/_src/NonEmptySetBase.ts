@@ -1,5 +1,4 @@
 import { Option } from "@effect-ts/core"
-import type { Ord as LegacyOrd } from "@effect-ts/core"
 import { flow } from "./Function.js"
 import {
   filter_,
@@ -30,8 +29,7 @@ function convertOpt<A>(a: Opt<A>) {
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord_: Ord<A>, eq_?: Equal<A>) {
-  const ord: LegacyOrd.Ord<A> = { compare: (x, y) => ord_.compare(x)(y) }
+function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
   const eq = eq_ ?? <Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)

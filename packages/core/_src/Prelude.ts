@@ -14,7 +14,7 @@ import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 // import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
 // import type * as EITHER from "@effect-ts/core/Either"
 import type * as EQ from "@effect-ts/core/Equal"
-// import type * as ORD from "@effect-ts/core/Ord"
+import type * as ORD from "@effect-ts/core/Ord"
 // import type * as Sy from "@effect-ts-app/core/Sync"
 // import type * as XPURE from "@effect-ts/core/XPure"
 import type * as LNS from "@effect-ts/monocle/Lens"
@@ -88,11 +88,12 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 // /** @tsplus type ets/Either */
 // export type Either<E, A> = EITHER.Either<E, A>
 
-// export namespace Ord {
-//   export * from "@effect-ts/core/Ord"
-// }
-// /** @tsplus type ets/Ord */
-// export type Ord<A> = ORD.Ord<A>
+export namespace Ord {
+  // @ts-expect-error abc
+  export * from "@effect-ts/core/Ord"
+}
+/** @tsplus type ets/Ord */
+export type Ord<A> = ORD.Ord<A>
 
 // export namespace EffectOption {
 //   export * from "@effect-ts-app/core/EffectOption"
@@ -153,7 +154,7 @@ export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 //   // @ts-expect-error
 //   export * from "@effect-ts-app/core/NonEmptyArray"
 // }
-// /** @tsplus type ets/NonEmptyArray */
+// /** @tsplus type fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray */
 // export type NonEmptyReadonlyArray<A> = NA.NonEmptyReadonlyArray<A>
 
 export namespace NonEmptySet {
