@@ -62,7 +62,6 @@ import {
   // Schedule,
   Schema,
   // Semaphore,
-  Tuple,
   Utils
   // XPure,
 } from "@effect-ts-app/boilerplate-prelude"

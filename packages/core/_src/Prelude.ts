@@ -28,7 +28,6 @@ import type * as O from "@fp-ts/data/Option"
 import type * as SET from "@effect-ts-app/core/Set"
 // import type * as SO from "@effect-ts-app/core/SyncOpt"
 // import type * as HAS from "@effect-ts/core/Has"
-import type * as TUP from "@effect-ts/core/Collections/Immutable/Tuple"
 
 import type {} from "@effect-ts-app/core/types/awesome"
 
@@ -62,13 +61,6 @@ export type Equal<A> = EQ.Equal<A>
 // export namespace Fiber {
 //   export * from "@effect-ts/core/Effect/Fiber"
 // }
-
-export namespace Tuple {
-  // @ts-expect-error
-  export * from "@effect-ts/core/Collections/Immutable/Tuple"
-}
-/** @tsplus type ets/Tuple */
-export type Tuple<T extends readonly unknown[]> = TUP.Tuple<T>
 
 // /** @tsplus type ets/Cause */
 // export type Cause<A> = CAUSE.Cause<A>

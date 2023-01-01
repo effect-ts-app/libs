@@ -1,7 +1,6 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
 export * as Map from "@effect-ts/core/Collections/Immutable/Map"
 export * as ROMap from "@effect-ts/core/Collections/Immutable/Map"
-export * as Tuple from "@effect-ts/core/Collections/Immutable/Tuple"
 export * as Lens from "@effect-ts/monocle/Lens"
 
 export * as Equal from "@effect-ts/core/Equal"
