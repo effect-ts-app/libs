@@ -8515,6 +8515,17 @@
       ]
     },
     {
+      "definitionName": "unsafeRoots",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber.Ops",
+          "name": "unsafeRoots"
+        }
+      ]
+    },
+    {
       "definitionName": "succeed",
       "definitionKind": "const",
       "extensions": [
