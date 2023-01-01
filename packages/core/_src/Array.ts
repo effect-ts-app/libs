@@ -244,7 +244,10 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
 }
 
 /**
- * @tsplus pipeable fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray mapRA
+ * @tsplus pipeable Array mapNonEmpty
+ * @tsplus pipeable fp-ts/data/ReadonlyArray mapNonEmpty
+ * @tsplus pipeable fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray mapNonEmpty
+ * @tsplus pipeable fp-ts/data/ReadonlyArray.NonEmptyArray mapNonEmpty
  */
 export const mapRA = ROA.mapNonEmpty
 

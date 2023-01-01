@@ -3443,6 +3443,16 @@
           "kind": "static",
           "typeName": "fp-ts/data/ReadonlyArray.Ops",
           "name": "mapNonEmpty"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray.NonEmptyArray",
+          "name": "mapNonEmpty"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray",
+          "name": "mapNonEmpty"
         }
       ]
     },
@@ -5433,6 +5443,11 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
+          "name": "make"
+        },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops",
