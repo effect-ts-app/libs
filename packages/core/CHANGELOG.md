@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.0
+
+### Major Changes
+
+- c090237: Convert to fp-ts and effect-ts/io
+
 ## 1.10.0
 
 ### Minor Changes

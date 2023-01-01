@@ -1,5 +1,19 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.0.0
+
+### Major Changes
+
+- c090237: Convert to fp-ts and effect-ts/io
+
+### Patch Changes
+
+- Updated dependencies [c090237]
+  - @effect-ts-app/boilerplate-prelude@2.0.0
+  - @effect-ts-app/boilerplate-vue@2.0.0
+  - @effect-ts-app/schema@2.0.0
+  - @effect-ts-app/core@2.0.0
+
 ## 1.6.4
 
 ### Patch Changes

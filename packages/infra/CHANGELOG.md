@@ -1,5 +1,17 @@
 # @effect-ts-app/infra
 
+## 2.0.0
+
+### Major Changes
+
+- c090237: Convert to fp-ts and effect-ts/io
+
+### Patch Changes
+
+- Updated dependencies [c090237]
+  - @effect-ts-app/schema@2.0.0
+  - @effect-ts-app/core@2.0.0
+
 ## 1.7.2
 
 ### Patch Changes
