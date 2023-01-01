@@ -78,7 +78,7 @@ export namespace Either {
   // @ts-expect-error abc
   export * from "@fp-ts/data/Either"
 }
-/** @tsplus type ets/Either */
+/** @tsplus type fp-ts/data/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Ord {
