@@ -37,7 +37,9 @@
         "test-packages": "pnpm packages test:run",
         "testsuite-packages": "pnpm packages testsuite",
         "watch-packages": "pnpm packages build && pnpm packages watch",
-        "build": "pnpm build:tsc ./tsconfig.all.json",
+        "build:tsc": "tsc --build ./tsconfig.all.json",
+        "watch": "pnpm build:tsc --watch",
+        "build": "pnpm build:tsc",
         "rebuild": "pnpm -r clean && pnpm -r build",
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },
