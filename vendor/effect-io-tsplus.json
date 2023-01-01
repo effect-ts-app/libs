@@ -7637,6 +7637,17 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Logger.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
       "definitionName": "console",
       "definitionKind": "const",
       "extensions": [

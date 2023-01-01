@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@types/node": "~18.11.18",
-    "json5": "^2.2.2",
+    "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
     "vitest": "^0.26.2"

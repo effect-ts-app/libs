@@ -1,12 +1,10 @@
-import { addLogger, LoggerTypeId } from "@effect/io/Logger"
+import { addLogger } from "@effect/io/Logger"
 
 /**
  * @tsplus static effect/io/Logger.Ops default
  */
-export const defaultLogger: Logger<string, string> = {
-  [LoggerTypeId]: {} as any,
-  // [LoggerTypeId]: loggerVariance,
-  log: (fiberId, logLevel, message, cause, _context, spans, annotations) => {
+export const defaultLogger = Logger.make<string, string>(
+  (fiberId, logLevel, message, cause, _context, spans, annotations) => {
     const now = new Date()
     const nowMillis = now.getTime()
 
@@ -56,7 +54,7 @@ export const defaultLogger: Logger<string, string> = {
 
     return output
   }
-}
+)
 
 function appendQuoted(label: string, output: string): string {
   return output + escapeLineBreaks(label)

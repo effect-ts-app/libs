@@ -69,7 +69,7 @@ importers:
       eslint-watch: ^8.0.0
       history: ^5.3.0
       http-proxy: npm:http-proxy-node16@1.0.0
-      json5: ^2.2.2
+      json5: ^2.2.3
       madge: ^5.0.1
       module-alias: ^2.2.2
       nodemon: ^2.0.20
@@ -118,7 +118,7 @@ importers:
       eslint-plugin-unused-imports: 2.0.0_tnum7sl7jcutfljbv5jztcescq_muj437zcjstb324sw2caifwg2a
       eslint-watch: 8.0.0_eslint@8.31.0
       history: 5.3.0
-      json5: 2.2.2
+      json5: 2.2.3
       madge: 5.0.1
       module-alias: 2.2.2
       nodemon: 2.0.20
@@ -178,7 +178,7 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': '*'
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@sendgrid/helpers': ^7.7.0
@@ -207,7 +207,7 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       change-case: 4.1.2
@@ -246,7 +246,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@effect/stm': ^0.0.8
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
@@ -273,7 +273,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@effect/stm': 0.0.8
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
@@ -303,7 +303,6 @@ importers:
       '@effect-ts-app/boilerplate-prelude': workspace:*
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/react': workspace:*
       '@effect-ts-app/schema': '*'
       '@types/node': ~18.11.12
       '@types/react': ^18.0.26
@@ -317,7 +316,6 @@ importers:
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
-      '@effect-ts-app/react': link:../react
       '@effect-ts-app/schema': link:../schema
       date-fns: 2.29.3
     devDependencies:
@@ -342,12 +340,12 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
-      json5: ^2.2.2
+      json5: ^2.2.3
       query-string: ^8.1.0
       swrv: ^1.0.2
       ts-node: ^10.9.1
@@ -363,7 +361,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       query-string: 8.1.0
@@ -374,7 +372,7 @@ importers:
       '@effect-ts-app/compiler': link:../compiler
       '@rollup/pluginutils': 5.0.2
       '@types/node': 18.11.12
-      json5: 2.2.2
+      json5: 2.2.3
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
       vite: 4.0.3_@types+node@18.11.12
@@ -385,7 +383,7 @@ importers:
       '@babel/cli': ^7.20.7
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
-      json5: ^2.2.2
+      json5: ^2.2.3
       ts-node: ^10.9.1
       typescript: https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz
       vite: ^4.0.3
@@ -396,7 +394,7 @@ importers:
     devDependencies:
       '@babel/cli': 7.20.7
       '@types/node': 18.11.12
-      json5: 2.2.2
+      json5: 2.2.3
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
       typescript: '@github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz_wbuoq7eauijk342tvgfm6ycsgm'
       vitest: 0.26.2
@@ -407,7 +405,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/uuid': ^9.0.0
@@ -425,7 +423,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       cross-fetch: 3.1.5
@@ -450,7 +448,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/connect': ^3.4.35
@@ -476,7 +474,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       proper-lockfile: 4.1.2
@@ -554,7 +552,7 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.45
+      '@effect/io': ^0.0.46
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
       '@types/uuid': ^9.0.0
@@ -572,7 +570,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
       cross-fetch: 3.1.5
@@ -1633,7 +1631,7 @@ packages:
       convert-source-map: 1.9.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
-      json5: 2.2.2
+      json5: 2.2.3
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -1655,7 +1653,7 @@ packages:
       convert-source-map: 1.9.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
-      json5: 2.2.2
+      json5: 2.2.3
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -2108,8 +2106,8 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.45:
-    resolution: {integrity: sha512-wWNX1mgkbIQe8nFlBIgx84Mj6HagiFtgpDTXeeRn1UXmZLFGAf3EmxgDo3UWTjQA2EJNZH4mf38uuwPQwgoXjQ==}
+  /@effect/io/0.0.46:
+    resolution: {integrity: sha512-CzhNrERjFe4LGcRZ+qrNMm91ydIb2INm8JRv+GoWGyqFrO6zNiIR3ztk0Yd97tevo5u2L+GkvNncUUK+8cfxuA==}
     dependencies:
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
@@ -2118,7 +2116,7 @@ packages:
   /@effect/stm/0.0.8:
     resolution: {integrity: sha512-r5i73DOQvHfXIoVp3YQy5aRoIAwDToTgYhYz3wQcTmjzlswc3tnYXfI+Wey0IbWhGMVI/769fcnoQqOZ71OGVQ==}
     dependencies:
-      '@effect/io': 0.0.45
+      '@effect/io': 0.0.46
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.31
     dev: false
@@ -6271,13 +6269,15 @@ packages:
 
   /json5/1.0.1:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
+    hasBin: true
     dependencies:
       minimist: 1.2.7
     dev: true
 
-  /json5/2.2.2:
-    resolution: {integrity: sha512-46Tk9JiOL2z7ytNQWFLpj99RZkVgeHf87yGQKsIkaPz1qSH9UczKH1rO7K3wgRselo0tYMUNfecYpm/p1vC7tQ==}
+  /json5/2.2.3:
+    resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
+    hasBin: true
 
   /jsonc-parser/3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
@@ -7830,7 +7830,7 @@ packages:
     dependencies:
       debug: 4.3.4
       js-yaml: 4.1.0
-      json5: 2.2.2
+      json5: 2.2.3
       require-from-string: 2.0.2
     transitivePeerDependencies:
       - supports-color
@@ -8932,7 +8932,7 @@ packages:
     resolution: {integrity: sha512-VgPrtLKpRgEAJsMj5Q/I/mXouC6A/7eJ/X4Nuk6o0cRPwBtznYxTCU4FodbexbzH9somBPEXYi0ZkUViUpJ21Q==}
     engines: {node: '>=6'}
     dependencies:
-      json5: 2.2.2
+      json5: 2.2.3
       minimist: 1.2.7
       strip-bom: 3.0.0
     dev: true
