@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.5
+
+### Patch Changes
+
+- 43c108c: fixes
+
 ## 2.0.4
 
 ### Patch Changes
