@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.1
+
+### Patch Changes
+
+- 30d1a78: Fix array ext
+
 ## 2.0.0
 
 ### Major Changes
