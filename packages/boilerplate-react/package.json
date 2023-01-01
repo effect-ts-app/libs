@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
-    "@effect-ts-app/react": "workspace:*",
     "@effect-ts-app/core": "workspace:*",
     "@effect-ts-app/schema": "*",
     "date-fns": "^2.29.3"
