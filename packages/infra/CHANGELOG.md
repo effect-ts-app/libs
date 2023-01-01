@@ -1,5 +1,11 @@
 # @effect-ts-app/infra
 
+## 2.0.1
+
+### Patch Changes
+
+- Update unsafe root fibers access
+
 ## 2.0.0
 
 ### Major Changes
