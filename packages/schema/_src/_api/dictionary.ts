@@ -61,9 +61,9 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
         errors = errors.append(MO.requiredKeyE(key, res.effect.left))
         isError = true
       } else {
-        result[key] = res.effect.right.get(0)
+        result[key] = res.effect.right[0]
 
-        const warnings = res.effect.right.get(1)
+        const warnings = res.effect.right[1]
 
         if (warnings._tag === "Some") {
           errors = errors.append(MO.requiredKeyE(key, warnings.value))

@@ -69,17 +69,17 @@ export function fromTuple<
     const res = Th.result(parsev2(i[1] as any))
     if (keyRes._tag === "Right" && res._tag === "Right") {
       if (!err) {
-        const keyW = keyRes.right.get(1)
+        const keyW = keyRes.right[1]
         if (keyW._tag === "Some") {
           warn = true
           e.push(MO.optionalIndexE(0, keyW.value))
         }
-        const w = res.right.get(1)
+        const w = res.right[1]
         if (w._tag === "Some") {
           warn = true
           e.push(MO.optionalIndexE(1, w.value))
         }
-        v = [keyRes.right.get(0), res.right.get(0)] as const
+        v = [keyRes.right[0], res.right[0]] as const
       }
     } else {
       err = true

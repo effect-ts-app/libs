@@ -1,6 +1,5 @@
 import { Option } from "@effect-ts/core"
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import type { Tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 import { pipe } from "@effect-ts/core/Function"
 import type { EnforceNonEmptyRecord, Unify } from "@effect-ts/core/Utils"
@@ -181,20 +180,20 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     const tags = entriesTags.filterMap(
       ([member, tags]) => {
         if (tagField in tags) {
-          return Option.some(tuple(tags[tagField], member)) as Option.Some<
-            Tuple<[string, string]>
+          return Option.some([tags[tagField], member]) as Option.Some<
+            readonly [string, string]
           >
         }
         return Option.none
       }
-    ).uniq({ equals: (x, y) => x.get(0) === y.get(0) })
+    ).uniq({ equals: (x, y) => x[0] === y[0] })
 
     if (tags.length === entries.length) {
       return Option.some({
         key: tagField,
-        index: D.fromArray(tags),
-        reverse: D.fromArray(tags.map(({ tuple: [a, b] }) => tuple(b, a))),
-        values: tags.map(_ => _.get(0))
+        index: D.fromArray(tags.map(([a, b]) => tuple(a, b))),
+        reverse: D.fromArray(tags.map(([a, b]) => tuple(b, a))),
+        values: tags.map(_ => _[0])
       })
     }
 

@@ -51,8 +51,8 @@ export function fromChunk<
         const res = Th.result(parseEl(a))
         if (res._tag === "Right") {
           if (!err) {
-            b.push(res.right.get(0))
-            const w = res.right.get(1)
+            b.push(res.right[0])
+            const w = res.right[1]
             if (w._tag === "Some") {
               warn = true
               e.push(S.optionalIndexE(j, w.value))
