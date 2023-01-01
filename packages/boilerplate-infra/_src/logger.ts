@@ -11,7 +11,7 @@ export const defaultLogger = Logger.make<string, string>(
     let output = [
       `timestamp=${now.toISOString()}`,
       ` level=${logLevel.label}`,
-      ` thread=#${fiberId.threadName}`
+      ` fiber=${fiberId.threadName}`
     ].join("")
 
     output = output + " message="
