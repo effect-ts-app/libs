@@ -54,22 +54,3 @@ export const pipeEffect = pipe
  * @tsplus static ets/Set __call
  */
 export const setSucceed = ROSet.fromArray
-
-// /**
-//  * @tsplus fluent global isNotNullish
-//  */
-// export const isNotNullish = isTruthy
-
-// /**
-//  * @tsplus getter global asOpt
-//  */
-// export function asOpt<A>(a: A | null | undefined): Opt<A> | undefined
-// export function asOpt<A>(a: A | null): Opt<A>
-// export function asOpt<A>(a: A | null | undefined) {
-//   return a === undefined ? a : Opt.fromNullable(a)
-// }
-
-// /**
-//  * @tsplus getter global asOpt2
-//  */
-// export const optionFromNullable = Opt.fromNullable

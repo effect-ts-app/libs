@@ -1,3 +1,5 @@
+import { Option } from "../../Prelude.js"
+
 export function find_<A, B extends A>(
   as: ROSet<A>,
   refinement: Refinement<A, B>
@@ -10,15 +12,15 @@ export function find_<A>(set: ROSet<A>, predicate: Predicate<A>) {
 export function findFirst_<A, B extends A>(
   set: ROSet<A>,
   refinement: Refinement<A, B>
-): Opt<B>
-export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Opt<A>
-export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Opt<A> {
-  return Opt.fromNullable([...set].find(predicate))
+): Option<B>
+export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A>
+export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A> {
+  return Option.fromNullable([...set].find(predicate))
 }
 
 export function findFirstMap_<A, B>(
   set: ROSet<A>,
-  f: (a: A) => Opt<B>
-): Opt<B> {
+  f: (a: A) => Option<B>
+): Option<B> {
   return [...set].findFirstMap(f)
 }

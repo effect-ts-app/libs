@@ -2,19 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Option as Opt } from "@fp-ts/data/Option"
+import { Option } from "@fp-ts/data/Option"
 
 /**
  * @tsplus static fp-ts/data/Option.Ops omitableToNullable
  */
-export function omitableToNullable<T>(om: Opt<T> | undefined) {
-  return om ?? Opt.fromNullable(om)
+export function omitableToNullable<T>(om: Option<T> | undefined) {
+  return om ?? Option.fromNullable(om)
 }
 
 /**
  * @tsplus static fp-ts/data/Option.Ops toBool
  */
-export const toBool = Opt.match(
+export const toBool = Option.match(
   () => false,
   () => true
 )
@@ -22,20 +22,20 @@ export const toBool = Opt.match(
 /**
  * @tsplus static fp-ts/data/Option.Ops fromBool
  */
-export const fromBool = (b: boolean) => (b ? Opt.some(true) : Opt.none)
+export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none)
 
 /**
  * Access property, unwrapping Options along the path
  */
-export function p<T, K extends KeysMatching<T, Opt<any>>>(
+export function p<T, K extends KeysMatching<T, Option<any>>>(
   k: K
-): (v: Opt<T>) => Opt<_A<T[K]>>
-export function p<T, K extends keyof T>(k: K): (v: Opt<T>) => Opt<T[K]>
+): (v: Option<T>) => Option<_A<T[K]>>
+export function p<T, K extends keyof T>(k: K): (v: Option<T>) => Option<T[K]>
 export function p<T>(k: any) {
-  return (v: Opt<T>) => v.flatMap(a => convert(a[k]))
+  return (v: Option<T>) => v.flatMap(a => convert(a[k]))
 }
 function convert(a: any) {
-  return Opt.isSome(a) || Opt.isNone(a) ? a : Opt.fromNullable(a)
+  return Option.isSome(a) || Option.isNone(a) ? a : Option.fromNullable(a)
 }
 export type _A<A> = A extends Some<infer Y> ? Y : never
 type KeysMatching<T, V> = {
@@ -59,13 +59,13 @@ function raisePartial<X>(): X {
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A
-): (...args: ARGS) => Opt<A> {
+): (...args: ARGS) => Option<A> {
   return (...args) => {
     try {
-      return Opt.some(f(raisePartial)(...args))
+      return Option.some(f(raisePartial)(...args))
     } catch (e) {
       if (e instanceof PartialException) {
-        return Opt.none
+        return Option.none
       }
       throw e
     }

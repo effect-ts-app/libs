@@ -1,6 +1,7 @@
 // ets_tracing: off
 
 import * as E from "@effect-ts/core/Either"
+import type { Option } from "../../Prelude.js"
 
 export function mapEither_<E, A, B>(
   self: ReadonlyArray<A>,
@@ -19,8 +20,8 @@ export function mapEither_<E, A, B>(
 
 export function mapOpt_<A, B>(
   self: ReadonlyArray<A>,
-  f: (a: A) => Opt<B>
-): Opt<ReadonlyArray<B>> {
+  f: (a: A) => Option<B>
+): Option<ReadonlyArray<B>> {
   const res = [] as B[]
   for (const a of self) {
     const x = f(a)

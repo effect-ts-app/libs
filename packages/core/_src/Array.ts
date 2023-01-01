@@ -1,7 +1,6 @@
-import { identity } from "./Function.js"
-
 import * as ROA from "@fp-ts/data/ReadonlyArray"
-import { Chunk } from "./Prelude.js"
+import { identity } from "./Function.js"
+import { Chunk, Option } from "./Prelude.js"
 
 import * as Dur from "@fp-ts/data/Duration"
 
@@ -35,7 +34,7 @@ export const { isArray } = Array
  * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
  */
 export function findFirstMap<A, B>(
-  f: (a: A) => Opt<B>
+  f: (a: A) => Option<B>
 ) {
   return (as: ReadonlyArray<A>) => {
     const len = as.length
@@ -45,7 +44,7 @@ export function findFirstMap<A, B>(
         return v
       }
     }
-    return Opt.none
+    return Option.none
   }
 }
 
@@ -85,14 +84,14 @@ function arrayIncludes<A>(E: Equal<A>) {
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
-  return ar.length ? Opt.some(ar as NonEmptyArray<T>) : Opt.none
+  return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none
 }
 
 /**
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray.Ops fromArray
  */
 export function NEROAFromArray<T>(ar: ReadonlyArray<T>) {
-  return ar.length ? Opt.some(ar as NonEmptyReadonlyArray<T>) : Opt.none
+  return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
 }
 
 function convertOrd<A>(_: Ord<A>): Order<A> {
@@ -118,7 +117,7 @@ export function sortWith<A>(
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO
  */
 export function sortByO<A>(
-  ords: Opt<NonEmptyReadonlyArray<Ord<A>>>
+  ords: Option<NonEmptyReadonlyArray<Ord<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
   return ords.match(() => identity, _ => ROA.sortBy(..._.map(convertOrd)))
 }
@@ -149,7 +148,7 @@ export function groupByT<A, Key extends PropertyKey>(
 // /**
 //  * @tsplus fluent ReadonlyArray collect
 //  */
-// export function arrayCollect<A, B>(ar: readonly A[], collector: (a: A) => Opt<B>): readonly B[] {
+// export function arrayCollect<A, B>(ar: readonly A[], collector: (a: A) => Option<B>): readonly B[] {
 //   return Chunk.fromIterable(ar).filterMap(collector).toArray
 // }
 
@@ -320,7 +319,8 @@ export function toChunk<T>(items: Iterable<T>) {
  * @tsplus getter Array toNonEmpty
  * @tsplus getter fp-ts/data/ReadonlyArray toNonEmpty
  */
-export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) => a.length ? Opt.some(a as NonEmptyReadonlyArray<A>) : Opt.none
+export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
+  a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none
 
 /**
  * @tsplus getter Iterable toArray

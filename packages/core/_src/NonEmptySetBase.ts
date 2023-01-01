@@ -1,5 +1,6 @@
-import { Option } from "@effect-ts/core"
+import { Option as OptionLegacy } from "@effect-ts/core"
 import { flow } from "./Function.js"
+import { Option } from "./Prelude.js"
 import {
   filter_,
   filterMap,
@@ -21,8 +22,8 @@ export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
 }
 
-function convertOpt<A>(a: Opt<A>) {
-  return a.isSome() ? Option.some(a.value) : Option.none
+function convertOpt<A>(a: Option<A>) {
+  return a.isSome() ? OptionLegacy.some(a.value) : OptionLegacy.none
 }
 /**
  * @tsplus type ets/NESet
@@ -78,7 +79,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Opt<A>) => flow(filterMap__<A>(a => convertOpt(f(a))), fromSet),
+    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>(a => convertOpt(f(a))), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
@@ -99,9 +100,9 @@ export const make: <A>(
 
 export function fromSet<A>(set: Set<A>) {
   if (set.size > 0) {
-    return Opt.some(set as NonEmptySet<A>)
+    return Option.some(set as NonEmptySet<A>)
   } else {
-    return Opt.none
+    return Option.none
   }
 }
 
