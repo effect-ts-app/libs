@@ -472,7 +472,7 @@ function useGetMeta<
                     },
                     { modelName: capitalize(name.toString()) }
                   ),
-                ({ tuple: [_, optErr] }) =>
+                ([_, optErr]) =>
                   optErr.isSome()
                     ? intl.formatMessage(
                       {
