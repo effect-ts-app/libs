@@ -300,6 +300,7 @@ importers:
 
   packages/boilerplate-react:
     specifiers:
+      '@babel/cli': ^7.20.7
       '@effect-ts-app/boilerplate-prelude': workspace:*
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
@@ -319,6 +320,7 @@ importers:
       '@effect-ts-app/schema': link:../schema
       date-fns: 2.29.3
     devDependencies:
+      '@babel/cli': 7.20.7
       '@effect-ts-app/compiler': link:../compiler
       '@types/node': 18.11.12
       '@types/react': 18.0.26
