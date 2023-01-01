@@ -160,7 +160,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             oneOf: yield* $(
               Effect.collectAll(
                 Object.keys(schemaMeta.props).map(x => processId(schemaMeta.props[x]))
-              )
+              ).map(_ => _.toArray)
             ) as any,
             discriminator: (schemaMeta.tag as Opt<any>).map((_: any) => ({
               propertyName: _.key // TODO
@@ -246,7 +246,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
               },
               required: ["_tag", i === 0 ? "left" : "right"],
               type: "object"
-            })) as any,
+            })).toArray as any,
             discriminator: { propertyName: "_tag" }
           })
         }
