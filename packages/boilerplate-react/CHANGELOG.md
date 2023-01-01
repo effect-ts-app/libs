@@ -1,5 +1,15 @@
 # @effect-ts-app/boilerplate-react
 
+## 2.0.7
+
+### Patch Changes
+
+- Fix Opt alias
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.0.7
+  - @effect-ts-app/schema@2.0.7
+  - @effect-ts-app/core@2.0.7
+
 ## 2.0.6
 
 ### Patch Changes

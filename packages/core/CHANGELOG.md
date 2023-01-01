@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.7
+
+### Patch Changes
+
+- Fix Opt alias
+
 ## 2.0.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 2.0.2
+
+### Patch Changes
+
+- Fix Opt alias
+
 ## 2.0.1
 
 ### Patch Changes
