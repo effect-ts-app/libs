@@ -100,6 +100,7 @@ function convertOrd<A>(_: Ord<A>): Order<A> {
 }
 
 /**
+ * @tsplus pipeable Array sortWith
  * @tsplus pipeable ReadonlyArray sortWith
  * @tsplus pipeable NonEmptyArray sortWith
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortWith
@@ -111,6 +112,7 @@ export function sortWith<A>(
 }
 
 /**
+ * @tsplus pipeable Array sortByO
  * @tsplus pipeable ReadonlyArray sortByO
  * @tsplus pipeable NonEmptyArray sortByO
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO
@@ -123,6 +125,7 @@ export function sortByO<A>(
 
 /**
  * @tsplus fluent ReadonlyArray groupByT
+ * @tsplus fluent Array groupByT
  * @tsplus fluent NonEmptyArray groupByT
  * @tsplus fluent NonEmptyArrayReadonlyArray groupByT
  */
@@ -227,6 +230,7 @@ export const appendOperator: <A>(self: ReadonlyArray<A>, a: A) => ReadonlyArray<
 
 /**
  * @tsplus fluent ReadonlyArray randomElement 1
+ * @tsplus fluent Array randomElement 1
  */
 export function randomElement<A>(a: ReadonlyArray<A>) {
   return a[Math.floor(Math.random() * a.length)]
@@ -290,6 +294,7 @@ export function* _chunk_<T>(items_: Iterable<T>, size: number) {
 
 /**
  * Split the `items` array into multiple, smaller chunks of the given `size`.
+ * @tsplus fluent Array chunk
  * @tsplus fluent ReadonlyArray chunk
  * @tsplus fluent fp-ts/data/Chunk chunk
  * @tsplus fluent Iterable chunk
@@ -299,6 +304,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
 }
 
 /**
+ * @tsplus getter Array toChunk
  * @tsplus getter ReadonlyArray toChunk
  * @tsplus getter Iterable toChunk
  */
@@ -394,7 +400,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
 
 /**
  * @tsplus fluent ReadonlyArray forEachEffectWithIndex
- * @tsplus fluent fp-ts/data/Chunk forEachEffectWithIndex
+ * @tsplus fluent Array forEachEffectWithIndex
  * @tsplus fluent fp-ts/data/Chunk forEachEffectWithIndex
  * @tsplus fluent ets/Set forEachEffectWithIndex
  */
@@ -404,7 +410,7 @@ export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: n
 
 /**
  * @tsplus fluent ReadonlyArray forEachEffectParWithIndex
- * @tsplus fluent fp-ts/data/Chunk forEachEffectParWithIndex
+ * @tsplus fluent Array forEachEffectParWithIndex
  * @tsplus fluent fp-ts/data/Chunk forEachEffectParWithIndex
  * @tsplus fluent ets/Set forEachEffectParWithIndex
  */
