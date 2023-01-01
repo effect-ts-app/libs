@@ -42,6 +42,11 @@ import { Queue } from "@effect/io/Queue"
 /**
  * @tsplus global
  */
+import { Hub } from "@effect/io/Hub"
+
+/**
+ * @tsplus global
+ */
 import { Deferred } from "@effect/io/Deferred"
 
 /**
