@@ -5,7 +5,7 @@ import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: { skip?: number; limit?: number }) {
-  return ((c: Chunk<T>) => {
+  return ((c: Chunk<T>): Chunk<T> => {
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {

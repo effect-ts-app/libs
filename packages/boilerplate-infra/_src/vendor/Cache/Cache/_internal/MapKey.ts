@@ -1,3 +1,5 @@
+import { symbolEqual, symbolHash } from "@fp-ts/data/Equal"
+
 export const MapKeyURI = Symbol.for("@effect/cache/Cache/MapKey")
 export type MapKeyURI = typeof MapKeyURI
 
@@ -14,17 +16,15 @@ export class MapKey<Key> implements Equals {
 
   constructor(readonly value: Key) {}
 
-  [Hash.sym](): number {
-    return Hash.combine(
-      Hash.unknown(this.value),
-      Hash.combine(
-        Hash.unknown(this.previous),
-        Hash.unknown(this.next)
-      )
-    )
+  [symbolHash](): number {
+    return Equals.hashCombine(
+      Equals.hashCombine(
+        Equals.hash(this.next)
+      )(Equals.hash(this.previous))
+    )(Equals.hash(this.value))
   }
 
-  [Equals.sym](that: unknown): boolean {
+  [symbolEqual](that: unknown): boolean {
     if (this === that) {
       return true
     }

@@ -51,75 +51,75 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
-              const batches = ReadonlyArray.chunksOf(config?.maxBulkSize ?? 10)(
-                [...items].map(
-                  x =>
-                    [
-                      x,
-                      Opt.fromNullable(x._etag).match(
-                        () => ({
-                          operationType: "Create" as const,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          partitionKey: config?.partitionValue(x)
-                        }),
-                        eTag => ({
-                          operationType: "Replace" as const,
-                          id: x.id,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          ifMatch: eTag,
-                          partitionKey: config?.partitionValue(x)
-                        })
-                      )
-                    ] as const
-                )
+              const b = [...items].map(
+                x =>
+                  [
+                    x,
+                    Opt.fromNullable(x._etag).match(
+                      () => ({
+                        operationType: "Create" as const,
+                        resourceBody: {
+                          ...omit(x, "_etag"),
+                          _partitionKey: config?.partitionValue(x)
+                        } as any,
+                        partitionKey: config?.partitionValue(x)
+                      }),
+                      eTag => ({
+                        operationType: "Replace" as const,
+                        id: x.id,
+                        resourceBody: {
+                          ...omit(x, "_etag"),
+                          _partitionKey: config?.partitionValue(x)
+                        } as any,
+                        ifMatch: eTag,
+                        partitionKey: config?.partitionValue(x)
+                      })
+                    )
+                  ] as const
               )
+              const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray()
 
               const batchResult = yield* $(
-                batches.map((x, i) => [i, x] as const).forEachEffect(
-                  ([i, batch]) =>
-                    Effect.promise(() => bulk(batch.map(([, op]) => op)))
-                      .delay(DUR.makeMillis(i === 0 ? 0 : 1100))
-                      .flatMap(responses =>
-                        Effect.gen(function*($) {
-                          const r = responses.find(x => x.statusCode === 412)
-                          if (r) {
-                            return yield* $(
-                              Effect.fail(
-                                new OptimisticConcurrencyException(
-                                  name,
-                                  JSON.stringify(r.resourceBody?.["id"])
+                batches.map((x, i) => [i, x] as const)
+                  .forEachEffect(
+                    ([i, batch]) =>
+                      Effect.promise(() => bulk(batch.map(([, op]) => op)))
+                        .delay(DUR.makeMillis(i === 0 ? 0 : 1100))
+                        .flatMap(responses =>
+                          Effect.gen(function*($) {
+                            const r = responses.find(x => x.statusCode === 412)
+                            if (r) {
+                              return yield* $(
+                                Effect.fail(
+                                  new OptimisticConcurrencyException(
+                                    name,
+                                    JSON.stringify(r.resourceBody?.["id"])
+                                  )
                                 )
                               )
+                            }
+                            const r2 = responses.find(
+                              x => x.statusCode > 299 || x.statusCode < 200
                             )
-                          }
-                          const r2 = responses.find(
-                            x => x.statusCode > 299 || x.statusCode < 200
-                          )
-                          if (r2) {
-                            return yield* $(
-                              Effect.die(
-                                new CosmosDbOperationError(
-                                  "not able to update record: " + r2.statusCode
+                            if (r2) {
+                              return yield* $(
+                                Effect.die(
+                                  new CosmosDbOperationError(
+                                    "not able to update record: " + r2.statusCode
+                                  )
                                 )
                               )
-                            )
-                          }
-                          return batch.map(([e], i) => ({
-                            ...e,
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            _etag: responses[i]!.eTag
-                          }))
-                        })
-                      )
-                )
+                            }
+                            return batch.map(([e], i) => ({
+                              ...e,
+                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                              _etag: responses[i]!.eTag
+                            }))
+                          })
+                        )
+                  )
               )
-              return batchResult.toArray.flatten as NonEmptyReadonlyArray<PM>
+              return batchResult.toReadonlyArray().flat() as unknown as NonEmptyReadonlyArray<PM>
             }).instrument("cosmos.bulkSet")
               .logAnnotate("cosmos.db", containerId)
 
@@ -178,7 +178,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       return batch.map(([e], i) => ({
                         ...e,
                         _etag: result[i]?.eTag
-                      })) as NonEmptyReadonlyArray<PM>
+                      })) as unknown as NonEmptyReadonlyArray<PM>
                     })
                   )
               )
@@ -309,7 +309,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect({
+                  return Effect.succeed({
                     ...e,
                     _etag: x.etag
                   })
@@ -339,7 +339,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             if (existing) {
               const m = yield* $(existing)
               yield* $(
-                Effect([...m.values()].toNonEmpty)
+                Effect.succeed([...m.values()].toNonEmpty)
                   .flatMapOpt(a =>
                     s
                       .bulkSet(a)

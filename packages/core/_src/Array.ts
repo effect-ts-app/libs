@@ -1,6 +1,7 @@
 import { identity } from "./Function.js"
 
 import * as ROA from "@fp-ts/data/ReadonlyArray"
+import { Chunk } from "./Prelude.js"
 
 import * as Dur from "@fp-ts/data/Duration"
 

@@ -1,3 +1,5 @@
+import type { Chunk, Option } from "./Prelude.js"
+
 /**
  * Returns the first element that satisfies the predicate.
  *
@@ -5,7 +7,7 @@
  * @tsplus pipeable fp-ts/data/Chunk findFirstMap
  */
 export function findFirstMap<A, B>(
-  f: (a: A) => Opt<B>
+  f: (a: A) => Option<B>
 ) {
   return (as: Chunk<A>) => {
     const ass = as.toReadonlyArray()

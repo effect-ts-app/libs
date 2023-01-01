@@ -3,8 +3,8 @@
 
 import "./global.ts"
 
-// import type * as CNK from "@effect-ts-app/core/Chunk"
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+import type * as CNK from "@fp-ts/data/Chunk"
 // import type * as CAUSE from "@effect-ts/core/Effect/Cause"
 // import type * as EX from "@effect-ts/core/Effect/Exit"
 // import type * as M from "@effect-ts/core/Effect/Managed"
@@ -23,7 +23,7 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 // import type * as QUEUE from "@effect-ts/core/Effect/Queue"
 // import type * as EO from "@effect-ts-app/core/EffectOption"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
-// import type * as O from "@effect-ts-app/core/Option"
+import type * as O from "@fp-ts/data/Option"
 // import type * as SCHEMA from "@effect-ts-app/schema"
 import type * as SET from "@effect-ts-app/core/Set"
 // import type * as SO from "@effect-ts-app/core/SyncOpt"
@@ -129,11 +129,25 @@ export type Ord<A> = ORD.Ord<A>
 // /** @tsplus type ets/Schedule */
 // export type Schedule<Env, In, Out> = SCHEDULE.Schedule<Env, In, Out>
 
-// export namespace Opt {
-//   export * from "@effect-ts-app/core/Option"
-// }
-// /** @tsplus type ets/Opt */
-// export type Opt<A> = O.Opt<A>
+export namespace Option {
+  // @ts-expect-error abc
+  export * from "@fp-ts/data/Option"
+}
+/**
+ * @tsplus companion fp-ts/data/Option.Ops
+ * @tsplus type fp-ts/data/Option
+ */
+export type Option<A> = O.Option<A>
+
+export namespace Chunk {
+  // @ts-expect-error abc
+  export * from "@fp-ts/data/Chunk"
+}
+/**
+ * @tsplus companion fp-ts/data/Chunk.Ops
+ * @tsplus type fp-ts/data/Chunk
+ */
+export type Chunk<A> = CNK.Chunk<A>
 
 // export namespace Sync {
 //   export * from "@effect-ts-app/core/Sync"

@@ -1,4 +1,4 @@
-import type { MapKey } from "@effect/cache/Cache/_internal/MapKey"
+import type { MapKey } from "./MapKey.js"
 
 /**
  * A `KeySet` is a sorted set of keys in the cache ordered by last access.
