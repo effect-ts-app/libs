@@ -1,5 +1,14 @@
 # @effect-ts-app/boilerplate-react
 
+## 2.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.10
+  - @effect-ts-app/boilerplate-prelude@2.0.9
+  - @effect-ts-app/schema@2.0.9
+
 ## 2.0.8
 
 ### Patch Changes

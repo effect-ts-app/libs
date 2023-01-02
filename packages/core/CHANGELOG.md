@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.10
+
+### Patch Changes
+
+- bump:
+
 ## 2.0.9
 
 ### Patch Changes
