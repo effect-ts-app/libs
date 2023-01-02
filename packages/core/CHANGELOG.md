@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.11
+
+### Patch Changes
+
+- array ext
+
 ## 2.0.10
 
 ### Patch Changes
