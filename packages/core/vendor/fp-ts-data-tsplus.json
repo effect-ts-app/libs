@@ -3277,38 +3277,6 @@
       ]
     },
     {
-      "definitionName": "uniq",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/ReadonlyArray.Ops",
-          "name": "uniq"
-        },
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/data/ReadonlyArray",
-          "name": "uniq"
-        },
-        {
-          "kind": "getter",
-          "typeName": "Array",
-          "name": "uniq"
-        }
-      ]
-    },
-    {
-      "definitionName": "uniqNonEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/ReadonlyArray.Ops",
-          "name": "uniqNonEmpty"
-        }
-      ]
-    },
-    {
       "definitionName": "chop",
       "definitionKind": "const",
       "extensions": [
