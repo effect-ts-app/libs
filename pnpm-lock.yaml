@@ -177,7 +177,7 @@ importers:
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
-      '@effect-ts-app/schema': '*'
+      '@effect-ts-app/schema': workspace:*
       '@effect/io': ^0.0.48
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.31
@@ -242,7 +242,7 @@ importers:
       '@babel/cli': ^7.20.7
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': '*'
+      '@effect-ts-app/schema': workspace:*
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
@@ -304,7 +304,7 @@ importers:
       '@effect-ts-app/boilerplate-prelude': workspace:*
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': '*'
+      '@effect-ts-app/schema': workspace:*
       '@types/node': ~18.11.12
       '@types/react': ^18.0.26
       date-fns: ^2.29.3
@@ -338,7 +338,7 @@ importers:
       '@effect-ts-app/boilerplate-vue': workspace:*
       '@effect-ts-app/compiler': workspace:*
       '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': '*'
+      '@effect-ts-app/schema': workspace:*
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
@@ -446,7 +446,7 @@ importers:
     specifiers:
       '@azure/cosmos': ^3.17.2
       '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': '*'
+      '@effect-ts-app/schema': workspace:*
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5

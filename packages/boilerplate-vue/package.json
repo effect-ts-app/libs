@@ -10,7 +10,7 @@
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
     "@effect-ts-app/boilerplate-vue": "workspace:*",
     "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",

@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "*",
