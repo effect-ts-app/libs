@@ -7,7 +7,7 @@ import "./Lens.ext.js"
 import "./refinements.js"
 import "./Schema.ext.js"
 
-import type * as O from "@fp-ts/data/Option"
+import type { Option } from "@fp-ts/data/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
@@ -23,7 +23,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
  * @tsplus fluent fp-ts/data/Option encaseInEffect
  */
 export function encaseMaybeInEffect_<E, A>(
-  o: O.Option<A>,
+  o: Option<A>,
   onError: LazyArg<E>
 ): Effect<never, E, A> {
   return o.match(() => Effect.fail(onError()), Effect.succeed)
@@ -38,7 +38,7 @@ export const EitherasEffect = Effect.fromEither
  * @tsplus fluent fp-ts/data/Option encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
-  o: O.Option<A>,
+  o: Option<A>,
   onError: LazyArg<E>
 ): Either<E, A> {
   return o.match(() => Either.left(onError()), Either.right)
@@ -102,7 +102,7 @@ export function accessServicesM<T extends Record<string, Tag<any>>>(services: T)
  * @tsplus getter effect/io/Effect toNullable
  */
 export function toNullable<R, E, A>(
-  self: Effect<R, E, O.Option<A>>
+  self: Effect<R, E, Option<A>>
 ) {
   return self.map(_ => _.getOrNull)
 }
