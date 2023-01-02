@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.9
+
+### Patch Changes
+
+- tsplus
+
 ## 2.0.8
 
 ### Patch Changes
