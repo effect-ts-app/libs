@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.0.10
+
+### Patch Changes
+
+- Update STM
+
 ## 2.0.9
 
 ### Patch Changes
