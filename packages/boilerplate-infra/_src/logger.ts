@@ -1,4 +1,4 @@
-import { addLogger } from "@effect/io/Logger"
+import { add, remove } from "@effect/io/Logger"
 
 /**
  * @tsplus static effect/io/Logger.Ops default
@@ -89,7 +89,7 @@ export const consoleLogger: Logger<string, void> = defaultLogger.map(message => 
 /**
  * @tsplus static effect/io/Logger.Ops consoleLoggerLayer
  */
-export const consoleLoggerLayer = addLogger(consoleLogger)
+export const consoleLoggerLayer = remove(Logger.defaultLogger) + add(consoleLogger)
 
 // /**
 //  * @tsplus static effect/io/Logger.Ops withConsoleLogger

@@ -7971,6 +7971,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/io/FiberRef",
+          "name": "locally"
+        },
+        {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
           "name": "locally"
@@ -7981,6 +7986,11 @@
       "definitionName": "locallyWith",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyWith"
+        },
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
@@ -8235,7 +8245,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "locallyScoped"
         }
@@ -8246,7 +8256,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "locallyScopedWith"
         }

@@ -177,9 +177,9 @@ export function logAnnotates(kvps: Record<string, string>) {
         Effect.suspendSucceed(() =>
           pipe(
             effect,
-            FiberRef.locally(
+            FiberRef.currentLogAnnotations.locally(
               new Map([...annotations, ...kvps.$$.entries]) as ReadonlyMap<string, string>
-            )(FiberRef.currentLogAnnotations)
+            )
           )
         )
       )
