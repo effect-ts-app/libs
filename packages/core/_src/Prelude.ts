@@ -35,7 +35,7 @@ import type {} from "@effect-ts-app/core/types/awesome"
  * @tsplus type ReadonlyArray
  * @tsplus type Iterable
  * @tsplus companion fp-ts/data/ReadonlyArray.Ops
- * @tsplus companion ReadonlyArray.Ops
+ * @tsplus companion fp-ts/data/ReadonlyArray.Ops
  */
 export type ROA<A> = ReadonlyArray<A>
 export type { ROA as ReadonlyArray }

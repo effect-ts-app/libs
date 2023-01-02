@@ -5,6 +5,111 @@ import { Chunk, Option } from "./Prelude.js"
 import * as Dur from "@fp-ts/data/Duration"
 
 /**
+ * @tsplus getter ets/Ord toOrder
+ */
+export function convertOrd<A>(_: Ord<A>): Order<A> {
+  return ({ compare: x => y => _.compare(x, y) })
+}
+
+/**
+ * @tsplus pipeable fp-ts/data/Chunk sortWith
+ */
+export function ChunksortWith<A>(
+  ...ords: NonEmptyArguments<Ord<A>>
+): (a: Chunk<A>) => Chunk<A> {
+  // TODO
+  return as => as.toArray.sortWith(...ords).toChunk
+}
+
+/**
+ * @tsplus getter Generator toArray
+ * @tsplus getter Iterable toArray
+ */
+export function toArray<A>(
+  gen: Generator<A, void, unknown>
+) {
+  return Array.from(gen)
+}
+
+/**
+ * Remove duplicates from an array, keeping the first occurrence of an element.
+ *
+ * @tsplus static fp-ts/data/ReadonlyArray.Ops uniq
+ * @tsplus pipeable ReadonlyArray uniq
+ */
+export function uniqArray<A>(E: Equal<A>) {
+  return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
+    const includes = arrayIncludes(E)
+    const result: Array<A> = []
+    const length = self.length
+    let i = 0
+    for (; i < length; i = i + 1) {
+      const a = self[i]!
+      if (!includes(result, a)) {
+        result.push(a)
+      }
+    }
+    return length === result.length ? self : result
+  }
+}
+
+function arrayIncludes<A>(E: Equal<A>) {
+  return (array: Array<A>, value: A): boolean => {
+    for (let i = 0; i < array.length; i = i + 1) {
+      const element = array[i]!
+      if (E.equals(value, element)) {
+        return true
+      }
+    }
+    return false
+  }
+}
+
+/**
+ * Remove duplicates from an array, keeping the first occurrence of an element.
+ *
+ * @tsplus static fp-ts/data/Chunk.Ops uniq
+ * @tsplus pipeable fp-ts/data/Chunk uniq
+ */
+export function uniq<A>(E: Equal<A>) {
+  return (self: Chunk<A>): Chunk<A> => {
+    let out = ([] as A[]).toChunk
+    for (let i = 0; i < self.length; i++) {
+      const a = self.unsafeGet(i)
+      if (!out.elem2(E, a)) {
+        out = out.append(a)
+      }
+    }
+    return self.length === out.length ? self : out
+  }
+}
+
+/**
+ * Test if a value is a member of an array. Takes a `Equivalence<A>` as a single
+ * argument which returns the function to use to search for a value of type `A`
+ * in an array of type `Chunk<A>`.
+ *
+ * @tsplus static fp-ts/data/Chunk.Ops elem2
+ * @tsplus pipeable fp-ts/data/Chunk elem2
+ */
+export function elem<A>(E: Equal<A>, value: A) {
+  return (self: Chunk<A>): boolean => {
+    const predicate = (element: A) => E.equals(element, value)
+    for (let i = 0; i < self.length; i++) {
+      if (predicate(self.unsafeGet(i)!)) {
+        return true
+      }
+    }
+    return false
+  }
+}
+
+/**
+ * @tsplus pipeable fp-ts/data/Chunk partition
+ */
+export const ChunkPartition = Chunk.partition
+
+/**
  * @tsplus static fp-ts/data/Duration.Ops makeMillis
  */
 export const millis_ = Dur.millis
@@ -25,7 +130,6 @@ export const { isArray } = Array
 
 /**
  * @tsplus static fp-ts/data/ReadonlyArray.Ops findFirstMap
- * @tsplus static ReadonlyArray.Ops findFirstMap
  * @tsplus static Array.Ops findFirstMap
  * @tsplus pipeable Array findFirstMap
  * @tsplus pipeable fp-ts/data/ReadonlyArray findFirstMap
@@ -49,38 +153,6 @@ export function findFirstMap<A, B>(
 }
 
 /**
- * @tsplus pipeable Array uniq
- * @tsplus pipeable ReadonlyArray uniq
- */
-export function uniq<A>(E: Equal<A>) {
-  return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
-    const includes = arrayIncludes(E)
-    const result: Array<A> = []
-    const length = self.length
-    let i = 0
-    for (; i < length; i = i + 1) {
-      const a = self[i]!
-      if (!includes(result, a)) {
-        result.push(a)
-      }
-    }
-    return length === result.length ? self : result
-  }
-}
-
-function arrayIncludes<A>(E: Equal<A>) {
-  return (array: ReadonlyArray<A>, value: A): boolean => {
-    for (let i = 0; i < array.length; i = i + 1) {
-      const element = array[i]!
-      if (E.equals(value, element)) {
-        return true
-      }
-    }
-    return false
-  }
-}
-
-/**
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
@@ -94,15 +166,9 @@ export function NEROAFromArray<T>(ar: ReadonlyArray<T>) {
   return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
 }
 
-function convertOrd<A>(_: Ord<A>): Order<A> {
-  return ({ compare: x => y => _.compare(x, y) })
-}
-
 /**
  * @tsplus pipeable Array sortWith
  * @tsplus pipeable ReadonlyArray sortWith
- * @tsplus pipeable NonEmptyArray sortWith
- * @tsplus pipeable NonEmptyArrayReadonlyArray sortWith
  */
 export function sortWith<A>(
   ...ords: NonEmptyArguments<Ord<A>>
@@ -258,10 +324,13 @@ export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[])
 }
 
 /**
- * @tsplus fluent fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray sortWith
+ * @tsplus static fp-ts/data/ReadonlyArray.Ops sortWithNonEmpty
+ * @tsplus pipeable ReadonlyArray sortWithNonEmpty
  */
-export function sortWithNEA<A>(na: NonEmptyReadonlyArray<A>, ord: Ord<A>) {
-  return ROA.sortNonEmpty(convertOrd(ord))(na as readonly [A, ...A[]])
+export function sortWithNonEmpty<A>(
+  ...ords: NonEmptyArguments<Ord<A>>
+): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
+  return a => ReadonlyArray.sortByNonEmpty(...ords.map(convertOrd))(a)
 }
 
 /**
