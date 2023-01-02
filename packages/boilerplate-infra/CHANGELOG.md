@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 2.0.10
+
+### Patch Changes
+
+- Fixes
+- Updated dependencies
+  - @effect-ts-app/core@2.0.8
+  - @effect-ts-app/boilerplate-prelude@2.0.8
+  - @effect-ts-app/infra@2.0.10
+  - @effect-ts-app/schema@2.0.8
+
 ## 2.0.9
 
 ### Patch Changes
