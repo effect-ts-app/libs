@@ -4,8 +4,8 @@
  * delayed by duration after the effect completes execution, whether by success,
  * failure, or interruption.
  *
- * @tsplus static effect/core/stm/TSemaphore.Aspects withPermitsDuration
- * @tsplus pipeable effect/core/stm/TSemaphore withPermitsDuration
+ * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
+ * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
  */
 export function withPermitsDuration(permits: number, duration: DUR) {
   return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
