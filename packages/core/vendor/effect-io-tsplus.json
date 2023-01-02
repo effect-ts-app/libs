@@ -679,7 +679,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "effect/io/Exit",
           "name": "isSuccess"
         },

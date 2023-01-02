@@ -20,7 +20,7 @@ export function withPermitsDuration(permits: number, duration: DUR) {
 }
 
 /**
- * @tsplus pipeable Collection batchNPar
+ * @tsplus pipeable Iterable batchNPar
  * @tsplus static Collection.Aspects batchNPar
  */
 export function batchNPar<R, E, A, R2, E2, A2, T>(
@@ -34,7 +34,7 @@ export function batchNPar<R, E, A, R2, E2, A2, T>(
 }
 
 /**
- * @tsplus pipeable Collection batch
+ * @tsplus pipeable Iterable batch
  * @tsplus static Collection.Aspects batch
  */
 export function batch<R, E, A, R2, E2, A2, T>(
@@ -48,7 +48,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
 }
 
 // /**
-//  * @tsplus pipeable Collection rateLimit
+//  * @tsplus pipeable Iterable rateLimit
 //  * @tsplus static Collection.Aspects rateLimit
 //  */
 // export function rateLimit(
@@ -68,7 +68,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
 // }
 
 /**
- * @tsplus pipeable Collection naiveRateLimit
+ * @tsplus pipeable Iterable naiveRateLimit
  * @tsplus static Collection.Aspects naiveRateLimit
  */
 

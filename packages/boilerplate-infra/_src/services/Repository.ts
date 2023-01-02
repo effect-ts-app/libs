@@ -506,7 +506,7 @@ export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effec
 }
 
 /**
- * @tsplus fluent Collection ifAny
+ * @tsplus fluent Iterable ifAny
  */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
   return Effect.succeed(items.toNonEmptyArray).flatMapOpt(fn)

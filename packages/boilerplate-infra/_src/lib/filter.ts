@@ -75,7 +75,7 @@ export type WhereIn<T extends "in" | "not-in", V, Values extends readonly V[] = 
 }
 
 /**
- * @tsplus fluent Collection $contains
+ * @tsplus fluent Iterable $contains
  */
 export function $contains<A extends SupportedValues, V extends A>(
   _: readonly A[],
@@ -85,7 +85,7 @@ export function $contains<A extends SupportedValues, V extends A>(
 }
 
 /**
- * @tsplus fluent Collection $notContains
+ * @tsplus fluent Iterable $notContains
  */
 export function $notContains<A extends SupportedValues, V extends A>(
   _: readonly A[],

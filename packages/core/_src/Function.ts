@@ -159,3 +159,16 @@ export function reverseCurriedMagix<A, B, C>(f: (a: A) => (b: B) => C) {
     r: f
   })
 }
+
+export function lazy<A>(f: () => A): () => A {
+  let tmp: A | undefined
+  let done = false
+  return () => {
+    if (done) {
+      return tmp!
+    }
+    tmp = f()
+    done = true
+    return tmp
+  }
+}
