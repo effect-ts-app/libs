@@ -27,7 +27,7 @@ export interface SchemaDefaultSchema<
 
   readonly Guard: Guard.Guard<ParsedShape>
 
-  readonly Arbitrary: Arbitrary.Arbitrary<ParsedShape>
+  readonly Arbitrary: Arbitrary.Gen<ParsedShape>
 
   readonly annotate: <Meta>(
     identifier: Annotation<Meta>,
