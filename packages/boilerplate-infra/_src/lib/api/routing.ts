@@ -364,7 +364,7 @@ export function makeRequestHandler<
                 path: req.originalUrl,
                 method: req.method
               })
-            }) >
+            }).zipRight(
               Effect.suspendSucceed(() => {
                 const headers = res.getHeaders()
                 return Effect.logErrorCauseMessage(
@@ -381,6 +381,8 @@ export function makeRequestHandler<
                     .$$.pretty
                 }))
               })
+            )
+              .tapErrorCause(cause => Effect.sync(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap(() =>
             Effect.suspendSucceed(() => {
@@ -397,6 +399,7 @@ export function makeRequestHandler<
               }))
             })
           )
+          .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
           .setupRequest(requestContext)
       )
   }
