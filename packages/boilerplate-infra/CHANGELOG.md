@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 2.0.11
+
+### Patch Changes
+
+- abc
+
 ## 2.0.10
 
 ### Patch Changes
