@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 2.0.18
+
+### Patch Changes
+
+- fix error handling
+
 ## 2.0.17
 
 ### Patch Changes
