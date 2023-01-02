@@ -1,4 +1,4 @@
-import * as ROA from "@fp-ts/data/ReadonlyArray"
+import * as ROArray from "@fp-ts/data/ReadonlyArray"
 import { identity } from "./Function.js"
 import { Chunk, Option } from "./Prelude.js"
 
@@ -164,7 +164,7 @@ export function NEAFromArray<T>(ar: Array<T>) {
 /**
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray.Ops fromArray
  */
-export function NEROAFromArray<T>(ar: ReadonlyArray<T>) {
+export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
   return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
 }
 
@@ -175,7 +175,7 @@ export function NEROAFromArray<T>(ar: ReadonlyArray<T>) {
 export function sortWith<A>(
   ...ords: NonEmptyArguments<Ord<A>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ROA.sortBy(...ords.map(convertOrd))
+  return ROArray.sortBy(...ords.map(convertOrd))
 }
 
 /**
@@ -187,7 +187,7 @@ export function sortWith<A>(
 export function sortByO<A>(
   ords: Option<NonEmptyReadonlyArray<Ord<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match(() => identity, _ => ROA.sortBy(..._.map(convertOrd)))
+  return ords.match(() => identity, _ => ROArray.sortBy(..._.map(convertOrd)))
 }
 
 /**
@@ -247,7 +247,7 @@ export const concatOperator: <A>(
  * @tsplus operator ReadonlyArray + 1.0
  */
 export function prependOperatorStrict<A>(a: A, self: ReadonlyArray<A>): ReadonlyArray<A> {
-  return ROA.prepend(a)(self)
+  return ROArray.prepend(a)(self)
 }
 
 /**
@@ -316,13 +316,13 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
  * @tsplus pipeable fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray mapNonEmpty
  * @tsplus pipeable fp-ts/data/ReadonlyArray.NonEmptyArray mapNonEmpty
  */
-export const mapRA = ROA.mapNonEmpty
+export const mapRA = ROArray.mapNonEmpty
 
 /**
  * @tsplus fluent fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray sortBy
  */
 export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[]) {
-  return ROA.sortBy(...ords.map(convertOrd))(na) as unknown as NonEmptyReadonlyArray<A>
+  return ROArray.sortBy(...ords.map(convertOrd))(na) as unknown as NonEmptyReadonlyArray<A>
 }
 
 /**
@@ -338,7 +338,7 @@ export function sortWithNonEmpty<A>(
 /**
  * @tsplus static fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray __call
  */
-export const makeNA = ROA.make
+export const makeNA = ROArray.make
 
 /**
  * @tsplus fluent fp-ts/data/Chunk groupByT

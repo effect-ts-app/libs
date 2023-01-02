@@ -31,15 +31,6 @@ import type * as SET from "@effect-ts-app/core/Set"
 
 import type {} from "@effect-ts-app/core/types/awesome"
 
-/**
- * @tsplus type ReadonlyArray
- * @tsplus type Iterable
- * @tsplus companion fp-ts/data/ReadonlyArray.Ops
- * @tsplus companion fp-ts/data/ReadonlyArray.Ops
- */
-export type ROA<A> = ReadonlyArray<A>
-export type { ROA as ReadonlyArray }
-
 export namespace Equal {
   // @ts-expect-error abc
   export * from "@effect-ts/core/Equal"
@@ -175,7 +166,12 @@ export namespace ROArray {
   // @ts-expect-error
   export * from "@effect-ts-app/core/Array"
 }
-/** @tsplus type ReadonlyArray */
+/**
+ * @tsplus type ReadonlyArray
+ * @tsplus type Iterable
+ * @tsplus companion fp-ts/data/ReadonlyArray.Ops
+ * @tsplus companion fp-ts/data/ReadonlyArray.Ops
+ */
 export type ROArray<A> = ReadonlyArray<A>
 
 // export namespace ReadonlyArray {
