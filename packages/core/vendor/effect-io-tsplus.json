@@ -8124,7 +8124,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "getAndSet"
         }
@@ -8135,7 +8135,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "getAndUpdate"
         }
@@ -8146,7 +8146,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "getAndUpdateSome"
         }
@@ -8157,7 +8157,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "getWith"
         }
@@ -8168,7 +8168,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "set"
         }
@@ -8179,7 +8179,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "modify"
         }
@@ -8190,7 +8190,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "effect/io/FiberRef",
           "name": "modifySome"
         }
