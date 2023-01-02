@@ -93,7 +93,7 @@
         "npm-check-updates": "^16.6.2",
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
-        "tsconfig-paths": "^4.1.1",
+        "tsconfig-paths": "^4.1.2",
         "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
         "typescript-transform-paths": "^3.4.4",
         "vite": "^4.0.3",
