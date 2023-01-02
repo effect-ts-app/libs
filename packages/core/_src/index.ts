@@ -16,3 +16,5 @@ export {} from "@effect-ts-app/core/Option"
 // export * as Schema from "@effect-ts-app/schema"
 export * as Set from "@effect-ts-app/core/Set"
 export * as ROSet from "@effect-ts-app/core/Set"
+
+export * as ROArray from "@effect-ts-app/core/Array"

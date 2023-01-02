@@ -4,6 +4,8 @@ import { Chunk, Option } from "./Prelude.js"
 
 import * as Dur from "@fp-ts/data/Duration"
 
+export * from "@fp-ts/data/ReadonlyArray"
+
 /**
  * @tsplus getter ets/Ord toOrder
  */

@@ -22,6 +22,7 @@ import type * as LNS from "@effect-ts/monocle/Lens"
 // import type * as SCHEDULE from "@effect-ts/core/Effect/Schedule"
 // import type * as QUEUE from "@effect-ts/core/Effect/Queue"
 // import type * as EO from "@effect-ts-app/core/EffectOption"
+import type * as A from "@effect-ts-app/core/Array"
 import type * as NS from "@effect-ts-app/core/NonEmptySet"
 import type * as O from "@fp-ts/data/Option"
 // import type * as SCHEMA from "@effect-ts-app/schema"
@@ -171,12 +172,12 @@ export namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-// export namespace Array {
-//   // @ts-expect-error
-//   export * from "@effect-ts-app/core/Array"
-// }
-// /** @tsplus type Array */
-// export type Array<A> = A.Array<A>
+export namespace ROArray {
+  // @ts-expect-error
+  export * from "@effect-ts-app/core/Array"
+}
+/** @tsplus type ReadonlyArray */
+export type ROArray<A> = ReadonlyArray<A>
 
 // export namespace ReadonlyArray {
 //   // @ts-expect-error
