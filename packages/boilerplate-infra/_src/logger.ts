@@ -4,7 +4,7 @@ import { add, remove } from "@effect/io/Logger"
  * @tsplus static effect/io/Logger.Ops default
  */
 export const defaultLogger = Logger.make<string, string>(
-  (fiberId, logLevel, message, cause, _context, spans, annotations) => {
+  (fiberId, logLevel, message, cause, _context, spans, annotations, _runtime) => {
     const now = new Date()
     const nowMillis = now.getTime()
 
@@ -18,8 +18,8 @@ export const defaultLogger = Logger.make<string, string>(
     output = appendQuoted(message, output)
 
     if (cause != null && cause != Cause.empty) {
-      // TODO(Mike/Max): implement once tracing is complete
-      // output = output + ` cause="${cause.prettyPrint()}"`
+      output = output + " cause="
+      output = appendQuoted(cause.pretty(), output)
     }
 
     if (spans.length > 0) {
