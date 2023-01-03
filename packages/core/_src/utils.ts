@@ -58,5 +58,6 @@ export function uncapitalize<T extends string>(string: T): Uncapitalize<T> {
 }
 
 export function pretty(o: unknown) {
-  return JSON.stringify(o, undefined, 2)
+  // JSON.stringify(undefined) ends up with undefined!
+  return JSON.stringify(o, undefined, 2) ?? "undefined"
 }
