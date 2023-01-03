@@ -1,5 +1,13 @@
 # @effect-ts-app/infra
 
+## 2.0.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.13
+  - @effect-ts-app/schema@2.0.13
+
 ## 2.0.14
 
 ### Patch Changes

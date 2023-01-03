@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.13
+
+### Patch Changes
+
+- Fix pretty undefined
+
 ## 2.0.12
 
 ### Patch Changes
