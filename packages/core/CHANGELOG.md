@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.14
+
+### Patch Changes
+
+- Update packages
+
 ## 2.0.13
 
 ### Patch Changes
