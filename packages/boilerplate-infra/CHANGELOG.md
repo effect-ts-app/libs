@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.1.0
+
+### Minor Changes
+
+- cdb79c6: Fix fiberref use
+
 ## 3.0.4
 
 ### Patch Changes
