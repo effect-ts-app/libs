@@ -53,5 +53,4 @@ function makeCosmos(storageUrl: string, config: StorageConfig) {
   ).provideTo(CosmosStoreLive(config))
 }
 
-export * from "./live.js"
 export * from "./service.js"

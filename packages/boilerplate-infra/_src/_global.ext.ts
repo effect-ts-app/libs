@@ -32,13 +32,3 @@ import type {} from "@effect-ts-app/boilerplate-infra/lib/api/setupRequest"
  * @tsplus global
  */
 import {} from "@effect-ts-app/boilerplate-infra/lib/api/reportError"
-
-/**
- * @tsplus global
- */
-import {} from "@effect-ts-app/boilerplate-infra/lib/RequestContext"
-
-/**
- * @tsplus global
- */
-import {} from "@effect-ts-app/boilerplate-infra/services/Store/live"

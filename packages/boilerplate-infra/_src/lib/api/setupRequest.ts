@@ -18,5 +18,5 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
  * @tsplus getter effect/io/Effect setupRequestFrom
  */
 export function setupRequestFrom<R, E, A>(self: Effect<R, E, A>) {
-  return RequestContext.withEffect(requestContext => self.setupRequest(requestContext))
+  return RequestContext.Tag.withEffect(requestContext => self.setupRequest(requestContext))
 }

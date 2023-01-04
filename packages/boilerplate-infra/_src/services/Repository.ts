@@ -2,8 +2,9 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
-import type { CMRuntime, Filter } from "../services/Store.js";
-import { ContextMap } from "../services/Store.js";
+import type { RequestContext } from "../lib/RequestContext.js"
+import { ContextMap} from "../services/Store.js";
+import type { Filter } from "../services/Store.js"
 import type { FixEnv, PureLogT} from "@effect-ts-app/boilerplate-prelude/_ext/Pure";
 import { Pure } from "@effect-ts-app/boilerplate-prelude/_ext/Pure"
 import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
@@ -11,16 +12,19 @@ import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
 /**
  * @tsplus type Repository
  */
-export interface Repository<T extends { id: Id }, PM extends { id: string }, TE extends { id: string }, Evt, Id extends string, ItemType extends string> {
+export interface Repository<T extends { id: Id }, PM extends { id: string }, Evt, Id extends string, ItemType extends string> {
   itemType: ItemType
-  find: (id: Id) => Effect<never, never, Opt<T>>
-  all: Effect<never, never, Chunk<T>>
+  find: (id: Id) => Effect<ContextMap | RequestContext, never, Opt<T>>
+  all: Effect<ContextMap, never, Chunk<T>>
   save: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<ContextMap | RequestContext, InvalidStateError | OptimisticConcurrencyException, void>
   utils: {
-    mapReverse: (rt: CMRuntime) => (pm: PM) => TE,
+    mapReverse: (
+      pm: PM,
+      setEtag: (id: string, eTag: string | undefined) => void
+    ) => unknown, // TODO
     parse: (a: unknown, env?: ParserEnv | undefined) => T,
     all: Effect<never, never, Chunk<PM>>,
     filter: (filter: Filter<PM>, cursor?: { limit?: number, skip?: number}) => Effect<never, never, Chunk<PM>>
@@ -40,11 +44,10 @@ export function get<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   id: Id
 ) {
   return self.find(id).flatMap(_ => _.encaseInEffect(() => new NotFoundError(self.itemType, id)))
@@ -57,10 +60,9 @@ export function filter<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
->(self: Repository<T, PM, TE, Evt, Id, ItemType>, filter: Predicate<T>) {
+>(self: Repository<T, PM, Evt, Id, ItemType>, filter: Predicate<T>) {
   return self.all.map(_ => _.filter(filter))
 }
 
@@ -71,11 +73,10 @@ export function filterAll<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S extends T,
->(self: Repository<T, PM, TE, Evt, Id, ItemType>, map: (items: Chunk<T>) => Chunk<S>) {
+>(self: Repository<T, PM, Evt, Id, ItemType>, map: (items: Chunk<T>) => Chunk<S>) {
   return self.all.map(map)
 }
 
@@ -87,11 +88,10 @@ export function collect<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S extends T,
->(self: Repository<T, PM, TE, Evt, Id, ItemType>, collect: (item: T) => Opt<S>) {
+>(self: Repository<T, PM, Evt, Id, ItemType>, collect: (item: T) => Opt<S>) {
   return self.all.map(_ => _.filterMap(collect))
 }
 
@@ -102,10 +102,9 @@ export function log<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string
->(_: Repository<T, PM, TE, Evt, Id, ItemType>) {
+>(_: Repository<T, PM, Evt, Id, ItemType>) {
   return (evt: Evt) => AnyPureDSL.log(evt)
 }
 
@@ -117,14 +116,13 @@ export function projectEffect<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S,
   R,
   E
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: PM) => Opt<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
@@ -142,12 +140,11 @@ export function project<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   map: { filter?: Filter<PM>; collect: (t: PM) => Opt<S>; limit?: number; skip?: number }
 ) {
   return self.projectEffect(Effect.succeed(map))
@@ -161,21 +158,25 @@ export function queryEffect<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   R,
   E,
   S,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }>
 ) {
-  return Effect.struct({ map, mr: ContextMap.withEffect(_ => _.makeRuntime.map(rt => self.utils.mapReverse(rt)))})
-  .flatMap(({ map: f, mr}) =>
+  return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip}) : self.utils.all)
-      .map(_ => _.map(_ => mr(_)).map(_ => self.utils.parse(_)))
+      .flatMap(items =>
+        Do($ => {
+          const { set } = $(Effect.service(ContextMap))
+          return items.map(_ => self.utils.mapReverse(_, set))
+        })
+      )
+      .map(_ => _.map(_ => self.utils.parse(_)))
       .map(_ => _.filterMap(f.collect))
   )
 }
@@ -187,21 +188,25 @@ export function queryOneEffect<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   R,
   E,
   S,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S> }>
 ) {
-  return Effect.struct({ map, mr: ContextMap.withEffect(_ => _.makeRuntime.map(rt => self.utils.mapReverse(rt)))})
-  .flatMap(({ map: f, mr }) =>
+  return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
-      .map(_ => _.map(_ => mr(_)).map(_ => self.utils.parse(_)))
+      .flatMap(items =>
+        Do($ => {
+          const { set } = $(Effect.service(ContextMap))
+          return items.map(_ => self.utils.mapReverse(_, set))
+        })
+      )
+      .map(_ => _.map(_ => self.utils.parse(_)))
       .flatMap(_ => _.filterMap(f.collect).toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ => _[0]))
   )
 }
@@ -213,12 +218,11 @@ export function query<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
@@ -232,12 +236,11 @@ export function queryOne<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect: (t: T) => Opt<S> }
 ) {
@@ -251,14 +254,13 @@ export function queryAndSavePureEffect<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   R,
   E,
   S extends T = T,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }>
 ) {
@@ -274,12 +276,11 @@ export function queryAndSavePure<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
   S extends T = T,
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
@@ -293,10 +294,9 @@ export function saveManyWithPure<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, TE, Evt, Id, ItemType>) {
+>(self: Repository<T, PM, Evt, Id, ItemType>) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>) =>
     (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
@@ -308,10 +308,9 @@ export function byIdAndSaveWithPure<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, TE, Evt, Id, ItemType>, id: Id) {
+>(self: Repository<T, PM, Evt, Id, ItemType>, id: Id) {
   return <R, A, E, S2 extends T>(pure: Effect<FixEnv<R, Evt, T, S2>, E, A>) => get(self, id).flatMap(item => saveWithPure_(self, item, pure))
 }
 
@@ -323,10 +322,9 @@ export function handleByIdAndSaveWithPure<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   Evt,
   ItemType extends string,
->(self: Repository<T, PM, TE, Evt, Id, ItemType>) {
+>(self: Repository<T, PM, Evt, Id, ItemType>) {
   return <Req extends { id: Id }, Context, R, A, E, S2 extends T>(pure: (req: Req, ctx: Context) => Effect<FixEnv<R, Evt, T, S2>, E, A>) => (req: Req, ctx: Context) => byIdAndSaveWithPure(self, req.id)(pure(req, ctx))
 }
 
@@ -338,7 +336,6 @@ export function saveManyWithPure_<
   R,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   A,
   E,
   Evt,
@@ -346,7 +343,7 @@ export function saveManyWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   items: Iterable<S1>,
   pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>
 ) {
@@ -364,7 +361,6 @@ export function saveWithPure_<
   R,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   A,
   E,
   Evt,
@@ -372,7 +368,7 @@ export function saveWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   item: S1,
   pure: Effect<FixEnv<R, Evt, S1, S2>, E, A>
 ) {
@@ -387,7 +383,6 @@ function saveAllWithEffectInt<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
-  TE extends { id: string },
   P extends T,
   Evt,
   ItemType extends string,
@@ -395,7 +390,7 @@ function saveAllWithEffectInt<
   E,
   A
 >(
-  self: Repository<T, PM, TE, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, Id, ItemType>,
   gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
   return gen

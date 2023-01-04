@@ -10,12 +10,12 @@ export class RequestException<E> extends CauseException<E> {
 export const reportRequestError_ = reportError(cause => new RequestException(cause))
 
 export const reportRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
-  RequestContext.withEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
+  RequestContext.Tag.withEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
 
 export const logRequestError_ = logError(cause => new RequestException(cause))
 
 export const logRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
-  RequestContext.withEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
+  RequestContext.Tag.withEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the

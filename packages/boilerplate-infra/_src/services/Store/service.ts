@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
+import type { Parser, ParserEnv } from "@effect-ts-app/schema/custom/Parser"
 
+import type { These } from "@effect-ts-app/boilerplate-prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 
 export type StoreConfig<E> = {
@@ -82,25 +84,73 @@ export interface StoreMaker {
 
 export const StoreMaker = Tag<StoreMaker>()
 
-/**
- * @tsplus type ContextMap
- */
-export interface ContextMap {
-  fork: Effect<never, never, void>
-  get: (id: string) => Effect<never, never, string | undefined>
-  set: (id: string, eTag: string | undefined) => Effect<never, never, void>
-  makeRuntime: Effect<never, never, {
-    get: (id: string) => string | undefined
-    set: (id: string, eTag: string | undefined) => void
-  }>
-}
+const makeMap = Effect.sync(() => {
+  const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)
+  const getEtag = (id: string) => etags.get(id)
+  const setEtag = (id: string, eTag: string | undefined) => {
+    eTag === undefined ? etags.delete(id) : etags.set(id, eTag)
+  }
 
-/**
- * @tsplus type ContextMap.Ops
- */
-export interface ContextMapOps extends Tag<ContextMap> {}
-export const ContextMap: ContextMapOps = Tag<ContextMap>()
-export type CMRuntime = Effect.Success<ContextMap["makeRuntime"]>
+  const parsedCache = ROMap.make<
+    Parser<any, any, any>,
+    Map<unknown, These.These<unknown, unknown>>
+  >([])["|>"](ROMap.toMutable)
+
+  const parserCache = ROMap.make<
+    Parser<any, any, any>,
+    (i: any) => These.These<any, any>
+  >([])["|>"](ROMap.toMutable)
+
+  const setAndReturn = <I, E, A>(
+    p: Parser<I, E, A>,
+    np: (i: I) => These.These<E, A>
+  ) => {
+    parserCache.set(p, np)
+    return np
+  }
+
+  const parserEnv: ParserEnv = {
+    // TODO: lax: true would turn off refinement checks, may help on large payloads
+    // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
+    lax: false,
+    cache: {
+      getOrSetParser: p => parserCache.get(p) ?? setAndReturn(p, i => parserEnv.cache!.getOrSet(i, p)),
+      getOrSetParsers: parsers => {
+        return Object.entries(parsers).reduce((prev, [k, v]) => {
+          prev[k] = parserEnv.cache!.getOrSetParser(v)
+          return prev
+        }, {} as any)
+      },
+      getOrSet: (i, parse): any => {
+        const c = parsedCache.get(parse)
+        if (c) {
+          const f = c.get(i)
+          if (f) {
+            // console.log("$$$ cache hit", i)
+            return f
+          } else {
+            const nf = parse(i, parserEnv)
+            c.set(i, nf)
+            return nf
+          }
+        } else {
+          const nf = parse(i, parserEnv)
+          parsedCache.set(parse, ROMap.make([[i, nf]])["|>"](ROMap.toMutable))
+          return nf
+        }
+      }
+    }
+  }
+
+  return {
+    get: getEtag,
+    set: setEtag,
+    parserEnv
+  }
+})
+export interface ContextMap extends Effect.Success<typeof makeMap> {}
+export const ContextMap = Tag<ContextMap>()
+export const LiveContextMap = Layer.fromEffect(ContextMap)(makeMap)
 
 export interface PersistenceModelType<Id extends string> {
   id: Id
