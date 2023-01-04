@@ -76,6 +76,10 @@ const makeMap = Effect.sync(() => {
 export const LiveContextMap = Layer.fromEffect(ContextMap)(makeMap)
 
 const ContextMapForkTag = Tag<never>()
+
+/**
+ * @tsplus static ContextMap.Ops LiveFork
+ */
 export const LiveContextFork = Layer.fromEffect(ContextMapForkTag)(
   ContextMap.withEffect(_ => _.fork.map(_ => _ as never))
 )
