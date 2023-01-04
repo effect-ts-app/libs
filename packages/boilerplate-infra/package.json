@@ -500,16 +500,6 @@
         "default": "./_cjs/services/Store/index.cjs"
       }
     },
-    "./services/Store/live": {
-      "import": {
-        "types": "./dist/services/Store/live.d.ts",
-        "default": "./dist/services/Store/live.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/live.d.ts",
-        "default": "./_cjs/services/Store/live.cjs"
-      }
-    },
     "./services/Store/service": {
       "import": {
         "types": "./dist/services/Store/service.d.ts",
