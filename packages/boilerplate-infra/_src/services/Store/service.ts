@@ -100,6 +100,7 @@ export interface ContextMap {
  */
 export interface ContextMapOps extends Tag<ContextMap> {}
 export const ContextMap: ContextMapOps = Tag<ContextMap>()
+export type CMRuntime = Effect.Success<ContextMap["makeRuntime"]>
 
 export interface PersistenceModelType<Id extends string> {
   id: Id

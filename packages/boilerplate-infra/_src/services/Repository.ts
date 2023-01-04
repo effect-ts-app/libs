@@ -2,7 +2,8 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
-import type { Filter } from "../services/Store.js";
+import type { CMRuntime, Filter } from "../services/Store.js";
+import { ContextMap } from "../services/Store.js";
 import type { FixEnv, PureLogT} from "@effect-ts-app/boilerplate-prelude/_ext/Pure";
 import { Pure } from "@effect-ts-app/boilerplate-prelude/_ext/Pure"
 import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
@@ -19,7 +20,7 @@ export interface Repository<T extends { id: Id }, PM extends { id: string }, TE 
     events?: Iterable<Evt>
   ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
   utils: {
-    mapReverse: (pm: PM) => TE,
+    mapReverse: (rt: CMRuntime) => (pm: PM) => TE,
     parse: (a: unknown, env?: ParserEnv | undefined) => T,
     all: Effect<never, never, Chunk<PM>>,
     filter: (filter: Filter<PM>, cursor?: { limit?: number, skip?: number}) => Effect<never, never, Chunk<PM>>
@@ -171,9 +172,10 @@ export function queryEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }>
 ) {
-  return map.flatMap(f =>
+  return Effect.struct({ map, mr: ContextMap.withEffect(_ => _.makeRuntime.map(rt => self.utils.mapReverse(rt)))})
+  .flatMap(({ map: f, mr}) =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip}) : self.utils.all)
-      .map(_ => _.map(_ => self.utils.mapReverse(_)).map(_ => self.utils.parse(_)))
+      .map(_ => _.map(_ => mr(_)).map(_ => self.utils.parse(_)))
       .map(_ => _.filterMap(f.collect))
   )
 }
@@ -196,9 +198,10 @@ export function queryOneEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S> }>
 ) {
-  return map.flatMap(f =>
+  return Effect.struct({ map, mr: ContextMap.withEffect(_ => _.makeRuntime.map(rt => self.utils.mapReverse(rt)))})
+  .flatMap(({ map: f, mr }) =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
-      .map(_ => _.map(_ => self.utils.mapReverse(_)).map(_ => self.utils.parse(_)))
+      .map(_ => _.map(_ => mr(_)).map(_ => self.utils.parse(_)))
       .flatMap(_ => _.filterMap(f.collect).toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ => _[0]))
   )
 }
