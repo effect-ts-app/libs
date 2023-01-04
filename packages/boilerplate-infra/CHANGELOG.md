@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.1.1
+
+### Patch Changes
+
+- 963ecf6: RT
+
 ## 3.1.0
 
 ### Minor Changes
