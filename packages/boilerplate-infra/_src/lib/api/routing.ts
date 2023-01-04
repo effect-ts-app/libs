@@ -399,7 +399,7 @@ export function makeRequestHandler<
               }))
             })
           )
-          .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
+          .provideSomeLayer(RequestContext.LiveFork(requestContext)) // otherwise external error reporter breaks.
           .setupRequest(requestContext)
       )
   }

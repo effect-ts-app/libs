@@ -61,15 +61,57 @@ export class RequestContext extends MNModel<
 /** @ignore @internal @deprecated */
 export type RequestContextConstructor = typeof RequestContext
 
+const make = Effect.sync(() => {
+  const fiberRef = FiberRef.unsafeMake<RequestContext>(
+    new RequestContext({ name: ReasonableString("root"), locale: "en", rootId: StringId("root-id") })
+  )
+
+  const fork = (pars: RequestContext) => Effect.suspendSucceed(() => fiberRef.set(pars))
+
+  return {
+    fork,
+    get: fiberRef.get
+  }
+})
+
+export interface RequestContextSvc extends Effect.Success<typeof make> {}
+
 /**
  * @tsplus static RequestContext.Ops Tag
  */
-export const tag = Tag<RequestContext>()
+export const tag = Tag<RequestContextSvc>()
+
+/**
+ * @tsplus static RequestContext.Ops ForkTag
+ */
+export const tag2 = Tag<never>()
+
+/**
+ * @tsplus static RequestContext.Ops LiveFork
+ */
+export const LiveRequestContextFork = (pars: RequestContext) =>
+  Layer.fromEffect(tag2)(tag.get.flatMap(_ => _.fork(pars).map(_ => _ as never)))
+
+/**
+ * @tsplus static RequestContext.Ops get
+ */
+export const get = tag.withEffect(_ => _.get)
+
+/**
+ * @tsplus static RequestContext.Ops with
+ */
+export const with_ = <B>(f: (ctx: RequestContext) => B) => tag.withEffect(_ => _.get).map(f)
+
+/**
+ * @tsplus static RequestContext.Ops withEffect
+ */
+export const withEffect = <R, E, B>(f: (ctx: RequestContext) => Effect<R, E, B>) =>
+  tag.withEffect(_ => _.get).flatMap(f)
 
 /**
  * @tsplus static RequestContext.Ops Live
  */
-export const LiveRequestContext = (pars: RequestContext) => tag.of(pars)
+export const LiveRequestContext = Layer.fromEffect(tag)(make)
 
 /* eslint-disable */
 export interface RequestContextParent {

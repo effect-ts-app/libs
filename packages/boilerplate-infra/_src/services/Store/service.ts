@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
-import type { Parser, ParserEnv } from "@effect-ts-app/schema/custom/Parser"
 
-import type { These } from "@effect-ts-app/boilerplate-prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 
 export type StoreConfig<E> = {
@@ -85,67 +83,72 @@ export interface StoreMaker {
 export const StoreMaker = Tag<StoreMaker>()
 
 const makeMap = Effect.sync(() => {
-  const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)
-  const getEtag = (id: string) => etags.get(id)
-  const setEtag = (id: string, eTag: string | undefined) => {
-    eTag === undefined ? etags.delete(id) : etags.set(id, eTag)
-  }
+  const fiberRef = FiberRef.unsafeMake<ROMap<string, string>>(ROMap.make([]))
 
-  const parsedCache = ROMap.make<
-    Parser<any, any, any>,
-    Map<unknown, These.These<unknown, unknown>>
-  >([])["|>"](ROMap.toMutable)
+  const getEtag = (id: string) => fiberRef.get.map(etags => etags.get(id)).unsafeRunSync
+  const setEtag = (id: string, eTag: string | undefined) =>
+    fiberRef.get
+      .flatMap(etags => fiberRef.set(eTag === undefined ? ROMap.remove_(etags, id) : ROMap.insert_(etags, id, eTag)))
+      .unsafeRunSync
 
-  const parserCache = ROMap.make<
-    Parser<any, any, any>,
-    (i: any) => These.These<any, any>
-  >([])["|>"](ROMap.toMutable)
+  // const parsedCache = ROMap.make<
+  //   Parser<any, any, any>,
+  //   Map<unknown, These.These<unknown, unknown>>
+  // >([])["|>"](ROMap.toMutable)
 
-  const setAndReturn = <I, E, A>(
-    p: Parser<I, E, A>,
-    np: (i: I) => These.These<E, A>
-  ) => {
-    parserCache.set(p, np)
-    return np
-  }
+  // const parserCache = ROMap.make<
+  //   Parser<any, any, any>,
+  //   (i: any) => These.These<any, any>
+  // >([])["|>"](ROMap.toMutable)
 
-  const parserEnv: ParserEnv = {
-    // TODO: lax: true would turn off refinement checks, may help on large payloads
-    // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
-    lax: false,
-    cache: {
-      getOrSetParser: p => parserCache.get(p) ?? setAndReturn(p, i => parserEnv.cache!.getOrSet(i, p)),
-      getOrSetParsers: parsers => {
-        return Object.entries(parsers).reduce((prev, [k, v]) => {
-          prev[k] = parserEnv.cache!.getOrSetParser(v)
-          return prev
-        }, {} as any)
-      },
-      getOrSet: (i, parse): any => {
-        const c = parsedCache.get(parse)
-        if (c) {
-          const f = c.get(i)
-          if (f) {
-            // console.log("$$$ cache hit", i)
-            return f
-          } else {
-            const nf = parse(i, parserEnv)
-            c.set(i, nf)
-            return nf
-          }
-        } else {
-          const nf = parse(i, parserEnv)
-          parsedCache.set(parse, ROMap.make([[i, nf]])["|>"](ROMap.toMutable))
-          return nf
-        }
-      }
-    }
-  }
+  // const setAndReturn = <I, E, A>(
+  //   p: Parser<I, E, A>,
+  //   np: (i: I) => These.These<E, A>
+  // ) => {
+  //   parserCache.set(p, np)
+  //   return np
+  // }
+
+  // const parserEnv: ParserEnv = {
+  //   // TODO: lax: true would turn off refinement checks, may help on large payloads
+  //   // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
+  //   lax: false,
+  //   cache: {
+  //     getOrSetParser: p => parserCache.get(p) ?? setAndReturn(p, i => parserEnv.cache!.getOrSet(i, p)),
+  //     getOrSetParsers: parsers => {
+  //       return Object.entries(parsers).reduce((prev, [k, v]) => {
+  //         prev[k] = parserEnv.cache!.getOrSetParser(v)
+  //         return prev
+  //       }, {} as any)
+  //     },
+  //     getOrSet: (i, parse): any => {
+  //       const c = parsedCache.get(parse)
+  //       if (c) {
+  //         const f = c.get(i)
+  //         if (f) {
+  //           // console.log("$$$ cache hit", i)
+  //           return f
+  //         } else {
+  //           const nf = parse(i, parserEnv)
+  //           c.set(i, nf)
+  //           return nf
+  //         }
+  //       } else {
+  //         const nf = parse(i, parserEnv)
+  //         parsedCache.set(parse, ROMap.make([[i, nf]])["|>"](ROMap.toMutable))
+  //         return nf
+  //       }
+  //     }
+  //   }
+  // }
+
+  const fork = Effect.suspendSucceed(() => fiberRef.set(ROMap.make([])))
 
   return {
+    fork,
     get: getEtag,
-    set: setEtag,
-    parserEnv
+    set: setEtag
+    // parserEnv
   }
 })
 export interface ContextMap extends Effect.Success<typeof makeMap> {}
