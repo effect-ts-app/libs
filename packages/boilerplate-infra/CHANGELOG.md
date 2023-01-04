@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.1.2
+
+### Patch Changes
+
+- d9612b9: more contextmap
+
 ## 3.1.1
 
 ### Patch Changes
