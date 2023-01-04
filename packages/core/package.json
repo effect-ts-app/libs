@@ -52,7 +52,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "_src/*"
+        "dist/*"
       ]
     }
   },
@@ -265,6 +265,16 @@
       "require": {
         "types": "./dist/_ext/lens.d.ts",
         "default": "./_cjs/_ext/lens.cjs"
+      }
+    },
+    "./_ext/ord.ext": {
+      "import": {
+        "types": "./dist/_ext/ord.ext.d.ts",
+        "default": "./dist/_ext/ord.ext.js"
+      },
+      "require": {
+        "types": "./dist/_ext/ord.ext.d.ts",
+        "default": "./_cjs/_ext/ord.ext.cjs"
       }
     },
     "./_ext/pipe": {
