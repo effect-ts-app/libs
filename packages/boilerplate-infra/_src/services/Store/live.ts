@@ -64,7 +64,13 @@ const makeMap = Effect.sync(() => {
   return {
     fork,
     get: getEtag,
-    set: setEtag
+    set: setEtag,
+    makeRuntime: fiberRef.get.map(_ => _ as Map<string, string>).map(etags => ({
+      get: (id: string) => etags.get(id),
+      set: (id: string, eTag: string | undefined) => {
+        eTag === undefined ? etags.delete(id) : etags.set(id, eTag)
+      }
+    }))
     // parserEnv
   }
 })
