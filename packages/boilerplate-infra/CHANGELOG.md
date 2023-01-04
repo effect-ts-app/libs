@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.2.0
+
+### Minor Changes
+
+- Revert Move ContextMap and RequestContext to FiberRef.
+
 ## 3.1.2
 
 ### Patch Changes
