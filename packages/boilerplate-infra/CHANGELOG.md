@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.0.4
+
+### Patch Changes
+
+- 0324736: Fix svc
+
 ## 3.0.3
 
 ### Patch Changes
