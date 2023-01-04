@@ -93,9 +93,9 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equal.contramap((to: { name?: string; email: string } | string) =>
+const eq = Equal.string.contramap((to: { name?: string; email: string } | string) =>
   typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
-)(Equal.string)
+)
 
 // TODO: should just not add any already added email address
 // https://stackoverflow.com/a/53603076/11595834

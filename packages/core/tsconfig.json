@@ -9,6 +9,7 @@
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "tsPlusTypes": [
+            "./vendor/effect-ts-tsplus.json",
             "./vendor/effect-io-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
             "./vendor/fp-ts-data-tsplus.json"

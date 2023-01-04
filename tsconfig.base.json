@@ -27,10 +27,12 @@
         "downlevelIteration": true,
         "noErrorTruncation": true,
         "forceConsistentCasingInFileNames": true,
-        // "tsPlusTypes": [
-        //     "./vendor/effect-io-tsplus.json",
-        //     "./vendor/fp-ts-data-tsplus.json"
-        // ],
+        "tsPlusTypes": [
+            "./node_modules/@effect-ts-app/core/vendor/effect-ts-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/effect-io-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/effect-stm-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/fp-ts-data-tsplus.json"
+        ],
         //"preserveSymlinks": true
     },
     "watchOptions": {

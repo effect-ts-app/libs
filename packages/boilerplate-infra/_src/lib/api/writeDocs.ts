@@ -8,7 +8,7 @@ import { typedValuesOf } from "@effect-ts-app/core/utils"
 export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDescriptorAny>>) {
   return makeOpenApiSpecs(
     typedValuesOf(rdescs).reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
-      .sortWith(Ord.contramap_(Ord.string, (a: RouteDescriptorAny) => a.path)),
+      .sortWith(Ord.string.contramap((a: RouteDescriptorAny) => a.path)),
     Plutus.info({
       title: "api",
       version: "X",
