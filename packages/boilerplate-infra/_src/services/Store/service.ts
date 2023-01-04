@@ -87,8 +87,8 @@ export const StoreMaker = Tag<StoreMaker>()
  */
 export interface ContextMap {
   fork: Effect<never, never, void>
-  get: (id: string) => string | undefined
-  set: (id: string, eTag: string | undefined) => void
+  get: (id: string) => Effect<never, never, string | undefined>
+  set: (id: string, eTag: string | undefined) => Effect<never, never, void>
 }
 
 /**

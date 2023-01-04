@@ -3,11 +3,10 @@ import { ContextMap } from "./service.js"
 const makeMap = Effect.sync(() => {
   const fiberRef = FiberRef.unsafeMake<ROMap<string, string>>(ROMap.make([]))
 
-  const getEtag = (id: string) => fiberRef.get.map(etags => etags.get(id)).unsafeRunSync
+  const getEtag = (id: string) => fiberRef.get.map(etags => etags.get(id))
   const setEtag = (id: string, eTag: string | undefined) =>
     fiberRef.get
       .flatMap(etags => fiberRef.set(eTag === undefined ? ROMap.remove_(etags, id) : ROMap.insert_(etags, id, eTag)))
-      .unsafeRunSync
 
   // const parsedCache = ROMap.make<
   //   Parser<any, any, any>,
