@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.17
+
+### Patch Changes
+
+- Fix typesVersions
+
 ## 2.0.16
 
 ### Patch Changes
