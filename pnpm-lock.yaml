@@ -178,9 +178,9 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': workspace:*
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
       '@sentry/node': ^7.28.1
@@ -207,9 +207,9 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       change-case: 4.1.2
       cross-fetch: 3.1.5
       faker: 5.5.3
@@ -246,10 +246,10 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@effect/stm': ^0.0.9
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.0
@@ -273,10 +273,10 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@effect/stm': 0.0.9
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       date-fns: 2.29.3
       lodash: 4.17.21
       nanoid: 4.0.0
@@ -342,9 +342,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
       json5: ^2.2.3
@@ -363,9 +363,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       query-string: 8.1.0
       swrv: 1.0.2_vue@3.2.45
       vue: 3.2.45
@@ -407,9 +407,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -425,9 +425,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -450,9 +450,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
       '@types/express': ^4.17.15
@@ -476,9 +476,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       proper-lockfile: 4.1.2
       query-string: 8.1.0
     devDependencies:
@@ -517,9 +517,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.50
+      '@effect/io': ^0.0.51
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.32
+      '@fp-ts/data': ^0.0.35
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -535,9 +535,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -2017,19 +2017,19 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.50:
-    resolution: {integrity: sha512-3hBNvl0LI2s6J9dUKP+6m+En8EfvCneG2nwPr7UlsfwY4meCL+GJqJeOJ6mZhb2/GX+Tw/wli9CF62qZtoNBZw==}
+  /@effect/io/0.0.51:
+    resolution: {integrity: sha512-cA3G5tqLUEiUYOmelWyl5uaoUzESJk6g1gBkDMN6Xe5VTMLAMvO94eGirYf2+HFx9u1Sy++WifkIYFGJfuePsA==}
     dependencies:
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
     dev: false
 
   /@effect/stm/0.0.9:
     resolution: {integrity: sha512-Qpsrt3llBwEvviEmDeVQBDYjZmeop45+jK1ITk9AKKvCrC88tMh89erdb7jiAHeLR5ltfNPVIzQVvnmOZydQwg==}
     dependencies:
-      '@effect/io': 0.0.50
+      '@effect/io': 0.0.51
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.32
+      '@fp-ts/data': 0.0.35
     dev: false
 
   /@esbuild/android-arm/0.16.4:
@@ -2297,8 +2297,8 @@ packages:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
     dev: false
 
-  /@fp-ts/data/0.0.32:
-    resolution: {integrity: sha512-s7esjvBfTWt6W3Y6kmrhV8IwBCAFdcK1HTetrYgkPGsNIjJFJGmmt+/sdhj/2MWX96hzvIJEr0FK9vVK1eYxXw==}
+  /@fp-ts/data/0.0.35:
+    resolution: {integrity: sha512-0EGZdUmIuidTLixWKYI9n2J2sBnjg6SkUkCuRqTpllfQHVNsDgqi6NqNOPF2QtLD+9uIdauJ1YaPQWmd3PAv+w==}
     dependencies:
       '@fp-ts/core': 0.0.11
     dev: false
