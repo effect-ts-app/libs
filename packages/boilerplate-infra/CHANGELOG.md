@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.0.1
+
+### Patch Changes
+
+- a574466: Improve ContextMap
+
 ## 3.0.0
 
 ### Major Changes
