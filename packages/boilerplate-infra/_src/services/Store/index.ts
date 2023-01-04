@@ -54,3 +54,4 @@ function makeCosmos(storageUrl: string, config: StorageConfig) {
 }
 
 export * from "./service.js"
+export * from "./live.js"
