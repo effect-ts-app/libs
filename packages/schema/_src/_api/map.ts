@@ -53,10 +53,11 @@ export function map<
     MO.arbitrary(_ => mapArb(_).map(x => new Map(x))),
     MO.parser(
       (i: unknown, env?: ParserEnv) =>
-        mapParse(i, env) >=
+        mapParse(i, env).apply(
           Th.map(x => new Map(x) as Map<KeyParsedShape, ParsedShape>)
+        )
     ),
-    MO.encoder(_ => ROArray.from(_.entries()) >= mapEncode),
+    MO.encoder(_ => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
     MO.mapApi(() => ({})),
     MO.withDefaults,
     MO.annotate(mapIdentifier, {})

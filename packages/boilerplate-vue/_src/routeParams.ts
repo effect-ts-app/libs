@@ -10,25 +10,25 @@ export function getQueryParam(search: ParsedQuery, param: string) {
   return v ?? null
 }
 
-export const getQueryParamO = flow(getQueryParam, Maybe.fromNullable)
+export const getQueryParamO = flow(getQueryParam, Opt.fromNullable)
 
-export const parseMaybe = <E, A>(t: ReqRes<E, A>) => {
+export const parseOpt = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(EParserFor(t), x =>
     x.effect._tag === "Right"
-      ? x.effect.right.tuple[1]._tag === "None"
-        ? Maybe.some(x.effect.right.tuple[0])
-        : Maybe.none
-      : Maybe.none)
+      ? x.effect.right[1]._tag === "None"
+        ? Opt.some(x.effect.right[0])
+        : Opt.none
+      : Opt.none)
   return dec
 }
 
-export const parseMaybeUnknown = <E, A>(t: ReqRes<E, A>) => {
+export const parseOptUnknown = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(Parser.for(t), x =>
     x.effect._tag === "Right"
-      ? x.effect.right.tuple[1]._tag === "None"
-        ? Maybe.some(x.effect.right.tuple[0])
-        : Maybe.none
-      : Maybe.none)
+      ? x.effect.right[1]._tag === "None"
+        ? Opt.some(x.effect.right[0])
+        : Opt.none
+      : Opt.none)
   return dec
 }
 
@@ -36,17 +36,17 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: Maybe<ParsedShapeOfCustom<NER[K]>>
+  [K in keyof NER]: Opt<ParsedShapeOfCustom<NER[K]>>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      prev[cur] = getQueryParamO(query, cur as string).flatMap(parseMaybe(t[cur]!))
+      prev[cur] = getQueryParamO(query, cur as string).flatMap(parseOpt(t[cur]!))
 
       return prev
     },
     {} as {
-      [K in keyof NER]: Maybe<ParsedShapeOfCustom<NER[K]>>
+      [K in keyof NER]: Opt<ParsedShapeOfCustom<NER[K]>>
     }
   )
 }

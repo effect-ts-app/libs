@@ -14,11 +14,11 @@ import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
  */
 export interface Repository<T extends { id: Id }, PM extends { id: string }, Evt, Id extends string, ItemType extends string> {
   itemType: ItemType
-  find: (id: Id) => Effect<ContextMap | RequestContext, never, Maybe<T>>
+  find: (id: Id) => Effect<ContextMap | RequestContext, never, Opt<T>>
   all: Effect<ContextMap, never, Chunk<T>>
   save: (
-    items: Collection<T>,
-    events?: Collection<Evt>
+    items: Iterable<T>,
+    events?: Iterable<Evt>
   ) => Effect<ContextMap | RequestContext, InvalidStateError | OptimisticConcurrencyException, void>
   utils: {
     mapReverse: (
@@ -91,8 +91,8 @@ export function collect<
   Evt,
   ItemType extends string,
   S extends T,
->(self: Repository<T, PM, Evt, Id, ItemType>, collect: (item: T) => Maybe<S>) {
-  return self.all.map(_ => _.collect(collect))
+>(self: Repository<T, PM, Evt, Id, ItemType>, collect: (item: T) => Opt<S>) {
+  return self.all.map(_ => _.filterMap(collect))
 }
 
 /**
@@ -123,12 +123,12 @@ export function projectEffect<
   E
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: PM) => Maybe<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: PM) => Opt<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip}) : self.utils.all)
-      .map(_ => _.collect(f.collect))
+      .map(_ => _.filterMap(f.collect))
   )
 }
 
@@ -145,9 +145,9 @@ export function project<
   S,
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  map: { filter?: Filter<PM>; collect: (t: PM) => Maybe<S>; limit?: number; skip?: number }
+  map: { filter?: Filter<PM>; collect: (t: PM) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.projectEffect(Effect(map))
+  return self.projectEffect(Effect.succeed(map))
 }
 
 
@@ -166,7 +166,7 @@ export function queryEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Maybe<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }>
 ) {
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip}) : self.utils.all)
@@ -177,7 +177,7 @@ export function queryEffect<
         })
       )
       .map(_ => _.map(_ => self.utils.parse(_)))
-      .map(_ => _.collect(f.collect))
+      .map(_ => _.filterMap(f.collect))
   )
 }
 
@@ -196,7 +196,7 @@ export function queryOneEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Maybe<S> }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Opt<S> }>
 ) {
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
@@ -207,7 +207,7 @@ export function queryOneEffect<
         })
       )
       .map(_ => _.map(_ => self.utils.parse(_)))
-      .flatMap(_ => _.collect(f.collect).toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ => _[0]))
+      .flatMap(_ => _.filterMap(f.collect).toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ => _[0]))
   )
 }
 
@@ -224,9 +224,9 @@ export function query<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter?: Filter<PM>; collect: (t: T) => Maybe<S>; limit?: number; skip?: number }
+  map: { filter?: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.queryEffect(Effect(map))
+  return self.queryEffect(Effect.succeed(map))
 }
 
 /**
@@ -242,9 +242,9 @@ export function queryOne<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter?: Filter<PM>; collect: (t: T) => Maybe<S> }
+  map: { filter?: Filter<PM>; collect: (t: T) => Opt<S> }
 ) {
-  return self.queryOneEffect(Effect(map))
+  return self.queryOneEffect(Effect.succeed(map))
 }
 
 /**
@@ -262,9 +262,9 @@ export function queryAndSavePureEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Maybe<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }>
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Collection<S2>>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Iterable<S2>>, E2, A>) =>
     queryEffect(self, map)
       .flatMap(_ => self.saveManyWithPure_(_, pure))
 }
@@ -282,9 +282,9 @@ export function queryAndSavePure<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter: Filter<PM>; collect: (t: T) => Maybe<S>; limit?: number; skip?: number }
+  map: { filter: Filter<PM>; collect: (t: T) => Opt<S>; limit?: number; skip?: number }
 ) {
-  return self.queryAndSavePureEffect(Effect(map))
+  return self.queryAndSavePureEffect(Effect.succeed(map))
 }
 
 /**
@@ -297,8 +297,8 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, Id, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Collection<S2>>, E, A>) =>
-    (items: Collection<S1>) => saveManyWithPure_(self, items, pure)
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>) =>
+    (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
 
 /**
@@ -344,8 +344,8 @@ export function saveManyWithPure_<
   ItemType extends string
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  items: Collection<S1>,
-  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Collection<S2>>, E, A>
+  items: Iterable<S1>,
+  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>
 ) {
   return saveAllWithEffectInt(
     self,
@@ -391,7 +391,7 @@ function saveAllWithEffectInt<
   A
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  gen: Effect<R, E, readonly [Collection<P>, Collection<Evt>, A]>
+  gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
   return gen
     .flatMap(
@@ -404,7 +404,7 @@ function saveAllWithEffectInt<
 const anyDSL = makeDSL<any, any, any>()
 
 export type AllDSL<T, Evt> =
-  (<R, A, E, S1 extends T, S2 extends T>(pure: (dsl: PureDSL<Chunk<S1>, Collection<S2>, Evt>) => Effect<R, E, A>) => Effect<FixEnv<R, Evt, Chunk<S1>, Collection<S2>>, E, A>)
+  (<R, A, E, S1 extends T, S2 extends T>(pure: (dsl: PureDSL<Chunk<S1>, Iterable<S2>, Evt>) => Effect<R, E, A>) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>)
     & AllDSLExt<T, Evt>
 
   
@@ -412,8 +412,8 @@ export type AllDSL<T, Evt> =
  * @tsplus type DSLExt
  */
 export interface AllDSLExt<T, Evt>  {
-  modify: <R, E, A, S1 extends T, S2 extends T>(pure: (items: Chunk<S1>, dsl: PureDSL<Chunk<S1>, Collection<S2>, Evt>) => Effect<R, E, A>) => Effect<FixEnv<R, Evt, Chunk<S1>, Collection<S2>>, E, A>;
-  update: <R, E, S1 extends T, S2 extends T>(pure: (items: Chunk<S1>, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, Collection<S2>>) => Effect<FixEnv<R, Evt, Chunk<S1>, Collection<S2>>, E, Collection<S2>>;
+  modify: <R, E, A, S1 extends T, S2 extends T>(pure: (items: Chunk<S1>, dsl: PureDSL<Chunk<S1>, Iterable<S2>, Evt>) => Effect<R, E, A>) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>;
+  update: <R, E, S1 extends T, S2 extends T>(pure: (items: Chunk<S1>, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, Iterable<S2>>) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, Iterable<S2>>;
 }
 
 export function makeAllDSL<T, Evt>() {
@@ -438,14 +438,14 @@ export interface OneDSLExt<T, Evt> {
  * @tsplus fluent DSLExt updateWith
  */
 export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T, Evt>, upd: (item: S1) => S2) {
-  return self.update((_: S1) => Effect(upd(_)))
+  return self.update((_: S1) => Effect.succeed(upd(_)))
 }
 
 /**
  * @tsplus fluent DSLExt updateWith
  */
-export function updateWith<T, Evt, S1 extends T, S2 extends T>(self: AllDSL<T, Evt>, upd: (item: Chunk<S1>) => Collection<S2>) {
-  return self.update((_: Chunk<S1>) => Effect(upd(_)))
+export function updateWith<T, Evt, S1 extends T, S2 extends T>(self: AllDSL<T, Evt>, upd: (item: Chunk<S1>) => Iterable<S2>) {
+  return self.update((_: Chunk<S1>) => Effect.succeed(upd(_)))
 }
 
 export function makeOneDSL<T, Evt>(): OneDSL<T, Evt>  {
@@ -501,13 +501,13 @@ export function makeDSL<S1, S2, Evt>() {
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> { }
 
 
-export function ifAny<T, R, E, A>(fn: (items: NonEmptyArray<T>) => Effect<R, E, A>) {
-  return (items: Collection<T>) => Effect(items.toNonEmptyArray).flatMapMaybe(fn)
+export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
+  return (items: Iterable<T>) => Effect.succeed(items.toNonEmptyArray).flatMapOpt(fn)
 }
 
 /**
- * @tsplus fluent Collection ifAny
+ * @tsplus fluent Iterable ifAny
  */
-export function ifAny_<T, R, E, A>(items: Collection<T>, fn: (items: NonEmptyArray<T>) => Effect<R, E, A>) {
-  return Effect(items.toNonEmptyArray).flatMapMaybe(fn)
+export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
+  return Effect.succeed(items.toNonEmptyArray).flatMapOpt(fn)
 }

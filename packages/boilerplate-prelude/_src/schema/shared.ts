@@ -44,6 +44,8 @@ import {
   withDefaults
 } from "./_schema.js"
 
+import * as Eq from "@effect-ts/core/Equal"
+
 export function tag<K extends string>(tag: K) {
   return prop(literal(tag))
 }
@@ -230,7 +232,7 @@ export function prefixedStringId<Brand extends StringId>() {
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         is: refinement,
         prefix,
-        eq: Equivalence.string as Equivalence<Brand>
+        eq: Eq.string as Equal<Brand>
       })
     )
   }
@@ -247,7 +249,7 @@ export interface PrefixedStringUtils<
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly is: (x: StringId) => x is Brand
   readonly prefix: Prefix
-  eq: Equivalence<Brand>
+  eq: Equal<Brand>
 }
 
 export interface UrlBrand {

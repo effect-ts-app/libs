@@ -87,7 +87,7 @@ export function fromEither<
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
     MO.encoder(_ =>
-      _.fold(
+      _.match(
         x => ({ _tag: "Left", left: leftEncode(x) }),
         x => ({ _tag: "Right", right: encode(x) })
       )

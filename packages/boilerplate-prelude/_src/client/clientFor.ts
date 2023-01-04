@@ -8,15 +8,15 @@ import type * as H from "@effect-ts-app/core/http/http-client"
 import { Path } from "path-parser"
 
 import type { ApiConfig } from "./config.js"
-import type { FetchError, FetchResponse, ResponseError } from "./fetch.js"
+import type { FetchError, FetchResponse } from "./fetch.js"
 import {
   fetchApi,
   fetchApi3S,
   fetchApi3SE,
   makePathWithBody,
   makePathWithQuery,
-  mapResponseErrorS,
-  mapResponseM
+  mapResponseM,
+  ResponseError
 } from "./fetch.js"
 
 export * from "./config.js"
@@ -64,7 +64,7 @@ function clientFor_<M extends Requests>(models: M) {
 
           const parseResponse = flow(
             Schema.Parser.for(Response)["|>"](condemnCustom),
-            mapResponseErrorS
+            _ => _.mapError(err => new ResponseError(err))
           )
 
           const parseResponseE = flow(parseResponse, x => x.map(Schema.Encoder.for(Response)))

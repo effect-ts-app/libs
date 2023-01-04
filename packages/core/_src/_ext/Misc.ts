@@ -24,81 +24,33 @@ export const pipeNESet = pipe
 export const pipeSet = pipe
 
 /**
- * @tsplus operator ets/Array >=
- * @tsplus fluent ets/Array apply
- * @tsplus fluent ets/Array __call
+ * @tsplus operator Array >=
+ * @tsplus fluent Array apply
+ * @tsplus fluent Array __call
+ * @tsplus operator ReadonlyArray >=
+ * @tsplus fluent ReadonlyArray apply
+ * @tsplus fluent ReadonlyArray __call
  * @tsplus macro pipe
  */
 export const pipeArray = pipe
 
 /**
- * @tsplus operator Chunk >=
- * @tsplus fluent Chunk apply
- * @tsplus fluent Chunk __call
+ * @tsplus operator fp-ts/data/Chunk >=
+ * @tsplus fluent fp-ts/data/Chunk apply
+ * @tsplus fluent fp-ts/data/Chunk __call
  * @tsplus macro pipe
  */
 export const pipeChunk = pipe
 
 /**
+ * @tsplus operator effect/io/Effect >=
+ * @tsplus fluent effect/io/Effect apply
+ * @tsplus fluent effect/io/Effect __call
+ * @tsplus macro pipe
+ */
+export const pipeEffect = pipe
+
+/**
  * @tsplus static ets/Set __call
  */
 export const setSucceed = ROSet.fromArray
-
-/**
- * @tsplus operator ets/Schema/Schema >=
- * @tsplus fluent ets/Schema/Schema apply
- * @tsplus fluent ets/Schema/Schema __call
- * @tsplus macro pipe
- */
-export const pipeSchema = pipe
-
-/**
- * @tsplus operator ets/Schema/Property >=
- * @tsplus fluent ets/Schema/Property apply
- * @tsplus fluent ets/Schema/Property __call
- * @tsplus macro pipe
- */
-export const pipeSchemaProperty = pipe
-
-/**
- * @tsplus operator ets/Schema/Constructor >=
- * @tsplus fluent ets/Schema/Constructor apply
- * @tsplus fluent ets/Schema/Constructor __call
- * @tsplus macro pipe
- */
-export const pipeSchemaConstructor = pipe
-
-/**
- * @tsplus operator ets/Schema/Parser >=
- * @tsplus fluent ets/Schema/Parser apply
- * @tsplus fluent ets/Schema/Parser __call
- * @tsplus macro pipe
- */
-export const pipeSchemaParser = pipe
-
-/**
- * @tsplus operator ets/Schema/These >=
- * @tsplus fluent ets/Schema/These apply
- * @tsplus fluent ets/Schema/These __call
- * @tsplus macro pipe
- */
-export const pipeSchemaThese = pipe
-
-// /**
-//  * @tsplus fluent global isNotNullish
-//  */
-// export const isNotNullish = isTruthy
-
-// /**
-//  * @tsplus getter global asOpt
-//  */
-// export function asOpt<A>(a: A | null | undefined): Maybe<A> | undefined
-// export function asOpt<A>(a: A | null): Maybe<A>
-// export function asOpt<A>(a: A | null | undefined) {
-//   return a === undefined ? a : Maybe.fromNullable(a)
-// }
-
-// /**
-//  * @tsplus getter global asOpt2
-//  */
-// export const optionFromNullable = Maybe.fromNullable

@@ -24,7 +24,7 @@ export const logRequestError = (cause: Cause<unknown>, context?: Record<string, 
  *
  * Reports errors.
  *
- * @tsplus getter effect/core/io/Effect forkDaemonReportRequest
+ * @tsplus getter effect/io/Effect forkDaemonReportRequest
  */
 export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
   return self.tapErrorCause(reportRequestError)
@@ -38,7 +38,7 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
  *
  * Reports errors.
  *
- * @tsplus getter effect/core/io/Effect forkDaemonReportRequestUnexpected
+ * @tsplus getter effect/io/Effect forkDaemonReportRequestUnexpected
  */
 export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>) {
   return self.tapErrorCause(cause =>

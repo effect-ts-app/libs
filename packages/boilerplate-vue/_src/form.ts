@@ -90,22 +90,23 @@ function buildFieldInfo(
         pipe(
           parse(v === "" ? null : v),
           These.result,
-          Either.$.fold(
-            () =>
-              `The entered value is not a valid ${
-                capitalize(
-                  fieldKey.toString()
-                )
-              }`,
-            ({ tuple: [_, optErr] }) =>
-              optErr.isSome()
-                ? `The entered value is not a valid ${
+          _ =>
+            _.match(
+              () =>
+                `The entered value is not a valid ${
                   capitalize(
                     fieldKey.toString()
                   )
-                }`
-                : true
-          )
+                }`,
+              ([_, optErr]) =>
+                optErr.isSome()
+                  ? `The entered value is not a valid ${
+                    capitalize(
+                      fieldKey.toString()
+                    )
+                  }`
+                  : true
+            )
         )
     ],
     metadata

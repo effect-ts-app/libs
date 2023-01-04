@@ -39,8 +39,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
           )
         )
-        .map(Maybe.fromNullable)
-        .mapMaybe(({ data, version }) => ({ version, data } as CachedRecord<EA>))
+        .map(Opt.fromNullable)
+        .mapOpt(({ data, version }) => ({ version, data } as CachedRecord<EA>))
     }
 
     function findBy(keys: Record<string, string>) {
@@ -48,11 +48,11 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap(db =>
           Effect.tryPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
         )
-        .map(Maybe.fromNullable)
-        .mapMaybe(({ _id }) => _id)
+        .map(Opt.fromNullable)
+        .mapOpt(({ _id }) => _id)
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       return Effect.gen(function*($) {
         const version = currentVersion
           .map(cv => (parseInt(cv) + 1).toString())
@@ -61,7 +61,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const db = yield* $(Mongo.db)
         const data = yield* $(encode(record))
         yield* $(
-          currentVersion.fold(
+          currentVersion.match(
             () =>
               Effect.tryPromise(() =>
                 db
@@ -72,7 +72,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                       checkKeys: false // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
                     } as InsertOneOptions
                   )
-              ).unit.orDie,
+              ).asUnit.orDie,
             currentVersion =>
               Effect.tryPromise(() =>
                 db.collection(type).replaceOne(

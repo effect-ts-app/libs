@@ -1,14 +1,15 @@
 {
   "name": "@effect-ts-app/core",
-  "version": "1.10.0",
+  "version": "2.0.16",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "^0.43.0",
-    "@effect/core": "*",
-    "@tsplus/stdlib": "*",
+    "@effect/io": "^0.0.51",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -21,11 +22,13 @@
     "@types/validator": "^13.7.10",
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -49,7 +52,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "dist/*"
+        "_src/*"
       ]
     }
   },
@@ -74,24 +77,14 @@
         "default": "./_cjs/Array.cjs"
       }
     },
-    "./Array/aspects": {
+    "./Chunk": {
       "import": {
-        "types": "./dist/Array/aspects.d.ts",
-        "default": "./dist/Array/aspects.js"
+        "types": "./dist/Chunk.d.ts",
+        "default": "./dist/Chunk.js"
       },
       "require": {
-        "types": "./dist/Array/aspects.d.ts",
-        "default": "./_cjs/Array/aspects.cjs"
-      }
-    },
-    "./Array/ext": {
-      "import": {
-        "types": "./dist/Array/ext.d.ts",
-        "default": "./dist/Array/ext.js"
-      },
-      "require": {
-        "types": "./dist/Array/ext.d.ts",
-        "default": "./_cjs/Array/ext.cjs"
+        "types": "./dist/Chunk.d.ts",
+        "default": "./_cjs/Chunk.cjs"
       }
     },
     "./Effect": {
@@ -104,24 +97,14 @@
         "default": "./_cjs/Effect.cjs"
       }
     },
-    "./EffectAspects": {
+    "./Either": {
       "import": {
-        "types": "./dist/EffectAspects.d.ts",
-        "default": "./dist/EffectAspects.js"
+        "types": "./dist/Either.d.ts",
+        "default": "./dist/Either.js"
       },
       "require": {
-        "types": "./dist/EffectAspects.d.ts",
-        "default": "./_cjs/EffectAspects.cjs"
-      }
-    },
-    "./EffectBase": {
-      "import": {
-        "types": "./dist/EffectBase.d.ts",
-        "default": "./dist/EffectBase.js"
-      },
-      "require": {
-        "types": "./dist/EffectBase.d.ts",
-        "default": "./_cjs/EffectBase.cjs"
+        "types": "./dist/Either.d.ts",
+        "default": "./_cjs/Either.cjs"
       }
     },
     "./Function": {
@@ -132,56 +115,6 @@
       "require": {
         "types": "./dist/Function.d.ts",
         "default": "./_cjs/Function.cjs"
-      }
-    },
-    "./Maybe": {
-      "import": {
-        "types": "./dist/Maybe.d.ts",
-        "default": "./dist/Maybe.js"
-      },
-      "require": {
-        "types": "./dist/Maybe.d.ts",
-        "default": "./_cjs/Maybe.cjs"
-      }
-    },
-    "./MaybeAspects": {
-      "import": {
-        "types": "./dist/MaybeAspects.d.ts",
-        "default": "./dist/MaybeAspects.js"
-      },
-      "require": {
-        "types": "./dist/MaybeAspects.d.ts",
-        "default": "./_cjs/MaybeAspects.cjs"
-      }
-    },
-    "./MaybeBase": {
-      "import": {
-        "types": "./dist/MaybeBase.d.ts",
-        "default": "./dist/MaybeBase.js"
-      },
-      "require": {
-        "types": "./dist/MaybeBase.d.ts",
-        "default": "./_cjs/MaybeBase.cjs"
-      }
-    },
-    "./NonEmptyArray": {
-      "import": {
-        "types": "./dist/NonEmptyArray.d.ts",
-        "default": "./dist/NonEmptyArray.js"
-      },
-      "require": {
-        "types": "./dist/NonEmptyArray.d.ts",
-        "default": "./_cjs/NonEmptyArray.cjs"
-      }
-    },
-    "./NonEmptyArrayAspects": {
-      "import": {
-        "types": "./dist/NonEmptyArrayAspects.d.ts",
-        "default": "./dist/NonEmptyArrayAspects.js"
-      },
-      "require": {
-        "types": "./dist/NonEmptyArrayAspects.d.ts",
-        "default": "./_cjs/NonEmptyArrayAspects.cjs"
       }
     },
     "./NonEmptySet": {
@@ -224,6 +157,16 @@
         "default": "./_cjs/Object.cjs"
       }
     },
+    "./Option": {
+      "import": {
+        "types": "./dist/Option.d.ts",
+        "default": "./dist/Option.js"
+      },
+      "require": {
+        "types": "./dist/Option.d.ts",
+        "default": "./_cjs/Option.cjs"
+      }
+    },
     "./Order": {
       "import": {
         "types": "./dist/Order.d.ts",
@@ -252,6 +195,26 @@
       "require": {
         "types": "./dist/Set.d.ts",
         "default": "./_cjs/Set.cjs"
+      }
+    },
+    "./Tag": {
+      "import": {
+        "types": "./dist/Tag.d.ts",
+        "default": "./dist/Tag.js"
+      },
+      "require": {
+        "types": "./dist/Tag.d.ts",
+        "default": "./_cjs/Tag.cjs"
+      }
+    },
+    "./Unify": {
+      "import": {
+        "types": "./dist/Unify.d.ts",
+        "default": "./dist/Unify.js"
+      },
+      "require": {
+        "types": "./dist/Unify.d.ts",
+        "default": "./_cjs/Unify.cjs"
       }
     },
     "./_ext/Lens.ext": {
@@ -292,26 +255,6 @@
       "require": {
         "types": "./dist/_ext/Prelude.ext.d.ts",
         "default": "./_cjs/_ext/Prelude.ext.cjs"
-      }
-    },
-    "./_ext/RArray": {
-      "import": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./dist/_ext/RArray.js"
-      },
-      "require": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./_cjs/_ext/RArray.cjs"
-      }
-    },
-    "./_ext/builtIn": {
-      "import": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./dist/_ext/builtIn.js"
-      },
-      "require": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./_cjs/_ext/builtIn.cjs"
       }
     },
     "./_ext/lens": {
@@ -364,16 +307,6 @@
         "default": "./_cjs/fluent/_ext/Lens.cjs"
       }
     },
-    "./fluent/_ext/Maybe": {
-      "import": {
-        "types": "./dist/fluent/_ext/Maybe.d.ts",
-        "default": "./dist/fluent/_ext/Maybe.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/Maybe.d.ts",
-        "default": "./_cjs/fluent/_ext/Maybe.cjs"
-      }
-    },
     "./fluent/_ext/Set": {
       "import": {
         "types": "./dist/fluent/_ext/Set.d.ts",
@@ -382,16 +315,6 @@
       "require": {
         "types": "./dist/fluent/_ext/Set.d.ts",
         "default": "./_cjs/fluent/_ext/Set.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/_files/Array": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/Array.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/Array.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/Array.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/Array.cjs"
       }
     },
     "./fluent/_ext/awesome/_files/Iterable": {
@@ -472,6 +395,16 @@
       "require": {
         "types": "./dist/fluent/fluent/Array.d.ts",
         "default": "./_cjs/fluent/fluent/Array.cjs"
+      }
+    },
+    "./global": {
+      "import": {
+        "types": "./dist/global.d.ts",
+        "default": "./dist/global.js"
+      },
+      "require": {
+        "types": "./dist/global.d.ts",
+        "default": "./_cjs/global.cjs"
       }
     },
     "./http/http-client": {
@@ -574,34 +507,34 @@
     "./dist/fluent/polyfill/Chunk.js",
     "./dist/fluent/polyfill/Effect.js",
     "./dist/fluent/polyfill/EffectNode.js",
-    "./dist/fluent/polyfill/EffectMaybe.js",
+    "./dist/fluent/polyfill/EffectOpt.js",
     "./dist/fluent/polyfill/Either.js",
     "./dist/fluent/polyfill/index.js",
     "./dist/fluent/polyfill/Lens.js",
     "./dist/fluent/polyfill/Managed.js",
     "./dist/fluent/polyfill/node.js",
-    "./dist/fluent/polyfill/Maybe.js",
+    "./dist/fluent/polyfill/Opt.js",
     "./dist/fluent/polyfill/Set.js",
     "./dist/fluent/polyfill/state.js",
     "./dist/fluent/polyfill/Sync.js",
-    "./dist/fluent/polyfill/SyncMaybe.js",
+    "./dist/fluent/polyfill/SyncOpt.js",
     "./dist/fluent/polyfill/util.js",
     "./_cjs/fluent/polyfill/Array.cjs",
     "./_cjs/fluent/polyfill/browser.cjs",
     "./_cjs/fluent/polyfill/Chunk.cjs",
     "./_cjs/fluent/polyfill/Effect.cjs",
     "./_cjs/fluent/polyfill/EffectNode.cjs",
-    "./_cjs/fluent/polyfill/EffectMaybe.cjs",
+    "./_cjs/fluent/polyfill/EffectOpt.cjs",
     "./_cjs/fluent/polyfill/Either.cjs",
     "./_cjs/fluent/polyfill/index.cjs",
     "./_cjs/fluent/polyfill/Lens.cjs",
     "./_cjs/fluent/polyfill/Managed.cjs",
     "./_cjs/fluent/polyfill/node.cjs",
-    "./_cjs/fluent/polyfill/Maybe.cjs",
+    "./_cjs/fluent/polyfill/Opt.cjs",
     "./_cjs/fluent/polyfill/Set.cjs",
     "./_cjs/fluent/polyfill/state.cjs",
     "./_cjs/fluent/polyfill/Sync.cjs",
-    "./_cjs/fluent/polyfill/SyncMaybe.cjs",
+    "./_cjs/fluent/polyfill/SyncOpt.cjs",
     "./_cjs/fluent/polyfill/util.cjs"
   ],
   "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"

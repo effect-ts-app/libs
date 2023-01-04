@@ -16,7 +16,7 @@ export function createReadableStream(fileName: string) {
 }
 
 export function openFile(fileName: string) {
-  return Effect.acquireRelease(Effect.tryPromise(() => fs.open(fileName)), f => Effect.promise(() => f.close()))
+  return Effect.tryPromise(() => fs.open(fileName)).acquireRelease(f => Effect.promise(() => f.close()))
 }
 
 export function tempFile(
@@ -47,10 +47,10 @@ export function tempFile_(
 ) {
   return Effect.sync(() => path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
     .flatMap(fp =>
-      Effect.acquireRelease(
-        Effect.tryPromise(() => fs.writeFile(fp, data, options))
-          .map(_ => fp),
-        p => Effect.promise(() => fs.unlink(p))
-      )
+      Effect.tryPromise(() => fs.writeFile(fp, data, options))
+        .map(_ => fp)
+        .acquireRelease(
+          p => Effect.promise(() => fs.unlink(p))
+        )
     )
 }

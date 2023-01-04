@@ -13,8 +13,8 @@ export type Constructor<Input, Output, ConstructorError> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => Maybe<() => Constructor<unknown, unknown, unknown>>)[] = [
-  Maybe.partial(
+) => Opt<() => Constructor<unknown, unknown, unknown>>)[] = [
+  Opt.partial(
     miss =>
       (schema: S.SchemaAny): (() => Constructor<unknown, unknown, unknown>) => {
         if (schema instanceof S.SchemaNamed) {
@@ -42,7 +42,7 @@ export const interpreters: ((
               Th.chain_(
                 pipe(
                   self(u),
-                  Th.mapError(e => S.compositionE(Chunk.single(S.prevE(e))))
+                  Th.mapError(e => S.compositionE(NonEmptyChunk.make(S.prevE(e))))
                 ),
                 (
                   a,
@@ -58,7 +58,7 @@ export const interpreters: ((
                     : Th.fail(
                       S.compositionE(
                         w._tag === "None"
-                          ? Chunk.single(S.nextE(S.refinementE(schema.error(a))))
+                          ? NonEmptyChunk.make(S.nextE(S.refinementE(schema.error(a))))
                           : w.value.errors.append(
                             S.nextE(S.refinementE(schema.error(a)))
                           )

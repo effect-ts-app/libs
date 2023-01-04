@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/schema",
-  "version": "1.9.1",
+  "version": "2.0.16",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -8,8 +8,9 @@
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "*",
-    "@effect/core": "*",
-    "@tsplus/stdlib": "*",
+    "@effect/io": "^0.0.51",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -19,12 +20,14 @@
   "devDependencies": {
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.10",
-    "fast-check": "^3.4.0",
+    "fast-check": "^3.5.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -290,6 +293,16 @@
       "require": {
         "types": "./dist/_global.d.ts",
         "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
       }
     },
     "./_schema": {

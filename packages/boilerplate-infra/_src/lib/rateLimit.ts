@@ -4,14 +4,14 @@
  * delayed by duration after the effect completes execution, whether by success,
  * failure, or interruption.
  *
- * @tsplus static effect/core/stm/TSemaphore.Aspects withPermitsDuration
- * @tsplus pipeable effect/core/stm/TSemaphore withPermitsDuration
+ * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
+ * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
  */
 export function withPermitsDuration(permits: number, duration: DUR) {
   return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
     return effect =>
       Effect.uninterruptibleMask(
-        ({ restore }) =>
+        restore =>
           restore(self.acquireN(permits).commit) >
             restore(effect)
               .ensuring(self.releaseN(permits).commit.delay(duration))
@@ -20,7 +20,7 @@ export function withPermitsDuration(permits: number, duration: DUR) {
 }
 
 /**
- * @tsplus pipeable Collection batchNPar
+ * @tsplus pipeable Iterable batchNPar
  * @tsplus static Collection.Aspects batchNPar
  */
 export function batchNPar<R, E, A, R2, E2, A2, T>(
@@ -34,7 +34,7 @@ export function batchNPar<R, E, A, R2, E2, A2, T>(
 }
 
 /**
- * @tsplus pipeable Collection batch
+ * @tsplus pipeable Iterable batch
  * @tsplus static Collection.Aspects batch
  */
 export function batch<R, E, A, R2, E2, A2, T>(
@@ -47,28 +47,28 @@ export function batch<R, E, A, R2, E2, A2, T>(
       .forEachEffect(_ => _.forEachPar(forEachItem).flatMap(forEachBatch))
 }
 
-/**
- * @tsplus pipeable Collection rateLimit
- * @tsplus static Collection.Aspects rateLimit
- */
-export function rateLimit(
-  n: number,
-  d: DUR
-) {
-  return <T>(items: Iterable<T>) =>
-    <R, E, A, R2, E2, A2>(
-      forEachItem: (i: T) => Effect<R, E, A>,
-      forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
-    ) =>
-      Stream.fromCollection(items)
-        .rechunk(n)
-        .throttleShape(n, d, () => n)
-        .mapChunksEffect(_ => _.forEachEffectPar(forEachItem).tap(forEachBatch))
-        .runCollect
-}
+// /**
+//  * @tsplus pipeable Iterable rateLimit
+//  * @tsplus static Collection.Aspects rateLimit
+//  */
+// export function rateLimit(
+//   n: number,
+//   d: DUR
+// ) {
+//   return <T>(items: Iterable<T>) =>
+//     <R, E, A, R2, E2, A2>(
+//       forEachItem: (i: T) => Effect<R, E, A>,
+//       forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
+//     ) =>
+//       Stream.fromCollection(items)
+//         .rechunk(n)
+//         .throttleShape(n, d, () => n)
+//         .mapChunksEffect(_ => _.forEachEffectPar(forEachItem).tap(forEachBatch))
+//         .runCollect
+// }
 
 /**
- * @tsplus pipeable Collection naiveRateLimit
+ * @tsplus pipeable Iterable naiveRateLimit
  * @tsplus static Collection.Aspects naiveRateLimit
  */
 

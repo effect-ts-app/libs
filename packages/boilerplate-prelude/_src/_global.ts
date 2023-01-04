@@ -7,7 +7,17 @@
 /**
  * @tsplus global
  */
-import { DUR } from "@effect-ts-app/boilerplate-prelude/duration"
+import { TSemaphore } from "@effect/stm/TSemaphore"
+
+/**
+ * @tsplus global
+ */
+import { TRef } from "@effect/stm/TRef"
+
+/**
+ * @tsplus global
+ */
+import { STM } from "@effect/stm/STM"
 
 /* eslint-disable unused-imports/no-unused-imports */
 /**
@@ -20,10 +30,6 @@ import type { lazyGetter } from "@effect-ts-app/boilerplate-prelude/utils"
  */
 import { Pure, PureEnv, PureEnvEnv } from "@effect-ts-app/boilerplate-prelude/_ext/Pure"
 
-/**
- * @tsplus global
- */
-import { flow, pipe, tuple, tupled } from "@effect-ts-app/boilerplate-prelude/Function"
 /**
  * @tsplus global
  */
@@ -46,19 +52,16 @@ import {
   Lens,
   // Managed,
   // Maybe,
-  NonEmptyArray,
   NonEmptySet,
   // Ord,
   // Queue,
   Record,
   // Ref,
-  ROArray,
   ROMap,
   ROSet,
   // Schedule,
   Schema,
   // Semaphore,
-  Tuple,
   Utils
   // XPure,
 } from "@effect-ts-app/boilerplate-prelude"
@@ -79,3 +82,4 @@ import "@effect-ts-app/boilerplate-prelude/_ext/Prelude.ext"
 import "@effect-ts-app/core/_global"
 import "@effect-ts-app/core/fluent/_ext/awesome/lib"
 import "@effect-ts-app/core/Prelude"
+import "@effect-ts-app/schema/_global"

@@ -88,26 +88,26 @@ export function intersect_<
 
         errored = true
       } else {
-        const warnings = left.right.get(1)
+        const warnings = left.right[1]
         if (warnings._tag === "Some") {
           errors = errors.append(S.memberE(0, warnings.value))
 
           warned = true
         }
-        Object.assign(intersection, left.right.get(0))
+        Object.assign(intersection, left.right[0])
       }
       if (right._tag === "Left") {
         errors = errors.append(S.memberE(1, right.left))
 
         errored = true
       } else {
-        const warnings = right.right.get(1)
+        const warnings = right.right[1]
         if (warnings._tag === "Some") {
           errors = errors.append(S.memberE(1, warnings.value))
 
           warned = true
         }
-        Object.assign(intersection, right.right.get(0))
+        Object.assign(intersection, right.right[0])
       }
 
       if (errored) {
@@ -138,26 +138,26 @@ export function intersect_<
 
         errored = true
       } else {
-        const warnings = left.right.get(1)
+        const warnings = left.right[1]
         if (warnings._tag === "Some") {
           errors = errors.append(S.memberE(0, warnings.value))
 
           warned = true
         }
-        Object.assign(intersection, left.right.get(0))
+        Object.assign(intersection, left.right[0])
       }
       if (right._tag === "Left") {
         errors = errors.append(S.memberE(1, right.left))
 
         errored = true
       } else {
-        const warnings = right.right.get(1)
+        const warnings = right.right[1]
         if (warnings._tag === "Some") {
           errors = errors.append(S.memberE(1, warnings.value))
 
           warned = true
         }
-        Object.assign(intersection, right.right.get(0))
+        Object.assign(intersection, right.right[0])
       }
 
       if (errored) {

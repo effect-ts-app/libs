@@ -1,5 +1,12 @@
 # @effect-ts-app/playground
 
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [c090237]
+  - @effect-ts-app/boilerplate-prelude@2.0.0
+
 ## 5.0.0
 
 ### Patch Changes

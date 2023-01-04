@@ -2,8 +2,10 @@
   "name": "@effect-ts-app/boilerplate-eslint",
   "description": "Contains eslint helpers",
   "sideEffects": false,
-  "version": "1.2.2",
+  "version": "2.0.2",
   "scripts": {
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
     "build": "tsc",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "ncu": "ncu",
@@ -14,7 +16,7 @@
   "dependencies": {
     "@babel/generator": "7.20.7",
     "@babel/parser": "7.20.7",
-    "eslint-plugin-codegen": "0.16.1",
+    "eslint-plugin-codegen": "0.17.0",
     "glob": "8.0.3",
     "io-ts": "2.2.20",
     "io-ts-extra": "0.11.6",
@@ -29,7 +31,7 @@
     "@types/lodash": "4.14.191",
     "madge": "5.0.1",
     "ts-node": "10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",

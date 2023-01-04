@@ -34,16 +34,16 @@ export function fromChunk<
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
-  const refinement = (_: unknown): _ is Chunk<ParsedShape> => Chunk.isChunk(_) && _.forAll(guard)
+  const refinement = (_: unknown): _ is Chunk<ParsedShape> => Chunk.isChunk(_) && _.every(guard)
   const encode = Encoder.for(self)
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary(_ => _.array(arb(_)).map(Chunk.from)),
+    S.arbitrary(_ => _.array(arb(_)).map(Chunk.fromIterable)),
     S.parser((i: readonly ParserInput[], env) => {
       const parseEl = env?.cache ? env.cache.getOrSetParser(parse) : parse
-      const b = Chunk.builder<ParsedShape>()
-      const e = Chunk.builder<S.OptionalIndexE<number, ParserError>>()
+      const b: ParsedShape[] = []
+      const e: S.OptionalIndexE<number, ParserError[]>[] = []
       let j = 0
       let err = false
       let warn = false
@@ -51,29 +51,29 @@ export function fromChunk<
         const res = Th.result(parseEl(a))
         if (res._tag === "Right") {
           if (!err) {
-            b.append(res.right.get(0))
-            const w = res.right.get(1)
+            b.push(res.right[0])
+            const w = res.right[1]
             if (w._tag === "Some") {
               warn = true
-              e.append(S.optionalIndexE(j, w.value))
+              e.push(S.optionalIndexE(j, w.value))
             }
           }
         } else {
           err = true
-          e.append(S.optionalIndexE(j, res.left))
+          e.push(S.optionalIndexE(j, res.left))
         }
         j++
       }
       if (err) {
-        return Th.fail(S.chunkE(e.build()))
+        return Th.fail(S.chunkE(e.toChunk))
       }
       if (warn) {
-        return Th.warn(b.build(), S.chunkE(e.build()))
+        return Th.warn(b.toChunk, S.chunkE(e.toChunk))
       }
-      return Th.succeed(b.build())
+      return Th.succeed(b.toChunk)
     }),
-    S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.from(i))),
-    S.encoder(_ => _.map(encode).toArray as readonly Encoded[]),
+    S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.fromIterable(i))),
+    S.encoder(_ => _.map(encode).toArray),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,
     S.annotate(fromChunkIdentifier, { self })

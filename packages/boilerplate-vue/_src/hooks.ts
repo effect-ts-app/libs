@@ -1,6 +1,7 @@
 import type { ApiConfig, FetchResponse } from "@effect-ts-app/boilerplate-prelude/client"
 import { Done } from "@effect-ts-app/boilerplate-prelude/client"
 import type { Http } from "@effect-ts-app/core/http/http-client"
+import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { Ref } from "vue"
@@ -162,7 +163,7 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
         ? fib.interrupt.zipRight(runNew)
         : runNew
     })
-  ).flatMap(_ => _.await)
+  ).flatMap(_ => _.await())
     .flatMap(Effect.done)
 
   function exec() {
@@ -254,7 +255,7 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
         .flatMap(exit => Effect.sync(() => handle(exit)))
         .fork
         .flatMap(f => {
-          const cancel = () => f.interrupt.unsafeRunPromise()
+          const cancel = () => f.interrupt.unsafeRunPromise
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join
         })
@@ -274,26 +275,26 @@ function handleExit<E, A>(
 ) {
   return (exit: Exit<E, A>): Either<E, A> => {
     loading.value = false
-    if (exit.isSuccess()) {
+    if (Exit.isSuccess(exit)) {
       value.value = exit.value
       error.value = undefined
       return Either.right(exit.value)
     }
 
-    const err = exit.cause.failureMaybe
+    const err = exit.cause.failureOption
     if (err.isSome()) {
       error.value = err.value
       value.value = undefined
       return Either.left(err.value)
     }
 
-    const died = exit.cause.dieMaybe
+    const died = exit.cause.dieOption
     if (died.value) {
       throw died.value
     }
-    const interrupted = exit.cause.interruptMaybe
+    const interrupted = exit.cause.interruptOption
     if (interrupted.value) {
-      throw new InterruptedException()
+      throw InterruptedException()
     }
     throw new Error("Invalid state")
   }

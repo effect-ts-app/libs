@@ -45,45 +45,45 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Effect(
-    Maybe.fromNullable(Request.Headers)
+  const ph = Effect.succeed(
+    Opt.fromNullable(Request.Headers)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
   )
-  const parseHeaders = (u: unknown) => ph.flatMapMaybe(d => d(u))
+  const parseHeaders = (u: unknown) => ph.flatMapOpt(d => d(u))
 
-  const pq = Effect(
-    Maybe.fromNullable(Request.Query)
+  const pq = Effect.succeed(
+    Opt.fromNullable(Request.Query)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
   )
-  const parseQuery = (u: unknown) => pq.flatMapMaybe(d => d(u))
+  const parseQuery = (u: unknown) => pq.flatMapOpt(d => d(u))
 
-  const pb = Effect(
-    Maybe.fromNullable(Request.Body)
+  const pb = Effect.succeed(
+    Opt.fromNullable(Request.Body)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
   )
-  const parseBody = (u: unknown) => pb.flatMapMaybe(d => d(u))
+  const parseBody = (u: unknown) => pb.flatMapOpt(d => d(u))
 
-  const pp = Effect(
-    Maybe.fromNullable(Request.Path)
+  const pp = Effect.succeed(
+    Opt.fromNullable(Request.Path)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
   )
-  const parsePath = (u: unknown) => pp.flatMapMaybe(d => d(u))
+  const parsePath = (u: unknown) => pp.flatMapOpt(d => d(u))
 
-  const pc = Effect(
-    Maybe.fromNullable(Request.Cookie)
+  const pc = Effect.succeed(
+    Opt.fromNullable(Request.Cookie)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemnFail)
   )
-  const parseCookie = (u: unknown) => pc.flatMapMaybe(d => d(u))
+  const parseCookie = (u: unknown) => pc.flatMapOpt(d => d(u))
 
   return {
     parseBody,
@@ -260,7 +260,7 @@ export function makeRequestHandler<
         : req.headers,
       cookies: req.cookies
         ? Object.entries(req.cookies).reduce((prev, [key, value]) => {
-          prev[key] = typeof value === "string" || ROArray.isArray(value)
+          prev[key] = typeof value === "string" || Array.isArray(value)
             ? snipValue(value)
             : value
           return prev
@@ -364,7 +364,7 @@ export function makeRequestHandler<
                 path: req.originalUrl,
                 method: req.method
               })
-            }) >
+            }).zipRight(
               Effect.suspendSucceed(() => {
                 const headers = res.getHeaders()
                 return Effect.logErrorCauseMessage(
@@ -381,6 +381,8 @@ export function makeRequestHandler<
                     .$$.pretty
                 }))
               })
+            )
+              .tapErrorCause(cause => Effect.sync(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap(() =>
             Effect.suspendSucceed(() => {
@@ -397,6 +399,7 @@ export function makeRequestHandler<
               }))
             })
           )
+          .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
           .setupRequest(requestContext)
       )
   }
@@ -576,7 +579,7 @@ export interface ReqHandler<
  * class SayHelloResponse extends Model<SayHelloRequest>()({ message: prop(LongString) }) {}
  *
  * export const SayHelloControllers = matchResource({ SayHello: { SayHelloRequest, SayHelloResponse } })({
- *   SayHello: (req) => Effect({ message: `Hi ${req.name}` })
+ *   SayHello: (req) => Effect.succeed({ message: `Hi ${req.name}` })
  * })
  * ```
  */

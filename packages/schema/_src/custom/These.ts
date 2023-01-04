@@ -1,6 +1,5 @@
 // tracing: off
 
-import * as Tp from "@effect-ts/core/Collections/Immutable/Tuple"
 import { _A, _E } from "@effect-ts/core/Effect"
 
 /**
@@ -10,15 +9,15 @@ import { _A, _E } from "@effect-ts/core/Effect"
 export class These<E, A> {
   readonly [_E]!: () => E
   readonly [_A]!: () => A
-  constructor(readonly effect: Either<E, Tp.Tuple<[A, Maybe<E>]>>) {}
+  constructor(readonly effect: Either<E, readonly [A, Opt<E>]>) {}
 }
 
 export function succeed<A>(a: A) {
-  return new These(Either.right(Tp.tuple(a, Maybe.none)))
+  return new These(Either.right(tuple(a, Opt.none)))
 }
 
 export function warn<E, A>(a: A, e: E) {
-  return new These(Either.right(Tp.tuple(a, Maybe.some(e))))
+  return new These(Either.right(tuple(a, Opt.some(e))))
 }
 
 export function fail<E>(e: E) {
@@ -32,9 +31,9 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
   onFail: (e: E) => These<E3, A3>
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
-    self.effect.fold(
-      (x): Either<E1 | E2 | E3, Tp.Tuple<[A1 | A2 | A3, Maybe<E1 | E2 | E3>]>> => onFail(x).effect,
-      ({ tuple: [result, warnings] }) =>
+    self.effect.match(
+      (x): Either<E1 | E2 | E3, readonly [A1 | A2 | A3, Opt<E1 | E2 | E3>]> => onFail(x).effect,
+      ([result, warnings]) =>
         warnings._tag === "None"
           ? onSuccess(result).effect
           : onBoth(result, warnings.value).effect
@@ -80,20 +79,20 @@ export function mapError<E0, E>(
 
 export function chain_<E0, A0, E, A>(
   self: These<E0, A0>,
-  f: (a: A0, w: Maybe<E0>) => These<E, A>
+  f: (a: A0, w: Opt<E0>) => These<E, A>
 ) {
   return foldM_(
     self,
-    a => f(a, Maybe.none),
-    (a, _) => f(a, Maybe.some(_)),
+    a => f(a, Opt.none),
+    (a, _) => f(a, Opt.some(_)),
     fail
   )
 }
 
-export function chain<E0, A0, E, A>(f: (a: A0, w: Maybe<E0>) => These<E, A>) {
+export function chain<E0, A0, E, A>(f: (a: A0, w: Opt<E0>) => These<E, A>) {
   return (self: These<E0, A0>) => chain_(self, f)
 }
 
-export function result<E, A>(self: These<E, A>): Either<E, Tp.Tuple<[A, Maybe<E>]>> {
+export function result<E, A>(self: These<E, A>): Either<E, readonly [A, Opt<E>]> {
   return self.effect
 }

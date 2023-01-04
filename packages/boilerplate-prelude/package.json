@@ -1,19 +1,21 @@
 {
   "name": "@effect-ts-app/boilerplate-prelude",
-  "version": "1.9.2",
+  "version": "2.0.18",
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
-    "@effect/core": "^0.0.16",
-    "@tsplus/stdlib": "^0.2.8",
+    "@effect/io": "^0.0.51",
+    "@effect/stm": "^0.0.9",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
@@ -27,14 +29,14 @@
     "@effect-ts-app/compiler": "workspace:*",
     "@babel/cli": "^7.20.7",
     "@types/faker": "5.5.9",
-    "@types/node": "~18.11.17",
+    "@types/node": "~18.11.18",
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.10",
     "faker": "^5.5.3",
-    "fast-check": "^3.4.0",
+    "fast-check": "^3.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vitest": "^0.26.2"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
+    "vitest": "^0.26.3"
   },
   "typesVersions": {
     "*": {
@@ -122,26 +124,6 @@
       "require": {
         "types": "./dist/_ext/Pure.d.ts",
         "default": "./_cjs/_ext/Pure.cjs"
-      }
-    },
-    "./_ext/RArray": {
-      "import": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./dist/_ext/RArray.js"
-      },
-      "require": {
-        "types": "./dist/_ext/RArray.d.ts",
-        "default": "./_cjs/_ext/RArray.cjs"
-      }
-    },
-    "./_ext/Ref": {
-      "import": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./dist/_ext/Ref.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./_cjs/_ext/Ref.cjs"
       }
     },
     "./_ext/Schema.ext": {
@@ -284,16 +266,6 @@
         "default": "./_cjs/client/fetch.cjs"
       }
     },
-    "./duration": {
-      "import": {
-        "types": "./dist/duration.d.ts",
-        "default": "./dist/duration.js"
-      },
-      "require": {
-        "types": "./dist/duration.d.ts",
-        "default": "./_cjs/duration.cjs"
-      }
-    },
     "./faker": {
       "import": {
         "types": "./dist/faker.d.ts",
@@ -406,9 +378,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
-    "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
     "clean": "rm -rf dist && rm -rf _cjs",
     "clean-dist": "sh ../../scripts/clean-dist.sh",

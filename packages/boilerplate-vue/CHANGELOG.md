@@ -1,5 +1,196 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.0.18
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.16
+  - @effect-ts-app/boilerplate-prelude@2.0.18
+  - @effect-ts-app/boilerplate-vue@2.0.18
+  - @effect-ts-app/schema@2.0.16
+
+## 2.0.17
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.15
+  - @effect-ts-app/boilerplate-prelude@2.0.17
+  - @effect-ts-app/boilerplate-vue@2.0.17
+  - @effect-ts-app/schema@2.0.15
+
+## 2.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.14
+  - @effect-ts-app/boilerplate-prelude@2.0.16
+  - @effect-ts-app/boilerplate-vue@2.0.16
+  - @effect-ts-app/schema@2.0.14
+
+## 2.0.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.13
+  - @effect-ts-app/boilerplate-prelude@2.0.15
+  - @effect-ts-app/boilerplate-vue@2.0.15
+  - @effect-ts-app/schema@2.0.13
+
+## 2.0.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/schema@2.0.12
+  - @effect-ts-app/boilerplate-prelude@2.0.14
+  - @effect-ts-app/boilerplate-vue@2.0.14
+
+## 2.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.0.13
+  - @effect-ts-app/boilerplate-vue@2.0.13
+
+## 2.0.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.12
+  - @effect-ts-app/boilerplate-prelude@2.0.12
+  - @effect-ts-app/boilerplate-vue@2.0.12
+  - @effect-ts-app/schema@2.0.11
+
+## 2.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.11
+  - @effect-ts-app/boilerplate-prelude@2.0.11
+  - @effect-ts-app/boilerplate-vue@2.0.11
+  - @effect-ts-app/schema@2.0.10
+
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.0.10
+  - @effect-ts-app/boilerplate-vue@2.0.10
+
+## 2.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.10
+  - @effect-ts-app/boilerplate-prelude@2.0.9
+  - @effect-ts-app/boilerplate-vue@2.0.9
+  - @effect-ts-app/schema@2.0.9
+
+## 2.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.0.8
+  - @effect-ts-app/boilerplate-prelude@2.0.8
+  - @effect-ts-app/boilerplate-vue@2.0.8
+  - @effect-ts-app/schema@2.0.8
+
+## 2.0.7
+
+### Patch Changes
+
+- Fix Opt alias
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.0.7
+  - @effect-ts-app/boilerplate-vue@2.0.7
+  - @effect-ts-app/schema@2.0.7
+  - @effect-ts-app/core@2.0.7
+
+## 2.0.6
+
+### Patch Changes
+
+- af52e05: vendor
+- Updated dependencies [af52e05]
+  - @effect-ts-app/boilerplate-prelude@2.0.6
+  - @effect-ts-app/boilerplate-vue@2.0.6
+  - @effect-ts-app/schema@2.0.6
+  - @effect-ts-app/core@2.0.6
+
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [43c108c]
+  - @effect-ts-app/core@2.0.5
+  - @effect-ts-app/boilerplate-prelude@2.0.5
+  - @effect-ts-app/boilerplate-vue@2.0.5
+  - @effect-ts-app/schema@2.0.5
+
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies [0f18481]
+  - @effect-ts-app/core@2.0.4
+  - @effect-ts-app/boilerplate-prelude@2.0.4
+  - @effect-ts-app/boilerplate-vue@2.0.4
+  - @effect-ts-app/schema@2.0.4
+
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [21ed348]
+  - @effect-ts-app/core@2.0.3
+  - @effect-ts-app/boilerplate-prelude@2.0.3
+  - @effect-ts-app/boilerplate-vue@2.0.3
+  - @effect-ts-app/schema@2.0.3
+
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [fe517f0]
+  - @effect-ts-app/core@2.0.2
+  - @effect-ts-app/boilerplate-prelude@2.0.2
+  - @effect-ts-app/boilerplate-vue@2.0.2
+  - @effect-ts-app/schema@2.0.2
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [30d1a78]
+  - @effect-ts-app/core@2.0.1
+  - @effect-ts-app/boilerplate-prelude@2.0.1
+  - @effect-ts-app/boilerplate-vue@2.0.1
+  - @effect-ts-app/schema@2.0.1
+
+## 2.0.0
+
+### Major Changes
+
+- c090237: Convert to fp-ts and effect-ts/io
+
+### Patch Changes
+
+- Updated dependencies [c090237]
+  - @effect-ts-app/boilerplate-prelude@2.0.0
+  - @effect-ts-app/boilerplate-vue@2.0.0
+  - @effect-ts-app/schema@2.0.0
+  - @effect-ts-app/core@2.0.0
+
 ## 1.6.4
 
 ### Patch Changes

@@ -31,7 +31,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       save: simpledb.store(find(type), store, lockRecordOnDisk(type), type)
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
@@ -74,22 +74,20 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        Effect.acquireRelease(
-          lockFile(getFilename(type, id)).mapBoth(
-            err => new CouldNotAquireDbLockException(type, id, err as Error),
-            release => ({ release })
-          ),
+        lockFile(getFilename(type, id)).mapBoth(
+          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          release => ({ release })
+        ).acquireRelease(
           l => l.release
         )
     }
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        Effect.acquireRelease(
-          lockFile(getIdxName(type, id)).mapBoth(
-            err => new CouldNotAquireDbLockException(type, id, err as Error),
-            release => ({ release })
-          ),
+        lockFile(getIdxName(type, id)).mapBoth(
+          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          release => ({ release })
+        ).acquireRelease(
           l => l.release
         )
     }
@@ -103,21 +101,22 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(type: string) {
       return (id: string) => {
         return tryRead(getFilename(type, id)).map(
-          Maybe.$.map(s => JSON.parse(s) as CachedRecord<EA>)
+          _ => _.map(s => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
 
     function getIdx(index: Index) {
-      return readIndex(index).map(idx => Maybe.fromNullable(idx[index.key]))
+      return readIndex(index).map(idx => Opt.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        Maybe.$.fold(
-          () => ({} as Record<string, TKey>),
-          x => JSON.parse(x) as Record<string, TKey>
-        )
+        _ =>
+          _.match(
+            () => ({} as Record<string, TKey>),
+            x => JSON.parse(x) as Record<string, TKey>
+          )
       )
     }
 
@@ -128,7 +127,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .flatMap(exists => !exists ? Effect.succeed(Maybe.none) : readFile(filePath).map(Maybe.some))
+        .flatMap(exists => !exists ? Effect.succeed(Opt.none) : readFile(filePath).map(Opt.some))
     }
 
     function getFilename(type: string, id: string) {

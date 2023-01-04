@@ -11,9 +11,10 @@ import * as MO from "../_schema.js"
 // }
 
 export function makeUtils<Schema extends MO.SchemaUPI>(self: Schema): Utils<Schema> {
+  const p = EParserFor(self)
   return {
-    parse: EParserFor(self),
-    unsafe: EParserFor(self) >= MO.unsafe
+    parse: p,
+    unsafe: MO.unsafe(p)
   }
 }
 

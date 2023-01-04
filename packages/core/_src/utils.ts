@@ -5,11 +5,6 @@ import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionar
 
 export * from "./utils/extend.js"
 
-/**
- * @deprecated use Effect.$.unsafeRunSync
- */
-export const unsafe = Effect.$.unsafeRunSync
-
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   if (ei.isLeft()) {
     console.error(ei.left)
@@ -19,7 +14,7 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
 }
 
 export const unsafeSome = (makeErrorMessage: () => string) =>
-  <A>(o: Maybe<A>) => {
+  <A>(o: Opt<A>) => {
     if (o.isNone()) {
       throw new Error(makeErrorMessage())
     }
@@ -63,5 +58,6 @@ export function uncapitalize<T extends string>(string: T): Uncapitalize<T> {
 }
 
 export function pretty(o: unknown) {
-  return JSON.stringify(o, undefined, 2)
+  // JSON.stringify(undefined) ends up with undefined!
+  return JSON.stringify(o, undefined, 2) ?? "undefined"
 }

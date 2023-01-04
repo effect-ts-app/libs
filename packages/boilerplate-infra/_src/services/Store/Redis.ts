@@ -9,7 +9,7 @@ import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const redis = yield* $(RedisClient.RedisClient)
+    const redis = yield* $(RedisClient.RedisClient.get)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
@@ -22,7 +22,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
-            const m = yield* $(existing ?? Effect(ROMap.empty))
+            const m = yield* $(existing ?? Effect.succeed(ROMap.empty))
             yield* $(
               RedisClient.set(key, JSON.stringify({ data: [...m.values()].map(e => makeETag(e)) }))
                 .orDie
@@ -41,8 +41,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const semaphore = TSemaphore.unsafeMake(1)
 
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
-          const all = get.map(Chunk.from)
-          const batchSet = (items: NonEmptyArray<PM>) =>
+          const all = get.map(Chunk.fromIterable)
+          const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             semaphore.withPermit(
               items
                 .forEachEffect(e => s.find(e.id).flatMap(current => updateETag(e, current)))
@@ -55,6 +55,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
                     })
                     .flatMap(set)
                 )
+                .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
             ).provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {
             all,

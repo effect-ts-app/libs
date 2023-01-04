@@ -1,5 +1,107 @@
 # @effect-ts-app/core
 
+## 2.0.16
+
+### Patch Changes
+
+- Update dependencies
+
+## 2.0.15
+
+### Patch Changes
+
+- update packages
+
+## 2.0.14
+
+### Patch Changes
+
+- Update packages
+
+## 2.0.13
+
+### Patch Changes
+
+- Fix pretty undefined
+
+## 2.0.12
+
+### Patch Changes
+
+- Fix
+
+## 2.0.11
+
+### Patch Changes
+
+- array ext
+
+## 2.0.10
+
+### Patch Changes
+
+- bump:
+
+## 2.0.9
+
+### Patch Changes
+
+- tsplus
+
+## 2.0.8
+
+### Patch Changes
+
+- Fixes
+
+## 2.0.7
+
+### Patch Changes
+
+- Fix Opt alias
+
+## 2.0.6
+
+### Patch Changes
+
+- af52e05: vendor
+
+## 2.0.5
+
+### Patch Changes
+
+- 43c108c: fixes
+
+## 2.0.4
+
+### Patch Changes
+
+- 0f18481: Opt cleanup
+
+## 2.0.3
+
+### Patch Changes
+
+- 21ed348: Hub
+
+## 2.0.2
+
+### Patch Changes
+
+- fe517f0: NEA
+
+## 2.0.1
+
+### Patch Changes
+
+- 30d1a78: Fix array ext
+
+## 2.0.0
+
+### Major Changes
+
+- c090237: Convert to fp-ts and effect-ts/io
+
 ## 1.10.0
 
 ### Minor Changes

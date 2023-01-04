@@ -3,15 +3,13 @@
 // tracing: off
 
 import { pretty } from "@effect-ts-app/core/utils"
-import { AtomicBoolean } from "@tsplus/stdlib/data/AtomicBoolean"
-import { literal } from "@tsplus/stdlib/data/Function"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
-import type { Server } from "http"
+import type { IncomingMessage, Server, ServerResponse } from "http"
 import type { Socket } from "net"
 
-export type NonEmptyArray<A> = ReadonlyArray<A> & {
+export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
   readonly 0: A
 }
 // export type _A<T extends Effect<any, any, any>> = [T] extends [
@@ -40,7 +38,7 @@ export class NodeServerListenError {
   constructor(readonly error: Error) {}
 }
 
-export const ExpressAppConfigTag = literal("@effect-ts-app/express/AppConfig")
+export const ExpressAppConfigTag = "@effect-ts-app/express/AppConfig" as const
 
 export interface ExpressAppConfig {
   readonly _tag: typeof ExpressAppConfigTag
@@ -61,7 +59,7 @@ export function LiveExpressAppConfig<R>(
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
   return Layer.fromEffect(ExpressAppConfig)(
-    Effect.environmentWith((r: Env<R>) => ({
+    Effect.environmentWith((r: Context<R>) => ({
       _tag: ExpressAppConfigTag,
       host,
       port,
@@ -70,46 +68,45 @@ export function LiveExpressAppConfig<R>(
   )
 }
 
-export const ExpressAppTag = literal("@effect-ts-app/express/App")
+export const ExpressAppTag = "@effect-ts-app/express/App" as const
 
 export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
   const open = yield* _(
-    Effect.acquireRelease(
-      Effect.sync(() => new AtomicBoolean(true)),
-      a => Effect.sync(() => a.set(false))
-    )
+    Ref.make(true)
+      .acquireRelease(
+        a => Effect.sync(() => a.set(false))
+      )
   )
 
   const app = yield* _(Effect.sync(() => express()))
 
-  const { exitHandler, host, port } = yield* _(ExpressAppConfig)
+  const { exitHandler, host, port } = yield* _(ExpressAppConfig.get)
 
   const connections = new Set<Socket>()
 
   // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
-    Effect.acquireRelease(
-      Effect.async<never, never, Server>(cb => {
-        const onError = (err: Error) => {
-          cb(Effect.die(new NodeServerListenError(err)))
-        }
-        const server = app.listen(port, host, () => {
-          cb(
-            Effect.sync(() => {
-              server.removeListener("error", onError)
-              return server
-            })
-          )
-        })
-        server.addListener("error", onError)
-        server.on("connection", connection => {
-          connections.add(connection)
-          connection.on("close", () => {
-            connections.delete(connection)
+    Effect.async<never, never, Server>(cb => {
+      const onError = (err: Error) => {
+        cb(Effect.die(new NodeServerListenError(err)))
+      }
+      const server = app.listen(port, host, () => {
+        cb(
+          Effect.sync(() => {
+            server.removeListener("error", onError)
+            return server
           })
+        )
+      })
+      server.addListener("error", onError)
+      server.on("connection", connection => {
+        connections.add(connection)
+        connection.on("close", () => {
+          connections.delete(connection)
         })
-      }),
+      })
+    }).acquireRelease(
       server =>
         Effect.async<never, never, void>(cb => {
           connections.forEach(s => {
@@ -128,7 +125,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   )
 
   const supervisor = yield* _(
-    Effect.acquireRelease(Supervisor.track, s => s.value.flatMap(Fiber.interruptAll))
+    Supervisor.track().acquireRelease(s => s.value().flatMap(_ => _.interruptAll))
   )
 
   function runtime<
@@ -148,9 +145,10 @@ export const makeExpressApp = Effect.gen(function*(_) {
       handlers.map(
         (handler): RequestHandler =>
           (req, res, next) => {
-            r.unsafeRunAsync(
-              (open.get ? handler(req, res, next) : Effect.interrupt)
-                .onTermination(exitHandler(req, res, next))
+            r.unsafeRun(
+              open.get
+                .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
+                .onError(exitHandler(req, res, next))
                 .supervised(supervisor)
             )
           }
@@ -169,7 +167,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = Layer.scoped(ExpressApp, makeExpressApp)
+export const LiveExpressApp = Layer.scoped(ExpressApp)(makeExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 
@@ -197,14 +195,18 @@ export function LiveExpress<R>(
   )
 }
 
-export const expressApp = Effect.serviceWith(ExpressApp, _ => _.app)
+export const expressApp = ExpressApp.with(_ => _.app)
 
-export const expressServer = Effect.serviceWith(ExpressApp, _ => _.server)
+export const expressServer = ExpressApp.with(_ => _.server)
 
-export const { app: withExpressApp, server: withExpressServer } = Effect.deriveAccessEffect(ExpressApp)([
-  "app",
-  "server"
-])
+export function withExpressApp<R, E, A>(self: (app: express.Express) => Effect<R, E, A>) {
+  return ExpressApp.withEffect(_ => self(_.app))
+}
+export function withExpressServer<R, E, A>(
+  self: (server: Server<typeof IncomingMessage, typeof ServerResponse>) => Effect<R, E, A>
+) {
+  return ExpressApp.withEffect(_ => self(_.server))
+}
 
 export const methods = [
   "all",
@@ -266,7 +268,7 @@ export interface EffectRequestHandler<
 export function expressRuntime<
   Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return Effect.serviceWithEffect(ExpressApp, _ => _.runtime(handlers))
+  return ExpressApp.withEffect(_ => _.runtime(handlers))
 }
 
 export function match(method: Methods): {

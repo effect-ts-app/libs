@@ -8,4 +8,4 @@ export * from "@effect-ts-app/core/Prelude"
 
 export * as Schema from "@effect-ts-app/schema"
 
-export { Array as ROArray, Map as ROMap, Set as ROSet } from "@effect-ts-app/core/Prelude"
+export { Map as ROMap, Set as ROSet } from "@effect-ts-app/core/Prelude"

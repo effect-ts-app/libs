@@ -1,6 +1,5 @@
 import { Option } from "@effect-ts/core"
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import type { Tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 import { pipe } from "@effect-ts/core/Function"
 import type { EnforceNonEmptyRecord, Unify } from "@effect-ts/core/Utils"
@@ -140,7 +139,7 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
 
 export const unionIdentifier = S.makeAnnotation<{
   props: Record<PropertyKey, S.SchemaUPI>
-  tag: Maybe<{
+  tag: Opt<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -172,27 +171,29 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   const firstMemberTags = entriesTags[0]![1]
 
-  const tag: Maybe<{
+  const tag: Opt<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
     values: readonly string[]
-  }> = ROArray.findFirstMap_(Object.keys(firstMemberTags), tagField => {
-    const tags = ROArray.collect_(entriesTags, ([member, tags]) => {
-      if (tagField in tags) {
-        return Option.some(tuple(tags[tagField], member)) as Option.Some<
-          Tuple<[string, string]>
-        >
+  }> = Object.keys(firstMemberTags).findFirstMap(tagField => {
+    const tags = entriesTags.filterMap(
+      ([member, tags]) => {
+        if (tagField in tags) {
+          return Option.some([tags[tagField], member]) as Option.Some<
+            readonly [string, string]
+          >
+        }
+        return Option.none
       }
-      return Option.none
-    }).uniq({ equals: (x, y) => x.get(0) === y.get(0) })
+    ).uniq({ equals: (x, y) => x[0] === y[0] })
 
     if (tags.length === entries.length) {
       return Option.some({
         key: tagField,
-        index: D.fromArray(tags),
-        reverse: D.fromArray(tags.map(({ tuple: [a, b] }) => tuple(b, a))),
-        values: tags.map(_ => _.get(0))
+        index: D.fromArray(tags.map(([a, b]) => tuple(a, b))),
+        reverse: D.fromArray(tags.map(([a, b]) => tuple(b, a))),
+        values: tags.map(_ => _[0])
       })
     }
 
@@ -271,7 +272,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       ) {
         return Th.fail(
           S.compositionE(
-            Chunk.single(
+            NonEmptyChunk.make(
               S.prevE(S.leafE(S.extractKeyE(tag.value.key, tag.value.values, u)))
             )
           )
@@ -280,9 +281,9 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         // // @ts-expect-error
         return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), e =>
           S.compositionE(
-            Chunk.single(
+            NonEmptyChunk.make(
               S.nextE(
-                S.unionE(Chunk.single(S.memberE(tag.value.index[u[tag.value.key]], e)))
+                S.unionE(NonEmptyChunk.make(S.memberE(tag.value.index[u[tag.value.key]], e)))
               )
             )
           ))
@@ -295,13 +296,16 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       const res = parsersv2[k](u)
 
       if (res.effect._tag === "Right") {
-        return Th.mapError_(res, e => S.compositionE(Chunk.single(S.nextE(S.unionE(Chunk.single(S.memberE(k, e)))))))
+        return Th.mapError_(
+          res,
+          e => S.compositionE(NonEmptyChunk.make(S.nextE(S.unionE(NonEmptyChunk.make(S.memberE(k, e))))))
+        )
       } else {
         errors = errors.append(S.memberE(k, res.effect.left))
       }
     }
 
-    return Th.fail(S.compositionE(Chunk.single(S.nextE(S.unionE(errors)))))
+    return Th.fail(S.compositionE(NonEmptyChunk.make(S.nextE(S.unionE(errors)))))
   }
 
   return pipe(

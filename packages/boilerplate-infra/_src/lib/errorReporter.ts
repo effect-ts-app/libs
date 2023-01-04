@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/node"
+import type { CauseException } from "../errors.js"
 
-export function reportError<E, E2 extends { toJSON(): Record<string, unknown> }>(
+export function reportError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
 ) {
   return (cause: Cause<E>, context?: Record<string, unknown>) =>
@@ -13,8 +14,9 @@ export function reportError<E, E2 extends { toJSON(): Record<string, unknown> }>
       const extras = { context, error: error.toJSON() }
       reportSentry(error, extras)
       yield* $(
-        Effect.logErrorCause(cause)["|>"](
-          Effect.logAnnotate("extras", JSON.stringify(extras))
+        cause.logErrorCause.logAnnotate(
+          "extras",
+          JSON.stringify({ context, error: { _tag: error._tag, message: error.message } })
         )
       )
     })
@@ -26,7 +28,7 @@ function reportSentry(error: unknown, extras: Record<string, unknown>) {
   Sentry.captureException(error, scope)
 }
 
-export function logError<E, E2 extends { toJSON(): Record<string, unknown> }>(
+export function logError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
 ) {
   return (cause: Cause<E>, context?: Record<string, unknown>) =>
@@ -36,10 +38,10 @@ export function logError<E, E2 extends { toJSON(): Record<string, unknown> }>(
         return
       }
       const error = makeError(cause)
-      const extras = { context, error: error.toJSON() }
       yield* $(
-        Effect.logWarningCause(cause)["|>"](
-          Effect.logAnnotate("extras", JSON.stringify(extras))
+        cause.logWarningCause.logAnnotate(
+          "extras",
+          JSON.stringify({ context, error: { _tag: error._tag, message: error.message } })
         )
       )
     })

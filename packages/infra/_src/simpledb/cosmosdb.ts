@@ -38,11 +38,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return Cosmos.db
         .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
-        .map(i => Maybe.fromNullable(i.resource))
+        .map(i => Opt.fromNullable(i.resource))
         .map(
-          Maybe.$.map(
-            ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
-          )
+          _ =>
+            _.map(
+              ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
+            )
         )
     }
 
@@ -72,11 +73,11 @@ WHERE (
               .fetchAll()
           )
         )
-        .map(x => ROArray.head(x.resources))
-        .map(Maybe.$.map(_ => _.id))
+        .map(x => ReadonlyArray.head(x.resources))
+        .map(_ => _.map(_ => _.id))
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       return Effect.gen(function*($) {
         const version = "_etag" // we get this from the etag anyway.
 
@@ -84,7 +85,7 @@ WHERE (
         const data = yield* $(encode(record))
 
         yield* $(
-          currentVersion.fold(
+          currentVersion.match(
             () =>
               Effect.tryPromise(() =>
                 db.container(type).items.create({
@@ -92,7 +93,7 @@ WHERE (
                   timestamp: new Date(),
                   data
                 })
-              ).unit.orDie,
+              ).asUnit.orDie,
             currentVersion =>
               Effect.tryPromise(() =>
                 db

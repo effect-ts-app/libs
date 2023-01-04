@@ -1,16 +1,17 @@
 {
   "name": "@effect-ts-app/infra",
-  "version": "1.7.2",
+  "version": "2.0.18",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "*",
-    "@effect/core": "*",
-    "@tsplus/stdlib": "*",
+    "@effect/io": "^0.0.51",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "proper-lockfile": "^4.1.2",
     "query-string": "^8.1.0"
   },
@@ -29,11 +30,13 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.0.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {
-    "build": "node ../../scripts/package.js && pnpm clean-dist && tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm clean-dist && pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -289,46 +292,6 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
-      }
-    },
-    "./logger": {
-      "import": {
-        "types": "./dist/logger.d.ts",
-        "default": "./dist/logger.js"
-      },
-      "require": {
-        "types": "./dist/logger.d.ts",
-        "default": "./_cjs/logger.cjs"
-      }
-    },
-    "./logger/Console": {
-      "import": {
-        "types": "./dist/logger/Console.d.ts",
-        "default": "./dist/logger/Console.js"
-      },
-      "require": {
-        "types": "./dist/logger/Console.d.ts",
-        "default": "./_cjs/logger/Console.cjs"
-      }
-    },
-    "./logger/Logger": {
-      "import": {
-        "types": "./dist/logger/Logger.d.ts",
-        "default": "./dist/logger/Logger.js"
-      },
-      "require": {
-        "types": "./dist/logger/Logger.d.ts",
-        "default": "./_cjs/logger/Logger.cjs"
-      }
-    },
-    "./logger/Winston": {
-      "import": {
-        "types": "./dist/logger/Winston.d.ts",
-        "default": "./dist/logger/Winston.js"
-      },
-      "require": {
-        "types": "./dist/logger/Winston.d.ts",
-        "default": "./_cjs/logger/Winston.cjs"
       }
     },
     "./mongo-client": {

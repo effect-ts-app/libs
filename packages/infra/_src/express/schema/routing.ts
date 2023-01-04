@@ -12,9 +12,9 @@ export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
 }
 
 export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
-  arr: ROArray<R>
+  arr: ReadonlyArray<R>
 ) {
-  return ROArray.map_(arr, asRouteDescriptionAny)
+  return arr.map(asRouteDescriptionAny)
 }
 
 export interface RouteDescriptor<
@@ -33,7 +33,7 @@ export interface RouteDescriptor<
   method: METHOD
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
   info?: {
-    tags: ROArray<string>
+    tags: ReadonlyArray<string>
   }
 }
 
@@ -97,36 +97,36 @@ export function makeFromSchema<ResA>(
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
   const Res = r ? MO.extractSchema(r) : MO.Void
-  // TODO EffectMaybe.fromNullable(Req.Headers).flatMapMaybe(jsonSchema)
+  // TODO EffectOpt.fromNullable(Req.Headers).flatMapOpt(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = Effect(Maybe.fromNullable(Req.Query)).flatMap(_ =>
-    _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+  const makeReqQuerySchema = Effect.succeed(Opt.fromNullable(Req.Query)).flatMap(_ =>
+    _.match(
+      () => Effect.succeed(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqHeadersSchema = Effect(Maybe.fromNullable(Req.Headers)).flatMap(_ =>
-    _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+  const makeReqHeadersSchema = Effect.succeed(Opt.fromNullable(Req.Headers)).flatMap(_ =>
+    _.match(
+      () => Effect.succeed(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqCookieSchema = Effect(Maybe.fromNullable(Req.Cookie)).flatMap(_ =>
-    _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+  const makeReqCookieSchema = Effect.succeed(Opt.fromNullable(Req.Cookie)).flatMap(_ =>
+    _.match(
+      () => Effect.succeed(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqPathSchema = Effect(Maybe.fromNullable(Req.Path)).flatMap(_ =>
-    _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+  const makeReqPathSchema = Effect.succeed(Opt.fromNullable(Req.Path)).flatMap(_ =>
+    _.match(
+      () => Effect.succeed(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqBodySchema = Effect(Maybe.fromNullable(Req.Body)).flatMap(_ =>
-    _.fold(
-      () => Effect(Maybe.none),
-      _ => jsonSchema(_).map(Maybe.some)
+  const makeReqBodySchema = Effect.succeed(Opt.fromNullable(Req.Body)).flatMap(_ =>
+    _.match(
+      () => Effect.succeed(Opt.none),
+      _ => jsonSchema(_).map(Opt.some)
     )
   )
   // const makeReqSchema = schema(Req)
@@ -134,9 +134,9 @@ export function makeFromSchema<ResA>(
   const makeResSchema = jsonSchema_(Res)
 
   function makeParameters(inn: ParameterLocation) {
-    return (a: Maybe<JSONSchema | SubSchema>) => {
+    return (a: Opt<JSONSchema | SubSchema>) => {
       return a
-        .flatMap(o => (isObjectSchema(o) ? Maybe.some(o) : Maybe.none))
+        .flatMap(o => (isObjectSchema(o) ? Opt.some(o) : Opt.none))
         .map(x => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map(p => {
@@ -177,16 +177,15 @@ export function makeFromSchema<ResA>(
       requestBody: _.reqBody.map(schema => ({
         content: { "application/json": { schema } }
       })).value,
-      responses: ROArray.concat_(
-        [
-          isEmpty
-            ? new Response(204, { description: "Empty" })
-            : new Response(200, {
-              description: "OK",
-              content: { "application/json": { schema: _.res } }
-            }),
-          new Response(400, { description: "ValidationError" })
-        ],
+      responses: [
+        isEmpty
+          ? new Response(204, { description: "Empty" })
+          : new Response(200, {
+            description: "OK",
+            content: { "application/json": { schema: _.res } }
+          }),
+        new Response(400, { description: "ValidationError" })
+      ].concat(
         e.path.includes(":") && isEmpty
           ? [new Response(404, { description: "NotFoundError" })]
           : []

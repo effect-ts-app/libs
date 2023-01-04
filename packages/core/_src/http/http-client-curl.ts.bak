@@ -13,7 +13,7 @@ export const Client = (
     requestTransformer?: F.Endomorphism<C.Curl>
   } = {}
 ) =>
-  Layer.fromValue(H.Http)({
+  H.Http.of({
     request: (
       method: H.Method,
       url: string,

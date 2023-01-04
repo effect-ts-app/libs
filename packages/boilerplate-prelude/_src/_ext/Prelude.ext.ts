@@ -1,18 +1,13 @@
-import "@effect-ts-app/core/_ext/Prelude.ext"
-
-// import "./EffectMaybe.ext.js"
+// import "./EffectOpt.ext.js"
 import "./builtIn.js"
 import "./date.js"
 import "./Has.ext.js"
 import "./Lens.ext.js"
-import "./RArray.js"
-import "./Ref.js"
+// import "./Ref.js"
+import "./refinements.js"
 import "./Schema.ext.js"
 
-import { Option } from "@effect-ts/core"
-import { asUnit } from "@effect/core/io/Effect"
-
-import "./refinements.js"
+import type { Option } from "@fp-ts/data/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
@@ -25,28 +20,28 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
   : never
 
 /**
- * @tsplus fluent Maybe encaseInEffect
+ * @tsplus fluent fp-ts/data/Option encaseInEffect
  */
 export function encaseMaybeInEffect_<E, A>(
-  o: Maybe<A>,
-  onError: Lazy<E>
+  o: Option<A>,
+  onError: LazyArg<E>
 ): Effect<never, E, A> {
-  return o.fold(() => Effect.fail(onError()), Effect.succeed)
+  return o.match(() => Effect.fail(onError()), Effect.succeed)
 }
 
 /**
- * @tsplus getter Either asEffect
+ * @tsplus getter fp-ts/data/Either asEffect
  */
 export const EitherasEffect = Effect.fromEither
 
 /**
- * @tsplus fluent Maybe encaseInEither
+ * @tsplus fluent fp-ts/data/Option encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
-  o: Maybe<A>,
-  onError: Lazy<E>
+  o: Option<A>,
+  onError: LazyArg<E>
 ): Either<E, A> {
-  return o.fold(() => Either.left(onError()), Either.right)
+  return o.match(() => Either.left(onError()), Either.right)
 }
 
 type Service<T> = T extends Tag<infer S> ? S : never
@@ -54,7 +49,7 @@ type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 type Services<T extends Record<string, Tag<any>>> = { [key in keyof T]: Service<T[key]> }
 
 /**
- * @tsplus static effect/core/io/Effect.Ops servicesWith
+ * @tsplus static effect/io/Effect.Ops servicesWith
  */
 export function accessServices_<T extends Record<string, Tag<any>>, A>(
   services: T,
@@ -69,7 +64,7 @@ export function accessServices_<T extends Record<string, Tag<any>>, A>(
 }
 
 /**
- * @tsplus static effect/core/io/Effect.Ops servicesWithEffect
+ * @tsplus static effect/io/Effect.Ops servicesWithEffect
  */
 export function accessServicesM_<T extends Record<string, Tag<any>>, R, E, A>(
   services: T,
@@ -104,16 +99,16 @@ export function accessServicesM<T extends Record<string, Tag<any>>>(services: T)
 }
 
 /**
- * @tsplus getter effect/core/io/Effect toNullable
+ * @tsplus getter effect/io/Effect toNullable
  */
 export function toNullable<R, E, A>(
-  self: Effect<R, E, Maybe<A>>
+  self: Effect<R, E, Option<A>>
 ) {
-  return self.map(_ => _.toNullable)
+  return self.map(_ => _.getOrNull)
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect scope
+ * @tsplus fluent effect/io/Effect scope
  */
 export function scope<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
@@ -123,7 +118,7 @@ export function scope<R, E, A, R2, E2, A2>(
 }
 
 /**
- * @tsplus fluent effect/core/io/Effect flatMapScoped
+ * @tsplus fluent effect/io/Effect flatMapScoped
  */
 export function flatMapScoped<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
@@ -133,7 +128,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 }
 
 // /**
-//  * @tsplus fluent effect/core/io/Effect withScoped
+//  * @tsplus fluent effect/io/Effect withScoped
 //  */
 // export function withScoped<R, E, A, R2, E2, A2>(
 //   effect: Effect<R2, E2, A2>,
@@ -143,7 +138,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 // }
 
 // /**
-//  * @tsplus fluent effect/core/io/Effect withScoped
+//  * @tsplus fluent effect/io/Effect withScoped
 //  */
 // export function withScopedFlatMap<R, E, A, R2, E2, A2>(
 //   effect: (a: A) => Effect<R2, E2, A2>,
@@ -155,36 +150,24 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 /**
  * Recovers from all errors.
  *
- * @tsplus static effect/core/io/Effect.Aspects catchAllMap
- * @tsplus pipeable effect/core/io/Effect catchAllMap
+ * @tsplus static effect/io/Effect.Aspects catchAllMap
+ * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect(f(err)))
+  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect.succeed(f(err)))
 }
 
 /**
- * @tsplus static effect/core/io/Effect.Aspects asUnit
- */
-export const asUnitE = asUnit
-
-/**
- * @tsplus getter Maybe toOption
- * @tsplus static ets/Maybe.Ops toOption
- */
-export function toOption<A>(o: Maybe<A>): Option.Option<A> {
-  return o._tag === "None" ? Option.none : Option.some(o.value)
-}
-
-/**
- * @tsplus fluent effect/core/io/Effect withSpan
+ * @depracted use `logSpan`
+ * @tsplus fluent effect/io/Effect withSpan
  */
 export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
-  return self.apply(Effect.logSpan(label))
+  return self.logSpan(label)
 }
 
 /**
  * Annotates each log in this effect with the specified log annotations.
- * @tsplus static effect/core/io/Effect.Ops logAnnotates
+ * @tsplus static effect/io/Effect.Ops logAnnotates
  */
 export function logAnnotates(kvps: Record<string, string>) {
   return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
@@ -192,9 +175,10 @@ export function logAnnotates(kvps: Record<string, string>) {
       .get
       .flatMap(annotations =>
         Effect.suspendSucceed(() =>
-          effect.apply(
+          pipe(
+            effect,
             FiberRef.currentLogAnnotations.locally(
-              ImmutableMap.from([...annotations, ...kvps.$$.entries])
+              new Map([...annotations, ...kvps.$$.entries]) as ReadonlyMap<string, string>
             )
           )
         )
@@ -204,7 +188,7 @@ export function logAnnotates(kvps: Record<string, string>) {
 /**
  * Annotates each log in this scope with the specified log annotation.
  *
- * @tsplus static effect/core/io/Effect.Ops logAnnotateScoped
+ * @tsplus static effect/io/Effect.Ops logAnnotateScoped
  */
 export function logAnnotateScoped(key: string, value: string) {
   return FiberRef.currentLogAnnotations
@@ -212,7 +196,7 @@ export function logAnnotateScoped(key: string, value: string) {
     .flatMap(annotations =>
       Effect.suspendSucceed(() =>
         FiberRef.currentLogAnnotations.locallyScoped(
-          annotations.set(key, value)
+          (annotations as Map<string, string>).set(key, value)
         )
       )
     )
@@ -221,7 +205,7 @@ export function logAnnotateScoped(key: string, value: string) {
 /**
  * Annotates each log in this scope with the specified log annotations.
  *
- * @tsplus static effect/core/io/Effect.Ops logAnnotatesScoped
+ * @tsplus static effect/io/Effect.Ops logAnnotatesScoped
  */
 export function logAnnotatesScoped(kvps: Record<string, string>) {
   return FiberRef.currentLogAnnotations
@@ -229,7 +213,7 @@ export function logAnnotatesScoped(kvps: Record<string, string>) {
     .flatMap(annotations =>
       Effect.suspendSucceed(() =>
         FiberRef.currentLogAnnotations.locallyScoped(
-          ImmutableMap.from([...annotations, ...kvps.$$.entries])
+          new Map([...annotations, ...kvps.$$.entries])
         )
       )
     )

@@ -96,7 +96,7 @@ export interface DataInput {
 export type Headers = Record<string, string>
 
 export interface Response<Body> {
-  body: Maybe<Body>
+  body: Opt<Body>
   headers: Headers
   status: number
 }
@@ -160,13 +160,13 @@ export function foldHttpError<A, B, ErrorBody>(
 
 export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Tag<HttpHeaders>()
-const accessHttpHeaders_ = Effect.environmentWith((env: Env<never>) => env.getMaybe(HttpHeaders))
+const accessHttpHeaders_ = Effect.environmentWith((env: Context<never>) => env.getOption(HttpHeaders))
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: Maybe<HttpHeaders>) => Effect<R, E, A>
+  eff: (h: Opt<HttpHeaders>) => Effect<R, E, A>
 ) {
   return accessHttpHeaders_.flatMap(eff)
 }
-export function accessHttpHeaders<A>(eff: (h: Maybe<HttpHeaders>) => A) {
+export function accessHttpHeaders<A>(eff: (h: Opt<HttpHeaders>) => A) {
   return accessHttpHeaders_.map(eff)
 }
 
@@ -210,20 +210,20 @@ export interface MiddlewareStack {
 
 export const MiddlewareStack = Tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = Effect.environmentWith((env: Env<never>) => env.getMaybe(MiddlewareStack))
+const accessMiddlewareStack_ = Effect.environmentWith((env: Context<never>) => env.getOption(MiddlewareStack))
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: Maybe<MiddlewareStack>) => Effect<R, E, A>
+  eff: (h: Opt<MiddlewareStack>) => Effect<R, E, A>
 ) {
   return accessMiddlewareStack_.flatMap(eff)
 }
 export function accessMiddlewareStack<A>(
-  eff: (h: Maybe<MiddlewareStack>) => A
+  eff: (h: Opt<MiddlewareStack>) => A
 ) {
   return accessMiddlewareStack_.map(eff)
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  Layer.fromValue(MiddlewareStack, {
+  MiddlewareStack.of({
     stack
   })
 
@@ -259,7 +259,7 @@ export function requestInner<
   body: RequestBodyTypes[Req][M]
 ): Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM(headers =>
-    Effect.serviceWithEffect(Http, h =>
+    Http.withEffect(h =>
       h.request<M, Req, Resp>(
         method,
         url,
@@ -267,7 +267,8 @@ export function requestInner<
         responseType,
         headers.getOrElse(() => ({})),
         body
-      ))
+      )
+    )
   )
 }
 
@@ -331,7 +332,7 @@ export function request<
 > {
   return (url, body) =>
     accessMiddlewareStackM(s =>
-      foldMiddlewareStack(s.toNullable, requestInner)<R, M, Req, Resp>(
+      foldMiddlewareStack(s.getOrNull, requestInner)<R, M, Req, Resp>(
         method,
         url,
         requestType,
@@ -420,14 +421,14 @@ export function withHeaders(
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.environmentWithEffect((r: Env<R>) => Effect.$.provideEnvironment(r.add(HttpHeaders, headers))(eff))
-      : Effect.environmentWithEffect((r: Env<R>) =>
-        Effect.$.provideEnvironment(
-          r.add(HttpHeaders, {
-            ...(r.getMaybe(HttpHeaders).value ?? {}),
+      ? Effect.environmentWithEffect((r: Context<R>) => eff.provideEnvironment(Context.add(HttpHeaders)(headers)(r)))
+      : Effect.environmentWithEffect((r: Context<R>) =>
+        eff.provideEnvironment(
+          Context.add(HttpHeaders)({
+            ...(r.getOption(HttpHeaders).value ?? {}),
             ...headers
-          })
-        )(eff)
+          })(r)
+        )
       )
 }
 

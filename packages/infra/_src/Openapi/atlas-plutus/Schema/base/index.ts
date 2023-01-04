@@ -11,7 +11,7 @@ export const References = Tag<References>()
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
-  constructor(readonly errors: ROArray<string>) {}
+  constructor(readonly errors: ReadonlyArray<string>) {}
 }
 
 export interface ConfigExtensionRef {
@@ -32,7 +32,7 @@ export function referenced(x?: ConfigExtensionRef) {
     if (x && typeof x.openapiRef !== "undefined") {
       const { openapiRef } = x
       return Effect.gen(function*(_) {
-        const { ref } = yield* _(References)
+        const { ref } = yield* _(References.get)
         const jsonSchema = yield* _(schema)
         yield* _(ref.update(m => m.set(openapiRef, jsonSchema)))
         return SchemaRef(`#/components/schemas/${openapiRef}`)
@@ -53,7 +53,7 @@ export const succeed = (_: SubSchema) => Effect.succeed(_)
 export const dieMessage = (_: string) => Effect.die(new UnsupportedOperation([_]))
 
 export function described(description: string) {
-  return Effect.$.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       description
@@ -62,7 +62,7 @@ export function described(description: string) {
 }
 
 export function titled(title: string) {
-  return Effect.$.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       title

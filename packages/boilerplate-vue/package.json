@@ -1,35 +1,36 @@
 {
   "name": "@effect-ts-app/boilerplate-vue",
-  "version": "1.6.4",
+  "version": "2.0.18",
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
     "@effect-ts-app/boilerplate-vue": "workspace:*",
     "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "*",
+    "@effect-ts-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
-    "@effect/core": "^0.0.16",
-    "@tsplus/stdlib": "^0.2.8",
+    "@effect/io": "^0.0.51",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "query-string": "^8.1.0",
-    "swrv": "^1.0.1",
+    "swrv": "^1.0.2",
     "vue": "^3.2.45"
   },
   "devDependencies": {
     "@effect-ts-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
     "@babel/cli": "^7.20.7",
-    "@types/node": "~18.11.17",
-    "json5": "^2.2.2",
+    "@types/node": "~18.11.18",
+    "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vite": "^4.0.3",
-    "vitest": "^0.26.2",
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
+    "vite": "^4.0.4",
+    "vitest": "^0.26.3",
     "vue": "^3.2.45"
   },
   "typesVersions": {
@@ -122,9 +123,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
-    "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
     "clean": "rm -rf dist && rm -rf _cjs",
     "clean-dist": "sh ../../scripts/clean-dist.sh",

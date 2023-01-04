@@ -1,5 +1,3 @@
-import type { Predicate } from "./Function.js"
-
 export const all_ = <T>(v: T, ...a: Predicate<T>[]) => !a.some(x => !x(v))
 export const all = <T>(...a: Predicate<T>[]) => (v: T) => all_(v, ...a)
 

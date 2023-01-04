@@ -1,0 +1,26 @@
+diff --git a/dist/index.js b/dist/index.js
+index 69126edc70f6abdf3ba0306db22059fc812bfa89..be4d1241650b464ba067de85fb796a7920fd847f 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -129,7 +129,7 @@ const codegen = {
+                 const normalise = (val) => val.trim().replace(/\r?\n/g, os.EOL);
+                 const result = (0, Either_1.tryCatch)(() => {
+                     const meta = { filename: context.getFilename(), existingContent };
+-                    return preset({ meta, options: opts });
++                    return preset({ meta, options: opts }, context);
+                 }, err => `${err}`);
+                 if (result._tag === 'Left') {
+                     context.report({ message: result.left, loc: startMarkerLoc });
+diff --git a/dist/presets/index.d.ts b/dist/presets/index.d.ts
+index a919405f6aeb9f3d3887d69d10350b46b790cf8e..3122de22e92cdf2d95d8bd881d054b35eb223f0c 100644
+--- a/dist/presets/index.d.ts
++++ b/dist/presets/index.d.ts
+@@ -4,7 +4,7 @@ export declare type Preset<Options> = (params: {
+         existingContent: string;
+     };
+     options: Options;
+-}) => string;
++}, context: any) => string;
+ export * from './barrel';
+ export * from './custom';
+ export * from './empty';

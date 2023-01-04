@@ -1,9 +1,6 @@
-import type * as Eq from "@effect-ts/core/Equal"
-
+import { Option as OptionLegacy } from "@effect-ts/core"
 import { flow } from "./Function.js"
-import * as Maybe from "./Maybe.js"
-import type { NonEmptyArray } from "./NonEmptyArray.js"
-import type * as Ord from "./Order.js"
+import { Option } from "./Prelude.js"
 import {
   filter_,
   filterMap,
@@ -25,15 +22,19 @@ export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
 }
 
+function convertOpt<A>(a: Option<A>) {
+  return a.isSome() ? OptionLegacy.some(a.value) : OptionLegacy.none
+}
 /**
  * @tsplus type ets/NESet
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
+function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
+  const eq = eq_ ?? <Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
-  const fromNonEmptyArray = (arr: NonEmptyArray<A>) => fromArray_(arr) as NonEmptySet<A>
+  const fromNonEmptyArray = (arr: NonEmptyReadonlyArray<A>) => fromArray_(arr) as NonEmptySet<A>
   const concat_ = (set: NonEmptySet<A>, it: Iterable<A>) => fromArray([...set, ...it])
   const insert__ = insertOriginal(eq)
   const insert: (a: A) => (set: NonEmptySet<A>) => NonEmptySet<A> = insert__ as any
@@ -47,7 +48,7 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
   const toArray__ = toArrayOriginal(ord)
 
   function toArray(s: NonEmptySet<A>) {
-    return toArray__(s) as NonEmptyArray<A>
+    return toArray__(s) as NonEmptyReadonlyArray<A>
   }
 
   const remove__ = remove(eq)
@@ -78,14 +79,14 @@ function make_<A>(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Maybe.Maybe<A>) => flow(filterMap__(f), fromSet),
+    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>(a => convertOpt(f(a))), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord.Ord<A>, eq: Eq.Equal<A>) {
+  wrapped(ord: Ord<A>, eq?: Equal<A>) {
     return make_(ord, eq)
   }
 }
@@ -93,15 +94,15 @@ class Wrapper<A> {
 export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Ord.Ord<A>,
-  eq: Eq.Equal<A>
+  ord: Ord<A>,
+  eq?: Equal<A>
 ) => NonEmptySetSchemaExtensions<A> = make_
 
 export function fromSet<A>(set: Set<A>) {
   if (set.size > 0) {
-    return Maybe.some(set as NonEmptySet<A>)
+    return Option.some(set as NonEmptySet<A>)
   } else {
-    return Maybe.none
+    return Option.none
   }
 }
 

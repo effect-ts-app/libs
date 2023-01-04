@@ -14,7 +14,6 @@ import {
 } from "@effect-ts-app/schema"
 
 import { ROSet } from "@effect-ts-app/core/Prelude"
-import type { NonEmptyArray } from "@effect-ts-app/core/Prelude"
 
 export const PositiveNumber = positive(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
@@ -50,7 +49,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
         _.array(arbitrarySelf(_), {
           minLength: 1,
           maxLength: MAX_LENGTH
-        }) as any as Arbitrary.Arbitrary<NonEmptyArray<ParsedShape>>
+        }) as any as Arbitrary.Arbitrary<NonEmptyReadonlyArray<ParsedShape>>
     )
   )
 }
@@ -73,11 +72,10 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq?: Equivalence<ParsedShape>
+  eq: Equal<ParsedShape>
 ) {
-  const eq_ = eq ?? ord.equivalence
   const arbitrarySelf = Arbitrary.for(self)
   return setOriginal(self, ord, eq)["|>"](
-    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq_)))
+    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
   )
 }

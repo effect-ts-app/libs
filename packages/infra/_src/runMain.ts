@@ -1,5 +1,4 @@
-import * as Supervisor from "@effect-ts/system/Supervisor"
-import type { FiberId } from "@effect/core/io/FiberId"
+import type { FiberId } from "@effect/io/Fiber/Id"
 import { inspect } from "util"
 
 export function defaultTeardown(
@@ -7,20 +6,21 @@ export function defaultTeardown(
   id: FiberId,
   onExit: (status: number) => void
 ) {
-  Fiber.interruptAllAs(FiberScope._roots, id).unsafeRunAsyncWith(() => {
-    setTimeout(() => {
-      if (Supervisor.mainFibers.size === 0) {
-        onExit(status)
-      } else {
-        defaultTeardown(status, id, onExit)
-      }
-    }, 0)
-  })
+  Fiber.roots().flatMap(_ => _.interruptAllWith(id))
+    .unsafeRun(() => {
+      setTimeout(() => {
+        if (Fiber.unsafeRoots().length === 0) {
+          onExit(status)
+        } else {
+          defaultTeardown(status, id, onExit)
+        }
+      }, 0)
+    })
 }
 
 /**
  * A dumbed down version of effect-ts/node's runtime, in preparation of new effect-ts
- * @tsplus fluent effect/core/io/Effect runMain
+ * @tsplus fluent effect/io/Effect runMain
  */
 export function runMain<E, A>(eff: Effect<never, E, A>) {
   const onExit = (s: number) => {
@@ -29,34 +29,30 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
 
   Fiber.fromEffect(eff)
     .map(context => {
-      context.await
+      context.await()
         .map(exit => {
-          switch (exit._tag) {
-            case "Failure": {
-              if (exit.cause.isInterruptedOnly) {
-                defaultTeardown(0, context.id, onExit)
-                break
-              } else {
-                console.error(inspect(exit.cause, true, 25))
-                defaultTeardown(1, context.id, onExit)
-                break
-              }
+          if (exit.isFailure()) {
+            if (exit.cause.isInterruptedOnly) {
+              defaultTeardown(0, context.id(), onExit)
+              return
+            } else {
+              console.error(inspect(exit.cause, true, 25))
+              defaultTeardown(1, context.id(), onExit)
+              return
             }
-            case "Success": {
-              defaultTeardown(0, context.id, onExit)
-              break
-            }
+          } else {
+            defaultTeardown(0, context.id(), onExit)
           }
         })
-        .unsafeRunAsync()
+        .unsafeRun()
 
       function handler() {
         process.removeListener("SIGTERM", handler)
         process.removeListener("SIGINT", handler)
-        context.interruptAs(context.id).unsafeRunAsync()
+        context.interruptWith(context.id()).unsafeRun()
       }
       process.once("SIGTERM", handler)
       process.once("SIGINT", handler)
     })
-    .unsafeRunAsync()
+    .unsafeRun()
 }

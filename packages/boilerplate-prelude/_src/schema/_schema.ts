@@ -37,7 +37,6 @@ import type * as Th from "@effect-ts-app/schema/custom/These"
 import type { EnforceNonEmptyRecord } from "@effect-ts/core/Utils"
 import type * as faker from "faker"
 
-import type { ROArray } from "@effect-ts-app/core/Prelude"
 import * as S from "@effect-ts-app/schema"
 import { fakerToArb, getFaker } from "../faker.js"
 
@@ -67,7 +66,7 @@ export function fitIntoLongString(str: string) {
 
 export class CustomSchemaException extends Error {
   readonly _tag = "ValidationError"
-  readonly errors: ROArray<unknown>
+  readonly errors: ReadonlyArray<unknown>
   constructor(error: S.AnyError) {
     super(S.drawError(error))
     this.errors = [error]
@@ -99,11 +98,11 @@ export function condemnCustom_<X, A>(
     if (res._tag === "Left") {
       return Effect.fail(new CustomSchemaException(res.left))
     }
-    const warn = res.right.get(1)
+    const warn = res.right[1]
     if (warn._tag === "Some") {
       return Effect.fail(new CustomSchemaException(warn.value))
     }
-    return Effect(res.right.get(0))
+    return Effect.succeed(res.right[0])
   })
 }
 
@@ -121,12 +120,10 @@ export function condemn_<X, E, A>(
     if (y._tag === "Left") {
       return Effect.fail(y.left)
     }
-    const {
-      tuple: [a, w]
-    } = y.right
+    const [a, w] = y.right
     return w._tag === "Some"
       ? Effect.fail(w.value)
-      : Effect(a)
+      : Effect.succeed(a)
   })
 }
 
@@ -143,11 +140,11 @@ export function condemnLeft_<X, A>(
   if (res._tag === "Left") {
     return Either.left(new CustomSchemaException(res.left))
   }
-  const warn = res.right.get(1)
+  const warn = res.right[1]
   if (warn._tag === "Some") {
     return Either.left(new CustomSchemaException(warn.value))
   }
-  return Either(res.right.get(0))
+  return Either.right(res.right[0])
 }
 
 export function condemnLeft<X, A>(self: Parser.Parser<X, AnyError, A>) {
@@ -357,13 +354,13 @@ export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {
   return (a: X, env?: Parser.ParserEnv) => {
     const res = self(a, env).effect
     if (res._tag === "Left") {
-      return Maybe.none
+      return Opt.none
     }
-    const warn = res.right.get(1)
+    const warn = res.right[1]
     if (warn._tag === "Some") {
-      return Maybe.none
+      return Opt.none
     }
-    return Maybe(res.right.get(0))
+    return Opt.some(res.right[0])
   }
 }
 
@@ -691,12 +688,10 @@ export function validate<X, A>(
     if (y._tag === "Left") {
       return Either.left(new CustomSchemaException(y.left))
     }
-    const {
-      tuple: [a, w]
-    } = y.right
+    const [a, w] = y.right
     return w._tag === "Some"
       ? Either.left(new CustomSchemaException(w.value))
-      : Either(a)
+      : Either.right(a)
   }
 }
 

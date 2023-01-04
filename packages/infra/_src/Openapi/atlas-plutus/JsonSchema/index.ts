@@ -53,7 +53,7 @@ export class StringSchema extends Base<
 
 export class EnumSchema extends Base<
   DescriptionSchema & {
-    enum: ROArray<string>
+    enum: ReadonlyArray<string>
   }
 > {
   readonly type = "string"
@@ -61,7 +61,7 @@ export class EnumSchema extends Base<
 
 export interface NumberEnumSchema extends DescriptionSchema {
   type: "number"
-  enum: ROArray<number>
+  enum: ReadonlyArray<number>
 }
 
 export const isEnumSchema = (x: JSONSchema): x is EnumSchema =>
@@ -85,7 +85,7 @@ export class BooleanSchema extends Base<DescriptionSchema> {
 
 export class ArraySchema extends Base<
   DescriptionSchema & {
-    items: SubSchema | ROArray<SubSchema>
+    items: SubSchema | ReadonlyArray<SubSchema>
     minItems?: number
     maxItems?: number
     description?: string
@@ -103,7 +103,7 @@ export const Ref = ($ref: string): Ref => ({ $ref })
 
 export class ObjectSchema extends Base<
   DescriptionSchema & {
-    required?: ROArray<string>
+    required?: ReadonlyArray<string>
     properties?: Record<string, SubSchema>
     additionalProperties?: SubSchema
   }
@@ -128,7 +128,7 @@ export const Anything: Anything = {}
 
 export class OneOfSchema extends Base<
   DescriptionSchema & {
-    oneOf: ROArray<JSONSchema | SubSchema>
+    oneOf: ReadonlyArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
     }
@@ -137,7 +137,7 @@ export class OneOfSchema extends Base<
 
 export class AllOfSchema extends Base<
   DescriptionSchema & {
-    allOf: ROArray<JSONSchema | SubSchema>
+    allOf: ReadonlyArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
     }

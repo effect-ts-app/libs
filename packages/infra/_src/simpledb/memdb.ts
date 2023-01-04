@@ -28,9 +28,9 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .map(Maybe.$.map(s => JSON.parse(s) as unknown))
-        .flatMapMaybe(parseSDB)
-        .mapMaybe(({ data, version }) => ({
+        .map(_ => _.map(s => JSON.parse(s) as unknown))
+        .flatMapOpt(parseSDB)
+        .mapOpt(({ data, version }) => ({
           data: JSON.parse(data) as EA,
           version
         }))
@@ -50,15 +50,15 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 : Effect.fail("not equals")
             ).exit
           )
-          if (r._tag === "Success") {
+          if (Exit.isSuccess(r)) {
             return r.value
           }
         }
         return null
-      }).map(Maybe.fromNullable)
+      }).map(Opt.fromNullable)
     }
 
-    function store(record: A, currentVersion: Maybe<Version>) {
+    function store(record: A, currentVersion: Opt<Version>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
@@ -75,5 +75,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function bogusLock() {
-  return Effect.acquireRelease(Effect.unit, () => Effect.unit)
+  return Effect.unit.acquireRelease(() => Effect.unit)
 }

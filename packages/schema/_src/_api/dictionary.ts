@@ -39,7 +39,7 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
   ): Th.These<ParserErrorFromDictionary, Dictionary<ParsedShape>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        MO.compositionE(Chunk.single(MO.prevE(MO.leafE(MO.unknownRecordE(_)))))
+        MO.compositionE(NonEmptyChunk.make(MO.prevE(MO.leafE(MO.unknownRecordE(_)))))
       )
     }
     let errors = Chunk.empty<
@@ -61,9 +61,9 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
         errors = errors.append(MO.requiredKeyE(key, res.effect.left))
         isError = true
       } else {
-        result[key] = res.effect.right.get(0)
+        result[key] = res.effect.right[0]
 
-        const warnings = res.effect.right.get(1)
+        const warnings = res.effect.right[1]
 
         if (warnings._tag === "Some") {
           errors = errors.append(MO.requiredKeyE(key, warnings.value))
@@ -75,11 +75,11 @@ export function dictionary<ParserInput, ParsedShape, ConstructorInput, Encoded, 
       augmentRecord(result)
     }
 
-    if (errors.isEmpty) {
+    if (errors.isEmpty()) {
       return Th.succeed(result as Dictionary<ParsedShape>)
     }
 
-    const error_ = MO.compositionE(Chunk.single(MO.nextE(MO.structE(errors))))
+    const error_ = MO.compositionE(NonEmptyChunk.make(MO.nextE(MO.structE(errors))))
     const error = error_
 
     if (isError) {

@@ -1,22 +1,22 @@
 {
   "name": "@effect-ts-app/compiler",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@rollup/pluginutils": "^5.0.2",
-    "vite": "^4.0.3"
+    "vite": "^4.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
-    "@types/node": "~18.11.17",
-    "json5": "^2.2.2",
+    "@types/node": "~18.11.18",
+    "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vitest": "^0.26.2"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
+    "vitest": "^0.26.3"
   },
   "typesVersions": {
     "*": {
@@ -48,9 +48,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
-    "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
     "clean": "rm -rf dist && rm -rf _cjs",
     "clean-dist": "sh ../../scripts/clean-dist.sh",

@@ -2,7 +2,6 @@
 
 // based on the work of Giulio Canti in io-ts (3.x poc stage)
 
-import { flow } from "@effect-ts/core/Function"
 import { Case } from "@effect-ts/system/Case"
 
 export interface Actual<A> {
@@ -474,25 +473,25 @@ export function toTreeWith<E>(
       case "Refinement": {
         return tree(
           `1 error(s) found while processing a refinement`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       }
       case "RequiredKey": {
         return tree(
           `1 error(s) found while processing required key ${JSON.stringify(de.key)}`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       }
       case "OptionalKey": {
         return tree(
           `1 error(s) found while processing optional key ${JSON.stringify(de.key)}`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       }
       case "OptionalIndex":
         return tree(
           `1 error(s) found while processing optional index ${de.index}`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       case "Collection":
         return tree(
@@ -514,7 +513,7 @@ export function toTreeWith<E>(
       case "Named": {
         return tree(
           `1 error(s) found while processing ${de.name}`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       }
       case "Missing": {
@@ -526,7 +525,7 @@ export function toTreeWith<E>(
       case "Member":
         return tree(
           `1 error(s) found while processing member ${JSON.stringify(de.member)}`,
-          Chunk.single(go(de.error))
+          NonEmptyChunk.make(go(de.error))
         )
       case "Intersection":
         return tree(

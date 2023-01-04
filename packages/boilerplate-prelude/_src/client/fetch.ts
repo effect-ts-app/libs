@@ -14,10 +14,6 @@ export class ResponseError {
   constructor(public readonly error: unknown) {}
 }
 
-export const mapResponseErrorS = Effect.$.mapError(
-  (err: unknown) => new ResponseError(err)
-)
-
 export function fetchApi(method: H.Method, path: string, body?: unknown) {
   const request = H.request(method, "JSON", "JSON")
   return getConfig(({ apiUrl, headers }) =>
@@ -32,10 +28,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
   encodeRequest: (a: RequestA) => RequestE,
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
-  const decodeRes = flow(
-    decodeResponse,
-    Effect.$.mapError(err => new ResponseError(err))
-  )
+  const decodeRes = (u: unknown) => decodeResponse(u).mapError(err => new ResponseError(err))
   return (method: H.Method, path: Path) =>
     (req: RequestA) =>
       fetchApi(
@@ -134,15 +127,15 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
   return (r: FetchResponse<T>): Effect<R, E, FetchResponse<A>> => {
     return Effect.struct({
       body: map(r.body),
-      headers: Effect(r.headers),
-      status: Effect(r.status)
+      headers: Effect.succeed(r.headers),
+      status: Effect.succeed(r.status)
     })
   }
 }
 export type FetchResponse<T> = { body: T; headers: H.Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
-export const EmptyResponseM = Effect(EmptyResponse)
+export const EmptyResponseM = Effect.succeed(EmptyResponse)
 const EmptyResponseMThunk_ = constant(EmptyResponseM)
 export function EmptyResponseMThunk<T>(): Effect<
   unknown,
@@ -158,5 +151,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<R, E, FetchResponse<A | null>>) {
-  return eff.flatMap(r => r.body === null ? Effect.die("Not found") : Effect(r.body))
+  return eff.flatMap(r => r.body === null ? Effect.die("Not found") : Effect.succeed(r.body))
 }

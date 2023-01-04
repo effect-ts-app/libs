@@ -1,19 +1,20 @@
-import { Option } from "@effect-ts/core"
+import { Option as OptionLegacy } from "@effect-ts/core"
+import { Option } from "../Prelude.js"
 
 /**
- * @tsplus getter Maybe toOption
- * @tsplus static ets/Maybe.Ops toOption
+ * @tsplus getter Opt toOption
+ * @tsplus static ets/Option.Ops toOption
  */
-export function toOption<A>(o: Maybe<A>): Option.Option<A> {
-  return o._tag === "None" ? Option.none : Option.some(o.value)
+export function toOption<A>(o: Option<A>): OptionLegacy.Option<A> {
+  return o._tag === "None" ? OptionLegacy.none : OptionLegacy.some(o.value)
 }
 
 /**
- * @tsplus static Maybe.Ops fromOption
- * @tsplus getter ets/Maybe toMaybe
+ * @tsplus static fp-ts-data/Option.Ops fromOption
+ * @tsplus getter ets/Option toOpt
  */
-export function fromOption<A>(o: Option.Option<A>) {
-  return o._tag === "None" ? Maybe.none : Maybe.some(o.value)
+export function fromOption<A>(o: OptionLegacy.Option<A>) {
+  return o._tag === "None" ? Option.none : Option.some(o.value)
 }
 
 export const PartialExceptionTypeId = Symbol()
@@ -29,17 +30,17 @@ function raisePartial<X>(): X {
 
 /**
  * Simulates a partial function
- * @tsplus static Maybe.Ops partial
+ * @tsplus static fp-ts/data/Option.Ops partial
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A
-): (...args: ARGS) => Maybe<A> {
+): (...args: ARGS) => Option<A> {
   return (...args) => {
     try {
-      return Maybe.some(f(raisePartial)(...args))
+      return Option.some(f(raisePartial)(...args))
     } catch (e) {
       if (e instanceof PartialException) {
-        return Maybe.none
+        return Option.none
       }
       throw e
     }

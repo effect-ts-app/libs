@@ -1,4 +1,4 @@
-import { Queue as Q } from "@effect/core/io/Queue"
+import { Queue as Q } from "@effect/io/Queue"
 
 export interface MemQueue {
   getOrCreateQueue: (k: string) => Effect<never, never, Queue<string>>
@@ -16,7 +16,7 @@ export const MemQueue: MemQueueOps = Tag<MemQueue>()
  */
 export const LiveMemQueue = Layer.fromEffect(MemQueue)(
   Effect.gen(function*($) {
-    const store = yield* $(Effect(new Map<string, Queue<string>>()))
+    const store = yield* $(Effect.succeed(new Map<string, Queue<string>>()))
 
     return {
       getOrCreateQueue: (k: string) =>

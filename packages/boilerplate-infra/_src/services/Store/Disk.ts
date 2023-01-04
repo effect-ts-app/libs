@@ -39,7 +39,7 @@ function makeDiskStore({ prefix }: StorageConfig) {
             make<Id, Id, E>(
               name,
               !fs.existsSync(file)
-                ? existing ?? Effect(ROMap.empty)
+                ? existing ?? Effect.succeed(ROMap.empty)
                 : fsStore.get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
             )
           )
@@ -51,19 +51,19 @@ function makeDiskStore({ prefix }: StorageConfig) {
           const s: Store<E, Id> = {
             ...store,
             batchSet: flow(store.batchSet, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
+              t.tap(() => flushToDisk.tapErrorCause(err => Effect.succeed(console.error(err))).forkDaemon)),
             bulkSet: flow(store.bulkSet, t =>
               t.tap(() =>
                 flushToDisk.tapErrorCause(err =>
-                  Effect(console.error(err))
+                  Effect.succeed(console.error(err))
                 ).forkDaemon
               )),
             set: flow(store.set, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
+              t.tap(() => flushToDisk.tapErrorCause(err => Effect.succeed(console.error(err))).forkDaemon)),
             remove: flow(store.remove, t =>
               t.tap(() =>
                 flushToDisk.tapErrorCause(err =>
-                  Effect(console.error(err))
+                  Effect.succeed(console.error(err))
                 ).forkDaemon
               ))
           }

@@ -31,7 +31,7 @@ function getBody(
 const makeAbort = Effect.sync(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
-  Layer.fromValue(H.Http, {
+  H.Http.of({
     request(
       method: H.Method,
       url: string,
@@ -66,32 +66,32 @@ export const Client = (fetchApi: typeof fetch) =>
                     ? {
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(void 0)
+                      body: Opt.fromNullable(void 0)
                     }
                     : resp.json().then((json: unknown) => ({
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(json)
+                      body: Opt.fromNullable(json)
                     })),
                 () =>
                   resp.text().then(text => ({
                     headers: h,
                     status: resp.status,
-                    body: Maybe.fromNullable(text)
+                    body: Opt.fromNullable(text)
                   })),
                 () => {
                   if (resp["arrayBuffer"]) {
                     return resp.arrayBuffer().then(arrayBuffer => ({
                       headers: h,
                       status: resp.status,
-                      body: Maybe.fromNullable(Buffer.from(arrayBuffer))
+                      body: Opt.fromNullable(Buffer.from(arrayBuffer))
                     }))
                   } else {
                     return ((resp as any).buffer() as Promise<Buffer>).then(
                       (buffer: Buffer) => ({
                         headers: h,
                         status: resp.status,
-                        body: Maybe.fromNullable(Buffer.from(buffer))
+                        body: Opt.fromNullable(Buffer.from(buffer))
                       })
                     )
                   }
@@ -104,7 +104,7 @@ export const Client = (fetchApi: typeof fetch) =>
                   response: {
                     headers: h,
                     status: resp.status,
-                    body: Maybe.fromNullable(text)
+                    body: Opt.fromNullable(text)
                   }
                 }
               })

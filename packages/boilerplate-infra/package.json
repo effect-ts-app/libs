@@ -1,23 +1,23 @@
 {
   "name": "@effect-ts-app/boilerplate-infra",
-  "version": "1.9.1",
+  "version": "2.0.23",
   "license": "MIT",
   "type": "module",
   "resolutions": {
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
   },
   "dependencies": {
     "@effect-ts-app/boilerplate-prelude": "workspace:*",
     "@effect-ts-app/core": "workspace:*",
     "@effect-ts-app/infra": "workspace:*",
-    "@effect-ts-app/schema": "*",
-    "@effect/cache": "^0.0.4",
-    "@effect/core": "^0.0.16",
-    "@tsplus/stdlib": "^0.2.8",
+    "@effect-ts-app/schema": "workspace:*",
+    "@effect/io": "^0.0.51",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.35",
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
     "faker": "^5.5.3",
-    "fast-check": "^3.4.0",
+    "fast-check": "^3.5.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "pure-rand": "^5.0.5"
@@ -31,16 +31,16 @@
     "@sendgrid/helpers": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
     "@types/express": "^4.17.15",
-    "@types/node": "~18.11.17",
+    "@types/node": "~18.11.18",
     "@types/redis": "^2.8.32",
     "express": "^4.18.2",
-    "express-jwt": "^8.2.0",
+    "express-jwt": "^8.2.1",
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "2.1.4",
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.161/compiler/typescript.tgz",
-    "vitest": "^0.26.2"
+    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz",
+    "vitest": "^0.26.3"
   },
   "typesVersions": {
     "*": {
@@ -330,16 +330,6 @@
         "default": "./_cjs/lib/instrument.cjs"
       }
     },
-    "./lib/logger": {
-      "import": {
-        "types": "./dist/lib/logger.d.ts",
-        "default": "./dist/lib/logger.js"
-      },
-      "require": {
-        "types": "./dist/lib/logger.d.ts",
-        "default": "./_cjs/lib/logger.cjs"
-      }
-    },
     "./lib/rateLimit": {
       "import": {
         "types": "./dist/lib/rateLimit.d.ts",
@@ -549,12 +539,213 @@
         "types": "./dist/test.arbs.d.ts",
         "default": "./_cjs/test.arbs.cjs"
       }
+    },
+    "./vendor/Cache/Cache": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache.d.ts",
+        "default": "./dist/vendor/Cache/Cache.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicBoolean": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicBoolean.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicNumber": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicNumber.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicReference": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicReference.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicReference.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/CacheInternal": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheInternal.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/CacheInternal.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheInternal.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/CacheInternal.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/CacheState": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheState.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/CacheState.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheState.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/CacheState.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/KeySet": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/KeySet.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/KeySet.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/KeySet.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/KeySet.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/MapKey": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapKey.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/MapKey.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapKey.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/MapKey.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/MapValue": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapValue.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/MapValue.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapValue.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/MapValue.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/definition.d.ts",
+        "default": "./dist/vendor/Cache/Cache/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/definition.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations/make": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations/make.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations/make.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations/make.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations/make.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations/makeWith": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations/makeWith.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations/makeWith.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations/makeWith.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations/makeWith.cjs"
+      }
+    },
+    "./vendor/Cache/CacheStats": {
+      "import": {
+        "types": "./dist/vendor/Cache/CacheStats.d.ts",
+        "default": "./dist/vendor/Cache/CacheStats.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/CacheStats.d.ts",
+        "default": "./_cjs/vendor/Cache/CacheStats.cjs"
+      }
+    },
+    "./vendor/Cache/CacheStats/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/CacheStats/definition.d.ts",
+        "default": "./dist/vendor/Cache/CacheStats/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/CacheStats/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/CacheStats/definition.cjs"
+      }
+    },
+    "./vendor/Cache/EntryStats": {
+      "import": {
+        "types": "./dist/vendor/Cache/EntryStats.d.ts",
+        "default": "./dist/vendor/Cache/EntryStats.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/EntryStats.d.ts",
+        "default": "./_cjs/vendor/Cache/EntryStats.cjs"
+      }
+    },
+    "./vendor/Cache/EntryStats/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/EntryStats/definition.d.ts",
+        "default": "./dist/vendor/Cache/EntryStats/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/EntryStats/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/EntryStats/definition.cjs"
+      }
+    },
+    "./vendor/Cache/Lookup": {
+      "import": {
+        "types": "./dist/vendor/Cache/Lookup.d.ts",
+        "default": "./dist/vendor/Cache/Lookup.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Lookup.d.ts",
+        "default": "./_cjs/vendor/Cache/Lookup.cjs"
+      }
+    },
+    "./vendor/Cache/Lookup/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/Lookup/definition.d.ts",
+        "default": "./dist/vendor/Cache/Lookup/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Lookup/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/Lookup/definition.cjs"
+      }
+    },
+    "./vendor/Cache/index": {
+      "import": {
+        "types": "./dist/vendor/Cache/index.d.ts",
+        "default": "./dist/vendor/Cache/index.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/index.d.ts",
+        "default": "./_cjs/vendor/Cache/index.cjs"
+      }
     }
   },
   "scripts": {
-    "build": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build && pnpm build2:cjs",
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
-    "watch": "pnpm build --watch",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
     "clean": "rm -rf dist && rm -rf _cjs",
     "clean-dist": "sh ../../scripts/clean-dist.sh",

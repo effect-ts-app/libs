@@ -141,8 +141,8 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       if (res.effect._tag === "Left") {
         return Th.fail(res.effect.left)
       }
-      const warnings = res.effect.right.get(1)
-      const out = res.effect.right.get(0)
+      const warnings = res.effect.right[1]
+      const out = res.effect.right[0]
       // @ts-expect-error
       const x = new self() as ShapeFromClass<Self>
       x[fromFields](out)
@@ -156,8 +156,8 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       if (res.effect._tag === "Left") {
         return Th.fail(res.effect.left)
       }
-      const warnings = res.effect.right.get(1)
-      const out = res.effect.right.get(0)
+      const warnings = res.effect.right[1]
+      const out = res.effect.right[0]
       // @ts-expect-error
       const x = new self() as ShapeFromClass<Self>
       x[fromFields](out)

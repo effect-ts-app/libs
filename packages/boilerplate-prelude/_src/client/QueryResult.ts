@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tagged } from "@effect-ts/core/Case"
 
-import type { Left, Right } from "@tsplus/stdlib/data/Either"
-
 export { matchTag } from "@effect-ts/core/Utils"
 
 export class Initial extends Tagged("Initial")<{}> {}
@@ -13,15 +11,15 @@ export class Loading extends Tagged("Loading")<{}> {}
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: Either<E, A>
-  readonly previous: Maybe<A>
+  readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: Either.right(a), previous: Maybe.none })
+    return new Refreshing<E, A>({ current: Either.right(a), previous: Opt.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Maybe.none : Maybe.some(previous)
+      previous: previous === undefined ? Opt.none : Opt.some(previous)
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -31,15 +29,15 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
 
 export class Done<E, A> extends Tagged("Done")<{
   readonly current: Either<E, A>
-  readonly previous: Maybe<A>
+  readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {
-    return new Done<E, A>({ current: Either.right(a), previous: Maybe.none })
+    return new Done<E, A>({ current: Either.right(a), previous: Opt.none })
   }
   static fail<E, A = never>(this: void, e: E, previous?: A) {
     return new Done<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Maybe.none : Maybe.some(previous)
+      previous: previous === undefined ? Opt.none : Opt.some(previous)
     })
   }
 
@@ -115,10 +113,10 @@ export type QueryResultTuple<E, A> = ResultTuple<QueryResult<E, A>>
 export const { fail, succeed } = Done
 
 /**
- * @tsplus getter effect/core/io/Effect asQueryResult
+ * @tsplus getter effect/io/Effect asQueryResult
  */
 export function queryResult<R, E, A>(
   self: Effect<R, E, A>
 ): Effect<R, never, QueryResult<E, A>> {
-  return self.fold(fail, succeed)
+  return self.match(fail, succeed)
 }

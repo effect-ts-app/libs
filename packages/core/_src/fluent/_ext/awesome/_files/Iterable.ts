@@ -1,53 +1,51 @@
 /**
- * @tsplus fluent ets/Array forEachPar
- * @tsplus fluent Chunk forEachPar
- * @tsplus fluent ets/Set forEachPar
+ * @tsplus pipeable Array forEachPar
+ * @tsplus pipeable Array ReadonlyArray
+ * @tsplus pipeable Iterable forEachPar
+ * @tsplus pipeable fp-ts/data/Chunk forEachPar
+ * @tsplus pipeable ets/Set forEachPar
  */
-export function ext_forEachPar<A, R, E, B>(
-  as: Iterable<A>,
-  f: (a: A) => Effect<R, E, B>
-) {
-  return Effect.forEachPar(Chunk.from(as), f)
-}
+export const ext_forEachPar = Effect.forEachPar
 
 /**
- * @tsplus fluent ets/Array forEachEffect
- * @tsplus fluent Chunk forEachEffect
- * @tsplus fluent Chunk forEachEffect
+ * @tsplus fluent Array forEachEffect
+ * @tsplus fluent ReadonlyArray forEachEffect
+ * @tsplus fluent Iterable forEachEffect
+ * @tsplus fluent fp-ts/data/Chunk forEachEffect
  * @tsplus fluent ets/Set forEachEffect
  */
 export function ext_forEach<A, R, E, B>(
   as: Iterable<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEach(Chunk.from(as), f)
+  return Effect.forEach(f)(Chunk.fromIterable(as))
 }
 
 /**
- * @tsplus fluent ets/Array collectAll
- * @tsplus fluent Chunk collectAll
+ * @tsplus fluent Array collectAll
+ * @tsplus fluent fp-ts/data/Chunk collectAll
  * @tsplus fluent ets/Set collectAll
  */
 export function ext_collectAll<A, R, E>(as: Iterable<Effect<R, E, A>>) {
-  return Effect.collectAll(Chunk.from(as))
+  return Effect.collectAll(Chunk.fromIterable(as))
 }
 
 // /**
-//  * @tsplus fluent ets/Array forEachSync
-//  * @tsplus fluent Chunk forEachSync
+//  * @tsplus fluent Array forEachSync
+//  * @tsplus fluent fp-ts/data/Chunk forEachSync
 //  * @tsplus fluent ets/Set forEachSync
 //  */
 // export const ext_forEachSync_ = forEachSync_
 
 // /**
-//  * @tsplus fluent ets/Array collectAllSync
-//  * @tsplus fluent Chunk collectAllSync
+//  * @tsplus fluent Array collectAllSync
+//  * @tsplus fluent fp-ts/data/Chunk collectAllSync
 //  * @tsplus fluent ets/Set collectAllSync
 //  */
 // export const ext_collectAllSync = collectAllSync
 
 /**
- * @tsplus fluent ets/Array toChunk
+ * @tsplus fluent Array toChunk
  * @tsplus fluent ets/Set toChunk
  */
-export const ext_from = Chunk.from
+export const ext_from = Chunk.fromIterable

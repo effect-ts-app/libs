@@ -12,9 +12,9 @@ export function makeApiLayers(apiUrl = "/api") {
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
   return Effect.gen(function*($) {
-    const scope = yield* $(Scope.make)
+    const scope = yield* $(Scope.make())
     const env = yield* $(layer.buildWithScope(scope))
-    const runtime = yield* $(Effect.scoped(Effect.runtime<A>()).provideEnvironment(env))
+    const runtime = yield* $(Effect.runtime<A>().scoped.provideEnvironment(env))
 
     return {
       runtime,
@@ -24,21 +24,21 @@ export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
 }
 
 export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
-  const { clean, runtime } = makeAppRuntime(layer).unsafeRunSync()
+  const { clean, runtime } = makeAppRuntime(layer).unsafeRunSync
   initRuntime(runtime)
   return {
     runtime,
-    clean: () => clean.unsafeRunSync()
+    clean: () => clean.unsafeRunSync
   }
 }
 
 export function initializeAsync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
-  return makeAppRuntime(layer).unsafeRunPromise()
+  return makeAppRuntime(layer).unsafeRunPromise
     .then(({ clean, runtime }) => {
       initRuntime(runtime)
       return {
         runtime,
-        clean: () => clean.unsafeRunPromise()
+        clean: () => clean.unsafeRunPromise
       }
     })
 }

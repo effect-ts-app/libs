@@ -23,7 +23,7 @@ import { StoreMaker } from "./service.js"
 // TODO: Retry operation when running into RU limit.
 function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const { db } = yield* $(CosmosClient.CosmosClient)
+    const { db } = yield* $(CosmosClient.CosmosClient.get)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
@@ -32,7 +32,6 @@ function makeCosmosStore({ prefix }: StorageConfig) {
       ) =>
         Effect.gen(function*($) {
           const containerId = `${prefix}${name}`
-          const annotate = Effect.logAnnotate("cosmos.db", containerId)
           yield* $(
             Effect.promise(() =>
               db.containers.createIfNotExists({
@@ -48,90 +47,89 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           const execBatch = container.items.batch.bind(container.items)
           const importedMarkerId = containerId
 
-          const bulkSet = (items: NonEmptyArray<PM>) =>
+          const bulkSet = (items: NonEmptyReadonlyArray<PM>) =>
             Effect.gen(function*($) {
               // TODO: disable batching if need atomicity
               // we delay and batch to keep low amount of RUs
-              const batches = ROArray.split_(
-                [...items].map(
-                  x =>
-                    [
-                      x,
-                      Maybe.fromNullable(x._etag).fold(
-                        () => ({
-                          operationType: "Create" as const,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          partitionKey: config?.partitionValue(x)
-                        }),
-                        eTag => ({
-                          operationType: "Replace" as const,
-                          id: x.id,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          ifMatch: eTag,
-                          partitionKey: config?.partitionValue(x)
-                        })
-                      )
-                    ] as const
-                ),
-                config?.maxBulkSize ?? 10
+              const b = [...items].map(
+                x =>
+                  [
+                    x,
+                    Opt.fromNullable(x._etag).match(
+                      () => ({
+                        operationType: "Create" as const,
+                        resourceBody: {
+                          ...omit(x, "_etag"),
+                          _partitionKey: config?.partitionValue(x)
+                        } as any,
+                        partitionKey: config?.partitionValue(x)
+                      }),
+                      eTag => ({
+                        operationType: "Replace" as const,
+                        id: x.id,
+                        resourceBody: {
+                          ...omit(x, "_etag"),
+                          _partitionKey: config?.partitionValue(x)
+                        } as any,
+                        ifMatch: eTag,
+                        partitionKey: config?.partitionValue(x)
+                      })
+                    )
+                  ] as const
               )
+              const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray()
 
               const batchResult = yield* $(
-                batches.mapWithIndex((i, x) => [i, x] as const).forEachEffect(
-                  ([i, batch]) =>
-                    Effect.promise(() => bulk(batch.map(([, op]) => op)))
-                      .delay(DUR.millis(i === 0 ? 0 : 1100))
-                      .flatMap(responses =>
-                        Effect.gen(function*($) {
-                          const r = responses.find(x => x.statusCode === 412)
-                          if (r) {
-                            return yield* $(
-                              Effect.fail(
-                                new OptimisticConcurrencyException(
-                                  name,
-                                  JSON.stringify(r.resourceBody?.["id"])
+                batches.map((x, i) => [i, x] as const)
+                  .forEachEffect(
+                    ([i, batch]) =>
+                      Effect.promise(() => bulk(batch.map(([, op]) => op)))
+                        .delay(DUR.makeMillis(i === 0 ? 0 : 1100))
+                        .flatMap(responses =>
+                          Effect.gen(function*($) {
+                            const r = responses.find(x => x.statusCode === 412)
+                            if (r) {
+                              return yield* $(
+                                Effect.fail(
+                                  new OptimisticConcurrencyException(
+                                    name,
+                                    JSON.stringify(r.resourceBody?.["id"])
+                                  )
                                 )
                               )
+                            }
+                            const r2 = responses.find(
+                              x => x.statusCode > 299 || x.statusCode < 200
                             )
-                          }
-                          const r2 = responses.find(
-                            x => x.statusCode > 299 || x.statusCode < 200
-                          )
-                          if (r2) {
-                            return yield* $(
-                              Effect.die(
-                                new CosmosDbOperationError(
-                                  "not able to update record: " + r2.statusCode
+                            if (r2) {
+                              return yield* $(
+                                Effect.die(
+                                  new CosmosDbOperationError(
+                                    "not able to update record: " + r2.statusCode
+                                  )
                                 )
                               )
-                            )
-                          }
-                          return batch.mapWithIndex((i, [e]) => ({
-                            ...e,
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            _etag: responses[i]!.eTag
-                          }))
-                        })
-                      )
-                )
+                            }
+                            return batch.map(([e], i) => ({
+                              ...e,
+                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                              _etag: responses[i]!.eTag
+                            }))
+                          })
+                        )
+                  )
               )
-              return batchResult.toArray.flatten() as NonEmptyArray<PM>
+              return batchResult.toReadonlyArray().flat() as unknown as NonEmptyReadonlyArray<PM>
             }).instrument("cosmos.bulkSet")
-              .apply(annotate)
+              .logAnnotate("cosmos.db", containerId)
 
-          const batchSet = (items: NonEmptyArray<PM>) => {
+          const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Do($ => {
               const batch = [...items].map(
                 x =>
                   [
                     x,
-                    Maybe.fromNullable(x._etag).fold(
+                    Opt.fromNullable(x._etag).match(
                       () => ({
                         operationType: "Create" as const,
                         resourceBody: {
@@ -177,15 +175,15 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                       }
 
-                      return batch.mapWithIndex((i, [e]) => ({
+                      return batch.map(([e], i) => ({
                         ...e,
                         _etag: result[i]?.eTag
-                      })) as NonEmptyArray<PM>
+                      })) as unknown as NonEmptyReadonlyArray<PM>
                     })
                   )
               )
             }).instrument("cosmos.batchSet")
-              .apply(annotate)
+              .logAnnotate("cosmos.db", containerId)
           }
 
           const s: Store<PM, Id> = {
@@ -202,7 +200,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resources }) => resources.toChunk)
                 )
               ).instrument("cosmos.all")
-              .apply(annotate),
+              .logAnnotate("cosmos.db", containerId),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -229,9 +227,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         ({ r, ...rest }: any) => ({ ...rest, ...r } as T & { _rootId: string })
                       )
                     )
-                  return Chunk.from(v)
+                  return Chunk.fromIterable(v)
                 }).instrument("cosmos.filterJoinSelect")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -267,19 +265,19 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.toChunk)
                     )
                   )).instrument("cosmos.filter")
-                .apply(annotate)
+                .logAnnotate("cosmos.db", containerId)
             },
             find: id =>
               Effect.promise(() =>
                 container
                   .item(id, config?.partitionValue({ id } as PM))
                   .read<PM>()
-                  .then(({ resource }) => Maybe.fromNullable(resource))
+                  .then(({ resource }) => Opt.fromNullable(resource))
               ).instrument("cosmos.find")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             set: e =>
-              Maybe.fromNullable(e._etag)
-                .fold(
+              Opt.fromNullable(e._etag)
+                .match(
                   () =>
                     Effect.promise(() =>
                       container.items.create({
@@ -311,19 +309,19 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect({
+                  return Effect.succeed({
                     ...e,
                     _etag: x.etag
                   })
                 })
                 .instrument("cosmos.set")
-                .apply(annotate),
+                .logAnnotate("cosmos.db", containerId),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect.promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .instrument("cosmos.remove")
-                .apply(annotate)
+                .logAnnotate("cosmos.db", containerId)
           }
 
           // handle mock data
@@ -332,7 +330,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               container
                 .item(importedMarkerId, importedMarkerId)
                 .read<{ id: string }>()
-                .then(({ resource }) => Maybe.fromNullable(resource))
+                .then(({ resource }) => Opt.fromNullable(resource))
             )
           )
 
@@ -341,13 +339,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             if (existing) {
               const m = yield* $(existing)
               yield* $(
-                Effect([...m.values()].toNonEmpty)
-                  .flatMapMaybe(a =>
+                Effect.succeed([...m.values()].toNonEmpty)
+                  .flatMapOpt(a =>
                     s
                       .bulkSet(a)
                       .orDie
                       // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                      .delay(DUR.millis(1100))
+                      .delay(DUR.makeMillis(1100))
                   )
               )
             }
@@ -484,8 +482,8 @@ export function buildWhereCosmosQuery(
             { ..._, f: _.key.split(".-1.")[0], key: _.key.split(".-1.")[1]! } :
             { ..._, f: "f" }
         )
-        .mapWithIndex(
-          (i, x) =>
+        .map(
+          (x, i) =>
             x.t === "in"
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
@@ -504,7 +502,7 @@ export function buildWhereCosmosQuery(
     parameters: [
       { name: "@id", value: importedMarkerId },
       ...filter.where
-        .mapWithIndex((i, x) => ({
+        .map((x, i) => ({
           name: `@v${i}`,
           value: x.value
         }))

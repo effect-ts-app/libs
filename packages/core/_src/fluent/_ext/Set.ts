@@ -1,30 +1,26 @@
-import * as ARR from "@effect-ts/core/Collections/Immutable/Array"
-import type { Set } from "@effect-ts/core/Collections/Immutable/Set"
-import type { Predicate, Refinement } from "@effect-ts/system/Function"
-
-import type { Maybe } from "../../Maybe.js"
+import { Option } from "../../Prelude.js"
 
 export function find_<A, B extends A>(
-  as: Set<A>,
+  as: ROSet<A>,
   refinement: Refinement<A, B>
 ): B | undefined
-export function find_<A>(set: Set<A>, predicate: Predicate<A>): A | undefined
-export function find_<A>(set: Set<A>, predicate: Predicate<A>) {
+export function find_<A>(set: ROSet<A>, predicate: Predicate<A>): A | undefined
+export function find_<A>(set: ROSet<A>, predicate: Predicate<A>) {
   return [...set].find(predicate)
 }
 
 export function findFirst_<A, B extends A>(
-  set: Set<A>,
+  set: ROSet<A>,
   refinement: Refinement<A, B>
-): Maybe<B>
-export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Maybe<A>
-export function findFirst_<A>(set: Set<A>, predicate: Predicate<A>): Maybe<A> {
-  return ARR.find_([...set], predicate)
+): Option<B>
+export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A>
+export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A> {
+  return Option.fromNullable([...set].find(predicate))
 }
 
 export function findFirstMap_<A, B>(
-  set: Set<A>,
-  f: (a: A) => Maybe<B>
-): Maybe<B> {
-  return ARR.findFirstMap_([...set], f)
+  set: ROSet<A>,
+  f: (a: A) => Option<B>
+): Option<B> {
+  return [...set].findFirstMap(f)
 }

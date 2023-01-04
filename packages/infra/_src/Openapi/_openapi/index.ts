@@ -53,8 +53,8 @@ import {
 
 export type Gen = Effect<never, never, JSONSchema>
 
-export const interpreters: ((schema: MO.SchemaAny) => Maybe<Gen>)[] = [
-  Maybe.partial(_miss =>
+export const interpreters: ((schema: MO.SchemaAny) => Opt<Gen>)[] = [
+  Opt.partial(_miss =>
     (schema: MO.SchemaAny): Gen => {
       // if (schema instanceof MO.SchemaOpenApi) {
       //   const cfg = schema.jsonSchema()
@@ -160,9 +160,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             oneOf: yield* $(
               Effect.collectAll(
                 Object.keys(schemaMeta.props).map(x => processId(schemaMeta.props[x]))
-              )
+              ).map(_ => _.toArray)
             ) as any,
-            discriminator: (schemaMeta.tag as Maybe<any>).map((_: any) => ({
+            discriminator: (schemaMeta.tag as Opt<any>).map((_: any) => ({
               propertyName: _.key // TODO
             })).value
           })
@@ -246,7 +246,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
               },
               required: ["_tag", i === 0 ? "left" : "right"],
               type: "object"
-            })) as any,
+            })).toArray as any,
             discriminator: { propertyName: "_tag" }
           })
         }

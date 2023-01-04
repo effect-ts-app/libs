@@ -1,7 +1,7 @@
 import { RequestContext } from "../RequestContext.js"
 
 /**
- * @tsplus fluent effect/core/io/Effect setupRequest
+ * @tsplus fluent effect/io/Effect setupRequest
  */
 export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext) {
   return pipe(
@@ -15,7 +15,7 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
 }
 
 /**
- * @tsplus getter effect/core/io/Effect setupRequestFrom
+ * @tsplus getter effect/io/Effect setupRequestFrom
  */
 export function setupRequestFrom<R, E, A>(self: Effect<R, E, A>) {
   return RequestContext.Tag.withEffect(requestContext => self.setupRequest(requestContext))

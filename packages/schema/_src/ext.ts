@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Lazy } from "@effect-ts-app/core/Function"
 import { constant, pipe } from "@effect-ts-app/core/Function"
 import * as NonEmptySet from "@effect-ts-app/core/NonEmptySet"
 import { typedKeysOf } from "@effect-ts-app/core/utils"
-import * as Eq from "@effect-ts/core/Equal"
-import * as Ord from "@effect-ts/core/Ord"
 import type { ComputeFlat } from "@effect-ts/core/Utils"
-import type { None, Some } from "@tsplus/stdlib/data/Maybe"
+import type { None, Some } from "@fp-ts/data/Option"
 import { v4 } from "uuid"
 
 import type { FromProperty } from "./_api.js"
@@ -15,6 +12,8 @@ import { nonEmptySet } from "./_api/nonEmptySet.js"
 import * as MO from "./_schema.js"
 import type { Property, UUID } from "./_schema.js"
 import { propDef, propOpt, propReq } from "./_schema.js"
+
+import * as Eq from "@effect-ts/core/Equal"
 
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   new(inp: ConstructorInput): ParsedShape
@@ -107,7 +106,7 @@ export function makeUuid() {
 }
 
 type LazyPartial<T> = {
-  [P in keyof T]?: Lazy<T[P]>
+  [P in keyof T]?: LazyArg<T[P]>
 }
 
 export function withDefaultConstructorFields<
@@ -152,15 +151,15 @@ export function makeCurrentDate() {
 }
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
+  As extends Opt<PropertyKey>,
+  Def extends Opt<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
 }
 
 type SupportedDefaults =
   | ROSet<any>
-  | ROArray<any>
+  | ReadonlyArray<any>
   | Some<any>
   | None
   | Date
@@ -192,7 +191,7 @@ export type WithDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>
+  As extends Opt<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -205,7 +204,7 @@ export type WithInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>
+  As extends Opt<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -218,8 +217,8 @@ export function withDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<
+  As extends Opt<PropertyKey>,
+  Def extends Opt<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -239,7 +238,7 @@ export function withDefault<
     return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Maybe.none as any, "constructor")
+    return propDef(p, () => Opt.none as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
@@ -264,8 +263,8 @@ export function withInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Maybe<PropertyKey>,
-  Def extends Maybe<
+  As extends Opt<PropertyKey>,
+  Def extends Opt<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -285,7 +284,7 @@ export function withInputDefault<
     return propDef(p, makeCurrentDate as any, "both")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Maybe.none as any, "both")
+    return propDef(p, () => Opt.none as any, "both")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")
@@ -512,7 +511,7 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
   }, {} as any)
 }
 
-export function createUnorder<T>(): Ord.Ord<T> {
+export function createUnorder<T>(): Ord<T> {
   return {
     compare: (_a: T, _b: T) => 0
   }
@@ -520,27 +519,26 @@ export function createUnorder<T>(): Ord.Ord<T> {
 export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord.Ord<ParsedShape>,
-  eq_?: Eq.Equal<ParsedShape>
+  ord: Ord<ParsedShape>,
+  eq?: Equal<ParsedShape>
 ) {
-  const eq = eq_ ?? Ord.getEqual(ord)
   const s = set(type, ord, eq)
   return Object.assign(s, ROSet.make(ord, eq))
 }
 
-export function makeUnorderedContramappedStringSet<
-  ParsedShape,
-  ConstructorInput,
-  Encoded,
-  Api,
-  MA extends string
->(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  contramap: (a: ParsedShape) => MA
-) {
-  return makeUnorderedSet(type, Eq.contramap(contramap)(Eq.string))
-}
+// export function makeUnorderedContramappedStringSet<
+//   ParsedShape,
+//   ConstructorInput,
+//   Encoded,
+//   Api,
+//   MA extends string
+// >(
+//   // eslint-disable-next-line @typescript-eslint/ban-types
+//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+//   contramap: (a: ParsedShape) => MA
+// ) {
+//   return makeUnorderedSet(type, Eq.contramap(contramap)(Eq.string))
+// }
 
 export function makeUnorderedStringSet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -563,40 +561,39 @@ export function makeUnorderedSet<ParsedShape, ConstructorInput, Encoded, Api>(
   return makeSet(type, createUnorder<ParsedShape>(), eq)
 }
 
-export function makeContramappedSet<ParsedShape, ConstructorInput, Encoded, Api, MA>(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  contramap: (a: ParsedShape) => MA,
-  ord: Ord.Ord<MA>,
-  eq: Eq.Equal<MA>
-) {
-  return makeSet(type, Ord.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
-}
+// export function makeContramappedSet<ParsedShape, ConstructorInput, Encoded, Api, MA>(
+//   // eslint-disable-next-line @typescript-eslint/ban-types
+//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+//   contramap: (a: ParsedShape) => MA,
+//   ord: Ord<MA>,
+//   eq: Eq.Equal<MA>
+// ) {
+//   return makeSet(type, LegacyOrd.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
+// }
 
 export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord.Ord<ParsedShape>,
-  eq_?: Eq.Equal<ParsedShape>
+  ord: Ord<ParsedShape>,
+  eq?: Equal<ParsedShape>
 ) {
-  const eq = eq_ ?? Ord.getEqual(ord)
   const s = nonEmptySet(type, ord, eq)
   return Object.assign(s, NonEmptySet.make(ord, eq))
 }
 
-export function makeUnorderedContramappedStringNonEmptySet<
-  ParsedShape,
-  ConstructorInput,
-  Encoded,
-  Api,
-  MA extends string
->(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  contramap: (a: ParsedShape) => MA
-) {
-  return makeUnorderedNonEmptySet(type, Eq.contramap(contramap)(Eq.string))
-}
+// export function makeUnorderedContramappedStringNonEmptySet<
+//   ParsedShape,
+//   ConstructorInput,
+//   Encoded,
+//   Api,
+//   MA extends string
+// >(
+//   // eslint-disable-next-line @typescript-eslint/ban-types
+//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+//   contramap: (a: ParsedShape) => MA
+// ) {
+//   return makeUnorderedNonEmptySet(type, Eq.contramap(contramap)(Eq.string))
+// }
 
 export function makeUnorderedStringNonEmptySet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -619,27 +616,27 @@ export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded,
   return makeNonEmptySet(type, createUnorder<ParsedShape>(), eq)
 }
 
-export function makeContramappedNonEmptySet<
-  ParsedShape,
-  ConstructorInput,
-  Encoded,
-  Api,
-  MA
->(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  contramap: (a: ParsedShape) => MA,
-  ord: Ord.Ord<MA>,
-  eq: Eq.Equal<MA>
-) {
-  return makeNonEmptySet(
-    type,
-    Ord.contramap_(ord, contramap),
-    Eq.contramap(contramap)(eq)
-  )
-}
+// export function makeContramappedNonEmptySet<
+//   ParsedShape,
+//   ConstructorInput,
+//   Encoded,
+//   Api,
+//   MA
+// >(
+//   // eslint-disable-next-line @typescript-eslint/ban-types
+//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+//   contramap: (a: ParsedShape) => MA,
+//   ord: Ord<MA>,
+//   eq: Eq.Equal<MA>
+// ) {
+//   return makeNonEmptySet(
+//     type,
+//     LegacyOrd.contramap_(ord, contramap),
+//     Eq.contramap(contramap)(eq)
+//   )
+// }
 
-export const constArray = constant(ROArray.empty)
+export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }

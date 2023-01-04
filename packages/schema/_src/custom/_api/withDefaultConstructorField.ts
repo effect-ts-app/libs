@@ -1,4 +1,3 @@
-import type { Lazy } from "@effect-ts/core/Function"
 import { pipe } from "@effect-ts/system/Function"
 
 import * as S from "../_schema.js"
@@ -15,7 +14,7 @@ export type OptionalKey<ConstructorInput, Key extends keyof ConstructorInput> =
 
 export const withDefaultConstructorFieldIdentifier = S.makeAnnotation<{
   key: PropertyKey
-  value: Lazy<unknown>
+  value: LazyArg<unknown>
   self: S.SchemaAny
 }>()
 
@@ -24,7 +23,7 @@ export function withDefaultConstructorField<
   Key extends keyof ConstructorInput
 >(
   key: Key,
-  value: Lazy<ConstructorInput[Key]>
+  value: LazyArg<ConstructorInput[Key]>
 ): <ParserInput, ParsedShape, Encoded, Api>(
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => DefaultSchema<

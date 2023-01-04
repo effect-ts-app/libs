@@ -2,7 +2,7 @@ export function snipValue(value: string | readonly string[] | undefined) {
   if (!value) {
     return value
   }
-  return ROArray.isArray(value)
+  return Array.isArray(value)
     ? value.map(snipString)
     : typeof value === "string" && value.length > 50
     ? snipString(value)

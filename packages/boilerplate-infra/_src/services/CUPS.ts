@@ -4,8 +4,8 @@ import { tempFile } from "../lib/fileUtil.js"
 
 import { isTruthy } from "@effect-ts-app/core/utils"
 import { ReasonableString } from "@effect-ts-app/schema"
-import { Effect } from "@effect/core/io/Effect"
-import { Layer } from "@effect/core/io/Layer"
+import { Effect } from "@effect/io/Effect"
+import { Layer } from "@effect/io/Layer"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -41,7 +41,7 @@ const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
     > Effect.tryPromise(() => exec_(command))
-      .tap(r => (Effect.logDebug(`Executed`).apply(Effect.logAnnotate("result", r.$$.pretty))))
+      .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", r.$$.pretty)))
 type PrinterConfig = { url?: URL; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {

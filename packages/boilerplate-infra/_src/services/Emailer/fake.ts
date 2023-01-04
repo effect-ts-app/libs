@@ -4,7 +4,7 @@ import { Emailer } from "./service.js"
 const makeFake = Effect.logDebug("FAKE Emailer Service enabled")
   .map((): Emailer => ({
     sendMail(msg) {
-      return Effect.logDebug(`Fake send mail`).apply(Effect.logAnnotate("msg", pretty(msg)))
+      return Effect.logDebug(`Fake send mail`).logAnnotate("msg", pretty(msg))
     }
   }))
 

@@ -4,15 +4,14 @@ import Redlock from "redlock"
 import { ConnectionException } from "./simpledb/shared.js"
 
 const makeRedisClient = (makeClient: () => Client) =>
-  Effect.acquireRelease(
-    Effect.sync(() => {
-      const client = createClient(makeClient)
-      const lock = new Redlock([client])
-      return {
-        client,
-        lock
-      }
-    }),
+  Effect.sync(() => {
+    const client = createClient(makeClient)
+    const lock = new Redlock([client])
+    return {
+      client,
+      lock
+    }
+  }).acquireRelease(
     cl =>
       Effect.async<never, Error, void>(res => {
         cl.client.quit(err => res(err ? Effect.fail(err) : Effect.unit))
@@ -23,13 +22,10 @@ export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisC
 
 export const RedisClient = Tag<RedisClient>()
 
-export const { client, lock } = Effect.deriveLifted(RedisClient)(
-  [],
-  [],
-  ["client", "lock"]
-)
+export const client = RedisClient.with(_ => _.client)
+export const lock = RedisClient.with(_ => _.lock)
 
-export const RedisClientLive = (makeClient: () => Client) => Layer.scoped(RedisClient, makeRedisClient(makeClient))
+export const RedisClientLive = (makeClient: () => Client) => Layer.scoped(RedisClient)(makeRedisClient(makeClient))
 
 function createClient(makeClient: () => Client) {
   const client = makeClient()
@@ -42,11 +38,11 @@ function createClient(makeClient: () => Client) {
 export function get(key: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<string>>(res => {
+      Effect.async<never, ConnectionException, Opt<string>>(res => {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Maybe.fromNullable(v))))
+            : res(Effect.succeed(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
@@ -78,23 +74,23 @@ export function hset(key: string, field: string, value: string) {
 export function hget(key: string, field: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<string>>(res => {
+      Effect.async<never, ConnectionException, Opt<string>>(res => {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Maybe.fromNullable(v))))
+            : res(Effect.succeed(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
 export function hmgetAll(key: string) {
   return client.flatMap(
     client =>
-      Effect.async<never, ConnectionException, Maybe<{ [key: string]: string }>>(
+      Effect.async<never, ConnectionException, Opt<{ [key: string]: string }>>(
         res => {
           client.hgetall(key, (err, v) =>
             err
               ? res(Effect.fail(new ConnectionException(err)))
-              : res(Effect.succeed(Maybe.fromNullable(v))))
+              : res(Effect.succeed(Opt.fromNullable(v))))
         }
       ).uninterruptible
   )

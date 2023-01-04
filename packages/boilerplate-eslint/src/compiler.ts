@@ -178,13 +178,13 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node) {
                 const sub = unions[rpl]
                 return (sub ? sub : rpl)
               })
-              .replaceAll(" Array<", " ROArray<") // .replaceAll(/(Array|Set|Map)\</", "ROArray<") //
+              .replaceAll(" Array<", " ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
               .replaceAll(" Set<", " ROSet<")
               .replaceAll(" Map<", " ROMap<")
-              .replaceAll("(Array<", "(ROArray<") // .replaceAll(/(Array|Set|Map)\</", "ROArray<") //
+              .replaceAll("(Array<", "(ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
               .replaceAll("(Set<", "(ROSet<")
               .replaceAll("(Map<", "(ROMap<")
-                .replaceAll(" Array.Array<", " ROArray<") // .replaceAll(/(Array|Set|Map)\</", "ROArray<") //
+                .replaceAll(" Array.Array<", " ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
                 .replaceAll(" Set.Set<", " ROSet<")
                 .replaceAll(" Map.Map<", " ROMap<")
             )

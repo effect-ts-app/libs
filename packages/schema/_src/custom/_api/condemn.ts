@@ -19,9 +19,7 @@ export function condemn<X, E, A>(
       if (y._tag === "Left") {
         return Effect.fail(y.left)
       }
-      const {
-        tuple: [a, w]
-      } = y.right
+      const [a, w] = y.right
       return w._tag === "Some" ? Effect.fail(w.value) : Effect.succeed(a)
     })
 }
@@ -53,11 +51,11 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
       if (res._tag === "Left") {
         return Effect.fail(new CondemnException({ message: drawError(res.left) }))
       }
-      const warn = res.right.get(1)
+      const warn = res.right[1]
       if (warn._tag === "Some") {
         return Effect.fail(new CondemnException({ message: drawError(warn.value) }))
       }
-      return Effect(res.right.get(0))
+      return Effect.succeed(res.right[0])
     })
 }
 
@@ -80,10 +78,10 @@ export function unsafe<X, A>(self: Parser<X, AnyError, A>) {
     if (res._tag === "Left") {
       throw new ThrowableCondemnException(res.left)
     }
-    const warn = res.right.get(1)
+    const warn = res.right[1]
     if (warn._tag === "Some") {
       throw new ThrowableCondemnException(warn.value)
     }
-    return res.right.get(0)
+    return res.right[0]
   }
 }

@@ -1,5 +1,6 @@
 import type { ApiConfig } from "@effect-ts-app/boilerplate-prelude/client"
 import type { Http } from "@effect-ts-app/core/http/http-client"
+import type { Runtime } from "@effect/io/Runtime"
 
 export const run = {
   value<E, A>(_: Effect<ApiConfig | Http, E, A>): Promise<A> {
