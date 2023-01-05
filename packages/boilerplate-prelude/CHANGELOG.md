@@ -1,5 +1,15 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.0.21
+
+### Patch Changes
+
+- c665498: Update deps
+- Updated dependencies [c665498]
+- Updated dependencies [035bb64]
+  - @effect-ts-app/schema@2.0.19
+  - @effect-ts-app/core@2.0.19
+
 ## 2.0.20
 
 ### Patch Changes

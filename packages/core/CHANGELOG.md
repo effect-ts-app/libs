@@ -1,5 +1,12 @@
 # @effect-ts-app/core
 
+## 2.0.19
+
+### Patch Changes
+
+- c665498: Update deps
+- 035bb64: Fix Ords
+
 ## 2.0.18
 
 ### Patch Changes
