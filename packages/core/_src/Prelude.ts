@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable unused-imports/no-unused-imports */
 
-import "./global.ts"
+import "./global.js"
 
 import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 import type * as CNK from "@fp-ts/data/Chunk"
