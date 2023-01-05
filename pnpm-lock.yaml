@@ -37,7 +37,7 @@ importers:
   .:
     specifiers:
       '@babel/cli': ^7.20.7
-      '@babel/core': ^7.20.7
+      '@babel/core': ^7.20.12
       '@babel/plugin-proposal-export-namespace-from': ^7.18.9
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@changesets/cli': ^2.26.0
@@ -87,10 +87,10 @@ importers:
       http-proxy: /http-proxy-node16/1.0.0
       ts-node: 10.9.1_nhxtaq5n6djfbj7lpnbpolgane
     devDependencies:
-      '@babel/cli': 7.20.7_@babel+core@7.20.7
-      '@babel/core': 7.20.7
-      '@babel/plugin-proposal-export-namespace-from': 7.18.9_@babel+core@7.20.7
-      '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.7
+      '@babel/cli': 7.20.7_@babel+core@7.20.12
+      '@babel/core': 7.20.12
+      '@babel/plugin-proposal-export-namespace-from': 7.18.9_@babel+core@7.20.12
+      '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.12
       '@changesets/cli': 2.26.0
       '@effect-ts-app/boilerplate-eslint': link:packages/boilerplate-eslint
       '@effect-ts-app/compiler': link:packages/compiler
@@ -178,19 +178,19 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': workspace:*
-      '@effect/io': ^0.0.51
+      '@effect/io': ^0.0.52
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
-      '@sentry/node': ^7.28.1
+      '@sentry/node': ^7.29.0
       '@types/express': ^4.17.15
       '@types/node': ~18.11.12
       '@types/redis': ^2.8.32
       change-case: ^4.1.2
       cross-fetch: ^3.1.5
       express: ^4.18.2
-      express-jwt: ^8.2.1
+      express-jwt: ^8.3.0
       express-jwt-authz: ^2.4.1
       faker: ^5.5.3
       fast-check: ^3.5.0
@@ -207,9 +207,9 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       change-case: 4.1.2
       cross-fetch: 3.1.5
       faker: 5.5.3
@@ -224,12 +224,12 @@ importers:
       '@effect-ts-app/compiler': link:../compiler
       '@sendgrid/helpers': 7.7.0
       '@sendgrid/mail': 7.7.0
-      '@sentry/node': 7.28.1
+      '@sentry/node': 7.29.0
       '@types/express': 4.17.15
       '@types/node': 18.11.12
       '@types/redis': 2.8.32
       express: 4.18.2
-      express-jwt: 8.2.1
+      express-jwt: 8.3.0
       express-jwt-authz: 2.4.1_apyp2epfdmgxwegqyl42oh3lhy
       jwks-rsa: 2.1.4
       redis: 3.1.2
@@ -246,10 +246,10 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.51
-      '@effect/stm': ^0.0.9
+      '@effect/io': ^0.0.52
+      '@effect/stm': ^0.0.11
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.0
@@ -273,10 +273,10 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.51
-      '@effect/stm': 0.0.9
+      '@effect/io': 0.0.52
+      '@effect/stm': 0.0.11
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       date-fns: 2.29.3
       lodash: 4.17.21
       nanoid: 4.0.0
@@ -342,9 +342,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.51
+      '@effect/io': ^0.0.52
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
       json5: ^2.2.3
@@ -363,9 +363,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       query-string: 8.1.0
       swrv: 1.0.2_vue@3.2.45
       vue: 3.2.45
@@ -407,9 +407,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.51
+      '@effect/io': ^0.0.52
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -425,9 +425,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -450,9 +450,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.51
+      '@effect/io': ^0.0.52
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
       '@types/express': ^4.17.15
@@ -476,9 +476,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       proper-lockfile: 4.1.2
       query-string: 8.1.0
     devDependencies:
@@ -517,9 +517,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.51
+      '@effect/io': ^0.0.52
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.35
+      '@fp-ts/data': ^0.0.36
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -535,9 +535,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -1549,14 +1549,14 @@ packages:
       chokidar: 3.5.3
     dev: true
 
-  /@babel/cli/7.20.7_@babel+core@7.20.7:
+  /@babel/cli/7.20.7_@babel+core@7.20.12:
     resolution: {integrity: sha512-WylgcELHB66WwQqItxNILsMlaTd8/SO6SgTTjMp4uCI7P4QyH1r3nqgFmO3BfM4AtfniHgFMH3EpYFj/zynBkQ==}
     engines: {node: '>=6.9.0'}
     hasBin: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.20.7
+      '@babel/core': 7.20.12
       '@jridgewell/trace-mapping': 0.3.17
       commander: 4.1.1
       convert-source-map: 1.9.0
@@ -1579,6 +1579,29 @@ packages:
     resolution: {integrity: sha512-sEnuDPpOJR/fcafHMjpcpGN5M2jbUGUHwmuWKM/YdPzeEDJg8bgmbcWQFUfE32MQjti1koACvoPVsDe8Uq+idg==}
     engines: {node: '>=6.9.0'}
 
+  /@babel/core/7.20.12:
+    resolution: {integrity: sha512-XsMfHovsUYHFMdrIHkZphTN/2Hzzi78R08NuHfDBehym2VsPDL6Zn/JAD/JQdnRvbSsbQc4mVaU1m6JgtTEElg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@ampproject/remapping': 2.2.0
+      '@babel/code-frame': 7.18.6
+      '@babel/generator': 7.20.7
+      '@babel/helper-compilation-targets': 7.20.7_@babel+core@7.20.12
+      '@babel/helper-module-transforms': 7.20.11
+      '@babel/helpers': 7.20.7
+      '@babel/parser': 7.20.7
+      '@babel/template': 7.20.7
+      '@babel/traverse': 7.20.12
+      '@babel/types': 7.20.7
+      convert-source-map: 1.9.0
+      debug: 4.3.4
+      gensync: 1.0.0-beta.2
+      json5: 2.2.3
+      semver: 6.3.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@babel/core/7.20.7:
     resolution: {integrity: sha512-t1ZjCluspe5DW24bn2Rr1CDb2v9rn/hROtg9a2tmd0+QYf4bsloYfLQzjG4qHPNMhWtKdGC33R5AxGR2Af2cBw==}
     engines: {node: '>=6.9.0'}
@@ -1591,7 +1614,7 @@ packages:
       '@babel/helpers': 7.20.7
       '@babel/parser': 7.20.7
       '@babel/template': 7.20.7
-      '@babel/traverse': 7.20.10
+      '@babel/traverse': 7.20.12
       '@babel/types': 7.20.7
       convert-source-map: 1.9.0
       debug: 4.3.4
@@ -1615,6 +1638,20 @@ packages:
       '@babel/types': 7.20.7
       '@jridgewell/gen-mapping': 0.3.2
       jsesc: 2.5.2
+
+  /@babel/helper-compilation-targets/7.20.7_@babel+core@7.20.12:
+    resolution: {integrity: sha512-4tGORmfQcrc+bvrjb5y3dG9Mx1IOZjsHqQVUz7XCNHO+iTmqxWnVg3KRygjGmpRLJGdQSKuvFinbIb0CnZwHAQ==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+    dependencies:
+      '@babel/compat-data': 7.20.10
+      '@babel/core': 7.20.12
+      '@babel/helper-validator-option': 7.18.6
+      browserslist: 4.21.4
+      lru-cache: 5.1.1
+      semver: 6.3.0
+    dev: true
 
   /@babel/helper-compilation-targets/7.20.7_@babel+core@7.20.7:
     resolution: {integrity: sha512-4tGORmfQcrc+bvrjb5y3dG9Mx1IOZjsHqQVUz7XCNHO+iTmqxWnVg3KRygjGmpRLJGdQSKuvFinbIb0CnZwHAQ==}
@@ -1662,7 +1699,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.18.6
       '@babel/helper-validator-identifier': 7.19.1
       '@babel/template': 7.20.7
-      '@babel/traverse': 7.20.10
+      '@babel/traverse': 7.20.12
       '@babel/types': 7.20.7
     transitivePeerDependencies:
       - supports-color
@@ -1701,7 +1738,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/template': 7.20.7
-      '@babel/traverse': 7.20.10
+      '@babel/traverse': 7.20.12
       '@babel/types': 7.20.7
     transitivePeerDependencies:
       - supports-color
@@ -1720,33 +1757,33 @@ packages:
     dependencies:
       '@babel/types': 7.20.7
 
-  /@babel/plugin-proposal-export-namespace-from/7.18.9_@babel+core@7.20.7:
+  /@babel/plugin-proposal-export-namespace-from/7.18.9_@babel+core@7.20.12:
     resolution: {integrity: sha512-k1NtHyOMvlDDFeb9G5PhUXuGj8m/wiwojgQVEhJ/fsVsMCpLyOP4h0uGEjYJKrRI+EVPlb5Jk+Gt9P97lOGwtA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.20.7
+      '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
-      '@babel/plugin-syntax-export-namespace-from': 7.8.3_@babel+core@7.20.7
+      '@babel/plugin-syntax-export-namespace-from': 7.8.3_@babel+core@7.20.12
     dev: true
 
-  /@babel/plugin-syntax-export-namespace-from/7.8.3_@babel+core@7.20.7:
+  /@babel/plugin-syntax-export-namespace-from/7.8.3_@babel+core@7.20.12:
     resolution: {integrity: sha512-MXf5laXo6c1IbEbegDmzGPwGNTsHZmEy6QGznu5Sh2UCWvueywb2ee+CCE4zQiZstxU9BMoQO9i6zUFSY0Kj0Q==}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.20.7
+      '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
     dev: true
 
-  /@babel/plugin-transform-modules-commonjs/7.20.11_@babel+core@7.20.7:
+  /@babel/plugin-transform-modules-commonjs/7.20.11_@babel+core@7.20.12:
     resolution: {integrity: sha512-S8e1f7WQ7cimJQ51JkAaDrEtohVEitXjgCGAS2N8S31Y42E+kWwfSz83LYz57QdBm7q9diARVqanIaH2oVgQnw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.20.7
+      '@babel/core': 7.20.12
       '@babel/helper-module-transforms': 7.20.11
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/helper-simple-access': 7.20.2
@@ -1771,6 +1808,23 @@ packages:
 
   /@babel/traverse/7.20.10:
     resolution: {integrity: sha512-oSf1juCgymrSez8NI4A2sr4+uB/mFd9MXplYGPEBnfAuWmmyeVcHa6xLPiaRBcXkcb/28bgxmQLTVwFKE1yfsg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/code-frame': 7.18.6
+      '@babel/generator': 7.20.7
+      '@babel/helper-environment-visitor': 7.18.9
+      '@babel/helper-function-name': 7.19.0
+      '@babel/helper-hoist-variables': 7.18.6
+      '@babel/helper-split-export-declaration': 7.18.6
+      '@babel/parser': 7.20.7
+      '@babel/types': 7.20.7
+      debug: 4.3.4
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
+  /@babel/traverse/7.20.12:
+    resolution: {integrity: sha512-MsIbFN0u+raeja38qboyF8TIT7K0BFzz/Yd/77ta4MsUsmP2RAnidIlwq7d5HFQrH/OZJecGV6B71C4zAgpoSQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.18.6
@@ -2017,19 +2071,19 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.51:
-    resolution: {integrity: sha512-cA3G5tqLUEiUYOmelWyl5uaoUzESJk6g1gBkDMN6Xe5VTMLAMvO94eGirYf2+HFx9u1Sy++WifkIYFGJfuePsA==}
+  /@effect/io/0.0.52:
+    resolution: {integrity: sha512-dR0E7TtN6grqiz6rF2dCH1QW+RsS0vupNR8dI1aqjwmwcc1pU2MtVM/PmTB5Zei3E+STT5P/fOpx9q7y4Iel6Q==}
     dependencies:
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
     dev: false
 
-  /@effect/stm/0.0.9:
-    resolution: {integrity: sha512-Qpsrt3llBwEvviEmDeVQBDYjZmeop45+jK1ITk9AKKvCrC88tMh89erdb7jiAHeLR5ltfNPVIzQVvnmOZydQwg==}
+  /@effect/stm/0.0.11:
+    resolution: {integrity: sha512-JWy6Na/KMNb8zvVTOLSohfpWFI9vNnvDMm+VMfal6Pkhy8IKEecMb3sPDupU14szGcTwl2Mr2D01wYlI4JoPXQ==}
     dependencies:
-      '@effect/io': 0.0.51
+      '@effect/io': 0.0.52
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.35
+      '@fp-ts/data': 0.0.36
     dev: false
 
   /@esbuild/android-arm/0.16.4:
@@ -2297,8 +2351,8 @@ packages:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
     dev: false
 
-  /@fp-ts/data/0.0.35:
-    resolution: {integrity: sha512-0EGZdUmIuidTLixWKYI9n2J2sBnjg6SkUkCuRqTpllfQHVNsDgqi6NqNOPF2QtLD+9uIdauJ1YaPQWmd3PAv+w==}
+  /@fp-ts/data/0.0.36:
+    resolution: {integrity: sha512-uC8S69OO+KyXrVTQhDr+JWXmex9blTwZcwG9BcxflPnytHA3lU8BxMz0DjxgSpeWzoGJIZ9F5L6bbwCnvcLeEA==}
     dependencies:
       '@fp-ts/core': 0.0.11
     dev: false
@@ -2591,22 +2645,22 @@ packages:
       - debug
     dev: true
 
-  /@sentry/core/7.28.1:
-    resolution: {integrity: sha512-7wvnuvn/mrAfcugWoCG/3pqDIrUgH5t+HisMJMGw0h9Tc33KqrmqMDCQVvjlrr2pWrw/vuUCFdm8CbUHJ832oQ==}
+  /@sentry/core/7.29.0:
+    resolution: {integrity: sha512-+e9aIp2ljtT4EJq3901z6TfEVEeqZd5cWzbKEuQzPn2UO6If9+Utd7kY2Y31eQYb4QnJgZfiIEz1HonuYY6zqQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.28.1
-      '@sentry/utils': 7.28.1
+      '@sentry/types': 7.29.0
+      '@sentry/utils': 7.29.0
       tslib: 1.14.1
     dev: true
 
-  /@sentry/node/7.28.1:
-    resolution: {integrity: sha512-n7AbpJqZJjWPpKNGc55mP7AdQ+XSomS9MZJuZ+Xt2AU52aVwGPI4z9aHUJFSDGaMHHiu/toyPnoUES+XZf6/hw==}
+  /@sentry/node/7.29.0:
+    resolution: {integrity: sha512-s/bN/JS5gPTmwzVms4FtI5YNYtC9aGY4uqdx/llVrIiVv7G6md/oJJzKtO1C4dt6YshjGjSs5KCpEn1NM4+1iA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.28.1
-      '@sentry/types': 7.28.1
-      '@sentry/utils': 7.28.1
+      '@sentry/core': 7.29.0
+      '@sentry/types': 7.29.0
+      '@sentry/utils': 7.29.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -2615,16 +2669,16 @@ packages:
       - supports-color
     dev: true
 
-  /@sentry/types/7.28.1:
-    resolution: {integrity: sha512-DvSplMVrVEmOzR2M161V5+B8Up3vR71xMqJOpWTzE9TqtFJRGPtqT/5OBsNJJw1+/j2ssMcnKwbEo9Q2EGeS6g==}
+  /@sentry/types/7.29.0:
+    resolution: {integrity: sha512-DmoEpoqHPty3VxqubS/5gxarwebHRlcBd/yuno+PS3xy++/i9YPjOWLZhU2jYs1cW68M9R6CcCOiC9f2ckJjdw==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils/7.28.1:
-    resolution: {integrity: sha512-75/jzLUO9HH09iC9TslNimGbxOP3jgn89P+q7uR+rp2fJfRExHVeKJZQdK0Ij4/SmE7TJ3Uh2r154N0INZEx1g==}
+  /@sentry/utils/7.29.0:
+    resolution: {integrity: sha512-ICcBwTiBGK8NQA8H2BJo0JcMN6yCeKLqNKNMVampRgS6wSfSk1edvcTdhRkW3bSktIGrIPZrKskBHyMwDGF2XQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.28.1
+      '@sentry/types': 7.29.0
       tslib: 1.14.1
     dev: true
 
@@ -3501,6 +3555,7 @@ packages:
   /browserslist/4.21.4:
     resolution: {integrity: sha512-CBHJJdDmgjl3daYjN5Cp5kbTf1mUhZoS+beLklHIvkOWscs83YAhLlF3Wsh/lciQYAcbBJgTOD44VtG31ZM4Hw==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001434
       electron-to-chromium: 1.4.284
@@ -4934,13 +4989,14 @@ packages:
       express: 4.18.2
     dev: true
 
-  /express-jwt/8.2.1:
-    resolution: {integrity: sha512-h4tbjjQ4LlgQ4ODF9ZBAzUSbclBhu0buEx3+3T0CT4KulO3pj0CxO+/GGqtINqnM8uZqU04RvDdMOkV5/UfXnA==}
+  /express-jwt/8.3.0:
+    resolution: {integrity: sha512-3eMAlhv240YOzI0WRbufa2oBc6xR29GVY4HZ6AZfJQGnTtelXBmFRYPk+BojSdTa5JLlu9LVmOrTJRI9yg54ww==}
     engines: {node: '>= 8.0.0'}
     dependencies:
       '@types/jsonwebtoken': 9.0.0
       express-unless: 2.1.3
       jsonwebtoken: 9.0.0
+      lodash.set: 4.3.2
     dev: true
 
   /express-unless/2.1.3:
@@ -6314,6 +6370,10 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: true
+
+  /lodash.set/4.3.2:
+    resolution: {integrity: sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==}
     dev: true
 
   /lodash.startcase/4.4.0:
