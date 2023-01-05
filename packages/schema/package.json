@@ -8,7 +8,7 @@
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "*",
-    "@effect/io": "^0.0.52",
+    "@effect/io": "^0.0.55",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.36",
     "cross-fetch": "^3.1.5",
