@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.0.20
+
+### Patch Changes
+
+- 31f6f2f: Fix
+
 ## 2.0.19
 
 ### Patch Changes
