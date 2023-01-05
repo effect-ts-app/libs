@@ -10,7 +10,7 @@ export * from "@fp-ts/data/ReadonlyArray"
  * @tsplus getter ets/Ord toOrder
  */
 export function convertOrd<A>(_: Ord<A>): Order<A> {
-  return ({ compare: x => y => _.compare(x, y) })
+  return ({ compare: y => x => _.compare(x, y) })
 }
 
 /**

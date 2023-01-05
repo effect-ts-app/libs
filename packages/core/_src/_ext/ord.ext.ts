@@ -129,3 +129,8 @@ export function EqlContramap<A, B>(fa: Equal<A>, f: (a: B) => A) {
  * @tsplus fluent ets/Ord contramap
  */
 export const OrdContramap = ORD.contramap_
+
+/**
+ * @tsplus getter ets/Ord inverted
+ */
+export const OrdInverted = ORD.inverted
