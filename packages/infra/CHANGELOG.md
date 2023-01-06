@@ -1,5 +1,11 @@
 # @effect-ts-app/infra
 
+## 2.0.24
+
+### Patch Changes
+
+- 92b3ecc: Improve runMain error log
+
 ## 2.0.23
 
 ### Patch Changes
