@@ -29,21 +29,23 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
   Fiber.fromEffect(eff)
     .map(context => {
       context.await()
-        .map(exit => {
-          if (exit.isFailure()) {
-            if (exit.cause.isInterruptedOnly) {
-              console.warn("Interrupted")
-              defaultTeardown(0, context.id(), onExit)
-              return
+        .flatMap(exit =>
+          Effect.gen(function*($) {
+            if (exit.isFailure()) {
+              if (exit.cause.isInterruptedOnly) {
+                yield* $(Effect.logWarning("Main process Interrupted"))
+                defaultTeardown(0, context.id(), onExit)
+                return
+              } else {
+                yield* $(Effect.logErrorCauseMessage("Main process Error", exit.cause))
+                defaultTeardown(1, context.id(), onExit)
+                return
+              }
             } else {
-              console.error(exit.cause.pretty())
-              defaultTeardown(1, context.id(), onExit)
-              return
+              defaultTeardown(0, context.id(), onExit)
             }
-          } else {
-            defaultTeardown(0, context.id(), onExit)
-          }
-        })
+          })
+        )
         .unsafeRun()
 
       function handler() {
