@@ -1,5 +1,4 @@
 import type { FiberId } from "@effect/io/Fiber/Id"
-import { inspect } from "util"
 
 export function defaultTeardown(
   status: number,
@@ -33,10 +32,11 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
         .map(exit => {
           if (exit.isFailure()) {
             if (exit.cause.isInterruptedOnly) {
+              console.warn("Interrupted")
               defaultTeardown(0, context.id(), onExit)
               return
             } else {
-              console.error(inspect(exit.cause, true, 25))
+              console.error(exit.cause.pretty())
               defaultTeardown(1, context.id(), onExit)
               return
             }
