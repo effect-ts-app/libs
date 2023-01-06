@@ -1,5 +1,11 @@
 # @effect-ts-app/infra
 
+## 2.0.25
+
+### Patch Changes
+
+- 746af1a: Improve runMain exit log
+
 ## 2.0.24
 
 ### Patch Changes
