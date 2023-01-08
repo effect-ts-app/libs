@@ -1,5 +1,5 @@
 diff --git a/lib/tsc.js b/lib/tsc.js
-index f266e9b..0b55b0d 100644
+index 94a0944..3ef32a3 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -42626,7 +42626,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
@@ -56,7 +56,7 @@ index f266e9b..0b55b0d 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -87992,13 +88003,27 @@ function getOriginalNodeId(node) {
+@@ -87996,13 +88007,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -88,7 +88,7 @@ index f266e9b..0b55b0d 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index c882eea..96deb2c 100644
+index d2b0553..dfcbab4 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2379,6 +2379,7 @@ __export(server_exports, {
@@ -153,7 +153,7 @@ index c882eea..96deb2c 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -92583,13 +92595,27 @@ function getOriginalNodeId(node) {
+@@ -92587,13 +92599,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -184,7 +184,7 @@ index c882eea..96deb2c 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-@@ -132264,6 +132290,7 @@ __export(ts_exports3, {
+@@ -132272,6 +132298,7 @@ __export(ts_exports3, {
    tryGetDirectories: () => tryGetDirectories,
    tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
    tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -192,7 +192,7 @@ index c882eea..96deb2c 100644
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
    tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -188375,6 +188402,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -188383,6 +188410,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -216,7 +216,7 @@ index 3d74aac..40c7800 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index 8965eb7..4116d0f 100644
+index 3f00aac..03b6620 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -44515,7 +44515,8 @@ ${lanes.join("\n")}
@@ -273,7 +273,7 @@ index 8965eb7..4116d0f 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -90157,13 +90168,26 @@ ${lanes.join("\n")}
+@@ -90161,13 +90172,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -303,7 +303,7 @@ index 8965eb7..4116d0f 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -90572,10 +90596,12 @@ ${lanes.join("\n")}
+@@ -90576,10 +90600,12 @@ ${lanes.join("\n")}
      }
      return { decorators };
    }
@@ -316,7 +316,7 @@ index 8965eb7..4116d0f 100644
      }
    });
  
-@@ -184497,6 +184523,7 @@ ${e.message}`;
+@@ -184505,6 +184531,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -324,7 +324,7 @@ index 8965eb7..4116d0f 100644
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
      tryGetNativePerformanceHooks: () => tryGetNativePerformanceHooks,
-@@ -187154,6 +187181,7 @@ ${e.message}`;
+@@ -187162,6 +187189,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -348,7 +348,7 @@ index d853110..230d2f9 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index d0e741b..9f85a71 100644
+index cfad250..ac4f5e3 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -44515,7 +44515,8 @@ ${lanes.join("\n")}
@@ -405,7 +405,7 @@ index d0e741b..9f85a71 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -90157,13 +90168,26 @@ ${lanes.join("\n")}
+@@ -90161,13 +90172,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -435,7 +435,7 @@ index d0e741b..9f85a71 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -90572,10 +90596,12 @@ ${lanes.join("\n")}
+@@ -90576,10 +90600,12 @@ ${lanes.join("\n")}
      }
      return { decorators };
    }
@@ -448,7 +448,7 @@ index d0e741b..9f85a71 100644
      }
    });
  
-@@ -173664,6 +173690,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -173672,6 +173698,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,

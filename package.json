@@ -48,7 +48,7 @@
         "@effect/core": "^0.0.16",
         "@types/node": "~18.11.12",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
-        "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz"
     },
     "dependencies": {
         "cross-env": "^7.0.3",
@@ -96,7 +96,7 @@
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.1.2",
-        "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.6",
         "vite": "^4.0.4",
         "vitest": "^0.26.3"
