@@ -3,9 +3,6 @@
   "version": "6.0.0",
   "license": "MIT",
   "type": "module",
-  "resolutions": {
-    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
-  },
   "peerDependencies": {
     "@effect-ts-app/boilerplate-prelude": "^2.0.6"
   },

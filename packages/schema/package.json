@@ -22,7 +22,7 @@
     "@types/validator": "^13.7.10",
     "fast-check": "^3.5.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://github.com/0x706b/typescript/raw/043313ca8f/typescript-5.0.0-tsplus.20221227.tgz"
+    "typescript": "https://github.com/0x706b/typescript/raw/7e45a7362f/typescript-5.0.0-tsplus.20230107.tgz"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

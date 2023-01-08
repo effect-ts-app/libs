@@ -34,6 +34,21 @@
             "./node_modules/@effect-ts-app/core/vendor/fp-ts-data-tsplus.json"
         ],
         //"preserveSymlinks": true
+        "plugins": [
+            {
+                "name": "@effect/language-service",
+                "diagnostics": {
+                    "1002": "none"
+                }
+            }
+        ],
+        "transformers": [
+            {
+                "name": "@effect/language-service/transformer",
+                "trace": {},
+                //"debug": {}
+            },
+        ],
     },
     "watchOptions": {
         // Use native file system events for files and directories
