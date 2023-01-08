@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.1.3
+  - @effect-ts-app/schema@2.1.3
+
 ## 2.1.2
 
 ### Patch Changes
