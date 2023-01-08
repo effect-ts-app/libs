@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.1.2
+
+### Patch Changes
+
+- df5275e: Add macros
+
 ## 2.1.1
 
 ### Patch Changes

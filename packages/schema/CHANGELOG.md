@@ -1,5 +1,12 @@
 # @effect-ts-app/schema
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [df5275e]
+  - @effect-ts-app/core@2.1.2
+
 ## 2.1.1
 
 ### Patch Changes
