@@ -1,28 +1,16 @@
 diff --git a/transformer.js b/transformer.js
-index d119a28427139fb3494eeeed8e23efb8a3a17925..00beb155ee3c7e23666ea072d4f33421fcbb15f1 100644
+index d119a28427139fb3494eeeed8e23efb8a3a17925..7c6e4c5b4e4d02fbf283fbd92456b45e53d8e146 100644
 --- a/transformer.js
 +++ b/transformer.js
-@@ -43,11 +43,17 @@ function effectPlugin(program, options) {
-         }
-         function getTrace(node) {
-           try {
--            const pos = getOriginal(node).getStart();
-+            const original = getOriginal(node)
-+            const pos = original.getStart(sourceFile);
-             const nodeEnd = sourceFile.getLineAndCharacterOfPosition(pos);
-             return ctx.factory.createBinaryExpression(fileName.get, ctx.factory.createToken(_typescript.default.SyntaxKind.PlusToken), ctx.factory.createStringLiteral(`:${nodeEnd.line + 1}:${nodeEnd.character + 1}`));
-           } catch (e) {
--            return undefined;
-+            if (!e.toString().includes("Cannot read properties of undefined")) {
-+              //return undefined;
-+              return ctx.factory.createBinaryExpression(fileName.get, ctx.factory.createToken(_typescript.default.SyntaxKind.PlusToken), ctx.factory.createStringLiteral(`:*:${node.escapedText}`));
-+            } else {
-+              return undefined
-+            }
-           }
-         }
-         const debugVisitor = node => {
-@@ -88,12 +100,17 @@ function effectPlugin(program, options) {
+@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
+ exports.default = effectPlugin;
+ var _pluginutils = /*#__PURE__*/require("@rollup/pluginutils");
+ var _typescript = /*#__PURE__*/_interopRequireDefault( /*#__PURE__*/require("typescript"));
++var path = require("path")
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ class RefCounted {
+   constructor(ref) {
+@@ -88,12 +101,17 @@ function effectPlugin(program, options) {
            }
            return node;
          };
@@ -41,3 +29,12 @@ index d119a28427139fb3494eeeed8e23efb8a3a17925..00beb155ee3c7e23666ea072d4f33421
                if (declaration.name?.getText() === "pipe") {
                  let expr = _typescript.default.visitNode(visited.arguments[0], optimizeVisitor);
                  for (let i = 1; i < visited.arguments.length; i++) {
+@@ -141,7 +159,7 @@ function effectPlugin(program, options) {
+           statements.push(ctx.factory.createImportDeclaration(undefined, ctx.factory.createImportClause(false, undefined, ctx.factory.createNamespaceImport(tracer.get)), ctx.factory.createStringLiteral("@effect/io/Debug")));
+         }
+         if (fileName.count > 0) {
+-          statements.push(ctx.factory.createVariableStatement(undefined, ctx.factory.createVariableDeclarationList([ctx.factory.createVariableDeclaration(fileName.get, undefined, undefined, ctx.factory.createStringLiteral(sourceFile.fileName))], _typescript.default.NodeFlags.Const)));
++          statements.push(ctx.factory.createVariableStatement(undefined, ctx.factory.createVariableDeclarationList([ctx.factory.createVariableDeclaration(fileName.get, undefined, undefined, ctx.factory.createStringLiteral(path.relative(process.cwd(), sourceFile.fileName)))], _typescript.default.NodeFlags.Const)));
+         }
+         for (const statement of visited.statements) {
+           statements.push(statement);

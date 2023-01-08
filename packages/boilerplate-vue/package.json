@@ -25,7 +25,7 @@
     "@types/node": "~18.11.18",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "https://github.com/0x706b/typescript/raw/7e45a7362f/typescript-5.0.0-tsplus.20230107.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz",
     "vite": "^4.0.4",
     "vitest": "^0.26.3",
     "vue": "^3.2.45"

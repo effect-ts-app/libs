@@ -10,7 +10,7 @@
             "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
             "ts-pattern@4.0.6": "patches/ts-pattern@4.0.6.patch",
-            "typescript@5.0.0-tsplus.20230107": "patches/typescript@5.0.0-tsplus.20230107.patch",
+            "typescript@5.0.0-tsplus.20230108": "patches/typescript@5.0.0-tsplus.20230108.patch",
             "@effect/language-service@0.0.15": "patches/@effect__language-service@0.0.15.patch"
         }
     },
@@ -48,7 +48,7 @@
         "@effect/core": "^0.0.16",
         "@types/node": "~18.11.12",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
-        "typescript": "https://github.com/0x706b/typescript/raw/7e45a7362f/typescript-5.0.0-tsplus.20230107.tgz"
+        "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz"
     },
     "dependencies": {
         "cross-env": "^7.0.3",
@@ -96,7 +96,7 @@
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.1.2",
-        "typescript": "https://github.com/0x706b/typescript/raw/7e45a7362f/typescript-5.0.0-tsplus.20230107.tgz",
+        "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz",
         "typescript-transform-paths": "^3.4.4",
         "vite": "^4.0.4",
         "vitest": "^0.26.3"

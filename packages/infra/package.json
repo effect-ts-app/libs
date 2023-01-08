@@ -30,7 +30,7 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.0.1",
-    "typescript": "https://github.com/0x706b/typescript/raw/7e45a7362f/typescript-5.0.0-tsplus.20230107.tgz",
+    "typescript": "https://github.com/0x706b/typescript/raw/artifact/tsplus-20230108/typescript-5.0.0-tsplus.20230108.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {
