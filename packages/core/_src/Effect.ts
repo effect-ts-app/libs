@@ -9,6 +9,7 @@ import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect provideService
  */
 export function provideService<T, R, E, A>(
@@ -46,6 +47,7 @@ export const fb_unit = Fiber.unit()
 export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) => Eff.flatMap((a: A2) => Effect.fromEither(ei(a)))
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect flatMapOpt
  */
 export function flatMapOpt<R, E, A, R2, E2, A2>(
@@ -61,6 +63,7 @@ export function flatMapOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect tapOpt
  */
 export function tapOpt<R, E, A, R2, E2, A2>(
@@ -76,6 +79,7 @@ export function tapOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect zipRightOpt
  */
 export function zipRightOpt<R, E, A, R2, E2, A2>(
@@ -91,6 +95,7 @@ export function zipRightOpt<R, E, A, R2, E2, A2>(
 }
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect mapOpt
  */
 export function mapOpt<R, E, A, A2>(
@@ -124,6 +129,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
 }
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect tapBoth
  */
 export const tapBoth_ = <R, E, A, R2, R3, E3>(
@@ -139,6 +145,7 @@ export const tapBoth = <E, A, R2, R3, E3>(
 ) => <R>(self: Effect<R, E, A>) => tapBoth_(self, f, g)
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect tapBothInclAbort
  */
 export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
@@ -169,6 +176,7 @@ export function getFirstError<E>(cause: Cause<E>) {
 }
 
 /**
+ * @macro traced
  * @tsplus fluent effect/io/Effect tapErrorInclAbort
  */
 export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
