@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.1.0
+
+### Minor Changes
+
+- Compile with tracing
+
 ## 2.0.21
 
 ### Patch Changes

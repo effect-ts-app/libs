@@ -1,5 +1,17 @@
 # @effect-ts-app/infra
 
+## 2.1.0
+
+### Minor Changes
+
+- Compile with tracing
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/core@2.1.0
+  - @effect-ts-app/schema@2.1.0
+
 ## 2.0.25
 
 ### Patch Changes

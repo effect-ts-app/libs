@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 2.1.0
+
+### Minor Changes
+
+- Compile with tracing
+
 ## 2.0.2
 
 ### Patch Changes
