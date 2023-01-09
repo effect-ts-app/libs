@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.3
+
+### Patch Changes
+
+- 2f9fc02: Add logfmtLogger
+
 ## 2.2.2
 
 ### Patch Changes
