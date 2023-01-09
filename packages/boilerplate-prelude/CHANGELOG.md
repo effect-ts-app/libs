@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.5
+
+### Patch Changes
+
+- Fix log
+
 ## 2.2.4
 
 ### Patch Changes
