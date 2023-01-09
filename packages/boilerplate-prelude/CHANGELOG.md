@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.4
+
+### Patch Changes
+
+- e92c15a: Fix log
+
 ## 2.2.3
 
 ### Patch Changes

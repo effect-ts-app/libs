@@ -1,5 +1,13 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.2.4
+
+### Patch Changes
+
+- Updated dependencies [e92c15a]
+  - @effect-ts-app/boilerplate-prelude@2.2.4
+  - @effect-ts-app/boilerplate-vue@2.2.4
+
 ## 2.2.3
 
 ### Patch Changes
