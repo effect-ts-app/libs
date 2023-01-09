@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.5.1
+
+### Patch Changes
+
+- Switch to Semaphore
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.2.1
+  - @effect-ts-app/core@2.2.1
+  - @effect-ts-app/infra@2.2.1
+  - @effect-ts-app/schema@2.2.1
+
 ## 3.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.2.1
+
+### Patch Changes
+
+- Switch to Semaphore
+
 ## 2.2.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.2.1
+
+### Patch Changes
+
+- Switch to Semaphore
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.2.1
+  - @effect-ts-app/boilerplate-vue@2.2.1
+  - @effect-ts-app/core@2.2.1
+  - @effect-ts-app/schema@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes

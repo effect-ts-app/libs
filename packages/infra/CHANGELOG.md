@@ -1,5 +1,14 @@
 # @effect-ts-app/infra
 
+## 2.2.1
+
+### Patch Changes
+
+- Switch to Semaphore
+- Updated dependencies
+  - @effect-ts-app/core@2.2.1
+  - @effect-ts-app/schema@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes
