@@ -38,7 +38,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
 
           const set = (i: ROMap<Id, PM>) => RedisClient.set(key, JSON.stringify({ data: [...i.values()] })).orDie
 
-          const semaphore = TSemaphore.unsafeMake(1)
+          const sem = Semaphore.unsafeMakeSemaphore(1)
+          const withPermit = sem.withPermits(1)
 
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
           const all = get.map(Chunk.fromIterable)
@@ -55,7 +56,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
                   .flatMap(set)
               )
               .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
-              .withPermit(semaphore).provideService(RedisClient.RedisClient, redis)
+              .apply(withPermit)
+              .provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
             filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
@@ -68,12 +70,14 @@ function makeRedisStore({ prefix }: StorageConfig) {
                 .find(e.id)
                 .flatMap(current => updateETag(e, current))
                 .tap(e => asMap.map(ROMap.insert(e.id, e)).flatMap(set))
-                .withPermit(semaphore).provideService(RedisClient.RedisClient, redis),
+                .apply(withPermit)
+                .provideService(RedisClient.RedisClient, redis),
             batchSet,
             bulkSet: batchSet,
             remove: (e: PM) =>
               asMap.map(ROMap.remove(e.id)).flatMap(set)
-                .withPermit(semaphore).provideService(
+                .apply(withPermit)
+                .provideService(
                   RedisClient.RedisClient,
                   redis
                 )

@@ -36,7 +36,8 @@ export const makeMemoryStore = () => ({
           ROMap.make([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
         )
       )
-      const semaphore = TSemaphore.unsafeMake(1)
+      const sem = Semaphore.unsafeMakeSemaphore(1)
+      const withPermit = sem.withPermits(1)
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.fromIterable)
       const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
@@ -52,7 +53,7 @@ export const makeMemoryStore = () => ({
               .flatMap(_ => store.set(_))
           )
           .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
-          .withPermit(semaphore)
+          .apply(withPermit)
       const s: Store<PM, Id> = {
         all,
         find: id => store.get.map(ROMap.lookup(id)),
@@ -64,10 +65,10 @@ export const makeMemoryStore = () => ({
             .find(e.id)
             .flatMap(current => updateETag(e, current))
             .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(_ => store.set(_)))
-            .withPermit(semaphore),
+            .apply(withPermit),
         batchSet,
         bulkSet: batchSet,
-        remove: (e: PM) => store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)).withPermit(semaphore)
+        remove: (e: PM) => store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)).apply(withPermit)
       }
       return s
     })

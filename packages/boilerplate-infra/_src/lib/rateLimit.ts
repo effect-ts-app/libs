@@ -12,9 +12,37 @@ export function withPermitsDuration(permits: number, duration: DUR) {
     return effect =>
       Effect.uninterruptibleMask(
         restore =>
-          restore(self.acquireN(permits).commit) >
-            restore(effect)
-              .ensuring(self.releaseN(permits).commit.delay(duration))
+          restore(self.acquireN(permits).commit)
+            > restore(effect)
+              .ensuring(
+                self.releaseN(permits)
+                  .commit
+                  .delay(duration)
+              )
+      )
+  }
+}
+
+/**
+ * Executes the specified effect, acquiring the specified number of permits
+ * immediately before the effect begins execution and releasing them
+ * delayed by duration after the effect completes execution, whether by success,
+ * failure, or interruption.
+ *
+ * @tsplus static effect/stm/Semaphore.Ops withPermitsDuration
+ * @tsplus pipeable effect/stm/Semaphore withPermitsDuration
+ */
+export function SEM_withPermitsDuration(permits: number, duration: DUR) {
+  return (self: Semaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
+    return effect =>
+      Effect.uninterruptibleMask(
+        restore =>
+          restore(self.take(permits))
+            > restore(effect)
+              .ensuring(
+                self.release(permits)
+                  .delay(duration)
+              )
       )
   }
 }
