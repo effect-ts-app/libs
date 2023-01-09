@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.5.2
+
+### Patch Changes
+
+- 68df2ab: Fix signature
+
 ## 3.5.1
 
 ### Patch Changes
