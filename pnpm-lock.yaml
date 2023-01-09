@@ -7,33 +7,30 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
 
 patchedDependencies:
-  '@effect-ts/monocle@0.43.0':
-    hash: d3hhxwnoq64fw5ljkjpzykj2mi
-    path: patches/@effect-ts__monocle@0.43.0.patch
   '@effect-ts/core@0.60.5':
     hash: jx4drcbvzaxoqqasybnfxdx44i
     path: patches/@effect-ts__core@0.60.5.patch
-  '@typescript-eslint/scope-manager@5.48.0':
-    hash: tp5r7mwyjl4dxldk2tuwbgrsum
-    path: patches/@typescript-eslint__scope-manager@5.48.0.patch
-  ts-pattern@4.0.6:
-    hash: hpfuegunz5yvcuwfbyr4pr7fdy
-    path: patches/ts-pattern@4.0.6.patch
-  typescript@5.0.0-tsplus.20230108:
-    hash: lx5lj3mbqmfnd7j7be7zce2s2e
-    path: patches/typescript@5.0.0-tsplus.20230108.patch
-  eslint-plugin-unused-imports@2.0.0:
-    hash: tnum7sl7jcutfljbv5jztcescq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
+  '@effect-ts/monocle@0.43.0':
+    hash: d3hhxwnoq64fw5ljkjpzykj2mi
+    path: patches/@effect-ts__monocle@0.43.0.patch
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
-  '@effect-ts/system@0.57.5':
-    hash: aliyesjnd2rt7ef7234i2dw2t4
-    path: patches/@effect-ts__system@0.57.5.patch
   '@effect/language-service@0.0.15':
     hash: a4uvuf3pdfkyyq2ka2mtqp5yfi
     path: patches/@effect__language-service@0.0.15.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: tnum7sl7jcutfljbv5jztcescq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
+  '@typescript-eslint/scope-manager@5.48.0':
+    hash: tp5r7mwyjl4dxldk2tuwbgrsum
+    path: patches/@typescript-eslint__scope-manager@5.48.0.patch
+  '@effect-ts/system@0.57.5':
+    hash: aliyesjnd2rt7ef7234i2dw2t4
+    path: patches/@effect-ts__system@0.57.5.patch
+  typescript@5.0.0-tsplus.20230108:
+    hash: lx5lj3mbqmfnd7j7be7zce2s2e
+    path: patches/typescript@5.0.0-tsplus.20230108.patch
 
 importers:
 
@@ -50,7 +47,7 @@ importers:
       '@effect/language-service': ^0.0.15
       '@phaphoso/eslint-plugin-dprint': ^0.5.2
       '@tsconfig/strictest': ^1.0.2
-      '@tsplus/installer': 0.0.162
+      '@tsplus/installer': 0.0.163
       '@types/lodash': ^4.14.191
       '@types/node': ~18.11.12
       '@typescript-eslint/eslint-plugin': ^5.48.0
@@ -102,7 +99,7 @@ importers:
       '@effect/language-service': 0.0.15_a4uvuf3pdfkyyq2ka2mtqp5yfi
       '@phaphoso/eslint-plugin-dprint': 0.5.2_eslint@8.31.0
       '@tsconfig/strictest': 1.0.2
-      '@tsplus/installer': 0.0.162_dyjje7lyfg3edhlnsfkm5eg54q
+      '@tsplus/installer': 0.0.163_dyjje7lyfg3edhlnsfkm5eg54q
       '@types/lodash': 4.14.191
       '@types/node': 18.11.12
       '@typescript-eslint/eslint-plugin': 5.48.0_nh677dnmtc4zshv3rbxk6xekhy
@@ -267,7 +264,7 @@ importers:
       path-parser: ^6.1.0
       query-string: ^8.1.0
       ts-node: ^10.9.1
-      ts-pattern: ^4.0.6
+      ts-pattern: ^4.1.2
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
@@ -287,7 +284,7 @@ importers:
       nanoid: 4.0.0
       path-parser: 6.1.0
       query-string: 8.1.0
-      ts-pattern: 4.0.6_hpfuegunz5yvcuwfbyr4pr7fdy
+      ts-pattern: 4.1.2
       uuid: 9.0.0
       validator: 13.7.0
     devDependencies:
@@ -2740,8 +2737,8 @@ packages:
     resolution: {integrity: sha512-IRKlC8cnP7zMz1SDBjyIVyPapkEGWLZ6wkF6Z8T+xU80P9sO5uGXlIUvtzjx+7ehPJRWxkB6CeIDwUfyqNtYkQ==}
     dev: true
 
-  /@tsplus/installer/0.0.162_dyjje7lyfg3edhlnsfkm5eg54q:
-    resolution: {integrity: sha512-XpOjckQpulvOl13tfWhTie7geq6GNqvvL3dwkUD8rQQGlsjmxppp+5Xng7pCLw7OOO8Dv2/eW1TozO04ZDfXZw==}
+  /@tsplus/installer/0.0.163_dyjje7lyfg3edhlnsfkm5eg54q:
+    resolution: {integrity: sha512-kj4kxCUAAZZgLSGQrhIO4Lc9OsN2Vq4ooPDYdrCoxy4U/i0/Mj6ThXij53ik5t6BYbos6892Yil6wfHmga/5vA==}
     hasBin: true
     dependencies:
       mkdirp: 1.0.4
@@ -8772,10 +8769,9 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /ts-pattern/4.0.6_hpfuegunz5yvcuwfbyr4pr7fdy:
-    resolution: {integrity: sha512-sFHQYD4KoysBi7e7a2mzDPvRBeqA4w+vEyRE+P5MU9VLq8eEYxgKCgD9RNEAT+itGRWUTYN+hry94GDPLb1/Yw==}
+  /ts-pattern/4.1.2:
+    resolution: {integrity: sha512-R/NEQHgeQwiyQyD5++s8rVB6jC1c6KiHHac2GEm0Pf82p3dth7s/kZfSimcUkVLjz+bPJn12721Vw9sbMpY5Rw==}
     dev: false
-    patched: true
 
   /ts-toolbelt/9.6.0:
     resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}

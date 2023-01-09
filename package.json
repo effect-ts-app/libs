@@ -9,7 +9,6 @@
             "@typescript-eslint/scope-manager@5.48.0": "patches/@typescript-eslint__scope-manager@5.48.0.patch",
             "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
-            "ts-pattern@4.0.6": "patches/ts-pattern@4.0.6.patch",
             "typescript@5.0.0-tsplus.20230108": "patches/typescript@5.0.0-tsplus.20230108.patch",
             "@effect/language-service@0.0.15": "patches/@effect__language-service@0.0.15.patch"
         }
@@ -67,7 +66,7 @@
         "@effect/language-service": "^0.0.15",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^1.0.2",
-        "@tsplus/installer": "0.0.162",
+        "@tsplus/installer": "0.0.163",
         "@types/lodash": "^4.14.191",
         "@types/node": "~18.11.18",
         "@typescript-eslint/eslint-plugin": "^5.48.0",
