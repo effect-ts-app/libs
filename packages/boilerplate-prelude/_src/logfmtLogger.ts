@@ -63,7 +63,7 @@ export const logFmtLoggerToString = Logger.make<string, string>(
 
 export const logFmtLogger = Logger.make<string, void>(
   (fiberId, logLevel, message, cause, context, spans, annotations, runtime) => {
-    const formatted = logFmtLogger.log(
+    const formatted = logFmtLoggerToString.log(
       fiberId,
       logLevel,
       message,
