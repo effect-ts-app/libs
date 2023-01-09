@@ -81,7 +81,8 @@ export const logFmtLogger = Logger.make<string, void>(
 )
 
 const appendQuoted = (label: string, output: string): string => {
-  return output + JSON.stringify(label)
+  // TODO: optimise \n and \r handling instead!
+  return output + JSON.stringify(label).replaceAll("\\n", "\n").replaceAll("\\r", "\r")
 }
 
 const renderLogSpan = (now: number) => {
