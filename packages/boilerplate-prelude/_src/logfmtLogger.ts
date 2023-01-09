@@ -1,7 +1,10 @@
+import { currentMinimumLogLevel } from "@effect/io/FiberRef"
+import * as FiberRefs from "@effect/io/FiberRefs"
 import * as Logger from "@effect/io/Logger"
+import * as LogLevel from "@effect/io/Logger/Level"
 import type * as LogSpan from "@effect/io/Logger/Span"
 
-export const logFmtLogger = Logger.make<string, string>(
+export const logFmtLoggerToString = Logger.make<string, string>(
   (fiberId, logLevel, message, cause, _context, spans, annotations, _runtime) => {
     const now = new Date()
     const nowMillis = now.getTime()
@@ -55,6 +58,25 @@ export const logFmtLogger = Logger.make<string, string>(
     }
 
     return output
+  }
+)
+
+export const logFmtLogger = Logger.make<string, void>(
+  (fiberId, logLevel, message, cause, context, spans, annotations, runtime) => {
+    const formatted = logFmtLogger.log(
+      fiberId,
+      logLevel,
+      message,
+      cause,
+      context,
+      spans,
+      annotations,
+      runtime
+    )
+    const filter = FiberRefs.getOrDefault(currentMinimumLogLevel)(context)
+    if (LogLevel.greaterThanEqual(filter)(logLevel)) {
+      globalThis.console.log(formatted)
+    }
   }
 )
 
