@@ -167,7 +167,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = Layer.scoped(ExpressApp)(makeExpressApp)
+export const LiveExpressApp = makeExpressApp.scoped(ExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 
@@ -311,7 +311,7 @@ export function defaultExitHandler(
 ): (cause: Cause<never>) => Effect<never, never, void> {
   return cause =>
     Effect.sync(() => {
-      if (cause.isDie) {
+      if (cause.isDie()) {
         console.error(pretty(cause))
       }
       _res.status(500).end()

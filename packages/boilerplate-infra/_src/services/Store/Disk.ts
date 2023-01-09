@@ -47,7 +47,7 @@ function makeDiskStore({ prefix }: StorageConfig) {
           yield* $(store.all.flatMap(fsStore.setRaw))
 
           const sem = TSemaphore.unsafeMake(1)
-          const flushToDisk = sem.withPermit(store.all.flatMap(fsStore.setRaw))
+          const flushToDisk = store.all.flatMap(fsStore.setRaw).withPermit(sem)
           const s: Store<E, Id> = {
             ...store,
             batchSet: flow(store.batchSet, t =>

@@ -6,7 +6,7 @@ export function reportError<E, E2 extends CauseException<unknown>>(
 ) {
   return (cause: Cause<E>, context?: Record<string, unknown>) =>
     Effect.gen(function*($) {
-      if (cause.isInterrupted) {
+      if (cause.isInterrupted()) {
         yield* $(Effect.logDebug("Interrupted: " + (context ? context.$$.pretty : "")))
         return
       }
@@ -33,7 +33,7 @@ export function logError<E, E2 extends CauseException<unknown>>(
 ) {
   return (cause: Cause<E>, context?: Record<string, unknown>) =>
     Effect.gen(function*($) {
-      if (cause.isInterrupted) {
+      if (cause.isInterrupted()) {
         yield* $(Effect.logDebug("Interrupted: " + (context ? context.$$.pretty : "")))
         return
       }

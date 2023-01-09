@@ -148,7 +148,6 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
   const [result, latestSuccess, execute] = make(self)
 
   const sem = TSemaphore.unsafeMake(1)
-  const lock = sem.withPermit
   let fib: Fiber.Runtime<unknown, unknown> | undefined = undefined
   const runNew = execute.fork
     .tap(newFiber =>
@@ -157,14 +156,12 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
       })
     )
 
-  const ex = lock(
-    Effect.suspendSucceed(() => {
-      return fib
-        ? fib.interrupt.zipRight(runNew)
-        : runNew
-    })
-  ).flatMap(_ => _.await())
-    .flatMap(Effect.done)
+  const ex = Effect.suspendSucceed(() => {
+    return fib
+      ? fib.interrupt.zipRight(runNew)
+      : runNew
+  }).withPermit(sem).flatMap(_ => _.await())
+    .flatMap(_ => _.done)
 
   function exec() {
     return run.value(ex)
@@ -275,7 +272,7 @@ function handleExit<E, A>(
 ) {
   return (exit: Exit<E, A>): Either<E, A> => {
     loading.value = false
-    if (Exit.isSuccess(exit)) {
+    if (exit.isSuccess()) {
       value.value = exit.value
       error.value = undefined
       return Either.right(exit.value)

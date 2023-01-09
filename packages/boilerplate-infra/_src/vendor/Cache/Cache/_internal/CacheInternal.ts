@@ -40,7 +40,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return Effect.sync(() => {
       const entries: Array<readonly [Key, Value]> = []
       for (const [key, value] of this.cacheState.map) {
-        if (value._tag === "Complete" && Exit.isSuccess(value.exit)) {
+        if (value._tag === "Complete" && value.exit.isSuccess()) {
           entries.push([key, value.exit.value] as const)
         }
       }
@@ -52,7 +52,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     return Effect.sync(() => {
       const values: Array<Value> = []
       for (const [_, value] of this.cacheState.map) {
-        if (value._tag === "Complete" && Exit.isSuccess(value.exit)) {
+        if (value._tag === "Complete" && value.exit.isSuccess()) {
           values.push(value.exit.value)
         }
       }
@@ -123,7 +123,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             }
             return this.get(k)
           }
-          return Effect.done(value.exit)
+          return value.exit.done
         }
         case "Refreshing": {
           this.trackAccess(value.complete.key)
@@ -131,7 +131,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
           if (this.hasExpired(value.complete.timeToLiveMillis)) {
             return value.deferred.await
           }
-          return Effect.done(value.complete.exit)
+          return value.complete.exit.done
         }
       }
     })
@@ -268,7 +268,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             now + this.timeToLive(exit).millis
           )
         )
-        return deferred.done(exit).zipRight(Effect.done(exit))
+        return deferred.done(exit).zipRight(exit.done)
       })
       .onInterrupt(() =>
         deferred.interrupt.zipRight(Effect.sync(() => {

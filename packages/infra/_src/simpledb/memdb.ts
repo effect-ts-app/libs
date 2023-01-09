@@ -50,7 +50,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 : Effect.fail("not equals")
             ).exit
           )
-          if (Exit.isSuccess(r)) {
+          if (r.isSuccess()) {
             return r.value
           }
         }

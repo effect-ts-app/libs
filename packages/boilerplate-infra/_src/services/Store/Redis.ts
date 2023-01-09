@@ -43,20 +43,19 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
           const all = get.map(Chunk.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-            semaphore.withPermit(
-              items
-                .forEachEffect(e => s.find(e.id).flatMap(current => updateETag(e, current)))
-                .tap(items =>
-                  asMap
-                    .map(m => {
-                      const mut = ROMap.toMutable(m)
-                      items.forEach(e => mut.set(e.id, e))
-                      return ROMap.fromMutable(mut)
-                    })
-                    .flatMap(set)
-                )
-                .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
-            ).provideService(RedisClient.RedisClient, redis)
+            items
+              .forEachEffect(e => s.find(e.id).flatMap(current => updateETag(e, current)))
+              .tap(items =>
+                asMap
+                  .map(m => {
+                    const mut = ROMap.toMutable(m)
+                    items.forEach(e => mut.set(e.id, e))
+                    return ROMap.fromMutable(mut)
+                  })
+                  .flatMap(set)
+              )
+              .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
+              .withPermit(semaphore).provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
             filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
@@ -65,21 +64,19 @@ function makeRedisStore({ prefix }: StorageConfig) {
               all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
             find: id => asMap.map(ROMap.lookup(id)),
             set: e =>
-              semaphore.withPermit(
-                s
-                  .find(e.id)
-                  .flatMap(current => updateETag(e, current))
-                  .tap(e => asMap.map(ROMap.insert(e.id, e)).flatMap(set))
-              ).provideService(RedisClient.RedisClient, redis),
+              s
+                .find(e.id)
+                .flatMap(current => updateETag(e, current))
+                .tap(e => asMap.map(ROMap.insert(e.id, e)).flatMap(set))
+                .withPermit(semaphore).provideService(RedisClient.RedisClient, redis),
             batchSet,
             bulkSet: batchSet,
             remove: (e: PM) =>
-              semaphore.withPermit(
-                asMap.map(ROMap.remove(e.id)).flatMap(set)
-              ).provideService(
-                RedisClient.RedisClient,
-                redis
-              )
+              asMap.map(ROMap.remove(e.id)).flatMap(set)
+                .withPermit(semaphore).provideService(
+                  RedisClient.RedisClient,
+                  redis
+                )
           }
           return s
         })

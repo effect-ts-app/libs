@@ -24,4 +24,4 @@ export const MongoClient = Tag<MongoClient>()
 export const db = MongoClient.with(_ => _.db)
 
 export const MongoClientLive = (mongoUrl: string, dbName?: string) =>
-  Layer.scoped(MongoClient)(makeMongoClient(mongoUrl, dbName))
+  makeMongoClient(mongoUrl, dbName).scoped(MongoClient)

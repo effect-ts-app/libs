@@ -34,7 +34,7 @@ export function fromChunk<
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
-  const refinement = (_: unknown): _ is Chunk<ParsedShape> => Chunk.isChunk(_) && _.every(guard)
+  const refinement = (_: unknown): _ is Chunk<ParsedShape> => Chunk.$.isChunk(_) && _.every(guard)
   const encode = Encoder.for(self)
 
   return pipe(

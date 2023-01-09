@@ -73,7 +73,7 @@ WHERE (
               .fetchAll()
           )
         )
-        .map(x => ReadonlyArray.head(x.resources))
+        .map(x => x.resources.head)
         .map(_ => _.map(_ => _.id))
     }
 

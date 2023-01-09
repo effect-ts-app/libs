@@ -109,7 +109,7 @@ export function elem<A>(E: Equal<A>, value: A) {
 export function sortWithNonEmpty<A>(
   ...ords: NonEmptyArguments<Ord<A>>
 ): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return a => ReadonlyArray.sortByNonEmpty(...ords.map(convertOrd))(a)
+  return a => a.sortByNonEmpty(...ords.map(convertOrd))
 }
 
 /**

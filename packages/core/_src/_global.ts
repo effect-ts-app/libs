@@ -38,7 +38,7 @@ import { Schedule } from "@effect/io/Schedule"
 /**
  * @tsplus global
  */
-import { Effect } from "@effect/io/Effect"
+import { Effect, Semaphore } from "@effect/io/Effect"
 
 /**
  * @tsplus global
@@ -136,6 +136,7 @@ import { MutableQueue } from "@fp-ts/data/MutableQueue"
 
 import "./_ext/Prelude.ext.js"
 import "./Array.js"
+import "./Aspects.js"
 import "./Chunk.js"
 import "./Effect.js"
 import "./Either.js"

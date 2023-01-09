@@ -74,10 +74,10 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       body: parsers
         .parseBody(body)
         .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure
+          _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
             : Effect.succeed(
-              Exit.isSuccess(_)
+              _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
             )
@@ -85,10 +85,10 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       cookie: parsers
         .parseCookie(cookies)
         .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure
+          _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
             : Effect.succeed(
-              Exit.isSuccess(_)
+              _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
             )
@@ -96,10 +96,10 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       headers: parsers
         .parseHeaders(headers)
         .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure
+          _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
             : Effect.succeed(
-              Exit.isSuccess(_)
+              _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
             )
@@ -107,10 +107,10 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       query: parsers
         .parseQuery(query)
         .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure
+          _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
             : Effect.succeed(
-              Exit.isSuccess(_)
+              _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
             )
@@ -118,10 +118,10 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       path: parsers
         .parsePath(params)
         .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure
+          _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
             : Effect.succeed(
-              Exit.isSuccess(_)
+              _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
             )

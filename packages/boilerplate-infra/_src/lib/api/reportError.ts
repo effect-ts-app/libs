@@ -42,7 +42,7 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
  */
 export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>) {
   return self.tapErrorCause(cause =>
-    cause.isInterruptedOnly || cause.isDie
+    cause.isInterruptedOnly() || cause.isDie()
       ? reportRequestError(cause)
       : logRequestError(cause)
   )

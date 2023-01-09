@@ -40,20 +40,19 @@ export const makeMemoryStore = () => ({
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.fromIterable)
       const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-        semaphore.withPermit(
-          items
-            .forEachEffect(i => s.find(i.id).flatMap(current => updateETag(i, current)))
-            .tap(items =>
-              store.get
-                .map(m => {
-                  const mut = ROMap.toMutable(m)
-                  items.forEach(e => mut.set(e.id, e))
-                  return ROMap.fromMutable(mut)
-                })
-                .flatMap(_ => store.set(_))
-            )
-            .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
-        )
+        items
+          .forEachEffect(i => s.find(i.id).flatMap(current => updateETag(i, current)))
+          .tap(items =>
+            store.get
+              .map(m => {
+                const mut = ROMap.toMutable(m)
+                items.forEach(e => mut.set(e.id, e))
+                return ROMap.fromMutable(mut)
+              })
+              .flatMap(_ => store.set(_))
+          )
+          .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
+          .withPermit(semaphore)
       const s: Store<PM, Id> = {
         all,
         find: id => store.get.map(ROMap.lookup(id)),
@@ -61,15 +60,14 @@ export const makeMemoryStore = () => ({
         filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
           all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
         set: e =>
-          semaphore.withPermit(
-            s
-              .find(e.id)
-              .flatMap(current => updateETag(e, current))
-              .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(_ => store.set(_)))
-          ),
+          s
+            .find(e.id)
+            .flatMap(current => updateETag(e, current))
+            .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(_ => store.set(_)))
+            .withPermit(semaphore),
         batchSet,
         bulkSet: batchSet,
-        remove: (e: PM) => semaphore.withPermit(store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)))
+        remove: (e: PM) => store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)).withPermit(semaphore)
       }
       return s
     })

@@ -8,6 +8,8 @@ import * as Fiber from "@effect/io/Fiber"
 import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 
+export * from "@effect/io/Effect"
+
 /**
  * @macro traced
  * @tsplus fluent effect/io/Effect provideService
@@ -164,11 +166,11 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   )
 
 export function getFirstError<E>(cause: Cause<E>) {
-  if (cause.isDie) {
+  if (cause.isDie()) {
     const defects = cause.defects
     return defects.unsafeHead
   }
-  if (cause.isFailure) {
+  if (cause.isFailure()) {
     const failures = cause.failures
     return failures.unsafeHead
   }

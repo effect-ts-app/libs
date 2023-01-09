@@ -221,6 +221,20 @@
       ]
     },
     {
+      "definitionName": "STMGen",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/STM.Gen"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/STM.Gen.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "STMTypeId",
       "definitionKind": "type",
       "extensions": [
@@ -499,6 +513,17 @@
       ]
     },
     {
+      "definitionName": "gen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "gen"
+        }
+      ]
+    },
+    {
       "definitionName": "interrupt",
       "definitionKind": "const",
       "extensions": [
@@ -506,17 +531,6 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
           "name": "interrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "interruptWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "interruptWith"
         }
       ]
     },
@@ -572,6 +586,28 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
           "name": "partition"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideService",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "provideService"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideServiceSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "provideServiceSTM"
         }
       ]
     },
@@ -972,24 +1008,24 @@
       ]
     },
     {
-      "definitionName": "fold",
+      "definitionName": "match",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
-          "name": "fold"
+          "name": "match"
         }
       ]
     },
     {
-      "definitionName": "foldSTM",
+      "definitionName": "matchSTM",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
-          "name": "foldSTM"
+          "name": "matchSTM"
         }
       ]
     },
@@ -1489,6 +1525,17 @@
       ]
     },
     {
+      "definitionName": "asUnit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asUnit"
+        }
+      ]
+    },
+    {
       "definitionName": "commit",
       "definitionKind": "const",
       "extensions": [
@@ -1573,6 +1620,22 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "ignore"
+        }
+      ]
+    },
+    {
+      "definitionName": "interruptWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Fiber/Id",
+          "name": "interruptWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Id.Ops",
+          "name": "interruptWith"
         }
       ]
     },
@@ -2842,6 +2905,498 @@
       ]
     }
   ],
+  "@effect/stm/TMap": [
+    {
+      "definitionName": "TMap",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TMap"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TMap.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TMapTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TMap.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TMap.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "TMapTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.TypeId.Ops",
+          "name": "TMapTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "find",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "find"
+        }
+      ]
+    },
+    {
+      "definitionName": "findSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "findSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "findAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "findAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "findAllSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "findAllSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrElse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "getOrElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "merge",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "merge"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "reduceSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "reduceWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceWithIndexSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "reduceWithIndexSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "remove",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "removeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "removeIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIfDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "removeIfDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "retainIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIfDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "retainIfDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "setIfAbsent",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "setIfAbsent"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "takeFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeFirstSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "takeFirstSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "takeSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeSomeSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "takeSomeSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "transformSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformValues",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "transformValues"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformValuesSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "transformValuesSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TMap",
+          "name": "updateWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "keys",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "keys"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toChunk"
+        }
+      ]
+    },
+    {
+      "definitionName": "toHashMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toHashMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toReadonlyArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toReadonlyMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "values",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "values"
+        }
+      ]
+    }
+  ],
   "@effect/stm/TPriorityQueue": [
     {
       "definitionName": "TPriorityQueue",
@@ -3081,6 +3636,363 @@
       ]
     }
   ],
+  "@effect/stm/TRandom": [
+    {
+      "definitionName": "TRandom",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRandom"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRandom.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRandomTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRandom.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRandom.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "live",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "live"
+        }
+      ]
+    },
+    {
+      "definitionName": "next",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "next"
+        }
+      ]
+    },
+    {
+      "definitionName": "nextBoolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "nextBoolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "nextInt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "nextInt"
+        }
+      ]
+    },
+    {
+      "definitionName": "nextIntBetween",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "nextIntBetween"
+        }
+      ]
+    },
+    {
+      "definitionName": "nextRange",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "nextRange"
+        }
+      ]
+    },
+    {
+      "definitionName": "shuffle",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.Ops",
+          "name": "shuffle"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRandomTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.TypeId.Ops",
+          "name": "TRandomTypeId"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TReentrantLock": [
+    {
+      "definitionName": "TReentrantLock",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TReentrantLock"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TReentrantLock.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TReentrantLockTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TReentrantLock.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TReentrantLock.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "TReentrantLockTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.TypeId.Ops",
+          "name": "TReentrantLockTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "withLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "withLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "withReadLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "withReadLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "withWriteLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "withWriteLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquireRead",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "acquireRead"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquireWrite",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "acquireWrite"
+        }
+      ]
+    },
+    {
+      "definitionName": "fiberReadLocks",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "fiberReadLocks"
+        }
+      ]
+    },
+    {
+      "definitionName": "fiberWriteLocks",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "fiberWriteLocks"
+        }
+      ]
+    },
+    {
+      "definitionName": "lock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "lock"
+        }
+      ]
+    },
+    {
+      "definitionName": "locked",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "locked"
+        }
+      ]
+    },
+    {
+      "definitionName": "readLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "readLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "readLocks",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "readLocks"
+        }
+      ]
+    },
+    {
+      "definitionName": "readLocked",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "readLocked"
+        }
+      ]
+    },
+    {
+      "definitionName": "releaseRead",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "releaseRead"
+        }
+      ]
+    },
+    {
+      "definitionName": "releaseWrite",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "releaseWrite"
+        }
+      ]
+    },
+    {
+      "definitionName": "writeLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "writeLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "writeLocked",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "writeLocked"
+        }
+      ]
+    },
+    {
+      "definitionName": "writeLocks",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "writeLocks"
+        }
+      ]
+    }
+  ],
   "@effect/stm/TSemaphore": [
     {
       "definitionName": "TSemaphore",
@@ -3133,33 +4045,12 @@
       ]
     },
     {
-      "definitionName": "withPermit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Ops",
-          "name": "withPermit"
-        },
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSemaphore",
-          "name": "withPermit"
-        }
-      ]
-    },
-    {
       "definitionName": "withPermits",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.Ops",
-          "name": "withPermits"
-        },
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSemaphore",
           "name": "withPermits"
         }
       ]
@@ -3194,6 +4085,22 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSemaphore",
           "name": "releaseN"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "withPermit"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withPermit"
         }
       ]
     },
@@ -3249,6 +4156,366 @@
           "kind": "getter",
           "typeName": "effect/stm/TSemaphore",
           "name": "withPermitScoped"
+        }
+      ]
+    }
+  ],
+  "@effect/stm/TSet": [
+    {
+      "definitionName": "TSet",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TSet"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TSet.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TSetTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TSet.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TSet.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "TSetTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.TypeId.Ops",
+          "name": "TSetTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "add",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "add"
+        }
+      ]
+    },
+    {
+      "definitionName": "difference",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "difference"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "intersection",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "intersection"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "reduceSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "remove",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "removeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "removeIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIfDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "removeIfDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "retainIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIfDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "retainIfDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "takeFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeFirstSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "takeFirstSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "takeSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeSomeSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "takeSomeSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "transformSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/stm/TSet",
+          "name": "union"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "toChunk"
+        }
+      ]
+    },
+    {
+      "definitionName": "toHashSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "toHashSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "toReadonlyArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlySet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "toReadonlySet"
         }
       ]
     }

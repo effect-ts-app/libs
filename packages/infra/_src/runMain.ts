@@ -32,7 +32,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
         .flatMap(exit =>
           Effect.gen(function*($) {
             if (exit.isFailure()) {
-              if (exit.cause.isInterruptedOnly) {
+              if (exit.cause.isInterruptedOnly()) {
                 yield* $(Effect.logWarning("Main process Interrupted"))
                 defaultTeardown(0, context.id(), onExit)
                 return
