@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.2.2
+
+### Patch Changes
+
+- 958e529: Use Config
+
 ## 2.2.1
 
 ### Patch Changes
