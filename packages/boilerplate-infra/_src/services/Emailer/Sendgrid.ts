@@ -4,18 +4,18 @@ import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
-const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridConfig) =>
+const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
-    sgMail.setApiKey(SENDGRID_API_KEY)
+    sgMail.setApiKey(apiKey)
 
     return {
       sendMail(msg_: EmailMsgOptionalFrom) {
         return Effect.gen(function*($) {
-          const msg = { ...msg_, from: msg_.from ?? FROM }
-          const render = renderMessage(FAKE_MAIL)
+          const msg = { ...msg_, from: msg_.from ?? defaultFrom }
+          const render = renderMessage(!realMail)
 
           const renderedMsg_ = render(msg)
-          const renderedMsg = { ...renderedMsg_, subject: `[scan] [${ENV}] ${renderedMsg_.subject}` }
+          const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
           yield* $(Effect.logDebug("Sending email").logAnnotate("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* $(
@@ -50,8 +50,8 @@ const makeLiveSendgrid = ({ ENV, FAKE_MAIL, FROM, SENDGRID_API_KEY }: SendgridCo
 /**
  * @tsplus static Emailer.Ops LiveSendgrid
  */
-export function LiveSendgrid(config: SendgridConfig) {
-  return Layer.fromEffect(Emailer)(makeLiveSendgrid(config))
+export function LiveSendgrid(config: Config<SendgridConfig>) {
+  return Layer.fromEffect(Emailer)(config.config.flatMap(makeLiveSendgrid))
 }
 
 /**

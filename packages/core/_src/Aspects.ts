@@ -1,5 +1,8 @@
 // Temporary workaround for missing .Aspects variations in current fp-ts and effect
 
+import * as Cause$_ from "@effect/io/Cause"
+import * as Exit$_ from "@effect/io/Exit"
+import * as Layer$_ from "@effect/io/Layer"
 import * as Array$_ from "./Array.js"
 import * as Chunk$_ from "./Chunk.js"
 import * as Effect$_ from "./Effect.js"
@@ -20,6 +23,21 @@ export const Option$ = Option$_
  * @tsplus static fp-ts/data/Either.Ops $
  */
 export const Either$ = Either$_
+
+/**
+ * @tsplus static effect/io/Layer.Ops $
+ */
+export const Layer$ = Layer$_
+
+/**
+ * @tsplus static effect/io/Exit.Ops $
+ */
+export const Exit$ = Exit$_
+
+/**
+ * @tsplus static effect/io/Cause.Ops $
+ */
+export const Cause$ = Cause$_
 
 /**
  * @tsplus static fp-ts/data/Chunk.Ops $

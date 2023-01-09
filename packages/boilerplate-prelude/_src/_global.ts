@@ -7,6 +7,26 @@
 /**
  * @tsplus global
  */
+import { Config } from "@effect/io/Config"
+
+/**
+ * @tsplus global
+ */
+import { ConfigSecret } from "@effect/io/Config/Secret"
+
+/**
+ * @tsplus global
+ */
+import { ConfigError } from "@effect/io/Config/Error"
+
+/**
+ * @tsplus global
+ */
+import { ConfigProvider } from "@effect/io/Config/Provider"
+
+/**
+ * @tsplus global
+ */
 import { TSemaphore } from "@effect/stm/TSemaphore"
 
 /**

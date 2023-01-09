@@ -14,10 +14,10 @@ export interface Emailer {
 export interface EmailerOps extends Tag<Emailer> {}
 
 export interface SendgridConfig {
-  ENV: string
-  FAKE_MAIL: boolean
-  FROM: { name: ReasonableString; email: Email }
-  SENDGRID_API_KEY: ReasonableString
+  subjectPrefix: string
+  realMail: boolean
+  defaultFrom: Email | { name?: ReasonableString; email: Email }
+  apiKey: ReasonableString
 }
 
 export const Emailer: EmailerOps = Tag<Emailer>()
