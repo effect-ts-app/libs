@@ -123,6 +123,16 @@
         "default": "./_cjs/_ext/Pure.cjs"
       }
     },
+    "./_ext/Ref": {
+      "import": {
+        "types": "./dist/_ext/Ref.d.ts",
+        "default": "./dist/_ext/Ref.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Ref.d.ts",
+        "default": "./_cjs/_ext/Ref.cjs"
+      }
+    },
     "./_ext/Schema.ext": {
       "import": {
         "types": "./dist/_ext/Schema.ext.d.ts",
