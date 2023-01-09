@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.6
+
+### Patch Changes
+
+- d4ec7a2: Improve bare log
+
 ## 2.2.5
 
 ### Patch Changes
