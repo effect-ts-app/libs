@@ -29,8 +29,8 @@ export function withPermitsDuration(permits: number, duration: DUR) {
  * delayed by duration after the effect completes execution, whether by success,
  * failure, or interruption.
  *
- * @tsplus static effect/stm/Semaphore.Ops withPermitsDuration
- * @tsplus pipeable effect/stm/Semaphore withPermitsDuration
+ * @tsplus static effect/io/Effect.Semaphore.Ops withPermitsDuration
+ * @tsplus pipeable effect/io/Effect.Semaphore withPermitsDuration
  */
 export function SEM_withPermitsDuration(permits: number, duration: DUR) {
   return (self: Semaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
