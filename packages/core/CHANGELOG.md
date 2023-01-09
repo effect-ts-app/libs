@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.2.0
+
+### Minor Changes
+
+- Update tsplus definitions
+
 ## 2.1.3
 
 ### Patch Changes

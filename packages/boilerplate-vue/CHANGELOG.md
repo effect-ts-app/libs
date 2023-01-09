@@ -1,5 +1,19 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.2.0
+
+### Minor Changes
+
+- Update tsplus definitions
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.2.0
+  - @effect-ts-app/boilerplate-vue@2.2.0
+  - @effect-ts-app/core@2.2.0
+  - @effect-ts-app/schema@2.2.0
+
 ## 2.1.3
 
 ### Patch Changes
