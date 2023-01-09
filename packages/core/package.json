@@ -77,6 +77,16 @@
         "default": "./_cjs/Array.cjs"
       }
     },
+    "./Aspects": {
+      "import": {
+        "types": "./dist/Aspects.d.ts",
+        "default": "./dist/Aspects.js"
+      },
+      "require": {
+        "types": "./dist/Aspects.d.ts",
+        "default": "./_cjs/Aspects.cjs"
+      }
+    },
     "./Chunk": {
       "import": {
         "types": "./dist/Chunk.d.ts",
