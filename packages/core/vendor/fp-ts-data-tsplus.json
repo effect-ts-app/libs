@@ -696,6 +696,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/typeclass/Filterable",
           "name": "partitionMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/typeclass/Filterable.Aspects",
+          "name": "partitionMap"
         }
       ]
     },
@@ -706,6 +711,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/typeclass/Filterable",
+          "name": "partition"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/typeclass/Filterable.Aspects",
           "name": "partition"
         }
       ]
@@ -1117,6 +1127,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "getOrThrow"
         }
       ]
     },
@@ -1127,6 +1142,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "map"
         }
       ]
@@ -1139,6 +1159,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "imap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "imap"
         }
       ]
     },
@@ -1149,6 +1174,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "bindTo"
         }
       ]
@@ -1161,6 +1191,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "flap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "flap"
         }
       ]
     },
@@ -1171,6 +1206,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "as"
         }
       ]
@@ -1183,6 +1223,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "flatMap"
         }
       ]
     },
@@ -1193,6 +1238,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "andThen"
         }
       ]
@@ -1205,6 +1255,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "bind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "bind"
         }
       ]
     },
@@ -1215,6 +1270,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "tap"
         }
       ]
@@ -1227,6 +1287,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "inspectSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "inspectSome"
         }
       ]
     },
@@ -1237,6 +1302,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "inspectNone"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "inspectNone"
         }
       ]
@@ -1249,6 +1319,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "andThenDiscard"
         }
       ]
     },
@@ -1259,6 +1334,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "product"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "product"
         }
       ]
@@ -1271,6 +1351,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "productMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "productMany"
         }
       ]
     },
@@ -1281,6 +1366,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "andThenBind"
         }
       ]
@@ -1293,6 +1383,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "productFlatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "productFlatten"
         }
       ]
     },
@@ -1303,6 +1398,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "ap"
         }
       ]
@@ -1315,6 +1415,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "coproduct"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "coproduct"
         }
       ]
     },
@@ -1325,6 +1430,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "firstSomeOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "firstSomeOf"
         }
       ]
@@ -1337,6 +1447,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "coproductEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "coproductEither"
         }
       ]
     },
@@ -1347,6 +1462,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "filterMap"
         }
       ]
@@ -1359,6 +1479,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "filter"
         }
       ]
     },
@@ -1369,6 +1494,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "sequence"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "sequence"
         }
       ]
@@ -1381,6 +1511,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "toEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "toEither"
         }
       ]
     },
@@ -1391,6 +1526,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "match"
         }
       ]
@@ -1403,6 +1543,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "getOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "getOrElse"
         }
       ]
     },
@@ -1413,6 +1558,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "flatMapNullable"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "flatMapNullable"
         }
       ]
@@ -1425,6 +1575,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "catchAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "catchAll"
         }
       ]
     },
@@ -1435,6 +1590,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "orElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "orElse"
         }
       ]
@@ -1447,6 +1607,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "orElseEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "orElseEither"
         }
       ]
     },
@@ -1457,6 +1622,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "orElseSucceed"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "orElseSucceed"
         }
       ]
@@ -1469,6 +1639,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "flatMapEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "flatMapEither"
         }
       ]
     },
@@ -1479,6 +1654,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "elem"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "elem"
         }
       ]
@@ -1491,6 +1671,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "exists"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "exists"
         }
       ]
     },
@@ -1501,6 +1686,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/Option",
+          "name": "isNone"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "isNone"
         }
       ]
@@ -1513,6 +1703,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/Option",
           "name": "isSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "isSome"
         }
       ]
     },
@@ -1523,6 +1718,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
+          "name": "tupled"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "tupled"
         }
       ]
@@ -1535,6 +1735,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
           "name": "asUnit"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "asUnit"
         }
       ]
     },
@@ -1545,6 +1750,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "flatten"
         }
       ]
@@ -1589,6 +1799,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
           "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "compact"
         }
       ]
     },
@@ -1600,6 +1815,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
           "name": "separate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "separate"
         }
       ]
     },
@@ -1610,6 +1830,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
+          "name": "getOrNull"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "getOrNull"
         }
       ]
@@ -1627,6 +1852,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Option",
           "name": "value"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "getOrUndefined"
         }
       ]
     }
@@ -1982,6 +2212,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "map"
         }
       ]
     },
@@ -1992,6 +2227,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "imap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "imap"
         }
       ]
@@ -2004,6 +2244,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "bindTo"
         }
       ]
     },
@@ -2014,6 +2259,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "flap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "flap"
         }
       ]
@@ -2026,6 +2276,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "as"
         }
       ]
     },
@@ -2036,6 +2291,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "bimap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "bimap"
         }
       ]
@@ -2048,6 +2308,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "mapLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "mapLeft"
         }
       ]
     },
@@ -2058,6 +2323,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "flatMap"
         }
       ]
@@ -2070,6 +2340,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "andThen"
         }
       ]
     },
@@ -2080,6 +2355,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "bind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "bind"
         }
       ]
@@ -2092,6 +2372,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "andThenDiscard"
         }
       ]
     },
@@ -2102,6 +2387,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "product"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "product"
         }
       ]
@@ -2114,6 +2404,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "productMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "productMany"
         }
       ]
     },
@@ -2124,6 +2419,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "andThenBind"
         }
       ]
@@ -2136,6 +2436,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "productFlatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "productFlatten"
         }
       ]
     },
@@ -2146,6 +2451,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "ap"
         }
       ]
@@ -2158,6 +2468,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "firstSuccessOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "firstSuccessOf"
         }
       ]
     },
@@ -2168,6 +2483,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "getOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "getOrElse"
         }
       ]
@@ -2180,6 +2500,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "catchAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "catchAll"
         }
       ]
     },
@@ -2190,6 +2515,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "orElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "orElse"
         }
       ]
@@ -2202,6 +2532,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "orElseEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "orElseEither"
         }
       ]
     },
@@ -2212,6 +2547,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "orElseFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "orElseFail"
         }
       ]
@@ -2224,6 +2564,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "orElseSucceed"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "orElseSucceed"
         }
       ]
     },
@@ -2234,6 +2579,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "match"
         }
       ]
@@ -2246,6 +2596,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "flatMapNullable"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "flatMapNullable"
         }
       ]
     },
@@ -2256,6 +2611,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "getOrThrow"
         }
       ]
@@ -2268,6 +2628,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "compact"
         }
       ]
     },
@@ -2278,6 +2643,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "filter"
         }
       ]
@@ -2290,6 +2660,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "filterMap"
         }
       ]
     },
@@ -2300,6 +2675,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "sequence"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "sequence"
         }
       ]
@@ -2312,6 +2692,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "tap"
         }
       ]
     },
@@ -2322,6 +2707,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "inspectRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "inspectRight"
         }
       ]
@@ -2334,6 +2724,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "tapError"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "tapError"
         }
       ]
     },
@@ -2344,6 +2739,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "inspectLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "inspectLeft"
         }
       ]
@@ -2356,6 +2756,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "flatMapOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "flatMapOption"
         }
       ]
     },
@@ -2366,6 +2771,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
+          "name": "elem"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "elem"
         }
       ]
@@ -2378,6 +2788,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Either",
           "name": "exists"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "exists"
         }
       ]
     },
@@ -2388,6 +2803,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/Either",
+          "name": "isLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "isLeft"
         }
       ]
@@ -2400,6 +2820,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/Either",
           "name": "isRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "isRight"
         }
       ]
     },
@@ -2410,6 +2835,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
+          "name": "tupled"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "tupled"
         }
       ]
@@ -2422,6 +2852,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
           "name": "asUnit"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "asUnit"
         }
       ]
     },
@@ -2432,6 +2867,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "flatten"
         }
       ]
@@ -2460,6 +2900,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
           "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "merge"
         }
       ]
     },
@@ -2470,6 +2915,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
+          "name": "reverse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "reverse"
         }
       ]
@@ -2482,6 +2932,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
           "name": "getLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "getLeft"
         }
       ]
     },
@@ -2492,6 +2947,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
+          "name": "getRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "getRight"
         }
       ]
@@ -2504,6 +2964,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
           "name": "getOrNull"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
+          "name": "getOrNull"
         }
       ]
     },
@@ -2514,6 +2979,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Either",
+          "name": "getOrUndefined"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Either.Aspects",
           "name": "getOrUndefined"
         }
       ]
@@ -5186,6 +5656,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Predicate.Refinement",
           "name": "every"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Refinement.Aspects",
+          "name": "every"
         }
       ]
     }
@@ -5351,6 +5826,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate.Refinement",
           "name": "compose"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Refinement.Aspects",
+          "name": "compose"
         }
       ]
     },
@@ -5361,6 +5841,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
+          "name": "contramap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "contramap"
         }
       ]
@@ -5373,6 +5858,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
           "name": "imap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
+          "name": "imap"
         }
       ]
     },
@@ -5383,6 +5873,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
+          "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "bindTo"
         }
       ]
@@ -5395,6 +5890,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
           "name": "product"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
+          "name": "product"
         }
       ]
     },
@@ -5405,6 +5905,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
+          "name": "productMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "productMany"
         }
       ]
@@ -5417,6 +5922,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
           "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
+          "name": "andThenBind"
         }
       ]
     },
@@ -5427,6 +5937,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
+          "name": "or"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "or"
         }
       ]
@@ -5439,6 +5954,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Predicate",
           "name": "and"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
+          "name": "and"
         }
       ]
     },
@@ -5449,6 +5969,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Predicate",
+          "name": "tupled"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "tupled"
         }
       ]
@@ -5476,6 +6001,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Predicate",
+          "name": "not"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Predicate.Aspects",
           "name": "not"
         }
       ]
@@ -5546,6 +6076,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/NonEmpty.Iterable",
+          "name": "unprepend"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/NonEmpty.Iterable.Aspects",
           "name": "unprepend"
         }
       ]
@@ -5704,6 +6239,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -5715,6 +6255,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "unsafeGet"
         }
       ]
     },
@@ -5725,6 +6270,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "append"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "append"
         },
         {
@@ -5744,6 +6294,11 @@
           "name": "prepend"
         },
         {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "prepend"
+        },
+        {
           "typeName": "fp-ts/data/Chunk",
           "kind": "pipeable-operator",
           "name": ">>"
@@ -5758,6 +6313,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "take"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "take"
         }
       ]
     },
@@ -5768,6 +6328,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "drop"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "drop"
         }
       ]
@@ -5780,6 +6345,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "dropRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "dropRight"
         }
       ]
     },
@@ -5791,6 +6361,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "dropWhile"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "dropWhile"
         }
       ]
     },
@@ -5801,6 +6376,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "concat"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "concat"
         },
         {
@@ -5817,6 +6397,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "correspondsTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "correspondsTo"
         }
       ]
@@ -5844,6 +6429,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "filter"
         }
       ]
@@ -5888,6 +6478,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "elem"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "elem"
         }
       ]
     },
@@ -5898,6 +6493,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "some"
         }
       ]
@@ -5910,6 +6510,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "every"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "every"
         }
       ]
     },
@@ -5920,6 +6525,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "findFirstIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "findFirstIndex"
         }
       ]
@@ -5932,6 +6542,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "findLastIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "findLastIndex"
         }
       ]
     },
@@ -5942,6 +6557,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "flatMap"
         }
       ]
@@ -5954,6 +6574,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "forEach"
         }
       ]
     },
@@ -5964,6 +6589,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "chunksOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "chunksOf"
         }
       ]
@@ -5976,6 +6606,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "intersection"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "intersection"
         }
       ]
     },
@@ -5986,6 +6621,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "reduce"
         }
       ]
@@ -5998,6 +6638,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "reduceWithIndex"
         }
       ]
     },
@@ -6008,6 +6653,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "reduceRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "reduceRight"
         }
       ]
@@ -6020,6 +6670,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "reduceRightWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "reduceRightWithIndex"
         }
       ]
     },
@@ -6030,6 +6685,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "join"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "join"
         }
       ]
@@ -6042,6 +6702,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "map"
         }
       ]
     },
@@ -6052,6 +6717,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "mapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "mapWithIndex"
         }
       ]
@@ -6064,6 +6734,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "partitionWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "partitionWithIndex"
         }
       ]
     },
@@ -6074,6 +6749,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "partition"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "partition"
         }
       ]
@@ -6086,6 +6766,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "partitionMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "partitionMap"
         }
       ]
     },
@@ -6096,6 +6781,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "sort"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "sort"
         }
       ]
@@ -6108,6 +6798,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "splitAt"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "splitAt"
         }
       ]
     },
@@ -6118,6 +6813,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "split"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "split"
         }
       ]
@@ -6130,6 +6830,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "splitWhere"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "splitWhere"
         }
       ]
     },
@@ -6140,6 +6845,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "takeRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "takeRight"
         }
       ]
@@ -6152,6 +6862,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "takeWhile"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "takeWhile"
         }
       ]
     },
@@ -6162,6 +6877,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "zip"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "zip"
         }
       ]
@@ -6174,6 +6894,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "zipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "zipWith"
         }
       ]
     },
@@ -6184,6 +6909,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "zipAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "zipAll"
         }
       ]
@@ -6196,6 +6926,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "zipAllWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "zipAllWith"
         }
       ]
     },
@@ -6206,6 +6941,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "crossWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "crossWith"
         }
       ]
@@ -6218,6 +6958,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "cross"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "cross"
         }
       ]
     },
@@ -6228,6 +6973,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "zipWithIndexOffset"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "zipWithIndexOffset"
         }
       ]
@@ -6240,6 +6990,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "remove"
         }
       ]
     },
@@ -6250,6 +7005,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "replace"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "replace"
         }
       ]
@@ -6262,6 +7022,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "replaceOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "replaceOption"
         }
       ]
     },
@@ -6272,6 +7037,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "modify"
         }
       ]
@@ -6284,6 +7054,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "modifyOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "modifyOption"
         }
       ]
     },
@@ -6294,6 +7069,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "prependAllNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "prependAllNonEmpty"
         }
       ]
@@ -6306,6 +7086,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "findFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "findFirst"
         }
       ]
     },
@@ -6316,6 +7101,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "findLast"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "findLast"
         }
       ]
@@ -6328,6 +7118,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
           "name": "mapAccum"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "mapAccum"
         }
       ]
     },
@@ -6338,6 +7133,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Chunk",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "union"
         }
       ]
@@ -6350,6 +7150,11 @@
           "kind": "fluent",
           "typeName": "Iterable",
           "name": "isChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "isChunk"
         }
       ]
     },
@@ -6360,6 +7165,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/Chunk",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -6372,6 +7182,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/Chunk",
           "name": "isNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "isNonEmpty"
         }
       ]
     },
@@ -6382,6 +7197,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "toReadonlyArray"
         }
       ]
@@ -6410,6 +7230,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "dedupeAdjacent"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "dedupeAdjacent"
         }
       ]
     },
@@ -6420,6 +7245,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "flatten"
         }
       ]
@@ -6432,6 +7262,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "head"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "head"
         }
       ]
     },
@@ -6442,6 +7277,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "last"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "last"
         }
       ]
@@ -6454,6 +7294,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "separate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "separate"
         }
       ]
     },
@@ -6464,6 +7309,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "reverse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "reverse"
         }
       ]
@@ -6476,6 +7326,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -6486,6 +7341,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "tail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "tail"
         }
       ]
@@ -6498,6 +7358,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "dedupe"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "dedupe"
         }
       ]
     },
@@ -6508,6 +7373,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "unsafeHead"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "unsafeHead"
         }
       ]
@@ -6520,6 +7390,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "unsafeLast"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "unsafeLast"
         }
       ]
     },
@@ -6530,6 +7405,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
+          "name": "unzip"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
           "name": "unzip"
         }
       ]
@@ -6542,6 +7422,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk",
           "name": "zipWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Aspects",
+          "name": "zipWithIndex"
         }
       ]
     },
@@ -6553,6 +7438,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk.NonEmptyChunk",
           "name": "headNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Aspects",
+          "name": "headNonEmpty"
         }
       ]
     },
@@ -6563,6 +7453,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Chunk.NonEmptyChunk",
+          "name": "tailNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Aspects",
           "name": "tailNonEmpty"
         }
       ]
@@ -6713,6 +7608,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Context",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -6723,6 +7623,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Context",
+          "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
           "name": "unsafeGet"
         }
       ]
@@ -6735,6 +7640,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Context",
           "name": "getOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "getOption"
         }
       ]
     },
@@ -6746,6 +7656,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Context",
           "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "merge"
         }
       ]
     },
@@ -6756,6 +7671,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Context",
+          "name": "prune"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
           "name": "prune"
         }
       ]
@@ -6820,6 +7740,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/ChunkPatch",
           "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ChunkPatch.Aspects",
+          "name": "combine"
         }
       ]
     },
@@ -6830,6 +7755,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/ChunkPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ChunkPatch.Aspects",
           "name": "patch"
         }
       ]
@@ -6894,6 +7824,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/ContextPatch",
           "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ContextPatch.Aspects",
+          "name": "combine"
         }
       ]
     },
@@ -6904,6 +7839,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/ContextPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ContextPatch.Aspects",
           "name": "patch"
         }
       ]
@@ -6979,6 +7919,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "has"
         }
       ]
     },
@@ -6989,6 +7934,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "some"
         }
       ]
@@ -7001,6 +7951,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "every"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "every"
         }
       ]
     },
@@ -7011,6 +7966,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "isSubset"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "isSubset"
         }
       ]
@@ -7023,6 +7983,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "mutate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "mutate"
         }
       ]
     },
@@ -7033,6 +7998,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "add"
         }
       ]
@@ -7045,6 +8015,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "remove"
         }
       ]
     },
@@ -7055,6 +8030,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "difference"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "difference"
         }
       ]
@@ -7067,6 +8047,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "intersection"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "intersection"
         }
       ]
     },
@@ -7077,6 +8062,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "union"
         }
       ]
@@ -7089,6 +8079,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "toggle"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "toggle"
         }
       ]
     },
@@ -7099,6 +8094,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "map"
         }
       ]
@@ -7111,6 +8111,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "flatMap"
         }
       ]
     },
@@ -7121,6 +8126,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "forEach"
         }
       ]
@@ -7133,6 +8143,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "reduce"
         }
       ]
     },
@@ -7144,6 +8159,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
           "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "filter"
         }
       ]
     },
@@ -7154,6 +8174,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashSet",
+          "name": "partition"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "partition"
         }
       ]
@@ -7177,6 +8202,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/HashSet",
           "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "values"
         }
       ]
     },
@@ -7187,6 +8217,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "size"
         }
       ]
@@ -7199,6 +8234,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/HashSet",
           "name": "beginMutation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
+          "name": "beginMutation"
         }
       ]
     },
@@ -7209,6 +8249,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashSet",
+          "name": "endMutation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashSet.Aspects",
           "name": "endMutation"
         }
       ]
@@ -7284,6 +8329,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -7294,6 +8344,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "getHash"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "getHash"
         }
       ]
@@ -7306,6 +8361,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "unsafeGet"
         }
       ]
     },
@@ -7316,6 +8376,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "has"
         }
       ]
@@ -7328,6 +8393,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "hasHash"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "hasHash"
         }
       ]
     },
@@ -7338,6 +8408,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "set"
         }
       ]
@@ -7350,6 +8425,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "mutate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "mutate"
         }
       ]
     },
@@ -7360,6 +8440,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "modifyAt"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "modifyAt"
         }
       ]
@@ -7372,6 +8457,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "modifyHash"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "modifyHash"
         }
       ]
     },
@@ -7382,6 +8472,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "modify"
         }
       ]
@@ -7394,6 +8489,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "union"
         }
       ]
     },
@@ -7404,6 +8504,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "remove"
         }
       ]
@@ -7416,6 +8521,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "removeMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "removeMany"
         }
       ]
     },
@@ -7426,6 +8536,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "map"
         }
       ]
@@ -7438,6 +8553,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "mapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "mapWithIndex"
         }
       ]
     },
@@ -7448,6 +8568,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "flatMap"
         }
       ]
@@ -7460,6 +8585,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "flatMapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "flatMapWithIndex"
         }
       ]
     },
@@ -7470,6 +8600,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "forEach"
         }
       ]
@@ -7482,6 +8617,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "forEachWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "forEachWithIndex"
         }
       ]
     },
@@ -7492,6 +8632,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "reduce"
         }
       ]
@@ -7504,6 +8649,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "reduceWithIndex"
         }
       ]
     },
@@ -7514,6 +8664,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "filter"
         }
       ]
@@ -7526,6 +8681,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "filterWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filterWithIndex"
         }
       ]
     },
@@ -7537,6 +8697,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
           "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filterMap"
         }
       ]
     },
@@ -7547,6 +8712,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/HashMap",
+          "name": "filterMapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "filterMapWithIndex"
         }
       ]
@@ -7570,6 +8740,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/HashMap",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -7580,6 +8755,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
+          "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "keys"
         }
       ]
@@ -7592,6 +8772,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
           "name": "keySet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "keySet"
         }
       ]
     },
@@ -7602,6 +8787,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
+          "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "values"
         }
       ]
@@ -7614,6 +8804,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
           "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -7624,6 +8819,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
+          "name": "beginMutation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "beginMutation"
         }
       ]
@@ -7636,6 +8836,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
           "name": "endMutation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "endMutation"
         }
       ]
     },
@@ -7646,6 +8851,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/HashMap",
+          "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "compact"
         }
       ]
@@ -7710,6 +8920,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/HashMapPatch",
           "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashMapPatch.Aspects",
+          "name": "combine"
         }
       ]
     },
@@ -7720,6 +8935,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/HashMapPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashMapPatch.Aspects",
           "name": "patch"
         }
       ]
@@ -7784,6 +9004,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/HashSetPatch",
           "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashSetPatch.Aspects",
+          "name": "combine"
         }
       ]
     },
@@ -7794,6 +9019,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/HashSetPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashSetPatch.Aspects",
           "name": "patch"
         }
       ]
@@ -7858,6 +9088,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/OrPatch",
           "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/OrPatch.Aspects",
+          "name": "combine"
         }
       ]
     },
@@ -7868,6 +9103,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ/OrPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/OrPatch.Aspects",
           "name": "patch"
         }
       ]
@@ -7965,6 +9205,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
           "name": "diff"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
+          "name": "diff"
         }
       ]
     },
@@ -7975,6 +9220,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
+          "name": "combine"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
           "name": "combine"
         }
       ]
@@ -7987,6 +9237,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
           "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
+          "name": "patch"
         }
       ]
     },
@@ -7997,6 +9252,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
+          "name": "orElseResult"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
           "name": "orElseResult"
         }
       ]
@@ -8009,6 +9269,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
           "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
+          "name": "transform"
         }
       ]
     },
@@ -8019,6 +9284,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Differ",
+          "name": "zip"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
           "name": "zip"
         }
       ]
@@ -8031,6 +9301,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Differ",
           "name": "empty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
+          "name": "empty"
         }
       ]
     },
@@ -8042,6 +9317,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/Differ",
           "name": "chunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
+          "name": "chunk"
         }
       ]
     },
@@ -8052,6 +9332,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Differ",
+          "name": "hashMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ.Aspects",
           "name": "hashMap"
         }
       ]
@@ -8195,6 +9480,11 @@
           "name": "times"
         },
         {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
+          "name": "times"
+        },
+        {
           "typeName": "fp-ts/data/Duration",
           "kind": "pipeable-operator",
           "name": "*"
@@ -8208,6 +9498,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Duration",
+          "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
           "name": "add"
         },
         {
@@ -8227,6 +9522,11 @@
           "name": "subtract"
         },
         {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
+          "name": "subtract"
+        },
+        {
           "typeName": "fp-ts/data/Duration",
           "kind": "pipeable-operator",
           "name": "-"
@@ -8240,6 +9540,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Duration",
+          "name": "lessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
           "name": "lessThan"
         },
         {
@@ -8259,6 +9564,11 @@
           "name": "lessThanOrEqualTo"
         },
         {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
+          "name": "lessThanOrEqualTo"
+        },
+        {
           "typeName": "fp-ts/data/Duration",
           "kind": "pipeable-operator",
           "name": "<="
@@ -8272,6 +9582,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Duration",
+          "name": "greaterThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
           "name": "greaterThan"
         },
         {
@@ -8291,6 +9606,11 @@
           "name": "greaterThanOrEqualTo"
         },
         {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
+          "name": "greaterThanOrEqualTo"
+        },
+        {
           "typeName": "fp-ts/data/Duration",
           "kind": "pipeable-operator",
           "name": ">="
@@ -8304,6 +9624,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Duration",
+          "name": "equals"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Duration.Aspects",
           "name": "equals"
         }
       ]
@@ -8879,6 +10204,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -8889,6 +10219,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
           "name": "has"
         }
       ]
@@ -8901,6 +10236,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "name": "modify"
         }
       ]
     },
@@ -8911,6 +10251,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
           "name": "set"
         }
       ]
@@ -8923,6 +10268,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "modifyAt"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "name": "modifyAt"
         }
       ]
     },
@@ -8934,6 +10284,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "name": "remove"
         }
       ]
     },
@@ -8944,6 +10299,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableHashMap",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
           "name": "size"
         }
       ]
@@ -9019,6 +10379,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashSet",
           "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "name": "has"
         }
       ]
     },
@@ -9029,6 +10394,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashSet",
+          "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashSet.Aspects",
           "name": "add"
         }
       ]
@@ -9041,6 +10411,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableHashSet",
           "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "name": "remove"
         }
       ]
     },
@@ -9051,6 +10426,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableHashSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashSet.Aspects",
           "name": "size"
         }
       ]
@@ -9126,6 +10506,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableList",
           "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "forEach"
         }
       ]
     },
@@ -9136,6 +10521,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableList",
+          "name": "append"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
           "name": "append"
         }
       ]
@@ -9148,6 +10538,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/MutableList",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -9158,6 +10553,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
+          "name": "length"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
           "name": "length"
         }
       ]
@@ -9170,6 +10570,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
           "name": "tail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "tail"
         }
       ]
     },
@@ -9180,6 +10585,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
+          "name": "head"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
           "name": "head"
         }
       ]
@@ -9192,6 +10602,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
           "name": "reset"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "reset"
         }
       ]
     },
@@ -9203,6 +10618,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
           "name": "shift"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "shift"
         }
       ]
     },
@@ -9213,6 +10633,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableList",
+          "name": "pop"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
           "name": "pop"
         }
       ]
@@ -9288,6 +10713,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableQueue",
           "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "offer"
         }
       ]
     },
@@ -9298,6 +10728,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableQueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
           "name": "offerAll"
         }
       ]
@@ -9310,6 +10745,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableQueue",
           "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "poll"
         }
       ]
     },
@@ -9320,6 +10760,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableQueue",
+          "name": "pollUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
           "name": "pollUpTo"
         }
       ]
@@ -9332,6 +10777,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/MutableQueue",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -9342,6 +10792,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/MutableQueue",
+          "name": "isFull"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
           "name": "isFull"
         }
       ]
@@ -9354,6 +10809,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableQueue",
           "name": "length"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "length"
         }
       ]
     },
@@ -9364,6 +10824,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableQueue",
+          "name": "capacity"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
           "name": "capacity"
         }
       ]
@@ -9417,6 +10882,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
           "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "set"
         }
       ]
     },
@@ -9427,6 +10897,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "update"
         }
       ]
@@ -9439,6 +10914,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
           "name": "updateAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "updateAndGet"
         }
       ]
     },
@@ -9449,6 +10929,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "getAndUpdate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "getAndUpdate"
         }
       ]
@@ -9461,6 +10946,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
           "name": "setAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "setAndGet"
         }
       ]
     },
@@ -9471,6 +10961,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "getAndSet"
         }
       ]
@@ -9483,6 +10978,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/MutableRef",
           "name": "compareAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "compareAndSet"
         }
       ]
     },
@@ -9493,6 +10993,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "get"
         }
       ]
@@ -9505,6 +11010,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
           "name": "incrementAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "incrementAndGet"
         }
       ]
     },
@@ -9515,6 +11025,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "getAndIncrement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "getAndIncrement"
         }
       ]
@@ -9527,6 +11042,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
           "name": "increment"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "increment"
         }
       ]
     },
@@ -9537,6 +11057,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "decrementAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "decrementAndGet"
         }
       ]
@@ -9549,6 +11074,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
           "name": "getAndDecrement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "getAndDecrement"
         }
       ]
     },
@@ -9560,6 +11090,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
           "name": "decrement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "decrement"
         }
       ]
     },
@@ -9570,6 +11105,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
+          "name": "toggle"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
           "name": "toggle"
         }
       ]
@@ -9645,6 +11185,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "keys"
         }
       ]
     },
@@ -9655,6 +11200,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "values"
         }
       ]
@@ -9667,6 +11217,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "has"
         }
       ]
     },
@@ -9677,6 +11232,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "getAt"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "getAt"
         }
       ]
@@ -9689,6 +11249,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "find"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "find"
         }
       ]
     },
@@ -9699,6 +11264,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "findFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "findFirst"
         }
       ]
@@ -9711,6 +11281,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "insert"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "insert"
         }
       ]
     },
@@ -9721,6 +11296,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "removeFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "removeFirst"
         }
       ]
@@ -9733,6 +11313,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "at"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "at"
         }
       ]
     },
@@ -9743,6 +11328,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "greaterThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "greaterThan"
         }
       ]
@@ -9755,6 +11345,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "greaterThanEqual"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "greaterThanEqual"
         }
       ]
     },
@@ -9765,6 +11360,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "lessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "lessThan"
         }
       ]
@@ -9777,6 +11377,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "lessThanEqual"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "lessThanEqual"
         }
       ]
     },
@@ -9787,6 +11392,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "forEach"
         }
       ]
@@ -9799,6 +11409,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEachGreaterThanEqual"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "forEachGreaterThanEqual"
         }
       ]
     },
@@ -9809,6 +11424,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "forEachLessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "forEachLessThan"
         }
       ]
@@ -9821,6 +11441,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEachBetween"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "forEachBetween"
         }
       ]
     },
@@ -9832,6 +11457,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "reduce"
         }
       ]
     },
@@ -9842,6 +11472,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -9865,6 +11500,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "getOrder"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "getOrder"
         }
       ]
     },
@@ -9875,6 +11515,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "size"
         }
       ]
@@ -9887,6 +11532,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "first"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "first"
         }
       ]
     },
@@ -9898,6 +11548,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "last"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "last"
         }
       ]
     },
@@ -9908,6 +11563,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
+          "name": "backwards"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
           "name": "backwards"
         }
       ]
@@ -9983,6 +11643,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -9993,6 +11658,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "set"
         }
       ]
@@ -10005,6 +11675,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
           "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "remove"
         }
       ]
     },
@@ -10015,6 +11690,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "has"
         }
       ]
@@ -10027,6 +11707,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
           "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "reduce"
         }
       ]
     },
@@ -10037,6 +11722,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -10049,6 +11739,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
           "name": "mapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "mapWithIndex"
         }
       ]
     },
@@ -10059,6 +11754,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "map"
         }
       ]
@@ -10082,6 +11782,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/SortedMap",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -10092,6 +11797,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "isNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "isNonEmpty"
         }
       ]
@@ -10104,6 +11814,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
           "name": "entries"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "entries"
         }
       ]
     },
@@ -10114,6 +11829,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "getOrder"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "getOrder"
         }
       ]
@@ -10126,6 +11846,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
           "name": "headOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "headOption"
         }
       ]
     },
@@ -10136,6 +11861,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "size"
         }
       ]
@@ -10148,6 +11878,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
           "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "keys"
         }
       ]
     },
@@ -10158,6 +11893,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/SortedMap",
+          "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "values"
         }
       ]
@@ -10233,6 +11973,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "add"
         }
       ]
     },
@@ -10243,6 +11988,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "remove"
         }
       ]
@@ -10255,6 +12005,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "toggle"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "toggle"
         }
       ]
     },
@@ -10265,6 +12020,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "has"
         }
       ]
@@ -10277,6 +12037,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "difference"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "difference"
         }
       ]
     },
@@ -10287,6 +12052,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "union"
         }
       ]
@@ -10299,6 +12069,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "intersection"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "intersection"
         }
       ]
     },
@@ -10309,6 +12084,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "every"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "every"
         }
       ]
@@ -10321,6 +12101,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "some"
         }
       ]
     },
@@ -10331,6 +12116,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "forEach"
         }
       ]
@@ -10343,6 +12133,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "isSubset"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "isSubset"
         }
       ]
     },
@@ -10354,6 +12149,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
           "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "filter"
         }
       ]
     },
@@ -10364,6 +12164,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "partition"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "partition"
         }
       ]
@@ -10387,6 +12192,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/SortedSet",
           "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "values"
         }
       ]
     },
@@ -10397,6 +12207,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/SortedSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "size"
         }
       ]
@@ -10855,6 +12670,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
           "name": "leftOrBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
+          "name": "leftOrBoth"
         }
       ]
     },
@@ -10865,6 +12685,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/Option",
+          "name": "rightOrBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Option.Aspects",
           "name": "rightOrBoth"
         }
       ]
@@ -10877,6 +12702,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "match"
         }
       ]
     },
@@ -10887,6 +12717,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getOrThrow"
         }
       ]
@@ -10899,6 +12734,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "getRightOnlyOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "getRightOnlyOrThrow"
         }
       ]
     },
@@ -10909,6 +12749,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "toEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "toEither"
         }
       ]
@@ -10921,6 +12766,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "flatMapNullable"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "flatMapNullable"
         }
       ]
     },
@@ -10931,6 +12781,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "flatMapOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "flatMapOption"
         }
       ]
@@ -10943,6 +12798,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "flatMapEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "flatMapEither"
         }
       ]
     },
@@ -10953,6 +12813,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "flatMapThese"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "flatMapThese"
         }
       ]
@@ -10965,6 +12830,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "getBothOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "getBothOrElse"
         }
       ]
     },
@@ -10975,6 +12845,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "getOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getOrElse"
         }
       ]
@@ -10987,6 +12862,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "inspectRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "inspectRight"
         }
       ]
     },
@@ -10997,6 +12877,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "inspectRightOrBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "inspectRightOrBoth"
         }
       ]
@@ -11009,6 +12894,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "inspectLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "inspectLeft"
         }
       ]
     },
@@ -11019,6 +12909,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "inspectBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "inspectBoth"
         }
       ]
@@ -11031,6 +12926,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "bimap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "bimap"
         }
       ]
     },
@@ -11041,6 +12941,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "mapLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "mapLeft"
         }
       ]
@@ -11053,6 +12958,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "map"
         }
       ]
     },
@@ -11063,6 +12973,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "imap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "imap"
         }
       ]
@@ -11075,6 +12990,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "bindTo"
         }
       ]
     },
@@ -11085,6 +13005,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "flap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "flap"
         }
       ]
@@ -11097,6 +13022,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "as"
         }
       ]
     },
@@ -11107,6 +13037,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "sequence"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "sequence"
         }
       ]
@@ -11119,6 +13054,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "elem"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "elem"
         }
       ]
     },
@@ -11129,6 +13069,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "exists"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "exists"
         }
       ]
@@ -11141,6 +13086,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "catchAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "catchAll"
         }
       ]
     },
@@ -11151,6 +13101,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "orElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "orElse"
         }
       ]
@@ -11163,6 +13118,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "orElseEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "orElseEither"
         }
       ]
     },
@@ -11173,6 +13133,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "orElseFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "orElseFail"
         }
       ]
@@ -11185,6 +13150,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "orElseSucceed"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "orElseSucceed"
         }
       ]
     },
@@ -11195,6 +13165,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "firstRightOrBothOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "firstRightOrBothOf"
         }
       ]
@@ -11207,6 +13182,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "compact"
         }
       ]
     },
@@ -11217,6 +13197,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "filter"
         }
       ]
@@ -11229,6 +13214,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These",
           "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "filterMap"
         }
       ]
     },
@@ -11239,6 +13229,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "product"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "product"
         }
       ]
@@ -11251,6 +13246,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "productMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "productMany"
         }
       ]
     },
@@ -11261,6 +13261,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "ap"
         }
       ]
@@ -11273,6 +13278,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "andThenBind"
         }
       ]
     },
@@ -11283,6 +13293,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "andThenBindEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "andThenBindEither"
         }
       ]
@@ -11295,6 +13310,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "andThenBindThese"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "andThenBindThese"
         }
       ]
     },
@@ -11305,6 +13325,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "productFlatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "productFlatten"
         }
       ]
@@ -11317,6 +13342,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "flatMap"
         }
       ]
     },
@@ -11327,6 +13357,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "andThen"
         }
       ]
@@ -11339,6 +13374,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "bind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "bind"
         }
       ]
     },
@@ -11349,6 +13389,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "bindEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "bindEither"
         }
       ]
@@ -11361,6 +13406,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "bindThese"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "bindThese"
         }
       ]
     },
@@ -11371,6 +13421,11 @@
         {
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "andThenDiscard"
         }
       ]
@@ -11383,6 +13438,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/These.Validated",
           "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "name": "tap"
         }
       ]
     },
@@ -11393,6 +13453,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/These",
+          "name": "isLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "isLeft"
         }
       ]
@@ -11405,6 +13470,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isLeftOrBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "isLeftOrBoth"
         }
       ]
     },
@@ -11415,6 +13485,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/These",
+          "name": "isRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "isRight"
         }
       ]
@@ -11427,6 +13502,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/These",
           "name": "isRightOrBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "isRightOrBoth"
         }
       ]
     },
@@ -11437,6 +13517,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/These",
+          "name": "isBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "isBoth"
         }
       ]
@@ -11449,6 +13534,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "reverse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "reverse"
         }
       ]
     },
@@ -11459,6 +13549,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "absolve"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "absolve"
         }
       ]
@@ -11471,6 +13566,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "condemn"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "condemn"
         }
       ]
     },
@@ -11481,6 +13581,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "getRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getRight"
         }
       ]
@@ -11493,6 +13598,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "getRightOnly"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "getRightOnly"
         }
       ]
     },
@@ -11503,6 +13613,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "getLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getLeft"
         }
       ]
@@ -11515,6 +13630,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "getLeftOnly"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "getLeftOnly"
         }
       ]
     },
@@ -11525,6 +13645,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "getBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getBoth"
         }
       ]
@@ -11537,6 +13662,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "getOrNull"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "getOrNull"
         }
       ]
     },
@@ -11547,6 +13677,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "getOrUndefined"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "getOrUndefined"
         }
       ]
@@ -11559,6 +13694,11 @@
           "kind": "getter",
           "typeName": "fp-ts/data/These",
           "name": "tupled"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
+          "name": "tupled"
         }
       ]
     },
@@ -11569,6 +13709,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These",
+          "name": "asUnit"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Aspects",
           "name": "asUnit"
         }
       ]
@@ -11596,6 +13741,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/These.Validated",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/These.Validated.Aspects",
           "name": "flatten"
         }
       ]
@@ -11695,6 +13845,11 @@
           "kind": "fluent",
           "typeName": "fp-ts/data/typeclass/FilterableWithIndex",
           "name": "partitionMapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/typeclass/FilterableWithIndex.Aspects",
+          "name": "partitionMapWithIndex"
         }
       ]
     },
@@ -11705,6 +13860,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/typeclass/FilterableWithIndex",
+          "name": "partitionWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/typeclass/FilterableWithIndex.Aspects",
           "name": "partitionWithIndex"
         }
       ]
@@ -11749,6 +13909,11 @@
           "kind": "pipeable",
           "typeName": "fp-ts/data/Ordering",
           "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Ordering.Aspects",
+          "name": "match"
         }
       ]
     },
@@ -11759,6 +13924,11 @@
         {
           "kind": "getter",
           "typeName": "fp-ts/data/Ordering",
+          "name": "reverse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Ordering.Aspects",
           "name": "reverse"
         }
       ]
@@ -11950,6 +14120,11 @@
         {
           "kind": "fluent",
           "typeName": "fp-ts/data/Function.LazyArg",
+          "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Function.LazyArg.Aspects",
           "name": "match"
         }
       ]

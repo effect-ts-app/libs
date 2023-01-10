@@ -1,50 +1,90 @@
 // Temporary workaround for missing .Aspects variations in current fp-ts and effect
 
-import * as Cause$_ from "@effect/io/Cause"
-import * as Exit$_ from "@effect/io/Exit"
-import * as Layer$_ from "@effect/io/Layer"
 import * as Array$_ from "./Array.js"
-import * as Chunk$_ from "./Chunk.js"
-import * as Effect$_ from "./Effect.js"
-import * as Either$_ from "./Either.js"
-import * as Option$_ from "./Option.js"
 
 /**
- * @tsplus static effect/io/Effect.Ops $
+ * @tsplus type fp-ts/data/Chunk.Aspects
  */
-export const Effect$ = Effect$_
-
-/**
- * @tsplus static fp-ts/data/Option.Ops $
- */
-export const Option$ = Option$_
-
-/**
- * @tsplus static fp-ts/data/Either.Ops $
- */
-export const Either$ = Either$_
-
-/**
- * @tsplus static effect/io/Layer.Ops $
- */
-export const Layer$ = Layer$_
-
-/**
- * @tsplus static effect/io/Exit.Ops $
- */
-export const Exit$ = Exit$_
-
-/**
- * @tsplus static effect/io/Cause.Ops $
- */
-export const Cause$ = Cause$_
+export interface ChunkAspects {}
 
 /**
  * @tsplus static fp-ts/data/Chunk.Ops $
  */
-export const Chunk$ = Chunk$_
+export const Chunk: ChunkAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/Either.Aspects
+ */
+export interface EitherAspects {}
+
+/**
+ * @tsplus static fp-ts/data/Either.Ops $
+ */
+export const Either: EitherAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/Option.Aspects
+ */
+export interface OptionAspects {}
+
+/**
+ * @tsplus static fp-ts/data/Option.Ops $
+ */
+export const Option: OptionAspects = {}
+
+/**
+ * @tsplus type effect/io/Effect.Aspects
+ */
+export interface EffectAspects {}
+
+/**
+ * @tsplus static effect/io/Effect.Ops $
+ */
+export const Effect: EffectAspects = {}
+
+/**
+ * @tsplus type effect/io/Layer.Aspects
+ */
+export interface LayerAspects {}
+
+/**
+ * @tsplus static effect/io/Layer.Ops $
+ */
+export const Layer: LayerAspects = {}
+
+/**
+ * @tsplus type effect/io/Exit.Aspects
+ */
+export interface ExitAspects {}
+
+/**
+ * @tsplus static effect/io/Exit.Ops $
+ */
+export const Exit: ExitAspects = {}
+
+/**
+ * @tsplus type effect/io/Cause.Aspects
+ */
+export interface CauseAspects {}
+
+/**
+ * @tsplus static effect/io/Cause.Ops $
+ */
+export const Cause: CauseAspects = {}
+
+// TODO
 
 /**
  * @tsplus static ReadonlyArray.Ops $
  */
 export const Array$ = Array$_
+
+// /**
+//  * @tsplus type fp-ts/data/ReadonlyArray.Aspects
+//  */
+// export interface ReadonlyArrayAspects {}
+
+// /**
+//  * @tsplus static fp-ts/data/ReadonlyArray.Ops $
+//  */
+// export const ReadonlyArray: ReadonlyArrayAspects = {}

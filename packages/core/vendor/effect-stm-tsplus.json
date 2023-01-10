@@ -58,6 +58,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "getAndSet"
         }
       ]
     },
@@ -68,6 +73,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "getAndUpdate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "getAndUpdate"
         }
       ]
@@ -80,6 +90,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "getAndUpdateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "getAndUpdateSome"
         }
       ]
     },
@@ -90,6 +105,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "modify"
         }
       ]
@@ -102,6 +122,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "modifySome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "modifySome"
         }
       ]
     },
@@ -112,6 +137,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "set"
         }
       ]
@@ -124,6 +154,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "setAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "setAndGet"
         }
       ]
     },
@@ -134,6 +169,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "update"
         }
       ]
@@ -146,6 +186,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "updateAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "updateAndGet"
         }
       ]
     },
@@ -156,6 +201,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "updateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "updateSome"
         }
       ]
@@ -168,6 +218,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "updateSomeAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "updateSomeAndGet"
         }
       ]
     },
@@ -178,6 +233,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
+          "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "unsafeGet"
         }
       ]
@@ -190,6 +250,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TRef",
           "name": "unsafeSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "unsafeSet"
         }
       ]
     },
@@ -200,6 +265,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TRef",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
           "name": "get"
         }
       ]
@@ -850,6 +920,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "as"
         }
       ]
     },
@@ -860,6 +935,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "catchAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "catchAll"
         }
       ]
@@ -872,6 +952,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "catchSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "catchSome"
         }
       ]
     },
@@ -882,6 +967,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "collect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "collect"
         }
       ]
@@ -894,6 +984,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "collectSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "collectSTM"
         }
       ]
     },
@@ -904,6 +999,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "ensuring"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "ensuring"
         }
       ]
@@ -916,6 +1016,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "filterOrDie"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "filterOrDie"
         }
       ]
     },
@@ -926,6 +1031,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "filterOrDieMessage"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "filterOrDieMessage"
         }
       ]
@@ -938,6 +1048,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "filterOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "filterOrElse"
         }
       ]
     },
@@ -948,6 +1063,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "filterOrElseWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "filterOrElseWith"
         }
       ]
@@ -960,6 +1080,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "filterOrFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "filterOrFail"
         }
       ]
     },
@@ -970,6 +1095,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "flatMap"
         }
       ]
@@ -982,6 +1112,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "flatMapError"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "flatMapError"
         }
       ]
     },
@@ -992,6 +1127,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "flattenErrorOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "flattenErrorOption"
         }
       ]
@@ -1004,6 +1144,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "flipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "flipWith"
         }
       ]
     },
@@ -1014,6 +1159,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "match"
         }
       ]
@@ -1026,6 +1176,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "matchSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "matchSTM"
         }
       ]
     },
@@ -1036,6 +1191,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "ifSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "ifSTM"
         }
       ]
@@ -1048,6 +1208,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "map"
         }
       ]
     },
@@ -1058,6 +1223,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "mapAttempt"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "mapAttempt"
         }
       ]
@@ -1070,6 +1240,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "mapBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "mapBoth"
         }
       ]
     },
@@ -1080,6 +1255,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "mapError"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "mapError"
         }
       ]
@@ -1092,6 +1272,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "orDieWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "orDieWith"
         }
       ]
     },
@@ -1102,6 +1287,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "orElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "orElse"
         }
       ]
@@ -1114,6 +1304,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "orElseEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "orElseEither"
         }
       ]
     },
@@ -1124,6 +1319,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "orElseFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "orElseFail"
         }
       ]
@@ -1136,6 +1336,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "orElseOptional"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "orElseOptional"
         }
       ]
     },
@@ -1146,6 +1351,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "orElseSucceed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "orElseSucceed"
         }
       ]
@@ -1158,6 +1368,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "orTry"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "orTry"
         }
       ]
     },
@@ -1168,6 +1383,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "provideEnvironment"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "provideEnvironment"
         }
       ]
@@ -1180,6 +1400,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "provideSomeEnvironment"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "provideSomeEnvironment"
         }
       ]
     },
@@ -1190,6 +1415,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "refineOrDie"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "refineOrDie"
         }
       ]
@@ -1202,6 +1432,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "refineOrDieWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "refineOrDieWith"
         }
       ]
     },
@@ -1212,6 +1447,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "reject"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "reject"
         }
       ]
@@ -1224,6 +1464,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "rejectSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "rejectSTM"
         }
       ]
     },
@@ -1234,6 +1479,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "repeatUntil"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "repeatUntil"
         }
       ]
@@ -1246,6 +1496,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "repeatWhile"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "repeatWhile"
         }
       ]
     },
@@ -1256,6 +1511,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "replicate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "replicate"
         }
       ]
@@ -1268,6 +1528,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "replicateSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "replicateSTM"
         }
       ]
     },
@@ -1278,6 +1543,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "replicateSTMDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "replicateSTMDiscard"
         }
       ]
@@ -1290,6 +1560,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "retryUntil"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "retryUntil"
         }
       ]
     },
@@ -1300,6 +1575,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "retryWhile"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "retryWhile"
         }
       ]
@@ -1312,6 +1592,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "someOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "someOrElse"
         }
       ]
     },
@@ -1322,6 +1607,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "someOrElseSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "someOrElseSTM"
         }
       ]
@@ -1334,6 +1624,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "someOrFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "someOrFail"
         }
       ]
     },
@@ -1344,6 +1639,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "summarized"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "summarized"
         }
       ]
@@ -1356,6 +1656,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "tap"
         }
       ]
     },
@@ -1366,6 +1671,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "tapBoth"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "tapBoth"
         }
       ]
@@ -1378,6 +1688,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "tapError"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "tapError"
         }
       ]
     },
@@ -1388,6 +1703,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "unless"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "unless"
         }
       ]
@@ -1400,6 +1720,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "unlessSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "unlessSTM"
         }
       ]
     },
@@ -1410,6 +1735,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "zip"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "zip"
         }
       ]
@@ -1422,6 +1752,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "zipLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "zipLeft"
         }
       ]
     },
@@ -1432,6 +1767,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "zipRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "zipRight"
         }
       ]
@@ -1444,6 +1784,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "zipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "zipWith"
         }
       ]
     },
@@ -1454,6 +1799,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "when"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "when"
         }
       ]
@@ -1466,6 +1816,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "whenCaseSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "whenCaseSTM"
         }
       ]
     },
@@ -1476,6 +1831,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/STM",
+          "name": "whenSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "whenSTM"
         }
       ]
@@ -1488,6 +1848,11 @@
           "kind": "fluent",
           "typeName": "effect/stm/STM",
           "name": "reduceAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "reduceAll"
         }
       ]
     },
@@ -1498,6 +1863,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "absolve"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "absolve"
         }
       ]
@@ -1510,6 +1880,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "asSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "asSome"
         }
       ]
     },
@@ -1520,6 +1895,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "asSomeError"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "asSomeError"
         }
       ]
@@ -1532,6 +1912,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "asUnit"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "asUnit"
         }
       ]
     },
@@ -1542,6 +1927,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "commit"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "commit"
         }
       ]
@@ -1554,6 +1944,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "commitEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "commitEither"
         }
       ]
     },
@@ -1564,6 +1959,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "either"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "either"
         }
       ]
@@ -1576,6 +1976,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "eventually"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "eventually"
         }
       ]
     },
@@ -1586,6 +1991,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "flatten"
         }
       ]
@@ -1598,6 +2008,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "flip"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "flip"
         }
       ]
     },
@@ -1609,6 +2024,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "head"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "head"
         }
       ]
     },
@@ -1619,6 +2039,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "ignore"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "ignore"
         }
       ]
@@ -1647,6 +2072,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "isFailure"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "isFailure"
         }
       ]
     },
@@ -1657,6 +2087,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "isSuccess"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "isSuccess"
         }
       ]
@@ -1669,6 +2104,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "left"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "left"
         }
       ]
     },
@@ -1679,6 +2119,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "merge"
         }
       ]
@@ -1691,6 +2136,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "negate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "negate"
         }
       ]
     },
@@ -1701,6 +2151,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "none"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "none"
         }
       ]
@@ -1713,6 +2168,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "option"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "option"
         }
       ]
     },
@@ -1723,6 +2183,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "orDie"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "orDie"
         }
       ]
@@ -1735,6 +2200,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "right"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "right"
         }
       ]
     },
@@ -1745,6 +2215,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "some"
         }
       ]
@@ -1757,6 +2232,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "someOrFailException"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "someOrFailException"
         }
       ]
     },
@@ -1767,6 +2247,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "unleft"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "unleft"
         }
       ]
@@ -1779,6 +2264,11 @@
           "kind": "getter",
           "typeName": "effect/stm/STM",
           "name": "unright"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "unright"
         }
       ]
     },
@@ -1789,6 +2279,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/STM",
+          "name": "unsome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
           "name": "unsome"
         }
       ]
@@ -1875,6 +2370,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "collectFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "collectFirst"
         }
       ]
     },
@@ -1885,6 +2385,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "collectFirstSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "collectFirstSTM"
         }
       ]
@@ -1897,6 +2402,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "contains"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "contains"
         }
       ]
     },
@@ -1907,6 +2417,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "count"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "count"
         }
       ]
@@ -1919,6 +2434,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "countSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "countSTM"
         }
       ]
     },
@@ -1929,6 +2449,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "every"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "every"
         }
       ]
@@ -1941,6 +2466,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "everySTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "everySTM"
         }
       ]
     },
@@ -1951,6 +2481,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "findFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "findFirst"
         }
       ]
@@ -1963,6 +2498,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "findFirstIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "findFirstIndex"
         }
       ]
     },
@@ -1973,6 +2513,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "findFirstIndexWhere"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "findFirstIndexWhere"
         }
       ]
@@ -1985,6 +2530,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "findFirstIndexWhereSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "findFirstIndexWhereSTM"
         }
       ]
     },
@@ -1995,6 +2545,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "findFirstSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "findFirstSTM"
         }
       ]
@@ -2007,6 +2562,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "findLast"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "findLast"
         }
       ]
     },
@@ -2017,6 +2577,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "findLastIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "findLastIndex"
         }
       ]
@@ -2029,6 +2594,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "findLastSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "findLastSTM"
         }
       ]
     },
@@ -2039,6 +2609,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "forEach"
         }
       ]
@@ -2051,6 +2626,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -2061,6 +2641,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "maxOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "maxOption"
         }
       ]
@@ -2073,6 +2658,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "minOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "minOption"
         }
       ]
     },
@@ -2083,6 +2673,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "reduce"
         }
       ]
@@ -2095,6 +2690,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "reduceOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "reduceOption"
         }
       ]
     },
@@ -2105,6 +2705,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "reduceOptionSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "reduceOptionSTM"
         }
       ]
@@ -2117,6 +2722,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "reduceSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "reduceSTM"
         }
       ]
     },
@@ -2127,6 +2737,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "some"
         }
       ]
@@ -2139,6 +2754,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "someSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "someSTM"
         }
       ]
     },
@@ -2149,6 +2769,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "transform"
         }
       ]
@@ -2161,6 +2786,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "transformSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "transformSTM"
         }
       ]
     },
@@ -2171,6 +2801,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "update"
         }
       ]
@@ -2183,6 +2818,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TArray",
           "name": "updateSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "updateSTM"
         }
       ]
     },
@@ -2193,6 +2833,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TArray",
+          "name": "headOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "headOption"
         }
       ]
@@ -2205,6 +2850,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TArray",
           "name": "lastOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "lastOption"
         }
       ]
     },
@@ -2216,6 +2866,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TArray",
           "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -2226,6 +2881,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TArray",
+          "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
           "name": "toChunk"
         }
       ]
@@ -2290,6 +2950,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TDeferred",
           "name": "done"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Aspects",
+          "name": "done"
         }
       ]
     },
@@ -2300,6 +2965,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TDeferred",
+          "name": "fail"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Aspects",
           "name": "fail"
         }
       ]
@@ -2312,6 +2982,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TDeferred",
           "name": "succeed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Aspects",
+          "name": "succeed"
         }
       ]
     },
@@ -2322,6 +2997,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TDeferred",
+          "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Aspects",
           "name": "poll"
         }
       ]
@@ -2519,6 +3199,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TEnqueue",
           "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TEnqueue.Aspects",
+          "name": "offer"
         }
       ]
     },
@@ -2529,6 +3214,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TEnqueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TEnqueue.Aspects",
           "name": "offerAll"
         }
       ]
@@ -2541,6 +3231,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TDequeue",
           "name": "seek"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "name": "seek"
         }
       ]
     },
@@ -2551,6 +3246,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeBetween"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
           "name": "takeBetween"
         }
       ]
@@ -2563,6 +3263,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TDequeue",
           "name": "takeN"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "name": "takeN"
         }
       ]
     },
@@ -2573,6 +3278,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
           "name": "takeUpTo"
         }
       ]
@@ -2585,6 +3295,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
           "name": "awaitShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "awaitShutdown"
         }
       ]
     },
@@ -2595,6 +3310,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
+          "name": "capacity"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
           "name": "capacity"
         }
       ]
@@ -2607,6 +3327,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -2617,6 +3342,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
+          "name": "isFull"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
           "name": "isFull"
         }
       ]
@@ -2629,6 +3359,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
           "name": "isShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "isShutdown"
         }
       ]
     },
@@ -2639,6 +3374,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "peek"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
           "name": "peek"
         }
       ]
@@ -2651,6 +3391,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue.TDequeue",
           "name": "peekOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "name": "peekOption"
         }
       ]
     },
@@ -2661,6 +3406,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
           "name": "poll"
         }
       ]
@@ -2673,6 +3423,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
           "name": "shutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "shutdown"
         }
       ]
     },
@@ -2683,6 +3438,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
           "name": "size"
         }
       ]
@@ -2695,6 +3455,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TQueue.TDequeue",
           "name": "take"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "name": "take"
         }
       ]
     },
@@ -2705,6 +3470,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TQueue.TDequeue",
+          "name": "takeAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
           "name": "takeAll"
         }
       ]
@@ -2802,6 +3572,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/THub",
           "name": "publish"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "publish"
         }
       ]
     },
@@ -2812,6 +3587,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/THub",
+          "name": "publishAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
           "name": "publishAll"
         }
       ]
@@ -2824,6 +3604,11 @@
           "kind": "getter",
           "typeName": "effect/stm/THub",
           "name": "awaitShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "awaitShutdown"
         }
       ]
     },
@@ -2834,6 +3619,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/THub",
+          "name": "capacity"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
           "name": "capacity"
         }
       ]
@@ -2846,6 +3636,11 @@
           "kind": "getter",
           "typeName": "effect/stm/THub",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -2856,6 +3651,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/THub",
+          "name": "isFull"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
           "name": "isFull"
         }
       ]
@@ -2868,6 +3668,11 @@
           "kind": "getter",
           "typeName": "effect/stm/THub",
           "name": "isShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "isShutdown"
         }
       ]
     },
@@ -2878,6 +3683,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/THub",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
           "name": "size"
         }
       ]
@@ -2890,6 +3700,11 @@
           "kind": "getter",
           "typeName": "effect/stm/THub",
           "name": "subscribe"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "subscribe"
         }
       ]
     },
@@ -2900,6 +3715,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/THub",
+          "name": "subscribeScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
           "name": "subscribeScoped"
         }
       ]
@@ -2986,6 +3806,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "find"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "find"
         }
       ]
     },
@@ -2996,6 +3821,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "findSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "findSTM"
         }
       ]
@@ -3008,6 +3838,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "findAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "findAll"
         }
       ]
     },
@@ -3018,6 +3853,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "findAllSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "findAllSTM"
         }
       ]
@@ -3030,6 +3870,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "forEach"
         }
       ]
     },
@@ -3040,6 +3885,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "get"
         }
       ]
@@ -3052,6 +3902,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "getOrElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "getOrElse"
         }
       ]
     },
@@ -3062,6 +3917,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "has"
         }
       ]
@@ -3074,6 +3934,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "merge"
         }
       ]
     },
@@ -3084,6 +3949,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "reduce"
         }
       ]
@@ -3096,6 +3966,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "reduceSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "reduceSTM"
         }
       ]
     },
@@ -3106,6 +3981,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -3118,6 +3998,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "reduceWithIndexSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "reduceWithIndexSTM"
         }
       ]
     },
@@ -3128,6 +4013,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "remove"
         }
       ]
@@ -3140,6 +4030,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "removeAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "removeAll"
         }
       ]
     },
@@ -3150,6 +4045,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "removeIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "removeIf"
         }
       ]
@@ -3162,6 +4062,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "removeIfDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "removeIfDiscard"
         }
       ]
     },
@@ -3172,6 +4077,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "retainIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "retainIf"
         }
       ]
@@ -3184,6 +4094,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "retainIfDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "retainIfDiscard"
         }
       ]
     },
@@ -3194,6 +4109,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "set"
         }
       ]
@@ -3206,6 +4126,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "setIfAbsent"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "setIfAbsent"
         }
       ]
     },
@@ -3216,6 +4141,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "takeFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "takeFirst"
         }
       ]
@@ -3228,6 +4158,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "takeFirstSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "takeFirstSTM"
         }
       ]
     },
@@ -3238,6 +4173,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "takeSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "takeSome"
         }
       ]
@@ -3250,6 +4190,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "takeSomeSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "takeSomeSTM"
         }
       ]
     },
@@ -3260,6 +4205,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "transform"
         }
       ]
@@ -3272,6 +4222,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "transformSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "transformSTM"
         }
       ]
     },
@@ -3282,6 +4237,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "transformValues"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "transformValues"
         }
       ]
@@ -3294,6 +4254,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
           "name": "transformValuesSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "transformValuesSTM"
         }
       ]
     },
@@ -3304,6 +4269,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TMap",
+          "name": "updateWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "updateWith"
         }
       ]
@@ -3316,6 +4286,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TMap",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -3326,6 +4301,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TMap",
+          "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "keys"
         }
       ]
@@ -3338,6 +4318,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TMap",
           "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -3348,6 +4333,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TMap",
+          "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "toChunk"
         }
       ]
@@ -3360,6 +4350,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TMap",
           "name": "toHashMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toHashMap"
         }
       ]
     },
@@ -3370,6 +4365,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TMap",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "toReadonlyArray"
         }
       ]
@@ -3382,6 +4382,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TMap",
           "name": "toReadonlyMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toReadonlyMap"
         }
       ]
     },
@@ -3392,6 +4397,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TMap",
+          "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
           "name": "values"
         }
       ]
@@ -3478,6 +4488,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "offer"
         }
       ]
     },
@@ -3488,6 +4503,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "offerAll"
         }
       ]
@@ -3500,6 +4520,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "removeIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "removeIf"
         }
       ]
     },
@@ -3510,6 +4535,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "retainIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "retainIf"
         }
       ]
@@ -3522,6 +4552,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "takeUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "takeUpTo"
         }
       ]
     },
@@ -3532,6 +4567,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -3544,6 +4584,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "isNonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "isNonEmpty"
         }
       ]
     },
@@ -3554,6 +4599,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "peek"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "peek"
         }
       ]
@@ -3566,6 +4616,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "peekOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "peekOption"
         }
       ]
     },
@@ -3576,6 +4631,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "size"
         }
       ]
@@ -3588,6 +4648,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "take"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "take"
         }
       ]
     },
@@ -3598,6 +4663,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "takeAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "takeAll"
         }
       ]
@@ -3610,6 +4680,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "takeOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "takeOption"
         }
       ]
     },
@@ -3621,6 +4696,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
           "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "toChunk"
         }
       ]
     },
@@ -3631,6 +4711,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TPriorityQueue",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "toReadonlyArray"
         }
       ]
@@ -3813,6 +4898,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TReentrantLock",
           "name": "withLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "withLock"
         }
       ]
     },
@@ -3823,6 +4913,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "withReadLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "withReadLock"
         }
       ]
@@ -3835,6 +4930,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TReentrantLock",
           "name": "withWriteLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "withWriteLock"
         }
       ]
     },
@@ -3845,6 +4945,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "acquireRead"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "acquireRead"
         }
       ]
@@ -3857,6 +4962,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "acquireWrite"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "acquireWrite"
         }
       ]
     },
@@ -3867,6 +4977,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "fiberReadLocks"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "fiberReadLocks"
         }
       ]
@@ -3879,6 +4994,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "fiberWriteLocks"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "fiberWriteLocks"
         }
       ]
     },
@@ -3889,6 +5009,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "lock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "lock"
         }
       ]
@@ -3901,6 +5026,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "locked"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "locked"
         }
       ]
     },
@@ -3911,6 +5041,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "readLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "readLock"
         }
       ]
@@ -3923,6 +5058,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "readLocks"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "readLocks"
         }
       ]
     },
@@ -3933,6 +5073,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "readLocked"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "readLocked"
         }
       ]
@@ -3945,6 +5090,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "releaseRead"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "releaseRead"
         }
       ]
     },
@@ -3955,6 +5105,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "releaseWrite"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "releaseWrite"
         }
       ]
@@ -3967,6 +5122,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "writeLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "writeLock"
         }
       ]
     },
@@ -3978,6 +5138,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
           "name": "writeLocked"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "writeLocked"
         }
       ]
     },
@@ -3988,6 +5153,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TReentrantLock",
+          "name": "writeLocks"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "writeLocks"
         }
       ]
@@ -4074,6 +5244,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSemaphore",
           "name": "acquireN"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "acquireN"
         }
       ]
     },
@@ -4084,6 +5259,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSemaphore",
+          "name": "releaseN"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
           "name": "releaseN"
         }
       ]
@@ -4112,6 +5292,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSemaphore",
           "name": "withPermitsScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "withPermitsScoped"
         }
       ]
     },
@@ -4122,6 +5307,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TSemaphore",
+          "name": "acquire"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
           "name": "acquire"
         }
       ]
@@ -4134,6 +5324,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TSemaphore",
           "name": "available"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "available"
         }
       ]
     },
@@ -4145,6 +5340,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TSemaphore",
           "name": "release"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "release"
         }
       ]
     },
@@ -4155,6 +5355,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TSemaphore",
+          "name": "withPermitScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
           "name": "withPermitScoped"
         }
       ]
@@ -4241,6 +5446,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "add"
         }
       ]
     },
@@ -4251,6 +5461,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "difference"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "difference"
         }
       ]
@@ -4263,6 +5478,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "forEach"
         }
       ]
     },
@@ -4273,6 +5493,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "has"
         }
       ]
@@ -4285,6 +5510,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "intersection"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "intersection"
         }
       ]
     },
@@ -4295,6 +5525,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "reduce"
         }
       ]
@@ -4307,6 +5542,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "reduceSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "reduceSTM"
         }
       ]
     },
@@ -4317,6 +5557,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "remove"
         }
       ]
@@ -4329,6 +5574,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "removeAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "removeAll"
         }
       ]
     },
@@ -4339,6 +5589,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "removeIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "removeIf"
         }
       ]
@@ -4351,6 +5606,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "removeIfDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "removeIfDiscard"
         }
       ]
     },
@@ -4361,6 +5621,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "retainIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "retainIf"
         }
       ]
@@ -4373,6 +5638,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "retainIfDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "retainIfDiscard"
         }
       ]
     },
@@ -4383,6 +5653,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "takeFirst"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "takeFirst"
         }
       ]
@@ -4395,6 +5670,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "takeFirstSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "takeFirstSTM"
         }
       ]
     },
@@ -4405,6 +5685,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "takeSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "takeSome"
         }
       ]
@@ -4417,6 +5702,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "takeSomeSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "takeSomeSTM"
         }
       ]
     },
@@ -4427,6 +5717,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "transform"
         }
       ]
@@ -4439,6 +5734,11 @@
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
           "name": "transformSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "transformSTM"
         }
       ]
     },
@@ -4449,6 +5749,11 @@
         {
           "kind": "pipeable",
           "typeName": "effect/stm/TSet",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "union"
         }
       ]
@@ -4461,6 +5766,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TSet",
           "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
@@ -4471,6 +5781,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "size"
         }
       ]
@@ -4483,6 +5798,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TSet",
           "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "toChunk"
         }
       ]
     },
@@ -4493,6 +5813,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TSet",
+          "name": "toHashSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "toHashSet"
         }
       ]
@@ -4505,6 +5830,11 @@
           "kind": "getter",
           "typeName": "effect/stm/TSet",
           "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "toReadonlyArray"
         }
       ]
     },
@@ -4515,6 +5845,11 @@
         {
           "kind": "getter",
           "typeName": "effect/stm/TSet",
+          "name": "toReadonlySet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
           "name": "toReadonlySet"
         }
       ]
