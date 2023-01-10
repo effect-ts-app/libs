@@ -9,7 +9,8 @@ import { MemoryStoreLive } from "./Memory.js"
 import { RedisStoreLive } from "./Redis.js"
 import type { StorageConfig } from "./service.js"
 
-export function StoreMakerLive(storageUrl: string, config: StorageConfig) {
+export function StoreMakerLive(config: StorageConfig) {
+  const storageUrl = config.url.value
   if (storageUrl.startsWith("mem://")) {
     console.log("Using in memory store")
     return MemoryStoreLive

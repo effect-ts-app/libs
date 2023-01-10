@@ -158,6 +158,7 @@ export interface PersistenceModelType<Id extends string> {
 }
 
 export interface StorageConfig {
+  url: ConfigSecret
   prefix: string
   dbName: string
 }
