@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.6.1
+
+### Patch Changes
+
+- 403a547: Improve StorageConfig
+
 ## 3.6.0
 
 ### Minor Changes
