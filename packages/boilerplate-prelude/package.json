@@ -303,16 +303,6 @@
         "default": "./_cjs/lens.cjs"
       }
     },
-    "./logfmtLogger": {
-      "import": {
-        "types": "./dist/logfmtLogger.d.ts",
-        "default": "./dist/logfmtLogger.js"
-      },
-      "require": {
-        "types": "./dist/logfmtLogger.d.ts",
-        "default": "./_cjs/logfmtLogger.cjs"
-      }
-    },
     "./schema": {
       "import": {
         "types": "./dist/schema.d.ts",
