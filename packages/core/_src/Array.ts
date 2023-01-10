@@ -298,7 +298,7 @@ export function filterWith<A>(self: ReadonlyArray<A>, predicates: ReadonlyArray<
  * Split the `items` array into multiple, smaller chunks of the given `size`.
  */
 export function* _chunk_<T>(items_: Iterable<T>, size: number) {
-  const items = ([] as T[]).concat(...items_)
+  const items = [...items_]
 
   while (items.length) {
     yield items.splice(0, size)
