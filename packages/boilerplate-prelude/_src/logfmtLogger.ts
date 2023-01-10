@@ -51,7 +51,7 @@ export const logFmtLoggerToString = Logger.make<string, string>(
         } else {
           output = output + " "
         }
-        output = output + key.replace(/[ ="]/g, "_")
+        output = output + filterKeyName(key)
         output = output + "="
         output = appendQuoted(value, output)
       }
@@ -80,14 +80,22 @@ export const logFmtLogger = Logger.make<string, void>(
   }
 )
 
+function filterKeyName(key: string) {
+  return key.replace(/[\s="]/g, "_")
+}
+
+function escapeDoubleQuotes(str: string) {
+  return str.replace(/\\([\s\S])|(")/g, "\\$1$2")
+}
+
+const textOnly = /^[^\s"=]+$/
 const appendQuoted = (label: string, output: string): string => {
-  // TODO: optimise \n and \r handling instead!
-  return output + JSON.stringify(label).replaceAll("\\n", "\n").replaceAll("\\r", "\r")
+  return output + (label.match(textOnly) ? label : `"${escapeDoubleQuotes(label)}"`)
 }
 
 const renderLogSpan = (now: number) => {
   return (self: LogSpan.LogSpan): string => {
-    const label = self.label.replace(/[ ="]/g, "_")
+    const label = filterKeyName(self.label)
     return `${label}=${now - self.startTime}ms`
   }
 }
