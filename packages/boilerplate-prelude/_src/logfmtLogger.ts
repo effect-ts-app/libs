@@ -85,12 +85,12 @@ function filterKeyName(key: string) {
 }
 
 function escapeDoubleQuotes(str: string) {
-  return str.replace(/\\([\s\S])|(")/g, "\\$1$2")
+  return `"${str.replace(/\\([\s\S])|(")/g, "\\$1$2")}"`
 }
 
 const textOnly = /^[^\s"=]+$/
 const appendQuoted = (label: string, output: string): string => {
-  return output + (label.match(textOnly) ? label : `"${escapeDoubleQuotes(label)}"`)
+  return output + (label.match(textOnly) ? label : escapeDoubleQuotes(label))
 }
 
 const renderLogSpan = (now: number) => {
