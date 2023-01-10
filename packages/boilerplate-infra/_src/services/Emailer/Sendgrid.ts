@@ -6,7 +6,7 @@ import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.j
 
 const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
-    sgMail.setApiKey(apiKey)
+    sgMail.setApiKey(apiKey.value)
 
     return {
       sendMail(msg_: EmailMsgOptionalFrom) {

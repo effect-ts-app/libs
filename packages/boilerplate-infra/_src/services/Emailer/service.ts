@@ -17,7 +17,7 @@ export interface SendgridConfig {
   subjectPrefix: string
   realMail: boolean
   defaultFrom: Email | { name?: ReasonableString; email: Email }
-  apiKey: ReasonableString
+  apiKey: ConfigSecret
 }
 
 export const Emailer: EmailerOps = Tag<Emailer>()
