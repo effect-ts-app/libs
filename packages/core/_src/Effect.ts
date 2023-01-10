@@ -5,6 +5,7 @@ import * as Def from "@effect/io/Deferred"
 import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
+import * as Layer from "@effect/io/Layer"
 import type { Option } from "@fp-ts/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 
@@ -251,3 +252,8 @@ export const tapErrorInclAbort = <A, ER, EE, EA>(onError: (err: unknown) => Effe
 export function ifDiff<I, R, E, A>(n: I, orig: I) {
   return (f: (i: I) => Effect<R, E, A>) => ifDiff_(n, orig, f)
 }
+
+/**
+ * @tsplus static effect/io/Layer.Ops effect
+ */
+export const LayerFromEffect = Layer.effect

@@ -17,7 +17,7 @@
       "/**",
       " * @tsplus static $1.Ops Live",
       " */",
-      "export const Live$1 = Layer.fromEffect($1)(make$1)",
+      "export const Live$1 = Layer.effect($1)(make$1)",
     ]
   }
 }

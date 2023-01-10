@@ -36,7 +36,7 @@ const demandScopes = jwtAuthz([])
 export const scopes = Ex.classic(demandScopes)
 
 /*
-Layer.fromEffect(UserProfile)(
+Layer.effect(UserProfile)(
   configM(cfg => {
   const handleJwt = Ex.classic(
     checkJwt(cfg.AUTH0_AUDIENCE, cfg.AUTH0_ISSUER_BASE_URL)

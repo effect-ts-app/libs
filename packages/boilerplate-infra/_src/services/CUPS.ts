@@ -18,7 +18,7 @@ export * from "./CUPS/service.js"
  * @tsplus static CUPS.Ops Live
  */
 export function LiveCUPS(cupsServer?: URL) {
-  return Layer.fromEffect(CUPS)(makeCUPS(cupsServer))
+  return Layer.effect(CUPS)(makeCUPS(cupsServer))
 }
 
 function makeCUPS(cupsServer?: URL) {

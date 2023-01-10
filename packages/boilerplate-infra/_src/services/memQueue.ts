@@ -14,7 +14,7 @@ export const MemQueue: MemQueueOps = Tag<MemQueue>()
 /**
  * @tsplus static MemQueue.Ops Live
  */
-export const LiveMemQueue = Layer.fromEffect(MemQueue)(
+export const LiveMemQueue = Layer.effect(MemQueue)(
   Effect.gen(function*($) {
     const store = yield* $(Effect.succeed(new Map<string, Queue<string>>()))
 

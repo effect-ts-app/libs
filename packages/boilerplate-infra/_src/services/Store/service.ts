@@ -150,7 +150,7 @@ const makeMap = Effect.sync(() => {
 })
 export interface ContextMap extends Effect.Success<typeof makeMap> {}
 export const ContextMap = Tag<ContextMap>()
-export const LiveContextMap = Layer.fromEffect(ContextMap)(makeMap)
+export const LiveContextMap = Layer.effect(ContextMap)(makeMap)
 
 export interface PersistenceModelType<Id extends string> {
   id: Id

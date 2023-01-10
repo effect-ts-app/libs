@@ -88,5 +88,5 @@ function makeRedisStore({ prefix }: StorageConfig) {
   })
 }
 export function RedisStoreLive(config: StorageConfig) {
-  return Layer.fromEffect(StoreMaker)(makeRedisStore(config))
+  return Layer.effect(StoreMaker)(makeRedisStore(config))
 }

@@ -11,4 +11,4 @@ const makeFake = Effect.logDebug("FAKE Emailer Service enabled")
 /**
  * @tsplus static Emailer.Ops Fake
  */
-export const FakeSendgrid = Layer.fromEffect(Emailer)(makeFake)
+export const FakeSendgrid = Layer.effect(Emailer)(makeFake)

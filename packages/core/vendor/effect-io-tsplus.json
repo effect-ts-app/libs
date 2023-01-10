@@ -8121,39 +8121,6 @@
       ]
     },
     {
-      "definitionName": "fromEffect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "fromEffect"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromEffectEnvironment",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "fromEffectEnvironment"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromFunction",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "fromFunction"
-        }
-      ]
-    },
-    {
       "definitionName": "isLayer",
       "definitionKind": "const",
       "extensions": [
@@ -8442,6 +8409,22 @@
       ]
     },
     {
+      "definitionName": "effect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "effect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "effect"
+        }
+      ]
+    },
+    {
       "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
@@ -8670,18 +8653,18 @@
       ]
     },
     {
-      "definitionName": "asUnit",
+      "definitionName": "discard",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/io/Layer",
-          "name": "asUnit"
+          "name": "discard"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
-          "name": "asUnit"
+          "name": "discard"
         }
       ]
     },
@@ -8746,6 +8729,38 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "fresh"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "effectDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "effectDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectEnvironment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "effectEnvironment"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "effectEnvironment"
         }
       ]
     },
@@ -9169,6 +9184,17 @@
       ]
     },
     {
+      "definitionName": "logFmt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "logFmt"
+        }
+      ]
+    },
+    {
       "definitionName": "stringLogger",
       "definitionKind": "const",
       "extensions": [
@@ -9176,6 +9202,17 @@
           "kind": "static",
           "typeName": "effect/io/Logger.Ops",
           "name": "stringLogger"
+        }
+      ]
+    },
+    {
+      "definitionName": "logfmtLogger",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Logger.Ops",
+          "name": "logfmtLogger"
         }
       ]
     },

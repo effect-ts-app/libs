@@ -58,7 +58,7 @@ export function LiveExpressAppConfig<R>(
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
-  return Layer.fromEffect(ExpressAppConfig)(
+  return Layer.effect(ExpressAppConfig)(
     Effect.environmentWith((r: Context<R>) => ({
       _tag: ExpressAppConfigTag,
       host,
