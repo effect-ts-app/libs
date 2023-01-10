@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.7
+
+### Patch Changes
+
+- 631b0d1: Improve logoutput for local console
+
 ## 2.2.6
 
 ### Patch Changes
