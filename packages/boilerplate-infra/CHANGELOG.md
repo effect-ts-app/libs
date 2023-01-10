@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.5.10
+
+### Patch Changes
+
+- Update tsplus definitions with Aspects
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.2.9
+  - @effect-ts-app/core@2.2.3
+  - @effect-ts-app/infra@2.2.3
+  - @effect-ts-app/schema@2.2.3
+
 ## 3.5.9
 
 ### Patch Changes

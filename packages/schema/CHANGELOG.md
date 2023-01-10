@@ -1,5 +1,13 @@
 # @effect-ts-app/schema
 
+## 2.2.3
+
+### Patch Changes
+
+- Update tsplus definitions with Aspects
+- Updated dependencies
+  - @effect-ts-app/core@2.2.3
+
 ## 2.2.2
 
 ### Patch Changes

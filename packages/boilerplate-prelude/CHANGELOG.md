@@ -1,5 +1,14 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.2.9
+
+### Patch Changes
+
+- Update tsplus definitions with Aspects
+- Updated dependencies
+  - @effect-ts-app/core@2.2.3
+  - @effect-ts-app/schema@2.2.3
+
 ## 2.2.8
 
 ### Patch Changes

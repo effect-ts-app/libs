@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.2.3
+
+### Patch Changes
+
+- Update tsplus definitions with Aspects
+
 ## 2.2.2
 
 ### Patch Changes
