@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.2.4
+
+### Patch Changes
+
+- Fix Iterable#chunk bug
+
 ## 2.2.3
 
 ### Patch Changes
