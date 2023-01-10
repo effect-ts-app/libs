@@ -33,6 +33,16 @@ export interface OptionAspects {}
 export const Option: OptionAspects = {}
 
 /**
+ * @tsplus type effect/io/Config.Aspects
+ */
+export interface ConfigAspects {}
+
+/**
+ * @tsplus static effect/io/Config.Ops $
+ */
+export const Config: ConfigAspects = {}
+
+/**
  * @tsplus type effect/io/Effect.Aspects
  */
 export interface EffectAspects {}
