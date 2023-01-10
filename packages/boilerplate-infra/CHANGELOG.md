@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.6.0
+
+### Minor Changes
+
+- Improve sendgrid config
+
 ## 3.5.10
 
 ### Patch Changes
