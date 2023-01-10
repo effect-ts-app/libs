@@ -85,7 +85,7 @@ function filterKeyName(key: string) {
 }
 
 function escapeDoubleQuotes(str: string) {
-  return `"${str.replace(/\\([\s\S])|(")/g, "\\$1$2")}"`
+  return JSON.stringify(str) // `"${str.replace(/\\([\s\S])|(")/g, "\\$1$2")}"`
 }
 
 const textOnly = /^[^\s"=]+$/

@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-prelude",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "license": "MIT",
   "type": "module",
   "dependencies": {
