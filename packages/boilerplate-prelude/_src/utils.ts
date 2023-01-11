@@ -60,7 +60,8 @@ export interface AnyOps<T> {
  * @tsplus fluent Object.Ops debug
  */
 export function debug<A>(a: AnyOps<A>, name: string) {
-  return Effect.logDebug(`${name}: '${a.subject}'`)
+  return Effect.logDebug("print")
+    .logAnnotate(name, pretty(a.subject))
     .map(() => a.subject)
 }
 
@@ -69,7 +70,7 @@ export function debug<A>(a: AnyOps<A>, name: string) {
  * @tsplus fluent Object.Ops debugUnsafe
  */
 export function debugUnsafe<A>(a: AnyOps<A>, name: string) {
-  console.log(`${name}: '${a.subject}'`)
+  console.log(name, a.subject)
   return a.subject
 }
 
@@ -146,6 +147,13 @@ export function RecordKeys<TT extends object>(o: ObjectOps<TT>) {
  */
 export function RecordValues<TT extends object>(o: ObjectOps<TT>): Values<TT>[] {
   return Object.values(o.subject)
+}
+
+/**
+ * @tsplus getter Any.Ops pretty
+ */
+export function AnyPretty<TT>(o: AnyOps<TT>) {
+  return pretty(o.subject)
 }
 
 /**
