@@ -1,5 +1,13 @@
 # @effect-ts-app/schema
 
+## 2.3.5
+
+### Patch Changes
+
+- Improve debug helpers
+- Updated dependencies
+  - @effect-ts-app/core@2.3.5
+
 ## 2.3.4
 
 ### Patch Changes

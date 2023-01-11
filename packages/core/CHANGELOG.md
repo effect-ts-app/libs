@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.5
+
+### Patch Changes
+
+- Improve debug helpers
+
 ## 2.3.4
 
 ### Patch Changes
