@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.1
+
+### Patch Changes
+
+- Update packages, annotations, add stream.
+
 ## 2.3.0
 
 ### Minor Changes
