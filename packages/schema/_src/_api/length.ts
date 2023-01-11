@@ -131,7 +131,7 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
-        n => MO.leafE(MO.customE(n, `at least a size of ${minLength} and at most ${maxLength}`))
+        n => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
       ),
       MO.annotate(minLengthIdentifier, { self, minLength }),
       MO.annotate(maxLengthIdentifier, { self, maxLength })
