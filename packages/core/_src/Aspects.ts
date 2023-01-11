@@ -82,10 +82,51 @@ export interface CauseAspects {}
  */
 export const Cause: CauseAspects = {}
 
+/**
+ * @tsplus type effect/stream/Stream.Aspects
+ */
+export interface StreamAspects {}
+
+/**
+ * @tsplus static effect/stream/Stream.Ops $
+ */
+export const Stream: StreamAspects = {}
+
+/**
+ * @tsplus type effect/stream/Channel.Aspects
+ */
+export interface ChannelAspects {}
+
+/**
+ * @tsplus static effect/stream/Channel.Ops $
+ */
+export const Channel: ChannelAspects = {}
+
+/**
+ * @tsplus type effect/stream/Sink.Aspects
+ */
+export interface SinkAspects {}
+
+/**
+ * @tsplus static effect/stream/Sink.Ops $
+ */
+export const Sink: SinkAspects = {}
+
+/**
+ * @tsplus type effect/stream/SubscriptionRef.Aspects
+ */
+export interface SubscriptionRefAspects {}
+
+/**
+ * @tsplus static effect/stream/SubscriptionRef.Ops $
+ */
+export const SubscriptionRef: SubscriptionRefAspects = {}
+
 // TODO
 
 /**
  * @tsplus static ReadonlyArray.Ops $
+ * @tsplus static Array.Ops $
  */
 export const Array$ = Array$_
 

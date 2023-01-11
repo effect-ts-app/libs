@@ -167,7 +167,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = makeExpressApp.scoped(ExpressApp)
+export const LiveExpressApp = ExpressApp.scoped(makeExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 

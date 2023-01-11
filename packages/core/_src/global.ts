@@ -13,7 +13,9 @@ declare global {
    */
   interface Iterable<T> {}
 
+  // * @tsplus companion Array.Ops causes "Error: Debug Failure. False expression: Should only get Alias here."
   /**
+   * @tsplus type ReadonlyArray
    * @tsplus type Array
    * @tsplus type Iterable
    */
@@ -60,6 +62,7 @@ declare global {
 
   /**
    * @tsplus type Generator
+   * @tsplus type Iterator
    */
   interface Generator<T = unknown, TReturn = any, TNext = unknown> {}
 

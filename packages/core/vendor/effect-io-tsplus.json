@@ -8187,6 +8187,17 @@
       ]
     },
     {
+      "definitionName": "failCause",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "failCause"
+        }
+      ]
+    },
+    {
       "definitionName": "failCauseSync",
       "definitionKind": "const",
       "extensions": [
@@ -8194,6 +8205,39 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "failCauseSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "effect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effect"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effectDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectEnvironment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effectEnvironment"
         }
       ]
     },
@@ -8216,6 +8260,74 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "scope"
+        }
+      ]
+    },
+    {
+      "definitionName": "scoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "scopedLayer"
+        },
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/Context.Tag",
+          "name": "scoped"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "scopedLayer"
+        }
+      ]
+    },
+    {
+      "definitionName": "scopedDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scopedDiscard"
+        },
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/Context.Tag",
+          "name": "scopedDiscard"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "scopedDiscardLayer"
+        }
+      ]
+    },
+    {
+      "definitionName": "scopedEnvironment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scopedEnvironment"
+        },
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/Context.Tag",
+          "name": "scopedEnvironment"
+        },
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "scopedEnvironmentLayer"
         }
       ]
     },
@@ -8409,22 +8521,6 @@
       ]
     },
     {
-      "definitionName": "effect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
-          "name": "effect"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "effect"
-        }
-      ]
-    },
-    {
       "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
@@ -8557,22 +8653,6 @@
       ]
     },
     {
-      "definitionName": "scoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
-          "name": "scoped"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "scoped"
-        }
-      ]
-    },
-    {
       "definitionName": "tap",
       "definitionKind": "const",
       "extensions": [
@@ -8701,22 +8781,6 @@
       ]
     },
     {
-      "definitionName": "failCause",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Cause",
-          "name": "failCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
-          "name": "failCause"
-        }
-      ]
-    },
-    {
       "definitionName": "fresh",
       "definitionKind": "const",
       "extensions": [
@@ -8729,38 +8793,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "fresh"
-        }
-      ]
-    },
-    {
-      "definitionName": "effectDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "effectDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "effectDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "effectEnvironment",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "effectEnvironment"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "effectEnvironment"
         }
       ]
     },
@@ -8825,38 +8857,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "passthrough"
-        }
-      ]
-    },
-    {
-      "definitionName": "scopedDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "scopedDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "scopedDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "scopedEnvironment",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "scopedEnvironment"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "scopedEnvironment"
         }
       ]
     },

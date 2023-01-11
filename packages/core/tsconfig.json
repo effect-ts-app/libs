@@ -12,6 +12,7 @@
             "./vendor/effect-ts-tsplus.json",
             "./vendor/effect-io-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
+            "./vendor/effect-stream-tsplus.json",
             "./vendor/fp-ts-data-tsplus.json"
         ],
     },

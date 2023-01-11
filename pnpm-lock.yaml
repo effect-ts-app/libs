@@ -250,6 +250,7 @@ importers:
       '@effect-ts/system': ^0.57.5
       '@effect/io': ^0.0.61
       '@effect/stm': ^0.0.14
+      '@effect/stream': ^0.0.11
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.36
       '@types/faker': 5.5.9
@@ -277,6 +278,7 @@ importers:
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
       '@effect/io': 0.0.61
       '@effect/stm': 0.0.14
+      '@effect/stream': 0.0.11
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.36
       date-fns: 2.29.3
@@ -2090,6 +2092,14 @@ packages:
 
   /@effect/stm/0.0.14:
     resolution: {integrity: sha512-BdOK0yoFnDoSKinbCfHQDNwtXM+o1ecz2TQ0Xq2Cl8FHWxbr8jyZD5FGlcICgoBHzesPgES1inZ3Zv9MYPspYA==}
+    dependencies:
+      '@effect/io': 0.0.61
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.36
+    dev: false
+
+  /@effect/stream/0.0.11:
+    resolution: {integrity: sha512-JKtQFp7sk+EJLDSHYColbZZReYtoaGLTwKCv0itaEYapQrxafCSBsBM8VNq/rnWQCbGA6fOd6rEyabOqWpgjKw==}
     dependencies:
       '@effect/io': 0.0.61
       '@fp-ts/core': 0.0.11
