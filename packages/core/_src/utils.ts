@@ -3,6 +3,8 @@
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
 
+import { stringify } from "flatted"
+
 export * from "./utils/extend.js"
 
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
@@ -57,7 +59,7 @@ export function uncapitalize<T extends string>(string: T): Uncapitalize<T> {
   return (string.charAt(0).toLowerCase() + string.slice(1)) as Uncapitalize<T>
 }
 
-export function pretty(o: unknown) {
+export function pretty(o: unknown): string {
   // JSON.stringify(undefined) ends up with undefined!
-  return JSON.stringify(o, undefined, 2) ?? "undefined"
+  return stringify(o, undefined, 2) ?? "undefined"
 }
