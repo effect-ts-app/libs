@@ -82,7 +82,11 @@ export interface StoreMaker {
   ) => Effect<never, never, Store<E, Id>>
 }
 
-export const StoreMaker = Tag<StoreMaker>()
+/**
+ * @tsplus type StoreMaker.Ops
+ */
+export interface StoreMakerOps extends Tag<StoreMaker> {}
+export const StoreMaker: StoreMakerOps = Tag<StoreMaker>()
 
 const makeMap = Effect.sync(() => {
   const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)

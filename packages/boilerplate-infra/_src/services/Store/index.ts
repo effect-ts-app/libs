@@ -9,6 +9,9 @@ import { MemoryStoreLive } from "./Memory.js"
 import { RedisStoreLive } from "./Redis.js"
 import type { StorageConfig } from "./service.js"
 
+/**
+ * @tsplus static StoreMaker.Ops Live
+ */
 export function StoreMakerLive(config: StorageConfig) {
   const storageUrl = config.url.value
   if (storageUrl.startsWith("mem://")) {
