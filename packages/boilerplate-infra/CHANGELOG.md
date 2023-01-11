@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.7.7
+
+### Patch Changes
+
+- 03d957b: Fix write json
+
 ## 3.7.6
 
 ### Patch Changes
