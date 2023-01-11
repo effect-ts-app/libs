@@ -417,7 +417,6 @@ importers:
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
-      flatted: ^3.2.7
       lodash: ^4.17.21
       path-parser: ^6.1.0
       query-string: ^8.1.0
@@ -434,7 +433,6 @@ importers:
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.38
       cross-fetch: 3.1.5
-      flatted: 3.2.7
       lodash: 4.17.21
       path-parser: 6.1.0
       query-string: 8.1.0
@@ -5248,6 +5246,7 @@ packages:
 
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
+    dev: true
 
   /flatten/1.0.3:
     resolution: {integrity: sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==}

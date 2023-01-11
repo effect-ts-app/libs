@@ -2,7 +2,6 @@
 // ets_tracing: off
 // tracing: off
 
-import { pretty } from "@effect-ts-app/core/utils"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express from "express"
@@ -310,7 +309,7 @@ export function defaultExitHandler(
   return cause =>
     Effect.sync(() => {
       if (cause.isDie()) {
-        console.error(pretty(cause))
+        console.error(cause.pretty())
       }
       _res.status(500).end()
     })

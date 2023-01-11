@@ -59,7 +59,13 @@ export interface AnyOps<T> {
  * @tsplus fluent effect/io/Effect debug
  */
 export function Effect_debug<R,E,A>(self: Effect<R,E,A>, name: string) {
-  return self.tap(a => Effect.logDebug("print").logAnnotate(name, pretty(a)))
+  return self.tap(a => {
+    let r: string | A = a
+    try {
+      r = pretty(a)
+    } catch { /* empty */ }
+    return Effect.logDebug("print").logAnnotate(name, `${r}`)
+  })
 }
 
 /**
@@ -74,8 +80,12 @@ export function Effect_debugUnsafe<R, E, A>(self: Effect<R,E,A>, name: string) {
  * @tsplus fluent Object.Ops debug
  */
 export function debug<A>(a: AnyOps<A>, name: string) {
+  let r: string | A = a.subject
+  try {
+    r = pretty(a.subject)
+  } catch { /* empty */ }
   return Effect.logDebug("print")
-    .logAnnotate(name, pretty(a.subject))
+    .logAnnotate(name, `${r}`)
     .map(() => a.subject)
 }
 
