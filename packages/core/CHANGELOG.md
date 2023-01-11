@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.2
+
+### Patch Changes
+
+- Fix dupe entry
+
 ## 2.3.1
 
 ### Patch Changes
