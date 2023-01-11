@@ -25,6 +25,56 @@ export function todayAtUTCNoon() {
   return new Date(utcDateAtNoon)
 }
 
+
+
+function anyOp_$<T>(self: T) {
+  return {
+    get subject() {
+      return self
+    }
+  }
+}
+
+/**
+ * @tsplus getter Object $$
+ * @tsplus getter number $$
+ * @tsplus getter bigint $$
+ * @tsplus getter boolean $$
+ * @tsplus getter regexp $$
+ * @tsplus getter string $$
+ */
+export function anyOp$<T>(self: T): AnyOps<T> {
+  return anyOp_$(self)
+}
+
+/**
+ * @tsplus type Any.Ops
+ * @tsplus type Object.Ops
+ */
+export interface AnyOps<T> {
+  subject: T
+}
+
+/**
+ * @tsplus fluent Any.Ops debug
+ * @tsplus fluent Object.Ops debug
+ */
+export function debug<A>(a: AnyOps<A>, name: string) {
+  return Effect.logDebug(`${name}: '${a.subject}'`)
+    .map(() => a.subject)
+}
+
+/**
+ * @tsplus fluent Any.Ops debugUnsafe
+ * @tsplus fluent Object.Ops debugUnsafe
+ */
+export function debugUnsafe<A>(a: AnyOps<A>, name: string) {
+  console.log(`${name}: '${a.subject}'`)
+  return a.subject
+}
+
+
+
 export function spread<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Props extends Record<any, any>,
