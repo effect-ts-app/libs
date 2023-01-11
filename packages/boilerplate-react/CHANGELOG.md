@@ -1,5 +1,15 @@
 # @effect-ts-app/boilerplate-react
 
+## 2.3.4
+
+### Patch Changes
+
+- Add AnyOp with debug helpers and update packages
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.3.4
+  - @effect-ts-app/core@2.3.4
+  - @effect-ts-app/schema@2.3.4
+
 ## 2.3.3
 
 ### Patch Changes

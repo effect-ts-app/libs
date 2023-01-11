@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.4
+
+### Patch Changes
+
+- Add AnyOp with debug helpers and update packages
+
 ## 2.3.3
 
 ### Patch Changes

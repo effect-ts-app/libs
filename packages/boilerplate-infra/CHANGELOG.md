@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.7.4
+
+### Patch Changes
+
+- Add AnyOp with debug helpers and update packages
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.3.4
+  - @effect-ts-app/core@2.3.4
+  - @effect-ts-app/infra@2.3.4
+  - @effect-ts-app/schema@2.3.4
+
 ## 3.7.3
 
 ### Patch Changes
