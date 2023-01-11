@@ -1,5 +1,14 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.7
+
+### Patch Changes
+
+- Revert flatted
+- Updated dependencies
+  - @effect-ts-app/core@2.3.6
+  - @effect-ts-app/schema@2.3.6
+
 ## 2.3.6
 
 ### Patch Changes

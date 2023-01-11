@@ -1,5 +1,14 @@
 # @effect-ts-app/infra
 
+## 2.3.6
+
+### Patch Changes
+
+- Revert flatted
+- Updated dependencies
+  - @effect-ts-app/core@2.3.6
+  - @effect-ts-app/schema@2.3.6
+
 ## 2.3.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.6
+
+### Patch Changes
+
+- Revert flatted
+
 ## 2.3.5
 
 ### Patch Changes
