@@ -59,7 +59,7 @@ importers:
       dprint: ^0.34.1
       enhanced-resolve: ^5.12.0
       eslint: ^8.31.0
-      eslint-import-resolver-typescript: ^3.5.2
+      eslint-import-resolver-typescript: ^3.5.3
       eslint-import-resolver-webpack: ^0.13.2
       eslint-plugin-codegen: ^0.17.0
       eslint-plugin-import: ^2.26.0
@@ -110,10 +110,10 @@ importers:
       dprint: 0.34.1
       enhanced-resolve: 5.12.0
       eslint: 8.31.0
-      eslint-import-resolver-typescript: 3.5.2_ol7jqilc3wemtdbq3nzhywgxq4
+      eslint-import-resolver-typescript: 3.5.3_ol7jqilc3wemtdbq3nzhywgxq4
       eslint-import-resolver-webpack: 0.13.2_fkfqfehjtk7sk2efaqbgxsuasa
       eslint-plugin-codegen: 0.17.0_3ogk7peuefdu45q3hbzcgdiuna
-      eslint-plugin-import: 2.26.0_4fqbgiudezbbxlgvxta4iasmgy
+      eslint-plugin-import: 2.26.0_44dvmq7r5oxouwh2bjsqnummgy
       eslint-plugin-prettier-vue: 4.2.0
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.31.0
       eslint-plugin-sort-destructure-keys: 1.4.0_eslint@8.31.0
@@ -180,9 +180,9 @@ importers:
       '@effect-ts-app/core': workspace:*
       '@effect-ts-app/infra': workspace:*
       '@effect-ts-app/schema': workspace:*
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
       '@sentry/node': ^7.30.0
@@ -209,9 +209,9 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       change-case: 4.1.2
       cross-fetch: 3.1.5
       faker: 5.5.3
@@ -248,11 +248,11 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@effect/stm': ^0.0.14
       '@effect/stream': ^0.0.11
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.0
@@ -276,11 +276,11 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@effect/stm': 0.0.14
       '@effect/stream': 0.0.11
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       date-fns: 2.29.3
       lodash: 4.17.21
       nanoid: 4.0.0
@@ -346,9 +346,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
       json5: ^2.2.3
@@ -367,9 +367,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       query-string: 8.1.0
       swrv: 1.0.2_vue@3.2.45
       vue: 3.2.45
@@ -411,9 +411,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -429,9 +429,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -454,9 +454,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
       '@types/express': ^4.17.15
@@ -480,9 +480,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       proper-lockfile: 4.1.2
       query-string: 8.1.0
     devDependencies:
@@ -521,9 +521,9 @@ importers:
       '@effect-ts/core': ^0.60.5
       '@effect-ts/monocle': '*'
       '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.61
+      '@effect/io': ^0.0.62
       '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.36
+      '@fp-ts/data': ^0.0.38
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.10
       cross-fetch: ^3.1.5
@@ -539,9 +539,9 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -2075,35 +2075,35 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.61:
-    resolution: {integrity: sha512-Ji7B0ekd7BM+oDjRAHlJyZOK/j3QJaGfgnCoDJ/K4nwqAWoDu+apMKNLUIKqszPvLMWPs7XOPx1zQ/z0tWsv0A==}
+  /@effect/io/0.0.62:
+    resolution: {integrity: sha512-d05Chya07Lkb+IHRFwqbVZbtZ08gCM10ZoFy362fGOy4IxjIhGB/ObZsb9idrLqK8T2IG+Hp3HJk7q6tpYlBfA==}
     dependencies:
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
     dev: false
 
   /@effect/language-service/0.0.15_a4uvuf3pdfkyyq2ka2mtqp5yfi:
     resolution: {integrity: sha512-ELYL6h56W2TjTd13AiddZgbZjZFaa0J6MpnLpM26XlxYIR66j5tmdNFW67dtJxFbieoFS33+E713E5hrkg8MKg==}
     dependencies:
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
     dev: true
     patched: true
 
   /@effect/stm/0.0.14:
     resolution: {integrity: sha512-BdOK0yoFnDoSKinbCfHQDNwtXM+o1ecz2TQ0Xq2Cl8FHWxbr8jyZD5FGlcICgoBHzesPgES1inZ3Zv9MYPspYA==}
     dependencies:
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
     dev: false
 
   /@effect/stream/0.0.11:
     resolution: {integrity: sha512-JKtQFp7sk+EJLDSHYColbZZReYtoaGLTwKCv0itaEYapQrxafCSBsBM8VNq/rnWQCbGA6fOd6rEyabOqWpgjKw==}
     dependencies:
-      '@effect/io': 0.0.61
+      '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.36
+      '@fp-ts/data': 0.0.38
     dev: false
 
   /@esbuild/android-arm/0.16.4:
@@ -2370,8 +2370,8 @@ packages:
   /@fp-ts/core/0.0.11:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
 
-  /@fp-ts/data/0.0.36:
-    resolution: {integrity: sha512-uC8S69OO+KyXrVTQhDr+JWXmex9blTwZcwG9BcxflPnytHA3lU8BxMz0DjxgSpeWzoGJIZ9F5L6bbwCnvcLeEA==}
+  /@fp-ts/data/0.0.38:
+    resolution: {integrity: sha512-Ex1G1zY9XutpVeY4PKfyr+Jxwc5Ix9757hE4YrlciIWtLpd/vf0TTtfyeRZt1SWhnFKQpknoq7ZgH2Vd4spZig==}
     dependencies:
       '@fp-ts/core': 0.0.11
 
@@ -4624,8 +4624,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-import-resolver-typescript/3.5.2_ol7jqilc3wemtdbq3nzhywgxq4:
-    resolution: {integrity: sha512-zX4ebnnyXiykjhcBvKIf5TNvt8K7yX6bllTRZ14MiurKPjDpCAZujlszTdB8pcNXhZcOf+god4s9SjQa5GnytQ==}
+  /eslint-import-resolver-typescript/3.5.3_ol7jqilc3wemtdbq3nzhywgxq4:
+    resolution: {integrity: sha512-njRcKYBc3isE42LaTcJNVANR3R99H9bAxBDMNDr2W7yq5gYPxbU3MkdhsQukxZ/Xg9C2vcyLlDsbKfRDg0QvCQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
@@ -4634,7 +4634,7 @@ packages:
       debug: 4.3.4
       enhanced-resolve: 5.12.0
       eslint: 8.31.0
-      eslint-plugin-import: 2.26.0_4fqbgiudezbbxlgvxta4iasmgy
+      eslint-plugin-import: 2.26.0_44dvmq7r5oxouwh2bjsqnummgy
       get-tsconfig: 4.2.0
       globby: 13.1.2
       is-core-module: 2.11.0
@@ -4654,7 +4654,7 @@ packages:
       array-find: 1.0.0
       debug: 3.2.7
       enhanced-resolve: 0.9.1
-      eslint-plugin-import: 2.26.0_4fqbgiudezbbxlgvxta4iasmgy
+      eslint-plugin-import: 2.26.0_44dvmq7r5oxouwh2bjsqnummgy
       find-root: 1.1.0
       has: 1.0.3
       interpret: 1.4.0
@@ -4667,7 +4667,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-module-utils/2.7.4_tdhkyr7ay666rd2k447xwl6l6m:
+  /eslint-module-utils/2.7.4_qryr4pnun6ibg4ouk6dbcykolq:
     resolution: {integrity: sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -4692,7 +4692,7 @@ packages:
       debug: 3.2.7
       eslint: 8.31.0
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-typescript: 3.5.2_ol7jqilc3wemtdbq3nzhywgxq4
+      eslint-import-resolver-typescript: 3.5.3_ol7jqilc3wemtdbq3nzhywgxq4
       eslint-import-resolver-webpack: 0.13.2_fkfqfehjtk7sk2efaqbgxsuasa
     transitivePeerDependencies:
       - supports-color
@@ -4718,7 +4718,7 @@ packages:
       - supports-color
     patched: true
 
-  /eslint-plugin-import/2.26.0_4fqbgiudezbbxlgvxta4iasmgy:
+  /eslint-plugin-import/2.26.0_44dvmq7r5oxouwh2bjsqnummgy:
     resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -4735,7 +4735,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.31.0
       eslint-import-resolver-node: 0.3.6
-      eslint-module-utils: 2.7.4_tdhkyr7ay666rd2k447xwl6l6m
+      eslint-module-utils: 2.7.4_qryr4pnun6ibg4ouk6dbcykolq
       has: 1.0.3
       is-core-module: 2.11.0
       is-glob: 4.0.3
@@ -5916,6 +5916,7 @@ packages:
   /is-docker/2.2.1:
     resolution: {integrity: sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==}
     engines: {node: '>=8'}
+    hasBin: true
     dev: true
 
   /is-extglob/2.1.1:

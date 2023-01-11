@@ -11,9 +11,9 @@
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
-    "@effect/io": "^0.0.61",
+    "@effect/io": "^0.0.62",
     "@fp-ts/core": "^0.0.11",
-    "@fp-ts/data": "^0.0.36",
+    "@fp-ts/data": "^0.0.38",
     "query-string": "^8.1.0",
     "swrv": "^1.0.2",
     "vue": "^3.2.45"
