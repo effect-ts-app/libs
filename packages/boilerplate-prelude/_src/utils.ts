@@ -59,8 +59,7 @@ export interface AnyOps<T> {
  * @tsplus fluent effect/io/Effect debug
  */
 export function Effect_debug<R,E,A>(self: Effect<R,E,A>, name: string) {
-  return self.tap(a => Effect.logDebug("print")
-    .logAnnotate(name, pretty(a)))
+  return self.tap(a => Effect.logDebug("print").logAnnotate(name, pretty(a)))
 }
 
 /**
