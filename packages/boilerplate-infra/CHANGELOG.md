@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.7.3
+
+### Patch Changes
+
+- 3fe67d6: Add extensions, cleanup and update dependencies
+- Updated dependencies [3fe67d6]
+  - @effect-ts-app/boilerplate-prelude@2.3.3
+  - @effect-ts-app/schema@2.3.3
+  - @effect-ts-app/infra@2.3.3
+  - @effect-ts-app/core@2.3.3
+
 ## 3.7.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.3
+
+### Patch Changes
+
+- 3fe67d6: Add extensions, cleanup and update dependencies
+
 ## 2.3.2
 
 ### Patch Changes
