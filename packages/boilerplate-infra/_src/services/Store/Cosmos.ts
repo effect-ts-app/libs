@@ -375,10 +375,14 @@ function logQuery(q: {
   return Effect.logDebug("cosmos query")
     .apply(Effect.logAnnotates({
       query: q.query,
-      parameters: q.parameters.reduce((acc, v) => {
-        acc[v.name] = v.value
-        return acc
-      }, {} as Record<string, SupportedValues | readonly SupportedValues[]>).$$.pretty
+      parameters: JSON.stringify(
+        q.parameters.reduce((acc, v) => {
+          acc[v.name] = v.value
+          return acc
+        }, {} as Record<string, SupportedValues | readonly SupportedValues[]>),
+        undefined,
+        2
+      )
     }))
 }
 

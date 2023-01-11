@@ -30,7 +30,7 @@ function makeDiskStore({ prefix }: StorageConfig) {
               .readTextFile(file)
               .map(x => JSON.parse(x) as E[])
               .orDie,
-            setRaw: (v: Iterable<E>) => [...v].$$.pretty["|>"](json => fu.writeTextFile(file, json))
+            setRaw: (v: Iterable<E>) => JSON.stringify([...v], undefined, 2)["|>"](json => fu.writeTextFile(file, json))
           }
 
           const { make } = makeMemoryStore()
