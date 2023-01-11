@@ -82,7 +82,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
       typescript-transform-paths: ^3.4.6
       vite: ^4.0.4
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     dependencies:
       cross-env: 7.0.3
       http-proxy: /http-proxy-node16/1.0.0
@@ -131,7 +131,7 @@ importers:
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
       typescript-transform-paths: 3.4.6_kxesddlyyi54o7oj4zx3op4any
       vite: 4.0.4_@types+node@18.11.12
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/boilerplate-eslint:
     specifiers:
@@ -203,7 +203,7 @@ importers:
       redis: ^3.1.2
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
@@ -237,7 +237,7 @@ importers:
       redis: 3.1.2
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/boilerplate-prelude:
     specifiers:
@@ -249,8 +249,8 @@ importers:
       '@effect-ts/monocle': ^0.43.0
       '@effect-ts/system': ^0.57.5
       '@effect/io': ^0.0.62
-      '@effect/stm': ^0.0.14
-      '@effect/stream': ^0.0.11
+      '@effect/stm': ^0.0.15
+      '@effect/stream': ^0.0.12
       '@fp-ts/core': ^0.0.11
       '@fp-ts/data': ^0.0.38
       '@types/faker': 5.5.9
@@ -269,7 +269,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     dependencies:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/schema': link:../schema
@@ -277,8 +277,8 @@ importers:
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
       '@effect/io': 0.0.62
-      '@effect/stm': 0.0.14
-      '@effect/stream': 0.0.11
+      '@effect/stm': 0.0.15
+      '@effect/stream': 0.0.12
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.38
       date-fns: 2.29.3
@@ -300,7 +300,7 @@ importers:
       fast-check: 3.5.0
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/boilerplate-react:
     specifiers:
@@ -317,7 +317,7 @@ importers:
       react-intl: ^6.2.5
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
       '@effect-ts-app/core': link:../core
@@ -333,7 +333,7 @@ importers:
       react-intl: 6.2.5_p4b2pwmqhxduchsqlf5xcj4d3e
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/boilerplate-vue:
     specifiers:
@@ -357,7 +357,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
       vite: ^4.0.4
-      vitest: ^0.27.0
+      vitest: ^0.27.1
       vue: ^3.2.45
     dependencies:
       '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
@@ -382,7 +382,7 @@ importers:
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
       vite: 4.0.4_@types+node@18.11.12
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/compiler:
     specifiers:
@@ -393,7 +393,7 @@ importers:
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
       vite: ^4.0.4
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     dependencies:
       '@rollup/pluginutils': 5.0.2
       vite: 4.0.4_@types+node@18.11.12
@@ -403,7 +403,7 @@ importers:
       json5: 2.2.3
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/core:
     specifiers:
@@ -508,12 +508,12 @@ importers:
       '@types/node': ~18.11.12
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz
-      vitest: ^0.27.0
+      vitest: ^0.27.1
     devDependencies:
       '@types/node': 18.11.12
       ts-node: 10.9.1_dyjje7lyfg3edhlnsfkm5eg54q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz_lx5lj3mbqmfnd7j7be7zce2s2e'
-      vitest: 0.27.0
+      vitest: 0.27.1
 
   packages/schema:
     specifiers:
@@ -561,7 +561,7 @@ importers:
       cross-fetch: ^3.1.5
       path-parser: ^6.1.0
       ts-node: ^10.9.1
-      vitest: ^0.27.0
+      vitest: ^0.27.1
       xstate: ^4.35.2
     dependencies:
       change-case: 4.1.2
@@ -571,7 +571,7 @@ importers:
     devDependencies:
       '@effect-ts-app/compiler': link:../packages/compiler
       ts-node: 10.9.1
-      vitest: 0.27.0
+      vitest: 0.27.1
 
 packages:
 
@@ -2090,16 +2090,16 @@ packages:
     dev: true
     patched: true
 
-  /@effect/stm/0.0.14:
-    resolution: {integrity: sha512-BdOK0yoFnDoSKinbCfHQDNwtXM+o1ecz2TQ0Xq2Cl8FHWxbr8jyZD5FGlcICgoBHzesPgES1inZ3Zv9MYPspYA==}
+  /@effect/stm/0.0.15:
+    resolution: {integrity: sha512-8H3AnkGFWf96THWog51XR5fQKu81vzN1vlTbXfXmvj1wDNEmY5/cqS4QWLIG2iGlIYHI0y9nVAWBI/LUD0vSkQ==}
     dependencies:
       '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.38
     dev: false
 
-  /@effect/stream/0.0.11:
-    resolution: {integrity: sha512-JKtQFp7sk+EJLDSHYColbZZReYtoaGLTwKCv0itaEYapQrxafCSBsBM8VNq/rnWQCbGA6fOd6rEyabOqWpgjKw==}
+  /@effect/stream/0.0.12:
+    resolution: {integrity: sha512-th6NokgLZQC97jGxo4vM4x29aYtmqkGSwMlNFAQUJCp0e0RGfmr+Wr2KRL24L+oRttd7ITNFJ9U2m+uo1IbBOg==}
     dependencies:
       '@effect/io': 0.0.62
       '@fp-ts/core': 0.0.11
@@ -6809,8 +6809,8 @@ packages:
     hasBin: true
     dev: true
 
-  /mlly/1.0.0:
-    resolution: {integrity: sha512-QL108Hwt+u9bXdWgOI0dhzZfACovn5Aen4Xvc8Jasd9ouRH4NjnrXEiyP3nVvJo91zPlYjVRckta0Nt2zfoR6g==}
+  /mlly/1.1.0:
+    resolution: {integrity: sha512-cwzBrBfwGC1gYJyfcy8TcZU1f+dbH/T+TuOhtYP2wLv/Fb51/uV7HJQfBPtEupZ2ORLRU1EKFS/QfS3eo9+kBQ==}
     dependencies:
       acorn: 8.8.1
       pathe: 1.0.0
@@ -7465,7 +7465,7 @@ packages:
     resolution: {integrity: sha512-jHv9HB+Ho7dj6ItwppRDDl0iZRYBD0jsakHXtFgoLr+cHSF6xC+QL54sJmWxyGxOLYSHm0afhXhXcQDQqH9z8g==}
     dependencies:
       jsonc-parser: 3.2.0
-      mlly: 1.0.0
+      mlly: 1.1.0
       pathe: 1.0.0
     dev: true
 
@@ -8213,6 +8213,10 @@ packages:
       get-intrinsic: 1.1.3
       object-inspect: 1.12.2
 
+  /siginfo/2.0.0:
+    resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
+    dev: true
+
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
 
@@ -8392,6 +8396,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       escape-string-regexp: 2.0.0
+
+  /stackback/0.0.2:
+    resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
+    dev: true
 
   /statuses/1.5.0:
     resolution: {integrity: sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==}
@@ -9110,14 +9118,14 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node/0.27.0_@types+node@18.11.12:
-    resolution: {integrity: sha512-O1o9joT0qCGx5Om6W0VNLr7M00ttrnFlfZX2d+oxt2T9oZ9DvYSv8kDRhNJDVhAgNgUm3Tc0h/+jppNf3mVKbA==}
+  /vite-node/0.27.1_@types+node@18.11.12:
+    resolution: {integrity: sha512-d6+ue/3NzsfndWaPbYh/bFkHbmAWfDXI4B874zRx+WREnG6CUHUbBC8lKaRYZjeR6gCPN5m1aVNNRXBYICA9XA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
-      mlly: 1.0.0
+      mlly: 1.1.0
       pathe: 0.2.0
       picocolors: 1.0.0
       source-map: 0.6.1
@@ -9166,8 +9174,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.27.0:
-    resolution: {integrity: sha512-BnOa7T6CnXVC6UgcAsvFOZ2Dtvqkt+/Nl6CRgh4qVT70vElf65XwEL6zMRyTF+h2QXJziEkxYdrLo5WCxckMLQ==}
+  /vitest/0.27.1:
+    resolution: {integrity: sha512-1sIpQ1DVFTEn7c1ici1XHcVfdU4nKiBmPtPAtGKJJJLuJjojTv/OHGgcf69P57alM4ty8V4NMv+7Yoi5Cxqx9g==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -9204,7 +9212,8 @@ packages:
       tinypool: 0.3.0
       tinyspy: 1.0.2
       vite: 4.0.4_@types+node@18.11.12
-      vite-node: 0.27.0_@types+node@18.11.12
+      vite-node: 0.27.1_@types+node@18.11.12
+      why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
       - sass
@@ -9312,6 +9321,15 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: true
+
+  /why-is-node-running/2.2.2:
+    resolution: {integrity: sha512-6tSwToZxTOcotxHeA+qGCq1mVzKR3CwcJGmVcY+QE8SHy6TnpFnh8PAvPNHYr7EcuVeG0QSMxtYCuO1ta/G/oA==}
+    engines: {node: '>=8'}
+    hasBin: true
+    dependencies:
+      siginfo: 2.0.0
+      stackback: 0.0.2
     dev: true
 
   /wide-align/1.1.5:
