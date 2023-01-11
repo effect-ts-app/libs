@@ -158,14 +158,6 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
 }
 
 /**
- * @depracted use `logSpan`
- * @tsplus fluent effect/io/Effect withSpan
- */
-export function withSpan<R, E, A>(self: Effect<R, E, A>, label: string) {
-  return self.logSpan(label)
-}
-
-/**
  * Annotates each log in this effect with the specified log annotations.
  * @tsplus static effect/io/Effect.Ops logAnnotates
  */
