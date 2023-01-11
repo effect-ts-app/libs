@@ -11,4 +11,4 @@ export const CosmosClient = Tag<CosmosClient>()
 export const db = CosmosClient.with(_ => _.db)
 
 export const CosmosClientLive = (cosmosUrl: string, dbName: string) =>
-  Layer.effect(CosmosClient)(makeCosmosClient(cosmosUrl, dbName))
+  makeCosmosClient(cosmosUrl, dbName).toLayer(CosmosClient)

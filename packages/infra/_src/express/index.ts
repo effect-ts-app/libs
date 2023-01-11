@@ -58,14 +58,12 @@ export function LiveExpressAppConfig<R>(
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
-  return Layer.effect(ExpressAppConfig)(
-    Effect.environmentWith((r: Context<R>) => ({
-      _tag: ExpressAppConfigTag,
-      host,
-      port,
-      exitHandler: (req, res, next) => cause => exitHandler(req, res, next)(cause).provideEnvironment(r)
-    }))
-  )
+  return Effect.environmentWith((r: Context<R>) => ({
+    _tag: ExpressAppConfigTag,
+    host,
+    port,
+    exitHandler: (req, res, next) => cause => exitHandler(req, res, next)(cause).provideEnvironment(r)
+  })).toLayer(ExpressAppConfig)
 }
 
 export const ExpressAppTag = "@effect-ts-app/express/App" as const

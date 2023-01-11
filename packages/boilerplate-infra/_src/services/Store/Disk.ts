@@ -75,5 +75,5 @@ function makeDiskStore({ prefix }: StorageConfig) {
 }
 
 export function DiskStoreLive(config: StorageConfig) {
-  return Layer.effect(StoreMaker)(makeDiskStore(config))
+  return makeDiskStore(config).toLayer(StoreMaker)
 }

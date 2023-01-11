@@ -529,5 +529,5 @@ class CosmosDbOperationError {
   constructor(readonly message: string) {}
 }
 export function CosmosStoreLive(config: StorageConfig) {
-  return Layer.effect(StoreMaker)(makeCosmosStore(config))
+  return makeCosmosStore(config).toLayer(StoreMaker)
 }

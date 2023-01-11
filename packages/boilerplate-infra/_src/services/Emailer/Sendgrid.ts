@@ -51,7 +51,9 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: Send
  * @tsplus static Emailer.Ops LiveSendgrid
  */
 export function LiveSendgrid(config: Config<SendgridConfig>) {
-  return Layer.effect(Emailer)(config.config.flatMap(makeLiveSendgrid))
+  return config.config
+    .flatMap(makeLiveSendgrid)
+    .toLayer(Emailer)
 }
 
 /**

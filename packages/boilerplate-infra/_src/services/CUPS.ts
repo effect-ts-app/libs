@@ -5,7 +5,6 @@ import { tempFile } from "../lib/fileUtil.js"
 import { isTruthy } from "@effect-ts-app/core/utils"
 import { ReasonableString } from "@effect-ts-app/schema"
 import { Effect } from "@effect/io/Effect"
-import { Layer } from "@effect/io/Layer"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -18,7 +17,7 @@ export * from "./CUPS/service.js"
  * @tsplus static CUPS.Ops Live
  */
 export function LiveCUPS(cupsServer?: URL) {
-  return Layer.effect(CUPS)(makeCUPS(cupsServer))
+  return makeCUPS(cupsServer).toLayer(CUPS)
 }
 
 function makeCUPS(cupsServer?: URL) {
