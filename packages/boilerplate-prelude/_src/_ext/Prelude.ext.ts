@@ -1,5 +1,6 @@
 // import "./EffectOpt.ext.js"
 import "./builtIn.js"
+import "./Config.js"
 import "./date.js"
 import "./Has.ext.js"
 import "./Lens.ext.js"

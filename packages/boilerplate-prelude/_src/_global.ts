@@ -7,6 +7,11 @@
 /**
  * @tsplus global
  */
+import { Runtime } from "@effect/io/Runtime"
+
+/**
+ * @tsplus global
+ */
 import { Config } from "@effect/io/Config"
 
 /**
