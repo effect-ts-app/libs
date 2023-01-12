@@ -84,16 +84,6 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
-    "./_ext/Config": {
-      "import": {
-        "types": "./dist/_ext/Config.d.ts",
-        "default": "./dist/_ext/Config.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Config.d.ts",
-        "default": "./_cjs/_ext/Config.cjs"
-      }
-    },
     "./_ext/Has.ext": {
       "import": {
         "types": "./dist/_ext/Has.ext.d.ts",
