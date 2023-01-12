@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.7.13
+
+### Patch Changes
+
+- Fix Cosmos join
+
 ## 3.7.12
 
 ### Patch Changes
