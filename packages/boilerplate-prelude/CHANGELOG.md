@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.11
+
+### Patch Changes
+
+- facea04: Drop exts
+
 ## 2.3.10
 
 ### Patch Changes
