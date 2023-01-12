@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.8
+
+### Patch Changes
+
+- 075116b: Improve Config
+
 ## 2.3.7
 
 ### Patch Changes
