@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.8.0
+
+### Minor Changes
+
+- 1426e8f: Fix Cosmos SQL
+
 ## 3.7.14
 
 ### Patch Changes
