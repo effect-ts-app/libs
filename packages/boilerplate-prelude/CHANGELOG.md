@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.10
+
+### Patch Changes
+
+- 85298b4: Fix Config extensions
+
 ## 2.3.9
 
 ### Patch Changes

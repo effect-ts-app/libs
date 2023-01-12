@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-vue",
-  "version": "2.3.9",
+  "version": "2.3.10",
   "license": "MIT",
   "type": "module",
   "dependencies": {
