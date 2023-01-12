@@ -1,9 +1,9 @@
-import type * as CFG from "@effect/io/Config"
+import type { Config } from "@effect/io/Config"
 
 /**
  * @tsplus fluent effect/io/Config withDefaultWhenMissing
  */
-export function configWithDefaultWhenMissing<A>(config: CFG.Config<A>, defaultValue: A) {
+export function configWithDefaultWhenMissing<A>(config: Config<A>, defaultValue: A) {
   return config
     .optional
     .map(_ => _.getOrElse(() => defaultValue))
@@ -14,8 +14,8 @@ export function configWithDefaultWhenMissing<A>(config: CFG.Config<A>, defaultVa
  * @tsplus fluent effect/io/Config orElseWhenMissing
  */
 export function configOrElseWhenMissing<A>(
-  config: CFG.Config<A>,
-  defaultConfig: CFG.Config<A>,
+  config: Config<A>,
+  defaultConfig: Config<A>,
   runtime = Runtime.defaultRuntime
 ) {
   return config
