@@ -11,8 +11,7 @@
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
             "typescript@5.0.0-tsplus.20230108": "patches/typescript@5.0.0-tsplus.20230108.patch",
             "@effect/language-service@0.0.15": "patches/@effect__language-service@0.0.15.patch",
-            "@effect/io@0.0.62": "patches/@effect__io@0.0.62.patch",
-            "@fp-ts/data@0.0.38": "patches/@fp-ts__data@0.0.38.patch"
+            "@effect/io@0.0.62": "patches/@effect__io@0.0.62.patch"
         }
     },
     "scripts": {
