@@ -57,7 +57,8 @@ test("works", () => {
       }
     ],
     "query": `
-    SELECT * FROM Somethings f
+    SELECT f
+    FROM Somethings AS f
     
     WHERE f.id != @id AND LOWER(f.b) = LOWER(@v0)
     OFFSET 0 LIMIT 10`
@@ -81,8 +82,9 @@ test("works", () => {
       }
     ],
     "query": `
-    SELECT * FROM Somethings f
-    JOIN d IN c.d
+    SELECT f
+    FROM Somethings AS f
+    JOIN d IN f.d
     WHERE f.id != @id AND LOWER(d.a) <> LOWER(@v0)
     OFFSET 0 LIMIT 10`
   })

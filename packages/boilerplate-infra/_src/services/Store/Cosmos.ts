@@ -258,11 +258,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   .tap(q => logQuery(q))
                   .flatMap(q =>
                     Effect.promise(() =>
-                      container.items.query<PM>(
+                      container.items.query<{ f: PM }>(
                         q
                       )
                         .fetchAll()
-                        .then(({ resources }) => resources.toChunk)
+                        .then(({ resources }) => resources.map(_ => _.f).toChunk)
                     )
                   )).instrument("cosmos.filter")
                 .logAnnotate("cosmos.db", containerId)
@@ -399,9 +399,9 @@ export function buildFilterJoinSelectCosmosQuery(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-SELECT r, c.id as _rootId
-FROM ${name} c
-JOIN r IN c.${k}
+SELECT r, f.id as _rootId
+FROM ${name} f
+JOIN r IN f.${k}
 WHERE LOWER(r.${filter.valueKey}) = LOWER(@value)
 ${lm}
 `,
@@ -422,9 +422,9 @@ export function buildFindJoinCosmosQuery(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-SELECT DISTINCT VALUE c
-FROM ${name} c
-JOIN r IN c.${k}
+SELECT DISTINCT VALUE f
+FROM ${name} f
+JOIN r IN f.${k}
 WHERE LOWER(r.${filter.valueKey}) = LOWER(@value)
 ${lm}`,
     parameters: [{ name: "@value", value: filter.value }]
@@ -443,7 +443,10 @@ export function buildLegacyCosmosQuery<PM>(
 ) {
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
-    query: `SELECT * FROM ${name} f WHERE f.id != @id AND f.${
+    query: `
+    SELECT f
+    FROM ${name} AS f
+    WHERE f.id != @id AND f.${
       String(
         filter.by
       )
@@ -473,11 +476,12 @@ export function buildWhereCosmosQuery(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-    SELECT * FROM ${name} f
+    SELECT f
+    FROM ${name} AS f
     ${
       filter.where.filter(_ => _.key.includes(".-1."))
         .map(_ => _.key.split(".-1.")[0])
-        .map(_ => `JOIN ${_} IN c.${_}`)
+        .map(_ => `JOIN ${_} IN f.${_}`)
         .uniq(Equal.string)
         .join("\n")
     }
@@ -497,10 +501,10 @@ export function buildWhereCosmosQuery(
               : x.t === "not-eq"
               ? x.value === null
                 ? `IS_NULL(${x.f}.${x.key}) = false`
-                : `LOWER(${x.f}.${x.key}) <> LOWER(@v${i})`
+                : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <> ${lowerIfNeeded(`@v${i}`, x.value)}`
               : x.value === null
               ? `IS_NULL(${x.f}.${x.key}) = true`
-              : `LOWER(${x.f}.${x.key}) = LOWER(@v${i})`
+              : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} = ${lowerIfNeeded(`@v${i}`, x.value)}`
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
     }
@@ -516,6 +520,8 @@ export function buildWhereCosmosQuery(
     ]
   }
 }
+
+const lowerIfNeeded = (key: unknown, value: unknown) => typeof value === "string" ? `LOWER(${key})` : `${key}`
 
 export function buildCosmosQuery<PM>(
   filter: LegacyFilter<PM> | StoreWhereFilter,
