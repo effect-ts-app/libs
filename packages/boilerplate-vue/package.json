@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-vue",
-  "version": "2.3.11",
+  "version": "2.3.12",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -13,7 +13,7 @@
     "@effect-ts/system": "^0.57.5",
     "@effect/io": "^0.0.62",
     "@fp-ts/core": "^0.0.11",
-    "@fp-ts/data": "^0.0.38",
+    "@fp-ts/data": "^0.0.39",
     "query-string": "^8.1.0",
     "swrv": "^1.0.2",
     "vue": "^3.2.45"

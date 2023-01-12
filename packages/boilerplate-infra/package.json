@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-infra",
-  "version": "3.7.13",
+  "version": "3.7.14",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -10,7 +10,7 @@
     "@effect-ts-app/schema": "workspace:*",
     "@effect/io": "^0.0.62",
     "@fp-ts/core": "^0.0.11",
-    "@fp-ts/data": "^0.0.38",
+    "@fp-ts/data": "^0.0.39",
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
     "faker": "^5.5.3",
