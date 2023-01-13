@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.9.0
+
+### Minor Changes
+
+- db47ee4: Try Context as Env instead of Layer
+
 ## 3.8.0
 
 ### Minor Changes
