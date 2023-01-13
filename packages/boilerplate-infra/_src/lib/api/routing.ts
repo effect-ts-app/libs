@@ -348,8 +348,7 @@ export function makeRequestHandler<
             ) // .instrument("Performance.RequestResponse")
             // the first log entry should be of the request start.
             const r2 = makeMiddlewareContext
-              ? makeMiddlewareContext(req, res, requestContext)
-                .flatMap(pr => r.provideSomeEnvironment((_: Context<R>) => _.merge(pr)))
+              ? r.provideSomeEnvironmentEffect(makeMiddlewareContext(req, res, requestContext))
               : r
             return errorHandler(
               req,

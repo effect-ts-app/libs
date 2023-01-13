@@ -257,3 +257,21 @@ export function ifDiff<I, R, E, A>(n: I, orig: I) {
  * @tsplus static effect/io/Layer.Ops effect
  */
 export const LayerFromEffect = Layer.effect
+
+/**
+ * @tsplus pipeable effect/io/Effect provideSomeEnvironmentReal
+ */
+export const provideSomeEnvironmentReal = <A2>(
+  ctx: Context<A2>
+) =>
+  <R, E, A>(self: Effect<R | A2, E, A>): Effect<Exclude<R, A2>, E, A> =>
+    (self as Effect<A2, E, A>).provideSomeEnvironment((_: Context<never>) => _.merge(ctx))
+
+/**
+ * @tsplus pipeable effect/io/Effect provideSomeEnvironmentEffect
+ */
+export const provideSomeEnvironmentEffect = <R2, E2, A2>(
+  makeCtx: Effect<R2, E2, Context<A2>>
+) =>
+  <R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
+    makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).provideSomeEnvironment((_: Context<never>) => _.merge(ctx)))
