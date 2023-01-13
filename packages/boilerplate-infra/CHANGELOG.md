@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.9.5
+
+### Patch Changes
+
+- 2abdc22: Fix router signature
+
 ## 3.9.4
 
 ### Patch Changes
