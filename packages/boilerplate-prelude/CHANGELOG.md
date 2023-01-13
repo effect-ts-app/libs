@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.15
+
+### Patch Changes
+
+- afbde97: Expose more fluent
+
 ## 2.3.14
 
 ### Patch Changes
