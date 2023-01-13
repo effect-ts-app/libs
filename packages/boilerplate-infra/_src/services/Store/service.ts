@@ -89,7 +89,7 @@ export interface StoreMakerOps extends Tag<StoreMaker> {}
 export const StoreMaker: StoreMakerOps = Tag<StoreMaker>()
 
 /**
- * @tsplus getter ContextMap.Ops make
+ * @tsplus static ContextMap.Ops Make
  */
 export const makeMap = Effect.sync(() => {
   const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)
