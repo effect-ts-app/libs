@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.3.8
+
+### Patch Changes
+
+- 52652c8: Improve providing env context
+
 ## 2.3.7
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.9.4
+
+### Patch Changes
+
+- 52652c8: Improve providing env context
+- Updated dependencies [52652c8]
+  - @effect-ts-app/core@2.3.8
+  - @effect-ts-app/boilerplate-prelude@2.3.13
+  - @effect-ts-app/infra@2.3.8
+  - @effect-ts-app/schema@2.3.8
+
 ## 3.9.3
 
 ### Patch Changes
