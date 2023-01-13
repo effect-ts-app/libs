@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.3.14
+
+### Patch Changes
+
+- d1224f1: Add ConfigSecretURL
+
 ## 2.3.13
 
 ### Patch Changes

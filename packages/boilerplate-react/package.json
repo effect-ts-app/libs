@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/boilerplate-react",
-  "version": "2.3.13",
+  "version": "2.3.14",
   "license": "MIT",
   "type": "module",
   "scripts": {
