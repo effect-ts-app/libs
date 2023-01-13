@@ -54,6 +54,26 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Config/SecretURL": {
+      "import": {
+        "types": "./dist/Config/SecretURL.d.ts",
+        "default": "./dist/Config/SecretURL.js"
+      },
+      "require": {
+        "types": "./dist/Config/SecretURL.d.ts",
+        "default": "./_cjs/Config/SecretURL.cjs"
+      }
+    },
+    "./Config/internal/configSecretURL": {
+      "import": {
+        "types": "./dist/Config/internal/configSecretURL.d.ts",
+        "default": "./dist/Config/internal/configSecretURL.js"
+      },
+      "require": {
+        "types": "./dist/Config/internal/configSecretURL.d.ts",
+        "default": "./_cjs/Config/internal/configSecretURL.cjs"
+      }
+    },
     "./Function": {
       "import": {
         "types": "./dist/Function.d.ts",

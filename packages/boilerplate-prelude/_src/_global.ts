@@ -17,6 +17,11 @@ import { Config } from "@effect/io/Config"
 /**
  * @tsplus global
  */
+import { ConfigSecretURL } from "@effect-ts-app/boilerplate-prelude/Config/SecretURL"
+
+/**
+ * @tsplus global
+ */
 import { ConfigSecret } from "@effect/io/Config/Secret"
 
 /**
