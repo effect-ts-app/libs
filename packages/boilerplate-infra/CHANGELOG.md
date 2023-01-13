@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.9.2
+
+### Patch Changes
+
+- 37ca423: zzz
+
 ## 3.9.1
 
 ### Patch Changes
