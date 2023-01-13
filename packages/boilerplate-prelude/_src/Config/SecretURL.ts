@@ -63,6 +63,7 @@ export const isConfigSecretURL: (u: unknown) => u is ConfigSecretURL = internal.
 export const make: (bytes: Array<number>) => ConfigSecretURL = internal.make
 
 /**
+ * @tsplus static ConfigSecretURL.Ops fromChunk
  * @since 1.0.0
  * @category constructors
  */
@@ -76,12 +77,14 @@ export const fromChunk: (chunk: Chunk.Chunk<string>) => ConfigSecretURL = intern
 export const fromString: (text: string) => ConfigSecretURL = internal.fromString
 
 /**
+ * @tsplus getter ConfigSecretURL value
  * @since 1.0.0
  * @category getters
  */
 export const value: (self: ConfigSecretURL) => string = internal.value
 
 /**
+ * @tsplus fluent ConfigSecretURL unsafeWipe
  * @since 1.0.0
  * @category unsafe
  */
