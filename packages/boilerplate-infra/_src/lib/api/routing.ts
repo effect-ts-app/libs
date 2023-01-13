@@ -235,7 +235,7 @@ export function makeRequestHandler<
     r2: Effect<R, E | ValidationError, void>
   ) => Effect<RErr | R, never, void>,
   makeMiddlewareContext?: MakeMiddlewareContext<E, R2, PR>
-) {
+): (req: express.Request, res: express.Response) => Effect<RErr | R | R2, never, void> {
   const { Request, Response, adaptResponse, h: handle } = handler
   const response = Response ? extractSchema(Response as any) : Void
   const encoder = Encoder.for(response)
@@ -349,7 +349,8 @@ export function makeRequestHandler<
             // the first log entry should be of the request start.
             const r2 = makeMiddlewareContext
               ? r.provideSomeEnvironmentEffect(makeMiddlewareContext(req, res, requestContext))
-              : r
+              : // PR is not relevant here
+                r as Effect<R, E | ValidationError, void>
             return errorHandler(
               req,
               res,
