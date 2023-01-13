@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.9.1
+
+### Patch Changes
+
+- a02b2e9: Fix ext
+
 ## 3.9.0
 
 ### Minor Changes
