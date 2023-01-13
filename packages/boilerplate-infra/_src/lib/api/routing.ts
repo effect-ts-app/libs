@@ -94,11 +94,11 @@ export function makeRequestParsers<
   }
 }
 
-export type MiddlewareHandler<ResE, R2 = never, PR = never> = (
+export type MakeMiddlewareContext<ResE, R2 = never, PR = never> = (
   req: express.Request,
   res: express.Response,
   context: RequestContext
-) => Layer<R2, ResE, PR>
+) => Effect<R2, ResE, Context<PR>>
 
 export type Middleware<
   R,
@@ -116,7 +116,7 @@ export type Middleware<
   handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE>
 ) => {
   handler: typeof handler
-  handle: MiddlewareHandler<ResE, R2, PR>
+  makeContext: MakeMiddlewareContext<ResE, R2, PR>
 }
 
 export function match<
@@ -164,18 +164,18 @@ export function match<
     PR
   >
 ) {
-  let makeMiddlewareLayer = undefined
+  let makeMiddlewareContext = undefined
   if (middleware) {
-    const { handle, handler } = middleware(requestHandler)
+    const { handler, makeContext } = middleware(requestHandler)
     requestHandler = handler
-    makeMiddlewareLayer = handle
+    makeMiddlewareContext = makeContext
   }
   return Ex.match(requestHandler.Request.method.toLowerCase() as any)(
     requestHandler.Request.path.split("?")[0],
     makeRequestHandler<R, E, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, R2, PR, RErr>(
       requestHandler,
       errorHandler,
-      makeMiddlewareLayer
+      makeMiddlewareContext
     )
   ).zipRight(
     Effect.sync(() =>
@@ -234,7 +234,7 @@ export function makeRequestHandler<
     requestContext: RequestContext,
     r2: Effect<R, E | ValidationError, void>
   ) => Effect<RErr | R, never, void>,
-  makeMiddlewareLayer?: MiddlewareHandler<E, R2, PR>
+  makeMiddlewareContext?: MakeMiddlewareContext<E, R2, PR>
 ) {
   const { Request, Response, adaptResponse, h: handle } = handler
   const response = Response ? extractSchema(Response as any) : Void
@@ -347,7 +347,10 @@ export function makeRequestHandler<
               req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
             ) // .instrument("Performance.RequestResponse")
             // the first log entry should be of the request start.
-            const r2 = makeMiddlewareLayer ? r.provideSomeLayer(makeMiddlewareLayer(req, res, requestContext)) : r
+            const r2 = makeMiddlewareContext
+              ? makeMiddlewareContext(req, res, requestContext)
+                .flatMap(pr => r.provideSomeEnvironment((_: Context<R>) => _.merge(pr)))
+              : r
             return errorHandler(
               req,
               res,

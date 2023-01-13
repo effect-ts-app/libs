@@ -66,11 +66,6 @@ export type RequestContextConstructor = typeof RequestContext
  */
 export const tag = Tag<RequestContext>()
 
-/**
- * @tsplus static RequestContext.Ops Live
- */
-export const LiveRequestContext = (pars: RequestContext) => tag.of(pars)
-
 /* eslint-disable */
 export interface RequestContextParent {
   readonly createdAt: Date

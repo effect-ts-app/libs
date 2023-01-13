@@ -88,7 +88,10 @@ export interface StoreMaker {
 export interface StoreMakerOps extends Tag<StoreMaker> {}
 export const StoreMaker: StoreMakerOps = Tag<StoreMaker>()
 
-const makeMap = Effect.sync(() => {
+/**
+ * @tsplus getter ContextMap make
+ */
+export const makeMap = Effect.sync(() => {
   const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)
   const getEtag = (id: string) => etags.get(id)
   const setEtag = (id: string, eTag: string | undefined) => {
@@ -154,7 +157,6 @@ const makeMap = Effect.sync(() => {
 })
 export interface ContextMap extends Effect.Success<typeof makeMap> {}
 export const ContextMap = Tag<ContextMap>()
-export const LiveContextMap = makeMap.toLayer(ContextMap)
 
 export interface PersistenceModelType<Id extends string> {
   id: Id
