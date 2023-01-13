@@ -156,7 +156,11 @@ export const makeMap = Effect.sync(() => {
   }
 })
 export interface ContextMap extends Effect.Success<typeof makeMap> {}
-export const ContextMap = Tag<ContextMap>()
+/**
+ * @tsplus type ContextMap.Ops
+ */
+export interface ContextMapOps extends Tag<ContextMap> {}
+export const ContextMap: ContextMapOps = Tag<ContextMap>()
 
 export interface PersistenceModelType<Id extends string> {
   id: Id
