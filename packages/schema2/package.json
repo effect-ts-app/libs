@@ -1,0 +1,82 @@
+{
+  "name": "@effect-ts-app/schema2",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@effect-ts-app/core": "workspace:*",
+    "@effect-ts/core": "^0.60.5",
+    "@effect-ts/system": "^0.57.5",
+    "@effect/io": "^0.0.63",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.39",
+    "@fp-ts/optic": "^0.0.6",
+    "@fp-ts/schema": "^0.0.8",
+    "cross-fetch": "^3.1.5",
+    "lodash": "^4.17.21",
+    "path-parser": "^6.1.0",
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.0",
+    "@types/validator": "^13.7.10",
+    "fast-check": "^3.5.0",
+    "ts-toolbelt": "^9.6.0",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz"
+  },
+  "scripts": {
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
+    "build2:cjs": "babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
+    "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
+    "clean": "rm -rf dist && rm -rf _cjs",
+    "clean-dist": "sh ../../scripts/clean-dist.sh",
+    "generate-exports": "sh ../../utils/extract.sh > package.log",
+    "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
+    "compile": "tsc --noEmit",
+    "lint": "eslint .",
+    "autofix": "pnpm lint --fix",
+    "test": "echo 'no tests yet'",
+    "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",
+    "ncu": "ncu",
+    "pub": "pnpm prepublish && npm publish --access public",
+    "prepublish": "pnpm build && cp -f ./tsconfig.json ./tsconfig.json.bak && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json",
+    "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "gitHead": "ccd5a7c229c825a78737b4225f5f966d793a159c"
+}
