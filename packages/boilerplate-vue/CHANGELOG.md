@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.3.16
+
+### Patch Changes
+
+- Update packages
+- Updated dependencies
+  - @effect-ts-app/boilerplate-prelude@2.3.16
+  - @effect-ts-app/boilerplate-vue@2.3.16
+  - @effect-ts-app/core@2.3.9
+  - @effect-ts-app/schema@2.3.9
+
 ## 2.3.15
 
 ### Patch Changes
