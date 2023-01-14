@@ -128,11 +128,29 @@ import { Duration as DUR } from "@fp-ts/data/Duration"
 /**
  * @tsplus global
  */
+import { HashMap } from "@fp-ts/data/HashMap"
+
+/**
+ * @tsplus global
+ */
+import { HashSet } from "@fp-ts/data/HashSet"
+
+/**
+ * @tsplus global
+ */
+import { MutableList } from "@fp-ts/data/MutableList"
+/**
+ * @tsplus global
+ */
 import { MutableHashMap } from "@fp-ts/data/MutableHashMap"
 /**
  * @tsplus global
  */
 import { MutableQueue } from "@fp-ts/data/MutableQueue"
+/**
+ * @tsplus global
+ */
+import { MutableRef } from "@fp-ts/data/MutableRef"
 
 import "./_ext/Prelude.ext.js"
 import "./Array.js"

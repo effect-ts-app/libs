@@ -7,7 +7,7 @@
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "^0.43.0",
-    "@effect/io": "^0.0.62",
+    "@effect/io": "^0.0.63",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.39",
     "cross-fetch": "^3.1.5",
@@ -22,7 +22,7 @@
     "@types/validator": "^13.7.10",
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.163/compiler/typescript.tgz",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
     "winston": "^3.8.2"
   },
   "scripts": {

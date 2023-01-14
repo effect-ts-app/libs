@@ -13,6 +13,46 @@ export interface ChunkAspects {}
 export const Chunk: ChunkAspects = {}
 
 /**
+ * @tsplus type fp-ts/data/HashMap.Aspects
+ */
+export interface HashMapAspects {}
+
+/**
+ * @tsplus static fp-ts/data/HashMap.Ops $
+ */
+export const HashMap: HashMapAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/HashSet.Aspects
+ */
+export interface HashSetAspects {}
+
+/**
+ * @tsplus static fp-ts/data/HashSet.Ops $
+ */
+export const HashSet: HashSetAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/MutableHashMap.Aspects
+ */
+export interface MutableHashMapAspects {}
+
+/**
+ * @tsplus static fp-ts/data/MutableHashMap.Ops $
+ */
+export const MutableHashMap: MutableHashMapAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/MutableHashSet.Aspects
+ */
+export interface MutableHashSetAspects {}
+
+/**
+ * @tsplus static fp-ts/data/MutableHashSet.Ops $
+ */
+export const MutableHashSet: MutableHashSetAspects = {}
+
+/**
  * @tsplus type fp-ts/data/Either.Aspects
  */
 export interface EitherAspects {}
