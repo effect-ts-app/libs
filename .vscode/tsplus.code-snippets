@@ -1,4 +1,18 @@
 {
+    "TSPlusAspects": {
+        "prefix": "tspa",
+        "body": [
+            "/**",
+            " * @tsplus type $1/$2.Aspects",
+            " */",
+            "export interface $2Aspects {}",
+            "",
+            "/**",
+            " * @tsplus static $1/$2.Ops $",
+            " */",
+            "export const $2: $2Aspects = {}"
+        ]
+    },
     "TSPlusBare": {
         "prefix": "tsp",
         "body": [

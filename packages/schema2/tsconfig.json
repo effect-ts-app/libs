@@ -8,6 +8,15 @@
         "rootDir": "./_src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
+        "tsPlusTypes": [
+            "./node_modules/@effect-ts-app/core/vendor/effect-ts-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/effect-io-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/effect-stm-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/effect-stream-tsplus.json",
+            "./node_modules/@effect-ts-app/core/vendor/fp-ts-data-tsplus.json",
+            "./vendor/fp-ts__optic.tsplus.json",
+            "./vendor/fp-ts__schema.tsplus.json"
+        ],
     },
     "include": [
         "./_src"

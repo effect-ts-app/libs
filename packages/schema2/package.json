@@ -66,6 +66,36 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Aspects": {
+      "import": {
+        "types": "./dist/Aspects.d.ts",
+        "default": "./dist/Aspects.js"
+      },
+      "require": {
+        "types": "./dist/Aspects.d.ts",
+        "default": "./_cjs/Aspects.cjs"
+      }
+    },
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
+      },
+      "require": {
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
+      }
+    },
     "./index": {
       "import": {
         "types": "./dist/index.d.ts",

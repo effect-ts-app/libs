@@ -9,6 +9,7 @@ module.exports = {
             "@effect/io",
             "@fp-ts/core",
             "@fp-ts/codec",
+            "@fp-ts/optic",
             "@fp-ts/data",
             "@fp-ts/schema",
             //"vue",

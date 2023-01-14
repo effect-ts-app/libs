@@ -1,0 +1,3150 @@
+{
+  "@fp-ts/schema/annotation/Hook": [
+    {
+      "definitionName": "Hook",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/Hook"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/Hook.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "hook",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/annotation/Hook.Ops",
+          "name": "hook"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/ParseError": [
+    {
+      "definitionName": "Type",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.Type"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Type.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Index",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.Index"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Index.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Key",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.Key"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Key.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Missing",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.Missing"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Missing.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Unexpected",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.Unexpected"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Unexpected.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "UnionMember",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.UnionMember"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.UnionMember.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ParseResult",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError.ParseResult"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.ParseResult.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ParseError",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/ParseError"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/ParseError.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "type",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Type.Ops",
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "definitionName": "index",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Index.Ops",
+          "name": "index"
+        }
+      ]
+    },
+    {
+      "definitionName": "key",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Key.Ops",
+          "name": "key"
+        }
+      ]
+    },
+    {
+      "definitionName": "unexpected",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Unexpected.Ops",
+          "name": "unexpected"
+        }
+      ]
+    },
+    {
+      "definitionName": "unionMember",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.UnionMember.Ops",
+          "name": "unionMember"
+        }
+      ]
+    },
+    {
+      "definitionName": "success",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Ops",
+          "name": "success"
+        }
+      ]
+    },
+    {
+      "definitionName": "failures",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Ops",
+          "name": "failures"
+        }
+      ]
+    },
+    {
+      "definitionName": "isSuccess",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Ops",
+          "name": "isSuccess"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFailure",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Ops",
+          "name": "isFailure"
+        }
+      ]
+    },
+    {
+      "definitionName": "missing",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Missing.Ops",
+          "name": "missing"
+        }
+      ]
+    },
+    {
+      "definitionName": "isIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/ParseError",
+          "name": "isIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Aspects",
+          "name": "isIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "isKey",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/ParseError",
+          "name": "isKey"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Aspects",
+          "name": "isKey"
+        }
+      ]
+    },
+    {
+      "definitionName": "isUnexpected",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/ParseError",
+          "name": "isUnexpected"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Aspects",
+          "name": "isUnexpected"
+        }
+      ]
+    },
+    {
+      "definitionName": "failure",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/ParseError",
+          "name": "failure"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/ParseError.Aspects",
+          "name": "failure"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/Pretty": [
+    {
+      "definitionName": "Pretty",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Pretty"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Pretty.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Pretty.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "pretty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "pretty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "pretty"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/Schema": [
+    {
+      "definitionName": "Schema",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "OptionalSchema",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.OptionalSchema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.OptionalSchema.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Infer",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.Infer"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.Infer.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Join",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.Join"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.Join.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Spread",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.Spread"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.Spread.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "OptionalSchemaId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.OptionalSchemaId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.OptionalSchemaId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "OptionalKeys",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.OptionalKeys"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.OptionalKeys.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "AnnotationOptions",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Schema.AnnotationOptions"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Schema.AnnotationOptions.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "literal",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "literal"
+        }
+      ]
+    },
+    {
+      "definitionName": "uniqueSymbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "uniqueSymbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "enums",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "enums"
+        }
+      ]
+    },
+    {
+      "definitionName": "templateLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "templateLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "typeAlias",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "typeAlias"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "union"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "tuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "lazy",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "lazy"
+        }
+      ]
+    },
+    {
+      "definitionName": "OptionalSchemaId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.OptionalSchemaId.Ops",
+          "name": "OptionalSchemaId"
+        }
+      ]
+    },
+    {
+      "definitionName": "never",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "never"
+        }
+      ]
+    },
+    {
+      "definitionName": "unknown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "unknown"
+        }
+      ]
+    },
+    {
+      "definitionName": "any",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "any"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "string"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "boolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "boolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
+      "definitionName": "symbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "symbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "object",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "object"
+        }
+      ]
+    },
+    {
+      "definitionName": "json",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "json"
+        }
+      ]
+    },
+    {
+      "definitionName": "instanceOf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "instanceOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "instanceOf"
+        }
+      ]
+    },
+    {
+      "definitionName": "minLength",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "minLength"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "minLength"
+        }
+      ]
+    },
+    {
+      "definitionName": "maxLength",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "maxLength"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "maxLength"
+        }
+      ]
+    },
+    {
+      "definitionName": "length",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "length"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "length"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "nonEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "nonEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "startsWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "startsWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "startsWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "endsWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "endsWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "endsWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "includes",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "includes"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "includes"
+        }
+      ]
+    },
+    {
+      "definitionName": "pattern",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "pattern"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "pattern"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "lessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "lessThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "lessThanOrEqualTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "lessThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "greaterThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "greaterThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "greaterThanOrEqualTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "greaterThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "int",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "int"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "int"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonNaN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "nonNaN"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "nonNaN"
+        }
+      ]
+    },
+    {
+      "definitionName": "finite",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "finite"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "finite"
+        }
+      ]
+    },
+    {
+      "definitionName": "rest",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "rest"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "rest"
+        }
+      ]
+    },
+    {
+      "definitionName": "element",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "element"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "element"
+        }
+      ]
+    },
+    {
+      "definitionName": "optionalElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "optionalElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "optionalElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "pick",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "pick"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "pick"
+        }
+      ]
+    },
+    {
+      "definitionName": "omit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "omit"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "omit"
+        }
+      ]
+    },
+    {
+      "definitionName": "extend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "extend"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "extend"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformOrFail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "transformOrFail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "transformOrFail"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "annotations",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "annotations"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "annotations"
+        }
+      ]
+    },
+    {
+      "definitionName": "message",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "message"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "message"
+        }
+      ]
+    },
+    {
+      "definitionName": "identifier",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "identifier"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "identifier"
+        }
+      ]
+    },
+    {
+      "definitionName": "title",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "title"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "title"
+        }
+      ]
+    },
+    {
+      "definitionName": "description",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "description"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "description"
+        }
+      ]
+    },
+    {
+      "definitionName": "examples",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "examples"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "examples"
+        }
+      ]
+    },
+    {
+      "definitionName": "documentation",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "documentation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "documentation"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "function",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "record",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "record"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "record"
+        }
+      ]
+    },
+    {
+      "definitionName": "nullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "nullable"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "nullable"
+        }
+      ]
+    },
+    {
+      "definitionName": "keyof",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "keyof"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "keyof"
+        }
+      ]
+    },
+    {
+      "definitionName": "array",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "array"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "array"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmptyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "nonEmptyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "nonEmptyArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "optional",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "optional"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "optional"
+        }
+      ]
+    },
+    {
+      "definitionName": "partial",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "partial"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "partial"
+        }
+      ]
+    },
+    {
+      "definitionName": "option",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "option"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "option"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/Arbitrary": [
+    {
+      "definitionName": "Arbitrary",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Arbitrary"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Arbitrary.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Arbitrary.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "arbitrary",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "arbitrary"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "arbitrary"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/Parser": [
+    {
+      "definitionName": "ParseOptions",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Parser.ParseOptions"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Parser.ParseOptions.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Parser",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Parser"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Parser.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "InferInput",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Parser.InferInput"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Parser.InferInput.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "InferAsserts",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/Parser.InferAsserts"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/Parser.InferAsserts.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Parser.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "decode",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "decode"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "decode"
+        }
+      ]
+    },
+    {
+      "definitionName": "decodeOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "decodeOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "decodeOrThrow"
+        }
+      ]
+    },
+    {
+      "definitionName": "is",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "is"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "is"
+        }
+      ]
+    },
+    {
+      "definitionName": "asserts",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "asserts"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "asserts"
+        }
+      ]
+    },
+    {
+      "definitionName": "encode",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "encode"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "encode"
+        }
+      ]
+    },
+    {
+      "definitionName": "encodeOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "encodeOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "encodeOrThrow"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/AST": [
+    {
+      "definitionName": "Annotated",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Annotated"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Annotated.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TypeAlias",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.TypeAlias"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.TypeAlias.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Literal",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Literal"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Literal.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "UniqueSymbol",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.UniqueSymbol"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.UniqueSymbol.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "UndefinedKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.UndefinedKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.UndefinedKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "VoidKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.VoidKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.VoidKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "NeverKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.NeverKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.NeverKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "UnknownKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.UnknownKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.UnknownKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "AnyKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.AnyKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.AnyKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "StringKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.StringKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.StringKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "NumberKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.NumberKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.NumberKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "BooleanKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.BooleanKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.BooleanKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "BigIntKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.BigIntKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.BigIntKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SymbolKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.SymbolKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.SymbolKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ObjectKeyword",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.ObjectKeyword"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.ObjectKeyword.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Enums",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Enums"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Enums.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TemplateLiteralSpan",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.TemplateLiteralSpan"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.TemplateLiteralSpan.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TemplateLiteral",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.TemplateLiteral"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.TemplateLiteral.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Element",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Element"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Element.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Tuple",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Tuple"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Tuple.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "PropertySignature",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.PropertySignature"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.PropertySignature.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "IndexSignature",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.IndexSignature"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.IndexSignature.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TypeLiteral",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.TypeLiteral"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.TypeLiteral.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Union",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Union"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Union.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Lazy",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Lazy"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Lazy.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Refinement",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Refinement"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Refinement.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Transform",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.Transform"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Transform.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "AST",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "LiteralValue",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/AST.LiteralValue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/AST.LiteralValue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "typeAlias",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.TypeAlias.Ops",
+          "name": "typeAlias"
+        }
+      ]
+    },
+    {
+      "definitionName": "uniqueSymbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.UniqueSymbol.Ops",
+          "name": "uniqueSymbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "enums",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Enums.Ops",
+          "name": "enums"
+        }
+      ]
+    },
+    {
+      "definitionName": "templateLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Ops",
+          "name": "templateLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "element",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Element.Ops",
+          "name": "element"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Tuple.Ops",
+          "name": "tuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "propertySignature",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.PropertySignature.Ops",
+          "name": "propertySignature"
+        }
+      ]
+    },
+    {
+      "definitionName": "indexSignature",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.IndexSignature.Ops",
+          "name": "indexSignature"
+        }
+      ]
+    },
+    {
+      "definitionName": "typeLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.TypeLiteral.Ops",
+          "name": "typeLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Ops",
+          "name": "union"
+        }
+      ]
+    },
+    {
+      "definitionName": "lazy",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Lazy.Ops",
+          "name": "lazy"
+        }
+      ]
+    },
+    {
+      "definitionName": "refinement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Refinement.Ops",
+          "name": "refinement"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Transform.Ops",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "record",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.TypeLiteral.Ops",
+          "name": "record"
+        }
+      ]
+    },
+    {
+      "definitionName": "pick",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.TypeLiteral.Ops",
+          "name": "pick"
+        }
+      ]
+    },
+    {
+      "definitionName": "omit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.TypeLiteral.Ops",
+          "name": "omit"
+        }
+      ]
+    },
+    {
+      "definitionName": "undefinedKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.UndefinedKeyword.Ops",
+          "name": "undefinedKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "voidKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.VoidKeyword.Ops",
+          "name": "voidKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "neverKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.NeverKeyword.Ops",
+          "name": "neverKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "unknownKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.UnknownKeyword.Ops",
+          "name": "unknownKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "anyKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.AnyKeyword.Ops",
+          "name": "anyKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "stringKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.StringKeyword.Ops",
+          "name": "stringKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "numberKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.NumberKeyword.Ops",
+          "name": "numberKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "booleanKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.BooleanKeyword.Ops",
+          "name": "booleanKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigIntKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.BigIntKeyword.Ops",
+          "name": "bigIntKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "symbolKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.SymbolKeyword.Ops",
+          "name": "symbolKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "objectKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.ObjectKeyword.Ops",
+          "name": "objectKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAnnotation",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/AST.Annotated",
+          "name": "getAnnotation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Annotated.Aspects",
+          "name": "getAnnotation"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTypeAlias",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isTypeAlias"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isTypeAlias"
+        }
+      ]
+    },
+    {
+      "definitionName": "isLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isLiteral"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "isUniqueSymbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isUniqueSymbol"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isUniqueSymbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "isStringKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isStringKeyword"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isStringKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "isNumberKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isNumberKeyword"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isNumberKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "isSymbolKeyword",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isSymbolKeyword"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isSymbolKeyword"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTemplateLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isTemplateLiteral"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isTemplateLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isTuple"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isTuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTypeLiteral",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isTypeLiteral"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isTypeLiteral"
+        }
+      ]
+    },
+    {
+      "definitionName": "isUnion",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isUnion"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isUnion"
+        }
+      ]
+    },
+    {
+      "definitionName": "isLazy",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isLazy"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isLazy"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTransform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "isTransform"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "isTransform"
+        }
+      ]
+    },
+    {
+      "definitionName": "annotations",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "annotations"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "annotations"
+        }
+      ]
+    },
+    {
+      "definitionName": "annotation",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST",
+          "name": "annotation"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "annotation"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendRestElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST.Tuple",
+          "name": "appendRestElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Tuple.Aspects",
+          "name": "appendRestElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/AST.Tuple",
+          "name": "appendElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Tuple.Aspects",
+          "name": "appendElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "literal",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST.LiteralValue",
+          "name": "literal"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.LiteralValue.Aspects",
+          "name": "literal"
+        }
+      ]
+    },
+    {
+      "definitionName": "keyof",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST",
+          "name": "keyof"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "keyof"
+        }
+      ]
+    },
+    {
+      "definitionName": "propertyKeys",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST",
+          "name": "propertyKeys"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "propertyKeys"
+        }
+      ]
+    },
+    {
+      "definitionName": "getPropertySignatures",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST",
+          "name": "getPropertySignatures"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "getPropertySignatures"
+        }
+      ]
+    },
+    {
+      "definitionName": "partial",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST",
+          "name": "partial"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "partial"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/annotation/AST": [
+    {
+      "definitionName": "Custom",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Custom"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Custom.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Message",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Message"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Message.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Identifier",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Identifier"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Identifier.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Title",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Title"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Title.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Description",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Description"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Description.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Examples",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Examples"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Examples.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "JSONSchema",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.JSONSchema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.JSONSchema.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Documentation",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/schema/annotation/AST.Documentation"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/schema/annotation/AST.Documentation.Ops"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/Option": [
+    {
+      "definitionName": "fromNullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/data/Option.Ops",
+          "name": "fromNullable"
+        }
+      ]
+    },
+    {
+      "definitionName": "option",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "option"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "option"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/Chunk": [
+    {
+      "definitionName": "fromValues",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/data/Chunk.Ops",
+          "name": "fromValues"
+        }
+      ]
+    },
+    {
+      "definitionName": "chunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "chunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "chunk"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/ReadonlyMap": [
+    {
+      "definitionName": "fromEntries",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/data/ReadonlyMap.Ops",
+          "name": "fromEntries"
+        }
+      ]
+    },
+    {
+      "definitionName": "readonlyMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "readonlyMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "readonlyMap"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/ReadonlySet": [
+    {
+      "definitionName": "fromValues",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/data/ReadonlySet.Ops",
+          "name": "fromValues"
+        }
+      ]
+    },
+    {
+      "definitionName": "readonlySet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "readonlySet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "readonlySet"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/formatter/Tree": [
+    {
+      "definitionName": "formatErrors",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/formatter/Tree.Ops",
+          "name": "formatErrors"
+        }
+      ]
+    },
+    {
+      "definitionName": "formatActual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/formatter/Tree.Ops",
+          "name": "formatActual"
+        }
+      ]
+    },
+    {
+      "definitionName": "formatExpected",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/AST",
+          "name": "formatExpected"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/AST.Aspects",
+          "name": "formatExpected"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/Json": [
+    {
+      "definitionName": "json",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "json"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/UUID": [
+    {
+      "definitionName": "UUID",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Ops",
+          "name": "UUID"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/filter": [
+    {
+      "definitionName": "finite",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "finite"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "finite"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "greaterThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "greaterThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "greaterThanOrEqualTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "greaterThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "instanceOf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "instanceOf"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "instanceOf"
+        }
+      ]
+    },
+    {
+      "definitionName": "int",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "int"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "int"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "lessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "lessThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "lessThanOrEqualTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "lessThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "maxLength",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "maxLength"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "maxLength"
+        }
+      ]
+    },
+    {
+      "definitionName": "minLength",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "minLength"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "minLength"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonNaN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "nonNaN"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "nonNaN"
+        }
+      ]
+    },
+    {
+      "definitionName": "pattern",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "pattern"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "pattern"
+        }
+      ]
+    },
+    {
+      "definitionName": "startsWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "startsWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "startsWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "endsWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "endsWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "endsWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "includes",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "includes"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "includes"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/schema/data/parser": [
+    {
+      "definitionName": "parseNumber",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/schema/Schema",
+          "name": "parseNumber"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/schema/Schema.Aspects",
+          "name": "parseNumber"
+        }
+      ]
+    }
+  ]
+}
