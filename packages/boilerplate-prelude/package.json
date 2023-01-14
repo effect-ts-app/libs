@@ -6,6 +6,7 @@
   "dependencies": {
     "@effect-ts-app/core": "workspace:*",
     "@effect-ts-app/schema": "workspace:*",
+    "@effect-ts-app/schema2": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
@@ -234,6 +235,16 @@
         "default": "./_cjs/_global.schema.cjs"
       }
     },
+    "./_global.schema2": {
+      "import": {
+        "types": "./dist/_global.schema2.d.ts",
+        "default": "./dist/_global.schema2.js"
+      },
+      "require": {
+        "types": "./dist/_global.schema2.d.ts",
+        "default": "./_cjs/_global.schema2.cjs"
+      }
+    },
     "./client": {
       "import": {
         "types": "./dist/client.d.ts",
@@ -382,6 +393,26 @@
       "require": {
         "types": "./dist/schema/shared.d.ts",
         "default": "./_cjs/schema/shared.cjs"
+      }
+    },
+    "./schema2": {
+      "import": {
+        "types": "./dist/schema2.d.ts",
+        "default": "./dist/schema2.js"
+      },
+      "require": {
+        "types": "./dist/schema2.d.ts",
+        "default": "./_cjs/schema2.cjs"
+      }
+    },
+    "./schema2/_schema": {
+      "import": {
+        "types": "./dist/schema2/_schema.d.ts",
+        "default": "./dist/schema2/_schema.js"
+      },
+      "require": {
+        "types": "./dist/schema2/_schema.d.ts",
+        "default": "./_cjs/schema2/_schema.cjs"
       }
     },
     "./service": {
