@@ -110,7 +110,7 @@ import {
   ROMap,
   ROSet,
   // Schedule,
-  Schema,
+  SchemaLegacy,
   // Semaphore,
   Utils
   // XPure,

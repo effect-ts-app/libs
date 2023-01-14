@@ -1,8 +1,3 @@
-import { getFaker } from "@effect-ts-app/boilerplate-prelude/faker"
-import type { Arbitrary } from "@fp-ts/schema/Arbitrary"
-import * as faker from "faker"
-import type * as FC from "fast-check"
-
 export { matchTag } from "@effect-ts/core/Utils"
 /**
  * A little helper to allow writing `interface X extends Identity<typeof Y>`
@@ -41,22 +36,6 @@ export type Identity<T> = T
 //     }
 //   }
 // }
-
-export const fakerToArb = (fakerGen: () => ReturnType<typeof faker.fake>) =>
-  (fc: typeof FC) => {
-    return fc
-      .integer()
-      .noBias() // same probability to generate each of the allowed integers
-      .noShrink() // shrink on a seed makes no sense
-      .map(seed => {
-        faker.seed(seed) // seed the generator
-        return fakerGen() // call it
-      })
-  }
-
-export const fakerArb = (
-  gen: (fake: typeof faker) => () => ReturnType<typeof faker.fake>
-): ((a: any) => Arbitrary<string>) => ({ arbitrary: fakerToArb(gen(getFaker())) })
 
 // /**
 //  * The Effect fails with `CustomSchemaException` when the parser produces an invalid result.

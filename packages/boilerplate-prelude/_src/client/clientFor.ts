@@ -51,8 +51,8 @@ function clientFor_<M extends Requests>(models: M) {
         (prev, cur) => {
           const h = models[cur]
 
-          const Request = Schema.extractRequest(h) as AnyRequest
-          const Response = Schema.extractResponse(h)
+          const Request = SchemaLegacy.extractRequest(h) as AnyRequest
+          const Response = SchemaLegacy.extractResponse(h)
 
           const b = Object.assign({}, h, { Request, Response })
 
@@ -63,11 +63,11 @@ function clientFor_<M extends Requests>(models: M) {
           }
 
           const parseResponse = flow(
-            Schema.Parser.for(Response)["|>"](condemnCustom),
+            SchemaLegacy.Parser.for(Response)["|>"](condemnCustom),
             _ => _.mapError(err => new ResponseError(err))
           )
 
-          const parseResponseE = flow(parseResponse, x => x.map(Schema.Encoder.for(Response)))
+          const parseResponseE = flow(parseResponse, x => x.map(SchemaLegacy.Encoder.for(Response)))
 
           const path = new Path(Request.path)
 
@@ -145,52 +145,52 @@ function clientFor_<M extends Requests>(models: M) {
   )
 }
 
-export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? ParsedShapeOfCustom<T["Model"]>
-  : T extends Schema.SchemaAny ? ParsedShapeOfCustom<T>
-  : T extends unknown ? Schema.Void
+export type ExtractResponse<T> = T extends { Model: SchemaLegacy.SchemaAny } ? ParsedShapeOfCustom<T["Model"]>
+  : T extends SchemaLegacy.SchemaAny ? ParsedShapeOfCustom<T>
+  : T extends unknown ? SchemaLegacy.Void
   : never
 
-export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? EncodedOf<T["Model"]>
-  : T extends Schema.SchemaAny ? EncodedOf<T>
-  : T extends unknown ? Schema.Void
+export type ExtractEResponse<T> = T extends { Model: SchemaLegacy.SchemaAny } ? EncodedOf<T["Model"]>
+  : T extends SchemaLegacy.SchemaAny ? EncodedOf<T>
+  : T extends unknown ? SchemaLegacy.Void
   : never
 
 type RequestHandlers<R, E, M extends Requests> = {
-  [K in keyof M & string as Uncapitalize<K>]: keyof Schema.GetRequest<
+  [K in keyof M & string as Uncapitalize<K>]: keyof SchemaLegacy.GetRequest<
     M[K]
-  >[Schema.schemaField]["Api"]["props"] extends never
+  >[SchemaLegacy.schemaField]["Api"]["props"] extends never
     ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
-      Request: Schema.GetRequest<M[K]>
+      Request: SchemaLegacy.GetRequest<M[K]>
       Reponse: ExtractResponse<GetResponse<M[K]>>
       mapPath: string
     }
     : 
       & ((
-        req: InstanceType<Schema.GetRequest<M[K]>>
+        req: InstanceType<SchemaLegacy.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
       & {
-        Request: Schema.GetRequest<M[K]>
+        Request: SchemaLegacy.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: InstanceType<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: InstanceType<SchemaLegacy.GetRequest<M[K]>>) => string
       }
 }
 
 type RequestHandlersE<R, E, M extends Requests> = {
-  [K in keyof M & string as `${Uncapitalize<K>}E`]: keyof Schema.GetRequest<
+  [K in keyof M & string as `${Uncapitalize<K>}E`]: keyof SchemaLegacy.GetRequest<
     M[K]
-  >[Schema.schemaField]["Api"]["props"] extends never
+  >[SchemaLegacy.schemaField]["Api"]["props"] extends never
     ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
-      Request: Schema.GetRequest<M[K]>
+      Request: SchemaLegacy.GetRequest<M[K]>
       Reponse: ExtractResponse<GetResponse<M[K]>>
       mapPath: string
     }
     : 
       & ((
-        req: InstanceType<Schema.GetRequest<M[K]>>
+        req: InstanceType<SchemaLegacy.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
       & {
-        Request: Schema.GetRequest<M[K]>
+        Request: SchemaLegacy.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: InstanceType<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: InstanceType<SchemaLegacy.GetRequest<M[K]>>) => string
       }
 }

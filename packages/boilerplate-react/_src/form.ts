@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Type the return values of the functions preferably with interfaces!
 
+import { SchemaLegacy } from "@effect-ts-app/boilerplate-prelude"
 import {
   getMetadataFromSchemaOrProp,
   getRegisterFromSchemaOrProp,
@@ -43,7 +44,7 @@ import { useIntl } from "react-intl"
 import { capitalize, isBetweenMidnightAndEndOfDay } from "./utils.js"
 
 export interface ControlMui<
-  Props extends Schema.PropertyRecord,
+  Props extends SchemaLegacy.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TContext extends object = object
 > extends Control<TFieldValues, TContext> {
@@ -51,7 +52,7 @@ export interface ControlMui<
 }
 
 export interface ControllerMuiProps<
-  Props extends Schema.PropertyRecord,
+  Props extends SchemaLegacy.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends Omit<UseControllerProps<TFieldValues, TName>, "control"> {
@@ -59,7 +60,7 @@ export interface ControllerMuiProps<
 }
 
 export function useControllerMui<
-  Props extends Schema.PropertyRecord,
+  Props extends SchemaLegacy.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(props: ControllerMuiProps<Props, TFieldValues, TName>) {
@@ -181,7 +182,7 @@ export interface MuiRenderProps<
 export interface MuiProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
+  Props extends SchemaLegacy.PropertyRecord = SchemaLegacy.PropertyRecord
 > extends Omit<ControllerProps<TFieldValues, TName>, "control" | "render"> {
   control: ControlMui<Props, TFieldValues>
   render: (_: MuiRenderProps<TFieldValues, TName>) => React.ReactElement
@@ -191,7 +192,7 @@ export interface MuiProps<
 export function ControllerMui<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
+  Props extends SchemaLegacy.PropertyRecord = SchemaLegacy.PropertyRecord
 >(props: MuiProps<TFieldValues, TName, Props>) {
   return props.render(useControllerMui(props))
 }
@@ -209,7 +210,7 @@ export interface FormMetadata {
 
 function getFormMetadata(
   intl: IntlShape,
-  p: Schema.AnyProperty | Schema.SchemaAny
+  p: SchemaLegacy.AnyProperty | SchemaLegacy.SchemaAny
 ): FormMetadata {
   const { maxLength, minLength, required } = getMetadataFromSchemaOrProp(p)
 
@@ -253,7 +254,7 @@ function getFormMetadata(
   }
 }
 
-export type SchemaProperties<Props extends PropertyRecord> = Schema.Schema<
+export type SchemaProperties<Props extends PropertyRecord> = SchemaLegacy.Schema<
   unknown,
   ShapeFromProperties<Props>,
   ConstructorFromProperties<Props>,
@@ -277,7 +278,7 @@ export function createUseParsedFormFromSchema<Props extends PropertyRecord>(
 export function createUseCustomParsedFormFromSchemaUnsafe<
   Props extends PropertyRecord,
   ParsedShape
->(input: SchemaProperties<Props>, target: Schema.Schema<unknown, ParsedShape, any, any, any>) {
+>(input: SchemaProperties<Props>, target: SchemaLegacy.Schema<unknown, ParsedShape, any, any, any>) {
   return createUseParsedFormUnsafe(input.Api.props)(Parser.for(target))
 }
 
@@ -412,7 +413,7 @@ function isNumber(a: string) {
 function getPropOrSchemaFromPath(
   current: any,
   name: string
-): Schema.AnyProperty | Schema.SchemaAny {
+): SchemaLegacy.AnyProperty | SchemaLegacy.SchemaAny {
   const path = name.split(".")
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const last = path[path.length - 1]!
@@ -436,7 +437,7 @@ function getPropOrSchemaFromPath(
 
 function useGetMeta<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
+  Props extends SchemaLegacy.PropertyRecord
 >(props: Props) {
   const intl = useIntl()
   const { getFieldMetadata, getMetadata, getRegisterMeta } = useMemo(() => {
@@ -456,7 +457,7 @@ function useGetMeta<
       const propOrSchema = getPropOrSchemaFromPath({ props }, name)
       const meta = getRegisterFromSchemaOrProp(propOrSchema)
       const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
-      const parse = Schema.Parser.for(schema)
+      const parse = SchemaLegacy.Parser.for(schema)
       const validate = (i: PathValue<TFieldValues, TFieldName>) =>
         parse(meta.transform.output(i))
           ["|>"](These.result)
@@ -510,7 +511,7 @@ function useGetMeta<
 
 function useRegister<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
+  Props extends SchemaLegacy.PropertyRecord
 >(register_: UseFormRegister<TFieldValues>, props: Props) {
   const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Props>(props)
   const register = useCallback(

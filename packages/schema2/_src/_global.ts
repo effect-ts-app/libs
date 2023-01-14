@@ -4,10 +4,24 @@ import "./_global.ext.js"
 /**
  * @tsplus global
  */
+import { Arbitrary } from "@fp-ts/schema/Arbitrary"
+
+/**
+ * @tsplus global
+ */
+import { AST } from "@fp-ts/schema/AST"
+
+/**
+ * @tsplus global
+ */
+import { Hook } from "@fp-ts/schema/annotation/Hook"
+
+/**
+ * @tsplus global
+ */
 import { Schema } from "@fp-ts/schema/Schema"
 
 /**
  * @tsplus global
  */
 import { Parser } from "@fp-ts/schema/Parser"
-

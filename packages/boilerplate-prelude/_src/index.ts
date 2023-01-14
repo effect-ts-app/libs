@@ -6,6 +6,6 @@ export * as Utils from "./utils.js"
 // for app land, it may make sense to create an app/prelude?
 export * from "@effect-ts-app/core/Prelude"
 
-export * as Schema from "@effect-ts-app/schema"
+export * as SchemaLegacy from "@effect-ts-app/schema"
 
 export { Map as ROMap, Set as ROSet } from "@effect-ts-app/core/Prelude"
