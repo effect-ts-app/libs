@@ -40,7 +40,7 @@
         "watch-packages": "pnpm packages build && pnpm packages watch",
         "build:tsc": "tsc --build ./tsconfig.all.json",
         "watch": "pnpm build:tsc --watch",
-        "build": "pnpm build:tsc",
+        "build": "pnpm build:tsc && cd packages/core && pnpm build",
         "rebuild": "pnpm -r clean && pnpm -r build",
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },
