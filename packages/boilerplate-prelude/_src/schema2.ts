@@ -27,3 +27,5 @@ export const fakerToArb = (fakerGen: () => ReturnType<typeof faker.fake>) =>
 export const fakerArb = (
   gen: (fake: typeof faker) => () => ReturnType<typeof faker.fake>
 ): ((a: any) => FC.Arbitrary<string>) => fakerToArb(gen(getFaker()))
+
+export * from "./schema2/strings.js"
