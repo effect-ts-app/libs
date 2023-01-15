@@ -33,7 +33,7 @@ const stringId: StringConstructorSchema<StringId> = makeConstructorFromSchema(
 )
 
 /**
- * A string that is at least 6 characters long and a maximum of 50.
+ * An identifier that is at least 6 characters long and a maximum of 50.
  */
 export const StringId: StringConstructorSchema<StringId> & Make<StringId> = Object.assign(
   stringId,
