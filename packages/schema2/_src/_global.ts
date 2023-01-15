@@ -25,3 +25,8 @@ import { Schema } from "@fp-ts/schema/Schema"
  * @tsplus global
  */
 import { Parser } from "@fp-ts/schema/Parser"
+
+/**
+ * @tsplus global
+ */
+import { Annotations } from "@effect-ts-app/schema2/Annotations"

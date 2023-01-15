@@ -77,6 +77,16 @@
         "default": "./_cjs/Aspects.cjs"
       }
     },
+    "./Annotations": {
+      "import": {
+        "types": "./dist/Annotations.d.ts",
+        "default": "./dist/Annotations.js"
+      },
+      "require": {
+        "types": "./dist/Annotations.d.ts",
+        "default": "./_cjs/Annotations.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",

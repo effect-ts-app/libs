@@ -16,3 +16,5 @@
 // } from "@effect-ts-app/boilerplate-prelude/schema2"
 
 // import "@effect-ts-app/boilerplate-prelude/schema2/_global"
+
+import "@effect-ts-app/schema2/_global.ext"

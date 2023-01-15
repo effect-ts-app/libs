@@ -27,10 +27,10 @@ export const NonEmptyString: StringConstructorSchema<NonEmptyString> = makeConst
     s
       .minLength(1)
       .title("NonEmptyString")
-      .filter((s): s is NonEmptyString => !!s)
       .annotations({
         [Annotations.CustomId]: { type: "NonEmptyString" }
       })
+      .branded<NonEmptyString>()
 )
 
 export type NonEmptyString = NST
@@ -39,10 +39,10 @@ export const ReasonableString: StringConstructorSchema<ReasonableString> = makeS
   NonEmptyString
     .maxLength(255)
     .title("ReasonableString")
-    .filter((s): s is ReasonableString => !!s)
     .annotations({
       [Annotations.CustomId]: { type: "ReasonableString" }
     })
+    .branded<ReasonableString>()
 )
 
 export type ReasonableString = RST
@@ -51,10 +51,10 @@ export const LongString: StringConstructorSchema<LongString> = makeStringConstru
   NonEmptyString
     .maxLength(2048)
     .title("LongString")
-    .filter((s): s is LongString => !!s)
     .annotations({
       [Annotations.CustomId]: { type: "LongString" }
     })
+    .branded<LongString>()
 )
 
 export type LongString = LST
