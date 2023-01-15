@@ -12,23 +12,23 @@ export interface Make<A> {
   make: () => A
 }
 
-const stringId: StringConstructorSchema<StringId> = makeConstructorFromSchema(
+const stringId = makeConstructorFromSchema(
   Schema.string,
   s =>
     s.minLength(6)
       .maxLength(50)
       .title("StringId")
-      .annotations({
+      .annotations2(s => ({
         [Annotations.CustomId]: { type: "StringId" },
         [Annotations.ArbitraryHookId]: Hook.hook(() =>
           Arbitrary.make(
-            stringId,
+            s,
             fc =>
               fc.uint8Array({ minLength: length, maxLength: length })
-                .map(_ => customRandom(urlAlphabet, size, size => _.subarray(0, size))() as StringId)
+                .map(_ => customRandom(urlAlphabet, size, size => _.subarray(0, size))())
           )
         )
-      })
+      }))
       .branded<StringId>()
 )
 
