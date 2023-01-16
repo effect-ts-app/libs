@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.0
+
+### Minor Changes
+
+- e7f40c5: Adapt for more lazy Config
+
 ## 2.3.9
 
 ### Patch Changes

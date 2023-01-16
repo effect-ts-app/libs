@@ -1,5 +1,12 @@
 # @effect-ts-app/schema
 
+## 2.3.10
+
+### Patch Changes
+
+- Updated dependencies [e7f40c5]
+  - @effect-ts-app/core@2.4.0
+
 ## 2.3.9
 
 ### Patch Changes

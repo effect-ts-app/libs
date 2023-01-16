@@ -1,5 +1,19 @@
 # @effect-ts-app/boilerplate-vue
 
+## 2.4.0
+
+### Minor Changes
+
+- e7f40c5: Adapt for more lazy Config
+
+### Patch Changes
+
+- Updated dependencies [e7f40c5]
+  - @effect-ts-app/boilerplate-prelude@2.4.0
+  - @effect-ts-app/boilerplate-vue@2.4.0
+  - @effect-ts-app/core@2.4.0
+  - @effect-ts-app/schema@2.3.10
+
 ## 2.3.16
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.0
+
+### Minor Changes
+
+- e7f40c5: Adapt for more lazy Config
+
+### Patch Changes
+
+- Updated dependencies [e7f40c5]
+  - @effect-ts-app/boilerplate-prelude@2.4.0
+  - @effect-ts-app/infra@2.4.0
+  - @effect-ts-app/core@2.4.0
+  - @effect-ts-app/schema@2.3.10
+
 ## 3.9.8
 
 ### Patch Changes
