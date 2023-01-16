@@ -30,6 +30,36 @@ yarn () {
 }
 ```
 
+## Git tricks
+
+### Aliases
+
+Aliases to easily update your main branch, e.g after PR was merged.
+It updates the branch in the background before switching to it, so that editor/tooling experience the least changes.
+
+- `upc`: update specified branch (defaults to `main`), and switch to it
+- `upd`: update specified branch (defaults to `main`)
+
+```
+[alias]
+	upc = "!git updonly \"${1:-main}\" && git checkout \"${1:-main}\" || git pull #"
+	upd = "!git updonly \"${1:-main}\" || git pull #"
+	updonly = "!git fetch `git gitremote \"$1\"` \"$1\":\"$1\" #"
+	gittrack = "!git for-each-ref --format='%(upstream:short)' $(git rev-parse --symbolic-full-name \"$1\") #"
+	gitremote = "!git gittrack \"$1\" | sed 's@/.*@@' #"
+```
+
+### Other recommendations
+
+```
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+[init]
+	defaultBranch = main
+```
+
 ## Znap - Oh My Posh and pnpm auto completion support
 
 Install oh-my-posh, install pnpm autocomple zsh, and use:
