@@ -6,11 +6,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Optic"
+          "typeName": "fp-ts/optic/Optic"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Optic.Ops"
+          "typeName": "fp-ts/optic/Optic.Ops"
         }
       ]
     },
@@ -20,11 +20,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyIso"
+          "typeName": "fp-ts/optic/PolyIso"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyIso.Ops"
+          "typeName": "fp-ts/optic/PolyIso.Ops"
         }
       ]
     },
@@ -34,11 +34,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Iso"
+          "typeName": "fp-ts/optic/Iso"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Iso.Ops"
+          "typeName": "fp-ts/optic/Iso.Ops"
         }
       ]
     },
@@ -48,11 +48,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyLens"
+          "typeName": "fp-ts/optic/PolyLens"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyLens.Ops"
+          "typeName": "fp-ts/optic/PolyLens.Ops"
         }
       ]
     },
@@ -62,11 +62,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Lens"
+          "typeName": "fp-ts/optic/Lens"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Lens.Ops"
+          "typeName": "fp-ts/optic/Lens.Ops"
         }
       ]
     },
@@ -76,11 +76,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyPrism"
+          "typeName": "fp-ts/optic/PolyPrism"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyPrism.Ops"
+          "typeName": "fp-ts/optic/PolyPrism.Ops"
         }
       ]
     },
@@ -90,11 +90,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Prism"
+          "typeName": "fp-ts/optic/Prism"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Prism.Ops"
+          "typeName": "fp-ts/optic/Prism.Ops"
         }
       ]
     },
@@ -104,11 +104,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyReversedPrism"
+          "typeName": "fp-ts/optic/PolyReversedPrism"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyReversedPrism.Ops"
+          "typeName": "fp-ts/optic/PolyReversedPrism.Ops"
         }
       ]
     },
@@ -118,11 +118,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.ReversedPrism"
+          "typeName": "fp-ts/optic/ReversedPrism"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.ReversedPrism.Ops"
+          "typeName": "fp-ts/optic/ReversedPrism.Ops"
         }
       ]
     },
@@ -132,11 +132,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyOptional"
+          "typeName": "fp-ts/optic/PolyOptional"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyOptional.Ops"
+          "typeName": "fp-ts/optic/PolyOptional.Ops"
         }
       ]
     },
@@ -146,11 +146,25 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Optional"
+          "typeName": "fp-ts/optic/Optional"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Optional.Ops"
+          "typeName": "fp-ts/optic/Optional.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "IndexSignature",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/optic/IndexSignature"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/optic/IndexSignature.Ops"
         }
       ]
     },
@@ -160,11 +174,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolySetter"
+          "typeName": "fp-ts/optic/PolySetter"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolySetter.Ops"
+          "typeName": "fp-ts/optic/PolySetter.Ops"
         }
       ]
     },
@@ -174,11 +188,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Setter"
+          "typeName": "fp-ts/optic/Setter"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Setter.Ops"
+          "typeName": "fp-ts/optic/Setter.Ops"
         }
       ]
     },
@@ -188,11 +202,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Getter"
+          "typeName": "fp-ts/optic/Getter"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Getter.Ops"
+          "typeName": "fp-ts/optic/Getter.Ops"
         }
       ]
     },
@@ -202,11 +216,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.PolyTraversal"
+          "typeName": "fp-ts/optic/PolyTraversal"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.PolyTraversal.Ops"
+          "typeName": "fp-ts/optic/PolyTraversal.Ops"
         }
       ]
     },
@@ -216,11 +230,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Traversal"
+          "typeName": "fp-ts/optic/Traversal"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Traversal.Ops"
+          "typeName": "fp-ts/optic/Traversal.Ops"
         }
       ]
     },
@@ -230,11 +244,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/optic.Fold"
+          "typeName": "fp-ts/optic/Fold"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/optic.Fold.Ops"
+          "typeName": "fp-ts/optic/Fold.Ops"
         }
       ]
     },
@@ -244,7 +258,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Iso.Ops",
+          "typeName": "fp-ts/optic/Iso.Ops",
           "name": "iso"
         }
       ]
@@ -255,7 +269,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Iso.Ops",
+          "typeName": "fp-ts/optic/Iso.Ops",
           "name": "id"
         }
       ]
@@ -266,7 +280,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Lens.Ops",
+          "typeName": "fp-ts/optic/Lens.Ops",
           "name": "lens"
         }
       ]
@@ -277,8 +291,30 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Lens.Ops",
+          "typeName": "fp-ts/optic/Lens.Ops",
           "name": "at"
+        }
+      ]
+    },
+    {
+      "definitionName": "pick",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/optic/Lens.Ops",
+          "name": "pick"
+        }
+      ]
+    },
+    {
+      "definitionName": "omit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/optic/Lens.Ops",
+          "name": "omit"
         }
       ]
     },
@@ -288,7 +324,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyPrism.Ops",
+          "typeName": "fp-ts/optic/PolyPrism.Ops",
           "name": "polyPrism"
         }
       ]
@@ -299,7 +335,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "prism"
         }
       ]
@@ -310,7 +346,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "cons"
         }
       ]
@@ -321,7 +357,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "filter"
         }
       ]
@@ -332,7 +368,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "nonNullable"
         }
       ]
@@ -343,7 +379,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "some"
         }
       ]
@@ -354,7 +390,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyReversedPrism.Ops",
+          "typeName": "fp-ts/optic/PolyReversedPrism.Ops",
           "name": "polyReversedPrism"
         }
       ]
@@ -365,7 +401,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.ReversedPrism.Ops",
+          "typeName": "fp-ts/optic/ReversedPrism.Ops",
           "name": "reversedPrism"
         }
       ]
@@ -376,7 +412,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.ReversedPrism.Ops",
+          "typeName": "fp-ts/optic/ReversedPrism.Ops",
           "name": "reversedFilter"
         }
       ]
@@ -387,7 +423,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyOptional.Ops",
+          "typeName": "fp-ts/optic/PolyOptional.Ops",
           "name": "polyOptional"
         }
       ]
@@ -398,7 +434,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "optional"
         }
       ]
@@ -409,8 +445,30 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "index"
+        }
+      ]
+    },
+    {
+      "definitionName": "indexes",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/optic/Traversal.Ops",
+          "name": "indexes"
+        }
+      ]
+    },
+    {
+      "definitionName": "key",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/optic/Optional.Ops",
+          "name": "key"
         }
       ]
     },
@@ -420,7 +478,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "head"
         }
       ]
@@ -431,7 +489,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "tail"
         }
       ]
@@ -442,7 +500,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "findFirst"
         }
       ]
@@ -453,7 +511,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyTraversal.Ops",
+          "typeName": "fp-ts/optic/PolyTraversal.Ops",
           "name": "polyTraversal"
         }
       ]
@@ -464,7 +522,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Traversal.Ops",
+          "typeName": "fp-ts/optic/Traversal.Ops",
           "name": "traversal"
         }
       ]
@@ -475,12 +533,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyReversedPrism",
+          "typeName": "fp-ts/optic/PolyReversedPrism",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyReversedPrism.Aspects",
+          "typeName": "fp-ts/optic/PolyReversedPrism.Aspects",
           "name": "get"
         }
       ]
@@ -491,12 +549,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.Getter",
+          "typeName": "fp-ts/optic/Getter",
           "name": "getOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Getter.Aspects",
+          "typeName": "fp-ts/optic/Getter.Aspects",
           "name": "getOption"
         }
       ]
@@ -507,12 +565,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyOptional",
+          "typeName": "fp-ts/optic/PolyOptional",
           "name": "getOrModify"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyOptional.Aspects",
+          "typeName": "fp-ts/optic/PolyOptional.Aspects",
           "name": "getOrModify"
         }
       ]
@@ -523,12 +581,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyPrism",
+          "typeName": "fp-ts/optic/PolyPrism",
           "name": "decode"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyPrism.Aspects",
+          "typeName": "fp-ts/optic/PolyPrism.Aspects",
           "name": "decode"
         }
       ]
@@ -539,12 +597,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyPrism",
+          "typeName": "fp-ts/optic/PolyPrism",
           "name": "encode"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyPrism.Aspects",
+          "typeName": "fp-ts/optic/PolyPrism.Aspects",
           "name": "encode"
         }
       ]
@@ -555,12 +613,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolySetter",
+          "typeName": "fp-ts/optic/PolySetter",
           "name": "replace"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolySetter.Aspects",
+          "typeName": "fp-ts/optic/PolySetter.Aspects",
           "name": "replace"
         }
       ]
@@ -571,12 +629,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolySetter",
+          "typeName": "fp-ts/optic/PolySetter",
           "name": "replaceOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolySetter.Aspects",
+          "typeName": "fp-ts/optic/PolySetter.Aspects",
           "name": "replaceOption"
         }
       ]
@@ -587,12 +645,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyOptional",
+          "typeName": "fp-ts/optic/PolyOptional",
           "name": "modify"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyOptional.Aspects",
+          "typeName": "fp-ts/optic/PolyOptional.Aspects",
           "name": "modify"
         }
       ]
@@ -720,19 +778,8 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Lens.Ops",
+          "typeName": "fp-ts/optic/Lens.Ops",
           "name": "zoom"
-        }
-      ]
-    },
-    {
-      "definitionName": "pick",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/optic.Lens.Ops",
-          "name": "pick"
         }
       ]
     },
@@ -742,7 +789,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Lens.Ops",
+          "typeName": "fp-ts/optic/Lens.Ops",
           "name": "path"
         }
       ]
@@ -764,12 +811,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.PolyOptional",
+          "typeName": "fp-ts/optic/PolyOptional",
           "name": "modifyApplicative"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.PolyOptional.Aspects",
+          "typeName": "fp-ts/optic/PolyOptional.Aspects",
           "name": "modifyApplicative"
         }
       ]
@@ -782,7 +829,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "index"
         }
       ]
@@ -793,7 +840,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "cons"
         }
       ]
@@ -804,7 +851,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "head"
         }
       ]
@@ -815,7 +862,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "tail"
         }
       ]
@@ -828,7 +875,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "right"
         }
       ]
@@ -839,7 +886,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "left"
         }
       ]
@@ -876,7 +923,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Prism.Ops",
+          "typeName": "fp-ts/optic/Prism.Ops",
           "name": "none"
         }
       ]
@@ -889,7 +936,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Iso.Ops",
+          "typeName": "fp-ts/optic/Iso.Ops",
           "name": "consNonEmpty"
         }
       ]
@@ -926,7 +973,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Ops",
+          "typeName": "fp-ts/optic/Optional.Ops",
           "name": "index"
         }
       ]
@@ -939,12 +986,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/optic.Optional",
+          "typeName": "fp-ts/optic/Optional",
           "name": "toggle"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/optic.Optional.Aspects",
+          "typeName": "fp-ts/optic/Optional.Aspects",
           "name": "toggle"
         }
       ]
