@@ -45,7 +45,7 @@ export const Client = (fetchApi: typeof fetch) =>
           "Content-Type": getContentType(requestType),
           ...headers
         },
-        body: body ? getBody(body, requestType) : undefined,
+        body: body ? getBody(body, requestType) : null,
         method: H.getMethodAsString(method)
       }
 

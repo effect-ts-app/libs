@@ -6,8 +6,14 @@ import { initRuntime } from "./internal.js"
 
 export { initRuntime } from "./internal.js"
 
-export function makeApiLayers(apiUrl = "/api") {
-  return HF.Client(fetch) + ApiConfig.Live({ apiUrl })
+const DefaultApiConfig = Config.struct({
+  apiUrl: Config.string("apiUrl").withDefault("/api"),
+  headers: Config.string()
+    .table("headers").optional
+})
+
+export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
+  return HF.Client(fetch) + ApiConfig.Live(config)
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {

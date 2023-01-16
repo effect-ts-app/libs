@@ -3,40 +3,51 @@ import * as CosmosClient from "@effect-ts-app/infra/cosmos-client"
 import * as RedisClient from "@effect-ts-app/infra/redis-client"
 import { createClient } from "redis"
 
-import { CosmosStoreLive } from "./Cosmos.js"
-import { DiskStoreLive } from "./Disk.js"
-import { MemoryStoreLive } from "./Memory.js"
-import { RedisStoreLive } from "./Redis.js"
+import { makeCosmosStore } from "./Cosmos.js"
+import { makeDiskStore } from "./Disk.js"
+import { makeMemoryStore } from "./Memory.js"
+import { makeRedisStore } from "./Redis.js"
 import type { StorageConfig } from "./service.js"
+import { StoreMaker } from "./service.js"
 
 /**
  * @tsplus static StoreMaker.Ops Live
  */
-export function StoreMakerLive(config: StorageConfig) {
-  const storageUrl = config.url.value
-  if (storageUrl.startsWith("mem://")) {
-    console.log("Using in memory store")
-    return MemoryStoreLive
-  }
-  if (storageUrl.startsWith("disk://")) {
-    console.log("Using disk store at ./.data")
-    return DiskStoreLive(config)
-  }
-  if (storageUrl.startsWith("redis://")) {
-    console.log("Using Redis store")
+export function StoreMakerLive(config: Config<StorageConfig>) {
+  return StoreMaker.scoped(
+    config.config.flatMap(cfg => {
+      const storageUrl = cfg.url.value
+      if (storageUrl.startsWith("mem://")) {
+        console.log("Using in memory store")
+        return Effect.succeed(makeMemoryStore())
+      }
+      if (storageUrl.startsWith("disk://")) {
+        console.log("Using disk store at ./.data")
+        return makeDiskStore(cfg)
+      }
+      if (storageUrl.startsWith("redis://")) {
+        console.log("Using Redis store")
+        return RedisClient.makeRedisClient(makeRedis(storageUrl)).flatMap(client =>
+          makeRedisStore(cfg).provideService(
+            RedisClient.RedisClient,
+            client
+          )
+        )
+      }
 
-    return makeRedis(storageUrl, config)
-  }
-
-  console.log("Using Cosmos DB store")
-  return makeCosmos(storageUrl, config)
+      console.log("Using Cosmos DB store")
+      return CosmosClient.makeCosmosClient(storageUrl, cfg.dbName).flatMap(client =>
+        makeCosmosStore(cfg).provideService(CosmosClient.CosmosClient, client)
+      )
+    })
+  )
 }
 
-function makeRedis(storageUrl: string, config: StorageConfig) {
+function makeRedis(storageUrl: string) {
   const url = new URL(storageUrl)
   const hostname = url.hostname
   const password = url.password
-  return RedisClient.RedisClientLive(() =>
+  return () =>
     createClient(
       storageUrl === "redis://"
         ? ({
@@ -47,14 +58,6 @@ function makeRedis(storageUrl: string, config: StorageConfig) {
         } as any)
         : (storageUrl as any)
     )
-  ).provideTo(RedisStoreLive(config))
-}
-
-function makeCosmos(storageUrl: string, config: StorageConfig) {
-  return CosmosClient.CosmosClientLive(
-    storageUrl,
-    config.dbName
-  ).provideTo(CosmosStoreLive(config))
 }
 
 export * from "./service.js"

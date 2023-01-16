@@ -3,7 +3,7 @@ import Redlock from "redlock"
 
 import { ConnectionException } from "./simpledb/shared.js"
 
-const makeRedisClient = (makeClient: () => Client) =>
+export const makeRedisClient = (makeClient: () => Client) =>
   Effect.sync(() => {
     const client = createClient(makeClient)
     const lock = new Redlock([client])

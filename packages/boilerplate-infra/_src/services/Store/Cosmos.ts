@@ -21,7 +21,7 @@ import type {
 import { StoreMaker } from "./service.js"
 
 // TODO: Retry operation when running into RU limit.
-function makeCosmosStore({ prefix }: StorageConfig) {
+export function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient.CosmosClient.get)
     return {
@@ -540,6 +540,6 @@ export function buildCosmosQuery<PM>(
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
 }
-export function CosmosStoreLive(config: StorageConfig) {
-  return makeCosmosStore(config).toLayer(StoreMaker)
+export function CosmosStoreLive(config: Config<StorageConfig>) {
+  return config.config.flatMap(makeCosmosStore).toLayer(StoreMaker)
 }

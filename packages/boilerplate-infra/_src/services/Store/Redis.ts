@@ -7,7 +7,7 @@ import type { Filter, FilterJoinSelect, PersistenceModelType, StorageConfig, Sto
 import { StoreMaker } from "./service.js"
 import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
-function makeRedisStore({ prefix }: StorageConfig) {
+export function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const redis = yield* $(RedisClient.RedisClient.get)
     return {
@@ -87,6 +87,6 @@ function makeRedisStore({ prefix }: StorageConfig) {
     }
   })
 }
-export function RedisStoreLive(config: StorageConfig) {
-  return makeRedisStore(config).toLayer(StoreMaker)
+export function RedisStoreLive(config: Config<StorageConfig>) {
+  return config.config.flatMap(makeRedisStore).toLayer(StoreMaker)
 }

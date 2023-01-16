@@ -18,8 +18,8 @@ export function fetchApi(method: H.Method, path: string, body?: unknown) {
   const request = H.request(method, "JSON", "JSON")
   return getConfig(({ apiUrl, headers }) =>
     H.withHeaders({
-      "request-id": (headers ? headers["request-id"] : null) ?? StringId.make(),
-      ...headers
+      "request-id": headers.flatMap(_ => _.get("request-id")).value ?? StringId.make(),
+      ...headers.map(_ => Object.fromEntries(_)).value
     })(request(`${apiUrl}${path}`, body))
       .map(x => ({ ...x, body: x.body.value ?? null }))
   )
