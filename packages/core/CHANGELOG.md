@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.4
+
+### Patch Changes
+
+- b9c2a0b7: Update annotations
+
 ## 2.4.3
 
 ### Patch Changes
