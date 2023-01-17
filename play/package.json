@@ -15,7 +15,7 @@
   "devDependencies": {
     "@effect-ts-app/compiler": "workspace:*",
     "ts-node": "^10.9.1",
-    "vitest": "^0.27.1"
+    "vitest": "^0.27.2"
   },
   "typesVersions": {
     "*": {
