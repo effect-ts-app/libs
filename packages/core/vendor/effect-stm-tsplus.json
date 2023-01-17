@@ -3028,11 +3028,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/TQueue.TEnqueue"
+          "typeName": "effect/stm/TQueue/TEnqueue"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/TQueue.TEnqueue.Ops"
+          "typeName": "effect/stm/TQueue/TEnqueue.Ops"
         }
       ]
     },
@@ -3042,11 +3042,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/TQueue.TDequeue"
+          "typeName": "effect/stm/TQueue/TDequeue"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/TQueue.TDequeue.Ops"
+          "typeName": "effect/stm/TQueue/TDequeue.Ops"
         }
       ]
     },
@@ -3056,11 +3056,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/TQueue.BaseTQueue"
+          "typeName": "effect/stm/TQueue/BaseTQueue"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/TQueue.BaseTQueue.Ops"
+          "typeName": "effect/stm/TQueue/BaseTQueue.Ops"
         }
       ]
     },
@@ -3070,11 +3070,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/TQueue.TDequeueTypeId"
+          "typeName": "effect/stm/TQueue/TDequeueTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/TQueue.TDequeueTypeId.Ops"
+          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops"
         }
       ]
     },
@@ -3084,11 +3084,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/TQueue.TEnqueueTypeId"
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/TQueue.TEnqueueTypeId.Ops"
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops"
         }
       ]
     },
@@ -3175,7 +3175,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeueTypeId.Ops",
+          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops",
           "name": "TDequeueTypeId"
         }
       ]
@@ -3186,7 +3186,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TEnqueueTypeId.Ops",
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops",
           "name": "TEnqueueTypeId"
         }
       ]
@@ -3197,12 +3197,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TEnqueue",
+          "typeName": "effect/stm/TQueue/TEnqueue",
           "name": "offer"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TEnqueue.Aspects",
+          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
           "name": "offer"
         }
       ]
@@ -3213,12 +3213,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TEnqueue",
+          "typeName": "effect/stm/TQueue/TEnqueue",
           "name": "offerAll"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TEnqueue.Aspects",
+          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
           "name": "offerAll"
         }
       ]
@@ -3229,12 +3229,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "seek"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "seek"
         }
       ]
@@ -3245,12 +3245,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "takeBetween"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "takeBetween"
         }
       ]
@@ -3261,12 +3261,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "takeN"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "takeN"
         }
       ]
@@ -3277,12 +3277,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "takeUpTo"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "takeUpTo"
         }
       ]
@@ -3373,12 +3373,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "peek"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "peek"
         }
       ]
@@ -3389,12 +3389,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "peekOption"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "peekOption"
         }
       ]
@@ -3405,12 +3405,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "poll"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "poll"
         }
       ]
@@ -3453,12 +3453,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "take"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "take"
         }
       ]
@@ -3469,12 +3469,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/TQueue.TDequeue",
+          "typeName": "effect/stm/TQueue/TDequeue",
           "name": "takeAll"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/TQueue.TDequeue.Aspects",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
           "name": "takeAll"
         }
       ]

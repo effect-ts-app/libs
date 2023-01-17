@@ -9,7 +9,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {
-      return c.findFirstMap(codeFilter(filter)).map(NonEmptyChunk.make).getOrElse(() => Chunk.empty())
+      return c.findFirstMap(codeFilter(filter)).map(Chunk.make).getOrElse(() => Chunk.empty())
     }
     let r = c.filterMap(codeFilter(filter))
     if (skip) {
@@ -36,7 +36,7 @@ export const makeMemoryStore = () => ({
           ROMap.make([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
         )
       )
-      const sem = Semaphore.unsafeMakeSemaphore(1)
+      const sem = Semaphore.unsafeMake(1)
       const withPermit = sem.withPermits(1)
       const values = store.get.map(s => s.values())
       const all = values.map(Chunk.fromIterable)

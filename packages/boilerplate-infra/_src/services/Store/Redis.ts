@@ -38,7 +38,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
 
           const set = (i: ROMap<Id, PM>) => RedisClient.set(key, JSON.stringify({ data: [...i.values()] })).orDie
 
-          const sem = Semaphore.unsafeMakeSemaphore(1)
+          const sem = Semaphore.unsafeMake(1)
           const withPermit = sem.withPermits(1)
 
           const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))

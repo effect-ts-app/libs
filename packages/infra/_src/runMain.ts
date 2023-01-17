@@ -51,7 +51,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
       function handler() {
         process.removeListener("SIGTERM", handler)
         process.removeListener("SIGINT", handler)
-        context.interruptWith(context.id()).unsafeRun()
+        context.interruptWithFork(context.id()).unsafeRun()
       }
       process.once("SIGTERM", handler)
       process.once("SIGINT", handler)

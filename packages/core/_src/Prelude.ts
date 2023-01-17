@@ -152,7 +152,7 @@ export type Chunk<A> = CNK.Chunk<A>
 //   // @ts-expect-error
 //   export * from "@effect-ts-app/core/NonEmptyArray"
 // }
-// /** @tsplus type fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray */
+// /** @tsplus type fp-ts/data/ReadonlyArray/NonEmptyReadonlyArray */
 // export type NonEmptyReadonlyArray<A> = NA.NonEmptyReadonlyArray<A>
 
 export namespace NonEmptySet {

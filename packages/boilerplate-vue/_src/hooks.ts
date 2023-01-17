@@ -96,7 +96,7 @@ export function useSafeQuery_<E, A>(
   // const [result, latestSuccess, execute] = make(self)
 
   // TODO: support with interruption
-  // const sem = Semaphore.unsafeMakeSemaphore(1)
+  // const sem = Semaphore.unsafeMake(1)
   // const lock = sem.withPermits(1)
   // let fib: Fiber.FiberContext<E, FetchResponse<A>> | undefined = undefined
   // const execute = self
@@ -147,7 +147,7 @@ export function useSafeQuery_<E, A>(
 export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, FetchResponse<A>>) {
   const [result, latestSuccess, execute] = make(self)
 
-  const sem = Semaphore.unsafeMakeSemaphore(1)
+  const sem = Semaphore.unsafeMake(1)
   const withPermit = sem.withPermits(1)
   let fib: Fiber.Runtime<unknown, unknown> | undefined = undefined
   const runNew = execute.fork

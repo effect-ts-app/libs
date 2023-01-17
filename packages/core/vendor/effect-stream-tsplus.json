@@ -6,11 +6,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Continue"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Continue"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Continue.Ops"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Continue.Ops"
         }
       ]
     },
@@ -20,11 +20,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Close"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Close"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Close.Ops"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Close.Ops"
         }
       ]
     },
@@ -34,11 +34,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Yield"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Yield"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Yield.Ops"
+          "typeName": "effect/stream/Channel/ChildExecutorDecision/Yield.Ops"
         }
       ]
     },
@@ -298,11 +298,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/MergeStrategy.BackPressure"
+          "typeName": "effect/stream/Channel/MergeStrategy/BackPressure"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/MergeStrategy.BackPressure.Ops"
+          "typeName": "effect/stream/Channel/MergeStrategy/BackPressure.Ops"
         }
       ]
     },
@@ -312,11 +312,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/MergeStrategy.BufferSliding"
+          "typeName": "effect/stream/Channel/MergeStrategy/BufferSliding"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/MergeStrategy.BufferSliding.Ops"
+          "typeName": "effect/stream/Channel/MergeStrategy/BufferSliding.Ops"
         }
       ]
     },
@@ -462,11 +462,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/SingleProducerAsyncInput.AsyncInputProducer"
+          "typeName": "effect/stream/Channel/SingleProducerAsyncInput/AsyncInputProducer"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/SingleProducerAsyncInput.AsyncInputProducer.Ops"
+          "typeName": "effect/stream/Channel/SingleProducerAsyncInput/AsyncInputProducer.Ops"
         }
       ]
     },
@@ -476,11 +476,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/SingleProducerAsyncInput.AsyncInputConsumer"
+          "typeName": "effect/stream/Channel/SingleProducerAsyncInput/AsyncInputConsumer"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/SingleProducerAsyncInput.AsyncInputConsumer.Ops"
+          "typeName": "effect/stream/Channel/SingleProducerAsyncInput/AsyncInputConsumer.Ops"
         }
       ]
     },
@@ -503,11 +503,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.Pulled"
+          "typeName": "effect/stream/Channel/UpstreamPullRequest/Pulled"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.Pulled.Ops"
+          "typeName": "effect/stream/Channel/UpstreamPullRequest/Pulled.Ops"
         }
       ]
     },
@@ -517,11 +517,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.NoUpstream"
+          "typeName": "effect/stream/Channel/UpstreamPullRequest/NoUpstream"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.NoUpstream.Ops"
+          "typeName": "effect/stream/Channel/UpstreamPullRequest/NoUpstream.Ops"
         }
       ]
     },
@@ -653,11 +653,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.PullAfterNext"
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy/PullAfterNext"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.PullAfterNext.Ops"
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy/PullAfterNext.Ops"
         }
       ]
     },
@@ -667,11 +667,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.PullAfterAllEnqueued"
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy/PullAfterAllEnqueued"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.PullAfterAllEnqueued.Ops"
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy/PullAfterAllEnqueued.Ops"
         }
       ]
     },
@@ -803,11 +803,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/MergeState.BothRunning"
+          "typeName": "effect/stream/Channel/MergeState/BothRunning"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/MergeState.BothRunning.Ops"
+          "typeName": "effect/stream/Channel/MergeState/BothRunning.Ops"
         }
       ]
     },
@@ -817,11 +817,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/MergeState.LeftDone"
+          "typeName": "effect/stream/Channel/MergeState/LeftDone"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/MergeState.LeftDone.Ops"
+          "typeName": "effect/stream/Channel/MergeState/LeftDone.Ops"
         }
       ]
     },
@@ -831,11 +831,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Channel/MergeState.RightDone"
+          "typeName": "effect/stream/Channel/MergeState/RightDone"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Channel/MergeState.RightDone.Ops"
+          "typeName": "effect/stream/Channel/MergeState/RightDone.Ops"
         }
       ]
     },
@@ -2754,11 +2754,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Stream/HaltStrategy.Left"
+          "typeName": "effect/stream/Stream/HaltStrategy/Left"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Stream/HaltStrategy.Left.Ops"
+          "typeName": "effect/stream/Stream/HaltStrategy/Left.Ops"
         }
       ]
     },
@@ -2768,11 +2768,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Stream/HaltStrategy.Right"
+          "typeName": "effect/stream/Stream/HaltStrategy/Right"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Stream/HaltStrategy.Right.Ops"
+          "typeName": "effect/stream/Stream/HaltStrategy/Right.Ops"
         }
       ]
     },
@@ -2782,11 +2782,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Stream/HaltStrategy.Both"
+          "typeName": "effect/stream/Stream/HaltStrategy/Both"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Stream/HaltStrategy.Both.Ops"
+          "typeName": "effect/stream/Stream/HaltStrategy/Both.Ops"
         }
       ]
     },
@@ -2796,11 +2796,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stream/Stream/HaltStrategy.Either"
+          "typeName": "effect/stream/Stream/HaltStrategy/Either"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stream/Stream/HaltStrategy.Either.Ops"
+          "typeName": "effect/stream/Stream/HaltStrategy/Either.Ops"
         }
       ]
     },

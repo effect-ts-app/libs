@@ -2,11 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Option } from "@fp-ts/data/Option"
+import { getOrUndefined as value, Option } from "@fp-ts/data/Option"
 
 export * from "@fp-ts/data/Option"
 
 export { Option as Opt } from "@fp-ts/data/Option"
+
+/**
+ * @tsplus getter fp-ts/data/Option value
+ */
+export const getOrUndefined = value
 
 /**
  * @tsplus static fp-ts/data/Option.Ops omitableToNullable

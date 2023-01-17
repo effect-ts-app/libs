@@ -20,7 +20,7 @@ export function makeService<T extends ServiceTagged<any>>(_: Omit<T, ServiceTag>
 }
 
 /**
- * @tsplus fluent fp-ts/data/Context.Tag make
+ * @tsplus fluent fp-ts/data/Context/Tag make
  */
 export function make<T extends ServiceTagged<any>>(_: Tag<T>, t: Omit<T, ServiceTag>) {
   return t as T

@@ -473,25 +473,25 @@ export function toTreeWith<E>(
       case "Refinement": {
         return tree(
           `1 error(s) found while processing a refinement`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       }
       case "RequiredKey": {
         return tree(
           `1 error(s) found while processing required key ${JSON.stringify(de.key)}`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       }
       case "OptionalKey": {
         return tree(
           `1 error(s) found while processing optional key ${JSON.stringify(de.key)}`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       }
       case "OptionalIndex":
         return tree(
           `1 error(s) found while processing optional index ${de.index}`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       case "Collection":
         return tree(
@@ -513,7 +513,7 @@ export function toTreeWith<E>(
       case "Named": {
         return tree(
           `1 error(s) found while processing ${de.name}`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       }
       case "Missing": {
@@ -525,7 +525,7 @@ export function toTreeWith<E>(
       case "Member":
         return tree(
           `1 error(s) found while processing member ${JSON.stringify(de.member)}`,
-          NonEmptyChunk.make(go(de.error))
+          Chunk.make(go(de.error))
         )
       case "Intersection":
         return tree(

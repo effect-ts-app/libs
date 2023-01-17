@@ -6,11 +6,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random.PCGRandom"
+          "typeName": "fp-ts/data/Random/PCGRandom"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random.PCGRandom.Ops"
+          "typeName": "fp-ts/data/Random/PCGRandom.Ops"
         }
       ]
     },
@@ -20,11 +20,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random.PCGRandomState"
+          "typeName": "fp-ts/data/Random/PCGRandomState"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random.PCGRandomState.Ops"
+          "typeName": "fp-ts/data/Random/PCGRandomState.Ops"
         }
       ]
     },
@@ -34,11 +34,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random.OptionalNumber"
+          "typeName": "fp-ts/data/Random/OptionalNumber"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random.OptionalNumber.Ops"
+          "typeName": "fp-ts/data/Random/OptionalNumber.Ops"
         }
       ]
     },
@@ -75,11 +75,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/typeclass/Gen.SingleShotGen"
+          "typeName": "fp-ts/data/typeclass/Gen/SingleShotGen"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/typeclass/Gen.SingleShotGen.Ops"
+          "typeName": "fp-ts/data/typeclass/Gen/SingleShotGen.Ops"
         }
       ]
     },
@@ -103,11 +103,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/typeclass/Gen.Variance"
+          "typeName": "fp-ts/data/typeclass/Gen/Variance"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/typeclass/Gen.Variance.Ops"
+          "typeName": "fp-ts/data/typeclass/Gen/Variance.Ops"
         }
       ]
     },
@@ -131,11 +131,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/typeclass/Gen.Adapter"
+          "typeName": "fp-ts/data/typeclass/Gen/Adapter"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/typeclass/Gen.Adapter.Ops"
+          "typeName": "fp-ts/data/typeclass/Gen/Adapter.Ops"
         }
       ]
     },
@@ -170,7 +170,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/typeclass/Gen.Adapter.Ops",
+          "typeName": "fp-ts/data/typeclass/Gen.Ops",
           "name": "adapter"
         }
       ]
@@ -219,11 +219,15 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Function.LazyArg"
+          "typeName": "fp-ts/data/Function/LazyArg"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops"
+          "typeName": "fp-ts/data/Function/LazyArg.Ops"
+        },
+        {
+          "typeName": "tsplus/LazyArgument",
+          "kind": "type"
         }
       ]
     },
@@ -313,7 +317,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function.Ops",
           "name": "constant"
         }
       ]
@@ -412,7 +416,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function/LazyArg.Ops",
           "name": "constTrue"
         }
       ]
@@ -423,7 +427,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function/LazyArg.Ops",
           "name": "constFalse"
         }
       ]
@@ -434,7 +438,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function/LazyArg.Ops",
           "name": "constNull"
         }
       ]
@@ -445,7 +449,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function/LazyArg.Ops",
           "name": "constUndefined"
         }
       ]
@@ -456,7 +460,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Ops",
+          "typeName": "fp-ts/data/Function/LazyArg.Ops",
           "name": "constVoid"
         }
       ]
@@ -596,7 +600,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal.symbolHash.Ops",
+          "typeName": "fp-ts/data/Equal/symbolHash.Ops",
           "name": "symbolHash"
         }
       ]
@@ -607,7 +611,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal.symbolEqual.Ops",
+          "typeName": "fp-ts/data/Equal/symbolEqual.Ops",
           "name": "symbolEqual"
         }
       ]
@@ -742,11 +746,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Option.None"
+          "typeName": "fp-ts/data/Option/None"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Option.None.Ops"
+          "typeName": "fp-ts/data/Option/None.Ops"
         }
       ]
     },
@@ -756,11 +760,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Option.Some"
+          "typeName": "fp-ts/data/Option/Some"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Option.Some.Ops"
+          "typeName": "fp-ts/data/Option/Some.Ops"
         }
       ]
     },
@@ -1839,14 +1843,14 @@
           "name": "getOrUndefined"
         },
         {
-          "kind": "getter",
-          "typeName": "fp-ts/data/Option",
-          "name": "value"
-        },
-        {
           "kind": "static",
           "typeName": "fp-ts/data/Option.Aspects",
           "name": "getOrUndefined"
+        },
+        {
+          "typeName": "fp-ts/data/Option",
+          "kind": "getter",
+          "name": "value"
         }
       ]
     }
@@ -1872,11 +1876,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Either.Left"
+          "typeName": "fp-ts/data/Either/Left"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Either.Left.Ops"
+          "typeName": "fp-ts/data/Either/Left.Ops"
         }
       ]
     },
@@ -1886,11 +1890,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Either.Right"
+          "typeName": "fp-ts/data/Either/Right"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Either.Right.Ops"
+          "typeName": "fp-ts/data/Either/Right.Ops"
         }
       ]
     },
@@ -3055,11 +3059,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray"
+          "typeName": "fp-ts/data/ReadonlyArray/NonEmptyReadonlyArray"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray.Ops"
+          "typeName": "fp-ts/data/ReadonlyArray/NonEmptyReadonlyArray.Ops"
         }
       ]
     },
@@ -5675,11 +5679,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Predicate.Refinement"
+          "typeName": "fp-ts/data/Predicate/Refinement"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Predicate.Refinement.Ops"
+          "typeName": "fp-ts/data/Predicate/Refinement.Ops"
         }
       ]
     },
@@ -5689,7 +5693,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Ops",
+          "typeName": "fp-ts/data/Predicate.Ops",
           "name": "id"
         }
       ]
@@ -5832,12 +5836,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/Predicate.Refinement",
+          "typeName": "fp-ts/data/Predicate/Refinement",
           "name": "compose"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Aspects",
+          "typeName": "fp-ts/data/Predicate/Refinement.Aspects",
           "name": "compose"
         }
       ]
@@ -6003,6 +6007,174 @@
       ]
     }
   ],
+  "@fp-ts/data/Brand": [
+    {
+      "definitionName": "Brand",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/Brand"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/Brand.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "BrandTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/Brand.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/Brand.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "NominalConstructorTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RefinedConstructorsTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "error",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "error"
+        }
+      ]
+    },
+    {
+      "definitionName": "errors",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "errors"
+        }
+      ]
+    },
+    {
+      "definitionName": "isNominal",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "isNominal"
+        }
+      ]
+    },
+    {
+      "definitionName": "isRefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "isRefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "nominal",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "nominal"
+        }
+      ]
+    },
+    {
+      "definitionName": "refined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "refined"
+        }
+      ]
+    },
+    {
+      "definitionName": "all",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.Ops",
+          "name": "all"
+        }
+      ]
+    },
+    {
+      "definitionName": "BrandTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand.TypeId.Ops",
+          "name": "BrandTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "NominalConstructorTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId.Ops",
+          "name": "NominalConstructorTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "RefinedConstructorsTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId.Ops",
+          "name": "RefinedConstructorsTypeId"
+        }
+      ]
+    }
+  ],
   "@fp-ts/data/NonEmpty": [
     {
       "definitionName": "NonEmptyIterable",
@@ -6024,7 +6196,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/NonEmpty.nonEmpty.Ops",
+          "typeName": "fp-ts/data/NonEmpty/nonEmpty.Ops",
           "name": "nonEmpty"
         }
       ]
@@ -6053,11 +6225,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk"
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops"
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Ops"
         }
       ]
     },
@@ -6095,11 +6267,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk.TypeId"
+          "typeName": "fp-ts/data/Chunk/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk.TypeId.Ops"
+          "typeName": "fp-ts/data/Chunk/TypeId.Ops"
         }
       ]
     },
@@ -6131,7 +6303,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "make"
         }
       ]
@@ -6142,7 +6314,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "makeBy"
         }
       ]
@@ -6174,13 +6346,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "filterMap"
         },
         {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "fp-ts/data/Chunk",
+          "kind": "pipeable",
           "name": "filterMap"
         }
       ]
@@ -6190,13 +6362,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "filterMapWithIndex"
         },
         {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "fp-ts/data/Chunk",
+          "kind": "pipeable",
           "name": "filterMapWithIndex"
         }
       ]
@@ -6206,13 +6378,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "filterMapWhile"
         },
         {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "fp-ts/data/Chunk",
+          "kind": "pipeable",
           "name": "filterMapWhile"
         }
       ]
@@ -6222,13 +6394,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "compact"
         },
         {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "fp-ts/data/Chunk",
+          "kind": "pipeable",
           "name": "compact"
         }
       ]
@@ -6239,7 +6411,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "of"
         }
       ]
@@ -6250,7 +6422,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Ops",
+          "typeName": "fp-ts/data/Chunk.Ops",
           "name": "range"
         }
       ]
@@ -7391,12 +7563,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk",
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk",
           "name": "headNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Aspects",
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Aspects",
           "name": "headNonEmpty"
         }
       ]
@@ -7407,12 +7579,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk",
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk",
           "name": "tailNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.NonEmptyChunk.Aspects",
+          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Aspects",
           "name": "tailNonEmpty"
         }
       ]
@@ -7425,11 +7597,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context.Tag"
+          "typeName": "fp-ts/data/Context/Tag"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context.Tag.Ops"
+          "typeName": "fp-ts/data/Context/Tag.Ops"
         }
       ]
     },
@@ -7453,11 +7625,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context.TagTypeId"
+          "typeName": "fp-ts/data/Context/TagTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context.TagTypeId.Ops"
+          "typeName": "fp-ts/data/Context/TagTypeId.Ops"
         }
       ]
     },
@@ -7467,11 +7639,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context.TypeId"
+          "typeName": "fp-ts/data/Context/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context.TypeId.Ops"
+          "typeName": "fp-ts/data/Context/TypeId.Ops"
         }
       ]
     },
@@ -7481,11 +7653,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context.Tags"
+          "typeName": "fp-ts/data/Context/Tags"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context.Tags.Ops"
+          "typeName": "fp-ts/data/Context/Tags.Ops"
         }
       ]
     },
@@ -7506,7 +7678,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Tag.Ops",
+          "typeName": "fp-ts/data/Context.Ops",
           "name": "Tag"
         }
       ]
@@ -7657,11 +7829,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.TypeId"
+          "typeName": "fp-ts/data/Differ/ChunkPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/ChunkPatch/TypeId.Ops"
         }
       ]
     },
@@ -7741,11 +7913,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ContextPatch.TypeId"
+          "typeName": "fp-ts/data/Differ/ContextPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ContextPatch.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/ContextPatch/TypeId.Ops"
         }
       ]
     },
@@ -7825,11 +7997,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashSet.TypeId"
+          "typeName": "fp-ts/data/HashSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashSet.TypeId.Ops"
+          "typeName": "fp-ts/data/HashSet/TypeId.Ops"
         }
       ]
     },
@@ -8235,11 +8407,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashMap.TypeId"
+          "typeName": "fp-ts/data/HashMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashMap.TypeId.Ops"
+          "typeName": "fp-ts/data/HashMap/TypeId.Ops"
         }
       ]
     },
@@ -8837,11 +9009,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.TypeId"
+          "typeName": "fp-ts/data/Differ/HashMapPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/HashMapPatch/TypeId.Ops"
         }
       ]
     },
@@ -8921,11 +9093,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.TypeId"
+          "typeName": "fp-ts/data/Differ/HashSetPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/HashSetPatch/TypeId.Ops"
         }
       ]
     },
@@ -9005,11 +9177,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/OrPatch.TypeId"
+          "typeName": "fp-ts/data/Differ/OrPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/OrPatch.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/OrPatch/TypeId.Ops"
         }
       ]
     },
@@ -9089,11 +9261,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ.TypeId"
+          "typeName": "fp-ts/data/Differ/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ.TypeId.Ops"
+          "typeName": "fp-ts/data/Differ/TypeId.Ops"
         }
       ]
     },
@@ -9318,11 +9490,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Duration.TypeId"
+          "typeName": "fp-ts/data/Duration/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Duration.TypeId.Ops"
+          "typeName": "fp-ts/data/Duration/TypeId.Ops"
         }
       ]
     },
@@ -10105,11 +10277,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashMap.TypeId"
+          "typeName": "fp-ts/data/MutableHashMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashMap.TypeId.Ops"
+          "typeName": "fp-ts/data/MutableHashMap/TypeId.Ops"
         }
       ]
     },
@@ -10280,11 +10452,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashSet.TypeId"
+          "typeName": "fp-ts/data/MutableHashSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashSet.TypeId.Ops"
+          "typeName": "fp-ts/data/MutableHashSet/TypeId.Ops"
         }
       ]
     },
@@ -10407,11 +10579,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableList.TypeId"
+          "typeName": "fp-ts/data/MutableList/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableList.TypeId.Ops"
+          "typeName": "fp-ts/data/MutableList/TypeId.Ops"
         }
       ]
     },
@@ -10614,11 +10786,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableQueue.TypeId"
+          "typeName": "fp-ts/data/MutableQueue/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableQueue.TypeId.Ops"
+          "typeName": "fp-ts/data/MutableQueue/TypeId.Ops"
         }
       ]
     },
@@ -10650,7 +10822,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.EmptyMutableQueue.Ops",
+          "typeName": "fp-ts/data/MutableQueue/EmptyMutableQueue.Ops",
           "name": "EmptyMutableQueue"
         }
       ]
@@ -10805,11 +10977,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableRef.TypeId"
+          "typeName": "fp-ts/data/MutableRef/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableRef.TypeId.Ops"
+          "typeName": "fp-ts/data/MutableRef/TypeId.Ops"
         }
       ]
     },
@@ -11086,11 +11258,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/RedBlackTree.TypeId"
+          "typeName": "fp-ts/data/RedBlackTree/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/RedBlackTree.TypeId.Ops"
+          "typeName": "fp-ts/data/RedBlackTree/TypeId.Ops"
         }
       ]
     },
@@ -11544,11 +11716,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedMap.TypeId"
+          "typeName": "fp-ts/data/SortedMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedMap.TypeId.Ops"
+          "typeName": "fp-ts/data/SortedMap/TypeId.Ops"
         }
       ]
     },
@@ -11874,11 +12046,22 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedSet.TypeId"
+          "typeName": "fp-ts/data/SortedSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedSet.TypeId.Ops"
+          "typeName": "fp-ts/data/SortedSet/TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "from",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Ops",
+          "name": "from"
         }
       ]
     },
@@ -12188,11 +12371,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/These.ValidatedTypeLambda"
+          "typeName": "fp-ts/data/These/ValidatedTypeLambda"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/These.ValidatedTypeLambda.Ops"
+          "typeName": "fp-ts/data/These/ValidatedTypeLambda.Ops"
         }
       ]
     },
@@ -12202,11 +12385,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/These.Both"
+          "typeName": "fp-ts/data/These/Both"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/These.Both.Ops"
+          "typeName": "fp-ts/data/These/Both.Ops"
         }
       ]
     },
@@ -12230,11 +12413,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/These.Validated"
+          "typeName": "fp-ts/data/These/Validated"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/These.Validated.Ops"
+          "typeName": "fp-ts/data/These/Validated.Ops"
         }
       ]
     },
@@ -12266,7 +12449,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "fromEither"
         }
       ]
@@ -12310,7 +12493,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "fromThese"
         }
       ]
@@ -12365,7 +12548,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "fail"
         }
       ]
@@ -12376,7 +12559,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "succeed"
         }
       ]
@@ -12387,7 +12570,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "warn"
         }
       ]
@@ -12453,7 +12636,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "liftEither"
         }
       ]
@@ -12464,7 +12647,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "liftThese"
         }
       ]
@@ -12508,7 +12691,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "lift2"
         }
       ]
@@ -12519,7 +12702,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "lift3"
         }
       ]
@@ -12541,7 +12724,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "productAll"
         }
       ]
@@ -12552,7 +12735,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "tuple"
         }
       ]
@@ -12563,7 +12746,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "struct"
         }
       ]
@@ -12585,7 +12768,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Ops",
+          "typeName": "fp-ts/data/These.Ops",
           "name": "composeKleisliArrow"
         }
       ]
@@ -12725,12 +12908,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatMapNullable"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatMapNullable"
         }
       ]
@@ -12741,12 +12924,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatMapOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatMapOption"
         }
       ]
@@ -12757,12 +12940,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatMapEither"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatMapEither"
         }
       ]
@@ -12773,12 +12956,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatMapThese"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatMapThese"
         }
       ]
@@ -13189,12 +13372,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "product"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "product"
         }
       ]
@@ -13205,12 +13388,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "productMany"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "productMany"
         }
       ]
@@ -13221,12 +13404,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "ap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "ap"
         }
       ]
@@ -13237,12 +13420,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "andThenBind"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "andThenBind"
         }
       ]
@@ -13253,12 +13436,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "andThenBindEither"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "andThenBindEither"
         }
       ]
@@ -13269,12 +13452,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "andThenBindThese"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "andThenBindThese"
         }
       ]
@@ -13285,12 +13468,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "productFlatten"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "productFlatten"
         }
       ]
@@ -13301,12 +13484,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatMap"
         }
       ]
@@ -13317,12 +13500,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "andThen"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "andThen"
         }
       ]
@@ -13333,12 +13516,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "bind"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "bind"
         }
       ]
@@ -13349,12 +13532,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "bindEither"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "bindEither"
         }
       ]
@@ -13365,12 +13548,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "bindThese"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "bindThese"
         }
       ]
@@ -13381,12 +13564,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "andThenDiscard"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "andThenDiscard"
         }
       ]
@@ -13397,12 +13580,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "tap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "tap"
         }
       ]
@@ -13685,12 +13868,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/These.Validated",
+          "typeName": "fp-ts/data/These/Validated",
           "name": "flatten"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/These.Validated.Aspects",
+          "typeName": "fp-ts/data/These/Validated.Aspects",
           "name": "flatten"
         }
       ]
@@ -14018,7 +14201,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Ops",
+          "typeName": "fp-ts/data/Predicate/Refinement.Ops",
           "name": "isNumber"
         }
       ]
@@ -14053,7 +14236,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Ops",
+          "typeName": "fp-ts/data/Predicate/Refinement.Ops",
           "name": "isBoolean"
         }
       ]
@@ -14064,12 +14247,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Function.LazyArg",
+          "typeName": "fp-ts/data/Function/LazyArg",
           "name": "match"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Function.LazyArg.Aspects",
+          "typeName": "fp-ts/data/Function/LazyArg.Aspects",
           "name": "match"
         }
       ]
@@ -14302,7 +14485,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Ops",
+          "typeName": "fp-ts/data/Predicate/Refinement.Ops",
           "name": "isString"
         }
       ]

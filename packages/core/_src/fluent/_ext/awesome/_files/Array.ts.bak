@@ -12,7 +12,7 @@ import { map_ as NEMap_ } from "@effect-ts/core/Collections/Immutable/NonEmptyAr
 export const ext_map_ = map_
 
 /**
- * @tsplus fluent fp-ts/data/ReadonlyArray.NonEmptyReadonlyArray mapRA
+ * @tsplus fluent fp-ts/data/ReadonlyArray/NonEmptyReadonlyArray mapRA
  */
 export const ext_map_NA_ = NEMap_
 
