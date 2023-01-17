@@ -2031,6 +2031,11 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "succeed"
+        },
+        {
+          "typeName": "effect/io/Config",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
