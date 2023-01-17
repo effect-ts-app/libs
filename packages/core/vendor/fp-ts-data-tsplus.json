@@ -834,6 +834,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/Option.Ops",
           "name": "some"
+        },
+        {
+          "typeName": "fp-ts/data/Option",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -1846,11 +1851,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/Option.Aspects",
           "name": "getOrUndefined"
-        },
-        {
-          "typeName": "fp-ts/data/Option",
-          "kind": "getter",
-          "name": "value"
         }
       ]
     }
@@ -1964,6 +1964,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/Either.Ops",
           "name": "right"
+        },
+        {
+          "typeName": "fp-ts/data/Either",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -6305,6 +6310,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/Chunk.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/Chunk",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -6316,6 +6326,17 @@
           "kind": "static",
           "typeName": "fp-ts/data/Chunk.Ops",
           "name": "makeBy"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Chunk.Ops",
+          "name": "tuple"
         }
       ]
     },
@@ -8024,6 +8045,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/HashSet.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/HashSet",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -8423,6 +8449,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/HashMap.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/HashMap",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -10293,6 +10324,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableHashMap.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/MutableHashMap",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -10479,6 +10515,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableHashSet.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/MutableHashSet",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -10993,6 +11034,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableRef.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/MutableRef",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -11743,6 +11789,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedMap.Ops",
           "name": "make"
+        },
+        {
+          "typeName": "fp-ts/data/SortedMap",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -12062,6 +12113,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Ops",
           "name": "from"
+        },
+        {
+          "typeName": "fp-ts/data/SortedSet",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
@@ -12517,6 +12573,11 @@
           "kind": "static",
           "typeName": "fp-ts/data/These.Ops",
           "name": "right"
+        },
+        {
+          "typeName": "fp-ts/data/These",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },

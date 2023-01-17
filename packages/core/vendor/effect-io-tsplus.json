@@ -8319,6 +8319,11 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "succeed"
+        },
+        {
+          "typeName": "effect/io/Layer",
+          "kind": "static",
+          "name": "__call"
         }
       ]
     },
