@@ -74,4 +74,4 @@ export const makeMemoryStore = () => ({
     })
 })
 
-export const MemoryStoreLive = StoreMaker.of(makeMemoryStore())
+export const MemoryStoreLive = StoreMaker.makeLayer(makeMemoryStore())

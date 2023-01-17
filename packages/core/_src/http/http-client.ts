@@ -223,7 +223,7 @@ export function accessMiddlewareStack<A>(
 }
 
 export const LiveMiddlewareStack = (stack: RequestMiddleware[] = []) =>
-  MiddlewareStack.of({
+  MiddlewareStack.makeLayer({
     stack
   })
 
@@ -259,7 +259,7 @@ export function requestInner<
   body: RequestBodyTypes[Req][M]
 ): Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM(headers =>
-    Http.withEffect(h =>
+    Http.accessWithEffect(h =>
       h.request<M, Req, Resp>(
         method,
         url,

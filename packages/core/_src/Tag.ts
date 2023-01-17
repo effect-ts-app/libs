@@ -1,18 +1,3 @@
-/**
- * @tsplus getter fp-ts/data/Context/Tag get
- */
-export const get = Effect.service
-
-/**
- * @tsplus getter fp-ts/data/Context/Tag with
- */
-export const with_ = Effect.serviceWith
-
-/**
- * @tsplus getter fp-ts/data/Context/Tag withEffect
- */
-export const accessM = Effect.serviceWithEffect
-
 // /**
 //  * @tsplus fluent fp-ts/data/Context/Tag withEffect_
 //  */
@@ -28,6 +13,6 @@ export const accessM = Effect.serviceWithEffect
 // }
 
 /**
- * @tsplus getter fp-ts/data/Context/Tag of
+ * @tsplus getter fp-ts/data/Context/Tag makeLayer
  */
-export const of = Layer.succeed
+export const makeLayer = Layer.succeed

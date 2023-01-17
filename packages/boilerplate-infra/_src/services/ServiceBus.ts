@@ -20,7 +20,7 @@ export const LiveServiceBusClient = (url: string) => makeClient(url).toScopedLay
 
 function makeSender(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client.get)
+    const serviceBusClient = yield* $(Client.access)
 
     return yield* $(
       Effect.sync(() => serviceBusClient.createSender(queueName)).acquireRelease(
@@ -37,7 +37,7 @@ export function LiveSender(queueName: string) {
 
 function makeReceiver(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client.get)
+    const serviceBusClient = yield* $(Client.access)
 
     return yield* $(
       Effect.sync(() => serviceBusClient.createReceiver(queueName)).acquireRelease(
@@ -57,14 +57,14 @@ export function sendMessages(
   options?: OperationOptionsBase
 ) {
   return Effect.gen(function*($) {
-    const s = yield* $(Sender.get)
+    const s = yield* $(Sender.access)
     return yield* $(Effect.promise(() => s.sendMessages(messages, options)))
   })
 }
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return Effect.gen(function*($) {
-    const r = yield* $(Receiver.get)
+    const r = yield* $(Receiver.access)
 
     const env = yield* $(Effect.environment<RMsg | RErr>())
 

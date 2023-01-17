@@ -12820,6 +12820,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "service"
+        },
+        {
+          "typeName": "fp-ts/data/Context/Tag",
+          "kind": "getter",
+          "name": "access"
         }
       ]
     },
@@ -12831,6 +12836,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "serviceWith"
+        },
+        {
+          "typeName": "fp-ts/data/Context/Tag",
+          "kind": "getter",
+          "name": "accessWith"
         }
       ]
     },
@@ -12842,6 +12852,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "serviceWithEffect"
+        },
+        {
+          "typeName": "fp-ts/data/Context/Tag",
+          "kind": "getter",
+          "name": "accessWithEffect"
         }
       ]
     },

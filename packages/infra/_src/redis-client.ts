@@ -22,8 +22,8 @@ export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisC
 
 export const RedisClient = Tag<RedisClient>()
 
-export const client = RedisClient.with(_ => _.client)
-export const lock = RedisClient.with(_ => _.lock)
+export const client = RedisClient.accessWith(_ => _.client)
+export const lock = RedisClient.accessWith(_ => _.lock)
 
 export const RedisClientLive = (makeClient: () => Client) => makeRedisClient(makeClient).toScopedLayer(RedisClient)
 
