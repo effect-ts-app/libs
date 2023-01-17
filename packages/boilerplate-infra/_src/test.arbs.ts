@@ -7,7 +7,7 @@ import { Random } from "fast-check"
 import * as fc from "fast-check"
 import * as rand from "pure-rand"
 
-const rnd = new Random(rand.congruential(5))
+const rnd = new Random(rand.congruential32(5))
 
 setFaker(faker)
 
