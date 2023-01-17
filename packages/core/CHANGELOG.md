@@ -1,5 +1,12 @@
 # @effect-ts-app/core
 
+## 2.4.3
+
+### Patch Changes
+
+- 4dea7c94: Update annotations
+- 14142c0c: Leverage \_\_call extensions
+
 ## 2.4.2
 
 ### Patch Changes

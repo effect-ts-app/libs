@@ -1,5 +1,15 @@
 # @effect-ts-app/boilerplate-prelude
 
+## 2.4.3
+
+### Patch Changes
+
+- 14142c0c: Leverage \_\_call extensions
+- Updated dependencies [4dea7c94]
+- Updated dependencies [14142c0c]
+  - @effect-ts-app/core@2.4.3
+  - @effect-ts-app/schema@2.3.13
+
 ## 2.4.2
 
 ### Patch Changes
