@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-eslint
 
+## 2.1.2
+
+### Patch Changes
+
+- 32ff3932: Update dependencies
+
 ## 2.1.1
 
 ### Patch Changes

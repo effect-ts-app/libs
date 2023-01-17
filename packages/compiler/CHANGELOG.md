@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.0.4
+
+### Patch Changes
+
+- 32ff3932: Update dependencies
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.1
+
+### Patch Changes
+
+- 32ff3932: Update dependencies
+
 ## 2.4.0
 
 ### Minor Changes

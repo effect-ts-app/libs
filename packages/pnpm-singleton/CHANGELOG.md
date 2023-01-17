@@ -1,5 +1,11 @@
 # @effect-ts-app/pnpm-singleton
 
+## 0.1.3
+
+### Patch Changes
+
+- 32ff3932: Update dependencies
+
 ## 0.1.2
 
 ### Patch Changes
