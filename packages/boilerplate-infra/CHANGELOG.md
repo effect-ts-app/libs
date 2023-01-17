@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.2
+
+### Patch Changes
+
+- f09b1430: Fix ratelimit extensions
+
 ## 3.10.1
 
 ### Patch Changes
