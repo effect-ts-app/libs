@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.4
+
+### Patch Changes
+
+- 6d4930c2: Update pure-rand
+
 ## 3.10.3
 
 ### Patch Changes
