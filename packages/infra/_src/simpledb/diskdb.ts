@@ -127,7 +127,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .flatMap(exists => !exists ? Effect.succeed(Opt.none) : readFile(filePath).map(Opt.some))
+        .flatMap(exists => !exists ? Effect(Opt.none) : readFile(filePath).map(Opt.some))
     }
 
     function getFilename(type: string, id: string) {

@@ -102,7 +102,7 @@ export function useSafeQuery_<E, A>(
   // const execute = self
   // const runNew = execute.fork()
   //   .tap(newFiber =>
-  //     Effect.sync(() => {
+  //     Effect(() => {
   //       fib = newFiber
   //     })
   //   )
@@ -152,7 +152,7 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
   let fib: Fiber.Runtime<unknown, unknown> | undefined = undefined
   const runNew = execute.fork
     .tap(newFiber =>
-      Effect.sync(() => {
+      Effect(() => {
         fib = newFiber
       })
     )
@@ -179,13 +179,13 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
 export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
   const result = shallowRef(new Initial() as QueryResult<E, A>)
 
-  const execute = Effect.sync(() => {
+  const execute = Effect(() => {
     result.value = result.value.isInitializing()
       ? new Loading()
       : new Refreshing(result.value)
   })
     .zipRight(self.map(_ => _.body).asQueryResult)
-    .flatMap(r => Effect.sync(() => result.value = r))
+    .flatMap(r => Effect(() => result.value = r))
 
   const latestSuccess = computed(() => {
     const value = result.value
@@ -212,14 +212,14 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
   const handle = handleExit(loading, error, value)
   const exec = (i: I, abortSignal?: AbortSignal) =>
     run.value(
-      Effect.sync(() => {
+      Effect(() => {
         loading.value = true
         value.value = undefined
         error.value = undefined
       })
         .zipRight(self(i))
         .exit
-        .flatMap(exit => Effect.sync(() => handle(exit)))
+        .flatMap(exit => Effect(() => handle(exit)))
         .fork
         .flatMap(f => {
           const cancel = () => run.value(f.interrupt)
@@ -251,7 +251,7 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
     return run.value(
       self
         .exit
-        .flatMap(exit => Effect.sync(() => handle(exit)))
+        .flatMap(exit => Effect(() => handle(exit)))
         .fork
         .flatMap(f => {
           const cancel = () => f.interrupt.unsafeRunPromise
@@ -277,7 +277,7 @@ function handleExit<E, A>(
     if (exit.isSuccess()) {
       value.value = exit.value
       error.value = undefined
-      return Either.right(exit.value)
+      return Either(exit.value)
     }
 
     const err = exit.cause.failureOption

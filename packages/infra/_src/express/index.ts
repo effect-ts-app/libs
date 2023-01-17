@@ -72,11 +72,11 @@ export const makeExpressApp = Effect.gen(function*(_) {
   const open = yield* _(
     Ref.make(true)
       .acquireRelease(
-        a => Effect.sync(() => a.set(false))
+        a => Effect(() => a.set(false))
       )
   )
 
-  const app = yield* _(Effect.sync(() => express()))
+  const app = yield* _(Effect(() => express()))
 
   const { exitHandler, host, port } = yield* _(ExpressAppConfig.access)
 
@@ -90,7 +90,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
       }
       const server = app.listen(port, host, () => {
         cb(
-          Effect.sync(() => {
+          Effect(() => {
             server.removeListener("error", onError)
             return server
           })
@@ -293,7 +293,7 @@ export function match(method: Methods): {
   return function(path, ...handlers) {
     return expressRuntime(handlers).flatMap(expressHandlers =>
       withExpressApp(app =>
-        Effect.sync(() => {
+        Effect(() => {
           app[method](path, ...expressHandlers)
         })
       )
@@ -307,7 +307,7 @@ export function defaultExitHandler(
   _next: NextFunction
 ): (cause: Cause<never>) => Effect<never, never, void> {
   return cause =>
-    Effect.sync(() => {
+    Effect(() => {
       if (cause.isDie()) {
         console.error(cause.pretty())
       }
@@ -357,13 +357,13 @@ export function use(...args: any[]): Effect<ExpressEnv, never, void> {
         args as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect.sync(() => app.use(...expressHandlers)))
+      ).flatMap(expressHandlers => Effect(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect.sync(() => app.use(args[0], ...expressHandlers)))
+      ).flatMap(expressHandlers => Effect(() => app.use(args[0], ...expressHandlers)))
     }
   })
 }
@@ -405,7 +405,7 @@ export function classic(_: RequestHandler): EffectRequestHandler<never>
 export function classic(
   _: RequestHandler | NextHandleFunction
 ): EffectRequestHandler<never> {
-  return (req, res, next) => Effect.sync(() => _(req, res, next))
+  return (req, res, next) => Effect(() => _(req, res, next))
 }
 
 /**

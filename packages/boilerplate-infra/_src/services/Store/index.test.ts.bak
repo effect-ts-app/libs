@@ -17,7 +17,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect.succeed(existing)))
+        const store = yield* $(make("test", Effect(existing)))
 
         const result1 = yield* $(store.set({ id: "1", a: "string", _etag: undefined }))
         const result2_1 = yield* $(
@@ -51,7 +51,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect.succeed(existing)))
+        const store = yield* $(make("test", Effect(existing)))
 
         const [result1] = yield* $(
           store.bulkSet([{ id: "1", a: "string", _etag: undefined }])
@@ -89,7 +89,7 @@ describe("Optimistic Concurrency", () => {
           { _etag: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
-        const store = yield* $(make("test", Effect.succeed(existing)))
+        const store = yield* $(make("test", Effect(existing)))
 
         const item1 = { id: "1", a: "string", _etag: undefined }
         const item2 = { id: "2", a: "string", _etag: undefined }
@@ -102,8 +102,8 @@ describe("Optimistic Concurrency", () => {
         const failResult = yield* $(
           store.batchSet([{ id: "1", a: "another-string3", _etag: "abc" }]).result
         )
-        expect(result1).toEqual(Opt.some({ ...item1, _etag: expect.any(String) }))
-        expect(result2).toEqual(Opt.some({ ...item2, _etag: expect.any(String) }))
+        expect(result1).toEqual(Opt({ ...item1, _etag: expect.any(String) }))
+        expect(result2).toEqual(Opt({ ...item2, _etag: expect.any(String) }))
         expect(Exit.untraced(failResult)).toEqual(
           Exit.fail(new OptimisticConcurrencyException("test", "1"))
         )

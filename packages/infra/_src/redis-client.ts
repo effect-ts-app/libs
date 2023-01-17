@@ -4,7 +4,7 @@ import Redlock from "redlock"
 import { ConnectionException } from "./simpledb/shared.js"
 
 export const makeRedisClient = (makeClient: () => Client) =>
-  Effect.sync(() => {
+  Effect(() => {
     const client = createClient(makeClient)
     const lock = new Redlock([client])
     return {
@@ -42,7 +42,7 @@ export function get(key: string) {
         client.get(key, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Opt.fromNullable(v))))
+            : res(Effect(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
@@ -54,7 +54,7 @@ export function set(key: string, val: string) {
         client.set(key, val, err =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(void 0)))
+            : res(Effect(void 0)))
       }).uninterruptible
   )
 }
@@ -66,7 +66,7 @@ export function hset(key: string, field: string, value: string) {
         client.hset(key, field, value, err =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(void 0)))
+            : res(Effect(void 0)))
       }).uninterruptible
   )
 }
@@ -78,7 +78,7 @@ export function hget(key: string, field: string) {
         client.hget(key, field, (err, v) =>
           err
             ? res(Effect.fail(new ConnectionException(err)))
-            : res(Effect.succeed(Opt.fromNullable(v))))
+            : res(Effect(Opt.fromNullable(v))))
       }).uninterruptible
   )
 }
@@ -90,7 +90,7 @@ export function hmgetAll(key: string) {
           client.hgetall(key, (err, v) =>
             err
               ? res(Effect.fail(new ConnectionException(err)))
-              : res(Effect.succeed(Opt.fromNullable(v))))
+              : res(Effect(Opt.fromNullable(v))))
         }
       ).uninterruptible
   )

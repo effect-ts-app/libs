@@ -20,7 +20,7 @@ export function condemn<X, E, A>(
         return Effect.fail(y.left)
       }
       const [a, w] = y.right
-      return w._tag === "Some" ? Effect.fail(w.value) : Effect.succeed(a)
+      return w._tag === "Some" ? Effect.fail(w.value) : Effect(a)
     })
 }
 
@@ -55,7 +55,7 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
       if (warn._tag === "Some") {
         return Effect.fail(new CondemnException({ message: drawError(warn.value) }))
       }
-      return Effect.succeed(res.right[0])
+      return Effect(res.right[0])
     })
 }
 

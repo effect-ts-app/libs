@@ -49,7 +49,7 @@ export class SchemaType<E, A> {
   constructor(public Schema: Schema) {}
 }
 
-export const succeed = (_: SubSchema) => Effect.succeed(_)
+export const succeed = (_: SubSchema) => Effect(_)
 export const dieMessage = (_: string) => Effect.die(new UnsupportedOperation([_]))
 
 export function described(description: string) {

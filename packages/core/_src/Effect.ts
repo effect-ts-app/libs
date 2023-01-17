@@ -59,7 +59,7 @@ export function flatMapOpt<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A2>> {
   return self.flatMap(d =>
     d.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => fm(_).map(Opt.some)
     )
   )
@@ -75,8 +75,8 @@ export function tapOpt<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A>> {
   return self.flatMap(d =>
     d.match(
-      () => Effect.succeed(Opt.none),
-      _ => fm(_).map(() => Opt.some(_))
+      () => Effect(Opt.none),
+      _ => fm(_).map(() => Opt(_))
     )
   )
 }
@@ -91,8 +91,8 @@ export function zipRightOpt<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap(d =>
     d.match(
-      () => Effect.succeed(Opt.none),
-      _ => fm.map(() => Opt.some(_))
+      () => Effect(Opt.none),
+      _ => fm.map(() => Opt(_))
     )
   )
 }
@@ -108,7 +108,7 @@ export function mapOpt<R, E, A, A2>(
   return self.map(d =>
     d.match(
       () => Opt.none,
-      _ => Opt.some(fm(_))
+      _ => Opt(fm(_))
     )
   )
 }
@@ -127,7 +127,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
     promise()
       .then(x => pipe(x, Effect.succeed, resolve))
       .catch(x => pipe(x, onReject, Effect.fail, resolve))
-    return Either.left(Effect.sync(canceller))
+    return Either.left(Effect(canceller))
   })
 }
 
@@ -163,7 +163,7 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
         return onError(firstError).flatMap(() => Effect.failCauseSync(() => cause))
       }
       return Effect.failCauseSync(() => cause)
-    }, _ => Effect.succeed(_).tap(onSuccess))
+    }, _ => Effect(_).tap(onSuccess))
   )
 
 export function getFirstError<E>(cause: Cause<E>) {
@@ -218,7 +218,7 @@ export function liftM<A, B>(a: (a: A) => B) {
 export function tupleTap<A, B, R, E, C>(
   f: (b: B) => (a: A) => Effect<R, E, C>
 ) {
-  return (t: readonly [A, B]) => Effect.succeed(t[0]).tap(f(t[1]))
+  return (t: readonly [A, B]) => Effect(t[0]).tap(f(t[1]))
 }
 
 /**

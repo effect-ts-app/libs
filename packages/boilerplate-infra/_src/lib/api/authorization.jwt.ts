@@ -42,7 +42,7 @@ export const scopes = Ex.classic(demandScopes)
   )
   return (
     cfg.AUTH_DISABLED
-      ? Effect.succeed(null)
+      ? Effect(null)
       : // eslint-disable-next-line @typescript-eslint/no-empty-function
         handleJwt(req, res, () => scopes(req, res, () => {}))
   ).zipRight(

@@ -8,7 +8,7 @@
     "@effect-ts-app/core": "workspace:*",
     "@effect-ts-app/infra": "workspace:*",
     "@effect-ts-app/schema": "workspace:*",
-    "@effect/io": "^0.0.64",
+    "@effect/io": "^0.0.65",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.39",
     "change-case": "^4.1.2",

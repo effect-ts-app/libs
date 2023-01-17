@@ -30,18 +30,18 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
     filter.type === "startsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())
-        ? Opt.some(x as unknown as NE)
+        ? Opt(x as unknown as NE)
         : Opt.none
       : filter.type === "endsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).endsWith(filter.value.toLowerCase())
-        ? Opt.some(x as unknown as NE)
+        ? Opt(x as unknown as NE)
         : Opt.none
       : filter.type === "contains"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       ? lowercaseIfString((x as any)[filter.by]).includes(filter.value.toLowerCase())
-        ? Opt.some(x as unknown as NE)
+        ? Opt(x as unknown as NE)
         : Opt.none
       : filter.type === "join_find"
       ? filter.keys.some(k => {
@@ -52,7 +52,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
             value.some(v => compareCaseInsensitive(v[filter.valueKey], filter.value))
           )
         })
-        ? Opt.some(x as unknown as NE)
+        ? Opt(x as unknown as NE)
         : Opt.none
       : // TODO: support mixed or/and
         filter.mode === "or"
@@ -66,7 +66,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 ? !compareCaseInsensitive(get(x, p.key), p.value)
                 : compareCaseInsensitive(get(x, p.key), p.value)
             )
-          ? Opt.some(x as unknown as NE)
+          ? Opt(x as unknown as NE)
           : Opt.none
         : filter.where
             .every(p =>
@@ -86,7 +86,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                   .some(_ => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
                 : compareCaseInsensitive(get(x, p.key), p.value)
             )
-        ? Opt.some(x as unknown as NE)
+        ? Opt(x as unknown as NE)
         : Opt.none
 }
 
@@ -98,11 +98,11 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
       const value = get(x, k)
       // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
       return value
-        ? Opt.some(
+        ? Opt(
           (value as readonly NE[]).filterMap(v =>
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             compareCaseInsensitive((v as any)[filter.valueKey], filter.value)
-              ? Opt.some({ ...v, _rootId: x.id })
+              ? Opt({ ...v, _rootId: x.id })
               : Opt.none
           )
         )

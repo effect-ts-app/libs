@@ -6,12 +6,12 @@ const withClient = (url: string) =>
   Effect.async<never, Error, MongoClient_>(res => {
     const client = new MongoClient_(url)
     client.connect(err => {
-      err ? res(Effect.fail(err)) : res(Effect.succeed(client))
+      err ? res(Effect.fail(err)) : res(Effect(client))
     })
   }).acquireRelease(
     cl =>
       Effect.async<never, Error, void>(res => {
-        cl.close((err, r) => res(err ? Effect.fail(err) : Effect.succeed(r)))
+        cl.close((err, r) => res(err ? Effect.fail(err) : Effect(r)))
       }).uninterruptible.orDie
   )
 

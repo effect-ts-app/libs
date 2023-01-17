@@ -99,33 +99,33 @@ export function makeFromSchema<ResA>(
   const Res = r ? MO.extractSchema(r) : MO.Void
   // TODO EffectOpt.fromNullable(Req.Headers).flatMapOpt(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
-  const makeReqQuerySchema = Effect.succeed(Opt.fromNullable(Req.Query)).flatMap(_ =>
+  const makeReqQuerySchema = Effect(Opt.fromNullable(Req.Query)).flatMap(_ =>
     _.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqHeadersSchema = Effect.succeed(Opt.fromNullable(Req.Headers)).flatMap(_ =>
+  const makeReqHeadersSchema = Effect(Opt.fromNullable(Req.Headers)).flatMap(_ =>
     _.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqCookieSchema = Effect.succeed(Opt.fromNullable(Req.Cookie)).flatMap(_ =>
+  const makeReqCookieSchema = Effect(Opt.fromNullable(Req.Cookie)).flatMap(_ =>
     _.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqPathSchema = Effect.succeed(Opt.fromNullable(Req.Path)).flatMap(_ =>
+  const makeReqPathSchema = Effect(Opt.fromNullable(Req.Path)).flatMap(_ =>
     _.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => jsonSchema(_).map(Opt.some)
     )
   )
-  const makeReqBodySchema = Effect.succeed(Opt.fromNullable(Req.Body)).flatMap(_ =>
+  const makeReqBodySchema = Effect(Opt.fromNullable(Req.Body)).flatMap(_ =>
     _.match(
-      () => Effect.succeed(Opt.none),
+      () => Effect(Opt.none),
       _ => jsonSchema(_).map(Opt.some)
     )
   )
@@ -136,7 +136,7 @@ export function makeFromSchema<ResA>(
   function makeParameters(inn: ParameterLocation) {
     return (a: Opt<JSONSchema | SubSchema>) => {
       return a
-        .flatMap(o => (isObjectSchema(o) ? Opt.some(o) : Opt.none))
+        .flatMap(o => (isObjectSchema(o) ? Opt(o) : Opt.none))
         .map(x => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return Object.keys(x.properties!).map(p => {

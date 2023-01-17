@@ -51,7 +51,7 @@ export class Property<
 
   // from<As1 extends PropertyKey>(as: As1): Property<Self, Optional, Some<As1>, Def> {
   //   return new Property(
-  //     Opt.some(as),
+  //     Opt(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -97,7 +97,7 @@ export class Property<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Opt.some([k ?? "both", _]),
+  //     Opt([k ?? "both", _]),
   //     this._map
   //   )
   // }
@@ -165,7 +165,7 @@ export function propDef<
     prop._schema,
     prop._optional,
     // @ts-expect-error
-    Opt.some([k ?? "both", _]),
+    Opt([k ?? "both", _]),
     prop._map
   )
 }
@@ -199,7 +199,7 @@ export function propFrom<
   as: As1
 ): Property<Self, Optional, Some<As1>, Def> {
   return new Property(
-    Opt.some(as) as Some<As1>,
+    Opt(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -464,7 +464,7 @@ export function props<Props extends PropertyRecord>(
   ): Th.These<ParserErrorFromProperties<Props>, ShapeFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
     let missingKeys = Chunk.empty<string>()
@@ -477,8 +477,8 @@ export function props<Props extends PropertyRecord>(
       // @ts-expect-error
       return Th.fail(
         S.compositionE(
-          Chunk.make(
-            S.nextE(S.compositionE(Chunk.make(S.prevE(S.missingKeysE(missingKeys)))))
+          Chunk(
+            S.nextE(S.compositionE(Chunk(S.prevE(S.missingKeysE(missingKeys)))))
           )
         )
       )
@@ -561,8 +561,8 @@ export function props<Props extends PropertyRecord>(
       return Th.succeed(result as ShapeFromProperties<Props>)
     }
 
-    const error_ = S.compositionE(Chunk.make(S.nextE(S.structE(errors))))
-    const error = hasRequired ? S.compositionE(Chunk.make(S.nextE(error_))) : error_
+    const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
+    const error = hasRequired ? S.compositionE(Chunk(S.nextE(error_))) : error_
 
     if (isError) {
       // @ts-expect-error

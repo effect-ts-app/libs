@@ -126,8 +126,6 @@ import { ServiceTagged } from "@effect-ts-app/boilerplate-prelude/service"
  */
 import { match, Pattern } from "ts-pattern"
 
-// import { LazyArg } from "@effect-ts-app/boilerplate-prelude/_ext/lazyArg"
-
 import "@effect-ts-app/boilerplate-prelude/_ext/Prelude.ext"
 import "@effect-ts-app/core/_global"
 import "@effect-ts-app/core/fluent/_ext/awesome/lib"

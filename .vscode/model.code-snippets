@@ -101,7 +101,7 @@
             "",
             "export const $1$2 = handle($2s.$1)((req) =>",
             "Effect.gen(function* ($) {",
-            "   yield* $(Effect.succeed(null))",
+            "   yield* $(Effect(null))",
             "}))"
         ]
     }

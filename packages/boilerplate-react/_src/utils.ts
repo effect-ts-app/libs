@@ -125,7 +125,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
     if (index === -1) {
       return Opt.none
     }
-    return Opt.some(arrayMoveDropUndefined(ar, index, newIndex))
+    return Opt(arrayMoveDropUndefined(ar, index, newIndex))
   }
 }
 

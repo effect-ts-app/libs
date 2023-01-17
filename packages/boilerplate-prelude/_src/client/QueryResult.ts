@@ -14,12 +14,12 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: Either.right(a), previous: Opt.none })
+    return new Refreshing<E, A>({ current: Either(a), previous: Opt.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Opt.none : Opt.some(previous)
+      previous: previous === undefined ? Opt.none : Opt(previous)
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -32,12 +32,12 @@ export class Done<E, A> extends Tagged("Done")<{
   readonly previous: Opt<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {
-    return new Done<E, A>({ current: Either.right(a), previous: Opt.none })
+    return new Done<E, A>({ current: Either(a), previous: Opt.none })
   }
   static fail<E, A = never>(this: void, e: E, previous?: A) {
     return new Done<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Opt.none : Opt.some(previous)
+      previous: previous === undefined ? Opt.none : Opt(previous)
     })
   }
 

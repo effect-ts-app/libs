@@ -218,14 +218,6 @@
       "definitionKind": "interface",
       "extensions": [
         {
-          "kind": "type",
-          "typeName": "fp-ts/data/Function/LazyArg"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/data/Function/LazyArg.Ops"
-        },
-        {
           "typeName": "tsplus/LazyArgument",
           "kind": "type"
         }

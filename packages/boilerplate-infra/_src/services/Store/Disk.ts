@@ -12,7 +12,7 @@ import { StoreMaker } from "./service.js"
  * and should therefore be as fast as the Memory Store.
  */
 export function makeDiskStore({ prefix }: StorageConfig) {
-  return Effect.sync(() => {
+  return Effect(() => {
     const dir = "./.data"
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
@@ -39,7 +39,7 @@ export function makeDiskStore({ prefix }: StorageConfig) {
             make<Id, Id, E>(
               name,
               !fs.existsSync(file)
-                ? existing ?? Effect.succeed(ROMap.empty)
+                ? existing ?? Effect(ROMap.empty)
                 : fsStore.get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
             )
           )
@@ -52,19 +52,19 @@ export function makeDiskStore({ prefix }: StorageConfig) {
           const s: Store<E, Id> = {
             ...store,
             batchSet: flow(store.batchSet, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect.succeed(console.error(err))).forkDaemon)),
+              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
             bulkSet: flow(store.bulkSet, t =>
               t.tap(() =>
                 flushToDisk.tapErrorCause(err =>
-                  Effect.succeed(console.error(err))
+                  Effect(console.error(err))
                 ).forkDaemon
               )),
             set: flow(store.set, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect.succeed(console.error(err))).forkDaemon)),
+              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
             remove: flow(store.remove, t =>
               t.tap(() =>
                 flushToDisk.tapErrorCause(err =>
-                  Effect.succeed(console.error(err))
+                  Effect(console.error(err))
                 ).forkDaemon
               ))
           }

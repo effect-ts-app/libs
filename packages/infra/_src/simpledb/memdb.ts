@@ -46,7 +46,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           const r = yield* $(
             decode(cr.data).flatMap(d =>
               eq.equals(keys, d as unknown as V)
-                ? Effect.succeed(d)
+                ? Effect(d)
                 : Effect.fail("not equals")
             ).exit
           )

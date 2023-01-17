@@ -45,7 +45,7 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Effect.succeed(
+  const ph = Effect(
     Opt.fromNullable(Request.Headers)
       .map(s => s)
       .map(Parser.for)
@@ -53,7 +53,7 @@ export function makeRequestParsers<
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt(d => d(u))
 
-  const pq = Effect.succeed(
+  const pq = Effect(
     Opt.fromNullable(Request.Query)
       .map(s => s)
       .map(Parser.for)
@@ -61,7 +61,7 @@ export function makeRequestParsers<
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt(d => d(u))
 
-  const pb = Effect.succeed(
+  const pb = Effect(
     Opt.fromNullable(Request.Body)
       .map(s => s)
       .map(Parser.for)
@@ -69,7 +69,7 @@ export function makeRequestParsers<
   )
   const parseBody = (u: unknown) => pb.flatMapOpt(d => d(u))
 
-  const pp = Effect.succeed(
+  const pp = Effect(
     Opt.fromNullable(Request.Path)
       .map(s => s)
       .map(Parser.for)
@@ -77,7 +77,7 @@ export function makeRequestParsers<
   )
   const parsePath = (u: unknown) => pp.flatMapOpt(d => d(u))
 
-  const pc = Effect.succeed(
+  const pc = Effect(
     Opt.fromNullable(Request.Cookie)
       .map(s => s)
       .map(Parser.for)
@@ -178,7 +178,7 @@ export function match<
       makeMiddlewareContext
     )
   ).zipRight(
-    Effect.sync(() =>
+    Effect(() =>
       makeRouteDescriptor(
         requestHandler.Request.path,
         requestHandler.Request.method,
@@ -192,9 +192,9 @@ export function respondSuccess<ReqA, A, E>(
   encodeResponse: (req: ReqA) => Encode<A, E>
 ) {
   return (req: ReqA, res: express.Response, a: A) =>
-    Effect.sync(() => encodeResponse(req)(a))
+    Effect(() => encodeResponse(req)(a))
       .flatMap(r =>
-        Effect.sync(() => {
+        Effect(() => {
           r === undefined
             ? res.status(204).send()
             : res.status(200)
@@ -248,7 +248,7 @@ export function makeRequestHandler<
   const respond = respondSuccess(encodeResponse)
 
   function getParams(req: express.Request) {
-    return Effect.sync(() => ({
+    return Effect(() => ({
       path: req.params,
       query: req.query,
       body: req.body,
@@ -308,7 +308,7 @@ export function makeRequestHandler<
 
   return (req: express.Request, res: express.Response) => {
     return Effect.struct({
-      requestContext: Effect.sync(() => {
+      requestContext: Effect(() => {
         const requestContext = makeContext(req)
         if (req.method === "GET") {
           res.setHeader("Cache-Control", "no-store")
@@ -385,7 +385,7 @@ export function makeRequestHandler<
                 }))
               })
             )
-              .tapErrorCause(cause => Effect.sync(() => console.error("Error occurred while reporting error", cause)))
+              .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap(() =>
             Effect.suspendSucceed(() => {
@@ -582,7 +582,7 @@ export interface ReqHandler<
  * class SayHelloResponse extends Model<SayHelloRequest>()({ message: prop(LongString) }) {}
  *
  * export const SayHelloControllers = matchResource({ SayHello: { SayHelloRequest, SayHelloResponse } })({
- *   SayHello: (req) => Effect.succeed({ message: `Hi ${req.name}` })
+ *   SayHello: (req) => Effect({ message: `Hi ${req.name}` })
  * })
  * ```
  */

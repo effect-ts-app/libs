@@ -76,7 +76,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .exit.flatMap(_ =>
           _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect.succeed(
+            : Effect(
               _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
@@ -87,7 +87,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .exit.flatMap(_ =>
           _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect.succeed(
+            : Effect(
               _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
@@ -98,7 +98,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .exit.flatMap(_ =>
           _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect.succeed(
+            : Effect(
               _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
@@ -109,7 +109,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .exit.flatMap(_ =>
           _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect.succeed(
+            : Effect(
               _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
@@ -120,7 +120,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         .exit.flatMap(_ =>
           _.isFailure() && !_.cause.isFailure()
             ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect.succeed(
+            : Effect(
               _.isSuccess()
                 ? { _tag: "Success" as const, value: _.value }
                 : { _tag: "Failure", errors: _.cause.failures }
@@ -146,7 +146,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
       if (errors.length) {
         return Effect.fail(new ValidationError(errors))
       }
-      return Effect.succeed({
+      return Effect({
         body: body.value!,
         cookie: cookie.value!,
         headers: headers.value!,
@@ -184,7 +184,7 @@ export function respondSuccess<ReqA, A, E>(
   return (req: ReqA, res: express.Response) =>
     flow(encodeResponse(req), Effect.succeed, _ =>
       _.flatMap(r =>
-        Effect.sync(() => {
+        Effect(() => {
           r === undefined
             ? res.status(204).send()
             : res.status(200).send(r === null ? JSON.stringify(null) : r)
@@ -301,7 +301,7 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Effect.succeed(
+  const ph = Effect(
     Opt.fromNullable(Request.Headers)
       .map(s => s)
       .map(Parser.for)
@@ -309,7 +309,7 @@ export function makeRequestParsers<
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt(d => d(u))
 
-  const pq = Effect.succeed(
+  const pq = Effect(
     Opt.fromNullable(Request.Query)
       .map(s => s)
       .map(Parser.for)
@@ -317,7 +317,7 @@ export function makeRequestParsers<
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt(d => d(u))
 
-  const pb = Effect.succeed(
+  const pb = Effect(
     Opt.fromNullable(Request.Body)
       .map(s => s)
       .map(Parser.for)
@@ -325,7 +325,7 @@ export function makeRequestParsers<
   )
   const parseBody = (u: unknown) => pb.flatMapOpt(d => d(u))
 
-  const pp = Effect.succeed(
+  const pp = Effect(
     Opt.fromNullable(Request.Path)
       .map(s => s)
       .map(Parser.for)
@@ -333,7 +333,7 @@ export function makeRequestParsers<
   )
   const parsePath = (u: unknown) => pp.flatMapOpt(d => d(u))
 
-  const pc = Effect.succeed(
+  const pc = Effect(
     Opt.fromNullable(Request.Cookie)
       .map(s => s)
       .map(Parser.for)

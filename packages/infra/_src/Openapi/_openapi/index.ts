@@ -99,7 +99,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   }
   if ("lazy" in schema) {
     // TODO: Support recursive structures
-    return Effect.succeed(new ObjectSchema({}))
+    return Effect(new ObjectSchema({}))
   }
   return Effect.gen(function*($) {
     if (schema instanceof MO.SchemaRefinement) {
@@ -150,8 +150,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
 
           return yield* $(
             noRef
-              ? Effect.succeed(obj)
-              : referenced({ openapiRef: ref })(Effect.succeed(obj))
+              ? Effect(obj)
+              : referenced({ openapiRef: ref })(Effect(obj))
           )
         }
         case unionIdentifier: {
@@ -259,9 +259,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? Effect.succeed(obj)
+              ? Effect(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                Effect.succeed(obj)
+                Effect(obj)
               )
           )
         }
@@ -284,9 +284,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? Effect.succeed(obj)
+              ? Effect(obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                Effect.succeed(obj)
+                Effect(obj)
               )
           )
         }

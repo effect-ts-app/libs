@@ -103,11 +103,11 @@ export const Client = (
                     () =>
                       // TEXT
                       done(
-                        Effect.succeed(getResponse(statusCode, body.toString(), headers))
+                        Effect(getResponse(statusCode, body.toString(), headers))
                       ),
                     () =>
                       Buffer.isBuffer(body)
-                        ? done(Effect.succeed(getResponse(statusCode, body, headers)))
+                        ? done(Effect(getResponse(statusCode, body, headers)))
                         : // BINARY
                           done(
                             Effect.fail({
@@ -132,7 +132,7 @@ export const Client = (
 
             req.perform()
 
-            return Effect.sync(() => {
+            return Effect(() => {
               req.close()
             })
           }),

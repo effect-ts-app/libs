@@ -5,7 +5,7 @@ import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
 const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: SendgridConfig) =>
-  Effect.sync(() => {
+  Effect(() => {
     sgMail.setApiKey(apiKey.value)
 
     return {
@@ -28,7 +28,7 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: Send
                 void sgMail.send(renderedMsg, false, (err, result) =>
                   err ?
                     cb(Effect.fail(err)) :
-                    cb(Effect.succeed(result)))
+                    cb(Effect(result)))
             )
           )
 

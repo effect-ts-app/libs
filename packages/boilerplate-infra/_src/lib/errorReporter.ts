@@ -59,5 +59,5 @@ export function reportMessage(message: string) {
 }
 
 export function reportMessageM(message: string) {
-  return Effect.sync(() => reportMessage(message))
+  return Effect(reportMessage(message))
 }

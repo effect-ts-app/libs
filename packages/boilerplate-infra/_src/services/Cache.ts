@@ -33,7 +33,7 @@ export function make<Key, Environment, Error, Value>(
 export function results<Key, Error, Value>(
   self: Cache<Key, Error, Value>
 ): Effect<never, never, Chunk<[Key, Exit<Error, Value>]>> {
-  return Effect.sync(() => {
+  return Effect(() => {
     const values: Array<[Key, Exit<Error, Value>]> = []
     for (const [key, value] of ((self as any).cacheState as CacheState<Key, Error, Value>).map) {
       if (value._tag === "Complete") {

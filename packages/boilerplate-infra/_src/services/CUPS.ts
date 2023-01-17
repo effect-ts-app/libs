@@ -21,7 +21,7 @@ export function LiveCUPS(cupsServer?: URL) {
 }
 
 function makeCUPS(cupsServer?: URL) {
-  return Effect.sync(() => {
+  return Effect(() => {
     function print_(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
       const print = printBuffer({
         id: printerId,
@@ -67,7 +67,7 @@ function* buildPrintArgs(filePath: string, printer: PrinterConfig | undefined, o
   yield `"${filePath}"`
 }
 
-export const prepareTempDir = Effect.sync(() => {
+export const prepareTempDir = Effect(() => {
   // TODO
   try {
     fs.mkdirSync(path.join(os.tmpdir(), "effect-ts-app"))

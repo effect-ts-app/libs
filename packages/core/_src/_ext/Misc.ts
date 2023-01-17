@@ -1,13 +1,6 @@
 import { pipe } from "./pipe.js"
 
 /**
- * @tsplus type tsplus/LazyArgument
- */
-export interface LazyArg<A> {
-  (): A
-}
-
-/**
  * @tsplus operator ets/NESet >=
  * @tsplus fluent ets/NESet apply
  * @tsplus fluent ets/NESet __call

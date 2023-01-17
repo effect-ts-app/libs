@@ -30,7 +30,7 @@ export function mapOpt_<A, B>(
     }
     res.push(x.value)
   }
-  return Opt.some(res)
+  return Opt(res)
 }
 
 /**
