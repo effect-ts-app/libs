@@ -7,12 +7,12 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
 
 patchedDependencies:
-  '@effect-ts/monocle@0.43.0':
-    hash: d3hhxwnoq64fw5ljkjpzykj2mi
-    path: patches/@effect-ts__monocle@0.43.0.patch
   '@typescript-eslint/scope-manager@5.48.2':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.48.2.patch
+  '@effect-ts/monocle@0.43.0':
+    hash: d3hhxwnoq64fw5ljkjpzykj2mi
+    path: patches/@effect-ts__monocle@0.43.0.patch
   '@effect-ts/core@0.60.5':
     hash: jx4drcbvzaxoqqasybnfxdx44i
     path: patches/@effect-ts__core@0.60.5.patch
@@ -25,14 +25,14 @@ patchedDependencies:
   typescript@5.0.0-tsplus.20230113:
     hash: 4lokxnnems7dr5czg2fre2i5fq
     path: patches/typescript@5.0.0-tsplus.20230113.patch
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
   '@effect/language-service@0.0.15':
     hash: a4uvuf3pdfkyyq2ka2mtqp5yfi
     path: patches/@effect__language-service@0.0.15.patch
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
   '@effect/io@0.0.65':
-    hash: fiou55ogrdnw5stoupnllrfvym
+    hash: ch2m3gurmkzos5ffwbxtffvjeq
     path: patches/@effect__io@0.0.65.patch
 
 importers:
@@ -212,7 +212,7 @@ importers:
       '@effect-ts-app/core': link:../core
       '@effect-ts-app/infra': link:../infra
       '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
       change-case: 4.1.2
@@ -279,7 +279,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@effect/stm': 0.0.15
       '@effect/stream': 0.0.12
       '@fp-ts/core': 0.0.11
@@ -370,7 +370,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
       query-string: 8.1.0
@@ -432,7 +432,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
       cross-fetch: 3.1.5
@@ -483,7 +483,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
       proper-lockfile: 4.1.2
@@ -542,7 +542,7 @@ importers:
       '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
       '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
       '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
       cross-fetch: 3.1.5
@@ -2078,7 +2078,7 @@ packages:
     dev: false
     patched: true
 
-  /@effect/io/0.0.65_fiou55ogrdnw5stoupnllrfvym:
+  /@effect/io/0.0.65_ch2m3gurmkzos5ffwbxtffvjeq:
     resolution: {integrity: sha512-LiCeZap+ERUAALdk1cscgWJj4o0IEvQ2KhAtI4fev8cqIRjYy/UsYaW29zeX6FIVGUN/5UaU0xLgMuJnl6Kjqw==}
     dependencies:
       '@fp-ts/core': 0.0.11
@@ -2097,7 +2097,7 @@ packages:
   /@effect/stm/0.0.15:
     resolution: {integrity: sha512-8H3AnkGFWf96THWog51XR5fQKu81vzN1vlTbXfXmvj1wDNEmY5/cqS4QWLIG2iGlIYHI0y9nVAWBI/LUD0vSkQ==}
     dependencies:
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
     dev: false
@@ -2105,7 +2105,7 @@ packages:
   /@effect/stream/0.0.12:
     resolution: {integrity: sha512-th6NokgLZQC97jGxo4vM4x29aYtmqkGSwMlNFAQUJCp0e0RGfmr+Wr2KRL24L+oRttd7ITNFJ9U2m+uo1IbBOg==}
     dependencies:
-      '@effect/io': 0.0.65_fiou55ogrdnw5stoupnllrfvym
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
       '@fp-ts/core': 0.0.11
       '@fp-ts/data': 0.0.39
     dev: false
