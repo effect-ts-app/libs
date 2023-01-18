@@ -1,5 +1,16 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.9
+
+### Patch Changes
+
+- b37cfe2f: Restore annotations
+- Updated dependencies [b37cfe2f]
+  - @effect-ts-app/core@2.4.7
+  - @effect-ts-app/infra@2.4.7
+  - @effect-ts-app/boilerplate-prelude@2.4.7
+  - @effect-ts-app/schema@2.3.17
+
 ## 3.10.8
 
 ### Patch Changes

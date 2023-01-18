@@ -1,5 +1,14 @@
 # @effect-ts-app/infra
 
+## 2.4.7
+
+### Patch Changes
+
+- b37cfe2f: Restore annotations
+- Updated dependencies [b37cfe2f]
+  - @effect-ts-app/core@2.4.7
+  - @effect-ts-app/schema@2.3.17
+
 ## 2.4.6
 
 ### Patch Changes

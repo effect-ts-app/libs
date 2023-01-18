@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.7
+
+### Patch Changes
+
+- b37cfe2f: Restore annotations
+
 ## 2.4.6
 
 ### Patch Changes
