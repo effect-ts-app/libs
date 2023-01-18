@@ -268,7 +268,8 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             now + this.timeToLive(exit).millis
           )
         )
-        return deferred.done(exit).zipRight(exit.done)
+        // TODO: later for updated Deferred handling
+        return Exit.$.done(exit).zipRight(exit.done)
       })
       .onInterrupt(() =>
         deferred.interrupt.zipRight(Effect(() => {
