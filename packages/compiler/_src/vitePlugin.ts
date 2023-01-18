@@ -1,112 +1,213 @@
 import { createFilter } from "@rollup/pluginutils"
 import fs from "fs"
-import json5 from "json5"
-import path from "path"
+import * as nodePath from "path"
 import ts from "typescript"
 import type * as V from "vite"
 
-function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }): V.Plugin {
-  const filter = createFilter(options?.include, options?.exclude)
+const configPath = ts.findConfigFile("./", ts.sys.fileExists, "tsconfig.json")
 
-  const configPath = ts.findConfigFile(
-    "./",
-    ts.sys.fileExists.bind(ts.sys),
-    "tsconfig.json" // "tsconfig.test.json"
+if (!configPath) {
+  throw new Error("Could not find a valid \"tsconfig.json\".")
+}
+
+const baseDir = nodePath.dirname(nodePath.resolve(configPath))
+const cacheDir = nodePath.join(baseDir, ".cache/effect")
+
+if (!fs.existsSync(cacheDir)) {
+  fs.mkdirSync(cacheDir, { recursive: true })
+}
+
+const registry = ts.createDocumentRegistry()
+const files = new Set<string>()
+
+let services: ts.LanguageService
+
+const getScriptVersion = (fileName: string): string => {
+  const modified = ts.sys.getModifiedTime!(fileName)
+  if (modified) {
+    return ts.sys.createHash!(`${fileName}${modified.toISOString()}`)
+  } else {
+    files.delete(fileName)
+  }
+  return "none"
+}
+
+const init = () => {
+  const { config } = ts.parseConfigFileTextToJson(
+    configPath,
+    ts.sys.readFile(configPath)!
   )
 
-  if (!configPath) {
-    throw new Error("Could not find a valid \"tsconfig.test.json\".")
-  }
+  Object.assign(config.compilerOptions, {
+    sourceMap: false,
+    inlineSourceMap: true,
+    inlineSources: true,
+    noEmit: false,
+    declaration: false,
+    declarationMap: false,
+    module: "ESNext",
+    target: "ES2022"
+  })
 
-  const files: Record<string, { version: number }> = {}
-  const registry = ts.createDocumentRegistry()
+  const tsconfig = ts.parseJsonConfigFileContent(config, ts.sys, baseDir)
 
-  let services: ts.LanguageService
-  let program: ts.Program
+  if (!tsconfig.options) tsconfig.options = {}
+  // fix tsplus not initialising
+  const opts = (tsconfig.options as any)
+  opts.configFilePath = configPath
 
-  const initTS = () => {
-    const config = json5.parse(fs.readFileSync(configPath).toString())
+  tsconfig.fileNames.forEach(fileName => {
+    files.add(fileName)
+  })
 
-    Object.assign(config.compilerOptions, {
-      sourceMap: false,
-      inlineSourceMap: true,
-      inlineSources: true,
-      noEmit: false,
-      // should mean faster tests, but requires a background compiler for the dependencies
-      "disableSourceOfProjectReferenceRedirect": true
-      // declaration: false,
-      // declarationMap: false,
-      // module: "ESNext",
-      // target: "ES2022",
-      // moduleResolution: "node16"
-    })
-
-    const tsconfig = ts.parseJsonConfigFileContent(
-      config,
-      ts.sys,
-      path.dirname(path.resolve(configPath))
-    )
-
-    if (!tsconfig.options) tsconfig.options = {}
-    // fix tsplus not initialising
-    const opts = (tsconfig.options as any)
-    opts.configFilePath = configPath
-
-    tsconfig.fileNames.forEach(fileName => {
-      if (!(fileName in files)) {
-        files[fileName] = { version: 0 }
+  const servicesHost: ts.LanguageServiceHost = {
+    realpath: fileName => ts.sys.realpath?.(fileName) ?? fileName,
+    getScriptFileNames: () => Array.from(files),
+    getScriptVersion,
+    getScriptSnapshot: fileName => {
+      if (!ts.sys.fileExists(fileName)) {
+        return undefined
       }
-    })
-
-    const servicesHost: ts.LanguageServiceHost = {
-      getScriptFileNames: () => tsconfig.fileNames,
-      getScriptVersion: fileName => files[fileName]! && files[fileName]!.version.toString(),
-      getScriptSnapshot: fileName => {
-        if (!ts.sys.fileExists(fileName)) {
-          return undefined
-        }
-        return ts.ScriptSnapshot.fromString(ts.sys.readFile(fileName)!.toString())
-      },
-      getCurrentDirectory: () => process.cwd(),
-      getCompilationSettings: () => tsconfig.options,
-      getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
-      fileExists: fileName => ts.sys.fileExists(fileName),
-      readFile: fileName => ts.sys.readFile(fileName),
-      realpath: ts.sys.realpath ? fileName => ts.sys.realpath!(fileName) : undefined
-    }
-
-    services = ts.createLanguageService(servicesHost, registry)
-    program = services.getProgram()!
+      return ts.ScriptSnapshot.fromString(
+        ts.sys.readFile(fileName)!.toString()
+      )
+    },
+    getCurrentDirectory: () => process.cwd(),
+    getCompilationSettings: () => tsconfig.options,
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    fileExists: fileName => ts.sys.fileExists(fileName),
+    readFile: fileName => ts.sys.readFile(fileName)
   }
 
-  initTS()
+  const services = ts.createLanguageService(servicesHost, registry)
+
+  setTimeout(() => {
+    services.getProgram()
+  }, 200)
+
+  return services
+}
+
+const getEmit = (path: string) => {
+  files.add(path)
+
+  const program = services.getProgram()!
+  const source = program.getSourceFile(path)
+
+  let text: string | undefined
+
+  program.emit(
+    source,
+    (file, content) => {
+      if (file.endsWith(".js") || file.endsWith(".jsx")) {
+        text = content
+      }
+    },
+    void 0,
+    void 0
+  )
+
+  if (!text) {
+    throw new Error(`Typescript failed emit for file: ${path}`)
+  }
+
+  return text
+}
+
+const cache = new Map<string, { hash: string; content: string }>()
+
+export const fromCache = (fileName: string) => {
+  const current = getScriptVersion(fileName)
+  if (cache.has(fileName)) {
+    const cached = cache.get(fileName)!
+    if (cached.hash === current) {
+      return cached.content
+    }
+  }
+  const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
+  if (fs.existsSync(path)) {
+    const hash = fs.readFileSync(path).toString("utf-8")
+    if (hash === current) {
+      return fs
+        .readFileSync(
+          nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`)
+        )
+        .toString("utf-8")
+    }
+  }
+}
+
+export const toCache = (fileName: string, content: string) => {
+  const current = getScriptVersion(fileName)
+  const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
+  fs.writeFileSync(path, current)
+  fs.writeFileSync(
+    nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`),
+    content
+  )
+  cache.set(fileName, { hash: current, content })
+  return content
+}
+
+export const getCompiled = (path: string) => {
+  const cached = fromCache(path)
+  if (cached) {
+    return {
+      code: cached
+    }
+  }
+
+  const syntactic = services.getSyntacticDiagnostics(path)
+
+  if (syntactic.length > 0) {
+    throw new Error(
+      syntactic
+        .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+        .join("\n")
+    )
+  }
+
+  const semantic = services.getSemanticDiagnostics(path)
+  services.cleanupSemanticCache()
+
+  if (semantic.length > 0) {
+    throw new Error(
+      semantic
+        .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+        .join("\n")
+    )
+  }
+
+  const code = toCache(path, getEmit(path))
 
   return {
-    name: "ts-plugin",
-    // Vitest Specific Watch
+    code
+  }
+}
+
+export function effectPlugin(options?: any): V.PluginOption[] {
+  const filter = createFilter(options?.include, options?.exclude)
+  if (!services) {
+    services = init()
+  }
+  const plugin: V.PluginOption = {
+    name: "vite:typescript-effect",
+    enforce: "pre",
     configureServer(dev) {
       dev.watcher.on("all", (event, path) => {
         if (filter(path)) {
           if (/\.tsx?/.test(path)) {
             switch (event) {
               case "add": {
-                if (!program.getSourceFile(path)) {
-                  initTS()
-                }
+                files.add(path)
                 break
               }
               case "change": {
-                if (!program.getSourceFile(path)) {
-                  initTS()
-                } else {
-                  files[path]!.version = files[path]!.version + 1
-                }
+                files.add(path)
                 break
               }
               case "unlink": {
-                if (program.getSourceFile(path)) {
-                  initTS()
-                }
+                files.delete(path)
                 break
               }
             }
@@ -114,78 +215,31 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
         }
       })
     },
-    // Rollup Generic Watch
-    watchChange(id, change) {
-      if (filter(id)) {
-        if (/\.tsx?/.test(id)) {
+    watchChange(path, change) {
+      if (filter(path)) {
+        if (/\.tsx?/.test(path)) {
           switch (change.event) {
             case "create": {
-              if (!program.getSourceFile(id)) {
-                initTS()
-              }
+              files.add(path)
               break
             }
             case "update": {
-              if (!program.getSourceFile(id)) {
-                initTS()
-              } else {
-                files[id]!.version = files[id]!.version + 1
-              }
+              files.add(path)
               break
             }
             case "delete": {
-              if (program.getSourceFile(id)) {
-                initTS()
-              }
+              files.delete(path)
               break
             }
           }
         }
       }
     },
-    transform(code, id) {
-      const split = id.split("?")
-      id = split[0]!
-
-      if (filter(id)) {
-        if (/\.tsx?/.test(id)) {
-          // TODO: wallaby may run code from the editor buffer,
-          // so we need a way to check ts files that live in buffer, or write them to disk?
-          // remove ?wallaby etc
-          // const wallabyId = split[1]
-          // const fn = id + "_" + wallabyId + ".tmp" + ".ts"
-          // if (wallabyId) {
-          //   fs.writeFileSync(fn, code, "utf-8")
-          //   id = fn
-          //   initTS()
-          // }
-          // wallaby workaround
-          const f = files[id]
-          if (f) {
-            f.version = f.version + 1
-          } else files[id] = { version: 0 }
-
-          const syntactic = services.getSyntacticDiagnostics(id)
-          if (syntactic.length > 0) {
-            throw new Error(syntactic.map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
-          }
-          const semantic = services.getSemanticDiagnostics(id)
-          services.cleanupSemanticCache()
-          if (semantic.length > 0) {
-            throw new Error(semantic.map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
-          }
-          const out = services.getEmitOutput(id).outputFiles
-          if (out.length === 0) {
-            throw new Error("typescript output files is empty")
-          }
-          code = out[0]!.text
-        }
-        return {
-          code
-        }
+    transform(_, path) {
+      if (/\.tsx?/.test(path) && filter(path)) {
+        return getCompiled(path)
       }
     }
   }
+  return [plugin]
 }
-
-export { tsPlugin }
