@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.5
+
+### Patch Changes
+
+- c887c1e9: Update libs
+
 ## 2.4.4
 
 ### Patch Changes
