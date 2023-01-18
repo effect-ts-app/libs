@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.6
+
+### Patch Changes
+
+- d3735fe9: FUP
+
 ## 2.4.5
 
 ### Patch Changes

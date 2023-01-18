@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "peerDependencies": {
-    "@effect-ts-app/boilerplate-prelude": "^2.4.5"
+    "@effect-ts-app/boilerplate-prelude": "^2.4.6"
   },
   "dependencies": {
     "change-case": "^4.1.2",
