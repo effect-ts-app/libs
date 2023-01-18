@@ -808,6 +808,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Exit.Ops",
+          "kind": "static",
+          "name": "isFailure"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Exit",
           "name": "isFailure"
@@ -815,11 +820,6 @@
         {
           "kind": "static",
           "typeName": "effect/io/Exit.Aspects",
-          "name": "isFailure"
-        },
-        {
-          "typeName": "effect/io/Exit.Ops",
-          "kind": "static",
           "name": "isFailure"
         }
       ]
@@ -829,6 +829,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Exit.Ops",
+          "kind": "static",
+          "name": "isSuccess"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Exit",
           "name": "isSuccess"
@@ -836,11 +841,6 @@
         {
           "kind": "static",
           "typeName": "effect/io/Exit.Aspects",
-          "name": "isSuccess"
-        },
-        {
-          "typeName": "effect/io/Exit.Ops",
-          "kind": "static",
           "name": "isSuccess"
         }
       ]
@@ -2028,14 +2028,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "succeed"
-        },
-        {
           "typeName": "effect/io/Config",
           "kind": "static",
           "name": "__call"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "succeed"
         }
       ]
     },
@@ -4738,6 +4738,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "static",
+          "name": "__call"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "sync"
@@ -4746,11 +4751,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "sync"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "static",
-          "name": "__call"
         }
       ]
     },
@@ -5525,6 +5525,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule/Interval",
+          "kind": "pipeable-operator",
+          "name": "<"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule/Interval",
           "name": "lessThan"
@@ -5533,11 +5538,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule/Interval.Aspects",
           "name": "lessThan"
-        },
-        {
-          "typeName": "effect/io/Schedule/Interval",
-          "kind": "pipeable-operator",
-          "name": "<"
         }
       ]
     },
@@ -5732,6 +5732,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule/Intervals",
+          "kind": "pipeable-operator",
+          "name": "||"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule/Intervals",
           "name": "union"
@@ -5740,11 +5745,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule/Intervals.Aspects",
           "name": "union"
-        },
-        {
-          "typeName": "effect/io/Schedule/Intervals",
-          "kind": "pipeable-operator",
-          "name": "||"
         }
       ]
     },
@@ -5753,6 +5753,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule/Intervals",
+          "kind": "pipeable-operator",
+          "name": "&&"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule/Intervals",
           "name": "intersect"
@@ -5761,11 +5766,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule/Intervals.Aspects",
           "name": "intersect"
-        },
-        {
-          "typeName": "effect/io/Schedule/Intervals",
-          "kind": "pipeable-operator",
-          "name": "&&"
         }
       ]
     },
@@ -5774,6 +5774,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule/Intervals",
+          "kind": "pipeable-operator",
+          "name": "<"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule/Intervals",
           "name": "lessThan"
@@ -5782,11 +5787,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule/Intervals.Aspects",
           "name": "lessThan"
-        },
-        {
-          "typeName": "effect/io/Schedule/Intervals",
-          "kind": "pipeable-operator",
-          "name": "<"
         }
       ]
     },
@@ -6514,6 +6514,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "/"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "andThen"
@@ -6522,11 +6527,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "andThen"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "/"
         }
       ]
     },
@@ -6535,6 +6535,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "%"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "andThenEither"
@@ -6543,11 +6548,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "andThenEither"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "%"
         }
       ]
     },
@@ -6572,6 +6572,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "**"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "bothInOut"
@@ -6580,11 +6585,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "bothInOut"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "**"
         }
       ]
     },
@@ -6625,6 +6625,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "+"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "choose"
@@ -6633,11 +6638,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "choose"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "+"
         }
       ]
     },
@@ -6662,6 +6662,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": ">>"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "compose"
@@ -6670,11 +6675,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "compose"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": ">>"
         }
       ]
     },
@@ -6859,6 +6859,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "&&"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "intersect"
@@ -6867,11 +6872,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "intersect"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "&&"
         }
       ]
     },
@@ -7152,6 +7152,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "||"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "union"
@@ -7160,11 +7165,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "union"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "||"
         }
       ]
     },
@@ -7333,6 +7333,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": "<"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "zipLeft"
@@ -7341,11 +7346,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "zipLeft"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "<"
         }
       ]
     },
@@ -7354,6 +7354,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Schedule",
+          "kind": "pipeable-operator",
+          "name": ">"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
           "name": "zipRight"
@@ -7362,11 +7367,6 @@
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
           "name": "zipRight"
-        },
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": ">"
         }
       ]
     },
@@ -8262,14 +8262,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "scoped"
-        },
-        {
           "typeName": "effect/io/Effect",
           "kind": "pipeable",
           "name": "toScopedLayer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scoped"
         }
       ]
     },
@@ -8278,14 +8278,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "scopedDiscard"
-        },
-        {
           "typeName": "effect/io/Effect",
           "kind": "pipeable",
           "name": "toScopedDiscardLayer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scopedDiscard"
         }
       ]
     },
@@ -8294,14 +8294,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "scopedEnvironment"
-        },
-        {
           "typeName": "effect/io/Effect",
           "kind": "pipeable",
           "name": "toScopedEnvironmentLayer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scopedEnvironment"
         }
       ]
     },
@@ -8324,11 +8324,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "succeed"
-        },
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "static",
-          "name": "__call"
         }
       ]
     },
@@ -8358,6 +8353,11 @@
       "definitionName": "sync",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/io/Layer",
+          "kind": "static",
+          "name": "__call"
+        },
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
@@ -8536,6 +8536,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Layer",
+          "kind": "pipeable-operator",
+          "name": "+"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
           "name": "merge"
@@ -8544,11 +8549,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "merge"
-        },
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": "+"
         }
       ]
     },
@@ -8557,6 +8557,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Layer",
+          "kind": "pipeable-operator",
+          "name": "|"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
           "name": "orElse"
@@ -8565,11 +8570,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "orElse"
-        },
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": "|"
         }
       ]
     },
@@ -8578,6 +8578,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Layer",
+          "kind": "pipeable-operator",
+          "name": ">>"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
           "name": "provideTo"
@@ -8586,11 +8591,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "provideTo"
-        },
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": ">>"
         }
       ]
     },
@@ -8599,6 +8599,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Layer",
+          "kind": "pipeable-operator",
+          "name": ">"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
           "name": "provideToAndMerge"
@@ -8607,11 +8612,6 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "provideToAndMerge"
-        },
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": ">"
         }
       ]
     },
@@ -12047,14 +12047,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "unsafeMakeSemaphore"
-        },
-        {
           "typeName": "effect/io/Effect/Semaphore.Ops",
           "kind": "static",
           "name": "unsafeMake"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "unsafeMakeSemaphore"
         }
       ]
     },
@@ -12063,14 +12063,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "makeSemaphore"
-        },
-        {
           "typeName": "effect/io/Effect/Semaphore.Ops",
           "kind": "static",
           "name": "make"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "makeSemaphore"
         }
       ]
     },
@@ -12827,14 +12827,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "service"
-        },
-        {
           "typeName": "fp-ts/data/Context/Tag",
           "kind": "getter",
           "name": "access"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "service"
         }
       ]
     },
@@ -12843,14 +12843,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "serviceWith"
-        },
-        {
           "typeName": "fp-ts/data/Context/Tag",
           "kind": "getter",
           "name": "accessWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "serviceWith"
         }
       ]
     },
@@ -12859,14 +12859,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "serviceWithEffect"
-        },
-        {
           "typeName": "fp-ts/data/Context/Tag",
           "kind": "getter",
           "name": "accessWithEffect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "serviceWithEffect"
         }
       ]
     },
@@ -12985,14 +12985,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "sync"
-        },
-        {
           "typeName": "effect/io/Effect",
           "kind": "static",
           "name": "__call"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "sync"
         }
       ]
     },
@@ -13166,13 +13166,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Effect",
+          "kind": "fluent",
           "name": "unsafeRun"
         },
         {
-          "typeName": "effect/io/Effect",
-          "kind": "fluent",
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unsafeRun"
         }
       ]
@@ -14491,6 +14491,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "pipeable-operator",
+          "name": "|"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "orElse"
@@ -14499,11 +14504,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "orElse"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "|"
         }
       ]
     },
@@ -16144,6 +16144,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "pipeable-operator",
+          "name": "+"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "zip"
@@ -16152,11 +16157,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "zip"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "+"
         }
       ]
     },
@@ -16165,6 +16165,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "pipeable-operator",
+          "name": "<"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "zipLeft"
@@ -16173,11 +16178,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "zipLeft"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "<"
         }
       ]
     },
@@ -16186,6 +16186,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "pipeable-operator",
+          "name": ">"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "zipRight"
@@ -16194,11 +16199,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "zipRight"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": ">"
         }
       ]
     },
@@ -16223,6 +16223,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "pipeable-operator",
+          "name": "&"
+        },
+        {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
           "name": "zipPar"
@@ -16231,11 +16236,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "zipPar"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "&"
         }
       ]
     },
