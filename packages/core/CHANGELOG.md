@@ -1,5 +1,11 @@
 # @effect-ts-app/core
 
+## 2.4.9
+
+### Patch Changes
+
+- 1429aa2e: Fix missing import
+
 ## 2.4.8
 
 ### Patch Changes
