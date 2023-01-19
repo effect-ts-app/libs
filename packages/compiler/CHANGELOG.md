@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-vue
 
+## 1.0.5
+
+### Patch Changes
+
+- eaee4f7a: Add vitePlugin2
+
 ## 1.0.4
 
 ### Patch Changes
