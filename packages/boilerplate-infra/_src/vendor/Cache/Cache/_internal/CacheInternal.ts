@@ -1,5 +1,5 @@
 import type { Clock } from "@effect/io/Clock"
-import { Deferred } from "@effect/io/Deferred"
+import { Deferred, done as doneDeferred } from "@effect/io/Deferred"
 import type { FiberId } from "@effect/io/Fiber/Id"
 import { EmptyMutableQueue } from "@fp-ts/data/MutableQueue"
 import { CacheStats } from "../../CacheStats.js"
@@ -269,7 +269,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
           )
         )
         // TODO: later for updated Deferred handling
-        return Exit.$.done(exit).zipRight(exit.done)
+        return doneDeferred(deferred)(exit).zipRight(exit.done)
       })
       .onInterrupt(() =>
         deferred.interrupt.zipRight(Effect(() => {
