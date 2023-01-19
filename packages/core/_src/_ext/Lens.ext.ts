@@ -1,4 +1,4 @@
-import * as Lens from "@effect-ts-app/core/fluent/_ext/Lens"
+import * as Lens from "@effect-app/core/fluent/_ext/Lens"
 
 import * as L from "./lens.js"
 

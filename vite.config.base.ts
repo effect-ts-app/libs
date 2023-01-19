@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { tsPlugin } from "@effect-ts-app/compiler/vitePlugin"
+import { tsPlugin } from "@effect-app/compiler/vitePlugin"
 import path from "path"
 import fs from "fs"
 

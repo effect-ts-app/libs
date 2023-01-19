@@ -1,14 +1,14 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable unused-imports/no-unused-imports */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import "@effect-ts-app/core/_global"
-import "@effect-ts-app/schema/_global"
 
 /**
  * @tsplus global
  */
-import { Logger } from "@effect/io/Logger"
+import "@effect-app/prelude/_global"
 
 /**
  * @tsplus global
  */
-import {} from "@effect-ts-app/infra/runMain"
+import "@effect-app/infra-adapters/_global"
+
+import "./_global.ext.js"

@@ -14,7 +14,7 @@
       "path": "packages/compiler"
     },
     {
-      "path": "packages/infra"
+      "path": "packages/infra-adapters"
     },
     {
       "path": "packages/schema"
@@ -23,16 +23,16 @@
       "path": "packages/core"
     },
     {
-      "path": "packages/boilerplate-prelude"
+      "path": "packages/prelude"
     },
     {
-      "path": "packages/boilerplate-infra"
+      "path": "packages/infra"
     },
     {
-      "path": "packages/boilerplate-vue"
+      "path": "packages/vue"
     },
     {
-      "path": "packages/boilerplate-react"
+      "path": "packages/react"
     },
   ]
 }

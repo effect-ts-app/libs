@@ -1,5 +1,5 @@
 {
-    "name": "@effect-ts-app/boilerplate-root",
+    "name": "@effect-app/boilerplate-root",
     "private": true,
     "pnpm": {
         "patchedDependencies": {
@@ -15,7 +15,7 @@
         }
     },
     "scripts": {
-        "all": "pnpm -r --filter=!./play --filter=!./packages/pnpm-singleton",
+        "all": "pnpm -r --filter=!./packages/pnpm-singleton",
         "ci:version": "pnpm changeset version",
         "ci:publish": "pnpm all publish --access=public",
         "preinstall": "npx only-allow pnpm",
@@ -61,9 +61,9 @@
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.20.11",
         "@changesets/cli": "^2.26.0",
-        "@effect-ts-app/boilerplate-eslint": "workspace:*",
-        "@effect-ts-app/compiler": "workspace:*",
-        "@effect-ts-app/pnpm-singleton": "workspace:*",
+        "@effect-app/eslint-codegen-model": "workspace:*",
+        "@effect-app/compiler": "workspace:*",
+        "@effect-app/pnpm-singleton": "workspace:*",
         "@effect/language-service": "^0.0.15",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^1.0.2",

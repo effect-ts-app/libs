@@ -19,7 +19,7 @@ const exps = {
     }
   },
   ...items,
-  ...pkg.name === "@effect-ts-app/core" ? {
+  ...pkg.name === "@effect-app/core" ? {
     "./types/awesome": { "types": "./types/awesome.d.ts" }
   } : {},
 }

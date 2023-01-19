@@ -1,8 +1,14 @@
 *.test.js
 *.test.d.ts
+tsconfig.build.json
+*.log
 tslint.json
-!**/*.d.ts
 .eslintrc.js
+.eslintignore
+.madgerc
 coverage/
-**/*.tsbuildinfo
-_esm/
+.tsbuildinfo
+.build/
+!dist/
+!_cjs/
+.swcrc

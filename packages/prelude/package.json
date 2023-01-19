@@ -1,0 +1,420 @@
+{
+  "name": "@effect-app/prelude",
+  "version": "0.7.0",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@effect-app/core": "workspace:*",
+    "@effect-app/schema": "workspace:*",
+    "@effect-ts/core": "^0.60.5",
+    "@effect-ts/monocle": "^0.43.0",
+    "@effect-ts/system": "^0.57.5",
+    "@effect/io": "^0.0.65",
+    "@effect/stm": "^0.0.15",
+    "@effect/stream": "^0.0.12",
+    "@fp-ts/core": "^0.0.11",
+    "@fp-ts/data": "^0.0.39",
+    "date-fns": "^2.29.3",
+    "lodash": "^4.17.21",
+    "nanoid": "^4.0.0",
+    "path-parser": "^6.1.0",
+    "query-string": "^8.1.0",
+    "ts-pattern": "^4.1.3",
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@effect-app/compiler": "workspace:*",
+    "@babel/cli": "^7.20.7",
+    "@types/faker": "5.5.9",
+    "@types/node": "~18.11.18",
+    "@types/uuid": "^9.0.0",
+    "@types/validator": "^13.7.10",
+    "faker": "^5.5.3",
+    "fast-check": "^3.6.0",
+    "ts-node": "^10.9.1",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
+    "vitest": "^0.27.2"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./Config/SecretURL": {
+      "import": {
+        "types": "./dist/Config/SecretURL.d.ts",
+        "default": "./dist/Config/SecretURL.js"
+      },
+      "require": {
+        "types": "./dist/Config/SecretURL.d.ts",
+        "default": "./_cjs/Config/SecretURL.cjs"
+      }
+    },
+    "./Config/internal/configSecretURL": {
+      "import": {
+        "types": "./dist/Config/internal/configSecretURL.d.ts",
+        "default": "./dist/Config/internal/configSecretURL.js"
+      },
+      "require": {
+        "types": "./dist/Config/internal/configSecretURL.d.ts",
+        "default": "./_cjs/Config/internal/configSecretURL.cjs"
+      }
+    },
+    "./Function": {
+      "import": {
+        "types": "./dist/Function.d.ts",
+        "default": "./dist/Function.js"
+      },
+      "require": {
+        "types": "./dist/Function.d.ts",
+        "default": "./_cjs/Function.cjs"
+      }
+    },
+    "./Inputify.type": {
+      "import": {
+        "types": "./dist/Inputify.type.d.ts",
+        "default": "./dist/Inputify.type.js"
+      },
+      "require": {
+        "types": "./dist/Inputify.type.d.ts",
+        "default": "./_cjs/Inputify.type.cjs"
+      }
+    },
+    "./Widen.type": {
+      "import": {
+        "types": "./dist/Widen.type.d.ts",
+        "default": "./dist/Widen.type.js"
+      },
+      "require": {
+        "types": "./dist/Widen.type.d.ts",
+        "default": "./_cjs/Widen.type.cjs"
+      }
+    },
+    "./_ext/Lens.ext": {
+      "import": {
+        "types": "./dist/_ext/Lens.ext.d.ts",
+        "default": "./dist/_ext/Lens.ext.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Lens.ext.d.ts",
+        "default": "./_cjs/_ext/Lens.ext.cjs"
+      }
+    },
+    "./_ext/Prelude.ext": {
+      "import": {
+        "types": "./dist/_ext/Prelude.ext.d.ts",
+        "default": "./dist/_ext/Prelude.ext.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Prelude.ext.d.ts",
+        "default": "./_cjs/_ext/Prelude.ext.cjs"
+      }
+    },
+    "./_ext/Pure": {
+      "import": {
+        "types": "./dist/_ext/Pure.d.ts",
+        "default": "./dist/_ext/Pure.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Pure.d.ts",
+        "default": "./_cjs/_ext/Pure.cjs"
+      }
+    },
+    "./_ext/Ref": {
+      "import": {
+        "types": "./dist/_ext/Ref.d.ts",
+        "default": "./dist/_ext/Ref.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Ref.d.ts",
+        "default": "./_cjs/_ext/Ref.cjs"
+      }
+    },
+    "./_ext/Schema.ext": {
+      "import": {
+        "types": "./dist/_ext/Schema.ext.d.ts",
+        "default": "./dist/_ext/Schema.ext.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Schema.ext.d.ts",
+        "default": "./_cjs/_ext/Schema.ext.cjs"
+      }
+    },
+    "./_ext/builtIn": {
+      "import": {
+        "types": "./dist/_ext/builtIn.d.ts",
+        "default": "./dist/_ext/builtIn.js"
+      },
+      "require": {
+        "types": "./dist/_ext/builtIn.d.ts",
+        "default": "./_cjs/_ext/builtIn.cjs"
+      }
+    },
+    "./_ext/date": {
+      "import": {
+        "types": "./dist/_ext/date.d.ts",
+        "default": "./dist/_ext/date.js"
+      },
+      "require": {
+        "types": "./dist/_ext/date.d.ts",
+        "default": "./_cjs/_ext/date.cjs"
+      }
+    },
+    "./_ext/pipe": {
+      "import": {
+        "types": "./dist/_ext/pipe.d.ts",
+        "default": "./dist/_ext/pipe.js"
+      },
+      "require": {
+        "types": "./dist/_ext/pipe.d.ts",
+        "default": "./_cjs/_ext/pipe.cjs"
+      }
+    },
+    "./_ext/refinements": {
+      "import": {
+        "types": "./dist/_ext/refinements.d.ts",
+        "default": "./dist/_ext/refinements.js"
+      },
+      "require": {
+        "types": "./dist/_ext/refinements.d.ts",
+        "default": "./_cjs/_ext/refinements.cjs"
+      }
+    },
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
+      },
+      "require": {
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.schema": {
+      "import": {
+        "types": "./dist/_global.schema.d.ts",
+        "default": "./dist/_global.schema.js"
+      },
+      "require": {
+        "types": "./dist/_global.schema.d.ts",
+        "default": "./_cjs/_global.schema.cjs"
+      }
+    },
+    "./client": {
+      "import": {
+        "types": "./dist/client.d.ts",
+        "default": "./dist/client.js"
+      },
+      "require": {
+        "types": "./dist/client.d.ts",
+        "default": "./_cjs/client.cjs"
+      }
+    },
+    "./client/QueryResult": {
+      "import": {
+        "types": "./dist/client/QueryResult.d.ts",
+        "default": "./dist/client/QueryResult.js"
+      },
+      "require": {
+        "types": "./dist/client/QueryResult.d.ts",
+        "default": "./_cjs/client/QueryResult.cjs"
+      }
+    },
+    "./client/clientFor": {
+      "import": {
+        "types": "./dist/client/clientFor.d.ts",
+        "default": "./dist/client/clientFor.js"
+      },
+      "require": {
+        "types": "./dist/client/clientFor.d.ts",
+        "default": "./_cjs/client/clientFor.cjs"
+      }
+    },
+    "./client/config": {
+      "import": {
+        "types": "./dist/client/config.d.ts",
+        "default": "./dist/client/config.js"
+      },
+      "require": {
+        "types": "./dist/client/config.d.ts",
+        "default": "./_cjs/client/config.cjs"
+      }
+    },
+    "./client/errors": {
+      "import": {
+        "types": "./dist/client/errors.d.ts",
+        "default": "./dist/client/errors.js"
+      },
+      "require": {
+        "types": "./dist/client/errors.d.ts",
+        "default": "./_cjs/client/errors.cjs"
+      }
+    },
+    "./client/fetch": {
+      "import": {
+        "types": "./dist/client/fetch.d.ts",
+        "default": "./dist/client/fetch.js"
+      },
+      "require": {
+        "types": "./dist/client/fetch.d.ts",
+        "default": "./_cjs/client/fetch.cjs"
+      }
+    },
+    "./faker": {
+      "import": {
+        "types": "./dist/faker.d.ts",
+        "default": "./dist/faker.js"
+      },
+      "require": {
+        "types": "./dist/faker.d.ts",
+        "default": "./_cjs/faker.cjs"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./lens": {
+      "import": {
+        "types": "./dist/lens.d.ts",
+        "default": "./dist/lens.js"
+      },
+      "require": {
+        "types": "./dist/lens.d.ts",
+        "default": "./_cjs/lens.cjs"
+      }
+    },
+    "./schema": {
+      "import": {
+        "types": "./dist/schema.d.ts",
+        "default": "./dist/schema.js"
+      },
+      "require": {
+        "types": "./dist/schema.d.ts",
+        "default": "./_cjs/schema.cjs"
+      }
+    },
+    "./schema/_schema": {
+      "import": {
+        "types": "./dist/schema/_schema.d.ts",
+        "default": "./dist/schema/_schema.js"
+      },
+      "require": {
+        "types": "./dist/schema/_schema.d.ts",
+        "default": "./_cjs/schema/_schema.cjs"
+      }
+    },
+    "./schema/api": {
+      "import": {
+        "types": "./dist/schema/api.d.ts",
+        "default": "./dist/schema/api.js"
+      },
+      "require": {
+        "types": "./dist/schema/api.d.ts",
+        "default": "./_cjs/schema/api.cjs"
+      }
+    },
+    "./schema/api/date": {
+      "import": {
+        "types": "./dist/schema/api/date.d.ts",
+        "default": "./dist/schema/api/date.js"
+      },
+      "require": {
+        "types": "./dist/schema/api/date.d.ts",
+        "default": "./_cjs/schema/api/date.cjs"
+      }
+    },
+    "./schema/overrides": {
+      "import": {
+        "types": "./dist/schema/overrides.d.ts",
+        "default": "./dist/schema/overrides.js"
+      },
+      "require": {
+        "types": "./dist/schema/overrides.d.ts",
+        "default": "./_cjs/schema/overrides.cjs"
+      }
+    },
+    "./schema/shared": {
+      "import": {
+        "types": "./dist/schema/shared.d.ts",
+        "default": "./dist/schema/shared.js"
+      },
+      "require": {
+        "types": "./dist/schema/shared.d.ts",
+        "default": "./_cjs/schema/shared.cjs"
+      }
+    },
+    "./service": {
+      "import": {
+        "types": "./dist/service.d.ts",
+        "default": "./dist/service.js"
+      },
+      "require": {
+        "types": "./dist/service.d.ts",
+        "default": "./_cjs/service.cjs"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      },
+      "require": {
+        "types": "./dist/utils.d.ts",
+        "default": "./_cjs/utils.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "watch": "pnpm build:tsc -w",
+    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build": "pnpm build:tsc && pnpm build2:cjs",
+    "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
+    "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
+    "clean": "rm -rf dist && rm -rf _cjs",
+    "clean-dist": "sh ../../scripts/clean-dist.sh",
+    "circular": "pnpm circular:src && pnpm circular:dist",
+    "circular:src": "madge --circular --ts-config ./tsconfig.json --extensions ts ./_src",
+    "circular:dist": "madge --circular --extensions js ./dist",
+    "compile": "NODE_OPTIONS=--max-old-space-size=6144 tsc --noEmit",
+    "lint": "NODE_OPTIONS=--max-old-space-size=6144 ESLINT_TS=1 eslint ./_src",
+    "lint:watch": "ESLINT_TS=1 esw -w --changed --clear --ext ts,tsx .",
+    "autofix": "pnpm lint --fix",
+    "test": "vitest",
+    "test:run": "pnpm run test run --passWithNoTests",
+    "testsuite": "pnpm lint && pnpm circular && pnpm run test:run",
+    "ncu": "ncu",
+    "pub": "pnpm prepublish && npm publish --access public",
+    "prepublish": "pnpm build && cp -f ./tsconfig.json ./tsconfig.json.bak && node ../../scripts/mergeTsConfig.cjs ./tsconfig.json",
+    "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"
+  },
+  "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
+  "sideEffects": [
+    "./dist/faker.js",
+    "./faker",
+    "./_src/faker",
+    "./dist/faker",
+    "./dist/src/faker.js",
+    "./dist/faker.js"
+  ]
+}

@@ -60,7 +60,7 @@ module.exports = (dirName, forceTS = false) => {
 
       "@typescript-eslint/consistent-type-imports": "error",
 
-      'codegen/codegen': ['error', { presets: require('@effect-ts-app/boilerplate-eslint/dist/presets/barrel') }],
+      'codegen/codegen': ['error', { presets: require('@effect-app/eslint-codegen-model/dist/presets/barrel') }],
 
       // We like namespaces, where ES modules cannot compete (augmenting existing types)
       "@typescript-eslint/no-namespace": "off",

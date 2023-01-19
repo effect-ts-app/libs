@@ -1,4 +1,4 @@
-import * as Schema from "@effect-ts-app/schema"
+import * as Schema from "@effect-app/schema"
 
 // We're using getters with curried functions, instead of fluent functions, so that they can be used directly in lambda callbacks
 

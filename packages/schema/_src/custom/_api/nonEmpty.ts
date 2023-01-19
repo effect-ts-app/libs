@@ -1,13 +1,13 @@
 // tracing: off
 
-import { pipe } from "@effect-ts-app/core/Function"
-import type { NonEmptyBrand } from "@effect-ts-app/core/NonEmptySet"
+import { pipe } from "@effect-app/core/Function"
+import type { NonEmptyBrand } from "@effect-app/core/NonEmptySet"
 
 import * as S from "../_schema.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
-export { NonEmptyBrand } from "@effect-ts-app/core/NonEmptySet"
+export { NonEmptyBrand } from "@effect-app/core/NonEmptySet"
 
 export const nonEmptyIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 

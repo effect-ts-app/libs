@@ -1,4 +1,4 @@
-import { pipe } from "@effect-ts-app/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../vendor.js"
 import type { NonEmptyBrand } from "../vendor.js"
