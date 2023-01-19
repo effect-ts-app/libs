@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.12
+
+### Patch Changes
+
+- 8f284d80: Add index to batch
+
 ## 3.10.11
 
 ### Patch Changes
