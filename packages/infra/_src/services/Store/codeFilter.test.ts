@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import type { StoreWhereFilter, Where } from "@effect-ts-app/infra/services/Store"
+import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
 import { makeFilters } from "../../lib/filter.js"
 import { codeFilter } from "./utils.js"
 

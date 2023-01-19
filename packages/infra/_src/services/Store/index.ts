@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as CosmosClient from "@effect-ts-app/infra-adapters/cosmos-client"
-import * as RedisClient from "@effect-ts-app/infra-adapters/redis-client"
+import * as CosmosClient from "@effect-app/infra-adapters/cosmos-client"
+import * as RedisClient from "@effect-app/infra-adapters/redis-client"
 import { createClient } from "redis"
 
 import { makeCosmosStore } from "./Cosmos.js"

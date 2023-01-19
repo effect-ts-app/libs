@@ -1,7 +1,7 @@
 // Do not import to frontend
 
-import { setFaker } from "@effect-ts-app/prelude/faker"
-import type { Arbitrary } from "@effect-ts-app/prelude/schema"
+import { setFaker } from "@effect-app/prelude/faker"
+import type { Arbitrary } from "@effect-app/prelude/schema"
 import faker from "faker"
 import { Random } from "fast-check"
 import * as fc from "fast-check"

@@ -1,5 +1,5 @@
 // import { configM, UserSVC } from "@/services.js"
-import * as Ex from "@effect-ts-app/infra-adapters/express/index"
+import * as Ex from "@effect-app/infra-adapters/express/index"
 import { expressjwt } from "express-jwt"
 import jwtAuthz from "express-jwt-authz"
 import jwksRsa from "jwks-rsa"

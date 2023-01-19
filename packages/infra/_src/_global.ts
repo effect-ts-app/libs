@@ -4,11 +4,11 @@
 /**
  * @tsplus global
  */
-import "@effect-ts-app/prelude/_global"
+import "@effect-app/prelude/_global"
 
 /**
  * @tsplus global
  */
-import "@effect-ts-app/infra-adapters/_global"
+import "@effect-app/infra-adapters/_global"
 
 import "./_global.ext.js"

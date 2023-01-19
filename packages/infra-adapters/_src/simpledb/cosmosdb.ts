@@ -1,5 +1,5 @@
 import type { IndexingPolicy } from "@azure/cosmos"
-import { typedKeysOf } from "@effect-ts-app/core/utils"
+import { typedKeysOf } from "@effect-app/core/utils"
 
 import * as Cosmos from "../cosmos-client.js"
 import type { CachedRecord, DBRecord } from "./shared.js"

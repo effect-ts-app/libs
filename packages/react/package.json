@@ -1,5 +1,5 @@
 {
-  "name": "@effect-ts-app/react",
+  "name": "@effect-app/react",
   "version": "0.9.0",
   "license": "MIT",
   "type": "module",
@@ -27,13 +27,13 @@
     "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"
   },
   "dependencies": {
-    "@effect-ts-app/prelude": "workspace:*",
-    "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "workspace:*",
+    "@effect-app/prelude": "workspace:*",
+    "@effect-app/core": "workspace:*",
+    "@effect-app/schema": "workspace:*",
     "date-fns": "^2.29.3"
   },
   "devDependencies": {
-    "@effect-ts-app/compiler": "workspace:*",
+    "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.20.7",
     "@types/node": "~18.11.18",
     "@types/react": "^18.0.26",

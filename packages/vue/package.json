@@ -1,13 +1,13 @@
 {
-  "name": "@effect-ts-app/vue",
+  "name": "@effect-app/vue",
   "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-ts-app/prelude": "workspace:*",
-    "@effect-ts-app/vue": "workspace:*",
-    "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "workspace:*",
+    "@effect-app/prelude": "workspace:*",
+    "@effect-app/vue": "workspace:*",
+    "@effect-app/core": "workspace:*",
+    "@effect-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
@@ -19,7 +19,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@effect-ts-app/compiler": "workspace:*",
+    "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
     "@babel/cli": "^7.20.7",
     "@types/node": "~18.11.18",

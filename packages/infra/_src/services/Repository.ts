@@ -5,9 +5,9 @@ import { NotFoundError } from "../errors.js"
 import type { RequestContext } from "../lib/RequestContext.js"
 import { ContextMap} from "../services/Store.js";
 import type { Filter } from "../services/Store.js"
-import type { FixEnv, PureLogT} from "@effect-ts-app/prelude/_ext/Pure";
-import { Pure } from "@effect-ts-app/prelude/_ext/Pure"
-import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
+import type { FixEnv, PureLogT} from "@effect-app/prelude/_ext/Pure";
+import { Pure } from "@effect-app/prelude/_ext/Pure"
+import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 
 /**
  * @tsplus type Repository

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { pipe } from "@effect-ts-app/core/Function"
-import { isValidPhone } from "@effect-ts-app/core/validation"
+import { pipe } from "@effect-app/core/Function"
+import { isValidPhone } from "@effect-app/core/validation"
 
 import * as MO from "../_schema.js"
 import type { DefaultSchema, NonEmptyString } from "../_schema.js"

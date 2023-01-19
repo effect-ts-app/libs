@@ -1,4 +1,4 @@
-import { get } from "@effect-ts-app/prelude/utils"
+import { get } from "@effect-app/prelude/utils"
 
 import { OptimisticConcurrencyException } from "../../errors.js"
 

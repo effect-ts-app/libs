@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { flow, pipe } from "@effect-ts-app/core/Function"
+import { flow, pipe } from "@effect-app/core/Function"
 
 import * as MO from "./_schema.js"
 import { Constructor, Parser, These as Th } from "./_schema.js"

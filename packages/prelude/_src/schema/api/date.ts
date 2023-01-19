@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { pipe } from "@effect-ts-app/core/Function"
-import { arbitrary, date, encoder, leafE, parseDateE, Parser, parser } from "@effect-ts-app/schema"
-import * as Th from "@effect-ts-app/schema/custom/These"
+import { pipe } from "@effect-app/core/Function"
+import { arbitrary, date, encoder, leafE, parseDateE, Parser, parser } from "@effect-app/schema"
+import * as Th from "@effect-app/schema/custom/These"
 
 import { todayAtUTCNoon } from "../../utils.js"
 

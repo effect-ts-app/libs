@@ -3,7 +3,7 @@
 /**
  * @tsplus global
  */
-import { Opt } from "@effect-ts-app/core/Option"
+import { Opt } from "@effect-app/core/Option"
 
 /**
  * @tsplus global
@@ -23,12 +23,12 @@ import { Predicate, Refinement } from "@fp-ts/data/Predicate"
 /**
  * @tsplus global
  */
-import { flow, LazyArg, pipe, tuple, tupled } from "@effect-ts-app/core/Function"
+import { flow, LazyArg, pipe, tuple, tupled } from "@effect-app/core/Function"
 
 /**
  * @tsplus global
  */
-import { Equal, Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-ts-app/core/Prelude"
+import { Equal, Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-app/core/Prelude"
 
 /**
  * @tsplus global

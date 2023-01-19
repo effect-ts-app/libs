@@ -1,5 +1,5 @@
-import type { ParsedShapeOfCustom, ReqRes, SchemaAny } from "@effect-ts-app/prelude/schema"
-import { EParserFor, Parser, unsafe } from "@effect-ts-app/prelude/schema"
+import type { ParsedShapeOfCustom, ReqRes, SchemaAny } from "@effect-app/prelude/schema"
+import { EParserFor, Parser, unsafe } from "@effect-app/prelude/schema"
 import type { ParsedQuery } from "query-string"
 
 export function getQueryParam(search: ParsedQuery, param: string) {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import type { HasContinuation, SchemaAny } from "@effect-ts-app/schema"
-import { Schema, SchemaContinuationSymbol } from "@effect-ts-app/schema"
+import type { HasContinuation, SchemaAny } from "@effect-app/schema"
+import { Schema, SchemaContinuationSymbol } from "@effect-app/schema"
 
 import type { JSONSchema } from "./atlas-plutus.js"
 

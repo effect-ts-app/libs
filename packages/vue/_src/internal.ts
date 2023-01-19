@@ -1,5 +1,5 @@
-import type { ApiConfig } from "@effect-ts-app/prelude/client"
-import type { Http } from "@effect-ts-app/core/http/http-client"
+import type { ApiConfig } from "@effect-app/prelude/client"
+import type { Http } from "@effect-app/core/http/http-client"
 import type { Runtime } from "@effect/io/Runtime"
 
 export const run = {

@@ -17,7 +17,7 @@ import { Config } from "@effect/io/Config"
 /**
  * @tsplus global
  */
-import { ConfigSecretURL } from "@effect-ts-app/prelude/Config/SecretURL"
+import { ConfigSecretURL } from "@effect-app/prelude/Config/SecretURL"
 
 /**
  * @tsplus global
@@ -73,17 +73,17 @@ import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
 /**
  * @tsplus global
  */
-import type { lazyGetter } from "@effect-ts-app/prelude/utils"
+import type { lazyGetter } from "@effect-app/prelude/utils"
 
 /**
  * @tsplus global
  */
-import { Pure, PureEnv, PureEnvEnv } from "@effect-ts-app/prelude/_ext/Pure"
+import { Pure, PureEnv, PureEnvEnv } from "@effect-app/prelude/_ext/Pure"
 
 /**
  * @tsplus global
  */
-import { exhaustiveMatch, exhaustiveMatch_, spread, spreadS } from "@effect-ts-app/prelude/utils"
+import { exhaustiveMatch, exhaustiveMatch_, spread, spreadS } from "@effect-app/prelude/utils"
 /**
  * @tsplus global
  */
@@ -114,20 +114,20 @@ import {
   // Semaphore,
   Utils
   // XPure,
-} from "@effect-ts-app/prelude"
+} from "@effect-app/prelude"
 
 /**
  * @tsplus global
  */
-import { ServiceTagged } from "@effect-ts-app/prelude/service"
+import { ServiceTagged } from "@effect-app/prelude/service"
 
 /**
  * @tsplus global
  */
 import { match, Pattern } from "ts-pattern"
 
-import "@effect-ts-app/prelude/_ext/Prelude.ext"
-import "@effect-ts-app/core/_global"
-import "@effect-ts-app/core/fluent/_ext/awesome/lib"
-import "@effect-ts-app/core/Prelude"
-import "@effect-ts-app/schema/_global"
+import "@effect-app/prelude/_ext/Prelude.ext"
+import "@effect-app/core/_global"
+import "@effect-app/core/fluent/_ext/awesome/lib"
+import "@effect-app/core/Prelude"
+import "@effect-app/schema/_global"

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { _E, _R } from "@effect-ts-app/prelude/_ext/Prelude.ext"
-import type { GetRequest, GetResponse } from "@effect-ts-app/prelude/schema"
-import { extractSchema, SchemaNamed } from "@effect-ts-app/prelude/schema"
-import * as MO from "@effect-ts-app/prelude/schema"
-import { pretty } from "@effect-ts-app/prelude/utils"
-import * as Ex from "@effect-ts-app/infra-adapters/express/index"
+import type { _E, _R } from "@effect-app/prelude/_ext/Prelude.ext"
+import type { GetRequest, GetResponse } from "@effect-app/prelude/schema"
+import { extractSchema, SchemaNamed } from "@effect-app/prelude/schema"
+import * as MO from "@effect-app/prelude/schema"
+import { pretty } from "@effect-app/prelude/utils"
+import * as Ex from "@effect-app/infra-adapters/express/index"
 import type {
   Encode,
   RequestHandler,
   RequestHandlerOptRes,
   RequestParsers
-} from "@effect-ts-app/infra-adapters/express/schema/requestHandler"
-import { parseRequestParams } from "@effect-ts-app/infra-adapters/express/schema/requestHandler"
-import type { RouteDescriptorAny } from "@effect-ts-app/infra-adapters/express/schema/routing"
-import { makeRouteDescriptor } from "@effect-ts-app/infra-adapters/express/schema/routing"
+} from "@effect-app/infra-adapters/express/schema/requestHandler"
+import { parseRequestParams } from "@effect-app/infra-adapters/express/schema/requestHandler"
+import type { RouteDescriptorAny } from "@effect-app/infra-adapters/express/schema/routing"
+import { makeRouteDescriptor } from "@effect-app/infra-adapters/express/schema/routing"
 import type express from "express"
 import type { ValidationError } from "../../errors.js"
 import { RequestContext, RequestId } from "../../lib/RequestContext.js"

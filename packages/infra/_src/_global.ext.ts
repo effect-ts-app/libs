@@ -1,34 +1,34 @@
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/services/Emailer/fake"
+import type {} from "@effect-app/infra/services/Emailer/fake"
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/services/Emailer/Sendgrid"
+import type {} from "@effect-app/infra/services/Emailer/Sendgrid"
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/test.arbs"
+import type {} from "@effect-app/infra/test.arbs"
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/ext"
+import type {} from "@effect-app/infra/ext"
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/lib/instrument"
+import type {} from "@effect-app/infra/lib/instrument"
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/lib/rateLimit"
+import type {} from "@effect-app/infra/lib/rateLimit"
 
 /**
  * @tsplus global
  */
-import type {} from "@effect-ts-app/infra/lib/api/setupRequest"
+import type {} from "@effect-app/infra/lib/api/setupRequest"
 
 /**
  * @tsplus global
  */
-import {} from "@effect-ts-app/infra/lib/api/reportError"
+import {} from "@effect-app/infra/lib/api/reportError"

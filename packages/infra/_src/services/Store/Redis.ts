@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as RedisClient from "@effect-ts-app/infra-adapters/redis-client"
+import * as RedisClient from "@effect-app/infra-adapters/redis-client"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
 

@@ -5,7 +5,7 @@ import { pipe } from "@fp-ts/data/Function"
 import type * as ConfigSecretURL from "../SecretURL.js"
 
 /** @internal */
-const ConfigSecretURLSymbolKey = "@effect/io/Config/Secret" // "@effect-ts-app/prelude/COnfigSecretURL"
+const ConfigSecretURLSymbolKey = "@effect/io/Config/Secret" // "@effect-app/prelude/COnfigSecretURL"
 
 /** @internal */
 export const proto = {

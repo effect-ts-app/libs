@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-ts-app/schema"
-import type { Methods } from "@effect-ts-app/schema"
+import * as MO from "@effect-app/schema"
+import type { Methods } from "@effect-app/schema"
 
 import type { JSONSchema, ParameterLocation, SubSchema } from "../../Openapi/atlas-plutus.js"
 import { isObjectSchema } from "../../Openapi/atlas-plutus.js"

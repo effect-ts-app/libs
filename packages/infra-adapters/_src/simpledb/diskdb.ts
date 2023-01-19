@@ -1,8 +1,8 @@
-import { flow, pipe } from "@effect-ts-app/core/Function"
+import { flow, pipe } from "@effect-app/core/Function"
 import fs from "fs"
 import * as PLF from "proper-lockfile"
 
-import { pretty } from "@effect-ts-app/core/utils"
+import { pretty } from "@effect-app/core/utils"
 import * as fu from "./fileutil.js"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"

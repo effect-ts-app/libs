@@ -5,7 +5,7 @@
   "typescript.preferences.autoImportFileExcludePatterns": [
     "node_modules/@sentry/node",
     "node_modules/@azure/cosmos",
-    "node_modules/@effect-ts-app/schema",
+    "node_modules/@effect-app/schema",
     "node_modules/lodash",
     "node_modules/@types/lodash"
   ],

@@ -54,4 +54,4 @@ import {
   UUID,
   Void,
   withDefaults
-} from "@effect-ts-app/prelude/schema"
+} from "@effect-app/prelude/schema"

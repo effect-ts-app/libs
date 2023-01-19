@@ -5,6 +5,6 @@
 /**
  * @tsplus global
  */
-import { allowAnonymous, Delete, Get, Patch, Post, Put } from "@effect-ts-app/prelude/schema"
+import { allowAnonymous, Delete, Get, Patch, Post, Put } from "@effect-app/prelude/schema"
 
-import "@effect-ts-app/prelude/_global.schema"
+import "@effect-app/prelude/_global.schema"

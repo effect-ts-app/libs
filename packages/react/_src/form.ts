@@ -5,7 +5,7 @@ import {
   getMetadataFromSchemaOrProp,
   getRegisterFromSchemaOrProp,
   isSchema
-} from "@effect-ts-app/prelude/schema"
+} from "@effect-app/prelude/schema"
 import {
   type AnyError,
   type ConstructorFromProperties,
@@ -16,7 +16,7 @@ import {
   type ShapeFromProperties,
   These,
   unsafe
-} from "@effect-ts-app/schema"
+} from "@effect-app/schema"
 import type { BaseSyntheticEvent } from "react"
 import { useCallback, useMemo } from "react"
 import type {

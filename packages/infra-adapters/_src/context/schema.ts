@@ -1,6 +1,6 @@
-import * as MO from "@effect-ts-app/schema"
-import { Encoder, Parser } from "@effect-ts-app/schema"
-import type { ParserEnv } from "@effect-ts-app/schema/custom/Parser"
+import * as MO from "@effect-app/schema"
+import { Encoder, Parser } from "@effect-app/schema"
+import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 
 export function makeCodec<
   ParsedShape extends { id: Id },

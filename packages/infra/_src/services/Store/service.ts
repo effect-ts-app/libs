@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
-import type { Parser, ParserEnv } from "@effect-ts-app/schema/custom/Parser"
+import type { Parser, ParserEnv } from "@effect-app/schema/custom/Parser"
 
-import type { These } from "@effect-ts-app/prelude/schema"
+import type { These } from "@effect-app/prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 
 export type StoreConfig<E> = {

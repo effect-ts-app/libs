@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import * as CosmosClient from "@effect-ts-app/infra-adapters/cosmos-client"
+import * as CosmosClient from "@effect-app/infra-adapters/cosmos-client"
 
 import { OptimisticConcurrencyException } from "../../errors.js"
 
-import { omit } from "@effect-ts-app/prelude/utils"
+import { omit } from "@effect-app/prelude/utils"
 
 import type {
   Filter,

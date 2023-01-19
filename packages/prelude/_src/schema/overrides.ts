@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 
-import type { PositiveBrand, Schema } from "@effect-ts-app/schema"
+import type { PositiveBrand, Schema } from "@effect-app/schema"
 import {
   Arbitrary,
   arbitrary,
@@ -11,9 +11,9 @@ import {
   number,
   positive,
   set as setOriginal
-} from "@effect-ts-app/schema"
+} from "@effect-app/schema"
 
-import { ROSet } from "@effect-ts-app/core/Prelude"
+import { ROSet } from "@effect-app/core/Prelude"
 
 export const PositiveNumber = positive(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand

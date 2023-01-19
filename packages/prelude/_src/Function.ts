@@ -1,1 +1,1 @@
-export * from "@effect-ts-app/core/Function"
+export * from "@effect-app/core/Function"

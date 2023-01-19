@@ -1,5 +1,5 @@
-import { flow } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/schema"
+import { flow } from "@effect-app/core/Function"
+import * as MO from "@effect-app/schema"
 import type * as Eq from "@effect-ts/core/Equal"
 
 import type { CachedRecord, DBRecord } from "./shared.js"

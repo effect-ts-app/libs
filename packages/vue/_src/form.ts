@@ -3,7 +3,7 @@ import type {
   ParsedShapeOfCustom,
   Property,
   PropertyRecord
-} from "@effect-ts-app/prelude/schema"
+} from "@effect-app/prelude/schema"
 import {
   type AnyProperty,
   getMetadataFromSchemaOrProp,
@@ -11,7 +11,7 @@ import {
   Parser,
   type SchemaAny,
   These
-} from "@effect-ts-app/prelude/schema"
+} from "@effect-app/prelude/schema"
 import { capitalize } from "vue"
 
 export function convertIn(v: string | null) {

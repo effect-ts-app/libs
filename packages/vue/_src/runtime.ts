@@ -1,6 +1,6 @@
-import { ApiConfig } from "@effect-ts-app/prelude/client"
-import type { Http } from "@effect-ts-app/core/http/http-client"
-import * as HF from "@effect-ts-app/core/http/http-client-fetch"
+import type { Http } from "@effect-app/core/http/http-client"
+import * as HF from "@effect-app/core/http/http-client-fetch"
+import { ApiConfig } from "@effect-app/prelude/client"
 import { fetch } from "cross-fetch"
 import { initRuntime } from "./internal.js"
 

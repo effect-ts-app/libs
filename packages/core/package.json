@@ -1,5 +1,5 @@
 {
-  "name": "@effect-ts-app/core",
+  "name": "@effect-app/core",
   "version": "0.9.0",
   "license": "MIT",
   "type": "module",

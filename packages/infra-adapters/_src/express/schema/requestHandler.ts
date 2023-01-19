@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { ValidationError } from "@effect-ts-app/infra-adapters/errors"
-import * as MO from "@effect-ts-app/schema"
-import type { Methods } from "@effect-ts-app/schema"
-import { Parser } from "@effect-ts-app/schema"
+import { ValidationError } from "@effect-app/infra-adapters/errors"
+import * as MO from "@effect-app/schema"
+import type { Methods } from "@effect-app/schema"
+import { Parser } from "@effect-app/schema"
 import { flow } from "@effect-ts/core/Function"
 import type express from "express"
 

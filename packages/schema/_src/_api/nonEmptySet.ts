@@ -1,6 +1,6 @@
 // tracing: off
 
-import type { NonEmptySet } from "@effect-ts-app/core/NonEmptySet"
+import type { NonEmptySet } from "@effect-app/core/NonEmptySet"
 import { pipe } from "@effect-ts/core/Function"
 
 import * as MO from "../custom.js"

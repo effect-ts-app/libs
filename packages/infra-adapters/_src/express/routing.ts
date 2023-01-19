@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-ts-app/schema"
-import { Encoder, extractSchema } from "@effect-ts-app/schema"
+import * as MO from "@effect-app/schema"
+import { Encoder, extractSchema } from "@effect-app/schema"
 import type express from "express"
 
 import type { NotFoundError, NotLoggedInError, UnauthorizedError, ValidationError } from "../errors.js"

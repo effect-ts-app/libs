@@ -1,10 +1,10 @@
 {
-  "name": "@effect-ts-app/schema",
+  "name": "@effect-app/schema",
   "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-ts-app/core": "workspace:*",
+    "@effect-app/core": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/system": "^0.57.5",
     "@effect-ts/monocle": "*",

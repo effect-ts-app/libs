@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { pipe } from "@effect-ts-app/core/Function"
+import { pipe } from "@effect-app/core/Function"
 import type {
   ApiSelfType,
   DefaultSchema,
@@ -8,7 +8,7 @@ import type {
   SchemaDefaultSchema,
   SchemaUPI,
   Utils
-} from "@effect-ts-app/schema"
+} from "@effect-app/schema"
 import {
   annotate,
   brand,
@@ -22,7 +22,7 @@ import {
   nonEmptyStringFromString,
   prop,
   refine
-} from "@effect-ts-app/schema"
+} from "@effect-app/schema"
 import type { Refinement } from "@effect-ts/core/Function"
 import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"

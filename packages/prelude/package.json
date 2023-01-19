@@ -1,11 +1,11 @@
 {
-  "name": "@effect-ts-app/prelude",
+  "name": "@effect-app/prelude",
   "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-ts-app/core": "workspace:*",
-    "@effect-ts-app/schema": "workspace:*",
+    "@effect-app/core": "workspace:*",
+    "@effect-app/schema": "workspace:*",
     "@effect-ts/core": "^0.60.5",
     "@effect-ts/monocle": "^0.43.0",
     "@effect-ts/system": "^0.57.5",
@@ -24,7 +24,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@effect-ts-app/compiler": "workspace:*",
+    "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.20.7",
     "@types/faker": "5.5.9",
     "@types/node": "~18.11.18",

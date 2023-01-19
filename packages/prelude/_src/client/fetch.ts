@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { constant, flow } from "@effect-ts-app/prelude/Function"
-import type { ReqRes, RequestSchemed } from "@effect-ts-app/prelude/schema"
-import { StringId } from "@effect-ts-app/prelude/schema"
-import * as H from "@effect-ts-app/core/http/http-client"
+import { constant, flow } from "@effect-app/prelude/Function"
+import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
+import { StringId } from "@effect-app/prelude/schema"
+import * as H from "@effect-app/core/http/http-client"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { getConfig } from "./config.js"

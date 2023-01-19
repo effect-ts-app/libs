@@ -1,4 +1,4 @@
-import { NotLoggedInError } from "@effect-ts-app/infra-adapters/errors"
+import { NotLoggedInError } from "@effect-app/infra-adapters/errors"
 
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
@@ -8,7 +8,7 @@ export class NotFoundError<T extends string = string> {
   }
 }
 
-export { NotLoggedInError, UnauthorizedError, ValidationError } from "@effect-ts-app/infra-adapters/errors"
+export { NotLoggedInError, UnauthorizedError, ValidationError } from "@effect-app/infra-adapters/errors"
 
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.

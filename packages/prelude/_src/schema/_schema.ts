@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { identity } from "@effect-ts-app/core/Function"
+import { identity } from "@effect-app/core/Function"
 import type {
   AnyError,
   ConstructorErrorOf,
@@ -16,7 +16,7 @@ import type {
   schemaField,
   SchemaUPI,
   UnionApi
-} from "@effect-ts-app/schema"
+} from "@effect-app/schema"
 import {
   Constructor,
   EParserFor,
@@ -32,12 +32,12 @@ import {
   union as unionOrig,
   unionIdentifier,
   unsafe
-} from "@effect-ts-app/schema"
-import type * as Th from "@effect-ts-app/schema/custom/These"
+} from "@effect-app/schema"
+import type * as Th from "@effect-app/schema/custom/These"
 import type { EnforceNonEmptyRecord } from "@effect-ts/core/Utils"
 import type * as faker from "faker"
 
-import * as S from "@effect-ts-app/schema"
+import * as S from "@effect-app/schema"
 import { fakerToArb, getFaker } from "../faker.js"
 
 export { matchTag } from "@effect-ts/core/Utils"
@@ -795,6 +795,6 @@ export function makePreparedLenses<S, Props extends PropertyRecord>(
   }, {} as any)
 }
 
-export * from "@effect-ts-app/schema"
+export * from "@effect-app/schema"
 export * from "./overrides.js"
 export { array, nonEmptyArray, set } from "./overrides.js"

@@ -133,8 +133,8 @@ export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
   return (arrInput: ReadonlySet<T | undefined>): Opt<ReadonlySet<T>> =>
     [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map(ar => new Set(ar))
 }
-export * from "@effect-ts-app/core/Function"
-export * from "@effect-ts-app/core/utils"
+export * from "@effect-app/core/Function"
+export * from "@effect-app/core/utils"
 export { default as get } from "lodash/get.js"
 export { default as omit } from "lodash/omit.js"
 export { default as pick } from "lodash/pick.js"

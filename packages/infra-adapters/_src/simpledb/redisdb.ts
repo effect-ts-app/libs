@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { flow, pipe } from "@effect-ts-app/core/Function"
-import * as MO from "@effect-ts-app/schema"
+import { flow, pipe } from "@effect-app/core/Function"
+import * as MO from "@effect-app/schema"
 import type { Lock } from "redlock"
 
 import * as RED from "../redis-client.js"

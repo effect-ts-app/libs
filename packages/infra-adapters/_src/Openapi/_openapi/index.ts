@@ -35,8 +35,8 @@ import {
   unionIdentifier,
   unknownIdentifier,
   UUIDFromStringIdentifier
-} from "@effect-ts-app/schema"
-import * as MO from "@effect-ts-app/schema"
+} from "@effect-app/schema"
+import * as MO from "@effect-app/schema"
 
 import type { JSONSchema } from "../atlas-plutus.js"
 import {

@@ -1,5 +1,5 @@
 {
-  "name": "@effect-ts-app/eslint-codegen-model",
+  "name": "@effect-app/eslint-codegen-model",
   "description": "Contains eslint helpers",
   "sideEffects": false,
   "version": "0.9.0",
