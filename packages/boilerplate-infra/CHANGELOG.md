@@ -1,5 +1,11 @@
 # @effect-ts-app/boilerplate-infra
 
+## 3.10.11
+
+### Patch Changes
+
+- 3867952c: Fix Cache
+
 ## 3.10.10
 
 ### Patch Changes
