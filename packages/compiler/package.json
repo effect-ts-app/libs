@@ -1,6 +1,6 @@
 {
   "name": "@effect-ts-app/compiler",
-  "version": "1.0.5",
+  "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
