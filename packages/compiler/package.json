@@ -42,6 +42,16 @@
         "types": "./dist/vitePlugin.d.ts",
         "default": "./_cjs/vitePlugin.cjs"
       }
+    },
+    "./vitePlugin2": {
+      "import": {
+        "types": "./dist/vitePlugin2.d.ts",
+        "default": "./dist/vitePlugin2.js"
+      },
+      "require": {
+        "types": "./dist/vitePlugin2.d.ts",
+        "default": "./_cjs/vitePlugin2.cjs"
+      }
     }
   },
   "scripts": {
