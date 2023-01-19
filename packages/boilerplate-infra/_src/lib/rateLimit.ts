@@ -53,12 +53,15 @@ export function SEM_withPermitsDuration(permits: number, duration: DUR) {
  */
 export function batchNPar<R, E, A, R2, E2, A2, T>(
   n: number,
-  forEachItem: (i: T) => Effect<R, E, A>,
-  forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
+  forEachItem: (item: T, iWithinBatch: number, i: number) => Effect<R, E, A>,
+  forEachBatch: (a: Chunk<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
     items.chunk(n)
-      .forEachEffectPar(_ => _.forEachPar(forEachItem).flatMap(forEachBatch))
+      .forEachEffectParWithIndex((_, i) =>
+        _.forEachParWithIndex((_, j) => forEachItem(_, j, i))
+          .flatMap(_ => forEachBatch(_, i))
+      )
 }
 
 /**
@@ -67,12 +70,15 @@ export function batchNPar<R, E, A, R2, E2, A2, T>(
  */
 export function batch<R, E, A, R2, E2, A2, T>(
   n: number,
-  forEachItem: (i: T) => Effect<R, E, A>,
-  forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
+  forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<R, E, A>,
+  forEachBatch: (a: Chunk<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
     items.chunk(n)
-      .forEachEffect(_ => _.forEachPar(forEachItem).flatMap(forEachBatch))
+      .forEachEffectWithIndex((_, i) =>
+        _.forEachParWithIndex((_, j) => forEachItem(_, j, i))
+          .flatMap(_ => forEachBatch(_, i))
+      )
 }
 
 // /**
