@@ -1,34 +1,47 @@
 {
-    "extends": "../../tsconfig.lib.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "lib": [
-            "es2020"
+            "esnext",
+            "DOM"
         ],
-        "moduleResolution": "Node16",
-        "baseUrl": "./",
-        "outDir": "./dist",
-        "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "noEmit": false,
-        "rootDir": "./_src",
         "tsPlusConfig": "../../tsplus.config.json",
+        //        "tsPlusGlobalFiles": [
+        //            "./_src/_global.ts"
+        //        ],
+        "moduleResolution": "Node16",
+        "outDir": "./dist",
+        "rootDir": "./_src",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        "types": [
+            "./types/modules"
+        ],
+        // temp disbaled to support ts-plus ops
+        "importsNotUsedAsValues": "preserve",
     },
     "include": [
-        "./_src"
+        "./_src/**/*.ts"
     ],
-    "exclude": [
-        "./dist",
-        "node_modules",
-        "build",
-        "lib",
-        "dist",
-        "**/*.d.ts.map"
-    ],
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ],
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
     "references": [
         {
-            "path": "../core"
+            "path": "../prelude"
+        },
+        {
+            "path": "../infra-adapters"
         },
         {
             "path": "../schema"
-        }
+        },
+        {
+            "path": "../core"
+        },
     ]
 }

@@ -44,8 +44,8 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': ^7.18.9
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@changesets/cli': ^2.26.0
-      '@effect-ts-app/boilerplate-eslint': workspace:*
       '@effect-ts-app/compiler': workspace:*
+      '@effect-ts-app/eslint-codegen-model': workspace:*
       '@effect-ts-app/pnpm-singleton': workspace:*
       '@effect/language-service': ^0.0.15
       '@phaphoso/eslint-plugin-dprint': ^0.5.2
@@ -96,8 +96,8 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': 7.18.9_@babel+core@7.20.12
       '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.12
       '@changesets/cli': 2.26.0
-      '@effect-ts-app/boilerplate-eslint': link:packages/boilerplate-eslint
       '@effect-ts-app/compiler': link:packages/compiler
+      '@effect-ts-app/eslint-codegen-model': link:packages/eslint-codegen-model
       '@effect-ts-app/pnpm-singleton': link:packages/pnpm-singleton
       '@effect/language-service': 0.0.15_a4uvuf3pdfkyyq2ka2mtqp5yfi
       '@phaphoso/eslint-plugin-dprint': 0.5.2_eslint@8.32.0
@@ -133,257 +133,6 @@ importers:
       tsconfig-paths: 4.1.2
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
       typescript-transform-paths: 3.4.6_mgz5y7zfvfi5vkn2mdecustjve
-      vite: 4.0.4_@types+node@18.11.12
-      vitest: 0.27.2
-
-  packages/boilerplate-eslint:
-    specifiers:
-      '@babel/generator': 7.20.7
-      '@babel/parser': 7.20.7
-      '@babel/types': 7.20.7
-      '@types/babel__generator': 7.6.4
-      '@types/babel__traverse': 7.18.3
-      '@types/glob': 8.0.0
-      '@types/lodash': 4.14.191
-      eslint-plugin-codegen: 0.17.0
-      glob: 8.1.0
-      io-ts: 2.2.20
-      io-ts-extra: 0.11.6
-      js-yaml: 4.1.0
-      lodash: 4.17.21
-      madge: 5.0.1
-      ts-node: 10.9.1
-      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
-    dependencies:
-      '@babel/generator': 7.20.7
-      '@babel/parser': 7.20.7
-      eslint-plugin-codegen: 0.17.0_3ogk7peuefdu45q3hbzcgdiuna
-      glob: 8.1.0
-      io-ts: 2.2.20
-      io-ts-extra: 0.11.6
-      js-yaml: 4.1.0
-      lodash: 4.17.21
-    devDependencies:
-      '@babel/types': 7.20.7
-      '@types/babel__generator': 7.6.4
-      '@types/babel__traverse': 7.18.3
-      '@types/glob': 8.0.0
-      '@types/lodash': 4.14.191
-      madge: 5.0.1
-      ts-node: 10.9.1_mgz5y7zfvfi5vkn2mdecustjve
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
-
-  packages/boilerplate-infra:
-    specifiers:
-      '@azure/cosmos': ^3.17.2
-      '@azure/service-bus': ^7.7.3
-      '@babel/cli': ^7.20.7
-      '@effect-ts-app/boilerplate-prelude': workspace:*
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/infra': workspace:*
-      '@effect-ts-app/schema': workspace:*
-      '@effect/io': ^0.0.65
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.39
-      '@sendgrid/helpers': ^7.7.0
-      '@sendgrid/mail': ^7.7.0
-      '@sentry/node': ^7.31.1
-      '@types/express': ^4.17.15
-      '@types/node': ~18.11.12
-      '@types/redis': ^2.8.32
-      change-case: ^4.1.2
-      cross-fetch: ^3.1.5
-      express: ^4.18.2
-      express-jwt: ^8.3.0
-      express-jwt-authz: ^2.4.1
-      faker: ^5.5.3
-      fast-check: ^3.6.0
-      jwks-rsa: 2.1.4
-      object-hash: ^3.0.0
-      path-parser: ^6.1.0
-      pure-rand: ^6.0.0
-      redis: ^3.1.2
-      ts-node: ^10.9.1
-      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
-      vitest: ^0.27.2
-    dependencies:
-      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/infra': link:../infra
-      '@effect-ts-app/schema': link:../schema
-      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.39
-      change-case: 4.1.2
-      cross-fetch: 3.1.5
-      faker: 5.5.3
-      fast-check: 3.6.0
-      object-hash: 3.0.0
-      path-parser: 6.1.0
-      pure-rand: 6.0.0
-    devDependencies:
-      '@azure/cosmos': 3.17.2
-      '@azure/service-bus': 7.7.3
-      '@babel/cli': 7.20.7
-      '@effect-ts-app/compiler': link:../compiler
-      '@sendgrid/helpers': 7.7.0
-      '@sendgrid/mail': 7.7.0
-      '@sentry/node': 7.31.1
-      '@types/express': 4.17.15
-      '@types/node': 18.11.12
-      '@types/redis': 2.8.32
-      express: 4.18.2
-      express-jwt: 8.3.0
-      express-jwt-authz: 2.4.1_apyp2epfdmgxwegqyl42oh3lhy
-      jwks-rsa: 2.1.4
-      redis: 3.1.2
-      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
-      vitest: 0.27.2
-
-  packages/boilerplate-prelude:
-    specifiers:
-      '@babel/cli': ^7.20.7
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': workspace:*
-      '@effect-ts/core': ^0.60.5
-      '@effect-ts/monocle': ^0.43.0
-      '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.65
-      '@effect/stm': ^0.0.15
-      '@effect/stream': ^0.0.12
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.39
-      '@types/faker': 5.5.9
-      '@types/node': ~18.11.12
-      '@types/uuid': ^9.0.0
-      '@types/validator': ^13.7.10
-      date-fns: ^2.29.3
-      faker: ^5.5.3
-      fast-check: ^3.6.0
-      lodash: ^4.17.21
-      nanoid: ^4.0.0
-      path-parser: ^6.1.0
-      query-string: ^8.1.0
-      ts-node: ^10.9.1
-      ts-pattern: ^4.1.3
-      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
-      uuid: ^9.0.0
-      validator: ^13.7.0
-      vitest: ^0.27.2
-    dependencies:
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/schema': link:../schema
-      '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
-      '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
-      '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
-      '@effect/stm': 0.0.15
-      '@effect/stream': 0.0.12
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.39
-      date-fns: 2.29.3
-      lodash: 4.17.21
-      nanoid: 4.0.0
-      path-parser: 6.1.0
-      query-string: 8.1.0
-      ts-pattern: 4.1.3
-      uuid: 9.0.0
-      validator: 13.7.0
-    devDependencies:
-      '@babel/cli': 7.20.7
-      '@effect-ts-app/compiler': link:../compiler
-      '@types/faker': 5.5.9
-      '@types/node': 18.11.12
-      '@types/uuid': 9.0.0
-      '@types/validator': 13.7.10
-      faker: 5.5.3
-      fast-check: 3.6.0
-      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
-      vitest: 0.27.2
-
-  packages/boilerplate-react:
-    specifiers:
-      '@babel/cli': ^7.20.7
-      '@effect-ts-app/boilerplate-prelude': workspace:*
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': workspace:*
-      '@types/node': ~18.11.12
-      '@types/react': ^18.0.26
-      date-fns: ^2.29.3
-      react: ^18.2.0
-      react-hook-form: 7.40.0
-      react-intl: ^6.2.5
-      ts-node: ^10.9.1
-      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
-      vitest: ^0.27.2
-    dependencies:
-      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/schema': link:../schema
-      date-fns: 2.29.3
-    devDependencies:
-      '@babel/cli': 7.20.7
-      '@effect-ts-app/compiler': link:../compiler
-      '@types/node': 18.11.12
-      '@types/react': 18.0.26
-      react: 18.2.0
-      react-hook-form: 7.40.0_react@18.2.0
-      react-intl: 6.2.5_x4xqxm2zmsqiuudkrycs3puhze
-      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
-      vitest: 0.27.2
-
-  packages/boilerplate-vue:
-    specifiers:
-      '@babel/cli': ^7.20.7
-      '@effect-ts-app/boilerplate-prelude': workspace:*
-      '@effect-ts-app/boilerplate-vue': workspace:*
-      '@effect-ts-app/compiler': workspace:*
-      '@effect-ts-app/core': workspace:*
-      '@effect-ts-app/schema': workspace:*
-      '@effect-ts/core': ^0.60.5
-      '@effect-ts/monocle': ^0.43.0
-      '@effect-ts/system': ^0.57.5
-      '@effect/io': ^0.0.65
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.39
-      '@rollup/pluginutils': ^5.0.2
-      '@types/node': ~18.11.12
-      json5: ^2.2.3
-      query-string: ^8.1.0
-      swrv: ^1.0.3
-      ts-node: ^10.9.1
-      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
-      vite: ^4.0.4
-      vitest: ^0.27.2
-      vue: ^3.2.45
-    dependencies:
-      '@effect-ts-app/boilerplate-prelude': link:../boilerplate-prelude
-      '@effect-ts-app/boilerplate-vue': 'link:'
-      '@effect-ts-app/core': link:../core
-      '@effect-ts-app/schema': link:../schema
-      '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
-      '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
-      '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
-      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.39
-      query-string: 8.1.0
-      swrv: 1.0.3_vue@3.2.45
-      vue: 3.2.45
-    devDependencies:
-      '@babel/cli': 7.20.7
-      '@effect-ts-app/compiler': link:../compiler
-      '@rollup/pluginutils': 5.0.2
-      '@types/node': 18.11.12
-      json5: 2.2.3
-      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
-      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
       vite: 4.0.4_@types+node@18.11.12
       vitest: 0.27.2
 
@@ -449,7 +198,113 @@ importers:
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
       winston: 3.8.2
 
+  packages/eslint-codegen-model:
+    specifiers:
+      '@babel/generator': 7.20.7
+      '@babel/parser': 7.20.7
+      '@babel/types': 7.20.7
+      '@types/babel__generator': 7.6.4
+      '@types/babel__traverse': 7.18.3
+      '@types/glob': 8.0.0
+      '@types/lodash': 4.14.191
+      eslint-plugin-codegen: 0.17.0
+      glob: 8.1.0
+      io-ts: 2.2.20
+      io-ts-extra: 0.11.6
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      madge: 5.0.1
+      ts-node: 10.9.1
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
+    dependencies:
+      '@babel/generator': 7.20.7
+      '@babel/parser': 7.20.7
+      eslint-plugin-codegen: 0.17.0_3ogk7peuefdu45q3hbzcgdiuna
+      glob: 8.1.0
+      io-ts: 2.2.20
+      io-ts-extra: 0.11.6
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+    devDependencies:
+      '@babel/types': 7.20.7
+      '@types/babel__generator': 7.6.4
+      '@types/babel__traverse': 7.18.3
+      '@types/glob': 8.0.0
+      '@types/lodash': 4.14.191
+      madge: 5.0.1
+      ts-node: 10.9.1_mgz5y7zfvfi5vkn2mdecustjve
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+
   packages/infra:
+    specifiers:
+      '@azure/cosmos': ^3.17.2
+      '@azure/service-bus': ^7.7.3
+      '@babel/cli': ^7.20.7
+      '@effect-ts-app/compiler': workspace:*
+      '@effect-ts-app/core': workspace:*
+      '@effect-ts-app/infra-adapters': workspace:*
+      '@effect-ts-app/prelude': workspace:*
+      '@effect-ts-app/schema': workspace:*
+      '@effect/io': ^0.0.65
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.39
+      '@sendgrid/helpers': ^7.7.0
+      '@sendgrid/mail': ^7.7.0
+      '@sentry/node': ^7.31.1
+      '@types/express': ^4.17.15
+      '@types/node': ~18.11.12
+      '@types/redis': ^2.8.32
+      change-case: ^4.1.2
+      cross-fetch: ^3.1.5
+      express: ^4.18.2
+      express-jwt: ^8.3.0
+      express-jwt-authz: ^2.4.1
+      faker: ^5.5.3
+      fast-check: ^3.6.0
+      jwks-rsa: 2.1.4
+      object-hash: ^3.0.0
+      path-parser: ^6.1.0
+      pure-rand: ^6.0.0
+      redis: ^3.1.2
+      ts-node: ^10.9.1
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
+      vitest: ^0.27.2
+    dependencies:
+      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/infra-adapters': link:../infra-adapters
+      '@effect-ts-app/prelude': link:../prelude
+      '@effect-ts-app/schema': link:../schema
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.39
+      change-case: 4.1.2
+      cross-fetch: 3.1.5
+      faker: 5.5.3
+      fast-check: 3.6.0
+      object-hash: 3.0.0
+      path-parser: 6.1.0
+      pure-rand: 6.0.0
+    devDependencies:
+      '@azure/cosmos': 3.17.2
+      '@azure/service-bus': 7.7.3
+      '@babel/cli': 7.20.7
+      '@effect-ts-app/compiler': link:../compiler
+      '@sendgrid/helpers': 7.7.0
+      '@sendgrid/mail': 7.7.0
+      '@sentry/node': 7.31.1
+      '@types/express': 4.17.15
+      '@types/node': 18.11.12
+      '@types/redis': 2.8.32
+      express: 4.18.2
+      express-jwt: 8.3.0
+      express-jwt-authz: 2.4.1_apyp2epfdmgxwegqyl42oh3lhy
+      jwks-rsa: 2.1.4
+      redis: 3.1.2
+      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+      vitest: 0.27.2
+
+  packages/infra-adapters:
     specifiers:
       '@azure/cosmos': ^3.17.2
       '@effect-ts-app/core': workspace:*
@@ -518,6 +373,102 @@ importers:
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
       vitest: 0.27.2
 
+  packages/prelude:
+    specifiers:
+      '@babel/cli': ^7.20.7
+      '@effect-ts-app/compiler': workspace:*
+      '@effect-ts-app/core': workspace:*
+      '@effect-ts-app/schema': workspace:*
+      '@effect-ts/core': ^0.60.5
+      '@effect-ts/monocle': ^0.43.0
+      '@effect-ts/system': ^0.57.5
+      '@effect/io': ^0.0.65
+      '@effect/stm': ^0.0.15
+      '@effect/stream': ^0.0.12
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.39
+      '@types/faker': 5.5.9
+      '@types/node': ~18.11.12
+      '@types/uuid': ^9.0.0
+      '@types/validator': ^13.7.10
+      date-fns: ^2.29.3
+      faker: ^5.5.3
+      fast-check: ^3.6.0
+      lodash: ^4.17.21
+      nanoid: ^4.0.0
+      path-parser: ^6.1.0
+      query-string: ^8.1.0
+      ts-node: ^10.9.1
+      ts-pattern: ^4.1.3
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
+      uuid: ^9.0.0
+      validator: ^13.7.0
+      vitest: ^0.27.2
+    dependencies:
+      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/schema': link:../schema
+      '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
+      '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
+      '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
+      '@effect/stm': 0.0.15
+      '@effect/stream': 0.0.12
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.39
+      date-fns: 2.29.3
+      lodash: 4.17.21
+      nanoid: 4.0.0
+      path-parser: 6.1.0
+      query-string: 8.1.0
+      ts-pattern: 4.1.3
+      uuid: 9.0.0
+      validator: 13.7.0
+    devDependencies:
+      '@babel/cli': 7.20.7
+      '@effect-ts-app/compiler': link:../compiler
+      '@types/faker': 5.5.9
+      '@types/node': 18.11.12
+      '@types/uuid': 9.0.0
+      '@types/validator': 13.7.10
+      faker: 5.5.3
+      fast-check: 3.6.0
+      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+      vitest: 0.27.2
+
+  packages/react:
+    specifiers:
+      '@babel/cli': ^7.20.7
+      '@effect-ts-app/compiler': workspace:*
+      '@effect-ts-app/core': workspace:*
+      '@effect-ts-app/prelude': workspace:*
+      '@effect-ts-app/schema': workspace:*
+      '@types/node': ~18.11.12
+      '@types/react': ^18.0.26
+      date-fns: ^2.29.3
+      react: ^18.2.0
+      react-hook-form: 7.40.0
+      react-intl: ^6.2.5
+      ts-node: ^10.9.1
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
+      vitest: ^0.27.2
+    dependencies:
+      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/prelude': link:../prelude
+      '@effect-ts-app/schema': link:../schema
+      date-fns: 2.29.3
+    devDependencies:
+      '@babel/cli': 7.20.7
+      '@effect-ts-app/compiler': link:../compiler
+      '@types/node': 18.11.12
+      '@types/react': 18.0.26
+      react: 18.2.0
+      react-hook-form: 7.40.0_react@18.2.0
+      react-intl: 6.2.5_x4xqxm2zmsqiuudkrycs3puhze
+      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+      vitest: 0.27.2
+
   packages/schema:
     specifiers:
       '@effect-ts-app/core': workspace:*
@@ -556,6 +507,55 @@ importers:
       fast-check: 3.6.0
       ts-toolbelt: 9.6.0
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+
+  packages/vue:
+    specifiers:
+      '@babel/cli': ^7.20.7
+      '@effect-ts-app/compiler': workspace:*
+      '@effect-ts-app/core': workspace:*
+      '@effect-ts-app/prelude': workspace:*
+      '@effect-ts-app/schema': workspace:*
+      '@effect-ts-app/vue': workspace:*
+      '@effect-ts/core': ^0.60.5
+      '@effect-ts/monocle': ^0.43.0
+      '@effect-ts/system': ^0.57.5
+      '@effect/io': ^0.0.65
+      '@fp-ts/core': ^0.0.11
+      '@fp-ts/data': ^0.0.39
+      '@rollup/pluginutils': ^5.0.2
+      '@types/node': ~18.11.12
+      json5: ^2.2.3
+      query-string: ^8.1.0
+      swrv: ^1.0.3
+      ts-node: ^10.9.1
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
+      vite: ^4.0.4
+      vitest: ^0.27.2
+      vue: ^3.2.45
+    dependencies:
+      '@effect-ts-app/core': link:../core
+      '@effect-ts-app/prelude': link:../prelude
+      '@effect-ts-app/schema': link:../schema
+      '@effect-ts-app/vue': 'link:'
+      '@effect-ts/core': 0.60.5_jx4drcbvzaxoqqasybnfxdx44i
+      '@effect-ts/monocle': 0.43.0_d3hhxwnoq64fw5ljkjpzykj2mi_@effect-ts+core@0.60.5
+      '@effect-ts/system': 0.57.5_aliyesjnd2rt7ef7234i2dw2t4
+      '@effect/io': 0.0.65_ch2m3gurmkzos5ffwbxtffvjeq
+      '@fp-ts/core': 0.0.11
+      '@fp-ts/data': 0.0.39
+      query-string: 8.1.0
+      swrv: 1.0.3_vue@3.2.45
+      vue: 3.2.45
+    devDependencies:
+      '@babel/cli': 7.20.7
+      '@effect-ts-app/compiler': link:../compiler
+      '@rollup/pluginutils': 5.0.2
+      '@types/node': 18.11.12
+      json5: 2.2.3
+      ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
+      vite: 4.0.4_@types+node@18.11.12
+      vitest: 0.27.2
 
   play:
     specifiers:
@@ -1607,29 +1607,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@babel/core/7.20.7:
-    resolution: {integrity: sha512-t1ZjCluspe5DW24bn2Rr1CDb2v9rn/hROtg9a2tmd0+QYf4bsloYfLQzjG4qHPNMhWtKdGC33R5AxGR2Af2cBw==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@ampproject/remapping': 2.2.0
-      '@babel/code-frame': 7.18.6
-      '@babel/generator': 7.20.7
-      '@babel/helper-compilation-targets': 7.20.7_@babel+core@7.20.7
-      '@babel/helper-module-transforms': 7.20.11
-      '@babel/helpers': 7.20.7
-      '@babel/parser': 7.20.7
-      '@babel/template': 7.20.7
-      '@babel/traverse': 7.20.12
-      '@babel/types': 7.20.7
-      convert-source-map: 1.9.0
-      debug: 4.3.4
-      gensync: 1.0.0-beta.2
-      json5: 2.2.3
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
 
   /@babel/generator/7.12.0:
     resolution: {integrity: sha512-8lnf4QcyiQMf5XQp47BltuMTocsOh6P0z/vueEh8GzhmWWlDbdvOoI5Ziddg0XYhmnx35HyByUW51/9NprF8cA==}
@@ -1654,20 +1631,6 @@ packages:
     dependencies:
       '@babel/compat-data': 7.20.10
       '@babel/core': 7.20.12
-      '@babel/helper-validator-option': 7.18.6
-      browserslist: 4.21.4
-      lru-cache: 5.1.1
-      semver: 6.3.0
-    dev: true
-
-  /@babel/helper-compilation-targets/7.20.7_@babel+core@7.20.7:
-    resolution: {integrity: sha512-4tGORmfQcrc+bvrjb5y3dG9Mx1IOZjsHqQVUz7XCNHO+iTmqxWnVg3KRygjGmpRLJGdQSKuvFinbIb0CnZwHAQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-    dependencies:
-      '@babel/compat-data': 7.20.10
-      '@babel/core': 7.20.7
       '@babel/helper-validator-option': 7.18.6
       browserslist: 4.21.4
       lru-cache: 5.1.1
@@ -1761,6 +1724,7 @@ packages:
   /@babel/parser/7.20.7:
     resolution: {integrity: sha512-T3Z9oHybU+0vZlY9CiDSJQTD5ZapcW18ZctFMi0MOAl/4BjFF4ul7NVSARLdbGO5vDqy9eQiGTV0LtKfvCYvcg==}
     engines: {node: '>=6.0.0'}
+    hasBin: true
     dependencies:
       '@babel/types': 7.20.7
 
@@ -1812,23 +1776,6 @@ packages:
       '@babel/code-frame': 7.18.6
       '@babel/parser': 7.20.7
       '@babel/types': 7.20.7
-
-  /@babel/traverse/7.20.10:
-    resolution: {integrity: sha512-oSf1juCgymrSez8NI4A2sr4+uB/mFd9MXplYGPEBnfAuWmmyeVcHa6xLPiaRBcXkcb/28bgxmQLTVwFKE1yfsg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/code-frame': 7.18.6
-      '@babel/generator': 7.20.7
-      '@babel/helper-environment-visitor': 7.18.9
-      '@babel/helper-function-name': 7.19.0
-      '@babel/helper-hoist-variables': 7.18.6
-      '@babel/helper-split-export-declaration': 7.18.6
-      '@babel/parser': 7.20.7
-      '@babel/types': 7.20.7
-      debug: 4.3.4
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
 
   /@babel/traverse/7.20.12:
     resolution: {integrity: sha512-MsIbFN0u+raeja38qboyF8TIT7K0BFzz/Yd/77ta4MsUsmP2RAnidIlwq7d5HFQrH/OZJecGV6B71C4zAgpoSQ==}
@@ -4274,6 +4221,7 @@ packages:
   /dependency-tree/8.1.2:
     resolution: {integrity: sha512-c4CL1IKxkKng0oT5xrg4uNiiMVFqTGOXqHSFx7XEFdgSsp6nw3AGGruICppzJUrfad/r7GLqt26rmWU4h4j39A==}
     engines: {node: ^10.13 || ^12 || >=14}
+    hasBin: true
     dependencies:
       commander: 2.20.3
       debug: 4.3.4
@@ -4297,6 +4245,7 @@ packages:
   /detective-amd/3.1.2:
     resolution: {integrity: sha512-jffU26dyqJ37JHR/o44La6CxtrDf3Rt9tvd2IbImJYxWKTMdBjctp37qoZ6ZcY80RHg+kzWz4bXn39e4P7cctQ==}
     engines: {node: '>=6.0'}
+    hasBin: true
     dependencies:
       ast-module-types: 3.0.0
       escodegen: 2.0.0
@@ -4622,6 +4571,7 @@ packages:
   /escodegen/2.0.0:
     resolution: {integrity: sha512-mmHKys/C8BFUGI+MAWNcSYoORYLMdPzjrknd2Vc+bUsjN5bXcr8EhrNB+UTqfL1y3I9c4fw2ihgtMPQLBRiQxw==}
     engines: {node: '>=6.0'}
+    hasBin: true
     dependencies:
       esprima: 4.0.1
       estraverse: 5.3.0
@@ -4718,10 +4668,10 @@ packages:
   /eslint-plugin-codegen/0.17.0_3ogk7peuefdu45q3hbzcgdiuna:
     resolution: {integrity: sha512-6DDDob+7PjyNJyy9ynHFFsLp0+aUtWbXiiT/SfU161NCxo1zevewq7VvtDiJh15gMBvVZSFs6hXqYJWT3NUZvA==}
     dependencies:
-      '@babel/core': 7.20.7
+      '@babel/core': 7.20.12
       '@babel/generator': 7.12.0
       '@babel/parser': 7.20.7
-      '@babel/traverse': 7.20.10
+      '@babel/traverse': 7.20.12
       expect: 26.6.2
       fp-ts: 2.13.1
       glob: 7.2.3
@@ -5140,6 +5090,7 @@ packages:
 
   /fast-xml-parser/4.0.11:
     resolution: {integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==}
+    hasBin: true
     dependencies:
       strnum: 1.0.5
     dev: true
@@ -5170,6 +5121,7 @@ packages:
   /filing-cabinet/3.3.0:
     resolution: {integrity: sha512-Tnbpbme1ONaHXV5DGcw0OFpcfP3p2itRf5VXO1bguBXdIewDbK6ZFBK//DGKM0BuCzaQLQNY4f5gljzxY1VCUw==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
     dependencies:
       app-module-path: 2.2.0
       commander: 2.20.3
@@ -5269,6 +5221,7 @@ packages:
 
   /flatten/1.0.3:
     resolution: {integrity: sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==}
+    deprecated: flatten is deprecated in favor of utility frameworks such as lodash.
     dev: true
 
   /fn.name/1.1.0:
@@ -5540,6 +5493,7 @@ packages:
   /gonzales-pe/4.3.0:
     resolution: {integrity: sha512-otgSPpUmdWJ43VXyiNgEYE4luzHCL2pz4wQ0OnDluC6Eg4Ko3Vexy/SrSynglw/eR+OhkzmqFCZa/OFa/RgAOQ==}
     engines: {node: '>=0.6.0'}
+    hasBin: true
     dependencies:
       minimist: 1.2.7
     dev: true
@@ -6194,6 +6148,7 @@ packages:
 
   /js-yaml/4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
     dependencies:
       argparse: 2.0.1
 
@@ -6455,6 +6410,7 @@ packages:
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
     dependencies:
       js-tokens: 4.0.0
     dev: true
@@ -6514,6 +6470,7 @@ packages:
   /madge/5.0.1:
     resolution: {integrity: sha512-krmSWL9Hkgub74bOjnjWRoFPAJvPwSG6Dbta06qhWOq6X/n/FPzO3ESZvbFYVIvG2g4UHXvCJN1b+RZLaSs9nA==}
     engines: {node: ^10.13 || ^12 || >=14}
+    hasBin: true
     dependencies:
       chalk: 4.1.2
       commander: 7.2.0
@@ -6844,6 +6801,7 @@ packages:
   /module-definition/3.4.0:
     resolution: {integrity: sha512-XxJ88R1v458pifaSkPNLUTdSPNVGMP2SXVncVmApGO+gAfrLANiYe6JofymCzVceGOMwQE2xogxBSc8uB7XegA==}
     engines: {node: '>=6.0'}
+    hasBin: true
     dependencies:
       ast-module-types: 3.0.0
       node-source-walk: 4.3.0
@@ -6852,6 +6810,7 @@ packages:
   /module-lookup-amd/7.0.1:
     resolution: {integrity: sha512-w9mCNlj0S8qviuHzpakaLVc+/7q50jl9a/kmJ/n8bmXQZgDPkQHnPBb8MUOYh3WpAYkXuNc2c+khsozhIp/amQ==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
     dependencies:
       commander: 2.20.3
       debug: 4.3.4
@@ -6902,6 +6861,7 @@ packages:
   /nanoid/4.0.0:
     resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
     engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
     dev: false
 
   /natural-compare-lite/1.4.0:
@@ -7525,6 +7485,7 @@ packages:
   /precinct/8.3.1:
     resolution: {integrity: sha512-pVppfMWLp2wF68rwHqBIpPBYY8Kd12lDhk8LVQzOwqllifVR15qNFyod43YLyFpurKRZQKnE7E4pofAagDOm2Q==}
     engines: {node: ^10.13 || ^12 || >=14}
+    hasBin: true
     dependencies:
       commander: 2.20.3
       debug: 4.3.4
@@ -7708,6 +7669,7 @@ packages:
   /querystring/0.2.0:
     resolution: {integrity: sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==}
     engines: {node: '>=0.4.x'}
+    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
     dev: true
 
   /queue-microtask/1.2.3:
@@ -7756,6 +7718,7 @@ packages:
 
   /rc/1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
+    hasBin: true
     dependencies:
       deep-extend: 0.6.0
       ini: 1.3.8
@@ -7972,6 +7935,7 @@ packages:
   /requirejs/2.3.6:
     resolution: {integrity: sha512-ipEzlWQe6RK3jkzikgCupiTbTvm4S0/CAU5GlgptkN5SO6F3u0UD0K18wy6ErDqiCyP4J4YYe1HuAShvsxePLg==}
     engines: {node: '>=0.4.0'}
+    hasBin: true
     dev: true
 
   /requires-port/1.0.0:
@@ -8105,6 +8069,7 @@ packages:
   /sass-lookup/3.0.0:
     resolution: {integrity: sha512-TTsus8CfFRn1N44bvdEai1no6PqdmDiQUiqW5DlpmtT+tYnIt1tXtDIph5KA1efC+LmioJXSnCtUVpcK9gaKIg==}
     engines: {node: '>=6.0.0'}
+    hasBin: true
     dependencies:
       commander: 2.20.3
     dev: true
@@ -8334,6 +8299,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
 
   /sparse-bitfield/3.0.3:
     resolution: {integrity: sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==}
@@ -8560,6 +8526,7 @@ packages:
   /stylus-lookup/3.0.2:
     resolution: {integrity: sha512-oEQGHSjg/AMaWlKe7gqsnYzan8DLcGIHe0dUaFkucZZ14z4zjENRlQMCHT4FNsiWnJf17YN9OvrCfCoi7VvOyg==}
     engines: {node: '>=6.0.0'}
+    hasBin: true
     dependencies:
       commander: 2.20.3
       debug: 4.3.4
@@ -9109,6 +9076,7 @@ packages:
 
   /uuid/9.0.0:
     resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /v8-compile-cache-lib/3.0.1:
