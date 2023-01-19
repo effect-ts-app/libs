@@ -6,8 +6,5 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "minor",
-  "ignore": [
-    "@effect-ts-app/playground"
-  ]
+  "updateInternalDependencies": "patch"
 }

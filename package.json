@@ -15,7 +15,7 @@
         }
     },
     "scripts": {
-        "all": "pnpm -r --filter=!./play --filter=!./packages/pnpm-singleton",
+        "all": "pnpm -r --filter=!./packages/pnpm-singleton",
         "ci:version": "pnpm changeset version",
         "ci:publish": "pnpm all publish --access=public",
         "preinstall": "npx only-allow pnpm",
