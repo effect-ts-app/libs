@@ -29,7 +29,7 @@ import { flow, LazyArg, pipe, tuple, tupled } from "@effect-app/core/Function"
 /**
  * @tsplus global
  */
-import { Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-app/core/Prelude"
+import { Lens, NonEmptyArguments, NonEmptySet, ROMap, ROSet } from "@effect-app/core/Prelude"
 
 /**
  * @tsplus global
