@@ -1,5 +1,3 @@
-import { NotLoggedInError } from "@effect-app/infra-adapters/errors"
-
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
   public readonly message: string
@@ -8,7 +6,18 @@ export class NotFoundError<T extends string = string> {
   }
 }
 
-export { NotLoggedInError, UnauthorizedError, ValidationError } from "@effect-app/infra-adapters/errors"
+export class ValidationError {
+  public readonly _tag = "ValidationError"
+  constructor(public readonly errors: ReadonlyArray<unknown>) {}
+}
+
+export class NotLoggedInError {
+  public readonly _tag = "NotLoggedInError"
+}
+
+export class UnauthorizedError {
+  public readonly _tag = "UnauthorizedError"
+}
 
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.

@@ -25,7 +25,6 @@
     "@types/redlock": "^4.0.4",
     "connect": "^3.7.0",
     "express": "^4.18.2",
-    "jwt-decode": "^3.1.2",
     "mongodb": "4.13.0",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
@@ -174,26 +173,6 @@
         "default": "./_cjs/_global.cjs"
       }
     },
-    "./app": {
-      "import": {
-        "types": "./dist/app.d.ts",
-        "default": "./dist/app.js"
-      },
-      "require": {
-        "types": "./dist/app.d.ts",
-        "default": "./_cjs/app.cjs"
-      }
-    },
-    "./context/schema": {
-      "import": {
-        "types": "./dist/context/schema.d.ts",
-        "default": "./dist/context/schema.js"
-      },
-      "require": {
-        "types": "./dist/context/schema.d.ts",
-        "default": "./_cjs/context/schema.cjs"
-      }
-    },
     "./cosmos-client": {
       "import": {
         "types": "./dist/cosmos-client.d.ts",
@@ -204,84 +183,14 @@
         "default": "./_cjs/cosmos-client.cjs"
       }
     },
-    "./errors": {
+    "./express": {
       "import": {
-        "types": "./dist/errors.d.ts",
-        "default": "./dist/errors.js"
+        "types": "./dist/express.d.ts",
+        "default": "./dist/express.js"
       },
       "require": {
-        "types": "./dist/errors.d.ts",
-        "default": "./_cjs/errors.cjs"
-      }
-    },
-    "./express/index": {
-      "import": {
-        "types": "./dist/express/index.d.ts",
-        "default": "./dist/express/index.js"
-      },
-      "require": {
-        "types": "./dist/express/index.d.ts",
-        "default": "./_cjs/express/index.cjs"
-      }
-    },
-    "./express/makeJsonSchema": {
-      "import": {
-        "types": "./dist/express/makeJsonSchema.d.ts",
-        "default": "./dist/express/makeJsonSchema.js"
-      },
-      "require": {
-        "types": "./dist/express/makeJsonSchema.d.ts",
-        "default": "./_cjs/express/makeJsonSchema.cjs"
-      }
-    },
-    "./express/makeOpenApiSpecs": {
-      "import": {
-        "types": "./dist/express/makeOpenApiSpecs.d.ts",
-        "default": "./dist/express/makeOpenApiSpecs.js"
-      },
-      "require": {
-        "types": "./dist/express/makeOpenApiSpecs.d.ts",
-        "default": "./_cjs/express/makeOpenApiSpecs.cjs"
-      }
-    },
-    "./express/routing": {
-      "import": {
-        "types": "./dist/express/routing.d.ts",
-        "default": "./dist/express/routing.js"
-      },
-      "require": {
-        "types": "./dist/express/routing.d.ts",
-        "default": "./_cjs/express/routing.cjs"
-      }
-    },
-    "./express/schema/jwt": {
-      "import": {
-        "types": "./dist/express/schema/jwt.d.ts",
-        "default": "./dist/express/schema/jwt.js"
-      },
-      "require": {
-        "types": "./dist/express/schema/jwt.d.ts",
-        "default": "./_cjs/express/schema/jwt.cjs"
-      }
-    },
-    "./express/schema/requestHandler": {
-      "import": {
-        "types": "./dist/express/schema/requestHandler.d.ts",
-        "default": "./dist/express/schema/requestHandler.js"
-      },
-      "require": {
-        "types": "./dist/express/schema/requestHandler.d.ts",
-        "default": "./_cjs/express/schema/requestHandler.cjs"
-      }
-    },
-    "./express/schema/routing": {
-      "import": {
-        "types": "./dist/express/schema/routing.d.ts",
-        "default": "./dist/express/schema/routing.js"
-      },
-      "require": {
-        "types": "./dist/express/schema/routing.d.ts",
-        "default": "./_cjs/express/schema/routing.cjs"
+        "types": "./dist/express.d.ts",
+        "default": "./_cjs/express.cjs"
       }
     },
     "./index": {

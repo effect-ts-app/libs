@@ -262,6 +262,7 @@ importers:
       faker: ^5.5.3
       fast-check: ^3.6.0
       jwks-rsa: 2.1.4
+      jwt-decode: ^3.1.2
       object-hash: ^3.0.0
       path-parser: ^6.1.0
       pure-rand: ^6.0.0
@@ -299,6 +300,7 @@ importers:
       express-jwt: 8.3.0
       express-jwt-authz: 2.4.1_apyp2epfdmgxwegqyl42oh3lhy
       jwks-rsa: 2.1.4
+      jwt-decode: 3.1.2
       redis: 3.1.2
       ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
@@ -323,7 +325,6 @@ importers:
       '@types/redlock': ^4.0.4
       connect: ^3.7.0
       express: ^4.18.2
-      jwt-decode: ^3.1.2
       mongodb: 4.13.0
       proper-lockfile: ^4.1.2
       query-string: ^8.1.0
@@ -353,7 +354,6 @@ importers:
       '@types/redlock': 4.0.4
       connect: 3.7.0
       express: 4.18.2
-      jwt-decode: 3.1.2
       mongodb: 4.13.0
       redis: 3.1.2
       redlock: 4.2.0

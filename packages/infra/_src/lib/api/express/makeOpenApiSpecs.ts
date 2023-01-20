@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type * as Plutus from "../Openapi/atlas-plutus.js"
-import type { JSONSchema, SubSchema } from "../Openapi/atlas-plutus/JsonSchema/index.js"
-import { References } from "../Openapi/atlas-plutus/Schema/index.js"
+import type * as Plutus from "@effect-app/infra-adapters/Openapi/atlas-plutus"
+import type { JSONSchema, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus/JsonSchema/index"
+import { References } from "@effect-app/infra-adapters/Openapi/atlas-plutus/Schema/index"
 import { makeJsonSchema } from "./makeJsonSchema.js"
 import type { RouteDescriptorAny } from "./schema/routing.js"
 

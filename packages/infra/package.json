@@ -34,6 +34,7 @@
     "express-jwt": "^8.3.0",
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "2.1.4",
+    "jwt-decode": "^3.1.2",
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
@@ -97,16 +98,6 @@
         "default": "./_cjs/errors.cjs"
       }
     },
-    "./ext": {
-      "import": {
-        "types": "./dist/ext.d.ts",
-        "default": "./dist/ext.js"
-      },
-      "require": {
-        "types": "./dist/ext.d.ts",
-        "default": "./_cjs/ext.cjs"
-      }
-    },
     "./index": {
       "import": {
         "types": "./dist/index.d.ts",
@@ -137,6 +128,16 @@
         "default": "./_cjs/lib/api/authorization.jwt.cjs"
       }
     },
+    "./lib/api/codec": {
+      "import": {
+        "types": "./dist/lib/api/codec.d.ts",
+        "default": "./dist/lib/api/codec.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/codec.d.ts",
+        "default": "./_cjs/lib/api/codec.cjs"
+      }
+    },
     "./lib/api/defaultErrorHandler": {
       "import": {
         "types": "./dist/lib/api/defaultErrorHandler.d.ts",
@@ -145,6 +146,56 @@
       "require": {
         "types": "./dist/lib/api/defaultErrorHandler.d.ts",
         "default": "./_cjs/lib/api/defaultErrorHandler.cjs"
+      }
+    },
+    "./lib/api/express/makeJsonSchema": {
+      "import": {
+        "types": "./dist/lib/api/express/makeJsonSchema.d.ts",
+        "default": "./dist/lib/api/express/makeJsonSchema.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/express/makeJsonSchema.d.ts",
+        "default": "./_cjs/lib/api/express/makeJsonSchema.cjs"
+      }
+    },
+    "./lib/api/express/makeOpenApiSpecs": {
+      "import": {
+        "types": "./dist/lib/api/express/makeOpenApiSpecs.d.ts",
+        "default": "./dist/lib/api/express/makeOpenApiSpecs.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/express/makeOpenApiSpecs.d.ts",
+        "default": "./_cjs/lib/api/express/makeOpenApiSpecs.cjs"
+      }
+    },
+    "./lib/api/express/schema/jwt": {
+      "import": {
+        "types": "./dist/lib/api/express/schema/jwt.d.ts",
+        "default": "./dist/lib/api/express/schema/jwt.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/express/schema/jwt.d.ts",
+        "default": "./_cjs/lib/api/express/schema/jwt.cjs"
+      }
+    },
+    "./lib/api/express/schema/requestHandler": {
+      "import": {
+        "types": "./dist/lib/api/express/schema/requestHandler.d.ts",
+        "default": "./dist/lib/api/express/schema/requestHandler.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/express/schema/requestHandler.d.ts",
+        "default": "./_cjs/lib/api/express/schema/requestHandler.cjs"
+      }
+    },
+    "./lib/api/express/schema/routing": {
+      "import": {
+        "types": "./dist/lib/api/express/schema/routing.d.ts",
+        "default": "./dist/lib/api/express/schema/routing.js"
+      },
+      "require": {
+        "types": "./dist/lib/api/express/schema/routing.d.ts",
+        "default": "./_cjs/lib/api/express/schema/routing.cjs"
       }
     },
     "./lib/api/reportError": {
