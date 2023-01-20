@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.10.2
+
+### Patch Changes
+
+- cc4b37ea: FUP
+
 ## 0.10.1
 
 ### Patch Changes
