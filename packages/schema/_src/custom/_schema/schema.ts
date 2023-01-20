@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // tracing: off
 
-import type { Refinement } from "@effect-ts/core/Function"
+import type { Refinement } from "@effect-app/core/Function"
 import { LazyGetter } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"
 

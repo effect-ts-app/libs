@@ -2,7 +2,7 @@
 // tracing: off
 
 import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../custom.js"
 import { augmentRecord } from "../custom/_utils.js"

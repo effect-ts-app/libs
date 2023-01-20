@@ -1,7 +1,7 @@
 // tracing: off
 
+import { pipe } from "@effect-app/core/Function"
 import type { NonEmptySet } from "@effect-app/core/NonEmptySet"
-import { pipe } from "@effect-ts/core/Function"
 
 import * as MO from "../custom.js"
 import { minSize } from "./length.js"

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { pipe } from "@effect-app/core/Function"
+import type { Refinement } from "@effect-app/core/Function"
 import type {
   ApiSelfType,
   DefaultSchema,
@@ -23,7 +24,6 @@ import {
   prop,
   refine
 } from "@effect-app/schema"
-import type { Refinement } from "@effect-ts/core/Function"
 import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"

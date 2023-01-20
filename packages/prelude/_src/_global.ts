@@ -2,7 +2,7 @@
 // /**
 //  * @tsplus global
 //  */
-// import { Predicate } from "@effect-ts/core/Function"
+// import { Predicate } from "@effect-app/core/Function"
 
 /**
  * @tsplus global

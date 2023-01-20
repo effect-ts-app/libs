@@ -1,6 +1,6 @@
 import * as Dictionary from "@effect-ts/core/Collections/Immutable/Dictionary"
 import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 import type { Compute, UnionToIntersection } from "@effect-ts/core/Utils"
 import { intersect } from "@effect-ts/core/Utils"
 import type * as fc from "fast-check"

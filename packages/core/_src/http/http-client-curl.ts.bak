@@ -1,6 +1,6 @@
 import * as R from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { pipe } from "@effect-ts/core/Function"
-import * as F from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
+import * as F from "@effect-app/core/Function"
 import * as C from "node-libcurl"
 import path from "path"
 import querystring, { ParsedQuery } from "query-string"

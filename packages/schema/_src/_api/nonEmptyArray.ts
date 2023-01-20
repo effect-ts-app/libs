@@ -1,6 +1,6 @@
 // tracing: off
 
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as S from "../custom.js"
 import { leafE, unknownArrayE } from "../custom.js"

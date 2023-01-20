@@ -2,7 +2,7 @@
 // tracing: off
 
 import { Map } from "@effect-ts/core/Collections/Immutable/Map"
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
