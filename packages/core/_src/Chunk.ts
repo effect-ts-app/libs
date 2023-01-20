@@ -56,7 +56,7 @@ export function toArray<T>(c: Chunk.Chunk<T>) {
  * @tsplus static fp-ts/data/Chunk.Ops uniq
  * @tsplus pipeable fp-ts/data/Chunk uniq
  */
-export function uniq<A>(E: Equal<A>) {
+export function uniq<A>(E: Equivalence<A>) {
   return (self: Chunk.Chunk<A>): Chunk.Chunk<A> => {
     let out = ([] as A[]).toChunk
     for (let i = 0; i < self.length; i++) {
@@ -77,9 +77,9 @@ export function uniq<A>(E: Equal<A>) {
  * @tsplus static fp-ts/data/Chunk.Ops elem2
  * @tsplus pipeable fp-ts/data/Chunk elem2
  */
-export function elem<A>(E: Equal<A>, value: A) {
+export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk.Chunk<A>): boolean => {
-    const predicate = (element: A) => E.equals(element, value)
+    const predicate = E(value)
     for (let i = 0; i < self.length; i++) {
       if (predicate(self.unsafeGet(i)!)) {
         return true

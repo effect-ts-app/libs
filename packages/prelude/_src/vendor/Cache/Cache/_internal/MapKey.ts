@@ -9,7 +9,7 @@ export type MapKeyURI = typeof MapKeyURI
  * to the previous key and next key in the `KeySet` to support an efficient
  * implementation of a sorted set of keys.
  */
-export class MapKey<Key> implements Equals {
+export class MapKey<Key> implements Equal.Equal {
   readonly [MapKeyURI]: MapKeyURI = MapKeyURI
 
   previous: MapKey<Key> | undefined = undefined
@@ -30,9 +30,9 @@ export class MapKey<Key> implements Equals {
       return true
     }
     return isMapKey(that) &&
-      Equals.equals(this.value, that.value) &&
-      Equals.equals(this.previous, that.previous) &&
-      Equals.equals(this.next, that.next)
+      Equal.equals(this.value, that.value) &&
+      Equal.equals(this.previous, that.previous) &&
+      Equal.equals(this.next, that.next)
   }
 }
 

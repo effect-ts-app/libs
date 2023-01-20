@@ -118,7 +118,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
           this.trackHit()
           if (this.hasExpired(value.timeToLiveMillis)) {
             const found = this.cacheState.map.get(k).value
-            if (Equals.equals(found, value)) {
+            if (Equal.equals(found, value)) {
               this.cacheState.map.remove(k)
             }
             return this.get(k)
@@ -178,7 +178,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
         case "Complete": {
           if (this.hasExpired(value.timeToLiveMillis)) {
             const found = this.cacheState.map.get(k).value!
-            if (Equals.equals(found, value)) {
+            if (Equal.equals(found, value)) {
               this.cacheState.map.remove(k)
             }
             return this.get(k).asUnit
@@ -187,7 +187,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
           return this.lookupValueOf(value.key.value, deferred)
             .when(() => {
               const current = this.cacheState.map.get(k).value
-              if (Equals.equals(current, value)) {
+              if (Equal.equals(current, value)) {
                 this.cacheState.map.set(
                   k,
                   new Refreshing(deferred, value as Complete<Key, Error, Value>)

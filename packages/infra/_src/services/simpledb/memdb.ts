@@ -1,6 +1,5 @@
 import { flow } from "@effect-app/core/Function"
 import * as MO from "@effect-app/schema"
-import type * as Eq from "@effect-ts/core/Equal"
 
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { getRecordName, makeMap, SerializedDBRecord } from "./shared.js"
@@ -28,7 +27,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return storage
         .find(getRecordName(type, id))
-        .map(_ => _.map(s => JSON.parse(s) as unknown))
+        .map(_ => _.map(s => JSON.parse(s)))
         .flatMapOpt(parseSDB)
         .mapOpt(({ data, version }) => ({
           data: JSON.parse(data) as EA,
@@ -36,16 +35,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         }))
     }
 
-    function findBy<V extends Partial<A>>(keys: V, eq: Eq.Equal<V>) {
+    function findBy<V extends Partial<A>>(keys: V, eq: Equivalence<V>) {
       // Naive implementation, fine for in memory testing purposes.
       return Effect.gen(function*($) {
         for (const [, value] of storage) {
-          const sdb_ = JSON.parse(value) as unknown
+          const sdb_ = JSON.parse(value)
           const sdb = yield* $(parseSDB(sdb_))
           const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
           const r = yield* $(
             decode(cr.data).flatMap(d =>
-              eq.equals(keys, d as unknown as V)
+              eq(d as unknown as V)(keys)
                 ? Effect(d)
                 : Effect.fail("not equals")
             ).exit

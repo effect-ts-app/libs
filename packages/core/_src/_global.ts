@@ -28,7 +28,12 @@ import { flow, LazyArg, pipe, tuple, tupled } from "@effect-app/core/Function"
 /**
  * @tsplus global
  */
-import { Equal, Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-app/core/Prelude"
+import { Lens, NonEmptyArguments, NonEmptySet, Ord, ROMap, ROSet } from "@effect-app/core/Prelude"
+
+/**
+ * @tsplus global
+ */
+import { Equivalence } from "@fp-ts/data/Equivalence"
 
 /**
  * @tsplus global
@@ -113,7 +118,7 @@ import { Order } from "@fp-ts/core/typeclass/Order"
 /**
  * @tsplus global
  */
-import { Equal as Equals } from "@fp-ts/data/Equal"
+import { Equal } from "@fp-ts/data/Equal"
 
 /**
  * @tsplus global

@@ -12,7 +12,6 @@ import type * as CNK from "@fp-ts/data/Chunk"
 // import type * as FIBER from "@effect-ts/core/Effect/Fiber"
 // import type * as REF from "@effect-ts/core/Effect/Ref"
 // import type * as SEMAPHORE from "@effect-ts/core/Effect/Semaphore"
-import type * as EQ from "@effect-ts/core/Equal"
 import type * as ORD from "@effect-ts/core/Ord"
 import type * as EITHER from "@fp-ts/data/Either"
 // import type * as Sy from "@effect-app/core/Sync"
@@ -30,13 +29,6 @@ import type * as SET from "@effect-app/core/Set"
 // import type * as HAS from "@effect-ts/core/Has"
 
 import type {} from "@effect-app/core/types/awesome"
-
-export namespace Equal {
-  // @ts-expect-error abc
-  export * from "@effect-ts/core/Equal"
-}
-/** @tsplus type ets/Equal */
-export type Equal<A> = EQ.Equal<A>
 
 // export namespace Has {
 //   export * from "@effect-ts/core/Has"

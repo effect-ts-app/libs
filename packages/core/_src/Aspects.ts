@@ -13,6 +13,26 @@ export interface ChunkAspects {}
 export const Chunk: ChunkAspects = {}
 
 /**
+ * @tsplus type fp-ts/data/Equal.Aspects
+ */
+export interface EqualAspects {}
+
+/**
+ * @tsplus static fp-ts/data/Equal.Ops $
+ */
+export const Equal: EqualAspects = {}
+
+/**
+ * @tsplus type fp-ts/data/Equivalence.Aspects
+ */
+export interface EquivalenceAspects {}
+
+/**
+ * @tsplus static fp-ts/data/Equivalence.Ops $
+ */
+export const Equivalence: EquivalenceAspects = {}
+
+/**
  * @tsplus type fp-ts/data/HashMap.Aspects
  */
 export interface HashMapAspects {}

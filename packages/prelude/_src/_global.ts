@@ -58,7 +58,7 @@ import {
   // Effect,
   // EffectMaybe as EffectMaybe,
   // Either,
-  // Equal,
+  // Equivalence,
   // Exit,
   // Fiber,
   Fnc,

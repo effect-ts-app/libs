@@ -1,5 +1,3 @@
-import * as EQUAL from "@effect-ts/core/Equal"
-import type { Equal } from "@effect-ts/core/Equal"
 import * as ORD from "@effect-ts/core/Ord"
 import type { Ord } from "@effect-ts/core/Ord"
 import * as CNK from "@fp-ts/data/Chunk"
@@ -36,7 +34,7 @@ export function toArray<A>(
  * @tsplus static ReadonlyArray.Ops uniq
  * @tsplus pipeable ReadonlyArray uniq
  */
-export function uniqArray<A>(E: Equal<A>) {
+export function uniqArray<A>(E: Equivalence<A>) {
   return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
     const includes = arrayIncludes(E)
     const result: Array<A> = []
@@ -52,11 +50,11 @@ export function uniqArray<A>(E: Equal<A>) {
   }
 }
 
-function arrayIncludes<A>(E: Equal<A>) {
+function arrayIncludes<A>(E: Equivalence<A>) {
   return (array: Array<A>, value: A): boolean => {
     for (let i = 0; i < array.length; i = i + 1) {
       const element = array[i]!
-      if (E.equals(value, element)) {
+      if (E(value)(element)) {
         return true
       }
     }
@@ -70,7 +68,7 @@ function arrayIncludes<A>(E: Equal<A>) {
  * @tsplus static fp-ts/data/Chunk.Ops uniq
  * @tsplus pipeable fp-ts/data/Chunk uniq
  */
-export function uniq<A>(E: Equal<A>) {
+export function uniq<A>(E: Equivalence<A>) {
   return (self: Chunk<A>): Chunk<A> => {
     let out = ([] as A[]).toChunk
     for (let i = 0; i < self.length; i++) {
@@ -91,9 +89,9 @@ export function uniq<A>(E: Equal<A>) {
  * @tsplus static fp-ts/data/Chunk.Ops elem2
  * @tsplus pipeable fp-ts/data/Chunk elem2
  */
-export function elem<A>(E: Equal<A>, value: A) {
+export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk<A>): boolean => {
-    const predicate = (element: A) => E.equals(element, value)
+    const predicate = E(value)
     for (let i = 0; i < self.length; i++) {
       if (predicate(self.unsafeGet(i)!)) {
         return true
@@ -116,14 +114,6 @@ export function sortWithNonEmpty<A>(
  * @tsplus pipeable fp-ts/data/Chunk partition
  */
 export const ChunkPartition = CNK.partition
-
-/**
- * @tsplus fluent ets/Equal contramap
- */
-
-export function EqlContramap<A, B>(fa: Equal<A>, f: (a: B) => A) {
-  return EQUAL.contramap(f)(fa)
-}
 
 /**
  * @tsplus fluent ets/Ord contramap

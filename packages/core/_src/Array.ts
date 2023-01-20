@@ -30,7 +30,7 @@ export function toArray<A>(
  * @tsplus pipeable ReadonlyArray uniq
  * @tsplus static fp-ts/data/ReadonlyArray.Ops uniq
  */
-export function uniq<A>(E: Equal<A>) {
+export function uniq<A>(E: Equivalence<A>) {
   return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
     const includes = arrayIncludes(E)
     const result: Array<A> = []
@@ -46,11 +46,11 @@ export function uniq<A>(E: Equal<A>) {
   }
 }
 
-function arrayIncludes<A>(E: Equal<A>) {
+function arrayIncludes<A>(E: Equivalence<A>) {
   return (array: Array<A>, value: A): boolean => {
     for (let i = 0; i < array.length; i = i + 1) {
       const element = array[i]!
-      if (E.equals(value, element)) {
+      if (E(value)(element)) {
         return true
       }
     }

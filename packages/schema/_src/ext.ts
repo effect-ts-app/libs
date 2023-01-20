@@ -13,8 +13,6 @@ import * as MO from "./_schema.js"
 import type { Property, UUID } from "./_schema.js"
 import { propDef, propOpt, propReq } from "./_schema.js"
 
-import * as Eq from "@effect-ts/core/Equal"
-
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   new(inp: ConstructorInput): ParsedShape
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
@@ -520,7 +518,7 @@ export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq?: Equal<ParsedShape>
+  eq?: Equivalence<ParsedShape>
 ) {
   const s = set(type, ord, eq)
   return Object.assign(s, ROSet.make(ord, eq))
@@ -550,13 +548,13 @@ export function makeUnorderedStringSet<A extends string>(
     any // Api
   >
 ) {
-  return makeUnorderedSet(type, Eq.string)
+  return makeUnorderedSet(type, Equivalence.string)
 }
 
 export function makeUnorderedSet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  eq: Eq.Equal<ParsedShape>
+  eq: Equivalence<ParsedShape>
 ) {
   return makeSet(type, createUnorder<ParsedShape>(), eq)
 }
@@ -566,7 +564,7 @@ export function makeUnorderedSet<ParsedShape, ConstructorInput, Encoded, Api>(
 //   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
 //   contramap: (a: ParsedShape) => MA,
 //   ord: Ord<MA>,
-//   eq: Eq.Equal<MA>
+//   eq: Equivalence<MA>
 // ) {
 //   return makeSet(type, LegacyOrd.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
 // }
@@ -575,7 +573,7 @@ export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq?: Equal<ParsedShape>
+  eq?: Equivalence<ParsedShape>
 ) {
   const s = nonEmptySet(type, ord, eq)
   return Object.assign(s, NonEmptySet.make(ord, eq))
@@ -605,13 +603,13 @@ export function makeUnorderedStringNonEmptySet<A extends string>(
     any // Api
   >
 ) {
-  return makeUnorderedNonEmptySet(type, Eq.string)
+  return makeUnorderedNonEmptySet(type, Equivalence.string)
 }
 
 export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  eq: Eq.Equal<ParsedShape>
+  eq: Equivalence<ParsedShape>
 ) {
   return makeNonEmptySet(type, createUnorder<ParsedShape>(), eq)
 }
@@ -627,7 +625,7 @@ export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded,
 //   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
 //   contramap: (a: ParsedShape) => MA,
 //   ord: Ord<MA>,
-//   eq: Eq.Equal<MA>
+//   eq: Equivalence<MA>
 // ) {
 //   return makeNonEmptySet(
 //     type,

@@ -2,6 +2,7 @@
 
 import { every_, fromArray, Set, toArray } from "@effect-ts/core/Collections/Immutable/Set"
 
+import type * as EQ from "@effect-ts/core/Equal"
 import * as MO from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
@@ -13,13 +14,13 @@ export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq_?: Equal<ParsedShape>
+  eq_?: Equivalence<ParsedShape>
 ): MO.DefaultSchema<
   unknown,
   Set<ParsedShape>,
   Set<ParsedShape>,
   readonly Encoded[],
-  { self: Api; eq: Equal<ParsedShape>; ord: Ord<ParsedShape> }
+  { self: Api; eq: Equivalence<ParsedShape>; ord: Ord<ParsedShape> }
 > {
   const refinement = (_: unknown): _ is Set<ParsedShape> => _ instanceof Set && every_(_, guardSelf)
 
@@ -27,9 +28,10 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 
-  const eq = eq_ ?? <Equal<ParsedShape>> { equals: (x, y) => ord.compare(x, y) === 0 }
+  const eq = eq_ ?? (y => x => ord.compare(x, y) === 0)
+  const eqO = <EQ.Equal<ParsedShape>> { equals: (x, y) => eq(y)(x) }
 
-  const fromArray_ = fromArray(eq)
+  const fromArray_ = fromArray(eqO)
   const toArray_ = toArray(ord)
 
   const fromChunk = pipe(

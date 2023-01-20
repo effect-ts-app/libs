@@ -15,8 +15,12 @@ import {
   toArray
 } from "@effect-ts/core/Collections/Immutable/Set"
 
-function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
-  const eq = eq_ ?? <Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
+import type * as EQ from "@effect-ts/core/Equal"
+
+function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
+  const eq = eq_
+    ? <EQ.Equal<A>> { equals: (x, y) => eq_(y)(x) }
+    : <EQ.Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
 
   const fromArray = fromArray_(eq)
   const concat_ = (set: Set<A>, it: Iterable<A>) => fromArray([...set, ...it])
@@ -52,7 +56,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord<A>, eq: Equal<A>) {
+  wrapped(ord: Ord<A>, eq: Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -61,7 +65,7 @@ export interface SetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]
 
 export const make: <A>(
   ord: Ord<A>,
-  eq?: Equal<A>
+  eq?: Equivalence<A>
 ) => SetSchemaExtensions<A> = make_
 
 export * from "@effect-ts/core/Collections/Immutable/Set"

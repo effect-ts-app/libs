@@ -186,7 +186,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         }
         return Option.none
       }
-    ).uniq({ equals: (x, y) => x[0] === y[0] })
+    ).uniq(y => x => x[0] === y[0])
 
     if (tags.length === entries.length) {
       return Option.some({

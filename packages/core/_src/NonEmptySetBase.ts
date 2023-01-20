@@ -1,4 +1,5 @@
 import { Option as OptionLegacy } from "@effect-ts/core"
+import type * as EQ from "@effect-ts/core/Equal"
 import { flow } from "./Function.js"
 import { Option } from "./Prelude.js"
 import {
@@ -30,8 +31,11 @@ function convertOpt<A>(a: Option<A>) {
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
-  const eq = eq_ ?? <Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
+function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
+  const eq = eq_
+    ? <EQ.Equal<A>> { equals: (x, y) => eq_(y)(x) }
+    : <EQ.Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
+
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
   const fromNonEmptyArray = (arr: NonEmptyReadonlyArray<A>) => fromArray_(arr) as NonEmptySet<A>
@@ -86,7 +90,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equal<A>) {
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord<A>, eq?: Equal<A>) {
+  wrapped(ord: Ord<A>, eq?: Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -95,7 +99,7 @@ export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["w
 
 export const make: <A>(
   ord: Ord<A>,
-  eq?: Equal<A>
+  eq?: Equivalence<A>
 ) => NonEmptySetSchemaExtensions<A> = make_
 
 export function fromSet<A>(set: Set<A>) {

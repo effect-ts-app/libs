@@ -14,6 +14,7 @@ import {
 } from "@effect-app/schema"
 
 import { ROSet } from "@effect-app/core/Prelude"
+import type * as EQ from "@effect-ts/core/Equal"
 
 export const PositiveNumber = positive(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
@@ -72,10 +73,11 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   ord: Ord<ParsedShape>,
-  eq: Equal<ParsedShape>
+  eq: Equivalence<ParsedShape>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
+  const eqO = <EQ.Equal<ParsedShape>> { equals: (x, y) => eq(y)(x) }
   return setOriginal(self, ord, eq)["|>"](
-    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
+    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eqO)))
   )
 }

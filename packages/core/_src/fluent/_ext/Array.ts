@@ -1,5 +1,4 @@
 import { sort, sortBy, uniq } from "@effect-ts/core/Collections/Immutable/Array"
-import type * as Eq from "@effect-ts/core/Equal"
 import type * as Ord from "@effect-ts/core/Ord"
 
 export function mapOriginal_<AX, B>(
@@ -17,6 +16,6 @@ export function sortBy_<A>(a: ReadonlyArray<A>, ords: ReadonlyArray<Ord.Ord<A>>)
   return sortBy(ords)(a)
 }
 
-export function uniq_<A>(as: ReadonlyArray<A>, E: Eq.Equal<A>) {
-  return uniq(E)(as)
+export function uniq_<A>(as: ReadonlyArray<A>, E: Equivalence<A>) {
+  return uniq<A>({ equals: (x, y) => E(y)(x) })(as)
 }

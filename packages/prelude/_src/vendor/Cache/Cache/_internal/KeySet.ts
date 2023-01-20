@@ -13,7 +13,7 @@ export class KeySet<Key> {
    * Adds the specified key to the set.
    */
   add(key: MapKey<Key>): void {
-    if (!Equals.equals(key, this.tail)) {
+    if (!Equal.equals(key, this.tail)) {
       if (this.tail != null) {
         const previous = key.previous
         const next = key.next
