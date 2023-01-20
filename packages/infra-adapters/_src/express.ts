@@ -61,7 +61,11 @@ export function LiveExpressAppConfig<R>(
     _tag: ExpressAppConfigTag,
     host,
     port,
-    exitHandler: (req, res, next) => cause => exitHandler(req, res, next)(cause).provideEnvironment(r)
+    exitHandler: (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ) => (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideEnvironment(r)
   })).toLayer(ExpressAppConfig)
 }
 

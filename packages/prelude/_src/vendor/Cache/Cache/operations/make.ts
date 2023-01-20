@@ -1,5 +1,6 @@
 import type { Lookup } from "../../Lookup/definition.js"
-import { Cache } from "../definition.js"
+import type { Cache } from "../definition.js"
+import { makeWith } from "./makeWith.js"
 
 /**
  * Constructs a new cache with the specified capacity, time to live, and
@@ -13,5 +14,5 @@ export function make<Key, Environment, Error, Value>(
   lookup: Lookup<Key, Environment, Error, Value>,
   __tsplusTrace?: string
 ): Effect<Environment, never, Cache<Key, Error, Value>> {
-  return Cache.makeWith(capacity, lookup, () => timeToLive)
+  return makeWith(capacity, lookup, () => timeToLive)
 }

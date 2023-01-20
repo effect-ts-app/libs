@@ -1,6 +1,6 @@
 import type { IndexDescription, InsertOneOptions } from "mongodb"
 
-import * as Mongo from "../mongo-client.js"
+import * as Mongo from "@effect-app/infra-adapters/mongo-client"
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"

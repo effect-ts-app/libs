@@ -4,7 +4,7 @@ import { flow, pipe } from "@effect-app/core/Function"
 import * as MO from "@effect-app/schema"
 import type { Lock } from "redlock"
 
-import * as RED from "../redis-client.js"
+import * as RED from "@effect-app/infra-adapters/redis-client"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
 import * as simpledb from "./simpledb.js"

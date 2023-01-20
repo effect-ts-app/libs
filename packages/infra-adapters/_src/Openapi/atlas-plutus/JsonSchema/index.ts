@@ -19,6 +19,7 @@ export const Base: BaseConstructor = class<T extends {}> {
       const keys = Object.keys(args)
 
       for (let i = 0; i < keys.length; i++) {
+        // @ts-expect-error
         this[keys[i]!] = args[keys[i]!]
       }
     }

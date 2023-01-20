@@ -7,7 +7,8 @@ import { EntryStats } from "../../EntryStats.js"
 import type { Lookup } from "../../Lookup.js"
 import type { Cache } from "../definition.js"
 import { CacheURI } from "../definition.js"
-import { CacheState } from "./CacheState.js"
+import type { CacheState } from "./CacheState.js"
+import { initial } from "./CacheState.js"
 import { MapKey } from "./MapKey.js"
 import type { MapValue } from "./MapValue.js"
 import { Complete, Pending, Refreshing } from "./MapValue.js"
@@ -29,7 +30,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     readonly environment: Context<Environment>,
     readonly fiberId: FiberId
   ) {
-    this.cacheState = CacheState.initial<Key, Error, Value>()
+    this.cacheState = initial<Key, Error, Value>()
   }
 
   get size(): Effect<never, never, number> {

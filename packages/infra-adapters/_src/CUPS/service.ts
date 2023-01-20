@@ -1,3 +1,5 @@
+import { ReasonableString } from "@effect-app/schema"
+
 export const PrinterId = ReasonableString
 export type PrinterId = ReasonableString
 
