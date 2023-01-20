@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.11.0
+
+### Minor Changes
+
+- Removed more of @effect-ts/core legacy
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.10.0
+  - @effect-app/infra-adapters@0.10.0
+  - @effect-app/prelude@0.10.0
+  - @effect-app/schema@0.10.0
+
 ## 0.10.0
 
 ### Minor Changes

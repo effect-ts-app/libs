@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.9.0
+
+### Minor Changes
+
+- Removed more of @effect-ts/core legacy
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.10.0
+  - @effect-app/prelude@0.10.0
+  - @effect-app/schema@0.10.0
+
 ## 0.8.1
 
 ### Patch Changes
