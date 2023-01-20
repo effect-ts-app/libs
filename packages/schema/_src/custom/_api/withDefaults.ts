@@ -1,3 +1,4 @@
+import type { UnionToIntersection } from "@effect-app/core/utils"
 import type { Annotation } from "../_schema.js"
 import * as MO from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"
@@ -7,11 +8,6 @@ import * as Encoder from "../Encoder.js"
 import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import { unsafe } from "./condemn.js"
-
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void ? I
-  : never
 
 export interface SchemaDefaultSchema<
   ParserInput,

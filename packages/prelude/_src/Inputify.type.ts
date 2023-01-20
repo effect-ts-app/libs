@@ -1,4 +1,4 @@
-import type { BuiltInObject } from "@effect-ts/core/Utils"
+import type { BuiltInObject } from "@effect-app/core/utils"
 
 import type { Primitive } from "./Widen.type.js"
 

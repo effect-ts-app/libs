@@ -1,9 +1,9 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tagged } from "@effect-ts/core/Case"
+import { Tagged } from "@effect-app/core/Case"
 
-export { matchTag } from "@effect-ts/core/Utils"
+export { matchTag } from "@effect-app/core/utils"
 
 export class Initial extends Tagged("Initial")<{}> {}
 

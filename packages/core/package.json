@@ -87,6 +87,16 @@
         "default": "./_cjs/Aspects.cjs"
       }
     },
+    "./Case": {
+      "import": {
+        "types": "./dist/Case.d.ts",
+        "default": "./dist/Case.js"
+      },
+      "require": {
+        "types": "./dist/Case.d.ts",
+        "default": "./_cjs/Case.cjs"
+      }
+    },
     "./Chunk": {
       "import": {
         "types": "./dist/Chunk.d.ts",
@@ -357,36 +367,6 @@
         "default": "./_cjs/fluent/_ext/awesome/_files/shared.cjs"
       }
     },
-    "./fluent/_ext/awesome/fluent/core": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/fluent/core.d.ts",
-        "default": "./dist/fluent/_ext/awesome/fluent/core.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/fluent/core.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/fluent/core.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/fluent/data": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/fluent/data.d.ts",
-        "default": "./dist/fluent/_ext/awesome/fluent/data.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/fluent/data.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/fluent/data.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/fluent/index": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/fluent/index.d.ts",
-        "default": "./dist/fluent/_ext/awesome/fluent/index.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/fluent/index.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/fluent/index.cjs"
-      }
-    },
     "./fluent/_ext/awesome/lib": {
       "import": {
         "types": "./dist/fluent/_ext/awesome/lib.d.ts",
@@ -395,16 +375,6 @@
       "require": {
         "types": "./dist/fluent/_ext/awesome/lib.d.ts",
         "default": "./_cjs/fluent/_ext/awesome/lib.cjs"
-      }
-    },
-    "./fluent/fluent/Array": {
-      "import": {
-        "types": "./dist/fluent/fluent/Array.d.ts",
-        "default": "./dist/fluent/fluent/Array.js"
-      },
-      "require": {
-        "types": "./dist/fluent/fluent/Array.d.ts",
-        "default": "./_cjs/fluent/fluent/Array.cjs"
       }
     },
     "./global": {
@@ -445,6 +415,16 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
+      }
+    },
+    "./operators": {
+      "import": {
+        "types": "./dist/operators.d.ts",
+        "default": "./dist/operators.js"
+      },
+      "require": {
+        "types": "./dist/operators.d.ts",
+        "default": "./_cjs/operators.cjs"
       }
     },
     "./transform": {

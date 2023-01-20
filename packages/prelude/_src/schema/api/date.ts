@@ -6,7 +6,7 @@ import * as Th from "@effect-app/schema/custom/These"
 
 import { todayAtUTCNoon } from "../../utils.js"
 
-export { matchTag } from "@effect-ts/core/Utils"
+export { matchTag } from "@effect-app/core/utils"
 
 // workaround for strange date extension issue.
 const subNow = (amount: number): Date => todayAtUTCNoon().subDays(amount)

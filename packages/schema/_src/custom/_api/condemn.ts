@@ -1,6 +1,6 @@
 // tracing: off
 
-import { Case } from "@effect-ts/system/Case"
+import { Case } from "@effect-app/core/Case"
 
 import type { AnyError } from "../_schema.js"
 import { drawError } from "../_schema.js"

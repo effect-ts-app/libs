@@ -2,7 +2,7 @@
 
 // based on the work of Giulio Canti in io-ts (3.x poc stage)
 
-import { Case } from "@effect-ts/system/Case"
+import { Case } from "@effect-app/core/Case"
 
 export interface Actual<A> {
   readonly actual: A

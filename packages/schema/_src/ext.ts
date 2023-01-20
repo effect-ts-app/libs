@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { constant, pipe } from "@effect-app/core/Function"
 import * as NonEmptySet from "@effect-app/core/NonEmptySet"
+import type { ComputeFlat } from "@effect-app/core/utils"
 import { typedKeysOf } from "@effect-app/core/utils"
-import type { ComputeFlat } from "@effect-ts/core/Utils"
 import type { None, Some } from "@fp-ts/data/Option"
 import { v4 } from "uuid"
 
