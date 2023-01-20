@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.10.1
+
+### Patch Changes
+
+- c4b95c0d: FUP
+
 ## 0.10.0
 
 ### Minor Changes
