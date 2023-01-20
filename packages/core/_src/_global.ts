@@ -1,4 +1,5 @@
 /* eslint-disable unused-imports/no-unused-imports */
+import "./operators.js"
 
 /**
  * @tsplus global
@@ -113,7 +114,7 @@ import { Chunk, NonEmptyChunk } from "@fp-ts/data/Chunk"
 /**
  * @tsplus global
  */
-import { Order } from "@fp-ts/core/typeclass/Order"
+import { Order } from "@effect-app/core/Order"
 
 /**
  * @tsplus global

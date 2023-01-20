@@ -1,19 +1,11 @@
-import * as ORD from "@effect-ts/core/Ord"
-import type { Ord } from "@effect-ts/core/Ord"
+import * as ORD from "@fp-ts/core/typeclass/Order"
 import * as CNK from "@fp-ts/data/Chunk"
-
-/**
- * @tsplus getter ets/Ord toOrder
- */
-export function convertOrd<A>(_: Ord<A>): Order<A> {
-  return ({ compare: x => y => _.compare(x, y) })
-}
 
 /**
  * @tsplus pipeable fp-ts/data/Chunk sortWith
  */
 export function sortWith<A>(
-  ...ords: NonEmptyArguments<Ord<A>>
+  ...ords: NonEmptyArguments<Order<A>>
 ): (a: Chunk<A>) => Chunk<A> {
   // TODO
   return as => as.toArray.sortWith(...ords).toChunk
@@ -105,9 +97,9 @@ export function elem<A>(E: Equivalence<A>, value: A) {
  * @tsplus pipeable ReadonlyArray sortWithNonEmpty
  */
 export function sortWithNonEmpty<A>(
-  ...ords: NonEmptyArguments<Ord<A>>
+  ...ords: NonEmptyArguments<Order<A>>
 ): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return a => a.sortByNonEmpty(...ords.map(convertOrd))
+  return a => a.sortByNonEmpty(...ords)
 }
 
 /**
@@ -116,11 +108,11 @@ export function sortWithNonEmpty<A>(
 export const ChunkPartition = CNK.partition
 
 /**
- * @tsplus fluent ets/Ord contramap
+ * @tsplus pipeable fp-ts/core/Order contramap
  */
-export const OrdContramap = ORD.contramap_
+export const OrdContramap = ORD.contramap
 
 /**
- * @tsplus getter ets/Ord inverted
+ * @tsplus getter fp-ts/core/Order inverted
  */
-export const OrdInverted = ORD.inverted
+export const OrdInverted = ORD.reverse

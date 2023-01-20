@@ -1,5 +1,3 @@
-import { Option as OptionLegacy } from "@effect-ts/core"
-import type * as EQ from "@effect-ts/core/Equal"
 import { flow } from "./Function.js"
 import { Option } from "./Prelude.js"
 import {
@@ -23,18 +21,14 @@ export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
 }
 
-function convertOpt<A>(a: Option<A>) {
-  return a.isSome() ? OptionLegacy.some(a.value) : OptionLegacy.none
-}
 /**
  * @tsplus type ets/NESet
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
+function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const eq = eq_
-    ? <EQ.Equal<A>> { equals: (x, y) => eq_(y)(x) }
-    : <EQ.Equal<A>> { equals: (x, y) => ord.compare(x, y) === 0 }
+    ?? (y => x => ord.compare(y)(x) === 0)
 
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
@@ -45,7 +39,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
   const insert_: (set: NonEmptySet<A>, a: A) => NonEmptySet<A> = insert_Original as any
 
   function replace_(set: NonEmptySet<A>, a: A) {
-    return (filter_(set, x => !eq.equals(x, a)) >=
+    return (filter_(set, x => !eq(a)(x)) >=
       insert__(a)) as NonEmptySet<A>
   }
 
@@ -83,14 +77,14 @@ function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>(a => convertOpt(f(a))), fromSet),
+    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>(a => f(a)), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord<A>, eq?: Equivalence<A>) {
+  wrapped(ord: Order<A>, eq?: Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -98,7 +92,7 @@ class Wrapper<A> {
 export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Ord<A>,
+  ord: Order<A>,
   eq?: Equivalence<A>
 ) => NonEmptySetSchemaExtensions<A> = make_
 
@@ -111,4 +105,4 @@ export function fromSet<A>(set: Set<A>) {
 }
 
 // TODO
-export * from "@effect-ts/core/Collections/Immutable/Set"
+export * from "./Set.js"

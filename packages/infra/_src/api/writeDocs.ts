@@ -7,7 +7,7 @@ import type { RouteDescriptorAny } from "./express/schema/routing.js"
 export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDescriptorAny>>) {
   return makeOpenApiSpecs(
     typedValuesOf(rdescs).reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
-      .sortWith(Ord.string.contramap((a: RouteDescriptorAny) => a.path)),
+      .sortWith(Order.string.contramap((a: RouteDescriptorAny) => a.path)),
     Plutus.info({
       title: "api",
       version: "X",

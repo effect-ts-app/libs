@@ -1,7 +1,7 @@
 // tracing: off
 
-import type { Refinement } from "@effect-ts/core/Function"
-import { pipe } from "@effect-ts/core/Function"
+import type { Refinement } from "@effect-app/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as S from "../_schema.js"
 // import type { RefinementE } from "../_schema/error.js"

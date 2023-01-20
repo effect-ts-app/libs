@@ -7,13 +7,6 @@ import * as Dur from "@fp-ts/data/Duration"
 export * from "@fp-ts/data/ReadonlyArray"
 
 /**
- * @tsplus getter ets/Ord toOrder
- */
-export function convertOrd<A>(_: Ord<A>): Order<A> {
-  return ({ compare: y => x => _.compare(x, y) })
-}
-
-/**
  * @tsplus getter Generator toArray
  * @tsplus getter Iterable toArray
  */
@@ -120,9 +113,9 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
  * @tsplus pipeable ReadonlyArray sortWith
  */
 export function sortWith<A>(
-  ...ords: NonEmptyArguments<Ord<A>>
+  ...ords: NonEmptyArguments<Order<A>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ROArray.sortBy(...ords.map(convertOrd))
+  return ROArray.sortBy(...ords)
 }
 
 /**
@@ -132,9 +125,9 @@ export function sortWith<A>(
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO
  */
 export function sortByO<A>(
-  ords: Option.Option<NonEmptyReadonlyArray<Ord<A>>>
+  ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match(() => identity, _ => ROArray.sortBy(..._.map(convertOrd)))
+  return ords.match(() => identity, _ => ROArray.sortBy(..._))
 }
 
 /**
@@ -268,8 +261,8 @@ export const mapRA = ROArray.mapNonEmpty
 /**
  * @tsplus fluent fp-ts/data/ReadonlyArray/NonEmptyReadonlyArray sortBy
  */
-export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[]) {
-  return ROArray.sortBy(...ords.map(convertOrd))(na) as unknown as NonEmptyReadonlyArray<A>
+export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Order<A>[]) {
+  return ROArray.sortBy(...ords)(na) as unknown as NonEmptyReadonlyArray<A>
 }
 
 /**
@@ -277,9 +270,9 @@ export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Ord<A>[])
  * @tsplus pipeable ReadonlyArray sortWithNonEmpty
  */
 export function sortWithNonEmpty<A>(
-  ...ords: NonEmptyArguments<Ord<A>>
+  ...ords: NonEmptyArguments<Order<A>>
 ): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return a => a.sortByNonEmpty(...ords.map(convertOrd))
+  return a => a.sortByNonEmpty(...ords)
 }
 
 /**

@@ -1,4 +1,4 @@
-import { XPure } from "@effect-ts/core/XPure/index";
+import type { Lens } from "@effect-ts/monocle/Lens";
 
 // TODO: move gloal
 
@@ -10,25 +10,6 @@ declare module "@effect-ts/monocle/Lens" {
    * @tsplus type ets/Lens
    */
   export interface Lens<S, A> {}
-}
-
-declare module "@effect-ts/system/Has" {
-  /**
-   * @tsplus type ets/Has
-   */
-  export interface Has<T> {}
-
-  /**
-   * @tsplus type ets/Tag
-   */
-  export interface Tag<T> {}
-}
-
-declare module "@effect-ts/system/Effect/effect" {
-  /**
-   * @tsplus type ets/Effect
-   */
-  export interface Effect<R, E, A> {}
 }
 
 declare module "@effect-ts/system/Either/core" {
@@ -63,19 +44,4 @@ declare module "@effect-ts/system/Option/core" {
    * @tsplus type ets/Maybe
    */
   export type Option<A> = None | Some<A>;
-}
-
-declare module "@effect-ts/system/Sync/core" {
-  /**
-   * @tsplus type ets/Sync
-   */
-  export interface Sync<R, E, A>
-    extends XPure<unknown, unknown, unknown, R, E, A> {}
-}
-
-declare module "@effect-ts/system/Managed/managed" {
-  /**
-   * @tsplus type ets/Managed
-   */
-  export interface Managed<R, E, A> {}
 }

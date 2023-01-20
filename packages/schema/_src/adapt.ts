@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import type { None, Some } from "@effect-ts/core/Option"
-import type { ComputeFlat, UnionToIntersection } from "@effect-ts/core/Utils"
 
+import type { ComputeFlat, UnionToIntersection } from "@effect-app/core/utils"
 import { array, prop, props } from "./_schema.js"
 import type * as MO from "./_schema.js"
 import { positiveInt } from "./custom.js"

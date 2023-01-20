@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { constant, pipe } from "@effect-app/core/Function"
 import * as NonEmptySet from "@effect-app/core/NonEmptySet"
+import type { ComputeFlat } from "@effect-app/core/utils"
 import { typedKeysOf } from "@effect-app/core/utils"
-import type { ComputeFlat } from "@effect-ts/core/Utils"
 import type { None, Some } from "@fp-ts/data/Option"
 import { v4 } from "uuid"
 
@@ -509,15 +509,15 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
   }, {} as any)
 }
 
-export function createUnorder<T>(): Ord<T> {
+export function createUnorder<T>(): Order<T> {
   return {
-    compare: (_a: T, _b: T) => 0
+    compare: (_b: T) => (_a: T) => 0
   }
 }
 export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord<ParsedShape>,
+  ord: Order<ParsedShape>,
   eq?: Equivalence<ParsedShape>
 ) {
   const s = set(type, ord, eq)
@@ -563,16 +563,16 @@ export function makeUnorderedSet<ParsedShape, ConstructorInput, Encoded, Api>(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
 //   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
 //   contramap: (a: ParsedShape) => MA,
-//   ord: Ord<MA>,
+//   ord: Order<MA>,
 //   eq: Equivalence<MA>
 // ) {
-//   return makeSet(type, LegacyOrd.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
+//   return makeSet(type, LegacyOrder.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
 // }
 
 export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord<ParsedShape>,
+  ord: Order<ParsedShape>,
   eq?: Equivalence<ParsedShape>
 ) {
   const s = nonEmptySet(type, ord, eq)
@@ -624,12 +624,12 @@ export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded,
 //   // eslint-disable-next-line @typescript-eslint/ban-types
 //   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
 //   contramap: (a: ParsedShape) => MA,
-//   ord: Ord<MA>,
+//   ord: Order<MA>,
 //   eq: Equivalence<MA>
 // ) {
 //   return makeNonEmptySet(
 //     type,
-//     LegacyOrd.contramap_(ord, contramap),
+//     LegacyOrder.contramap_(ord, contramap),
 //     Eq.contramap(contramap)(eq)
 //   )
 // }

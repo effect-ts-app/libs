@@ -1,5 +1,4 @@
-import type { UnionToIntersection } from "@effect-ts/core/Utils"
-
+import type { UnionToIntersection } from "@effect-app/core/utils"
 import type { Annotation } from "../_schema.js"
 import * as MO from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"

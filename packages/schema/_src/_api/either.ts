@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"

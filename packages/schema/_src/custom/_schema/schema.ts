@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // tracing: off
 
-import type { Refinement } from "@effect-ts/core/Function"
-import { LazyGetter } from "@effect-ts/core/Utils"
+import type { Refinement } from "@effect-app/core/Function"
+import { LazyGetter } from "@effect-app/core/utils"
 import type * as fc from "fast-check"
 
 import type { Parser, ParserEnv } from "../Parser.js"

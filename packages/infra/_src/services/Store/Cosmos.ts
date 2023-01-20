@@ -516,7 +516,6 @@ export function buildWhereCosmosQuery(
           name: `@v${i}`,
           value: x.value
         }))
-        .mutable
     ]
   }
 }

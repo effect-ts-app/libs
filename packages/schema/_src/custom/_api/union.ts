@@ -1,9 +1,8 @@
-import { Option } from "@effect-ts/core"
+import { pipe } from "@effect-app/core/Function"
 import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
 import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
-import { pipe } from "@effect-ts/core/Function"
-import type { EnforceNonEmptyRecord, Unify } from "@effect-ts/core/Utils"
 
+import type { EnforceNonEmptyRecord, Unify } from "@effect-app/core/utils"
 import * as S from "../_schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Encoder from "../Encoder.js"
@@ -180,16 +179,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     const tags = entriesTags.filterMap(
       ([member, tags]) => {
         if (tagField in tags) {
-          return Option.some([tags[tagField], member]) as Option.Some<
-            readonly [string, string]
-          >
+          return Opt.some([tags[tagField], member])
         }
-        return Option.none
+        return Opt.none
       }
     ).uniq(y => x => x[0] === y[0])
 
     if (tags.length === entries.length) {
-      return Option.some({
+      return Opt.some({
         key: tagField,
         index: D.fromArray(tags.map(([a, b]) => tuple(a, b))),
         reverse: D.fromArray(tags.map(([a, b]) => tuple(b, a))),
@@ -197,7 +194,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       })
     }
 
-    return Option.none
+    return Opt.none
   })
 
   function guard(u: unknown): u is {

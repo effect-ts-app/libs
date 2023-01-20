@@ -1,4 +1,4 @@
-import { pipe } from "@effect-ts/core/Function"
+import { pipe } from "@effect-app/core/Function"
 import * as St from "@effect-ts/core/Structural"
 
 import * as S from "../_schema.js"

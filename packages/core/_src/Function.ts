@@ -1,4 +1,5 @@
 export * from "@fp-ts/data/Function"
+export { Predicate, Refinement } from "@fp-ts/data/Predicate"
 
 /**
  * Construct tuples

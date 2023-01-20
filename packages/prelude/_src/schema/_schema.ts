@@ -34,13 +34,13 @@ import {
   unsafe
 } from "@effect-app/schema"
 import type * as Th from "@effect-app/schema/custom/These"
-import type { EnforceNonEmptyRecord } from "@effect-ts/core/Utils"
 import type * as faker from "faker"
 
+import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import * as S from "@effect-app/schema"
 import { fakerToArb, getFaker } from "../faker.js"
 
-export { matchTag } from "@effect-ts/core/Utils"
+export { matchTag } from "@effect-app/core/utils"
 
 /**
  * A little helper to allow writing `interface X extends Identity<typeof Y>`
