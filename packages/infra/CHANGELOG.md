@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.10.0
+
+### Minor Changes
+
+- 7d445f3e: Adopt Equivalence and Equal from @fp-ts/data
+
+### Patch Changes
+
+- Updated dependencies [7d445f3e]
+  - @effect-app/prelude@0.9.0
+  - @effect-app/schema@0.9.0
+  - @effect-app/core@0.9.0
+  - @effect-app/infra-adapters@0.9.1
+
 ## 0.9.0
 
 ### Minor Changes
