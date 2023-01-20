@@ -114,7 +114,7 @@ import { Chunk, NonEmptyChunk } from "@fp-ts/data/Chunk"
 /**
  * @tsplus global
  */
-import { Order } from "@effect-app/core/Order"
+import { Order } from "@fp-ts/core/typeclass/Order"
 
 /**
  * @tsplus global
