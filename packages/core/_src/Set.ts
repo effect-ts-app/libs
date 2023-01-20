@@ -1,6 +1,6 @@
 // ets_tracing: off
 
-import "../../../Operator/index.js"
+import "./operators.js"
 
 import { not } from "@fp-ts/data/Predicate"
 import { identity } from "./Function.js"
