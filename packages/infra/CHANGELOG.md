@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 0.8.2
+
+### Patch Changes
+
+- Cleanup infra
+- Updated dependencies
+  - @effect-app/infra-adapters@0.8.1
+
 ## 0.8.1
 
 ### Patch Changes
