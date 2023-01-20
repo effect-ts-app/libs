@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as fu from "../simpledb/fileutil.js"
+import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 

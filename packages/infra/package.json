@@ -535,16 +535,6 @@
         "default": "./_cjs/services/simpledb/diskdb.cjs"
       }
     },
-    "./services/simpledb/fileutil": {
-      "import": {
-        "types": "./dist/services/simpledb/fileutil.d.ts",
-        "default": "./dist/services/simpledb/fileutil.js"
-      },
-      "require": {
-        "types": "./dist/services/simpledb/fileutil.d.ts",
-        "default": "./_cjs/services/simpledb/fileutil.cjs"
-      }
-    },
     "./services/simpledb/index": {
       "import": {
         "types": "./dist/services/simpledb/index.d.ts",

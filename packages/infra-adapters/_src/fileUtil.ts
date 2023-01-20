@@ -54,3 +54,23 @@ export function tempFile_(
         )
     )
 }
+
+/**
+ * Safe write file to .tmp and then rename
+ */
+export function writeTextFile(fileName: string, content: string) {
+  const tmp = fileName + ".tmp"
+  return (
+    Effect.tryPromise(() => fs.writeFile(tmp, content, "utf-8")) >
+      Effect.tryPromise(() => fs.rename(tmp, fileName))
+  ).orDie
+}
+
+export function fileExists(fileName: string) {
+  return Effect.tryPromise(() => fs.stat(fileName).then(_ => _.isFile()))
+    .orDie
+}
+
+export function readTextFile(fileName: string) {
+  return Effect.tryPromise(() => fs.readFile(fileName, "utf-8"))
+}
