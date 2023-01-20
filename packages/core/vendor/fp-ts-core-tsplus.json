@@ -1,0 +1,18 @@
+{
+  "@fp-ts/core/typeclass/Order": [
+    {
+      "definitionName": "Order",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Order"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Order.Ops"
+        }
+      ]
+    }
+  ]
+}

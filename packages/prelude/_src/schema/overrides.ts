@@ -71,7 +71,7 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 
 export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Ord<ParsedShape>,
+  ord: Order<ParsedShape>,
   eq: Equivalence<ParsedShape>
 ) {
   const arbitrarySelf = Arbitrary.for(self)

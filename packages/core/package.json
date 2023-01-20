@@ -307,16 +307,6 @@
         "default": "./_cjs/_global.cjs"
       }
     },
-    "./fluent/_ext/Array": {
-      "import": {
-        "types": "./dist/fluent/_ext/Array.d.ts",
-        "default": "./dist/fluent/_ext/Array.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/Array.d.ts",
-        "default": "./_cjs/fluent/_ext/Array.cjs"
-      }
-    },
     "./fluent/_ext/Lens": {
       "import": {
         "types": "./dist/fluent/_ext/Lens.d.ts",

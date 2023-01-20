@@ -33,6 +33,16 @@ export interface EquivalenceAspects {}
 export const Equivalence: EquivalenceAspects = {}
 
 /**
+ * @tsplus type fp-ts/data/Order.Aspects
+ */
+export interface OrderAspects {}
+
+/**
+ * @tsplus static fp-ts/data/Order.Ops $
+ */
+export const Order: OrderAspects = {}
+
+/**
  * @tsplus type fp-ts/data/HashMap.Aspects
  */
 export interface HashMapAspects {}

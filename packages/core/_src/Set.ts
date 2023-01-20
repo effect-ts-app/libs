@@ -72,18 +72,18 @@ export function toMutable<A>(s: Set<A>): MutableSet<A> {
 /**
  * Convert a set to an Array
  */
-export function toArray<A>(O: Ord<A>): (set: Set<A>) => ReadonlyArray<A> {
+export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
   return x => {
     const r: Array<A> = []
     x.forEach(e => r.push(e))
-    return r.sort(O.compare)
+    return r.sort((a, b) => O.compare(b)(a))
   }
 }
 
 /**
  * Convert a set to an Array
  */
-export function toArray_<A>(x: Set<A>, O: Ord<A>): ReadonlyArray<A> {
+export function toArray_<A>(x: Set<A>, O: Order<A>): ReadonlyArray<A> {
   return toArray(O)(x)
 }
 
@@ -371,7 +371,7 @@ export function difference<A>(E: Equivalence<A>): (y: Set<A>) => (x: Set<A>) => 
  * Reduce over the set values
  */
 export function reduce<A>(
-  O: Ord<A>
+  O: Order<A>
 ): <B>(b: B, f: (b: B, a: A) => B) => (fa: Set<A>) => B {
   const red = reduce_(O)
   return (b, f) => fa => red(fa, b, f)
@@ -381,7 +381,7 @@ export function reduce<A>(
  * Reduce over the set values
  */
 export function reduce_<A>(
-  O: Ord<A>
+  O: Order<A>
 ): <B>(fa: Set<A>, b: B, f: (b: B, a: A) => B) => B {
   const toArrayO = toArray(O)
   return (fa, b, f) => toArrayO(fa).reduce(f, b)
@@ -391,7 +391,7 @@ export function reduce_<A>(
 //  * Fold + Map
 //  */
 // export function foldMap<A, M>(
-//   O: Ord<A>,
+//   O: Order<A>,
 //   M: Identity<M>
 // ): (f: (a: A) => M) => (fa: Set<A>) => M {
 //   const fm = foldMap_(O, M)
@@ -402,7 +402,7 @@ export function reduce_<A>(
 //  * Fold + Map
 //  */
 // export function foldMap_<A, M>(
-//   O: Ord<A>,
+//   O: Order<A>,
 //   M: Identity<M>
 // ): (fa: Set<A>, f: (a: A) => M) => M {
 //   const toArrayO = toArray(O)
@@ -587,8 +587,8 @@ export function union<A>(E: Equivalence<A>): (y: Set<A>) => (set: Set<A>) => Set
   return y => x => u(x, y)
 }
 
-function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
-  const eq = eq_ ?? (y => x => ord.compare(x, y) === 0)
+function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
+  const eq = eq_ ?? (y => x => ord.compare(y)(x) === 0)
 
   const fromArray_ = fromArray(eq)
   const concat_ = (set: Set<A>, it: Iterable<A>) => fromArray_([...set, ...it])
@@ -624,7 +624,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord<A>, eq: Equivalence<A>) {
+  wrapped(ord: Order<A>, eq: Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -632,7 +632,6 @@ class Wrapper<A> {
 export interface SetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Ord<A>,
+  ord: Order<A>,
   eq?: Equivalence<A>
 ) => SetSchemaExtensions<A> = make_
-

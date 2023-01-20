@@ -26,9 +26,9 @@ export interface NonEmptyBrand {
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
+function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const eq = eq_
-    ?? (y => x => ord.compare(x, y) === 0)
+    ?? (y => x => ord.compare(y)(x) === 0)
 
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
@@ -84,7 +84,7 @@ function make_<A>(ord: Ord<A>, eq_?: Equivalence<A>) {
 }
 
 class Wrapper<A> {
-  wrapped(ord: Ord<A>, eq?: Equivalence<A>) {
+  wrapped(ord: Order<A>, eq?: Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -92,7 +92,7 @@ class Wrapper<A> {
 export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Ord<A>,
+  ord: Order<A>,
   eq?: Equivalence<A>
 ) => NonEmptySetSchemaExtensions<A> = make_
 

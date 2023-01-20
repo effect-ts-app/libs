@@ -6,7 +6,7 @@ export * as Chunk from "@fp-ts/data/Chunk"
 export * as Either from "@fp-ts/data/Either"
 export * as Option from "@fp-ts/data/Option"
 
-export * as Ord from "@effect-ts/core/Ord"
+export * as Order from "@effect-app/core/Order"
 
 export {} from "@effect-app/core/Effect"
 // export * as EffectOption from "@effect-app/core/EffectOption"
