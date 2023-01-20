@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.8.1
+
+### Patch Changes
+
+- Cleanup
+
 ## 0.8.0
 
 ### Minor Changes
