@@ -21,9 +21,9 @@ export namespace Either {
 /** @tsplus type fp-ts/data/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
-export namespace Ord {
+export namespace Order {
   // @ts-expect-error abc
-  export * from "@fp-ts/core/typeclass/Order"
+  export * from "@effect-app/core/Order"
 }
 /** @tsplus type fp-ts/core/Order */
 export type Order<A> = ORD.Order<A>
