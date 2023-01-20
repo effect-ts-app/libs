@@ -1,7 +1,7 @@
 import type { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-app/core/utils"
 
-import * as Cosmos from "../cosmos-client.js"
+import * as Cosmos from "@effect-app/infra-adapters/cosmos-client"
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"
@@ -67,7 +67,7 @@ WHERE (
 `,
                 parameters: typedKeysOf(parameters).map(p => ({
                   name: `@${p}`,
-                  value: parameters[p]
+                  value: parameters[p]!
                 }))
               })
               .fetchAll()

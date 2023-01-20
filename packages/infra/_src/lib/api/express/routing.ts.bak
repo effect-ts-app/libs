@@ -4,8 +4,8 @@ import * as MO from "@effect-app/schema"
 import { Encoder, extractSchema } from "@effect-app/schema"
 import type express from "express"
 
-import type { NotFoundError, NotLoggedInError, UnauthorizedError, ValidationError } from "../errors.js"
-import * as Ex from "./index.js"
+import * as Ex from "@effect-app/infra-adapters/express"
+import type { NotFoundError, NotLoggedInError, UnauthorizedError, ValidationError } from "../../../errors.js"
 import type {
   Encode,
   Middleware,

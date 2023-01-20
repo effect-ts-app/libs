@@ -33,7 +33,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
           const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)
           prev[path] = {
             ...prev[path],
-            ...map(e)
+            ...map(e) as any
           }
           return prev
         }

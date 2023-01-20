@@ -1,7 +1,12 @@
 import type { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
-import { ConnectionException } from "./simpledb/shared.js"
+export class ConnectionException extends Error {
+  readonly _errorTag = "ConnectionException"
+  constructor(readonly error: Error) {
+    super("A connection error ocurred")
+  }
+}
 
 export const makeRedisClient = (makeClient: () => Client) =>
   Effect(() => {

@@ -1,9 +1,8 @@
-import { makeOpenApiSpecs } from "@effect-app/infra-adapters/express/makeOpenApiSpecs"
-import type { RouteDescriptorAny } from "@effect-app/infra-adapters/express/schema/routing"
-import * as Plutus from "@effect-app/infra-adapters/Openapi/atlas-plutus"
-import { writeTextFile } from "@effect-app/infra-adapters/simpledb/fileutil"
-
 import { typedValuesOf } from "@effect-app/core/utils"
+import * as Plutus from "@effect-app/infra-adapters/Openapi/atlas-plutus"
+import { writeTextFile } from "../../services/simpledb/fileutil.js"
+import { makeOpenApiSpecs } from "./express/makeOpenApiSpecs.js"
+import type { RouteDescriptorAny } from "./express/schema/routing.js"
 
 export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDescriptorAny>>) {
   return makeOpenApiSpecs(

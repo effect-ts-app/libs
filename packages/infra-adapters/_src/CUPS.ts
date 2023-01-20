@@ -1,10 +1,9 @@
 import cp from "child_process"
 import util from "util"
-import { tempFile } from "../lib/fileUtil.js"
+import { tempFile } from "./fileUtil.js"
 
-import { isTruthy } from "@effect-app/core/utils"
+import { isTruthy, pretty } from "@effect-app/core/utils"
 import { ReasonableString } from "@effect-app/schema"
-import { Effect } from "@effect/io/Effect"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -40,7 +39,7 @@ const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
     > Effect.tryPromise(() => exec_(command))
-      .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", r.$$.pretty)))
+      .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", pretty(r))))
 type PrinterConfig = { url?: URL; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
@@ -85,7 +84,8 @@ const makePrintJobTempFile = makeTempFile("print-job")
 function printBuffer(printer: PrinterConfig, options: string[]) {
   return (buffer: ArrayBuffer) =>
     makePrintJobTempFile(Buffer.from(buffer))
-      .flatMapScoped(printFile(printer, options))
+      .flatMap(printFile(printer, options))
+      .scoped
 }
 
 function getAvailablePrinters(host?: string) {

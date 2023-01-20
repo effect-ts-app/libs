@@ -2,9 +2,9 @@
 import * as MO from "@effect-app/schema"
 import type { Methods } from "@effect-app/schema"
 
-import type { JSONSchema, ParameterLocation, SubSchema } from "../../Openapi/atlas-plutus.js"
-import { isObjectSchema } from "../../Openapi/atlas-plutus.js"
-import * as OpenApi from "../../Openapi/index.js"
+import type { JSONSchema, ParameterLocation, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
+import { isObjectSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
+import * as OpenApi from "@effect-app/infra-adapters/Openapi/index"
 import type { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
 
 export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {

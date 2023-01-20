@@ -13,7 +13,7 @@ import type {} from "@effect-app/infra/test.arbs"
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/ext"
+import type {} from "@effect-app/infra/lib/ext/Array"
 /**
  * @tsplus global
  */

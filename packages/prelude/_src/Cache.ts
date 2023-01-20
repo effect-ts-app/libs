@@ -1,7 +1,7 @@
-import type { Cache as _Cache } from "../vendor/Cache/Cache.js"
-import { make as _make } from "../vendor/Cache/Cache.js"
-import type { CacheState } from "../vendor/Cache/Cache/_internal/CacheState.js"
-import type { Lookup } from "../vendor/Cache/Lookup.js"
+import { make as _make } from "./vendor/Cache/Cache.js"
+import type { Cache as _Cache } from "./vendor/Cache/Cache.js"
+import type { CacheState } from "./vendor/Cache/Cache/_internal/CacheState.js"
+import type { Lookup } from "./vendor/Cache/Lookup.js"
 
 /**
  * @tsplus type ets/cache/Cache
