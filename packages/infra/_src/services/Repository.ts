@@ -2,7 +2,7 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
-import type { RequestContext } from "../lib/RequestContext.js"
+import type { RequestContext } from "../RequestContext.js"
 import { ContextMap} from "../services/Store.js";
 import type { Filter } from "../services/Store.js"
 import type { FixEnv, PureLogT} from "@effect-app/prelude/_ext/Pure";

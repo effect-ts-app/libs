@@ -13,22 +13,22 @@ import type {} from "@effect-app/infra/test.arbs"
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/lib/ext/Array"
+import type {} from "@effect-app/infra/ext/Array"
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/lib/instrument"
+import type {} from "@effect-app/infra/instrument"
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/lib/rateLimit"
+import type {} from "@effect-app/infra/rateLimit"
 
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/lib/api/setupRequest"
+import type {} from "@effect-app/infra/api/setupRequest"
 
 /**
  * @tsplus global
  */
-import {} from "@effect-app/infra/lib/api/reportError"
+import {} from "@effect-app/infra/api/reportError"

@@ -1,6 +1,6 @@
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
 import { expect, test } from "vitest"
-import { makeFilters } from "../../lib/filter.js"
+import { makeFilters } from "../../filter.js"
 import { buildWhereCosmosQuery } from "./Cosmos.js"
 
 const f_ = makeFilters<Something>()

@@ -1,6 +1,6 @@
 import type { ObjectOps } from "@effect-app/prelude/utils"
 import { inspect } from "util"
-import { NotFoundError } from "../../errors.js"
+import { NotFoundError } from "../errors.js"
 
 /**
  * @tsplus fluent Array getFirstById

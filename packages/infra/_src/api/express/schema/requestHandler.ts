@@ -4,7 +4,7 @@ import * as MO from "@effect-app/schema"
 import type { Methods } from "@effect-app/schema"
 import { Parser } from "@effect-app/schema"
 import type express from "express"
-import { ValidationError } from "../../../../errors.js"
+import { ValidationError } from "../../../errors.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>

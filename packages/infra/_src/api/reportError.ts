@@ -1,6 +1,6 @@
-import { CauseException } from "../../errors.js"
-import { logError, reportError } from "../../lib/errorReporter.js"
-import { RequestContext } from "../../lib/RequestContext.js"
+import { logError, reportError } from "../errorReporter.js"
+import { CauseException } from "../errors.js"
+import { RequestContext } from "../RequestContext.js"
 
 export class RequestException<E> extends CauseException<E> {
   constructor(cause: Cause<E>) {

@@ -65,6 +65,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./RequestContext": {
+      "import": {
+        "types": "./dist/RequestContext.d.ts",
+        "default": "./dist/RequestContext.js"
+      },
+      "require": {
+        "types": "./dist/RequestContext.d.ts",
+        "default": "./_cjs/RequestContext.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",
@@ -95,6 +105,146 @@
         "default": "./_cjs/_global.schema.cjs"
       }
     },
+    "./api/authorization.jwt": {
+      "import": {
+        "types": "./dist/api/authorization.jwt.d.ts",
+        "default": "./dist/api/authorization.jwt.js"
+      },
+      "require": {
+        "types": "./dist/api/authorization.jwt.d.ts",
+        "default": "./_cjs/api/authorization.jwt.cjs"
+      }
+    },
+    "./api/codec": {
+      "import": {
+        "types": "./dist/api/codec.d.ts",
+        "default": "./dist/api/codec.js"
+      },
+      "require": {
+        "types": "./dist/api/codec.d.ts",
+        "default": "./_cjs/api/codec.cjs"
+      }
+    },
+    "./api/defaultErrorHandler": {
+      "import": {
+        "types": "./dist/api/defaultErrorHandler.d.ts",
+        "default": "./dist/api/defaultErrorHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/defaultErrorHandler.d.ts",
+        "default": "./_cjs/api/defaultErrorHandler.cjs"
+      }
+    },
+    "./api/express/makeJsonSchema": {
+      "import": {
+        "types": "./dist/api/express/makeJsonSchema.d.ts",
+        "default": "./dist/api/express/makeJsonSchema.js"
+      },
+      "require": {
+        "types": "./dist/api/express/makeJsonSchema.d.ts",
+        "default": "./_cjs/api/express/makeJsonSchema.cjs"
+      }
+    },
+    "./api/express/makeOpenApiSpecs": {
+      "import": {
+        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
+        "default": "./dist/api/express/makeOpenApiSpecs.js"
+      },
+      "require": {
+        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
+        "default": "./_cjs/api/express/makeOpenApiSpecs.cjs"
+      }
+    },
+    "./api/express/schema/jwt": {
+      "import": {
+        "types": "./dist/api/express/schema/jwt.d.ts",
+        "default": "./dist/api/express/schema/jwt.js"
+      },
+      "require": {
+        "types": "./dist/api/express/schema/jwt.d.ts",
+        "default": "./_cjs/api/express/schema/jwt.cjs"
+      }
+    },
+    "./api/express/schema/requestHandler": {
+      "import": {
+        "types": "./dist/api/express/schema/requestHandler.d.ts",
+        "default": "./dist/api/express/schema/requestHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/express/schema/requestHandler.d.ts",
+        "default": "./_cjs/api/express/schema/requestHandler.cjs"
+      }
+    },
+    "./api/express/schema/routing": {
+      "import": {
+        "types": "./dist/api/express/schema/routing.d.ts",
+        "default": "./dist/api/express/schema/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/express/schema/routing.d.ts",
+        "default": "./_cjs/api/express/schema/routing.cjs"
+      }
+    },
+    "./api/reportError": {
+      "import": {
+        "types": "./dist/api/reportError.d.ts",
+        "default": "./dist/api/reportError.js"
+      },
+      "require": {
+        "types": "./dist/api/reportError.d.ts",
+        "default": "./_cjs/api/reportError.cjs"
+      }
+    },
+    "./api/routing": {
+      "import": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./dist/api/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./_cjs/api/routing.cjs"
+      }
+    },
+    "./api/setupRequest": {
+      "import": {
+        "types": "./dist/api/setupRequest.d.ts",
+        "default": "./dist/api/setupRequest.js"
+      },
+      "require": {
+        "types": "./dist/api/setupRequest.d.ts",
+        "default": "./_cjs/api/setupRequest.cjs"
+      }
+    },
+    "./api/util": {
+      "import": {
+        "types": "./dist/api/util.d.ts",
+        "default": "./dist/api/util.js"
+      },
+      "require": {
+        "types": "./dist/api/util.d.ts",
+        "default": "./_cjs/api/util.cjs"
+      }
+    },
+    "./api/writeDocs": {
+      "import": {
+        "types": "./dist/api/writeDocs.d.ts",
+        "default": "./dist/api/writeDocs.js"
+      },
+      "require": {
+        "types": "./dist/api/writeDocs.d.ts",
+        "default": "./_cjs/api/writeDocs.cjs"
+      }
+    },
+    "./errorReporter": {
+      "import": {
+        "types": "./dist/errorReporter.d.ts",
+        "default": "./dist/errorReporter.js"
+      },
+      "require": {
+        "types": "./dist/errorReporter.d.ts",
+        "default": "./_cjs/errorReporter.cjs"
+      }
+    },
     "./errors": {
       "import": {
         "types": "./dist/errors.d.ts",
@@ -103,6 +253,106 @@
       "require": {
         "types": "./dist/errors.d.ts",
         "default": "./_cjs/errors.cjs"
+      }
+    },
+    "./ext/Array": {
+      "import": {
+        "types": "./dist/ext/Array.d.ts",
+        "default": "./dist/ext/Array.js"
+      },
+      "require": {
+        "types": "./dist/ext/Array.d.ts",
+        "default": "./_cjs/ext/Array.cjs"
+      }
+    },
+    "./filter": {
+      "import": {
+        "types": "./dist/filter.d.ts",
+        "default": "./dist/filter.js"
+      },
+      "require": {
+        "types": "./dist/filter.d.ts",
+        "default": "./_cjs/filter.cjs"
+      }
+    },
+    "./filter/types/errors": {
+      "import": {
+        "types": "./dist/filter/types/errors.d.ts",
+        "default": "./dist/filter/types/errors.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/errors.d.ts",
+        "default": "./_cjs/filter/types/errors.cjs"
+      }
+    },
+    "./filter/types/fields": {
+      "import": {
+        "types": "./dist/filter/types/fields.d.ts",
+        "default": "./dist/filter/types/fields.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/fields.d.ts",
+        "default": "./_cjs/filter/types/fields.cjs"
+      }
+    },
+    "./filter/types/index": {
+      "import": {
+        "types": "./dist/filter/types/index.d.ts",
+        "default": "./dist/filter/types/index.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/index.d.ts",
+        "default": "./_cjs/filter/types/index.cjs"
+      }
+    },
+    "./filter/types/path/common": {
+      "import": {
+        "types": "./dist/filter/types/path/common.d.ts",
+        "default": "./dist/filter/types/path/common.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/path/common.d.ts",
+        "default": "./_cjs/filter/types/path/common.cjs"
+      }
+    },
+    "./filter/types/path/eager": {
+      "import": {
+        "types": "./dist/filter/types/path/eager.d.ts",
+        "default": "./dist/filter/types/path/eager.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/path/eager.d.ts",
+        "default": "./_cjs/filter/types/path/eager.cjs"
+      }
+    },
+    "./filter/types/path/index": {
+      "import": {
+        "types": "./dist/filter/types/path/index.d.ts",
+        "default": "./dist/filter/types/path/index.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/path/index.d.ts",
+        "default": "./_cjs/filter/types/path/index.cjs"
+      }
+    },
+    "./filter/types/utils": {
+      "import": {
+        "types": "./dist/filter/types/utils.d.ts",
+        "default": "./dist/filter/types/utils.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/utils.d.ts",
+        "default": "./_cjs/filter/types/utils.cjs"
+      }
+    },
+    "./filter/types/validator": {
+      "import": {
+        "types": "./dist/filter/types/validator.d.ts",
+        "default": "./dist/filter/types/validator.js"
+      },
+      "require": {
+        "types": "./dist/filter/types/validator.d.ts",
+        "default": "./_cjs/filter/types/validator.cjs"
       }
     },
     "./index": {
@@ -115,274 +365,24 @@
         "default": "./_cjs/index.cjs"
       }
     },
-    "./lib/RequestContext": {
+    "./instrument": {
       "import": {
-        "types": "./dist/lib/RequestContext.d.ts",
-        "default": "./dist/lib/RequestContext.js"
+        "types": "./dist/instrument.d.ts",
+        "default": "./dist/instrument.js"
       },
       "require": {
-        "types": "./dist/lib/RequestContext.d.ts",
-        "default": "./_cjs/lib/RequestContext.cjs"
+        "types": "./dist/instrument.d.ts",
+        "default": "./_cjs/instrument.cjs"
       }
     },
-    "./lib/api/authorization.jwt": {
+    "./rateLimit": {
       "import": {
-        "types": "./dist/lib/api/authorization.jwt.d.ts",
-        "default": "./dist/lib/api/authorization.jwt.js"
+        "types": "./dist/rateLimit.d.ts",
+        "default": "./dist/rateLimit.js"
       },
       "require": {
-        "types": "./dist/lib/api/authorization.jwt.d.ts",
-        "default": "./_cjs/lib/api/authorization.jwt.cjs"
-      }
-    },
-    "./lib/api/codec": {
-      "import": {
-        "types": "./dist/lib/api/codec.d.ts",
-        "default": "./dist/lib/api/codec.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/codec.d.ts",
-        "default": "./_cjs/lib/api/codec.cjs"
-      }
-    },
-    "./lib/api/defaultErrorHandler": {
-      "import": {
-        "types": "./dist/lib/api/defaultErrorHandler.d.ts",
-        "default": "./dist/lib/api/defaultErrorHandler.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/defaultErrorHandler.d.ts",
-        "default": "./_cjs/lib/api/defaultErrorHandler.cjs"
-      }
-    },
-    "./lib/api/express/makeJsonSchema": {
-      "import": {
-        "types": "./dist/lib/api/express/makeJsonSchema.d.ts",
-        "default": "./dist/lib/api/express/makeJsonSchema.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/express/makeJsonSchema.d.ts",
-        "default": "./_cjs/lib/api/express/makeJsonSchema.cjs"
-      }
-    },
-    "./lib/api/express/makeOpenApiSpecs": {
-      "import": {
-        "types": "./dist/lib/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./dist/lib/api/express/makeOpenApiSpecs.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./_cjs/lib/api/express/makeOpenApiSpecs.cjs"
-      }
-    },
-    "./lib/api/express/schema/jwt": {
-      "import": {
-        "types": "./dist/lib/api/express/schema/jwt.d.ts",
-        "default": "./dist/lib/api/express/schema/jwt.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/express/schema/jwt.d.ts",
-        "default": "./_cjs/lib/api/express/schema/jwt.cjs"
-      }
-    },
-    "./lib/api/express/schema/requestHandler": {
-      "import": {
-        "types": "./dist/lib/api/express/schema/requestHandler.d.ts",
-        "default": "./dist/lib/api/express/schema/requestHandler.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/express/schema/requestHandler.d.ts",
-        "default": "./_cjs/lib/api/express/schema/requestHandler.cjs"
-      }
-    },
-    "./lib/api/express/schema/routing": {
-      "import": {
-        "types": "./dist/lib/api/express/schema/routing.d.ts",
-        "default": "./dist/lib/api/express/schema/routing.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/express/schema/routing.d.ts",
-        "default": "./_cjs/lib/api/express/schema/routing.cjs"
-      }
-    },
-    "./lib/api/reportError": {
-      "import": {
-        "types": "./dist/lib/api/reportError.d.ts",
-        "default": "./dist/lib/api/reportError.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/reportError.d.ts",
-        "default": "./_cjs/lib/api/reportError.cjs"
-      }
-    },
-    "./lib/api/routing": {
-      "import": {
-        "types": "./dist/lib/api/routing.d.ts",
-        "default": "./dist/lib/api/routing.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/routing.d.ts",
-        "default": "./_cjs/lib/api/routing.cjs"
-      }
-    },
-    "./lib/api/setupRequest": {
-      "import": {
-        "types": "./dist/lib/api/setupRequest.d.ts",
-        "default": "./dist/lib/api/setupRequest.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/setupRequest.d.ts",
-        "default": "./_cjs/lib/api/setupRequest.cjs"
-      }
-    },
-    "./lib/api/util": {
-      "import": {
-        "types": "./dist/lib/api/util.d.ts",
-        "default": "./dist/lib/api/util.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/util.d.ts",
-        "default": "./_cjs/lib/api/util.cjs"
-      }
-    },
-    "./lib/api/writeDocs": {
-      "import": {
-        "types": "./dist/lib/api/writeDocs.d.ts",
-        "default": "./dist/lib/api/writeDocs.js"
-      },
-      "require": {
-        "types": "./dist/lib/api/writeDocs.d.ts",
-        "default": "./_cjs/lib/api/writeDocs.cjs"
-      }
-    },
-    "./lib/errorReporter": {
-      "import": {
-        "types": "./dist/lib/errorReporter.d.ts",
-        "default": "./dist/lib/errorReporter.js"
-      },
-      "require": {
-        "types": "./dist/lib/errorReporter.d.ts",
-        "default": "./_cjs/lib/errorReporter.cjs"
-      }
-    },
-    "./lib/ext/Array": {
-      "import": {
-        "types": "./dist/lib/ext/Array.d.ts",
-        "default": "./dist/lib/ext/Array.js"
-      },
-      "require": {
-        "types": "./dist/lib/ext/Array.d.ts",
-        "default": "./_cjs/lib/ext/Array.cjs"
-      }
-    },
-    "./lib/filter": {
-      "import": {
-        "types": "./dist/lib/filter.d.ts",
-        "default": "./dist/lib/filter.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter.d.ts",
-        "default": "./_cjs/lib/filter.cjs"
-      }
-    },
-    "./lib/filter/types/errors": {
-      "import": {
-        "types": "./dist/lib/filter/types/errors.d.ts",
-        "default": "./dist/lib/filter/types/errors.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/errors.d.ts",
-        "default": "./_cjs/lib/filter/types/errors.cjs"
-      }
-    },
-    "./lib/filter/types/fields": {
-      "import": {
-        "types": "./dist/lib/filter/types/fields.d.ts",
-        "default": "./dist/lib/filter/types/fields.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/fields.d.ts",
-        "default": "./_cjs/lib/filter/types/fields.cjs"
-      }
-    },
-    "./lib/filter/types/index": {
-      "import": {
-        "types": "./dist/lib/filter/types/index.d.ts",
-        "default": "./dist/lib/filter/types/index.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/index.d.ts",
-        "default": "./_cjs/lib/filter/types/index.cjs"
-      }
-    },
-    "./lib/filter/types/path/common": {
-      "import": {
-        "types": "./dist/lib/filter/types/path/common.d.ts",
-        "default": "./dist/lib/filter/types/path/common.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/path/common.d.ts",
-        "default": "./_cjs/lib/filter/types/path/common.cjs"
-      }
-    },
-    "./lib/filter/types/path/eager": {
-      "import": {
-        "types": "./dist/lib/filter/types/path/eager.d.ts",
-        "default": "./dist/lib/filter/types/path/eager.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/path/eager.d.ts",
-        "default": "./_cjs/lib/filter/types/path/eager.cjs"
-      }
-    },
-    "./lib/filter/types/path/index": {
-      "import": {
-        "types": "./dist/lib/filter/types/path/index.d.ts",
-        "default": "./dist/lib/filter/types/path/index.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/path/index.d.ts",
-        "default": "./_cjs/lib/filter/types/path/index.cjs"
-      }
-    },
-    "./lib/filter/types/utils": {
-      "import": {
-        "types": "./dist/lib/filter/types/utils.d.ts",
-        "default": "./dist/lib/filter/types/utils.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/utils.d.ts",
-        "default": "./_cjs/lib/filter/types/utils.cjs"
-      }
-    },
-    "./lib/filter/types/validator": {
-      "import": {
-        "types": "./dist/lib/filter/types/validator.d.ts",
-        "default": "./dist/lib/filter/types/validator.js"
-      },
-      "require": {
-        "types": "./dist/lib/filter/types/validator.d.ts",
-        "default": "./_cjs/lib/filter/types/validator.cjs"
-      }
-    },
-    "./lib/instrument": {
-      "import": {
-        "types": "./dist/lib/instrument.d.ts",
-        "default": "./dist/lib/instrument.js"
-      },
-      "require": {
-        "types": "./dist/lib/instrument.d.ts",
-        "default": "./_cjs/lib/instrument.cjs"
-      }
-    },
-    "./lib/rateLimit": {
-      "import": {
-        "types": "./dist/lib/rateLimit.d.ts",
-        "default": "./dist/lib/rateLimit.js"
-      },
-      "require": {
-        "types": "./dist/lib/rateLimit.d.ts",
-        "default": "./_cjs/lib/rateLimit.cjs"
+        "types": "./dist/rateLimit.d.ts",
+        "default": "./_cjs/rateLimit.cjs"
       }
     },
     "./services/Emailer": {

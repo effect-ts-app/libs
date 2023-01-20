@@ -6,7 +6,7 @@ import type {
   OptimisticConcurrencyException,
   UnauthorizedError,
   ValidationError
-} from "../../errors.js"
+} from "../errors.js"
 import type { RequestContext } from "../RequestContext.js"
 import { logRequestError } from "./reportError.js"
 

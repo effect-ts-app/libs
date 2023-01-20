@@ -2,7 +2,7 @@ import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"
 
-import type { RequestContext } from "../../lib/RequestContext.js"
+import type { RequestContext } from "../../RequestContext.js"
 
 export interface Emailer {
   sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContext, Error | ResponseError, void>

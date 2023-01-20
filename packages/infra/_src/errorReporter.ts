@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/node"
-import type { CauseException } from "../errors.js"
+import type { CauseException } from "./errors.js"
 
 export function reportError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
