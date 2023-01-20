@@ -54,6 +54,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Cache": {
+      "import": {
+        "types": "./dist/Cache.d.ts",
+        "default": "./dist/Cache.js"
+      },
+      "require": {
+        "types": "./dist/Cache.d.ts",
+        "default": "./_cjs/Cache.cjs"
+      }
+    },
     "./Config/SecretURL": {
       "import": {
         "types": "./dist/Config/SecretURL.d.ts",
@@ -382,6 +392,206 @@
       "require": {
         "types": "./dist/utils.d.ts",
         "default": "./_cjs/utils.cjs"
+      }
+    },
+    "./vendor/Cache/Cache": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache.d.ts",
+        "default": "./dist/vendor/Cache/Cache.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicBoolean": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicBoolean.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicBoolean.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicNumber": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicNumber.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicNumber.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/AtomicReference": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/AtomicReference.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/AtomicReference.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/AtomicReference.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/CacheInternal": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheInternal.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/CacheInternal.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheInternal.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/CacheInternal.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/CacheState": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheState.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/CacheState.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/CacheState.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/CacheState.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/KeySet": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/KeySet.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/KeySet.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/KeySet.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/KeySet.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/MapKey": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapKey.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/MapKey.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapKey.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/MapKey.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/_internal/MapValue": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapValue.d.ts",
+        "default": "./dist/vendor/Cache/Cache/_internal/MapValue.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/_internal/MapValue.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/_internal/MapValue.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/definition.d.ts",
+        "default": "./dist/vendor/Cache/Cache/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/definition.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations/make": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations/make.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations/make.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations/make.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations/make.cjs"
+      }
+    },
+    "./vendor/Cache/Cache/operations/makeWith": {
+      "import": {
+        "types": "./dist/vendor/Cache/Cache/operations/makeWith.d.ts",
+        "default": "./dist/vendor/Cache/Cache/operations/makeWith.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Cache/operations/makeWith.d.ts",
+        "default": "./_cjs/vendor/Cache/Cache/operations/makeWith.cjs"
+      }
+    },
+    "./vendor/Cache/CacheStats": {
+      "import": {
+        "types": "./dist/vendor/Cache/CacheStats.d.ts",
+        "default": "./dist/vendor/Cache/CacheStats.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/CacheStats.d.ts",
+        "default": "./_cjs/vendor/Cache/CacheStats.cjs"
+      }
+    },
+    "./vendor/Cache/CacheStats/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/CacheStats/definition.d.ts",
+        "default": "./dist/vendor/Cache/CacheStats/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/CacheStats/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/CacheStats/definition.cjs"
+      }
+    },
+    "./vendor/Cache/EntryStats": {
+      "import": {
+        "types": "./dist/vendor/Cache/EntryStats.d.ts",
+        "default": "./dist/vendor/Cache/EntryStats.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/EntryStats.d.ts",
+        "default": "./_cjs/vendor/Cache/EntryStats.cjs"
+      }
+    },
+    "./vendor/Cache/EntryStats/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/EntryStats/definition.d.ts",
+        "default": "./dist/vendor/Cache/EntryStats/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/EntryStats/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/EntryStats/definition.cjs"
+      }
+    },
+    "./vendor/Cache/Lookup": {
+      "import": {
+        "types": "./dist/vendor/Cache/Lookup.d.ts",
+        "default": "./dist/vendor/Cache/Lookup.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Lookup.d.ts",
+        "default": "./_cjs/vendor/Cache/Lookup.cjs"
+      }
+    },
+    "./vendor/Cache/Lookup/definition": {
+      "import": {
+        "types": "./dist/vendor/Cache/Lookup/definition.d.ts",
+        "default": "./dist/vendor/Cache/Lookup/definition.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/Lookup/definition.d.ts",
+        "default": "./_cjs/vendor/Cache/Lookup/definition.cjs"
+      }
+    },
+    "./vendor/Cache/index": {
+      "import": {
+        "types": "./dist/vendor/Cache/index.d.ts",
+        "default": "./dist/vendor/Cache/index.js"
+      },
+      "require": {
+        "types": "./dist/vendor/Cache/index.d.ts",
+        "default": "./_cjs/vendor/Cache/index.cjs"
       }
     }
   },
