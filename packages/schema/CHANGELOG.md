@@ -1,4 +1,4 @@
-# @effect-app/prelude
+# @effect-app/schema
 
 ## 0.8.0
 
@@ -9,11 +9,4 @@
 ### Patch Changes
 
 - Updated dependencies [bba14672]
-  - @effect-app/schema@0.8.0
   - @effect-app/core@0.8.0
-
-## 0.7.1
-
-### Patch Changes
-
-- Cleanup infra packages
