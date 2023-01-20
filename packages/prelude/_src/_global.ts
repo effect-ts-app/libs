@@ -34,41 +34,6 @@ import { ConfigError } from "@effect/io/Config/Error"
  */
 import { ConfigProvider } from "@effect/io/Config/Provider"
 
-/**
- * @tsplus global
- */
-import { TSemaphore } from "@effect/stm/TSemaphore"
-
-/**
- * @tsplus global
- */
-import { TRef } from "@effect/stm/TRef"
-
-/**
- * @tsplus global
- */
-import { STM } from "@effect/stm/STM"
-
-/**
- * @tsplus global
- */
-import { Stream } from "@effect/stream/Stream"
-
-/**
- * @tsplus global
- */
-import { Channel } from "@effect/stream/Channel"
-
-/**
- * @tsplus global
- */
-import { Sink } from "@effect/stream/Sink"
-
-/**
- * @tsplus global
- */
-import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
-
 /* eslint-disable unused-imports/no-unused-imports */
 /**
  * @tsplus global

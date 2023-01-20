@@ -1,6 +1,5 @@
 {
   "reject": [
-    "@fp-ts/data",
     "jwks-rsa",
     "applicationinsights",
     "faker",

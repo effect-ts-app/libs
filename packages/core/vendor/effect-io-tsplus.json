@@ -808,11 +808,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Exit.Ops",
-          "kind": "static",
-          "name": "isFailure"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Exit",
           "name": "isFailure"
@@ -828,11 +823,6 @@
       "definitionName": "isSuccess",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Exit.Ops",
-          "kind": "static",
-          "name": "isSuccess"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Exit",
@@ -1021,83 +1011,6 @@
       ]
     },
     {
-      "definitionName": "succeed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "succeed"
-        }
-      ]
-    },
-    {
-      "definitionName": "sync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "sync"
-        }
-      ]
-    },
-    {
-      "definitionName": "fail",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "fail"
-        }
-      ]
-    },
-    {
-      "definitionName": "failSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "failSync"
-        }
-      ]
-    },
-    {
-      "definitionName": "failCauseSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "failCauseSync"
-        }
-      ]
-    },
-    {
-      "definitionName": "die",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "die"
-        }
-      ]
-    },
-    {
-      "definitionName": "dieSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Deferred.Ops",
-          "name": "dieSync"
-        }
-      ]
-    },
-    {
       "definitionName": "DeferredTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -1109,18 +1022,130 @@
       ]
     },
     {
+      "definitionName": "succeed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "succeed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "sync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "sync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "sync"
+        }
+      ]
+    },
+    {
+      "definitionName": "fail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "fail"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "fail"
+        }
+      ]
+    },
+    {
+      "definitionName": "failSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "failSync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "failSync"
+        }
+      ]
+    },
+    {
       "definitionName": "failCause",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Cause",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "failCause"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "failCause"
+        }
+      ]
+    },
+    {
+      "definitionName": "failCauseSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "failCauseSync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "failCauseSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "die",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "die"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "die"
+        }
+      ]
+    },
+    {
+      "definitionName": "dieSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "dieSync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Aspects",
+          "name": "dieSync"
         }
       ]
     },
@@ -1129,13 +1154,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Fiber/Id",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "interruptWith"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "interruptWith"
         }
       ]
@@ -1145,13 +1170,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Exit",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "done"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "done"
         }
       ]
@@ -1161,13 +1186,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "complete"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "complete"
         }
       ]
@@ -1177,13 +1202,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "completeWith"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "completeWith"
         }
       ]
@@ -1193,13 +1218,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
           "name": "unsafeDone"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Deferred.Aspects",
           "name": "unsafeDone"
         }
       ]
@@ -2023,7 +2048,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Config",
+          "typeName": "effect/io/Config.Ops",
           "kind": "static",
           "name": "__call"
         },
@@ -2534,6 +2559,17 @@
       ]
     },
     {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRefs.Ops",
+          "name": "get"
+        }
+      ]
+    },
+    {
       "definitionName": "FiberRefsSym",
       "definitionKind": "const",
       "extensions": [
@@ -2549,7 +2585,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/FiberRefs",
           "name": "forkAs"
         },
@@ -2557,22 +2593,6 @@
           "kind": "static",
           "typeName": "effect/io/FiberRefs.Aspects",
           "name": "forkAs"
-        }
-      ]
-    },
-    {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/FiberRefs",
-          "name": "get"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
-          "name": "get"
         }
       ]
     },
@@ -2581,7 +2601,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/FiberRefs",
           "name": "getOrDefault"
         },
@@ -2597,7 +2617,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/FiberRefs",
           "name": "joinAs"
         },
@@ -2613,7 +2633,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/FiberRefs",
           "name": "updatedAs"
         },
@@ -3079,17 +3099,6 @@
       ]
     },
     {
-      "definitionName": "suspended",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Status.Ops",
-          "name": "suspended"
-        }
-      ]
-    },
-    {
       "definitionName": "isFiberStatus",
       "definitionKind": "const",
       "extensions": [
@@ -3119,6 +3128,22 @@
           "kind": "static",
           "typeName": "effect/io/Fiber/Status.Ops",
           "name": "done"
+        }
+      ]
+    },
+    {
+      "definitionName": "suspended",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Fiber/Runtime/Flags",
+          "name": "suspended"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "name": "suspended"
         }
       ]
     },
@@ -3314,17 +3339,6 @@
       ]
     },
     {
-      "definitionName": "diff",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRefs/Patch.Ops",
-          "name": "diff"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -3353,6 +3367,22 @@
           "kind": "static",
           "typeName": "effect/io/FiberRefs/Patch.Aspects",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "diff",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRefs",
+          "name": "diff"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRefs.Aspects",
+          "name": "diff"
         }
       ]
     }
@@ -4774,7 +4804,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
+          "typeName": "effect/io/Effect.Ops",
           "kind": "static",
           "name": "__call"
         },
@@ -5206,12 +5236,28 @@
       ]
     },
     {
-      "definitionName": "getAndSet",
+      "definitionName": "RefTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.TypeId.Ops",
+          "name": "RefTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "getAndSet"
         }
       ]
@@ -5221,13 +5267,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "getAndUpdate"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "getAndUpdate"
         }
       ]
@@ -5237,13 +5283,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "getAndUpdateSome"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "getAndUpdateSome"
         }
       ]
@@ -5253,13 +5299,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "modify"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "modify"
         }
       ]
@@ -5269,13 +5315,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "modifySome"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "modifySome"
         }
       ]
@@ -5285,13 +5331,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "set"
         }
       ]
@@ -5301,13 +5347,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "setAndGet"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "setAndGet"
         }
       ]
@@ -5317,13 +5363,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "update"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "update"
         }
       ]
@@ -5333,13 +5379,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "updateAndGet"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "updateAndGet"
         }
       ]
@@ -5349,13 +5395,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "updateSome"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "updateSome"
         }
       ]
@@ -5365,25 +5411,14 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
           "typeName": "effect/io/Ref",
-          "kind": "getter",
           "name": "updateSomeAndGet"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Ops",
+          "typeName": "effect/io/Ref.Aspects",
           "name": "updateSomeAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "RefTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Ref.TypeId.Ops",
-          "name": "RefTypeId"
         }
       ]
     },
@@ -5400,69 +5435,6 @@
           "kind": "static",
           "typeName": "effect/io/Ref.Aspects",
           "name": "get"
-        }
-      ]
-    }
-  ],
-  "@effect/io/Tracer": [
-    {
-      "definitionName": "Tracer",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Tracer"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/Tracer.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TracerTypeId",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Tracer.TypeId"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/Tracer.TypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Tracer.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "TracerTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Tracer.TypeId.Ops",
-          "name": "TracerTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "currentTracer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "currentTracer"
         }
       ]
     }
@@ -7019,18 +6991,18 @@
       ]
     },
     {
-      "definitionName": "provideEnvironment",
+      "definitionName": "provideContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
-          "name": "provideEnvironment"
+          "name": "provideContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
-          "name": "provideEnvironment"
+          "name": "provideContext"
         }
       ]
     },
@@ -7051,18 +7023,18 @@
       ]
     },
     {
-      "definitionName": "provideSomeEnvironment",
+      "definitionName": "contramapContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Schedule",
-          "name": "provideSomeEnvironment"
+          "name": "contramapContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Schedule.Aspects",
-          "name": "provideSomeEnvironment"
+          "name": "contramapContext"
         }
       ]
     },
@@ -7614,12 +7586,28 @@
       ]
     },
     {
-      "definitionName": "getAndSet",
+      "definitionName": "SynchronizedTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.TypeId.Ops",
+          "name": "SynchronizedTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "getAndSet"
         }
       ]
@@ -7629,8 +7617,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "getAndUpdate"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "getAndUpdate"
         }
       ]
@@ -7640,8 +7633,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "getAndUpdateEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "getAndUpdateEffect"
         }
       ]
@@ -7651,8 +7649,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "getAndUpdateSome"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "getAndUpdateSome"
         }
       ]
@@ -7662,8 +7665,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "getAndUpdateSomeEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "getAndUpdateSomeEffect"
         }
       ]
@@ -7673,8 +7681,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "modify"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "modify"
         }
       ]
@@ -7684,8 +7697,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "modifyEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "modifyEffect"
         }
       ]
@@ -7695,8 +7713,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "modifySome"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "modifySome"
         }
       ]
@@ -7706,8 +7729,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "modifySomeEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "modifySomeEffect"
         }
       ]
@@ -7717,8 +7745,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "set"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "set"
         }
       ]
@@ -7728,8 +7761,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "setAndGet"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "setAndGet"
         }
       ]
@@ -7739,8 +7777,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "update"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "update"
         }
       ]
@@ -7750,8 +7793,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "updateEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "updateEffect"
         }
       ]
@@ -7761,8 +7809,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "updateAndGetEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "updateAndGetEffect"
         }
       ]
@@ -7772,8 +7825,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "updateSome"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "updateSome"
         }
       ]
@@ -7783,8 +7841,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "updateSomeEffect"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "updateSomeEffect"
         }
       ]
@@ -7794,8 +7857,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
+          "name": "updateSomeAndGet"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
           "name": "updateSomeAndGet"
         }
       ]
@@ -7805,20 +7873,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Ops",
+          "kind": "fluent",
+          "typeName": "effect/io/Ref/Synchronized",
           "name": "updateSomeAndGetEffect"
-        }
-      ]
-    },
-    {
-      "definitionName": "SynchronizedTypeId",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.TypeId.Ops",
-          "name": "SynchronizedTypeId"
+          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "name": "updateSomeAndGetEffect"
         }
       ]
     },
@@ -7930,11 +7992,43 @@
       ]
     },
     {
-      "definitionName": "addFinalizer",
+      "definitionName": "extend",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "extend"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "extend"
+        }
+      ]
+    },
+    {
+      "definitionName": "use",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "use"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "use"
+        }
+      ]
+    },
+    {
+      "definitionName": "addFinalizer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
           "typeName": "effect/io/Scope",
           "name": "addFinalizer"
         },
@@ -7950,7 +8044,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Scope",
           "name": "addFinalizerExit"
         },
@@ -7966,7 +8060,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Scope/CloseableScope",
           "name": "close"
         },
@@ -7974,22 +8068,6 @@
           "kind": "static",
           "typeName": "effect/io/Scope/CloseableScope.Aspects",
           "name": "close"
-        }
-      ]
-    },
-    {
-      "definitionName": "extend",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Scope",
-          "name": "extend"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Scope.Aspects",
-          "name": "extend"
         }
       ]
     },
@@ -7998,7 +8076,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Scope",
           "name": "fork"
         },
@@ -8006,22 +8084,6 @@
           "kind": "static",
           "typeName": "effect/io/Scope.Aspects",
           "name": "fork"
-        }
-      ]
-    },
-    {
-      "definitionName": "use",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Scope/CloseableScope",
-          "name": "use"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Scope/CloseableScope.Aspects",
-          "name": "use"
         }
       ]
     }
@@ -8089,13 +8151,13 @@
       ]
     },
     {
-      "definitionName": "environment",
+      "definitionName": "context",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
-          "name": "environment"
+          "name": "context"
         }
       ]
     },
@@ -8166,24 +8228,13 @@
       ]
     },
     {
-      "definitionName": "effectEnvironment",
+      "definitionName": "effectContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
-          "name": "effectEnvironment"
-        }
-      ]
-    },
-    {
-      "definitionName": "project",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "project"
+          "name": "effectContext"
         }
       ]
     },
@@ -8204,7 +8255,7 @@
       "extensions": [
         {
           "typeName": "effect/io/Effect",
-          "kind": "pipeable",
+          "kind": "fluent",
           "name": "toScopedLayer"
         },
         {
@@ -8220,7 +8271,7 @@
       "extensions": [
         {
           "typeName": "effect/io/Effect",
-          "kind": "pipeable",
+          "kind": "fluent",
           "name": "toScopedDiscardLayer"
         },
         {
@@ -8231,18 +8282,13 @@
       ]
     },
     {
-      "definitionName": "scopedEnvironment",
+      "definitionName": "scopedContext",
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable",
-          "name": "toScopedEnvironmentLayer"
-        },
-        {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
-          "name": "scopedEnvironment"
+          "name": "scopedContext"
         }
       ]
     },
@@ -8269,13 +8315,13 @@
       ]
     },
     {
-      "definitionName": "succeedEnvironment",
+      "definitionName": "succeedContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
-          "name": "succeedEnvironment"
+          "name": "succeedContext"
         }
       ]
     },
@@ -8295,7 +8341,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Layer",
+          "typeName": "effect/io/Layer.Ops",
           "kind": "static",
           "name": "__call"
         },
@@ -8307,13 +8353,24 @@
       ]
     },
     {
-      "definitionName": "syncEnvironment",
+      "definitionName": "syncContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
-          "name": "syncEnvironment"
+          "name": "syncContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "mergeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "mergeAll"
         }
       ]
     },
@@ -8515,7 +8572,23 @@
       ]
     },
     {
-      "definitionName": "provideTo",
+      "definitionName": "project",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Layer",
+          "name": "project"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Aspects",
+          "name": "project"
+        }
+      ]
+    },
+    {
+      "definitionName": "provide",
       "definitionKind": "const",
       "extensions": [
         {
@@ -8526,17 +8599,33 @@
         {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
-          "name": "provideTo"
+          "name": "provide"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
-          "name": "provideTo"
+          "name": "provide"
         }
       ]
     },
     {
-      "definitionName": "provideToAndMerge",
+      "definitionName": "use",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Layer",
+          "name": "use"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Aspects",
+          "name": "use"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideMerge",
       "definitionKind": "const",
       "extensions": [
         {
@@ -8547,12 +8636,28 @@
         {
           "kind": "pipeable",
           "typeName": "effect/io/Layer",
-          "name": "provideToAndMerge"
+          "name": "provideMerge"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
-          "name": "provideToAndMerge"
+          "name": "provideMerge"
+        }
+      ]
+    },
+    {
+      "definitionName": "useMerge",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Layer",
+          "name": "useMerge"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Aspects",
+          "name": "useMerge"
         }
       ]
     },
@@ -9027,17 +9132,6 @@
       ]
     },
     {
-      "definitionName": "replace",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Logger.Ops",
-          "name": "replace"
-        }
-      ]
-    },
-    {
       "definitionName": "none",
       "definitionKind": "const",
       "extensions": [
@@ -9265,6 +9359,22 @@
       ]
     },
     {
+      "definitionName": "replace",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Logger",
+          "name": "replace"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Logger.Aspects",
+          "name": "replace"
+        }
+      ]
+    },
+    {
       "definitionName": "add",
       "definitionKind": "const",
       "extensions": [
@@ -9379,13 +9489,13 @@
       ]
     },
     {
-      "definitionName": "makeEnvironment",
+      "definitionName": "makeContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
-          "name": "makeEnvironment"
+          "name": "makeContext"
         }
       ]
     },
@@ -9423,13 +9533,13 @@
       ]
     },
     {
-      "definitionName": "unsafeMakeEnvironment",
+      "definitionName": "unsafeMakeContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
-          "name": "unsafeMakeEnvironment"
+          "name": "unsafeMakeContext"
         }
       ]
     },
@@ -9456,171 +9566,6 @@
       ]
     },
     {
-      "definitionName": "getAndSet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "getAndSet"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndUpdate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "getAndUpdate"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndUpdateSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "getAndUpdateSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "getWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "getWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "set",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "set"
-        }
-      ]
-    },
-    {
-      "definitionName": "modify",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "modify"
-        }
-      ]
-    },
-    {
-      "definitionName": "modifySome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "modifySome"
-        }
-      ]
-    },
-    {
-      "definitionName": "update",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "update"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "updateSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateAndGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "updateAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateSomeAndGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "updateSomeAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "locally",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locally"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyScoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyScoped"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyScopedWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyScopedWith"
-        }
-      ]
-    },
-    {
       "definitionName": "FiberRefTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -9632,13 +9577,13 @@
       ]
     },
     {
-      "definitionName": "currentEnvironment",
+      "definitionName": "currentContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
-          "name": "currentEnvironment"
+          "name": "currentContext"
         }
       ]
     },
@@ -9760,6 +9705,246 @@
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
           "name": "interruptedCause"
+        }
+      ]
+    },
+    {
+      "definitionName": "locally",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locally"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "locally"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "locallyWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "getAndSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "getAndUpdate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "getAndUpdate"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "getAndUpdateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "getAndUpdateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "getWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "getWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "getWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "modify",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "modify"
+        }
+      ]
+    },
+    {
+      "definitionName": "modifySome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "modifySome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "modifySome"
+        }
+      ]
+    },
+    {
+      "definitionName": "update",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "update"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "updateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "updateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "updateAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "updateAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSomeAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "updateSomeAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "updateSomeAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "locallyScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyScopedWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyScopedWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Aspects",
+          "name": "locallyScopedWith"
         }
       ]
     },
@@ -12236,35 +12421,35 @@
       ]
     },
     {
-      "definitionName": "environment",
+      "definitionName": "context",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "environment"
+          "name": "context"
         }
       ]
     },
     {
-      "definitionName": "environmentWith",
+      "definitionName": "contextWith",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "environmentWith"
+          "name": "contextWith"
         }
       ]
     },
     {
-      "definitionName": "environmentWithEffect",
+      "definitionName": "contextWithEffect",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "environmentWithEffect"
+          "name": "contextWithEffect"
         }
       ]
     },
@@ -12599,17 +12784,6 @@
       ]
     },
     {
-      "definitionName": "mapAccum",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "mapAccum"
-        }
-      ]
-    },
-    {
       "definitionName": "memoizeFunction",
       "definitionKind": "const",
       "extensions": [
@@ -12672,28 +12846,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "promiseInterrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "provideService",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "provideService"
-        }
-      ]
-    },
-    {
-      "definitionName": "provideServiceEffect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "provideServiceEffect"
         }
       ]
     },
@@ -12785,7 +12937,7 @@
       "extensions": [
         {
           "typeName": "fp-ts/data/Context/Tag",
-          "kind": "getter",
+          "kind": "fluent",
           "name": "accessWith"
         },
         {
@@ -12801,7 +12953,7 @@
       "extensions": [
         {
           "typeName": "fp-ts/data/Context/Tag",
-          "kind": "getter",
+          "kind": "fluent",
           "name": "accessWithEffect"
         },
         {
@@ -12926,7 +13078,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
+          "typeName": "effect/io/Effect.Ops",
           "kind": "static",
           "name": "__call"
         },
@@ -13099,22 +13251,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "unit"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeRun",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "fluent",
-          "name": "unsafeRun"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "unsafeRun"
         }
       ]
     },
@@ -14545,18 +14681,18 @@
       ]
     },
     {
-      "definitionName": "provideEnvironment",
+      "definitionName": "provideContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "provideEnvironment"
+          "name": "provideContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
-          "name": "provideEnvironment"
+          "name": "provideContext"
         }
       ]
     },
@@ -14577,18 +14713,50 @@
       ]
     },
     {
-      "definitionName": "provideSomeEnvironment",
+      "definitionName": "provideService",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/io/Effect",
-          "name": "provideSomeEnvironment"
+          "name": "provideService"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
-          "name": "provideSomeEnvironment"
+          "name": "provideService"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideServiceEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "provideServiceEffect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "provideServiceEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramapContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "contramapContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "contramapContext"
         }
       ]
     },
@@ -15649,6 +15817,22 @@
       ]
     },
     {
+      "definitionName": "toLayerScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "toLayerScoped"
+        }
+      ]
+    },
+    {
       "definitionName": "traced",
       "definitionKind": "const",
       "extensions": [
@@ -16065,22 +16249,6 @@
       ]
     },
     {
-      "definitionName": "withSpan",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
-          "name": "withSpan"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "withSpan"
-        }
-      ]
-    },
-    {
       "definitionName": "zip",
       "definitionKind": "const",
       "extensions": [
@@ -16273,6 +16441,33 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "acquireUseRelease"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapAccum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "mapAccum"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeRun",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "unsafeRun"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "unsafeRun"
         }
       ]
     },
@@ -17429,6 +17624,54 @@
       ]
     },
     {
+      "definitionName": "toLayerContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "toLayerContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "toLayerDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "toLayerDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "toLayerScopedDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScopedDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "toLayerScopedDiscard"
+        }
+      ]
+    },
+    {
       "definitionName": "uncause",
       "definitionKind": "const",
       "extensions": [
@@ -17784,13 +18027,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "typeName": "effect/io/ScopedRef",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/ScopedRef.Aspects",
           "name": "set"
         }
       ]
@@ -17842,6 +18085,28 @@
       ]
     },
     {
+      "definitionName": "auto",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cached.Ops",
+          "name": "auto"
+        }
+      ]
+    },
+    {
+      "definitionName": "manual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cached.Ops",
+          "name": "manual"
+        }
+      ]
+    },
+    {
       "definitionName": "CachedTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -17849,22 +18114,6 @@
           "kind": "static",
           "typeName": "effect/io/Cached.TypeId.Ops",
           "name": "CachedTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "auto",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "auto"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "auto"
         }
       ]
     },
@@ -17881,22 +18130,6 @@
           "kind": "static",
           "typeName": "effect/io/Cached.Aspects",
           "name": "get"
-        }
-      ]
-    },
-    {
-      "definitionName": "manual",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "manual"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
-          "name": "manual"
         }
       ]
     },
@@ -18255,7 +18488,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Queue/Enqueue",
           "name": "offer"
         },
@@ -18271,7 +18504,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Queue/Enqueue",
           "name": "offerAll"
         },
@@ -18287,7 +18520,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Queue/Dequeue",
           "name": "takeUpTo"
         },
@@ -18303,7 +18536,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Queue/Dequeue",
           "name": "takeBetween"
         },
@@ -18319,7 +18552,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Queue/Dequeue",
           "name": "takeN"
         },
@@ -18443,7 +18676,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Hub",
           "name": "publish"
         },
@@ -18459,7 +18692,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/io/Hub",
           "name": "publishAll"
         },
@@ -18662,6 +18895,17 @@
       ]
     },
     {
+      "definitionName": "manual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Reloadable.Ops",
+          "name": "manual"
+        }
+      ]
+    },
+    {
       "definitionName": "reload",
       "definitionKind": "const",
       "extensions": [
@@ -18673,13 +18917,13 @@
       ]
     },
     {
-      "definitionName": "reloadableTag",
+      "definitionName": "tag",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Reloadable.Ops",
-          "name": "reloadableTag"
+          "name": "tag"
         }
       ]
     },
@@ -18702,22 +18946,6 @@
           "kind": "static",
           "typeName": "effect/io/Reloadable.TypeId.Ops",
           "name": "ReloadableTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "manual",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Layer",
-          "name": "manual"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
-          "name": "manual"
         }
       ]
     }
@@ -19398,22 +19626,6 @@
       ]
     },
     {
-      "definitionName": "diff",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Fiber/Runtime/Flags",
-          "name": "diff"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
-          "name": "diff"
-        }
-      ]
-    },
-    {
       "definitionName": "disable",
       "definitionKind": "const",
       "extensions": [
@@ -19478,54 +19690,6 @@
       ]
     },
     {
-      "definitionName": "isEnabled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Fiber/Runtime/Flags",
-          "name": "isEnabled"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
-          "name": "isEnabled"
-        }
-      ]
-    },
-    {
-      "definitionName": "isDisabled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Fiber/Runtime/Flags",
-          "name": "isDisabled"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
-          "name": "isDisabled"
-        }
-      ]
-    },
-    {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/io/Fiber/Runtime/Flags",
-          "name": "patch"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "cooperativeYielding",
       "definitionKind": "const",
       "extensions": [
@@ -19538,6 +19702,22 @@
           "kind": "static",
           "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
           "name": "cooperativeYielding"
+        }
+      ]
+    },
+    {
+      "definitionName": "diff",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Fiber/Runtime/Flags",
+          "name": "diff"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "name": "diff"
         }
       ]
     },
@@ -19574,6 +19754,38 @@
       ]
     },
     {
+      "definitionName": "isEnabled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Fiber/Runtime/Flags",
+          "name": "isEnabled"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "name": "isEnabled"
+        }
+      ]
+    },
+    {
+      "definitionName": "isDisabled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Fiber/Runtime/Flags",
+          "name": "isDisabled"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "name": "isDisabled"
+        }
+      ]
+    },
+    {
       "definitionName": "opSupervision",
       "definitionKind": "const",
       "extensions": [
@@ -19586,6 +19798,22 @@
           "kind": "static",
           "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
           "name": "opSupervision"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Fiber/Runtime/Flags",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "name": "patch"
         }
       ]
     },

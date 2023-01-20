@@ -20,7 +20,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
   return Effect.gen(function*($) {
     const scope = yield* $(Scope.make())
     const env = yield* $(layer.buildWithScope(scope))
-    const runtime = yield* $(Effect.runtime<A>().scoped.provideEnvironment(env))
+    const runtime = yield* $(Effect.runtime<A>().scoped.provideContext(env))
 
     return {
       runtime,

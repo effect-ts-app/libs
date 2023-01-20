@@ -160,7 +160,7 @@ export function foldHttpError<A, B, ErrorBody>(
 
 export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Tag<HttpHeaders>()
-const accessHttpHeaders_ = Effect.environmentWith((env: Context<never>) => env.getOption(HttpHeaders))
+const accessHttpHeaders_ = Effect.contextWith((env: Context<never>) => env.getOption(HttpHeaders))
 export function accessHttpHeadersM<R, E, A>(
   eff: (h: Opt<HttpHeaders>) => Effect<R, E, A>
 ) {
@@ -210,7 +210,7 @@ export interface MiddlewareStack {
 
 export const MiddlewareStack = Tag<MiddlewareStack>()
 
-const accessMiddlewareStack_ = Effect.environmentWith((env: Context<never>) => env.getOption(MiddlewareStack))
+const accessMiddlewareStack_ = Effect.contextWith((env: Context<never>) => env.getOption(MiddlewareStack))
 export function accessMiddlewareStackM<R, E, A>(
   eff: (h: Opt<MiddlewareStack>) => Effect<R, E, A>
 ) {
@@ -421,9 +421,9 @@ export function withHeaders(
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.environmentWithEffect((r: Context<R>) => eff.provideEnvironment(Context.add(HttpHeaders)(headers)(r)))
-      : Effect.environmentWithEffect((r: Context<R>) =>
-        eff.provideEnvironment(
+      ? Effect.contextWithEffect((r: Context<R>) => eff.provideContext(Context.add(HttpHeaders)(headers)(r)))
+      : Effect.contextWithEffect((r: Context<R>) =>
+        eff.provideContext(
           Context.add(HttpHeaders)({
             ...(r.getOption(HttpHeaders).value ?? {}),
             ...headers

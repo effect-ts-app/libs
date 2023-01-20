@@ -13,6 +13,6 @@
 // }
 
 /**
- * @tsplus getter fp-ts/data/Context/Tag makeLayer
+ * @tsplus fluent fp-ts/data/Context/Tag makeLayer
  */
 export const makeLayer = Layer.succeed

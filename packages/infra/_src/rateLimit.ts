@@ -1,27 +1,27 @@
-/**
- * Executes the specified effect, acquiring the specified number of permits
- * immediately before the effect begins execution and releasing them
- * delayed by duration after the effect completes execution, whether by success,
- * failure, or interruption.
- *
- * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
- * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
- */
-export function withPermitsDuration(permits: number, duration: DUR) {
-  return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
-    return effect =>
-      Effect.uninterruptibleMask(
-        restore =>
-          restore(self.acquireN(permits).commit)
-            > restore(effect)
-              .ensuring(
-                self.releaseN(permits)
-                  .commit
-                  .delay(duration)
-              )
-      )
-  }
-}
+// /**
+//  * Executes the specified effect, acquiring the specified number of permits
+//  * immediately before the effect begins execution and releasing them
+//  * delayed by duration after the effect completes execution, whether by success,
+//  * failure, or interruption.
+//  *
+//  * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
+//  * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
+//  */
+// export function withPermitsDuration(permits: number, duration: DUR) {
+//   return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
+//     return effect =>
+//       Effect.uninterruptibleMask(
+//         restore =>
+//           restore(self.acquireN(permits).commit)
+//             > restore(effect)
+//               .ensuring(
+//                 self.releaseN(permits)
+//                   .commit
+//                   .delay(duration)
+//               )
+//       )
+//   }
+// }
 
 /**
  * Executes the specified effect, acquiring the specified number of permits

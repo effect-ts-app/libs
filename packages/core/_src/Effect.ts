@@ -12,18 +12,6 @@ import { curry, flow, pipe } from "./Function.js"
 export * from "@effect/io/Effect"
 
 /**
- * @macro traced
- * @tsplus fluent effect/io/Effect provideService
- */
-export function provideService<T, R, E, A>(
-  self: Effect<R, E, A>,
-  tag: Tag<T>,
-  resource: T
-): Effect<Exclude<R, T>, E, A> {
-  return Eff.provideService(tag)(resource)(self)
-}
-
-/**
  * @tsplus static effect/io/Deferred.Ops await
  * @tsplus getter effect/io/Deferred await
  */
@@ -259,19 +247,40 @@ export function ifDiff<I, R, E, A>(n: I, orig: I) {
 export const LayerFromEffect = Layer.effect
 
 /**
- * @tsplus pipeable effect/io/Effect provideSomeEnvironmentReal
+ * @tsplus pipeable effect/io/Effect provideSomeContextReal
  */
-export const provideSomeEnvironmentReal = <A2>(
+export const provideSomeContextReal = <A2>(
   ctx: Context<A2>
 ) =>
   <R, E, A>(self: Effect<R | A2, E, A>): Effect<Exclude<R, A2>, E, A> =>
-    (self as Effect<A2, E, A>).provideSomeEnvironment((_: Context<never>) => _.merge(ctx))
+    (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx))
 
 /**
- * @tsplus pipeable effect/io/Effect provideSomeEnvironmentEffect
+ * @tsplus pipeable effect/io/Effect provideSomeContextEffect
  */
-export const provideSomeEnvironmentEffect = <R2, E2, A2>(
+export const provideSomeContextEffect = <R2, E2, A2>(
   makeCtx: Effect<R2, E2, Context<A2>>
 ) =>
   <R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
-    makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).provideSomeEnvironment((_: Context<never>) => _.merge(ctx)))
+    makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
+
+/**
+ * @tsplus fluent effect/io/Effect toLayer
+ */
+export function toLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
+  return Layer.effect(tag, self)
+}
+
+/**
+ * @tsplus fluent effect/io/Effect toScopedLayer
+ */
+export function toScopedLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
+  return Layer.scoped(tag, self)
+}
+
+/**
+ * @tsplus getter effect/io/Effect toScopedDiscardLayer
+ */
+export function toScopedDiscardLayer<R, E, A>(self: Effect<R, E, A>) {
+  return Layer.scopedDiscard(self)
+}

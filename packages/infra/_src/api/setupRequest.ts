@@ -5,7 +5,7 @@ import { RequestContext } from "../RequestContext.js"
  */
 export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext) {
   return pipe(
-    self.withSpan("request"),
+    self.logSpan("request"),
     Effect.logAnnotates({
       requestRootId: requestContext.rootId,
       requestId: requestContext.id,

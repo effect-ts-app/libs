@@ -168,7 +168,7 @@ export function logAnnotates(kvps: Record<string, string>) {
         Effect.suspendSucceed(() =>
           pipe(
             effect,
-            FiberRef.locally(FiberRef.currentLogAnnotations)(
+            FiberRef.currentLogAnnotations.locally(
               HashMap.from([...annotations, ...kvps.$$.entries])
             )
           )
@@ -185,11 +185,7 @@ export function logAnnotateScoped(key: string, value: string) {
   return FiberRef.currentLogAnnotations
     .get
     .flatMap(annotations =>
-      Effect.suspendSucceed(() =>
-        annotations.set(key, value)["|>"](
-          FiberRef.locallyScoped(FiberRef.currentLogAnnotations)
-        )
-      )
+      Effect.suspendSucceed(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
     )
 }
 
@@ -203,9 +199,7 @@ export function logAnnotatesScoped(kvps: Record<string, string>) {
     .get
     .flatMap(annotations =>
       Effect.suspendSucceed(() =>
-        HashMap.from([...annotations, ...kvps.$$.entries])["|>"](
-          FiberRef.locallyScoped(FiberRef.currentLogAnnotations)
-        )
+        FiberRef.currentLogAnnotations.locallyScoped(HashMap.from([...annotations, ...kvps.$$.entries]))
       )
     )
 }

@@ -343,7 +343,7 @@ export function makeRequestHandler<
             ) // .instrument("Performance.RequestResponse")
             // the first log entry should be of the request start.
             const r2 = makeMiddlewareContext
-              ? r.provideSomeEnvironmentEffect(makeMiddlewareContext(req, res, requestContext))
+              ? r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
               : // PR is not relevant here
                 r as Effect<R, E | ValidationError, void>
             return errorHandler(

@@ -11,7 +11,7 @@
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
             "typescript@5.0.0-tsplus.20230113": "patches/typescript@5.0.0-tsplus.20230113.patch",
             "@effect/language-service@0.0.15": "patches/@effect__language-service@0.0.15.patch",
-            "@effect/io@0.0.65": "patches/@effect__io@0.0.65.patch"
+            "@effect/io@0.0.66": "patches/@effect__io@0.0.66.patch"
         }
     },
     "scripts": {
@@ -61,8 +61,8 @@
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.20.11",
         "@changesets/cli": "^2.26.0",
-        "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/compiler": "workspace:*",
+        "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
         "@effect/language-service": "^0.0.15",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",

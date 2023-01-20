@@ -57,7 +57,7 @@ export function LiveExpressAppConfig<R>(
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
-  return Effect.environmentWith((r: Context<R>) => ({
+  return Effect.contextWith((r: Context<R>) => ({
     _tag: ExpressAppConfigTag,
     host,
     port,
@@ -65,7 +65,7 @@ export function LiveExpressAppConfig<R>(
       req: Request,
       res: Response,
       next: NextFunction
-    ) => (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideEnvironment(r)
+    ) => (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
   })).toLayer(ExpressAppConfig)
 }
 

@@ -2,6 +2,7 @@ import { ConfigSecretTypeId } from "@effect/io/Config/Secret"
 import * as Chunk from "@fp-ts/data/Chunk"
 import * as Equal from "@fp-ts/data/Equal"
 import { pipe } from "@fp-ts/data/Function"
+import * as Hash from "@fp-ts/data/Hash"
 import type * as ConfigSecretURL from "../SecretURL.js"
 
 /** @internal */
@@ -10,13 +11,13 @@ const ConfigSecretURLSymbolKey = "@effect/io/Config/Secret" // "@effect-app/prel
 /** @internal */
 export const proto = {
   [ConfigSecretTypeId]: ConfigSecretTypeId,
-  [Equal.symbolHash](this: ConfigSecretURL.ConfigSecretURL): number {
+  [Hash.symbol](this: ConfigSecretURL.ConfigSecretURL): number {
     return pipe(
-      Equal.hash(ConfigSecretURLSymbolKey),
-      Equal.hashCombine(Equal.hash(this.raw))
+      Hash.hash(ConfigSecretURLSymbolKey),
+      Hash.combine(Hash.hash(this.raw))
     )
   },
-  [Equal.symbolEqual](this: ConfigSecretURL.ConfigSecretURL, that: unknown): boolean {
+  [Equal.symbol](this: ConfigSecretURL.ConfigSecretURL, that: unknown): boolean {
     return isConfigSecretURL(that) && Equal.equals(this.raw, that.raw)
   }
 }

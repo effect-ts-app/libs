@@ -1,5 +1,4 @@
 import type { Clock } from "@effect/io/Clock"
-import { Deferred, done as doneDeferred } from "@effect/io/Deferred"
 import type { FiberId } from "@effect/io/Fiber/Id"
 import { EmptyMutableQueue } from "@fp-ts/data/MutableQueue"
 import { CacheStats } from "../../CacheStats.js"
@@ -255,7 +254,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
 
   private lookupValueOf(key: Key, deferred: Deferred<Error, Value>): Effect<never, Error, Value> {
     return this.lookup(key)
-      .provideEnvironment(this.environment)
+      .provideContext(this.environment)
       .exit
       .flatMap(exit => {
         const now = this.clock.currentTimeMillis().unsafeRunSync
@@ -270,7 +269,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
           )
         )
         // TODO: later for updated Deferred handling
-        return doneDeferred(deferred)(exit).zipRight(exit.done)
+        return deferred.done(exit).zipRight(exit.done)
       })
       .onInterrupt(() =>
         deferred.interrupt.zipRight(Effect(() => {
