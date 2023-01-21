@@ -14,7 +14,7 @@ export function hasCaseBrand(self: unknown): self is CaseBrand {
   return typeof self === "object" && self != null && CaseBrand in self
 }
 
-const h0 = Hash.string("@effect-ts/system/Case")
+const h0 = Hash.string("@effect-app/core/Case")
 
 export interface Copy<T> {
   copy(args: IsEqualTo<T, {}> extends true ? void : Partial<T>): this

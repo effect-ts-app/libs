@@ -1,6 +1,4 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
-// export * as Map from "@effect-ts/core/Collections/Immutable/Map"
-// export * as ReadonlyMap from "@effect-ts/core/Collections/Immutable/Map"
 export * as Chunk from "@fp-ts/data/Chunk"
 export * as Either from "@fp-ts/data/Either"
 export * as Option from "@fp-ts/data/Option"
