@@ -781,6 +781,13 @@ export function modify<S, T>(l: PreparedLens<S, T>, mod: (t: T) => T) {
   return l.set(mod(l.get()))
 }
 
+/**
+ * @tsplus fluent PreparedLens replace
+ */
+export function replace<S, T>(l: PreparedLens<S, T>, t: T) {
+  return l.set(t)
+}
+
 export function makePreparedLenses<S, Props extends PropertyRecord>(
   props: Props,
   s: S

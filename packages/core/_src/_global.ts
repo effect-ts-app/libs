@@ -119,6 +119,11 @@ import { Order } from "@fp-ts/core/typeclass/Order"
 /**
  * @tsplus global
  */
+import { Ordering } from "@fp-ts/data/Ordering"
+
+/**
+ * @tsplus global
+ */
 import { Equal } from "@fp-ts/data/Equal"
 
 /**
