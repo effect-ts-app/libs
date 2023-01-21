@@ -180,13 +180,13 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node) {
               })
               .replaceAll(" Array<", " ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
               .replaceAll(" Set<", " ROSet<")
-              .replaceAll(" Map<", " ROMap<")
+              .replaceAll(" Map<", " ReadonlyMap<")
               .replaceAll("(Array<", "(ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
               .replaceAll("(Set<", "(ROSet<")
-              .replaceAll("(Map<", "(ROMap<")
+              .replaceAll("(Map<", "(ReadonlyMap<")
                 .replaceAll(" Array.Array<", " ReadonlyArray<") // .replaceAll(/(Array|Set|Map)\</", "ReadonlyArray<") //
                 .replaceAll(" Set.Set<", " ROSet<")
-                .replaceAll(" Map.Map<", " ROMap<")
+                .replaceAll(" Map.Map<", " ReadonlyMap<")
             )
           // we sort for now, because otherwise we have sometimes multiple times changing back and forth between editor and console.
           .sort(sortAlpha)

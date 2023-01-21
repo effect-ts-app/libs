@@ -1,11 +1,13 @@
 import { identity } from "@effect-app/core/Function"
 
-export function setIfDefined_<S, A>(lens: Lens<S, A>) {
-  return <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? lens.set(map(b)) : identity
+import type { Lens } from "@fp-ts/optic"
+
+export function replaceIfDefined_<S, A>(lens: Lens<S, A>) {
+  return <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? lens.replace(map(b)) : identity
 }
 
-export function setIfDefined<S, A>(lens: Lens<S, A>) {
-  return <B>(map: (b: B) => A) => (b: B | undefined) => setIfDefined_(lens)(b, map)
+export function replaceIfDefined<S, A>(lens: Lens<S, A>) {
+  return <B>(map: (b: B) => A) => (b: B | undefined) => replaceIfDefined_(lens)(b, map)
 }
 
 export function modifyM_<R, E, A, B>(
@@ -22,12 +24,12 @@ export function modifyM__<R, E, A, B>(
 ) {
   return Effect.gen(function*($) {
     const b = yield* $(mod(l.get(a)))
-    return l.set(b)(a)
+    return l.replace(b)(a)
   })
 }
 
 export function modify__<A, B>(l: Lens<A, B>, a: A, mod: (b: B) => B) {
-  return l.set(mod(l.get(a)))(a)
+  return l.replace(mod(l.get(a)))(a)
 }
 
 export function modifyConcat<A, B>(l: Lens<A, readonly B[]>, a: A) {
@@ -59,7 +61,7 @@ export function modify2M__<R, E, A, B, EVT>(
 ) {
   return Effect.gen(function*($) {
     const [b, evt] = yield* $(mod(l.get(a)))
-    return [l.set(b)(a), evt] as const
+    return [l.replace(b)(a), evt] as const
   })
 }
 
@@ -80,7 +82,7 @@ export function modify2__<EVT, A, B>(
   mod: (b: B) => readonly [B, EVT]
 ) {
   const [b, evt] = mod(l.get(a))
-  return [l.set(b)(a), evt] as const
+  return [l.replace(b)(a), evt] as const
 }
 
 export function modify2<A, B>(l: Lens<A, B>) {

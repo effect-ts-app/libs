@@ -1,5 +1,4 @@
-import { find_, findFirst_, findFirstMap_ } from "@effect-app/core/fluent/_ext/Set"
-import { filter_, some_ } from "@effect-app/core/Set"
+import { filter_, find_, findFirst_, findFirstMap_, some_ } from "@effect-app/core/Set"
 
 /**
  * @tsplus fluent ets/Set filter

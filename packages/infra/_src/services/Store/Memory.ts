@@ -25,15 +25,15 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
 export const makeMemoryStore = () => ({
   make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
     name: string,
-    existing?: Effect<never, never, ROMap<Id2, PM>>,
+    existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
     _config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
       const updateETag = makeUpdateETag(name)
-      const items = yield* $(existing ?? Effect(ROMap.empty))
+      const items = yield* $(existing ?? Effect(new Map()))
       const store = yield* $(
-        Ref.make<ROMap<Id, PM>>(
-          ROMap.make([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
+        Ref.make<ReadonlyMap<Id, PM>>(
+          new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
         )
       )
       const sem = Semaphore.unsafeMake(1)
@@ -46,9 +46,9 @@ export const makeMemoryStore = () => ({
           .tap(items =>
             store.get
               .map(m => {
-                const mut = ROMap.toMutable(m)
+                const mut = m as Map<Id, PM>
                 items.forEach(e => mut.set(e.id, e))
-                return ROMap.fromMutable(mut)
+                return mut
               })
               .flatMap(_ => store.set(_))
           )
@@ -56,7 +56,7 @@ export const makeMemoryStore = () => ({
           .apply(withPermit)
       const s: Store<PM, Id> = {
         all,
-        find: id => store.get.map(ROMap.lookup(id)),
+        find: id => store.get.map(_ => Opt.fromNullable(_.get(id))),
         filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) => all.map(memFilter(filter, cursor)),
         filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
           all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
@@ -64,11 +64,13 @@ export const makeMemoryStore = () => ({
           s
             .find(e.id)
             .flatMap(current => updateETag(e, current))
-            .tap(e => store.get.map(ROMap.insert(e.id, e)).flatMap(_ => store.set(_)))
+            .tap(e => store.get.map(_ => new Map([..._, [e.id, e]])).flatMap(_ => store.set(_)))
             .apply(withPermit),
         batchSet,
         bulkSet: batchSet,
-        remove: (e: PM) => store.get.map(ROMap.remove(e.id)).flatMap(_ => store.set(_)).apply(withPermit)
+        remove: (e: PM) =>
+          store.get.map(_ => new Map([..._].filter(([_]) => _ !== e.id)))
+            .flatMap(_ => store.set(_)).apply(withPermit)
       }
       return s
     })

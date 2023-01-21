@@ -5,12 +5,10 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect-ts/core": "^0.60.5",
-    "@effect-ts/system": "^0.57.5",
-    "@effect-ts/monocle": "*",
     "@effect/io": "^0.0.66",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.40",
+    "@fp-ts/optic": "^0.0.7",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",

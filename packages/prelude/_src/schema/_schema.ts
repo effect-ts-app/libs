@@ -771,7 +771,7 @@ export interface UnionBrand {}
 export class PreparedLens<S, T> {
   constructor(private readonly s: S, readonly lens: Lens<S, T>) {}
   get = () => this.lens.get(this.s)
-  set = (t: T) => this.lens.set_(this.s, t)
+  set = (t: T) => this.lens.replace_(this.s, t)
 }
 
 /**
@@ -788,9 +788,9 @@ export function makePreparedLenses<S, Props extends PropertyRecord>(
   function makeLens<T>(l: Lens<S, T>) {
     return new PreparedLens(s, l)
   }
-  const id = Lens.id<S>()
+  const id = Optic.id<S>()
   return Object.keys(props).reduce((prev, cur) => {
-    prev[cur] = makeLens(id.prop(cur as any))
+    prev[cur] = makeLens(id.at(cur as any))
     return prev
   }, {} as any)
 }

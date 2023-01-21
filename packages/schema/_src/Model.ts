@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ComputeFlat } from "@effect-app/core/utils"
-import * as Lens from "@effect-ts/monocle/Lens"
+import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
 
@@ -237,7 +237,7 @@ export function lensFromProps<T>() {
   return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
-      prev[cur] = id.prop(cur as any)
+      prev[cur] = id.at(cur as any)
       return prev
     }, {} as any)
   }

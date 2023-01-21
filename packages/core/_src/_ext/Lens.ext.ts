@@ -1,63 +1,58 @@
-import * as Lens from "@effect-app/core/fluent/_ext/Lens"
-
 import * as L from "./lens.js"
 
 /**
- * @tsplus fluent ets/Lens setIfDefined
+ * @tsplus fluent fp-ts/optic/Optic replace_
  */
-export const { setIfDefined_ } = L
+export function replace_<S, A>(l: Lens<S, A>, s: S, a: A) {
+  return l.replace(a)(s)
+}
 
 /**
- * @tsplus fluent ets/Lens modifyM
+ * @tsplus fluent fp-ts/optic/Optic replaceIfDefined
  */
-export const { modifyM_ } = L
+export const replaceIfDefined_ = L.replaceIfDefined_
 
 /**
- * @tsplus fluent ets/Lens modifyConcat
+ * @tsplus fluent fp-ts/optic/Optic modifyM
  */
-export const { modifyConcat } = L
+export const modifyM_ = L.modifyM_
 
 /**
- * @tsplus fluent ets/Lens modifyConcat_
+ * @tsplus fluent fp-ts/optic/Optic modifyConcat
+ */
+export const modifyConcat = L.modifyConcat
+
+/**
+ * @tsplus fluent fp-ts/optic/Optic modifyConcat_
  */
 export const modifyConcat__ = L.modifyConcat_
 
 /**
- * @tsplus fluent ets/Lens modifyM_
+ * @tsplus fluent fp-ts/optic/Optic modifyM_
  */
-export const { modifyM__ } = L
+export const modifyM__ = L.modifyM__
 
 /**
- * @tsplus fluent ets/Lens modify_
+ * @tsplus fluent fp-ts/optic/Optic modify_
  */
-export const { modify__ } = L
+export const modify__ = L.modify__
 
 /**
- * @tsplus fluent ets/Lens modify2M_
+ * @tsplus fluent fp-ts/optic/Optic modify2M_
  */
-export const { modify2M__ } = L
+export const modify2M__ = L.modify2M__
 
 /**
- * @tsplus fluent ets/Lens modify2_
+ * @tsplus fluent fp-ts/optic/Optic modify2_
  */
-export const { modify2__ } = L
+export const modify2__ = L.modify2__
 
 /**
- * @tsplus fluent ets/Lens modify2M
+ * @tsplus fluent fp-ts/optic/Optic modify2M
  */
-export const { modify2M_ } = L
+export const modify2M_ = L.modify2M_
 
 /**
- * @tsplus fluent ets/Lens modify2
+ * @tsplus fluent fp-ts/optic/Optic modify2
  */
-export const { modify2_ } = L
-
-/**
- * @tsplus fluent ets/Lens modify
- */
-export const ext_modify_ = Lens.modify_
-
-/**
- * @tsplus fluent ets/Lens prop
- */
-export const ext_prop_ = Lens.prop_
+export const modify2_ = L.modify2_

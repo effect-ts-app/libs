@@ -7,12 +7,10 @@ import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
 // import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
-import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as CNK from "@fp-ts/data/Chunk"
 import type * as EITHER from "@fp-ts/data/Either"
 import type * as O from "@fp-ts/data/Option"
-
-import type {} from "@effect-app/core/types/awesome"
+import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
   // @ts-expect-error abc
@@ -98,18 +96,17 @@ export type ROSet<A> = SET.Set<A>
 // /** @tsplus type ets/Map */
 // export type Map<K, A> = MAP.Map<K, A>
 
-// export namespace ROMap {
+// export namespace ReadonlyMap {
 //   // @ts-expect-error
 //   export * from "@effect-ts/core/Collections/Immutable/Map"
 // }
 // /** @tsplus type ets/Map */
-// export type ROMap<K, A> = MAP.Map<K, A>
+// export type ReadonlyMap<K, A> = MAP.Map<K, A>
 
-export namespace Lens {
+export namespace Optic {
   // @ts-expect-error
-  export * from "@effect-ts/monocle/Lens"
+  export * from "@fp-ts/optic"
 }
-/** @tsplus type ets/Lens */
 export type Lens<S, A> = LNS.Lens<S, A>
 
 export type NonEmptyArguments<T> = [T, ...T[]]

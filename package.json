@@ -3,9 +3,6 @@
     "private": true,
     "pnpm": {
         "patchedDependencies": {
-            "@effect-ts/core@0.60.5": "patches/@effect-ts__core@0.60.5.patch",
-            "@effect-ts/monocle@0.43.0": "patches/@effect-ts__monocle@0.43.0.patch",
-            "@effect-ts/system@0.57.5": "patches/@effect-ts__system@0.57.5.patch",
             "@typescript-eslint/scope-manager@5.48.2": "patches/@typescript-eslint__scope-manager@5.48.2.patch",
             "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",

@@ -27,7 +27,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
-        existing?: Effect<never, never, ROMap<Id2, PM>>,
+        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {

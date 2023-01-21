@@ -4,8 +4,6 @@ module.exports = {
             "@tsplus/stdlib",
             "@effect/core",
             "@effect/cache",
-            "@effect-ts/core",
-            "@effect-ts/system",
             "@effect/io",
             "@fp-ts/core",
             "@fp-ts/codec",

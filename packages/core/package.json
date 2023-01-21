@@ -4,12 +4,10 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-ts/core": "^0.60.5",
-    "@effect-ts/system": "^0.57.5",
-    "@effect-ts/monocle": "^0.43.0",
     "@effect/io": "^0.0.66",
     "@fp-ts/core": "^0.0.11",
     "@fp-ts/data": "^0.0.40",
+    "@fp-ts/optic": "^0.0.7",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -327,26 +325,6 @@
         "default": "./_cjs/_global.cjs"
       }
     },
-    "./fluent/_ext/Lens": {
-      "import": {
-        "types": "./dist/fluent/_ext/Lens.d.ts",
-        "default": "./dist/fluent/_ext/Lens.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/Lens.d.ts",
-        "default": "./_cjs/fluent/_ext/Lens.cjs"
-      }
-    },
-    "./fluent/_ext/Set": {
-      "import": {
-        "types": "./dist/fluent/_ext/Set.d.ts",
-        "default": "./dist/fluent/_ext/Set.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/Set.d.ts",
-        "default": "./_cjs/fluent/_ext/Set.cjs"
-      }
-    },
     "./fluent/_ext/awesome/_files/Iterable": {
       "import": {
         "types": "./dist/fluent/_ext/awesome/_files/Iterable.d.ts",
@@ -496,9 +474,6 @@
         "types": "./dist/validation/validators.d.ts",
         "default": "./_cjs/validation/validators.cjs"
       }
-    },
-    "./types/awesome": {
-      "types": "./types/awesome.d.ts"
     }
   },
   "sideEffects": [

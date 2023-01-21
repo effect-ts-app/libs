@@ -29,7 +29,7 @@ import { flow, LazyArg, pipe, tuple, tupled } from "@effect-app/core/Function"
 /**
  * @tsplus global
  */
-import { Lens, NonEmptyArguments, NonEmptySet, ROMap, ROSet } from "@effect-app/core/Prelude"
+import { NonEmptyArguments, NonEmptySet, ROSet } from "@effect-app/core/Prelude"
 
 /**
  * @tsplus global
@@ -157,6 +157,11 @@ import { MutableQueue } from "@fp-ts/data/MutableQueue"
  * @tsplus global
  */
 import { MutableRef } from "@fp-ts/data/MutableRef"
+
+/**
+ * @tsplus global
+ */
+import { Lens, lens, Optic } from "@fp-ts/optic"
 
 import "./_ext/Prelude.ext.js"
 import "./Array.js"

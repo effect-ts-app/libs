@@ -19,9 +19,9 @@ const exps = {
     }
   },
   ...items,
-  ...pkg.name === "@effect-app/core" ? {
-    "./types/awesome": { "types": "./types/awesome.d.ts" }
-  } : {},
+  // ...pkg.name === "@effect-app/core" ? {
+  //   "./types/awesome": { "types": "./types/awesome.d.ts" }
+  // } : {},
 }
 console.log(exps)
 pkg.exports = exps

@@ -9,12 +9,12 @@
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "tsPlusTypes": [
-            "./vendor/effect-ts-tsplus.json",
             "./vendor/effect-io-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
             "./vendor/effect-stream-tsplus.json",
             "./vendor/fp-ts-core-tsplus.json",
-            "./vendor/fp-ts-data-tsplus.json"
+            "./vendor/fp-ts-data-tsplus.json",
+            "./vendor/fp-ts-optic-tsplus.json"
         ],
     },
     "include": [
