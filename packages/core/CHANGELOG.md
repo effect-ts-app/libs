@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.11.1
+
+### Patch Changes
+
+- 5ee19e1e: Improve exports
+
 ## 0.11.0
 
 ### Minor Changes
