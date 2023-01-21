@@ -1,4 +1,4 @@
-import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
+import * as D from "./Dictionary.js"
 
 export const { collect, collect_ } = D
 

@@ -1,6 +1,7 @@
 // tracing: off
 
-import { _A, _E } from "@effect-ts/core/Effect"
+export const _E: unique symbol = Symbol()
+export const _A: unique symbol = Symbol()
 
 /**
  * @tsplus type ets/Schema/These

@@ -1,4 +1,4 @@
-import * as R from "@effect-ts/core/Collections/Immutable/Dictionary"
+import * as R from "../Dictionary.js"
 import { pipe } from "@effect-app/core/Function"
 import * as F from "@effect-app/core/Function"
 import * as C from "node-libcurl"

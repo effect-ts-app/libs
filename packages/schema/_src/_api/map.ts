@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import { Map } from "@effect-ts/core/Collections/Immutable/Map"
 import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../custom.js"
@@ -29,8 +28,8 @@ export function map<
   self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): MO.DefaultSchema<
   unknown,
-  Map<KeyParsedShape, ParsedShape>,
-  Map<KeyParsedShape, ParsedShape>,
+  ReadonlyMap<KeyParsedShape, ParsedShape>,
+  ReadonlyMap<KeyParsedShape, ParsedShape>,
   readonly (readonly [KeyEncoded, Encoded])[],
   {}
 > {
@@ -43,18 +42,18 @@ export function map<
   const mapEncode = Encoder.for(maparr)
   const mapArb = Arbitrary.for(maparr)
 
-  const refinement = (_: unknown): _ is Map<KeyParsedShape, ParsedShape> =>
+  const refinement = (_: unknown): _ is ReadonlyMap<KeyParsedShape, ParsedShape> =>
     _ instanceof Map &&
     Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
 
   return pipe(
     MO.identity(refinement),
-    MO.constructor((s: Map<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
+    MO.constructor((s: ReadonlyMap<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
     MO.arbitrary(_ => mapArb(_).map(x => new Map(x))),
     MO.parser(
       (i: unknown, env?: ParserEnv) =>
         mapParse(i, env).apply(
-          Th.map(x => new Map(x) as Map<KeyParsedShape, ParsedShape>)
+          Th.map(x => new Map(x) as ReadonlyMap<KeyParsedShape, ParsedShape>)
         )
     ),
     MO.encoder(_ => mapEncode(ReadonlyArray.fromIterable(_.entries()))),

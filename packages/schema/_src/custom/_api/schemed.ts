@@ -1,5 +1,6 @@
 import { pipe } from "@effect-app/core/Function"
-import * as St from "@effect-ts/core/Structural"
+import * as Equal from "@fp-ts/data/Equal"
+import * as Hash from "@fp-ts/data/Hash"
 
 import * as S from "../_schema.js"
 import * as Arbitrary from "../Arbitrary.js"
@@ -88,24 +89,23 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
       inst[fromFields]({ ...this, ...partial })
       return inst
     }
-    get [St.hashSym](): number {
+    get [Hash.symbol](): number {
       const ka = Object.keys(this).sort()
       if (ka.length === 0) {
         return 0
       }
-      let hash = St.combineHash(St.hashString(ka[0]!), St.hash(this[ka[0]!]))
+      let hash = Hash.combine(Hash.hash(this[ka[0]!]))(Hash.string(ka[0]!))
       let i = 1
       while (hash && i < ka.length) {
-        hash = St.combineHash(
-          hash,
-          St.combineHash(St.hashString(ka[i]!), St.hash(this[ka[i]!]))
-        )
+        hash = Hash.combine(
+          Hash.combine(Hash.hash(this[ka[i]!]))(Hash.string(ka[i]!))
+        )(hash)
         i++
       }
       return hash
     }
 
-    [St.equalsSym](that: unknown): boolean {
+    [Equal.symbol](that: unknown): boolean {
       if (!(that instanceof this.constructor)) {
         return false
       }
@@ -119,7 +119,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
       const ka_ = ka.sort()
       const kb_ = kb.sort()
       while (eq && i < ka.length) {
-        eq = ka_[i] === kb_[i] && St.equals(this[ka_[i]!], this[kb_[i]!])
+        eq = ka_[i] === kb_[i] && Hash.equals(this[ka_[i]!], this[kb_[i]!])
         i++
       }
       return eq

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
+import * as D from "@effect-app/core/Dictionary"
 
 import type { ComputeFlat, UnionToIntersection } from "@effect-app/core/utils"
 import { array, prop, props } from "./_schema.js"

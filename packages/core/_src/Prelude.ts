@@ -6,7 +6,7 @@ import "./global.js"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
-import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
+// import type * as MAP from "@effect-ts/core/Collections/Immutable/Map"
 import type * as LNS from "@effect-ts/monocle/Lens"
 import type * as CNK from "@fp-ts/data/Chunk"
 import type * as EITHER from "@fp-ts/data/Either"
@@ -91,19 +91,19 @@ export namespace ROSet {
  */
 export type ROSet<A> = SET.Set<A>
 
-export namespace Map {
-  // @ts-expect-error
-  export * from "@effect-ts/core/Collections/Immutable/Map"
-}
-/** @tsplus type ets/Map */
-export type Map<K, A> = MAP.Map<K, A>
+// export namespace Map {
+//   // @ts-expect-error
+//   export * from "@effect-ts/core/Collections/Immutable/Map"
+// }
+// /** @tsplus type ets/Map */
+// export type Map<K, A> = MAP.Map<K, A>
 
-export namespace ROMap {
-  // @ts-expect-error
-  export * from "@effect-ts/core/Collections/Immutable/Map"
-}
-/** @tsplus type ets/Map */
-export type ROMap<K, A> = MAP.Map<K, A>
+// export namespace ROMap {
+//   // @ts-expect-error
+//   export * from "@effect-ts/core/Collections/Immutable/Map"
+// }
+// /** @tsplus type ets/Map */
+// export type ROMap<K, A> = MAP.Map<K, A>
 
 export namespace Lens {
   // @ts-expect-error

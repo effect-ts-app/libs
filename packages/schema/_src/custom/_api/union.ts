@@ -1,6 +1,5 @@
+import * as D from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
-import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import { tuple } from "@effect-ts/core/Collections/Immutable/Tuple"
 
 import type { EnforceNonEmptyRecord, Unify } from "@effect-app/core/utils"
 import * as S from "../_schema.js"

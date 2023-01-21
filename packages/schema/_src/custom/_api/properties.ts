@@ -1,8 +1,8 @@
+import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
 import { intersect } from "@effect-app/core/utils"
 import type { Compute, UnionToIntersection } from "@effect-app/core/utils"
-import * as Dictionary from "@effect-ts/core/Collections/Immutable/Dictionary"
-import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
+import * as HashMap from "@fp-ts/data/HashMap"
 import type * as fc from "fast-check"
 
 import * as S from "../_schema.js"
@@ -215,7 +215,7 @@ export function prop<Self extends S.SchemaUPI>(
     schema,
     "required",
     Opt.none as None,
-    HashMap.make()
+    HashMap.empty()
   )
 }
 
