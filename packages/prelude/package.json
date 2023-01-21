@@ -109,16 +109,6 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
-    "./_ext/Lens.ext": {
-      "import": {
-        "types": "./dist/_ext/Lens.ext.d.ts",
-        "default": "./dist/_ext/Lens.ext.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Lens.ext.d.ts",
-        "default": "./_cjs/_ext/Lens.ext.cjs"
-      }
-    },
     "./_ext/Prelude.ext": {
       "import": {
         "types": "./dist/_ext/Prelude.ext.d.ts",
@@ -297,16 +287,6 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
-      }
-    },
-    "./lens": {
-      "import": {
-        "types": "./dist/lens.d.ts",
-        "default": "./dist/lens.js"
-      },
-      "require": {
-        "types": "./dist/lens.d.ts",
-        "default": "./_cjs/lens.cjs"
       }
     },
     "./schema": {
