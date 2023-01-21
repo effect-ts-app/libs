@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import type { Refinement } from "@effect-ts/system/Function"
 import type * as fc from "fast-check"
 
 import type { ParserEnv } from "../Parser.js"

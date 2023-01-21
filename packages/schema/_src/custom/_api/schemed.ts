@@ -119,7 +119,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
       const ka_ = ka.sort()
       const kb_ = kb.sort()
       while (eq && i < ka.length) {
-        eq = ka_[i] === kb_[i] && Hash.equals(this[ka_[i]!], this[kb_[i]!])
+        eq = ka_[i] === kb_[i] && Equal.equals(this[ka_[i]!], this[kb_[i]!])
         i++
       }
       return eq
