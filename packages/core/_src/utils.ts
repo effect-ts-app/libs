@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as D from "@effect-ts/core/Collections/Immutable/Dictionary"
-import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
+import type { Dictionary } from "./Dictionary.js"
+import * as D from "./Dictionary.js"
 
 export * from "./utils/extend.js"
 
@@ -472,6 +472,12 @@ export function LazyGetter(
 function thrower(): never {
   throw new Error("This decoration modifies the class prototype and cannot be reset.")
 }
+
+export type RefinementWithIndex<I, A, B extends A> = (i: I, a: A) => a is B
+
+export type PredicateWithIndex<I, A> = (i: I, a: A) => boolean
+
+export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
 /** from ts-toolbelt, minimal port of Compute */
 

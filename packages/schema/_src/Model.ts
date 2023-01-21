@@ -2,10 +2,12 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ComputeFlat } from "@effect-app/core/utils"
-import * as St from "@effect-ts/core/Structural"
-import * as Lens from "@effect-ts/monocle/Lens"
+import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
+
+import * as Equal from "@fp-ts/data/Equal"
+import * as Hash from "@fp-ts/data/Hash"
 
 import type { EncSchemaForModel, EParserFor, FromPropertyRecord } from "./_api.js"
 import { fromProps } from "./_api.js"
@@ -235,7 +237,7 @@ export function lensFromProps<T>() {
   return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
-      prev[cur] = id.prop(cur as any)
+      prev[cur] = id.at(cur as any)
       return prev
     }, {} as any)
   }
@@ -410,24 +412,23 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
       // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
       fromFields(of_(inp), this)
     }
-    get [St.hashSym](): number {
+    get [Hash.symbol](): number {
       const ka = Object.keys(this).sort()
       if (ka.length === 0) {
         return 0
       }
-      let hash = St.combineHash(St.hashString(ka[0]!), St.hash(this[ka[0]!]))
+      let hash = Hash.combine(Hash.hash(this[ka[0]!]))(Hash.string(ka[0]!))
       let i = 1
       while (hash && i < ka.length) {
-        hash = St.combineHash(
-          hash,
-          St.combineHash(St.hashString(ka[i]!), St.hash(this[ka[i]!]))
-        )
+        hash = Hash.combine(
+          Hash.combine(Hash.hash(this[ka[i]!]))(Hash.string(ka[i]!))
+        )(hash)
         i++
       }
       return hash
     }
 
-    [St.equalsSym](that: unknown): boolean {
+    [Equal.symbol](that: unknown): boolean {
       if (!(that instanceof this.constructor)) {
         return false
       }
@@ -441,7 +442,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
       const ka_ = ka.sort()
       const kb_ = kb.sort()
       while (eq && i < ka.length) {
-        eq = ka_[i] === kb_[i] && St.equals(this[ka_[i]!], this[kb_[i]!])
+        eq = ka_[i] === kb_[i] && Equal.equals(this[ka_[i]!], this[kb_[i]!])
         i++
       }
       return eq

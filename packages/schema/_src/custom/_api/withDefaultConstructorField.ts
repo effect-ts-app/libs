@@ -1,5 +1,3 @@
-import { pipe } from "@effect-ts/system/Function"
-
 import * as S from "../_schema.js"
 import * as Constructor from "../Constructor.js"
 import type { DefaultSchema } from "./withDefaults.js"

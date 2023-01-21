@@ -1,3 +1,5 @@
+export * from "@fp-ts/data/Either"
+
 /**
  * @tsplus pipeable fp-ts/data/Either mapBoth
  */

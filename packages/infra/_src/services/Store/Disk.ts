@@ -20,7 +20,7 @@ export function makeDiskStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, Id2 extends Id, E extends PersistenceModelType<Id>>(
         name: string,
-        existing?: Effect<never, never, ROMap<Id2, E>>,
+        existing?: Effect<never, never, ReadonlyMap<Id2, E>>,
         _config?: StoreConfig<E>
       ) =>
         Effect.gen(function*($) {
@@ -39,8 +39,8 @@ export function makeDiskStore({ prefix }: StorageConfig) {
             make<Id, Id, E>(
               name,
               !fs.existsSync(file)
-                ? existing ?? Effect(ROMap.empty)
-                : fsStore.get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
+                ? existing ?? Effect(new Map())
+                : fsStore.get.map(x => new Map(x.map(x => [x.id, x] as const)))
             )
           )
 

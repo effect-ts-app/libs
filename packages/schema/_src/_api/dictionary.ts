@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // tracing: off
 
-import type { Dictionary } from "@effect-ts/core/Collections/Immutable/Dictionary"
+import type { Dictionary } from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
 
 import * as MO from "../custom.js"

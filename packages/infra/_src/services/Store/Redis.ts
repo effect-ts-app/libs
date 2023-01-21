@@ -13,7 +13,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
-        existing?: Effect<never, never, ROMap<Id2, PM>>,
+        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
         _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -22,7 +22,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
-            const m = yield* $(existing ?? Effect(ROMap.empty))
+            const m = yield* $(existing ?? Effect(new Map()))
             yield* $(
               RedisClient.set(key, JSON.stringify({ data: [...m.values()].map(e => makeETag(e)) }))
                 .orDie
@@ -36,12 +36,12 @@ export function makeRedisStore({ prefix }: StorageConfig) {
             .map(_ => _.data)
             .provideService(RedisClient.RedisClient, redis)
 
-          const set = (i: ROMap<Id, PM>) => RedisClient.set(key, JSON.stringify({ data: [...i.values()] })).orDie
+          const set = (i: ReadonlyMap<Id, PM>) => RedisClient.set(key, JSON.stringify({ data: [...i.values()] })).orDie
 
           const sem = Semaphore.unsafeMake(1)
           const withPermit = sem.withPermits(1)
 
-          const asMap = get.map(x => ROMap.make(x.map(x => [x.id, x] as const)))
+          const asMap = get.map(x => new Map(x.map(x => [x.id, x] as const)))
           const all = get.map(Chunk.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             items
@@ -49,9 +49,9 @@ export function makeRedisStore({ prefix }: StorageConfig) {
               .tap(items =>
                 asMap
                   .map(m => {
-                    const mut = ROMap.toMutable(m)
+                    const mut = m
                     items.forEach(e => mut.set(e.id, e))
-                    return ROMap.fromMutable(mut)
+                    return mut
                   })
                   .flatMap(set)
               )
@@ -64,18 +64,18 @@ export function makeRedisStore({ prefix }: StorageConfig) {
               all.map(memFilter(filter, cursor)),
             filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
               all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
-            find: id => asMap.map(ROMap.lookup(id)),
+            find: id => asMap.map(_ => Opt.fromNullable(_.get(id))),
             set: e =>
               s
                 .find(e.id)
                 .flatMap(current => updateETag(e, current))
-                .tap(e => asMap.map(ROMap.insert(e.id, e)).flatMap(set))
+                .tap(e => asMap.map(_ => new Map([..._, [e.id, e]])).flatMap(set))
                 .apply(withPermit)
                 .provideService(RedisClient.RedisClient, redis),
             batchSet,
             bulkSet: batchSet,
             remove: (e: PM) =>
-              asMap.map(ROMap.remove(e.id)).flatMap(set)
+              asMap.map(_ => new Map([..._].filter(([_]) => _ !== e.id))).flatMap(set)
                 .apply(withPermit)
                 .provideService(
                   RedisClient.RedisClient,

@@ -5,8 +5,6 @@
 // https://github.com/sledorze/morphic-ts/blob/master/packages/morphic-json-schema-interpreters/src/json-schema/json-schema.ts
 
 /* eslint-disable no-prototype-builtins */
-import * as Lens from "@effect-ts/monocle/Lens"
-import * as Prism from "@effect-ts/monocle/Prism"
 
 export interface BaseConstructor {
   new<T>(args: /*{} extends T ? void : */ T): T
@@ -112,11 +110,7 @@ export class ObjectSchema extends Base<
   readonly type = "object"
 }
 
-export const objectSchemaOnRequired = Lens.id<ObjectSchema>().prop("required")
-
 export const isObjectSchema = (x: SubSchema): x is ObjectSchema => "type" in x && x.type === "object"
-
-export const jsonToObjectSchemaPrism = Prism.fromPredicate(isObjectSchema)
 
 export type SubSchema = JSONSchema | Ref
 

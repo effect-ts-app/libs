@@ -77,7 +77,7 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
 export interface StoreMaker {
   make: <E extends PersistenceModelType<Id>, Id extends string, Id2 extends Id>(
     name: string,
-    existing?: Effect<never, never, ROMap<Id2, E>>,
+    existing?: Effect<never, never, ReadonlyMap<Id2, E>>,
     config?: StoreConfig<E>
   ) => Effect<never, never, Store<E, Id>>
 }
@@ -92,21 +92,21 @@ export const StoreMaker: StoreMakerOps = Tag<StoreMaker>()
  * @tsplus static ContextMap.Ops Make
  */
 export const makeMap = Effect(() => {
-  const etags = ROMap.make<string, string>([])["|>"](ROMap.toMutable)
+  const etags = new Map<string, string>()
   const getEtag = (id: string) => etags.get(id)
   const setEtag = (id: string, eTag: string | undefined) => {
     eTag === undefined ? etags.delete(id) : etags.set(id, eTag)
   }
 
-  const parsedCache = ROMap.make<
+  const parsedCache = new Map<
     Parser<any, any, any>,
     Map<unknown, These.These<unknown, unknown>>
-  >([])["|>"](ROMap.toMutable)
+  >()
 
-  const parserCache = ROMap.make<
+  const parserCache = new Map<
     Parser<any, any, any>,
     (i: any) => These.These<any, any>
-  >([])["|>"](ROMap.toMutable)
+  >()
 
   const setAndReturn = <I, E, A>(
     p: Parser<I, E, A>,
@@ -142,7 +142,7 @@ export const makeMap = Effect(() => {
           }
         } else {
           const nf = parse(i, parserEnv)
-          parsedCache.set(parse, ROMap.make([[i, nf]])["|>"](ROMap.toMutable))
+          parsedCache.set(parse, new Map([[i, nf]]))
           return nf
         }
       }

@@ -1,6 +1,7 @@
 // ets_tracing: off
 
-import * as St from "@effect-ts/core/Structural"
+import * as Equal from "@fp-ts/data/Equal"
+import * as Hash from "@fp-ts/data/Hash"
 import type { IsEqualTo } from "./utils.js"
 
 export const CaseBrand = Symbol()
@@ -13,7 +14,7 @@ export function hasCaseBrand(self: unknown): self is CaseBrand {
   return typeof self === "object" && self != null && CaseBrand in self
 }
 
-const h0 = St.hashString("@effect-ts/system/Case")
+const h0 = Hash.string("@effect-app/core/Case")
 
 export interface Copy<T> {
   copy(args: IsEqualTo<T, {}> extends true ? void : Partial<T>): this
@@ -32,7 +33,7 @@ export const caseArgs = Symbol()
 export const caseKeys = Symbol()
 
 // @ts-expect-error
-export const Case: CaseConstructor = class<T> implements CaseBrand, St.HasHash, St.HasEquals {
+export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.HasHash, Hash.HasEquals {
   static make<T>(args: T) {
     return new this(args)
   }
@@ -61,15 +62,15 @@ export const Case: CaseConstructor = class<T> implements CaseBrand, St.HasHash, 
     return this[caseKeys]
   }
 
-  get [St.hashSym](): number {
+  get [Hash.symbol](): number {
     let h = h0
     for (const k of this[caseKeys]) {
-      h = St.combineHash(h, St.hash(this[k]))
+      h = Hash.combine(Hash.hash(this[k]))(h)
     }
     return h
   }
 
-  [St.equalsSym](that: unknown): boolean {
+  [Equal.symbol](that: unknown): boolean {
     if (this === that) {
       return true
     }
@@ -86,7 +87,7 @@ export const Case: CaseConstructor = class<T> implements CaseBrand, St.HasHash, 
 
       while (eq && i < len) {
         eq = this[caseKeys][i] === kthat[i] &&
-          St.equals(this[this[caseKeys][i]!]!, that[kthat[i]!]!)
+          Equal.equals(this[this[caseKeys][i]!]!, that[kthat[i]!]!)
         i++
       }
 

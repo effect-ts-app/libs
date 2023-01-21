@@ -8,4 +8,4 @@ export * from "@effect-app/core/Prelude"
 
 export * as Schema from "@effect-app/schema"
 
-export { Map as ROMap, Set as ROSet } from "@effect-app/core/Prelude"
+export { Set as ROSet } from "@effect-app/core/Prelude"

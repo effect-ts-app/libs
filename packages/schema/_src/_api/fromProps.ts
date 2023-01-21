@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
 import type { Compute, UnionToIntersection } from "@effect-app/core/utils"
 import { intersect } from "@effect-app/core/utils"
-import * as Dictionary from "@effect-ts/core/Collections/Immutable/Dictionary"
-import * as HashMap from "@effect-ts/core/Collections/Immutable/HashMap"
+import * as HashMap from "@fp-ts/data/HashMap"
 import type * as fc from "fast-check"
 
 import * as S from "../custom.js"
@@ -156,7 +156,7 @@ export function fromProp<Self extends S.SchemaAny>(
     schema,
     "required",
     Opt.none as None,
-    HashMap.make()
+    HashMap.empty()
   )
 }
 

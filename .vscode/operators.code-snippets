@@ -23,7 +23,7 @@
   "Operators Import": {
     "prefix": "op",
     "body": [
-      "import \"@effect-ts/core/Operator\""
+      "import \"@effect-app/core/operators\""
     ],
     "description": "Operators Import"
   },

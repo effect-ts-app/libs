@@ -1,21 +1,20 @@
 // tracing: off
-
-import * as St from "@effect-ts/core/Structural"
+import * as Equal from "@fp-ts/data/Equal"
+import * as Hash from "@fp-ts/data/Hash"
 
 export function augmentRecord(value: {}) {
-  Object.defineProperty(value, St.hashSym, {
+  Object.defineProperty(value, Hash.symbol, {
     get: (): number => {
       const ka = Object.keys(value).sort()
       if (ka.length === 0) {
         return 0
       }
-      let hash = St.combineHash(St.hashString(ka[0]!), St.hash(value[ka[0]!]))
+      let hash = Hash.combine(Hash.hash(value[ka[0]!]))(Hash.string(ka[0]!))
       let i = 1
       while (hash && i < ka.length) {
-        hash = St.combineHash(
-          hash,
-          St.combineHash(St.hashString(ka[i]!), St.hash(value[ka[i]!]))
-        )
+        hash = Hash.combine(
+          Hash.combine(Hash.hash(value[ka[i]!]))(Hash.string(ka[i]!))
+        )(hash)
         i++
       }
       return hash
@@ -23,7 +22,7 @@ export function augmentRecord(value: {}) {
     enumerable: false
   })
 
-  Object.defineProperty(value, St.equalsSym, {
+  Object.defineProperty(value, Equal.symbol, {
     value: (that: unknown): boolean => {
       if (typeof that !== "object" || that == null) {
         return false
@@ -38,7 +37,7 @@ export function augmentRecord(value: {}) {
       const ka_ = ka.sort()
       const kb_ = kb.sort()
       while (eq && i < ka.length) {
-        eq = ka_[i] === kb_[i] && St.equals(value[ka_[i]!], that[kb_[i]!])
+        eq = ka_[i] === kb_[i] && Equal.equals(value[ka_[i]!], that[kb_[i]!])
         i++
       }
       return eq
