@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.10.0
+
+### Minor Changes
+
+- Remove @effect-ts/\* and replace monocle with fp-ts/optic
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.11.0
+  - @effect-app/prelude@0.11.0
+  - @effect-app/schema@0.11.0
+
 ## 0.9.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.11.0
+
+### Minor Changes
+
+- Remove @effect-ts/\* and replace monocle with fp-ts/optic
+
 ## 0.10.2
 
 ### Patch Changes
