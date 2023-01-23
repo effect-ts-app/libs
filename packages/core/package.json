@@ -477,6 +477,7 @@
     }
   },
   "sideEffects": [
+    "./dist/operators.js",
     "./dist/fluent/polyfill/Array.js",
     "./dist/fluent/polyfill/browser.js",
     "./dist/fluent/polyfill/Chunk.js",
@@ -494,6 +495,7 @@
     "./dist/fluent/polyfill/Sync.js",
     "./dist/fluent/polyfill/SyncOpt.js",
     "./dist/fluent/polyfill/util.js",
+    "./_cjs/operators.js",
     "./_cjs/fluent/polyfill/Array.cjs",
     "./_cjs/fluent/polyfill/browser.cjs",
     "./_cjs/fluent/polyfill/Chunk.cjs",
