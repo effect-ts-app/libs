@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.11.2
+
+### Patch Changes
+
+- Fix sideEffects marking
+
 ## 0.11.1
 
 ### Patch Changes
