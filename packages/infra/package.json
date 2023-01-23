@@ -422,6 +422,46 @@
         "default": "./_cjs/services/Emailer/service.cjs"
       }
     },
+    "./services/Operations": {
+      "import": {
+        "types": "./dist/services/Operations.d.ts",
+        "default": "./dist/services/Operations.js"
+      },
+      "require": {
+        "types": "./dist/services/Operations.d.ts",
+        "default": "./_cjs/services/Operations.cjs"
+      }
+    },
+    "./services/Operations/live": {
+      "import": {
+        "types": "./dist/services/Operations/live.d.ts",
+        "default": "./dist/services/Operations/live.js"
+      },
+      "require": {
+        "types": "./dist/services/Operations/live.d.ts",
+        "default": "./_cjs/services/Operations/live.cjs"
+      }
+    },
+    "./services/Operations/models": {
+      "import": {
+        "types": "./dist/services/Operations/models.d.ts",
+        "default": "./dist/services/Operations/models.js"
+      },
+      "require": {
+        "types": "./dist/services/Operations/models.d.ts",
+        "default": "./_cjs/services/Operations/models.cjs"
+      }
+    },
+    "./services/Operations/service": {
+      "import": {
+        "types": "./dist/services/Operations/service.d.ts",
+        "default": "./dist/services/Operations/service.js"
+      },
+      "require": {
+        "types": "./dist/services/Operations/service.d.ts",
+        "default": "./_cjs/services/Operations/service.cjs"
+      }
+    },
     "./services/Repository": {
       "import": {
         "types": "./dist/services/Repository.d.ts",

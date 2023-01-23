@@ -99,6 +99,16 @@
         "default": "./_cjs/Inputify.type.cjs"
       }
     },
+    "./Operations": {
+      "import": {
+        "types": "./dist/Operations.d.ts",
+        "default": "./dist/Operations.js"
+      },
+      "require": {
+        "types": "./dist/Operations.d.ts",
+        "default": "./_cjs/Operations.cjs"
+      }
+    },
     "./Widen.type": {
       "import": {
         "types": "./dist/Widen.type.d.ts",

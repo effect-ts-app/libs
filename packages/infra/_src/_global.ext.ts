@@ -9,6 +9,10 @@ import type {} from "@effect-app/infra/services/Emailer/Sendgrid"
 /**
  * @tsplus global
  */
+import type {} from "@effect-app/infra/services/Operations/live"
+/**
+ * @tsplus global
+ */
 import type {} from "@effect-app/infra/test.arbs"
 /**
  * @tsplus global
