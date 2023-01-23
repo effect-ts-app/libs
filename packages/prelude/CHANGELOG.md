@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.11.5
+
+### Patch Changes
+
+- e9a667fe: Add Operations
+
 ## 0.11.4
 
 ### Patch Changes

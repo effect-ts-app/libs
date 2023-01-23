@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 0.12.5
+
+### Patch Changes
+
+- e9a667fe: Add Operations
+- Updated dependencies [e9a667fe]
+  - @effect-app/prelude@0.11.5
+
 ## 0.12.4
 
 ### Patch Changes
