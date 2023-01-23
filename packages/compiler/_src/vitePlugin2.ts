@@ -149,8 +149,8 @@ export const toCache = (fileName: string, content: string) => {
   return content
 }
 
-export const getCompiled = (path: string) => {
-  const cached = fromCache(path)
+export const getCompiled = (path: string, enableCache: boolean) => {
+  const cached = enableCache && fromCache(path)
   if (cached) {
     return {
       code: cached
@@ -186,6 +186,8 @@ export const getCompiled = (path: string) => {
 }
 
 export function effectPlugin(options?: any): V.PluginOption[] {
+  const enableCache = options?.enableCache ?? true
+  const enableTempFiles = options?.enableTempFiles ?? false
   const filter = createFilter(options?.include, options?.exclude)
   if (!services) {
     services = init()
@@ -237,7 +239,21 @@ export function effectPlugin(options?: any): V.PluginOption[] {
     },
     transform(_, path) {
       if (/\.tsx?/.test(path) && filter(path)) {
-        return getCompiled(path)
+        if (!enableTempFiles) {
+          return getCompiled(path, enableCache)
+        }
+        // Compatibility for editor buffers like in Quokka, Wallaby, etc.
+        // TODO: only do temp file, if the content of buffer is different from file content..
+        const fn = path + "_" + Math.random() + ".tmp" + ".ts"
+        fs.writeFileSync(fn, _, "utf-8")
+        path = fn
+        files.add(path)
+        const compiled = getCompiled(path, enableCache)
+        fs.unlink(path, err => {
+          if (err) console.error(err)
+          files.delete(path)
+        })
+        return compiled
       }
     }
   }
