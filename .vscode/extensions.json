@@ -2,15 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "eamodio.gitlens",
-    "hbenl.vscode-test-explorer",
-    "kavod-io.vscode-jest-test-adapter",
-    "wallabyjs.quokka-vscode",
-    "wallabyjs.wallaby-vscode",
-    "MS-vsliveshare.vsliveshare-pack",
-    "hbenl.vscode-test-explorer-liveshare",
     "Vue.volar",
-    "Vue.vscode-typescript-vue-plugin",
-    "streetsidesoftware.code-spell-checker"
+    "Vue.vscode-typescript-vue-plugin"
   ]
 }
