@@ -437,11 +437,10 @@ export function withPathHeaders(
   path: Predicate<string>,
   replace = false
 ): RequestMiddleware {
-  return req =>
-    (m, u, reqT, respT, b) =>
-      path(u)
-        ? withHeaders(headers, replace)(req(m, u, reqT, respT, b))
-        : req(m, u, reqT, respT, b)
+  return req => (m, u, reqT, respT, b) =>
+    path(u)
+      ? withHeaders(headers, replace)(req(m, u, reqT, respT, b))
+      : req(m, u, reqT, respT, b)
 }
 
 export function foldRequestType<A, B, C, D>(

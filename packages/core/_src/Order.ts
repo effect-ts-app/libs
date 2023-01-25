@@ -4,10 +4,9 @@ import * as Ord from "@fp-ts/core/typeclass/Order"
 
 export type { Ordering }
 
-const compare = (y: any) =>
-  (x: any): Ordering => {
-    return x < y ? -1 : x > y ? 1 : 0
-  }
+const compare = (y: any) => (x: any): Ordering => {
+  return x < y ? -1 : x > y ? 1 : 0
+}
 
 /**
  * @tsplus static fp-ts/core/Order.Ops boolean

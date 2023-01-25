@@ -133,7 +133,8 @@ export const tapBoth = <E, A, R2, R3, E3>(
   // official tapBoth has E2 instead of never
   f: (e: E) => Effect<R2, never, any>,
   g: (a: A) => Effect<R3, E3, any>
-) => <R>(self: Effect<R, E, A>) => tapBoth_(self, f, g)
+) =>
+<R>(self: Effect<R, E, A>) => tapBoth_(self, f, g)
 
 /**
  * @macro traced
@@ -232,10 +233,12 @@ export function ifDiff_<I, R, E, A>(
 export const tapBothInclAbort = <A, ER, EE, EA, SR, SE, SA>(
   onError: (err: unknown) => Effect<ER, EE, EA>,
   onSuccess: (a: A) => Effect<SR, SE, SA>
-) => <R, E>(eff: Effect<R, E, A>) => tapBothInclAbort_(eff, onError, onSuccess)
+) =>
+<R, E>(eff: Effect<R, E, A>) => tapBothInclAbort_(eff, onError, onSuccess)
 
-export const tapErrorInclAbort = <A, ER, EE, EA>(onError: (err: unknown) => Effect<ER, EE, EA>) =>
-  <R, E>(eff: Effect<R, E, A>) => tapErrorInclAbort_(eff, onError)
+export const tapErrorInclAbort =
+  <A, ER, EE, EA>(onError: (err: unknown) => Effect<ER, EE, EA>) => <R, E>(eff: Effect<R, E, A>) =>
+    tapErrorInclAbort_(eff, onError)
 
 export function ifDiff<I, R, E, A>(n: I, orig: I) {
   return (f: (i: I) => Effect<R, E, A>) => ifDiff_(n, orig, f)
@@ -252,8 +255,8 @@ export const LayerFromEffect = Layer.effect
 export const provideSomeContextReal = <A2>(
   ctx: Context<A2>
 ) =>
-  <R, E, A>(self: Effect<R | A2, E, A>): Effect<Exclude<R, A2>, E, A> =>
-    (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx))
+<R, E, A>(self: Effect<R | A2, E, A>): Effect<Exclude<R, A2>, E, A> =>
+  (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx))
 
 /**
  * @tsplus pipeable effect/io/Effect provideSomeContextEffect
@@ -261,8 +264,8 @@ export const provideSomeContextReal = <A2>(
 export const provideSomeContextEffect = <R2, E2, A2>(
   makeCtx: Effect<R2, E2, Context<A2>>
 ) =>
-  <R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
-    makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
+<R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
+  makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
 
 /**
  * @tsplus fluent effect/io/Effect toLayer

@@ -13,13 +13,12 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   return ei.right
 }
 
-export const unsafeSome = (makeErrorMessage: () => string) =>
-  <A>(o: Opt<A>) => {
-    if (o.isNone()) {
-      throw new Error(makeErrorMessage())
-    }
-    return o.value
+export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Opt<A>) => {
+  if (o.isNone()) {
+    throw new Error(makeErrorMessage())
   }
+  return o.value
+}
 
 export function toString(v: unknown) {
   return `${v}`
@@ -111,10 +110,9 @@ export const pattern: <N extends string>(
     __: (_: Exclude<X, { _tag: keyof K }>, __: Exclude<X, { _tag: keyof K }>) => H
   ): (m: X) => { [k in keyof K]: ReturnType<NonNullable<K[k]>> }[keyof K] | H
 } = n =>
-  ((_: any, d: any) =>
-    (m: any) => {
-      return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
-    }) as any
+  ((_: any, d: any) => (m: any) => {
+    return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
+  }) as any
 
 export const matchTag = pattern("_tag")
 
@@ -197,12 +195,10 @@ export const patternFor: <N extends string>(
       },
     __: (_: Exclude<X, { _tag: keyof K }>, __: Exclude<X, { _tag: keyof K }>) => H
   ): (m: X) => { [k in keyof K]: ReturnType<NonNullable<K[k]>> }[keyof K] | H
-} = n =>
-  () =>
-    ((_: any, d: any) =>
-      (m: any) => {
-        return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
-      }) as any
+} = n => () =>
+  ((_: any, d: any) => (m: any) => {
+    return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
+  }) as any
 
 export const matchTagFor = patternFor("_tag")
 
@@ -226,7 +222,7 @@ export interface Unifiable<X> {
   //     : Effect<R, E, A>
   //   : never
   Unify: [X] extends [{ readonly [unifyIndex]: infer K }] ? K extends UnifiableIndexedURI ? UnifiableIndexed<X>[K]
-  : never
+    : never
     : never
 }
 

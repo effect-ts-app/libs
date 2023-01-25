@@ -118,7 +118,7 @@ export interface CaseConstructorADT<Y, Tag extends PropertyKey, K extends Proper
     this: X,
     ...args: X extends new(...args: infer R) => any ? R : never
   ) => X extends new(...args: any) => any ? InstanceType<X> extends Y ? Y
-  : InstanceType<X>
+    : InstanceType<X>
     : Y
 
   new<T>(args: IsEqualTo<T, {}> extends true ? void : T):

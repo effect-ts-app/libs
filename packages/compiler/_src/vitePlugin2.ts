@@ -4,7 +4,7 @@ import * as nodePath from "path"
 import ts from "typescript"
 import type * as V from "vite"
 
-const configPath = ts.findConfigFile("./", ts.sys.fileExists, "tsconfig.json")
+const configPath = ts.findConfigFile("./", f => ts.sys.fileExists(f), "tsconfig.json")
 
 if (!configPath) {
   throw new Error("Could not find a valid \"tsconfig.json\".")
@@ -53,7 +53,7 @@ const init = () => {
 
   if (!tsconfig.options) tsconfig.options = {}
   // fix tsplus not initialising
-  const opts = (tsconfig.options as any)
+  const opts = tsconfig.options as any
   opts.configFilePath = configPath
 
   tsconfig.fileNames.forEach(fileName => {

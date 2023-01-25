@@ -593,8 +593,8 @@ export const partition: {
   <A>(predicate: Predicate<A>): (
     fa: Dictionary<A>
   ) => readonly [Dictionary<A>, Dictionary<A>]
-} = <A>(predicate: Predicate<A>) =>
-  (fa: Dictionary<A>): readonly [Dictionary<A>, Dictionary<A>] => partition_(fa, predicate)
+} = <A>(predicate: Predicate<A>) => (fa: Dictionary<A>): readonly [Dictionary<A>, Dictionary<A>] =>
+  partition_(fa, predicate)
 
 /**
  * Partition record entries according to a predicate

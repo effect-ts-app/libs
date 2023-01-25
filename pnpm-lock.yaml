@@ -7,24 +7,27 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
 
 patchedDependencies:
-  eslint-plugin-unused-imports@2.0.0:
-    hash: tnum7sl7jcutfljbv5jztcescq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   '@effect/language-service@0.0.17':
     hash: a4uvuf3pdfkyyq2ka2mtqp5yfi
     path: patches/@effect__language-service@0.0.17.patch
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
   '@typescript-eslint/scope-manager@5.48.2':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.48.2.patch
-  '@effect/io@0.0.66':
-    hash: wvvg23gkayuzduliecfba7o7im
-    path: patches/@effect__io@0.0.66.patch
+  '@phaphoso/eslint-plugin-dprint@0.5.2':
+    hash: 5r3oafqkulzxdb6awceadivssy
+    path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: tnum7sl7jcutfljbv5jztcescq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   typescript@5.0.0-tsplus.20230113:
     hash: 4lokxnnems7dr5czg2fre2i5fq
     path: patches/typescript@5.0.0-tsplus.20230113.patch
+  '@effect/io@0.0.66':
+    hash: wvvg23gkayuzduliecfba7o7im
+    path: patches/@effect__io@0.0.66.patch
 
 importers:
 
@@ -35,6 +38,7 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': ^7.18.9
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@changesets/cli': ^2.26.0
+      '@dprint/typescript': ^0.80.2
       '@effect-app/compiler': workspace:*
       '@effect-app/eslint-codegen-model': workspace:*
       '@effect-app/pnpm-singleton': workspace:*
@@ -87,11 +91,12 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': 7.18.9_@babel+core@7.20.12
       '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.12
       '@changesets/cli': 2.26.0
+      '@dprint/typescript': 0.80.2
       '@effect-app/compiler': link:packages/compiler
       '@effect-app/eslint-codegen-model': link:packages/eslint-codegen-model
       '@effect-app/pnpm-singleton': link:packages/pnpm-singleton
       '@effect/language-service': 0.0.17_a4uvuf3pdfkyyq2ka2mtqp5yfi
-      '@phaphoso/eslint-plugin-dprint': 0.5.2_eslint@8.32.0
+      '@phaphoso/eslint-plugin-dprint': 0.5.2_5r3oafqkulzxdb6awceadivssy_eslint@8.32.0
       '@tsconfig/strictest': 1.0.2
       '@tsplus/installer': 0.0.164_ympwothzvasvtenlug7chhn7bi
       '@types/lodash': 4.14.191
@@ -1949,6 +1954,10 @@ packages:
       kuler: 2.0.0
     dev: true
 
+  /@dprint/typescript/0.80.2:
+    resolution: {integrity: sha512-HozAM9p6Ae+u95CqZ2wi3K1Xp5i7Ld60Xu+aIP3dTGp57bMSEC8FXFf/Uh60bbOSaKIU7Y91NMyk+8QzP2Sldg==}
+    dev: true
+
   /@effect/io/0.0.66_wvvg23gkayuzduliecfba7o7im:
     resolution: {integrity: sha512-aRrVm4+hqT4VFVpBXEh8Ecrzgz0lHOOp4ArwvmF2sqMUhoVlKmMPCfHB6ccDYtQbsjKU9QkQrTA8OCdrMEndpQ==}
     dependencies:
@@ -2449,7 +2458,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /@phaphoso/eslint-plugin-dprint/0.5.2_eslint@8.32.0:
+  /@phaphoso/eslint-plugin-dprint/0.5.2_5r3oafqkulzxdb6awceadivssy_eslint@8.32.0:
     resolution: {integrity: sha512-I86DIjCIAIKzdEf0vu0Ctqbp0cm2u1toc94ngm09PuGty58P8w+5WPpR8hm+lQm7+yxLadk/nFhiGEY2eavfYg==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
@@ -2461,6 +2470,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+    patched: true
 
   /@pkgr/utils/2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}

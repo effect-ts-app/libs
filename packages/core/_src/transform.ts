@@ -26,10 +26,10 @@ export type TransformRoot<O> = O extends Opt<any> ? Transform<OptOf<O>>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive ? O
   : {
     [K in keyof O]: OptOf<O[K]> extends infer X ? X extends (infer Y)[] ? OptOf<Transform<Y>>[]
-    : X extends NonEmptyReadonlyArray<infer Y> ? NonEmptyReadonlyArray<OptOf<Transform<Y>>>
-    : X extends SET.Set<infer Y> ? SET.Set<OptOf<Transform<Y>>>
-    : X extends readonly (infer Y)[] ? readonly OptOf<Transform<Y>>[]
-    : Transform<X>
+      : X extends NonEmptyReadonlyArray<infer Y> ? NonEmptyReadonlyArray<OptOf<Transform<Y>>>
+      : X extends SET.Set<infer Y> ? SET.Set<OptOf<Transform<Y>>>
+      : X extends readonly (infer Y)[] ? readonly OptOf<Transform<Y>>[]
+      : Transform<X>
       : never
   }
 
@@ -64,7 +64,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      const v = (value as Opt<unknown>)
+      const v = value as Opt<unknown>
       return encodeOptsAsNullable_(v.getOrNull, cacheMap)
     }
     const newObj = {} as Record<string, any>
