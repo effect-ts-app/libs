@@ -66,20 +66,18 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return Effect.gen(function*($) {
     const r = yield* $(Receiver.access)
 
-    const env = yield* $(Effect.context<RMsg | RErr>())
-
     yield* $(
-      Effect(() =>
+      Effect.runtime<RMsg | RErr>().map(rt =>
         r.subscribe({
           processError: err =>
-            hndlr.processError(err)
-              .provideContext(env)
-              .unsafeRunPromise
-              .catch(console.error),
+            rt.unsafeRunPromise(
+              hndlr.processError(err)
+                .catchAllCause(cause => Effect.logErrorCauseMessage("ServiceBus Error", cause))
+            ),
           processMessage: msg =>
-            hndlr.processMessage(msg)
-              .provideContext(env)
-              .unsafeRunPromise
+            rt.unsafeRunPromise(
+              hndlr.processMessage(msg)
+            )
           // DO NOT CATCH ERRORS here as they should return to the queue!
         })
       ).acquireRelease(
