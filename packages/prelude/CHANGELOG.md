@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.11.6
+
+### Patch Changes
+
+- Fix ServiceBus should inherit runtime context
+
 ## 0.11.5
 
 ### Patch Changes

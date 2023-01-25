@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.11.4
+
+### Patch Changes
+
+- Fix ServiceBus should inherit runtime context
+
 ## 0.11.3
 
 ### Patch Changes
