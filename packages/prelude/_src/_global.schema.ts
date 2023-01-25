@@ -40,6 +40,7 @@ import {
   PositiveNumber,
   prop,
   propFrom,
+  props,
   ReasonableString,
   smartClassUnion,
   string,
