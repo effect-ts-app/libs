@@ -544,9 +544,9 @@ export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReado
 }
 
 /**
- * @tsplus getter Repository save_
+ * @tsplus getter Repository save
  */
-export function save_<
+export function save<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
