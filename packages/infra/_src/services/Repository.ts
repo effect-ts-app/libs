@@ -22,7 +22,7 @@ export interface Repository<
   itemType: ItemType
   find: (id: Id) => Effect<ContextMap | RequestContext, never, Opt<T>>
   all: Effect<ContextMap, never, Chunk<T>>
-  save: (
+  saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<ContextMap | RequestContext, InvalidStateError | OptimisticConcurrencyException, void>
@@ -414,7 +414,7 @@ function saveAllWithEffectInt<
   return gen
     .flatMap(
       ([items, events, a]) =>
-        self.save(items, events)
+        self.saveAndPublish(items, events)
           .map(() => a)
     )
 }
@@ -541,4 +541,34 @@ export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effec
  */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
   return Effect(items.toNonEmptyArray).flatMapOpt(fn)
+}
+
+/**
+ * @tsplus getter Repository save_
+ */
+export function save_<
+  Id extends string,
+  T extends { id: Id },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+>(
+  self: Repository<T, PM, Evt, Id, ItemType>
+) {
+  return (...items: NonEmptyArray<T>) => self.saveAndPublish(items)
+}
+
+/**
+ * @tsplus getter Repository saveWithEvents
+ */
+export function saveWithEvents<
+  Id extends string,
+  T extends { id: Id },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+>(
+  self: Repository<T, PM, Evt, Id, ItemType>
+) {
+  return (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) => self.saveAndPublish(items, events)
 }
