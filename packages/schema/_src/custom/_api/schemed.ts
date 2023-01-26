@@ -37,12 +37,12 @@ export type SchemaForSchemed<Self extends SchemedOut<S.SchemaAny>> = [
 ] extends [
   S.Schema<infer ParserInput, any, infer ConstructorInput, infer Encoded, infer Api>
 ] ? S.Schema<
-  ParserInput,
-  ShapeFromSchemedOut<Self>,
-  ConstructorInput,
-  Encoded,
-  Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
->
+    ParserInput,
+    ShapeFromSchemedOut<Self>,
+    ConstructorInput,
+    Encoded,
+    Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
+  >
   : never
 
 export interface Copy {

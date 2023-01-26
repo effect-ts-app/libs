@@ -42,8 +42,8 @@ export class Operation extends MNModel<Operation, Operation.ConstructorInput, Op
 /** @ignore @internal @deprecated */
 export type OperationConstructor = typeof Operation
 
-// codegen:start {preset: model}
-//
+//// codegen:start {preset: model}
+////
 /* eslint-disable */
 export interface OperationProgress {
   readonly completed: PositiveInt

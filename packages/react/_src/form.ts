@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Type the return values of the functions preferably with interfaces!
 
-import {
-  getMetadataFromSchemaOrProp,
-  getRegisterFromSchemaOrProp,
-  isSchema
-} from "@effect-app/prelude/schema"
+import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } from "@effect-app/prelude/schema"
 import {
   type AnyError,
   type ConstructorFromProperties,

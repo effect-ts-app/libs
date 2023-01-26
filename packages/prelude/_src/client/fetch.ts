@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as H from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
 import { StringId } from "@effect-app/prelude/schema"
-import * as H from "@effect-app/core/http/http-client"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { getConfig } from "./config.js"
@@ -29,22 +29,21 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
   const decodeRes = (u: unknown) => decodeResponse(u).mapError(err => new ResponseError(err))
-  return (method: H.Method, path: Path) =>
-    (req: RequestA) =>
-      fetchApi(
-        method,
-        method === "DELETE"
-          ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            makePathWithQuery(path, req as any)
-          : makePathWithBody(path, req as any),
-        encodeRequest(req)
-      )
-        .flatMap(mapResponseM(decodeRes))
-        .map(i => ({
-          ...i,
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          body: i.body as ResponseA
-        }))
+  return (method: H.Method, path: Path) => (req: RequestA) =>
+    fetchApi(
+      method,
+      method === "DELETE"
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        ? makePathWithQuery(path, req as any)
+        : makePathWithBody(path, req as any),
+      encodeRequest(req)
+    )
+      .flatMap(mapResponseM(decodeRes))
+      .map(i => ({
+        ...i,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        body: i.body as ResponseA
+      }))
 }
 
 export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = void>({

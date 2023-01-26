@@ -13,8 +13,8 @@ export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
     ...e,
     _etag: objectHash(e)
   }) as any
-export const makeUpdateETag = (name: string) =>
-  <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Opt<E>) =>
+export const makeUpdateETag =
+  (name: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Opt<E>) =>
     Effect.gen(function*($) {
       if (current.isSome() && current.value._etag !== e._etag) {
         return yield* $(
@@ -54,40 +54,40 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
         })
         ? Opt(x as unknown as NE)
         : Opt.none
-      : // TODO: support mixed or/and
-        filter.mode === "or"
-        ? filter.where
-            .some(p =>
-              p.t === "in"
-                ? p.value.includes(get(x, p.key))
-                : p.t === "not-in"
-                ? !p.value.includes(get(x, p.key))
-                : p.t === "not-eq"
-                ? !compareCaseInsensitive(get(x, p.key), p.value)
-                : compareCaseInsensitive(get(x, p.key), p.value)
-            )
-          ? Opt(x as unknown as NE)
-          : Opt.none
-        : filter.where
-            .every(p =>
-              p.t === "in"
-                ? p.value.includes(get(x, p.key))
-                : p.t === "not-in"
-                ? !p.value.includes(get(x, p.key))
-                : p.t === "not-eq"
-                ? p.key.includes(".-1.")
-                  ? (get(x, p.key.split(".-1.")[0]) as any[])
-                    // TODO: or vs and
-                    .every(_ => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-                  : !compareCaseInsensitive(get(x, p.key), p.value)
-                : p.key.includes(".-1.")
-                ? (get(x, p.key.split(".-1.")[0]) as any[])
-                  // TODO: or vs and
-                  .some(_ => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-                : compareCaseInsensitive(get(x, p.key), p.value)
-            )
+      // TODO: support mixed or/and
+      : filter.mode === "or"
+      ? filter.where
+          .some(p =>
+            p.t === "in"
+              ? p.value.includes(get(x, p.key))
+              : p.t === "not-in"
+              ? !p.value.includes(get(x, p.key))
+              : p.t === "not-eq"
+              ? !compareCaseInsensitive(get(x, p.key), p.value)
+              : compareCaseInsensitive(get(x, p.key), p.value)
+          )
         ? Opt(x as unknown as NE)
         : Opt.none
+      : filter.where
+          .every(p =>
+            p.t === "in"
+              ? p.value.includes(get(x, p.key))
+              : p.t === "not-in"
+              ? !p.value.includes(get(x, p.key))
+              : p.t === "not-eq"
+              ? p.key.includes(".-1.")
+                ? (get(x, p.key.split(".-1.")[0]) as any[])
+                  // TODO: or vs and
+                  .every(_ => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+                : !compareCaseInsensitive(get(x, p.key), p.value)
+              : p.key.includes(".-1.")
+              ? (get(x, p.key.split(".-1.")[0]) as any[])
+                // TODO: or vs and
+                .some(_ => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+              : compareCaseInsensitive(get(x, p.key), p.value)
+          )
+      ? Opt(x as unknown as NE)
+      : Opt.none
 }
 
 export function codeFilterJoinSelect<E extends { id: string }, NE>(

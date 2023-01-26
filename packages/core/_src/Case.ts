@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // ets_tracing: off
 
 import * as Equal from "@fp-ts/data/Equal"
@@ -32,7 +33,7 @@ export interface CaseConstructor {
 export const caseArgs = Symbol()
 export const caseKeys = Symbol()
 
-// @ts-expect-error
+// @ts-expect-error abc
 export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.HasHash, Hash.HasEquals {
   static make<T>(args: T) {
     return new this(args)
@@ -54,7 +55,7 @@ export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.HasHash
   }
 
   copy(args: Partial<T>): this {
-    // @ts-expect-error
+    // @ts-expect-error abc
     return new this.constructor({ ...this[caseArgs], ...args })
   }
 
@@ -134,7 +135,7 @@ export function TaggedADT<X>(): {
     key: Key
   ): CaseConstructorADT<X, Tag, Key>
 } {
-  // @ts-expect-error
+  // @ts-expect-error abc
   return Tagged
 }
 
@@ -152,10 +153,10 @@ export function Tagged<Tag extends string | symbol, Key extends string | symbol>
   if (key) {
     class X extends Case<{}> {
       static readonly _tag = tag
-      // @ts-expect-error
+      // @ts-expect-error abc
       readonly [key] = tag
     }
-    // @ts-expect-error
+    // @ts-expect-error abc
     return X
   }
   class X extends Case<{}> {
@@ -163,6 +164,6 @@ export function Tagged<Tag extends string | symbol, Key extends string | symbol>
     readonly _tag = tag
   }
 
-  // @ts-expect-error
+  // @ts-expect-error abc
   return X
 }

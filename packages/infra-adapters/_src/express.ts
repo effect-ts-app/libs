@@ -65,7 +65,8 @@ export function LiveExpressAppConfig<R>(
       req: Request,
       res: Response,
       next: NextFunction
-    ) => (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
+    ) =>
+    (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
   })).toLayer(ExpressAppConfig)
 }
 
@@ -144,15 +145,14 @@ export const makeExpressApp = Effect.gen(function*(_) {
     >
     return Effect.runtime<Env>().map(r =>
       handlers.map(
-        (handler): RequestHandler =>
-          (req, res, next) => {
-            r.unsafeRun(
-              open.get
-                .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
-                .onError(exitHandler(req, res, next))
-                .supervised(supervisor)
-            )
-          }
+        (handler): RequestHandler => (req, res, next) => {
+          r.unsafeRun(
+            open.get
+              .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
+              .onError(exitHandler(req, res, next))
+              .supervised(supervisor)
+          )
+        }
       )
     )
   }

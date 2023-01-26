@@ -15,60 +15,59 @@ export const interpreters: ((
   schema: S.SchemaAny
 ) => Opt<() => Constructor<unknown, unknown, unknown>>)[] = [
   Opt.partial(
-    miss =>
-      (schema: S.SchemaAny): (() => Constructor<unknown, unknown, unknown>) => {
-        if (schema instanceof S.SchemaNamed) {
-          return () => {
-            const self = constructorFor(schema.self)
-            return u => Th.mapError_(self(u), e => S.namedE(schema.name, e))
-          }
+    miss => (schema: S.SchemaAny): () => Constructor<unknown, unknown, unknown> => {
+      if (schema instanceof S.SchemaNamed) {
+        return () => {
+          const self = constructorFor(schema.self)
+          return u => Th.mapError_(self(u), e => S.namedE(schema.name, e))
         }
-        if (schema instanceof S.SchemaMapConstructorError) {
-          return () => {
-            const self = constructorFor(schema.self)
-            return u => Th.mapError_(self(u), schema.mapError)
-          }
-        }
-        if (schema instanceof S.SchemaIdentity) {
-          return () => u => Th.succeed(u)
-        }
-        if (schema instanceof S.SchemaConstructor) {
-          return () => schema.of
-        }
-        if (schema instanceof S.SchemaRefinement) {
-          return () => {
-            const self = constructorFor(schema.self)
-            return u =>
-              Th.chain_(
-                pipe(
-                  self(u),
-                  Th.mapError(e => S.compositionE(Chunk(S.prevE(e))))
-                ),
-                (
-                  a,
-                  w
-                ): Th.These<
-                  S.CompositionE<S.PrevE<unknown> | S.NextE<S.RefinementE<unknown>>>,
-                  unknown
-                > =>
-                  schema.refinement(a)
-                    ? w._tag === "Some"
-                      ? Th.warn(a, w.value)
-                      : Th.succeed(a)
-                    : Th.fail(
-                      S.compositionE(
-                        w._tag === "None"
-                          ? Chunk(S.nextE(S.refinementE(schema.error(a))))
-                          : w.value.errors.append(
-                            S.nextE(S.refinementE(schema.error(a)))
-                          )
-                      )
-                    )
-              )
-          }
-        }
-        return miss()
       }
+      if (schema instanceof S.SchemaMapConstructorError) {
+        return () => {
+          const self = constructorFor(schema.self)
+          return u => Th.mapError_(self(u), schema.mapError)
+        }
+      }
+      if (schema instanceof S.SchemaIdentity) {
+        return () => u => Th.succeed(u)
+      }
+      if (schema instanceof S.SchemaConstructor) {
+        return () => schema.of
+      }
+      if (schema instanceof S.SchemaRefinement) {
+        return () => {
+          const self = constructorFor(schema.self)
+          return u =>
+            Th.chain_(
+              pipe(
+                self(u),
+                Th.mapError(e => S.compositionE(Chunk(S.prevE(e))))
+              ),
+              (
+                a,
+                w
+              ): Th.These<
+                S.CompositionE<S.PrevE<unknown> | S.NextE<S.RefinementE<unknown>>>,
+                unknown
+              > =>
+                schema.refinement(a)
+                  ? w._tag === "Some"
+                    ? Th.warn(a, w.value)
+                    : Th.succeed(a)
+                  : Th.fail(
+                    S.compositionE(
+                      w._tag === "None"
+                        ? Chunk(S.nextE(S.refinementE(schema.error(a))))
+                        : w.value.errors.append(
+                          S.nextE(S.refinementE(schema.error(a)))
+                        )
+                    )
+                  )
+            )
+        }
+      }
+      return miss()
+    }
   )
 ]
 

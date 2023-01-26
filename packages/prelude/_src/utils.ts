@@ -25,8 +25,6 @@ export function todayAtUTCNoon() {
   return new Date(utcDateAtNoon)
 }
 
-
-
 function anyOp_$<T>(self: T) {
   return {
     get subject() {
@@ -58,7 +56,7 @@ export interface AnyOps<T> {
 /**
  * @tsplus fluent effect/io/Effect debug
  */
-export function Effect_debug<R,E,A>(self: Effect<R,E,A>, name: string) {
+export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
   return self.tap(a => {
     let r: string | A = a
     try {
@@ -71,7 +69,7 @@ export function Effect_debug<R,E,A>(self: Effect<R,E,A>, name: string) {
 /**
  * @tsplus fluent effect/io/Effect debugUnsafe
  */
-export function Effect_debugUnsafe<R, E, A>(self: Effect<R,E,A>, name: string) {
+export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
   return self.tap(a => Effect(() => console.log(name, a)))
 }
 
@@ -98,8 +96,6 @@ export function debugUnsafe<A>(a: AnyOps<A>, name: string) {
   return a.subject
 }
 
-
-
 export function spread<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Props extends Record<any, any>,
@@ -117,7 +113,7 @@ export function spreadS<
 }
 
 type Key<T> = T extends Record<infer TKey, any> ? TKey : never
-type Values<T> =  T extends { [s: string]: infer S } ? S : any
+type Values<T> = T extends { [s: string]: infer S } ? S : any
 
 function object_$<T extends object>(self: T) {
   return {
@@ -131,7 +127,7 @@ function object_$<T extends object>(self: T) {
     },
     spreadS(this: void, fnc: (t: T) => T) {
       return spreadS(self, fnc)
-    },
+    }
   }
 }
 
@@ -140,7 +136,9 @@ type BasicObjectOps<T extends object> = ReturnType<typeof object_$<T>>
 /**
  * @tsplus getter Object $$
  */
-export function object$<T extends object>(self: T): ObjectOps<T> { return object_$(self) }
+export function object$<T extends object>(self: T): ObjectOps<T> {
+  return object_$(self)
+}
 
 /**
  * @tsplus type Object.Ops
@@ -150,7 +148,6 @@ export interface ObjectOps<T extends object> extends BasicObjectOps<T> {}
 function entries<TT extends object>(o: TT): [Key<TT>, Values<TT>][] {
   return Object.entries(o) as any
 }
-
 
 /**
  * @tsplus getter Object.Ops entries
@@ -186,7 +183,6 @@ export function AnyPretty<TT>(o: AnyOps<TT>) {
 export function RecordPretty<TT extends object>(o: ObjectOps<TT>) {
   return pretty(o.subject)
 }
-
 
 export function makeAzureFriendly(path: string) {
   return path.replace(/\//g, "___SL@SH___")

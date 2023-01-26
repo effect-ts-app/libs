@@ -338,14 +338,12 @@ export function makeRequestHandler<
                   .flatMap(r => respond(parsedReq, res, r))
               )
             // Commands should not be interruptable.
-            const r = (
-              req.method !== "GET" ? handleRequest.uninterruptible : handleRequest
-            ) // .instrument("Performance.RequestResponse")
+            const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
             // the first log entry should be of the request start.
             const r2 = makeMiddlewareContext
               ? r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
-              : // PR is not relevant here
-                r as Effect<R, E | ValidationError, void>
+              // PR is not relevant here
+              : r as Effect<R, E | ValidationError, void>
             return errorHandler(
               req,
               res,
@@ -484,11 +482,11 @@ export type RouteAllTest<T extends RequestHandlersTest> = {
 export type Flatten<T extends object> = object extends T ? object : {
   [K in keyof T]-?: (
     x: NonNullable<T[K]> extends infer V ? V extends object ? V extends readonly any[] ? Pick<T, K>
-    : FlattenLVL1<V> extends infer FV ? ({
-      [P in keyof FV as `${Extract<K, string | number>}.${Extract<P, string | number>}`]: FV[P]
-    })
-    : never
-    : Pick<T, K>
+        : FlattenLVL1<V> extends infer FV ? ({
+            [P in keyof FV as `${Extract<K, string | number>}.${Extract<P, string | number>}`]: FV[P]
+          })
+        : never
+      : Pick<T, K>
       : never
   ) => void
 } extends Record<keyof T, (y: infer O) => void> ? O extends unknown /* infer U */ ? { [K in keyof O]: O[K] } : never
@@ -497,12 +495,13 @@ export type Flatten<T extends object> = object extends T ? object : {
 type FlattenLVL1<T extends object> = object extends T ? object : {
   [K in keyof T]-?: (
     x: NonNullable<T[K]> extends infer V ? V extends object ? V extends readonly any[] ? Pick<T, K>
-    : /*: Flatten<V> extends infer FV ? ({
+          /*: Flatten<V> extends infer FV ? ({
       [P in keyof FV as `${Extract<K, string | number>}.${Extract<P, string | number>}`]: FV[P]
     })
     : never
-    */ Pick<T, K>
-    : never
+    */
+        : Pick<T, K>
+      : never
       : never
   ) => void
 } extends Record<keyof T, (y: infer O) => void> ? O extends unknown /* infer U */ ? { [K in keyof O]: O[K] } : never

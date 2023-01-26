@@ -362,11 +362,11 @@ export function defaultProp<
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): null extends ParsedShape ? FromProperty<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  "required",
-  None,
-  Some<["constructor", () => ParsedShape]>
->
+    MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    "required",
+    None,
+    Some<["constructor", () => ParsedShape]>
+  >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
@@ -393,11 +393,11 @@ export function defaultProp<
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): null extends ParsedShape ? FromProperty<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  "required",
-  None,
-  Some<["constructor", () => ParsedShape]>
->
+    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    "required",
+    None,
+    Some<["constructor", () => ParsedShape]>
+  >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
   schema: MO.Schema<unknown, any, any, any, any>,
@@ -431,11 +431,11 @@ export function defaultInputProp<
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): null extends ParsedShape ? FromProperty<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  "required",
-  None,
-  Some<["both", () => ParsedShape]>
->
+    MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    "required",
+    None,
+    Some<["both", () => ParsedShape]>
+  >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
@@ -462,11 +462,11 @@ export function defaultInputProp<
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ): null extends ParsedShape ? FromProperty<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  "required",
-  None,
-  Some<["both", () => ParsedShape]>
->
+    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    "required",
+    None,
+    Some<["both", () => ParsedShape]>
+  >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
   schema: MO.Schema<unknown, any, any, any, any>,
@@ -639,7 +639,7 @@ export const constArray = constant(ReadonlyArray.empty)
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { props: infer Props }
 } ? Props extends MO.PropertyRecord ? MO.ParserInputFromProperties<Props>
-: never
+  : never
   : never
 
 /**

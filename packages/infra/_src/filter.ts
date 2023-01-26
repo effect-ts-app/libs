@@ -1,11 +1,13 @@
-import type { Where } from "./services/Store.js"
 import type { FieldValues } from "./filter/types/fields.js"
 import type { FieldPath, FieldPathValue } from "./filter/types/path/eager.js"
+import type { Where } from "./services/Store.js"
 
 /**
  * the function defaults to "eq", but has additional properties for notEq, in and notIn
  */
-export interface WhereFilter<TFieldValues extends FieldValues> extends ReturnType<typeof makeWhereFilter_<TFieldValues>> {}
+export interface WhereFilter<TFieldValues extends FieldValues>
+  extends ReturnType<typeof makeWhereFilter_<TFieldValues>>
+{}
 export function makeWhereFilter<TFieldValues extends FieldValues>() {
   const f = makeWhereFilter_<TFieldValues>()
   return f as WhereFilter<TFieldValues>
@@ -59,8 +61,6 @@ function makeWhereFilter_<TFieldValues extends FieldValues>() {
   const f = Object.assign(helpers.eq, helpers)
   return f
 }
-
-
 
 export type WhereValue<
   T extends "eq" | "not-eq" | "starts-with" | "ends-with" | "includes" | "contains" | "not-contains",
@@ -145,9 +145,8 @@ function $isnt__<V extends A, A>(v: V) {
   return (_: A) => $isnt(_, v)
 }
 
-
 function $in__<A extends SupportedValues, Values extends readonly A[]>(
-...v: Values
+  ...v: Values
 ) {
   return (_: A) => $in(_, ...v)
 }
@@ -174,7 +173,7 @@ export const Filters = {
   $is: $is__,
   $isnt: $isnt__,
   $in: $in__,
-  $notIn: $notIn__,
+  $notIn: $notIn__
   // $contains: $contains__,
   // $notContains: $notContains__,
 }
@@ -242,7 +241,7 @@ type VType<T> = T extends ValueType<any> ? T["v"] : never
 function f(p: string, b: any) {
   if (typeof b === "function") b = b(undefined)
   const obj = typeof b === "object" && b !== null
-  return makeFilter(p, obj ? b.v : b, obj ? b.t ?? "eq" : "eq");
+  return makeFilter(p, obj ? b.v : b, obj ? b.t ?? "eq" : "eq")
 }
 
 function makeFilter<T extends "in" | "not-in" | "eq" | "not-eq">(path: string, value: any, t: T) {
@@ -255,7 +254,6 @@ type FIL<S, K extends string, T extends "in" | "not-in" | "eq" | "not-eq", V> = 
   value: V
   readonly S: S
 }
-
 
 export function makeFilters<T extends FieldValues>() {
   type Paths = FieldPath<T>
@@ -281,8 +279,6 @@ export function makeFilters<T extends FieldValues>() {
   }
   return test
 }
-
-
 
 // export function makeFilter<TFieldValues extends FieldValues>() {
 //   const f = makeFilter_<TFieldValues>()

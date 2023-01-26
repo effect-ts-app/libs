@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type * as H from "@effect-app/core/http/http-client"
 import type { GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect-app/prelude/schema"
 import { condemnCustom } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
-import type * as H from "@effect-app/core/http/http-client"
 import { Path } from "path-parser"
 
 import type { ApiConfig } from "./config.js"

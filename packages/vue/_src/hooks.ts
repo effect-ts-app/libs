@@ -1,6 +1,6 @@
+import type { Http } from "@effect-app/core/http/http-client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { Done } from "@effect-app/prelude/client"
-import type { Http } from "@effect-app/core/http/http-client"
 import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"

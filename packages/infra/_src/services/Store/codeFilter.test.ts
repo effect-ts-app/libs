@@ -1,12 +1,11 @@
-import { expect, test } from "vitest"
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
+import { expect, test } from "vitest"
 import { makeFilters } from "../../filter.js"
 import { codeFilter } from "./utils.js"
 
-
 const somethings = [
-  {a: 1, b: "b", c: ["c"], d: [{a: "a2", b: 1}, {a: "a", b: 1}], id: "1"},
-  {a: 2, b: "b2", c: ["c2"], d: [{a: "a4", b: 2}, {a: "a5", b: 2}], id: "2"},
+  { a: 1, b: "b", c: ["c"], d: [{ a: "a2", b: 1 }, { a: "a", b: 1 }], id: "1" },
+  { a: 2, b: "b2", c: ["c2"], d: [{ a: "a4", b: 2 }, { a: "a5", b: 2 }], id: "2" }
 ] satisfies readonly Something[]
 
 const f_ = makeFilters<Something>()
@@ -31,44 +30,52 @@ export function somethingsWhere(
   })
 }
 
-
 type SomethingElse = {
-  a: string,
+  a: string
   b: number
 }
 
 type Something = {
-  a: number,
-  id: string,
-  b: string,
+  a: number
+  id: string
+  b: string
   c: readonly string[]
   d: readonly SomethingElse[]
 }
 
 test("works", () => {
-  expect(somethings.filterMap(codeFilter(
-    somethingsWhere(_ => _("b", _ => "b2"))
-  )).toArray)
-  .toEqual([somethings[1]])
+  expect(
+    somethings.filterMap(codeFilter(
+      somethingsWhere(_ => _("b", _ => "b2"))
+    )).toArray
+  )
+    .toEqual([somethings[1]])
 
-  expect(somethings.filterMap(codeFilter(
-    somethingsWhere(_ => _("b", _ => "b"))
-  )).toArray)
-  .toEqual([somethings[0]])
+  expect(
+    somethings.filterMap(codeFilter(
+      somethingsWhere(_ => _("b", _ => "b"))
+    )).toArray
+  )
+    .toEqual([somethings[0]])
 
+  expect(
+    somethings.filterMap(codeFilter(
+      somethingsWhere(_ => _("d.-1.a", _ => "a5"))
+    )).toArray
+  )
+    .toEqual([somethings[1]])
 
-  expect(somethings.filterMap(codeFilter(
-    somethingsWhere(_ => _("d.-1.a", _ => "a5"))
-  )).toArray)
-  .toEqual([somethings[1]])
+  expect(
+    somethings.filterMap(codeFilter(
+      somethingsWhere(_ => _("d.-1.a", _ => "a"))
+    )).toArray
+  )
+    .toEqual([somethings[0]])
 
-  expect(somethings.filterMap(codeFilter(
-    somethingsWhere(_ => _("d.-1.a", _ => "a"))
-  )).toArray)
-  .toEqual([somethings[0]])
-
-  expect(somethings.filterMap(codeFilter(
-    somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a")))
-  )).toArray)
-  .toEqual([somethings[1]])
+  expect(
+    somethings.filterMap(codeFilter(
+      somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a")))
+    )).toArray
+  )
+    .toEqual([somethings[1]])
 })

@@ -12,7 +12,8 @@ type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {
 }
 
 // TODO: adapt error types too; low prio
-const adaptedSchema = <Props extends MO.PropertyRecord>(properties: Props) =>
+const adaptedSchema =
+  <Props extends MO.PropertyRecord>(properties: Props) =>
   <Key extends keyof Props>(keys: readonly Key[]): AdaptSchema<Props, Key> =>
     D.filterWithIndex_(properties, key => keys.includes(key as Key)) as any
 
@@ -41,15 +42,15 @@ export type Adapted<
               Props,
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?:
-                | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                | undefined
-            }
-            : {
-              readonly [h in k]: MO.ParsedShapeOf<
-                AdaptSchema<Props, Key>[k]["_schema"]
-              >
-            }
+                  readonly [h in k]?:
+                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | undefined
+                }
+              : {
+                readonly [h in k]: MO.ParsedShapeOf<
+                  AdaptSchema<Props, Key>[k]["_schema"]
+                >
+              }
               : never
           }[Key]
         >
@@ -61,15 +62,15 @@ export type Adapted<
               Props,
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?:
-                | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                | undefined
-            }
-            : {
-              readonly [h in k]: MO.ParsedShapeOf<
-                AdaptSchema<Props, Key>[k]["_schema"]
-              >
-            }
+                  readonly [h in k]?:
+                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | undefined
+                }
+              : {
+                readonly [h in k]: MO.ParsedShapeOf<
+                  AdaptSchema<Props, Key>[k]["_schema"]
+                >
+              }
               : never
           }[Key]
         >
@@ -81,19 +82,20 @@ export type Adapted<
               Props,
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
-              readonly [
-                h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ? AdaptSchema<Props, Key>[k]["_as"]["value"]
-                  : k
-              ]?:
-                | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
-                | undefined
-            }
-            : {
-              readonly [
-                h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ? AdaptSchema<Props, Key>[k]["_as"]["value"]
-                  : k
-              ]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
-            }
+                  readonly [
+                    h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ?
+                      AdaptSchema<Props, Key>[k]["_as"]["value"]
+                      : k
+                  ]?:
+                    | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | undefined
+                }
+              : {
+                readonly [
+                  h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ? AdaptSchema<Props, Key>[k]["_as"]["value"]
+                    : k
+                ]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+              }
               : never
           }[Key]
         >

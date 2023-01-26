@@ -1,16 +1,11 @@
+import { getMetadataFromSchemaOrProp, isSchema, Parser, These } from "@effect-app/prelude/schema"
 import type {
+  AnyProperty,
   EncodedOf,
   ParsedShapeOfCustom,
   Property,
-  PropertyRecord
-} from "@effect-app/prelude/schema"
-import {
-  type AnyProperty,
-  getMetadataFromSchemaOrProp,
-  isSchema,
-  Parser,
-  type SchemaAny,
-  These
+  PropertyRecord,
+  SchemaAny
 } from "@effect-app/prelude/schema"
 import { capitalize } from "vue"
 

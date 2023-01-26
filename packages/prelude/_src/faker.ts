@@ -16,14 +16,13 @@ export function getFaker() {
   return faker
 }
 
-export const fakerToArb = (fakerGen: () => ReturnType<typeof faker.fake>) =>
-  (fc: typeof FC) => {
-    return fc
-      .integer()
-      .noBias() // same probability to generate each of the allowed integers
-      .noShrink() // shrink on a seed makes no sense
-      .map(seed => {
-        faker.seed(seed) // seed the generator
-        return fakerGen() // call it
-      })
-  }
+export const fakerToArb = (fakerGen: () => ReturnType<typeof faker.fake>) => (fc: typeof FC) => {
+  return fc
+    .integer()
+    .noBias() // same probability to generate each of the allowed integers
+    .noShrink() // shrink on a seed makes no sense
+    .map(seed => {
+      faker.seed(seed) // seed the generator
+      return fakerGen() // call it
+    })
+}

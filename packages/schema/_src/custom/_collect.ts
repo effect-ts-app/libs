@@ -15,43 +15,40 @@ export interface CollectAnnotations {
 
 export const interpreters: ((schema: S.SchemaAny) => Opt<() => any>)[] = [
   Opt.partial(
-    miss =>
-      (schema: S.SchemaAny): (() => (...xs: S.Annotation<any>[]) => Chunk<any>) => {
-        if (S.isAnnotatedSchema(schema)) {
-          return () =>
-            (...xs) => {
-              for (const x of xs) {
-                if (schema.annotation === x) {
-                  return collectAnnotationsFor(schema.self)(...xs).append(schema.meta)
-                }
-              }
-              return collectAnnotationsFor(schema.self)(...xs)
+    miss => (schema: S.SchemaAny): () => (...xs: S.Annotation<any>[]) => Chunk<any> => {
+      if (S.isAnnotatedSchema(schema)) {
+        return () => (...xs) => {
+          for (const x of xs) {
+            if (schema.annotation === x) {
+              return collectAnnotationsFor(schema.self)(...xs).append(schema.meta)
             }
+          }
+          return collectAnnotationsFor(schema.self)(...xs)
         }
-        if (schema instanceof S.SchemaNamed) {
-          return () => collectAnnotationsFor(schema.self)
-        }
-        if (schema instanceof S.SchemaMapParserError) {
-          return () => collectAnnotationsFor(schema.self)
-        }
-        if (schema instanceof S.SchemaIdentity) {
-          return () => () => Chunk.empty<any>()
-        }
-        if (schema instanceof S.SchemaPipe) {
-          return () =>
-            (...xs) =>
-              collectAnnotationsFor(schema.self)(...xs).concat(
-                collectAnnotationsFor(schema.that)(...xs)
-              )
-        }
-        if (schema instanceof S.SchemaParser) {
-          return () => collectAnnotationsFor(schema.self)
-        }
-        if (schema instanceof S.SchemaRefinement) {
-          return () => collectAnnotationsFor(schema.self)
-        }
-        return miss()
       }
+      if (schema instanceof S.SchemaNamed) {
+        return () => collectAnnotationsFor(schema.self)
+      }
+      if (schema instanceof S.SchemaMapParserError) {
+        return () => collectAnnotationsFor(schema.self)
+      }
+      if (schema instanceof S.SchemaIdentity) {
+        return () => () => Chunk.empty<any>()
+      }
+      if (schema instanceof S.SchemaPipe) {
+        return () => (...xs) =>
+          collectAnnotationsFor(schema.self)(...xs).concat(
+            collectAnnotationsFor(schema.that)(...xs)
+          )
+      }
+      if (schema instanceof S.SchemaParser) {
+        return () => collectAnnotationsFor(schema.self)
+      }
+      if (schema instanceof S.SchemaRefinement) {
+        return () => collectAnnotationsFor(schema.self)
+      }
+      return miss()
+    }
   )
 ]
 

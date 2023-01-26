@@ -199,7 +199,7 @@ type TryAccessArray<
  * ```
  */
 export type EvaluateKey<T, K extends Key> = T extends ReadonlyArray<any> ? IsTuple<T> extends true ? TryAccess<T, K>
-: TryAccessArray<T, K>
+  : TryAccessArray<T, K>
   : TryAccess<MapKeys<T>, K>
 
 /**
@@ -259,7 +259,7 @@ type NumericObjectKeys<T extends Traversable> = ToKey<
  */
 export type NumericKeys<T extends Traversable> = UnionToIntersection<
   T extends ReadonlyArray<any> ? IsTuple<T> extends true ? [TupleKeys<T>]
-  : [ToKey<ArrayKey>]
+    : [ToKey<ArrayKey>]
     : [NumericObjectKeys<T>]
 >[never]
 
@@ -292,7 +292,7 @@ export type ObjectKeys<T extends Traversable> = Exclude<
  * ```
  */
 export type CheckKeyConstraint<T, K extends Key, U> = K extends any ? EvaluateKey<T, K> extends U ? K
-: never
+  : never
   : never
 
 /**
@@ -315,7 +315,7 @@ export type ContainsIndexable<T> = IsNever<
  * @typeParam T - non-nullable type whose property should be checked
  */
 type KeysImpl<T> = [T] extends [Traversable] ? ContainsIndexable<T> extends true ? NumericKeys<T>
-: ObjectKeys<T>
+  : ObjectKeys<T>
   : never
 
 /**
@@ -366,11 +366,11 @@ type ValidPathPrefixImpl<
   PT extends PathTuple,
   VPT extends PathTuple
 > = PT extends [infer K, ...infer R] ? HasKey<T, AsKey<K>> extends true ? ValidPathPrefixImpl<
-  EvaluateKey<T, AsKey<K>>,
-  AsPathTuple<R>,
-  AsPathTuple<[...VPT, K]>
->
-: VPT
+      EvaluateKey<T, AsKey<K>>,
+      AsPathTuple<R>,
+      AsPathTuple<[...VPT, K]>
+    >
+  : VPT
   : VPT
 
 /**

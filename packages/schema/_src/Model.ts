@@ -317,7 +317,7 @@ export function useClassNameForSchema(cls: any) {
 }
 
 export type GetProps<Self> = Self extends { Api: { props: infer Props } } ? Props extends PropertyRecord ? Props
-: never
+  : never
   : never
 
 export interface PropsExtensions<Props> {

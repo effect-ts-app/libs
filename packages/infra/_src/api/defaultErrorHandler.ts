@@ -41,11 +41,9 @@ export function defaultErrorHandler<R>(
   _: RequestContext,
   r2: Effect<R, SupportedErrors, void>
 ) {
-  const r3 = (
-    req.method === "PATCH"
-      ? r2.retry(optimisticConcurrencySchedule)
-      : r2
-  )
+  const r3 = req.method === "PATCH"
+    ? r2.retry(optimisticConcurrencySchedule)
+    : r2
   return r3
     .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", err =>

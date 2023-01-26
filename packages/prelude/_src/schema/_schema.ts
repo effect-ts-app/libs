@@ -82,7 +82,7 @@ export class CustomSchemaException extends Error {
 
 export const fakerArb = (
   gen: (fake: typeof faker) => () => ReturnType<typeof faker.fake>
-): ((a: any) => S.Arbitrary.Arbitrary<string>) => fakerToArb(gen(getFaker()))
+): (a: any) => S.Arbitrary.Arbitrary<string> => fakerToArb(gen(getFaker()))
 
 /**
  * The Effect fails with `CustomSchemaException` when the parser produces an invalid result.

@@ -12,26 +12,24 @@ export type Encoder<Output, Encoded> = {
 export const interpreters: ((
   schema: S.SchemaAny
 ) => Opt<() => Encoder<unknown, unknown>>)[] = [
-  Opt.partial(miss =>
-    (schema: S.SchemaAny): (() => Encoder<unknown, unknown>) => {
-      if (schema instanceof S.SchemaIdentity) {
-        return () => _ => _
-      }
-      if (schema instanceof S.SchemaPipe) {
-        const encodeSelf = encoderFor(schema.that)
-        const encodeThat = encoderFor(schema.self)
-
-        return () => _ => encodeThat(encodeSelf(_))
-      }
-      if (schema instanceof S.SchemaRefinement) {
-        return () => encoderFor(schema.self)
-      }
-      if (schema instanceof S.SchemaEncoder) {
-        return () => schema.encoder
-      }
-      return miss()
+  Opt.partial(miss => (schema: S.SchemaAny): () => Encoder<unknown, unknown> => {
+    if (schema instanceof S.SchemaIdentity) {
+      return () => _ => _
     }
-  )
+    if (schema instanceof S.SchemaPipe) {
+      const encodeSelf = encoderFor(schema.that)
+      const encodeThat = encoderFor(schema.self)
+
+      return () => _ => encodeThat(encodeSelf(_))
+    }
+    if (schema instanceof S.SchemaRefinement) {
+      return () => encoderFor(schema.self)
+    }
+    if (schema instanceof S.SchemaEncoder) {
+      return () => schema.encoder
+    }
+    return miss()
+  })
 ]
 
 const cache = new WeakMap()

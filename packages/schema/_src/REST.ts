@@ -502,8 +502,8 @@ type Separator = "/" | "&" | "?.js"
 export type PathParams<Path extends string> = Path extends `:${infer Param}${Separator}${infer Rest}`
   ? Param | PathParams<Rest>
   : Path extends `:${infer Param}` ? Param
-  : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Path extends `${infer _Prefix}:${infer Rest}` ? PathParams<`:${Rest}`>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  : Path extends `${infer _Prefix}:${infer Rest}` ? PathParams<`:${Rest}`>
   : never
 
 export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord, C> =
@@ -650,11 +650,10 @@ export function MethodReq_<Method extends Methods, Path extends string>(
   method: Method,
   path: Path
 ) {
-  return <M>(__name?: string) =>
-    <Props extends MO.PropertyRecord>(self: MO.SchemaProperties<Props>) => {
-      const req = Req<M>(__name)
-      return req(method, path, self)
-    }
+  return <M>(__name?: string) => <Props extends MO.PropertyRecord>(self: MO.SchemaProperties<Props>) => {
+    const req = Req<M>(__name)
+    return req(method, path, self)
+  }
 }
 
 /**
@@ -704,12 +703,12 @@ type BuildRequest<
   Path,
   Props,
   Method extends "GET" | "DELETE" ? QueryRequest<
-    M,
-    MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
-    MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
-    undefined,
-    MO.SchemaProperties<Props>
-  >
+      M,
+      MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
+      MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
+      undefined,
+      MO.SchemaProperties<Props>
+    >
     : BodyRequest<
       M,
       MO.SchemaProperties<Pick<Props, PathParams<Path>>>,

@@ -237,23 +237,23 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               const skip = cursor?.skip
               const limit = cursor?.limit
               return (filter.type === "join_find"
-                ? // This is a problem if one of the multiple joined arrays can be empty!
+                // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra
                 // so we use multiple queries instead.
-                  filter.keys
-                    .forEachEffect(k =>
-                      Effect(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
-                        .tap(q => logQuery(q))
-                        .flatMap(q =>
-                          Effect.promise(() =>
-                            container.items
-                              .query<PM>(q)
-                              .fetchAll()
-                              .then(({ resources }) => resources.toChunk)
-                          )
+                ? filter.keys
+                  .forEachEffect(k =>
+                    Effect(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                      .tap(q => logQuery(q))
+                      .flatMap(q =>
+                        Effect.promise(() =>
+                          container.items
+                            .query<PM>(q)
+                            .fetchAll()
+                            .then(({ resources }) => resources.toChunk)
                         )
-                    )
-                    .map(_ => _.flatMap(_ => _))
+                      )
+                  )
+                  .map(_ => _.flatMap(_ => _))
                 : Effect(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
                   .tap(q => logQuery(q))
                   .flatMap(q =>

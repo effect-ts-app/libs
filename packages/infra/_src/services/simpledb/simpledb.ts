@@ -30,12 +30,11 @@ export const RecordCache = Tag<RecordCache>()
 
 export const LiveRecordCache = Effect(makeLiveRecordCache()).toLayer(RecordCache)
 
-const getM = <T>(type: string) =>
-  <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
-    Effect.gen(function*($) {
-      const { get } = yield* $(RecordCache.access)
-      return yield* $(get<T>(type).flatMap(eff))
-    })
+const getM = <T>(type: string) => <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
+  Effect.gen(function*($) {
+    const { get } = yield* $(RecordCache.access)
+    return yield* $(get<T>(type).flatMap(eff))
+  })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
   tryRead: (id: string) => Effect<R, E, Opt<CachedRecord<EA>>>,

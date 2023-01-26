@@ -6,23 +6,21 @@ import { hasContinuation, SchemaContinuationSymbol } from "./_schema.js"
 export type Guard<T> = { (u: unknown): u is T }
 
 export const interpreters: ((schema: S.SchemaAny) => Opt<() => Guard<unknown>>)[] = [
-  Opt.partial(miss =>
-    (schema: S.SchemaAny): (() => Guard<unknown>) => {
-      if (schema instanceof S.SchemaGuard) {
-        return () => schema.guard
-      }
-      if (schema instanceof S.SchemaIdentity) {
-        return () => schema.guard
-      }
-      if (schema instanceof S.SchemaRefinement) {
-        return () => {
-          const self = guardFor(schema.self)
-          return (u): u is unknown => self(u) && schema.refinement(u)
-        }
-      }
-      return miss()
+  Opt.partial(miss => (schema: S.SchemaAny): () => Guard<unknown> => {
+    if (schema instanceof S.SchemaGuard) {
+      return () => schema.guard
     }
-  )
+    if (schema instanceof S.SchemaIdentity) {
+      return () => schema.guard
+    }
+    if (schema instanceof S.SchemaRefinement) {
+      return () => {
+        const self = guardFor(schema.self)
+        return (u): u is unknown => self(u) && schema.refinement(u)
+      }
+    }
+    return miss()
+  })
 ]
 
 const cache = new WeakMap()

@@ -54,34 +54,32 @@ import {
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Opt<Gen>)[] = [
-  Opt.partial(_miss =>
-    (schema: MO.SchemaAny): Gen => {
-      // if (schema instanceof MO.SchemaOpenApi) {
-      //   const cfg = schema.jsonSchema()
-      //   return processId(schema, cfg)
-      // }
+  Opt.partial(_miss => (schema: MO.SchemaAny): Gen => {
+    // if (schema instanceof MO.SchemaOpenApi) {
+    //   const cfg = schema.jsonSchema()
+    //   return processId(schema, cfg)
+    // }
 
-      // if (schema instanceof MO.SchemaRecur) {
-      //   if (interpreterCache.has(schema)) {
-      //     return interpreterCache.get(schema)
-      //   }
-      //   const parser = () => {
-      //     if (interpretedCache.has(schema)) {
-      //       return interpretedCache.get(schema)
-      //     }
-      //     const e = for_(schema.self(schema))()
-      //     interpretedCache.set(schema, e)
-      //     return e
-      //   }
-      //   interpreterCache.set(schema, parser)
-      //   return parser
-      // }
+    // if (schema instanceof MO.SchemaRecur) {
+    //   if (interpreterCache.has(schema)) {
+    //     return interpreterCache.get(schema)
+    //   }
+    //   const parser = () => {
+    //     if (interpretedCache.has(schema)) {
+    //       return interpretedCache.get(schema)
+    //     }
+    //     const e = for_(schema.self(schema))()
+    //     interpretedCache.set(schema, e)
+    //     return e
+    //   }
+    //   interpreterCache.set(schema, parser)
+    //   return parser
+    // }
 
-      return processId(schema)
+    return processId(schema)
 
-      // return miss()
-    }
-  )
+    // return miss()
+  })
 ]
 
 // TODO: Cache

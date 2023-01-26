@@ -312,31 +312,29 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     S.mapApi(
       () => ({
         // @ts-ignore
-        matchS: (matcher, def) =>
-          ks => {
-            if (tag.isSome()) {
-              return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
-            }
-            for (const k of keys) {
-              if (guards[k](ks)) {
-                return (matcher[k] ?? def)(ks, ks)
-              }
-            }
-            throw new Error(`bug: can't find any valid matcher`)
-          },
-        // @ts-ignore
-        matchW: (matcher, def) =>
-          ks => {
-            if (tag.isSome()) {
-              return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
-            }
-            for (const k of keys) {
-              if (guards[k](ks)) {
-                return (matcher[k] ?? def)(ks, ks)
-              }
-            }
-            throw new Error(`bug: can't find any valid matcher`)
+        matchS: (matcher, def) => ks => {
+          if (tag.isSome()) {
+            return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
           }
+          for (const k of keys) {
+            if (guards[k](ks)) {
+              return (matcher[k] ?? def)(ks, ks)
+            }
+          }
+          throw new Error(`bug: can't find any valid matcher`)
+        },
+        // @ts-ignore
+        matchW: (matcher, def) => ks => {
+          if (tag.isSome()) {
+            return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
+          }
+          for (const k of keys) {
+            if (guards[k](ks)) {
+              return (matcher[k] ?? def)(ks, ks)
+            }
+          }
+          throw new Error(`bug: can't find any valid matcher`)
+        }
       } as UnionApi<Props>)
     ),
     withDefaults,
