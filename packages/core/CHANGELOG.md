@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.12.2
+
+### Patch Changes
+
+- Fix Exclude
+
 ## 0.12.1
 
 ### Patch Changes
