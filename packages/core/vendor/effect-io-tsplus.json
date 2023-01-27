@@ -8245,6 +8245,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/io/Layer",
+          "name": "buildWithScope"
+        },
+        {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "buildWithScope"
