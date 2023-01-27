@@ -7,10 +7,6 @@
     "date-fns",
     "redis",
     "@types/redis",
-    "react-hook-form",
-    "@fp-ts/core",
-    "@fp-ts/data",
-    "@fp-ts/optic",
-    "@fp-ts/schema"
+    "react-hook-form"
   ]
 }

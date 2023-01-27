@@ -146,7 +146,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
     return Effect.runtime<Env>().map(r =>
       handlers.map(
         (handler): RequestHandler => (req, res, next) => {
-          r.unsafeRun(
+          r.runCallback(
             open.get
               .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
               .onError(exitHandler(req, res, next))
@@ -313,7 +313,7 @@ export function defaultExitHandler(
   return cause =>
     Effect(() => {
       if (cause.isDie()) {
-        console.error(cause.pretty())
+        console.error(cause.pretty)
       }
       _res.status(500).end()
     })

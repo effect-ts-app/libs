@@ -2,7 +2,7 @@
 
 import "./operators.js"
 
-import { not } from "@fp-ts/data/Predicate"
+import { not } from "@fp-ts/core/Predicate"
 import { identity } from "./Function.js"
 
 import { Option } from "./Option.js"
@@ -103,7 +103,7 @@ export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
   return x => {
     const r: Array<A> = []
     x.forEach(e => r.push(e))
-    return r.sort((a, b) => O.compare(b)(a))
+    return r.sort(O.compare)
   }
 }
 
@@ -221,9 +221,9 @@ export function chain_<B>(
 /**
  * `true` if and only if every element in the first set is an element of the second set
  */
-export function isSubset<A>(E: Equivalence<A>): (y: Set<A>) => (x: Set<A>) => boolean {
+export function isSubset<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => boolean {
   const i = isSubset_(E)
-  return y => x => i(y, x)
+  return (x, y) => i(y, x)
 }
 
 /**
@@ -320,7 +320,7 @@ export function elem_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => boolean {
     let e: Next<A>
     let found = false
     while (!found && !(e = values.next()).done) {
-      found = E(e.value)(a)
+      found = E(a, e.value)
     }
     return found
   }
@@ -389,9 +389,9 @@ export function difference_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => Set
 /**
  * Form the set difference (`x` - `y`)
  */
-export function difference<A>(E: Equivalence<A>): (y: Set<A>) => (x: Set<A>) => Set<A> {
+export function difference<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => Set<A> {
   const diff = difference_(E)
-  return y => x => diff(x, y)
+  return (x, y) => diff(x, y)
 }
 
 /**
@@ -479,7 +479,7 @@ export function remove<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> 
  * Delete a value from a set
  */
 export function remove_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
-  return (set, a) => filter((ax: A) => !E(ax)(a))(set)
+  return (set, a) => filter((ax: A) => !E(a, ax))(set)
 }
 
 /**
@@ -609,20 +609,20 @@ export function union_<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A>
 /**
  * Form the union of two sets
  */
-export function union<A>(E: Equivalence<A>): (y: Set<A>) => (set: Set<A>) => Set<A> {
+export function union<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> {
   const u = union_(E)
-  return y => x => u(x, y)
+  return (x, y) => u(x, y)
 }
 
 function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
-  const eq = eq_ ?? (y => x => ord.compare(y)(x) === 0)
+  const eq = eq_ ?? ((x, y) => ord.compare(x, y) === 0)
 
   const fromArray_ = fromArray(eq)
   const concat_ = (set: Set<A>, it: Iterable<A>) => fromArray_([...set, ...it])
   const insert__ = insert(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, x => !eq(a)(x)) >= insert__(a)
+    return filter_(set, x => !eq(x, a)) >= insert__(a)
   }
 
   return {

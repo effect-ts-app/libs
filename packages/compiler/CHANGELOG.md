@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.7.3
+
+### Patch Changes
+
+- Disable trace
+
 ## 0.7.2
 
 ### Patch Changes

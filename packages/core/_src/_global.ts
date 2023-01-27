@@ -9,17 +9,17 @@ import { Opt } from "@effect-app/core/Option"
 /**
  * @tsplus global
  */
-import { None, Some } from "@fp-ts/data/Option"
+import { None, Some } from "@fp-ts/core/Option"
 
 /**
  * @tsplus global
  */
-import { Either, Left, Right } from "@fp-ts/data/Either"
+import { Either, Left, Right } from "@fp-ts/core/Either"
 
 /**
  * @tsplus global
  */
-import { Predicate, Refinement } from "@fp-ts/data/Predicate"
+import { Predicate, Refinement } from "@fp-ts/core/Predicate"
 
 /**
  * @tsplus global
@@ -34,7 +34,7 @@ import { NonEmptyArguments, NonEmptySet, ROSet } from "@effect-app/core/Prelude"
 /**
  * @tsplus global
  */
-import { Equivalence } from "@fp-ts/data/Equivalence"
+import { Equivalence } from "@fp-ts/core/typeclass/Equivalence"
 
 /**
  * @tsplus global
@@ -119,7 +119,7 @@ import { Order } from "@fp-ts/core/typeclass/Order"
 /**
  * @tsplus global
  */
-import { Ordering } from "@fp-ts/data/Ordering"
+import { Ordering } from "@fp-ts/core/Ordering"
 
 /**
  * @tsplus global
@@ -129,7 +129,7 @@ import { Equal } from "@fp-ts/data/Equal"
 /**
  * @tsplus global
  */
-import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/data/ReadonlyArray"
+import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/core/ReadonlyArray"
 
 /**
  * @tsplus global

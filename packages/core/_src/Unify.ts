@@ -26,9 +26,9 @@ export function unifyChunk<X extends Chunk<any>>(
 }
 
 /**
- * @tsplus unify fp-ts/data/Either
- * @tsplus unify fp-ts/data/Either.Left
- * @tsplus unify fp-ts/data/Either.Right
+ * @tsplus unify fp-ts/core/Either
+ * @tsplus unify fp-ts/core/Either.Left
+ * @tsplus unify fp-ts/core/Either.Right
  */
 export function unifyEither<X extends Either<any, any>>(
   self: X
@@ -40,9 +40,9 @@ export function unifyEither<X extends Either<any, any>>(
 }
 
 /**
- * @tsplus unify fp-ts/data/Option
- * @tsplus unify fp-ts/data/Option.Some
- * @tsplus unify fp-ts/data/Option.None
+ * @tsplus unify fp-ts/core/Option
+ * @tsplus unify fp-ts/core/Option.Some
+ * @tsplus unify fp-ts/core/Option.None
  */
 export function unifyOpt<X extends Option<any>>(
   self: X

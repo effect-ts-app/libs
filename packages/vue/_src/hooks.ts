@@ -254,7 +254,7 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
         .flatMap(exit => Effect(() => handle(exit)))
         .fork
         .flatMap(f => {
-          const cancel = () => f.interrupt.unsafeRunPromise
+          const cancel = () => f.interrupt.runPromise
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join
         })

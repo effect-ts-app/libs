@@ -2,26 +2,33 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { getOrUndefined as value, Option } from "@fp-ts/data/Option"
+import { getOrUndefined as value, Option } from "@fp-ts/core/Option"
 
-export * from "@fp-ts/data/Option"
+import * as O from "@fp-ts/core/Option"
 
-export { Option as Opt } from "@fp-ts/data/Option"
+export * from "@fp-ts/core/Option"
+
+export { Option as Opt } from "@fp-ts/core/Option"
 
 /**
- * @tsplus getter fp-ts/data/Option value
+ * @tsplus static fp-ts/core/Option.Ops none
+ */
+export const none = O.none()
+
+/**
+ * @tsplus getter fp-ts/core/Option value
  */
 export const getOrUndefined = value
 
 /**
- * @tsplus static fp-ts/data/Option.Ops omitableToNullable
+ * @tsplus static fp-ts/core/Option.Ops omitableToNullable
  */
 export function omitableToNullable<T>(om: Option<T> | undefined) {
   return om ?? Option.fromNullable(om)
 }
 
 /**
- * @tsplus static fp-ts/data/Option.Ops toBool
+ * @tsplus static fp-ts/core/Option.Ops toBool
  */
 export const toBool = Option.$.match(
   () => false,
@@ -29,7 +36,7 @@ export const toBool = Option.$.match(
 )
 
 /**
- * @tsplus static fp-ts/data/Option.Ops fromBool
+ * @tsplus static fp-ts/core/Option.Ops fromBool
  */
 export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none)
 
@@ -64,7 +71,7 @@ function raisePartial<X>(): X {
 
 /**
  * Simulates a partial function
- * @tsplus static fp-ts/data/Option.Ops partial
+ * @tsplus static fp-ts/core/Option.Ops partial
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A

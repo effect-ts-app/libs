@@ -5,7 +5,7 @@ import "./Ref.js"
 import "./refinements.js"
 import "./Schema.ext.js"
 
-import type { Option } from "@fp-ts/data/Option"
+import type { Option } from "@fp-ts/core/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>
@@ -18,7 +18,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
   : never
 
 /**
- * @tsplus fluent fp-ts/data/Option encaseInEffect
+ * @tsplus fluent fp-ts/core/Option encaseInEffect
  */
 export function encaseMaybeInEffect_<E, A>(
   o: Option<A>,
@@ -28,12 +28,12 @@ export function encaseMaybeInEffect_<E, A>(
 }
 
 /**
- * @tsplus getter fp-ts/data/Either asEffect
+ * @tsplus getter fp-ts/core/Either asEffect
  */
 export const EitherasEffect = Effect.fromEither
 
 /**
- * @tsplus fluent fp-ts/data/Option encaseInEither
+ * @tsplus fluent fp-ts/core/Option encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
   o: Option<A>,

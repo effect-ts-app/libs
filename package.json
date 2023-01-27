@@ -8,7 +8,6 @@
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
             "typescript@5.0.0-tsplus.20230113": "patches/typescript@5.0.0-tsplus.20230113.patch",
             "@effect/language-service@0.0.17": "patches/@effect__language-service@0.0.17.patch",
-            "@effect/io@0.0.66": "patches/@effect__io@0.0.66.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch"
         }
     },

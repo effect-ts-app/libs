@@ -139,7 +139,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
 
   set(key: Key, value: Value): Effect<never, never, void> {
     return Effect(() => {
-      const now = this.clock.currentTimeMillis().unsafeRunSync
+      const now = this.clock.currentTimeMillis().runSync
       const lookupResult = Exit.succeed(value)
       this.cacheState.map.set(
         key,
@@ -257,7 +257,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
       .provideContext(this.environment)
       .exit
       .flatMap(exit => {
-        const now = this.clock.currentTimeMillis().unsafeRunSync
+        const now = this.clock.currentTimeMillis().runSync
         const entryStats = EntryStats(now)
         this.cacheState.map.set(
           key,
@@ -279,7 +279,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   private hasExpired(timeToLiveMillis: number): boolean {
-    return this.clock.currentTimeMillis().unsafeRunSync > timeToLiveMillis
+    return this.clock.currentTimeMillis().runSync > timeToLiveMillis
   }
 }
 

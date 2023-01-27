@@ -79,9 +79,8 @@ export function uniq<A>(E: Equivalence<A>) {
  */
 export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk.Chunk<A>): boolean => {
-    const predicate = E(value)
     for (let i = 0; i < self.length; i++) {
-      if (predicate(self.unsafeGet(i)!)) {
+      if (E(self.unsafeGet(i)!, value)) {
         return true
       }
     }

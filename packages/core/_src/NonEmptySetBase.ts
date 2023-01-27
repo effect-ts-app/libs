@@ -28,7 +28,7 @@ export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
 function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const eq = eq_
-    ?? (y => x => ord.compare(y)(x) === 0)
+    ?? ((x, y) => ord.compare(x, y) === 0)
 
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)
@@ -39,7 +39,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const insert_: (set: NonEmptySet<A>, a: A) => NonEmptySet<A> = insert_Original as any
 
   function replace_(set: NonEmptySet<A>, a: A) {
-    return (filter_(set, x => !eq(a)(x)) >=
+    return (filter_(set, x => !eq(x, a)) >=
       insert__(a)) as NonEmptySet<A>
   }
 
@@ -100,7 +100,7 @@ export function fromSet<A>(set: Set<A>) {
   if (set.size > 0) {
     return Option.some(set as NonEmptySet<A>)
   } else {
-    return Option.none
+    return Option.none()
   }
 }
 

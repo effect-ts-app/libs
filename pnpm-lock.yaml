@@ -7,24 +7,21 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
 
 patchedDependencies:
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
+  '@phaphoso/eslint-plugin-dprint@0.5.2':
+    hash: 5r3oafqkulzxdb6awceadivssy
+    path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
   eslint-plugin-unused-imports@2.0.0:
     hash: tnum7sl7jcutfljbv5jztcescq
     path: patches/eslint-plugin-unused-imports@2.0.0.patch
   '@typescript-eslint/scope-manager@5.49.0':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.49.0.patch
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
   '@effect/language-service@0.0.17':
     hash: a4uvuf3pdfkyyq2ka2mtqp5yfi
     path: patches/@effect__language-service@0.0.17.patch
-  '@effect/io@0.0.66':
-    hash: wvvg23gkayuzduliecfba7o7im
-    path: patches/@effect__io@0.0.66.patch
-  '@phaphoso/eslint-plugin-dprint@0.5.2':
-    hash: 5r3oafqkulzxdb6awceadivssy
-    path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
   typescript@5.0.0-tsplus.20230113:
     hash: 4lokxnnems7dr5czg2fre2i5fq
     path: patches/typescript@5.0.0-tsplus.20230113.patch
@@ -156,10 +153,10 @@ importers:
   packages/core:
     specifiers:
       '@babel/cli': ^7.20.7
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
-      '@fp-ts/optic': ^0.0.7
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
+      '@fp-ts/optic': ^0.1.0
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.11
       cross-fetch: ^3.1.5
@@ -172,10 +169,10 @@ importers:
       validator: ^13.7.0
       winston: ^3.8.2
     dependencies:
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
-      '@fp-ts/optic': 0.0.7
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
+      '@fp-ts/optic': 0.1.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -236,12 +233,12 @@ importers:
       '@effect-app/infra-adapters': workspace:*
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
-      '@sentry/node': ^7.33.0
+      '@sentry/node': ^7.34.0
       '@types/express': ^4.17.16
       '@types/node': ~18.11.12
       '@types/proper-lockfile': ^4.1.2
@@ -272,9 +269,9 @@ importers:
       '@effect-app/infra-adapters': link:../infra-adapters
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
       '@sendgrid/helpers': 7.7.0
       '@sendgrid/mail': 7.7.0
       change-case: 4.1.2
@@ -289,7 +286,7 @@ importers:
     devDependencies:
       '@babel/cli': 7.20.7
       '@effect-app/compiler': link:../compiler
-      '@sentry/node': 7.33.0
+      '@sentry/node': 7.34.0
       '@types/express': 4.17.16
       '@types/node': 18.11.12
       '@types/proper-lockfile': 4.1.2
@@ -312,10 +309,10 @@ importers:
       '@azure/service-bus': ^7.7.3
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
-      '@fp-ts/optic': ^0.0.7
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
+      '@fp-ts/optic': ^0.1.0
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
       '@types/express': ^4.17.16
@@ -333,10 +330,10 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
-      '@fp-ts/optic': 0.0.7
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
+      '@fp-ts/optic': 0.1.0
       query-string: 8.1.0
     devDependencies:
       '@azure/cosmos': 3.17.2
@@ -373,9 +370,9 @@ importers:
       '@effect-app/compiler': workspace:*
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.0
@@ -396,9 +393,9 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
       date-fns: 2.29.3
       lodash: 4.17.21
       nanoid: 4.0.0
@@ -432,7 +429,7 @@ importers:
       date-fns: ^2.29.3
       react: ^18.2.0
       react-hook-form: 7.40.0
-      react-intl: ^6.2.5
+      react-intl: ^6.2.6
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
       vitest: ^0.28.2
@@ -448,7 +445,7 @@ importers:
       '@types/react': 18.0.27
       react: 18.2.0
       react-hook-form: 7.40.0_react@18.2.0
-      react-intl: 6.2.5_x4xqxm2zmsqiuudkrycs3puhze
+      react-intl: 6.2.6_x4xqxm2zmsqiuudkrycs3puhze
       ts-node: 10.9.1_ympwothzvasvtenlug7chhn7bi
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
       vitest: 0.28.2
@@ -456,10 +453,10 @@ importers:
   packages/schema:
     specifiers:
       '@effect-app/core': workspace:*
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
-      '@fp-ts/optic': ^0.0.7
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
+      '@fp-ts/optic': ^0.1.0
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.11
       cross-fetch: ^3.1.5
@@ -472,10 +469,10 @@ importers:
       validator: ^13.7.0
     dependencies:
       '@effect-app/core': link:../core
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
-      '@fp-ts/optic': 0.0.7
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
+      '@fp-ts/optic': 0.1.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -496,10 +493,10 @@ importers:
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
       '@effect-app/vue': workspace:*
-      '@effect/io': ^0.0.66
-      '@fp-ts/core': ^0.0.11
-      '@fp-ts/data': ^0.0.40
-      '@fp-ts/optic': ^0.0.7
+      '@effect/io': ^0.1.0
+      '@fp-ts/core': ^0.1.1
+      '@fp-ts/data': ^0.1.0
+      '@fp-ts/optic': ^0.1.0
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
       json5: ^2.2.3
@@ -515,10 +512,10 @@ importers:
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
       '@effect-app/vue': 'link:'
-      '@effect/io': 0.0.66_wvvg23gkayuzduliecfba7o7im
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
-      '@fp-ts/optic': 0.0.7
+      '@effect/io': 0.1.0
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
+      '@fp-ts/optic': 0.1.0
       query-string: 8.1.0
       swrv: 1.0.3_vue@3.2.45
       vue: 3.2.45
@@ -1958,13 +1955,12 @@ packages:
     resolution: {integrity: sha512-HozAM9p6Ae+u95CqZ2wi3K1Xp5i7Ld60Xu+aIP3dTGp57bMSEC8FXFf/Uh60bbOSaKIU7Y91NMyk+8QzP2Sldg==}
     dev: true
 
-  /@effect/io/0.0.66_wvvg23gkayuzduliecfba7o7im:
-    resolution: {integrity: sha512-aRrVm4+hqT4VFVpBXEh8Ecrzgz0lHOOp4ArwvmF2sqMUhoVlKmMPCfHB6ccDYtQbsjKU9QkQrTA8OCdrMEndpQ==}
+  /@effect/io/0.1.0:
+    resolution: {integrity: sha512-mQSoXqgAC33F5pmJFtQFoSGXlNe6C2h5sz8EtLBHQtQP8SkaJXtD4QU9J8DYYRdRIByuNZbFmG2FBh4wXWYMZA==}
     dependencies:
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
     dev: false
-    patched: true
 
   /@effect/language-service/0.0.17_a4uvuf3pdfkyyq2ka2mtqp5yfi:
     resolution: {integrity: sha512-98c6VtueGDvCGDfkQijsQ5uP/g4J2VhSbI83f/Rv84Gg0uJ+BbA9jno1dQubvaPRGBMIVE+1egZUduSWY6tfEg==}
@@ -2174,8 +2170,8 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@formatjs/fast-memoize/1.2.7:
-    resolution: {integrity: sha512-hPeM5LXUUjtCKPybWOUAWpv8lpja8Xz+uKprFPJcg5F2Rd+/bf1E0UUsLRpaAgOReAf5HMRtoIgv/UcyPICrTQ==}
+  /@formatjs/fast-memoize/1.2.8:
+    resolution: {integrity: sha512-PemNUObyoIZcqdQ1ixTPugzAzhEj7j6AHIyrq/qR6x5BFTvOQeXHYsVZUqBEFduAIscUaDfou+U+xTqOiunJ3Q==}
     dependencies:
       tslib: 2.4.1
     dev: true
@@ -2195,8 +2191,8 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@formatjs/intl-displaynames/6.2.3:
-    resolution: {integrity: sha512-teB0L68MDGM8jEKQg55w7nvFjzeLHE6e3eK/04s+iuEVYYmvjjiHJKHrthKENzcJ0F6mHf/AwXrbX+1mKxT6AQ==}
+  /@formatjs/intl-displaynames/6.2.4:
+    resolution: {integrity: sha512-CmTbSjnmAZHNGuA9vBkWoDHvrcrRauDb0OWc6nk2dAPtesQdadr49Q9N18fr8IV7n3rblgKiYaFVjg68UkRxNg==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.14.3
       '@formatjs/intl-localematcher': 0.2.32
@@ -2217,8 +2213,8 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@formatjs/intl/2.6.3_mgz5y7zfvfi5vkn2mdecustjve:
-    resolution: {integrity: sha512-JaVZk14U/GypVfCZPevQ0KdruFkq16FXx7g398/Dm+YEx/W7sRiftbZeDy4wQ7WGryb45e763XycxD9o/vm9BA==}
+  /@formatjs/intl/2.6.4_mgz5y7zfvfi5vkn2mdecustjve:
+    resolution: {integrity: sha512-xUuVxcJpyUxRjIaaaaFes3acTRS9T6vkL7onXBmfVT5+HTakVDGeRA7DYQD9u8ZUdzlqxe/4AuIuC+E9zBTngQ==}
     peerDependencies:
       typescript: ^4.7
     peerDependenciesMeta:
@@ -2226,28 +2222,40 @@ packages:
         optional: true
     dependencies:
       '@formatjs/ecma402-abstract': 1.14.3
-      '@formatjs/fast-memoize': 1.2.7
+      '@formatjs/fast-memoize': 1.2.8
       '@formatjs/icu-messageformat-parser': 2.1.14
-      '@formatjs/intl-displaynames': 6.2.3
+      '@formatjs/intl-displaynames': 6.2.4
       '@formatjs/intl-listformat': 7.1.7
-      intl-messageformat: 10.2.5
+      intl-messageformat: 10.2.6
       tslib: 2.4.1
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'
     dev: true
 
   /@fp-ts/core/0.0.11:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
+    dev: true
+
+  /@fp-ts/core/0.1.1:
+    resolution: {integrity: sha512-7vQnrnvJAMrXgIwt0qQNhXkPDtm4l8vwql8EvXeY47v/FwnWpDvt1HISoO9Kq3am5SZ0A8Av+4NqPab2FRdKxw==}
+    dev: false
 
   /@fp-ts/data/0.0.40:
     resolution: {integrity: sha512-Wo/2KNO3n6TdUuX+vFEkK1hkQ3EDWp/5Uha8ZLtIvurndQxlDcF4kpU20c0CKJL8g5DpnRHiKN/cni5yyb09eQ==}
     dependencies:
       '@fp-ts/core': 0.0.11
+    dev: true
 
-  /@fp-ts/optic/0.0.7:
-    resolution: {integrity: sha512-THNLR/z+vCtz3iSm6Vm1Jpk8n74e9tDzmpVEZf0tQsgv1G9asw+ton7/49t7L1mAoYEiUCv4/GtK8XFapGQBWg==}
+  /@fp-ts/data/0.1.0:
+    resolution: {integrity: sha512-T4PbFVo2fzy2XaUHbFmEc24TJSPzTl/xUHC+1qCXZZfb3MaIKdKHS10aUt+9zcQ75KpiZbHL8hBfoP9fHOI6Mg==}
     dependencies:
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
+      '@fp-ts/core': 0.1.1
+    dev: false
+
+  /@fp-ts/optic/0.1.0:
+    resolution: {integrity: sha512-fPRUzjvi8564/2A2YmOC0LkQEk46T8X6sypTnUNW4eT0CFJ5fu+dxzn8gMOs17kqOWPZsWRnYw3zX++PErFLdw==}
+    dependencies:
+      '@fp-ts/core': 0.1.1
+      '@fp-ts/data': 0.1.0
     dev: false
 
   /@gar/promisify/1.1.3:
@@ -2541,22 +2549,22 @@ packages:
       - debug
     dev: false
 
-  /@sentry/core/7.33.0:
-    resolution: {integrity: sha512-mrSgUnXjxHVi0cVea1lv7gC/Y66ya2a3atCHaPEij/+l+3APg5d0Ixt1zMx5YllMiZKf6wpxlZ0uwXcqdAAw+w==}
+  /@sentry/core/7.34.0:
+    resolution: {integrity: sha512-J1oxsYZX1N0tkEcaHt/uuDqk6zOnaivyampp+EvBsUMCdemjg7rwKvawlRB0ZtBEQu3HAhi8zecm03mlpWfCDw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.33.0
-      '@sentry/utils': 7.33.0
+      '@sentry/types': 7.34.0
+      '@sentry/utils': 7.34.0
       tslib: 1.14.1
     dev: true
 
-  /@sentry/node/7.33.0:
-    resolution: {integrity: sha512-isQVF9LLSG4EZLHiSJ3chgK6f3ZBdGxm8fX6YGm8HWz07CubJddes3yBPLPRNXrRLd7X3SK8pPcK5oc3LIKqAw==}
+  /@sentry/node/7.34.0:
+    resolution: {integrity: sha512-VM4XeydRdgeaNTRe8kwqYg2oNPddVyY74PlCFEFnPEN1NccycNuwiFno68kNrApeqxxLlTTmzkJy0BWo16x2Yg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.33.0
-      '@sentry/types': 7.33.0
-      '@sentry/utils': 7.33.0
+      '@sentry/core': 7.34.0
+      '@sentry/types': 7.34.0
+      '@sentry/utils': 7.34.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -2565,16 +2573,16 @@ packages:
       - supports-color
     dev: true
 
-  /@sentry/types/7.33.0:
-    resolution: {integrity: sha512-5kkmYjtBWSbPxfYGiXdZFPS6xpFBNlXvDqeX4NpCFXz6/LiEDn6tZ61kuCSFb8MZlyqyCX5WsP3aiI2FJfpGIA==}
+  /@sentry/types/7.34.0:
+    resolution: {integrity: sha512-K+OeHIrl35PSYn6Zwqe4b8WWyAJQoI5NeWxHVkM7oQTGJ1YLG4BvLsR+UiUXnKdR5krE4EDtEA5jLsDlBEyPvw==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils/7.33.0:
-    resolution: {integrity: sha512-msp02GV1gOfaN5FjKjWxI00rtbYLXEE5cTGldhs/Dt9KI63dDk1nwPDkSLhg6joqRItAq0thlBh6un717HdWbg==}
+  /@sentry/utils/7.34.0:
+    resolution: {integrity: sha512-VIHHXEBw0htzqxnU8A7WkXKvmsG2pZVqHlAn0H9W/yyFQtXMuP1j1i0NsjADB/3JXUKK83kTNWGzScXvp0o+Jg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.33.0
+      '@sentry/types': 7.34.0
       tslib: 1.14.1
     dev: true
 
@@ -5758,11 +5766,11 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /intl-messageformat/10.2.5:
-    resolution: {integrity: sha512-AievYMN6WLLHwBeCTv4aRKG+w3ZNyZtkObwgsKk3Q7GNTq8zDRvDbJSBQkb2OPeVCcAKcIXvak9FF/bRNavoww==}
+  /intl-messageformat/10.2.6:
+    resolution: {integrity: sha512-qaTfGjXhdgDup5h3O8406GlQjEj0ky3q0cWWu/lL+H6vJA+sY2/8e4l4XrRPbi9vp38Pop0gO5dsrMO0DdEEBw==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.14.3
-      '@formatjs/fast-memoize': 1.2.7
+      '@formatjs/fast-memoize': 1.2.8
       '@formatjs/icu-messageformat-parser': 2.1.14
       tslib: 2.4.1
     dev: true
@@ -7721,8 +7729,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-intl/6.2.5_x4xqxm2zmsqiuudkrycs3puhze:
-    resolution: {integrity: sha512-nz21POTKbE0sPEuEJU4o5YTZYY7VlIYCPNJaD6D2+xKyk6Noj6DoUK0LRO9LXuQNUuQ044IZl3m6ymzZRj8XFQ==}
+  /react-intl/6.2.6_x4xqxm2zmsqiuudkrycs3puhze:
+    resolution: {integrity: sha512-GHvcFBvo7erL94qNpwNPZE2wkoKxAcXwXQCXOR6yP+tuNImd/PKJreBbAAu9K4zCWBi07SQBPnxv9jzLssx9yg==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
       typescript: ^4.7
@@ -7732,13 +7740,13 @@ packages:
     dependencies:
       '@formatjs/ecma402-abstract': 1.14.3
       '@formatjs/icu-messageformat-parser': 2.1.14
-      '@formatjs/intl': 2.6.3_mgz5y7zfvfi5vkn2mdecustjve
-      '@formatjs/intl-displaynames': 6.2.3
+      '@formatjs/intl': 2.6.4_mgz5y7zfvfi5vkn2mdecustjve
+      '@formatjs/intl-displaynames': 6.2.4
       '@formatjs/intl-listformat': 7.1.7
       '@types/hoist-non-react-statics': 3.3.1
       '@types/react': 18.0.27
       hoist-non-react-statics: 3.3.2
-      intl-messageformat: 10.2.5
+      intl-messageformat: 10.2.6
       react: 18.2.0
       tslib: 2.4.1
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_4lokxnnems7dr5czg2fre2i5fq'

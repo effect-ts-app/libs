@@ -70,12 +70,12 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
       Effect.runtime<RMsg | RErr>().map(rt =>
         r.subscribe({
           processError: err =>
-            rt.unsafeRunPromise(
+            rt.runPromise(
               hndlr.processError(err)
                 .catchAllCause(cause => Effect.logErrorCauseMessage("ServiceBus Error", cause))
             ),
           processMessage: msg =>
-            rt.unsafeRunPromise(
+            rt.runPromise(
               hndlr.processMessage(msg)
             )
           // DO NOT CATCH ERRORS here as they should return to the queue!

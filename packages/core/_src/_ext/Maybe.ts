@@ -13,7 +13,7 @@ function raisePartial<X>(): X {
 
 /**
  * Simulates a partial function
- * @tsplus static fp-ts/data/Option.Ops partial
+ * @tsplus static fp-ts/core/Option.Ops partial
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A
@@ -23,7 +23,7 @@ export function partial<ARGS extends any[], A>(
       return Option.some(f(raisePartial)(...args))
     } catch (e) {
       if (e instanceof PartialException) {
-        return Option.none
+        return Option.none()
       }
       throw e
     }

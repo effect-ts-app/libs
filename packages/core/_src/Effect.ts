@@ -6,7 +6,8 @@ import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
-import type { Option } from "@fp-ts/data/Option"
+import type { Option } from "@fp-ts/core/Option"
+import type { Exclude } from "ts-toolbelt/out/Union/Exclude.js"
 import { curry, flow, pipe } from "./Function.js"
 
 export * from "@effect/io/Effect"
@@ -287,3 +288,69 @@ export function toScopedLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
 export function toScopedDiscardLayer<R, E, A>(self: Effect<R, E, A>) {
   return Layer.scopedDiscard(self)
 }
+
+/**
+ * @tsplus pipeable-operator effect/io/Effect >
+ */
+export const EffectZipRight: <R2, E2, A2>(
+  that: Effect<R2, E2, A2>
+) => <R, E, A>(self: Effect<R, E, A>) => Effect<R2 | R, E2 | E, A2> = Eff.zipRight
+
+/**
+ * @tsplus pipeable-operator effect/io/Effect <
+ */
+export const EffectZipLeft: <R2, E2, A2>(
+  that: Eff.Effect<R2, E2, A2>
+) => <R, E, A>(self: Eff.Effect<R, E, A>) => Eff.Effect<R2 | R, E2 | E, A> = Eff.zipLeft
+
+/**
+ * @tsplus pipeable-operator effect/io/Effect &
+ */
+export const EffectZipPar: <R2, E2, A2>(
+  that: Eff.Effect<R2, E2, A2>
+) => <R, E, A>(self: Eff.Effect<R, E, A>) => Eff.Effect<R2 | R, E2 | E, readonly [A, A2]> = Eff.zipPar
+
+/**
+ * @tsplus pipeable-operator effect/io/Effect +
+ */
+export const EffectZip: <R2, E2, A2>(
+  that: Eff.Effect<R2, E2, A2>
+) => <R, E, A>(self: Eff.Effect<R, E, A>) => Eff.Effect<R2 | R, E2 | E, readonly [A, A2]> = Eff.zip
+
+/**
+ * @tsplus pipeable-operator effect/io/Effect |
+ */
+export const EffectOrElse: <R2, E2, A2>(
+  that: LazyArg<Eff.Effect<R2, E2, A2>>
+) => <R, E, A>(self: Eff.Effect<R, E, A>) => Eff.Effect<R2 | R, E2, A2 | A> = Eff.orElse
+
+/**
+ * @tsplus pipeable-operator effect/io/Layer |
+ */
+export const LayerOrElse: <R2, E2, A2>(
+  that: LazyArg<Layer.Layer<R2, E2, A2>>
+) => <R, E, A>(self: Layer.Layer<R, E, A>) => Layer.Layer<R2 | R, E2 | E, A & A2> = Layer.orElse
+
+/**
+ * @tsplus pipeable-operator effect/io/Layer +
+ */
+export const LayerMerge: <RIn2, E2, ROut2>(
+  that: Layer.Layer<RIn2, E2, ROut2>
+) => <RIn, E, ROut>(self: Layer.Layer<RIn, E, ROut>) => Layer.Layer<RIn2 | RIn, E2 | E, ROut2 | ROut> = Layer.merge
+
+/**
+ * @tsplus pipeable-operator effect/io/Layer >>
+ */
+export const LayerProvide: <RIn2, E2, ROut2>(
+  that: Layer.Layer<RIn2, E2, ROut2>
+) => <RIn, E, ROut>(
+  self: Layer.Layer<RIn, E, ROut>
+) => Layer.Layer<RIn | globalThis.Exclude<RIn2, ROut>, E2 | E, ROut2> = Layer.provide
+
+/**
+ * @tsplus pipeable-operator effect/io/Layer >
+ */
+export const LayerProvideMerge: <RIn2, E2, ROut2>(
+  that: Layer.Layer<RIn2, E2, ROut2>
+) => <RIn, E, ROut>(self: Layer.Layer<RIn, E, ROut>) => Layer.Layer<RIn | Exclude<RIn2, ROut>, E2 | E, ROut2 | ROut> =
+  Layer.provideMerge
