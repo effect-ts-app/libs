@@ -382,7 +382,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
   }
   const parser = MO.Parser.for(schema)
 
-  return class {
+  return class implements Hash.Hash, Equal.Equal {
     static [nModelBrand] = nModelBrand
 
     static [schemaField] = schema
@@ -412,7 +412,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
       // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
       fromFields(of_(inp), this)
     }
-    get [Hash.symbol](): number {
+    [Hash.symbol](): number {
       const ka = Object.keys(this).sort()
       if (ka.length === 0) {
         return 0

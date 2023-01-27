@@ -34,7 +34,7 @@ export const caseArgs = Symbol()
 export const caseKeys = Symbol()
 
 // @ts-expect-error abc
-export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.HasHash, Hash.HasEquals {
+export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.Hash, Equal.Equal {
   static make<T>(args: T) {
     return new this(args)
   }
@@ -63,7 +63,7 @@ export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.HasHash
     return this[caseKeys]
   }
 
-  get [Hash.symbol](): number {
+  [Hash.symbol](): number {
     let h = h0
     for (const k of this[caseKeys]) {
       h = Hash.combine(Hash.hash(this[k]))(h)

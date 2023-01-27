@@ -70,7 +70,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
 ): Schemed<Self> {
   const of_ = Constructor.for(self) >= unsafe
   // @ts-expect-error
-  return class {
+  return class implements Hash.Hash, Equal.Equal {
     static [schemaField] = self
     static [schemedBrand] = schemedBrand
     constructor(inp?: S.ConstructorInputOf<Self>) {
@@ -89,7 +89,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
       inst[fromFields]({ ...this, ...partial })
       return inst
     }
-    get [Hash.symbol](): number {
+    [Hash.symbol](): number {
       const ka = Object.keys(this).sort()
       if (ka.length === 0) {
         return 0
