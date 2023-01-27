@@ -511,7 +511,7 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
 
 export function createUnorder<T>(): Order<T> {
   return {
-    compare: (_b: T) => (_a: T) => 0
+    compare: (_a: T, _b: T) => 0
   }
 }
 export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(

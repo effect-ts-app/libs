@@ -15,6 +15,142 @@
       ]
     }
   ],
+  "@fp-ts/core/typeclass/Equivalence": [
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Equivalence"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "kind": "static",
+          "name": "__call"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "strict",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "strict"
+        }
+      ]
+    },
+    {
+      "definitionName": "equal",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "equal"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "tuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "string"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
+      "definitionName": "symbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "symbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/typeclass/Equivalence",
+          "name": "contramap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Aspects",
+          "name": "contramap"
+        }
+      ]
+    }
+  ],
   "@fp-ts/core/HKT": [
     {
       "definitionName": "TypeClass",
@@ -3535,7 +3671,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/typeclass/Compactable.Ops",
+          "typeName": "fp-ts/core/typeclass/Compactable.Ops",
           "name": "Compactable"
         }
       ]
@@ -3546,7 +3682,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/typeclass/Filterable.Ops",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
           "name": "Filterable"
         }
       ]
@@ -3557,7 +3693,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/typeclass/TraversableFilterable.Ops",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
           "name": "TraversableFilterable"
         }
       ]
