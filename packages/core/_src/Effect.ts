@@ -7,7 +7,6 @@ import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
 import type { Option } from "@fp-ts/core/Option"
-import type { Exclude } from "ts-toolbelt/out/Union/Exclude.js"
 import { curry, flow, pipe } from "./Function.js"
 
 export * from "@effect/io/Effect"
