@@ -30,21 +30,21 @@ export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
 }
 
 export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
-  const { clean, runtime } = makeAppRuntime(layer).unsafeRunSync
+  const { clean, runtime } = makeAppRuntime(layer).runSync
   initRuntime(runtime)
   return {
     runtime,
-    clean: () => clean.unsafeRunSync
+    clean: () => clean.runSync
   }
 }
 
 export function initializeAsync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
-  return makeAppRuntime(layer).unsafeRunPromise
+  return makeAppRuntime(layer).runPromise
     .then(({ clean, runtime }) => {
       initRuntime(runtime)
       return {
         runtime,
-        clean: () => clean.unsafeRunPromise
+        clean: () => clean.runPromise
       }
     })
 }

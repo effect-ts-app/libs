@@ -9173,6 +9173,11 @@
           "kind": "static",
           "typeName": "effect/io/Runtime.Ops",
           "name": "runFork"
+        },
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
+          "name": "runFork"
         }
       ]
     },
@@ -9183,6 +9188,11 @@
         {
           "kind": "static",
           "typeName": "effect/io/Runtime.Ops",
+          "name": "runCallback"
+        },
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Runtime",
           "name": "runCallback"
         }
       ]
@@ -9214,8 +9224,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncExit"
         },
         {
@@ -9230,8 +9240,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSync"
         },
         {
@@ -9246,8 +9256,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncEither"
         },
         {
@@ -9262,8 +9272,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromise"
         },
         {
@@ -9278,8 +9288,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromiseExit"
         },
         {
@@ -9294,8 +9304,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromiseEither"
         },
         {
@@ -10105,12 +10115,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/io/Effect",
+          "typeName": "effect/io/FiberRef",
           "name": "locally"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/FiberRef.Aspects",
           "name": "locally"
         }
       ]
@@ -10121,12 +10131,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/io/Effect",
+          "typeName": "effect/io/FiberRef",
           "name": "locallyWith"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/FiberRef.Aspects",
           "name": "locallyWith"
         }
       ]

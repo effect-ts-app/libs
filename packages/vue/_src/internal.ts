@@ -9,6 +9,6 @@ export const run = {
 }
 export function initRuntime<A>(rt: Runtime<A | ApiConfig | Http>) {
   run.value = function<E, A>(self: Effect<ApiConfig | Http, E, A>): Promise<A> {
-    return rt.unsafeRunPromise(self)
+    return rt.runPromise(self)
   }
 }
