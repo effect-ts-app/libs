@@ -146,7 +146,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
     return Effect.runtime<Env>().map(r =>
       handlers.map(
         (handler): RequestHandler => (req, res, next) => {
-          r.run(
+          r.runCallback(
             open.get
               .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
               .onError(exitHandler(req, res, next))

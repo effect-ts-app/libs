@@ -9191,7 +9191,7 @@
           "name": "runCallback"
         },
         {
-          "kind": "fluent",
+          "kind": "getter",
           "typeName": "effect/io/Runtime",
           "name": "runCallback"
         }

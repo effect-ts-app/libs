@@ -6,7 +6,7 @@ export function defaultTeardown(
   onExit: (status: number) => void
 ) {
   Fiber.roots().flatMap(_ => _.interruptAllWith(id))
-    .run(() => {
+    .runCallback(() => {
       setTimeout(() => {
         if (Fiber.unsafeRoots().length === 0) {
           onExit(status)
@@ -51,7 +51,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
       function handler() {
         process.removeListener("SIGTERM", handler)
         process.removeListener("SIGINT", handler)
-        context.interruptAsFork(context.id()).run()
+        context.interruptAsFork(context.id()).runCallback()
       }
       process.once("SIGTERM", handler)
       process.once("SIGINT", handler)
