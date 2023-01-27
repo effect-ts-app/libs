@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.14.3
+
+### Patch Changes
+
+- 602ffbce: Update packages
+- Updated dependencies [602ffbce]
+  - @effect-app/infra-adapters@0.12.3
+  - @effect-app/prelude@0.12.3
+  - @effect-app/schema@0.12.3
+  - @effect-app/core@0.12.3
+
 ## 0.14.2
 
 ### Patch Changes
