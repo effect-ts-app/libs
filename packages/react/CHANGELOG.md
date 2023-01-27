@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.11.0
+
+### Minor Changes
+
+- Update to effect and fp-ts 0.1 line
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.12.0
+  - @effect-app/schema@0.12.0
+  - @effect-app/core@0.12.0
+
 ## 0.10.6
 
 ### Patch Changes

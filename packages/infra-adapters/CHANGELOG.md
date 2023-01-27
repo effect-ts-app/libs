@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.12.0
+
+### Minor Changes
+
+- Update to effect and fp-ts 0.1 line
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.12.0
+  - @effect-app/core@0.12.0
+
 ## 0.11.4
 
 ### Patch Changes
