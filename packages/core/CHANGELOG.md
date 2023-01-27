@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.12.4
+
+### Patch Changes
+
+- ffd11b1c: Fix Hash impl
+
 ## 0.12.3
 
 ### Patch Changes
