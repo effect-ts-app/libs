@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.8.2
+
+### Patch Changes
+
+- Disable trace
+
 ## 0.8.1
 
 ### Patch Changes

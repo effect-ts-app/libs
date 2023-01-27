@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.11.1
+
+### Patch Changes
+
+- Disable trace
+- Updated dependencies
+  - @effect-app/prelude@0.12.1
+  - @effect-app/schema@0.12.1
+  - @effect-app/core@0.12.1
+  - @effect-app/vue@0.11.1
+
 ## 0.11.0
 
 ### Minor Changes

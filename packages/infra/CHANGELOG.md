@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.14.1
+
+### Patch Changes
+
+- Disable trace
+- Updated dependencies
+  - @effect-app/infra-adapters@0.12.1
+  - @effect-app/prelude@0.12.1
+  - @effect-app/schema@0.12.1
+  - @effect-app/core@0.12.1
+
 ## 0.14.0
 
 ### Minor Changes
