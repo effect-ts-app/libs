@@ -582,12 +582,12 @@
           "name": "=="
         },
         {
-          "typeName": "fp-ts/data/Either",
+          "typeName": "fp-ts/core/Either",
           "kind": "operator",
           "name": "=="
         },
         {
-          "typeName": "fp-ts/data/Option",
+          "typeName": "fp-ts/core/Option",
           "kind": "operator",
           "name": "=="
         },

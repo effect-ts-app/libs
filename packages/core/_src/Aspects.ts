@@ -83,22 +83,22 @@ export interface MutableHashSetAspects {}
 export const MutableHashSet: MutableHashSetAspects = {}
 
 /**
- * @tsplus type fp-ts/data/Either.Aspects
+ * @tsplus type fp-ts/core/Either.Aspects
  */
 export interface EitherAspects {}
 
 /**
- * @tsplus static fp-ts/data/Either.Ops $
+ * @tsplus static fp-ts/core/Either.Ops $
  */
 export const Either: EitherAspects = {}
 
 /**
- * @tsplus type fp-ts/data/Option.Aspects
+ * @tsplus type fp-ts/core/Option.Aspects
  */
 export interface OptionAspects {}
 
 /**
- * @tsplus static fp-ts/data/Option.Ops $
+ * @tsplus static fp-ts/core/Option.Ops $
  */
 export const Option: OptionAspects = {}
 
@@ -201,11 +201,11 @@ export const SubscriptionRef: SubscriptionRefAspects = {}
 export const Array$ = Array$_
 
 // /**
-//  * @tsplus type fp-ts/data/ReadonlyArray.Aspects
+//  * @tsplus type fp-ts/core/ReadonlyArray.Aspects
 //  */
 // export interface ReadonlyArrayAspects {}
 
 // /**
-//  * @tsplus static fp-ts/data/ReadonlyArray.Ops $
+//  * @tsplus static fp-ts/core/ReadonlyArray.Ops $
 //  */
 // export const ReadonlyArray: ReadonlyArrayAspects = {}

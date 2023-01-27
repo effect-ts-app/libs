@@ -3,7 +3,7 @@ import { constant, pipe } from "@effect-app/core/Function"
 import * as NonEmptySet from "@effect-app/core/NonEmptySet"
 import type { ComputeFlat } from "@effect-app/core/utils"
 import { typedKeysOf } from "@effect-app/core/utils"
-import type { None, Some } from "@fp-ts/data/Option"
+import type { None, Some } from "@fp-ts/core/Option"
 import { v4 } from "uuid"
 
 import type { FromProperty } from "./_api.js"

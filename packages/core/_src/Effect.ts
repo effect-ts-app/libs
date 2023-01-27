@@ -6,7 +6,7 @@ import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
-import type { Option } from "@fp-ts/data/Option"
+import type { Option } from "@fp-ts/core/Option"
 import { curry, flow, pipe } from "./Function.js"
 
 export * from "@effect/io/Effect"

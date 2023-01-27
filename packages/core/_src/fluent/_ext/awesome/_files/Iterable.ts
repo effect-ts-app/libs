@@ -1,11 +1,13 @@
+import * as T from "@effect/io/Effect"
+
 /**
- * @tsplus pipeable Array forEachPar
- * @tsplus pipeable Array ReadonlyArray
- * @tsplus pipeable Iterable forEachPar
- * @tsplus pipeable fp-ts/data/Chunk forEachPar
- * @tsplus pipeable ets/Set forEachPar
+ * @tsplus fluent Array forEachPar
+ * @tsplus fluent Array ReadonlyArray
+ * @tsplus fluent Iterable forEachPar
+ * @tsplus fluent fp-ts/data/Chunk forEachPar
+ * @tsplus fluent ets/Set forEachPar
  */
-export const ext_forEachPar = Effect.forEachPar
+export const ext_forEachPar = T.forEachPar
 
 /**
  * @tsplus fluent Array forEachEffect
@@ -18,7 +20,7 @@ export function ext_forEach<A, R, E, B>(
   as: Iterable<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return Effect.forEach(f)(Chunk.fromIterable(as))
+  return T.forEach(Chunk.fromIterable(as), f)
 }
 
 /**

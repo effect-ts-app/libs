@@ -27,7 +27,7 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 
-  const eq = eq_ ?? (y => x => ord.compare(y)(x) === 0)
+  const eq = eq_ ?? ((x, y) =>ord.compare(x, y) === 0)
 
   const fromArray_ = fromArray(eq)
   const toArray_ = toArray(ord)

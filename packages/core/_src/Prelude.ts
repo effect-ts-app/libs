@@ -7,15 +7,15 @@ import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
 import type * as CNK from "@fp-ts/data/Chunk"
-import type * as EITHER from "@fp-ts/data/Either"
-import type * as O from "@fp-ts/data/Option"
+import type * as EITHER from "@fp-ts/core/Either"
+import type * as O from "@fp-ts/core/Option"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
   // @ts-expect-error abc
-  export * from "@fp-ts/data/Either"
+  export * from "@fp-ts/core/Either"
 }
-/** @tsplus type fp-ts/data/Either */
+/** @tsplus type fp-ts/core/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Order {
@@ -27,11 +27,11 @@ export type Order<A> = ORD.Order<A>
 
 export namespace Option {
   // @ts-expect-error abc
-  export * from "@fp-ts/data/Option"
+  export * from "@fp-ts/core/Option"
 }
 /**
- * @tsplus companion fp-ts/data/Option.Ops
- * @tsplus type fp-ts/data/Option
+ * @tsplus companion fp-ts/core/Option.Ops
+ * @tsplus type fp-ts/core/Option
  */
 export type Option<A> = O.Option<A>
 
@@ -59,8 +59,8 @@ export namespace ROArray {
 /**
  * @tsplus type ReadonlyArray
  * @tsplus type Iterable
- * @tsplus companion fp-ts/data/ReadonlyArray.Ops
- * @tsplus companion fp-ts/data/ReadonlyArray.Ops
+ * @tsplus companion fp-ts/core/ReadonlyArray.Ops
+ * @tsplus companion fp-ts/core/ReadonlyArray.Ops
  */
 export type ROArray<A> = ReadonlyArray<A>
 

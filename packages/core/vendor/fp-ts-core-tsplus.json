@@ -3852,7 +3852,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "findFirstIndex"
         }
       ]
@@ -3873,7 +3873,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "findLastIndex"
         }
       ]
@@ -3894,7 +3894,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "insertAt"
         }
       ]
@@ -3936,7 +3936,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "replaceOption"
         }
       ]
@@ -3978,7 +3978,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "modifyOption"
         }
       ]
@@ -4955,7 +4955,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "findFirst"
         }
       ]
@@ -4976,7 +4976,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "findLast"
         }
       ]
@@ -5084,7 +5084,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "tail"
         }
       ]
@@ -5100,7 +5100,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Option.Ops",
+          "typeName": "fp-ts/core/Option.Ops",
           "name": "init"
         }
       ]
@@ -5245,12 +5245,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Predicate.Refinement",
+          "typeName": "fp-ts/core/Predicate.Refinement",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Predicate.Refinement.Aspects",
+          "typeName": "fp-ts/core/Predicate.Refinement.Aspects",
           "name": "every"
         }
       ]
