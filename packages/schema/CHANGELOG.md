@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.12.5
+
+### Patch Changes
+
+- a1bbd31f: FUP fix hash
+
 ## 0.12.4
 
 ### Patch Changes
