@@ -153,7 +153,7 @@ importers:
   packages/core:
     specifiers:
       '@babel/cli': ^7.20.7
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@fp-ts/optic': ^0.1.0
@@ -169,7 +169,7 @@ importers:
       validator: ^13.7.0
       winston: ^3.8.2
     dependencies:
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       '@fp-ts/optic': 0.1.0
@@ -233,7 +233,7 @@ importers:
       '@effect-app/infra-adapters': workspace:*
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@sendgrid/helpers': ^7.7.0
@@ -269,7 +269,7 @@ importers:
       '@effect-app/infra-adapters': link:../infra-adapters
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       '@sendgrid/helpers': 7.7.0
@@ -309,7 +309,7 @@ importers:
       '@azure/service-bus': ^7.7.3
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@fp-ts/optic': ^0.1.0
@@ -330,7 +330,7 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       '@fp-ts/optic': 0.1.0
@@ -370,7 +370,7 @@ importers:
       '@effect-app/compiler': workspace:*
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@types/faker': 5.5.9
@@ -393,7 +393,7 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       date-fns: 2.29.3
@@ -453,7 +453,7 @@ importers:
   packages/schema:
     specifiers:
       '@effect-app/core': workspace:*
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@fp-ts/optic': ^0.1.0
@@ -469,7 +469,7 @@ importers:
       validator: ^13.7.0
     dependencies:
       '@effect-app/core': link:../core
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       '@fp-ts/optic': 0.1.0
@@ -493,7 +493,7 @@ importers:
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
       '@effect-app/vue': workspace:*
-      '@effect/io': ^0.1.0
+      '@effect/io': ^0.1.1
       '@fp-ts/core': ^0.1.1
       '@fp-ts/data': ^0.1.0
       '@fp-ts/optic': ^0.1.0
@@ -512,7 +512,7 @@ importers:
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
       '@effect-app/vue': 'link:'
-      '@effect/io': 0.1.0
+      '@effect/io': 0.1.1
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
       '@fp-ts/optic': 0.1.0
@@ -1955,8 +1955,8 @@ packages:
     resolution: {integrity: sha512-HozAM9p6Ae+u95CqZ2wi3K1Xp5i7Ld60Xu+aIP3dTGp57bMSEC8FXFf/Uh60bbOSaKIU7Y91NMyk+8QzP2Sldg==}
     dev: true
 
-  /@effect/io/0.1.0:
-    resolution: {integrity: sha512-mQSoXqgAC33F5pmJFtQFoSGXlNe6C2h5sz8EtLBHQtQP8SkaJXtD4QU9J8DYYRdRIByuNZbFmG2FBh4wXWYMZA==}
+  /@effect/io/0.1.1:
+    resolution: {integrity: sha512-MDnqd5A+/W2qE0qvdUC9Ql5eNQPqjSMvNXclIExpByZZXN/cRyvp6GskO4OX7Nmru15yd0qfiHT7ZiEQW7LU8w==}
     dependencies:
       '@fp-ts/core': 0.1.1
       '@fp-ts/data': 0.1.0
