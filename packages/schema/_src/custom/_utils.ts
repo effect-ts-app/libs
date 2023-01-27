@@ -4,7 +4,7 @@ import * as Hash from "@fp-ts/data/Hash"
 
 export function augmentRecord(value: {}) {
   Object.defineProperty(value, Hash.symbol, {
-    get: (): number => {
+    value: (): number => {
       const ka = Object.keys(value).sort()
       if (ka.length === 0) {
         return 0
