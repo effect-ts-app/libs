@@ -7,7 +7,7 @@
 //  * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
 //  * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
 //  */
-// export function withPermitsDuration(permits: number, duration: DUR) {
+// export function withPermitsDuration(permits: number, duration: Duration) {
 //   return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
 //     return effect =>
 //       Effect.uninterruptibleMask(
@@ -32,7 +32,7 @@
  * @tsplus static effect/io/Effect/Semaphore.Ops withPermitsDuration
  * @tsplus pipeable effect/io/Effect/Semaphore withPermitsDuration
  */
-export function SEM_withPermitsDuration(permits: number, duration: DUR) {
+export function SEM_withPermitsDuration(permits: number, duration: Duration) {
   return (self: Semaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
     return effect =>
       Effect.uninterruptibleMask(

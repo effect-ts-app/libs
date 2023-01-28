@@ -90,7 +90,7 @@ const cleanupLoop = Operations.accessWithEffect(_ => _.cleanup)
       return reportAppError(_.cause)
     }
   })
-  .delay(DUR.minutes(1))
+  .delay(Duration.minutes(1))
   .forever
   .forkScoped
 

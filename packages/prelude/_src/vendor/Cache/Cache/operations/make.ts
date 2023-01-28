@@ -10,7 +10,7 @@ import { makeWith } from "./makeWith.js"
  */
 export function make<Key, Environment, Error, Value>(
   capacity: number,
-  timeToLive: DUR,
+  timeToLive: Duration,
   lookup: Lookup<Key, Environment, Error, Value>,
   __tsplusTrace?: string
 ): Effect<Environment, never, Cache<Key, Error, Value>> {

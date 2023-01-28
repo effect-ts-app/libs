@@ -9,6 +9,7 @@ module.exports = {
             "@fp-ts/codec",
             "@fp-ts/data",
             "@fp-ts/schema",
+            "date-fns"
             //"vue",
         ]})
     }

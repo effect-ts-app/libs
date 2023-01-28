@@ -8,7 +8,8 @@
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
             "typescript@5.0.0-tsplus.20230113": "patches/typescript@5.0.0-tsplus.20230113.patch",
             "@effect/language-service@0.0.17": "patches/@effect__language-service@0.0.17.patch",
-            "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch"
+            "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
+            "date-fns@2.29.3": "patches/date-fns@2.29.3.patch"
         }
     },
     "scripts": {
@@ -44,6 +45,7 @@
     "resolutions": {
         "@effect/core": "^0.0.16",
         "@types/node": "~18.11.12",
+        "date-fns": "^2.29.3",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz"
     },

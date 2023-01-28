@@ -21,7 +21,7 @@ export const Cache: CacheOps = {}
  */
 export function make<Key, Environment, Error, Value>(
   capacity: number,
-  duration: DUR,
+  duration: Duration,
   lookup: Lookup<Key, Environment, Error, Value>
 ) {
   return _make(capacity, duration, lookup) as Effect<Environment, never, Cache<Key, Error, Value>>

@@ -4,7 +4,6 @@
     "applicationinsights",
     "faker",
     "@types/faker",
-    "date-fns",
     "redis",
     "@types/redis",
     "react-hook-form"

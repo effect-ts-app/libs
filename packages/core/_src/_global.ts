@@ -4,6 +4,11 @@ import "./operators.js"
 /**
  * @tsplus global
  */
+import { Data } from "@fp-ts/data/Data"
+
+/**
+ * @tsplus global
+ */
 import { Opt, Option } from "@effect-app/core/Option"
 
 /**
@@ -134,7 +139,7 @@ import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/core/ReadonlyArray"
 /**
  * @tsplus global
  */
-import { Duration as DUR } from "@fp-ts/data/Duration"
+import { Duration, Duration as DUR } from "@fp-ts/data/Duration"
 
 /**
  * @tsplus global

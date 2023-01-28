@@ -24,7 +24,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   constructor(
     readonly capacity: number,
     readonly lookup: Lookup<Key, Environment, Error, Value>,
-    readonly timeToLive: (exit: Exit<Error, Value>) => DUR,
+    readonly timeToLive: (exit: Exit<Error, Value>) => Duration,
     readonly clock: Clock,
     readonly environment: Context<Environment>,
     readonly fiberId: FiberId

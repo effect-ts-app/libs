@@ -12,7 +12,7 @@ import type { Cache } from "../definition.js"
 export function makeWith<Key, Environment, Error, Value>(
   capacity: number,
   lookup: Lookup<Key, Environment, Error, Value>,
-  timeToLive: (exit: Exit<Error, Value>) => DUR,
+  timeToLive: (exit: Exit<Error, Value>) => Duration,
   __tsplusTrace?: string
 ): Effect<Environment, never, Cache<Key, Error, Value>> {
   return Effect.clockWith(clock =>
