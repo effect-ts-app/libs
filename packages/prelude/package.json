@@ -109,6 +109,16 @@
         "default": "./_cjs/Operations.cjs"
       }
     },
+    "./Pure": {
+      "import": {
+        "types": "./dist/Pure.d.ts",
+        "default": "./dist/Pure.js"
+      },
+      "require": {
+        "types": "./dist/Pure.d.ts",
+        "default": "./_cjs/Pure.cjs"
+      }
+    },
     "./Widen.type": {
       "import": {
         "types": "./dist/Widen.type.d.ts",
@@ -117,36 +127,6 @@
       "require": {
         "types": "./dist/Widen.type.d.ts",
         "default": "./_cjs/Widen.type.cjs"
-      }
-    },
-    "./_ext/Prelude.ext": {
-      "import": {
-        "types": "./dist/_ext/Prelude.ext.d.ts",
-        "default": "./dist/_ext/Prelude.ext.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Prelude.ext.d.ts",
-        "default": "./_cjs/_ext/Prelude.ext.cjs"
-      }
-    },
-    "./_ext/Pure": {
-      "import": {
-        "types": "./dist/_ext/Pure.d.ts",
-        "default": "./dist/_ext/Pure.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Pure.d.ts",
-        "default": "./_cjs/_ext/Pure.cjs"
-      }
-    },
-    "./_ext/Ref": {
-      "import": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./dist/_ext/Ref.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Ref.d.ts",
-        "default": "./_cjs/_ext/Ref.cjs"
       }
     },
     "./_ext/Schema.ext": {
@@ -179,24 +159,14 @@
         "default": "./_cjs/_ext/date.cjs"
       }
     },
-    "./_ext/pipe": {
+    "./_ext/misc": {
       "import": {
-        "types": "./dist/_ext/pipe.d.ts",
-        "default": "./dist/_ext/pipe.js"
+        "types": "./dist/_ext/misc.d.ts",
+        "default": "./dist/_ext/misc.js"
       },
       "require": {
-        "types": "./dist/_ext/pipe.d.ts",
-        "default": "./_cjs/_ext/pipe.cjs"
-      }
-    },
-    "./_ext/refinements": {
-      "import": {
-        "types": "./dist/_ext/refinements.d.ts",
-        "default": "./dist/_ext/refinements.js"
-      },
-      "require": {
-        "types": "./dist/_ext/refinements.d.ts",
-        "default": "./_cjs/_ext/refinements.cjs"
+        "types": "./dist/_ext/misc.d.ts",
+        "default": "./_cjs/_ext/misc.cjs"
       }
     },
     "./_global": {
@@ -207,6 +177,16 @@
       "require": {
         "types": "./dist/_global.d.ts",
         "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
       }
     },
     "./_global.schema": {
@@ -297,6 +277,16 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
+      }
+    },
+    "./refinements": {
+      "import": {
+        "types": "./dist/refinements.d.ts",
+        "default": "./dist/refinements.js"
+      },
+      "require": {
+        "types": "./dist/refinements.d.ts",
+        "default": "./_cjs/refinements.cjs"
       }
     },
     "./schema": {

@@ -1,7 +1,7 @@
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
-import type { FixEnv, PureLogT } from "@effect-app/prelude/_ext/Pure"
-import { Pure } from "@effect-app/prelude/_ext/Pure"
+import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
+import { Pure } from "@effect-app/prelude/Pure"
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"

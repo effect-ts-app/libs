@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Ex from "@effect-app/infra-adapters/express"
-import type { _E, _R } from "@effect-app/prelude/_ext/Prelude.ext"
+import type { _E, _R } from "@effect-app/prelude/_ext/misc"
 import type { GetRequest, GetResponse } from "@effect-app/prelude/schema"
 import { extractSchema, SchemaNamed } from "@effect-app/prelude/schema"
 import * as MO from "@effect-app/prelude/schema"

@@ -1,4 +1,4 @@
-import { InvalidStateError } from "../client.js"
+import { InvalidStateError } from "./client.js"
 
 /**
  * @tsplus getter function asCollectable
