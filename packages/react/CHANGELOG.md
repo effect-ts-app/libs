@@ -1,5 +1,14 @@
 # @effect-app/react
 
+## 0.11.7
+
+### Patch Changes
+
+- Updated dependencies [e4730778]
+  - @effect-app/prelude@0.14.0
+  - @effect-app/core@0.14.0
+  - @effect-app/schema@0.12.7
+
 ## 0.11.6
 
 ### Patch Changes

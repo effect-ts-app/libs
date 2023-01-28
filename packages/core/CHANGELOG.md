@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.14.0
+
+### Minor Changes
+
+- e4730778: Test dual api for Optic
+
 ## 0.13.0
 
 ### Minor Changes

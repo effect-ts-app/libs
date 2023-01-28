@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.14.0
+
+### Minor Changes
+
+- e4730778: Test dual api for Optic
+
+### Patch Changes
+
+- Updated dependencies [e4730778]
+  - @effect-app/core@0.14.0
+  - @effect-app/schema@0.12.7
+
 ## 0.13.0
 
 ### Minor Changes
