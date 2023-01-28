@@ -9,7 +9,7 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.1",
+    "@effect/io": "^0.1.2",
     "@fp-ts/core": "^0.1.1",
     "@fp-ts/data": "^0.1.0",
     "@sendgrid/helpers": "^7.7.0",
@@ -34,7 +34,7 @@
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.4",
     "express": "^4.18.2",
-    "express-jwt": "^8.3.0",
+    "express-jwt": "^8.4.0",
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "2.1.4",
     "jwt-decode": "^3.1.2",
@@ -42,7 +42,7 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
-    "vitest": "^0.28.2"
+    "vitest": "^0.28.3"
   },
   "typesVersions": {
     "*": {

@@ -58,7 +58,7 @@
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.20.11",
         "@changesets/cli": "^2.26.0",
-        "@dprint/typescript": "^0.80.2",
+        "@dprint/typescript": "^0.81.1",
         "@effect-app/compiler": "workspace:*",
         "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
@@ -81,13 +81,13 @@
         "eslint-plugin-codegen": "^0.17.0",
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-prettier-vue": "^4.2.0",
-        "eslint-plugin-simple-import-sort": "^9.0.0",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
         "eslint-plugin-sort-destructure-keys": "^1.4.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "eslint-watch": "^8.0.0",
         "history": "^5.3.0",
         "json5": "^2.2.3",
-        "madge": "^5.0.1",
+        "madge": "^5.0.2",
         "module-alias": "^2.2.2",
         "nodemon": "^2.0.20",
         "npm-check-updates": "^16.6.3",
@@ -97,6 +97,6 @@
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.6",
         "vite": "^4.0.4",
-        "vitest": "^0.28.2"
+        "vitest": "^0.28.3"
     }
 }
