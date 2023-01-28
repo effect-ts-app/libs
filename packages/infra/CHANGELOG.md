@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.16.0
+
+### Minor Changes
+
+- 25ec7aff: Reclaim the Option
+
+### Patch Changes
+
+- Updated dependencies [25ec7aff]
+  - @effect-app/infra-adapters@0.13.0
+  - @effect-app/prelude@0.15.0
+  - @effect-app/schema@0.13.0
+  - @effect-app/core@0.15.0
+
 ## 0.15.3
 
 ### Patch Changes

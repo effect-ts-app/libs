@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.12.0
+
+### Minor Changes
+
+- 25ec7aff: Reclaim the Option
+
+### Patch Changes
+
+- Updated dependencies [25ec7aff]
+  - @effect-app/prelude@0.15.0
+  - @effect-app/schema@0.13.0
+  - @effect-app/core@0.15.0
+
 ## 0.11.9
 
 ### Patch Changes

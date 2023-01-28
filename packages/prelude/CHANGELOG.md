@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.15.0
+
+### Minor Changes
+
+- 25ec7aff: Reclaim the Option
+
+### Patch Changes
+
+- Updated dependencies [25ec7aff]
+  - @effect-app/schema@0.13.0
+  - @effect-app/core@0.15.0
+
 ## 0.14.2
 
 ### Patch Changes
