@@ -72,6 +72,16 @@
         "default": "./_cjs/RequestContext.cjs"
       }
     },
+    "./_ext/Array": {
+      "import": {
+        "types": "./dist/_ext/Array.d.ts",
+        "default": "./dist/_ext/Array.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Array.d.ts",
+        "default": "./_cjs/_ext/Array.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",
@@ -250,16 +260,6 @@
       "require": {
         "types": "./dist/errors.d.ts",
         "default": "./_cjs/errors.cjs"
-      }
-    },
-    "./ext/Array": {
-      "import": {
-        "types": "./dist/ext/Array.d.ts",
-        "default": "./dist/ext/Array.js"
-      },
-      "require": {
-        "types": "./dist/ext/Array.d.ts",
-        "default": "./_cjs/ext/Array.cjs"
       }
     },
     "./filter": {

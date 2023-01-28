@@ -265,16 +265,6 @@
         "default": "./_cjs/_ext/Iterable.cjs"
       }
     },
-    "./_ext/Prelude.ext": {
-      "import": {
-        "types": "./dist/_ext/Prelude.ext.d.ts",
-        "default": "./dist/_ext/Prelude.ext.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Prelude.ext.d.ts",
-        "default": "./_cjs/_ext/Prelude.ext.cjs"
-      }
-    },
     "./_ext/ord.ext": {
       "import": {
         "types": "./dist/_ext/ord.ext.d.ts",
@@ -313,6 +303,16 @@
       "require": {
         "types": "./dist/_global.d.ts",
         "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
       }
     },
     "./global": {
