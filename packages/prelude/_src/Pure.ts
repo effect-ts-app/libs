@@ -1,4 +1,4 @@
-import type { ServiceTagged } from "../service.js"
+import type { ServiceTagged } from "./service.js"
 
 const S1 = Symbol()
 const S2 = Symbol()

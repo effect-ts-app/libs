@@ -168,7 +168,7 @@ import { MutableRef } from "@fp-ts/data/MutableRef"
  */
 import { Lens, lens, Optic } from "@fp-ts/optic"
 
-import "./_ext/Prelude.ext.js"
+import "./_global.ext.js"
 import "./Array.js"
 import "./Aspects.js"
 import "./Chunk.js"

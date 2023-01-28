@@ -1,8 +1,3 @@
-// import "./EffectOpt.ext.js"
-import "./builtIn.js"
-import "./date.js"
-import "./refinements.js"
-import "./Schema.ext.js"
 
 import type { Option } from "@fp-ts/core/Option"
 

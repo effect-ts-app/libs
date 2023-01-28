@@ -43,7 +43,7 @@ import type { lazyGetter } from "@effect-app/prelude/utils"
 /**
  * @tsplus global
  */
-import { Pure, PureEnv, PureEnvEnv } from "@effect-app/prelude/_ext/Pure"
+import { Pure, PureEnv, PureEnvEnv } from "@effect-app/prelude/Pure"
 
 /**
  * @tsplus global
@@ -93,5 +93,6 @@ import { match, Pattern } from "ts-pattern"
 import "@effect-app/core/_global"
 import "@effect-app/core/fluent/_ext/awesome/lib"
 import "@effect-app/core/Prelude"
-import "@effect-app/prelude/_ext/Prelude.ext"
 import "@effect-app/schema/_global"
+import "./_global.ext.js"
+import "./refinements.js"
