@@ -1,5 +1,3 @@
-import { expect, test } from "vitest"
-
 const l = Optic.id<{ test: number }>()
   .at("test")
 

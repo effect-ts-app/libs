@@ -12,5 +12,5 @@
         "importsNotUsedAsValues": "remove",
         "noPropertyAccessFromIndexSignature": false,
         "noUncheckedIndexedAccess": false,
-    },
+    }
 }

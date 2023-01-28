@@ -21,6 +21,7 @@
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz",
+    "vitest": "^0.28.3",
     "winston": "^3.8.2"
   },
   "scripts": {

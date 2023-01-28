@@ -171,6 +171,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
+      vitest: ^0.28.3
       winston: ^3.8.2
     dependencies:
       '@effect/io': 0.1.2
@@ -189,6 +190,7 @@ importers:
       '@types/validator': 13.7.11
       ts-toolbelt: 9.6.0
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_x7hrtdrmc4m6ro2wz34ayeshby'
+      vitest: 0.28.3
       winston: 3.8.2
 
   packages/eslint-codegen-model:
@@ -471,6 +473,7 @@ importers:
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.7.0
+      vitest: ^0.28.3
     dependencies:
       '@effect-app/core': link:../core
       '@effect/io': 0.1.2
@@ -488,6 +491,7 @@ importers:
       fast-check: 3.6.2
       ts-toolbelt: 9.6.0
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.164/compiler/typescript.tgz_x7hrtdrmc4m6ro2wz34ayeshby'
+      vitest: 0.28.3
 
   packages/vue:
     specifiers:

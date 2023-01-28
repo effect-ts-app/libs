@@ -13,6 +13,7 @@
         "rootDir": "./_src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "types": [
+            "vitest/globals",
             "./types/modules"
         ],
         // temp disbaled to support ts-plus ops

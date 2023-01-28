@@ -15,7 +15,7 @@
             "./vendor/fp-ts-core-tsplus.json",
             "./vendor/fp-ts-data-tsplus.json",
             "./vendor/fp-ts-optic-tsplus.json"
-        ],
+        ]
     },
     "include": [
         "./_src"
