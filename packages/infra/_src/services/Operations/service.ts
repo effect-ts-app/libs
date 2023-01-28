@@ -4,7 +4,7 @@ export const OperationsId = Symbol("OperationsId")
 export interface Operations extends ServiceTagged<typeof OperationsId> {
   register: Effect<Scope, never, OperationId>
   update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
-  find: (id: OperationId) => Effect<never, never, Opt<Operation>>
+  find: (id: OperationId) => Effect<never, never, Option<Operation>>
   cleanup: Effect<never, never, void>
 }
 

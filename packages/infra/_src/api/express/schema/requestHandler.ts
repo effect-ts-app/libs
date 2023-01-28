@@ -301,7 +301,7 @@ export function makeRequestParsers<
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph = Effect(
-    Opt.fromNullable(Request.Headers)
+    Option.fromNullable(Request.Headers)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
@@ -309,7 +309,7 @@ export function makeRequestParsers<
   const parseHeaders = (u: unknown) => ph.flatMapOpt(d => d(u))
 
   const pq = Effect(
-    Opt.fromNullable(Request.Query)
+    Option.fromNullable(Request.Query)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
@@ -317,7 +317,7 @@ export function makeRequestParsers<
   const parseQuery = (u: unknown) => pq.flatMapOpt(d => d(u))
 
   const pb = Effect(
-    Opt.fromNullable(Request.Body)
+    Option.fromNullable(Request.Body)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
@@ -325,7 +325,7 @@ export function makeRequestParsers<
   const parseBody = (u: unknown) => pb.flatMapOpt(d => d(u))
 
   const pp = Effect(
-    Opt.fromNullable(Request.Path)
+    Option.fromNullable(Request.Path)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
@@ -333,7 +333,7 @@ export function makeRequestParsers<
   const parsePath = (u: unknown) => pp.flatMapOpt(d => d(u))
 
   const pc = Effect(
-    Opt.fromNullable(Request.Cookie)
+    Option.fromNullable(Request.Cookie)
       .map(s => s)
       .map(Parser.for)
       .map(MO.condemn)
@@ -352,9 +352,9 @@ export function makeRequestParsers<
 type Decode<A> = (u: unknown) => Effect<never, unknown, A>
 
 export interface RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  parseHeaders: Decode<Opt<HeaderA>>
-  parseQuery: Decode<Opt<QueryA>>
-  parseBody: Decode<Opt<BodyA>>
-  parsePath: Decode<Opt<PathA>>
-  parseCookie: Decode<Opt<CookieA>>
+  parseHeaders: Decode<Option<HeaderA>>
+  parseQuery: Decode<Option<QueryA>>
+  parseBody: Decode<Option<BodyA>>
+  parsePath: Decode<Option<PathA>>
+  parseCookie: Decode<Option<CookieA>>
 }

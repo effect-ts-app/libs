@@ -60,7 +60,7 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
   filterJoinSelect: <T extends object>(
     filter: FilterJoinSelect
   ) => Effect<never, never, Chunk<T & { _rootId: string }>>
-  find: (id: Id) => Effect<never, never, Opt<PM>>
+  find: (id: Id) => Effect<never, never, Option<PM>>
   set: (e: PM) => Effect<never, OptimisticConcurrencyException, PM>
   batchSet: (
     items: NonEmptyReadonlyArray<PM>

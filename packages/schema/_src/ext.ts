@@ -149,8 +149,8 @@ export function makeCurrentDate() {
 }
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
   return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
 }
@@ -189,7 +189,7 @@ export type WithDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Opt<PropertyKey>
+  As extends Option<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -202,7 +202,7 @@ export type WithInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Opt<PropertyKey>
+  As extends Option<PropertyKey>
 > = MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
@@ -215,8 +215,8 @@ export function withDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Opt<PropertyKey>,
-  Def extends Opt<
+  As extends Option<PropertyKey>,
+  Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -236,7 +236,7 @@ export function withDefault<
     return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Opt.none as any, "constructor")
+    return propDef(p, () => Option.none as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
@@ -261,8 +261,8 @@ export function withInputDefault<
   ConstructorInput,
   Encoded,
   Api,
-  As extends Opt<PropertyKey>,
-  Def extends Opt<
+  As extends Option<PropertyKey>,
+  Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.ParsedShapeOf<
@@ -282,7 +282,7 @@ export function withInputDefault<
     return propDef(p, makeCurrentDate as any, "both")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Opt.none as any, "both")
+    return propDef(p, () => Option.none as any, "both")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")

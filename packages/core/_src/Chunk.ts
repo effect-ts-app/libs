@@ -1,4 +1,4 @@
-import type { Option } from "./Option.js"
+import { Option } from "./Option.js"
 
 import * as Chunk from "@fp-ts/data/Chunk"
 
@@ -39,7 +39,7 @@ export function findFirstMap<A, B>(
         return v
       }
     }
-    return Opt.none
+    return Option.none
   }
 }
 

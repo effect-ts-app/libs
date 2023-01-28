@@ -33,7 +33,7 @@
     "generate-exports": "sh ../../utils/extract.sh > package.log",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./",
     "compile": "tsc --noEmit",
-    "lint": "eslint .",
+    "lint": "eslint ./_src",
     "autofix": "pnpm lint --fix",
     "test": "echo 'no tests yet'",
     "testsuite": "pnpm compile && pnpm lint && pnpm test && pnpm circular",

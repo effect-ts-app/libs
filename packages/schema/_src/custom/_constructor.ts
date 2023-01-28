@@ -13,8 +13,8 @@ export type Constructor<Input, Output, ConstructorError> = {
 
 export const interpreters: ((
   schema: S.SchemaAny
-) => Opt<() => Constructor<unknown, unknown, unknown>>)[] = [
-  Opt.partial(
+) => Option<() => Constructor<unknown, unknown, unknown>>)[] = [
+  Option.partial(
     miss => (schema: S.SchemaAny): () => Constructor<unknown, unknown, unknown> => {
       if (schema instanceof S.SchemaNamed) {
         return () => {

@@ -223,18 +223,18 @@ export function arrayMoveDropUndefined<T>(
 }
 
 export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlyArray<T | undefined>): Opt<ReadonlyArray<T>> => {
+  return (arrInput: ReadonlyArray<T | undefined>): Option<ReadonlyArray<T>> => {
     const ar = [...arrInput]
     const index = ar.findIndex(x => x === el)
     if (index === -1) {
-      return Opt.none
+      return Option.none
     }
-    return Opt(arrayMoveDropUndefined(ar, index, newIndex))
+    return Option(arrayMoveDropUndefined(ar, index, newIndex))
   }
 }
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlySet<T | undefined>): Opt<ReadonlySet<T>> =>
+  return (arrInput: ReadonlySet<T | undefined>): Option<ReadonlySet<T>> =>
     [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map(ar => new Set(ar))
 }
 export * from "@effect-app/core/utils"

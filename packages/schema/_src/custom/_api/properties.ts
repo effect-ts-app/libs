@@ -25,8 +25,8 @@ import { withDefaults } from "./withDefaults.js"
 export class Property<
   Self extends S.SchemaUPI,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 > {
   constructor(
     readonly _as: As,
@@ -38,7 +38,7 @@ export class Property<
 
   // Disabled because it sends the compiler down into rabbit holes..
   // schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, None> {
-  //   return new Property(this._as, schema, this._optional, Opt.none, this._map)
+  //   return new Property(this._as, schema, this._optional, Option.none, this._map)
   // }
 
   // opt(): Property<Self, "optional", As, Def> {
@@ -51,7 +51,7 @@ export class Property<
 
   // from<As1 extends PropertyKey>(as: As1): Property<Self, Optional, Some<As1>, Def> {
   //   return new Property(
-  //     Opt(as),
+  //     Option(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -61,7 +61,7 @@ export class Property<
 
   // removeFrom(): Property<Self, Optional, None, Def> {
   //   return new Property(
-  //     Opt.none,
+  //     Option.none,
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -97,16 +97,16 @@ export class Property<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Opt([k ?? "both", _]),
+  //     Option([k ?? "both", _]),
   //     this._map
   //   )
   // }
 
   // removeDef(): Property<Self, Optional, As, None> {
-  //   return new Property(this._as, this._schema, this._optional, Opt.none, this._map)
+  //   return new Property(this._as, this._schema, this._optional, Option.none, this._map)
   // }
 
-  // getAnnotation<A>(annotation: Annotation<A>): Opt<A> {
+  // getAnnotation<A>(annotation: Annotation<A>): Option<A> {
   //   return HashMap.get_(this._map, annotation)
   // }
 
@@ -124,8 +124,8 @@ export class Property<
 export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
@@ -135,8 +135,8 @@ export function propDef<
   K extends "parser" | "constructor" | "both",
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
@@ -146,8 +146,8 @@ export function propDef<
 export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
@@ -165,7 +165,7 @@ export function propDef<
     prop._schema,
     prop._optional,
     // @ts-expect-error
-    Opt([k ?? "both", _]),
+    Option([k ?? "both", _]),
     prop._map
   )
 }
@@ -173,8 +173,8 @@ export function propDef<
 export function propOpt<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 >(prop: Property<Self, Optional, As, Def>): Property<Self, "optional", As, Def> {
   return new Property(prop._as, prop._schema, "optional", prop._def, prop._map)
 }
@@ -182,8 +182,8 @@ export function propOpt<
 export function propReq<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 >(prop: Property<Self, Optional, As, Def>): Property<Self, "required", As, Def> {
   return new Property(prop._as, prop._schema, "required", prop._def, prop._map)
 }
@@ -191,15 +191,15 @@ export function propReq<
 export function propFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
   As1 extends PropertyKey
 >(
   prop: Property<Self, Optional, As, Def>,
   as: As1
 ): Property<Self, Optional, Some<As1>, Def> {
   return new Property(
-    Opt(as) as Some<As1>,
+    Option(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -211,10 +211,10 @@ export function prop<Self extends S.SchemaUPI>(
   schema: Self
 ): Property<Self, "required", None, None> {
   return new Property(
-    Opt.none as None,
+    Option.none as None,
     schema,
     "required",
-    Opt.none as None,
+    Option.none as None,
     HashMap.empty()
   )
 }
@@ -379,10 +379,10 @@ export function tagsFromProps<Props extends PropertyRecord>(
   const tags = {}
   for (const key of keys) {
     const s: S.SchemaUPI = props[key]._schema
-    const def = props[key]._def as Opt<
+    const def = props[key]._def as Option<
       ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
     >
-    const as = props[key]._as as Opt<PropertyKey>
+    const as = props[key]._as as Option<PropertyKey>
     if (
       as.isNone() &&
       def.isNone() &&
@@ -416,11 +416,11 @@ export function props<Props extends PropertyRecord>(
     guards[key] = Guard.for(props[key]._schema)
 
     if (props[key]._optional === "required") {
-      const def = props[key]._def as Opt<
+      const def = props[key]._def as Option<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
-        const as = props[key]._as as Opt<string>
+        const as = props[key]._as as Option<string>
         required.push(as.getOrElse(() => key))
       }
       if (def.isSome() && (def.value[0] === "constructor" || def.value[0] === "both")) {
@@ -496,10 +496,10 @@ export function props<Props extends PropertyRecord>(
 
     for (const key of keys) {
       const prop = props[key]
-      const as = props[key]._as as Opt<string>
+      const as = props[key]._as as Option<string>
       const _as: string = as.getOrElse(() => key)
 
-      const def = prop._def as Opt<
+      const def = prop._def as Option<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
       // TODO: support actual optionallity vs explicit `| undefined`
@@ -578,7 +578,7 @@ export function props<Props extends PropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const as = props[key]._as as Opt<string>
+        const as = props[key]._as as Option<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }

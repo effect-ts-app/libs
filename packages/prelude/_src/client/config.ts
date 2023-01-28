@@ -1,6 +1,6 @@
 export interface ApiConfig {
   apiUrl: string
-  headers: Opt<HashMap<string, string>>
+  headers: Option<HashMap<string, string>>
 }
 
 const tag = Tag<ApiConfig>()

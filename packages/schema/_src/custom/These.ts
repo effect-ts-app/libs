@@ -10,15 +10,15 @@ export const _A: unique symbol = Symbol()
 export class These<E, A> {
   readonly [_E]!: () => E
   readonly [_A]!: () => A
-  constructor(readonly effect: Either<E, readonly [A, Opt<E>]>) {}
+  constructor(readonly effect: Either<E, readonly [A, Option<E>]>) {}
 }
 
 export function succeed<A>(a: A) {
-  return new These(Either(tuple(a, Opt.none)))
+  return new These(Either(tuple(a, Option.none)))
 }
 
 export function warn<E, A>(a: A, e: E) {
-  return new These(Either(tuple(a, Opt(e))))
+  return new These(Either(tuple(a, Option(e))))
 }
 
 export function fail<E>(e: E) {
@@ -33,7 +33,7 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
     self.effect.match(
-      (x): Either<E1 | E2 | E3, readonly [A1 | A2 | A3, Opt<E1 | E2 | E3>]> => onFail(x).effect,
+      (x): Either<E1 | E2 | E3, readonly [A1 | A2 | A3, Option<E1 | E2 | E3>]> => onFail(x).effect,
       ([result, warnings]) =>
         warnings._tag === "None"
           ? onSuccess(result).effect
@@ -80,20 +80,20 @@ export function mapError<E0, E>(
 
 export function chain_<E0, A0, E, A>(
   self: These<E0, A0>,
-  f: (a: A0, w: Opt<E0>) => These<E, A>
+  f: (a: A0, w: Option<E0>) => These<E, A>
 ) {
   return foldM_(
     self,
-    a => f(a, Opt.none),
-    (a, _) => f(a, Opt(_)),
+    a => f(a, Option.none),
+    (a, _) => f(a, Option(_)),
     fail
   )
 }
 
-export function chain<E0, A0, E, A>(f: (a: A0, w: Opt<E0>) => These<E, A>) {
+export function chain<E0, A0, E, A>(f: (a: A0, w: Option<E0>) => These<E, A>) {
   return (self: These<E0, A0>) => chain_(self, f)
 }
 
-export function result<E, A>(self: These<E, A>): Either<E, readonly [A, Opt<E>]> {
+export function result<E, A>(self: These<E, A>): Either<E, readonly [A, Option<E>]> {
   return self.effect
 }

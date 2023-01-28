@@ -533,7 +533,7 @@ export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A
 /**
  * Set compaction, remove none
  */
-export function compact<A>(E: Equivalence<A>): (fa: Set<Opt<A>>) => Set<A> {
+export function compact<A>(E: Equivalence<A>): (fa: Set<Option<A>>) => Set<A> {
   return filterMap(E)(identity)
 }
 
@@ -572,7 +572,7 @@ export function separate<E, A>(
  */
 export function filterMap<B>(
   E: Equivalence<B>
-): <A>(f: (a: A) => Opt<B>) => (fa: Set<A>) => Set<B> {
+): <A>(f: (a: A) => Option<B>) => (fa: Set<A>) => Set<B> {
   const fm = filterMap_(E)
   return f => fa => fm(fa, f)
 }
@@ -582,7 +582,7 @@ export function filterMap<B>(
  */
 export function filterMap_<B>(
   E: Equivalence<B>
-): <A>(fa: Set<A>, f: (a: A) => Opt<B>) => Set<B> {
+): <A>(fa: Set<A>, f: (a: A) => Option<B>) => Set<B> {
   const elemE = elem_(E)
   return (fa, f) => {
     const r: MutableSet<B> = new Set()

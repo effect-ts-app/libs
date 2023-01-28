@@ -4,13 +4,13 @@ import type { Misc, Union } from "ts-toolbelt"
 import type * as SET from "./Set.js"
 
 // type SomeObject = {
-//   0: Opt<string>
+//   0: Option<string>
 //   a: {
-//     b: Opt<string>
-//     g: Opt<Opt<string>>
-//     h: Opt<{ i: Opt<boolean> }>
+//     b: Option<string>
+//     g: Option<Option<string>>
+//     h: Option<{ i: Option<boolean> }>
 //   }
-//   c: { d: Array<Opt<{ e: Opt<boolean> }>> }
+//   c: { d: Array<Option<{ e: Option<boolean> }>> }
 // }
 // type test0 = Transform<SomeObject>
 // type test1 = Transform<SomeObject[]>
@@ -21,7 +21,7 @@ type OptOf<A> = Union.Exclude<
 >
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-export type TransformRoot<O> = O extends Opt<any> ? Transform<OptOf<O>>
+export type TransformRoot<O> = O extends Option<any> ? Transform<OptOf<O>>
   : Transform<O>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive ? O
   : {
@@ -64,7 +64,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      const v = value as Opt<unknown>
+      const v = value as Option<unknown>
       return encodeOptsAsNullable_(v.getOrNull, cacheMap)
     }
     const newObj = {} as Record<string, any>

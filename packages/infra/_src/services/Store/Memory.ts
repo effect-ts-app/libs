@@ -56,7 +56,7 @@ export const makeMemoryStore = () => ({
           .apply(withPermit)
       const s: Store<PM, Id> = {
         all,
-        find: id => store.get.map(_ => Opt.fromNullable(_.get(id))),
+        find: id => store.get.map(_ => Option.fromNullable(_.get(id))),
         filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) => all.map(memFilter(filter, cursor)),
         filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
           all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),

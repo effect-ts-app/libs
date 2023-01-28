@@ -37,7 +37,7 @@ const getM = <T>(type: string) => <R, E, A>(eff: (m: EffectMap<string, CachedRec
   })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
-  tryRead: (id: string) => Effect<R, E, Opt<CachedRecord<EA>>>,
+  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
   decode: (d: EA) => Effect<RDecode, EDecode, A>,
   type: string
 ) {
@@ -63,7 +63,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
 }
 
 export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey>>(
-  save: (r: A, version: Opt<Version>) => Effect<R, E, CachedRecord<A>>,
+  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -79,8 +79,8 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 }
 
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
-  tryRead: (id: string) => Effect<R, E, Opt<CachedRecord<EA>>>,
-  save: (r: A, version: Opt<Version>) => Effect<R, E, CachedRecord<A>>,
+  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
+  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
   lock: (id: string) => Effect<R2 | Scope, E2, unknown>,
   type: string
 ) {
@@ -90,7 +90,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapOpt(x => x.version)
-        .flatMap(_ => _.match(() => save(record, Opt.none), confirmVersionAndSave(record)))
+        .flatMap(_ => _.match(() => save(record, Option.none), confirmVersionAndSave(record)))
         .tap(r => c.set(record.id, r))
         .map(r => r.data)
     )
@@ -110,7 +110,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
               ? Effect.fail(new OptimisticLockException(type, record.id))
               : Effect.unit
           )
-          .zipRight(save(record, Opt(cv)))
+          .zipRight(save(record, Option(cv)))
       ).scoped
   }
 }

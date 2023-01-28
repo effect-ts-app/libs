@@ -2,8 +2,7 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "lib": [
-            "esnext",
-            "DOM"
+            "esnext"
         ],
         "tsPlusConfig": "../../tsplus.config.json",
         //        "tsPlusGlobalFiles": [

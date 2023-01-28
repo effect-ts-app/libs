@@ -54,10 +54,10 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           }
         }
         return null
-      }).map(Opt.fromNullable)
+      }).map(Option.fromNullable)
     }
 
-    function store(record: A, currentVersion: Opt<Version>) {
+    function store(record: A, currentVersion: Option<Version>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")

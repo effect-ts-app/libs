@@ -137,7 +137,7 @@ export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = Defaul
 
 export const unionIdentifier = S.makeAnnotation<{
   props: Record<PropertyKey, S.SchemaUPI>
-  tag: Opt<{
+  tag: Option<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -169,7 +169,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   const firstMemberTags = entriesTags[0]![1]
 
-  const tag: Opt<{
+  const tag: Option<{
     key: string
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
@@ -178,14 +178,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     const tags = entriesTags.filterMap(
       ([member, tags]) => {
         if (tagField in tags) {
-          return Opt.some([tags[tagField], member])
+          return Option.some([tags[tagField], member])
         }
-        return Opt.none
+        return Option.none
       }
-    ).uniq((x, y) =>x[0] === y[0])
+    ).uniq((x, y) => x[0] === y[0])
 
     if (tags.length === entries.length) {
-      return Opt.some({
+      return Option.some({
         key: tagField,
         index: D.fromArray(tags.map(([a, b]) => tuple(a, b))),
         reverse: D.fromArray(tags.map(([a, b]) => tuple(b, a))),
@@ -193,7 +193,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       })
     }
 
-    return Opt.none
+    return Option.none
   })
 
   function guard(u: unknown): u is {

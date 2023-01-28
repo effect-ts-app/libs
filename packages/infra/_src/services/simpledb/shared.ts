@@ -65,7 +65,7 @@ export function getRecordName(type: string, id: string) {
 export function makeMap<TKey, T>() {
   const map = new Map<TKey, T>()
   return {
-    find: (k: TKey) => Effect(() => Opt.fromNullable(map.get(k))),
+    find: (k: TKey) => Effect(() => Option.fromNullable(map.get(k))),
     [Symbol.iterator]: () => map[Symbol.iterator](),
     set: (k: TKey, v: T) =>
       Effect(() => {
@@ -76,7 +76,7 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => Effect<never, never, Opt<T>>
+  find: (k: TKey) => Effect<never, never, Option<T>>
   set: (k: TKey, v: T) => Effect<never, never, void>
 }
 

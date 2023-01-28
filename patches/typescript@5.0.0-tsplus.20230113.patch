@@ -1,3 +1,27 @@
+diff --git a/lib/lib.dom.d.ts b/lib/lib.dom.d.ts
+index 753f767..51c697e 100644
+--- a/lib/lib.dom.d.ts
++++ b/lib/lib.dom.d.ts
+@@ -16895,6 +16895,9 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+     removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+     removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
++    Option: {
++        new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
++    }
+     [index: number]: Window;
+ }
+ 
+@@ -17848,9 +17851,6 @@ declare var Audio: {
+ declare var Image: {
+     new(width?: number, height?: number): HTMLImageElement;
+ };
+-declare var Option: {
+-    new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
+-};
+ /** @deprecated This is a legacy alias of `navigator`. */
+ declare var clientInformation: Navigator;
+ /** Returns true if the window has been closed, false otherwise. */
 diff --git a/lib/tsc.js b/lib/tsc.js
 index 2908163..ec58ef1 100644
 --- a/lib/tsc.js

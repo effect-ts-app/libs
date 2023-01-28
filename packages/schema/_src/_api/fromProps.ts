@@ -20,8 +20,8 @@ import * as Th from "../custom/These.js"
 export class FromProperty<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
 > {
   constructor(
     readonly _as: As,
@@ -35,7 +35,7 @@ export class FromProperty<
   // schema<That extends S.SchemaAny>(
   //   schema: That
   // ): FromProperty<That, Optional, As, None> {
-  //   return new FromProperty(this._as, schema, this._optional, Opt.none, this._map)
+  //   return new FromProperty(this._as, schema, this._optional, Option.none, this._map)
   // }
 
   // opt(): FromProperty<Self, "optional", As, Def> {
@@ -50,7 +50,7 @@ export class FromProperty<
   //   as: As1
   // ): FromProperty<Self, Optional, Some<As1>, Def> {
   //   return new FromProperty(
-  //     Opt(as),
+  //     Option(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -60,7 +60,7 @@ export class FromProperty<
 
   // removeFrom(): FromProperty<Self, Optional, None, Def> {
   //   return new FromProperty(
-  //     Opt.none,
+  //     Option.none,
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -96,7 +96,7 @@ export class FromProperty<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Opt([k ?? "both", _]),
+  //     Option([k ?? "both", _]),
   //     this._map
   //   )
   // }
@@ -106,12 +106,12 @@ export class FromProperty<
   //     this._as,
   //     this._schema,
   //     this._optional,
-  //     Opt.none,
+  //     Option.none,
   //     this._map
   //   )
   // }
 
-  // getAnnotation<A>(annotation: Annotation<A>): Opt<A> {
+  // getAnnotation<A>(annotation: Annotation<A>): Option<A> {
   //   return HashMap.get_(this._map, annotation)
   // }
 
@@ -132,15 +132,15 @@ export class FromProperty<
 export function fromPropFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
-  As extends Opt<PropertyKey>,
-  Def extends Opt<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
+  As extends Option<PropertyKey>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
   As1 extends PropertyKey
 >(
   prop: FromProperty<Self, Optional, As, Def>,
   as: As1
 ): FromProperty<Self, Optional, Some<As1>, Def> {
   return new FromProperty(
-    Opt(as) as Some<As1>,
+    Option(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -152,10 +152,10 @@ export function fromProp<Self extends S.SchemaAny>(
   schema: Self
 ): FromProperty<Self, "required", None, None> {
   return new FromProperty(
-    Opt.none as None,
+    Option.none as None,
     schema,
     "required",
-    Opt.none as None,
+    Option.none as None,
     HashMap.empty()
   )
 }
@@ -342,10 +342,10 @@ export function tagsFromFromProps<Props extends FromPropertyRecord>(
   const tags = {}
   for (const key of keys) {
     const s: S.SchemaAny = props[key]._schema
-    const def = props[key]._def as Opt<
+    const def = props[key]._def as Option<
       ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
     >
-    const as = props[key]._as as Opt<PropertyKey>
+    const as = props[key]._as as Option<PropertyKey>
     if (
       as.isNone() &&
       def.isNone() &&
@@ -379,10 +379,10 @@ export function fromProps<Props extends FromPropertyRecord>(
     guards[key] = Guard.for(props[key]._schema)
 
     if (props[key]._optional === "required") {
-      const def = props[key]._def as Opt<
+      const def = props[key]._def as Option<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
-      const as = props[key]._as as Opt<string>
+      const as = props[key]._as as Option<string>
 
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
         required.push(as.getOrElse(() => key))
@@ -456,10 +456,10 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       const prop = props[key]
-      const as = props[key]._as as Opt<string>
+      const as = props[key]._as as Option<string>
       const _as: string = as.getOrElse(() => key)
 
-      const def = prop._def as Opt<
+      const def = prop._def as Option<
         ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
       >
 
@@ -540,7 +540,7 @@ export function fromProps<Props extends FromPropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const as = props[key]._as as Opt<string>
+        const as = props[key]._as as Option<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }

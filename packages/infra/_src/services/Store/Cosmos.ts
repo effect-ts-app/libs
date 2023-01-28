@@ -55,7 +55,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 x =>
                   [
                     x,
-                    Opt.fromNullable(x._etag).match(
+                    Option.fromNullable(x._etag).match(
                       () => ({
                         operationType: "Create" as const,
                         resourceBody: {
@@ -129,7 +129,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 x =>
                   [
                     x,
-                    Opt.fromNullable(x._etag).match(
+                    Option.fromNullable(x._etag).match(
                       () => ({
                         operationType: "Create" as const,
                         resourceBody: {
@@ -272,11 +272,11 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 container
                   .item(id, config?.partitionValue({ id } as PM))
                   .read<PM>()
-                  .then(({ resource }) => Opt.fromNullable(resource))
+                  .then(({ resource }) => Option.fromNullable(resource))
               ).instrument("cosmos.find")
                 .logAnnotate("cosmos.db", containerId),
             set: e =>
-              Opt.fromNullable(e._etag)
+              Option.fromNullable(e._etag)
                 .match(
                   () =>
                     Effect.promise(() =>
@@ -330,7 +330,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               container
                 .item(importedMarkerId, importedMarkerId)
                 .read<{ id: string }>()
-                .then(({ resource }) => Opt.fromNullable(resource))
+                .then(({ resource }) => Option.fromNullable(resource))
             )
           )
 

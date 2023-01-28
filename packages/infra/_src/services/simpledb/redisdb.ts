@@ -39,7 +39,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           .mapError(e => new ConnectionException(new Error(e.toString())))
       ).orDie
     }
-    function store(record: A, currentVersion: Opt<string>) {
+    function store(record: A, currentVersion: Option<string>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")

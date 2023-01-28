@@ -1,4 +1,4 @@
-// import "./EffectOpt.ext.js"
+// import "./EffectOption.ext.js"
 import "./_ext/builtIn.js"
 import "./_ext/date.js"
 import "./_ext/misc.js"

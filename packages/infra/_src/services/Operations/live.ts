@@ -15,7 +15,7 @@ const make = Effect(() => {
     ops.entries()
       .toChunk
       .forEach(([id, op]) => {
-        const lastChanged = Opt.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
+        const lastChanged = Option.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
         if (lastChanged < before) {
           ops.delete(id)
         }
@@ -28,7 +28,7 @@ const make = Effect(() => {
     })
   }
   function findOp(id: OperationId) {
-    return Effect(() => Opt.fromNullable(ops.get(id)))
+    return Effect(() => Option.fromNullable(ops.get(id)))
   }
   function finishOp(id: OperationId, exit: Exit<unknown, unknown>) {
     return findOp(id).flatMap(_ =>
@@ -48,8 +48,8 @@ const make = Effect(() => {
                 ? LongString("Unknown error")
                 : exit.cause.failureOption.flatMap(_ =>
                   typeof _ === "object" && _ !== null && "message" in _ && LongString.Guard(_.message)
-                    ? Opt(_.message)
-                    : Opt.none
+                    ? Option(_.message)
+                    : Option.none
                 )?.value ?? null
             })
         })

@@ -354,13 +354,13 @@ export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {
   return (a: X, env?: Parser.ParserEnv) => {
     const res = self(a, env).effect
     if (res._tag === "Left") {
-      return Opt.none
+      return Option.none
     }
     const warn = res.right[1]
     if (warn._tag === "Some") {
-      return Opt.none
+      return Option.none
     }
-    return Opt(res.right[0])
+    return Option(res.right[0])
   }
 }
 

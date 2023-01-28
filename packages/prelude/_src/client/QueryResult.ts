@@ -11,15 +11,15 @@ export class Loading extends Tagged("Loading")<{}> {}
 
 export class Refreshing<E, A> extends Tagged("Refreshing")<{
   readonly current: Either<E, A>
-  readonly previous: Opt<A>
+  readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
-    return new Refreshing<E, A>({ current: Either(a), previous: Opt.none })
+    return new Refreshing<E, A>({ current: Either(a), previous: Option.none })
   }
   static fail<E, A = never>(e: E, previous?: A) {
     return new Refreshing<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Opt.none : Opt(previous)
+      previous: previous === undefined ? Option.none : Option(previous)
     })
   }
   static fromDone<E, A>(d: Done<E, A>) {
@@ -29,15 +29,15 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
 
 export class Done<E, A> extends Tagged("Done")<{
   readonly current: Either<E, A>
-  readonly previous: Opt<A>
+  readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {
-    return new Done<E, A>({ current: Either(a), previous: Opt.none })
+    return new Done<E, A>({ current: Either(a), previous: Option.none })
   }
   static fail<E, A = never>(this: void, e: E, previous?: A) {
     return new Done<E, A>({
       current: Either.left(e),
-      previous: previous === undefined ? Opt.none : Opt(previous)
+      previous: previous === undefined ? Option.none : Option(previous)
     })
   }
 

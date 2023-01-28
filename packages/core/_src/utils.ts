@@ -13,7 +13,7 @@ export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   return ei.right
 }
 
-export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Opt<A>) => {
+export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Option<A>) => {
   if (o.isNone()) {
     throw new Error(makeErrorMessage())
   }

@@ -31,7 +31,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       save: simpledb.store(find(type), store, lockRecordOnDisk(type), type)
     }
 
-    function store(record: A, currentVersion: Opt<Version>) {
+    function store(record: A, currentVersion: Option<Version>) {
       const version = currentVersion
         .map(cv => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
@@ -107,7 +107,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return readIndex(index).map(idx => Opt.fromNullable(idx[index.key]))
+      return readIndex(index).map(idx => Option.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
@@ -127,7 +127,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .flatMap(exists => !exists ? Effect(Opt.none) : readFile(filePath).map(Opt.some))
+        .flatMap(exists => !exists ? Effect(Option.none) : readFile(filePath).map(Option.some))
     }
 
     function getFilename(type: string, id: string) {

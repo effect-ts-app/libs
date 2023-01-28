@@ -44,7 +44,7 @@ export function unifyEither<X extends Either<any, any>>(
  * @tsplus unify fp-ts/core/Option.Some
  * @tsplus unify fp-ts/core/Option.None
  */
-export function unifyOpt<X extends Option<any>>(
+export function unifyOption<X extends Option<any>>(
   self: X
 ): Option<X extends Option.Some<infer A> ? A : never> {
   return self

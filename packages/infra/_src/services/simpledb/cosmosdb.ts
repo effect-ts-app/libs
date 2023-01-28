@@ -38,7 +38,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return Cosmos.db
         .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
-        .map(i => Opt.fromNullable(i.resource))
+        .map(i => Option.fromNullable(i.resource))
         .map(
           _ =>
             _.map(
@@ -77,7 +77,7 @@ WHERE (
         .map(_ => _.map(_ => _.id))
     }
 
-    function store(record: A, currentVersion: Opt<Version>) {
+    function store(record: A, currentVersion: Option<Version>) {
       return Effect.gen(function*($) {
         const version = "_etag" // we get this from the etag anyway.
 

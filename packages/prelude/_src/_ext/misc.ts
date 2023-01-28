@@ -1,4 +1,3 @@
-
 import type { Option } from "@fp-ts/core/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [

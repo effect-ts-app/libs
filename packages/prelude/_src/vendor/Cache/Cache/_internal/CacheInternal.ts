@@ -68,21 +68,21 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
     ))
   }
 
-  entryStats(k: Key): Effect<never, never, Opt<EntryStats>> {
+  entryStats(k: Key): Effect<never, never, Option<EntryStats>> {
     return Effect(() => {
       const value = this.cacheState.map.get(k).value
       if (value == null) {
-        return Opt.none
+        return Option.none
       }
       switch (value._tag) {
         case "Pending": {
-          return Opt.none
+          return Option.none
         }
         case "Complete": {
-          return Opt(EntryStats(value.entryStats.loadedMillis))
+          return Option(EntryStats(value.entryStats.loadedMillis))
         }
         case "Refreshing": {
-          return Opt(EntryStats(value.complete.entryStats.loadedMillis))
+          return Option(EntryStats(value.complete.entryStats.loadedMillis))
         }
       }
     })

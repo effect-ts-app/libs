@@ -54,7 +54,7 @@ export interface Cache<Key, Error, Value> {
   /**
    * Returns statistics for the specified entry, if it exists.
    */
-  readonly entryStats: (key: Key) => Effect<never, never, Opt<EntryStats>>
+  readonly entryStats: (key: Key) => Effect<never, never, Option<EntryStats>>
 
   /**
    * Retrieves the value associated with the specified key if it exists.

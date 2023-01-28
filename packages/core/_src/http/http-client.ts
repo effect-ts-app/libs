@@ -96,7 +96,7 @@ export interface DataInput {
 export type Headers = Record<string, string>
 
 export interface Response<Body> {
-  body: Opt<Body>
+  body: Option<Body>
   headers: Headers
   status: number
 }
@@ -162,11 +162,11 @@ export interface HttpHeaders extends Record<string, string> {}
 export const HttpHeaders = Tag<HttpHeaders>()
 const accessHttpHeaders_ = Effect.contextWith((env: Context<never>) => env.getOption(HttpHeaders))
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: Opt<HttpHeaders>) => Effect<R, E, A>
+  eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
 ) {
   return accessHttpHeaders_.flatMap(eff)
 }
-export function accessHttpHeaders<A>(eff: (h: Opt<HttpHeaders>) => A) {
+export function accessHttpHeaders<A>(eff: (h: Option<HttpHeaders>) => A) {
   return accessHttpHeaders_.map(eff)
 }
 
@@ -212,12 +212,12 @@ export const MiddlewareStack = Tag<MiddlewareStack>()
 
 const accessMiddlewareStack_ = Effect.contextWith((env: Context<never>) => env.getOption(MiddlewareStack))
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: Opt<MiddlewareStack>) => Effect<R, E, A>
+  eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
 ) {
   return accessMiddlewareStack_.flatMap(eff)
 }
 export function accessMiddlewareStack<A>(
-  eff: (h: Opt<MiddlewareStack>) => A
+  eff: (h: Option<MiddlewareStack>) => A
 ) {
   return accessMiddlewareStack_.map(eff)
 }

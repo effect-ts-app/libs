@@ -64,7 +64,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
               all.map(memFilter(filter, cursor)),
             filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
               all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
-            find: id => asMap.map(_ => Opt.fromNullable(_.get(id))),
+            find: id => asMap.map(_ => Option.fromNullable(_.get(id))),
             set: e =>
               s
                 .find(e.id)
