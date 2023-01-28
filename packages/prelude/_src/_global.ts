@@ -35,10 +35,6 @@ import { ConfigError } from "@effect/io/Config/Error"
 import { ConfigProvider } from "@effect/io/Config/Provider"
 
 /* eslint-disable unused-imports/no-unused-imports */
-/**
- * @tsplus global
- */
-import type { lazyGetter } from "@effect-app/prelude/utils"
 
 /**
  * @tsplus global

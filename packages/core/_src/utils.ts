@@ -567,3 +567,40 @@ export type Compute<A, depth extends Depth = "deep"> = {
   flat: ComputeFlat<A>
   deep: ComputeDeep<A>
 }[depth]
+
+/////
+
+export const LazySymbol = Symbol("lazy")
+
+interface Lazy {
+  [LazySymbol]: Record<symbol, any>
+}
+
+export function lazyGetter<T extends object, T2>(creator: (target: T) => T2) {
+  const key = Symbol(creator.name)
+  const f = (target: T): T2 => {
+    let lazy = (target as unknown as Lazy)[LazySymbol]
+    if (!lazy) {
+      lazy = {}
+      Object.defineProperty(target, LazySymbol, { enumerable: false, value: lazy })
+    } else if (lazy[key]) {
+      return lazy[key]
+    }
+    const value = creator(target)
+    lazy[key] = value
+    return value
+  }
+  Object.defineProperty(f, "name", {
+    enumerable: false,
+    value: `Lazy<${creator.name}>`
+  })
+  return f
+}
+
+export function exhaustiveMatch<T extends string>() {
+  return <Out extends Record<T, (t: T) => any>>(handlers: Out) => (t: T): ReturnType<Out[keyof Out]> => handlers[t](t)
+}
+
+export function exhaustiveMatch_<T extends string>(t: T) {
+  return <Out extends Record<T, (t: T) => any>>(handlers: Out): ReturnType<Out[keyof Out]> => handlers[t](t)
+}

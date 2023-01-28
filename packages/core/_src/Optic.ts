@@ -1,12 +1,35 @@
 import type { Lens } from "@fp-ts/optic"
 import { identity } from "./Function.js"
 
+import * as OPTIC from "@fp-ts/optic"
+
+import { dual } from "@effect/io/Debug"
+
 /**
- * @tsplus fluent fp-ts/optic/Optic replace_
+ * @tsplus getter fp-ts/optic/Optic replace
  */
-export function replace_<S, A>(l: Lens<S, A>, s: S, a: A) {
-  return l.replace(a)(s)
-}
+export const replace = lazyGetter(<S, A>(l: Lens<S, A>) => {
+  const replace = OPTIC.replace(l)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const f: {
+    (s: S, a: A): S
+    (a: A): (s: S) => S
+  } = dual(2, (s: S, a: A) => replace(a)(s))
+  return f
+})
+
+/**
+ * @tsplus getter fp-ts/optic/Optic modify
+ */
+export const modify = lazyGetter(<S, A>(l: Lens<S, A>) => {
+  const modify = OPTIC.modify(l)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const f: {
+    (s: S, f: (a: A) => A): S
+    (f: (a: A) => A): (s: S) => S
+  } = dual(2, (s: S, f: (a: A) => A) => modify(f)(s))
+  return f
+})
 
 /**
  * @tsplus fluent fp-ts/optic/Optic replaceIfDefined
@@ -44,13 +67,6 @@ export function modifyM__<R, E, A, B>(
 }
 
 /**
- * @tsplus fluent fp-ts/optic/Optic modify_
- */
-export function modify__<A, B>(l: Lens<A, B>, a: A, mod: (b: B) => B) {
-  return l.replace(mod(l.get(a)))(a)
-}
-
-/**
  * @tsplus fluent fp-ts/optic/Optic modifyConcat
  */
 export function modifyConcat<A, B>(l: Lens<A, readonly B[]>, a: A) {
@@ -65,7 +81,7 @@ export function modifyConcat_<A, B>(
   a: A,
   v: readonly B[]
 ) {
-  return modify__(l, a, b => b.concat(v))
+  return l.modify(a, b => b.concat(v))
 }
 
 export function modifyM<A, B>(l: Lens<A, B>) {

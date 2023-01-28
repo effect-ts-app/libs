@@ -771,7 +771,7 @@ export interface UnionBrand {}
 export class PreparedLens<S, T> {
   constructor(private readonly s: S, readonly lens: Lens<S, T>) {}
   get = () => this.lens.get(this.s)
-  set = (t: T) => this.lens.replace_(this.s, t)
+  set = (t: T) => this.lens.replace(this.s, t)
 }
 
 /**

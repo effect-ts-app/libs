@@ -168,6 +168,11 @@ import { MutableRef } from "@fp-ts/data/MutableRef"
  */
 import { Lens, lens, Optic } from "@fp-ts/optic"
 
+/**
+ * @tsplus global
+ */
+import type { lazyGetter } from "@effect-app/core/utils"
+
 import "./_global.ext.js"
 import "./Array.js"
 import "./Aspects.js"
