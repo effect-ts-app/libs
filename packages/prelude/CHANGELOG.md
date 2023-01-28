@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.15.1
+
+### Patch Changes
+
+- 5a69e08a: Reclaim Duration
+- Updated dependencies [5a69e08a]
+  - @effect-app/core@0.15.1
+  - @effect-app/schema@0.13.1
+
 ## 0.15.0
 
 ### Minor Changes
