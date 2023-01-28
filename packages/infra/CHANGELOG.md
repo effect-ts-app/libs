@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.15.0
+
+### Minor Changes
+
+- e7b4a0b9: Cleanup extensions
+
+### Patch Changes
+
+- Updated dependencies [e7b4a0b9]
+  - @effect-app/prelude@0.13.0
+  - @effect-app/core@0.13.0
+  - @effect-app/infra-adapters@0.12.6
+  - @effect-app/schema@0.12.6
+
 ## 0.14.5
 
 ### Patch Changes

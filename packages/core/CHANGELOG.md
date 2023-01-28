@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.13.0
+
+### Minor Changes
+
+- e7b4a0b9: Cleanup extensions
+
 ## 0.12.4
 
 ### Patch Changes
