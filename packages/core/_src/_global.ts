@@ -4,7 +4,7 @@ import "./operators.js"
 /**
  * @tsplus global
  */
-import { Opt } from "@effect-app/core/Option"
+import { Opt, Option } from "@effect-app/core/Option"
 
 /**
  * @tsplus global
