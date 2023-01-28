@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.14.1
+
+### Patch Changes
+
+- 8f97d979: Cleanup optics dual api
+
 ## 0.14.0
 
 ### Minor Changes
