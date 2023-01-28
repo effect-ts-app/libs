@@ -7,6 +7,9 @@ import { identity } from "./Function.js"
 
 import { Option } from "./Option.js"
 
+/**
+ * @tsplus fluent ets/Set find
+ */
 export function find_<A, B extends A>(
   as: ROSet<A>,
   refinement: Refinement<A, B>
@@ -16,6 +19,9 @@ export function find_<A>(set: ROSet<A>, predicate: Predicate<A>) {
   return [...set].find(predicate)
 }
 
+/**
+ * @tsplus fluent ets/Set findFirst
+ */
 export function findFirst_<A, B extends A>(
   set: ROSet<A>,
   refinement: Refinement<A, B>
@@ -25,6 +31,9 @@ export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A>
   return Option.fromNullable([...set].find(predicate))
 }
 
+/**
+ * @tsplus fluent ets/Set findFirstMap
+ */
 export function findFirstMap_<A, B>(
   set: ROSet<A>,
   f: (a: A) => Option<B>
@@ -144,6 +153,7 @@ export function some<A>(predicate: Predicate<A>): (set: Set<A>) => boolean {
 
 /**
  * true if one or more elements match predicate
+ * @tsplus fluent ets/Set some
  */
 export function some_<A>(set: Set<A>, predicate: Predicate<A>): boolean {
   return some(predicate)(set)
@@ -247,6 +257,7 @@ export function filter<A>(predicate: Predicate<A>): (set: Set<A>) => Set<A> {
 
 /**
  * Filter set values using predicate
+ * @tsplus fluent ets/Set filter
  */
 export function filter_<A, B extends A>(
   set: Set<A>,
@@ -502,6 +513,7 @@ export function toggle_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
 
 /**
  * Create a set from an array
+ * @tsplus static ets/Set __call
  */
 export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A> {
   return as => {

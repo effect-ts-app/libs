@@ -6,9 +6,9 @@ import "./global.js"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
-import type * as CNK from "@fp-ts/data/Chunk"
 import type * as EITHER from "@fp-ts/core/Either"
 import type * as O from "@fp-ts/core/Option"
+import type * as CNK from "@fp-ts/data/Chunk"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
@@ -90,7 +90,7 @@ export type ROSet<A> = SET.Set<A>
 
 export namespace Optic {
   // @ts-expect-error
-  export * from "@fp-ts/optic"
+  export * from "@effect-app/core/Optic"
 }
 export type Lens<S, A> = LNS.Lens<S, A>
 

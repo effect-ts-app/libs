@@ -185,6 +185,16 @@
         "default": "./_cjs/Object.cjs"
       }
     },
+    "./Optic": {
+      "import": {
+        "types": "./dist/Optic.d.ts",
+        "default": "./dist/Optic.js"
+      },
+      "require": {
+        "types": "./dist/Optic.d.ts",
+        "default": "./_cjs/Optic.cjs"
+      }
+    },
     "./Option": {
       "import": {
         "types": "./dist/Option.d.ts",
@@ -245,34 +255,14 @@
         "default": "./_cjs/Unify.cjs"
       }
     },
-    "./_ext/Lens.ext": {
+    "./_ext/Iterable": {
       "import": {
-        "types": "./dist/_ext/Lens.ext.d.ts",
-        "default": "./dist/_ext/Lens.ext.js"
+        "types": "./dist/_ext/Iterable.d.ts",
+        "default": "./dist/_ext/Iterable.js"
       },
       "require": {
-        "types": "./dist/_ext/Lens.ext.d.ts",
-        "default": "./_cjs/_ext/Lens.ext.cjs"
-      }
-    },
-    "./_ext/Maybe": {
-      "import": {
-        "types": "./dist/_ext/Maybe.d.ts",
-        "default": "./dist/_ext/Maybe.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Maybe.d.ts",
-        "default": "./_cjs/_ext/Maybe.cjs"
-      }
-    },
-    "./_ext/Misc": {
-      "import": {
-        "types": "./dist/_ext/Misc.d.ts",
-        "default": "./dist/_ext/Misc.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Misc.d.ts",
-        "default": "./_cjs/_ext/Misc.cjs"
+        "types": "./dist/_ext/Iterable.d.ts",
+        "default": "./_cjs/_ext/Iterable.cjs"
       }
     },
     "./_ext/Prelude.ext": {
@@ -283,16 +273,6 @@
       "require": {
         "types": "./dist/_ext/Prelude.ext.d.ts",
         "default": "./_cjs/_ext/Prelude.ext.cjs"
-      }
-    },
-    "./_ext/lens": {
-      "import": {
-        "types": "./dist/_ext/lens.d.ts",
-        "default": "./dist/_ext/lens.js"
-      },
-      "require": {
-        "types": "./dist/_ext/lens.d.ts",
-        "default": "./_cjs/_ext/lens.cjs"
       }
     },
     "./_ext/ord.ext": {
@@ -315,6 +295,16 @@
         "default": "./_cjs/_ext/pipe.cjs"
       }
     },
+    "./_ext/pipe.ext": {
+      "import": {
+        "types": "./dist/_ext/pipe.ext.d.ts",
+        "default": "./dist/_ext/pipe.ext.js"
+      },
+      "require": {
+        "types": "./dist/_ext/pipe.ext.d.ts",
+        "default": "./_cjs/_ext/pipe.ext.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",
@@ -323,46 +313,6 @@
       "require": {
         "types": "./dist/_global.d.ts",
         "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/_files/Iterable": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/Iterable.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/Iterable.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/Iterable.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/Iterable.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/_files/Set": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/Set.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/Set.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/Set.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/Set.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/_files/shared": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/_files/shared.d.ts",
-        "default": "./dist/fluent/_ext/awesome/_files/shared.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/_files/shared.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/_files/shared.cjs"
-      }
-    },
-    "./fluent/_ext/awesome/lib": {
-      "import": {
-        "types": "./dist/fluent/_ext/awesome/lib.d.ts",
-        "default": "./dist/fluent/_ext/awesome/lib.js"
-      },
-      "require": {
-        "types": "./dist/fluent/_ext/awesome/lib.d.ts",
-        "default": "./_cjs/fluent/_ext/awesome/lib.cjs"
       }
     },
     "./global": {

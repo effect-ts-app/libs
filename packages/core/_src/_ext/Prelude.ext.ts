@@ -1,6 +1,3 @@
-import "./Lens.ext.js"
-// import "./Schema.ext.js"
-// import "./EffectOption.js"
-import "../fluent/_ext/awesome/lib.js"
-import "./Misc.js"
+import "./Iterable.js"
+import "./pipe.ext.js"
 import "./ord.ext.js"
