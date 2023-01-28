@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.14.2
+
+### Patch Changes
+
+- 90d6e600: Also export Option as Option
+
 ## 0.14.1
 
 ### Patch Changes
