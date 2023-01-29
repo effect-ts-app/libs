@@ -307,7 +307,7 @@ export function makeRequestHandler<
     })
       .flatMap(({ pars, requestContext }) =>
         RequestSettings.get.flatMap(s =>
-          Effect.logInfo("Processing request").apply(
+          Effect.logInfo("Incoming request").apply(
             Effect.logAnnotates({
               method: req.method,
               path: req.originalUrl,
@@ -353,18 +353,17 @@ export function makeRequestHandler<
           })
         )
           .tapErrorCause(cause =>
-            Effect.suspendSucceed(() => {
-              res.status(500).send()
-              return reportRequestError(cause, {
+            Effect.tuplePar(
+              Effect(() => res.status(500).send()),
+              reportRequestError(cause, {
                 requestContext,
                 path: req.originalUrl,
                 method: req.method
-              })
-            }).zipRight(
+              }),
               Effect.suspendSucceed(() => {
                 const headers = res.getHeaders()
                 return Effect.logErrorCauseMessage(
-                  "Processed request",
+                  "Finished request",
                   cause
                 ).apply(Effect.logAnnotates({
                   method: req.method,
@@ -388,9 +387,9 @@ export function makeRequestHandler<
               .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap(() =>
-            RequestSettings.get.map(s => {
+            RequestSettings.get.flatMap(s => {
               const headers = res.getHeaders()
-              return Effect.logInfo("Processed request").apply(Effect.logAnnotates({
+              return Effect.logInfo("Finished request").apply(Effect.logAnnotates({
                 method: req.method,
                 path: req.originalUrl,
                 statusCode: res.statusCode.toString(),
