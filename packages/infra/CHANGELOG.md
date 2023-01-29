@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.3
+
+### Patch Changes
+
+- fc656d37: Fix finished request message
+
 ## 0.17.2
 
 ### Patch Changes
