@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.9.0
+
+### Minor Changes
+
+- 67716050: Update to TS5 beta
+
 ## 0.8.0
 
 ### Minor Changes

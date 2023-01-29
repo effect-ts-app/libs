@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.16.0
+
+### Minor Changes
+
+- 67716050: Update to TS5 beta
+
 ## 0.15.1
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.17.0
+
+### Minor Changes
+
+- 67716050: Update to TS5 beta
+
+### Patch Changes
+
+- Updated dependencies [67716050]
+  - @effect-app/infra-adapters@0.14.0
+  - @effect-app/prelude@0.16.0
+  - @effect-app/schema@0.14.0
+  - @effect-app/core@0.16.0
+
 ## 0.16.1
 
 ### Patch Changes
