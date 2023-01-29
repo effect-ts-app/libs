@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.1
+
+### Patch Changes
+
+- e5c6a5fb: Add QueueMaker
+
 ## 0.17.0
 
 ### Minor Changes
