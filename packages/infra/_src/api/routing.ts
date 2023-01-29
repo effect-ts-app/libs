@@ -15,7 +15,11 @@ import { parseRequestParams } from "./express/schema/requestHandler.js"
 import type { RouteDescriptorAny } from "./express/schema/routing.js"
 import { makeRouteDescriptor } from "./express/schema/routing.js"
 import { reportRequestError } from "./reportError.js"
-import { snipString, snipValue } from "./util.js"
+import { snipString } from "./util.js"
+
+export const RequestSettings = FiberRef.unsafeMake({
+  verbose: false
+})
 
 export function makeRequestParsers<
   R,
@@ -247,20 +251,8 @@ export function makeRequestHandler<
       path: req.params,
       query: req.query,
       body: req.body,
-      headers: req.headers
-        ? Object.entries(req.headers).reduce((prev, [key, value]) => {
-          prev[key] = snipValue(value)
-          return prev
-        }, {} as Record<string, any>)
-        : req.headers,
+      headers: req.headers,
       cookies: req.cookies
-        ? Object.entries(req.cookies).reduce((prev, [key, value]) => {
-          prev[key] = typeof value === "string" || Array.isArray(value)
-            ? snipValue(value)
-            : value
-          return prev
-        }, {} as Record<string, any>)
-        : req.cookies
     }))
   }
 
@@ -314,15 +306,23 @@ export function makeRequestHandler<
       pars: getParams(req)
     })
       .flatMap(({ pars, requestContext }) =>
-        Effect.logInfo("Processing request").apply(Effect.logAnnotates({
-          method: req.method,
-          path: req.originalUrl,
-          reqPath: pars.path.$$.pretty,
-          reqQuery: pars.query.$$.pretty,
-          reqBody: pretty(pars.body),
-          reqCookies: pretty(pars.cookies),
-          reqHeaders: pars.headers.$$.pretty
-        })).zipRight(
+        RequestSettings.get.flatMap(s =>
+          Effect.logInfo("Processing request").apply(
+            Effect.logAnnotates({
+              method: req.method,
+              path: req.originalUrl,
+              ...s.verbose
+                ? {
+                  reqPath: pars.path.$$.pretty,
+                  reqQuery: pars.query.$$.pretty,
+                  reqBody: pretty(pars.body),
+                  reqCookies: pretty(pars.cookies),
+                  reqHeaders: pars.headers.$$.pretty
+                } :
+                undefined
+            })
+          )
+        ).zipRight(
           Effect.suspendSucceed(() => {
             const handleRequest = parseRequest(req)
               .map(({ body, path, query }) => {
@@ -370,6 +370,13 @@ export function makeRequestHandler<
                   method: req.method,
                   path: req.originalUrl,
                   statusCode: res.statusCode.toString(),
+
+                  reqPath: pars.path.$$.pretty,
+                  reqQuery: pars.query.$$.pretty,
+                  reqBody: pretty(pars.body),
+                  reqCookies: pretty(pars.cookies),
+                  reqHeaders: pars.headers.$$.pretty,
+
                   resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
                     prev[key] = value && typeof value === "string" ? snipString(value) : value
                     return prev
@@ -381,17 +388,17 @@ export function makeRequestHandler<
               .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap(() =>
-            Effect.suspendSucceed(() => {
+            RequestSettings.get.map(s => {
               const headers = res.getHeaders()
               return Effect.logInfo("Processed request").apply(Effect.logAnnotates({
                 method: req.method,
                 path: req.originalUrl,
                 statusCode: res.statusCode.toString(),
-                resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
-                  prev[key] = value && typeof value === "string" ? snipString(value) : value
-                  return prev
-                }, {} as Record<string, any>)
-                  .$$.pretty
+                ...s.verbose
+                  ? {
+                    resHeaders: headers.$$.pretty
+                  } :
+                  undefined
               }))
             })
           )
