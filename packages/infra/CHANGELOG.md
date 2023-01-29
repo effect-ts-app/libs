@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.2
+
+### Patch Changes
+
+- e5e7a7c9: Reduce log-noise of express routing by default
+
 ## 0.17.1
 
 ### Patch Changes
