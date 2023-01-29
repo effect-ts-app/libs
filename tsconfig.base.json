@@ -26,6 +26,7 @@
         "moduleResolution": "Node16",
         "downlevelIteration": true,
         "noErrorTruncation": true,
+        "ignoreDeprecations": "5.0",
         "forceConsistentCasingInFileNames": true,
         "tsPlusTypes": [
             "./node_modules/@effect-app/core/vendor/effect-io-tsplus.json",
