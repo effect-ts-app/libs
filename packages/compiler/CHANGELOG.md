@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.10.2
+
+### Patch Changes
+
+- 057574a0: Add Wallaby compatibility
+
 ## 0.10.1
 
 ### Patch Changes
