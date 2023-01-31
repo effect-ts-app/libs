@@ -497,7 +497,7 @@ export function buildWhereCosmosQuery(
             x.t === "in"
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
-              ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}, false)`
+              ? `(NOT ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}))`
               : x.t === "not-eq"
               ? x.value === null
                 ? `IS_NULL(${x.f}.${x.key}) = false`
