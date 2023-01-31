@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.6
+
+### Patch Changes
+
+- 838face9: y
+
 ## 0.17.5
 
 ### Patch Changes
