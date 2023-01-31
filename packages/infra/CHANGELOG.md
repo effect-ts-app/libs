@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.5
+
+### Patch Changes
+
+- 2390b678: Add batch support to saveManyWithPure
+
 ## 0.17.4
 
 ### Patch Changes
