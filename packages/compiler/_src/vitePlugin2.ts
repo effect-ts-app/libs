@@ -234,6 +234,10 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
       }
     },
     transform(_, path) {
+      // support wallaby and others who add query strings for cache busting
+      // todo; consider using the query string for some versioning/busting?
+      const split = path.split("?")
+      path = split[0]!
       if (/\.tsx?/.test(path) && filter(path)) {
         if (!enableTempFiles) {
           return getCompiled(path)
