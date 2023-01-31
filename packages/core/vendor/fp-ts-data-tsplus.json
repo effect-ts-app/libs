@@ -749,17 +749,6 @@
       ]
     },
     {
-      "definitionName": "makeBy",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
-          "name": "makeBy"
-        }
-      ]
-    },
-    {
       "definitionName": "isChunk",
       "definitionKind": "const",
       "extensions": [
@@ -778,54 +767,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/Chunk.Ops",
           "name": "empty"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable",
-          "name": "filterMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
-          "name": "filterMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable",
-          "name": "filterMapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
-          "name": "filterMapWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMapWhile",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable",
-          "name": "filterMapWhile"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
-          "name": "filterMapWhile"
         }
       ]
     },
@@ -875,869 +816,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/Chunk.Ops",
           "name": "unfold"
-        }
-      ]
-    },
-    {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "get"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "get"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "unsafeGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "unsafeGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "append",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable-operator",
-          "name": "<<"
-        },
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "append"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "append"
-        }
-      ]
-    },
-    {
-      "definitionName": "prepend",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable-operator",
-          "name": ">>"
-        },
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "prepend"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "prepend"
-        }
-      ]
-    },
-    {
-      "definitionName": "take",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "take"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "take"
-        }
-      ]
-    },
-    {
-      "definitionName": "drop",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "drop"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "drop"
-        }
-      ]
-    },
-    {
-      "definitionName": "dropRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "dropRight"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "dropRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "dropWhile",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "dropWhile"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "dropWhile"
-        }
-      ]
-    },
-    {
-      "definitionName": "concat",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "fp-ts/data/Chunk",
-          "kind": "pipeable-operator",
-          "name": "+"
-        },
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "concat"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "concat"
-        }
-      ]
-    },
-    {
-      "definitionName": "correspondsTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "correspondsTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "correspondsTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "filter",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "filter"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "filter"
-        }
-      ]
-    },
-    {
-      "definitionName": "elem",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "elem"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "elem"
-        }
-      ]
-    },
-    {
-      "definitionName": "some",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "some"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "some"
-        }
-      ]
-    },
-    {
-      "definitionName": "every",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "every"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "every"
-        }
-      ]
-    },
-    {
-      "definitionName": "findFirstIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "findFirstIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "findFirstIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "findLastIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "findLastIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "findLastIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "flatMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "flatMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEach",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "forEach"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "forEach"
-        }
-      ]
-    },
-    {
-      "definitionName": "chunksOf",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "chunksOf"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "chunksOf"
-        }
-      ]
-    },
-    {
-      "definitionName": "intersection",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "intersection"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "intersection"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "reduce"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "reduce"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "reduceWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "reduceWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "reduceRight"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "reduceRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceRightWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "reduceRightWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "reduceRightWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "join",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "join"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "join"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "map"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "mapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "mapWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "partitionWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "partitionWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "partitionWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "partition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "partition"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "partition"
-        }
-      ]
-    },
-    {
-      "definitionName": "partitionMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "partitionMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "partitionMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "sort",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "sort"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "sort"
-        }
-      ]
-    },
-    {
-      "definitionName": "splitAt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "splitAt"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "splitAt"
-        }
-      ]
-    },
-    {
-      "definitionName": "split",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "split"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "split"
-        }
-      ]
-    },
-    {
-      "definitionName": "splitWhere",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "splitWhere"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "splitWhere"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "takeRight"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "takeRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeWhile",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "takeWhile"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "takeWhile"
-        }
-      ]
-    },
-    {
-      "definitionName": "zip",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "zip"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "zip"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "zipWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "zipWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "zipAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "zipAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipAllWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "zipAllWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "zipAllWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "crossWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "crossWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "crossWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "cross",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "cross"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "cross"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipWithIndexOffset",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "zipWithIndexOffset"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "zipWithIndexOffset"
-        }
-      ]
-    },
-    {
-      "definitionName": "remove",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "remove"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "remove"
-        }
-      ]
-    },
-    {
-      "definitionName": "replace",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "replace"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "replace"
-        }
-      ]
-    },
-    {
-      "definitionName": "replaceOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "replaceOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "replaceOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "modify",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "modify"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "modify"
-        }
-      ]
-    },
-    {
-      "definitionName": "modifyOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "modifyOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "modifyOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "prependAllNonEmpty",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "prependAllNonEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "prependAllNonEmpty"
-        }
-      ]
-    },
-    {
-      "definitionName": "findFirst",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "findFirst"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "findFirst"
-        }
-      ]
-    },
-    {
-      "definitionName": "findLast",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "findLast"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "findLast"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapAccum",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "mapAccum"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "mapAccum"
-        }
-      ]
-    },
-    {
-      "definitionName": "union",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Chunk",
-          "name": "union"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
-          "name": "union"
         }
       ]
     },
@@ -2157,77 +1235,13 @@
       ]
     },
     {
-      "definitionName": "add",
+      "definitionName": "getOption",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/Context.Ops",
-          "name": "add"
-        }
-      ]
-    },
-    {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Context",
-          "name": "get"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
-          "name": "get"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Context",
-          "name": "unsafeGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
-          "name": "unsafeGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "getOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Context",
           "name": "getOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
-          "name": "getOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "merge",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Context",
-          "name": "merge"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
-          "name": "merge"
         }
       ]
     },
@@ -2244,6 +1258,70 @@
           "kind": "static",
           "typeName": "fp-ts/data/Context.Aspects",
           "name": "prune"
+        }
+      ]
+    },
+    {
+      "definitionName": "add",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Context",
+          "name": "add"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "add"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Context",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Context",
+          "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "unsafeGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "merge",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Context",
+          "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/Context.Aspects",
+          "name": "merge"
         }
       ]
     }
@@ -2396,34 +1474,29 @@
       ]
     },
     {
-      "definitionName": "combine",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/ChunkPatch",
-          "name": "combine"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Aspects",
-          "name": "combine"
-        }
-      ]
-    },
-    {
       "definitionName": "patch",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/ChunkPatch",
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ChunkPatch.Ops",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "combine",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Differ/ChunkPatch",
+          "name": "combine"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Differ/ChunkPatch.Aspects",
-          "name": "patch"
+          "name": "combine"
         }
       ]
     }
@@ -2480,34 +1553,29 @@
       ]
     },
     {
-      "definitionName": "combine",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/ContextPatch",
-          "name": "combine"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Aspects",
-          "name": "combine"
-        }
-      ]
-    },
-    {
       "definitionName": "patch",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/ContextPatch",
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/ContextPatch.Ops",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "combine",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Differ/ContextPatch",
+          "name": "combine"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Differ/ContextPatch.Aspects",
-          "name": "patch"
+          "name": "combine"
         }
       ]
     }
@@ -2542,13 +1610,13 @@
       ]
     },
     {
-      "definitionName": "from",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/HashSet.Ops",
-          "name": "from"
+          "name": "fromIterable"
         }
       ]
     },
@@ -2595,7 +1663,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "has"
         },
@@ -2611,7 +1679,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "some"
         },
@@ -2627,7 +1695,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "every"
         },
@@ -2643,7 +1711,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "isSubset"
         },
@@ -2659,7 +1727,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "mutate"
         },
@@ -2675,7 +1743,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "add"
         },
@@ -2691,7 +1759,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "remove"
         },
@@ -2707,7 +1775,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "difference"
         },
@@ -2723,7 +1791,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "intersection"
         },
@@ -2739,7 +1807,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "union"
         },
@@ -2755,7 +1823,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "toggle"
         },
@@ -2771,7 +1839,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "map"
         },
@@ -2787,7 +1855,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "flatMap"
         },
@@ -2803,7 +1871,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "forEach"
         },
@@ -2819,7 +1887,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "reduce"
         },
@@ -2835,7 +1903,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "filter"
         },
@@ -2851,7 +1919,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/HashSet",
           "name": "partition"
         },
@@ -2973,13 +2041,13 @@
       ]
     },
     {
-      "definitionName": "from",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/HashMap.Ops",
-          "name": "from"
+          "name": "fromIterable"
         }
       ]
     },
@@ -3010,13 +2078,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "get"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "fp-ts/data/HashMap.Ops",
           "name": "get"
         }
       ]
@@ -3026,382 +2089,9 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Ops",
           "name": "getHash"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "getHash"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "unsafeGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "unsafeGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "has",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "has"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "has"
-        }
-      ]
-    },
-    {
-      "definitionName": "hasHash",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "hasHash"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "hasHash"
-        }
-      ]
-    },
-    {
-      "definitionName": "set",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "set"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "set"
-        }
-      ]
-    },
-    {
-      "definitionName": "mutate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "mutate"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "mutate"
-        }
-      ]
-    },
-    {
-      "definitionName": "modifyAt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "modifyAt"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "modifyAt"
-        }
-      ]
-    },
-    {
-      "definitionName": "modifyHash",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "modifyHash"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "modifyHash"
-        }
-      ]
-    },
-    {
-      "definitionName": "modify",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "modify"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "modify"
-        }
-      ]
-    },
-    {
-      "definitionName": "union",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "union"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "union"
-        }
-      ]
-    },
-    {
-      "definitionName": "remove",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "remove"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "remove"
-        }
-      ]
-    },
-    {
-      "definitionName": "removeMany",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "removeMany"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "removeMany"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "map"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "mapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "mapWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "flatMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "flatMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatMapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "flatMapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "flatMapWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEach",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "forEach"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "forEach"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEachWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "forEachWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "forEachWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "reduce"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "reduce"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "reduceWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "reduceWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "filter",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "filter"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "filter"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "filterWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "filterWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "filterMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "filterMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/HashMap",
-          "name": "filterMapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
-          "name": "filterMapWithIndex"
         }
       ]
     },
@@ -3418,6 +2108,374 @@
           "kind": "static",
           "typeName": "fp-ts/data/HashMap.Aspects",
           "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "unsafeGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "unsafeGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "hasHash",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "hasHash"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "hasHash"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "mutate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "mutate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "mutate"
+        }
+      ]
+    },
+    {
+      "definitionName": "modifyAt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "modifyAt"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "modifyAt"
+        }
+      ]
+    },
+    {
+      "definitionName": "modifyHash",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "modifyHash"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "modifyHash"
+        }
+      ]
+    },
+    {
+      "definitionName": "modify",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "modify"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "union"
+        }
+      ]
+    },
+    {
+      "definitionName": "remove",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeMany",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "removeMany"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "removeMany"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "mapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "mapWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "flatMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMapWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "flatMapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "flatMapWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEachWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "forEachWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "forEachWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "reduceWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "filterWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filterWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterMapWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/HashMap",
+          "name": "filterMapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/HashMap.Aspects",
+          "name": "filterMapWithIndex"
         }
       ]
     },
@@ -3586,34 +2644,29 @@
       ]
     },
     {
-      "definitionName": "combine",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/HashMapPatch",
-          "name": "combine"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Aspects",
-          "name": "combine"
-        }
-      ]
-    },
-    {
       "definitionName": "patch",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/HashMapPatch",
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashMapPatch.Ops",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "combine",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Differ/HashMapPatch",
+          "name": "combine"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Differ/HashMapPatch.Aspects",
-          "name": "patch"
+          "name": "combine"
         }
       ]
     }
@@ -3670,34 +2723,29 @@
       ]
     },
     {
-      "definitionName": "combine",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/HashSetPatch",
-          "name": "combine"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Aspects",
-          "name": "combine"
-        }
-      ]
-    },
-    {
       "definitionName": "patch",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/HashSetPatch",
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/HashSetPatch.Ops",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "combine",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Differ/HashSetPatch",
+          "name": "combine"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Differ/HashSetPatch.Aspects",
-          "name": "patch"
+          "name": "combine"
         }
       ]
     }
@@ -3754,34 +2802,29 @@
       ]
     },
     {
-      "definitionName": "combine",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/OrPatch",
-          "name": "combine"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/Differ/OrPatch.Aspects",
-          "name": "combine"
-        }
-      ]
-    },
-    {
       "definitionName": "patch",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/Differ/OrPatch",
+          "kind": "static",
+          "typeName": "fp-ts/data/Differ/OrPatch.Ops",
           "name": "patch"
+        }
+      ]
+    },
+    {
+      "definitionName": "combine",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/Differ/OrPatch",
+          "name": "combine"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/Differ/OrPatch.Aspects",
-          "name": "patch"
+          "name": "combine"
         }
       ]
     }
@@ -3875,7 +2918,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "diff"
         },
@@ -3891,7 +2934,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "combine"
         },
@@ -3907,7 +2950,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "patch"
         },
@@ -3923,7 +2966,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "orElseResult"
         },
@@ -3939,7 +2982,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "transform"
         },
@@ -3955,7 +2998,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Differ",
           "name": "zip"
         },
@@ -4153,7 +3196,7 @@
           "name": "*"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "times"
         },
@@ -4174,7 +3217,7 @@
           "name": "+"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "add"
         },
@@ -4195,7 +3238,7 @@
           "name": "-"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "subtract"
         },
@@ -4216,7 +3259,7 @@
           "name": "<"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "lessThan"
         },
@@ -4237,7 +3280,7 @@
           "name": "<="
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "lessThanOrEqualTo"
         },
@@ -4258,7 +3301,7 @@
           "name": ">"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "greaterThan"
         },
@@ -4279,7 +3322,7 @@
           "name": ">="
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "greaterThanOrEqualTo"
         },
@@ -4295,7 +3338,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/Duration",
           "name": "equals"
         },
@@ -4303,6 +3346,355 @@
           "kind": "static",
           "typeName": "fp-ts/data/Duration.Aspects",
           "name": "equals"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/data/List": [
+    {
+      "definitionName": "Cons",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/List/Cons"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/List/Cons.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Nil",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/List/Nil"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/List/Nil.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ListTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/List.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/List.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "List",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/data/List"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/data/List.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "isList",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "isList"
+        }
+      ]
+    },
+    {
+      "definitionName": "nil",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "nil"
+        }
+      ]
+    },
+    {
+      "definitionName": "cons",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "cons"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "of",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "of"
+        }
+      ]
+    },
+    {
+      "definitionName": "compact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Ops",
+          "name": "compact"
+        }
+      ]
+    },
+    {
+      "definitionName": "ListTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.TypeId.Ops",
+          "name": "ListTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "isNil",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/List",
+          "name": "isNil"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "isNil"
+        }
+      ]
+    },
+    {
+      "definitionName": "isCons",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/List",
+          "name": "isCons"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "isCons"
+        }
+      ]
+    },
+    {
+      "definitionName": "length",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "length"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "length"
+        }
+      ]
+    },
+    {
+      "definitionName": "head",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "head"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "head"
+        }
+      ]
+    },
+    {
+      "definitionName": "last",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "last"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "last"
+        }
+      ]
+    },
+    {
+      "definitionName": "reverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "reverse"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "reverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "tail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "tail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "tail"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "toChunk"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "toReadonlyArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeHead",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "unsafeHead"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "unsafeHead"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeLast",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "unsafeLast"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "unsafeLast"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeTail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/List",
+          "name": "unsafeTail"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/List.Aspects",
+          "name": "unsafeTail"
         }
       ]
     }
@@ -4379,13 +3771,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableHashMap",
-          "name": "get"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "fp-ts/data/MutableHashMap.Ops",
           "name": "get"
         }
       ]
@@ -4395,7 +3782,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "has"
         },
@@ -4411,7 +3798,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "modify"
         },
@@ -4419,22 +3806,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableHashMap.Aspects",
           "name": "modify"
-        }
-      ]
-    },
-    {
-      "definitionName": "set",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableHashMap",
-          "name": "set"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
-          "name": "set"
         }
       ]
     },
@@ -4443,7 +3814,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "modifyAt"
         },
@@ -4459,7 +3830,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashMap",
           "name": "remove"
         },
@@ -4467,6 +3838,22 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableHashMap.Aspects",
           "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableHashMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "name": "set"
         }
       ]
     },
@@ -4555,27 +3942,11 @@
       ]
     },
     {
-      "definitionName": "has",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableHashSet",
-          "name": "has"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Aspects",
-          "name": "has"
-        }
-      ]
-    },
-    {
       "definitionName": "add",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashSet",
           "name": "add"
         },
@@ -4583,6 +3954,22 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableHashSet.Aspects",
           "name": "add"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableHashSet",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "name": "has"
         }
       ]
     },
@@ -4591,7 +3978,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableHashSet",
           "name": "remove"
         },
@@ -4682,11 +4069,27 @@
       ]
     },
     {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableList",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableList.Aspects",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
       "definitionName": "forEach",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableList",
           "name": "forEach"
         },
@@ -4702,30 +4105,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableList",
-          "name": "append"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
-          "name": "append"
-        }
-      ]
-    },
-    {
-      "definitionName": "isEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
           "kind": "fluent",
           "typeName": "fp-ts/data/MutableList",
-          "name": "isEmpty"
+          "name": "append"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/MutableList.Aspects",
-          "name": "isEmpty"
+          "name": "append"
         }
       ]
     },
@@ -4889,70 +4276,6 @@
       ]
     },
     {
-      "definitionName": "offer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableQueue",
-          "name": "offer"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
-          "name": "offer"
-        }
-      ]
-    },
-    {
-      "definitionName": "offerAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableQueue",
-          "name": "offerAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
-          "name": "offerAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "poll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableQueue",
-          "name": "poll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
-          "name": "poll"
-        }
-      ]
-    },
-    {
-      "definitionName": "pollUpTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableQueue",
-          "name": "pollUpTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
-          "name": "pollUpTo"
-        }
-      ]
-    },
-    {
       "definitionName": "isEmpty",
       "definitionKind": "const",
       "extensions": [
@@ -4981,6 +4304,70 @@
           "kind": "static",
           "typeName": "fp-ts/data/MutableQueue.Aspects",
           "name": "isFull"
+        }
+      ]
+    },
+    {
+      "definitionName": "offer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableQueue",
+          "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "offer"
+        }
+      ]
+    },
+    {
+      "definitionName": "offerAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableQueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "offerAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "poll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableQueue",
+          "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "poll"
+        }
+      ]
+    },
+    {
+      "definitionName": "pollUpTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableQueue",
+          "name": "pollUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "name": "pollUpTo"
         }
       ]
     },
@@ -5063,11 +4450,59 @@
       ]
     },
     {
+      "definitionName": "compareAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableRef",
+          "name": "compareAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "compareAndSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableRef",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "getAndSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableRef",
+          "name": "getAndUpdate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "getAndUpdate"
+        }
+      ]
+    },
+    {
       "definitionName": "set",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableRef",
           "name": "set"
         },
@@ -5079,11 +4514,27 @@
       ]
     },
     {
+      "definitionName": "setAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/MutableRef",
+          "name": "setAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "name": "setAndGet"
+        }
+      ]
+    },
+    {
       "definitionName": "update",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableRef",
           "name": "update"
         },
@@ -5099,7 +4550,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/MutableRef",
           "name": "updateAndGet"
         },
@@ -5111,66 +4562,34 @@
       ]
     },
     {
-      "definitionName": "getAndUpdate",
+      "definitionName": "decrement",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
-          "name": "getAndUpdate"
+          "name": "decrement"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "getAndUpdate"
+          "name": "decrement"
         }
       ]
     },
     {
-      "definitionName": "setAndGet",
+      "definitionName": "decrementAndGet",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
-          "name": "setAndGet"
+          "name": "decrementAndGet"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "setAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndSet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableRef",
-          "name": "getAndSet"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "getAndSet"
-        }
-      ]
-    },
-    {
-      "definitionName": "compareAndSet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/MutableRef",
-          "name": "compareAndSet"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "compareAndSet"
+          "name": "decrementAndGet"
         }
       ]
     },
@@ -5191,18 +4610,18 @@
       ]
     },
     {
-      "definitionName": "incrementAndGet",
+      "definitionName": "getAndDecrement",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
-          "name": "incrementAndGet"
+          "name": "getAndDecrement"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "incrementAndGet"
+          "name": "getAndDecrement"
         }
       ]
     },
@@ -5239,50 +4658,18 @@
       ]
     },
     {
-      "definitionName": "decrementAndGet",
+      "definitionName": "incrementAndGet",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/data/MutableRef",
-          "name": "decrementAndGet"
+          "name": "incrementAndGet"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "decrementAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndDecrement",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
-          "name": "getAndDecrement"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "getAndDecrement"
-        }
-      ]
-    },
-    {
-      "definitionName": "decrement",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
-          "name": "decrement"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
-          "name": "decrement"
+          "name": "incrementAndGet"
         }
       ]
     },
@@ -5333,13 +4720,13 @@
       ]
     },
     {
-      "definitionName": "from",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/RedBlackTree.Ops",
-          "name": "from"
+          "name": "fromIterable"
         }
       ]
     },
@@ -5377,82 +4764,24 @@
       ]
     },
     {
-      "definitionName": "keys",
+      "definitionName": "at",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "keys"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "keys"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "at"
         }
       ]
     },
     {
-      "definitionName": "values",
+      "definitionName": "atReversed",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "values"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "values"
-        }
-      ]
-    },
-    {
-      "definitionName": "has",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "has"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "has"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "getAt"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "getAt"
-        }
-      ]
-    },
-    {
-      "definitionName": "find",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "find"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "find"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "atReversed"
         }
       ]
     },
@@ -5461,62 +4790,20 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "findFirst"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
           "name": "findFirst"
         }
       ]
     },
     {
-      "definitionName": "insert",
+      "definitionName": "getAt",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "insert"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "insert"
-        }
-      ]
-    },
-    {
-      "definitionName": "removeFirst",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "removeFirst"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "removeFirst"
-        }
-      ]
-    },
-    {
-      "definitionName": "at",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "at"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "at"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "getAt"
         }
       ]
     },
@@ -5525,14 +4812,20 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
           "name": "greaterThan"
-        },
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanReversed",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "greaterThan"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "greaterThanReversed"
         }
       ]
     },
@@ -5541,14 +4834,20 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
           "name": "greaterThanEqual"
-        },
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanEqualReversed",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "greaterThanEqual"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "greaterThanEqualReversed"
         }
       ]
     },
@@ -5557,14 +4856,20 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
           "name": "lessThan"
-        },
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanReversed",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "lessThan"
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "lessThanReversed"
         }
       ]
     },
@@ -5573,14 +4878,68 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
           "name": "lessThanEqual"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanEqualReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "name": "lessThanEqualReversed"
+        }
+      ]
+    },
+    {
+      "definitionName": "find",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "find"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "lessThanEqual"
+          "name": "find"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "insert",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "insert"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "insert"
         }
       ]
     },
@@ -5589,7 +4948,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEach"
         },
@@ -5605,7 +4964,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEachGreaterThanEqual"
         },
@@ -5621,7 +4980,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEachLessThan"
         },
@@ -5637,7 +4996,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "forEachBetween"
         },
@@ -5653,7 +5012,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "reduce"
         },
@@ -5669,7 +5028,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
           "name": "reduceWithIndex"
         },
@@ -5681,34 +5040,18 @@
       ]
     },
     {
-      "definitionName": "getOrder",
+      "definitionName": "removeFirst",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "fp-ts/data/RedBlackTree",
-          "name": "getOrder"
+          "name": "removeFirst"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "getOrder"
-        }
-      ]
-    },
-    {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "size"
+          "name": "removeFirst"
         }
       ]
     },
@@ -5729,6 +5072,54 @@
       ]
     },
     {
+      "definitionName": "getOrder",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "getOrder"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "getOrder"
+        }
+      ]
+    },
+    {
+      "definitionName": "keys",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "keys"
+        }
+      ]
+    },
+    {
+      "definitionName": "keysReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "keysReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "keysReversed"
+        }
+      ]
+    },
+    {
       "definitionName": "last",
       "definitionKind": "const",
       "extensions": [
@@ -5745,18 +5136,66 @@
       ]
     },
     {
-      "definitionName": "backwards",
+      "definitionName": "reversed",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/data/RedBlackTree",
-          "name": "backwards"
+          "name": "reversed"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/data/RedBlackTree.Aspects",
-          "name": "backwards"
+          "name": "reversed"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "values",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "values"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "values"
+        }
+      ]
+    },
+    {
+      "definitionName": "valuesReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/RedBlackTree",
+          "name": "valuesReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "name": "valuesReversed"
         }
       ]
     }
@@ -5791,13 +5230,13 @@
       ]
     },
     {
-      "definitionName": "from",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/SortedMap.Ops",
-          "name": "from"
+          "name": "fromIterable"
         }
       ]
     },
@@ -5844,126 +5283,9 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Ops",
           "name": "get"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "get"
-        }
-      ]
-    },
-    {
-      "definitionName": "set",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "set"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "set"
-        }
-      ]
-    },
-    {
-      "definitionName": "remove",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "remove"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "remove"
-        }
-      ]
-    },
-    {
-      "definitionName": "has",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "has"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "has"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "reduce"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "reduce"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "reduceWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "reduceWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapWithIndex",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "mapWithIndex"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "mapWithIndex"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "map"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "map"
         }
       ]
     },
@@ -5996,6 +5318,118 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "isNonEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "mapWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "mapWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceWithIndex",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "reduceWithIndex"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "reduceWithIndex"
+        }
+      ]
+    },
+    {
+      "definitionName": "remove",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "set"
         }
       ]
     },
@@ -6048,22 +5482,6 @@
       ]
     },
     {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
-          "name": "size"
-        }
-      ]
-    },
-    {
       "definitionName": "keys",
       "definitionKind": "const",
       "extensions": [
@@ -6076,6 +5494,22 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedMap.Aspects",
           "name": "keys"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/SortedMap",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -6126,18 +5560,24 @@
       ]
     },
     {
-      "definitionName": "from",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/SortedSet.Ops",
           "kind": "static",
-          "name": "__call"
-        },
+          "typeName": "fp-ts/data/SortedSet.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Ops",
-          "name": "from"
+          "name": "make"
         }
       ]
     },
@@ -6164,33 +5604,11 @@
       ]
     },
     {
-      "definitionName": "flatMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Ops",
-          "name": "flatMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Ops",
-          "name": "map"
-        }
-      ]
-    },
-    {
       "definitionName": "add",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/SortedSet",
           "name": "add"
         },
@@ -6198,54 +5616,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "add"
-        }
-      ]
-    },
-    {
-      "definitionName": "remove",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "remove"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "remove"
-        }
-      ]
-    },
-    {
-      "definitionName": "toggle",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "toggle"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "toggle"
-        }
-      ]
-    },
-    {
-      "definitionName": "has",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "has"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "has"
         }
       ]
     },
@@ -6254,7 +5624,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/SortedSet",
           "name": "difference"
         },
@@ -6262,38 +5632,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "difference"
-        }
-      ]
-    },
-    {
-      "definitionName": "union",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "union"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "union"
-        }
-      ]
-    },
-    {
-      "definitionName": "intersection",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "intersection"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "intersection"
         }
       ]
     },
@@ -6302,7 +5640,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/SortedSet",
           "name": "every"
         },
@@ -6310,54 +5648,6 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "every"
-        }
-      ]
-    },
-    {
-      "definitionName": "some",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "some"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "some"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEach",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "forEach"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "forEach"
-        }
-      ]
-    },
-    {
-      "definitionName": "isSubset",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "isSubset"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "isSubset"
         }
       ]
     },
@@ -6366,7 +5656,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/SortedSet",
           "name": "filter"
         },
@@ -6378,11 +5668,107 @@
       ]
     },
     {
+      "definitionName": "flatMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "flatMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "forEach",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "forEach"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "intersection",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "intersection"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "intersection"
+        }
+      ]
+    },
+    {
+      "definitionName": "isSubset",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "isSubset"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "isSubset"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
       "definitionName": "partition",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/data/SortedSet",
           "name": "partition"
         },
@@ -6390,6 +5776,86 @@
           "kind": "static",
           "typeName": "fp-ts/data/SortedSet.Aspects",
           "name": "partition"
+        }
+      ]
+    },
+    {
+      "definitionName": "remove",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "remove"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "some",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "some"
+        }
+      ]
+    },
+    {
+      "definitionName": "toggle",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "toggle"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "toggle"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "union"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/data/SortedSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "name": "size"
         }
       ]
     },
@@ -6408,20 +5874,17 @@
           "name": "values"
         }
       ]
-    },
+    }
+  ],
+  "@fp-ts/data/Dual": [
     {
-      "definitionName": "size",
+      "definitionName": "dual",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
-          "typeName": "fp-ts/data/SortedSet",
-          "name": "size"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
-          "name": "size"
+          "typeName": "fp-ts/data/Dual.Ops",
+          "name": "dual"
         }
       ]
     }
