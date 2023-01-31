@@ -312,8 +312,11 @@ export function saveManyWithPure<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>, batchSize?: number) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>) =>
+>(self: Repository<T, PM, Evt, Id, ItemType>) {
+  return <R, A, E, S1 extends T, S2 extends T>(
+    pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>,
+    batchSize?: number
+  ) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure, batchSize)
 }
 
