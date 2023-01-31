@@ -307,7 +307,7 @@ export function match(method: Methods): {
 
 export function defaultExitHandler(
   _req: Request,
-  _res: Response,
+  res: Response,
   _next: NextFunction
 ): (cause: Cause<never>) => Effect<never, never, void> {
   return cause =>
@@ -315,7 +315,7 @@ export function defaultExitHandler(
       if (cause.isDie()) {
         console.error(cause.pretty)
       }
-      _res.status(500).end()
+      res.status(500).end()
     })
 }
 
@@ -324,8 +324,8 @@ export function use<
 >(
   ...handlers: Handlers
 ): Effect<
-  & ExpressEnv
-  & _R<
+  | ExpressEnv
+  | _R<
     {
       [k in keyof Handlers]: [Handlers[k]] extends [
         EffectRequestHandler<infer R, any, any, any, any, any>
@@ -354,7 +354,7 @@ export function use<
   never,
   void
 >
-export function use(...args: any[]): Effect<ExpressEnv, never, void> {
+export function use(...args: any[]) {
   return withExpressApp(app => {
     if (typeof args[0] === "function") {
       return expressRuntime(
