@@ -276,12 +276,11 @@ export function queryAndSavePureEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>,
-  batchSize?: number
+  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Iterable<S2>>, E2, A>) =>
     queryEffect(self, map)
-      .flatMap(_ => self.saveManyWithPure_(_, pure, batchSize))
+      .flatMap(_ => self.saveManyWithPure_(_, pure))
 }
 
 /**
@@ -297,10 +296,9 @@ export function queryAndSavePure<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number },
-  batchSize?: number
+  map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.queryAndSavePureEffect(Effect(map), batchSize)
+  return self.queryAndSavePureEffect(Effect(map))
 }
 
 /**
@@ -313,11 +311,8 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, Id, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(
-    pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>,
-    batchSize?: number
-  ) =>
-  (items: Iterable<S1>) => saveManyWithPure_(self, items, pure, batchSize)
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>) =>
+  (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
 
 /**
@@ -368,21 +363,12 @@ export function saveManyWithPure_<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>,
-  batchSize?: number
+  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>
 ) {
-  return batchSize
-    ? items.chunk(batchSize)
-      .forEachEffect(batch =>
-        saveAllWithEffectInt(
-          self,
-          pure.runTerm(batch.toChunk)
-        )
-      )
-    : saveAllWithEffectInt(
-      self,
-      pure.runTerm(items.toChunk)
-    )
+  return saveAllWithEffectInt(
+    self,
+    pure.runTerm(items.toChunk)
+  )
 }
 
 /**
