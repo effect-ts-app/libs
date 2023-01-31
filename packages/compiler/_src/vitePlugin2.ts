@@ -4,35 +4,45 @@ import * as nodePath from "path"
 import ts from "typescript"
 import type * as V from "vite"
 
-const configPath = ts.findConfigFile("./", f => ts.sys.fileExists(f), "tsconfig.json")
-
-if (!configPath) {
-  throw new Error("Could not find a valid \"tsconfig.json\".")
-}
-
-const baseDir = nodePath.dirname(nodePath.resolve(configPath))
-const cacheDir = nodePath.join(baseDir, ".cache/effect")
-
-if (!fs.existsSync(cacheDir)) {
-  fs.mkdirSync(cacheDir, { recursive: true })
-}
-
 const registry = ts.createDocumentRegistry()
 const files = new Set<string>()
 
-let services: ts.LanguageService
-
-const getScriptVersion = (fileName: string): string => {
-  const modified = ts.sys.getModifiedTime!(fileName)
-  if (modified) {
-    return ts.sys.createHash!(`${fileName}${modified.toISOString()}`)
-  } else {
-    files.delete(fileName)
-  }
-  return "none"
+interface Options {
+  enableCache?: boolean
+  enableTempFiles?: boolean
+  include?: readonly string[]
+  exclude?: readonly string[]
+  tsconfig?: string
 }
 
-const init = () => {
+export function effectPlugin(options?: Options): Array<V.PluginOption> {
+  const enableCache = options?.enableCache ?? true
+  const enableTempFiles = options?.enableTempFiles ?? false
+
+  const filter = createFilter(options?.include, options?.exclude)
+  const configPath = ts.findConfigFile("./", ts.sys.fileExists.bind(ts.sys), options?.tsconfig ?? "tsconfig.json")
+
+  if (!configPath) {
+    throw new Error(`Could not find a valid "${options?.tsconfig ?? "tsconfig.json"}".`)
+  }
+
+  const baseDir = nodePath.dirname(nodePath.resolve(configPath))
+  const cacheDir = nodePath.join(baseDir, ".cache/effect")
+
+  if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true })
+  }
+
+  const getScriptVersion = (fileName: string): string => {
+    const modified = ts.sys.getModifiedTime!(fileName)
+    if (modified) {
+      return ts.sys.createHash!(`${fileName}${modified.toISOString()}`)
+    } else {
+      files.delete(fileName)
+    }
+    return "none"
+  }
+
   const { config } = ts.parseConfigFileTextToJson(
     configPath,
     ts.sys.readFile(configPath)!
@@ -81,117 +91,103 @@ const init = () => {
 
   const services = ts.createLanguageService(servicesHost, registry)
 
-  setTimeout(() => {
-    services.getProgram()
-  }, 200)
+  const getEmit = (path: string) => {
+    files.add(path)
 
-  return services
-}
+    const program = services.getProgram()!
+    const source = program.getSourceFile(path)
 
-const getEmit = (path: string) => {
-  files.add(path)
+    let text: string | undefined
 
-  const program = services.getProgram()!
-  const source = program.getSourceFile(path)
+    program.emit(
+      source,
+      (file, content) => {
+        if (file.endsWith(".js") || file.endsWith(".jsx")) {
+          text = content
+        }
+      },
+      void 0,
+      void 0
+    )
 
-  let text: string | undefined
+    if (!text) {
+      throw new Error(`Typescript failed emit for file: ${path}`)
+    }
 
-  program.emit(
-    source,
-    (file, content) => {
-      if (file.endsWith(".js") || file.endsWith(".jsx")) {
-        text = content
+    return text
+  }
+
+  const cache = new Map<string, { hash: string; content: string }>()
+
+  const fromCache = (fileName: string) => {
+    const current = getScriptVersion(fileName)
+    if (cache.has(fileName)) {
+      const cached = cache.get(fileName)!
+      if (cached.hash === current) {
+        return cached.content
       }
-    },
-    void 0,
-    void 0
-  )
-
-  if (!text) {
-    throw new Error(`Typescript failed emit for file: ${path}`)
-  }
-
-  return text
-}
-
-const cache = new Map<string, { hash: string; content: string }>()
-
-export const fromCache = (fileName: string) => {
-  const current = getScriptVersion(fileName)
-  if (cache.has(fileName)) {
-    const cached = cache.get(fileName)!
-    if (cached.hash === current) {
-      return cached.content
+    }
+    const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
+    if (fs.existsSync(path)) {
+      const hash = fs.readFileSync(path).toString("utf-8")
+      if (hash === current) {
+        return fs
+          .readFileSync(
+            nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`)
+          )
+          .toString("utf-8")
+      }
     }
   }
-  const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
-  if (fs.existsSync(path)) {
-    const hash = fs.readFileSync(path).toString("utf-8")
-    if (hash === current) {
-      return fs
-        .readFileSync(
-          nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`)
-        )
-        .toString("utf-8")
-    }
+
+  const toCache = (fileName: string, content: string) => {
+    const current = getScriptVersion(fileName)
+    const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
+    fs.writeFileSync(path, current)
+    fs.writeFileSync(
+      nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`),
+      content
+    )
+    cache.set(fileName, { hash: current, content })
+    return content
   }
-}
 
-export const toCache = (fileName: string, content: string) => {
-  const current = getScriptVersion(fileName)
-  const path = nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.hash`)
-  fs.writeFileSync(path, current)
-  fs.writeFileSync(
-    nodePath.join(cacheDir, `${ts.sys.createHash!(fileName)}.content`),
-    content
-  )
-  cache.set(fileName, { hash: current, content })
-  return content
-}
+  const getCompiled = (path: string) => {
+    const cached = enableCache && fromCache(path)
+    if (cached) {
+      return {
+        code: cached
+      }
+    }
 
-export const getCompiled = (path: string, enableCache: boolean) => {
-  const cached = enableCache && fromCache(path)
-  if (cached) {
+    const syntactic = services.getSyntacticDiagnostics(path)
+
+    if (syntactic.length > 0) {
+      throw new Error(
+        syntactic
+          .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+          .join("\n")
+      )
+    }
+
+    const semantic = services.getSemanticDiagnostics(path)
+    services.cleanupSemanticCache()
+
+    if (semantic.length > 0) {
+      throw new Error(
+        semantic
+          .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+          .join("\n")
+      )
+    }
+
+    const code = toCache(path, getEmit(path))
+
     return {
-      code: cached
+      code
     }
   }
 
-  const syntactic = services.getSyntacticDiagnostics(path)
-
-  if (syntactic.length > 0) {
-    throw new Error(
-      syntactic
-        .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
-        .join("\n")
-    )
-  }
-
-  const semantic = services.getSemanticDiagnostics(path)
-  services.cleanupSemanticCache()
-
-  if (semantic.length > 0) {
-    throw new Error(
-      semantic
-        .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
-        .join("\n")
-    )
-  }
-
-  const code = toCache(path, getEmit(path))
-
-  return {
-    code
-  }
-}
-
-export function effectPlugin(options?: any): V.PluginOption[] {
-  const enableCache = options?.enableCache ?? true
-  const enableTempFiles = options?.enableTempFiles ?? false
-  const filter = createFilter(options?.include, options?.exclude)
-  if (!services) {
-    services = init()
-  }
   const plugin: V.PluginOption = {
     name: "vite:typescript-effect",
     enforce: "pre",
@@ -240,7 +236,7 @@ export function effectPlugin(options?: any): V.PluginOption[] {
     transform(_, path) {
       if (/\.tsx?/.test(path) && filter(path)) {
         if (!enableTempFiles) {
-          return getCompiled(path, enableCache)
+          return getCompiled(path)
         }
         // Compatibility for editor buffers like in Quokka, Wallaby, etc.
         // TODO: only do temp file, if the content of buffer is different from file content..
@@ -248,7 +244,7 @@ export function effectPlugin(options?: any): V.PluginOption[] {
         fs.writeFileSync(fn, _, "utf-8")
         path = fn
         files.add(path)
-        const compiled = getCompiled(path, enableCache)
+        const compiled = getCompiled(path)
         fs.unlink(path, err => {
           if (err) console.error(err)
           files.delete(path)
