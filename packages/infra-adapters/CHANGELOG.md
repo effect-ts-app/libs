@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.14.2
+
+### Patch Changes
+
+- 26c5251f: fix: express use() return type. Thanks [@NexZhu](https://github.com/NexZhu)
+
 ## 0.14.1
 
 ### Patch Changes
