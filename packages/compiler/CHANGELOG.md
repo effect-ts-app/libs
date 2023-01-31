@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.10.1
+
+### Patch Changes
+
+- 604cd62e: Cleanup cache
+
 ## 0.10.0
 
 ### Minor Changes
