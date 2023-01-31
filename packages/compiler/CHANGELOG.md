@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.10.0
+
+### Minor Changes
+
+- e196a928: Update compiler plugin to latest basis
+
 ## 0.9.0
 
 ### Minor Changes
