@@ -29,7 +29,7 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
   const baseDir = nodePath.dirname(nodePath.resolve(configPath))
   const cacheDir = nodePath.join(baseDir, ".cache/effect")
 
-  if (!fs.existsSync(cacheDir)) {
+  if (enableCache && !fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir, { recursive: true })
   }
 
@@ -181,7 +181,7 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
       )
     }
 
-    const code = toCache(path, getEmit(path))
+    const code = enableCache ? toCache(path, getEmit(path)) : getEmit(path)
 
     return {
       code
