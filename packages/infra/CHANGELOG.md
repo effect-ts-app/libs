@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.17.7
+
+### Patch Changes
+
+- d3024081: Fix "NOT ARRAY_CONTAINS"
+
 ## 0.17.6
 
 ### Patch Changes
