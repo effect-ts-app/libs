@@ -10,12 +10,16 @@ export class RequestException<E> extends CauseException<E> {
 export const reportRequestError_ = reportError(cause => new RequestException(cause))
 
 export const reportRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
-  RequestContext.Tag.accessWithEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
+  Debug.untraced(() =>
+    RequestContext.Tag.accessWithEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
+  )
 
 export const logRequestError_ = logError(cause => new RequestException(cause))
 
 export const logRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
-  RequestContext.Tag.accessWithEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
+  Debug.untraced(() =>
+    RequestContext.Tag.accessWithEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
+  )
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
@@ -27,8 +31,10 @@ export const logRequestError = (cause: Cause<unknown>, context?: Record<string, 
  * @tsplus getter effect/io/Effect forkDaemonReportRequest
  */
 export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
-  return self.tapErrorCause(reportRequestError)
-    .fork.daemonChildren
+  return Debug.untraced(() =>
+    self.tapErrorCause(reportRequestError)
+      .fork.daemonChildren
+  )
 }
 
 /**
@@ -41,10 +47,12 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
  * @tsplus getter effect/io/Effect forkDaemonReportRequestUnexpected
  */
 export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>) {
-  return self.tapErrorCause(cause =>
-    cause.isInterruptedOnly() || cause.isDie()
-      ? reportRequestError(cause)
-      : logRequestError(cause)
+  return Debug.untraced(() =>
+    self.tapErrorCause(cause =>
+      cause.isInterruptedOnly() || cause.isDie()
+        ? reportRequestError(cause)
+        : logRequestError(cause)
+    )
+      .fork.daemonChildren
   )
-    .fork.daemonChildren
 }

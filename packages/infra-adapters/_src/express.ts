@@ -143,18 +143,21 @@ export const makeExpressApp = Effect.gen(function*(_) {
           : never
       }[number]
     >
-    return Debug.untraced(() =>
-      Effect.runtime<Env>().map(r =>
-        handlers.map(
-          (handler): RequestHandler => (req, res, next) => {
+    return Effect.runtime<Env>().map(r =>
+      handlers.map(
+        (handler): RequestHandler => (req, res, next) => {
+          // TODO: restore trace from "handler"
+          Debug.untraced(restore =>
             r.runCallback(
               open.get
-                .flatMap(open => open ? handler(req, res, next) : Effect.interrupt())
-                .onError(exitHandler(req, res, next))
-                .supervised(supervisor)
+                .flatMap(open =>
+                  restore(() => (open ? handler(req, res, next) : Effect.interrupt()))()
+                    .onError(exitHandler(req, res, next))
+                    .supervised(supervisor)
+                )
             )
-          }
-        )
+          )
+        }
       )
     )
   }

@@ -294,7 +294,7 @@ export function makeRequestHandler<
   }
 
   return (req: express.Request, res: express.Response) => {
-    return Debug.untraced(() =>
+    return Debug.untraced(restore =>
       Effect.struct({
         requestContext: Effect(() => {
           const requestContext = makeContext(req)
@@ -335,7 +335,7 @@ export function makeRequestHandler<
                   return hn
                 })
                 .flatMap(parsedReq =>
-                  handle(parsedReq as any)
+                  restore(() => handle(parsedReq as any))()
                     .flatMap(r => respond(parsedReq, res, r))
                 )
               // Commands should not be interruptable.
