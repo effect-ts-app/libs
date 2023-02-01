@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.17.0
+
+### Minor Changes
+
+- 9f9b2d32: Update effect and fp-ts
+
 ## 0.16.1
 
 ### Patch Changes

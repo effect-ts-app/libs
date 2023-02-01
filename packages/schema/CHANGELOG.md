@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.15.0
+
+### Minor Changes
+
+- 9f9b2d32: Update effect and fp-ts
+
+### Patch Changes
+
+- Updated dependencies [9f9b2d32]
+  - @effect-app/core@0.17.0
+
 ## 0.14.1
 
 ### Patch Changes
