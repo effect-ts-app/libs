@@ -6,8 +6,6 @@
     "@types/faker",
     "redis",
     "@types/redis",
-    "react-hook-form",
-    "@effect/io",
-    "@fp-ts/data",
+    "react-hook-form"
   ]
 }

@@ -2220,6 +2220,17 @@
       ]
     },
     {
+      "definitionName": "unwrap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "unwrap"
+        }
+      ]
+    },
+    {
       "definitionName": "ConfigTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -2503,6 +2514,167 @@
       ]
     }
   ],
+  "@effect/io/Config/Provider/PathPatch": [
+    {
+      "definitionName": "Empty",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch/Empty"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch/Empty.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "AndThen",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch/AndThen"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch/AndThen.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "MapName",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch/MapName"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch/MapName.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Nested",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch/Nested"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch/Nested.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Unnested",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch/Unnested"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch/Unnested.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "PathPatch",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/Provider/PathPatch"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider/PathPatch",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapName",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider/PathPatch",
+          "name": "mapName"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "name": "mapName"
+        }
+      ]
+    },
+    {
+      "definitionName": "nested",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider/PathPatch",
+          "name": "nested"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "name": "nested"
+        }
+      ]
+    },
+    {
+      "definitionName": "unnested",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider/PathPatch",
+          "name": "unnested"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "name": "unnested"
+        }
+      ]
+    }
+  ],
   "@effect/io/Config/Provider": [
     {
       "definitionName": "ConfigProvider",
@@ -2624,6 +2796,22 @@
       ]
     },
     {
+      "definitionName": "contramapPath",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider",
+          "name": "contramapPath"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "contramapPath"
+        }
+      ]
+    },
+    {
       "definitionName": "nested",
       "definitionKind": "const",
       "extensions": [
@@ -2652,6 +2840,118 @@
           "kind": "static",
           "typeName": "effect/io/Config/Provider.Aspects",
           "name": "orElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "unnested",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider",
+          "name": "unnested"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "unnested"
+        }
+      ]
+    },
+    {
+      "definitionName": "within",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config/Provider",
+          "name": "within"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "within"
+        }
+      ]
+    },
+    {
+      "definitionName": "constantCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Config/Provider",
+          "name": "constantCase"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "constantCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "kebabCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Config/Provider",
+          "name": "kebabCase"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "kebabCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "lowerCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Config/Provider",
+          "name": "lowerCase"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "lowerCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "snakeCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Config/Provider",
+          "name": "snakeCase"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "snakeCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "upperCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Config/Provider",
+          "name": "upperCase"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config/Provider.Aspects",
+          "name": "upperCase"
         }
       ]
     }
@@ -18804,6 +19104,101 @@
           "kind": "static",
           "typeName": "effect/io/Hub.Aspects",
           "name": "subscribe"
+        }
+      ]
+    }
+  ],
+  "@effect/io/Pool": [
+    {
+      "definitionName": "Pool",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Pool"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Pool.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "PoolTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Pool.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Pool.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeWithTTL",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.Ops",
+          "name": "makeWithTTL"
+        }
+      ]
+    },
+    {
+      "definitionName": "PoolTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.TypeId.Ops",
+          "name": "PoolTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "invalidate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Pool",
+          "name": "invalidate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.Aspects",
+          "name": "invalidate"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Pool",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.Aspects",
+          "name": "get"
         }
       ]
     }

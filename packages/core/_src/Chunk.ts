@@ -92,3 +92,19 @@ export function elem<A>(E: Equivalence<A>, value: A) {
  * @tsplus pipeable fp-ts/data/Chunk partition
  */
 export const ChunkPartition = Chunk.partition
+
+/**
+ * @tsplus fluent fp-ts/data/Chunk findFirst
+ */
+export const findFirstSimple: {
+  <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>
+  <A>(self: Chunk.Chunk<A>, predicate: Predicate<A>): Option<A>
+} = Chunk.findFirst
+
+/**
+ * @tsplus fluent fp-ts/data/Chunk findLast
+ */
+export const findLastSimple: {
+  <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>
+  <A>(self: Chunk.Chunk<A>, predicate: Predicate<A>): Option<A>
+} = Chunk.findLast
