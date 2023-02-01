@@ -178,6 +178,11 @@ import { Lens, lens, Optic } from "@fp-ts/optic"
  */
 import type { lazyGetter } from "@effect-app/core/utils"
 
+/**
+ * @tsplus global
+ */
+import { Debug } from "@effect/io/Debug"
+
 import "./_global.ext.js"
 import "./Array.js"
 import "./Aspects.js"

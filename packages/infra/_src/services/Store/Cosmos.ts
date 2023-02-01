@@ -124,7 +124,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               .logAnnotate("cosmos.db", containerId)
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
-            return Do($ => {
+            return Effect.suspendSucceed(() => {
               const batch = [...items].map(
                 x =>
                   [
@@ -152,36 +152,34 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
 
               const ex = batch.map(([, c]) => c)
 
-              return $(
-                Effect.promise(() => execBatch(ex, ex[0]?.resourceBody._partitionKey))
-                  .flatMap(x =>
-                    Effect.gen(function*($) {
-                      const result = x.result ?? []
-                      const firstFailed = result.find(
-                        (x: any) => x.statusCode > 299 || x.statusCode < 200
-                      )
-                      if (firstFailed) {
-                        const code = firstFailed.statusCode ?? 0
-                        if (code === 412) {
-                          return yield* $(
-                            Effect.fail(new OptimisticConcurrencyException(name, "batch"))
-                          )
-                        }
-
+              return Effect.promise(() => execBatch(ex, ex[0]?.resourceBody._partitionKey))
+                .flatMap(x =>
+                  Effect.gen(function*($) {
+                    const result = x.result ?? []
+                    const firstFailed = result.find(
+                      (x: any) => x.statusCode > 299 || x.statusCode < 200
+                    )
+                    if (firstFailed) {
+                      const code = firstFailed.statusCode ?? 0
+                      if (code === 412) {
                         return yield* $(
-                          Effect.die(
-                            new CosmosDbOperationError("not able to update record: " + code)
-                          )
+                          Effect.fail(new OptimisticConcurrencyException(name, "batch"))
                         )
                       }
 
-                      return batch.map(([e], i) => ({
-                        ...e,
-                        _etag: result[i]?.eTag
-                      })) as unknown as NonEmptyReadonlyArray<PM>
-                    })
-                  )
-              )
+                      return yield* $(
+                        Effect.die(
+                          new CosmosDbOperationError("not able to update record: " + code)
+                        )
+                      )
+                    }
+
+                    return batch.map(([e], i) => ({
+                      ...e,
+                      _etag: result[i]?.eTag
+                    })) as unknown as NonEmptyReadonlyArray<PM>
+                  })
+                )
             }).instrument("cosmos.batchSet")
               .logAnnotate("cosmos.db", containerId)
           }
