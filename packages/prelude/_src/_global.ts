@@ -87,7 +87,6 @@ import { ServiceTagged } from "@effect-app/prelude/service"
 import { match, Pattern } from "ts-pattern"
 
 import "@effect-app/core/_global"
-import "@effect-app/core/fluent/_ext/awesome/lib"
 import "@effect-app/core/Prelude"
 import "@effect-app/schema/_global"
 import "./_global.ext.js"
