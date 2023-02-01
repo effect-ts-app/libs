@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 0.18.2
+
+### Patch Changes
+
+- Untrace routing and express
+- Updated dependencies
+  - @effect-app/infra-adapters@0.15.2
+
 ## 0.18.1
 
 ### Patch Changes

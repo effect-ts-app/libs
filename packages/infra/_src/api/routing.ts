@@ -294,116 +294,118 @@ export function makeRequestHandler<
   }
 
   return (req: express.Request, res: express.Response) => {
-    return Effect.struct({
-      requestContext: Effect(() => {
-        const requestContext = makeContext(req)
-        if (req.method === "GET") {
-          res.setHeader("Cache-Control", "no-store")
-        }
-        res.setHeader("Content-Language", requestContext.locale)
-        return requestContext
-      }),
-      pars: getParams(req)
-    })
-      .flatMap(({ pars, requestContext }) =>
-        RequestSettings.get.flatMap(s =>
-          Effect.logInfo("Incoming request").apply(
-            Effect.logAnnotates({
-              method: req.method,
-              path: req.originalUrl,
-              ...s.verbose
-                ? {
-                  reqPath: pars.path.$$.pretty,
-                  reqQuery: pars.query.$$.pretty,
-                  reqBody: pretty(pars.body),
-                  reqCookies: pretty(pars.cookies),
-                  reqHeaders: pars.headers.$$.pretty
-                } :
-                undefined
+    return Debug.untraced(() =>
+      Effect.struct({
+        requestContext: Effect(() => {
+          const requestContext = makeContext(req)
+          if (req.method === "GET") {
+            res.setHeader("Cache-Control", "no-store")
+          }
+          res.setHeader("Content-Language", requestContext.locale)
+          return requestContext
+        }),
+        pars: getParams(req)
+      })
+        .flatMap(({ pars, requestContext }) =>
+          RequestSettings.get.flatMap(s =>
+            Effect.logInfo("Incoming request").apply(
+              Effect.logAnnotates({
+                method: req.method,
+                path: req.originalUrl,
+                ...s.verbose
+                  ? {
+                    reqPath: pars.path.$$.pretty,
+                    reqQuery: pars.query.$$.pretty,
+                    reqBody: pretty(pars.body),
+                    reqCookies: pretty(pars.cookies),
+                    reqHeaders: pars.headers.$$.pretty
+                  } :
+                  undefined
+              })
+            )
+          ).zipRight(
+            Effect.suspendSucceed(() => {
+              const handleRequest = parseRequest(req)
+                .map(({ body, path, query }) => {
+                  const hn = {
+                    ...body.value,
+                    ...query.value,
+                    ...path.value
+                  } as unknown as ReqA
+                  return hn
+                })
+                .flatMap(parsedReq =>
+                  handle(parsedReq as any)
+                    .flatMap(r => respond(parsedReq, res, r))
+                )
+              // Commands should not be interruptable.
+              const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
+              // the first log entry should be of the request start.
+              const r2 = makeMiddlewareContext
+                ? r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
+                // PR is not relevant here
+                : r as Effect<R, E | ValidationError, void>
+              return errorHandler(
+                req,
+                res,
+                requestContext,
+                r2
+              )
             })
           )
-        ).zipRight(
-          Effect.suspendSucceed(() => {
-            const handleRequest = parseRequest(req)
-              .map(({ body, path, query }) => {
-                const hn = {
-                  ...body.value,
-                  ...query.value,
-                  ...path.value
-                } as unknown as ReqA
-                return hn
-              })
-              .flatMap(parsedReq =>
-                handle(parsedReq as any)
-                  .flatMap(r => respond(parsedReq, res, r))
+            .tapErrorCause(cause =>
+              Effect.tuplePar(
+                Effect(() => res.status(500).send()),
+                reportRequestError(cause, {
+                  requestContext,
+                  path: req.originalUrl,
+                  method: req.method
+                }),
+                Effect.suspendSucceed(() => {
+                  const headers = res.getHeaders()
+                  return Effect.logErrorCauseMessage(
+                    "Finished request",
+                    cause
+                  ).apply(Effect.logAnnotates({
+                    method: req.method,
+                    path: req.originalUrl,
+                    statusCode: res.statusCode.toString(),
+
+                    reqPath: pars.path.$$.pretty,
+                    reqQuery: pars.query.$$.pretty,
+                    reqBody: pretty(pars.body),
+                    reqCookies: pretty(pars.cookies),
+                    reqHeaders: pars.headers.$$.pretty,
+
+                    resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
+                      prev[key] = value && typeof value === "string" ? snipString(value) : value
+                      return prev
+                    }, {} as Record<string, any>)
+                      .$$.pretty
+                  }))
+                })
               )
-            // Commands should not be interruptable.
-            const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
-            // the first log entry should be of the request start.
-            const r2 = makeMiddlewareContext
-              ? r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
-              // PR is not relevant here
-              : r as Effect<R, E | ValidationError, void>
-            return errorHandler(
-              req,
-              res,
-              requestContext,
-              r2
+                .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
             )
-          })
-        )
-          .tapErrorCause(cause =>
-            Effect.tuplePar(
-              Effect(() => res.status(500).send()),
-              reportRequestError(cause, {
-                requestContext,
-                path: req.originalUrl,
-                method: req.method
-              }),
-              Effect.suspendSucceed(() => {
+            .tap(() =>
+              RequestSettings.get.flatMap(s => {
                 const headers = res.getHeaders()
-                return Effect.logErrorCauseMessage(
-                  "Finished request",
-                  cause
-                ).apply(Effect.logAnnotates({
+                return Effect.logInfo("Finished request").apply(Effect.logAnnotates({
                   method: req.method,
                   path: req.originalUrl,
                   statusCode: res.statusCode.toString(),
-
-                  reqPath: pars.path.$$.pretty,
-                  reqQuery: pars.query.$$.pretty,
-                  reqBody: pretty(pars.body),
-                  reqCookies: pretty(pars.cookies),
-                  reqHeaders: pars.headers.$$.pretty,
-
-                  resHeaders: Object.entries(headers).reduce((prev, [key, value]) => {
-                    prev[key] = value && typeof value === "string" ? snipString(value) : value
-                    return prev
-                  }, {} as Record<string, any>)
-                    .$$.pretty
+                  ...s.verbose
+                    ? {
+                      resHeaders: headers.$$.pretty
+                    } :
+                    undefined
                 }))
               })
             )
-              .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
-          )
-          .tap(() =>
-            RequestSettings.get.flatMap(s => {
-              const headers = res.getHeaders()
-              return Effect.logInfo("Finished request").apply(Effect.logAnnotates({
-                method: req.method,
-                path: req.originalUrl,
-                statusCode: res.statusCode.toString(),
-                ...s.verbose
-                  ? {
-                    resHeaders: headers.$$.pretty
-                  } :
-                  undefined
-              }))
-            })
-          )
-          .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
-          .setupRequest(requestContext)
-      )
+            .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
+            .setupRequest(requestContext)
+        )
+    )
   }
 }
 

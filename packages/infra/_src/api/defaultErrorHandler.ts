@@ -16,20 +16,22 @@ export function defaultBasicErrorHandler<R>(
   _requestContext: RequestContext,
   r2: Effect<R, ValidationError, void>
 ) {
-  return r2
-    .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
-    .catchTag("ValidationError", err =>
-      Effect(() => {
-        res.status(400).send(err.errors)
-      }))
-    // final catch all; expecting never so that unhandled known errors will show up
-    .catchAll((err: never) =>
-      Effect.logError(
-        "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
+  return Debug.untraced(() =>
+    r2
+      .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
+      .catchTag("ValidationError", err =>
+        Effect(() => {
+          res.status(400).send(err.errors)
+        }))
+      // final catch all; expecting never so that unhandled known errors will show up
+      .catchAll((err: never) =>
+        Effect.logError(
+          "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
+        )
+          .map(() => err as unknown)
+          .flatMap(Effect.die)
       )
-        .map(() => err as unknown)
-        .flatMap(Effect.die)
-    )
+  )
 }
 
 const optimisticConcurrencySchedule = Schedule.once() &&
@@ -44,41 +46,43 @@ export function defaultErrorHandler<R>(
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
-  return r3
-    .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
-    .catchTag("ValidationError", err =>
-      Effect(() => {
-        res.status(400).send(err.errors)
-      }))
-    .catchTag("NotFoundError", err =>
-      Effect(() => {
-        res.status(404).send(err)
-      }))
-    .catchTag("NotLoggedInError", err =>
-      Effect(() => {
-        res.status(401).send(err)
-      }))
-    .catchTag("UnauthorizedError", err =>
-      Effect(() => {
-        res.status(403).send(err)
-      }))
-    .catchTag("InvalidStateError", err =>
-      Effect(() => {
-        res.status(422).send(err)
-      }))
-    .catchTag("OptimisticConcurrencyException", err =>
-      Effect(() => {
-        // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
-        res.status(412).send(err)
-      }))
-    // final catch all; expecting never so that unhandled known errors will show up
-    .catchAll((err: never) =>
-      Effect.logError(
-        "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
+  return Debug.untraced(() =>
+    r3
+      .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
+      .catchTag("ValidationError", err =>
+        Effect(() => {
+          res.status(400).send(err.errors)
+        }))
+      .catchTag("NotFoundError", err =>
+        Effect(() => {
+          res.status(404).send(err)
+        }))
+      .catchTag("NotLoggedInError", err =>
+        Effect(() => {
+          res.status(401).send(err)
+        }))
+      .catchTag("UnauthorizedError", err =>
+        Effect(() => {
+          res.status(403).send(err)
+        }))
+      .catchTag("InvalidStateError", err =>
+        Effect(() => {
+          res.status(422).send(err)
+        }))
+      .catchTag("OptimisticConcurrencyException", err =>
+        Effect(() => {
+          // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
+          res.status(412).send(err)
+        }))
+      // final catch all; expecting never so that unhandled known errors will show up
+      .catchAll((err: never) =>
+        Effect.logError(
+          "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
+        )
+          .map(() => err as unknown)
+          .flatMap(Effect.die)
       )
-        .map(() => err as unknown)
-        .flatMap(Effect.die)
-    )
+  )
 }
 
 export type SupportedErrors =
