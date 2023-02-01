@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.15.3
+
+### Patch Changes
+
+- ed2aa2d7: Improve tracing
+
 ## 0.15.2
 
 ### Patch Changes
