@@ -46,12 +46,14 @@ export function accessServices_<T extends Record<string, Tag<any>>, A>(
   services: T,
   fn: (services: Services<T>) => A
 ) {
-  return (Effect.struct(
-    services.$$.keys.reduce((prev, cur) => {
-      prev[cur] = Effect.service(services[cur]!)
-      return prev
-    }, {} as any)
-  ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+  return Debug.untraced(() =>
+    (Effect.struct(
+      services.$$.keys.reduce((prev, cur) => {
+        prev[cur] = Effect.service(services[cur]!)
+        return prev
+      }, {} as any)
+    ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+  )
 }
 
 /**
@@ -61,32 +63,38 @@ export function accessServicesM_<T extends Record<string, Tag<any>>, R, E, A>(
   services: T,
   fn: (services: Services<T>) => Effect<R, E, A>
 ) {
-  return (Effect.struct(
-    services.$$.keys.reduce((prev, cur) => {
-      prev[cur] = Effect.service(services[cur]!)
-      return prev
-    }, {} as any)
-  ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
-}
-
-export function accessServices<T extends Record<string, Tag<any>>>(services: T) {
-  return <A>(fn: (services: Services<T>) => A) =>
-    (Effect.struct(
-      services.$$.keys.reduce((prev, cur) => {
-        prev[cur] = Effect.service(services[cur]!)
-        return prev
-      }, {} as any)
-    ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
-}
-
-export function accessServicesM<T extends Record<string, Tag<any>>>(services: T) {
-  return <R, E, A>(fn: (services: Services<T>) => Effect<R, E, A>) =>
+  return Debug.untraced(() =>
     (Effect.struct(
       services.$$.keys.reduce((prev, cur) => {
         prev[cur] = Effect.service(services[cur]!)
         return prev
       }, {} as any)
     ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
+  )
+}
+
+export function accessServices<T extends Record<string, Tag<any>>>(services: T) {
+  return <A>(fn: (services: Services<T>) => A) =>
+    Debug.untraced(() =>
+      (Effect.struct(
+        services.$$.keys.reduce((prev, cur) => {
+          prev[cur] = Effect.service(services[cur]!)
+          return prev
+        }, {} as any)
+      ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+    )
+}
+
+export function accessServicesM<T extends Record<string, Tag<any>>>(services: T) {
+  return <R, E, A>(fn: (services: Services<T>) => Effect<R, E, A>) =>
+    Debug.untraced(() =>
+      (Effect.struct(
+        services.$$.keys.reduce((prev, cur) => {
+          prev[cur] = Effect.service(services[cur]!)
+          return prev
+        }, {} as any)
+      ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
+    )
 }
 
 /**
@@ -95,7 +103,7 @@ export function accessServicesM<T extends Record<string, Tag<any>>>(services: T)
 export function toNullable<R, E, A>(
   self: Effect<R, E, Option<A>>
 ) {
-  return self.map(_ => _.getOrNull)
+  return Debug.untraced(() => self.map(_ => _.getOrNull))
 }
 
 /**
@@ -105,7 +113,7 @@ export function scope<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
   effect: Effect<R2, E2, A2>
 ): Effect<Exclude<R | R2, Scope>, E | E2, A2> {
-  return scopedEffect.zipRight(effect).scoped
+  return Debug.untraced(() => scopedEffect.zipRight(effect).scoped)
 }
 
 /**
@@ -115,7 +123,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<R | Scope, E, A>,
   effect: (a: A) => Effect<R2, E2, A2>
 ): Effect<Exclude<R | R2, Scope>, E | E2, A2> {
-  return scopedEffect.flatMap(effect).scoped
+  return Debug.untraced(() => scopedEffect.flatMap(effect).scoped)
 }
 
 // /**
@@ -145,7 +153,8 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll(err => Effect(f(err)))
+  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> =>
+    Debug.untraced(() => self.catchAll(err => Effect(f(err))))
 }
 
 /**
@@ -154,18 +163,20 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
  */
 export function logAnnotates(kvps: Record<string, string>) {
   return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
-    FiberRef.currentLogAnnotations
-      .get
-      .flatMap(annotations =>
-        Effect.suspendSucceed(() =>
-          pipe(
-            effect,
-            FiberRef.currentLogAnnotations.locally(
-              HashMap.fromIterable([...annotations, ...kvps.$$.entries])
+    Debug.untraced(() =>
+      FiberRef.currentLogAnnotations
+        .get
+        .flatMap(annotations =>
+          Effect.suspendSucceed(() =>
+            pipe(
+              effect,
+              FiberRef.currentLogAnnotations.locally(
+                HashMap.fromIterable([...annotations, ...kvps.$$.entries])
+              )
             )
           )
         )
-      )
+    )
 }
 
 /**
@@ -174,11 +185,13 @@ export function logAnnotates(kvps: Record<string, string>) {
  * @tsplus static effect/io/Effect.Ops logAnnotateScoped
  */
 export function logAnnotateScoped(key: string, value: string) {
-  return FiberRef.currentLogAnnotations
-    .get
-    .flatMap(annotations =>
-      Effect.suspendSucceed(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
-    )
+  return Debug.untraced(() =>
+    FiberRef.currentLogAnnotations
+      .get
+      .flatMap(annotations =>
+        Effect.suspendSucceed(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
+      )
+  )
 }
 
 /**
@@ -187,13 +200,15 @@ export function logAnnotateScoped(key: string, value: string) {
  * @tsplus static effect/io/Effect.Ops logAnnotatesScoped
  */
 export function logAnnotatesScoped(kvps: Record<string, string>) {
-  return FiberRef.currentLogAnnotations
-    .get
-    .flatMap(annotations =>
-      Effect.suspendSucceed(() =>
-        FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+  return Debug.untraced(() =>
+    FiberRef.currentLogAnnotations
+      .get
+      .flatMap(annotations =>
+        Effect.suspendSucceed(() =>
+          FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+        )
       )
-    )
+  )
 }
 
 /**
