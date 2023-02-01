@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.17.1
+
+### Patch Changes
+
+- 8b10e403: Sprinkle some Debug.untraced
+
 ## 0.17.0
 
 ### Minor Changes

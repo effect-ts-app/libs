@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.18.1
+
+### Patch Changes
+
+- 8b10e403: Sprinkle some Debug.untraced
+- Updated dependencies [8b10e403]
+  - @effect-app/core@0.17.1
+  - @effect-app/infra-adapters@0.15.1
+  - @effect-app/prelude@0.17.1
+  - @effect-app/schema@0.15.1
+
 ## 0.18.0
 
 ### Minor Changes
