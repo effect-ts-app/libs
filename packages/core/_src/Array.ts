@@ -343,6 +343,13 @@ export function CollectionToNonEmptyReadonlyArray<A>(c: Iterable<A>) {
 }
 
 /**
+ * @tsplus getter fp-ts/data/Chunk asNonEmptyArray
+ */
+export function NonEmptyChunkToNonEmptyReadonlyArray<A>(c: NonEmptyChunk<A>) {
+  return c.toArray.toNonEmpty.value!
+}
+
+/**
  * @tsplus getter fp-ts/data/Chunk toNonEmptyArray
  */
 export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
