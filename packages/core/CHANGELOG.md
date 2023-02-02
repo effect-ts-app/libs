@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.17.3
+
+### Patch Changes
+
+- 407cc13e: Add chunk non empty
+
 ## 0.17.2
 
 ### Patch Changes
