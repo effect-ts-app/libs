@@ -278,7 +278,7 @@ export function queryAndSavePureEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Iterable<S2>>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
     Debug.untraced(restore =>
       queryEffect(self, map)
         .flatMap(restore(_ => self.saveManyWithPure_(_, pure)))
@@ -313,7 +313,7 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, Id, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>) =>
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
 
@@ -365,7 +365,7 @@ export function saveManyWithPure_<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>
+  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>
 ) {
   return saveAllWithEffectInt(
     self,
@@ -399,7 +399,7 @@ export function saveWithPure_<
   )
 }
 
-function saveAllWithEffectInt<
+export function saveAllWithEffectInt<
   Id extends string,
   T extends { id: Id },
   PM extends { id: string },
@@ -425,8 +425,8 @@ const anyDSL = makeDSL<any, any, any>()
 
 export type AllDSL<T, Evt> =
   & (<R, A, E, S1 extends T, S2 extends T>(
-    pure: (dsl: PureDSL<Chunk<S1>, Iterable<S2>, Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>)
+    pure: (dsl: PureDSL<Chunk<S1>, Chunk<S2>, Evt>) => Effect<R, E, A>
+  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>)
   & AllDSLExt<T, Evt>
 
 /**
@@ -434,11 +434,11 @@ export type AllDSL<T, Evt> =
  */
 export interface AllDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
-    pure: (items: Chunk<S1>, dsl: PureDSL<Chunk<S1>, Iterable<S2>, Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, A>
+    pure: (items: Chunk<S1>, dsl: PureDSL<Chunk<S1>, Chunk<S2>, Evt>) => Effect<R, E, A>
+  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>
   update: <R, E, S1 extends T, S2 extends T>(
-    pure: (items: Chunk<S1>, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, Iterable<S2>>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Iterable<S2>>, E, Iterable<S2>>
+    pure: (items: Chunk<S1>, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, Chunk<S2>>
+  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, Chunk<S2>>
 }
 
 export function makeAllDSL<T, Evt>() {
@@ -476,7 +476,7 @@ export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T
  */
 export function updateWith<T, Evt, S1 extends T, S2 extends T>(
   self: AllDSL<T, Evt>,
-  upd: (item: Chunk<S1>) => Iterable<S2>
+  upd: (item: Chunk<S1>) => Chunk<S2>
 ) {
   return self.update((_: Chunk<S1>) => Effect(upd(_)))
 }
