@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.18.5
+
+### Patch Changes
+
+- 1639239d: Update batch
+- e9e498ee: Update packages
+- Updated dependencies [e9e498ee]
+  - @effect-app/infra-adapters@0.15.4
+  - @effect-app/prelude@0.17.3
+  - @effect-app/schema@0.15.2
+  - @effect-app/core@0.17.2
+
 ## 0.18.4
 
 ### Patch Changes
