@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.19.0
+
+### Minor Changes
+
+- c6db9ba7: Lock S2 to Chunk
+
 ## 0.18.6
 
 ### Patch Changes
