@@ -8,13 +8,13 @@
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.6",
+    "@effect/io": "^0.1.8",
     "@fp-ts/core": "^0.1.1",
     "@fp-ts/data": "^0.1.1",
     "@fp-ts/optic": "^0.1.0",
     "query-string": "^8.1.0",
     "swrv": "^1.0.3",
-    "vue": "^3.2.45"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
@@ -24,9 +24,9 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz",
-    "vite": "^4.0.4",
+    "vite": "^4.1.1",
     "vitest": "^0.28.3",
-    "vue": "^3.2.45"
+    "vue": "^3.2.47"
   },
   "typesVersions": {
     "*": {
