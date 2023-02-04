@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
+  "bin": {
+    "effect-app-cli": "./bin.js"
+  },
   "dependencies": {
     "node-watch": "^0.7.3"
   },
