@@ -133,6 +133,25 @@ importers:
       vite: 4.1.1_@types+node@18.11.12
       vitest: 0.28.3
 
+  packages/cli:
+    specifiers:
+      '@babel/cli': ^7.20.7
+      '@types/node': ~18.11.12
+      json5: ^2.2.3
+      node-watch: ^0.7.3
+      ts-node: ^10.9.1
+      typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz
+      vitest: ^0.28.3
+    dependencies:
+      node-watch: 0.7.3
+    devDependencies:
+      '@babel/cli': 7.20.7
+      '@types/node': 18.11.12
+      json5: 2.2.3
+      ts-node: 10.9.1_cotrl3tqwhwhold37qpo37sswy
+      typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz_ib3e6iib27z2am4swqyaxkqsxm'
+      vitest: 0.28.3
+
   packages/compiler:
     specifiers:
       '@babel/cli': ^7.20.7
@@ -5464,6 +5483,7 @@ packages:
 
   /json5/1.0.1:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
+    hasBin: true
     dependencies:
       minimist: 1.2.7
     dev: true
@@ -6218,6 +6238,11 @@ packages:
     dependencies:
       '@babel/parser': 7.20.13
     dev: true
+
+  /node-watch/0.7.3:
+    resolution: {integrity: sha512-3l4E8uMPY1HdMMryPRUAl+oIHtXtyiTlIiESNSVSNxcPfzAFzeTbXFQkZfAwBbo0B1qMSG8nUABx+Gd+YrbKrQ==}
+    engines: {node: '>=6'}
+    dev: false
 
   /nodemon/2.0.20:
     resolution: {integrity: sha512-Km2mWHKKY5GzRg6i1j5OxOHQtuvVsgskLfigG25yTtbyfRGn/GNvIbRyOf1PSCKJ2aT/58TiuUsuOU5UToVViw==}

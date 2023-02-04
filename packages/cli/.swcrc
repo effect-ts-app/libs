@@ -1,0 +1,15 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "decoratorsBeforeExport": true
+    },
+    "target": "es2021",
+    "externalHelpers": true,
+    "keepClassNames": true
+  },
+  "module": {
+    "type": "commonjs"
+  }
+}
