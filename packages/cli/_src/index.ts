@@ -1,12 +1,15 @@
-// monitor '../resources/dist', '../types/dist', '../ui/dist'
-// and spawn the desired command
-
 import cp from "child_process"
 import fs from "fs"
 
 import w from "node-watch"
 
-const cmds = process.argv.slice(2)
+const cmd = process.argv[2]
+if (cmd !== "watch") {
+  console.log("unknown command: ", cmd)
+  process.exit(1)
+}
+
+const cmds = process.argv.slice(3)
 
 const dirs = ["../resources/dist", "../types/dist", "../ui/dist"]
 
