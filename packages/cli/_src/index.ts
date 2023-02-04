@@ -10,7 +10,7 @@ const supportedCommands = [
   "index",
   "index-multi",
   "packagejson",
-  "packagejson-multi",
+  "packagejson-target",
   "packagejson-packages"
 ] as const
 if (
@@ -52,12 +52,12 @@ function monitorIndexes(path: string) {
 
 const startDir = process.cwd()
 
-function packagejson(p: string) {
+function packagejson(p: string, levels = 0) {
   process.chdir(path.resolve(startDir, p))
 
   const r = cp.execSync("sh ../../scripts/extract.sh", { encoding: "utf-8" })
   const s = r.split("\n").sort((a, b) => a < b ? -1 : 1).join("\n")
-  const items = JSON.parse(`{${s.substring(0, s.length - 1)} }`)
+  const items = JSON.parse(`{${s.substring(0, s.length - 1)} }`) as Record<string, unknown>
 
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"))
   const exps = {
@@ -71,7 +71,14 @@ function packagejson(p: string) {
         "default": "./_cjs/index.cjs"
       }
     },
-    ...items
+    ...(levels
+      ? Object.keys(items)
+        .filter(_ => _.split("/").length <= (levels))
+        .reduce((prev, cur) => {
+          prev[cur] = items[cur]
+          return prev
+        }, {} as Record<string, unknown>)
+      : items)
     // ...pkg.name === "@effect-app/core" ? {
     //   "./types/awesome": { "types": "./types/awesome.d.ts" }
     // } : {},
@@ -80,13 +87,13 @@ function packagejson(p: string) {
   fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2))
 }
 
-function monitorPackagejson(path: string) {
+function monitorPackagejson(path: string, levels = 0) {
   w.default(path + "/_src", { recursive: true }, (_, __) => {
-    packagejson(path)
+    packagejson(path, levels)
   })
 }
 
-const cmds = process.argv.slice(3)
+let cmds = process.argv.slice(3)
 switch (cmd) {
   case "watch": {
     const dirs = ["../resources/dist", "../types/dist", "../ui/dist"]
@@ -118,8 +125,10 @@ switch (cmd) {
     break
   }
 
-  case "packagejson-multi": {
-    ;["./_project/resources", "./_project/models"].forEach(monitorPackagejson)
+  case "packagejson-target": {
+    const target = process.argv[3]!
+    target.split(",").forEach(_ => monitorPackagejson(_, 1))
+    cmds = process.argv.slice(4)
     break
   }
 
