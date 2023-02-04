@@ -2,13 +2,25 @@ import cp from "child_process"
 import fs from "fs"
 import w from "node-watch"
 
-const cmd = process.argv[2]
+import path from "path"
+
+const _cmd = process.argv[2]
+const supportedCommands = [
+  "watch",
+  "index",
+  "index-multi",
+  "packagejson",
+  "packagejson-multi",
+  "packagejson-packages"
+] as const
 if (
-  cmd !== "watch" && cmd !== "index" && cmd !== "index-multi" && cmd !== "packagejson" && cmd !== "packagejson-multi"
+  !supportedCommands.includes(_cmd as any)
 ) {
-  console.log("unknown command: ", cmd)
+  console.log("unknown command: ", _cmd)
   process.exit(1)
 }
+
+const cmd = _cmd as typeof supportedCommands[number]
 
 function touch(path: string) {
   const time = new Date()
@@ -36,8 +48,12 @@ function monitorIndexes(path: string) {
   })
 }
 
-function packagejson(path: string) {
-  process.chdir(path)
+// TODO: cache, don't do things when it already existed before, so only file is updated, not created.
+
+const startDir = process.cwd()
+
+function packagejson(p: string) {
+  process.chdir(path.resolve(startDir, p))
 
   const r = cp.execSync("sh ../../scripts/extract.sh", { encoding: "utf-8" })
   const s = r.split("\n").sort((a, b) => a < b ? -1 : 1).join("\n")
@@ -104,6 +120,13 @@ switch (cmd) {
 
   case "packagejson-multi": {
     ;["./_project/resources", "./_project/models"].forEach(monitorPackagejson)
+    break
+  }
+
+  case "packagejson-packages": {
+    fs.readdirSync("./packages")
+      .map(_ => "./packages/" + _)
+      .filter(_ => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/_src")).forEach(monitorPackagejson)
     break
   }
 }
