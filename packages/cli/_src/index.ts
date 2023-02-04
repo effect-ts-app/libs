@@ -61,19 +61,23 @@ function packagejson(p: string, levels = 0) {
 
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"))
   const exps = {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./_cjs/index.cjs"
+    ...fs.existsSync("./_src/index.ts")
+      ? {
+        ".": {
+          "import": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+          },
+          "require": {
+            "types": "./dist/index.d.ts",
+            "default": "./_cjs/index.cjs"
+          }
+        }
       }
-    },
+      : undefined,
     ...(levels
       ? Object.keys(items)
-        .filter(_ => _.split("/").length <= (levels))
+        .filter(_ => _.split("/").length <= (levels + 1 /* `./` */))
         .reduce((prev, cur) => {
           prev[cur] = items[cur]
           return prev
