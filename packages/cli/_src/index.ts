@@ -124,8 +124,8 @@ switch (cmd) {
   }
 
   case "packagejson-packages": {
-    fs.readdirSync("./packages")
-      .map(_ => "./packages/" + _)
+    fs.readdirSync(startDir + "/packages")
+      .map(_ => startDir + "/packages/" + _)
       .filter(_ => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/_src")).forEach(monitorPackagejson)
     break
   }
