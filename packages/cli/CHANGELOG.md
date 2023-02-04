@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.1.4
+
+### Patch Changes
+
+- dccdfe2a: cli: add packagejson levels
+
 ## 0.1.3
 
 ### Patch Changes
