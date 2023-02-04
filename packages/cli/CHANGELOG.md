@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.1.2
+
+### Patch Changes
+
+- 5fd3e5f5: Add package json exports support
+
 ## 0.1.1
 
 ### Patch Changes
