@@ -13604,11 +13604,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
-        {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "sync"
