@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/io": "^0.1.8",
+    "@effect/io": "^0.1.9",
     "@fp-ts/core": "^0.1.1",
     "@fp-ts/data": "^0.1.1",
     "@fp-ts/optic": "^0.1.0",
@@ -13,15 +13,15 @@
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
     "uuid": "^9.0.0",
-    "validator": "^13.7.0"
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.0",
-    "@types/validator": "^13.7.11",
+    "@types/validator": "^13.7.12",
     "@babel/cli": "^7.20.7",
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz",
-    "vitest": "^0.28.3",
+    "vitest": "^0.28.4",
     "winston": "^3.8.2"
   },
   "scripts": {

@@ -9,11 +9,11 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
-    "@types/node": "~18.11.18",
+    "@types/node": "~18.11.19",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz",
-    "vitest": "^0.28.3"
+    "vitest": "^0.28.4"
   },
   "typesVersions": {
     "*": {
