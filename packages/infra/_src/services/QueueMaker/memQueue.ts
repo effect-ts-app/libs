@@ -32,7 +32,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
           return yield* $(
             messages.forEachEffect(m =>
               // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-              Effect(() =>
+              Effect(
                 JSON.stringify(
                   encoder({ body: m, meta: requestContext })
                 )
@@ -48,7 +48,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
         const handleEvent = yield* $(makeHandleEvent)
         const processMessage = (msg: string) =>
           // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-          Effect(() => JSON.parse(msg))
+          Effect(JSON.parse(msg))
             .flatMap(parseDrain)
             .orDie
             .flatMap(({ body, meta }) =>

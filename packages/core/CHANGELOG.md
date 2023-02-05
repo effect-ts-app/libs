@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.18.0
+
+### Minor Changes
+
+- Update annotations and leverage ForceLazy on Effect \_\_call
+
 ## 0.17.4
 
 ### Patch Changes

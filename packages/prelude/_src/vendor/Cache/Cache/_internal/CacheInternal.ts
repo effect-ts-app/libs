@@ -33,11 +33,11 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   get size(): Effect<never, never, number> {
-    return Effect(() => this.cacheState.map.size)
+    return Effect(this.cacheState.map.size)
   }
 
   get entries(): Effect<never, never, Chunk<readonly [Key, Value]>> {
-    return Effect(() => {
+    return Effect.sync(() => {
       const entries: Array<readonly [Key, Value]> = []
       for (const [key, value] of this.cacheState.map) {
         if (value._tag === "Complete" && value.exit.isSuccess()) {
@@ -49,7 +49,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   get values(): Effect<never, never, Chunk<Value>> {
-    return Effect(() => {
+    return Effect.sync(() => {
       const values: Array<Value> = []
       for (const [_, value] of this.cacheState.map) {
         if (value._tag === "Complete" && value.exit.isSuccess()) {
@@ -69,7 +69,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   entryStats(k: Key): Effect<never, never, Option<EntryStats>> {
-    return Effect(() => {
+    return Effect.sync(() => {
       const value = this.cacheState.map.get(k).value
       if (value == null) {
         return Option.none
@@ -138,7 +138,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   set(key: Key, value: Value): Effect<never, never, void> {
-    return Effect(() => {
+    return Effect.sync(() => {
       const now = this.clock.currentTimeMillis().runSync
       const lookupResult = Exit.succeed(value)
       this.cacheState.map.set(
@@ -154,7 +154,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   contains(key: Key): Effect<never, never, boolean> {
-    return Effect(() => this.cacheState.map.has(key))
+    return Effect(this.cacheState.map.has(key))
   }
 
   refresh(k: Key): Effect<never, Error, void> {
@@ -206,12 +206,12 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   invalidate(key: Key): Effect<never, never, void> {
-    return Effect(() => {
+    return Effect.sync(() => {
       this.cacheState.map.remove(key)
     })
   }
 
-  invalidateAll: Effect<never, never, void> = Effect(() => {
+  invalidateAll: Effect<never, never, void> = Effect.sync(() => {
     this.cacheState.map = MutableHashMap.empty<Key, MapValue<Key, Error, Value>>()
   })
 
@@ -272,7 +272,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
         return deferred.done(exit).zipRight(exit.done)
       })
       .onInterrupt(() =>
-        deferred.interrupt.zipRight(Effect(() => {
+        deferred.interrupt.zipRight(Effect.sync(() => {
           this.cacheState.map.remove(key)
         }))
       )

@@ -12,7 +12,7 @@ import { StoreMaker } from "./service.js"
  * and should therefore be as fast as the Memory Store.
  */
 export function makeDiskStore({ prefix }: StorageConfig) {
-  return Effect(() => {
+  return Effect.sync(() => {
     const dir = "./.data"
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)

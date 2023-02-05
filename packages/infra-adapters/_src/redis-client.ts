@@ -9,7 +9,7 @@ export class ConnectionException extends Error {
 }
 
 export const makeRedisClient = (makeClient: () => Client) =>
-  Effect(() => {
+  Effect.sync(() => {
     const client = createClient(makeClient)
     const lock = new Redlock([client])
     return {

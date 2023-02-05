@@ -6,11 +6,11 @@ import { Operations } from "./service.js"
 
 const reportAppError = reportError(cause => new RequestException(cause))
 
-const make = Effect(() => {
+const make = Effect.sync(() => {
   const ops = new Map<OperationId, Operation>()
-  const makeOp = Effect(() => OperationId.make())
+  const makeOp = Effect(OperationId.make())
 
-  const cleanup = Effect(() => {
+  const cleanup = Effect.sync(() => {
     const before = new Date().subHours(1)
     ops.entries()
       .toChunk
@@ -23,16 +23,16 @@ const make = Effect(() => {
   })
 
   function addOp(id: OperationId) {
-    return Effect(() => {
+    return Effect.sync(() => {
       ops.set(id, new Operation({ id }))
     })
   }
   function findOp(id: OperationId) {
-    return Effect(() => Option.fromNullable(ops.get(id)))
+    return Effect(Option.fromNullable(ops.get(id)))
   }
   function finishOp(id: OperationId, exit: Exit<unknown, unknown>) {
     return findOp(id).flatMap(_ =>
-      Effect(() => {
+      Effect.sync(() => {
         if (_.isNone()) {
           throw new Error("Not found")
         }
@@ -58,7 +58,7 @@ const make = Effect(() => {
   }
   function update(id: OperationId, progress: OperationProgress) {
     return findOp(id).flatMap(_ =>
-      Effect(() => {
+      Effect.sync(() => {
         if (_.isNone()) {
           throw new Error("Not found")
         }

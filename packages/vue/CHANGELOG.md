@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.15.0
+
+### Minor Changes
+
+- Update annotations and leverage ForceLazy on Effect \_\_call
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.18.0
+  - @effect-app/core@0.18.0
+  - @effect-app/vue@0.15.0
+  - @effect-app/schema@0.15.5
+
 ## 0.14.5
 
 ### Patch Changes

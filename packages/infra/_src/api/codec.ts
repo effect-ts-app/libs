@@ -14,7 +14,7 @@ export function makeCodec<
   const decode = (e: Encoded, env?: ParserEnv) => parse(e, env)
   const enc = Encoder.for(self)
 
-  const encode = (u: ParsedShape) => Effect(() => enc(u))
+  const encode = (u: ParsedShape) => Effect(enc(u))
   const encodeToMap = toMap(encode)
   return [decode, encode, encodeToMap] as const
 }

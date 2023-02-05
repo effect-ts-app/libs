@@ -42,3 +42,10 @@ export const pipeChunk = pipe
  * @tsplus macro pipe
  */
 export const pipeEffect = pipe
+
+/**
+ * @tsplus type tsplus/ForceLazyArgument
+ */
+export interface ForceLazyArg<A> {
+  (): A
+}

@@ -11,7 +11,7 @@ export function makeLiveRecordCache() {
   const m = new Map<string, EffectMap<string, unknown>>()
   return {
     get: <T>(type: string) =>
-      Effect(() => {
+      Effect.sync(() => {
         const ex = m.get(type)
         if (!ex) {
           const nm = makeMap<string, unknown>()

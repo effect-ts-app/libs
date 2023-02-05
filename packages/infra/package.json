@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -273,6 +273,16 @@
         "default": "./_cjs/filter.cjs"
       }
     },
+    "./filter/types": {
+      "import": {
+        "types": "./dist/filter/types.d.ts",
+        "default": "./dist/filter/types.js"
+      },
+      "require": {
+        "types": "./dist/filter/types.d.ts",
+        "default": "./_cjs/filter/types.cjs"
+      }
+    },
     "./filter/types/errors": {
       "import": {
         "types": "./dist/filter/types/errors.d.ts",
@@ -291,16 +301,6 @@
       "require": {
         "types": "./dist/filter/types/fields.d.ts",
         "default": "./_cjs/filter/types/fields.cjs"
-      }
-    },
-    "./filter/types/index": {
-      "import": {
-        "types": "./dist/filter/types/index.d.ts",
-        "default": "./dist/filter/types/index.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/index.d.ts",
-        "default": "./_cjs/filter/types/index.cjs"
       }
     },
     "./filter/types/path/common": {

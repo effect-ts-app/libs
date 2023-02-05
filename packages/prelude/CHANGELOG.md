@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.18.0
+
+### Minor Changes
+
+- Update annotations and leverage ForceLazy on Effect \_\_call
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.18.0
+  - @effect-app/schema@0.15.5
+
 ## 0.17.5
 
 ### Patch Changes

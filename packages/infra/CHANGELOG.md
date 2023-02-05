@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.20.0
+
+### Minor Changes
+
+- Update annotations and leverage ForceLazy on Effect \_\_call
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/infra-adapters@0.16.0
+  - @effect-app/prelude@0.18.0
+  - @effect-app/core@0.18.0
+  - @effect-app/schema@0.15.5
+
 ## 0.19.1
 
 ### Patch Changes

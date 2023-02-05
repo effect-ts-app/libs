@@ -76,7 +76,7 @@ export function match<
       h
     )
   ).zipRight(
-    Effect(() => makeRouteDescriptor(r.Request.path, r.Request.method, r))
+    Effect(makeRouteDescriptor(r.Request.path, r.Request.method, r))
   )
 }
 
@@ -163,31 +163,31 @@ export function handleRequest<
         ).flatMap(outp => respond(inp, res)(outp))
       })
       .catchTag("ValidationError", err =>
-        Effect(() => {
+        Effect.sync(() => {
           res.status(400).send(err.errors)
         }))
       .catchTag("NotFoundError", err =>
-        Effect(() => {
+        Effect.sync(() => {
           res.status(404).send(err)
         }))
       .catchTag("NotLoggedInError", err =>
-        Effect(() => {
+        Effect.sync(() => {
           res.status(401).send(err)
         }))
       .catchTag("UnauthorizedError", err =>
-        Effect(() => {
+        Effect.sync(() => {
           res.status(403).send(err)
         }))
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
-        Effect(() =>
+        Effect(
           console.error(
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect",
             err
           )
         ).flatMap(Effect.die)
       )
-  // .tapCause(() => Effect(() => res.status(500).send()))
+  // .tapCause(() => Effect(res.status(500).send()))
 }
 
 // Additional convenience helpers
@@ -242,7 +242,7 @@ export function get<
       r,
       h
     )
-  ).zipRight(Effect(() => makeRouteDescriptor(path, "GET", r)))
+  ).zipRight(Effect(makeRouteDescriptor(path, "GET", r)))
 }
 
 export function post<
@@ -295,7 +295,7 @@ export function post<
       r,
       h
     )
-  ).zipRight(Effect(() => makeRouteDescriptor(path, "POST", r)))
+  ).zipRight(Effect(makeRouteDescriptor(path, "POST", r)))
 }
 
 export function put<
@@ -348,7 +348,7 @@ export function put<
       r,
       h
     )
-  ).zipRight(Effect(() => makeRouteDescriptor(path, "PUT", r)))
+  ).zipRight(Effect(makeRouteDescriptor(path, "PUT", r)))
 }
 
 export function patch<
@@ -401,7 +401,7 @@ export function patch<
       r,
       h
     )
-  ).zipRight(Effect(() => makeRouteDescriptor(path, "PATCH", r)))
+  ).zipRight(Effect(makeRouteDescriptor(path, "PATCH", r)))
 }
 
 function del<
@@ -454,7 +454,7 @@ function del<
       r,
       h
     )
-  ).zipRight(Effect(() => makeRouteDescriptor(path, "DELETE", r)))
+  ).zipRight(Effect(makeRouteDescriptor(path, "DELETE", r)))
 }
 
 export { del as delete }

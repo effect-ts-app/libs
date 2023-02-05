@@ -1,6 +1,6 @@
 import { CosmosClient as ComosClient_ } from "@azure/cosmos"
 
-const withClient = (url: string) => Effect(() => new ComosClient_(url))
+const withClient = (url: string) => Effect(new ComosClient_(url))
 
 export const makeCosmosClient = (url: string, dbName: string) => withClient(url).map(x => ({ db: x.database(dbName) }))
 

@@ -5,7 +5,7 @@ import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
 const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: SendgridConfig) =>
-  Effect(() => {
+  Effect.sync(() => {
     sgMail.setApiKey(apiKey.value)
 
     return {

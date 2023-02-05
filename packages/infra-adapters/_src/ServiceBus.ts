@@ -10,7 +10,7 @@ import type {
 import { ServiceBusClient } from "@azure/service-bus"
 
 function makeClient(url: string) {
-  return Effect(() => new ServiceBusClient(url)).acquireRelease(
+  return Effect(new ServiceBusClient(url)).acquireRelease(
     client => Effect.promise(() => client.close())
   )
 }
@@ -23,7 +23,7 @@ function makeSender(queueName: string) {
     const serviceBusClient = yield* $(Client.access)
 
     return yield* $(
-      Effect(() => serviceBusClient.createSender(queueName)).acquireRelease(
+      Effect(serviceBusClient.createSender(queueName)).acquireRelease(
         subscription => Effect.promise(() => subscription.close())
       )
     )
@@ -40,7 +40,7 @@ function makeReceiver(queueName: string) {
     const serviceBusClient = yield* $(Client.access)
 
     return yield* $(
-      Effect(() => serviceBusClient.createReceiver(queueName)).acquireRelease(
+      Effect(serviceBusClient.createReceiver(queueName)).acquireRelease(
         r => Effect.promise(() => r.close())
       )
     )

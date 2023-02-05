@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- Update annotations and leverage ForceLazy on Effect \_\_call
+
 ## 0.1.6
 
 ### Patch Changes

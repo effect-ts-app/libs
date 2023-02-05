@@ -185,7 +185,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect(() => ({
+            all: Effect(({
               query: `SELECT * FROM ${name} f WHERE f.id != @id`,
               parameters: [{ name: "@id", value: importedMarkerId }]
             }))
@@ -205,7 +205,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             ) =>
               filter.keys
                 .forEachEffect(k =>
-                  Effect(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                  Effect(buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
                     .tap(q => logQuery(q))
                     .flatMap(q =>
                       Effect.promise(() =>
@@ -240,7 +240,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 // so we use multiple queries instead.
                 ? filter.keys
                   .forEachEffect(k =>
-                    Effect(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                    Effect(buildFindJoinCosmosQuery(filter, k, name, skip, limit))
                       .tap(q => logQuery(q))
                       .flatMap(q =>
                         Effect.promise(() =>
@@ -252,7 +252,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                   )
                   .map(_ => _.flatMap(_ => _))
-                : Effect(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
                   .tap(q => logQuery(q))
                   .flatMap(q =>
                     Effect.promise(() =>

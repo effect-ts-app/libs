@@ -183,7 +183,7 @@ export function respondSuccess<ReqA, A, E>(
   return (req: ReqA, res: express.Response) =>
     flow(encodeResponse(req), Effect.succeed, _ =>
       _.flatMap(r =>
-        Effect(() => {
+        Effect.sync(() => {
           r === undefined
             ? res.status(204).send()
             : res.status(200).send(r === null ? JSON.stringify(null) : r)

@@ -177,7 +177,7 @@ export function match<
       makeMiddlewareContext
     )
   ).zipRight(
-    Effect(() =>
+    Effect(
       makeRouteDescriptor(
         requestHandler.Request.path,
         requestHandler.Request.method,
@@ -191,9 +191,9 @@ export function respondSuccess<ReqA, A, E>(
   encodeResponse: (req: ReqA) => Encode<A, E>
 ) {
   return (req: ReqA, res: express.Response, a: A) =>
-    Effect(() => encodeResponse(req)(a))
+    Effect(encodeResponse(req)(a))
       .flatMap(r =>
-        Effect(() => {
+        Effect.sync(() => {
           r === undefined
             ? res.status(204).send()
             : res.status(200)
@@ -247,7 +247,7 @@ export function makeRequestHandler<
   const respond = respondSuccess(encodeResponse)
 
   function getParams(req: express.Request) {
-    return Effect(() => ({
+    return Effect(({
       path: req.params,
       query: req.query,
       body: req.body,
@@ -296,7 +296,7 @@ export function makeRequestHandler<
   return (req: express.Request, res: express.Response) => {
     return Debug.untraced(restore =>
       Effect.struct({
-        requestContext: Effect(() => {
+        requestContext: Effect.sync(() => {
           const requestContext = makeContext(req)
           if (req.method === "GET") {
             res.setHeader("Cache-Control", "no-store")
@@ -355,7 +355,7 @@ export function makeRequestHandler<
           )
             .tapErrorCause(cause =>
               Effect.tuplePar(
-                Effect(() => res.status(500).send()),
+                Effect(res.status(500).send()),
                 reportRequestError(cause, {
                   requestContext,
                   path: req.originalUrl,
@@ -385,7 +385,7 @@ export function makeRequestHandler<
                   }))
                 })
               )
-                .tapErrorCause(cause => Effect(() => console.error("Error occurred while reporting error", cause)))
+                .tapErrorCause(cause => Effect(console.error("Error occurred while reporting error", cause)))
             )
             .tap(() =>
               RequestSettings.get.flatMap(s => {
