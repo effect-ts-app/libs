@@ -185,10 +185,10 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect(({
+            all: Effect({
               query: `SELECT * FROM ${name} f WHERE f.id != @id`,
               parameters: [{ name: "@id", value: importedMarkerId }]
-            }))
+            })
               .tap(q => logQuery(q))
               .flatMap(q =>
                 Effect.promise(() =>

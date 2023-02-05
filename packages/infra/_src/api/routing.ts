@@ -247,13 +247,13 @@ export function makeRequestHandler<
   const respond = respondSuccess(encodeResponse)
 
   function getParams(req: express.Request) {
-    return Effect(({
+    return Effect({
       path: req.params,
       query: req.query,
       body: req.body,
       headers: req.headers,
       cookies: req.cookies
-    }))
+    })
   }
 
   function makeContext(req: express.Request) {
