@@ -6,7 +6,7 @@
             "@typescript-eslint/scope-manager@5.50.0": "patches/@typescript-eslint__scope-manager@5.50.0.patch",
             "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
             "eslint-plugin-unused-imports@2.0.0": "patches/eslint-plugin-unused-imports@2.0.0.patch",
-            "typescript@5.0.0-tsplus.20230128": "patches/typescript@5.0.0-tsplus.20230128.patch",
+            "typescript@5.0.0-tsplus.20230205": "patches/typescript@5.0.0-tsplus.20230205.patch",
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
             "date-fns@2.29.3": "patches/date-fns@2.29.3.patch"
@@ -47,7 +47,7 @@
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz"
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.169/compiler/typescript.tgz"
     },
     "dependencies": {
         "cross-env": "^7.0.3",
@@ -68,7 +68,7 @@
         "@effect/language-service": "^0.0.19",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^1.0.2",
-        "@tsplus/installer": "0.0.168",
+        "@tsplus/installer": "0.0.169",
         "@types/lodash": "^4.14.191",
         "@types/node": "~18.11.19",
         "@typescript-eslint/eslint-plugin": "^5.50.0",
@@ -97,7 +97,7 @@
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.1.2",
-        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.168/compiler/typescript.tgz",
+        "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.169/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.6",
         "vite": "^4.1.1",
         "vitest": "^0.28.4"

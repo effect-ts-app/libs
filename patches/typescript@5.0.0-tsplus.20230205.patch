@@ -26,18 +26,9 @@ index a1bc18a..b7f73d2 100644
  declare var clientInformation: Navigator;
  /** Returns true if the window has been closed, false otherwise. */
 diff --git a/lib/tsc.js b/lib/tsc.js
-index e98b0d2..64db766 100644
+index 42a5a2d..f6048d4 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
-@@ -23,7 +23,7 @@ var __export = (target, all) => {
- 
- // src/compiler/corePublic.ts
- var versionMajorMinor = "5.0";
--var version = `${versionMajorMinor}.0-tsplus.20230128`;
-+var version = `${versionMajorMinor}.0-tsplus.20230129`;
- 
- // src/compiler/core.ts
- var emptyArray = [];
 @@ -43064,7 +43064,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -167,7 +158,7 @@ index e98b0d2..64db766 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 04f3e2d..2235528 100644
+index 01e2f37..653899d 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2225,6 +2225,7 @@ __export(server_exports, {
@@ -178,15 +169,6 @@ index 04f3e2d..2235528 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -2394,7 +2395,7 @@ __export(ts_server_exports3, {
- 
- // src/compiler/corePublic.ts
- var versionMajorMinor = "5.0";
--var version = `${versionMajorMinor}.0-tsplus.20230128`;
-+var version = `${versionMajorMinor}.0-tsplus.20230129`;
- var Comparison = /* @__PURE__ */ ((Comparison3) => {
-   Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-   Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -47188,7 +47189,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
        for (const key of getOwnKeys(exports)) {
          if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -323,7 +305,7 @@ index 04f3e2d..2235528 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -190318,6 +190354,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -190321,6 +190357,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -347,18 +329,9 @@ index 0355521..48c8e28 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index b7ab1a1..3b82292 100644
+index f58fe2f..2fe084c 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20230128`;
-+      version = `${versionMajorMinor}.0-tsplus.20230129`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -499,7 +472,7 @@ index b7ab1a1..3b82292 100644
      }
    });
  
-@@ -186960,6 +186995,7 @@ ${e.message}`;
+@@ -186963,6 +186998,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -507,7 +480,7 @@ index b7ab1a1..3b82292 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -189333,6 +189369,7 @@ ${e.message}`;
+@@ -189336,6 +189372,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -531,18 +504,9 @@ index ac0f972..1c8c593 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index cb6b331..4756708 100644
+index 471d299..20abb19 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
-@@ -42,7 +42,7 @@ var ts = (() => {
-     "src/compiler/corePublic.ts"() {
-       "use strict";
-       versionMajorMinor = "5.0";
--      version = `${versionMajorMinor}.0-tsplus.20230128`;
-+      version = `${versionMajorMinor}.0-tsplus.20230129`;
-       Comparison = /* @__PURE__ */ ((Comparison3) => {
-         Comparison3[Comparison3["LessThan"] = -1] = "LessThan";
-         Comparison3[Comparison3["EqualTo"] = 0] = "EqualTo";
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
          for (const key of getOwnKeys(exports)) {
            if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
@@ -683,7 +647,7 @@ index cb6b331..4756708 100644
      }
    });
  
-@@ -176145,6 +176180,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -176148,6 +176183,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -691,16 +655,3 @@ index cb6b331..4756708 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-diff --git a/lib/typingsInstaller.js b/lib/typingsInstaller.js
-index 99d01bd..accc6d2 100644
---- a/lib/typingsInstaller.js
-+++ b/lib/typingsInstaller.js
-@@ -54,7 +54,7 @@ var path = __toESM(require("path"));
- 
- // src/compiler/corePublic.ts
- var versionMajorMinor = "5.0";
--var version = `${versionMajorMinor}.0-tsplus.20230128`;
-+var version = `${versionMajorMinor}.0-tsplus.20230129`;
- 
- // src/compiler/core.ts
- var emptyArray = [];
