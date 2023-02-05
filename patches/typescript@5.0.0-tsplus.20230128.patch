@@ -26,7 +26,7 @@ index a1bc18a..b7f73d2 100644
  declare var clientInformation: Navigator;
  /** Returns true if the window has been closed, false otherwise. */
 diff --git a/lib/tsc.js b/lib/tsc.js
-index e98b0d2..33f1c21 100644
+index e98b0d2..64db766 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -23,7 +23,7 @@ var __export = (target, all) => {
@@ -57,6 +57,15 @@ index e98b0d2..33f1c21 100644
    const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
    return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
    function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -44407,7 +44408,7 @@ function createTypeChecker(host) {
+   }
+   function unionIfLazy(_paramType) {
+     const isLazy = isLazyParameterByType(_paramType);
+-    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+     return paramType;
+   }
+   function getFluentExtension(targetType, name) {
 @@ -49908,6 +49909,16 @@ function createTypeChecker(host) {
        }
        return top;
@@ -92,7 +101,41 @@ index e98b0d2..33f1c21 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -89244,13 +89255,27 @@ function getOriginalNodeId(node) {
+@@ -71025,6 +71036,15 @@ function createTypeChecker(host) {
+     }
+     return false;
+   }
++  function isForceLazyParameterByType(type) {
++    if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++      const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++      if (tag === "tsplus/ForceLazyArgument") {
++        return true;
++      }
++    }
++    return false;
++  }
+   function getMutableArrayOrTupleType(type) {
+     return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+       getTypeArguments(type),
+@@ -71230,7 +71250,7 @@ function createTypeChecker(host) {
+       const thisArgumentType = getThisArgumentType(thisArgumentNode);
+       const originalParamType = thisType;
+       let paramType = originalParamType;
+-      if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++      if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+         const contextFreeArgType = thisArgumentType;
+         if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+           return [createDiagnosticForNode(
+@@ -71268,7 +71288,7 @@ function createTypeChecker(host) {
+           checkMode
+         );
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType)) {
++        if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+           if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+             return [createDiagnosticForNode(
+               arg,
+@@ -89244,13 +89264,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -124,7 +167,7 @@ index e98b0d2..33f1c21 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 04f3e2d..37ce922 100644
+index 04f3e2d..2235528 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2225,6 +2225,7 @@ __export(server_exports, {
@@ -163,6 +206,15 @@ index 04f3e2d..37ce922 100644
    const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
    return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
    function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -48531,7 +48533,7 @@ function createTypeChecker(host) {
+   }
+   function unionIfLazy(_paramType) {
+     const isLazy = isLazyParameterByType(_paramType);
+-    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+     return paramType;
+   }
+   function getFluentExtension(targetType, name) {
 @@ -54032,6 +54034,16 @@ function createTypeChecker(host) {
        }
        return top;
@@ -198,7 +250,41 @@ index 04f3e2d..37ce922 100644
          }
          if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
            const oldSpecifier = specifier;
-@@ -93594,13 +93606,27 @@ function getOriginalNodeId(node) {
+@@ -75149,6 +75161,15 @@ function createTypeChecker(host) {
+     }
+     return false;
+   }
++  function isForceLazyParameterByType(type) {
++    if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++      const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++      if (tag === "tsplus/ForceLazyArgument") {
++        return true;
++      }
++    }
++    return false;
++  }
+   function getMutableArrayOrTupleType(type) {
+     return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+       getTypeArguments(type),
+@@ -75354,7 +75375,7 @@ function createTypeChecker(host) {
+       const thisArgumentType = getThisArgumentType(thisArgumentNode);
+       const originalParamType = thisType;
+       let paramType = originalParamType;
+-      if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++      if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+         const contextFreeArgType = thisArgumentType;
+         if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+           return [createDiagnosticForNode(
+@@ -75392,7 +75413,7 @@ function createTypeChecker(host) {
+           checkMode
+         );
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType)) {
++        if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+           if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+             return [createDiagnosticForNode(
+               arg,
+@@ -93594,13 +93615,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -229,7 +315,7 @@ index 04f3e2d..37ce922 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-@@ -135618,6 +135644,7 @@ __export(ts_exports3, {
+@@ -135618,6 +135653,7 @@ __export(ts_exports3, {
    tryGetDirectories: () => tryGetDirectories,
    tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
    tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -237,7 +323,7 @@ index 04f3e2d..37ce922 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -190318,6 +190345,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -190318,6 +190354,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -261,7 +347,7 @@ index 0355521..48c8e28 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index b7ab1a1..5d0ca75 100644
+index b7ab1a1..3b82292 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -42,7 +42,7 @@ var ts = (() => {
@@ -292,6 +378,15 @@ index b7ab1a1..5d0ca75 100644
      const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
      return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
      function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -46215,7 +46216,7 @@ ${lanes.join("\n")}
+     }
+     function unionIfLazy(_paramType) {
+       const isLazy = isLazyParameterByType(_paramType);
+-      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+       return paramType;
+     }
+     function getFluentExtension(targetType, name) {
 @@ -51716,6 +51717,16 @@ ${lanes.join("\n")}
          }
          return top;
@@ -327,7 +422,41 @@ index b7ab1a1..5d0ca75 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -91452,13 +91463,26 @@ ${lanes.join("\n")}
+@@ -72833,6 +72844,15 @@ ${lanes.join("\n")}
+       }
+       return false;
+     }
++    function isForceLazyParameterByType(type) {
++      if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++        const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++        if (tag === "tsplus/ForceLazyArgument") {
++          return true;
++        }
++      }
++      return false;
++    }
+     function getMutableArrayOrTupleType(type) {
+       return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+         getTypeArguments(type),
+@@ -73038,7 +73058,7 @@ ${lanes.join("\n")}
+         const thisArgumentType = getThisArgumentType(thisArgumentNode);
+         const originalParamType = thisType;
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++        if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+           const contextFreeArgType = thisArgumentType;
+           if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+             return [createDiagnosticForNode(
+@@ -73076,7 +73096,7 @@ ${lanes.join("\n")}
+             checkMode
+           );
+           let paramType = originalParamType;
+-          if (isLazyParameterByType(originalParamType)) {
++          if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+             if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+               return [createDiagnosticForNode(
+                 arg,
+@@ -91452,13 +91472,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -357,7 +486,7 @@ index b7ab1a1..5d0ca75 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -91898,10 +91922,12 @@ ${lanes.join("\n")}
+@@ -91898,10 +91931,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -370,7 +499,7 @@ index b7ab1a1..5d0ca75 100644
      }
    });
  
-@@ -186960,6 +186986,7 @@ ${e.message}`;
+@@ -186960,6 +186995,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -378,7 +507,7 @@ index b7ab1a1..5d0ca75 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -189333,6 +189360,7 @@ ${e.message}`;
+@@ -189333,6 +189369,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -402,7 +531,7 @@ index ac0f972..1c8c593 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index cb6b331..311fb58 100644
+index cb6b331..4756708 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -42,7 +42,7 @@ var ts = (() => {
@@ -433,6 +562,15 @@ index cb6b331..311fb58 100644
      const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
      return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
      function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -46215,7 +46216,7 @@ ${lanes.join("\n")}
+     }
+     function unionIfLazy(_paramType) {
+       const isLazy = isLazyParameterByType(_paramType);
+-      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+       return paramType;
+     }
+     function getFluentExtension(targetType, name) {
 @@ -51716,6 +51717,16 @@ ${lanes.join("\n")}
          }
          return top;
@@ -468,7 +606,41 @@ index cb6b331..311fb58 100644
            }
            if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
              const oldSpecifier = specifier;
-@@ -91452,13 +91463,26 @@ ${lanes.join("\n")}
+@@ -72833,6 +72844,15 @@ ${lanes.join("\n")}
+       }
+       return false;
+     }
++    function isForceLazyParameterByType(type) {
++      if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++        const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++        if (tag === "tsplus/ForceLazyArgument") {
++          return true;
++        }
++      }
++      return false;
++    }
+     function getMutableArrayOrTupleType(type) {
+       return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+         getTypeArguments(type),
+@@ -73038,7 +73058,7 @@ ${lanes.join("\n")}
+         const thisArgumentType = getThisArgumentType(thisArgumentNode);
+         const originalParamType = thisType;
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++        if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+           const contextFreeArgType = thisArgumentType;
+           if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+             return [createDiagnosticForNode(
+@@ -73076,7 +73096,7 @@ ${lanes.join("\n")}
+             checkMode
+           );
+           let paramType = originalParamType;
+-          if (isLazyParameterByType(originalParamType)) {
++          if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+             if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+               return [createDiagnosticForNode(
+                 arg,
+@@ -91452,13 +91472,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -498,7 +670,7 @@ index cb6b331..311fb58 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -91898,10 +91922,12 @@ ${lanes.join("\n")}
+@@ -91898,10 +91931,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -511,7 +683,7 @@ index cb6b331..311fb58 100644
      }
    });
  
-@@ -176145,6 +176171,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -176145,6 +176180,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
