@@ -2821,11 +2821,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/core/ReadonlyArray.NonEmptyArray"
+          "typeName": "fp-ts/core/ReadonlyArray/NonEmptyArray"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/core/ReadonlyArray.NonEmptyArray.Ops"
+          "typeName": "fp-ts/core/ReadonlyArray/NonEmptyArray.Ops"
         }
       ]
     },
@@ -5381,12 +5381,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/core/Predicate.Refinement",
+          "typeName": "fp-ts/core/Predicate/Refinement",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Predicate.Refinement.Aspects",
+          "typeName": "fp-ts/core/Predicate/Refinement.Aspects",
           "name": "every"
         }
       ]
@@ -5513,6 +5513,61 @@
           "kind": "static",
           "typeName": "fp-ts/core/Function.Ops",
           "name": "constant"
+        }
+      ]
+    },
+    {
+      "definitionName": "constTrue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constTrue"
+        }
+      ]
+    },
+    {
+      "definitionName": "constFalse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constFalse"
+        }
+      ]
+    },
+    {
+      "definitionName": "constNull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constNull"
+        }
+      ]
+    },
+    {
+      "definitionName": "constUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "constVoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constVoid"
         }
       ]
     },
@@ -5704,6 +5759,39 @@
       ]
     },
     {
+      "definitionName": "isString",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "isString"
+        }
+      ]
+    },
+    {
+      "definitionName": "isNumber",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "isNumber"
+        }
+      ]
+    },
+    {
+      "definitionName": "isBoolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "isBoolean"
+        }
+      ]
+    },
+    {
       "definitionName": "isBigInt",
       "definitionKind": "const",
       "extensions": [
@@ -5744,6 +5832,28 @@
           "kind": "static",
           "typeName": "fp-ts/core/Predicate.Ops",
           "name": "of"
+        }
+      ]
+    },
+    {
+      "definitionName": "Do",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "Do"
+        }
+      ]
+    },
+    {
+      "definitionName": "unit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "unit"
         }
       ]
     },
@@ -8458,6 +8568,28 @@
   ],
   "@fp-ts/core/String": [
     {
+      "definitionName": "isString",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/String.Ops",
+          "name": "isString"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/String.Ops",
+          "name": "Equivalence"
+        }
+      ]
+    },
+    {
       "definitionName": "concat",
       "definitionKind": "const",
       "extensions": [
@@ -8784,6 +8916,17 @@
       "extensions": [
         {
           "kind": "static",
+          "typeName": "fp-ts/core/Bigint.Ops",
+          "name": "Equivalence"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
           "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
           "name": "Equivalence"
         }
@@ -8847,6 +8990,17 @@
   ],
   "@fp-ts/core/Boolean": [
     {
+      "definitionName": "isBoolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Boolean.Ops",
+          "name": "isBoolean"
+        }
+      ]
+    },
+    {
       "definitionName": "match",
       "definitionKind": "const",
       "extensions": [
@@ -8854,6 +9008,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/Boolean.Ops",
           "name": "match"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Boolean.Ops",
+          "name": "Equivalence"
         }
       ]
     },
@@ -8914,6 +9079,17 @@
     }
   ],
   "@fp-ts/core/Number": [
+    {
+      "definitionName": "isNumber",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "isNumber"
+        }
+      ]
+    },
     {
       "definitionName": "sum",
       "definitionKind": "const",
@@ -8977,6 +9153,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/Number.Ops",
           "name": "decrement"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "Equivalence"
         }
       ]
     },

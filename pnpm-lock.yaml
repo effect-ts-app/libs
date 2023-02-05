@@ -40,7 +40,7 @@ importers:
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@changesets/cli': ^2.26.0
       '@dprint/typescript': ^0.81.1
-      '@effect-app/cli': ^0.1.5
+      '@effect-app/cli': ^0.1.6
       '@effect-app/compiler': workspace:*
       '@effect-app/eslint-codegen-model': workspace:*
       '@effect-app/pnpm-singleton': workspace:*

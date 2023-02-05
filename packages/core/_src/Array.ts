@@ -97,7 +97,7 @@ export function findFirstMap<A, B>(
 }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray.NonEmptyArray.Ops fromArray
+ * @tsplus static fp-ts/core/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
   return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none
@@ -256,7 +256,7 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
  * @tsplus pipeable Array mapNonEmpty
  * @tsplus pipeable fp-ts/core/ReadonlyArray mapNonEmpty
  * @tsplus pipeable fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray mapNonEmpty
- * @tsplus pipeable fp-ts/core/ReadonlyArray.NonEmptyArray mapNonEmpty
+ * @tsplus pipeable fp-ts/core/ReadonlyArray/NonEmptyArray mapNonEmpty
  */
 export const mapRA = ROArray.mapNonEmpty
 

@@ -4956,6 +4956,17 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Metric.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
       "definitionName": "fromConst",
       "definitionKind": "const",
       "extensions": [
@@ -11326,6 +11337,34 @@
   ],
   "@effect/io/Cause": [
     {
+      "definitionName": "StackAnnotationConstructor",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Cause/StackAnnotationConstructor"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Cause/StackAnnotationConstructor.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "StackAnnotation",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Cause/StackAnnotation"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Cause/StackAnnotation.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "CauseReducer",
       "definitionKind": "interface",
       "extensions": [
@@ -11847,6 +11886,17 @@
           "kind": "static",
           "typeName": "effect/io/Cause/StackAnnotationTypeId.Ops",
           "name": "StackAnnotationTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "StackAnnotation",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cause/StackAnnotationConstructor.Ops",
+          "name": "StackAnnotation"
         }
       ]
     },
