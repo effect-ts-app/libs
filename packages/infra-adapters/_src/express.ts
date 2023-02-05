@@ -81,7 +81,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
       )
   )
 
-  const app = yield* _(Effect(express()))
+  const app = yield* _(Effect(express))
 
   const { exitHandler, host, port } = yield* _(ExpressAppConfig.access)
 
@@ -366,13 +366,13 @@ export function use(...args: any[]) {
         args as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect(app.use(...expressHandlers)))
+      ).flatMap(expressHandlers => Effect(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect(app.use(args[0], ...expressHandlers)))
+      ).flatMap(expressHandlers => Effect(() => app.use(args[0], ...expressHandlers)))
     }
   })
 }

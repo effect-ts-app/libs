@@ -7,7 +7,6 @@ import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
 import { Option } from "@fp-ts/core/Option"
-import type { ForceLazyArg } from "./_ext/pipe.ext.js"
 import { curry, flow, pipe } from "./Function.js"
 
 export * from "@effect/io/Effect"
@@ -324,7 +323,7 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
     )
 }
 
-/**
- * @tsplus static effect/io/Effect.Ops __call
- */
-export const effectSync: <A>(evaluate: ForceLazyArg<A>) => Effect<never, never, A> = Effect.sync
+// /**
+//  * @tsplus static effect/io/Effect.Ops __call
+//  */
+// export const effectSync: <A>(evaluate: ForceLazyArg<A>) => Effect<never, never, A> = Effect.sync
