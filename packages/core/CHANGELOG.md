@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.19.0
+
+### Minor Changes
+
+- f8d8e4ec: Revert ForceLazy for now
+
 ## 0.18.0
 
 ### Minor Changes

@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.17.0
+
+### Minor Changes
+
+- f8d8e4ec: Revert ForceLazy for now
+
+### Patch Changes
+
+- Updated dependencies [f8d8e4ec]
+  - @effect-app/core@0.19.0
+  - @effect-app/schema@0.15.6
+
 ## 0.16.0
 
 ### Minor Changes
