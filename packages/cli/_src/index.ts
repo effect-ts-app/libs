@@ -92,6 +92,7 @@ function packagejson(p: string, levels = 0) {
 }
 
 function monitorPackagejson(path: string, levels = 0) {
+  packagejson(path, levels)
   w.default(path + "/_src", { recursive: true }, (_, __) => {
     packagejson(path, levels)
   })
