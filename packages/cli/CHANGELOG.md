@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- 847c1eb0: Improve cli dirs
+
 ## 0.2.0
 
 ### Minor Changes
