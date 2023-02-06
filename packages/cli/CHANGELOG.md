@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.5
+
+### Patch Changes
+
+- 9ae82030: fix index
+
 ## 0.2.4
 
 ### Patch Changes
