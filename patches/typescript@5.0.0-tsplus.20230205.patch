@@ -26,7 +26,7 @@ index a1bc18a..b7f73d2 100644
  declare var clientInformation: Navigator;
  /** Returns true if the window has been closed, false otherwise. */
 diff --git a/lib/tsc.js b/lib/tsc.js
-index 42a5a2d..f6048d4 100644
+index 3bb0351..5f82977 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -43064,7 +43064,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
@@ -158,7 +158,7 @@ index 42a5a2d..f6048d4 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 01e2f37..653899d 100644
+index 699ee85..6a5e17d 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2225,6 +2225,7 @@ __export(server_exports, {
@@ -305,7 +305,7 @@ index 01e2f37..653899d 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -190321,6 +190357,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -190324,6 +190360,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -329,7 +329,7 @@ index 0355521..48c8e28 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index f58fe2f..2fe084c 100644
+index dcc543f..f4ae672 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
@@ -472,7 +472,7 @@ index f58fe2f..2fe084c 100644
      }
    });
  
-@@ -186963,6 +186998,7 @@ ${e.message}`;
+@@ -186966,6 +187001,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -480,7 +480,7 @@ index f58fe2f..2fe084c 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -189336,6 +189372,7 @@ ${e.message}`;
+@@ -189339,6 +189375,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -504,7 +504,7 @@ index ac0f972..1c8c593 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index 471d299..20abb19 100644
+index 9421253..95bf36a 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
@@ -647,7 +647,7 @@ index 471d299..20abb19 100644
      }
    });
  
-@@ -176148,6 +176183,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -176151,6 +176186,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
