@@ -53,13 +53,20 @@ function monitorIndexes(path: string) {
 const startDir = process.cwd()
 
 function packagejson(p: string, levels = 0) {
-  process.chdir(path.resolve(startDir, p))
+  const curDir = process.cwd()
+  let r = ""
+  // TODO: no chdir!
+  try {
+    process.chdir(path.resolve(startDir, p))
+    r = cp.execSync("sh ../../scripts/extract.sh", { encoding: "utf-8" })
+  } finally {
+    process.chdir(curDir)
+  }
 
-  const r = cp.execSync("sh ../../scripts/extract.sh", { encoding: "utf-8" })
   const s = r.split("\n").sort((a, b) => a < b ? -1 : 1).join("\n")
   const items = JSON.parse(`{${s.substring(0, s.length - 1)} }`) as Record<string, unknown>
 
-  const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"))
+  const pkg = JSON.parse(fs.readFileSync(p + "/package.json", "utf-8"))
   const exps = {
     ...fs.existsSync("./_src/index.ts")
       ? {
@@ -88,7 +95,7 @@ function packagejson(p: string, levels = 0) {
     // } : {},
   }
   pkg.exports = exps
-  fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2))
+  fs.writeFileSync(p + "/package.json", JSON.stringify(pkg, null, 2))
 }
 
 function monitorPackagejson(path: string, levels = 0) {
