@@ -129,7 +129,9 @@ switch (cmd) {
       "./_project/api-api/_src",
       "./_project/core/_src",
       "./_project/resources/_src",
-      "./_project/models/_src"
+      "./_project/models/_src",
+      "./_project/ui/_src",
+      "./_project/core/_src"
     ].filter(
       _ => fs.existsSync(_)
     )
