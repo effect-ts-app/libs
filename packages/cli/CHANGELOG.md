@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.4
+
+### Patch Changes
+
+- fe896f8c: Fix m
+
 ## 0.2.3
 
 ### Patch Changes
