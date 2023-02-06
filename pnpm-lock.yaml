@@ -39,8 +39,8 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': ^7.18.9
       '@babel/plugin-transform-modules-commonjs': ^7.20.11
       '@changesets/cli': ^2.26.0
-      '@dprint/typescript': ^0.81.1
-      '@effect-app/cli': ^0.1.6
+      '@dprint/typescript': ^0.82.0
+      '@effect-app/cli': ^0.2.0
       '@effect-app/compiler': workspace:*
       '@effect-app/eslint-codegen-model': workspace:*
       '@effect-app/pnpm-singleton': workspace:*
@@ -74,7 +74,7 @@ importers:
       madge: ^6.0.0
       module-alias: ^2.2.2
       nodemon: ^2.0.20
-      npm-check-updates: ^16.6.3
+      npm-check-updates: ^16.6.4
       ts-node: ^10.9.1
       ts-transform-paths: ^3.0.0
       tsc-watch: ^6.0.0
@@ -93,8 +93,8 @@ importers:
       '@babel/plugin-proposal-export-namespace-from': 7.18.9_@babel+core@7.20.12
       '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.12
       '@changesets/cli': 2.26.0
-      '@dprint/typescript': 0.81.1
-      '@effect-app/cli': 0.1.6
+      '@dprint/typescript': 0.82.0
+      '@effect-app/cli': link:packages/cli
       '@effect-app/compiler': link:packages/compiler
       '@effect-app/eslint-codegen-model': link:packages/eslint-codegen-model
       '@effect-app/pnpm-singleton': link:packages/pnpm-singleton
@@ -126,7 +126,7 @@ importers:
       madge: 6.0.0
       module-alias: 2.2.2
       nodemon: 2.0.20
-      npm-check-updates: 16.6.3
+      npm-check-updates: 16.6.4
       ts-transform-paths: 3.0.0
       tsc-watch: 6.0.0_gmyzgtbobtwqxr3kpifzlndcxy
       tsconfig-paths: 4.1.2
@@ -410,7 +410,7 @@ importers:
       faker: ^5.5.3
       fast-check: ^3.6.2
       lodash: ^4.17.21
-      nanoid: ^4.0.0
+      nanoid: ^4.0.1
       path-parser: ^6.1.0
       query-string: ^8.1.0
       ts-node: ^10.9.1
@@ -427,7 +427,7 @@ importers:
       '@fp-ts/data': 0.1.1
       date-fns: 2.29.3_g5hqt5bhnjezqo5vnkpprfkba4
       lodash: 4.17.21
-      nanoid: 4.0.0
+      nanoid: 4.0.1
       path-parser: 6.1.0
       query-string: 8.1.0
       ts-pattern: 4.1.3
@@ -1177,15 +1177,8 @@ packages:
       kuler: 2.0.0
     dev: true
 
-  /@dprint/typescript/0.81.1:
-    resolution: {integrity: sha512-ee6WJBYjxM/5qjAQKNvQHc9Kh61iYN9uwgx6BU4b/XIphcKwHLL8pU1QRKJ2Q+ocmKUHmi0IeYYIPj2T3AsQDw==}
-    dev: true
-
-  /@effect-app/cli/0.1.6:
-    resolution: {integrity: sha512-xcJZVedJay9HMF+WScfoHTZc298rJuctg/v8mtr3m6buwVWjQ4uXMYQsMLd6tKxX8Dx87aozgRhj9JmNOhRDgg==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.3
+  /@dprint/typescript/0.82.0:
+    resolution: {integrity: sha512-Q+2TJ1ukZc+HuSg6AvF5lEbO2uXfKnNYLdrvaMG1JJCTiurpL023GzZAM9tXHAwMvFxeURvSp9FOLazVBgDZyw==}
     dev: true
 
   /@effect/io/0.1.9:
@@ -1655,6 +1648,7 @@ packages:
   /@npmcli/installed-package-contents/2.0.1:
     resolution: {integrity: sha512-GIykAFdOVK31Q1/zAtT5MbxqQL2vyl9mvFJv+OGu01zxbhL3p0xc8gJjdNGX1mWmUT43aEKVO2L6V/2j4TOsAA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    hasBin: true
     dependencies:
       npm-bundled: 3.0.0
       npm-normalize-package-bin: 3.0.0
@@ -1663,6 +1657,7 @@ packages:
   /@npmcli/move-file/2.0.1:
     resolution: {integrity: sha512-mJd2Z5TjYWq/ttPLLGqArdtnC74J6bOzg4rMDnN+p1xTacZ2yPRCk2y0oSWQtygLR9YVQXgOcONrwtnk3JupxQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    deprecated: This functionality has been moved to @npmcli/fs
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
@@ -3123,6 +3118,7 @@ packages:
 
   /color-support/1.1.3:
     resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
+    hasBin: true
     dev: true
 
   /color/3.2.1:
@@ -6170,9 +6166,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  /nanoid/4.0.0:
-    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+  /nanoid/4.0.1:
+    resolution: {integrity: sha512-udKGtCCUafD3nQtJg9wBhRP3KMbPglUsgV5JVsXhvyBs/oefqb4sqMEhKBBgqZncYowu58p1prsZQBYvAj/Gww==}
     engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
     dev: false
 
   /natural-compare-lite/1.4.0:
@@ -6217,6 +6214,7 @@ packages:
   /node-gyp/9.3.0:
     resolution: {integrity: sha512-A6rJWfXFz7TQNjpldJ915WFb1LnhO4lIve3ANPbWreuEoLoKlFT3sxIepPBkLhM27crW8YmN+pjlgbasH6cH/Q==}
     engines: {node: ^12.22 || ^14.13 || >=16}
+    hasBin: true
     dependencies:
       env-paths: 2.2.1
       glob: 7.2.3
@@ -6253,6 +6251,7 @@ packages:
   /node-watch/0.7.3:
     resolution: {integrity: sha512-3l4E8uMPY1HdMMryPRUAl+oIHtXtyiTlIiESNSVSNxcPfzAFzeTbXFQkZfAwBbo0B1qMSG8nUABx+Gd+YrbKrQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon/2.0.20:
     resolution: {integrity: sha512-Km2mWHKKY5GzRg6i1j5OxOHQtuvVsgskLfigG25yTtbyfRGn/GNvIbRyOf1PSCKJ2aT/58TiuUsuOU5UToVViw==}
@@ -6279,6 +6278,7 @@ packages:
   /nopt/6.0.0:
     resolution: {integrity: sha512-ZwLpbTgdhuZUnZzjd7nb1ZV+4DoiC6/sfiVKok72ym/4Tlf+DFdlHYmT2JPmcNNWV6Pi3SDf1kT+A4r9RTuT9g==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+    hasBin: true
     dependencies:
       abbrev: 1.1.1
     dev: true
@@ -6318,9 +6318,10 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates/16.6.3:
-    resolution: {integrity: sha512-EKhsCbBcVrPlYKzaYQtRhGv9fxpexwROcvl5HebCUNpiCSlOWrzaJvrMlwi9i9GCyJCnH+YAeBPYdqnArA390A==}
+  /npm-check-updates/16.6.4:
+    resolution: {integrity: sha512-YZ99u6l7GFG5y1/XapEqlMwUWVEJfwXbOsf6SU5X1YuKEHpWbC+98cL/F7TALKjVAMwOrx43WopeBspatxh/Kw==}
     engines: {node: '>=14.14'}
+    hasBin: true
     dependencies:
       chalk: 5.2.0
       cli-table: 0.3.11
@@ -6621,6 +6622,7 @@ packages:
   /pacote/15.0.8:
     resolution: {integrity: sha512-UlcumB/XS6xyyIMwg/WwMAyUmga+RivB5KgkRwA1hZNtrx+0Bt41KxHCvg1kr0pZ/ZeD8qjhW4fph6VaYRCbLw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    hasBin: true
     dependencies:
       '@npmcli/git': 4.0.3
       '@npmcli/installed-package-contents': 2.0.1
@@ -6661,6 +6663,7 @@ packages:
   /parse-github-url/1.0.2:
     resolution: {integrity: sha512-kgBf6avCbO3Cn6+RnzRGLkUsv4ZVqv/VfAYkRsyBcgkshNvVBkRn1FEZcW0Jb+npXQWm2vHPnnOqFteZxRRGNw==}
     engines: {node: '>=0.10.0'}
+    hasBin: true
     dev: true
 
   /parse-json/5.2.0:
@@ -8642,6 +8645,7 @@ packages:
   /which/3.0.0:
     resolution: {integrity: sha512-nla//68K9NU6yRiwDY/Q8aU6siKlSs64aEC7+IV56QoAuyQT2ovsJcgGYGyqMOmI/CGN1BOR6mM5EN0FBO+zyQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    hasBin: true
     dependencies:
       isexe: 2.0.0
     dev: true

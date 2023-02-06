@@ -11,7 +11,7 @@
     "@fp-ts/data": "^0.1.1",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
-    "nanoid": "^4.0.0",
+    "nanoid": "^4.0.1",
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
     "ts-pattern": "^4.1.3",
