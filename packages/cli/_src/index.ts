@@ -67,8 +67,17 @@ function packagejson(p: string, levels = 0) {
   const items = JSON.parse(`{${s.substring(0, s.length - 1)} }`) as Record<string, unknown>
 
   const pkg = JSON.parse(fs.readFileSync(p + "/package.json", "utf-8"))
+  const t = levels
+    ? Object.keys(items)
+      .filter(_ => _.split("/").length <= (levels + 1 /* `./` */))
+      .reduce((prev, cur) => {
+        prev[cur] = items[cur]
+        return prev
+      }, {} as Record<string, unknown>)
+    : items
+
   const exps = {
-    ...fs.existsSync("./_src/index.ts")
+    ...fs.existsSync(p + "/_src/index.ts")
       ? {
         ".": {
           "import": {
@@ -82,14 +91,11 @@ function packagejson(p: string, levels = 0) {
         }
       }
       : undefined,
-    ...(levels
-      ? Object.keys(items)
-        .filter(_ => _.split("/").length <= (levels + 1 /* `./` */))
-        .reduce((prev, cur) => {
-          prev[cur] = items[cur]
-          return prev
-        }, {} as Record<string, unknown>)
-      : items)
+    ...Object.keys(t)
+      .reduce((prev, cur) => {
+        if (cur !== "./index") prev[cur] = t[cur]
+        return prev
+      }, {} as Record<string, unknown>)
     // ...pkg.name === "@effect-app/core" ? {
     //   "./types/awesome": { "types": "./types/awesome.d.ts" }
     // } : {},
