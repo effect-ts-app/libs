@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.20.2
+
+### Patch Changes
+
+- 5efae7a5: Add ContextMap to Repository utils.filter and all
+
 ## 0.20.1
 
 ### Patch Changes
