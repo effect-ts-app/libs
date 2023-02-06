@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.2
+
+### Patch Changes
+
+- 1cd7bbd9: write package.json at start
+
 ## 0.2.1
 
 ### Patch Changes
