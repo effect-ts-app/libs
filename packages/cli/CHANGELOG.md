@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.3
+
+### Patch Changes
+
+- 5a37df3f: Improve cli
+
 ## 0.2.2
 
 ### Patch Changes
