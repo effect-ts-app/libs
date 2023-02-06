@@ -214,6 +214,6 @@ export function logAnnotatesScoped(kvps: Record<string, string>) {
 /**
  * @tsplus fluent function flow
  */
-export function flow<A, B, C>(f: (a: A) => B, g: (b: B) => C): (a: A) => C {
-  return a => g(f(a))
+export function flow<Args extends readonly any[], B, C>(f: (...args: Args) => B, g: (b: B) => C): (...args: Args) => C {
+  return (...args) => g(f(...args))
 }
