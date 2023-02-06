@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.18.2
+
+### Patch Changes
+
+- ca8b9a4e: Fix Function flow
+
 ## 0.18.1
 
 ### Patch Changes
