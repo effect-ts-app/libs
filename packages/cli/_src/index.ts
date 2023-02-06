@@ -115,7 +115,17 @@ switch (cmd) {
   }
 
   case "index-multi": {
-    ;["./_project/api-api/_src", "./_project/resources/_src", "./_project/models/_src"].forEach(monitorIndexes)
+    ;[
+      "./_project/api/_src",
+      "./_project/printworker/_src",
+      "./_project/api-api/_src",
+      "./_project/core/_src",
+      "./_project/resources/_src",
+      "./_project/models/_src"
+    ].filter(
+      _ => fs.existsSync(_)
+    )
+      .forEach(monitorIndexes)
     break
   }
 
