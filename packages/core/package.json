@@ -346,16 +346,6 @@
         "default": "./_cjs/http/http-client-fetch.cjs"
       }
     },
-    "./index": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./_cjs/index.cjs"
-      }
-    },
     "./operators": {
       "import": {
         "types": "./dist/operators.d.ts",
