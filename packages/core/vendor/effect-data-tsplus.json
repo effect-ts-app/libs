@@ -2423,17 +2423,6 @@
       ]
     },
     {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Differ/ChunkPatch.Ops",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -2446,6 +2435,22 @@
           "kind": "static",
           "typeName": "effect/data/Differ/ChunkPatch.Aspects",
           "name": "combine"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Differ/ChunkPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Differ/ChunkPatch.Aspects",
+          "name": "patch"
         }
       ]
     }
@@ -2502,17 +2507,6 @@
       ]
     },
     {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Differ/ContextPatch.Ops",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -2525,6 +2519,22 @@
           "kind": "static",
           "typeName": "effect/data/Differ/ContextPatch.Aspects",
           "name": "combine"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Differ/ContextPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Differ/ContextPatch.Aspects",
+          "name": "patch"
         }
       ]
     }
@@ -3603,17 +3613,6 @@
       ]
     },
     {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Differ/HashMapPatch.Ops",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -3626,6 +3625,22 @@
           "kind": "static",
           "typeName": "effect/data/Differ/HashMapPatch.Aspects",
           "name": "combine"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Differ/HashMapPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Differ/HashMapPatch.Aspects",
+          "name": "patch"
         }
       ]
     }
@@ -3682,17 +3697,6 @@
       ]
     },
     {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Differ/HashSetPatch.Ops",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -3705,6 +3709,22 @@
           "kind": "static",
           "typeName": "effect/data/Differ/HashSetPatch.Aspects",
           "name": "combine"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Differ/HashSetPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Differ/HashSetPatch.Aspects",
+          "name": "patch"
         }
       ]
     }
@@ -3761,17 +3781,6 @@
       ]
     },
     {
-      "definitionName": "patch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Differ/OrPatch.Ops",
-          "name": "patch"
-        }
-      ]
-    },
-    {
       "definitionName": "combine",
       "definitionKind": "const",
       "extensions": [
@@ -3784,6 +3793,22 @@
           "kind": "static",
           "typeName": "effect/data/Differ/OrPatch.Aspects",
           "name": "combine"
+        }
+      ]
+    },
+    {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Differ/OrPatch",
+          "name": "patch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Differ/OrPatch.Aspects",
+          "name": "patch"
         }
       ]
     }
@@ -6046,8 +6071,13 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "at"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "at"
         }
       ]
@@ -6057,97 +6087,14 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
           "name": "atReversed"
-        }
-      ]
-    },
-    {
-      "definitionName": "greaterThan",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "greaterThan"
-        }
-      ]
-    },
-    {
-      "definitionName": "greaterThanReversed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "greaterThanReversed"
-        }
-      ]
-    },
-    {
-      "definitionName": "greaterThanEqual",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "greaterThanEqual"
-        }
-      ]
-    },
-    {
-      "definitionName": "greaterThanEqualReversed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "greaterThanEqualReversed"
-        }
-      ]
-    },
-    {
-      "definitionName": "lessThan",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "lessThan"
-        }
-      ]
-    },
-    {
-      "definitionName": "lessThanReversed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "lessThanReversed"
-        }
-      ]
-    },
-    {
-      "definitionName": "lessThanEqual",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "lessThanEqual"
-        }
-      ]
-    },
-    {
-      "definitionName": "lessThanEqualReversed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Ops",
-          "name": "lessThanEqualReversed"
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "atReversed"
         }
       ]
     },
@@ -6200,6 +6147,70 @@
       ]
     },
     {
+      "definitionName": "greaterThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "greaterThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "greaterThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "greaterThanReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "greaterThanReversed"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanEqual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "greaterThanEqual"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "greaterThanEqual"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanEqualReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "greaterThanEqualReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "greaterThanEqualReversed"
+        }
+      ]
+    },
+    {
       "definitionName": "has",
       "definitionKind": "const",
       "extensions": [
@@ -6228,6 +6239,70 @@
           "kind": "static",
           "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "insert"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "lessThan"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "lessThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "lessThanReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "lessThanReversed"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanEqual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "lessThanEqual"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "lessThanEqual"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanEqualReversed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/RedBlackTree",
+          "name": "lessThanEqualReversed"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/RedBlackTree.Aspects",
+          "name": "lessThanEqualReversed"
         }
       ]
     },

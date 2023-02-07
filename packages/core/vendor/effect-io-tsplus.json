@@ -2997,17 +2997,6 @@
       ]
     },
     {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRefs.Ops",
-          "name": "get"
-        }
-      ]
-    },
-    {
       "definitionName": "FiberRefsSym",
       "definitionKind": "const",
       "extensions": [
@@ -3031,6 +3020,22 @@
           "kind": "static",
           "typeName": "effect/io/FiberRefs.Aspects",
           "name": "forkAs"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRefs",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRefs.Aspects",
+          "name": "get"
         }
       ]
     },
@@ -5242,17 +5247,6 @@
       ]
     },
     {
-      "definitionName": "update",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Metric.Ops",
-          "name": "update"
-        }
-      ]
-    },
-    {
       "definitionName": "unsafeSnapshot",
       "definitionKind": "const",
       "extensions": [
@@ -5405,6 +5399,22 @@
           "kind": "static",
           "typeName": "effect/io/Metric.Aspects",
           "name": "taggedWithLabelSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "update",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Metric",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Metric.Aspects",
+          "name": "update"
         }
       ]
     },
@@ -5876,17 +5886,6 @@
       ]
     },
     {
-      "definitionName": "union",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Ops",
-          "name": "union"
-        }
-      ]
-    },
-    {
       "definitionName": "after",
       "definitionKind": "const",
       "extensions": [
@@ -6028,6 +6027,22 @@
           "kind": "static",
           "typeName": "effect/io/Schedule/Interval.Aspects",
           "name": "intersect"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Schedule/Interval",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "name": "union"
         }
       ]
     },
@@ -8552,22 +8567,6 @@
       ]
     },
     {
-      "definitionName": "buildWithScope",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Layer",
-          "name": "buildWithScope"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "buildWithScope"
-        }
-      ]
-    },
-    {
       "definitionName": "context",
       "definitionKind": "const",
       "extensions": [
@@ -8827,6 +8826,22 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Aspects",
           "name": "isFresh"
+        }
+      ]
+    },
+    {
+      "definitionName": "buildWithScope",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Layer",
+          "name": "buildWithScope"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Aspects",
+          "name": "buildWithScope"
         }
       ]
     },
@@ -11736,28 +11751,6 @@
       ]
     },
     {
-      "definitionName": "stripSomeDefects",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "stripSomeDefects"
-        }
-      ]
-    },
-    {
-      "definitionName": "find",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "find"
-        }
-      ]
-    },
-    {
       "definitionName": "isInterruptedException",
       "definitionKind": "const",
       "extensions": [
@@ -12152,6 +12145,22 @@
       ]
     },
     {
+      "definitionName": "stripSomeDefects",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Cause",
+          "name": "stripSomeDefects"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cause.Aspects",
+          "name": "stripSomeDefects"
+        }
+      ]
+    },
+    {
       "definitionName": "as",
       "definitionKind": "const",
       "extensions": [
@@ -12228,6 +12237,22 @@
           "kind": "static",
           "typeName": "effect/io/Cause.Aspects",
           "name": "squashWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "find",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Cause",
+          "name": "find"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cause.Aspects",
+          "name": "find"
         }
       ]
     },
@@ -14094,6 +14119,22 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Aspects",
           "name": "catchTag"
+        }
+      ]
+    },
+    {
+      "definitionName": "catchTags",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "catchTags"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Aspects",
+          "name": "catchTags"
         }
       ]
     },
@@ -19423,17 +19464,6 @@
       ]
     },
     {
-      "definitionName": "launch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Ops",
-          "name": "launch"
-        }
-      ]
-    },
-    {
       "definitionName": "PollingMetricTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -19441,6 +19471,22 @@
           "kind": "static",
           "typeName": "effect/io/Metric/Polling.MetricTypeId.Ops",
           "name": "PollingMetricTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "launch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Metric/Polling.Metric",
+          "name": "launch"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "name": "launch"
         }
       ]
     },
