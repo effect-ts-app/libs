@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.21.1
+
+### Patch Changes
+
+- 02997e8f: FUP
+- Updated dependencies [02997e8f]
+  - @effect-app/infra-adapters@0.18.1
+  - @effect-app/prelude@0.19.1
+  - @effect-app/schema@0.16.1
+
 ## 0.21.0
 
 ### Minor Changes

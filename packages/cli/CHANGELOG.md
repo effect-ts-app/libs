@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.3.1
+
+### Patch Changes
+
+- 02997e8f: FUP
+
 ## 0.3.0
 
 ### Minor Changes

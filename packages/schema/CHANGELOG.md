@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.16.1
+
+### Patch Changes
+
+- 02997e8f: FUP
+
 ## 0.16.0
 
 ### Minor Changes

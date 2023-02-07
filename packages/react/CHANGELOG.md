@@ -1,5 +1,14 @@
 # @effect-app/react
 
+## 0.15.1
+
+### Patch Changes
+
+- 02997e8f: FUP
+- Updated dependencies [02997e8f]
+  - @effect-app/prelude@0.19.1
+  - @effect-app/schema@0.16.1
+
 ## 0.15.0
 
 ### Minor Changes
