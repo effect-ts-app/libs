@@ -33,9 +33,9 @@ function touch(path: string) {
 
 function* monitorIndexes_(path: string) {
   yield monitorChildIndexes(path)
-  const indexFileName = path + "/index.ts"
-  if (fs.existsSync(indexFileName)) {
-    yield monitorRootIndexes(path, indexFileName)
+  const indexFile = path + "/index.ts"
+  if (fs.existsSync(indexFile)) {
+    yield monitorRootIndexes(path, indexFile)
   }
 }
 
@@ -50,22 +50,22 @@ function monitorChildIndexes(path: string) {
       return
     }
     // const dirName = pathParts[pathParts.length - 2]!
-    const indexFileName = pathParts.slice(0, -1).join("/") + ".ts"
+    const indexFile = pathParts.slice(0, -1).join("/") + ".ts"
 
-    // console.log("change!", evt, path, dirName, indexFileName)
-    if (!fs.existsSync(indexFileName)) {
+    // console.log("change!", evt, path, dirName, indexFile)
+    if (!fs.existsSync(indexFile)) {
       return
     }
-    cp.execSync(`pnpm eslint --fix "${indexFileName}"`)
+    cp.execSync(`pnpm eslint --fix "${indexFile}"`)
   })
 }
 
-function monitorRootIndexes(path: string, indexFileName: string) {
+function monitorRootIndexes(path: string, indexFile: string) {
   return w.default(path, (_, path) => {
-    if (path.endsWith("index.ts")) return
+    if (path.endsWith(indexFile)) return
     // const dirName = pathParts[pathParts.length - 2]!
-    // console.log("change!", evt, path, dirName, indexFileName)
-    cp.execSync(`pnpm eslint --fix "${indexFileName}"`)
+    // console.log("change!", evt, path, dirName, indexFile)
+    cp.execSync(`pnpm eslint --fix "${indexFile}"`)
   })
 }
 
