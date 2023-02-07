@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.10.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
 ## 0.9.1
 
 ### Patch Changes

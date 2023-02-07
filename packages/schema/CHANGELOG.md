@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.16.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
+### Patch Changes
+
+- Updated dependencies [4d49f303]
+  - @effect-app/core@0.20.0
+
 ## 0.15.6
 
 ### Patch Changes

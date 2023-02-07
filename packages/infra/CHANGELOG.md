@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.21.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
+### Patch Changes
+
+- Updated dependencies [4d49f303]
+  - @effect-app/infra-adapters@0.18.0
+  - @effect-app/prelude@0.19.0
+  - @effect-app/schema@0.16.0
+  - @effect-app/core@0.20.0
+
 ## 0.20.3
 
 ### Patch Changes

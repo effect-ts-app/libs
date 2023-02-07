@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.11.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
 ## 0.10.4
 
 ### Patch Changes

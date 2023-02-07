@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
 ## 0.2.7
 
 ### Patch Changes

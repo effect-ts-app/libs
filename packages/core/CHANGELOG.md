@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.20.0
+
+### Minor Changes
+
+- 4d49f303: Upgrade to @effect/data
+
 ## 0.19.0
 
 ### Minor Changes
