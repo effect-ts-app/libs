@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.6
+
+### Patch Changes
+
+- 89ee2cc5: Add root index.ts support
+
 ## 0.2.5
 
 ### Patch Changes
