@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.20.1
+
+### Patch Changes
+
+- Update tsplus annotations
+
 ## 0.20.0
 
 ### Minor Changes
