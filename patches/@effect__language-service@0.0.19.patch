@@ -25,7 +25,7 @@ index d119a28427139fb3494eeeed8e23efb8a3a17925..7c6e4c5b4e4d02fbf283fbd92456b45e
              const signature = checker.getResolvedSignature(visited);
              const declaration = signature?.declaration;
 -            if (declaration && !_typescript.default.isJSDocSignature(declaration) && findSource(declaration).fileName.includes("@fp-ts/data/Function")) {
-+            if (declaration && !_typescript.default.isJSDocSignature(declaration) && tryFindSourceFileName(declaration).includes("@fp-ts/data/Function")) {
++            if (declaration && !_typescript.default.isJSDocSignature(declaration) && tryFindSourceFileName(declaration).includes("@effect/data/Function")) {
                if (declaration.name?.getText() === "pipe") {
                  let expr = _typescript.default.visitNode(visited.arguments[0], optimizeVisitor);
                  for (let i = 1; i < visited.arguments.length; i++) {

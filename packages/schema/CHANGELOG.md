@@ -228,7 +228,7 @@
 
 ### Minor Changes
 
-- 7d445f3e: Adopt Equivalence and Equal from @fp-ts/data
+- 7d445f3e: Adopt Equivalence and Equal from @effect/data
 
 ### Patch Changes
 
@@ -239,7 +239,7 @@
 
 ### Minor Changes
 
-- bba14672: Update to latest @effect/io and @fp-ts/data
+- bba14672: Update to latest @effect/io and @effect/data
 
 ### Patch Changes
 

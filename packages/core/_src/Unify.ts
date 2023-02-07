@@ -17,7 +17,7 @@ export function unifyEffect<X extends Effect<any, any, any>>(
 }
 
 /**
- * @tsplus unify fp-ts/data/Chunk
+ * @tsplus unify effect/data/Chunk
  */
 export function unifyChunk<X extends Chunk<any>>(
   self: X

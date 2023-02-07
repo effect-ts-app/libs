@@ -7,7 +7,7 @@ module.exports = {
             "@effect/io",
             "@fp-ts/core",
             "@fp-ts/codec",
-            "@fp-ts/data",
+            "@effect/data",
             "@fp-ts/schema",
             "date-fns"
             //"vue",

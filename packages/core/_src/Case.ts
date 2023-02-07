@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // ets_tracing: off
 
-import * as Equal from "@fp-ts/data/Equal"
-import * as Hash from "@fp-ts/data/Hash"
+import * as Equal from "@effect/data/Equal"
+import * as Hash from "@effect/data/Hash"
 import type { IsEqualTo } from "./utils.js"
 
 export const CaseBrand = Symbol()

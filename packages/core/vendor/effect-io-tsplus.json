@@ -13446,7 +13446,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Context/Tag",
+          "typeName": "effect/data/Context/Tag",
           "kind": "getter",
           "name": "access"
         },
@@ -13462,7 +13462,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Context/Tag",
+          "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
           "name": "accessWith"
         },
@@ -13478,7 +13478,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Context/Tag",
+          "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
           "name": "accessWithEffect"
         },

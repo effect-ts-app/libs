@@ -8,9 +8,9 @@
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.9",
+    "@effect/io": "^0.1.10",
     "@fp-ts/core": "^0.1.1",
-    "@fp-ts/data": "^0.1.1",
+    "@effect/data": "^0.0.1",
     "@fp-ts/optic": "^0.1.0",
     "query-string": "^8.1.0",
     "swrv": "^1.0.3",
@@ -20,7 +20,7 @@
     "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
     "@babel/cli": "^7.20.7",
-    "@types/node": "~18.11.19",
+    "@types/node": "~18.13.0",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
@@ -74,16 +74,6 @@
       "require": {
         "types": "./dist/hooks.d.ts",
         "default": "./_cjs/hooks.cjs"
-      }
-    },
-    "./index": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./_cjs/index.cjs"
       }
     },
     "./internal": {

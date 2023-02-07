@@ -1,6 +1,6 @@
 // tracing: off
-import * as Equal from "@fp-ts/data/Equal"
-import * as Hash from "@fp-ts/data/Hash"
+import * as Equal from "@effect/data/Equal"
+import * as Hash from "@effect/data/Hash"
 
 export function augmentRecord(value: {}) {
   Object.defineProperty(value, Hash.symbol, {

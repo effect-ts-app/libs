@@ -4,7 +4,7 @@ import * as Option from "./Option.js"
 
 import * as T from "@effect/io/Effect"
 
-import * as Dur from "@fp-ts/data/Duration"
+import * as Dur from "@effect/data/Duration"
 
 export * from "@fp-ts/core/ReadonlyArray"
 
@@ -54,7 +54,7 @@ function arrayIncludes<A>(E: Equivalence<A>) {
 }
 
 /**
- * @tsplus static fp-ts/data/Duration.Ops makeMillis
+ * @tsplus static effect/data/Duration.Ops makeMillis
  */
 export const millis_ = Dur.millis
 
@@ -304,7 +304,7 @@ export function* _chunk_<T>(items_: Iterable<T>, size: number) {
  * Split the `items` array into multiple, smaller chunks of the given `size`.
  * @tsplus fluent Array chunk
  * @tsplus fluent ReadonlyArray chunk
- * @tsplus fluent fp-ts/data/Chunk chunk
+ * @tsplus fluent effect/data/Chunk chunk
  * @tsplus fluent Iterable chunk
  */
 export function chunk_<T>(items_: Iterable<T>, size: number) {
@@ -343,14 +343,14 @@ export function CollectionToNonEmptyReadonlyArray<A>(c: Iterable<A>) {
 }
 
 /**
- * @tsplus getter fp-ts/data/Chunk asNonEmptyArray
+ * @tsplus getter effect/data/Chunk asNonEmptyArray
  */
 export function NonEmptyChunkToNonEmptyReadonlyArray<A>(c: NonEmptyChunk<A>) {
   return c.toArray.toNonEmpty.value!
 }
 
 /**
- * @tsplus getter fp-ts/data/Chunk toNonEmptyArray
+ * @tsplus getter effect/data/Chunk toNonEmptyArray
  */
 export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
   return c.toArray.toNonEmpty
@@ -368,7 +368,7 @@ export function ext_forEachEffectPar<A, R, E, B>(
 }
 
 /**
- * @tsplus fluent fp-ts/data/Chunk forEachEffectPar
+ * @tsplus fluent effect/data/Chunk forEachEffectPar
  */
 export function ext_CNKforEachEffectPar<A, R, E, B>(
   as: Chunk<A>,
@@ -417,7 +417,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
 /**
  * @tsplus fluent ReadonlyArray forEachEffectWithIndex
  * @tsplus fluent Array forEachEffectWithIndex
- * @tsplus fluent fp-ts/data/Chunk forEachEffectWithIndex
+ * @tsplus fluent effect/data/Chunk forEachEffectWithIndex
  * @tsplus fluent ets/Set forEachEffectWithIndex
  */
 export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {
@@ -427,7 +427,7 @@ export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: n
 /**
  * @tsplus fluent ReadonlyArray forEachEffectParWithIndex
  * @tsplus fluent Array forEachEffectParWithIndex
- * @tsplus fluent fp-ts/data/Chunk forEachEffectParWithIndex
+ * @tsplus fluent effect/data/Chunk forEachEffectParWithIndex
  * @tsplus fluent ets/Set forEachEffectParWithIndex
  */
 export function ext_forEachParWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {

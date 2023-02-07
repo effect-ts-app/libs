@@ -1,16 +1,16 @@
 {
-  "@fp-ts/data/Random": [
+  "@effect/data/Random": [
     {
       "definitionName": "PCGRandom",
       "definitionKind": "class",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random/PCGRandom"
+          "typeName": "effect/data/Random/PCGRandom"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random/PCGRandom.Ops"
+          "typeName": "effect/data/Random/PCGRandom.Ops"
         }
       ]
     },
@@ -20,11 +20,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random/PCGRandomState"
+          "typeName": "effect/data/Random/PCGRandomState"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random/PCGRandomState.Ops"
+          "typeName": "effect/data/Random/PCGRandomState.Ops"
         }
       ]
     },
@@ -34,11 +34,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Random/OptionalNumber"
+          "typeName": "effect/data/Random/OptionalNumber"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Random/OptionalNumber.Ops"
+          "typeName": "effect/data/Random/OptionalNumber.Ops"
         }
       ]
     },
@@ -48,24 +48,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Random.Ops",
+          "typeName": "effect/data/Random.Ops",
           "name": "isNothing"
         }
       ]
     }
   ],
-  "@fp-ts/data/Gen": [
+  "@effect/data/Gen": [
     {
       "definitionName": "GenKindImpl",
       "definitionKind": "class",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen.KindImpl"
+          "typeName": "effect/data/Gen.KindImpl"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen.KindImpl.Ops"
+          "typeName": "effect/data/Gen.KindImpl.Ops"
         }
       ]
     },
@@ -75,11 +75,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen/SingleShotGen"
+          "typeName": "effect/data/Gen/SingleShotGen"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen/SingleShotGen.Ops"
+          "typeName": "effect/data/Gen/SingleShotGen.Ops"
         }
       ]
     },
@@ -89,11 +89,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen.Kind"
+          "typeName": "effect/data/Gen.Kind"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen.Kind.Ops"
+          "typeName": "effect/data/Gen.Kind.Ops"
         }
       ]
     },
@@ -103,11 +103,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen/Variance"
+          "typeName": "effect/data/Gen/Variance"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen/Variance.Ops"
+          "typeName": "effect/data/Gen/Variance.Ops"
         }
       ]
     },
@@ -117,11 +117,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen"
+          "typeName": "effect/data/Gen"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen.Ops"
+          "typeName": "effect/data/Gen.Ops"
         }
       ]
     },
@@ -131,11 +131,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen/Adapter"
+          "typeName": "effect/data/Gen/Adapter"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen/Adapter.Ops"
+          "typeName": "effect/data/Gen/Adapter.Ops"
         }
       ]
     },
@@ -145,11 +145,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Gen.KindTypeId"
+          "typeName": "effect/data/Gen.KindTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Gen.KindTypeId.Ops"
+          "typeName": "effect/data/Gen.KindTypeId.Ops"
         }
       ]
     },
@@ -159,7 +159,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Kind.Ops",
+          "typeName": "effect/data/Gen.Kind.Ops",
           "name": "makeGenKind"
         }
       ]
@@ -170,7 +170,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "singleShot"
         }
       ]
@@ -181,7 +181,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "Either"
         }
       ]
@@ -192,7 +192,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "These"
         }
       ]
@@ -203,7 +203,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "Option"
         }
       ]
@@ -214,7 +214,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.KindTypeId.Ops",
+          "typeName": "effect/data/Gen.KindTypeId.Ops",
           "name": "GenKindTypeId"
         }
       ]
@@ -225,7 +225,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "Either"
         }
       ]
@@ -236,7 +236,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "These"
         }
       ]
@@ -247,24 +247,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Gen.Ops",
+          "typeName": "effect/data/Gen.Ops",
           "name": "Option"
         }
       ]
     }
   ],
-  "@fp-ts/data/Brand": [
+  "@effect/data/Brand": [
     {
       "definitionName": "Brand",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Brand"
+          "typeName": "effect/data/Brand"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Brand.Ops"
+          "typeName": "effect/data/Brand.Ops"
         }
       ]
     },
@@ -274,11 +274,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Brand.TypeId"
+          "typeName": "effect/data/Brand.TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Brand.TypeId.Ops"
+          "typeName": "effect/data/Brand.TypeId.Ops"
         }
       ]
     },
@@ -288,11 +288,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId"
+          "typeName": "effect/data/Brand/NominalConstructorTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId.Ops"
+          "typeName": "effect/data/Brand/NominalConstructorTypeId.Ops"
         }
       ]
     },
@@ -302,11 +302,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId"
+          "typeName": "effect/data/Brand/RefinedConstructorsTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId.Ops"
+          "typeName": "effect/data/Brand/RefinedConstructorsTypeId.Ops"
         }
       ]
     },
@@ -316,7 +316,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "error"
         }
       ]
@@ -327,7 +327,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "errors"
         }
       ]
@@ -338,7 +338,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "isNominal"
         }
       ]
@@ -349,7 +349,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "isRefined"
         }
       ]
@@ -360,7 +360,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "nominal"
         }
       ]
@@ -371,7 +371,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "refined"
         }
       ]
@@ -382,7 +382,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.Ops",
+          "typeName": "effect/data/Brand.Ops",
           "name": "all"
         }
       ]
@@ -393,7 +393,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand.TypeId.Ops",
+          "typeName": "effect/data/Brand.TypeId.Ops",
           "name": "BrandTypeId"
         }
       ]
@@ -404,7 +404,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand/NominalConstructorTypeId.Ops",
+          "typeName": "effect/data/Brand/NominalConstructorTypeId.Ops",
           "name": "NominalConstructorTypeId"
         }
       ]
@@ -415,24 +415,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Brand/RefinedConstructorsTypeId.Ops",
+          "typeName": "effect/data/Brand/RefinedConstructorsTypeId.Ops",
           "name": "RefinedConstructorsTypeId"
         }
       ]
     }
   ],
-  "@fp-ts/data/Hash": [
+  "@effect/data/Hash": [
     {
       "definitionName": "Hash",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Hash"
+          "typeName": "effect/data/Hash"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Hash.Ops"
+          "typeName": "effect/data/Hash.Ops"
         }
       ]
     },
@@ -442,7 +442,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "hash"
         }
       ]
@@ -453,7 +453,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "random"
         }
       ]
@@ -464,7 +464,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "combine"
         }
       ]
@@ -475,7 +475,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "optimize"
         }
       ]
@@ -486,7 +486,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "isHash"
         }
       ]
@@ -497,7 +497,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "number"
         }
       ]
@@ -508,7 +508,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "string"
         }
       ]
@@ -519,7 +519,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "structure"
         }
       ]
@@ -530,7 +530,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "array"
         }
       ]
@@ -541,24 +541,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Hash/symbol.Ops",
+          "typeName": "effect/data/Hash/symbol.Ops",
           "name": "symbol"
         }
       ]
     }
   ],
-  "@fp-ts/data/Equal": [
+  "@effect/data/Equal": [
     {
       "definitionName": "Equal",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Equal"
+          "typeName": "effect/data/Equal"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Equal.Ops"
+          "typeName": "effect/data/Equal.Ops"
         }
       ]
     },
@@ -568,7 +568,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal.Ops",
+          "typeName": "effect/data/Equal.Ops",
           "name": "isEqual"
         }
       ]
@@ -579,7 +579,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal.Ops",
+          "typeName": "effect/data/Equal.Ops",
           "name": "equivalence"
         }
       ]
@@ -589,7 +589,7 @@
       "definitionKind": "function",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Equal",
+          "typeName": "effect/data/Equal",
           "kind": "operator",
           "name": "=="
         },
@@ -599,7 +599,7 @@
           "name": "=="
         },
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "operator",
           "name": "=="
         },
@@ -615,7 +615,7 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal.Ops",
+          "typeName": "effect/data/Equal.Ops",
           "name": "equals"
         }
       ]
@@ -626,24 +626,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Equal/symbol.Ops",
+          "typeName": "effect/data/Equal/symbol.Ops",
           "name": "symbol"
         }
       ]
     }
   ],
-  "@fp-ts/data/NonEmpty": [
+  "@effect/data/NonEmpty": [
     {
       "definitionName": "NonEmptyIterable",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/NonEmpty.Iterable"
+          "typeName": "effect/data/NonEmpty.Iterable"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/NonEmpty.Iterable.Ops"
+          "typeName": "effect/data/NonEmpty.Iterable.Ops"
         }
       ]
     },
@@ -653,7 +653,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/NonEmpty/nonEmpty.Ops",
+          "typeName": "effect/data/NonEmpty/nonEmpty.Ops",
           "name": "nonEmpty"
         }
       ]
@@ -664,29 +664,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/NonEmpty.Iterable",
+          "typeName": "effect/data/NonEmpty.Iterable",
           "name": "unprepend"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/NonEmpty.Iterable.Aspects",
+          "typeName": "effect/data/NonEmpty.Iterable.Aspects",
           "name": "unprepend"
         }
       ]
     }
   ],
-  "@fp-ts/data/Chunk": [
+  "@effect/data/Chunk": [
     {
       "definitionName": "NonEmptyChunk",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk"
+          "typeName": "effect/data/Chunk/NonEmptyChunk"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Ops"
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Ops"
         }
       ]
     },
@@ -696,11 +696,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk"
+          "typeName": "effect/data/Chunk"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk.Ops"
+          "typeName": "effect/data/Chunk.Ops"
         }
       ]
     },
@@ -710,11 +710,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk.TypeLambda"
+          "typeName": "effect/data/Chunk.TypeLambda"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk.TypeLambda.Ops"
+          "typeName": "effect/data/Chunk.TypeLambda.Ops"
         }
       ]
     },
@@ -724,11 +724,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Chunk/TypeId"
+          "typeName": "effect/data/Chunk/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Chunk/TypeId.Ops"
+          "typeName": "effect/data/Chunk/TypeId.Ops"
         }
       ]
     },
@@ -738,7 +738,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "fromIterable"
         }
       ]
@@ -749,7 +749,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unsafeFromArray"
         }
       ]
@@ -759,13 +759,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "make"
         }
       ]
@@ -776,7 +776,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "makeBy"
         }
       ]
@@ -787,7 +787,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "isChunk"
         }
       ]
@@ -798,7 +798,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "empty"
         }
       ]
@@ -808,13 +808,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "fluent",
           "name": "filterMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "filterMap"
         }
       ]
@@ -824,13 +824,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "fluent",
           "name": "filterMapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "filterMapWithIndex"
         }
       ]
@@ -840,13 +840,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "fluent",
           "name": "filterMapWhile"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "filterMapWhile"
         }
       ]
@@ -856,13 +856,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "getter",
           "name": "compact"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "compact"
         }
       ]
@@ -873,7 +873,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "of"
         }
       ]
@@ -884,7 +884,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "range"
         }
       ]
@@ -895,7 +895,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Ops",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unfold"
         }
       ]
@@ -906,12 +906,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "get"
         }
       ]
@@ -922,12 +922,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "unsafeGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "unsafeGet"
         }
       ]
@@ -937,18 +937,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "pipeable-operator",
           "name": "<<"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "append"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "append"
         }
       ]
@@ -958,18 +958,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "pipeable-operator",
           "name": ">>"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "prepend"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "prepend"
         }
       ]
@@ -980,12 +980,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "take"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "take"
         }
       ]
@@ -996,12 +996,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "drop"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "drop"
         }
       ]
@@ -1012,12 +1012,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "dropRight"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "dropRight"
         }
       ]
@@ -1028,12 +1028,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "dropWhile"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "dropWhile"
         }
       ]
@@ -1044,12 +1044,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "prependAllNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "prependAllNonEmpty"
         }
       ]
@@ -1059,18 +1059,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "kind": "pipeable-operator",
           "name": "+"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "concat"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "concat"
         }
       ]
@@ -1081,12 +1081,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "correspondsTo"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "correspondsTo"
         }
       ]
@@ -1097,12 +1097,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "filter"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "filter"
         }
       ]
@@ -1113,12 +1113,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "elem"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "elem"
         }
       ]
@@ -1129,12 +1129,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "some"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "some"
         }
       ]
@@ -1145,12 +1145,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "every"
         }
       ]
@@ -1161,12 +1161,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "findFirst"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "findFirst"
         }
       ]
@@ -1177,12 +1177,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "findFirstIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "findFirstIndex"
         }
       ]
@@ -1193,12 +1193,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "findLastIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "findLastIndex"
         }
       ]
@@ -1209,12 +1209,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "findLast"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "findLast"
         }
       ]
@@ -1225,12 +1225,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "flatMap"
         }
       ]
@@ -1241,12 +1241,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "forEach"
         }
       ]
@@ -1257,12 +1257,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "chunksOf"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "chunksOf"
         }
       ]
@@ -1273,12 +1273,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "intersection"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "intersection"
         }
       ]
@@ -1289,12 +1289,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -1305,12 +1305,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "isNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "isNonEmpty"
         }
       ]
@@ -1321,12 +1321,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "reduce"
         }
       ]
@@ -1337,12 +1337,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "reduceWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -1353,12 +1353,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "reduceRight"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "reduceRight"
         }
       ]
@@ -1369,12 +1369,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "reduceRightWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "reduceRightWithIndex"
         }
       ]
@@ -1385,12 +1385,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "join"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "join"
         }
       ]
@@ -1401,12 +1401,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "map"
         }
       ]
@@ -1417,12 +1417,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "mapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "mapWithIndex"
         }
       ]
@@ -1433,12 +1433,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "mapAccum"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "mapAccum"
         }
       ]
@@ -1449,12 +1449,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "partitionWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "partitionWithIndex"
         }
       ]
@@ -1465,12 +1465,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "partition"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "partition"
         }
       ]
@@ -1481,12 +1481,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "partitionMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "partitionMap"
         }
       ]
@@ -1497,12 +1497,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "sort"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "sort"
         }
       ]
@@ -1513,12 +1513,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "splitAt"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "splitAt"
         }
       ]
@@ -1529,12 +1529,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "split"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "split"
         }
       ]
@@ -1545,12 +1545,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "splitWhere"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "splitWhere"
         }
       ]
@@ -1561,12 +1561,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "takeRight"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "takeRight"
         }
       ]
@@ -1577,12 +1577,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "takeWhile"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "takeWhile"
         }
       ]
@@ -1593,12 +1593,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "union"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "union"
         }
       ]
@@ -1609,12 +1609,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zip"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zip"
         }
       ]
@@ -1625,12 +1625,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zipWith"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zipWith"
         }
       ]
@@ -1641,12 +1641,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zipAll"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zipAll"
         }
       ]
@@ -1657,12 +1657,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zipAllWith"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zipAllWith"
         }
       ]
@@ -1673,12 +1673,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "crossWith"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "crossWith"
         }
       ]
@@ -1689,12 +1689,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "cross"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "cross"
         }
       ]
@@ -1705,12 +1705,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zipWithIndexOffset"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zipWithIndexOffset"
         }
       ]
@@ -1721,12 +1721,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "remove"
         }
       ]
@@ -1737,12 +1737,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "replace"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "replace"
         }
       ]
@@ -1753,12 +1753,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "replaceOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "replaceOption"
         }
       ]
@@ -1769,12 +1769,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "modify"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "modify"
         }
       ]
@@ -1785,12 +1785,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "modifyOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "modifyOption"
         }
       ]
@@ -1801,12 +1801,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "toReadonlyArray"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "toReadonlyArray"
         }
       ]
@@ -1817,12 +1817,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "dedupeAdjacent"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "dedupeAdjacent"
         }
       ]
@@ -1833,12 +1833,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "flatten"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "flatten"
         }
       ]
@@ -1849,12 +1849,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "head"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "head"
         }
       ]
@@ -1865,12 +1865,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "last"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "last"
         }
       ]
@@ -1881,12 +1881,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "separate"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "separate"
         }
       ]
@@ -1897,12 +1897,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "reverse"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "reverse"
         }
       ]
@@ -1913,12 +1913,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "size"
         }
       ]
@@ -1929,12 +1929,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "tail"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "tail"
         }
       ]
@@ -1945,12 +1945,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "dedupe"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "dedupe"
         }
       ]
@@ -1961,12 +1961,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "unsafeHead"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "unsafeHead"
         }
       ]
@@ -1977,12 +1977,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "unsafeLast"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "unsafeLast"
         }
       ]
@@ -1993,12 +1993,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "unzip"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "unzip"
         }
       ]
@@ -2009,12 +2009,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk",
+          "typeName": "effect/data/Chunk",
           "name": "zipWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Aspects",
           "name": "zipWithIndex"
         }
       ]
@@ -2025,12 +2025,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk",
+          "typeName": "effect/data/Chunk/NonEmptyChunk",
           "name": "headNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
           "name": "headNonEmpty"
         }
       ]
@@ -2041,29 +2041,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk",
+          "typeName": "effect/data/Chunk/NonEmptyChunk",
           "name": "tailNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Chunk/NonEmptyChunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
           "name": "tailNonEmpty"
         }
       ]
     }
   ],
-  "@fp-ts/data/Context": [
+  "@effect/data/Context": [
     {
       "definitionName": "Tag",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context/Tag"
+          "typeName": "effect/data/Context/Tag"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context/Tag.Ops"
+          "typeName": "effect/data/Context/Tag.Ops"
         }
       ]
     },
@@ -2073,11 +2073,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context"
+          "typeName": "effect/data/Context"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context.Ops"
+          "typeName": "effect/data/Context.Ops"
         }
       ]
     },
@@ -2087,11 +2087,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context/TagTypeId"
+          "typeName": "effect/data/Context/TagTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context/TagTypeId.Ops"
+          "typeName": "effect/data/Context/TagTypeId.Ops"
         }
       ]
     },
@@ -2101,11 +2101,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context/TypeId"
+          "typeName": "effect/data/Context/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context/TypeId.Ops"
+          "typeName": "effect/data/Context/TypeId.Ops"
         }
       ]
     },
@@ -2115,11 +2115,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Context/Tags"
+          "typeName": "effect/data/Context/Tags"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Context/Tags.Ops"
+          "typeName": "effect/data/Context/Tags.Ops"
         }
       ]
     },
@@ -2129,7 +2129,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "make"
         }
       ]
@@ -2140,7 +2140,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "Tag"
         }
       ]
@@ -2151,7 +2151,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "isContext"
         }
       ]
@@ -2162,7 +2162,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "isTag"
         }
       ]
@@ -2173,7 +2173,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "empty"
         }
       ]
@@ -2184,12 +2184,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "prune"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
+          "typeName": "effect/data/Context.Aspects",
           "name": "prune"
         }
       ]
@@ -2200,12 +2200,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Ops",
+          "typeName": "effect/data/Context.Ops",
           "name": "add"
         }
       ]
@@ -2216,12 +2216,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
+          "typeName": "effect/data/Context.Aspects",
           "name": "get"
         }
       ]
@@ -2232,12 +2232,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "unsafeGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
+          "typeName": "effect/data/Context.Aspects",
           "name": "unsafeGet"
         }
       ]
@@ -2248,12 +2248,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "getOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
+          "typeName": "effect/data/Context.Aspects",
           "name": "getOption"
         }
       ]
@@ -2264,29 +2264,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Context",
+          "typeName": "effect/data/Context",
           "name": "merge"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Context.Aspects",
+          "typeName": "effect/data/Context.Aspects",
           "name": "merge"
         }
       ]
     }
   ],
-  "@fp-ts/data/Data": [
+  "@effect/data/Data": [
     {
       "definitionName": "Case",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Data/Case"
+          "typeName": "effect/data/Data/Case"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Data/Case.Ops"
+          "typeName": "effect/data/Data/Case.Ops"
         }
       ]
     },
@@ -2296,11 +2296,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Data"
+          "typeName": "effect/data/Data"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Data.Ops"
+          "typeName": "effect/data/Data.Ops"
         }
       ]
     },
@@ -2310,7 +2310,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "struct"
         }
       ]
@@ -2321,7 +2321,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "unsafeStruct"
         }
       ]
@@ -2332,7 +2332,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "tuple"
         }
       ]
@@ -2343,7 +2343,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "array"
         }
       ]
@@ -2354,7 +2354,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "unsafeArray"
         }
       ]
@@ -2365,24 +2365,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Data.Ops",
+          "typeName": "effect/data/Data.Ops",
           "name": "tagged"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ/ChunkPatch": [
+  "@effect/data/Differ/ChunkPatch": [
     {
       "definitionName": "ChunkPatch",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ChunkPatch"
+          "typeName": "effect/data/Differ/ChunkPatch"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Ops"
+          "typeName": "effect/data/Differ/ChunkPatch.Ops"
         }
       ]
     },
@@ -2392,11 +2392,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ChunkPatch/TypeId"
+          "typeName": "effect/data/Differ/ChunkPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ChunkPatch/TypeId.Ops"
+          "typeName": "effect/data/Differ/ChunkPatch/TypeId.Ops"
         }
       ]
     },
@@ -2406,7 +2406,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Ops",
+          "typeName": "effect/data/Differ/ChunkPatch.Ops",
           "name": "empty"
         }
       ]
@@ -2417,7 +2417,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Ops",
+          "typeName": "effect/data/Differ/ChunkPatch.Ops",
           "name": "diff"
         }
       ]
@@ -2428,7 +2428,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Ops",
+          "typeName": "effect/data/Differ/ChunkPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2439,29 +2439,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ/ChunkPatch",
+          "typeName": "effect/data/Differ/ChunkPatch",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ChunkPatch.Aspects",
+          "typeName": "effect/data/Differ/ChunkPatch.Aspects",
           "name": "combine"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ/ContextPatch": [
+  "@effect/data/Differ/ContextPatch": [
     {
       "definitionName": "ContextPatch",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ContextPatch"
+          "typeName": "effect/data/Differ/ContextPatch"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Ops"
+          "typeName": "effect/data/Differ/ContextPatch.Ops"
         }
       ]
     },
@@ -2471,11 +2471,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/ContextPatch/TypeId"
+          "typeName": "effect/data/Differ/ContextPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/ContextPatch/TypeId.Ops"
+          "typeName": "effect/data/Differ/ContextPatch/TypeId.Ops"
         }
       ]
     },
@@ -2485,7 +2485,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Ops",
+          "typeName": "effect/data/Differ/ContextPatch.Ops",
           "name": "empty"
         }
       ]
@@ -2496,7 +2496,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Ops",
+          "typeName": "effect/data/Differ/ContextPatch.Ops",
           "name": "diff"
         }
       ]
@@ -2507,7 +2507,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Ops",
+          "typeName": "effect/data/Differ/ContextPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2518,29 +2518,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ/ContextPatch",
+          "typeName": "effect/data/Differ/ContextPatch",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/ContextPatch.Aspects",
+          "typeName": "effect/data/Differ/ContextPatch.Aspects",
           "name": "combine"
         }
       ]
     }
   ],
-  "@fp-ts/data/HashSet": [
+  "@effect/data/HashSet": [
     {
       "definitionName": "HashSet",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashSet"
+          "typeName": "effect/data/HashSet"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashSet.Ops"
+          "typeName": "effect/data/HashSet.Ops"
         }
       ]
     },
@@ -2550,11 +2550,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashSet/TypeId"
+          "typeName": "effect/data/HashSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashSet/TypeId.Ops"
+          "typeName": "effect/data/HashSet/TypeId.Ops"
         }
       ]
     },
@@ -2564,7 +2564,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Ops",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "fromIterable"
         }
       ]
@@ -2574,13 +2574,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/HashSet.Ops",
+          "typeName": "effect/data/HashSet.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Ops",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "make"
         }
       ]
@@ -2591,7 +2591,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Ops",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "isHashSet"
         }
       ]
@@ -2602,7 +2602,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Ops",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "empty"
         }
       ]
@@ -2613,12 +2613,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "has"
         }
       ]
@@ -2629,12 +2629,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "some"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "some"
         }
       ]
@@ -2645,12 +2645,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "every"
         }
       ]
@@ -2661,12 +2661,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "isSubset"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "isSubset"
         }
       ]
@@ -2677,12 +2677,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "mutate"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "mutate"
         }
       ]
@@ -2693,12 +2693,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "add"
         }
       ]
@@ -2709,12 +2709,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "remove"
         }
       ]
@@ -2725,12 +2725,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "difference"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "difference"
         }
       ]
@@ -2741,12 +2741,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "intersection"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "intersection"
         }
       ]
@@ -2757,12 +2757,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "union"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "union"
         }
       ]
@@ -2773,12 +2773,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "toggle"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "toggle"
         }
       ]
@@ -2789,12 +2789,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "map"
         }
       ]
@@ -2805,12 +2805,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "flatMap"
         }
       ]
@@ -2821,12 +2821,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "forEach"
         }
       ]
@@ -2837,12 +2837,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "reduce"
         }
       ]
@@ -2853,12 +2853,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "filter"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "filter"
         }
       ]
@@ -2869,12 +2869,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "partition"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "partition"
         }
       ]
@@ -2885,12 +2885,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "values"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "values"
         }
       ]
@@ -2901,12 +2901,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "size"
         }
       ]
@@ -2917,12 +2917,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "beginMutation"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "beginMutation"
         }
       ]
@@ -2933,29 +2933,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashSet",
+          "typeName": "effect/data/HashSet",
           "name": "endMutation"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Aspects",
           "name": "endMutation"
         }
       ]
     }
   ],
-  "@fp-ts/data/HashMap": [
+  "@effect/data/HashMap": [
     {
       "definitionName": "HashMap",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashMap"
+          "typeName": "effect/data/HashMap"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashMap.Ops"
+          "typeName": "effect/data/HashMap.Ops"
         }
       ]
     },
@@ -2965,11 +2965,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/HashMap/TypeId"
+          "typeName": "effect/data/HashMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/HashMap/TypeId.Ops"
+          "typeName": "effect/data/HashMap/TypeId.Ops"
         }
       ]
     },
@@ -2978,13 +2978,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/HashMap.Ops",
+          "typeName": "effect/data/HashMap.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Ops",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "make"
         }
       ]
@@ -2995,7 +2995,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Ops",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "fromIterable"
         }
       ]
@@ -3006,7 +3006,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Ops",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "isHashMap"
         }
       ]
@@ -3017,7 +3017,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Ops",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "empty"
         }
       ]
@@ -3028,12 +3028,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -3044,12 +3044,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "get"
         }
       ]
@@ -3060,12 +3060,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "getHash"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "getHash"
         }
       ]
@@ -3076,12 +3076,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "unsafeGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "unsafeGet"
         }
       ]
@@ -3092,12 +3092,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "has"
         }
       ]
@@ -3108,12 +3108,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "hasHash"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "hasHash"
         }
       ]
@@ -3124,12 +3124,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "set"
         }
       ]
@@ -3140,12 +3140,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "mutate"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "mutate"
         }
       ]
@@ -3156,12 +3156,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "modifyAt"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "modifyAt"
         }
       ]
@@ -3172,12 +3172,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "modifyHash"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "modifyHash"
         }
       ]
@@ -3188,12 +3188,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "modify"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "modify"
         }
       ]
@@ -3204,12 +3204,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "union"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "union"
         }
       ]
@@ -3220,12 +3220,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "remove"
         }
       ]
@@ -3236,12 +3236,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "removeMany"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "removeMany"
         }
       ]
@@ -3252,12 +3252,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "map"
         }
       ]
@@ -3268,12 +3268,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "mapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "mapWithIndex"
         }
       ]
@@ -3284,12 +3284,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "flatMap"
         }
       ]
@@ -3300,12 +3300,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "flatMapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "flatMapWithIndex"
         }
       ]
@@ -3316,12 +3316,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "forEach"
         }
       ]
@@ -3332,12 +3332,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "forEachWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "forEachWithIndex"
         }
       ]
@@ -3348,12 +3348,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "reduce"
         }
       ]
@@ -3364,12 +3364,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "reduceWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -3380,12 +3380,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "filter"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "filter"
         }
       ]
@@ -3396,12 +3396,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "filterWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "filterWithIndex"
         }
       ]
@@ -3412,12 +3412,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "filterMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "filterMap"
         }
       ]
@@ -3428,12 +3428,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "filterMapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "filterMapWithIndex"
         }
       ]
@@ -3444,12 +3444,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "keys"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "keys"
         }
       ]
@@ -3460,12 +3460,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "keySet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "keySet"
         }
       ]
@@ -3476,12 +3476,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "values"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "values"
         }
       ]
@@ -3492,12 +3492,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "size"
         }
       ]
@@ -3508,12 +3508,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "beginMutation"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "beginMutation"
         }
       ]
@@ -3524,12 +3524,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "endMutation"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "endMutation"
         }
       ]
@@ -3540,29 +3540,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/HashMap",
+          "typeName": "effect/data/HashMap",
           "name": "compact"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Aspects",
           "name": "compact"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ/HashMapPatch": [
+  "@effect/data/Differ/HashMapPatch": [
     {
       "definitionName": "HashMapPatch",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashMapPatch"
+          "typeName": "effect/data/Differ/HashMapPatch"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Ops"
+          "typeName": "effect/data/Differ/HashMapPatch.Ops"
         }
       ]
     },
@@ -3572,11 +3572,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashMapPatch/TypeId"
+          "typeName": "effect/data/Differ/HashMapPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashMapPatch/TypeId.Ops"
+          "typeName": "effect/data/Differ/HashMapPatch/TypeId.Ops"
         }
       ]
     },
@@ -3586,7 +3586,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Ops",
+          "typeName": "effect/data/Differ/HashMapPatch.Ops",
           "name": "empty"
         }
       ]
@@ -3597,7 +3597,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Ops",
+          "typeName": "effect/data/Differ/HashMapPatch.Ops",
           "name": "diff"
         }
       ]
@@ -3608,7 +3608,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Ops",
+          "typeName": "effect/data/Differ/HashMapPatch.Ops",
           "name": "patch"
         }
       ]
@@ -3619,29 +3619,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ/HashMapPatch",
+          "typeName": "effect/data/Differ/HashMapPatch",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashMapPatch.Aspects",
+          "typeName": "effect/data/Differ/HashMapPatch.Aspects",
           "name": "combine"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ/HashSetPatch": [
+  "@effect/data/Differ/HashSetPatch": [
     {
       "definitionName": "HashSetPatch",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashSetPatch"
+          "typeName": "effect/data/Differ/HashSetPatch"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Ops"
+          "typeName": "effect/data/Differ/HashSetPatch.Ops"
         }
       ]
     },
@@ -3651,11 +3651,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/HashSetPatch/TypeId"
+          "typeName": "effect/data/Differ/HashSetPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/HashSetPatch/TypeId.Ops"
+          "typeName": "effect/data/Differ/HashSetPatch/TypeId.Ops"
         }
       ]
     },
@@ -3665,7 +3665,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Ops",
+          "typeName": "effect/data/Differ/HashSetPatch.Ops",
           "name": "empty"
         }
       ]
@@ -3676,7 +3676,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Ops",
+          "typeName": "effect/data/Differ/HashSetPatch.Ops",
           "name": "diff"
         }
       ]
@@ -3687,7 +3687,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Ops",
+          "typeName": "effect/data/Differ/HashSetPatch.Ops",
           "name": "patch"
         }
       ]
@@ -3698,29 +3698,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ/HashSetPatch",
+          "typeName": "effect/data/Differ/HashSetPatch",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/HashSetPatch.Aspects",
+          "typeName": "effect/data/Differ/HashSetPatch.Aspects",
           "name": "combine"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ/OrPatch": [
+  "@effect/data/Differ/OrPatch": [
     {
       "definitionName": "OrPatch",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/OrPatch"
+          "typeName": "effect/data/Differ/OrPatch"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/OrPatch.Ops"
+          "typeName": "effect/data/Differ/OrPatch.Ops"
         }
       ]
     },
@@ -3730,11 +3730,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/OrPatch/TypeId"
+          "typeName": "effect/data/Differ/OrPatch/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/OrPatch/TypeId.Ops"
+          "typeName": "effect/data/Differ/OrPatch/TypeId.Ops"
         }
       ]
     },
@@ -3744,7 +3744,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/OrPatch.Ops",
+          "typeName": "effect/data/Differ/OrPatch.Ops",
           "name": "empty"
         }
       ]
@@ -3755,7 +3755,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/OrPatch.Ops",
+          "typeName": "effect/data/Differ/OrPatch.Ops",
           "name": "diff"
         }
       ]
@@ -3766,7 +3766,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/OrPatch.Ops",
+          "typeName": "effect/data/Differ/OrPatch.Ops",
           "name": "patch"
         }
       ]
@@ -3777,29 +3777,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ/OrPatch",
+          "typeName": "effect/data/Differ/OrPatch",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ/OrPatch.Aspects",
+          "typeName": "effect/data/Differ/OrPatch.Aspects",
           "name": "combine"
         }
       ]
     }
   ],
-  "@fp-ts/data/Differ": [
+  "@effect/data/Differ": [
     {
       "definitionName": "Differ",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ"
+          "typeName": "effect/data/Differ"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ.Ops"
+          "typeName": "effect/data/Differ.Ops"
         }
       ]
     },
@@ -3809,11 +3809,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Differ/TypeId"
+          "typeName": "effect/data/Differ/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Differ/TypeId.Ops"
+          "typeName": "effect/data/Differ/TypeId.Ops"
         }
       ]
     },
@@ -3823,7 +3823,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Ops",
+          "typeName": "effect/data/Differ.Ops",
           "name": "make"
         }
       ]
@@ -3834,7 +3834,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Ops",
+          "typeName": "effect/data/Differ.Ops",
           "name": "environment"
         }
       ]
@@ -3845,7 +3845,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Ops",
+          "typeName": "effect/data/Differ.Ops",
           "name": "hashSet"
         }
       ]
@@ -3856,7 +3856,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Ops",
+          "typeName": "effect/data/Differ.Ops",
           "name": "update"
         }
       ]
@@ -3867,7 +3867,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Ops",
+          "typeName": "effect/data/Differ.Ops",
           "name": "updateWith"
         }
       ]
@@ -3878,12 +3878,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "diff"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "diff"
         }
       ]
@@ -3894,12 +3894,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "combine"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "combine"
         }
       ]
@@ -3910,12 +3910,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "patch"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "patch"
         }
       ]
@@ -3926,12 +3926,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "orElseResult"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "orElseResult"
         }
       ]
@@ -3942,12 +3942,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "transform"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "transform"
         }
       ]
@@ -3958,12 +3958,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "zip"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "zip"
         }
       ]
@@ -3974,12 +3974,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "empty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "empty"
         }
       ]
@@ -3990,12 +3990,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "chunk"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "chunk"
         }
       ]
@@ -4006,29 +4006,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/Differ",
+          "typeName": "effect/data/Differ",
           "name": "hashMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Aspects",
           "name": "hashMap"
         }
       ]
     }
   ],
-  "@fp-ts/data/Duration": [
+  "@effect/data/Duration": [
     {
       "definitionName": "Duration",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Duration"
+          "typeName": "effect/data/Duration"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Duration.Ops"
+          "typeName": "effect/data/Duration.Ops"
         }
       ]
     },
@@ -4038,11 +4038,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/Duration/TypeId"
+          "typeName": "effect/data/Duration/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/Duration/TypeId.Ops"
+          "typeName": "effect/data/Duration/TypeId.Ops"
         }
       ]
     },
@@ -4052,7 +4052,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "isDuration"
         }
       ]
@@ -4063,7 +4063,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "millis"
         }
       ]
@@ -4074,7 +4074,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "seconds"
         }
       ]
@@ -4085,7 +4085,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "minutes"
         }
       ]
@@ -4096,7 +4096,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "hours"
         }
       ]
@@ -4107,7 +4107,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "days"
         }
       ]
@@ -4118,7 +4118,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "weeks"
         }
       ]
@@ -4129,7 +4129,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "zero"
         }
       ]
@@ -4140,7 +4140,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Ops",
+          "typeName": "effect/data/Duration.Ops",
           "name": "infinity"
         }
       ]
@@ -4150,18 +4150,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": "*"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "times"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "times"
         }
       ]
@@ -4171,18 +4171,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": "+"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "add"
         }
       ]
@@ -4192,18 +4192,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": "-"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "subtract"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "subtract"
         }
       ]
@@ -4213,18 +4213,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": "<"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "lessThan"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "lessThan"
         }
       ]
@@ -4234,18 +4234,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": "<="
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "lessThanOrEqualTo"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "lessThanOrEqualTo"
         }
       ]
@@ -4255,18 +4255,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": ">"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "greaterThan"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "greaterThan"
         }
       ]
@@ -4276,18 +4276,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "kind": "pipeable-operator",
           "name": ">="
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "greaterThanOrEqualTo"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "greaterThanOrEqualTo"
         }
       ]
@@ -4298,29 +4298,29 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/Duration",
+          "typeName": "effect/data/Duration",
           "name": "equals"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Aspects",
           "name": "equals"
         }
       ]
     }
   ],
-  "@fp-ts/data/List": [
+  "@effect/data/List": [
     {
       "definitionName": "Cons",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/List/Cons"
+          "typeName": "effect/data/List/Cons"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/List/Cons.Ops"
+          "typeName": "effect/data/List/Cons.Ops"
         }
       ]
     },
@@ -4330,11 +4330,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/List/Nil"
+          "typeName": "effect/data/List/Nil"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/List/Nil.Ops"
+          "typeName": "effect/data/List/Nil.Ops"
         }
       ]
     },
@@ -4344,11 +4344,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/List.TypeId"
+          "typeName": "effect/data/List.TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/List.TypeId.Ops"
+          "typeName": "effect/data/List.TypeId.Ops"
         }
       ]
     },
@@ -4358,11 +4358,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/List"
+          "typeName": "effect/data/List"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/List.Ops"
+          "typeName": "effect/data/List.Ops"
         }
       ]
     },
@@ -4372,7 +4372,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "fromIterable"
         }
       ]
@@ -4383,7 +4383,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "make"
         }
       ]
@@ -4394,7 +4394,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "isList"
         }
       ]
@@ -4405,7 +4405,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "nil"
         }
       ]
@@ -4416,7 +4416,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "cons"
         }
       ]
@@ -4427,7 +4427,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "empty"
         }
       ]
@@ -4438,7 +4438,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "of"
         }
       ]
@@ -4449,7 +4449,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "compact"
         }
       ]
@@ -4460,7 +4460,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Ops",
+          "typeName": "effect/data/List.Ops",
           "name": "filterMap"
         }
       ]
@@ -4471,7 +4471,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.TypeId.Ops",
+          "typeName": "effect/data/List.TypeId.Ops",
           "name": "ListTypeId"
         }
       ]
@@ -4482,12 +4482,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "isNil"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "isNil"
         }
       ]
@@ -4498,12 +4498,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "isCons"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "isCons"
         }
       ]
@@ -4514,12 +4514,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "equalsWith"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "equalsWith"
         }
       ]
@@ -4529,18 +4529,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "kind": "pipeable-operator",
           "name": "+"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "concat"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "concat"
         }
       ]
@@ -4551,12 +4551,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "drop"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "drop"
         }
       ]
@@ -4567,12 +4567,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "every"
         }
       ]
@@ -4583,12 +4583,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "filter"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "filter"
         }
       ]
@@ -4599,12 +4599,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "findFirst"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "findFirst"
         }
       ]
@@ -4615,12 +4615,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "flatMap"
         }
       ]
@@ -4631,12 +4631,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "forEach"
         }
       ]
@@ -4647,12 +4647,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "map"
         }
       ]
@@ -4663,12 +4663,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "partition"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "partition"
         }
       ]
@@ -4679,12 +4679,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "partitionMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "partitionMap"
         }
       ]
@@ -4694,18 +4694,18 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "kind": "pipeable-operator",
           "name": ">>"
         },
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "prepend"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "prepend"
         }
       ]
@@ -4716,12 +4716,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "prependAll"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "prependAll"
         }
       ]
@@ -4732,12 +4732,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "prependAllReversed"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "prependAllReversed"
         }
       ]
@@ -4748,12 +4748,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "reduce"
         }
       ]
@@ -4764,12 +4764,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "reduceRight"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "reduceRight"
         }
       ]
@@ -4780,12 +4780,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "some"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "some"
         }
       ]
@@ -4796,12 +4796,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "splitAt"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "splitAt"
         }
       ]
@@ -4812,12 +4812,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "take"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "take"
         }
       ]
@@ -4828,12 +4828,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "length"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "length"
         }
       ]
@@ -4844,12 +4844,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "head"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "head"
         }
       ]
@@ -4860,12 +4860,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "last"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "last"
         }
       ]
@@ -4876,12 +4876,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "reverse"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "reverse"
         }
       ]
@@ -4892,12 +4892,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "tail"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "tail"
         }
       ]
@@ -4908,12 +4908,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "toChunk"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "toChunk"
         }
       ]
@@ -4924,12 +4924,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "toReadonlyArray"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "toReadonlyArray"
         }
       ]
@@ -4940,12 +4940,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "unsafeHead"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "unsafeHead"
         }
       ]
@@ -4956,12 +4956,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "unsafeLast"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "unsafeLast"
         }
       ]
@@ -4972,29 +4972,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/List",
+          "typeName": "effect/data/List",
           "name": "unsafeTail"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/List.Aspects",
+          "typeName": "effect/data/List.Aspects",
           "name": "unsafeTail"
         }
       ]
     }
   ],
-  "@fp-ts/data/MutableHashMap": [
+  "@effect/data/MutableHashMap": [
     {
       "definitionName": "MutableHashMap",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashMap"
+          "typeName": "effect/data/MutableHashMap"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashMap.Ops"
+          "typeName": "effect/data/MutableHashMap.Ops"
         }
       ]
     },
@@ -5004,11 +5004,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashMap/TypeId"
+          "typeName": "effect/data/MutableHashMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashMap/TypeId.Ops"
+          "typeName": "effect/data/MutableHashMap/TypeId.Ops"
         }
       ]
     },
@@ -5017,13 +5017,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/MutableHashMap.Ops",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Ops",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "make"
         }
       ]
@@ -5034,7 +5034,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Ops",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "fromIterable"
         }
       ]
@@ -5045,7 +5045,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Ops",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "empty"
         }
       ]
@@ -5056,12 +5056,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "get"
         }
       ]
@@ -5072,12 +5072,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "has"
         }
       ]
@@ -5088,12 +5088,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "modify"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "modify"
         }
       ]
@@ -5104,12 +5104,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "modifyAt"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "modifyAt"
         }
       ]
@@ -5120,12 +5120,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "remove"
         }
       ]
@@ -5136,12 +5136,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "set"
         }
       ]
@@ -5152,29 +5152,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableHashMap",
+          "typeName": "effect/data/MutableHashMap",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Aspects",
           "name": "size"
         }
       ]
     }
   ],
-  "@fp-ts/data/MutableHashSet": [
+  "@effect/data/MutableHashSet": [
     {
       "definitionName": "MutableHashSet",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashSet"
+          "typeName": "effect/data/MutableHashSet"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashSet.Ops"
+          "typeName": "effect/data/MutableHashSet.Ops"
         }
       ]
     },
@@ -5184,11 +5184,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableHashSet/TypeId"
+          "typeName": "effect/data/MutableHashSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableHashSet/TypeId.Ops"
+          "typeName": "effect/data/MutableHashSet/TypeId.Ops"
         }
       ]
     },
@@ -5198,7 +5198,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Ops",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "fromIterable"
         }
       ]
@@ -5208,13 +5208,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/MutableHashSet.Ops",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Ops",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "make"
         }
       ]
@@ -5225,7 +5225,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Ops",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "empty"
         }
       ]
@@ -5236,12 +5236,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashSet",
+          "typeName": "effect/data/MutableHashSet",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Aspects",
           "name": "add"
         }
       ]
@@ -5252,12 +5252,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashSet",
+          "typeName": "effect/data/MutableHashSet",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Aspects",
           "name": "has"
         }
       ]
@@ -5268,12 +5268,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableHashSet",
+          "typeName": "effect/data/MutableHashSet",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Aspects",
           "name": "remove"
         }
       ]
@@ -5284,29 +5284,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableHashSet",
+          "typeName": "effect/data/MutableHashSet",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Aspects",
           "name": "size"
         }
       ]
     }
   ],
-  "@fp-ts/data/MutableList": [
+  "@effect/data/MutableList": [
     {
       "definitionName": "MutableList",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableList"
+          "typeName": "effect/data/MutableList"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableList.Ops"
+          "typeName": "effect/data/MutableList.Ops"
         }
       ]
     },
@@ -5316,11 +5316,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableList/TypeId"
+          "typeName": "effect/data/MutableList/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableList/TypeId.Ops"
+          "typeName": "effect/data/MutableList/TypeId.Ops"
         }
       ]
     },
@@ -5330,7 +5330,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Ops",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "from"
         }
       ]
@@ -5341,7 +5341,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Ops",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "make"
         }
       ]
@@ -5352,7 +5352,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Ops",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "empty"
         }
       ]
@@ -5363,12 +5363,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -5379,12 +5379,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "forEach"
         }
       ]
@@ -5395,12 +5395,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "append"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "append"
         }
       ]
@@ -5411,12 +5411,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "length"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "length"
         }
       ]
@@ -5427,12 +5427,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "tail"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "tail"
         }
       ]
@@ -5443,12 +5443,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "head"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "head"
         }
       ]
@@ -5459,12 +5459,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "reset"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "reset"
         }
       ]
@@ -5475,12 +5475,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "shift"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "shift"
         }
       ]
@@ -5491,29 +5491,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableList",
+          "typeName": "effect/data/MutableList",
           "name": "pop"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Aspects",
           "name": "pop"
         }
       ]
     }
   ],
-  "@fp-ts/data/MutableQueue": [
+  "@effect/data/MutableQueue": [
     {
       "definitionName": "MutableQueue",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableQueue"
+          "typeName": "effect/data/MutableQueue"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableQueue.Ops"
+          "typeName": "effect/data/MutableQueue.Ops"
         }
       ]
     },
@@ -5523,11 +5523,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableQueue/TypeId"
+          "typeName": "effect/data/MutableQueue/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableQueue/TypeId.Ops"
+          "typeName": "effect/data/MutableQueue/TypeId.Ops"
         }
       ]
     },
@@ -5537,7 +5537,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Ops",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "bounded"
         }
       ]
@@ -5548,7 +5548,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Ops",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "unbounded"
         }
       ]
@@ -5559,7 +5559,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue/EmptyMutableQueue.Ops",
+          "typeName": "effect/data/MutableQueue/EmptyMutableQueue.Ops",
           "name": "EmptyMutableQueue"
         }
       ]
@@ -5570,12 +5570,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -5586,12 +5586,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "isFull"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "isFull"
         }
       ]
@@ -5602,12 +5602,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "offer"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "offer"
         }
       ]
@@ -5618,12 +5618,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "offerAll"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "offerAll"
         }
       ]
@@ -5634,12 +5634,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "poll"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "poll"
         }
       ]
@@ -5650,12 +5650,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "pollUpTo"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "pollUpTo"
         }
       ]
@@ -5666,12 +5666,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "length"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "length"
         }
       ]
@@ -5682,29 +5682,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableQueue",
+          "typeName": "effect/data/MutableQueue",
           "name": "capacity"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Aspects",
           "name": "capacity"
         }
       ]
     }
   ],
-  "@fp-ts/data/MutableRef": [
+  "@effect/data/MutableRef": [
     {
       "definitionName": "MutableRef",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableRef"
+          "typeName": "effect/data/MutableRef"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableRef.Ops"
+          "typeName": "effect/data/MutableRef.Ops"
         }
       ]
     },
@@ -5714,11 +5714,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/MutableRef/TypeId"
+          "typeName": "effect/data/MutableRef/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/MutableRef/TypeId.Ops"
+          "typeName": "effect/data/MutableRef/TypeId.Ops"
         }
       ]
     },
@@ -5727,13 +5727,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/MutableRef.Ops",
+          "typeName": "effect/data/MutableRef.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Ops",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "make"
         }
       ]
@@ -5744,12 +5744,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "compareAndSet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "compareAndSet"
         }
       ]
@@ -5760,12 +5760,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "getAndSet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "getAndSet"
         }
       ]
@@ -5776,12 +5776,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "getAndUpdate"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "getAndUpdate"
         }
       ]
@@ -5792,12 +5792,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "set"
         }
       ]
@@ -5808,12 +5808,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "setAndGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "setAndGet"
         }
       ]
@@ -5824,12 +5824,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "update"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "update"
         }
       ]
@@ -5840,12 +5840,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "updateAndGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "updateAndGet"
         }
       ]
@@ -5856,12 +5856,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "decrement"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "decrement"
         }
       ]
@@ -5872,12 +5872,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "decrementAndGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "decrementAndGet"
         }
       ]
@@ -5888,12 +5888,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "get"
         }
       ]
@@ -5904,12 +5904,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "getAndDecrement"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "getAndDecrement"
         }
       ]
@@ -5920,12 +5920,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "getAndIncrement"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "getAndIncrement"
         }
       ]
@@ -5936,12 +5936,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "increment"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "increment"
         }
       ]
@@ -5952,12 +5952,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "incrementAndGet"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "incrementAndGet"
         }
       ]
@@ -5968,29 +5968,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/MutableRef",
+          "typeName": "effect/data/MutableRef",
           "name": "toggle"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Aspects",
           "name": "toggle"
         }
       ]
     }
   ],
-  "@fp-ts/data/RedBlackTree": [
+  "@effect/data/RedBlackTree": [
     {
       "definitionName": "RedBlackTree",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/RedBlackTree"
+          "typeName": "effect/data/RedBlackTree"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/RedBlackTree.Ops"
+          "typeName": "effect/data/RedBlackTree.Ops"
         }
       ]
     },
@@ -6000,11 +6000,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/RedBlackTree/TypeId"
+          "typeName": "effect/data/RedBlackTree/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/RedBlackTree/TypeId.Ops"
+          "typeName": "effect/data/RedBlackTree/TypeId.Ops"
         }
       ]
     },
@@ -6014,7 +6014,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "fromIterable"
         }
       ]
@@ -6025,7 +6025,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "make"
         }
       ]
@@ -6036,7 +6036,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "isRedBlackTree"
         }
       ]
@@ -6047,7 +6047,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "at"
         }
       ]
@@ -6058,7 +6058,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "atReversed"
         }
       ]
@@ -6069,7 +6069,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThan"
         }
       ]
@@ -6080,7 +6080,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanReversed"
         }
       ]
@@ -6091,7 +6091,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanEqual"
         }
       ]
@@ -6102,7 +6102,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanEqualReversed"
         }
       ]
@@ -6113,7 +6113,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThan"
         }
       ]
@@ -6124,7 +6124,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanReversed"
         }
       ]
@@ -6135,7 +6135,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanEqual"
         }
       ]
@@ -6146,7 +6146,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Ops",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanEqualReversed"
         }
       ]
@@ -6157,12 +6157,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "find"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "find"
         }
       ]
@@ -6173,12 +6173,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "findFirst"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "findFirst"
         }
       ]
@@ -6189,12 +6189,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "getAt"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "getAt"
         }
       ]
@@ -6205,12 +6205,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "has"
         }
       ]
@@ -6221,12 +6221,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "insert"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "insert"
         }
       ]
@@ -6237,12 +6237,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "forEach"
         }
       ]
@@ -6253,12 +6253,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "forEachGreaterThanEqual"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "forEachGreaterThanEqual"
         }
       ]
@@ -6269,12 +6269,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "forEachLessThan"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "forEachLessThan"
         }
       ]
@@ -6285,12 +6285,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "forEachBetween"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "forEachBetween"
         }
       ]
@@ -6301,12 +6301,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "reduce"
         }
       ]
@@ -6317,12 +6317,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "reduceWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -6333,12 +6333,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "removeFirst"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "removeFirst"
         }
       ]
@@ -6349,12 +6349,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "first"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "first"
         }
       ]
@@ -6365,12 +6365,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "getOrder"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "getOrder"
         }
       ]
@@ -6381,12 +6381,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "keys"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "keys"
         }
       ]
@@ -6397,12 +6397,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "keysReversed"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "keysReversed"
         }
       ]
@@ -6413,12 +6413,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "last"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "last"
         }
       ]
@@ -6429,12 +6429,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "reversed"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "reversed"
         }
       ]
@@ -6445,12 +6445,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "size"
         }
       ]
@@ -6461,12 +6461,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "values"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "values"
         }
       ]
@@ -6477,29 +6477,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/RedBlackTree",
+          "typeName": "effect/data/RedBlackTree",
           "name": "valuesReversed"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Aspects",
           "name": "valuesReversed"
         }
       ]
     }
   ],
-  "@fp-ts/data/SortedMap": [
+  "@effect/data/SortedMap": [
     {
       "definitionName": "SortedMap",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedMap"
+          "typeName": "effect/data/SortedMap"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedMap.Ops"
+          "typeName": "effect/data/SortedMap.Ops"
         }
       ]
     },
@@ -6509,11 +6509,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedMap/TypeId"
+          "typeName": "effect/data/SortedMap/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedMap/TypeId.Ops"
+          "typeName": "effect/data/SortedMap/TypeId.Ops"
         }
       ]
     },
@@ -6523,7 +6523,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Ops",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "fromIterable"
         }
       ]
@@ -6533,13 +6533,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "fp-ts/data/SortedMap.Ops",
+          "typeName": "effect/data/SortedMap.Ops",
           "kind": "static",
           "name": "__call"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Ops",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "make"
         }
       ]
@@ -6550,7 +6550,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Ops",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "isSortedMap"
         }
       ]
@@ -6561,12 +6561,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "isEmpty"
         }
       ]
@@ -6577,12 +6577,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "isNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "isNonEmpty"
         }
       ]
@@ -6593,12 +6593,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "get"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "get"
         }
       ]
@@ -6609,12 +6609,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "has"
         }
       ]
@@ -6625,12 +6625,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "map"
         }
       ]
@@ -6641,12 +6641,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "mapWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "mapWithIndex"
         }
       ]
@@ -6657,12 +6657,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "reduce"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "reduce"
         }
       ]
@@ -6673,12 +6673,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "reduceWithIndex"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "reduceWithIndex"
         }
       ]
@@ -6689,12 +6689,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "remove"
         }
       ]
@@ -6705,12 +6705,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "set"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "set"
         }
       ]
@@ -6721,12 +6721,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "entries"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "entries"
         }
       ]
@@ -6737,12 +6737,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "getOrder"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "getOrder"
         }
       ]
@@ -6753,12 +6753,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "headOption"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "headOption"
         }
       ]
@@ -6769,12 +6769,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "keys"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "keys"
         }
       ]
@@ -6785,12 +6785,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "size"
         }
       ]
@@ -6801,29 +6801,29 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedMap",
+          "typeName": "effect/data/SortedMap",
           "name": "values"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Aspects",
           "name": "values"
         }
       ]
     }
   ],
-  "@fp-ts/data/SortedSet": [
+  "@effect/data/SortedSet": [
     {
       "definitionName": "SortedSet",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedSet"
+          "typeName": "effect/data/SortedSet"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedSet.Ops"
+          "typeName": "effect/data/SortedSet.Ops"
         }
       ]
     },
@@ -6833,11 +6833,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/data/SortedSet/TypeId"
+          "typeName": "effect/data/SortedSet/TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/data/SortedSet/TypeId.Ops"
+          "typeName": "effect/data/SortedSet/TypeId.Ops"
         }
       ]
     },
@@ -6847,7 +6847,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Ops",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "fromIterable"
         }
       ]
@@ -6858,7 +6858,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Ops",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "make"
         }
       ]
@@ -6869,7 +6869,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Ops",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "isSortedSet"
         }
       ]
@@ -6880,12 +6880,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "add"
         }
       ]
@@ -6896,12 +6896,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "difference"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "difference"
         }
       ]
@@ -6912,12 +6912,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "every"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "every"
         }
       ]
@@ -6928,12 +6928,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "filter"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "filter"
         }
       ]
@@ -6944,12 +6944,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "flatMap"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "flatMap"
         }
       ]
@@ -6960,12 +6960,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "forEach"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "forEach"
         }
       ]
@@ -6976,12 +6976,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "has"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "has"
         }
       ]
@@ -6992,12 +6992,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "intersection"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "intersection"
         }
       ]
@@ -7008,12 +7008,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "isSubset"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "isSubset"
         }
       ]
@@ -7024,12 +7024,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "map"
         }
       ]
@@ -7040,12 +7040,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "partition"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "partition"
         }
       ]
@@ -7056,12 +7056,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "remove"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "remove"
         }
       ]
@@ -7072,12 +7072,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "some"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "some"
         }
       ]
@@ -7088,12 +7088,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "toggle"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "toggle"
         }
       ]
@@ -7104,12 +7104,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "union"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "union"
         }
       ]
@@ -7120,12 +7120,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "size"
         }
       ]
@@ -7136,25 +7136,25 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/data/SortedSet",
+          "typeName": "effect/data/SortedSet",
           "name": "values"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Aspects",
           "name": "values"
         }
       ]
     }
   ],
-  "@fp-ts/data/Dual": [
+  "@effect/data/Dual": [
     {
       "definitionName": "dual",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/data/Dual.Ops",
+          "typeName": "effect/data/Dual.Ops",
           "name": "dual"
         }
       ]

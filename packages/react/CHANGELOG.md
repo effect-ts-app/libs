@@ -325,7 +325,7 @@
 
 ### Minor Changes
 
-- bba14672: Update to latest @effect/io and @fp-ts/data
+- bba14672: Update to latest @effect/io and @effect/data
 
 ### Patch Changes
 

@@ -33,7 +33,7 @@
             "./node_modules/@effect-app/core/vendor/effect-stm-tsplus.json",
             "./node_modules/@effect-app/core/vendor/effect-stream-tsplus.json",
             "./node_modules/@effect-app/core/vendor/fp-ts-core-tsplus.json",
-            "./node_modules/@effect-app/core/vendor/fp-ts-data-tsplus.json",
+            "./node_modules/@effect-app/core/vendor/effect-data-tsplus.json",
             "./node_modules/@effect-app/core/vendor/fp-ts-optic-tsplus.json"
         ],
         //"preserveSymlinks": true

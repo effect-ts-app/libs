@@ -3,82 +3,82 @@
 import * as Array$_ from "./Array.js"
 
 /**
- * @tsplus type fp-ts/data/Chunk.Aspects
+ * @tsplus type effect/data/Chunk.Aspects
  */
 export interface ChunkAspects {}
 
 /**
- * @tsplus static fp-ts/data/Chunk.Ops $
+ * @tsplus static effect/data/Chunk.Ops $
  */
 export const Chunk: ChunkAspects = {}
 
 /**
- * @tsplus type fp-ts/data/Equal.Aspects
+ * @tsplus type effect/data/Equal.Aspects
  */
 export interface EqualAspects {}
 
 /**
- * @tsplus static fp-ts/data/Equal.Ops $
+ * @tsplus static effect/data/Equal.Ops $
  */
 export const Equal: EqualAspects = {}
 
 /**
- * @tsplus type fp-ts/data/Equivalence.Aspects
+ * @tsplus type effect/data/Equivalence.Aspects
  */
 export interface EquivalenceAspects {}
 
 /**
- * @tsplus static fp-ts/data/Equivalence.Ops $
+ * @tsplus static effect/data/Equivalence.Ops $
  */
 export const Equivalence: EquivalenceAspects = {}
 
 /**
- * @tsplus type fp-ts/data/Order.Aspects
+ * @tsplus type effect/data/Order.Aspects
  */
 export interface OrderAspects {}
 
 /**
- * @tsplus static fp-ts/data/Order.Ops $
+ * @tsplus static effect/data/Order.Ops $
  */
 export const Order: OrderAspects = {}
 
 /**
- * @tsplus type fp-ts/data/HashMap.Aspects
+ * @tsplus type effect/data/HashMap.Aspects
  */
 export interface HashMapAspects {}
 
 /**
- * @tsplus static fp-ts/data/HashMap.Ops $
+ * @tsplus static effect/data/HashMap.Ops $
  */
 export const HashMap: HashMapAspects = {}
 
 /**
- * @tsplus type fp-ts/data/HashSet.Aspects
+ * @tsplus type effect/data/HashSet.Aspects
  */
 export interface HashSetAspects {}
 
 /**
- * @tsplus static fp-ts/data/HashSet.Ops $
+ * @tsplus static effect/data/HashSet.Ops $
  */
 export const HashSet: HashSetAspects = {}
 
 /**
- * @tsplus type fp-ts/data/MutableHashMap.Aspects
+ * @tsplus type effect/data/MutableHashMap.Aspects
  */
 export interface MutableHashMapAspects {}
 
 /**
- * @tsplus static fp-ts/data/MutableHashMap.Ops $
+ * @tsplus static effect/data/MutableHashMap.Ops $
  */
 export const MutableHashMap: MutableHashMapAspects = {}
 
 /**
- * @tsplus type fp-ts/data/MutableHashSet.Aspects
+ * @tsplus type effect/data/MutableHashSet.Aspects
  */
 export interface MutableHashSetAspects {}
 
 /**
- * @tsplus static fp-ts/data/MutableHashSet.Ops $
+ * @tsplus static effect/data/MutableHashSet.Ops $
  */
 export const MutableHashSet: MutableHashSetAspects = {}
 

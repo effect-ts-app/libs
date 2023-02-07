@@ -8,7 +8,7 @@ import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
 import type * as EITHER from "@fp-ts/core/Either"
 import type * as O from "@fp-ts/core/Option"
-import type * as CNK from "@fp-ts/data/Chunk"
+import type * as CNK from "@effect/data/Chunk"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
@@ -37,11 +37,11 @@ export type Option<A> = O.Option<A>
 
 export namespace Chunk {
   // @ts-expect-error abc
-  export * from "@fp-ts/data/Chunk"
+  export * from "@effect/data/Chunk"
 }
 /**
- * @tsplus companion fp-ts/data/Chunk.Ops
- * @tsplus type fp-ts/data/Chunk
+ * @tsplus companion effect/data/Chunk.Ops
+ * @tsplus type effect/data/Chunk
  */
 export type Chunk<A> = CNK.Chunk<A>
 

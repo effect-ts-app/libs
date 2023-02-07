@@ -1,11 +1,11 @@
 import { Option } from "./Option.js"
 
-import * as Chunk from "@fp-ts/data/Chunk"
+import * as Chunk from "@effect/data/Chunk"
 
-export * from "@fp-ts/data/Chunk"
+export * from "@effect/data/Chunk"
 
 /**
- * @tsplus pipeable fp-ts/data/Chunk sortWith
+ * @tsplus pipeable effect/data/Chunk sortWith
  */
 export function ChunksortWith<A>(
   ...ords: NonEmptyArguments<Order<A>>
@@ -15,7 +15,7 @@ export function ChunksortWith<A>(
 }
 
 /**
- * @tsplus fluent fp-ts/data/Chunk groupByT
+ * @tsplus fluent effect/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {
   return c.toReadonlyArray().groupByT(f).toChunk
@@ -24,8 +24,8 @@ export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f:
 /**
  * Returns the first element that satisfies the predicate.
  *
- * @tsplus static fp-ts/data/Chunk.Ops findFirstMap
- * @tsplus pipeable fp-ts/data/Chunk findFirstMap
+ * @tsplus static effect/data/Chunk.Ops findFirstMap
+ * @tsplus pipeable effect/data/Chunk findFirstMap
  */
 export function findFirstMap<A, B>(
   f: (a: A) => Option<B>
@@ -44,7 +44,7 @@ export function findFirstMap<A, B>(
 }
 
 /**
- * @tsplus getter fp-ts/data/Chunk toArray
+ * @tsplus getter effect/data/Chunk toArray
  */
 export function toArray<T>(c: Chunk.Chunk<T>) {
   return c.toReadonlyArray()
@@ -53,8 +53,8 @@ export function toArray<T>(c: Chunk.Chunk<T>) {
 /**
  * Remove duplicates from an array, keeping the first occurrence of an element.
  *
- * @tsplus static fp-ts/data/Chunk.Ops uniq
- * @tsplus pipeable fp-ts/data/Chunk uniq
+ * @tsplus static effect/data/Chunk.Ops uniq
+ * @tsplus pipeable effect/data/Chunk uniq
  */
 export function uniq<A>(E: Equivalence<A>) {
   return (self: Chunk.Chunk<A>): Chunk.Chunk<A> => {
@@ -74,8 +74,8 @@ export function uniq<A>(E: Equivalence<A>) {
  * argument which returns the function to use to search for a value of type `A`
  * in an array of type `Chunk<A>`.
  *
- * @tsplus static fp-ts/data/Chunk.Ops elem2
- * @tsplus pipeable fp-ts/data/Chunk elem2
+ * @tsplus static effect/data/Chunk.Ops elem2
+ * @tsplus pipeable effect/data/Chunk elem2
  */
 export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk.Chunk<A>): boolean => {
@@ -89,12 +89,12 @@ export function elem<A>(E: Equivalence<A>, value: A) {
 }
 
 /**
- * @tsplus pipeable fp-ts/data/Chunk partition
+ * @tsplus pipeable effect/data/Chunk partition
  */
 export const ChunkPartition = Chunk.partition
 
 /**
- * @tsplus fluent fp-ts/data/Chunk findFirst
+ * @tsplus fluent effect/data/Chunk findFirst
  */
 export const findFirstSimple: {
   <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>
@@ -102,7 +102,7 @@ export const findFirstSimple: {
 } = Chunk.findFirst
 
 /**
- * @tsplus fluent fp-ts/data/Chunk findLast
+ * @tsplus fluent effect/data/Chunk findLast
  */
 export const findLastSimple: {
   <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>

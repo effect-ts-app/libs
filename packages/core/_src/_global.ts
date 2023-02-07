@@ -4,7 +4,7 @@ import "./operators.js"
 /**
  * @tsplus global
  */
-import { Data } from "@fp-ts/data/Data"
+import { Data } from "@effect/data/Data"
 
 /**
  * @tsplus global
@@ -109,12 +109,12 @@ import { Scope } from "@effect/io/Scope"
 /**
  * @tsplus global
  */
-import { Context, Tag } from "@fp-ts/data/Context"
+import { Context, Tag } from "@effect/data/Context"
 
 /**
  * @tsplus global
  */
-import { Chunk, NonEmptyChunk } from "@fp-ts/data/Chunk"
+import { Chunk, NonEmptyChunk } from "@effect/data/Chunk"
 
 /**
  * @tsplus global
@@ -129,7 +129,7 @@ import { Ordering } from "@fp-ts/core/Ordering"
 /**
  * @tsplus global
  */
-import { Equal } from "@fp-ts/data/Equal"
+import { Equal } from "@effect/data/Equal"
 
 /**
  * @tsplus global
@@ -139,34 +139,34 @@ import { NonEmptyArray, NonEmptyReadonlyArray } from "@fp-ts/core/ReadonlyArray"
 /**
  * @tsplus global
  */
-import { Duration, Duration as DUR } from "@fp-ts/data/Duration"
+import { Duration, Duration as DUR } from "@effect/data/Duration"
 
 /**
  * @tsplus global
  */
-import { HashMap } from "@fp-ts/data/HashMap"
+import { HashMap } from "@effect/data/HashMap"
 
 /**
  * @tsplus global
  */
-import { HashSet } from "@fp-ts/data/HashSet"
+import { HashSet } from "@effect/data/HashSet"
 
 /**
  * @tsplus global
  */
-import { MutableList } from "@fp-ts/data/MutableList"
+import { MutableList } from "@effect/data/MutableList"
 /**
  * @tsplus global
  */
-import { MutableHashMap } from "@fp-ts/data/MutableHashMap"
+import { MutableHashMap } from "@effect/data/MutableHashMap"
 /**
  * @tsplus global
  */
-import { MutableQueue } from "@fp-ts/data/MutableQueue"
+import { MutableQueue } from "@effect/data/MutableQueue"
 /**
  * @tsplus global
  */
-import { MutableRef } from "@fp-ts/data/MutableRef"
+import { MutableRef } from "@effect/data/MutableRef"
 
 /**
  * @tsplus global

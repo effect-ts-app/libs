@@ -6,8 +6,8 @@ import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
 
-import * as Equal from "@fp-ts/data/Equal"
-import * as Hash from "@fp-ts/data/Hash"
+import * as Equal from "@effect/data/Equal"
+import * as Hash from "@effect/data/Hash"
 
 import type { EncSchemaForModel, EParserFor, FromPropertyRecord } from "./_api.js"
 import { fromProps } from "./_api.js"
