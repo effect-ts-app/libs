@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.2.7
+
+### Patch Changes
+
+- 82a54d23: Cleanup
+
 ## 0.2.6
 
 ### Patch Changes
