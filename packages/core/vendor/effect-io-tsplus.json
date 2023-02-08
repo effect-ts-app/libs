@@ -9544,8 +9544,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncExit"
         },
         {
@@ -9560,8 +9560,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSync"
         },
         {
@@ -9576,8 +9576,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncEither"
         },
         {
