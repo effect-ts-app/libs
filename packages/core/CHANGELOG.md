@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.21.1
+
+### Patch Changes
+
+- 46d8b7e1: fix
+
 ## 0.21.0
 
 ### Minor Changes
