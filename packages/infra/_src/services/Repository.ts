@@ -218,7 +218,7 @@ export function queryOneEffect<
       )
       .map(_ => _.map(_ => self.utils.parse(_)))
       .flatMap(_ =>
-        (f.collect ? _.filterMap(f.collect) : _)
+        (f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
           .toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ =>
             _[0]
           )
