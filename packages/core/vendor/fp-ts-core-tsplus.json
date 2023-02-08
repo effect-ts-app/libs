@@ -4521,7 +4521,7 @@
     },
     {
       "definitionName": "slice",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
@@ -5848,7 +5848,7 @@
     },
     {
       "definitionName": "prependAllNonEmpty",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5869,7 +5869,7 @@
     },
     {
       "definitionName": "appendAllNonEmpty",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5890,7 +5890,7 @@
     },
     {
       "definitionName": "takeWhile",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5911,7 +5911,7 @@
     },
     {
       "definitionName": "span",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5932,7 +5932,7 @@
     },
     {
       "definitionName": "dropWhile",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5953,7 +5953,7 @@
     },
     {
       "definitionName": "findFirst",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5974,7 +5974,7 @@
     },
     {
       "definitionName": "findLast",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -5995,7 +5995,7 @@
     },
     {
       "definitionName": "unionNonEmpty",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
@@ -6253,7 +6253,7 @@
     },
     {
       "definitionName": "every",
-      "definitionKind": "function",
+      "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
