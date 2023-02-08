@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.21.2
+
+### Patch Changes
+
+- d9751183: fix: array ext
+
 ## 0.21.1
 
 ### Patch Changes
