@@ -129,17 +129,17 @@ export function projectEffect<
   PM extends { id: string },
   Evt,
   ItemType extends string,
-  S,
   R,
-  E
+  E,
+  S = PM
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: PM) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
-      .map(_ => _.filterMap(f.collect))
+      .map(_ => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
   )
 }
 
@@ -153,10 +153,10 @@ export function project<
   PM extends { id: string },
   Evt,
   ItemType extends string,
-  S
+  S = PM
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
-  map: { filter?: Filter<PM>; collect: (t: PM) => Option<S>; limit?: number; skip?: number }
+  map: { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.projectEffect(Effect(map))
 }
@@ -420,6 +420,91 @@ export function saveAllWithEffectInt<
         ([items, events, a]) => restore(() => self.saveAndPublish(items, events))().map(() => a)
       )
   )
+}
+
+/**
+ * @tsplus fluent Repository queryAndSavePureEffectBatched
+ */
+export function queryAndSavePureEffectBatched<
+  Id extends string,
+  T extends { id: Id },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  S extends T = T
+>(
+  self: Repository<T, PM, Evt, Id, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>,
+  batchSize = 100
+) {
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
+    queryEffect(self, map)
+      .flatMap(_ => self.saveManyWithPureBatched_(_, pure, batchSize))
+}
+
+/**
+ * @tsplus fluent Repository queryAndSavePureBatched
+ */
+export function queryAndSavePureBatched<
+  Id extends string,
+  T extends { id: Id },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string,
+  S extends T = T
+>(
+  self: Repository<T, PM, Evt, Id, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
+  batchSize = 100
+) {
+  return self.queryAndSavePureEffectBatched(Effect(map), batchSize)
+}
+
+/**
+ * @tsplus fluent Repository saveManyWithPureBatched
+ */
+export function saveManyWithPureBatched<
+  Id extends string,
+  T extends { id: Id },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+>(self: Repository<T, PM, Evt, Id, ItemType>, batchSize = 100) {
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
+  (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
+}
+
+/**
+ * @tsplus fluent Repository saveManyWithPureBatched_
+ */
+export function saveManyWithPureBatched_<
+  Id extends string,
+  R,
+  T extends { id: Id },
+  PM extends { id: string },
+  A,
+  E,
+  Evt,
+  S1 extends T,
+  S2 extends T,
+  ItemType extends string
+>(
+  self: Repository<T, PM, Evt, Id, ItemType>,
+  items: Iterable<S1>,
+  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>,
+  batchSize = 100
+) {
+  return items.chunk(batchSize)
+    .forEachEffect(batch =>
+      saveAllWithEffectInt(
+        self,
+        pure.runTerm(batch.toChunk)
+      )
+    )
 }
 
 const anyDSL = makeDSL<any, any, any>()
