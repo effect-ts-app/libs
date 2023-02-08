@@ -4,7 +4,7 @@ import { identity } from "./Function.js"
 
 import * as OPTIC from "@fp-ts/optic"
 
-import { dual } from "@effect/io/Debug"
+import { dual } from "@fp-ts/core/Function"
 
 export * from "@fp-ts/optic"
 

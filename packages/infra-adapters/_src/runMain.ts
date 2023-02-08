@@ -5,7 +5,7 @@ export function defaultTeardown(
   id: FiberId,
   onExit: (status: number) => void
 ) {
-  Fiber.roots().flatMap(_ => _.interruptAllWith(id))
+  Fiber.roots().flatMap(_ => _.interruptAllAs(id))
     .runCallback(() => {
       setTimeout(() => {
         if (Fiber.unsafeRoots().length === 0) {

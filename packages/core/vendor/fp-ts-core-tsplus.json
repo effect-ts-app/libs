@@ -206,6 +206,318 @@
       ]
     }
   ],
+  "@fp-ts/core/Function": [
+    {
+      "definitionName": "FunctionTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Function.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Function.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "LazyArg",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "typeName": "tsplus/LazyArgument",
+          "kind": "type"
+        },
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Function/LazyArg"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "FunctionN",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Function.N"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Function.N.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "dual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "dual"
+        }
+      ]
+    },
+    {
+      "definitionName": "apply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "apply"
+        }
+      ]
+    },
+    {
+      "definitionName": "identity",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "identity"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeCoerce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "unsafeCoerce"
+        }
+      ]
+    },
+    {
+      "definitionName": "constant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constant"
+        }
+      ]
+    },
+    {
+      "definitionName": "constTrue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constTrue"
+        }
+      ]
+    },
+    {
+      "definitionName": "constFalse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constFalse"
+        }
+      ]
+    },
+    {
+      "definitionName": "constNull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constNull"
+        }
+      ]
+    },
+    {
+      "definitionName": "constUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "constVoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "constVoid"
+        }
+      ]
+    },
+    {
+      "definitionName": "flip",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "flip"
+        }
+      ]
+    },
+    {
+      "definitionName": "compose",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "compose"
+        }
+      ]
+    },
+    {
+      "definitionName": "absurd",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "absurd"
+        }
+      ]
+    },
+    {
+      "definitionName": "tupled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "tupled"
+        }
+      ]
+    },
+    {
+      "definitionName": "untupled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "untupled"
+        }
+      ]
+    },
+    {
+      "definitionName": "hole",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "hole"
+        }
+      ]
+    },
+    {
+      "definitionName": "SK",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "SK"
+        }
+      ]
+    },
+    {
+      "definitionName": "flow",
+      "definitionKind": "function",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "flow"
+        }
+      ]
+    },
+    {
+      "definitionName": "pipe",
+      "definitionKind": "function",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function.Ops",
+          "name": "pipe"
+        }
+      ]
+    },
+    {
+      "definitionName": "constTrue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops",
+          "name": "constTrue"
+        }
+      ]
+    },
+    {
+      "definitionName": "constFalse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops",
+          "name": "constFalse"
+        }
+      ]
+    },
+    {
+      "definitionName": "constNull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops",
+          "name": "constNull"
+        }
+      ]
+    },
+    {
+      "definitionName": "constUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops",
+          "name": "constUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "constVoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Function/LazyArg.Ops",
+          "name": "constVoid"
+        }
+      ]
+    }
+  ],
   "@fp-ts/core/ReadonlyRecord": [
     {
       "definitionName": "ReadonlyRecord",
@@ -218,6 +530,206 @@
         {
           "kind": "companion",
           "typeName": "fp-ts/core/ReadonlyRecord.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ReadonlyRecordTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/ReadonlyRecord.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/ReadonlyRecord.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "flap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "flap"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseTap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traverseTap"
+        }
+      ]
+    },
+    {
+      "definitionName": "traversePartitionMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traversePartitionMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseFilterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traverseFilterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseFilter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traverseFilter"
+        }
+      ]
+    },
+    {
+      "definitionName": "traversePartition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Ops",
+          "name": "traversePartition"
+        }
+      ]
+    },
+    {
+      "definitionName": "Covariant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "Covariant"
+        }
+      ]
+    },
+    {
+      "definitionName": "Invariant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "Invariant"
+        }
+      ]
+    },
+    {
+      "definitionName": "Filterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "Filterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "Traversable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Traversable.Ops",
+          "name": "Traversable"
+        }
+      ]
+    },
+    {
+      "definitionName": "TraversableFilterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
+          "name": "TraversableFilterable"
+        }
+      ]
+    },
+    {
+      "definitionName": "collect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "collect"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "collect"
+        }
+      ]
+    },
+    {
+      "definitionName": "has",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "has"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "has"
         }
       ]
     },
@@ -238,6 +750,22 @@
       ]
     },
     {
+      "definitionName": "modifyOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "modifyOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "modifyOption"
+        }
+      ]
+    },
+    {
       "definitionName": "replaceOption",
       "definitionKind": "const",
       "extensions": [
@@ -254,23 +782,275 @@
       ]
     },
     {
-      "definitionName": "modifyOption",
+      "definitionName": "remove",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "fp-ts/core/ReadonlyRecord",
-          "name": "modifyOption"
+          "name": "remove"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
-          "name": "modifyOption"
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "definitionName": "pop",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "pop"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "pop"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "filterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "partitionMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "partitionMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "partitionMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "partition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "partition"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "partition"
+        }
+      ]
+    },
+    {
+      "definitionName": "sequence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "sequence"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "sequence"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "toArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "toArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "toArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "compact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "compact"
+        }
+      ]
+    },
+    {
+      "definitionName": "separate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "separate"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "separate"
+        }
+      ]
+    },
+    {
+      "definitionName": "tupled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/ReadonlyRecord",
+          "name": "tupled"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/ReadonlyRecord.Aspects",
+          "name": "tupled"
         }
       ]
     }
   ],
   "@fp-ts/core/Option": [
+    {
+      "definitionName": "None",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Option/None"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Option/None.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Some",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Option/Some"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Option/Some.Ops"
+        }
+      ]
+    },
     {
       "definitionName": "OptionTypeLambda",
       "definitionKind": "interface",
@@ -286,34 +1066,6 @@
       ]
     },
     {
-      "definitionName": "None",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Option/None"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Option/None.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Some",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Option/Some"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Option/Some.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "Option",
       "definitionKind": "type",
       "extensions": [
@@ -324,28 +1076,6 @@
         {
           "kind": "companion",
           "typeName": "fp-ts/core/Option.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromNullable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Ops",
-          "name": "fromNullable"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromThrowable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Ops",
-          "name": "fromThrowable"
         }
       ]
     },
@@ -368,6 +1098,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/Option.Ops",
           "name": "fromEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromNullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "fromNullable"
         }
       ]
     },
@@ -399,6 +1140,17 @@
       ]
     },
     {
+      "definitionName": "of",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "of"
+        }
+      ]
+    },
+    {
       "definitionName": "isOption",
       "definitionKind": "const",
       "extensions": [
@@ -421,6 +1173,28 @@
       ]
     },
     {
+      "definitionName": "firstSomeOf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "firstSomeOf"
+        }
+      ]
+    },
+    {
+      "definitionName": "liftNullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "liftNullable"
+        }
+      ]
+    },
+    {
       "definitionName": "liftThrowable",
       "definitionKind": "const",
       "extensions": [
@@ -432,13 +1206,13 @@
       ]
     },
     {
-      "definitionName": "of",
+      "definitionName": "flap",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/Option.Ops",
-          "name": "of"
+          "name": "flap"
         }
       ]
     },
@@ -476,28 +1250,6 @@
       ]
     },
     {
-      "definitionName": "lift2",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Ops",
-          "name": "lift2"
-        }
-      ]
-    },
-    {
-      "definitionName": "lift3",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Ops",
-          "name": "lift3"
-        }
-      ]
-    },
-    {
       "definitionName": "getFirstSomeSemigroup",
       "definitionKind": "const",
       "extensions": [
@@ -505,6 +1257,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/Option.Ops",
           "name": "getFirstSomeSemigroup"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceCompact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "reduceCompact"
         }
       ]
     },
@@ -531,13 +1294,13 @@
       ]
     },
     {
-      "definitionName": "liftNullable",
+      "definitionName": "lift2",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/Option.Ops",
-          "name": "liftNullable"
+          "name": "lift2"
         }
       ]
     },
@@ -575,13 +1338,24 @@
       ]
     },
     {
-      "definitionName": "Invariant",
+      "definitionName": "sumCompact",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
-          "name": "Invariant"
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "sumCompact"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiplyCompact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "multiplyCompact"
         }
       ]
     },
@@ -593,6 +1367,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Covariant.Ops",
           "name": "Covariant"
+        }
+      ]
+    },
+    {
+      "definitionName": "Invariant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "Invariant"
         }
       ]
     },
@@ -615,17 +1400,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Option.Ops",
           "name": "unit"
-        }
-      ]
-    },
-    {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Ops",
-          "name": "Do"
         }
       ]
     },
@@ -773,17 +1547,6 @@
       ]
     },
     {
-      "definitionName": "Compactable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Compactable.Ops",
-          "name": "Compactable"
-        }
-      ]
-    },
-    {
       "definitionName": "Filterable",
       "definitionKind": "const",
       "extensions": [
@@ -806,354 +1569,13 @@
       ]
     },
     {
-      "definitionName": "getOrThrow",
+      "definitionName": "Do",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "getOrThrow"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "getOrThrow"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "map"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "imap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "bindTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "bindTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "bindTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "flap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "flap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "flap"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "as"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "as"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "flatMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "flatMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThen",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "andThen"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "andThen"
-        }
-      ]
-    },
-    {
-      "definitionName": "bind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "bind"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "bind"
-        }
-      ]
-    },
-    {
-      "definitionName": "tap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "tap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "tap"
-        }
-      ]
-    },
-    {
-      "definitionName": "inspectSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "inspectSome"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "inspectSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "inspectNone",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "inspectNone"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "inspectNone"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "andThenDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "andThenDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "andThenBind"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "andThenBind"
-        }
-      ]
-    },
-    {
-      "definitionName": "element",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "element"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "element"
-        }
-      ]
-    },
-    {
-      "definitionName": "ap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "ap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "ap"
-        }
-      ]
-    },
-    {
-      "definitionName": "firstSomeOf",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "firstSomeOf"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "firstSomeOf"
-        }
-      ]
-    },
-    {
-      "definitionName": "coproductEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "coproductEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "coproductEither"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "filterMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "filterMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "filter",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "filter"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "filter"
-        }
-      ]
-    },
-    {
-      "definitionName": "sequence",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "sequence"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "sequence"
-        }
-      ]
-    },
-    {
-      "definitionName": "toEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "toEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "toEither"
+          "typeName": "fp-ts/core/Option.Ops",
+          "name": "Do"
         }
       ]
     },
@@ -1190,38 +1612,6 @@
       ]
     },
     {
-      "definitionName": "flatMapNullable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "flatMapNullable"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "flatMapNullable"
-        }
-      ]
-    },
-    {
-      "definitionName": "catchAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Option",
-          "name": "catchAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "catchAll"
-        }
-      ]
-    },
-    {
       "definitionName": "orElse",
       "definitionKind": "const",
       "extensions": [
@@ -1254,18 +1644,34 @@
       ]
     },
     {
-      "definitionName": "orElseSucceed",
+      "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "fp-ts/core/Option",
-          "name": "orElseSucceed"
+          "name": "map"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/Option.Aspects",
-          "name": "orElseSucceed"
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "flatMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "flatMap"
         }
       ]
     },
@@ -1286,6 +1692,102 @@
       ]
     },
     {
+      "definitionName": "flatMapNullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "flatMapNullable"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "flatMapNullable"
+        }
+      ]
+    },
+    {
+      "definitionName": "inspectSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "inspectSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "inspectSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "inspectNone",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "inspectNone"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "inspectNone"
+        }
+      ]
+    },
+    {
+      "definitionName": "partitionMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "partitionMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "partitionMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "filterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "filterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "sequence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "sequence"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "sequence"
+        }
+      ]
+    },
+    {
       "definitionName": "exists",
       "definitionKind": "const",
       "extensions": [
@@ -1298,6 +1800,54 @@
           "kind": "static",
           "typeName": "fp-ts/core/Option.Aspects",
           "name": "exists"
+        }
+      ]
+    },
+    {
+      "definitionName": "bindTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "bindTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "bind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "bind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "bind"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenBind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Option",
+          "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "andThenBind"
         }
       ]
     },
@@ -1330,6 +1880,294 @@
           "kind": "static",
           "typeName": "fp-ts/core/Option.Aspects",
           "name": "isSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "toEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "toEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "toEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "andThenDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "tap"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "appendElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "appendElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "zipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "zipWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "ap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "ap"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "filter"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "sum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "sum"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "sum"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "multiply"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "multiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "subtract",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "subtract"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "subtract"
+        }
+      ]
+    },
+    {
+      "definitionName": "divide",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Option",
+          "name": "divide"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "divide"
+        }
+      ]
+    },
+    {
+      "definitionName": "getRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "getRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "getRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "getLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "getLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "getLeft"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrNull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Option",
+          "name": "getOrNull"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "getOrNull"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrUndefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Option",
+          "name": "getOrUndefined"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "getOrUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Option",
+          "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Option.Aspects",
+          "name": "getOrThrow"
         }
       ]
     },
@@ -1382,50 +2220,50 @@
       ]
     },
     {
-      "definitionName": "getMonoid",
+      "definitionName": "getOptionalMonoid",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/core/typeclass/Semigroup",
-          "name": "getMonoid"
+          "name": "getOptionalMonoid"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Semigroup.Aspects",
-          "name": "getMonoid"
+          "name": "getOptionalMonoid"
         }
       ]
     },
     {
-      "definitionName": "getFirstNoneSemigroup",
+      "definitionName": "getFailureSemigroup",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/core/typeclass/Semigroup",
-          "name": "getFirstNoneSemigroup"
+          "name": "getFailureSemigroup"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Semigroup.Aspects",
-          "name": "getFirstNoneSemigroup"
+          "name": "getFailureSemigroup"
         }
       ]
     },
     {
-      "definitionName": "getFirstNoneMonoid",
+      "definitionName": "getFailureMonoid",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/core/typeclass/Monoid",
-          "name": "getFirstNoneMonoid"
+          "name": "getFailureMonoid"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Monoid.Aspects",
-          "name": "getFirstNoneMonoid"
+          "name": "getFailureMonoid"
         }
       ]
     },
@@ -1446,87 +2284,67 @@
       ]
     },
     {
-      "definitionName": "compact",
+      "definitionName": "getEquivalence",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "fp-ts/core/Option",
-          "name": "compact"
+          "typeName": "fp-ts/core/typeclass/Equivalence",
+          "name": "getEquivalence"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "compact"
+          "typeName": "fp-ts/core/typeclass/Equivalence.Aspects",
+          "name": "getEquivalence"
         }
       ]
     },
     {
-      "definitionName": "separate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/Option",
-          "name": "separate"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "separate"
-        }
-      ]
-    },
-    {
-      "definitionName": "getOrNull",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/Option",
-          "name": "getOrNull"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "getOrNull"
-        }
-      ]
-    },
-    {
-      "definitionName": "getOrUndefined",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/Option",
-          "name": "getOrUndefined"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Option.Aspects",
-          "name": "getOrUndefined"
-        }
-      ]
-    },
-    {
-      "definitionName": "liftOrder",
+      "definitionName": "getOrder",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "fp-ts/core/typeclass/Order",
-          "name": "liftOrder"
+          "name": "getOrder"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Order.Aspects",
-          "name": "liftOrder"
+          "name": "getOrder"
         }
       ]
     }
   ],
   "@fp-ts/core/Either": [
+    {
+      "definitionName": "Left",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Either/Left"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Either/Left.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Right",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/Either/Right"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/Either/Right.Ops"
+        }
+      ]
+    },
     {
       "definitionName": "EitherTypeLambda",
       "definitionKind": "interface",
@@ -1542,34 +2360,6 @@
       ]
     },
     {
-      "definitionName": "Left",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Either/Left"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Either/Left.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Right",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Either/Right"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Either/Right.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "Either",
       "definitionKind": "type",
       "extensions": [
@@ -1580,28 +2370,6 @@
         {
           "kind": "companion",
           "typeName": "fp-ts/core/Either.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromNullable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Ops",
-          "name": "fromNullable"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromThrowable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Ops",
-          "name": "fromThrowable"
         }
       ]
     },
@@ -1624,6 +2392,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Ops",
           "name": "fromOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromNullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "fromNullable"
         }
       ]
     },
@@ -1677,6 +2456,28 @@
       ]
     },
     {
+      "definitionName": "toRefinement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "toRefinement"
+        }
+      ]
+    },
+    {
+      "definitionName": "flap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "flap"
+        }
+      ]
+    },
+    {
       "definitionName": "composeKleisliArrow",
       "definitionKind": "const",
       "extensions": [
@@ -1721,17 +2522,6 @@
       ]
     },
     {
-      "definitionName": "lift3",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Ops",
-          "name": "lift3"
-        }
-      ]
-    },
-    {
       "definitionName": "getFirstRightSemigroup",
       "definitionKind": "const",
       "extensions": [
@@ -1750,17 +2540,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Ops",
           "name": "liftNullable"
-        }
-      ]
-    },
-    {
-      "definitionName": "toRefinement",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Ops",
-          "name": "toRefinement"
         }
       ]
     },
@@ -1798,6 +2577,17 @@
       ]
     },
     {
+      "definitionName": "liftPredicate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "liftPredicate"
+        }
+      ]
+    },
+    {
       "definitionName": "liftOption",
       "definitionKind": "const",
       "extensions": [
@@ -1820,13 +2610,35 @@
       ]
     },
     {
-      "definitionName": "Invariant",
+      "definitionName": "rights",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
-          "name": "Invariant"
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "rights"
+        }
+      ]
+    },
+    {
+      "definitionName": "lefts",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "lefts"
+        }
+      ]
+    },
+    {
+      "definitionName": "Bicovariant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops",
+          "name": "Bicovariant"
         }
       ]
     },
@@ -1842,13 +2654,13 @@
       ]
     },
     {
-      "definitionName": "Bicovariant",
+      "definitionName": "Invariant",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops",
-          "name": "Bicovariant"
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "Invariant"
         }
       ]
     },
@@ -1871,17 +2683,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Ops",
           "name": "unit"
-        }
-      ]
-    },
-    {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Ops",
-          "name": "Do"
         }
       ]
     },
@@ -2018,82 +2819,13 @@
       ]
     },
     {
-      "definitionName": "map",
+      "definitionName": "Do",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "map"
-        },
-        {
           "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "imap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "bindTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "bindTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "bindTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "flap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "flap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "flap"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "as"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "as"
+          "typeName": "fp-ts/core/Either.Ops",
+          "name": "Do"
         }
       ]
     },
@@ -2130,6 +2862,22 @@
       ]
     },
     {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "map"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
       "definitionName": "flatMap",
       "definitionKind": "const",
       "extensions": [
@@ -2146,114 +2894,18 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "firstRightOf",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "fp-ts/core/Either",
-          "name": "andThen"
+          "name": "firstRightOf"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
-          "name": "andThen"
-        }
-      ]
-    },
-    {
-      "definitionName": "bind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "bind"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "bind"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "andThenDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "andThenDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "andThenBind"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "andThenBind"
-        }
-      ]
-    },
-    {
-      "definitionName": "element",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "element"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "element"
-        }
-      ]
-    },
-    {
-      "definitionName": "ap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "ap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "ap"
-        }
-      ]
-    },
-    {
-      "definitionName": "firstSuccessOf",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "firstSuccessOf"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "firstSuccessOf"
+          "name": "firstRightOf"
         }
       ]
     },
@@ -2270,22 +2922,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "getOrElse"
-        }
-      ]
-    },
-    {
-      "definitionName": "catchAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "catchAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "catchAll"
         }
       ]
     },
@@ -2338,22 +2974,6 @@
       ]
     },
     {
-      "definitionName": "orElseSucceed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "orElseSucceed"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "orElseSucceed"
-        }
-      ]
-    },
-    {
       "definitionName": "match",
       "definitionKind": "const",
       "extensions": [
@@ -2382,38 +3002,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "flatMapNullable"
-        }
-      ]
-    },
-    {
-      "definitionName": "getOrThrow",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "getOrThrow"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "getOrThrow"
-        }
-      ]
-    },
-    {
-      "definitionName": "compact",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "compact"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "compact"
         }
       ]
     },
@@ -2450,6 +3038,22 @@
       ]
     },
     {
+      "definitionName": "compact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "compact"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "compact"
+        }
+      ]
+    },
+    {
       "definitionName": "sequence",
       "definitionKind": "const",
       "extensions": [
@@ -2462,22 +3066,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "sequence"
-        }
-      ]
-    },
-    {
-      "definitionName": "tap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "tap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "tap"
         }
       ]
     },
@@ -2498,22 +3086,6 @@
       ]
     },
     {
-      "definitionName": "tapError",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Either",
-          "name": "tapError"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "tapError"
-        }
-      ]
-    },
-    {
       "definitionName": "inspectLeft",
       "definitionKind": "const",
       "extensions": [
@@ -2526,6 +3098,22 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "inspectLeft"
+        }
+      ]
+    },
+    {
+      "definitionName": "tapError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "tapError"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "tapError"
         }
       ]
     },
@@ -2562,6 +3150,54 @@
       ]
     },
     {
+      "definitionName": "bindTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "bindTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "bind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "bind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "bind"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenBind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Either",
+          "name": "andThenBind"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "andThenBind"
+        }
+      ]
+    },
+    {
       "definitionName": "isLeft",
       "definitionKind": "const",
       "extensions": [
@@ -2594,18 +3230,242 @@
       ]
     },
     {
-      "definitionName": "liftPredicate",
+      "definitionName": "getEquivalence",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/core/Predicate/Refinement",
-          "name": "liftPredicate"
+          "typeName": "fp-ts/core/typeclass/Equivalence",
+          "name": "getEquivalence"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Aspects",
-          "name": "liftPredicate"
+          "typeName": "fp-ts/core/typeclass/Equivalence.Aspects",
+          "name": "getEquivalence"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "andThenDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "appendElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "appendElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "zipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "zipWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "ap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "ap"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "tap"
+        }
+      ]
+    },
+    {
+      "definitionName": "sum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "sum"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "sum"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "multiply"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "multiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "subtract",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "subtract"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "subtract"
+        }
+      ]
+    },
+    {
+      "definitionName": "divide",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/Either",
+          "name": "divide"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "divide"
+        }
+      ]
+    },
+    {
+      "definitionName": "toOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "toOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "toOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "getRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "getRight"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "getRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "getLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "getLeft"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "getLeft"
         }
       ]
     },
@@ -2690,6 +3550,22 @@
       ]
     },
     {
+      "definitionName": "toArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "toArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "toArray"
+        }
+      ]
+    },
+    {
       "definitionName": "merge",
       "definitionKind": "const",
       "extensions": [
@@ -2706,6 +3582,22 @@
       ]
     },
     {
+      "definitionName": "getOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/Either",
+          "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Either.Aspects",
+          "name": "getOrThrow"
+        }
+      ]
+    },
+    {
       "definitionName": "reverse",
       "definitionKind": "const",
       "extensions": [
@@ -2718,38 +3610,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "reverse"
-        }
-      ]
-    },
-    {
-      "definitionName": "getLeft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/Either",
-          "name": "getLeft"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "getLeft"
-        }
-      ]
-    },
-    {
-      "definitionName": "getRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/Either",
-          "name": "getRight"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Either.Aspects",
-          "name": "getRight"
         }
       ]
     },
@@ -2782,6 +3642,22 @@
           "kind": "static",
           "typeName": "fp-ts/core/Either.Aspects",
           "name": "getOrUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOptionalSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/typeclass/Semigroup",
+          "name": "getOptionalSemigroup"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Aspects",
+          "name": "getOptionalSemigroup"
         }
       ]
     }
@@ -5392,329 +6268,6 @@
       ]
     }
   ],
-  "@fp-ts/core/Function": [
-    {
-      "definitionName": "FunctionTypeLambda",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Function.TypeLambda"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Function.TypeLambda.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "LazyArg",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "typeName": "tsplus/LazyArgument",
-          "kind": "type"
-        },
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Function/LazyArg"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "FunctionN",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/Function.N"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/Function.N.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "compose",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "compose"
-        }
-      ]
-    },
-    {
-      "definitionName": "getSemigroup",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "getSemigroup"
-        }
-      ]
-    },
-    {
-      "definitionName": "getMonoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "getMonoid"
-        }
-      ]
-    },
-    {
-      "definitionName": "apply",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "apply"
-        }
-      ]
-    },
-    {
-      "definitionName": "identity",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "identity"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeCoerce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "unsafeCoerce"
-        }
-      ]
-    },
-    {
-      "definitionName": "constant",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constant"
-        }
-      ]
-    },
-    {
-      "definitionName": "constTrue",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constTrue"
-        }
-      ]
-    },
-    {
-      "definitionName": "constFalse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constFalse"
-        }
-      ]
-    },
-    {
-      "definitionName": "constNull",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constNull"
-        }
-      ]
-    },
-    {
-      "definitionName": "constUndefined",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constUndefined"
-        }
-      ]
-    },
-    {
-      "definitionName": "constVoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "constVoid"
-        }
-      ]
-    },
-    {
-      "definitionName": "flip",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "flip"
-        }
-      ]
-    },
-    {
-      "definitionName": "absurd",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "absurd"
-        }
-      ]
-    },
-    {
-      "definitionName": "tupled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "tupled"
-        }
-      ]
-    },
-    {
-      "definitionName": "untupled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "untupled"
-        }
-      ]
-    },
-    {
-      "definitionName": "hole",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "hole"
-        }
-      ]
-    },
-    {
-      "definitionName": "SK",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "SK"
-        }
-      ]
-    },
-    {
-      "definitionName": "flow",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "flow"
-        }
-      ]
-    },
-    {
-      "definitionName": "pipe",
-      "definitionKind": "function",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function.Ops",
-          "name": "pipe"
-        }
-      ]
-    },
-    {
-      "definitionName": "constTrue",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops",
-          "name": "constTrue"
-        }
-      ]
-    },
-    {
-      "definitionName": "constFalse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops",
-          "name": "constFalse"
-        }
-      ]
-    },
-    {
-      "definitionName": "constNull",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops",
-          "name": "constNull"
-        }
-      ]
-    },
-    {
-      "definitionName": "constUndefined",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops",
-          "name": "constUndefined"
-        }
-      ]
-    },
-    {
-      "definitionName": "constVoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Function/LazyArg.Ops",
-          "name": "constVoid"
-        }
-      ]
-    }
-  ],
   "@fp-ts/core/Predicate": [
     {
       "definitionName": "Predicate",
@@ -5792,13 +6345,13 @@
       ]
     },
     {
-      "definitionName": "isBigInt",
+      "definitionName": "isBigint",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/Predicate.Ops",
-          "name": "isBigInt"
+          "name": "isBigint"
         }
       ]
     },
@@ -5832,17 +6385,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Predicate.Ops",
           "name": "of"
-        }
-      ]
-    },
-    {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate.Ops",
-          "name": "Do"
         }
       ]
     },
@@ -5946,35 +6488,13 @@
       ]
     },
     {
-      "definitionName": "isString",
+      "definitionName": "Do",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Ops",
-          "name": "isString"
-        }
-      ]
-    },
-    {
-      "definitionName": "isNumber",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Ops",
-          "name": "isNumber"
-        }
-      ]
-    },
-    {
-      "definitionName": "isBoolean",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Ops",
-          "name": "isBoolean"
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "Do"
         }
       ]
     },
@@ -6012,17 +6532,6 @@
       ]
     },
     {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate.Ops",
-          "name": "Do"
-        }
-      ]
-    },
-    {
       "definitionName": "unit",
       "definitionKind": "const",
       "extensions": [
@@ -6052,6 +6561,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Product.Ops",
           "name": "Product"
+        }
+      ]
+    },
+    {
+      "definitionName": "Do",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Ops",
+          "name": "Do"
         }
       ]
     },
@@ -6088,18 +6608,34 @@
       ]
     },
     {
-      "definitionName": "imap",
+      "definitionName": "or",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "fp-ts/core/Predicate",
-          "name": "imap"
+          "name": "or"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/Predicate.Aspects",
-          "name": "imap"
+          "name": "or"
+        }
+      ]
+    },
+    {
+      "definitionName": "and",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/Predicate",
+          "name": "and"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Predicate.Aspects",
+          "name": "and"
         }
       ]
     },
@@ -6136,50 +6672,18 @@
       ]
     },
     {
-      "definitionName": "element",
+      "definitionName": "appendElement",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "fp-ts/core/Predicate",
-          "name": "element"
+          "name": "appendElement"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/Predicate.Aspects",
-          "name": "element"
-        }
-      ]
-    },
-    {
-      "definitionName": "or",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Predicate",
-          "name": "or"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate.Aspects",
-          "name": "or"
-        }
-      ]
-    },
-    {
-      "definitionName": "and",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/Predicate",
-          "name": "and"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate.Aspects",
-          "name": "and"
+          "name": "appendElement"
         }
       ]
     },
@@ -6260,39 +6764,6 @@
       ]
     },
     {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "tupled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "tupled"
-        }
-      ]
-    },
-    {
       "definitionName": "bindTo",
       "definitionKind": "const",
       "extensions": [
@@ -6300,94 +6771,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Identity.Ops",
           "name": "bindTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "flap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "flap"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "as"
-        }
-      ]
-    },
-    {
-      "definitionName": "asUnit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "asUnit"
-        }
-      ]
-    },
-    {
-      "definitionName": "of",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "of"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "flatMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatten",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "flatten"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThen",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "andThen"
-        }
-      ]
-    },
-    {
-      "definitionName": "composeKleisliArrow",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "composeKleisliArrow"
         }
       ]
     },
@@ -6403,28 +6786,6 @@
       ]
     },
     {
-      "definitionName": "tap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "tap"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "andThenDiscard"
-        }
-      ]
-    },
-    {
       "definitionName": "andThenBind",
       "definitionKind": "const",
       "extensions": [
@@ -6436,178 +6797,13 @@
       ]
     },
     {
-      "definitionName": "element",
+      "definitionName": "Covariant",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "element"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "tuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "lift2",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "lift2"
-        }
-      ]
-    },
-    {
-      "definitionName": "lift3",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "lift3"
-        }
-      ]
-    },
-    {
-      "definitionName": "ap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "ap"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "reduce"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "reduceRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "foldMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "foldMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "toArray",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "toArray"
-        }
-      ]
-    },
-    {
-      "definitionName": "toArrayWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "toArrayWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceKind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "reduceKind"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceRightKind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "reduceRightKind"
-        }
-      ]
-    },
-    {
-      "definitionName": "foldMapKind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "foldMapKind"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "traverse"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverseTap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Identity.Ops",
-          "name": "traverseTap"
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "Covariant"
         }
       ]
     },
@@ -6619,17 +6815,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Invariant.Ops",
           "name": "Invariant"
-        }
-      ]
-    },
-    {
-      "definitionName": "Covariant",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
-          "name": "Covariant"
         }
       ]
     },
@@ -6755,54 +6940,6 @@
       ]
     },
     {
-      "definitionName": "sequence",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/HKT/Kind",
-          "name": "sequence"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/HKT/Kind.Aspects",
-          "name": "sequence"
-        }
-      ]
-    },
-    {
-      "definitionName": "liftSemigroup",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/typeclass/Semigroup",
-          "name": "liftSemigroup"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Semigroup.Aspects",
-          "name": "liftSemigroup"
-        }
-      ]
-    },
-    {
-      "definitionName": "liftMonoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "fp-ts/core/typeclass/Monoid",
-          "name": "liftMonoid"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Monoid.Aspects",
-          "name": "liftMonoid"
-        }
-      ]
-    },
-    {
       "definitionName": "getSemiCoproduct",
       "definitionKind": "const",
       "extensions": [
@@ -6837,6 +6974,20 @@
   ],
   "@fp-ts/core/These": [
     {
+      "definitionName": "Both",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/These/Both"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/These/Both.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "TheseTypeLambda",
       "definitionKind": "interface",
       "extensions": [
@@ -6865,20 +7016,6 @@
       ]
     },
     {
-      "definitionName": "Both",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "fp-ts/core/These/Both"
-        },
-        {
-          "kind": "companion",
-          "typeName": "fp-ts/core/These/Both.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "These",
       "definitionKind": "type",
       "extensions": [
@@ -6903,17 +7040,6 @@
         {
           "kind": "companion",
           "typeName": "fp-ts/core/These/Validated.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromThrowable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Ops",
-          "name": "fromThrowable"
         }
       ]
     },
@@ -6973,17 +7099,6 @@
       ]
     },
     {
-      "definitionName": "fromThese",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Ops",
-          "name": "fromThese"
-        }
-      ]
-    },
-    {
       "definitionName": "left",
       "definitionKind": "const",
       "extensions": [
@@ -7039,17 +7154,6 @@
       ]
     },
     {
-      "definitionName": "succeed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Ops",
-          "name": "succeed"
-        }
-      ]
-    },
-    {
       "definitionName": "warn",
       "definitionKind": "const",
       "extensions": [
@@ -7094,6 +7198,17 @@
       ]
     },
     {
+      "definitionName": "liftPredicate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Ops",
+          "name": "liftPredicate"
+        }
+      ]
+    },
+    {
       "definitionName": "liftOption",
       "definitionKind": "const",
       "extensions": [
@@ -7123,6 +7238,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Ops",
           "name": "liftThese"
+        }
+      ]
+    },
+    {
+      "definitionName": "flap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Ops",
+          "name": "flap"
         }
       ]
     },
@@ -7178,17 +7304,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Ops",
           "name": "lift2"
-        }
-      ]
-    },
-    {
-      "definitionName": "lift3",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Ops",
-          "name": "lift3"
         }
       ]
     },
@@ -7277,17 +7392,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Ops",
           "name": "unit"
-        }
-      ]
-    },
-    {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Ops",
-          "name": "Do"
         }
       ]
     },
@@ -7424,6 +7528,17 @@
       ]
     },
     {
+      "definitionName": "Do",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Ops",
+          "name": "Do"
+        }
+      ]
+    },
+    {
       "definitionName": "leftOrBoth",
       "definitionKind": "const",
       "extensions": [
@@ -7468,38 +7583,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Aspects",
           "name": "match"
-        }
-      ]
-    },
-    {
-      "definitionName": "getOrThrow",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "getOrThrow"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "getOrThrow"
-        }
-      ]
-    },
-    {
-      "definitionName": "getRightOnlyOrThrow",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "getRightOnlyOrThrow"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "getRightOnlyOrThrow"
         }
       ]
     },
@@ -7712,86 +7795,6 @@
       ]
     },
     {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "map"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "imap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "bindTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "bindTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "bindTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "flap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "flap"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "flap"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "as"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "as"
-        }
-      ]
-    },
-    {
       "definitionName": "sequence",
       "definitionKind": "const",
       "extensions": [
@@ -7820,22 +7823,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Aspects",
           "name": "exists"
-        }
-      ]
-    },
-    {
-      "definitionName": "catchAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "catchAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "catchAll"
         }
       ]
     },
@@ -7888,22 +7875,6 @@
       ]
     },
     {
-      "definitionName": "orElseSucceed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "orElseSucceed"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "orElseSucceed"
-        }
-      ]
-    },
-    {
       "definitionName": "firstRightOrBothOf",
       "definitionKind": "const",
       "extensions": [
@@ -7916,22 +7887,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Aspects",
           "name": "firstRightOrBothOf"
-        }
-      ]
-    },
-    {
-      "definitionName": "compact",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These",
-          "name": "compact"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These.Aspects",
-          "name": "compact"
         }
       ]
     },
@@ -7968,82 +7923,18 @@
       ]
     },
     {
-      "definitionName": "ap",
+      "definitionName": "compact",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "ap"
+          "typeName": "fp-ts/core/These",
+          "name": "compact"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "ap"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "andThenBind"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "andThenBind"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBindEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "andThenBindEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "andThenBindEither"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBindThese",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "andThenBindThese"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "andThenBindThese"
-        }
-      ]
-    },
-    {
-      "definitionName": "element",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "element"
-        },
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "element"
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "compact"
         }
       ]
     },
@@ -8064,18 +7955,18 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "bindTo",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "andThen"
+          "typeName": "fp-ts/core/These",
+          "name": "bindTo"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "andThen"
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "bindTo"
         }
       ]
     },
@@ -8128,34 +8019,34 @@
       ]
     },
     {
-      "definitionName": "andThenDiscard",
+      "definitionName": "andThenBind",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "fp-ts/core/These/Validated",
-          "name": "andThenDiscard"
+          "name": "andThenBind"
         },
         {
           "kind": "static",
           "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "andThenDiscard"
+          "name": "andThenBind"
         }
       ]
     },
     {
-      "definitionName": "tap",
+      "definitionName": "getEquivalence",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "fp-ts/core/These/Validated",
-          "name": "tap"
+          "kind": "fluent",
+          "typeName": "fp-ts/core/typeclass/Equivalence",
+          "name": "getEquivalence"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/These/Validated.Aspects",
-          "name": "tap"
+          "typeName": "fp-ts/core/typeclass/Equivalence.Aspects",
+          "name": "getEquivalence"
         }
       ]
     },
@@ -8240,18 +8131,194 @@
       ]
     },
     {
-      "definitionName": "liftPredicate",
+      "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "fp-ts/core/Predicate/Refinement",
-          "name": "liftPredicate"
+          "typeName": "fp-ts/core/These",
+          "name": "map"
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Aspects",
-          "name": "liftPredicate"
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "zipWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "zipWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "ap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "ap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "ap"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "appendElement"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "appendElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "andThenDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "andThenDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "tap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "tap"
+        }
+      ]
+    },
+    {
+      "definitionName": "sum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "sum"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "sum"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "multiply"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "multiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "subtract",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "subtract"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "subtract"
+        }
+      ]
+    },
+    {
+      "definitionName": "divide",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "fp-ts/core/These/Validated",
+          "name": "divide"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These/Validated.Aspects",
+          "name": "divide"
         }
       ]
     },
@@ -8268,6 +8335,38 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Aspects",
           "name": "reverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "getOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/These",
+          "name": "getOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "getOrThrow"
+        }
+      ]
+    },
+    {
+      "definitionName": "getRightOnlyOrThrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/These",
+          "name": "getRightOnlyOrThrow"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "getRightOnlyOrThrow"
         }
       ]
     },
@@ -8412,6 +8511,22 @@
           "kind": "static",
           "typeName": "fp-ts/core/These.Aspects",
           "name": "getOrUndefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "toValidated",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "fp-ts/core/These",
+          "name": "toValidated"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/These.Aspects",
+          "name": "toValidated"
         }
       ]
     },
@@ -8562,6 +8677,250 @@
           "kind": "static",
           "typeName": "fp-ts/core/Ordering.Aspects",
           "name": "reverse"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/Number": [
+    {
+      "definitionName": "isNumber",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "isNumber"
+        }
+      ]
+    },
+    {
+      "definitionName": "sum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "sum"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "multiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "subtract",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "subtract"
+        }
+      ]
+    },
+    {
+      "definitionName": "divide",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "divide"
+        }
+      ]
+    },
+    {
+      "definitionName": "increment",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "increment"
+        }
+      ]
+    },
+    {
+      "definitionName": "decrement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "decrement"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "Equivalence"
+        }
+      ]
+    },
+    {
+      "definitionName": "sign",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "sign"
+        }
+      ]
+    },
+    {
+      "definitionName": "sumAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "sumAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "multiplyAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/Number.Ops",
+          "name": "multiplyAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "Equivalence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "Equivalence"
+        }
+      ]
+    },
+    {
+      "definitionName": "Order",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "Order"
+        }
+      ]
+    },
+    {
+      "definitionName": "Bounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
+          "name": "Bounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "SemigroupSum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "SemigroupSum"
+        }
+      ]
+    },
+    {
+      "definitionName": "SemigroupMax",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "SemigroupMax"
+        }
+      ]
+    },
+    {
+      "definitionName": "SemigroupMin",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "SemigroupMin"
+        }
+      ]
+    },
+    {
+      "definitionName": "SemigroupMultiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "SemigroupMultiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "MonoidSum",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "MonoidSum"
+        }
+      ]
+    },
+    {
+      "definitionName": "MonoidMultiply",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "MonoidMultiply"
+        }
+      ]
+    },
+    {
+      "definitionName": "MonoidMax",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "MonoidMax"
+        }
+      ]
+    },
+    {
+      "definitionName": "MonoidMin",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "MonoidMin"
         }
       ]
     }
@@ -8733,6 +9092,17 @@
       ]
     },
     {
+      "definitionName": "includesWithPosition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/String.Ops",
+          "name": "includesWithPosition"
+        }
+      ]
+    },
+    {
       "definitionName": "startsWith",
       "definitionKind": "const",
       "extensions": [
@@ -8744,6 +9114,17 @@
       ]
     },
     {
+      "definitionName": "startsWithPosition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/String.Ops",
+          "name": "startsWithPosition"
+        }
+      ]
+    },
+    {
       "definitionName": "endsWith",
       "definitionKind": "const",
       "extensions": [
@@ -8751,6 +9132,17 @@
           "kind": "static",
           "typeName": "fp-ts/core/String.Ops",
           "name": "endsWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "endsWithPosition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/String.Ops",
+          "name": "endsWithPosition"
         }
       ]
     },
@@ -9078,239 +9470,6 @@
       ]
     }
   ],
-  "@fp-ts/core/Number": [
-    {
-      "definitionName": "isNumber",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "isNumber"
-        }
-      ]
-    },
-    {
-      "definitionName": "sum",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "sum"
-        }
-      ]
-    },
-    {
-      "definitionName": "multiply",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "multiply"
-        }
-      ]
-    },
-    {
-      "definitionName": "subtract",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "subtract"
-        }
-      ]
-    },
-    {
-      "definitionName": "divide",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "divide"
-        }
-      ]
-    },
-    {
-      "definitionName": "increment",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "increment"
-        }
-      ]
-    },
-    {
-      "definitionName": "decrement",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "decrement"
-        }
-      ]
-    },
-    {
-      "definitionName": "Equivalence",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "Equivalence"
-        }
-      ]
-    },
-    {
-      "definitionName": "sign",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Number.Ops",
-          "name": "sign"
-        }
-      ]
-    },
-    {
-      "definitionName": "isNumber",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Predicate/Refinement.Ops",
-          "name": "isNumber"
-        }
-      ]
-    },
-    {
-      "definitionName": "Equivalence",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "Equivalence"
-        }
-      ]
-    },
-    {
-      "definitionName": "Order",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Order.Ops",
-          "name": "Order"
-        }
-      ]
-    },
-    {
-      "definitionName": "Bounded",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
-          "name": "Bounded"
-        }
-      ]
-    },
-    {
-      "definitionName": "SemigroupSum",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
-          "name": "SemigroupSum"
-        }
-      ]
-    },
-    {
-      "definitionName": "SemigroupMax",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
-          "name": "SemigroupMax"
-        }
-      ]
-    },
-    {
-      "definitionName": "SemigroupMin",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
-          "name": "SemigroupMin"
-        }
-      ]
-    },
-    {
-      "definitionName": "SemigroupMultiply",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
-          "name": "SemigroupMultiply"
-        }
-      ]
-    },
-    {
-      "definitionName": "MonoidSum",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
-          "name": "MonoidSum"
-        }
-      ]
-    },
-    {
-      "definitionName": "MonoidMultiply",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
-          "name": "MonoidMultiply"
-        }
-      ]
-    },
-    {
-      "definitionName": "MonoidMax",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
-          "name": "MonoidMax"
-        }
-      ]
-    },
-    {
-      "definitionName": "MonoidMin",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
-          "name": "MonoidMin"
-        }
-      ]
-    }
-  ],
   "@fp-ts/core/Struct": [
     {
       "definitionName": "pick",
@@ -9377,28 +9536,6 @@
           "name": "getMonoid"
         }
       ]
-    },
-    {
-      "definitionName": "nonEmptyProduct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Struct.Ops",
-          "name": "nonEmptyProduct"
-        }
-      ]
-    },
-    {
-      "definitionName": "product",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Struct.Ops",
-          "name": "product"
-        }
-      ]
     }
   ],
   "@fp-ts/core/Symbol": [
@@ -9423,17 +9560,6 @@
           "kind": "static",
           "typeName": "fp-ts/core/Tuple.Ops",
           "name": "tuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "element",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Tuple.Ops",
-          "name": "element"
         }
       ]
     },
@@ -9482,24 +9608,13 @@
       ]
     },
     {
-      "definitionName": "nonEmptyProduct",
+      "definitionName": "appendElement",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/Tuple.Ops",
-          "name": "nonEmptyProduct"
-        }
-      ]
-    },
-    {
-      "definitionName": "product",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/Tuple.Ops",
-          "name": "product"
+          "name": "appendElement"
         }
       ]
     }

@@ -6,9 +6,9 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.10",
-    "@fp-ts/core": "^0.1.1",
-    "@effect/data": "^0.0.1",
+    "@effect/io": "^0.1.11",
+    "@fp-ts/core": "^0.2.0",
+    "@effect/data": "^0.1.0",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.1",
@@ -26,7 +26,7 @@
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.12",
     "faker": "^5.5.3",
-    "fast-check": "^3.6.2",
+    "fast-check": "^3.6.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
     "vitest": "^0.28.4"

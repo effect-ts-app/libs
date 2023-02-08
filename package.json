@@ -62,7 +62,7 @@
         "@changesets/cli": "^2.26.0",
         "@dprint/typescript": "^0.82.0",
         "@effect-app/compiler": "workspace:*",
-        "@effect-app/cli": "^0.2.7",
+        "@effect-app/cli": "^0.3.1",
         "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
         "@effect/language-service": "^0.0.19",
