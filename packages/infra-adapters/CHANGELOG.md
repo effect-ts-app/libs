@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.19.0
+
+### Minor Changes
+
+- 338f1f19: Update packages
+
+### Patch Changes
+
+- Updated dependencies [338f1f19]
+  - @effect-app/schema@0.17.0
+  - @effect-app/core@0.21.0
+
 ## 0.18.3
 
 ### Patch Changes
