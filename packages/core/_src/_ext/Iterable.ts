@@ -9,6 +9,7 @@ import * as T from "@effect/io/Effect"
  */
 export const ext_forEachPar = T.forEachPar
 
+// TODO:
 /**
  * @tsplus fluent Array forEachEffect
  * @tsplus fluent ReadonlyArray forEachEffect
@@ -16,35 +17,14 @@ export const ext_forEachPar = T.forEachPar
  * @tsplus fluent effect/data/Chunk forEachEffect
  * @tsplus fluent ets/Set forEachEffect
  */
-export function ext_forEach<A, R, E, B>(
-  as: Iterable<A>,
-  f: (a: A) => Effect<R, E, B>
-) {
-  return T.forEach(Chunk.fromIterable(as), f)
-}
+export const ext_forEach = T.forEach
 
 /**
  * @tsplus fluent Array collectAll
  * @tsplus fluent effect/data/Chunk collectAll
  * @tsplus fluent ets/Set collectAll
  */
-export function ext_collectAll<A, R, E>(as: Iterable<Effect<R, E, A>>) {
-  return Effect.collectAll(Chunk.fromIterable(as))
-}
-
-// /**
-//  * @tsplus fluent Array forEachSync
-//  * @tsplus fluent effect/data/Chunk forEachSync
-//  * @tsplus fluent ets/Set forEachSync
-//  */
-// export const ext_forEachSync_ = forEachSync_
-
-// /**
-//  * @tsplus fluent Array collectAllSync
-//  * @tsplus fluent effect/data/Chunk collectAllSync
-//  * @tsplus fluent ets/Set collectAllSync
-//  */
-// export const ext_collectAllSync = collectAllSync
+export const ext_collectAll = T.collectAll
 
 /**
  * @tsplus fluent Array toChunk
