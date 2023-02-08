@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.21.6
+
+### Patch Changes
+
+- 145ec1fe: Add batching
+
 ## 0.21.5
 
 ### Patch Changes
