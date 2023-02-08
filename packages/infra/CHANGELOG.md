@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.21.3
+
+### Patch Changes
+
+- b8f7fb23: make collect optional in repo queries
+
 ## 0.21.2
 
 ### Patch Changes
