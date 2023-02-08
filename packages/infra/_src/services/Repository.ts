@@ -172,11 +172,11 @@ export function queryEffect<
   ItemType extends string,
   R,
   E,
-  S
+  S = T
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
@@ -187,7 +187,7 @@ export function queryEffect<
         })
       )
       .map(_ => _.map(_ => self.utils.parse(_)))
-      .map(_ => _.filterMap(f.collect))
+      .map(_ => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
   )
 }
 
@@ -206,7 +206,7 @@ export function queryOneEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Option<S> }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
 ) {
   return map.flatMap(f =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
@@ -218,9 +218,10 @@ export function queryOneEffect<
       )
       .map(_ => _.map(_ => self.utils.parse(_)))
       .flatMap(_ =>
-        _.filterMap(f.collect).toNonEmptyArray.encaseInEffect(() =>
-          new NotFoundError(self.itemType, JSON.stringify(f.filter))
-        ).map(_ => _[0])
+        (f.collect ? _.filterMap(f.collect) : _)
+          .toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ =>
+            _[0]
+          )
       )
   )
 }
@@ -238,7 +239,7 @@ export function query<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter?: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
+  map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.queryEffect(Effect(map))
 }
@@ -256,7 +257,7 @@ export function queryOne<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
+  map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
   return self.queryOneEffect(Effect(map))
 }
@@ -276,7 +277,7 @@ export function queryAndSavePureEffect<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
     Debug.untraced(restore =>
@@ -298,7 +299,7 @@ export function queryAndSavePure<
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
+  map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.queryAndSavePureEffect(Effect(map))
 }
