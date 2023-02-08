@@ -94,7 +94,7 @@ importers:
       '@babel/plugin-transform-modules-commonjs': 7.20.11_@babel+core@7.20.12
       '@changesets/cli': 2.26.0
       '@dprint/typescript': 0.82.0
-      '@effect-app/cli': link:packages/cli
+      '@effect-app/cli': 0.2.7
       '@effect-app/compiler': link:packages/compiler
       '@effect-app/eslint-codegen-model': link:packages/eslint-codegen-model
       '@effect-app/pnpm-singleton': link:packages/pnpm-singleton
@@ -1179,6 +1179,13 @@ packages:
 
   /@dprint/typescript/0.82.0:
     resolution: {integrity: sha512-Q+2TJ1ukZc+HuSg6AvF5lEbO2uXfKnNYLdrvaMG1JJCTiurpL023GzZAM9tXHAwMvFxeURvSp9FOLazVBgDZyw==}
+    dev: true
+
+  /@effect-app/cli/0.2.7:
+    resolution: {integrity: sha512-U0p0zKyVwytoWs8ltsftTmt/D0XqNEYsxgjuPmCjQT6+2LhIp3qqTtbWygfsKcepMgzNPVpCmG1fG4NylywQMQ==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.3
     dev: true
 
   /@effect/data/0.0.1:
@@ -6257,7 +6264,6 @@ packages:
   /node-watch/0.7.3:
     resolution: {integrity: sha512-3l4E8uMPY1HdMMryPRUAl+oIHtXtyiTlIiESNSVSNxcPfzAFzeTbXFQkZfAwBbo0B1qMSG8nUABx+Gd+YrbKrQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon/2.0.20:
     resolution: {integrity: sha512-Km2mWHKKY5GzRg6i1j5OxOHQtuvVsgskLfigG25yTtbyfRGn/GNvIbRyOf1PSCKJ2aT/58TiuUsuOU5UToVViw==}

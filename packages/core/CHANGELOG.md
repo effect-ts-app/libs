@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.20.2
+
+### Patch Changes
+
+- 00ac8993: fix: tracing
+
 ## 0.20.1
 
 ### Patch Changes
