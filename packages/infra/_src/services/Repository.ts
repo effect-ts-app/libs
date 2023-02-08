@@ -202,7 +202,7 @@ export function queryOneEffect<
   ItemType extends string,
   R,
   E,
-  S
+  S = T
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
@@ -235,7 +235,7 @@ export function query<
   PM extends { id: string },
   Evt,
   ItemType extends string,
-  S
+  S = T
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
@@ -253,7 +253,7 @@ export function queryOne<
   PM extends { id: string },
   Evt,
   ItemType extends string,
-  S
+  S = T
 >(
   self: Repository<T, PM, Evt, Id, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
