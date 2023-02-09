@@ -1,248 +1,4 @@
 {
-  "@effect/stm/TRef": [
-    {
-      "definitionName": "TRef",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TRef"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TRef.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TRefTypeId",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TRef.TypeId"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TRef.TypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "TRefTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.TypeId.Ops",
-          "name": "TRefTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndSet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "getAndSet"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "getAndSet"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndUpdate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "getAndUpdate"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "getAndUpdate"
-        }
-      ]
-    },
-    {
-      "definitionName": "getAndUpdateSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "getAndUpdateSome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "getAndUpdateSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "modify",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "modify"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "modify"
-        }
-      ]
-    },
-    {
-      "definitionName": "modifySome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "modifySome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "modifySome"
-        }
-      ]
-    },
-    {
-      "definitionName": "set",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "set"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "set"
-        }
-      ]
-    },
-    {
-      "definitionName": "setAndGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "setAndGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "setAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "update",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "update"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "update"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateAndGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "updateAndGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "updateAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "updateSome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "updateSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "updateSomeAndGet",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TRef",
-          "name": "updateSomeAndGet"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "updateSomeAndGet"
-        }
-      ]
-    },
-    {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TRef",
-          "name": "get"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRef.Aspects",
-          "name": "get"
-        }
-      ]
-    }
-  ],
   "@effect/stm/STM": [
     {
       "definitionName": "STM",
@@ -287,24 +43,109 @@
       ]
     },
     {
-      "definitionName": "fromEither",
+      "definitionName": "STMTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "fromEither"
+          "typeName": "effect/stm/STM.TypeId.Ops",
+          "name": "STMTypeId"
         }
       ]
     },
     {
-      "definitionName": "fromOption",
+      "definitionName": "absolve",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "absolve"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "fromOption"
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "absolve"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquireUseRelease",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "acquireUseRelease"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "acquireUseRelease"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "as"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "asSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "asSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "asSomeError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asSomeError"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "asSomeError"
+        }
+      ]
+    },
+    {
+      "definitionName": "asUnit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "asUnit"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "asUnit"
         }
       ]
     },
@@ -320,6 +161,38 @@
       ]
     },
     {
+      "definitionName": "catchAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "catchAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "catchAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "catchSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "catchSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "catchSome"
+        }
+      ]
+    },
+    {
       "definitionName": "check",
       "definitionKind": "const",
       "extensions": [
@@ -327,6 +200,22 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
           "name": "check"
+        }
+      ]
+    },
+    {
+      "definitionName": "collect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "collect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "collect"
         }
       ]
     },
@@ -364,6 +253,54 @@
       ]
     },
     {
+      "definitionName": "collectSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "collectSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "collectSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "commit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "commit"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "commit"
+        }
+      ]
+    },
+    {
+      "definitionName": "commitEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "commitEither"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "commitEither"
+        }
+      ]
+    },
+    {
       "definitionName": "cond",
       "definitionKind": "const",
       "extensions": [
@@ -371,6 +308,55 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
           "name": "cond"
+        }
+      ]
+    },
+    {
+      "definitionName": "context",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "context"
+        }
+      ]
+    },
+    {
+      "definitionName": "contextWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "contextWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "contextWithSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "contextWithSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramapContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "contramapContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "contramapContext"
         }
       ]
     },
@@ -408,35 +394,50 @@
       ]
     },
     {
-      "definitionName": "context",
+      "definitionName": "either",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "either"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "context"
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "either"
         }
       ]
     },
     {
-      "definitionName": "contextWith",
+      "definitionName": "ensuring",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "ensuring"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "contextWith"
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "ensuring"
         }
       ]
     },
     {
-      "definitionName": "contextWithSTM",
+      "definitionName": "eventually",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "eventually"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "contextWithSTM"
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "eventually"
         }
       ]
     },
@@ -514,459 +515,6 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
           "name": "filterNot"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEach",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "forEach"
-        }
-      ]
-    },
-    {
-      "definitionName": "forEachDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "forEachDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "gen",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "gen"
-        }
-      ]
-    },
-    {
-      "definitionName": "interrupt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "interrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "iterate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "iterate"
-        }
-      ]
-    },
-    {
-      "definitionName": "loop",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "loop"
-        }
-      ]
-    },
-    {
-      "definitionName": "loopDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "loopDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "mergeAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "mergeAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "partition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "partition"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduce",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "reduce"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "reduceAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "reduceRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "retry",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "retry"
-        }
-      ]
-    },
-    {
-      "definitionName": "service",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "service"
-        }
-      ]
-    },
-    {
-      "definitionName": "serviceWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "serviceWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "serviceWithSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "serviceWithSTM"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "succeed",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "succeed"
-        }
-      ]
-    },
-    {
-      "definitionName": "succeedLeft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "succeedLeft"
-        }
-      ]
-    },
-    {
-      "definitionName": "succeedNone",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "succeedNone"
-        }
-      ]
-    },
-    {
-      "definitionName": "succeedRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "succeedRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "succeedSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "succeedSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "suspend",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "suspend"
-        }
-      ]
-    },
-    {
-      "definitionName": "sync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "sync"
-        }
-      ]
-    },
-    {
-      "definitionName": "tryCatch",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "tryCatch"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "tuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "unit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "unit"
-        }
-      ]
-    },
-    {
-      "definitionName": "validateAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "validateAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "validateFirst",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "validateFirst"
-        }
-      ]
-    },
-    {
-      "definitionName": "whenCase",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Ops",
-          "name": "whenCase"
-        }
-      ]
-    },
-    {
-      "definitionName": "STMTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.TypeId.Ops",
-          "name": "STMTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "as"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "as"
-        }
-      ]
-    },
-    {
-      "definitionName": "acquireUseRelease",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "acquireUseRelease"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "acquireUseRelease"
-        }
-      ]
-    },
-    {
-      "definitionName": "catchAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "catchAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "catchAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "catchSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "catchSome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "catchSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "collect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "collect"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "collect"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "collectSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "collectSTM"
-        }
-      ]
-    },
-    {
-      "definitionName": "ensuring",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "ensuring"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "ensuring"
         }
       ]
     },
@@ -1083,6 +631,22 @@
       ]
     },
     {
+      "definitionName": "flatten",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "flatten"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "flatten"
+        }
+      ]
+    },
+    {
       "definitionName": "flattenErrorOption",
       "definitionKind": "const",
       "extensions": [
@@ -1095,6 +659,22 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "flattenErrorOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "flip",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "flip"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "flip"
         }
       ]
     },
@@ -1115,34 +695,73 @@
       ]
     },
     {
-      "definitionName": "match",
+      "definitionName": "forEach",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "match"
-        },
-        {
           "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "match"
+          "typeName": "effect/stm/STM.Ops",
+          "name": "forEach"
         }
       ]
     },
     {
-      "definitionName": "matchSTM",
+      "definitionName": "forEachDiscard",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "forEachDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fromEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "fromOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "gen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "gen"
+        }
+      ]
+    },
+    {
+      "definitionName": "head",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
           "typeName": "effect/stm/STM",
-          "name": "matchSTM"
+          "name": "head"
         },
         {
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
-          "name": "matchSTM"
+          "name": "head"
         }
       ]
     },
@@ -1159,6 +778,130 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "ifSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "ignore",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "ignore"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "ignore"
+        }
+      ]
+    },
+    {
+      "definitionName": "interrupt",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "interrupt"
+        }
+      ]
+    },
+    {
+      "definitionName": "interruptWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Fiber/Id",
+          "name": "interruptWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Fiber/Id.Ops",
+          "name": "interruptWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFailure",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "isFailure"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "isFailure"
+        }
+      ]
+    },
+    {
+      "definitionName": "isSuccess",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "isSuccess"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "isSuccess"
+        }
+      ]
+    },
+    {
+      "definitionName": "iterate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "iterate"
+        }
+      ]
+    },
+    {
+      "definitionName": "left",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "left"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "left"
+        }
+      ]
+    },
+    {
+      "definitionName": "loop",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "loop"
+        }
+      ]
+    },
+    {
+      "definitionName": "loopDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "loopDiscard"
         }
       ]
     },
@@ -1223,6 +966,129 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "mapError"
+        }
+      ]
+    },
+    {
+      "definitionName": "match",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "match"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "match"
+        }
+      ]
+    },
+    {
+      "definitionName": "matchSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "matchSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "matchSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "merge",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "merge"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "merge"
+        }
+      ]
+    },
+    {
+      "definitionName": "mergeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "mergeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "negate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "negate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "negate"
+        }
+      ]
+    },
+    {
+      "definitionName": "none",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "none"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "none"
+        }
+      ]
+    },
+    {
+      "definitionName": "option",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "option"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "option"
+        }
+      ]
+    },
+    {
+      "definitionName": "orDie",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "orDie"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "orDie"
         }
       ]
     },
@@ -1339,6 +1205,17 @@
       ]
     },
     {
+      "definitionName": "partition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "partition"
+        }
+      ]
+    },
+    {
       "definitionName": "provideContext",
       "definitionKind": "const",
       "extensions": [
@@ -1387,18 +1264,35 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "reduce",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "contramapContext"
-        },
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceAll",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "contramapContext"
+          "typeName": "effect/stm/STM.Ops",
+          "name": "reduceAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "reduceRight"
         }
       ]
     },
@@ -1547,6 +1441,17 @@
       ]
     },
     {
+      "definitionName": "retry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "retry"
+        }
+      ]
+    },
+    {
       "definitionName": "retryUntil",
       "definitionKind": "const",
       "extensions": [
@@ -1575,6 +1480,71 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "retryWhile"
+        }
+      ]
+    },
+    {
+      "definitionName": "right",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "right"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "right"
+        }
+      ]
+    },
+    {
+      "definitionName": "service",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "service"
+        }
+      ]
+    },
+    {
+      "definitionName": "serviceWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "serviceWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "serviceWithSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "serviceWithSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "some",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "some"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "some"
         }
       ]
     },
@@ -1627,6 +1597,88 @@
       ]
     },
     {
+      "definitionName": "someOrFailException",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "someOrFailException"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "someOrFailException"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedLeft"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedNone",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedNone"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedRight",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedRight"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeedSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "succeedSome"
+        }
+      ]
+    },
+    {
       "definitionName": "summarized",
       "definitionKind": "const",
       "extensions": [
@@ -1639,6 +1691,28 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "summarized"
+        }
+      ]
+    },
+    {
+      "definitionName": "suspend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "suspend"
+        }
+      ]
+    },
+    {
+      "definitionName": "sync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "sync"
         }
       ]
     },
@@ -1691,6 +1765,55 @@
       ]
     },
     {
+      "definitionName": "tryCatch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "tryCatch"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "tuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "unit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "unit"
+        }
+      ]
+    },
+    {
+      "definitionName": "unleft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unleft"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "unleft"
+        }
+      ]
+    },
+    {
       "definitionName": "unless",
       "definitionKind": "const",
       "extensions": [
@@ -1719,6 +1842,119 @@
           "kind": "static",
           "typeName": "effect/stm/STM.Aspects",
           "name": "unlessSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "unright",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unright"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "unright"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/STM",
+          "name": "unsome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "unsome"
+        }
+      ]
+    },
+    {
+      "definitionName": "validateAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "validateAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "validateFirst",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "validateFirst"
+        }
+      ]
+    },
+    {
+      "definitionName": "when",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "when"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "when"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenCase",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Ops",
+          "name": "whenCase"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenCaseSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "whenCaseSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "whenCaseSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "whenSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/STM",
+          "name": "whenSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/STM.Aspects",
+          "name": "whenSTM"
         }
       ]
     },
@@ -1785,486 +2021,6 @@
           "name": "zipWith"
         }
       ]
-    },
-    {
-      "definitionName": "when",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "when"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "when"
-        }
-      ]
-    },
-    {
-      "definitionName": "whenCaseSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "whenCaseSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "whenCaseSTM"
-        }
-      ]
-    },
-    {
-      "definitionName": "whenSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/STM",
-          "name": "whenSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "whenSTM"
-        }
-      ]
-    },
-    {
-      "definitionName": "absolve",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "absolve"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "absolve"
-        }
-      ]
-    },
-    {
-      "definitionName": "asSome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "asSome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "asSome"
-        }
-      ]
-    },
-    {
-      "definitionName": "asSomeError",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "asSomeError"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "asSomeError"
-        }
-      ]
-    },
-    {
-      "definitionName": "asUnit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "asUnit"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "asUnit"
-        }
-      ]
-    },
-    {
-      "definitionName": "commit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "commit"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "commit"
-        }
-      ]
-    },
-    {
-      "definitionName": "commitEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "commitEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "commitEither"
-        }
-      ]
-    },
-    {
-      "definitionName": "either",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "either"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "either"
-        }
-      ]
-    },
-    {
-      "definitionName": "eventually",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "eventually"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "eventually"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatten",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "flatten"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "flatten"
-        }
-      ]
-    },
-    {
-      "definitionName": "flip",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "flip"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "flip"
-        }
-      ]
-    },
-    {
-      "definitionName": "head",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "head"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "head"
-        }
-      ]
-    },
-    {
-      "definitionName": "ignore",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "ignore"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "ignore"
-        }
-      ]
-    },
-    {
-      "definitionName": "interruptWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Fiber/Id",
-          "name": "interruptWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Ops",
-          "name": "interruptWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "isFailure",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "isFailure"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "isFailure"
-        }
-      ]
-    },
-    {
-      "definitionName": "isSuccess",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "isSuccess"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "isSuccess"
-        }
-      ]
-    },
-    {
-      "definitionName": "left",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "left"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "left"
-        }
-      ]
-    },
-    {
-      "definitionName": "merge",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "merge"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "merge"
-        }
-      ]
-    },
-    {
-      "definitionName": "negate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "negate"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "negate"
-        }
-      ]
-    },
-    {
-      "definitionName": "none",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "none"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "none"
-        }
-      ]
-    },
-    {
-      "definitionName": "option",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "option"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "option"
-        }
-      ]
-    },
-    {
-      "definitionName": "orDie",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "orDie"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "orDie"
-        }
-      ]
-    },
-    {
-      "definitionName": "right",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "right"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "right"
-        }
-      ]
-    },
-    {
-      "definitionName": "some",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "some"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "some"
-        }
-      ]
-    },
-    {
-      "definitionName": "someOrFailException",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "someOrFailException"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "someOrFailException"
-        }
-      ]
-    },
-    {
-      "definitionName": "unleft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "unleft"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "unleft"
-        }
-      ]
-    },
-    {
-      "definitionName": "unright",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "unright"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "unright"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsome",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/STM",
-          "name": "unsome"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/STM.Aspects",
-          "name": "unsome"
-        }
-      ]
     }
   ],
   "@effect/stm/TArray": [
@@ -2293,39 +2049,6 @@
         {
           "kind": "companion",
           "typeName": "effect/stm/TArray.TypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromIterable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Ops",
-          "name": "fromIterable"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "empty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Ops",
-          "name": "empty"
         }
       ]
     },
@@ -2417,6 +2140,17 @@
           "kind": "static",
           "typeName": "effect/stm/TArray.Aspects",
           "name": "countSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "empty"
         }
       ]
     },
@@ -2533,22 +2267,6 @@
       ]
     },
     {
-      "definitionName": "findFirstIndexWhereSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TArray",
-          "name": "findFirstIndexWhereSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Aspects",
-          "name": "findFirstIndexWhereSTM"
-        }
-      ]
-    },
-    {
       "definitionName": "findFirstIndexWhereFromSTM",
       "definitionKind": "const",
       "extensions": [
@@ -2561,6 +2279,22 @@
           "kind": "static",
           "typeName": "effect/stm/TArray.Aspects",
           "name": "findFirstIndexWhereFromSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "findFirstIndexWhereSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TArray",
+          "name": "findFirstIndexWhereSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "findFirstIndexWhereSTM"
         }
       ]
     },
@@ -2661,6 +2395,17 @@
       ]
     },
     {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "fromIterable"
+        }
+      ]
+    },
+    {
       "definitionName": "get",
       "definitionKind": "const",
       "extensions": [
@@ -2673,6 +2418,49 @@
           "kind": "static",
           "typeName": "effect/stm/TArray.Aspects",
           "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "headOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "headOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "headOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "lastOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "lastOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "lastOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Ops",
+          "name": "make"
         }
       ]
     },
@@ -2773,6 +2561,22 @@
       ]
     },
     {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
       "definitionName": "some",
       "definitionKind": "const",
       "extensions": [
@@ -2801,6 +2605,22 @@
           "kind": "static",
           "typeName": "effect/stm/TArray.Aspects",
           "name": "someSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TArray",
+          "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TArray.Aspects",
+          "name": "toChunk"
         }
       ]
     },
@@ -2867,70 +2687,6 @@
           "name": "updateSTM"
         }
       ]
-    },
-    {
-      "definitionName": "headOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TArray",
-          "name": "headOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Aspects",
-          "name": "headOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "lastOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TArray",
-          "name": "lastOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Aspects",
-          "name": "lastOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TArray",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Aspects",
-          "name": "size"
-        }
-      ]
-    },
-    {
-      "definitionName": "toChunk",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TArray",
-          "name": "toChunk"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TArray.Aspects",
-          "name": "toChunk"
-        }
-      ]
     }
   ],
   "@effect/stm/TDeferred": [
@@ -2959,17 +2715,6 @@
         {
           "kind": "companion",
           "typeName": "effect/stm/TDeferred.TypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TDeferred.Ops",
-          "name": "make"
         }
       ]
     },
@@ -3017,6 +2762,33 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "poll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TDeferred",
+          "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TDeferred.Aspects",
+          "name": "poll"
+        }
+      ]
+    },
+    {
       "definitionName": "succeed",
       "definitionKind": "const",
       "extensions": [
@@ -3029,495 +2801,6 @@
           "kind": "static",
           "typeName": "effect/stm/TDeferred.Aspects",
           "name": "succeed"
-        }
-      ]
-    },
-    {
-      "definitionName": "poll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TDeferred",
-          "name": "poll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TDeferred.Aspects",
-          "name": "poll"
-        }
-      ]
-    }
-  ],
-  "@effect/stm/TQueue": [
-    {
-      "definitionName": "TQueue",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TEnqueue",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue/TEnqueue"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue/TEnqueue.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TDequeue",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue/TDequeue"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue/TDequeue.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "BaseTQueue",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue/BaseTQueue"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue/BaseTQueue.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TDequeueTypeId",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue/TDequeueTypeId"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "TEnqueueTypeId",
-      "definitionKind": "type",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/TQueue/TEnqueueTypeId"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "isTQueue",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "isTQueue"
-        }
-      ]
-    },
-    {
-      "definitionName": "isTDequeue",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "isTDequeue"
-        }
-      ]
-    },
-    {
-      "definitionName": "isTEnqueue",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "isTEnqueue"
-        }
-      ]
-    },
-    {
-      "definitionName": "bounded",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "bounded"
-        }
-      ]
-    },
-    {
-      "definitionName": "dropping",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "dropping"
-        }
-      ]
-    },
-    {
-      "definitionName": "sliding",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "sliding"
-        }
-      ]
-    },
-    {
-      "definitionName": "unbounded",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Ops",
-          "name": "unbounded"
-        }
-      ]
-    },
-    {
-      "definitionName": "TDequeueTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops",
-          "name": "TDequeueTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "TEnqueueTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops",
-          "name": "TEnqueueTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "offer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TEnqueue",
-          "name": "offer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
-          "name": "offer"
-        }
-      ]
-    },
-    {
-      "definitionName": "offerAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TEnqueue",
-          "name": "offerAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
-          "name": "offerAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "seek",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "seek"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "seek"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeBetween",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "takeBetween"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "takeBetween"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeN",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "takeN"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "takeN"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeUpTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "takeUpTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "takeUpTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "awaitShutdown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "awaitShutdown"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "awaitShutdown"
-        }
-      ]
-    },
-    {
-      "definitionName": "capacity",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "capacity"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "capacity"
-        }
-      ]
-    },
-    {
-      "definitionName": "isEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "isEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "isEmpty"
-        }
-      ]
-    },
-    {
-      "definitionName": "isFull",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "isFull"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "isFull"
-        }
-      ]
-    },
-    {
-      "definitionName": "isShutdown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "isShutdown"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "isShutdown"
-        }
-      ]
-    },
-    {
-      "definitionName": "peek",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "peek"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "peek"
-        }
-      ]
-    },
-    {
-      "definitionName": "peekOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "peekOption"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "peekOption"
-        }
-      ]
-    },
-    {
-      "definitionName": "poll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "poll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "poll"
-        }
-      ]
-    },
-    {
-      "definitionName": "shutdown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "shutdown"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "shutdown"
-        }
-      ]
-    },
-    {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue.Aspects",
-          "name": "size"
-        }
-      ]
-    },
-    {
-      "definitionName": "take",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "take"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "take"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TQueue/TDequeue",
-          "name": "takeAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
-          "name": "takeAll"
         }
       ]
     }
@@ -3552,6 +2835,33 @@
       ]
     },
     {
+      "definitionName": "THubTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.TypeId.Ops",
+          "name": "THubTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "awaitShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "awaitShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "awaitShutdown"
+        }
+      ]
+    },
+    {
       "definitionName": "bounded",
       "definitionKind": "const",
       "extensions": [
@@ -3559,6 +2869,22 @@
           "kind": "static",
           "typeName": "effect/stm/THub.Ops",
           "name": "bounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "capacity",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "capacity"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "capacity"
         }
       ]
     },
@@ -3574,35 +2900,50 @@
       ]
     },
     {
-      "definitionName": "sliding",
+      "definitionName": "isEmpty",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isEmpty"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
-          "name": "sliding"
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "isEmpty"
         }
       ]
     },
     {
-      "definitionName": "unbounded",
+      "definitionName": "isFull",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isFull"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
-          "name": "unbounded"
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "isFull"
         }
       ]
     },
     {
-      "definitionName": "THubTypeId",
+      "definitionName": "isShutdown",
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/stm/THub",
+          "name": "isShutdown"
+        },
+        {
           "kind": "static",
-          "typeName": "effect/stm/THub.TypeId.Ops",
-          "name": "THubTypeId"
+          "typeName": "effect/stm/THub.Aspects",
+          "name": "isShutdown"
         }
       ]
     },
@@ -3639,86 +2980,6 @@
       ]
     },
     {
-      "definitionName": "awaitShutdown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/THub",
-          "name": "awaitShutdown"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/THub.Aspects",
-          "name": "awaitShutdown"
-        }
-      ]
-    },
-    {
-      "definitionName": "capacity",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/THub",
-          "name": "capacity"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/THub.Aspects",
-          "name": "capacity"
-        }
-      ]
-    },
-    {
-      "definitionName": "isEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/THub",
-          "name": "isEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/THub.Aspects",
-          "name": "isEmpty"
-        }
-      ]
-    },
-    {
-      "definitionName": "isFull",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/THub",
-          "name": "isFull"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/THub.Aspects",
-          "name": "isFull"
-        }
-      ]
-    },
-    {
-      "definitionName": "isShutdown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/THub",
-          "name": "isShutdown"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/THub.Aspects",
-          "name": "isShutdown"
-        }
-      ]
-    },
-    {
       "definitionName": "size",
       "definitionKind": "const",
       "extensions": [
@@ -3731,6 +2992,17 @@
           "kind": "static",
           "typeName": "effect/stm/THub.Aspects",
           "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "sliding",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "sliding"
         }
       ]
     },
@@ -3765,6 +3037,17 @@
           "name": "subscribeScoped"
         }
       ]
+    },
+    {
+      "definitionName": "unbounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/THub.Ops",
+          "name": "unbounded"
+        }
+      ]
     }
   ],
   "@effect/stm/TMap": [
@@ -3797,24 +3080,13 @@
       ]
     },
     {
-      "definitionName": "fromIterable",
+      "definitionName": "TMapTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/TMap.Ops",
-          "name": "fromIterable"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Ops",
-          "name": "make"
+          "typeName": "effect/stm/TMap.TypeId.Ops",
+          "name": "TMapTypeId"
         }
       ]
     },
@@ -3826,17 +3098,6 @@
           "kind": "static",
           "typeName": "effect/stm/TMap.Ops",
           "name": "empty"
-        }
-      ]
-    },
-    {
-      "definitionName": "TMapTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.TypeId.Ops",
-          "name": "TMapTypeId"
         }
       ]
     },
@@ -3853,22 +3114,6 @@
           "kind": "static",
           "typeName": "effect/stm/TMap.Aspects",
           "name": "find"
-        }
-      ]
-    },
-    {
-      "definitionName": "findSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TMap",
-          "name": "findSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "findSTM"
         }
       ]
     },
@@ -3905,6 +3150,22 @@
       ]
     },
     {
+      "definitionName": "findSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TMap",
+          "name": "findSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "findSTM"
+        }
+      ]
+    },
+    {
       "definitionName": "forEach",
       "definitionKind": "const",
       "extensions": [
@@ -3917,6 +3178,17 @@
           "kind": "static",
           "typeName": "effect/stm/TMap.Aspects",
           "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Ops",
+          "name": "fromIterable"
         }
       ]
     },
@@ -3965,6 +3237,49 @@
           "kind": "static",
           "typeName": "effect/stm/TMap.Aspects",
           "name": "has"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "keys",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "keys"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "keys"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Ops",
+          "name": "make"
         }
       ]
     },
@@ -4177,6 +3492,22 @@
       ]
     },
     {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
       "definitionName": "takeFirst",
       "definitionKind": "const",
       "extensions": [
@@ -4237,6 +3568,70 @@
           "kind": "static",
           "typeName": "effect/stm/TMap.Aspects",
           "name": "takeSomeSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "toChunk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toChunk"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toChunk"
+        }
+      ]
+    },
+    {
+      "definitionName": "toHashMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toHashMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toHashMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toReadonlyArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "toReadonlyMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TMap",
+          "name": "toReadonlyMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TMap.Aspects",
+          "name": "toReadonlyMap"
         }
       ]
     },
@@ -4321,118 +3716,6 @@
       ]
     },
     {
-      "definitionName": "isEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "isEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "isEmpty"
-        }
-      ]
-    },
-    {
-      "definitionName": "keys",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "keys"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "keys"
-        }
-      ]
-    },
-    {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "size"
-        }
-      ]
-    },
-    {
-      "definitionName": "toChunk",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "toChunk"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "toChunk"
-        }
-      ]
-    },
-    {
-      "definitionName": "toHashMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "toHashMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "toHashMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "toReadonlyArray",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "toReadonlyArray"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "toReadonlyArray"
-        }
-      ]
-    },
-    {
-      "definitionName": "toReadonlyMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TMap",
-          "name": "toReadonlyMap"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TMap.Aspects",
-          "name": "toReadonlyMap"
-        }
-      ]
-    },
-    {
       "definitionName": "values",
       "definitionKind": "const",
       "extensions": [
@@ -4479,24 +3762,13 @@
       ]
     },
     {
-      "definitionName": "fromIterable",
+      "definitionName": "TPriorityQueueTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Ops",
-          "name": "fromIterable"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Ops",
-          "name": "make"
+          "typeName": "effect/stm/TPriorityQueue.TypeId.Ops",
+          "name": "TPriorityQueueTypeId"
         }
       ]
     },
@@ -4512,93 +3784,13 @@
       ]
     },
     {
-      "definitionName": "TPriorityQueueTypeId",
+      "definitionName": "fromIterable",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.TypeId.Ops",
-          "name": "TPriorityQueueTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "offer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TPriorityQueue",
-          "name": "offer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Aspects",
-          "name": "offer"
-        }
-      ]
-    },
-    {
-      "definitionName": "offerAll",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TPriorityQueue",
-          "name": "offerAll"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Aspects",
-          "name": "offerAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "removeIf",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TPriorityQueue",
-          "name": "removeIf"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Aspects",
-          "name": "removeIf"
-        }
-      ]
-    },
-    {
-      "definitionName": "retainIf",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TPriorityQueue",
-          "name": "retainIf"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Aspects",
-          "name": "retainIf"
-        }
-      ]
-    },
-    {
-      "definitionName": "takeUpTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TPriorityQueue",
-          "name": "takeUpTo"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TPriorityQueue.Aspects",
-          "name": "takeUpTo"
+          "typeName": "effect/stm/TPriorityQueue.Ops",
+          "name": "fromIterable"
         }
       ]
     },
@@ -4635,6 +3827,49 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "offer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "offer"
+        }
+      ]
+    },
+    {
+      "definitionName": "offerAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "offerAll"
+        }
+      ]
+    },
+    {
       "definitionName": "peek",
       "definitionKind": "const",
       "extensions": [
@@ -4663,6 +3898,38 @@
           "kind": "static",
           "typeName": "effect/stm/TPriorityQueue.Aspects",
           "name": "peekOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "removeIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "removeIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "removeIf"
+        }
+      ]
+    },
+    {
+      "definitionName": "retainIf",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "retainIf"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "retainIf"
         }
       ]
     },
@@ -4731,6 +3998,22 @@
       ]
     },
     {
+      "definitionName": "takeUpTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TPriorityQueue",
+          "name": "takeUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TPriorityQueue.Aspects",
+          "name": "takeUpTo"
+        }
+      ]
+    },
+    {
       "definitionName": "toChunk",
       "definitionKind": "const",
       "extensions": [
@@ -4763,6 +4046,479 @@
       ]
     }
   ],
+  "@effect/stm/TQueue": [
+    {
+      "definitionName": "BaseTQueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue/BaseTQueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue/BaseTQueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue/TDequeue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue/TDequeue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeueTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue/TDequeueTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue/TEnqueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue/TEnqueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueueTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TQueue",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TQueue"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TQueue.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TDequeueTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeueTypeId.Ops",
+          "name": "TDequeueTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "TEnqueueTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TEnqueueTypeId.Ops",
+          "name": "TEnqueueTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "awaitShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "awaitShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "awaitShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "bounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "bounded"
+        }
+      ]
+    },
+    {
+      "definitionName": "capacity",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "capacity"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "capacity"
+        }
+      ]
+    },
+    {
+      "definitionName": "dropping",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "dropping"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "isFull",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isFull"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "isFull"
+        }
+      ]
+    },
+    {
+      "definitionName": "isShutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "isShutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "isShutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTDequeue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTDequeue"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTEnqueue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTEnqueue"
+        }
+      ]
+    },
+    {
+      "definitionName": "isTQueue",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "isTQueue"
+        }
+      ]
+    },
+    {
+      "definitionName": "offer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TEnqueue",
+          "name": "offer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
+          "name": "offer"
+        }
+      ]
+    },
+    {
+      "definitionName": "offerAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TEnqueue",
+          "name": "offerAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TEnqueue.Aspects",
+          "name": "offerAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "peek",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "peek"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "peek"
+        }
+      ]
+    },
+    {
+      "definitionName": "peekOption",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "peekOption"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "peekOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "poll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "poll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "poll"
+        }
+      ]
+    },
+    {
+      "definitionName": "seek",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "seek"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "seek"
+        }
+      ]
+    },
+    {
+      "definitionName": "shutdown",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "shutdown"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "shutdown"
+        }
+      ]
+    },
+    {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
+      "definitionName": "sliding",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "sliding"
+        }
+      ]
+    },
+    {
+      "definitionName": "take",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "take"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "take"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeAll",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "takeAll"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "takeAll"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeBetween",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "takeBetween"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "takeBetween"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "takeN"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "takeN"
+        }
+      ]
+    },
+    {
+      "definitionName": "takeUpTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TQueue/TDequeue",
+          "name": "takeUpTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue/TDequeue.Aspects",
+          "name": "takeUpTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "unbounded",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TQueue.Ops",
+          "name": "unbounded"
+        }
+      ]
+    }
+  ],
   "@effect/stm/TRandom": [
     {
       "definitionName": "TRandom",
@@ -4789,6 +4545,17 @@
         {
           "kind": "companion",
           "typeName": "effect/stm/TRandom.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRandomTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRandom.TypeId.Ops",
+          "name": "TRandomTypeId"
         }
       ]
     },
@@ -4868,17 +4635,6 @@
           "name": "shuffle"
         }
       ]
-    },
-    {
-      "definitionName": "TRandomTypeId",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TRandom.TypeId.Ops",
-          "name": "TRandomTypeId"
-        }
-      ]
     }
   ],
   "@effect/stm/TReentrantLock": [
@@ -4911,17 +4667,6 @@
       ]
     },
     {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TReentrantLock.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
       "definitionName": "TReentrantLockTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -4929,54 +4674,6 @@
           "kind": "static",
           "typeName": "effect/stm/TReentrantLock.TypeId.Ops",
           "name": "TReentrantLockTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "withLock",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withLock"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "withLock"
-        }
-      ]
-    },
-    {
-      "definitionName": "withReadLock",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withReadLock"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "withReadLock"
-        }
-      ]
-    },
-    {
-      "definitionName": "withWriteLock",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withWriteLock"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "withWriteLock"
         }
       ]
     },
@@ -5077,6 +4774,17 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
       "definitionName": "readLock",
       "definitionKind": "const",
       "extensions": [
@@ -5093,22 +4801,6 @@
       ]
     },
     {
-      "definitionName": "readLocks",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TReentrantLock",
-          "name": "readLocks"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TReentrantLock.Aspects",
-          "name": "readLocks"
-        }
-      ]
-    },
-    {
       "definitionName": "readLocked",
       "definitionKind": "const",
       "extensions": [
@@ -5121,6 +4813,22 @@
           "kind": "static",
           "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "readLocked"
+        }
+      ]
+    },
+    {
+      "definitionName": "readLocks",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TReentrantLock",
+          "name": "readLocks"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TReentrantLock.Aspects",
+          "name": "readLocks"
         }
       ]
     },
@@ -5153,6 +4861,54 @@
           "kind": "static",
           "typeName": "effect/stm/TReentrantLock.Aspects",
           "name": "releaseWrite"
+        }
+      ]
+    },
+    {
+      "definitionName": "withLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "withReadLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withReadLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withReadLock"
+        }
+      ]
+    },
+    {
+      "definitionName": "withWriteLock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withWriteLock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withWriteLock"
         }
       ]
     },
@@ -5205,6 +4961,250 @@
       ]
     }
   ],
+  "@effect/stm/TRef": [
+    {
+      "definitionName": "TRef",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRef"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRef.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRefTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/TRef.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/TRef.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TRefTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.TypeId.Ops",
+          "name": "TRefTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TRef",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndSet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndSet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "getAndSet"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndUpdate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "getAndUpdate"
+        }
+      ]
+    },
+    {
+      "definitionName": "getAndUpdateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "getAndUpdateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "getAndUpdateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "modify",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "modify"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "modify"
+        }
+      ]
+    },
+    {
+      "definitionName": "modifySome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "modifySome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "modifySome"
+        }
+      ]
+    },
+    {
+      "definitionName": "set",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "set"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "setAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "setAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "setAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "update",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "update"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "update"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "updateAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "updateAndGet"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSome",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "updateSome"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "updateSome"
+        }
+      ]
+    },
+    {
+      "definitionName": "updateSomeAndGet",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TRef",
+          "name": "updateSomeAndGet"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TRef.Aspects",
+          "name": "updateSomeAndGet"
+        }
+      ]
+    }
+  ],
   "@effect/stm/TSemaphore": [
     {
       "definitionName": "TSemaphore",
@@ -5235,28 +5235,6 @@
       ]
     },
     {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "unsafeMake",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Ops",
-          "name": "unsafeMake"
-        }
-      ]
-    },
-    {
       "definitionName": "TSemaphoreTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -5264,6 +5242,22 @@
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.TypeId.Ops",
           "name": "TSemaphoreTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "acquire",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "acquire"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "acquire"
         }
       ]
     },
@@ -5284,6 +5278,49 @@
       ]
     },
     {
+      "definitionName": "available",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "available"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "available"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "release",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "release"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "release"
+        }
+      ]
+    },
+    {
       "definitionName": "releaseN",
       "definitionKind": "const",
       "extensions": [
@@ -5296,6 +5333,17 @@
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.Aspects",
           "name": "releaseN"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeMake",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Ops",
+          "name": "unsafeMake"
         }
       ]
     },
@@ -5332,70 +5380,6 @@
       ]
     },
     {
-      "definitionName": "withPermitsScoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TSemaphore",
-          "name": "withPermitsScoped"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Aspects",
-          "name": "withPermitsScoped"
-        }
-      ]
-    },
-    {
-      "definitionName": "acquire",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSemaphore",
-          "name": "acquire"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Aspects",
-          "name": "acquire"
-        }
-      ]
-    },
-    {
-      "definitionName": "available",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSemaphore",
-          "name": "available"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Aspects",
-          "name": "available"
-        }
-      ]
-    },
-    {
-      "definitionName": "release",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSemaphore",
-          "name": "release"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSemaphore.Aspects",
-          "name": "release"
-        }
-      ]
-    },
-    {
       "definitionName": "withPermitScoped",
       "definitionKind": "const",
       "extensions": [
@@ -5408,6 +5392,22 @@
           "kind": "static",
           "typeName": "effect/stm/TSemaphore.Aspects",
           "name": "withPermitScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "withPermitsScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TSemaphore",
+          "name": "withPermitsScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSemaphore.Aspects",
+          "name": "withPermitsScoped"
         }
       ]
     }
@@ -5438,39 +5438,6 @@
         {
           "kind": "companion",
           "typeName": "effect/stm/TSet.TypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromIterable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Ops",
-          "name": "fromIterable"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "empty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Ops",
-          "name": "empty"
         }
       ]
     },
@@ -5518,6 +5485,17 @@
       ]
     },
     {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
       "definitionName": "forEach",
       "definitionKind": "const",
       "extensions": [
@@ -5530,6 +5508,17 @@
           "kind": "static",
           "typeName": "effect/stm/TSet.Aspects",
           "name": "forEach"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "fromIterable"
         }
       ]
     },
@@ -5562,6 +5551,33 @@
           "kind": "static",
           "typeName": "effect/stm/TSet.Aspects",
           "name": "intersection"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEmpty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "isEmpty"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "isEmpty"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Ops",
+          "name": "make"
         }
       ]
     },
@@ -5694,6 +5710,22 @@
       ]
     },
     {
+      "definitionName": "size",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/stm/TSet",
+          "name": "size"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "size"
+        }
+      ]
+    },
+    {
       "definitionName": "takeFirst",
       "definitionKind": "const",
       "extensions": [
@@ -5758,86 +5790,6 @@
       ]
     },
     {
-      "definitionName": "transform",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TSet",
-          "name": "transform"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Aspects",
-          "name": "transform"
-        }
-      ]
-    },
-    {
-      "definitionName": "transformSTM",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TSet",
-          "name": "transformSTM"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Aspects",
-          "name": "transformSTM"
-        }
-      ]
-    },
-    {
-      "definitionName": "union",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/stm/TSet",
-          "name": "union"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Aspects",
-          "name": "union"
-        }
-      ]
-    },
-    {
-      "definitionName": "isEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSet",
-          "name": "isEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Aspects",
-          "name": "isEmpty"
-        }
-      ]
-    },
-    {
-      "definitionName": "size",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/stm/TSet",
-          "name": "size"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/stm/TSet.Aspects",
-          "name": "size"
-        }
-      ]
-    },
-    {
       "definitionName": "toChunk",
       "definitionKind": "const",
       "extensions": [
@@ -5898,6 +5850,54 @@
           "kind": "static",
           "typeName": "effect/stm/TSet.Aspects",
           "name": "toReadonlySet"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TSet",
+          "name": "transform"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformSTM",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TSet",
+          "name": "transformSTM"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "transformSTM"
+        }
+      ]
+    },
+    {
+      "definitionName": "union",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/stm/TSet",
+          "name": "union"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/stm/TSet.Aspects",
+          "name": "union"
         }
       ]
     }
