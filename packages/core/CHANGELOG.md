@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.21.3
+
+### Patch Changes
+
+- e3e768a5: Remove unused type param
+
 ## 0.21.2
 
 ### Patch Changes
