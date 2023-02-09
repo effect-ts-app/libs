@@ -186,7 +186,6 @@ export const Http = Tag<HttpOps>()
 // const accessHttp = Effect.accessService(Http)
 
 export type RequestF = <
-  R,
   M extends Method,
   Req extends RequestType,
   Resp extends ResponseType
@@ -197,7 +196,7 @@ export type RequestF = <
   responseType: Resp,
   body?: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv | R,
+  RequestEnv,
   HttpError<string>,
   Response<ResponseTypes[Resp][M]>
 >
@@ -247,7 +246,6 @@ function foldMiddlewareStack(
 }
 
 export function requestInner<
-  R,
   M extends Method,
   Req extends RequestType,
   Resp extends ResponseType
@@ -257,7 +255,7 @@ export function requestInner<
   requestType: Req,
   responseType: Resp,
   body: RequestBodyTypes[Req][M]
-): Effect<RequestEnv | R, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+): Effect<RequestEnv, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM(headers =>
     Http.accessWithEffect(h =>
       h.request<M, Req, Resp>(
@@ -272,7 +270,7 @@ export function requestInner<
   )
 }
 
-export function request<R, Req extends RequestType, Resp extends ResponseType>(
+export function request<Req extends RequestType, Resp extends ResponseType>(
   method: "GET",
   requestType: Req,
   responseType: Resp
@@ -280,11 +278,11 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
   url: string,
   body?: RequestBodyTypes[Req]["GET"]
 ) => Effect<
-  RequestEnv | R,
+  RequestEnv,
   HttpError<string>,
   Response<ResponseTypes[Resp]["GET"]>
 >
-export function request<R, Req extends RequestType, Resp extends ResponseType>(
+export function request<Req extends RequestType, Resp extends ResponseType>(
   method: "DELETE",
   requestType: Req,
   responseType: Resp
@@ -292,12 +290,11 @@ export function request<R, Req extends RequestType, Resp extends ResponseType>(
   url: string,
   body?: RequestBodyTypes[Req]["DELETE"]
 ) => Effect<
-  RequestEnv | R,
+  RequestEnv,
   HttpError<string>,
   Response<ResponseTypes[Resp]["DELETE"]>
 >
 export function request<
-  R,
   M extends Method,
   Req extends RequestType,
   Resp extends ResponseType
@@ -309,12 +306,11 @@ export function request<
   url: string,
   body: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv | R,
+  RequestEnv,
   HttpError<string>,
   Response<ResponseTypes[Resp][M]>
 >
 export function request<
-  R,
   M extends Method,
   Req extends RequestType,
   Resp extends ResponseType
@@ -326,13 +322,13 @@ export function request<
   url: string,
   body: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv | R,
+  RequestEnv,
   HttpError<string>,
   Response<ResponseTypes[Resp][M]>
 > {
   return (url, body) =>
     accessMiddlewareStackM(s =>
-      foldMiddlewareStack(s.getOrNull, requestInner)<R, M, Req, Resp>(
+      foldMiddlewareStack(s.getOrNull, requestInner)<M, Req, Resp>(
         method,
         url,
         requestType,
