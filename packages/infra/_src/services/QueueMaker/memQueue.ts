@@ -1,6 +1,7 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
+import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportFailure, reportQueueError } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
@@ -55,6 +56,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
                 .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .tap(() => restoreFromRequestContext)
                 .zipRight(silence(handleEvent(body)))
                 .apply(
                   provideContext(
@@ -68,7 +70,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
             )
         return yield* $(
           qReply.take()
-            .flatMap(x => processMessage(x).uninterruptible)
+            .flatMap(x => processMessage(x).uninterruptible.fork.flatMap(_ => _.join))
             .forever
             .apply(reportFailure("drain"))
             .setupRequestFromWith("Queue.ReceiveMessage")
