@@ -3,7 +3,7 @@ import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 
-import { makeMemoryStore } from "./Memory.js"
+import { makeMemoryStoreInt } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 
@@ -18,25 +18,24 @@ export function makeDiskStore({ prefix }: StorageConfig) {
       fs.mkdirSync(dir)
     }
     return {
-      make: <Id extends string, Id2 extends Id, E extends PersistenceModelType<Id>>(
+      make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
         name: string,
-        existing?: Effect<never, never, ReadonlyMap<Id2, E>>,
-        _config?: StoreConfig<E>
+        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
           const file = dir + "/" + prefix + name + ".json"
           const fsStore = {
             get: fu
               .readTextFile(file)
-              .map(x => JSON.parse(x) as E[])
+              .map(x => JSON.parse(x) as PM[])
               .orDie,
-            setRaw: (v: Iterable<E>) => JSON.stringify([...v], undefined, 2)["|>"](json => fu.writeTextFile(file, json))
+            setRaw: (v: Iterable<PM>) =>
+              JSON.stringify([...v], undefined, 2)["|>"](json => fu.writeTextFile(file, json))
           }
 
-          const { make } = makeMemoryStore()
-
           const store = yield* $(
-            make<Id, Id, E>(
+            makeMemoryStoreInt<Id, Id, PM>(
               name,
               !fs.existsSync(file)
                 ? existing ?? Effect(new Map())
@@ -49,24 +48,24 @@ export function makeDiskStore({ prefix }: StorageConfig) {
           const sem = Semaphore.unsafeMake(1)
           const withPermit = sem.withPermits(1)
           const flushToDisk = store.all.flatMap(fsStore.setRaw).apply(withPermit)
-          const s: Store<E, Id> = {
+          const s: Store<PM, Id> = {
             ...store,
-            batchSet: flow(store.batchSet, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
-            bulkSet: flow(store.bulkSet, t =>
-              t.tap(() =>
-                flushToDisk.tapErrorCause(err =>
-                  Effect(console.error(err))
-                ).forkDaemon
-              )),
-            set: flow(store.set, t =>
-              t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)),
-            remove: flow(store.remove, t =>
-              t.tap(() =>
-                flushToDisk.tapErrorCause(err =>
-                  Effect(console.error(err))
-                ).forkDaemon
-              ))
+            batchSet: flow(
+              store.batchSet,
+              t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+            ),
+            bulkSet: flow(
+              store.bulkSet,
+              t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+            ),
+            set: flow(
+              store.set,
+              t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+            ),
+            remove: flow(
+              store.remove,
+              t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+            )
           }
           return s
         })
