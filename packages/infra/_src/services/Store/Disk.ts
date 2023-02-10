@@ -3,7 +3,6 @@ import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 
-import { dir } from "console"
 import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -11,6 +10,7 @@ import { StoreMaker } from "./service.js"
 function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
   prefix: string,
   namespace: string,
+  dir: string,
   name: string,
   existing?: Effect<never, never, ReadonlyMap<Id2, PM>>
 ) {
@@ -78,7 +78,7 @@ export function makeDiskStore({ prefix }: StorageConfig) {
       ) =>
         Effect.gen(function*($) {
           const storesSem = Semaphore.unsafeMake(1)
-          const primary = yield* $(makeDiskStoreInt(prefix, "primary", name, existing))
+          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, existing))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
           const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
             const store = stores.get(namespace)
@@ -92,7 +92,7 @@ export function makeDiskStore({ prefix }: StorageConfig) {
               Effect.suspendSucceed(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, name, existing).tap(store =>
+                return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, dir, name, existing).tap(store =>
                   Effect.sync(() => stores.set(namespace, store))
                 )
               })
