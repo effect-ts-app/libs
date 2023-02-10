@@ -149,7 +149,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 /**
  * Recovers from all errors.
  *
- * @tsplus static effect/io/Effect.Aspects catchAllMap
+ * @tsplus static effect/io/Effect.Ops catchAllMap
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {

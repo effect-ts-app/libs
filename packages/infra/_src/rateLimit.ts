@@ -49,7 +49,7 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
 
 /**
  * @tsplus pipeable Iterable batchPar
- * @tsplus static Collection.Aspects batchPar
+ * @tsplus static Collection.Ops batchPar
  */
 export function batchPar<R, E, A, R2, E2, A2, T>(
   n: number,
@@ -66,7 +66,7 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
 
 /**
  * @tsplus pipeable Iterable batch
- * @tsplus static Collection.Aspects batch
+ * @tsplus static Collection.Ops batch
  */
 export function batch<R, E, A, R2, E2, A2, T>(
   n: number,
@@ -83,7 +83,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
 
 // /**
 //  * @tsplus pipeable Iterable rateLimit
-//  * @tsplus static Collection.Aspects rateLimit
+//  * @tsplus static Collection.Ops rateLimit
 //  */
 // export function rateLimit(
 //   n: number,
@@ -103,7 +103,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
 
 /**
  * @tsplus pipeable Iterable naiveRateLimit
- * @tsplus static Collection.Aspects naiveRateLimit
+ * @tsplus static Collection.Ops naiveRateLimit
  */
 
 export function naiveRateLimit(

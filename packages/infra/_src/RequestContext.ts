@@ -88,7 +88,7 @@ export namespace RequestContextParent {
   }
   export const Encoded: EncodedOps = { $: {} }
   /**
-   * @tsplus type RequestContextParent.Encoded.Aspects
+   * @tsplus type RequestContextParent.Encoded.Ops
    */
   export interface EncodedAspects {}
   /**
@@ -123,7 +123,7 @@ export namespace RequestContext {
   }
   export const Encoded: EncodedOps = { $: {} }
   /**
-   * @tsplus type RequestContext.Encoded.Aspects
+   * @tsplus type RequestContext.Encoded.Ops
    */
   export interface EncodedAspects {}
   /**

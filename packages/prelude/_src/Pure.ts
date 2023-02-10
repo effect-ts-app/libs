@@ -295,16 +295,16 @@ export function updateM<W, R, E, S2, S3>(
  * @tsplus type Pure.Ops
  */
 export interface PureOps {
-  $: PureAspects
+  // $: PureAspects
 }
 
-/**
- * @tsplus type Pure.Aspects
- */
+// /**
+//  * @tsplus type Pure.Aspects
+//  */
 
-export interface PureAspects {}
+// export interface PureAspects {}
 export const Pure: PureOps = {
-  $: {}
+  // $: {}
 }
 
 // /**

@@ -240,7 +240,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "append"
         }
       ]
@@ -256,7 +256,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "chunksOf"
         }
       ]
@@ -293,7 +293,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "concat"
         }
       ]
@@ -309,7 +309,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "correspondsTo"
         }
       ]
@@ -325,7 +325,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "cross"
         }
       ]
@@ -341,7 +341,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "crossWith"
         }
       ]
@@ -357,7 +357,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "dedupe"
         }
       ]
@@ -373,7 +373,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "dedupeAdjacent"
         }
       ]
@@ -389,7 +389,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "drop"
         }
       ]
@@ -405,7 +405,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "dropRight"
         }
       ]
@@ -421,7 +421,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "dropWhile"
         }
       ]
@@ -437,7 +437,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "elem"
         }
       ]
@@ -464,7 +464,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "every"
         }
       ]
@@ -480,7 +480,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "filter"
         }
       ]
@@ -549,7 +549,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "findFirst"
         }
       ]
@@ -565,7 +565,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "findFirstIndex"
         }
       ]
@@ -581,7 +581,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "findLast"
         }
       ]
@@ -597,7 +597,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "findLastIndex"
         }
       ]
@@ -613,7 +613,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "flatMap"
         }
       ]
@@ -629,7 +629,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "flatten"
         }
       ]
@@ -645,7 +645,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "forEach"
         }
       ]
@@ -672,7 +672,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "get"
         }
       ]
@@ -688,7 +688,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "head"
         }
       ]
@@ -704,7 +704,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Ops",
           "name": "headNonEmpty"
         }
       ]
@@ -720,7 +720,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "intersection"
         }
       ]
@@ -747,7 +747,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "isEmpty"
         }
       ]
@@ -763,7 +763,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "isNonEmpty"
         }
       ]
@@ -779,7 +779,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "join"
         }
       ]
@@ -795,7 +795,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "last"
         }
       ]
@@ -838,7 +838,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "map"
         }
       ]
@@ -854,7 +854,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "mapAccum"
         }
       ]
@@ -870,7 +870,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "mapWithIndex"
         }
       ]
@@ -886,7 +886,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "modify"
         }
       ]
@@ -902,7 +902,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "modifyOption"
         }
       ]
@@ -929,7 +929,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "partition"
         }
       ]
@@ -945,7 +945,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "partitionMap"
         }
       ]
@@ -961,7 +961,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "partitionWithIndex"
         }
       ]
@@ -982,7 +982,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "prepend"
         }
       ]
@@ -998,7 +998,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Ops",
           "name": "prependAllNonEmpty"
         }
       ]
@@ -1025,7 +1025,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "reduce"
         }
       ]
@@ -1041,7 +1041,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "reduceRight"
         }
       ]
@@ -1057,7 +1057,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "reduceRightWithIndex"
         }
       ]
@@ -1073,7 +1073,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "reduceWithIndex"
         }
       ]
@@ -1089,7 +1089,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "remove"
         }
       ]
@@ -1105,7 +1105,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "replace"
         }
       ]
@@ -1121,7 +1121,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "replaceOption"
         }
       ]
@@ -1137,7 +1137,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "reverse"
         }
       ]
@@ -1153,7 +1153,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "separate"
         }
       ]
@@ -1169,7 +1169,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "size"
         }
       ]
@@ -1185,7 +1185,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "some"
         }
       ]
@@ -1201,7 +1201,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "sort"
         }
       ]
@@ -1217,7 +1217,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "split"
         }
       ]
@@ -1233,7 +1233,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "splitAt"
         }
       ]
@@ -1249,7 +1249,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "splitWhere"
         }
       ]
@@ -1265,7 +1265,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "tail"
         }
       ]
@@ -1281,7 +1281,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Ops",
           "name": "tailNonEmpty"
         }
       ]
@@ -1297,7 +1297,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "take"
         }
       ]
@@ -1313,7 +1313,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "takeRight"
         }
       ]
@@ -1329,7 +1329,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "takeWhile"
         }
       ]
@@ -1345,7 +1345,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "toReadonlyArray"
         }
       ]
@@ -1372,7 +1372,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "union"
         }
       ]
@@ -1399,7 +1399,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unsafeGet"
         }
       ]
@@ -1415,7 +1415,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unsafeHead"
         }
       ]
@@ -1431,7 +1431,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unsafeLast"
         }
       ]
@@ -1447,7 +1447,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "unzip"
         }
       ]
@@ -1463,7 +1463,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zip"
         }
       ]
@@ -1479,7 +1479,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zipAll"
         }
       ]
@@ -1495,7 +1495,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zipAllWith"
         }
       ]
@@ -1511,7 +1511,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zipWith"
         }
       ]
@@ -1527,7 +1527,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zipWithIndex"
         }
       ]
@@ -1543,7 +1543,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk.Ops",
           "name": "zipWithIndexOffset"
         }
       ]
@@ -1642,7 +1642,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "add"
         }
       ]
@@ -1669,7 +1669,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "get"
         }
       ]
@@ -1685,7 +1685,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "getOption"
         }
       ]
@@ -1734,7 +1734,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "merge"
         }
       ]
@@ -1750,7 +1750,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "prune"
         }
       ]
@@ -1766,7 +1766,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Aspects",
+          "typeName": "effect/data/Context.Ops",
           "name": "unsafeGet"
         }
       ]
@@ -1908,7 +1908,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "chunk"
         }
       ]
@@ -1924,7 +1924,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "combine"
         }
       ]
@@ -1940,7 +1940,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "diff"
         }
       ]
@@ -1956,7 +1956,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "empty"
         }
       ]
@@ -1983,7 +1983,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "hashMap"
         }
       ]
@@ -2021,7 +2021,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "orElseResult"
         }
       ]
@@ -2037,7 +2037,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "patch"
         }
       ]
@@ -2053,7 +2053,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "transform"
         }
       ]
@@ -2091,7 +2091,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ.Aspects",
+          "typeName": "effect/data/Differ.Ops",
           "name": "zip"
         }
       ]
@@ -2137,7 +2137,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/ChunkPatch.Aspects",
+          "typeName": "effect/data/Differ/ChunkPatch.Ops",
           "name": "combine"
         }
       ]
@@ -2175,7 +2175,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/ChunkPatch.Aspects",
+          "typeName": "effect/data/Differ/ChunkPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2221,7 +2221,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/ContextPatch.Aspects",
+          "typeName": "effect/data/Differ/ContextPatch.Ops",
           "name": "combine"
         }
       ]
@@ -2259,7 +2259,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/ContextPatch.Aspects",
+          "typeName": "effect/data/Differ/ContextPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2305,7 +2305,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/HashMapPatch.Aspects",
+          "typeName": "effect/data/Differ/HashMapPatch.Ops",
           "name": "combine"
         }
       ]
@@ -2343,7 +2343,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/HashMapPatch.Aspects",
+          "typeName": "effect/data/Differ/HashMapPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2389,7 +2389,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/HashSetPatch.Aspects",
+          "typeName": "effect/data/Differ/HashSetPatch.Ops",
           "name": "combine"
         }
       ]
@@ -2427,7 +2427,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/HashSetPatch.Aspects",
+          "typeName": "effect/data/Differ/HashSetPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2473,7 +2473,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/OrPatch.Aspects",
+          "typeName": "effect/data/Differ/OrPatch.Ops",
           "name": "combine"
         }
       ]
@@ -2511,7 +2511,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Differ/OrPatch.Aspects",
+          "typeName": "effect/data/Differ/OrPatch.Ops",
           "name": "patch"
         }
       ]
@@ -2562,7 +2562,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "add"
         }
       ]
@@ -2589,7 +2589,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "equals"
         }
       ]
@@ -2610,7 +2610,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "greaterThan"
         }
       ]
@@ -2631,7 +2631,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "greaterThanOrEqualTo"
         }
       ]
@@ -2685,7 +2685,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "lessThan"
         }
       ]
@@ -2706,7 +2706,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "lessThanOrEqualTo"
         }
       ]
@@ -2760,7 +2760,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "subtract"
         }
       ]
@@ -2781,7 +2781,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Duration.Aspects",
+          "typeName": "effect/data/Duration.Ops",
           "name": "times"
         }
       ]
@@ -3259,7 +3259,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "beginMutation"
         }
       ]
@@ -3275,7 +3275,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "compact"
         }
       ]
@@ -3302,7 +3302,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "endMutation"
         }
       ]
@@ -3318,7 +3318,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "filter"
         }
       ]
@@ -3334,7 +3334,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "filterMap"
         }
       ]
@@ -3350,7 +3350,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "filterMapWithIndex"
         }
       ]
@@ -3366,7 +3366,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "filterWithIndex"
         }
       ]
@@ -3382,7 +3382,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "flatMap"
         }
       ]
@@ -3398,7 +3398,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "flatMapWithIndex"
         }
       ]
@@ -3414,7 +3414,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "forEach"
         }
       ]
@@ -3430,7 +3430,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "forEachWithIndex"
         }
       ]
@@ -3457,7 +3457,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "get"
         }
       ]
@@ -3473,7 +3473,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "getHash"
         }
       ]
@@ -3489,7 +3489,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "has"
         }
       ]
@@ -3505,7 +3505,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "hasHash"
         }
       ]
@@ -3521,7 +3521,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "isEmpty"
         }
       ]
@@ -3548,7 +3548,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "keys"
         }
       ]
@@ -3564,7 +3564,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "keySet"
         }
       ]
@@ -3596,7 +3596,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "map"
         }
       ]
@@ -3612,7 +3612,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "mapWithIndex"
         }
       ]
@@ -3628,7 +3628,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "modify"
         }
       ]
@@ -3644,7 +3644,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "modifyAt"
         }
       ]
@@ -3660,7 +3660,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "modifyHash"
         }
       ]
@@ -3676,7 +3676,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "mutate"
         }
       ]
@@ -3692,7 +3692,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "reduce"
         }
       ]
@@ -3708,7 +3708,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "reduceWithIndex"
         }
       ]
@@ -3724,7 +3724,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "remove"
         }
       ]
@@ -3740,7 +3740,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "removeMany"
         }
       ]
@@ -3756,7 +3756,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "set"
         }
       ]
@@ -3772,7 +3772,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "size"
         }
       ]
@@ -3788,7 +3788,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "union"
         }
       ]
@@ -3804,7 +3804,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "unsafeGet"
         }
       ]
@@ -3820,7 +3820,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashMap.Aspects",
+          "typeName": "effect/data/HashMap.Ops",
           "name": "values"
         }
       ]
@@ -3866,7 +3866,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "add"
         }
       ]
@@ -3882,7 +3882,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "beginMutation"
         }
       ]
@@ -3898,7 +3898,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "difference"
         }
       ]
@@ -3925,7 +3925,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "endMutation"
         }
       ]
@@ -3941,7 +3941,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "every"
         }
       ]
@@ -3957,7 +3957,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "filter"
         }
       ]
@@ -3973,7 +3973,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "flatMap"
         }
       ]
@@ -3989,7 +3989,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "forEach"
         }
       ]
@@ -4016,7 +4016,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "has"
         }
       ]
@@ -4032,7 +4032,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "intersection"
         }
       ]
@@ -4059,7 +4059,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "isSubset"
         }
       ]
@@ -4091,7 +4091,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "map"
         }
       ]
@@ -4107,7 +4107,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "mutate"
         }
       ]
@@ -4123,7 +4123,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "partition"
         }
       ]
@@ -4139,7 +4139,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "reduce"
         }
       ]
@@ -4155,7 +4155,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "remove"
         }
       ]
@@ -4171,7 +4171,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "size"
         }
       ]
@@ -4187,7 +4187,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "some"
         }
       ]
@@ -4203,7 +4203,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "toggle"
         }
       ]
@@ -4219,7 +4219,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "union"
         }
       ]
@@ -4235,7 +4235,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/HashSet.Aspects",
+          "typeName": "effect/data/HashSet.Ops",
           "name": "values"
         }
       ]
@@ -4336,7 +4336,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "concat"
         }
       ]
@@ -4363,7 +4363,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "drop"
         }
       ]
@@ -4390,7 +4390,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "equalsWith"
         }
       ]
@@ -4406,7 +4406,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "every"
         }
       ]
@@ -4422,7 +4422,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "filter"
         }
       ]
@@ -4449,7 +4449,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "findFirst"
         }
       ]
@@ -4465,7 +4465,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "flatMap"
         }
       ]
@@ -4481,7 +4481,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "forEach"
         }
       ]
@@ -4508,7 +4508,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "head"
         }
       ]
@@ -4524,7 +4524,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "isCons"
         }
       ]
@@ -4551,7 +4551,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "isNil"
         }
       ]
@@ -4567,7 +4567,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "last"
         }
       ]
@@ -4583,7 +4583,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "length"
         }
       ]
@@ -4610,7 +4610,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "map"
         }
       ]
@@ -4648,7 +4648,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "partition"
         }
       ]
@@ -4664,7 +4664,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "partitionMap"
         }
       ]
@@ -4685,7 +4685,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "prepend"
         }
       ]
@@ -4701,7 +4701,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "prependAll"
         }
       ]
@@ -4717,7 +4717,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "prependAllReversed"
         }
       ]
@@ -4733,7 +4733,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "reduce"
         }
       ]
@@ -4749,7 +4749,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "reduceRight"
         }
       ]
@@ -4765,7 +4765,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "reverse"
         }
       ]
@@ -4781,7 +4781,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "some"
         }
       ]
@@ -4797,7 +4797,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "splitAt"
         }
       ]
@@ -4813,7 +4813,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "tail"
         }
       ]
@@ -4829,7 +4829,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "take"
         }
       ]
@@ -4845,7 +4845,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "toChunk"
         }
       ]
@@ -4861,7 +4861,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "toReadonlyArray"
         }
       ]
@@ -4877,7 +4877,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "unsafeHead"
         }
       ]
@@ -4893,7 +4893,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "unsafeLast"
         }
       ]
@@ -4909,7 +4909,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/List.Aspects",
+          "typeName": "effect/data/List.Ops",
           "name": "unsafeTail"
         }
       ]
@@ -4977,7 +4977,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "get"
         }
       ]
@@ -4993,7 +4993,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "has"
         }
       ]
@@ -5025,7 +5025,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "modify"
         }
       ]
@@ -5041,7 +5041,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "modifyAt"
         }
       ]
@@ -5057,7 +5057,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "remove"
         }
       ]
@@ -5073,7 +5073,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "set"
         }
       ]
@@ -5089,7 +5089,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashMap.Aspects",
+          "typeName": "effect/data/MutableHashMap.Ops",
           "name": "size"
         }
       ]
@@ -5135,7 +5135,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "add"
         }
       ]
@@ -5173,7 +5173,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "has"
         }
       ]
@@ -5205,7 +5205,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "remove"
         }
       ]
@@ -5221,7 +5221,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableHashSet.Aspects",
+          "typeName": "effect/data/MutableHashSet.Ops",
           "name": "size"
         }
       ]
@@ -5267,7 +5267,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "append"
         }
       ]
@@ -5294,7 +5294,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "forEach"
         }
       ]
@@ -5321,7 +5321,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "head"
         }
       ]
@@ -5337,7 +5337,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "isEmpty"
         }
       ]
@@ -5353,7 +5353,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "length"
         }
       ]
@@ -5380,7 +5380,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "pop"
         }
       ]
@@ -5396,7 +5396,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "reset"
         }
       ]
@@ -5412,7 +5412,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "shift"
         }
       ]
@@ -5428,7 +5428,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableList.Aspects",
+          "typeName": "effect/data/MutableList.Ops",
           "name": "tail"
         }
       ]
@@ -5496,7 +5496,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "capacity"
         }
       ]
@@ -5512,7 +5512,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "isEmpty"
         }
       ]
@@ -5528,7 +5528,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "isFull"
         }
       ]
@@ -5544,7 +5544,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "length"
         }
       ]
@@ -5560,7 +5560,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "offer"
         }
       ]
@@ -5576,7 +5576,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "offerAll"
         }
       ]
@@ -5592,7 +5592,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "poll"
         }
       ]
@@ -5608,7 +5608,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableQueue.Aspects",
+          "typeName": "effect/data/MutableQueue.Ops",
           "name": "pollUpTo"
         }
       ]
@@ -5665,7 +5665,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "compareAndSet"
         }
       ]
@@ -5681,7 +5681,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "decrement"
         }
       ]
@@ -5697,7 +5697,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "decrementAndGet"
         }
       ]
@@ -5713,7 +5713,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "get"
         }
       ]
@@ -5729,7 +5729,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "getAndDecrement"
         }
       ]
@@ -5745,7 +5745,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "getAndIncrement"
         }
       ]
@@ -5761,7 +5761,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "getAndSet"
         }
       ]
@@ -5777,7 +5777,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -5793,7 +5793,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "increment"
         }
       ]
@@ -5809,7 +5809,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "incrementAndGet"
         }
       ]
@@ -5841,7 +5841,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "set"
         }
       ]
@@ -5857,7 +5857,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "setAndGet"
         }
       ]
@@ -5873,7 +5873,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "toggle"
         }
       ]
@@ -5889,7 +5889,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "update"
         }
       ]
@@ -5905,7 +5905,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/MutableRef.Aspects",
+          "typeName": "effect/data/MutableRef.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -5948,7 +5948,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/NonEmpty.Iterable.Aspects",
+          "typeName": "effect/data/NonEmpty.Iterable.Ops",
           "name": "unprepend"
         }
       ]
@@ -6049,7 +6049,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "at"
         }
       ]
@@ -6065,7 +6065,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "atReversed"
         }
       ]
@@ -6081,7 +6081,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "find"
         }
       ]
@@ -6097,7 +6097,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "findFirst"
         }
       ]
@@ -6113,7 +6113,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "first"
         }
       ]
@@ -6129,7 +6129,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "forEach"
         }
       ]
@@ -6145,7 +6145,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "forEachBetween"
         }
       ]
@@ -6161,7 +6161,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "forEachGreaterThanEqual"
         }
       ]
@@ -6177,7 +6177,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "forEachLessThan"
         }
       ]
@@ -6204,7 +6204,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "getAt"
         }
       ]
@@ -6220,7 +6220,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "getOrder"
         }
       ]
@@ -6236,7 +6236,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThan"
         }
       ]
@@ -6252,7 +6252,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanEqual"
         }
       ]
@@ -6268,7 +6268,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanEqualReversed"
         }
       ]
@@ -6284,7 +6284,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "greaterThanReversed"
         }
       ]
@@ -6300,7 +6300,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "has"
         }
       ]
@@ -6316,7 +6316,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "insert"
         }
       ]
@@ -6343,7 +6343,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "keys"
         }
       ]
@@ -6359,7 +6359,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "keysReversed"
         }
       ]
@@ -6375,7 +6375,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "last"
         }
       ]
@@ -6391,7 +6391,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThan"
         }
       ]
@@ -6407,7 +6407,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanEqual"
         }
       ]
@@ -6423,7 +6423,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanEqualReversed"
         }
       ]
@@ -6439,7 +6439,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "lessThanReversed"
         }
       ]
@@ -6466,7 +6466,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "reduce"
         }
       ]
@@ -6482,7 +6482,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "reduceWithIndex"
         }
       ]
@@ -6498,7 +6498,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "removeFirst"
         }
       ]
@@ -6514,7 +6514,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "reversed"
         }
       ]
@@ -6530,7 +6530,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "size"
         }
       ]
@@ -6546,7 +6546,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "values"
         }
       ]
@@ -6562,7 +6562,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/RedBlackTree.Aspects",
+          "typeName": "effect/data/RedBlackTree.Ops",
           "name": "valuesReversed"
         }
       ]
@@ -6608,7 +6608,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "entries"
         }
       ]
@@ -6635,7 +6635,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "get"
         }
       ]
@@ -6651,7 +6651,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "getOrder"
         }
       ]
@@ -6667,7 +6667,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "has"
         }
       ]
@@ -6683,7 +6683,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "headOption"
         }
       ]
@@ -6699,7 +6699,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "isEmpty"
         }
       ]
@@ -6715,7 +6715,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "isNonEmpty"
         }
       ]
@@ -6742,7 +6742,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "keys"
         }
       ]
@@ -6774,7 +6774,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "map"
         }
       ]
@@ -6790,7 +6790,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "mapWithIndex"
         }
       ]
@@ -6806,7 +6806,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "reduce"
         }
       ]
@@ -6822,7 +6822,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "reduceWithIndex"
         }
       ]
@@ -6838,7 +6838,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "remove"
         }
       ]
@@ -6854,7 +6854,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "set"
         }
       ]
@@ -6870,7 +6870,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "size"
         }
       ]
@@ -6886,7 +6886,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedMap.Aspects",
+          "typeName": "effect/data/SortedMap.Ops",
           "name": "values"
         }
       ]
@@ -6932,7 +6932,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "add"
         }
       ]
@@ -6948,7 +6948,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "difference"
         }
       ]
@@ -6964,7 +6964,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "every"
         }
       ]
@@ -6980,7 +6980,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "filter"
         }
       ]
@@ -6996,7 +6996,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "flatMap"
         }
       ]
@@ -7012,7 +7012,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "forEach"
         }
       ]
@@ -7039,7 +7039,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "has"
         }
       ]
@@ -7055,7 +7055,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "intersection"
         }
       ]
@@ -7082,7 +7082,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "isSubset"
         }
       ]
@@ -7109,7 +7109,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "map"
         }
       ]
@@ -7125,7 +7125,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "partition"
         }
       ]
@@ -7141,7 +7141,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "remove"
         }
       ]
@@ -7157,7 +7157,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "size"
         }
       ]
@@ -7173,7 +7173,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "some"
         }
       ]
@@ -7189,7 +7189,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "toggle"
         }
       ]
@@ -7205,7 +7205,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "union"
         }
       ]
@@ -7221,7 +7221,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/data/SortedSet.Aspects",
+          "typeName": "effect/data/SortedSet.Ops",
           "name": "values"
         }
       ]

@@ -53,7 +53,7 @@ export const succeed = (_: SubSchema) => Effect(_)
 export const dieMessage = (_: string) => Effect.die(new UnsupportedOperation([_]))
 
 export function described(description: string) {
-  return Effect.$.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       description
@@ -62,7 +62,7 @@ export function described(description: string) {
 }
 
 export function titled(title: string) {
-  return Effect.$.map(
+  return Effect.map(
     (schema: SubSchema): SubSchema => ({
       ...schema,
       title
