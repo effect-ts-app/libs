@@ -61,7 +61,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cached.Aspects",
+          "typeName": "effect/io/Cached.Ops",
           "name": "get"
         }
       ]
@@ -88,7 +88,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cached.Aspects",
+          "typeName": "effect/io/Cached.Ops",
           "name": "refresh"
         }
       ]
@@ -560,7 +560,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "annotated"
         }
       ]
@@ -576,7 +576,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "as"
         }
       ]
@@ -592,7 +592,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "contains"
         }
       ]
@@ -608,7 +608,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "defects"
         }
       ]
@@ -635,7 +635,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "dieOption"
         }
       ]
@@ -673,7 +673,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failureOption"
         }
       ]
@@ -689,7 +689,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failureOrCause"
         }
       ]
@@ -705,7 +705,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failures"
         }
       ]
@@ -721,7 +721,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "filter"
         }
       ]
@@ -737,7 +737,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "find"
         }
       ]
@@ -753,7 +753,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "flatMap"
         }
       ]
@@ -769,7 +769,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "flatten"
         }
       ]
@@ -785,7 +785,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "flipCauseOption"
         }
       ]
@@ -801,7 +801,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "interrupt"
         }
       ]
@@ -817,7 +817,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "interruptOption"
         }
       ]
@@ -833,7 +833,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "interruptors"
         }
       ]
@@ -849,7 +849,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isAnnotatedType"
         }
       ]
@@ -876,7 +876,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isDie"
         }
       ]
@@ -892,7 +892,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isDieType"
         }
       ]
@@ -908,7 +908,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isEmpty"
         }
       ]
@@ -924,7 +924,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isEmptyType"
         }
       ]
@@ -940,7 +940,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isFailType"
         }
       ]
@@ -956,7 +956,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isFailure"
         }
       ]
@@ -983,7 +983,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isInterrupted"
         }
       ]
@@ -1010,7 +1010,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isInterruptedOnly"
         }
       ]
@@ -1026,7 +1026,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isInterruptType"
         }
       ]
@@ -1053,7 +1053,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isParallelType"
         }
       ]
@@ -1080,7 +1080,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "isSequentialType"
         }
       ]
@@ -1107,7 +1107,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "keepDefects"
         }
       ]
@@ -1123,7 +1123,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "linearize"
         }
       ]
@@ -1139,7 +1139,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "map"
         }
       ]
@@ -1155,7 +1155,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "match"
         }
       ]
@@ -1171,7 +1171,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "parallel"
         }
       ]
@@ -1187,7 +1187,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "pretty"
         }
       ]
@@ -1203,7 +1203,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "reduce"
         }
       ]
@@ -1219,7 +1219,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "reduceWithContext"
         }
       ]
@@ -1235,7 +1235,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "sequential"
         }
       ]
@@ -1251,7 +1251,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "size"
         }
       ]
@@ -1267,7 +1267,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "squash"
         }
       ]
@@ -1283,7 +1283,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "squashWith"
         }
       ]
@@ -1299,7 +1299,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "stripFailures"
         }
       ]
@@ -1315,7 +1315,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "stripSomeDefects"
         }
       ]
@@ -1331,7 +1331,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "unannotate"
         }
       ]
@@ -1515,7 +1515,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "arrayOf"
         }
       ]
@@ -1542,7 +1542,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "chunkOf"
         }
       ]
@@ -1613,7 +1613,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "map"
         }
       ]
@@ -1629,7 +1629,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "mapAttempt"
         }
       ]
@@ -1645,7 +1645,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "mapOrFail"
         }
       ]
@@ -1661,7 +1661,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "nested"
         }
       ]
@@ -1677,7 +1677,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "optional"
         }
       ]
@@ -1693,7 +1693,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "orElse"
         }
       ]
@@ -1709,7 +1709,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "orElseIf"
         }
       ]
@@ -1736,7 +1736,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "repeat"
         }
       ]
@@ -1763,7 +1763,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "setOf"
         }
       ]
@@ -1828,7 +1828,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "table"
         }
       ]
@@ -1866,7 +1866,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "validate"
         }
       ]
@@ -1882,7 +1882,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "withDefault"
         }
       ]
@@ -1898,7 +1898,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "withDescription"
         }
       ]
@@ -1914,7 +1914,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "zip"
         }
       ]
@@ -1930,7 +1930,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "zipWith"
         }
       ]
@@ -2074,7 +2074,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "And"
         }
       ]
@@ -2123,7 +2123,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "Or"
         }
       ]
@@ -2161,7 +2161,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isAnd"
         }
       ]
@@ -2188,7 +2188,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isInvalidData"
         }
       ]
@@ -2204,7 +2204,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isMissingData"
         }
       ]
@@ -2220,7 +2220,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isMissingDataOnly"
         }
       ]
@@ -2236,7 +2236,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isOr"
         }
       ]
@@ -2252,7 +2252,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isSourceUnavailable"
         }
       ]
@@ -2268,7 +2268,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "isUnsupported"
         }
       ]
@@ -2284,7 +2284,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "prefixed"
         }
       ]
@@ -2300,7 +2300,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Error.Aspects",
+          "typeName": "effect/io/Config/Error.Ops",
           "name": "reduceWithContext"
         }
       ]
@@ -2382,7 +2382,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "constantCase"
         }
       ]
@@ -2398,7 +2398,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "contramapPath"
         }
       ]
@@ -2447,7 +2447,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "kebabCase"
         }
       ]
@@ -2463,7 +2463,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "lowerCase"
         }
       ]
@@ -2501,7 +2501,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "nested"
         }
       ]
@@ -2517,7 +2517,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "orElse"
         }
       ]
@@ -2533,7 +2533,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "snakeCase"
         }
       ]
@@ -2549,7 +2549,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "unnested"
         }
       ]
@@ -2565,7 +2565,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "upperCase"
         }
       ]
@@ -2581,7 +2581,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "within"
         }
       ]
@@ -2683,7 +2683,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops",
           "name": "andThen"
         }
       ]
@@ -2710,7 +2710,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops",
           "name": "mapName"
         }
       ]
@@ -2726,7 +2726,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops",
           "name": "nested"
         }
       ]
@@ -2742,7 +2742,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider/PathPatch.Aspects",
+          "typeName": "effect/io/Config/Provider/PathPatch.Ops",
           "name": "unnested"
         }
       ]
@@ -2843,7 +2843,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Secret.Aspects",
+          "typeName": "effect/io/Config/Secret.Ops",
           "name": "unsafeWipe"
         }
       ]
@@ -2859,7 +2859,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Secret.Aspects",
+          "typeName": "effect/io/Config/Secret.Ops",
           "name": "value"
         }
       ]
@@ -3125,7 +3125,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "complete"
         }
       ]
@@ -3141,7 +3141,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "completeWith"
         }
       ]
@@ -3157,7 +3157,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "die"
         }
       ]
@@ -3173,7 +3173,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "dieSync"
         }
       ]
@@ -3189,7 +3189,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "done"
         }
       ]
@@ -3205,7 +3205,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "fail"
         }
       ]
@@ -3221,7 +3221,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "failCause"
         }
       ]
@@ -3237,7 +3237,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "failCauseSync"
         }
       ]
@@ -3253,7 +3253,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "failSync"
         }
       ]
@@ -3269,7 +3269,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "interrupt"
         }
       ]
@@ -3285,7 +3285,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "interruptWith"
         }
       ]
@@ -3301,7 +3301,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "isDone"
         }
       ]
@@ -3339,7 +3339,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "poll"
         }
       ]
@@ -3355,7 +3355,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "succeed"
         }
       ]
@@ -3371,7 +3371,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "sync"
         }
       ]
@@ -3387,7 +3387,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Deferred.Aspects",
+          "typeName": "effect/io/Deferred.Ops",
           "name": "unsafeDone"
         }
       ]
@@ -3508,7 +3508,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "absolve"
         }
       ]
@@ -3524,7 +3524,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "absorb"
         }
       ]
@@ -3540,7 +3540,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "absorbWith"
         }
       ]
@@ -3561,7 +3561,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "acquireRelease"
         }
       ]
@@ -3577,7 +3577,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "acquireReleaseInterruptible"
         }
       ]
@@ -3593,7 +3593,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "acquireUseRelease"
         }
       ]
@@ -3631,7 +3631,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "as"
         }
       ]
@@ -3647,7 +3647,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asLeft"
         }
       ]
@@ -3663,7 +3663,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asLeftError"
         }
       ]
@@ -3679,7 +3679,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asRight"
         }
       ]
@@ -3695,7 +3695,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asRightError"
         }
       ]
@@ -3711,7 +3711,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asSome"
         }
       ]
@@ -3727,7 +3727,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asSomeError"
         }
       ]
@@ -3743,7 +3743,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "asUnit"
         }
       ]
@@ -3825,7 +3825,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "awaitAllChildren"
         }
       ]
@@ -3841,7 +3841,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "bind"
         }
       ]
@@ -3857,7 +3857,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "bindValue"
         }
       ]
@@ -3873,7 +3873,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "blocking"
         }
       ]
@@ -3889,7 +3889,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "cached"
         }
       ]
@@ -3905,7 +3905,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "cachedInvalidate"
         }
       ]
@@ -3921,7 +3921,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchAll"
         }
       ]
@@ -3937,7 +3937,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchAllCause"
         }
       ]
@@ -3953,7 +3953,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchAllDefect"
         }
       ]
@@ -3969,7 +3969,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchSome"
         }
       ]
@@ -3985,7 +3985,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchSomeCause"
         }
       ]
@@ -4001,7 +4001,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchSomeDefect"
         }
       ]
@@ -4017,7 +4017,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchTag"
         }
       ]
@@ -4033,7 +4033,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "catchTags"
         }
       ]
@@ -4049,7 +4049,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "cause"
         }
       ]
@@ -4317,7 +4317,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config.Aspects",
+          "typeName": "effect/io/Config.Ops",
           "name": "config"
         }
       ]
@@ -4377,7 +4377,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "continueOrFail"
         }
       ]
@@ -4393,7 +4393,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "continueOrFailEffect"
         }
       ]
@@ -4409,7 +4409,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "contramapContext"
         }
       ]
@@ -4425,7 +4425,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "daemonChildren"
         }
       ]
@@ -4441,7 +4441,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "delay"
         }
       ]
@@ -4512,7 +4512,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "diffFiberRefs"
         }
       ]
@@ -4528,7 +4528,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "disconnect"
         }
       ]
@@ -4544,7 +4544,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "done"
         }
       ]
@@ -4592,7 +4592,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "either"
         }
       ]
@@ -4608,7 +4608,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ensuring"
         }
       ]
@@ -4624,7 +4624,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ensuringChild"
         }
       ]
@@ -4640,7 +4640,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ensuringChildren"
         }
       ]
@@ -4656,7 +4656,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "eventually"
         }
       ]
@@ -4704,7 +4704,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "exit"
         }
       ]
@@ -4731,7 +4731,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failCause"
         }
       ]
@@ -4839,7 +4839,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "filterOrDie"
         }
       ]
@@ -4855,7 +4855,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "filterOrDieMessage"
         }
       ]
@@ -4871,7 +4871,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "filterOrElse"
         }
       ]
@@ -4887,7 +4887,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "filterOrElseWith"
         }
       ]
@@ -4903,7 +4903,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "filterOrFail"
         }
       ]
@@ -4967,7 +4967,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "flatMap"
         }
       ]
@@ -4983,7 +4983,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "flatten"
         }
       ]
@@ -4999,7 +4999,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "flattenErrorOption"
         }
       ]
@@ -5015,7 +5015,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "flip"
         }
       ]
@@ -5031,7 +5031,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "flipWith"
         }
       ]
@@ -5095,7 +5095,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forEachEffect"
         }
       ]
@@ -5202,7 +5202,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forever"
         }
       ]
@@ -5218,7 +5218,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "fork"
         }
       ]
@@ -5266,7 +5266,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forkDaemon"
         }
       ]
@@ -5282,7 +5282,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forkIn"
         }
       ]
@@ -5298,7 +5298,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forkScoped"
         }
       ]
@@ -5314,7 +5314,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "forkWithErrorHandler"
         }
       ]
@@ -5440,7 +5440,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "head"
         }
       ]
@@ -5456,7 +5456,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ifEffect"
         }
       ]
@@ -5472,7 +5472,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ignore"
         }
       ]
@@ -5488,7 +5488,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "ignoreLogged"
         }
       ]
@@ -5504,7 +5504,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "inheritFiberRefs"
         }
       ]
@@ -5531,7 +5531,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "interruptible"
         }
       ]
@@ -5558,7 +5558,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "interruptWith"
         }
       ]
@@ -5574,7 +5574,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "intoDeferred"
         }
       ]
@@ -5601,7 +5601,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "isFailure"
         }
       ]
@@ -5617,7 +5617,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "isSuccess"
         }
       ]
@@ -5644,7 +5644,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "left"
         }
       ]
@@ -5660,7 +5660,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "leftWith"
         }
       ]
@@ -5687,7 +5687,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "logAnnotate"
         }
       ]
@@ -5725,7 +5725,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logDebugCause"
         }
       ]
@@ -5763,7 +5763,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logErrorCause"
         }
       ]
@@ -5801,7 +5801,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logFatalCause"
         }
       ]
@@ -5839,7 +5839,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logInfoCause"
         }
       ]
@@ -5866,7 +5866,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "logSpan"
         }
       ]
@@ -5893,7 +5893,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logTraceCause"
         }
       ]
@@ -5931,7 +5931,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "logWarningCause"
         }
       ]
@@ -5996,7 +5996,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "map"
         }
       ]
@@ -6028,7 +6028,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "mapBoth"
         }
       ]
@@ -6044,7 +6044,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "mapError"
         }
       ]
@@ -6060,7 +6060,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "mapErrorCause"
         }
       ]
@@ -6076,7 +6076,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "mapTryCatch"
         }
       ]
@@ -6092,7 +6092,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "match"
         }
       ]
@@ -6108,7 +6108,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "matchCause"
         }
       ]
@@ -6124,7 +6124,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "matchCauseEffect"
         }
       ]
@@ -6140,7 +6140,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "matchEffect"
         }
       ]
@@ -6156,7 +6156,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "memoize"
         }
       ]
@@ -6183,7 +6183,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "merge"
         }
       ]
@@ -6231,7 +6231,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "negate"
         }
       ]
@@ -6258,7 +6258,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "none"
         }
       ]
@@ -6296,7 +6296,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "once"
         }
       ]
@@ -6312,7 +6312,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "onDone"
         }
       ]
@@ -6328,7 +6328,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "onDoneCause"
         }
       ]
@@ -6344,7 +6344,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "onError"
         }
       ]
@@ -6360,7 +6360,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "onExit"
         }
       ]
@@ -6376,7 +6376,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "onInterrupt"
         }
       ]
@@ -6392,7 +6392,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "option"
         }
       ]
@@ -6408,7 +6408,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orDie"
         }
       ]
@@ -6424,7 +6424,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orDieWith"
         }
       ]
@@ -6445,7 +6445,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orElse"
         }
       ]
@@ -6461,7 +6461,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orElseEither"
         }
       ]
@@ -6477,7 +6477,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orElseFail"
         }
       ]
@@ -6493,7 +6493,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orElseOptional"
         }
       ]
@@ -6509,7 +6509,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "orElseSucceed"
         }
       ]
@@ -6525,7 +6525,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "parallelErrors"
         }
       ]
@@ -6541,7 +6541,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "parallelFinalizers"
         }
       ]
@@ -6589,7 +6589,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs/Patch.Aspects",
+          "typeName": "effect/io/FiberRefs/Patch.Ops",
           "name": "patchFiberRefs"
         }
       ]
@@ -6627,7 +6627,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "provideContext"
         }
       ]
@@ -6643,7 +6643,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "provideLayer"
         }
       ]
@@ -6659,7 +6659,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "provideService"
         }
       ]
@@ -6675,7 +6675,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "provideServiceEffect"
         }
       ]
@@ -6691,7 +6691,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "provideSomeLayer"
         }
       ]
@@ -6707,7 +6707,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "race"
         }
       ]
@@ -6739,7 +6739,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "raceAwait"
         }
       ]
@@ -6755,7 +6755,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "raceEither"
         }
       ]
@@ -6771,7 +6771,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "raceFibersWith"
         }
       ]
@@ -6787,7 +6787,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "raceFirst"
         }
       ]
@@ -6803,7 +6803,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "raceWith"
         }
       ]
@@ -6921,7 +6921,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "refineOrDie"
         }
       ]
@@ -6937,7 +6937,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "refineOrDieWith"
         }
       ]
@@ -6953,7 +6953,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "reject"
         }
       ]
@@ -6969,7 +6969,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "rejectEffect"
         }
       ]
@@ -6985,7 +6985,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeat"
         }
       ]
@@ -7001,7 +7001,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatN"
         }
       ]
@@ -7017,7 +7017,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatOrElse"
         }
       ]
@@ -7033,7 +7033,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatOrElseEither"
         }
       ]
@@ -7049,7 +7049,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatUntil"
         }
       ]
@@ -7065,7 +7065,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatUntilEffect"
         }
       ]
@@ -7081,7 +7081,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatUntilEquals"
         }
       ]
@@ -7097,7 +7097,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatWhile"
         }
       ]
@@ -7113,7 +7113,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatWhileEffect"
         }
       ]
@@ -7129,7 +7129,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "repeatWhileEquals"
         }
       ]
@@ -7145,7 +7145,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "replicate"
         }
       ]
@@ -7161,7 +7161,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "replicateEffect"
         }
       ]
@@ -7177,7 +7177,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "replicateEffectDiscard"
         }
       ]
@@ -7193,7 +7193,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "resurrect"
         }
       ]
@@ -7209,7 +7209,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retry"
         }
       ]
@@ -7225,7 +7225,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryN"
         }
       ]
@@ -7241,7 +7241,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryOrElse"
         }
       ]
@@ -7257,7 +7257,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryOrElseEither"
         }
       ]
@@ -7273,7 +7273,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryUntil"
         }
       ]
@@ -7289,7 +7289,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryUntilEffect"
         }
       ]
@@ -7305,7 +7305,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryUntilEquals"
         }
       ]
@@ -7321,7 +7321,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryWhile"
         }
       ]
@@ -7337,7 +7337,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryWhileEffect"
         }
       ]
@@ -7353,7 +7353,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "retryWhileEquals"
         }
       ]
@@ -7369,7 +7369,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "right"
         }
       ]
@@ -7385,7 +7385,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "rightWith"
         }
       ]
@@ -7401,7 +7401,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runCallback"
         }
       ]
@@ -7417,7 +7417,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runFork"
         }
       ]
@@ -7433,7 +7433,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromise"
         }
       ]
@@ -7449,7 +7449,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromiseEither"
         }
       ]
@@ -7465,7 +7465,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromiseExit"
         }
       ]
@@ -7481,7 +7481,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSync"
         }
       ]
@@ -7497,7 +7497,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSyncEither"
         }
       ]
@@ -7513,7 +7513,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSyncExit"
         }
       ]
@@ -7551,7 +7551,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "sandbox"
         }
       ]
@@ -7567,7 +7567,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "schedule"
         }
       ]
@@ -7583,7 +7583,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "scheduleForked"
         }
       ]
@@ -7599,7 +7599,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "scheduleFrom"
         }
       ]
@@ -7626,7 +7626,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "scoped"
         }
       ]
@@ -7653,7 +7653,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "sequentialFinalizers"
         }
       ]
@@ -7717,7 +7717,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "setConfigProvider"
         }
       ]
@@ -7733,7 +7733,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "setFiberRefs"
         }
       ]
@@ -7760,7 +7760,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "some"
         }
       ]
@@ -7776,7 +7776,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "someOrElse"
         }
       ]
@@ -7792,7 +7792,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "someOrElseEffect"
         }
       ]
@@ -7808,7 +7808,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "someOrFail"
         }
       ]
@@ -7824,7 +7824,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "someOrFailException"
         }
       ]
@@ -7840,7 +7840,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "someWith"
         }
       ]
@@ -7933,7 +7933,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "summarized"
         }
       ]
@@ -7949,7 +7949,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "supervised"
         }
       ]
@@ -8003,7 +8003,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tagged"
         }
       ]
@@ -8052,7 +8052,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "taggedWithLabels"
         }
       ]
@@ -8068,7 +8068,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "taggedWithLabelSet"
         }
       ]
@@ -8111,7 +8111,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tap"
         }
       ]
@@ -8127,7 +8127,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapBoth"
         }
       ]
@@ -8143,7 +8143,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapDefect"
         }
       ]
@@ -8159,7 +8159,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapEither"
         }
       ]
@@ -8175,7 +8175,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapError"
         }
       ]
@@ -8191,7 +8191,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapErrorCause"
         }
       ]
@@ -8207,7 +8207,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tapSome"
         }
       ]
@@ -8223,7 +8223,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timed"
         }
       ]
@@ -8239,7 +8239,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timedWith"
         }
       ]
@@ -8255,7 +8255,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timeout"
         }
       ]
@@ -8271,7 +8271,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timeoutFail"
         }
       ]
@@ -8287,7 +8287,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timeoutFailCause"
         }
       ]
@@ -8303,7 +8303,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "timeoutTo"
         }
       ]
@@ -8319,7 +8319,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "toLayer"
         }
       ]
@@ -8335,7 +8335,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "toLayerContext"
         }
       ]
@@ -8351,7 +8351,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "toLayerDiscard"
         }
       ]
@@ -8367,7 +8367,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "toLayerScoped"
         }
       ]
@@ -8383,7 +8383,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "toLayerScopedDiscard"
         }
       ]
@@ -8443,7 +8443,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "tryOrElse"
         }
       ]
@@ -8503,7 +8503,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "uncause"
         }
       ]
@@ -8541,7 +8541,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "uninterruptible"
         }
       ]
@@ -8579,7 +8579,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unleft"
         }
       ]
@@ -8595,7 +8595,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unless"
         }
       ]
@@ -8611,7 +8611,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unlessEffect"
         }
       ]
@@ -8627,7 +8627,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unrefine"
         }
       ]
@@ -8643,7 +8643,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unrefineWith"
         }
       ]
@@ -8659,7 +8659,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unright"
         }
       ]
@@ -8691,7 +8691,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unsandbox"
         }
       ]
@@ -8707,7 +8707,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "unsome"
         }
       ]
@@ -8734,7 +8734,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "updateRuntimeFlags"
         }
       ]
@@ -8750,7 +8750,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "updateService"
         }
       ]
@@ -8766,7 +8766,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "using"
         }
       ]
@@ -8782,7 +8782,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "validate"
         }
       ]
@@ -8894,7 +8894,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "validatePar"
         }
       ]
@@ -8910,7 +8910,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "validateWith"
         }
       ]
@@ -8926,7 +8926,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "validateWithPar"
         }
       ]
@@ -8942,7 +8942,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "when"
         }
       ]
@@ -8969,7 +8969,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "whenCaseEffect"
         }
       ]
@@ -8985,7 +8985,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "whenEffect"
         }
       ]
@@ -9001,7 +9001,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "whenFiberRef"
         }
       ]
@@ -9017,7 +9017,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "whenRef"
         }
       ]
@@ -9044,7 +9044,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withClock"
         }
       ]
@@ -9071,7 +9071,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withConfigProvider"
         }
       ]
@@ -9087,7 +9087,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Config/Provider.Aspects",
+          "typeName": "effect/io/Config/Provider.Ops",
           "name": "withConfigProviderScoped"
         }
       ]
@@ -9103,7 +9103,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withEarlyRelease"
         }
       ]
@@ -9119,7 +9119,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withMetric"
         }
       ]
@@ -9135,7 +9135,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withParallelism"
         }
       ]
@@ -9151,7 +9151,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withParallelismUnbounded"
         }
       ]
@@ -9167,7 +9167,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withRuntimeFlags"
         }
       ]
@@ -9183,7 +9183,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "withRuntimeFlagsScoped"
         }
       ]
@@ -9215,7 +9215,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zip"
         }
       ]
@@ -9236,7 +9236,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipLeft"
         }
       ]
@@ -9257,7 +9257,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipPar"
         }
       ]
@@ -9273,7 +9273,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipParLeft"
         }
       ]
@@ -9289,7 +9289,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipParRight"
         }
       ]
@@ -9310,7 +9310,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipRight"
         }
       ]
@@ -9326,7 +9326,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipWith"
         }
       ]
@@ -9342,7 +9342,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "zipWithPar"
         }
       ]
@@ -9416,7 +9416,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ExecutionStrategy.Aspects",
+          "typeName": "effect/io/ExecutionStrategy.Ops",
           "name": "isParallel"
         }
       ]
@@ -9432,7 +9432,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ExecutionStrategy.Aspects",
+          "typeName": "effect/io/ExecutionStrategy.Ops",
           "name": "isParallelN"
         }
       ]
@@ -9448,7 +9448,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ExecutionStrategy.Aspects",
+          "typeName": "effect/io/ExecutionStrategy.Ops",
           "name": "isSequential"
         }
       ]
@@ -9464,7 +9464,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ExecutionStrategy.Aspects",
+          "typeName": "effect/io/ExecutionStrategy.Ops",
           "name": "match"
         }
       ]
@@ -9557,7 +9557,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "as"
         }
       ]
@@ -9573,7 +9573,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "asUnit"
         }
       ]
@@ -9589,7 +9589,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "causeOption"
         }
       ]
@@ -9616,7 +9616,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "exists"
         }
       ]
@@ -9643,7 +9643,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failCause"
         }
       ]
@@ -9659,7 +9659,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "flatMap"
         }
       ]
@@ -9675,7 +9675,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "flatMapEffect"
         }
       ]
@@ -9691,7 +9691,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "flatten"
         }
       ]
@@ -9707,7 +9707,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "forEachEffect"
         }
       ]
@@ -9745,7 +9745,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "getOrElse"
         }
       ]
@@ -9761,7 +9761,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "interrupt"
         }
       ]
@@ -9788,7 +9788,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "isFailure"
         }
       ]
@@ -9804,7 +9804,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "isInterrupted"
         }
       ]
@@ -9820,7 +9820,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "isSuccess"
         }
       ]
@@ -9836,7 +9836,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "map"
         }
       ]
@@ -9852,7 +9852,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "mapBoth"
         }
       ]
@@ -9868,7 +9868,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "mapError"
         }
       ]
@@ -9884,7 +9884,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "mapErrorCause"
         }
       ]
@@ -9900,7 +9900,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "match"
         }
       ]
@@ -9916,7 +9916,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "matchEffect"
         }
       ]
@@ -9943,7 +9943,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "unannotate"
         }
       ]
@@ -9970,7 +9970,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zip"
         }
       ]
@@ -9986,7 +9986,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipLeft"
         }
       ]
@@ -10002,7 +10002,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipPar"
         }
       ]
@@ -10018,7 +10018,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipParLeft"
         }
       ]
@@ -10034,7 +10034,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipParRight"
         }
       ]
@@ -10050,7 +10050,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipRight"
         }
       ]
@@ -10066,7 +10066,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "zipWith"
         }
       ]
@@ -10178,7 +10178,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "children"
         }
       ]
@@ -10194,7 +10194,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Exit.Aspects",
+          "typeName": "effect/io/Exit.Ops",
           "name": "done"
         }
       ]
@@ -10210,7 +10210,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/RuntimeFiber.Aspects",
+          "typeName": "effect/io/Fiber/RuntimeFiber.Ops",
           "name": "dump"
         }
       ]
@@ -10253,7 +10253,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Cause.Aspects",
+          "typeName": "effect/io/Cause.Ops",
           "name": "failCause"
         }
       ]
@@ -10291,7 +10291,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "id"
         }
       ]
@@ -10307,7 +10307,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "inheritAll"
         }
       ]
@@ -10323,7 +10323,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "interrupt"
         }
       ]
@@ -10371,7 +10371,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "interruptAs"
         }
       ]
@@ -10387,7 +10387,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "interruptAsFork"
         }
       ]
@@ -10403,7 +10403,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "interrupted"
         }
       ]
@@ -10419,7 +10419,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "interruptFork"
         }
       ]
@@ -10446,7 +10446,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "isRuntimeFiber"
         }
       ]
@@ -10462,7 +10462,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "join"
         }
       ]
@@ -10494,7 +10494,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "map"
         }
       ]
@@ -10510,7 +10510,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "mapEffect"
         }
       ]
@@ -10526,7 +10526,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "mapFiber"
         }
       ]
@@ -10542,7 +10542,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "match"
         }
       ]
@@ -10569,7 +10569,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "orElse"
         }
       ]
@@ -10585,7 +10585,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "orElseEither"
         }
       ]
@@ -10601,7 +10601,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "poll"
         }
       ]
@@ -10617,7 +10617,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/RuntimeFiber.Aspects",
+          "typeName": "effect/io/Fiber/RuntimeFiber.Ops",
           "name": "pretty"
         }
       ]
@@ -10644,7 +10644,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "scoped"
         }
       ]
@@ -10660,7 +10660,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/RuntimeFiber.Aspects",
+          "typeName": "effect/io/Fiber/RuntimeFiber.Ops",
           "name": "status"
         }
       ]
@@ -10709,7 +10709,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "zip"
         }
       ]
@@ -10725,7 +10725,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "zipLeft"
         }
       ]
@@ -10741,7 +10741,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "zipRight"
         }
       ]
@@ -10757,7 +10757,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber.Aspects",
+          "typeName": "effect/io/Fiber.Ops",
           "name": "zipWith"
         }
       ]
@@ -10856,7 +10856,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "combine"
         }
       ]
@@ -10883,7 +10883,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "composite"
         }
       ]
@@ -10899,7 +10899,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "getOrElse"
         }
       ]
@@ -10915,7 +10915,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "ids"
         }
       ]
@@ -10931,7 +10931,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "isComposite"
         }
       ]
@@ -10958,7 +10958,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "isNone"
         }
       ]
@@ -10974,7 +10974,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "isRuntime"
         }
       ]
@@ -11023,7 +11023,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "threadName"
         }
       ]
@@ -11039,7 +11039,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "toOption"
         }
       ]
@@ -11055,7 +11055,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Id.Aspects",
+          "typeName": "effect/io/Fiber/Id.Ops",
           "name": "toSet"
         }
       ]
@@ -11178,7 +11178,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "cooperativeYielding"
         }
       ]
@@ -11194,7 +11194,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "diff"
         }
       ]
@@ -11221,7 +11221,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "disable"
         }
       ]
@@ -11237,7 +11237,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "disableAll"
         }
       ]
@@ -11308,7 +11308,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "enable"
         }
       ]
@@ -11324,7 +11324,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "enableAll"
         }
       ]
@@ -11395,7 +11395,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "interruptible"
         }
       ]
@@ -11411,7 +11411,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "interruption"
         }
       ]
@@ -11427,7 +11427,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "isDisabled"
         }
       ]
@@ -11443,7 +11443,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "isEnabled"
         }
       ]
@@ -11481,7 +11481,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "opSupervision"
         }
       ]
@@ -11497,7 +11497,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "patch"
         }
       ]
@@ -11513,7 +11513,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "render"
         }
       ]
@@ -11529,7 +11529,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "runtimeMetrics"
         }
       ]
@@ -11545,7 +11545,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "toSet"
         }
       ]
@@ -11561,7 +11561,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "windDown"
         }
       ]
@@ -11593,7 +11593,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "andThen"
         }
       ]
@@ -11609,7 +11609,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "both"
         }
       ]
@@ -11625,7 +11625,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/RuntimeFlag.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/RuntimeFlag.Ops",
           "name": "disable"
         }
       ]
@@ -11641,7 +11641,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "disabledSet"
         }
       ]
@@ -11657,7 +11657,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "either"
         }
       ]
@@ -11684,7 +11684,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/RuntimeFlag.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/RuntimeFlag.Ops",
           "name": "enable"
         }
       ]
@@ -11700,7 +11700,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "enabledSet"
         }
       ]
@@ -11716,7 +11716,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "exclude"
         }
       ]
@@ -11732,7 +11732,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "includes"
         }
       ]
@@ -11748,7 +11748,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "inverse"
         }
       ]
@@ -11764,7 +11764,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "isActive"
         }
       ]
@@ -11780,7 +11780,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "isDisabled"
         }
       ]
@@ -11796,7 +11796,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "isEmpty"
         }
       ]
@@ -11812,7 +11812,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "isEnabled"
         }
       ]
@@ -11839,7 +11839,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "render"
         }
       ]
@@ -11949,7 +11949,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Status.Aspects",
+          "typeName": "effect/io/Fiber/Status.Ops",
           "name": "isDone"
         }
       ]
@@ -11976,7 +11976,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Status.Aspects",
+          "typeName": "effect/io/Fiber/Status.Ops",
           "name": "isRunning"
         }
       ]
@@ -11992,7 +11992,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Status.Aspects",
+          "typeName": "effect/io/Fiber/Status.Ops",
           "name": "isSuspended"
         }
       ]
@@ -12008,7 +12008,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "running"
         }
       ]
@@ -12024,7 +12024,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Aspects",
+          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
           "name": "suspended"
         }
       ]
@@ -12216,7 +12216,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "get"
         }
       ]
@@ -12232,7 +12232,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "getAndSet"
         }
       ]
@@ -12248,7 +12248,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -12264,7 +12264,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "getAndUpdateSome"
         }
       ]
@@ -12280,7 +12280,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "getWith"
         }
       ]
@@ -12312,7 +12312,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "locally"
         }
       ]
@@ -12328,7 +12328,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "locallyScoped"
         }
       ]
@@ -12344,7 +12344,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "locallyScopedWith"
         }
       ]
@@ -12365,7 +12365,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "locallyWith"
         }
       ]
@@ -12425,7 +12425,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "modify"
         }
       ]
@@ -12441,7 +12441,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "modifySome"
         }
       ]
@@ -12457,7 +12457,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "reset"
         }
       ]
@@ -12473,7 +12473,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "set"
         }
       ]
@@ -12544,7 +12544,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "update"
         }
       ]
@@ -12560,7 +12560,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -12576,7 +12576,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "updateSome"
         }
       ]
@@ -12592,7 +12592,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Aspects",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "updateSomeAndGet"
         }
       ]
@@ -12649,7 +12649,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "fiberRefs"
         }
       ]
@@ -12665,7 +12665,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "forkAs"
         }
       ]
@@ -12681,7 +12681,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "get"
         }
       ]
@@ -12697,7 +12697,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "getOrDefault"
         }
       ]
@@ -12713,7 +12713,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "joinAs"
         }
       ]
@@ -12729,7 +12729,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "setAll"
         }
       ]
@@ -12756,7 +12756,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "updatedAs"
         }
       ]
@@ -12858,7 +12858,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs/Patch.Aspects",
+          "typeName": "effect/io/FiberRefs/Patch.Ops",
           "name": "combine"
         }
       ]
@@ -12874,7 +12874,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs.Aspects",
+          "typeName": "effect/io/FiberRefs.Ops",
           "name": "diff"
         }
       ]
@@ -12901,7 +12901,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRefs/Patch.Aspects",
+          "typeName": "effect/io/FiberRefs/Patch.Ops",
           "name": "patch"
         }
       ]
@@ -12933,7 +12933,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "awaitShutdown"
         }
       ]
@@ -12960,7 +12960,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "capacity"
         }
       ]
@@ -12987,7 +12987,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "isEmpty"
         }
       ]
@@ -13003,7 +13003,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "isFull"
         }
       ]
@@ -13019,7 +13019,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "isShutdown"
         }
       ]
@@ -13035,7 +13035,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "publish"
         }
       ]
@@ -13051,7 +13051,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "publishAll"
         }
       ]
@@ -13067,7 +13067,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "shutdown"
         }
       ]
@@ -13083,7 +13083,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "size"
         }
       ]
@@ -13110,7 +13110,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Aspects",
+          "typeName": "effect/io/Hub.Ops",
           "name": "subscribe"
         }
       ]
@@ -13178,7 +13178,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "build"
         }
       ]
@@ -13194,7 +13194,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "buildWithScope"
         }
       ]
@@ -13210,7 +13210,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "catchAll"
         }
       ]
@@ -13226,7 +13226,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "catchAllCause"
         }
       ]
@@ -13275,7 +13275,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "discard"
         }
       ]
@@ -13324,7 +13324,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "extendScope"
         }
       ]
@@ -13384,7 +13384,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "flatMap"
         }
       ]
@@ -13400,7 +13400,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "flatten"
         }
       ]
@@ -13416,7 +13416,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "fresh"
         }
       ]
@@ -13432,7 +13432,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "isFresh"
         }
       ]
@@ -13459,7 +13459,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "launch"
         }
       ]
@@ -13475,7 +13475,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "map"
         }
       ]
@@ -13491,7 +13491,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "mapError"
         }
       ]
@@ -13507,7 +13507,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "matchCauseLayer"
         }
       ]
@@ -13523,7 +13523,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "matchLayer"
         }
       ]
@@ -13539,7 +13539,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "memoize"
         }
       ]
@@ -13560,7 +13560,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "merge"
         }
       ]
@@ -13587,7 +13587,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "orDie"
         }
       ]
@@ -13608,7 +13608,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "orElse"
         }
       ]
@@ -13624,7 +13624,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "passthrough"
         }
       ]
@@ -13640,7 +13640,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "project"
         }
       ]
@@ -13661,7 +13661,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "provide"
         }
       ]
@@ -13682,7 +13682,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "provideMerge"
         }
       ]
@@ -13698,7 +13698,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "retry"
         }
       ]
@@ -13829,7 +13829,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "tap"
         }
       ]
@@ -13845,7 +13845,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "tapError"
         }
       ]
@@ -13861,7 +13861,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "tapErrorCause"
         }
       ]
@@ -13877,7 +13877,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "toRuntime"
         }
       ]
@@ -13893,7 +13893,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "use"
         }
       ]
@@ -13909,7 +13909,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "useMerge"
         }
       ]
@@ -13925,7 +13925,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Aspects",
+          "typeName": "effect/io/Layer.Ops",
           "name": "zipWithPar"
         }
       ]
@@ -13982,7 +13982,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "add"
         }
       ]
@@ -13998,7 +13998,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "contramap"
         }
       ]
@@ -14025,7 +14025,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "filterLogLevel"
         }
       ]
@@ -14074,7 +14074,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "map"
         }
       ]
@@ -14090,7 +14090,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Level/LogLevel.Aspects",
+          "typeName": "effect/io/Logger/Level/LogLevel.Ops",
           "name": "minimumLogLevel"
         }
       ]
@@ -14117,7 +14117,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "remove"
         }
       ]
@@ -14133,7 +14133,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "replace"
         }
       ]
@@ -14193,7 +14193,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "test"
         }
       ]
@@ -14209,7 +14209,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "withMinimumLogLevel"
         }
       ]
@@ -14225,7 +14225,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "zip"
         }
       ]
@@ -14241,7 +14241,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "zipLeft"
         }
       ]
@@ -14257,7 +14257,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger.Aspects",
+          "typeName": "effect/io/Logger.Ops",
           "name": "zipRight"
         }
       ]
@@ -14500,7 +14500,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Level/LogLevel.Aspects",
+          "typeName": "effect/io/Logger/Level/LogLevel.Ops",
           "name": "greaterThan"
         }
       ]
@@ -14516,7 +14516,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Level/LogLevel.Aspects",
+          "typeName": "effect/io/Logger/Level/LogLevel.Ops",
           "name": "greaterThanEqual"
         }
       ]
@@ -14532,7 +14532,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Level/LogLevel.Aspects",
+          "typeName": "effect/io/Logger/Level/LogLevel.Ops",
           "name": "lessThan"
         }
       ]
@@ -14548,7 +14548,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Level/LogLevel.Aspects",
+          "typeName": "effect/io/Logger/Level/LogLevel.Ops",
           "name": "lessThanEqual"
         }
       ]
@@ -14569,7 +14569,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "locally"
         }
       ]
@@ -14612,7 +14612,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Span/LogSpan.Aspects",
+          "typeName": "effect/io/Logger/Span/LogSpan.Ops",
           "name": "render"
         }
       ]
@@ -14683,7 +14683,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "contramap"
         }
       ]
@@ -14820,7 +14820,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "map"
         }
       ]
@@ -14836,7 +14836,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "mapType"
         }
       ]
@@ -14918,7 +14918,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "tagged"
         }
       ]
@@ -14934,7 +14934,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "taggedWith"
         }
       ]
@@ -14950,7 +14950,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "taggedWithLabels"
         }
       ]
@@ -14966,7 +14966,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "taggedWithLabelSet"
         }
       ]
@@ -15114,7 +15114,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "update"
         }
       ]
@@ -15130,7 +15130,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "value"
         }
       ]
@@ -15146,7 +15146,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "withNow"
         }
       ]
@@ -15162,7 +15162,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric.Aspects",
+          "typeName": "effect/io/Metric.Ops",
           "name": "zip"
         }
       ]
@@ -15359,7 +15359,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Hook.Aspects",
+          "typeName": "effect/io/Metric/Hook.Ops",
           "name": "onUpdate"
         }
       ]
@@ -15493,7 +15493,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Key.Aspects",
+          "typeName": "effect/io/Metric/Key.Ops",
           "name": "tagged"
         }
       ]
@@ -15509,7 +15509,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Key.Aspects",
+          "typeName": "effect/io/Metric/Key.Ops",
           "name": "taggedWithLabels"
         }
       ]
@@ -15525,7 +15525,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Key.Aspects",
+          "typeName": "effect/io/Metric/Key.Ops",
           "name": "taggedWithLabelSet"
         }
       ]
@@ -15707,7 +15707,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Boundaries.Aspects",
+          "typeName": "effect/io/Metric/Boundaries.Ops",
           "name": "histogram"
         }
       ]
@@ -15978,7 +15978,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "typeName": "effect/io/Metric/Polling.Metric.Ops",
           "name": "launch"
         }
       ]
@@ -16005,7 +16005,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "typeName": "effect/io/Metric/Polling.Metric.Ops",
           "name": "poll"
         }
       ]
@@ -16021,7 +16021,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "typeName": "effect/io/Metric/Polling.Metric.Ops",
           "name": "pollAndUpdate"
         }
       ]
@@ -16037,7 +16037,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "typeName": "effect/io/Metric/Polling.Metric.Ops",
           "name": "retry"
         }
       ]
@@ -16053,7 +16053,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Metric/Polling.Metric.Aspects",
+          "typeName": "effect/io/Metric/Polling.Metric.Ops",
           "name": "zip"
         }
       ]
@@ -16449,7 +16449,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Pool.Aspects",
+          "typeName": "effect/io/Pool.Ops",
           "name": "get"
         }
       ]
@@ -16465,7 +16465,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Pool.Aspects",
+          "typeName": "effect/io/Pool.Ops",
           "name": "invalidate"
         }
       ]
@@ -16782,7 +16782,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Enqueue.Aspects",
+          "typeName": "effect/io/Queue/Enqueue.Ops",
           "name": "offer"
         }
       ]
@@ -16798,7 +16798,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Enqueue.Aspects",
+          "typeName": "effect/io/Queue/Enqueue.Ops",
           "name": "offerAll"
         }
       ]
@@ -16814,7 +16814,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "poll"
         }
       ]
@@ -16874,7 +16874,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "take"
         }
       ]
@@ -16890,7 +16890,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "takeAll"
         }
       ]
@@ -16906,7 +16906,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "takeBetween"
         }
       ]
@@ -16922,7 +16922,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "takeN"
         }
       ]
@@ -16938,7 +16938,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Queue/Dequeue.Aspects",
+          "typeName": "effect/io/Queue/Dequeue.Ops",
           "name": "takeUpTo"
         }
       ]
@@ -17129,7 +17129,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "get"
         }
       ]
@@ -17145,7 +17145,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndSet"
         }
       ]
@@ -17161,7 +17161,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -17177,7 +17177,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndUpdateSome"
         }
       ]
@@ -17204,7 +17204,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "modify"
         }
       ]
@@ -17220,7 +17220,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "modifySome"
         }
       ]
@@ -17236,7 +17236,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "set"
         }
       ]
@@ -17252,7 +17252,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "setAndGet"
         }
       ]
@@ -17279,7 +17279,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "update"
         }
       ]
@@ -17295,7 +17295,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -17311,7 +17311,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateSome"
         }
       ]
@@ -17327,7 +17327,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateSomeAndGet"
         }
       ]
@@ -17384,7 +17384,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "get"
         }
       ]
@@ -17400,7 +17400,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndSet"
         }
       ]
@@ -17416,7 +17416,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -17432,7 +17432,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "getAndUpdateEffect"
         }
       ]
@@ -17448,7 +17448,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "getAndUpdateSome"
         }
       ]
@@ -17464,7 +17464,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "getAndUpdateSomeEffect"
         }
       ]
@@ -17491,7 +17491,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "modify"
         }
       ]
@@ -17507,7 +17507,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "modifyEffect"
         }
       ]
@@ -17523,7 +17523,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "modifySome"
         }
       ]
@@ -17539,7 +17539,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "modifySomeEffect"
         }
       ]
@@ -17555,7 +17555,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "set"
         }
       ]
@@ -17571,7 +17571,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "setAndGet"
         }
       ]
@@ -17598,7 +17598,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "update"
         }
       ]
@@ -17614,7 +17614,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -17630,7 +17630,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "updateAndGetEffect"
         }
       ]
@@ -17646,7 +17646,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "updateEffect"
         }
       ]
@@ -17662,7 +17662,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateSome"
         }
       ]
@@ -17678,7 +17678,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref.Aspects",
+          "typeName": "effect/io/Ref.Ops",
           "name": "updateSomeAndGet"
         }
       ]
@@ -17694,7 +17694,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "updateSomeAndGetEffect"
         }
       ]
@@ -17710,7 +17710,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Ref/Synchronized.Aspects",
+          "typeName": "effect/io/Ref/Synchronized.Ops",
           "name": "updateSomeEffect"
         }
       ]
@@ -17915,6 +17915,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
+          "name": "runCallback"
+        },
+        {
           "kind": "static",
           "typeName": "effect/io/Runtime.Ops",
           "name": "runCallback"
@@ -17925,6 +17930,11 @@
       "definitionName": "runFork",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
+          "name": "runFork"
+        },
         {
           "kind": "static",
           "typeName": "effect/io/Runtime.Ops",
@@ -17937,13 +17947,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromise"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromise"
         }
       ]
@@ -17953,13 +17963,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromiseEither"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromiseEither"
         }
       ]
@@ -17969,13 +17979,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runPromiseExit"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runPromiseExit"
         }
       ]
@@ -17985,13 +17995,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSync"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSync"
         }
       ]
@@ -18001,13 +18011,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncEither"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSyncEither"
         }
       ]
@@ -18017,13 +18027,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "typeName": "effect/io/Runtime",
           "name": "runSyncExit"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "runSyncExit"
         }
       ]
@@ -18119,7 +18129,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "addDelay"
         }
       ]
@@ -18135,7 +18145,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "addDelayEffect"
         }
       ]
@@ -18156,7 +18166,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "andThen"
         }
       ]
@@ -18177,7 +18187,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "andThenEither"
         }
       ]
@@ -18193,7 +18203,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "as"
         }
       ]
@@ -18209,7 +18219,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "asUnit"
         }
       ]
@@ -18230,7 +18240,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "bothInOut"
         }
       ]
@@ -18246,7 +18256,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "check"
         }
       ]
@@ -18262,7 +18272,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "checkEffect"
         }
       ]
@@ -18283,7 +18293,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "choose"
         }
       ]
@@ -18299,7 +18309,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "chooseMerge"
         }
       ]
@@ -18326,7 +18336,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "collectAllOutputs"
         }
       ]
@@ -18391,7 +18401,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "compose"
         }
       ]
@@ -18407,7 +18417,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "contramap"
         }
       ]
@@ -18423,7 +18433,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "contramapContext"
         }
       ]
@@ -18439,7 +18449,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "contramapEffect"
         }
       ]
@@ -18488,7 +18498,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "delayed"
         }
       ]
@@ -18504,7 +18514,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "delayedEffect"
         }
       ]
@@ -18520,7 +18530,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "delayedSchedule"
         }
       ]
@@ -18536,7 +18546,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "delays"
         }
       ]
@@ -18552,7 +18562,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "dimap"
         }
       ]
@@ -18568,7 +18578,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "dimapEffect"
         }
       ]
@@ -18584,7 +18594,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "driver"
         }
       ]
@@ -18611,7 +18621,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "either"
         }
       ]
@@ -18627,7 +18637,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "eitherWith"
         }
       ]
@@ -18654,7 +18664,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "ensuring"
         }
       ]
@@ -18774,7 +18784,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "intersect"
         }
       ]
@@ -18790,7 +18800,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "intersectWith"
         }
       ]
@@ -18806,7 +18816,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "jittered"
         }
       ]
@@ -18822,7 +18832,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "jitteredWith"
         }
       ]
@@ -18838,7 +18848,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "left"
         }
       ]
@@ -18876,7 +18886,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "map"
         }
       ]
@@ -18892,7 +18902,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "mapEffect"
         }
       ]
@@ -18919,7 +18929,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "modifyDelay"
         }
       ]
@@ -18935,7 +18945,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "modifyDelayEffect"
         }
       ]
@@ -18962,7 +18972,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "onDecision"
         }
       ]
@@ -18978,7 +18988,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "passthrough"
         }
       ]
@@ -18994,7 +19004,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "provideContext"
         }
       ]
@@ -19010,7 +19020,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "provideService"
         }
       ]
@@ -19026,7 +19036,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "reconsider"
         }
       ]
@@ -19042,7 +19052,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "reconsiderEffect"
         }
       ]
@@ -19157,7 +19167,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "reduce"
         }
       ]
@@ -19173,7 +19183,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "reduceEffect"
         }
       ]
@@ -19200,7 +19210,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "repetitions"
         }
       ]
@@ -19216,7 +19226,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "resetAfter"
         }
       ]
@@ -19232,7 +19242,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "resetWhen"
         }
       ]
@@ -19248,7 +19258,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "right"
         }
       ]
@@ -19264,7 +19274,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "run"
         }
       ]
@@ -19335,7 +19345,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "tapInput"
         }
       ]
@@ -19351,7 +19361,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "tapOutput"
         }
       ]
@@ -19383,7 +19393,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "union"
         }
       ]
@@ -19399,7 +19409,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "unionWith"
         }
       ]
@@ -19415,7 +19425,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "untilInput"
         }
       ]
@@ -19431,7 +19441,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "untilInputEffect"
         }
       ]
@@ -19447,7 +19457,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "untilOutput"
         }
       ]
@@ -19463,7 +19473,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "untilOutputEffect"
         }
       ]
@@ -19479,7 +19489,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "upTo"
         }
       ]
@@ -19495,7 +19505,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "whileInput"
         }
       ]
@@ -19511,7 +19521,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "whileInputEffect"
         }
       ]
@@ -19527,7 +19537,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "whileOutput"
         }
       ]
@@ -19543,7 +19553,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "whileOutputEffect"
         }
       ]
@@ -19575,7 +19585,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "zipLeft"
         }
       ]
@@ -19596,7 +19606,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "zipRight"
         }
       ]
@@ -19612,7 +19622,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule.Aspects",
+          "typeName": "effect/io/Schedule.Ops",
           "name": "zipWith"
         }
       ]
@@ -19672,7 +19682,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "continueWith"
         }
       ]
@@ -19699,7 +19709,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Decision.Aspects",
+          "typeName": "effect/io/Schedule/Decision.Ops",
           "name": "isContinue"
         }
       ]
@@ -19715,7 +19725,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Decision.Aspects",
+          "typeName": "effect/io/Schedule/Decision.Ops",
           "name": "isDone"
         }
       ]
@@ -19805,7 +19815,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "intersect"
         }
       ]
@@ -19821,7 +19831,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "isEmpty"
         }
       ]
@@ -19837,7 +19847,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "isNonEmpty"
         }
       ]
@@ -19858,7 +19868,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "lessThan"
         }
       ]
@@ -19885,7 +19895,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "max"
         }
       ]
@@ -19901,7 +19911,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "min"
         }
       ]
@@ -19917,7 +19927,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "size"
         }
       ]
@@ -19933,7 +19943,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Interval.Aspects",
+          "typeName": "effect/io/Schedule/Interval.Ops",
           "name": "union"
         }
       ]
@@ -20001,7 +20011,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "end"
         }
       ]
@@ -20033,7 +20043,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "intersect"
         }
       ]
@@ -20049,7 +20059,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "isNonEmpty"
         }
       ]
@@ -20070,7 +20080,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "lessThan"
         }
       ]
@@ -20097,7 +20107,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "max"
         }
       ]
@@ -20113,7 +20123,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "start"
         }
       ]
@@ -20134,7 +20144,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Schedule/Intervals.Aspects",
+          "typeName": "effect/io/Schedule/Intervals.Ops",
           "name": "union"
         }
       ]
@@ -20260,7 +20270,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Scope.Aspects",
+          "typeName": "effect/io/Scope.Ops",
           "name": "addFinalizer"
         }
       ]
@@ -20276,7 +20286,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Scope.Aspects",
+          "typeName": "effect/io/Scope.Ops",
           "name": "addFinalizerExit"
         }
       ]
@@ -20292,7 +20302,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Scope/CloseableScope.Aspects",
+          "typeName": "effect/io/Scope/CloseableScope.Ops",
           "name": "close"
         }
       ]
@@ -20308,7 +20318,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "extend"
         }
       ]
@@ -20324,7 +20334,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Scope.Aspects",
+          "typeName": "effect/io/Scope.Ops",
           "name": "fork"
         }
       ]
@@ -20351,7 +20361,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Aspects",
+          "typeName": "effect/io/Effect.Ops",
           "name": "use"
         }
       ]
@@ -20419,7 +20429,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ScopedRef.Aspects",
+          "typeName": "effect/io/ScopedRef.Ops",
           "name": "get"
         }
       ]
@@ -20446,7 +20456,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ScopedRef.Aspects",
+          "typeName": "effect/io/ScopedRef.Ops",
           "name": "set"
         }
       ]
@@ -20503,7 +20513,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Supervisor.Aspects",
+          "typeName": "effect/io/Supervisor.Ops",
           "name": "addSupervisor"
         }
       ]

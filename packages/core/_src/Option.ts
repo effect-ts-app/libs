@@ -30,7 +30,7 @@ export function omitableToNullable<T>(om: Option<T> | undefined) {
 /**
  * @tsplus static fp-ts/core/Option.Ops toBool
  */
-export const toBool = Option.$.match(
+export const toBool = Option.match(
   () => false,
   () => true
 )
@@ -51,7 +51,7 @@ export function p<T>(k: any) {
   return (v: Option<T>) => v.flatMap(a => convert(a[k]))
 }
 function convert(a: any) {
-  return Option.$.isSome(a) || Option.$.isNone(a) ? a : Option.fromNullable(a)
+  return Option.isSome(a) || Option.isNone(a) ? a : Option.fromNullable(a)
 }
 export type _A<A> = A extends Some<infer Y> ? Y : never
 type KeysMatching<T, V> = {

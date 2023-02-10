@@ -58,14 +58,14 @@ export namespace OperationProgress {
     readonly total: number
   }
   export const Encoded: EncodedOps = { $: {} }
-  /**
-   * @tsplus type OperationProgress.Encoded/Aspects
-   */
-  export interface EncodedAspects {}
+  // /**
+  //  * @tsplus type OperationProgress.Encoded/Aspects
+  //  */
+  // export interface EncodedAspects {}
   /**
    * @tsplus type OperationProgress.Encoded/Ops
    */
-  export interface EncodedOps { $: EncodedAspects }
+  export interface EncodedOps {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof OperationProgress> {}
   export interface Props extends GetProvidedProps<typeof OperationProgress> {}

@@ -107,6 +107,6 @@ export const Cache: CacheOps = {
 }
 
 /**
- * @tsplus type effect/cache/Cache.Aspects
+ * @tsplus type effect/cache/Cache.Ops
  */
 export interface CacheAspects {}

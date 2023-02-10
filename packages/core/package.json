@@ -76,16 +76,6 @@
         "default": "./_cjs/Array.cjs"
       }
     },
-    "./Aspects": {
-      "import": {
-        "types": "./dist/Aspects.d.ts",
-        "default": "./dist/Aspects.js"
-      },
-      "require": {
-        "types": "./dist/Aspects.d.ts",
-        "default": "./_cjs/Aspects.cjs"
-      }
-    },
     "./Case": {
       "import": {
         "types": "./dist/Case.d.ts",

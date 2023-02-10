@@ -185,7 +185,7 @@ import { Debug } from "@effect/io/Debug"
 
 import "./_global.ext.js"
 import "./Array.js"
-import "./Aspects.js"
+// import "./Aspects.js"
 import "./Chunk.js"
 import "./Effect.js"
 import "./Either.js"
