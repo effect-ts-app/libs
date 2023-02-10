@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.23.0
+
+### Minor Changes
+
+- Add support for storage namepaces (for testing)
+
 ## 0.22.3
 
 ### Patch Changes
