@@ -234,7 +234,7 @@
           "name": "<<"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "append"
         },
@@ -250,7 +250,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "chunksOf"
         },
@@ -287,7 +287,7 @@
           "name": "+"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "concat"
         },
@@ -303,7 +303,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "correspondsTo"
         },
@@ -319,7 +319,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "cross"
         },
@@ -335,7 +335,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "crossWith"
         },
@@ -383,7 +383,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "drop"
         },
@@ -399,7 +399,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "dropRight"
         },
@@ -415,7 +415,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "dropWhile"
         },
@@ -431,7 +431,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "elem"
         },
@@ -458,7 +458,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "every"
         },
@@ -474,7 +474,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "filter"
         },
@@ -543,7 +543,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "findFirst"
         },
@@ -559,7 +559,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "findFirstIndex"
         },
@@ -575,7 +575,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "findLast"
         },
@@ -591,7 +591,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "findLastIndex"
         },
@@ -607,7 +607,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "flatMap"
         },
@@ -639,7 +639,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "forEach"
         },
@@ -666,7 +666,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "get"
         },
@@ -714,7 +714,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "intersection"
         },
@@ -773,7 +773,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "join"
         },
@@ -832,7 +832,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "map"
         },
@@ -848,7 +848,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "mapAccum"
         },
@@ -864,7 +864,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "mapWithIndex"
         },
@@ -880,7 +880,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "modify"
         },
@@ -896,7 +896,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "modifyOption"
         },
@@ -923,7 +923,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "partition"
         },
@@ -939,7 +939,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "partitionMap"
         },
@@ -955,7 +955,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "partitionWithIndex"
         },
@@ -976,7 +976,7 @@
           "name": ">>"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "prepend"
         },
@@ -992,13 +992,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
-          "typeName": "effect/data/Chunk",
+          "kind": "fluent",
+          "typeName": "effect/data/Chunk/NonEmptyChunk",
           "name": "prependAllNonEmpty"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Chunk.Aspects",
+          "typeName": "effect/data/Chunk/NonEmptyChunk.Aspects",
           "name": "prependAllNonEmpty"
         }
       ]
@@ -1019,7 +1019,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "reduce"
         },
@@ -1035,7 +1035,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "reduceRight"
         },
@@ -1051,7 +1051,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "reduceRightWithIndex"
         },
@@ -1067,7 +1067,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "reduceWithIndex"
         },
@@ -1083,7 +1083,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "remove"
         },
@@ -1099,7 +1099,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "replace"
         },
@@ -1115,7 +1115,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "replaceOption"
         },
@@ -1179,7 +1179,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "some"
         },
@@ -1195,7 +1195,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "sort"
         },
@@ -1211,7 +1211,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "split"
         },
@@ -1227,7 +1227,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "splitAt"
         },
@@ -1243,7 +1243,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "splitWhere"
         },
@@ -1291,7 +1291,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "take"
         },
@@ -1307,7 +1307,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "takeRight"
         },
@@ -1323,7 +1323,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "takeWhile"
         },
@@ -1366,7 +1366,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "union"
         },
@@ -1393,7 +1393,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "unsafeGet"
         },
@@ -1457,7 +1457,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "zip"
         },
@@ -1473,7 +1473,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "zipAll"
         },
@@ -1489,7 +1489,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "zipAllWith"
         },
@@ -1505,7 +1505,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "zipWith"
         },
@@ -1537,7 +1537,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "zipWithIndexOffset"
         },
@@ -1636,13 +1636,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Context",
           "name": "add"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/Context.Ops",
+          "typeName": "effect/data/Context.Aspects",
           "name": "add"
         }
       ]
@@ -1663,7 +1663,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Context",
           "name": "get"
         },
@@ -1679,7 +1679,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Context",
           "name": "getOption"
         },
@@ -1728,7 +1728,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Context",
           "name": "merge"
         },
@@ -1760,7 +1760,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Context",
           "name": "unsafeGet"
         },
@@ -1918,7 +1918,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "combine"
         },
@@ -1934,7 +1934,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "diff"
         },
@@ -2015,7 +2015,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "orElseResult"
         },
@@ -2031,7 +2031,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "patch"
         },
@@ -2047,7 +2047,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "transform"
         },
@@ -2085,7 +2085,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ",
           "name": "zip"
         },
@@ -2131,7 +2131,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/ChunkPatch",
           "name": "combine"
         },
@@ -2169,7 +2169,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/ChunkPatch",
           "name": "patch"
         },
@@ -2215,7 +2215,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/ContextPatch",
           "name": "combine"
         },
@@ -2253,7 +2253,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/ContextPatch",
           "name": "patch"
         },
@@ -2299,7 +2299,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/HashMapPatch",
           "name": "combine"
         },
@@ -2337,7 +2337,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/HashMapPatch",
           "name": "patch"
         },
@@ -2383,7 +2383,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/HashSetPatch",
           "name": "combine"
         },
@@ -2421,7 +2421,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/HashSetPatch",
           "name": "patch"
         },
@@ -2467,7 +2467,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/OrPatch",
           "name": "combine"
         },
@@ -2505,7 +2505,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Differ/OrPatch",
           "name": "patch"
         },
@@ -2556,7 +2556,7 @@
           "name": "+"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "add"
         },
@@ -2583,7 +2583,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "equals"
         },
@@ -2604,7 +2604,7 @@
           "name": ">"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "greaterThan"
         },
@@ -2625,7 +2625,7 @@
           "name": ">="
         },
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/data/Duration",
           "name": "greaterThanOrEqualTo"
         },
@@ -2679,7 +2679,7 @@
           "name": "<"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "lessThan"
         },
@@ -2700,7 +2700,7 @@
           "name": "<="
         },
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/data/Duration",
           "name": "lessThanOrEqualTo"
         },
@@ -2754,7 +2754,7 @@
           "name": "-"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "subtract"
         },
@@ -2775,7 +2775,7 @@
           "name": "*"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/Duration",
           "name": "times"
         },
@@ -3312,7 +3312,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "filter"
         },
@@ -3328,7 +3328,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "filterMap"
         },
@@ -3344,7 +3344,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "filterMapWithIndex"
         },
@@ -3360,7 +3360,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "filterWithIndex"
         },
@@ -3376,7 +3376,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "flatMap"
         },
@@ -3392,7 +3392,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "flatMapWithIndex"
         },
@@ -3408,7 +3408,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "forEach"
         },
@@ -3424,7 +3424,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "forEachWithIndex"
         },
@@ -3451,7 +3451,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "get"
         },
@@ -3467,7 +3467,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "getHash"
         },
@@ -3483,7 +3483,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "has"
         },
@@ -3499,7 +3499,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "hasHash"
         },
@@ -3590,7 +3590,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "map"
         },
@@ -3606,7 +3606,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "mapWithIndex"
         },
@@ -3622,7 +3622,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "modify"
         },
@@ -3638,7 +3638,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "modifyAt"
         },
@@ -3654,7 +3654,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "modifyHash"
         },
@@ -3670,7 +3670,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "mutate"
         },
@@ -3686,7 +3686,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "reduce"
         },
@@ -3702,7 +3702,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "reduceWithIndex"
         },
@@ -3718,7 +3718,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "remove"
         },
@@ -3734,7 +3734,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "removeMany"
         },
@@ -3750,7 +3750,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "set"
         },
@@ -3782,7 +3782,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "union"
         },
@@ -3798,7 +3798,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashMap",
           "name": "unsafeGet"
         },
@@ -3860,7 +3860,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "add"
         },
@@ -3892,7 +3892,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "difference"
         },
@@ -3935,7 +3935,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "every"
         },
@@ -3951,7 +3951,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "filter"
         },
@@ -3967,7 +3967,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "flatMap"
         },
@@ -3983,7 +3983,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "forEach"
         },
@@ -4010,7 +4010,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "has"
         },
@@ -4026,7 +4026,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "intersection"
         },
@@ -4053,7 +4053,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "isSubset"
         },
@@ -4085,7 +4085,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "map"
         },
@@ -4101,7 +4101,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "mutate"
         },
@@ -4117,7 +4117,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "partition"
         },
@@ -4133,7 +4133,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "reduce"
         },
@@ -4149,7 +4149,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "remove"
         },
@@ -4181,7 +4181,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "some"
         },
@@ -4197,7 +4197,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "toggle"
         },
@@ -4213,7 +4213,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/HashSet",
           "name": "union"
         },
@@ -4330,7 +4330,7 @@
           "name": "+"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "concat"
         },
@@ -4357,7 +4357,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "drop"
         },
@@ -4384,7 +4384,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "equalsWith"
         },
@@ -4400,7 +4400,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "every"
         },
@@ -4416,7 +4416,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "filter"
         },
@@ -4443,7 +4443,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "findFirst"
         },
@@ -4459,7 +4459,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "flatMap"
         },
@@ -4475,7 +4475,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "forEach"
         },
@@ -4604,7 +4604,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "map"
         },
@@ -4642,7 +4642,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "partition"
         },
@@ -4658,7 +4658,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "partitionMap"
         },
@@ -4679,7 +4679,7 @@
           "name": ">>"
         },
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "prepend"
         },
@@ -4695,7 +4695,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "prependAll"
         },
@@ -4711,7 +4711,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "prependAllReversed"
         },
@@ -4727,7 +4727,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "reduce"
         },
@@ -4743,7 +4743,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "reduceRight"
         },
@@ -4775,7 +4775,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "some"
         },
@@ -4791,7 +4791,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "splitAt"
         },
@@ -4823,7 +4823,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/List",
           "name": "take"
         },
@@ -4971,7 +4971,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "get"
         },
@@ -4987,7 +4987,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "has"
         },
@@ -5019,7 +5019,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "modify"
         },
@@ -5035,7 +5035,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "modifyAt"
         },
@@ -5051,7 +5051,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "remove"
         },
@@ -5067,7 +5067,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashMap",
           "name": "set"
         },
@@ -5129,7 +5129,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashSet",
           "name": "add"
         },
@@ -5167,7 +5167,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashSet",
           "name": "has"
         },
@@ -5199,7 +5199,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableHashSet",
           "name": "remove"
         },
@@ -5261,7 +5261,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableList",
           "name": "append"
         },
@@ -5288,7 +5288,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableList",
           "name": "forEach"
         },
@@ -5554,7 +5554,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/data/MutableQueue",
           "name": "offer"
         },
@@ -5570,7 +5570,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableQueue",
           "name": "offerAll"
         },
@@ -5586,7 +5586,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableQueue",
           "name": "poll"
         },
@@ -5602,7 +5602,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableQueue",
           "name": "pollUpTo"
         },
@@ -5659,7 +5659,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "compareAndSet"
         },
@@ -5755,7 +5755,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "getAndSet"
         },
@@ -5771,7 +5771,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "getAndUpdate"
         },
@@ -5835,7 +5835,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "set"
         },
@@ -5851,7 +5851,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "setAndGet"
         },
@@ -5883,7 +5883,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "update"
         },
@@ -5899,7 +5899,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/MutableRef",
           "name": "updateAndGet"
         },
@@ -6043,7 +6043,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "at"
         },
@@ -6059,7 +6059,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "atReversed"
         },
@@ -6075,7 +6075,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "find"
         },
@@ -6091,7 +6091,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "findFirst"
         },
@@ -6123,7 +6123,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "forEach"
         },
@@ -6139,7 +6139,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "forEachBetween"
         },
@@ -6155,7 +6155,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "forEachGreaterThanEqual"
         },
@@ -6171,7 +6171,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "forEachLessThan"
         },
@@ -6198,7 +6198,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "getAt"
         },
@@ -6230,7 +6230,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "greaterThan"
         },
@@ -6246,7 +6246,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "greaterThanEqual"
         },
@@ -6262,7 +6262,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "greaterThanEqualReversed"
         },
@@ -6278,7 +6278,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "greaterThanReversed"
         },
@@ -6294,7 +6294,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "has"
         },
@@ -6310,7 +6310,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "insert"
         },
@@ -6385,7 +6385,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "lessThan"
         },
@@ -6401,7 +6401,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "lessThanEqual"
         },
@@ -6417,7 +6417,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "lessThanEqualReversed"
         },
@@ -6433,7 +6433,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "lessThanReversed"
         },
@@ -6460,7 +6460,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "reduce"
         },
@@ -6476,7 +6476,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "reduceWithIndex"
         },
@@ -6492,7 +6492,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/RedBlackTree",
           "name": "removeFirst"
         },
@@ -6629,7 +6629,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "get"
         },
@@ -6661,7 +6661,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "has"
         },
@@ -6768,7 +6768,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "map"
         },
@@ -6784,7 +6784,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "mapWithIndex"
         },
@@ -6800,7 +6800,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "reduce"
         },
@@ -6816,7 +6816,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "reduceWithIndex"
         },
@@ -6832,7 +6832,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "remove"
         },
@@ -6848,7 +6848,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedMap",
           "name": "set"
         },
@@ -6926,7 +6926,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "add"
         },
@@ -6942,7 +6942,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "difference"
         },
@@ -6958,7 +6958,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "every"
         },
@@ -6974,7 +6974,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "filter"
         },
@@ -6990,7 +6990,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "flatMap"
         },
@@ -7006,7 +7006,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "forEach"
         },
@@ -7033,7 +7033,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "has"
         },
@@ -7049,7 +7049,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "intersection"
         },
@@ -7076,7 +7076,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "isSubset"
         },
@@ -7103,7 +7103,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "map"
         },
@@ -7119,7 +7119,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "partition"
         },
@@ -7135,7 +7135,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "remove"
         },
@@ -7167,7 +7167,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "some"
         },
@@ -7183,7 +7183,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "toggle"
         },
@@ -7199,7 +7199,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/data/SortedSet",
           "name": "union"
         },

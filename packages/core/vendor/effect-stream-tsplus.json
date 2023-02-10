@@ -10110,7 +10110,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndSet"
         }
       ]
@@ -10126,7 +10126,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -10142,7 +10142,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateEffect"
         }
       ]
@@ -10158,7 +10158,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateSome"
         }
       ]
@@ -10174,7 +10174,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateSomeEffect"
         }
       ]
@@ -10233,7 +10233,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modifySome"
         }
       ]
@@ -10249,7 +10249,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modifySomeEffect"
         }
       ]
@@ -10281,7 +10281,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "setAndGet"
         }
       ]
@@ -10297,7 +10297,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "update"
         }
       ]
@@ -10313,7 +10313,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -10329,7 +10329,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateAndGetEffect"
         }
       ]
@@ -10345,7 +10345,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateEffect"
         }
       ]
@@ -10361,7 +10361,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSome"
         }
       ]
@@ -10377,7 +10377,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeAndGet"
         }
       ]
@@ -10393,7 +10393,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeAndGetEffect"
         }
       ]
@@ -10409,7 +10409,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeEffect"
         }
       ]

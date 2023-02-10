@@ -651,7 +651,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/stm/STM",
           "name": "flattenErrorOption"
         },
@@ -809,18 +809,18 @@
       ]
     },
     {
-      "definitionName": "interruptWith",
+      "definitionName": "interruptAs",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/io/Fiber/Id",
-          "name": "interruptWith"
+          "name": "interruptAs"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Fiber/Id.Ops",
-          "name": "interruptWith"
+          "name": "interruptAs"
         }
       ]
     },
