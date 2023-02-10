@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.11.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
 ## 0.10.0
 
 ### Minor Changes

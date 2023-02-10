@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.18.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.22.0
+  - @effect-app/prelude@0.21.0
+  - @effect-app/schema@0.18.0
+  - @effect-app/vue@0.18.0
+
 ## 0.17.3
 
 ### Patch Changes

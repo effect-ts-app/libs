@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.22.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
 ## 0.21.3
 
 ### Patch Changes

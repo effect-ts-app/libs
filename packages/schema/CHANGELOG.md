@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.18.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.22.0
+
 ## 0.17.3
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.16.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.22.0
+  - @effect-app/prelude@0.21.0
+  - @effect-app/schema@0.18.0
+
 ## 0.15.7
 
 ### Patch Changes

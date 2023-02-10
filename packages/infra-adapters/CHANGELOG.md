@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.20.0
+
+### Minor Changes
+
+- Update annotations, drop Aspects for now
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.22.0
+  - @effect-app/schema@0.18.0
+
 ## 0.19.3
 
 ### Patch Changes
