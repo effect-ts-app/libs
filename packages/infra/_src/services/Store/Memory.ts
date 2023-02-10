@@ -23,11 +23,10 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
   })
 }
 
-export const storeId = FiberRef.unsafeMake("store-1" as `store-${number}`)
+export const storeId = FiberRef.unsafeMake("primary")
 export const restoreFromRequestContext = RequestContext.Tag.accessWithEffect(ctx =>
-  storeId.set((ctx.parent?.namespace ?? ctx.namespace ?? "store-1") as `store-${number}`)
+  storeId.set(ctx.parent?.namespace ?? ctx.namespace ?? "primary")
 )
-// const stores = ["store-1", "store-2", "store-3", "store-4"]
 
 export const makeMemoryStore = () => ({
   make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
@@ -36,12 +35,27 @@ export const makeMemoryStore = () => ({
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
-      const namespaces = config?.namespaces ?? ["store-1"]
       const updateETag = makeUpdateETag(name)
-      const items = yield* $(existing ?? Effect(new Map()))
-      const makeStore = () => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
-      const stores = new Map(namespaces.map(n => [n, Ref.unsafeMake(makeStore())] as const))
-      const getStore = storeId.get.flatMap(namespace => stores.get(namespace)!.get)
+      const items: ReadonlyMap<Id, PM> = yield* $(existing ?? Effect(new Map<Id, PM>()))
+      const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
+      const storesSem = Semaphore.unsafeMake(1)
+      const stores = new Map([["primary", Ref.unsafeMake(makeStore())]])
+      const getStore = storeId.get.flatMap(namespace => {
+        const store = stores.get(namespace)
+        if (!store) {
+          if (!config?.allowNamespace || !config.allowNamespace(namespace)) {
+            throw new Error(`Namespace ${namespace} not allowed!`)
+          }
+          return storesSem.withPermits(1)(Effect.suspendSucceed(() => {
+            const store = stores.get(namespace)
+            if (store) return store.get
+            const newStore = Ref.unsafeMake(makeStore())
+            stores.set(namespace, newStore)
+            return newStore.get
+          }))
+        }
+        return store.get
+      })
       const setStore = (m: any) => storeId.get.flatMap(namespace => stores.get(namespace)!.set(m))
       const sem = Semaphore.unsafeMake(1)
       const withPermit = sem.withPermits(1)

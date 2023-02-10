@@ -9,7 +9,7 @@ export type StoreConfig<E> = {
   uniqueKeys?: UniqueKey[]
   maxBulkSize?: number
   partitionValue: (e: E) => string | undefined
-  namespaces?: ["store-1", ...(`store-${number}`)[]]
+  allowNamespace?: (namespace: string) => boolean
 }
 
 export type SupportedValues = string | boolean | number | null
