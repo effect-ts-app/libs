@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { RequestContext } from "../../RequestContext.js"
 import type { Filter, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
@@ -23,6 +24,9 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
 }
 
 export const storeId = FiberRef.unsafeMake("store-1" as `store-${number}`)
+export const restoreFromRequestContext = RequestContext.Tag.accessWithEffect(ctx =>
+  storeId.set((ctx.parent?.namespace ?? ctx.namespace ?? "store-1") as `store-${number}`)
+)
 // const stores = ["store-1", "store-2", "store-3", "store-4"]
 
 export const makeMemoryStore = () => ({

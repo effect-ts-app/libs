@@ -10,6 +10,7 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
+import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportQueueError } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
@@ -54,6 +55,7 @@ export function makeServiceBusQueue<
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
                 .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .tap(() => restoreFromRequestContext)
                 .zipRight(handleEvent(body))
                 .tapErrorCause(report)
                 .apply(

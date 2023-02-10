@@ -11,7 +11,8 @@ export class RequestContextParent extends MNModel<
   id: prop(RequestId),
   name: prop(ReasonableString),
   locale: prop(literal("en", "de")),
-  createdAt: defaultProp(date)
+  createdAt: defaultProp(date),
+  namespace: optProp(ReasonableString)
 }) {}
 /** @ignore @internal @deprecated */
 export type RequestContextParentConstructor = typeof RequestContextParent
@@ -72,6 +73,7 @@ export interface RequestContextParent {
   readonly id: RequestId
   readonly locale: "de" | "en"
   readonly name: ReasonableString
+  readonly namespace?: ReasonableString | undefined
 }
 export namespace RequestContextParent {
   /**
@@ -82,6 +84,7 @@ export namespace RequestContextParent {
     readonly id: string
     readonly locale: "de" | "en"
     readonly name: string
+    readonly namespace?: string | undefined
   }
   export const Encoded: EncodedOps = { $: {} }
   /**
@@ -103,6 +106,7 @@ export interface RequestContext {
   readonly name: ReasonableString
   readonly parent?: RequestContextParent | undefined
   readonly rootId: RequestId
+  readonly namespace?: ReasonableString | undefined
 }
 export namespace RequestContext {
   /**
@@ -115,6 +119,7 @@ export namespace RequestContext {
     readonly name: string
     readonly parent?: RequestContextParent.Encoded | undefined
     readonly rootId: string
+    readonly namespace?: string | undefined
   }
   export const Encoded: EncodedOps = { $: {} }
   /**
