@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.24.1
+
+### Patch Changes
+
+- 075b117f: Add namespace support for Disk
+
 ## 0.24.0
 
 ### Minor Changes
