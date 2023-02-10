@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.24.2
+
+### Patch Changes
+
+- 4a0f8ce2: Fix typo
+
 ## 0.24.1
 
 ### Patch Changes
