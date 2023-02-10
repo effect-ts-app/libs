@@ -87,12 +87,12 @@ export const makeMemoryStore = () => ({
       const storesSem = Semaphore.unsafeMake(1)
       const primary = yield* $(makeMemoryStoreInt<Id, Id2, PM>(name, existing))
       const stores = new Map([["primary", primary]])
-      const getStore = storeId.get.flatMap(namespace => {
+      const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
         const store = stores.get(namespace)
         if (store) {
-          return Effect(store)
+          return Effect.succeed(store)
         }
-        if (!config?.allowNamespace || !config.allowNamespace(namespace)) {
+        if (!config.allowNamespace!(namespace)) {
           throw new Error(`Namespace ${namespace} not allowed!`)
         }
         return storesSem.withPermits(1)(Effect.suspendSucceed(() => {
