@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.24.0
+
+### Minor Changes
+
+- 2bf6e3ec: More flexible namespaces
+
 ## 0.23.0
 
 ### Minor Changes
