@@ -27,7 +27,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
-        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -334,8 +334,8 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
 
           if (!marker.isSome()) {
             console.log("Creating mock data for " + name)
-            if (existing) {
-              const m = yield* $(existing)
+            if (seed) {
+              const m = yield* $(seed)
               yield* $(
                 Effect([...m.values()].toNonEmpty)
                   .flatMapOpt(a =>

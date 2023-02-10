@@ -30,11 +30,11 @@ export const restoreFromRequestContext = RequestContext.Tag.accessWithEffect(ctx
 
 export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
   name: string,
-  existing?: Effect<never, never, ReadonlyMap<Id2, PM>>
+  seed?: Effect<never, never, ReadonlyMap<Id2, PM>>
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(name)
-    const items: ReadonlyMap<Id, PM> = yield* $(existing ?? Effect(new Map<Id, PM>()))
+    const items: ReadonlyMap<Id, PM> = yield* $(seed ?? Effect(new Map<Id, PM>()))
     const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
     const store = Ref.unsafeMake(makeStore())
     const sem = Semaphore.unsafeMake(1)
@@ -80,12 +80,12 @@ export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends
 export const makeMemoryStore = () => ({
   make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
     name: string,
-    existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+    seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
       const storesSem = Semaphore.unsafeMake(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, Id2, PM>(name, existing))
+      const primary = yield* $(makeMemoryStoreInt<Id, Id2, PM>(name, seed))
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
         const store = stores.get(namespace)
@@ -98,7 +98,7 @@ export const makeMemoryStore = () => ({
         return storesSem.withPermits(1)(Effect.suspendSucceed(() => {
           const store = stores.get(namespace)
           if (store) return Effect(store)
-          return makeMemoryStoreInt(name, existing).tap(store => Effect.sync(() => stores.set(namespace, store)))
+          return makeMemoryStoreInt(name, seed).tap(store => Effect.sync(() => stores.set(namespace, store)))
         }))
       })
       const s: Store<PM, Id> = {

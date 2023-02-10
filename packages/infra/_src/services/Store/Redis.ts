@@ -13,7 +13,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
-        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
         _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -22,7 +22,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
-            const m = yield* $(existing ?? Effect(new Map()))
+            const m = yield* $(seed ?? Effect(new Map()))
             yield* $(
               RedisClient.set(key, JSON.stringify({ data: [...m.values()].map(e => makeETag(e)) }))
                 .orDie

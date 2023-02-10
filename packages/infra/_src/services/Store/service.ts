@@ -78,7 +78,7 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
 export interface StoreMaker {
   make: <E extends PersistenceModelType<Id>, Id extends string, Id2 extends Id>(
     name: string,
-    existing?: Effect<never, never, ReadonlyMap<Id2, E>>,
+    seed?: Effect<never, never, ReadonlyMap<Id2, E>>,
     config?: StoreConfig<E>
   ) => Effect<never, never, Store<E, Id>>
 }

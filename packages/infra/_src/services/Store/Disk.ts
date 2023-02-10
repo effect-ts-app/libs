@@ -12,7 +12,7 @@ function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends Persiste
   namespace: string,
   dir: string,
   name: string,
-  existing?: Effect<never, never, ReadonlyMap<Id2, PM>>
+  seed?: Effect<never, never, ReadonlyMap<Id2, PM>>
 ) {
   return Effect.gen(function*($) {
     const file = dir + "/" + prefix + name + (namespace === "primary" ? "" : "-" + namespace) + ".json"
@@ -28,7 +28,7 @@ function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends Persiste
       makeMemoryStoreInt<Id, Id, PM>(
         name,
         !fs.existsSync(file)
-          ? existing ?? Effect(new Map())
+          ? seed ?? Effect(new Map())
           : fsStore.get.map(x => new Map(x.map(x => [x.id, x] as const)))
       )
     )
@@ -73,12 +73,12 @@ export function makeDiskStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
         name: string,
-        existing?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
           const storesSem = Semaphore.unsafeMake(1)
-          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, existing))
+          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
           const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
             const store = stores.get(namespace)
@@ -92,7 +92,7 @@ export function makeDiskStore({ prefix }: StorageConfig) {
               Effect.suspendSucceed(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, dir, name, existing).tap(store =>
+                return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, dir, name, seed).tap(store =>
                   Effect.sync(() => stores.set(namespace, store))
                 )
               })
