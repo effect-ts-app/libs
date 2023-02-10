@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.24.3
+
+### Patch Changes
+
+- 398d0069: Fix seed
+
 ## 0.24.2
 
 ### Patch Changes
