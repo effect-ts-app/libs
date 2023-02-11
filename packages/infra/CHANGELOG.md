@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.25.1
+
+### Patch Changes
+
+- a6d7d551: Fix error cause inference
+
 ## 0.25.0
 
 ### Minor Changes
