@@ -9,14 +9,14 @@ export class RequestException<E> extends CauseException<E> {
 }
 export const reportRequestError_ = reportError(cause => new RequestException(cause))
 
-export const reportRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
+export const reportRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
     RequestContext.Tag.accessWithEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
   )
 
 export const logRequestError_ = logError(cause => new RequestException(cause))
 
-export const logRequestError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
+export const logRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
     RequestContext.Tag.accessWithEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
   )

@@ -16,7 +16,7 @@ export class FatalQueueException<E> extends CauseException<E> {
 
 const reportQueueError_ = reportError(cause => new MessageException(cause))
 
-export const reportQueueError = (cause: Cause<unknown>, context?: Record<string, unknown> | undefined) =>
+export const reportQueueError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   RequestContext.Tag.accessWithEffect(requestContext =>
     Effect(reportQueueError_(cause, { requestContext, ...context }))
   )
