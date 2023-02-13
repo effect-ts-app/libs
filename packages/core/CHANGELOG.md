@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.22.1
+
+### Patch Changes
+
+- df13134f: Fix Optic Getters
+
 ## 0.22.0
 
 ### Minor Changes
