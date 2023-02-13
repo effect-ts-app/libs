@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.20.1
+
+### Patch Changes
+
+- c507165c: Add fake CUPS
+
 ## 0.20.0
 
 ### Minor Changes
