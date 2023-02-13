@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.22.2
+
+### Patch Changes
+
+- Revert optic getters
+
 ## 0.22.1
 
 ### Patch Changes
