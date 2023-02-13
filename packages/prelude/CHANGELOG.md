@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.21.3
+
+### Patch Changes
+
+- c29ab9fa: default Effect.servicesWith\* to lowercase first letter services.
+
 ## 0.21.2
 
 ### Patch Changes
