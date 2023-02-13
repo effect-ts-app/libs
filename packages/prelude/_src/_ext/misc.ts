@@ -37,65 +37,102 @@ export function encaseMaybeEither_<E, A>(
 
 type Service<T> = T extends Tag<infer S> ? S : never
 type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
-type Services<T extends Record<string, Tag<any>>> = { [key in keyof T]: Service<T[key]> }
+type LowerFirst<S extends PropertyKey> = S extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}` : S
+type LowerServices<T extends Record<string, Tag<any>>> = { [key in keyof T as LowerFirst<key>]: Service<T[key]> }
 
 /**
  * @tsplus static effect/io/Effect.Ops servicesWith
  */
-export function accessServices_<T extends Record<string, Tag<any>>, A>(
+export function accessLowerServices_<T extends Record<string, Tag<any>>, A>(
   services: T,
-  fn: (services: Services<T>) => A
+  fn: (services: LowerServices<T>) => A
 ) {
   return Debug.untraced(() =>
     (Effect.struct(
       services.$$.keys.reduce((prev, cur) => {
-        prev[cur] = Effect.service(services[cur]!)
+        prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] =
+          Effect.service(services[cur]!)
         return prev
       }, {} as any)
-    ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+    ) as any as Effect<Values<T>, never, LowerServices<T>>).map(fn)
   )
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops servicesWithEffect
  */
-export function accessServicesM_<T extends Record<string, Tag<any>>, R, E, A>(
+export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R, E, A>(
   services: T,
-  fn: (services: Services<T>) => Effect<R, E, A>
+  fn: (services: LowerServices<T>) => Effect<R, E, A>
 ) {
   return Debug.untraced(() =>
     (Effect.struct(
       services.$$.keys.reduce((prev, cur) => {
-        prev[cur] = Effect.service(services[cur]!)
+        prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] =
+          Effect.service(services[cur]!)
         return prev
       }, {} as any)
-    ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
+    ) as any as Effect<Values<T>, never, LowerServices<T>>).flatMap(fn)
   )
 }
 
-export function accessServices<T extends Record<string, Tag<any>>>(services: T) {
-  return <A>(fn: (services: Services<T>) => A) =>
-    Debug.untraced(() =>
-      (Effect.struct(
-        services.$$.keys.reduce((prev, cur) => {
-          prev[cur] = Effect.service(services[cur]!)
-          return prev
-        }, {} as any)
-      ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
-    )
-}
+// /**
+//  * @tsplus static effect/io/Effect.Ops servicesWith
+//  */
+// export function accessServices_<T extends Record<string, Tag<any>>, A>(
+//   services: T,
+//   fn: (services: Services<T>) => A
+// ) {
+//   return Debug.untraced(() =>
+//     (Effect.struct(
+//       services.$$.keys.reduce((prev, cur) => {
+//         prev[cur] = Effect.service(services[cur]!)
+//         return prev
+//       }, {} as any)
+//     ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+//   )
+// }
 
-export function accessServicesM<T extends Record<string, Tag<any>>>(services: T) {
-  return <R, E, A>(fn: (services: Services<T>) => Effect<R, E, A>) =>
-    Debug.untraced(() =>
-      (Effect.struct(
-        services.$$.keys.reduce((prev, cur) => {
-          prev[cur] = Effect.service(services[cur]!)
-          return prev
-        }, {} as any)
-      ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
-    )
-}
+// /**
+//  * @tsplus static effect/io/Effect.Ops servicesWithEffect
+//  */
+// export function accessServicesM_<T extends Record<string, Tag<any>>, R, E, A>(
+//   services: T,
+//   fn: (services: Services<T>) => Effect<R, E, A>
+// ) {
+//   return Debug.untraced(() =>
+//     (Effect.struct(
+//       services.$$.keys.reduce((prev, cur) => {
+//         prev[cur] = Effect.service(services[cur]!)
+//         return prev
+//       }, {} as any)
+//     ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
+//   )
+// }
+
+// export function accessServices<T extends Record<string, Tag<any>>>(services: T) {
+//   return <A>(fn: (services: Services<T>) => A) =>
+//     Debug.untraced(() =>
+//       (Effect.struct(
+//         services.$$.keys.reduce((prev, cur) => {
+//           prev[cur] = Effect.service(services[cur]!)
+//           return prev
+//         }, {} as any)
+//       ) as any as Effect<Values<T>, never, Services<T>>).map(fn)
+//     )
+// }
+
+// export function accessServicesM<T extends Record<string, Tag<any>>>(services: T) {
+//   return <R, E, A>(fn: (services: Services<T>) => Effect<R, E, A>) =>
+//     Debug.untraced(() =>
+//       (Effect.struct(
+//         services.$$.keys.reduce((prev, cur) => {
+//           prev[cur] = Effect.service(services[cur]!)
+//           return prev
+//         }, {} as any)
+//       ) as any as Effect<Values<T>, never, Services<T>>).flatMap(fn)
+//     )
+// }
 
 /**
  * @tsplus getter effect/io/Effect toNullable
