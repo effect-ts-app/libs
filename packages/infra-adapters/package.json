@@ -80,6 +80,26 @@
         "default": "./_cjs/CUPS.cjs"
       }
     },
+    "./CUPS/fake": {
+      "import": {
+        "types": "./dist/CUPS/fake.d.ts",
+        "default": "./dist/CUPS/fake.js"
+      },
+      "require": {
+        "types": "./dist/CUPS/fake.d.ts",
+        "default": "./_cjs/CUPS/fake.cjs"
+      }
+    },
+    "./CUPS/live": {
+      "import": {
+        "types": "./dist/CUPS/live.d.ts",
+        "default": "./dist/CUPS/live.js"
+      },
+      "require": {
+        "types": "./dist/CUPS/live.d.ts",
+        "default": "./_cjs/CUPS/live.cjs"
+      }
+    },
     "./CUPS/service": {
       "import": {
         "types": "./dist/CUPS/service.d.ts",
