@@ -11,7 +11,7 @@ export * from "@fp-ts/optic"
 /**
  * @tsplus getter fp-ts/optic/Optic replace
  */
-export const replace = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const replaceGetter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   const replace = OPTIC.replace(l)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
@@ -24,7 +24,7 @@ export const replace = lazyGetter(<S, A>(l: Lens<S, A>) => {
 /**
  * @tsplus getter fp-ts/optic/Optic modify
  */
-export const modify = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const modifyGetter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   const modify = OPTIC.modify(l)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
@@ -37,7 +37,7 @@ export const modify = lazyGetter(<S, A>(l: Lens<S, A>) => {
 /**
  * @tsplus getter fp-ts/optic/Optic modify2
  */
-export const modify2 = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const modify2Getter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
     <Evt extends readonly any[]>(s: S, f: (a: A) => readonly [A, ...Evt]): readonly [S, ...Evt]
@@ -52,7 +52,7 @@ export const modify2 = lazyGetter(<S, A>(l: Lens<S, A>) => {
 /**
  * @tsplus getter fp-ts/optic/Optic replaceIfDefined
  */
-export const replaceIfDefined = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const replaceIfDefinedGetter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
     <B>(b: B | undefined, map: (b: B) => A): (s: S) => S
@@ -64,7 +64,7 @@ export const replaceIfDefined = lazyGetter(<S, A>(l: Lens<S, A>) => {
 /**
  * @tsplus getter fp-ts/optic/Optic modifyM
  */
-export const modifyM = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const modifyMGetter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
     <R, E>(s: S, f: (a: A) => Effect<R, E, A>): Effect<R, E, S>
@@ -80,7 +80,7 @@ export const modifyM = lazyGetter(<S, A>(l: Lens<S, A>) => {
 /**
  * @tsplus getter fp-ts/optic/Optic modify2M
  */
-export const modify2M = lazyGetter(<S, A>(l: Lens<S, A>) => {
+export const modify2MGetter = lazyGetter(<S, A>(l: Lens<S, A>) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
     <R, E, Evt extends readonly any[]>(
