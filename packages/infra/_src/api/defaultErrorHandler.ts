@@ -46,34 +46,19 @@ export function defaultErrorHandler<R>(
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
+  const sendError = (code: number) => (body: unknown) => Effect(res.status(code).send(body))
   return Debug.untraced(() =>
     r3
       .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
-      .catchTag("ValidationError", err =>
-        Effect.sync(() => {
-          res.status(400).send(err.errors)
-        }))
-      .catchTag("NotFoundError", err =>
-        Effect.sync(() => {
-          res.status(404).send(err)
-        }))
-      .catchTag("NotLoggedInError", err =>
-        Effect.sync(() => {
-          res.status(401).send(err)
-        }))
-      .catchTag("UnauthorizedError", err =>
-        Effect.sync(() => {
-          res.status(403).send(err)
-        }))
-      .catchTag("InvalidStateError", err =>
-        Effect.sync(() => {
-          res.status(422).send(err)
-        }))
-      .catchTag("OptimisticConcurrencyException", err =>
-        Effect.sync(() => {
-          // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
-          res.status(412).send(err)
-        }))
+      .catchTags({
+        "ValidationError": err => sendError(400)(err.errors),
+        "NotFoundError": sendError(404),
+        "NotLoggedInError": sendError(401),
+        "UnauthorizedError": sendError(403),
+        "InvalidStateError": sendError(422),
+        // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
+        "OptimisticConcurrencyException": sendError(412)
+      })
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
         Effect.logError(
