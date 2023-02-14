@@ -22,7 +22,7 @@ export namespace Order {
   // @ts-expect-error abc
   export * from "@effect-app/core/Order"
 }
-/** @tsplus type fp-ts/core/Order */
+/** @tsplus type fp-ts/core/typeclass/Order */
 export type Order<A> = ORD.Order<A>
 
 export namespace Option {

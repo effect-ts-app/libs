@@ -12306,13 +12306,13 @@
           "name": "locally"
         },
         {
-          "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "locally"
+          "kind": "fluent",
+          "name": "fiberRefLocally"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "locally"
         }
       ]
@@ -12359,13 +12359,13 @@
           "name": "locallyWith"
         },
         {
-          "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "locallyWith"
+          "kind": "fluent",
+          "name": "fiberRefLocallyWith"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/FiberRef.Ops",
           "name": "locallyWith"
         }
       ]
@@ -13123,6 +13123,123 @@
           "kind": "static",
           "typeName": "effect/io/Hub.Ops",
           "name": "unbounded"
+        }
+      ]
+    }
+  ],
+  "@effect/io/KeyedPool": [
+    {
+      "definitionName": "KeyedPool",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/KeyedPool"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/KeyedPool.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "KeyedPoolTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/KeyedPool.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/KeyedPool.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "KeyedPoolTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.TypeId.Ops",
+          "name": "KeyedPoolTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/KeyedPool",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "invalidate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/KeyedPool",
+          "name": "invalidate"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "invalidate"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeSized",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "makeSized"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeSizedWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "makeSizedWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeSizedWithTTL",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "makeSizedWithTTL"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeSizedWithTTLBy",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/KeyedPool.Ops",
+          "name": "makeSizedWithTTLBy"
         }
       ]
     }
@@ -14031,13 +14148,13 @@
       ]
     },
     {
-      "definitionName": "logFmt",
+      "definitionName": "logfmt",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Layer.Ops",
-          "name": "logFmt"
+          "typeName": "effect/io/Logger.Ops",
+          "name": "logfmt"
         }
       ]
     },
@@ -14209,7 +14326,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Logger.Ops",
           "name": "withMinimumLogLevel"
         }
       ]
@@ -16467,6 +16584,17 @@
           "kind": "static",
           "typeName": "effect/io/Pool.Ops",
           "name": "invalidate"
+        }
+      ]
+    },
+    {
+      "definitionName": "isPool",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Pool.Ops",
+          "name": "isPool"
         }
       ]
     },

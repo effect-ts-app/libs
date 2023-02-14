@@ -1802,6 +1802,28 @@
       ]
     },
     {
+      "definitionName": "Class",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Data.Ops",
+          "name": "Class"
+        }
+      ]
+    },
+    {
+      "definitionName": "TaggedClass",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Data.Ops",
+          "name": "TaggedClass"
+        }
+      ]
+    },
+    {
       "definitionName": "array",
       "definitionKind": "const",
       "extensions": [
@@ -5382,6 +5404,22 @@
           "kind": "static",
           "typeName": "effect/data/MutableList.Ops",
           "name": "pop"
+        }
+      ]
+    },
+    {
+      "definitionName": "prepend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/MutableList",
+          "name": "prepend"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/MutableList.Ops",
+          "name": "prepend"
         }
       ]
     },

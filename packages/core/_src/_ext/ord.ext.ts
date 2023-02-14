@@ -107,11 +107,11 @@ export function sortWithNonEmpty<A>(
 export const ChunkPartition = CNK.partition
 
 /**
- * @tsplus pipeable fp-ts/core/Order contramap
+ * @tsplus pipeable fp-ts/core/typeclass/Order contramap
  */
 export const OrdContramap = ORD.contramap
 
 /**
- * @tsplus getter fp-ts/core/Order inverted
+ * @tsplus getter fp-ts/core/typeclass/Order inverted
  */
 export const OrdInverted = ORD.reverse

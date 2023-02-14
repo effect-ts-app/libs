@@ -9482,18 +9482,353 @@
       ]
     }
   ],
-  "@fp-ts/core/typeclass/Order": [
+  "@fp-ts/core/typeclass/Alternative": [
     {
-      "definitionName": "Order",
+      "definitionName": "Alternative",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "fp-ts/core/Order"
+          "typeName": "fp-ts/core/typeclass/Alternative"
         },
         {
           "kind": "companion",
-          "typeName": "fp-ts/core/Order.Ops"
+          "typeName": "fp-ts/core/typeclass/Alternative.Ops"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Applicative": [
+    {
+      "definitionName": "Applicative",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Applicative"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Applicative.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "getMonoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Applicative.Ops",
+          "name": "getMonoid"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Bicovariant": [
+    {
+      "definitionName": "Bicovariant",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Bicovariant"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "bimapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops",
+          "name": "bimapComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops",
+          "name": "map"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapLeft",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bicovariant.Ops",
+          "name": "mapLeft"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Bounded": [
+    {
+      "definitionName": "Bounded",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Bounded"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "BoundedTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Bounded.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Bounded.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "clamp",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
+          "name": "clamp"
+        }
+      ]
+    },
+    {
+      "definitionName": "max",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
+          "name": "max"
+        }
+      ]
+    },
+    {
+      "definitionName": "min",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
+          "name": "min"
+        }
+      ]
+    },
+    {
+      "definitionName": "reverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Bounded.Ops",
+          "name": "reverse"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Chainable": [
+    {
+      "definitionName": "Chainable",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Chainable"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Chainable.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Chainable.Ops",
+          "name": "andThenDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "bind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Chainable.Ops",
+          "name": "bind"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Chainable.Ops",
+          "name": "tap"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Contravariant": [
+    {
+      "definitionName": "Contravariant",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Contravariant"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Contravariant.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Contravariant.Ops",
+          "name": "contramapComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "imap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Contravariant.Ops",
+          "name": "imap"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Coproduct": [
+    {
+      "definitionName": "Coproduct",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Coproduct"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Coproduct.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "getMonoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Coproduct.Ops",
+          "name": "getMonoid"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Covariant": [
+    {
+      "definitionName": "Covariant",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Covariant"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "as",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "as"
+        }
+      ]
+    },
+    {
+      "definitionName": "asUnit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "asUnit"
+        }
+      ]
+    },
+    {
+      "definitionName": "flap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "flap"
+        }
+      ]
+    },
+    {
+      "definitionName": "imap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "imap"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Covariant.Ops",
+          "name": "mapComposition"
         }
       ]
     }
@@ -9514,84 +9849,27 @@
       ]
     },
     {
-      "definitionName": "make",
-      "definitionKind": "const",
+      "definitionName": "EquivalenceTypeLambda",
+      "definitionKind": "interface",
       "extensions": [
         {
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "kind": "static",
-          "name": "__call"
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Equivalence.TypeLambda"
         },
         {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "make"
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Equivalence.TypeLambda.Ops"
         }
       ]
     },
     {
-      "definitionName": "strict",
+      "definitionName": "array",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "strict"
-        }
-      ]
-    },
-    {
-      "definitionName": "equal",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "equal"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "tuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "string",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "string"
-        }
-      ]
-    },
-    {
-      "definitionName": "number",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "number"
+          "name": "array"
         }
       ]
     },
@@ -9607,13 +9885,13 @@
       ]
     },
     {
-      "definitionName": "symbol",
+      "definitionName": "boolean",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
-          "name": "symbol"
+          "name": "boolean"
         }
       ]
     },
@@ -9628,8 +9906,1314 @@
         },
         {
           "kind": "static",
-          "typeName": "fp-ts/core/typeclass/Equivalence.Aspects",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
           "name": "contramap"
+        }
+      ]
+    },
+    {
+      "definitionName": "getMonoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "getMonoid"
+        }
+      ]
+    },
+    {
+      "definitionName": "getSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "getSemigroup"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "record",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "record"
+        }
+      ]
+    },
+    {
+      "definitionName": "strict",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "strict"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "string"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "symbol",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "symbol"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Equivalence.Ops",
+          "name": "tuple"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Filterable": [
+    {
+      "definitionName": "Filterable",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Filterable"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "compact",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "compact"
+        }
+      ]
+    },
+    {
+      "definitionName": "filter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "filter"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterMapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "filterMapComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "partition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "partition"
+        }
+      ]
+    },
+    {
+      "definitionName": "partitionMapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "partitionMapComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "separate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Filterable.Ops",
+          "name": "separate"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/FlatMap": [
+    {
+      "definitionName": "FlatMap",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/FlatMap"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/FlatMap.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/FlatMap.Ops",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "composeKleisliArrow",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/FlatMap.Ops",
+          "name": "composeKleisliArrow"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatten",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/FlatMap.Ops",
+          "name": "flatten"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Foldable": [
+    {
+      "definitionName": "Foldable",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Foldable"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "combineMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "combineMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "coproductMapKind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "coproductMapKind"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "reduceComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduceKind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "reduceKind"
+        }
+      ]
+    },
+    {
+      "definitionName": "toArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "toArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "toArrayMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Foldable.Ops",
+          "name": "toArrayMap"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Invariant": [
+    {
+      "definitionName": "Invariant",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Invariant"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "bindTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "bindTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "imapComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "imapComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "tupled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Invariant.Ops",
+          "name": "tupled"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Monad": [
+    {
+      "definitionName": "Monad",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Monad"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Monad.Ops"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Monoid": [
+    {
+      "definitionName": "Monoid",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Monoid"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "array",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "array"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "fromSemigroup"
+        }
+      ]
+    },
+    {
+      "definitionName": "max",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "max"
+        }
+      ]
+    },
+    {
+      "definitionName": "min",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "min"
+        }
+      ]
+    },
+    {
+      "definitionName": "mutableArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "mutableArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "reverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "reverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Monoid.Ops",
+          "name": "tuple"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Of": [
+    {
+      "definitionName": "Of",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Of"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Of.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Do",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Of.Ops",
+          "name": "Do"
+        }
+      ]
+    },
+    {
+      "definitionName": "ofComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Of.Ops",
+          "name": "ofComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "unit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Of.Ops",
+          "name": "unit"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Order": [
+    {
+      "definitionName": "Order",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Order"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Order.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "OrderTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Order.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Order.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "array",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "array"
+        }
+      ]
+    },
+    {
+      "definitionName": "between",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "between"
+        }
+      ]
+    },
+    {
+      "definitionName": "clamp",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "clamp"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "fp-ts/core/typeclass/Order",
+          "name": "contramap"
+        },
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "contramap"
+        }
+      ]
+    },
+    {
+      "definitionName": "getMonoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "getMonoid"
+        }
+      ]
+    },
+    {
+      "definitionName": "getSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "getSemigroup"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "greaterThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "greaterThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "greaterThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "lessThan"
+        }
+      ]
+    },
+    {
+      "definitionName": "lessThanOrEqualTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "lessThanOrEqualTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "max",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "max"
+        }
+      ]
+    },
+    {
+      "definitionName": "min",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "min"
+        }
+      ]
+    },
+    {
+      "definitionName": "reverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "reverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Order.Ops",
+          "name": "tuple"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Pointed": [
+    {
+      "definitionName": "Pointed",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Pointed"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Pointed.Ops"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Product": [
+    {
+      "definitionName": "Product",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Product"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Product.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Product.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Product.Ops",
+          "name": "tuple"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/SemiAlternative": [
+    {
+      "definitionName": "SemiAlternative",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/SemiAlternative"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/SemiAlternative.Ops"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/SemiApplicative": [
+    {
+      "definitionName": "SemiApplicative",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "andThenDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "ap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "ap"
+        }
+      ]
+    },
+    {
+      "definitionName": "getSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "getSemigroup"
+        }
+      ]
+    },
+    {
+      "definitionName": "lift2",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "lift2"
+        }
+      ]
+    },
+    {
+      "definitionName": "zipWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiApplicative.Ops",
+          "name": "zipWith"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/SemiCoproduct": [
+    {
+      "definitionName": "SemiCoproduct",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/SemiCoproduct"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/SemiCoproduct.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "getSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiCoproduct.Ops",
+          "name": "getSemigroup"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Semigroup": [
+    {
+      "definitionName": "Semigroup",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Semigroup"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SemigroupTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Semigroup.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Semigroup.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "array",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "array"
+        }
+      ]
+    },
+    {
+      "definitionName": "constant",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "constant"
+        }
+      ]
+    },
+    {
+      "definitionName": "first",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "first"
+        }
+      ]
+    },
+    {
+      "definitionName": "imap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "imap"
+        }
+      ]
+    },
+    {
+      "definitionName": "intercalate",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "intercalate"
+        }
+      ]
+    },
+    {
+      "definitionName": "last",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "last"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "max",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "max"
+        }
+      ]
+    },
+    {
+      "definitionName": "min",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "min"
+        }
+      ]
+    },
+    {
+      "definitionName": "mutableArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "mutableArray"
+        }
+      ]
+    },
+    {
+      "definitionName": "reverse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "reverse"
+        }
+      ]
+    },
+    {
+      "definitionName": "struct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "tuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Semigroup.Ops",
+          "name": "tuple"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/SemiProduct": [
+    {
+      "definitionName": "SemiProduct",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/SemiProduct"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThenBind",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "andThenBind"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendElement",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "appendElement"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmptyStruct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "nonEmptyStruct"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmptyTuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "nonEmptyTuple"
+        }
+      ]
+    },
+    {
+      "definitionName": "productComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "productComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "productMany",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "productMany"
+        }
+      ]
+    },
+    {
+      "definitionName": "productManyComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/SemiProduct.Ops",
+          "name": "productManyComposition"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/Traversable": [
+    {
+      "definitionName": "Traversable",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/Traversable"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/Traversable.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "sequence",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Traversable.Ops",
+          "name": "sequence"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseComposition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Traversable.Ops",
+          "name": "traverseComposition"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseTap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/Traversable.Ops",
+          "name": "traverseTap"
+        }
+      ]
+    }
+  ],
+  "@fp-ts/core/typeclass/TraversableFilterable": [
+    {
+      "definitionName": "TraversableFilterable",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable"
+        },
+        {
+          "kind": "companion",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseFilter",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
+          "name": "traverseFilter"
+        }
+      ]
+    },
+    {
+      "definitionName": "traverseFilterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
+          "name": "traverseFilterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "traversePartition",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
+          "name": "traversePartition"
+        }
+      ]
+    },
+    {
+      "definitionName": "traversePartitionMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "fp-ts/core/typeclass/TraversableFilterable.Ops",
+          "name": "traversePartitionMap"
         }
       ]
     }
