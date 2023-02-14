@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.25.6
+
+### Patch Changes
+
+- b90a3b20: Fix mem queue open span
+
 ## 0.25.5
 
 ### Patch Changes
