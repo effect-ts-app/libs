@@ -16,13 +16,11 @@ export function defaultBasicErrorHandler<R>(
   _requestContext: RequestContext,
   r2: Effect<R, ValidationError, void>
 ) {
+  const sendError = (code: number) => (body: unknown) => Effect(res.status(code).send(body))
   return Debug.untraced(() =>
     r2
       .tapErrorCause(cause => cause.isFailure() ? logRequestError(cause) : Effect.unit)
-      .catchTag("ValidationError", err =>
-        Effect.sync(() => {
-          res.status(400).send(err.errors)
-        }))
+      .catchTag("ValidationError", err => sendError(400)(err.errors))
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
         Effect.logError(
