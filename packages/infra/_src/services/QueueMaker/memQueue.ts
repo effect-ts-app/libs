@@ -71,9 +71,10 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
         return yield* $(
           qReply.take()
             .flatMap(x => processMessage(x).uninterruptible.fork.flatMap(_ => _.join))
-            .forever
             .apply(reportFailure("drain"))
+            // runs before `forever` or we have an open, increasing span forever
             .setupRequestFromWith("Queue.ReceiveMessage")
+            .forever
             .forkScoped
         )
       })
