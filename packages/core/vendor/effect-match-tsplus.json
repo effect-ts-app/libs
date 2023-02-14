@@ -1,0 +1,287 @@
+{
+  "@effect/match": [
+    {
+      "definitionName": "Matcher",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/match/Matcher"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/match/Matcher.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SafeSchema",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/match/SafeSchema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/match/SafeSchema.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "_null",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "_null"
+        }
+      ]
+    },
+    {
+      "definitionName": "_undefined",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "_undefined"
+        }
+      ]
+    },
+    {
+      "definitionName": "any",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "any"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
+      "definitionName": "boolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "boolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "date",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "date"
+        }
+      ]
+    },
+    {
+      "definitionName": "either",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/match/Matcher",
+          "name": "either"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "either"
+        }
+      ]
+    },
+    {
+      "definitionName": "exhaustive",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/match/Matcher",
+          "name": "exhaustive"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "exhaustive"
+        }
+      ]
+    },
+    {
+      "definitionName": "is",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match.Ops",
+          "name": "is"
+        }
+      ]
+    },
+    {
+      "definitionName": "not",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/match/Matcher",
+          "name": "not"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "not"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "option",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/match/Matcher",
+          "name": "option"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "option"
+        }
+      ]
+    },
+    {
+      "definitionName": "orElse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/match/Matcher",
+          "name": "orElse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "orElse"
+        }
+      ]
+    },
+    {
+      "definitionName": "safe",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match.Ops",
+          "name": "safe"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match/SafeSchema.Ops",
+          "name": "string"
+        }
+      ]
+    },
+    {
+      "definitionName": "tag",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/match/Matcher",
+          "name": "tag"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "tag"
+        }
+      ]
+    },
+    {
+      "definitionName": "type",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match.Ops",
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafe",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match.Ops",
+          "name": "unsafe"
+        }
+      ]
+    },
+    {
+      "definitionName": "value",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/match.Ops",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "definitionName": "when",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/match/Matcher",
+          "name": "when"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/match/Matcher.Aspects",
+          "name": "when"
+        }
+      ]
+    }
+  ]
+}
