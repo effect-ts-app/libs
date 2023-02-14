@@ -17,9 +17,8 @@ export class FatalQueueException<E> extends CauseException<E> {
 const reportQueueError_ = reportError(cause => new MessageException(cause))
 
 export const reportQueueError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
-  RequestContext.Tag.accessWithEffect(requestContext =>
-    Effect(reportQueueError_(cause, { requestContext, ...context }))
-  )
+  Effect.contextWith((_: Context<never>) => Context.getOption(_, RequestContext.Tag))
+    .flatMap(requestContext => reportQueueError_(cause, { requestContext: requestContext.value, ...context }))
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
@@ -31,18 +30,30 @@ export const reportQueueError = <E>(cause: Cause<E>, context?: Record<string, un
  * @tsplus getter effect/io/Effect forkDaemonReportQueue
  */
 export function forkDaemonReportQueue<R, E, A>(self: Effect<R, E, A>) {
-  return self.tapErrorCause(reportQueueError).fork.daemonChildren
+  return self.tapErrorCause(reportNonInterruptedFailureCause({})).fork.daemonChildren
 }
 
 export const reportFatalQueueError = reportError(
   cause => new FatalQueueException(cause)
 )
 
-export function reportFailure(name: string) {
-  return <R, E, A>(self: Effect<R, E, A>) =>
-    self.exit.tap(exit =>
-      exit._tag === "Failure"
-        ? reportFatalQueueError(exit.cause, { name })
-        : Effect.unit
-    )
+export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
+  const report = reportNonInterruptedFailureCause(context)
+  return <R, E, A>(inp: Effect<R, E, A>): Effect<R, never, Exit<E, A>> =>
+    inp.exit
+      .flatMap(result =>
+        result.match(
+          cause => report(cause).map(() => result),
+          () => Effect(result)
+        )
+      )
+}
+
+export function reportNonInterruptedFailureCause(context?: Record<string, unknown>) {
+  return <E>(cause: Cause<E>): Effect<never, never, void> => {
+    if (cause.isInterrupted()) {
+      return (cause as Cause<never>).failCause
+    }
+    return reportQueueError(cause, context)
+  }
 }

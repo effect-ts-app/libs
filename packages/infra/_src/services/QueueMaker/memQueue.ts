@@ -2,20 +2,27 @@ import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { restoreFromRequestContext } from "../Store/Memory.js"
-import { reportFailure, reportQueueError } from "./errors.js"
+import { reportNonInterruptedFailure } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
 /**
  * @tsplus static QueueMaker.Ops makeMem
  */
-export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag: string }, RContext, EvtE, DrainE>(
+export function makeMemQueue<
+  DrainR,
+  Evt,
+  DrainEvt extends { id: StringId; _tag: string },
+  RContext,
+  EvtE,
+  DrainE
+>(
   queueName: string,
   queueDrainName: string,
   encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
   provideContext: (context: RequestContext) => <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext>, E, A>,
+  ) => Effect<Exclude<R, RContext | RequestContext>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -24,7 +31,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue.access)
     const q = yield* $(mem.getOrCreateQueue(queueName))
-    const qReply = yield* $(mem.getOrCreateQueue(queueDrainName))
+    const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
 
     return {
       publish: (...messages) =>
@@ -47,6 +54,7 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
         }),
       drain: Effect.gen(function*($) {
         const handleEvent = yield* $(makeHandleEvent)
+        const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
         const processMessage = (msg: string) =>
           // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
           Effect(JSON.parse(msg))
@@ -57,7 +65,8 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
                 .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .tap(() => restoreFromRequestContext)
-                .zipRight(silence(handleEvent(body)))
+                .zipRight(handleEvent(body))
+                .apply(silenceAndReportError)
                 .apply(
                   provideContext(
                     RequestContext.inherit(meta, {
@@ -69,37 +78,15 @@ export function makeMemQueue<DrainR, Evt, DrainEvt extends { id: StringId; _tag:
                 )
             )
         return yield* $(
-          qReply.take()
+          qDrain.take()
             .flatMap(x => processMessage(x).uninterruptible.fork.flatMap(_ => _.join))
-            .apply(reportFailure("drain"))
-            // runs before `forever` or we have an open, increasing span forever
-            .setupRequestFromWith("Queue.ReceiveMessage")
+            // TODO: normally a failed item would be returned to the queue and retried up to X times.
+            // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
+            .apply(silenceAndReportError)
             .forever
             .forkScoped
         )
       })
     } satisfies QueueBase<DrainR, Evt>
   })
-}
-
-// We want the Queue to continue processing even on errors per messages
-// must make sure that the errors are processed/handled beforehand.
-export function silence<R, E, A>(inp: Effect<R, E, A>) {
-  return inp.exit.flatMap(result =>
-    Effect.gen(function*($) {
-      const requestContext = yield* $(RequestContext.Tag.access)
-      return yield* $(
-        result.match(
-          cause => {
-            if (cause.isInterrupted()) {
-              return (cause as Cause<never>).failCause
-            }
-            reportQueueError(cause, { requestContext })
-            return Effect.unit
-          },
-          () => Effect.unit
-        )
-      )
-    })
-  )
 }

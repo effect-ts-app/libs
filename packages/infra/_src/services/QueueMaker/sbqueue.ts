@@ -11,7 +11,7 @@ import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { restoreFromRequestContext } from "../Store/Memory.js"
-import { reportQueueError } from "./errors.js"
+import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
 /**
@@ -31,7 +31,7 @@ export function makeServiceBusQueue<
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
   provideContext: (context: RequestContext) => <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext>, E, A>,
+  ) => Effect<Exclude<R, RContext | RequestContext>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -41,6 +41,8 @@ export function makeServiceBusQueue<
     const s = yield* $(Sender.access)
     const receiver = yield* $(Receiver.access)
     const receiverLayer = Receiver.makeLayer(receiver)
+    const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
+    const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
 
     return {
       drain: Effect.gen(function*($) {
@@ -48,34 +50,34 @@ export function makeServiceBusQueue<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function processMessage(messageBody: any) {
           return Effect.sync(() => JSON.parse(messageBody))
-            .flatMap(x => parseDrain(x))
-            .orDie
-            .tapErrorCause(report)
-            .flatMap(({ body, meta }) =>
-              Effect
-                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                .tap(() => restoreFromRequestContext)
-                .zipRight(handleEvent(body))
-                .tapErrorCause(report)
-                .apply(
-                  provideContext(
-                    RequestContext.inherit(meta, {
-                      id: body.id,
-                      locale: "en" as const,
-                      name: ReasonableString(body._tag)
-                    })
-                  )
+                .flatMap(x => parseDrain(x))
+                .orDie
+                .flatMap(({ body, meta }) =>
+                  Effect
+                    .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                    .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                    .tap(() => restoreFromRequestContext)
+                    .zipRight(handleEvent(body))
+                    .orDie
+                    // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                    .apply(silenceAndReportError)
+                    .apply(
+                      provideContext(
+                        RequestContext.inherit(meta, {
+                          id: body.id,
+                          locale: "en" as const,
+                          name: ReasonableString(body._tag)
+                        })
+                      )
+                    )
                 )
-            )
-            .setupRequestFromWith("Queue.ReceiveMessage")
-            .orDie
-            .asUnit
+                // we reportError here, so that we report the error only, and keep flowing
+                .tapErrorCause(reportError)
         }
 
         return yield* $(
           subscribe({
-            processMessage: x => processMessage(x.body).uninterruptible,
+            processMessage: x => processMessage(x.body).uninterruptible.flatMap(_ => _.done),
             processError: err => Effect(captureException(err.error))
           })
             .provideSomeLayer(receiverLayer)
@@ -110,11 +112,4 @@ export function makeServiceBusQueue<
 export function makeServiceBusLayers(url: string, queueName: string, queueDrainName: string) {
   return LiveServiceBusClient(url)
     >> (LiveReceiver(queueDrainName) + LiveSender(queueName))
-}
-
-function report<E>(cause: Cause<E>) {
-  return Effect.gen(function*($) {
-    const requestContext = yield* $(RequestContext.Tag.access)
-    return reportQueueError(cause, { requestContext })
-  })
 }
