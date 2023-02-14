@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.25.9
+
+### Patch Changes
+
+- 8da4c8fc: Add match and improve error handling
+- Updated dependencies [8da4c8fc]
+  - @effect-app/core@0.23.1
+  - @effect-app/infra-adapters@0.20.5
+  - @effect-app/prelude@0.21.5
+  - @effect-app/schema@0.18.4
+
 ## 0.25.8
 
 ### Patch Changes

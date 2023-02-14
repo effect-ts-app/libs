@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.23.1
+
+### Patch Changes
+
+- 8da4c8fc: Add match and improve error handling
+
 ## 0.23.0
 
 ### Minor Changes
