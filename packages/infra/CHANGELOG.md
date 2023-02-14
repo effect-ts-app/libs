@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.25.8
+
+### Patch Changes
+
+- ba26d2fc: Fix Queue error reporting and request semantics
+
 ## 0.25.7
 
 ### Patch Changes
