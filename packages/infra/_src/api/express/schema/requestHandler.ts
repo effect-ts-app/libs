@@ -140,7 +140,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
         errors.push(makeError("path")(path.errors))
       }
       if (query._tag === "Failure") {
-        errors.push(makeError("path")(path.errors))
+        errors.push(makeError("query")(query.errors))
       }
       if (errors.length) {
         return Effect.fail(new ValidationError(errors))
