@@ -109,6 +109,11 @@ import { Scope } from "@effect/io/Scope"
 /**
  * @tsplus global
  */
+import { Matcher } from "@effect/match"
+
+/**
+ * @tsplus global
+ */
 import { Context, Tag } from "@effect/data/Context"
 
 /**
