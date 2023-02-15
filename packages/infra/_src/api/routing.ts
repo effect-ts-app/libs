@@ -343,16 +343,17 @@ export function makeRequestHandler<
                   restore(() => handle(parsedReq as any))()
                     .flatMap(r => respond(parsedReq, res, r))
                 )
+
+              const setNamespace = restoreFromRequestContext
+                .provideService(RequestContext.Tag, requestContext)
               // Commands should not be interruptable.
               const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
               // the first log entry should be of the request start.
               const r2 = makeMiddlewareContext
-                ? restoreFromRequestContext
-                  .zipRight(r)
-                  .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
-                // PR is not relevant here
-                : restoreFromRequestContext
-                  .provideService(RequestContext.Tag, requestContext)
+                ? setNamespace
+                  .zipRight(r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext)))
+                : setNamespace
+                  // PR is not relevant here
                   .zipRight(r) as Effect<R, E | ValidationError, void>
               return errorHandler(
                 req,
