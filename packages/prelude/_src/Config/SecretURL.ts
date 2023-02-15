@@ -1,9 +1,9 @@
 /**
  * @since 1.0.0
  */
-import type { ConfigSecretTypeId } from "@effect/io/Config/Secret"
 import type * as Chunk from "@effect/data/Chunk"
 import type * as Equal from "@effect/data/Equal"
+import type { ConfigSecretTypeId } from "@effect/io/Config/Secret"
 import * as internal from "./internal/configSecretURL.js"
 
 // /**

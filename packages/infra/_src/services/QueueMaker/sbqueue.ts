@@ -50,29 +50,29 @@ export function makeServiceBusQueue<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function processMessage(messageBody: any) {
           return Effect.sync(() => JSON.parse(messageBody))
-                .flatMap(x => parseDrain(x))
+            .flatMap(x => parseDrain(x))
+            .orDie
+            .flatMap(({ body, meta }) =>
+              Effect
+                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .tap(() => restoreFromRequestContext)
+                .zipRight(handleEvent(body))
                 .orDie
-                .flatMap(({ body, meta }) =>
-                  Effect
-                    .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                    .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                    .tap(() => restoreFromRequestContext)
-                    .zipRight(handleEvent(body))
-                    .orDie
-                    // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                    .apply(silenceAndReportError)
-                    .apply(
-                      provideContext(
-                        RequestContext.inherit(meta, {
-                          id: body.id,
-                          locale: "en" as const,
-                          name: ReasonableString(body._tag)
-                        })
-                      )
-                    )
+                // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                .apply(silenceAndReportError)
+                .apply(
+                  provideContext(
+                    RequestContext.inherit(meta, {
+                      id: body.id,
+                      locale: "en" as const,
+                      name: ReasonableString(body._tag)
+                    })
+                  )
                 )
-                // we reportError here, so that we report the error only, and keep flowing
-                .tapErrorCause(reportError)
+            )
+            // we reportError here, so that we report the error only, and keep flowing
+            .tapErrorCause(reportError)
         }
 
         return yield* $(

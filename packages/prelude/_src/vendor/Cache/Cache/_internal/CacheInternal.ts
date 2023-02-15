@@ -1,6 +1,6 @@
+import { EmptyMutableQueue } from "@effect/data/MutableQueue"
 import type { Clock } from "@effect/io/Clock"
 import type { FiberId } from "@effect/io/Fiber/Id"
-import { EmptyMutableQueue } from "@effect/data/MutableQueue"
 import { CacheStats } from "../../CacheStats.js"
 import { EntryStats } from "../../EntryStats.js"
 import type { Lookup } from "../../Lookup.js"
