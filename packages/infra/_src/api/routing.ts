@@ -8,6 +8,7 @@ import { pretty } from "@effect-app/prelude/utils"
 import type express from "express"
 import type { ValidationError } from "../errors.js"
 import { RequestContext, RequestId } from "../RequestContext.js"
+import { restoreFromRequestContext } from "../services/Store/Memory.js"
 import type { SupportedErrors } from "./defaultErrorHandler.js"
 import { defaultBasicErrorHandler } from "./defaultErrorHandler.js"
 import type { Encode, RequestHandler, RequestHandlerOptRes, RequestParsers } from "./express/schema/requestHandler.js"
@@ -272,13 +273,17 @@ export function makeRequestHandler<
     const requestId = req.headers["request-id"]
     const rootId = requestId ? RequestId.parseUnsafe(requestId) : RequestId.make()
 
+    const storeId = req.headers["x-store-id"]
+    const namespace = ReasonableString((storeId && (Array.isArray(storeId) ? storeId[0] : storeId)) || "primary")
+
     const requestContext = new RequestContext({
       rootId,
       name: ReasonableString(
         Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
       ),
       locale,
-      createdAt: start
+      createdAt: start,
+      namespace
       // ...(context.operation.parentId
       //   ? {
       //     parent: new RequestContextParent({
@@ -342,9 +347,13 @@ export function makeRequestHandler<
               const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
               // the first log entry should be of the request start.
               const r2 = makeMiddlewareContext
-                ? r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
+                ? restoreFromRequestContext
+                  .zipRight(r)
+                  .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
                 // PR is not relevant here
-                : r as Effect<R, E | ValidationError, void>
+                : restoreFromRequestContext
+                  .provideService(RequestContext.Tag, requestContext)
+                  .zipRight(r) as Effect<R, E | ValidationError, void>
               return errorHandler(
                 req,
                 res,

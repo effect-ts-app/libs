@@ -25,7 +25,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
 
 export const storeId = FiberRef.unsafeMake("primary")
 export const restoreFromRequestContext = RequestContext.Tag.accessWithEffect(ctx =>
-  storeId.set(ctx.parent?.namespace ?? ctx.namespace ?? "primary")
+  storeId.set(ctx.namespace ?? "primary")
 )
 
 export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
