@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.26.1
+
+### Patch Changes
+
+- Improve set namespace
+
 ## 0.26.0
 
 ### Minor Changes
