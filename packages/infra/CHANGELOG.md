@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.26.0
+
+### Minor Changes
+
+- Improve store-id
+
+### Patch Changes
+
+- d69d6ead: fix typo
+- Updated dependencies
+  - @effect-app/core@0.24.0
+  - @effect-app/infra-adapters@0.20.6
+  - @effect-app/prelude@0.21.6
+  - @effect-app/schema@0.18.5
+
 ## 0.25.9
 
 ### Patch Changes

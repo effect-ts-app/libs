@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.24.0
+
+### Minor Changes
+
+- Improve store-id
+
 ## 0.23.1
 
 ### Patch Changes
