@@ -65,7 +65,7 @@ importers:
       eslint-plugin-import: ^2.27.5
       eslint-plugin-prettier-vue: ^4.2.0
       eslint-plugin-simple-import-sort: ^10.0.0
-      eslint-plugin-sort-destructure-keys: ^1.4.0
+      eslint-plugin-sort-destructure-keys: ^1.5.0
       eslint-plugin-unused-imports: ^2.0.0
       eslint-watch: ^8.0.0
       history: ^5.3.0
@@ -118,7 +118,7 @@ importers:
       eslint-plugin-import: 2.27.5_arwc4p7g7l3lpdvzmudz2ge5va
       eslint-plugin-prettier-vue: 4.2.0
       eslint-plugin-simple-import-sort: 10.0.0_eslint@8.34.0
-      eslint-plugin-sort-destructure-keys: 1.4.0_eslint@8.34.0
+      eslint-plugin-sort-destructure-keys: 1.5.0_eslint@8.34.0
       eslint-plugin-unused-imports: 2.0.0_tnum7sl7jcutfljbv5jztcescq_vqeavzxdzk2atb75l6fx3anzpi
       eslint-watch: 8.0.0_eslint@8.34.0
       history: 5.3.0
@@ -4084,8 +4084,8 @@ packages:
       eslint: 8.34.0
     dev: true
 
-  /eslint-plugin-sort-destructure-keys/1.4.0_eslint@8.34.0:
-    resolution: {integrity: sha512-txU9l22mblz7YpyjJNYFy4wb5PVXiRMbc9lqFPPhvY4wKyBBYQvb31TIcduf7iRb4Bv01aiXcJiuCkOOrVY48Q==}
+  /eslint-plugin-sort-destructure-keys/1.5.0_eslint@8.34.0:
+    resolution: {integrity: sha512-xGLyqHtbFXZNXQSvAiQ4ISBYokrbUywEhmaA50fKtSKgceCv5y3zjoNuZwcnajdM6q29Nxj+oXC9KcqfMsAPrg==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
       eslint: 3 - 8
