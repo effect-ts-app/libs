@@ -3,7 +3,7 @@
 import { pipe } from "@effect-app/core/Function"
 
 import * as S from "../custom.js"
-import { leafE, unknownArrayE } from "../custom.js"
+import { customE, leafE } from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
@@ -23,16 +23,15 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 
-  const fromChunk = pipe(
+  const fromArray = pipe(
     S.identity(
       (u): u is NonEmptyReadonlyArray<ParsedShape> => Array.isArray(u) && u.length > 0 && u.every(guardSelf)
     ),
-    S.parser((u: Chunk<ParsedShape>) => {
-      const ar = u.toArray
+    S.parser((ar: readonly ParsedShape[]) => {
       const nar = ar.toNonEmpty
-      return nar.match(() => Th.fail(leafE(unknownArrayE(u)) as any), Th.succeed)
+      return nar.match(() => Th.fail(leafE(customE(ar, "a non empty array")) as any), Th.succeed)
     }),
-    S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
+    S.encoder((u): readonly ParsedShape[] => u),
     S.arbitrary(
       _ =>
         _.array(arbitrarySelf(_), { minLength: 1 }) as any as Arbitrary.Arbitrary<
@@ -42,7 +41,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
   )
 
   return pipe(
-    S.chunk(self)[">>>"](fromChunk),
+    S.array(self)[">>>"](fromArray),
     S.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     S.constructor((_: NonEmptyReadonlyArray<ParsedShape>) => Th.succeed(_)),
     S.encoder(u => u.map(encodeSelf)),
