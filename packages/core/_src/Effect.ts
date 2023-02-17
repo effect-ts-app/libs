@@ -8,6 +8,7 @@ import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
 import { Option } from "@fp-ts/core/Option"
 import { curry, flow, pipe } from "./Function.js"
+import type { Chunk } from "./Prelude.js"
 
 export * from "@effect/io/Effect"
 
@@ -321,6 +322,14 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
           .map(([_]) => _)
       )
     )
+}
+
+/**
+ * @tsplus getter Iterable joinAll
+ * @tsplus static effect/io/Effect.Ops joinAll
+ */
+export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, Chunk<A>> {
+  return Fiber.join(Fiber.collectAll(fibers))
 }
 
 // /**
