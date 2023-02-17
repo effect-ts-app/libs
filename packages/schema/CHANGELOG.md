@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.18.6
+
+### Patch Changes
+
+- 3d49bb4a: Fix nonEmptyArray parser error
+
 ## 0.18.5
 
 ### Patch Changes
