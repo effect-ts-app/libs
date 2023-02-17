@@ -74,14 +74,14 @@ importers:
       madge: ^6.0.0
       module-alias: ^2.2.2
       nodemon: ^2.0.20
-      npm-check-updates: ^16.7.4
+      npm-check-updates: ^16.7.5
       ts-node: ^10.9.1
       ts-transform-paths: ^3.0.0
       tsc-watch: ^6.0.0
       tsconfig-paths: ^4.1.2
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz
       typescript-transform-paths: ^3.4.6
-      vite: ^4.1.1
+      vite: ^4.1.2
       vitest: ^0.28.5
     dependencies:
       cross-env: 7.0.3
@@ -126,13 +126,13 @@ importers:
       madge: 6.0.0
       module-alias: 2.2.2
       nodemon: 2.0.20
-      npm-check-updates: 16.7.4
+      npm-check-updates: 16.7.5
       ts-transform-paths: 3.0.0
       tsc-watch: 6.0.0_gmyzgtbobtwqxr3kpifzlndcxy
       tsconfig-paths: 4.1.2
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz_3fpnb3exznmanjmuxoeacxgduu'
       typescript-transform-paths: 3.4.6_gmyzgtbobtwqxr3kpifzlndcxy
-      vite: 4.1.1_@types+node@18.11.12
+      vite: 4.1.2_@types+node@18.11.12
       vitest: 0.28.5
 
   packages/cli:
@@ -162,11 +162,11 @@ importers:
       json5: ^2.2.3
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz
-      vite: ^4.1.1
+      vite: ^4.1.2
       vitest: ^0.28.5
     dependencies:
       '@rollup/pluginutils': 5.0.2
-      vite: 4.1.1_@types+node@18.11.12
+      vite: 4.1.2_@types+node@18.11.12
     devDependencies:
       '@babel/cli': 7.20.7
       '@types/node': 18.11.12
@@ -182,7 +182,7 @@ importers:
       '@effect/io': ^0.1.12
       '@effect/match': ^0.0.11
       '@fp-ts/core': ^0.2.1
-      '@fp-ts/optic': ^0.1.0
+      '@fp-ts/optic': ^0.2.0
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.12
       cross-fetch: ^3.1.5
@@ -200,7 +200,7 @@ importers:
       '@effect/io': 0.1.12
       '@effect/match': 0.0.11
       '@fp-ts/core': 0.2.1
-      '@fp-ts/optic': 0.1.0
+      '@fp-ts/optic': 0.2.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -268,7 +268,7 @@ importers:
       '@fp-ts/core': ^0.2.1
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
-      '@sentry/node': ^7.37.2
+      '@sentry/node': ^7.38.0
       '@types/express': ^4.17.17
       '@types/node': ~18.11.12
       '@types/proper-lockfile': ^4.1.2
@@ -317,7 +317,7 @@ importers:
     devDependencies:
       '@babel/cli': 7.20.7
       '@effect-app/compiler': link:../compiler
-      '@sentry/node': 7.37.2
+      '@sentry/node': 7.38.0
       '@types/express': 4.17.17
       '@types/node': 18.11.12
       '@types/proper-lockfile': 4.1.2
@@ -343,7 +343,7 @@ importers:
       '@effect/data': ^0.1.2
       '@effect/io': ^0.1.12
       '@fp-ts/core': ^0.2.1
-      '@fp-ts/optic': ^0.1.0
+      '@fp-ts/optic': ^0.2.0
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
       '@types/express': ^4.17.17
@@ -364,7 +364,7 @@ importers:
       '@effect/data': 0.1.2
       '@effect/io': 0.1.12
       '@fp-ts/core': 0.2.1
-      '@fp-ts/optic': 0.1.0
+      '@fp-ts/optic': 0.2.0
       query-string: 8.1.0
     devDependencies:
       '@azure/cosmos': 3.17.2
@@ -487,7 +487,7 @@ importers:
       '@effect/data': ^0.1.2
       '@effect/io': ^0.1.12
       '@fp-ts/core': ^0.2.1
-      '@fp-ts/optic': ^0.1.0
+      '@fp-ts/optic': ^0.2.0
       '@types/uuid': ^9.0.0
       '@types/validator': ^13.7.12
       cross-fetch: ^3.1.5
@@ -504,7 +504,7 @@ importers:
       '@effect/data': 0.1.2
       '@effect/io': 0.1.12
       '@fp-ts/core': 0.2.1
-      '@fp-ts/optic': 0.1.0
+      '@fp-ts/optic': 0.2.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
       path-parser: 6.1.0
@@ -529,7 +529,7 @@ importers:
       '@effect/data': ^0.1.2
       '@effect/io': ^0.1.12
       '@fp-ts/core': ^0.2.1
-      '@fp-ts/optic': ^0.1.0
+      '@fp-ts/optic': ^0.2.0
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
       json5: ^2.2.3
@@ -537,7 +537,7 @@ importers:
       swrv: ^1.0.3
       ts-node: ^10.9.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz
-      vite: ^4.1.1
+      vite: ^4.1.2
       vitest: ^0.28.5
       vue: ^3.2.47
     dependencies:
@@ -548,7 +548,7 @@ importers:
       '@effect/data': 0.1.2
       '@effect/io': 0.1.12
       '@fp-ts/core': 0.2.1
-      '@fp-ts/optic': 0.1.0
+      '@fp-ts/optic': 0.2.0
       query-string: 8.1.0
       swrv: 1.0.3_vue@3.2.47
       vue: 3.2.47
@@ -560,7 +560,7 @@ importers:
       json5: 2.2.3
       ts-node: 10.9.1_utzzg2uv645qg4mhftwsf2mc4q
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz_3fpnb3exznmanjmuxoeacxgduu'
-      vite: 4.1.1_@types+node@18.11.12
+      vite: 4.1.2_@types+node@18.11.12
       vitest: 0.28.5
 
 packages:
@@ -1496,11 +1496,11 @@ packages:
       '@fp-ts/core': 0.1.1
     dev: false
 
-  /@fp-ts/optic/0.1.0:
-    resolution: {integrity: sha512-fPRUzjvi8564/2A2YmOC0LkQEk46T8X6sypTnUNW4eT0CFJ5fu+dxzn8gMOs17kqOWPZsWRnYw3zX++PErFLdw==}
+  /@fp-ts/optic/0.2.0:
+    resolution: {integrity: sha512-Cr3A05Q4kMXx5JBP71FOBLqyuE9g0Ol3XMkm6q75QDl2rElrTO/kQTabb3VAEgEf8t5SQvjEMK/9JFDIBZ1SSA==}
     dependencies:
-      '@fp-ts/core': 0.1.1
-      '@fp-ts/data': 0.1.1
+      '@effect/data': 0.1.2
+      '@fp-ts/core': 0.2.1
     dev: false
 
   /@fp-ts/schema/0.1.3:
@@ -1802,22 +1802,22 @@ packages:
       - debug
     dev: false
 
-  /@sentry/core/7.37.2:
-    resolution: {integrity: sha512-LjofMDSTyVeBErl9N7TTqlyEVuW1g6U4iuJtdZ75JohnvVxzWdpZfWfddwQ6h7nGWfe9dNg0fGs1wxKtMhY+MA==}
+  /@sentry/core/7.38.0:
+    resolution: {integrity: sha512-+hXh/SO3Ie6WC2b+wi01xLhyVREdkRXS5QBmCiv3z2ks2HvYXp7PoKSXJvNKiwCP+pBD+enOnM1YEzM2yEy5yw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.37.2
-      '@sentry/utils': 7.37.2
+      '@sentry/types': 7.38.0
+      '@sentry/utils': 7.38.0
       tslib: 1.14.1
     dev: true
 
-  /@sentry/node/7.37.2:
-    resolution: {integrity: sha512-aeJQ4oU3vF9zks8S/fvoLPVVhofmTjyMhZZIpSQWtfFqWxrXQsrqNlNUZZdXoqAUPNjA4QAzzOoXHhpUsa3Nxw==}
+  /@sentry/node/7.38.0:
+    resolution: {integrity: sha512-jNIN6NZvgzn/oms8RQzffjX8Z0LQDTN6N28nnhzqGCvnfmS1QtTt0FlU+pTuFXZNNSjfGy4XMXMYvLlbvhm2bg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.37.2
-      '@sentry/types': 7.37.2
-      '@sentry/utils': 7.37.2
+      '@sentry/core': 7.38.0
+      '@sentry/types': 7.38.0
+      '@sentry/utils': 7.38.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -1826,16 +1826,16 @@ packages:
       - supports-color
     dev: true
 
-  /@sentry/types/7.37.2:
-    resolution: {integrity: sha512-SxKQOCX94ZaQM4C2ysNjHdJsjYapu/NYZCz1cnPyCdDvYfhwiVge1uq6ZHiQ/ARfxAAOmc3R4Mh3VvEz7WUOdw==}
+  /@sentry/types/7.38.0:
+    resolution: {integrity: sha512-NKOALR6pNUMzUrsk2m+dkPrO8uGNvNh1LD0BCPswKNjC2qHo1h1mDGCgBmF9+EWyii8ZoACTIsxvsda+MBf97Q==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils/7.37.2:
-    resolution: {integrity: sha512-5irN1nN/mtdOoWwsJiwBK0gPgNMkciUubEMbCaaXqJaGyGz8+yfDvXj7L+xGYiU57z+7+QkkSKxKEZ/IcBpjVQ==}
+  /@sentry/utils/7.38.0:
+    resolution: {integrity: sha512-MgbI3YmYuyyhUtvcXkgGBqjOW+nuLLNGUdWCK+C4kObf8VbLt3dSE/7SEMT6TSHLYQmxs2BxFgx5Agn97m68kQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.37.2
+      '@sentry/types': 7.38.0
       tslib: 1.14.1
     dev: true
 
@@ -2415,7 +2415,7 @@ packages:
       '@vue/shared': 3.2.47
       estree-walker: 2.0.2
       magic-string: 0.25.9
-      postcss: 8.4.20
+      postcss: 8.4.21
       source-map: 0.6.1
     dev: false
 
@@ -6008,8 +6008,8 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
 
-  /minimatch/6.1.6:
-    resolution: {integrity: sha512-6bR3UIeh/DF8+p6A9Spyuy67ShOq42rOkHWi7eUe3Ua99Zo5lZfGC6lJJWkeoK4k9jQFT3Pl7czhTXimG2XheA==}
+  /minimatch/6.2.0:
+    resolution: {integrity: sha512-sauLxniAmvnhhRjFwPNnJKaPFYyddAgbYdeUpHULtCT/GhzdCx/MDNy+Y40lBxTQUrMzDE8e0S43Z5uqfO0REg==}
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
@@ -6359,8 +6359,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates/16.7.4:
-    resolution: {integrity: sha512-joYzlwYN4I3QDOOcAoaFS4qo/Vq1fZN86b14pjyiJw82NxerY+Zk1MzMHKAsKypKlSANjFO4CibdkDVlKQ7IKg==}
+  /npm-check-updates/16.7.5:
+    resolution: {integrity: sha512-g+U/cxA0iTvU/syX0EjXWtV10joEKQlN5s6DCFdvpv6eXSGbSYpOjOtifiyopSekdPnjogVuIDtxNlVdJECR8w==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -6377,9 +6377,9 @@ packages:
       json-parse-helpfulerror: 1.0.3
       jsonlines: 0.1.1
       lodash: 4.17.21
-      minimatch: 6.1.6
+      minimatch: 6.2.0
       p-map: 4.0.0
-      pacote: 15.0.8
+      pacote: 15.1.0
       parse-github-url: 1.0.2
       progress: 2.0.3
       prompts-ncu: 2.5.1
@@ -6661,8 +6661,8 @@ packages:
       semver: 7.3.8
     dev: true
 
-  /pacote/15.0.8:
-    resolution: {integrity: sha512-UlcumB/XS6xyyIMwg/WwMAyUmga+RivB5KgkRwA1hZNtrx+0Bt41KxHCvg1kr0pZ/ZeD8qjhW4fph6VaYRCbLw==}
+  /pacote/15.1.0:
+    resolution: {integrity: sha512-FFcjtIl+BQNfeliSm7MZz5cpdohvUV1yjGnqgVM4UnVF7JslRY0ImXAygdaCDV0jjUADEWu4y5xsDV8brtrTLg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     hasBin: true
     dependencies:
@@ -6681,6 +6681,7 @@ packages:
       promise-retry: 2.0.1
       read-package-json: 6.0.0
       read-package-json-fast: 3.0.1
+      sigstore: 1.0.0
       ssri: 10.0.0
       tar: 6.1.12
     transitivePeerDependencies:
@@ -6850,6 +6851,7 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
 
   /postcss/8.4.21:
     resolution: {integrity: sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==}
@@ -7608,6 +7610,18 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
 
+  /sigstore/1.0.0:
+    resolution: {integrity: sha512-e+qfbn/zf1+rCza/BhIA//Awmf0v1pa5HQS8Xk8iXrn9bgytytVLqYD0P7NSqZ6IELTgq+tcDvLPkQjNHyWLNg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    hasBin: true
+    dependencies:
+      make-fetch-happen: 11.0.1
+      tuf-js: 1.0.0
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: true
+
   /simple-swizzle/0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
     dependencies:
@@ -8249,6 +8263,17 @@ packages:
       yargs: 17.6.2
     dev: true
 
+  /tuf-js/1.0.0:
+    resolution: {integrity: sha512-1dxsQwESDzACJjTdYHQ4wJ1f/of7jALWKfJEHSBWUQB/5UTJUx9SW6GHXp4mZ1KvdBRJCpGjssoPFGi4hvw8/A==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    dependencies:
+      make-fetch-happen: 11.0.1
+      minimatch: 6.2.0
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+    dev: true
+
   /type-check/0.3.2:
     resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
     engines: {node: '>= 0.8.0'}
@@ -8509,7 +8534,7 @@ packages:
       picocolors: 1.0.0
       source-map: 0.6.1
       source-map-support: 0.5.21
-      vite: 4.1.1_@types+node@18.11.12
+      vite: 4.1.2_@types+node@18.11.12
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8522,6 +8547,40 @@ packages:
 
   /vite/4.1.1_@types+node@18.11.12:
     resolution: {integrity: sha512-LM9WWea8vsxhr782r9ntg+bhSFS06FJgCvvB0+8hf8UWtvaiDagKYWXndjfX6kGl74keHJUcpzrQliDXZlF5yg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.11.12
+      esbuild: 0.16.17
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.12.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/4.1.2_@types+node@18.11.12:
+    resolution: {integrity: sha512-MWDb9Rfy3DI8omDQySbMK93nQqStwbsQWejXRY2EBzEWKmLAXWb1mkI9Yw2IJrc+oCvPCI1Os5xSSIBYY6DEAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
