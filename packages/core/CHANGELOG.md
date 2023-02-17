@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.24.1
+
+### Patch Changes
+
+- c4b4a20a: Improve joinAll
+
 ## 0.24.0
 
 ### Minor Changes
