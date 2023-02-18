@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.25.1
+
+### Patch Changes
+
+- d66406c9: Add Dequeue extensions
+
 ## 0.25.0
 
 ### Minor Changes
