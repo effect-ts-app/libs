@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.26.0
+
+### Minor Changes
+
+- 4679321f: Add @effect/stream
+
 ## 0.25.1
 
 ### Patch Changes
