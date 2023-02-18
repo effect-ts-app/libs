@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.27.0
+
+### Minor Changes
+
+- 39da5db8: Revert Queue changes, use Stream :)
+
 ## 0.26.0
 
 ### Minor Changes
