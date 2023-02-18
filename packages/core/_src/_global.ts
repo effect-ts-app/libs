@@ -84,7 +84,7 @@ import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
 /**
  * @tsplus global
  */
-import { Dequeue, Queue } from "@effect-app/core/Queue"
+import { Dequeue, Queue } from "@effect/io/Queue"
 
 /**
  * @tsplus global
