@@ -54,6 +54,36 @@ import { Effect, Semaphore } from "@effect/io/Effect"
 /**
  * @tsplus global
  */
+import { Stream } from "@effect/stream/Stream"
+
+/**
+ * @tsplus global
+ */
+import { Sink } from "@effect/stream/Sink"
+
+/**
+ * @tsplus global
+ */
+import { Channel } from "@effect/stream/Channel"
+
+/**
+ * @tsplus global
+ */
+import { Take } from "@effect/stream/Take"
+
+/**
+ * @tsplus global
+ */
+import { GroupBy } from "@effect/stream/GroupBy"
+
+/**
+ * @tsplus global
+ */
+import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
+
+/**
+ * @tsplus global
+ */
 import { Dequeue, Queue } from "@effect-app/core/Queue"
 
 /**

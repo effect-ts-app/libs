@@ -9,11 +9,11 @@
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
         "tsPlusTypes": [
+            "./vendor/effect-data-tsplus.json",
             "./vendor/effect-io-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
             "./vendor/effect-stream-tsplus.json",
             "./vendor/fp-ts-core-tsplus.json",
-            "./vendor/effect-data-tsplus.json",
             "./vendor/fp-ts-optic-tsplus.json"
         ]
     },
