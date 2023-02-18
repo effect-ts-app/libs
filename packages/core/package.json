@@ -217,6 +217,16 @@
         "default": "./_cjs/Prelude.cjs"
       }
     },
+    "./Queue": {
+      "import": {
+        "types": "./dist/Queue.d.ts",
+        "default": "./dist/Queue.js"
+      },
+      "require": {
+        "types": "./dist/Queue.d.ts",
+        "default": "./_cjs/Queue.cjs"
+      }
+    },
     "./Set": {
       "import": {
         "types": "./dist/Set.d.ts",

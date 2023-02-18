@@ -54,7 +54,7 @@ import { Effect, Semaphore } from "@effect/io/Effect"
 /**
  * @tsplus global
  */
-import { Queue } from "@effect/io/Queue"
+import { Dequeue, Queue } from "@effect-app/core/Queue"
 
 /**
  * @tsplus global
@@ -188,6 +188,8 @@ import type { lazyGetter } from "@effect-app/core/utils"
  */
 import { Debug } from "@effect/io/Debug"
 
+// TODO: these may be problematic global imports causing bundling issues?
+// "import type {} from" doesn't work outside this package
 import "./_global.ext.js"
 import "./Array.js"
 // import "./Aspects.js"
@@ -197,5 +199,6 @@ import "./Either.js"
 import "./global.js"
 import "./Optic.js"
 import "./Option.js"
+import "./Queue.js"
 import "./Tag.js"
 import "./Unify.js"
