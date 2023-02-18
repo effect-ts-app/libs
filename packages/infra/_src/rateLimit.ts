@@ -116,7 +116,7 @@ export function naiveRateLimit(
   ) =>
     items.chunk(n)
       .forEachEffectWithIndex((batch, i) =>
-        ((i === 0) ? Effect.unit : Effect.unit.delay(d))
+        ((i === 0) ? Effect.unit : Effect.sleep(d))
           .zipRight(
             batch.forEachEffectPar(forEachItem)
               .withParallelism(n)
