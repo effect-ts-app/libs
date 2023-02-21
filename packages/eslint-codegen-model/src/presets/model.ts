@@ -23,12 +23,14 @@ function normalise(str: string) {
 // TODO: get shared compiler host...
 import { ESLintUtils } from "@typescript-eslint/utils"
 export const model: Preset<{
-  exclude?: string
-}> = ({ meta }, context: any) => {
+  writeFullTypes?: boolean
+}> = ({ meta, options }, context: any) => {
   if (!context.parserOptions.project) {
     console.warn(`${meta.filename}: Cannot run ESLint Model plugin, because no TS Compiler is enabled`)
     return meta.existingContent
   }
+
+  const writeFullTypes = !!options.writeFullTypes
 
   try {
     // option to exclude some methods
@@ -87,7 +89,7 @@ export const model: Preset<{
     // const nodes = dataFirstDeclarations.map(createPipeableFunctionDeclaration)
     // const expectedContent = nodes.map((node) => printNode(node, sourceFile)).join("\n")
 
-    const pn = processNode(program.getTypeChecker(), sourceFile)
+    const pn = processNode(program.getTypeChecker(), sourceFile, writeFullTypes)
     let abc: (string[] | undefined)[] = []
     // TODO: must return void, cannot use getChildren() etc, or it wont work, no idea why!  
     sourceFile.forEachChild(c => {abc = abc.concat(pn(c))})

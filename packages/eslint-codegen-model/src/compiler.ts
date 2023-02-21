@@ -27,14 +27,41 @@ function sortIt(str: string) {
 
 const debug = false // true
 
-export function processNode(tc: ts.TypeChecker, root: ts.Node) {
+export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = false) {
   return (n: ts.Node) => {
     if (/*ts.isClassDeclaration(n) || ts.isTypeAliasDeclaration(n)*/ true) {
       const constructorName = (n as any).name?.escapedText
 
+      // TODO: Remove requirement
       if (!constructorName?.endsWith("Constructor")) {
         //console.log("$$$constructorName doesnt end with Constructor", constructorName)
         return
+      }
+      const modelName = constructorName.replace("Constructor", "")
+
+      if (!writeFullTypes) {
+        return [
+          `export interface ${modelName} extends ParsedShapeOfCustom<typeof ${modelName}> {}`,
+          `export namespace ${modelName} {`,
+          `  /**`,
+          `   * @tsplus type ${modelName}.Encoded`,
+          `   */`,
+          `  export interface Encoded extends EncodedOf<typeof ${modelName}> {}`,
+          `  export const Encoded: EncodedOps = {}`,
+          // `  export const Encoded: EncodedOps = { $: {} }`,
+          // `  /**`,
+          // `   * @tsplus type ${modelName}.Encoded/Aspects`,
+          // `   */`,
+          // `  export interface EncodedAspects {}`,
+          `  /**`,
+          `   * @tsplus type ${modelName}.Encoded/Ops`,
+          `   */`,
+          `  export interface EncodedOps {}`,
+          "  export interface ConstructorInput",
+          `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
+          `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+          "}",
+        ]
       }
 
       //console.log("$$$ constructorName", constructorName)
@@ -204,7 +231,6 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node) {
         throw new Error("No encoded result")
       }
 
-      const modelName = constructorName.replace("Constructor", "")
 
       const encoded = result.encoded.filter(x => !!x)
       const parsed = result.parsed.filter(x => !!x)
@@ -216,7 +242,8 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node) {
         `   * @tsplus type ${modelName}.Encoded`,
         `   */`,
         `  export interface Encoded {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
-        `  export const Encoded: EncodedOps = { $: {} }`,
+        `  export const Encoded: EncodedOps = {}`,
+        // `  export const Encoded: EncodedOps = { $: {} }`,
         // `  /**`,
         // `   * @tsplus type ${modelName}.Encoded/Aspects`,
         // `   */`,
