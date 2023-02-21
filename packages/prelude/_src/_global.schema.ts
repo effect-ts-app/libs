@@ -14,6 +14,7 @@ import {
   defaultProp,
   Email,
   EncodedOf,
+  EncodedFromApi,
   Encoder,
   enhanceClassUnion,
   enhanceUnion,

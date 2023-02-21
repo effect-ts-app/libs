@@ -45,7 +45,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           `  /**`,
           `   * @tsplus type ${modelName}.Encoded`,
           `   */`,
-          `  export interface Encoded extends EncodedOf<typeof ${modelName}> {}`,
+          `  export interface Encoded extends EncodedFromApi<typeof ${modelName}> {}`,
           `  export const Encoded: EncodedOps = {}`,
           // `  export const Encoded: EncodedOps = { $: {} }`,
           // `  /**`,
