@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.12.1
+
+### Patch Changes
+
+- 315487e5: Fix unneeded interface
+
 ## 0.12.0
 
 ### Minor Changes
