@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.12.0
+
+### Minor Changes
+
+- 0ed16973: Disable full-type generation by default
+
 ## 0.11.0
 
 ### Minor Changes
