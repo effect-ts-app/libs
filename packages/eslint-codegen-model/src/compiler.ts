@@ -41,7 +41,6 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
 
       if (!writeFullTypes) {
         return [
-          `export interface ${modelName} extends ParsedShapeOfCustom<typeof ${modelName}> {}`,
           `export namespace ${modelName} {`,
           `  /**`,
           `   * @tsplus type ${modelName}.Encoded`,
