@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.21.14
+
+### Patch Changes
+
+- 28d5530b: Fix Encoded
+
 ## 0.21.13
 
 ### Patch Changes

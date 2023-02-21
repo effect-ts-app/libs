@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.12.2
+
+### Patch Changes
+
+- 28d5530b: Fix Encoded
+
 ## 0.12.1
 
 ### Patch Changes
