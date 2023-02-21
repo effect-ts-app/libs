@@ -44,5 +44,8 @@
     "composables",
     "pipeable",
     "tsplus"
-  ]
+  ],
+  "files.watcherExclude": {
+    "**/target": true
+  }
 }

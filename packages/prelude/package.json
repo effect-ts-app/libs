@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.12",
+    "@effect/io": "^0.1.13",
     "@fp-ts/core": "^0.2.1",
     "@effect/data": "^0.1.2",
     "date-fns": "^2.29.3",
@@ -14,15 +14,15 @@
     "nanoid": "^4.0.1",
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
-    "ts-pattern": "^4.1.4",
+    "ts-pattern": "^4.2.0",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
-    "@babel/cli": "^7.20.7",
+    "@babel/cli": "^7.21.0",
     "@types/faker": "5.5.9",
-    "@types/node": "~18.13.0",
+    "@types/node": "~18.14.0",
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.12",
     "faker": "^5.5.3",

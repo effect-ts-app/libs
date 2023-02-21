@@ -55,8 +55,8 @@
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
-        "@babel/cli": "^7.20.7",
-        "@babel/core": "^7.20.12",
+        "@babel/cli": "^7.21.0",
+        "@babel/core": "^7.21.0",
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.20.11",
         "@changesets/cli": "^2.26.0",
@@ -70,7 +70,7 @@
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.170",
         "@types/lodash": "^4.14.191",
-        "@types/node": "~18.13.0",
+        "@types/node": "~18.14.0",
         "@typescript-eslint/eslint-plugin": "^5.52.0",
         "@typescript-eslint/parser": "^5.52.0",
         "@typescript-eslint/scope-manager": "^5.52.0",
@@ -99,7 +99,7 @@
         "tsconfig-paths": "^4.1.2",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.6",
-        "vite": "^4.1.2",
+        "vite": "^4.1.3",
         "vitest": "^0.28.5"
     }
 }

@@ -10,8 +10,8 @@
     "node-watch": "^0.7.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@types/node": "~18.13.0",
+    "@babel/cli": "^7.21.0",
+    "@types/node": "~18.14.0",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",

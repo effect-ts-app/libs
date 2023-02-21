@@ -10,7 +10,7 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/io": "^0.1.12",
+    "@effect/io": "^0.1.13",
     "@fp-ts/core": "^0.2.1",
     "@effect/data": "^0.1.2",
     "@sendgrid/helpers": "^7.7.0",
@@ -26,11 +26,11 @@
     "redlock": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
+    "@babel/cli": "^7.21.0",
     "@effect-app/compiler": "workspace:*",
     "@sentry/node": "^7.38.0",
     "@types/express": "^4.17.17",
-    "@types/node": "~18.13.0",
+    "@types/node": "~18.14.0",
     "@types/proper-lockfile": "^4.1.2",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.4",
