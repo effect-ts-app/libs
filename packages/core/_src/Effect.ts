@@ -1,12 +1,12 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
+import { Option } from "@effect/data/Option"
 import * as Def from "@effect/io/Deferred"
 import * as Eff from "@effect/io/Effect"
 import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
-import { Option } from "@effect/data/Option"
 import { curry, flow, pipe } from "./Function.js"
 import type { Chunk } from "./Prelude.js"
 
