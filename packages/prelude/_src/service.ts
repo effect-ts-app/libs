@@ -72,7 +72,7 @@ export function TagClass<T extends Tag<any>>(): T & {
 } {
   abstract class TagClass {}
 
-  return Object.assign(TagClass, assignTag<T>()) as any
+  return assignTag<T>()(TagClass) as any
 }
 
 export function ServiceTaggedClass<T extends Tag<any>>(): <Key extends PropertyKey>(
@@ -92,6 +92,6 @@ export function ServiceTaggedClass<T extends Tag<any>>(): <Key extends PropertyK
       }
     }
 
-    return Object.assign(ServiceTaggedClassC, assignTag<T>()) as any
+    return assignTag<T>()(ServiceTaggedClassC) as any
   }
 }
