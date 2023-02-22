@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@effect/core': ^0.0.16
+  '@effect/data': ^0.2.0
   '@types/node': ~18.11.12
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
@@ -11,21 +11,21 @@ patchedDependencies:
   '@typescript-eslint/scope-manager@5.53.0':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.53.0.patch
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
-  eslint-plugin-unused-imports@2.0.0:
-    hash: tnum7sl7jcutfljbv5jztcescq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
-  typescript@5.0.0-tsplus.20230205:
-    hash: 3fpnb3exznmanjmuxoeacxgduu
-    path: patches/typescript@5.0.0-tsplus.20230205.patch
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
+  typescript@5.0.0-tsplus.20230205:
+    hash: 3fpnb3exznmanjmuxoeacxgduu
+    path: patches/typescript@5.0.0-tsplus.20230205.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: tnum7sl7jcutfljbv5jztcescq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
   date-fns@2.29.3:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
     path: patches/date-fns@2.29.3.patch
@@ -178,11 +178,9 @@ importers:
   packages/core:
     specifiers:
       '@babel/cli': ^7.21.0
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@effect/match': ^0.0.11
       '@effect/stream': ^0.4.0
-      '@fp-ts/core': ^0.2.1
       '@fp-ts/optic': ^0.2.0
       '@types/uuid': ^9.0.1
       '@types/validator': ^13.7.12
@@ -197,11 +195,9 @@ importers:
       vitest: ^0.28.5
       winston: ^3.8.2
     dependencies:
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@effect/match': 0.0.11
       '@effect/stream': 0.4.0
-      '@fp-ts/core': 0.2.1
       '@fp-ts/optic': 0.2.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
@@ -265,9 +261,8 @@ importers:
       '@effect-app/infra-adapters': workspace:*
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@fp-ts/core': ^0.2.1
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
       '@sentry/node': ^7.38.0
@@ -302,9 +297,8 @@ importers:
       '@effect-app/infra-adapters': link:../infra-adapters
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@fp-ts/core': 0.2.1
       '@sendgrid/helpers': 7.7.0
       '@sendgrid/mail': 7.7.0
       change-case: 4.1.2
@@ -342,9 +336,8 @@ importers:
       '@azure/service-bus': ^7.8.0
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@fp-ts/core': ^0.2.1
       '@fp-ts/optic': ^0.2.0
       '@types/connect': ^3.4.35
       '@types/dynamodb': ^1.3.2
@@ -363,9 +356,8 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@fp-ts/core': 0.2.1
       '@fp-ts/optic': 0.2.0
       query-string: 8.1.0
     devDependencies:
@@ -403,9 +395,8 @@ importers:
       '@effect-app/compiler': workspace:*
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@fp-ts/core': ^0.2.1
       '@types/faker': 5.5.9
       '@types/node': ~18.11.12
       '@types/uuid': ^9.0.1
@@ -418,7 +409,7 @@ importers:
       path-parser: ^6.1.0
       query-string: ^8.1.0
       ts-node: ^10.9.1
-      ts-pattern: ^4.2.0
+      ts-pattern: ^4.2.1
       typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz
       uuid: ^9.0.0
       validator: ^13.9.0
@@ -426,15 +417,14 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@fp-ts/core': 0.2.1
       date-fns: 2.29.3_g5hqt5bhnjezqo5vnkpprfkba4
       lodash: 4.17.21
       nanoid: 4.0.1
       path-parser: 6.1.0
       query-string: 8.1.0
-      ts-pattern: 4.2.0
+      ts-pattern: 4.2.1
       uuid: 9.0.0
       validator: 13.9.0
     devDependencies:
@@ -486,9 +476,8 @@ importers:
   packages/schema:
     specifiers:
       '@effect-app/core': workspace:*
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@fp-ts/core': ^0.2.1
       '@fp-ts/optic': ^0.2.0
       '@types/uuid': ^9.0.1
       '@types/validator': ^13.7.12
@@ -503,9 +492,8 @@ importers:
       vitest: ^0.28.5
     dependencies:
       '@effect-app/core': link:../core
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@fp-ts/core': 0.2.1
       '@fp-ts/optic': 0.2.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
@@ -528,9 +516,8 @@ importers:
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
       '@effect-app/vue': workspace:*
-      '@effect/data': ^0.1.3
+      '@effect/data': ^0.2.0
       '@effect/io': ^0.2.0
-      '@fp-ts/core': ^0.2.1
       '@fp-ts/optic': ^0.2.0
       '@rollup/pluginutils': ^5.0.2
       '@types/node': ~18.11.12
@@ -547,9 +534,8 @@ importers:
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
       '@effect-app/vue': 'link:'
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
-      '@fp-ts/core': 0.2.1
       '@fp-ts/optic': 0.2.0
       query-string: 8.1.0
       swrv: 1.0.3_vue@3.2.47
@@ -1274,14 +1260,14 @@ packages:
     resolution: {integrity: sha512-xOZEJm/8R9DF0dUEzvAQfaW5e0YY4tmHYTlwyAZEYQvvLg8xx0K+CtGBgdcKHKcNe7FdjRUz+qO2+NErAc82Cg==}
     dev: true
 
-  /@effect/data/0.1.3:
-    resolution: {integrity: sha512-2z0DQ/rPa/cpZkc32PAFNeufD3Jdgdh9NE5b74CeBwr1JUyJOj2IdOLnGNjm+MAwua7+YiXGvJhupe3wrbFiSg==}
+  /@effect/data/0.2.0:
+    resolution: {integrity: sha512-1hSNjR0LX3zsGxCB8wykSNZ4OHXoA9NjeWlxgjmxcCOkYyMH+3exxJu/9GbkXt/35zaZE0KDFyMwfvrr20zRKw==}
     dev: false
 
   /@effect/io/0.2.0:
     resolution: {integrity: sha512-ILZc8+qO4CbIYef1KxU3IIXuZh+04I5IOh3xW0voT8tKuXSvXGeRf4wsBoxo6+HQwURfp8I7FVghPROwXRkbJw==}
     dependencies:
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
     dev: false
 
   /@effect/language-service/0.0.19_izp2ue34jjv4swyrhg2ux4ha3e:
@@ -1292,17 +1278,10 @@ packages:
     dev: true
     patched: true
 
-  /@effect/match/0.0.11:
-    resolution: {integrity: sha512-tDvvvy2uOtXTHvwSDpaFXpl/LSXbKohAMRoloJSgIUs5P7B3pza9WdZeGUWJ0xG9iyKPoTRZQ+lIMR25yiTYRA==}
-    dependencies:
-      '@fp-ts/core': 0.1.1
-      '@fp-ts/schema': 0.1.3
-    dev: false
-
   /@effect/stream/0.4.0:
     resolution: {integrity: sha512-GLZyWoUIIwc7HszdhjWCcnIye8aRHElt8A0jvdO8z/XG0uaEFT5KDhXZ/3eihIQOZfFs5X74MVCQyMGloXAUMA==}
     dependencies:
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@effect/io': 0.2.0
     dev: false
 
@@ -1571,10 +1550,6 @@ packages:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
     dev: true
 
-  /@fp-ts/core/0.1.1:
-    resolution: {integrity: sha512-7vQnrnvJAMrXgIwt0qQNhXkPDtm4l8vwql8EvXeY47v/FwnWpDvt1HISoO9Kq3am5SZ0A8Av+4NqPab2FRdKxw==}
-    dev: false
-
   /@fp-ts/core/0.2.1:
     resolution: {integrity: sha512-gjp/LTCsxqe8KYvPOcMcsEXT+J6tKC4v1nNqK4RZsZcB6pMcQgrullh5Oa371O9WHSULivpgOvjWyeioFevg5g==}
     dev: false
@@ -1585,25 +1560,11 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/data/0.1.1:
-    resolution: {integrity: sha512-hgsoSDKP01kGY+g/Ino+QX3VEqiPnf0mrhKujMajT4ma0w82i4u0nMEPbBykyMxscQirFemwl7CnWn7G3TadcA==}
-    dependencies:
-      '@fp-ts/core': 0.1.1
-    dev: false
-
   /@fp-ts/optic/0.2.0:
     resolution: {integrity: sha512-Cr3A05Q4kMXx5JBP71FOBLqyuE9g0Ol3XMkm6q75QDl2rElrTO/kQTabb3VAEgEf8t5SQvjEMK/9JFDIBZ1SSA==}
     dependencies:
-      '@effect/data': 0.1.3
+      '@effect/data': 0.2.0
       '@fp-ts/core': 0.2.1
-    dev: false
-
-  /@fp-ts/schema/0.1.3:
-    resolution: {integrity: sha512-rdyqwodZPqbY96mAUg3cAEKK7WsJ3JqZWDfBShSoPvxwB+fnFw1Rjhg3tsTpBhBN1oGlSHatIRJQ+QcoaAU+uA==}
-    dependencies:
-      '@fp-ts/core': 0.1.1
-      '@fp-ts/data': 0.1.1
-      fast-check: 3.6.3
     dev: false
 
   /@gar/promisify/1.1.3:
@@ -8288,8 +8249,8 @@ packages:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  /ts-pattern/4.2.0:
-    resolution: {integrity: sha512-Bmi5G8KQyTnkcpRYzAwgPj8nvIodm2S7aneJtILrW0/2ZzqXQbl5nC5YjCiZUj5Iqihl8MLH+TK7pmCAZ61xJg==}
+  /ts-pattern/4.2.1:
+    resolution: {integrity: sha512-lXCmHZb01QOM9HdCLvisCGUH9ATdKPON9UaUvwe007gJAhuSBhRWIAIowys5QqNxEq6odWctfMIdI96vzjnOMQ==}
     dev: false
 
   /ts-toolbelt/9.6.0:

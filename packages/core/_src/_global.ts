@@ -136,10 +136,10 @@ import { Ref } from "@effect/io/Ref"
  */
 import { Scope } from "@effect/io/Scope"
 
-/**
- * @tsplus global
- */
-import { Matcher } from "@effect/match"
+// /**
+//  * @tsplus global
+//  */
+// import { Matcher } from "@effect/match"
 
 /**
  * @tsplus global
