@@ -7,13 +7,13 @@ import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
 import type * as CNK from "@effect/data/Chunk"
-import type * as EITHER from "@fp-ts/core/Either"
-import type * as O from "@fp-ts/core/Option"
+import type * as EITHER from "@effect/data/Either"
+import type * as O from "@effect/data/Option"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
   // @ts-expect-error abc
-  export * from "@fp-ts/core/Either"
+  export * from "@effect/data/Either"
 }
 /** @tsplus type fp-ts/core/Either */
 export type Either<E, A> = EITHER.Either<E, A>
@@ -27,7 +27,7 @@ export type Order<A> = ORD.Order<A>
 
 export namespace Option {
   // @ts-expect-error abc
-  export * from "@fp-ts/core/Option"
+  export * from "@effect/data/Option"
 }
 /**
  * @tsplus companion fp-ts/core/Option.Ops

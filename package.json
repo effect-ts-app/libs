@@ -43,7 +43,7 @@
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },
     "resolutions": {
-        "@effect/core": "^0.0.16",
+        "@effect/data": "^0.2.0",
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
@@ -99,7 +99,7 @@
         "tsconfig-paths": "^4.1.2",
         "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
         "typescript-transform-paths": "^3.4.6",
-        "vite": "^4.1.3",
+        "vite": "^4.1.4",
         "vitest": "^0.28.5"
     }
 }

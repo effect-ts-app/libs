@@ -2,7 +2,7 @@
 
 import "./operators.js"
 
-import { not } from "@fp-ts/core/Predicate"
+import { not } from "@effect/data/Predicate"
 import { identity } from "./Function.js"
 
 import { Option } from "./Option.js"

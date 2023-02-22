@@ -1,8 +1,8 @@
 import * as Chunk from "@effect/data/Chunk"
 import * as EQ from "@effect/data/Equal"
+import { pipe } from "@effect/data/Function"
 import * as Hash from "@effect/data/Hash"
 import { ConfigSecretTypeId } from "@effect/io/Config/Secret"
-import { pipe } from "@fp-ts/core/Function"
 import type * as ConfigSecretURL from "../SecretURL.js"
 
 /** @internal */
