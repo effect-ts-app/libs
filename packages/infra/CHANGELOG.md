@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.28.0
+
+### Minor Changes
+
+- b967055c: Replace fp-ts/core with effect/data
+
+### Patch Changes
+
+- Updated dependencies [b967055c]
+  - @effect-app/infra-adapters@0.22.0
+  - @effect-app/prelude@0.22.0
+  - @effect-app/schema@0.20.0
+  - @effect-app/core@0.29.0
+
 ## 0.27.5
 
 ### Patch Changes

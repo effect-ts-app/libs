@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.14.0
+
+### Minor Changes
+
+- b967055c: Replace fp-ts/core with effect/data
+
 ## 0.13.0
 
 ### Minor Changes
