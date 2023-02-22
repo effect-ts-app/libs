@@ -1,5 +1,5 @@
 import * as CNK from "@effect/data/Chunk"
-import * as ORD from "@fp-ts/core/typeclass/Order"
+import * as ORD from "@effect/data/typeclass/Order"
 
 /**
  * @tsplus pipeable effect/data/Chunk sortWith

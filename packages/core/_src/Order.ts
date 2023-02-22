@@ -1,6 +1,6 @@
-import type { Ordering } from "@fp-ts/core/Ordering"
+import type { Ordering } from "@effect/data/Ordering"
 
-import * as Ord from "@fp-ts/core/typeclass/Order"
+import * as Ord from "@effect/data/typeclass/Order"
 
 export type { Ordering }
 
@@ -30,4 +30,4 @@ export const date: Order<Date> = Ord.contramap((date: Date) => date.valueOf())(n
  */
 export const string: Order<string> = { compare }
 
-export * from "@fp-ts/core/typeclass/Order"
+export * from "@effect/data/typeclass/Order"

@@ -5,7 +5,6 @@ module.exports = {
             "@effect/core",
             "@effect/cache",
             "@effect/io",
-            "@fp-ts/core",
             "@fp-ts/codec",
             "@effect/data",
             "@fp-ts/schema",

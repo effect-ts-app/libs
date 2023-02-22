@@ -1,4 +1,4 @@
-export * from "@fp-ts/core/Either"
+export * from "@effect/data/Either"
 
 /**
  * @tsplus pipeable fp-ts/core/Either mapBoth

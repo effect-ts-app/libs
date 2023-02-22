@@ -1,4 +1,4 @@
-import type { Option } from "@fp-ts/core/Option"
+import type { Option } from "@effect/data/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<infer R, any, any>

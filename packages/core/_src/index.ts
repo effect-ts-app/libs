@@ -1,7 +1,7 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
 export * as Chunk from "@effect/data/Chunk"
-export * as Either from "@fp-ts/core/Either"
-export * as Option from "@fp-ts/core/Option"
+export * as Either from "@effect/data/Either"
+export * as Option from "@effect/data/Option"
 export * as Optic from "@fp-ts/optic"
 
 export * as Order from "@effect-app/core/Order"
