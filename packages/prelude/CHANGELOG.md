@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.22.1
+
+### Patch Changes
+
+- d89f88cb: add assignTag, TagClass, ServiceTaggedClass
+
 ## 0.22.0
 
 ### Minor Changes
