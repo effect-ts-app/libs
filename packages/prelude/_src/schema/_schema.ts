@@ -775,17 +775,17 @@ export class PreparedLens<S, T> {
 }
 
 /**
- * @tsplus fluent PreparedLens modify
+ * @tsplus getter PreparedLens modify
  */
-export function modify<S, T>(l: PreparedLens<S, T>, mod: (t: T) => T) {
-  return l.set(mod(l.get()))
+export function modify<S, T>(l: PreparedLens<S, T>) {
+  return (mod: (t: T) => T) => l.set(mod(l.get()))
 }
 
 /**
- * @tsplus fluent PreparedLens replace
+ * @tsplus getter PreparedLens replace
  */
-export function replace<S, T>(l: PreparedLens<S, T>, t: T) {
-  return l.set(t)
+export function replace<S, T>(l: PreparedLens<S, T>) {
+  return (t: T) => l.set(t)
 }
 
 export function makePreparedLenses<S, Props extends PropertyRecord>(
