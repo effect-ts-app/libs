@@ -75,7 +75,7 @@ importers:
       madge: ^6.0.0
       module-alias: ^2.2.2
       nodemon: ^2.0.20
-      npm-check-updates: ^16.7.5
+      npm-check-updates: ^16.7.9
       ts-node: ^10.9.1
       ts-transform-paths: ^3.0.0
       tsc-watch: ^6.0.0
@@ -127,7 +127,7 @@ importers:
       madge: 6.0.0
       module-alias: 2.2.2
       nodemon: 2.0.20
-      npm-check-updates: 16.7.5
+      npm-check-updates: 16.7.9
       ts-transform-paths: 3.0.0
       tsc-watch: 6.0.0_gmyzgtbobtwqxr3kpifzlndcxy
       tsconfig-paths: 4.1.2
@@ -222,7 +222,7 @@ importers:
       '@babel/types': 7.21.0
       '@types/babel__generator': 7.6.4
       '@types/babel__traverse': 7.18.3
-      '@types/glob': 8.0.1
+      '@types/glob': 8.1.0
       '@types/lodash': 4.14.191
       eslint-plugin-codegen: 0.17.0
       glob: 8.1.0
@@ -246,7 +246,7 @@ importers:
       '@babel/types': 7.21.0
       '@types/babel__generator': 7.6.4
       '@types/babel__traverse': 7.18.3
-      '@types/glob': 8.0.1
+      '@types/glob': 8.1.0
       '@types/lodash': 4.14.191
       madge: 6.0.0
       ts-node: 10.9.1_gmyzgtbobtwqxr3kpifzlndcxy
@@ -2029,8 +2029,8 @@ packages:
     resolution: {integrity: sha512-uCx6mP3UY5SIO14XlspxsGjgaemrxpssJI0Ol+GfhxtcKpv9pgRZYsS4eeKeHVLje6Qtc8lGszuBI461+gVZBA==}
     dev: true
 
-  /@types/glob/8.0.1:
-    resolution: {integrity: sha512-8bVUjXZvJacUFkJXHdyZ9iH1Eaj5V7I8c4NdH5sQJsdXkqT4CA5Dhb4yb4VE/3asyx4L9ayZr1NIhTsWHczmMw==}
+  /@types/glob/8.1.0:
+    resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 18.11.12
@@ -6413,8 +6413,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates/16.7.5:
-    resolution: {integrity: sha512-g+U/cxA0iTvU/syX0EjXWtV10joEKQlN5s6DCFdvpv6eXSGbSYpOjOtifiyopSekdPnjogVuIDtxNlVdJECR8w==}
+  /npm-check-updates/16.7.9:
+    resolution: {integrity: sha512-2/T9PB0W1uABB1N11jdnPauqNLXMhPUyC0DBeeGlUktcGl/412f40iqFsnNGCqIAag/C37SjLNiW2/yuD7Salw==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
