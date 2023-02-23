@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.22.4
+
+### Patch Changes
+
+- Improve curry support for PreparedLens
+
 ## 0.22.3
 
 ### Patch Changes
