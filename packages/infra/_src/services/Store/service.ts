@@ -75,19 +75,17 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
   remove: (e: PM) => Effect<never, never, void>
 }
 
-export interface StoreMaker {
-  make: <E extends PersistenceModelType<Id>, Id extends string, Id2 extends Id>(
+/**
+ * @tsplus type StoreMaker
+ * @tsplus companion StoreMaker.Ops
+ */
+export abstract class StoreMaker extends TagClass<Tag<StoreMaker>>() {
+  abstract make: <E extends PersistenceModelType<Id>, Id extends string, Id2 extends Id>(
     name: string,
     seed?: Effect<never, never, ReadonlyMap<Id2, E>>,
     config?: StoreConfig<E>
   ) => Effect<never, never, Store<E, Id>>
 }
-
-/**
- * @tsplus type StoreMaker.Ops
- */
-export interface StoreMakerOps extends Tag<StoreMaker> {}
-export const StoreMaker: StoreMakerOps = Tag<StoreMaker>()
 
 /**
  * @tsplus static ContextMap.Ops Make

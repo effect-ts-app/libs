@@ -4,14 +4,13 @@ import type sgMail from "@sendgrid/mail"
 
 import type { RequestContext } from "../../RequestContext.js"
 
-export interface Emailer {
-  sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContext, Error | ResponseError, void>
-}
-
 /**
- * @tsplus type Emailer.Ops
+ * @tsplus type Emailer
+ * @tsplus companion Emailer.Ops
  */
-export interface EmailerOps extends Tag<Emailer> {}
+export abstract class Emailer extends TagClass<Tag<Emailer>>() {
+  abstract sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContext, Error | ResponseError, void>
+}
 
 export interface SendgridConfig {
   subjectPrefix: string
@@ -19,9 +18,6 @@ export interface SendgridConfig {
   defaultFrom: Email | { name?: ReasonableString; email: Email }
   apiKey: ConfigSecret
 }
-
-export const Emailer: EmailerOps = Tag<Emailer>()
-
 export type EmailMsg = sgMail.MailDataRequired
 export type EmailTemplateMsg = MailData & { templateId: string }
 
