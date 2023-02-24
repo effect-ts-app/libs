@@ -1,4 +1,4 @@
-import { getMetadataFromSchemaOrProp, isSchema, Parser, These } from "@effect-app/prelude/schema"
+import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These } from "@effect-app/prelude/schema"
 import type {
   AnyProperty,
   EncodedOf,
@@ -67,6 +67,15 @@ function buildFieldInfo(
   const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
   const parse = Parser.for(schema)
 
+  function renderError(e: any) {
+    const err = drawError(e)
+    return `The entered value is not a valid ${
+      capitalize(
+        fieldKey.toString()
+      )
+    } (${err.slice(err.indexOf("expected"))})`
+  }
+
   const info = {
     type: "text", // TODO: various types
     rules: [
@@ -87,19 +96,10 @@ function buildFieldInfo(
           These.result,
           _ =>
             _.match(
-              () =>
-                `The entered value is not a valid ${
-                  capitalize(
-                    fieldKey.toString()
-                  )
-                }`,
+              renderError,
               ([_, optErr]) =>
                 optErr.isSome()
-                  ? `The entered value is not a valid ${
-                    capitalize(
-                      fieldKey.toString()
-                    )
-                  }`
+                  ? renderError(optErr.value)
                   : true
             )
         )
