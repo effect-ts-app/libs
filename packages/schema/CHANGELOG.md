@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.21.0
+
+### Minor Changes
+
+- 00d34a69: Remove unneeded `self` in annotations
+
 ## 0.20.1
 
 ### Patch Changes

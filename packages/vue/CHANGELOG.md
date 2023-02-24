@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.21.0
+
+### Minor Changes
+
+- d01ada27: Improve validation error display
+
+### Patch Changes
+
+- Updated dependencies [00d34a69]
+- Updated dependencies [d01ada27]
+  - @effect-app/schema@0.21.0
+  - @effect-app/vue@0.21.0
+  - @effect-app/prelude@0.22.5
+
 ## 0.20.4
 
 ### Patch Changes
