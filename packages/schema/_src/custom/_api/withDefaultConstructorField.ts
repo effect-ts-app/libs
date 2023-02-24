@@ -13,7 +13,6 @@ export type OptionalKey<ConstructorInput, Key extends keyof ConstructorInput> =
 export const withDefaultConstructorFieldIdentifier = S.makeAnnotation<{
   key: PropertyKey
   value: LazyArg<unknown>
-  self: S.SchemaAny
 }>()
 
 export function withDefaultConstructorField<
@@ -37,7 +36,7 @@ export function withDefaultConstructorField<
       self,
       S.constructor((u: any) => constructSelf(typeof u[key] !== "undefined" ? u : { ...u, [key]: value() })),
       withDefaults,
-      S.annotate(withDefaultConstructorFieldIdentifier, { self, key, value })
+      S.annotate(withDefaultConstructorFieldIdentifier, { key, value })
     )
   }
 }

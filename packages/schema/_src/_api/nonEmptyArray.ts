@@ -47,7 +47,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     S.encoder(u => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     S.withDefaults,
-    S.annotate(minLengthIdentifier, { self, minLength: 1 }),
+    S.annotate(minLengthIdentifier, { minLength: 1 }),
     S.annotate(S.arrayIdentifier, { self })
   )
 }

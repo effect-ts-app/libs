@@ -2,7 +2,7 @@ import { pipe } from "@effect-app/core/Function"
 import * as MO from "../_schema.js"
 import type { NonEmptyBrand } from "../custom.js"
 
-export const maxLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; maxLength: number }>()
+export const maxLengthIdentifier = MO.makeAnnotation<{ maxLength: number }>()
 
 export function maxLength<Brand>(maxLength: number) {
   return <
@@ -20,11 +20,11 @@ export function maxLength<Brand>(maxLength: number) {
         (n): n is ParsedShape & Brand => n.length <= maxLength,
         n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { self, maxLength })
+      MO.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
-export const minLengthIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny; minLength: number }>()
+export const minLengthIdentifier = MO.makeAnnotation<{ minLength: number }>()
 
 export function minLength<Brand>(minLength: number) {
   if (minLength < 1) {
@@ -51,7 +51,7 @@ export function minLength<Brand>(minLength: number) {
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
         n => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { self, minLength })
+      MO.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -80,7 +80,7 @@ export function minSize<Brand>(minLength: number) {
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
         n => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { self, minLength })
+      MO.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -109,7 +109,7 @@ export function maxSize<Brand>(maxLength: number) {
         (n): n is ParsedShape & Brand => n.size <= maxLength,
         n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { self, maxLength })
+      MO.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
@@ -133,8 +133,8 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
         n => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { self, minLength }),
-      MO.annotate(maxLengthIdentifier, { self, maxLength })
+      MO.annotate(minLengthIdentifier, { minLength }),
+      MO.annotate(maxLengthIdentifier, { maxLength })
       /*minLength<Brand>(min), maxLength<Brand>(max)*/
     )
   }
