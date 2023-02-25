@@ -13,8 +13,8 @@ export function convertIn(v: string | null) {
   return v === null ? "" : v
 }
 
-export function convertOut(v: string, set: (v: string | null) => void) {
-  v = v.trim()
+export function convertOut(v: string | null, set: (v: string | null) => void) {
+  v = v == null ? v : v.trim()
   return set(v === "" ? null : v)
 }
 
