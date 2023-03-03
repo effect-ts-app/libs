@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.23.3
+
+### Patch Changes
+
+- Workaround tag
+
 ## 0.23.2
 
 ### Patch Changes
