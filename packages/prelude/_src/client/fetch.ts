@@ -124,7 +124,7 @@ export function mapResponse<T, A>(map: (t: T) => A) {
 
 export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
   return (r: FetchResponse<T>): Effect<R, E, FetchResponse<A>> => {
-    return Effect.struct({
+    return Effect.all({
       body: map(r.body),
       headers: Effect(r.headers),
       status: Effect(r.status)

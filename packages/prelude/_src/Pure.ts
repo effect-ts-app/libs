@@ -161,7 +161,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
 ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
   return self.flatMap(x =>
     castTag<W3, S1, S3>().accessWithEffect(
-      ({ env: _ }) => Effect.struct({ log: _.log.get, state: _.state.get }) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
+      ({ env: _ }) => Effect.all({ log: _.log.get, state: _.state.get }) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
     ).map(
       (
         { log, state }
@@ -367,7 +367,7 @@ export const Pure: PureOps = {
 //   ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3>}>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
 //     return self.flatMap(x =>
 //       Effect.serviceWithEffect(tag, ({ env: _ }) =>
-//         Effect.struct({ log: _.log.get, state: _.state.get })
+//         Effect.all({ log: _.log.get, state: _.state.get })
 //         //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
 //       ).map(
 //         (

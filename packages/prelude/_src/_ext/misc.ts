@@ -48,7 +48,7 @@ export function accessLowerServices_<T extends Record<string, Tag<any>>, A>(
   fn: (services: LowerServices<T>) => A
 ) {
   return Debug.untraced(() =>
-    (Effect.struct(
+    (Effect.all(
       services.$$.keys.reduce((prev, cur) => {
         prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] =
           Effect.service(services[cur]!)
@@ -66,7 +66,7 @@ export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R
   fn: (services: LowerServices<T>) => Effect<R, E, A>
 ) {
   return Debug.untraced(() =>
-    (Effect.struct(
+    (Effect.all(
       services.$$.keys.reduce((prev, cur) => {
         prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] =
           Effect.service(services[cur]!)
@@ -84,7 +84,7 @@ export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R
 //   fn: (services: Services<T>) => A
 // ) {
 //   return Debug.untraced(() =>
-//     (Effect.struct(
+//     (Effect.all(
 //       services.$$.keys.reduce((prev, cur) => {
 //         prev[cur] = Effect.service(services[cur]!)
 //         return prev
@@ -101,7 +101,7 @@ export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R
 //   fn: (services: Services<T>) => Effect<R, E, A>
 // ) {
 //   return Debug.untraced(() =>
-//     (Effect.struct(
+//     (Effect.all(
 //       services.$$.keys.reduce((prev, cur) => {
 //         prev[cur] = Effect.service(services[cur]!)
 //         return prev
@@ -113,7 +113,7 @@ export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R
 // export function accessServices<T extends Record<string, Tag<any>>>(services: T) {
 //   return <A>(fn: (services: Services<T>) => A) =>
 //     Debug.untraced(() =>
-//       (Effect.struct(
+//       (Effect.all(
 //         services.$$.keys.reduce((prev, cur) => {
 //           prev[cur] = Effect.service(services[cur]!)
 //           return prev
@@ -125,7 +125,7 @@ export function accessLowerServicesEffect_<T extends Record<string, Tag<any>>, R
 // export function accessServicesM<T extends Record<string, Tag<any>>>(services: T) {
 //   return <R, E, A>(fn: (services: Services<T>) => Effect<R, E, A>) =>
 //     Debug.untraced(() =>
-//       (Effect.struct(
+//       (Effect.all(
 //         services.$$.keys.reduce((prev, cur) => {
 //           prev[cur] = Effect.service(services[cur]!)
 //           return prev

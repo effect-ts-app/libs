@@ -8,7 +8,7 @@ import type { RequestContext } from "../../RequestContext.js"
  * @tsplus type Emailer
  * @tsplus companion Emailer.Ops
  */
-export abstract class Emailer extends TagClass<Tag<Emailer>>() {
+export abstract class Emailer extends TagClass<Emailer>() {
   abstract sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContext, Error | ResponseError, void>
 }
 

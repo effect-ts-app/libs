@@ -8,7 +8,7 @@ export type PrinterId = ReasonableString
  * @tsplus type CUPS
  * @tsplus companion CUPS.Ops
  */
-export abstract class CUPS extends TagClass<Tag<CUPS>>() {
+export abstract class CUPS extends TagClass<CUPS>() {
   abstract print: (buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) => Effect<never, unknown, {
     stdout: string
     stderr: string

@@ -300,7 +300,7 @@ export function makeRequestHandler<
 
   return (req: express.Request, res: express.Response) => {
     return Debug.untraced(restore =>
-      Effect.struct({
+      Effect.all({
         requestContext: Effect.sync(() => {
           const requestContext = makeContext(req)
           if (req.method === "GET") {
@@ -364,7 +364,7 @@ export function makeRequestHandler<
             })
           )
             .tapErrorCause(cause =>
-              Effect.tuplePar(
+              Effect.allPar(
                 Effect(res.status(500).send()),
                 reportRequestError(cause, {
                   requestContext,

@@ -69,7 +69,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
   return ({ body, cookies, headers, params, query }: express.Request) =>
-    Effect.struct({
+    Effect.all({
       body: parsers
         .parseBody(body)
         .exit.flatMap(_ =>

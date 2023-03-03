@@ -5,7 +5,7 @@ export const OperationsId = Symbol("OperationsId")
  * @tsplus type Operations
  * @tsplus companion Operations.Ops
  */
-export abstract class Operations extends ServiceTaggedClass<Tag<Operations>>()(OperationsId) {
+export abstract class Operations extends ServiceTaggedClass<Operations>()(OperationsId) {
   abstract register: Effect<Scope, never, OperationId>
   abstract update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
   abstract find: (id: OperationId) => Effect<never, never, Option<Operation>>

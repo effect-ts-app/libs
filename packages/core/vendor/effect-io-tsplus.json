@@ -1494,6 +1494,34 @@
       ]
     },
     {
+      "definitionName": "NonEmptyArrayConfig",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/NonEmptyArrayConfig"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/NonEmptyArrayConfig.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TupleConfig",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Config/TupleConfig"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Config/TupleConfig.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "ConfigTypeId",
       "definitionKind": "const",
       "extensions": [
@@ -1501,6 +1529,17 @@
           "kind": "static",
           "typeName": "effect/io/Config.TypeId.Ops",
           "name": "ConfigTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "all",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "all"
         }
       ]
     },
@@ -1599,6 +1638,17 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "integer"
+        }
+      ]
+    },
+    {
+      "definitionName": "isConfig",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "isConfig"
         }
       ]
     },
@@ -1780,17 +1830,6 @@
       ]
     },
     {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
       "definitionName": "succeed",
       "definitionKind": "const",
       "extensions": [
@@ -1830,17 +1869,6 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "table"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "tuple"
         }
       ]
     },
@@ -3448,6 +3476,20 @@
       ]
     },
     {
+      "definitionName": "MergeRecord",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect/MergeRecord"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect/MergeRecord.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "Permit",
       "definitionKind": "interface",
       "extensions": [
@@ -3610,6 +3652,17 @@
       ]
     },
     {
+      "definitionName": "all",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "all"
+        }
+      ]
+    },
+    {
       "definitionName": "allowInterrupt",
       "definitionKind": "const",
       "extensions": [
@@ -3617,6 +3670,17 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "allowInterrupt"
+        }
+      ]
+    },
+    {
+      "definitionName": "allPar",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allPar"
         }
       ]
     },
@@ -3859,22 +3923,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "bindValue"
-        }
-      ]
-    },
-    {
-      "definitionName": "blocking",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "blocking"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "blocking"
         }
       ]
     },
@@ -6943,6 +6991,38 @@
       ]
     },
     {
+      "definitionName": "refineTagOrDie",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "refineTagOrDie"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "refineTagOrDie"
+        }
+      ]
+    },
+    {
+      "definitionName": "refineTagOrDieWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "refineTagOrDieWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "refineTagOrDieWith"
+        }
+      ]
+    },
+    {
       "definitionName": "reject",
       "definitionKind": "const",
       "extensions": [
@@ -7846,28 +7926,6 @@
       ]
     },
     {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "structPar",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "structPar"
-        }
-      ]
-    },
-    {
       "definitionName": "succeed",
       "definitionKind": "const",
       "extensions": [
@@ -8467,28 +8525,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "tryPromiseInterrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "tuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuplePar",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "tuplePar"
         }
       ]
     },
@@ -14148,17 +14184,6 @@
       ]
     },
     {
-      "definitionName": "logfmt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Logger.Ops",
-          "name": "logfmt"
-        }
-      ]
-    },
-    {
       "definitionName": "logfmtLogger",
       "definitionKind": "const",
       "extensions": [
@@ -14319,11 +14344,6 @@
       "definitionName": "withMinimumLogLevel",
       "definitionKind": "const",
       "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withMinimumLogLevel"
-        },
         {
           "kind": "static",
           "typeName": "effect/io/Logger.Ops",
@@ -14611,6 +14631,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Logger/Level/LogLevel",
+          "kind": "pipeable-operator",
+          "name": ">"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Logger/Level/LogLevel",
           "name": "greaterThan"
@@ -14626,6 +14651,11 @@
       "definitionName": "greaterThanEqual",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/io/Logger/Level/LogLevel",
+          "kind": "pipeable-operator",
+          "name": ">="
+        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Logger/Level/LogLevel",
@@ -14643,6 +14673,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Logger/Level/LogLevel",
+          "kind": "pipeable-operator",
+          "name": "<"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Logger/Level/LogLevel",
           "name": "lessThan"
@@ -14658,6 +14693,11 @@
       "definitionName": "lessThanEqual",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/io/Logger/Level/LogLevel",
+          "kind": "pipeable-operator",
+          "name": "<="
+        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Logger/Level/LogLevel",
@@ -14675,18 +14715,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/FiberRef",
-          "kind": "fluent",
-          "name": "locally"
-        },
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "locally"
-        },
-        {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Logger/Level.Ops",
           "name": "locally"
         }
       ]

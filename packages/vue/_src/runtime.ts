@@ -6,7 +6,7 @@ import { initRuntime } from "./internal.js"
 
 export { initRuntime } from "./internal.js"
 
-const DefaultApiConfig = Config.struct({
+const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").withDefault("/api"),
   headers: Config.string()
     .table("headers").optional

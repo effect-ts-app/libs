@@ -5,8 +5,6 @@
  */
 
 import type { TagTypeId as TagTypeIdOriginal } from "@effect/data/Context"
-import * as Equal from "@effect/data/Equal"
-import * as Hash from "@effect/data/Hash"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
@@ -39,55 +37,47 @@ export function make<T extends ServiceTagged<any>>(_: Tag<T>, t: Omit<T, Service
 export const TagTypeId: TagTypeIdOriginal = Symbol.for("@effect/data/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
 
-export const equalSymbol: typeof Equal.symbol = Symbol.for("@effect/data/Equal") as unknown as typeof Equal.symbol
-export const hashSymbol: typeof Hash.symbol = Symbol.for("@effect/data/Hash") as unknown as typeof Hash.symbol
-
 export interface AccessService<T> {
   access: Effect<T, never, T>
   accessWith: <B>(f: (a: T) => B) => Effect<T, never, B>
   accessWithEffect: <R, E, B>(f: (a: T) => Effect<R, E, B>) => Effect<T, E, B>
 }
 
-export function assignTag<T extends Tag<any>>() {
-  type Service = ReturnType<T["_S"]>
+export function assignTag<Service>() {
   return <S extends object>(cls: S) => {
     const tag = Tag<Service>()
     return Object.assign(cls, {
       _S: tag._S,
       _id: tag._id,
-      key: tag.key,
-      [Hash.symbol]: tag[Hash.symbol],
-      [Equal.symbol]: tag[Equal.symbol],
       access: Effect.service(tag),
       accessWith: <B>(f: (a: Service) => B) => Effect.serviceWith(tag, f),
       accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect.serviceWithEffect(tag, f),
       makeLayer: (resource: Service) => Layer.succeed(tag, resource)
-    }) as any as S & AccessService<Service> & T
+    }) as any as S & AccessService<Service> & Tag<Service>
   }
 }
-export function TagClass<T extends Tag<any>>(): T & {
-  access: Effect<Tag.Service<T>, never, Tag.Service<T>>
-  accessWith: <B>(f: (a: Tag.Service<T>) => B) => Effect<Tag.Service<T>, never, B>
-  accessWithEffect: <R, E, B>(f: (a: Tag.Service<T>) => Effect<R, E, B>) => Effect<Tag.Service<T>, E, B>
-  makeLayer: (resource: Tag.Service<T>) => Layer<never, never, Tag.Service<T>>
+export function TagClass<Service>(): Tag<Service> & {
+  access: Effect<Service, never, Service>
+  accessWith: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+  accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect<Service, E, B>
+  makeLayer: (resource: Service) => Layer<never, never, Service>
   new(): {}
 } {
   abstract class TagClass {}
 
-  return assignTag<T>()(TagClass) as any
+  return assignTag<Service>()(TagClass) as any
 }
 
-export function ServiceTaggedClass<T extends Tag<any>>(): <Key extends PropertyKey>(
+export function ServiceTaggedClass<Service>(): <Key extends PropertyKey>(
   _: Key
-) => T & {
-  make: (t: Omit<Tag.Service<T>, Key>) => Tag.Service<T>
-  access: Effect<Tag.Service<T>, never, Tag.Service<T>>
-  accessWith: <B>(f: (a: Tag.Service<T>) => B) => Effect<Tag.Service<T>, never, B>
-  accessWithEffect: <R, E, B>(f: (a: Tag.Service<T>) => Effect<R, E, B>) => Effect<Tag.Service<T>, E, B>
-  makeLayer: (resource: Tag.Service<T>) => Layer<never, never, Tag.Service<T>>
+) => Tag<Service> & {
+  make: (t: Omit<Service, Key>) => Service
+  access: Effect<Service, never, Service>
+  accessWith: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+  accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect<Service, E, B>
+  makeLayer: (resource: Service) => Layer<never, never, Service>
   new(): {}
 } {
-  type Service = Tag.Service<T>
   return <Key extends PropertyKey>(_: Key) => {
     abstract class ServiceTaggedClassC {
       static make(t: Omit<Service, Key>) {
@@ -95,6 +85,6 @@ export function ServiceTaggedClass<T extends Tag<any>>(): <Key extends PropertyK
       }
     }
 
-    return assignTag<T>()(ServiceTaggedClassC) as any
+    return assignTag<Service>()(ServiceTaggedClassC) as any
   }
 }
