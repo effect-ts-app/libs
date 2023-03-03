@@ -20,4 +20,4 @@ export const db = MongoClient.accessWith(_ => _.db)
 
 export const MongoClientLive = (mongoUrl: string, dbName?: string) =>
   makeMongoClient(mongoUrl, dbName)
-    .toScopedLayer(MongoClient)
+    .toLayerScoped(MongoClient)

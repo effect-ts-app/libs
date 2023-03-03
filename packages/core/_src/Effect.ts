@@ -287,27 +287,6 @@ export const provideSomeContextEffect = <R2, E2, A2>(
   )
 
 /**
- * @tsplus fluent effect/io/Effect toLayer
- */
-export function toLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
-  return Layer.effect(tag, self)
-}
-
-/**
- * @tsplus fluent effect/io/Effect toScopedLayer
- */
-export function toScopedLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
-  return Layer.scoped(tag, self)
-}
-
-/**
- * @tsplus getter effect/io/Effect toScopedDiscardLayer
- */
-export function toScopedDiscardLayer<R, E, A>(self: Effect<R, E, A>) {
-  return Layer.scopedDiscard(self)
-}
-
-/**
  * Ref has atomic modify support if synchronous, for Effect we need a Semaphore.
  * @tsplus fluent effect/io/Ref modifyWithEffect
  */

@@ -173,7 +173,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
 export const ExpressApp = Tag<ExpressApp>()
-export const LiveExpressApp = makeExpressApp.toScopedLayer(ExpressApp)
+export const LiveExpressApp = makeExpressApp.toLayerScoped(ExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp
 

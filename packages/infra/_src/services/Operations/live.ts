@@ -98,4 +98,4 @@ const cleanupLoop = Operations.accessWithEffect(_ => _.cleanup)
  */
 export const Live = make.toLayer(Operations)
   > cleanupLoop
-    .toScopedDiscardLayer
+    .toLayerScopedDiscard

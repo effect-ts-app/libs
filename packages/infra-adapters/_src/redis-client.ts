@@ -30,7 +30,7 @@ export const RedisClient = Tag<RedisClient>()
 export const client = RedisClient.accessWith(_ => _.client)
 export const lock = RedisClient.accessWith(_ => _.lock)
 
-export const RedisClientLive = (makeClient: () => Client) => makeRedisClient(makeClient).toScopedLayer(RedisClient)
+export const RedisClientLive = (makeClient: () => Client) => makeRedisClient(makeClient).toLayerScoped(RedisClient)
 
 function createClient(makeClient: () => Client) {
   const client = makeClient()

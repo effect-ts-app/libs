@@ -16,7 +16,7 @@ function makeClient(url: string) {
 }
 
 const Client = Tag<ServiceBusClient>()
-export const LiveServiceBusClient = (url: string) => makeClient(url).toScopedLayer(Client)
+export const LiveServiceBusClient = (url: string) => makeClient(url).toLayerScoped(Client)
 
 function makeSender(queueName: string) {
   return Effect.gen(function*($) {
@@ -32,7 +32,7 @@ function makeSender(queueName: string) {
 export const Sender = Tag<ServiceBusSender>()
 
 export function LiveSender(queueName: string) {
-  return makeSender(queueName).toScopedLayer(Sender)
+  return makeSender(queueName).toLayerScoped(Sender)
 }
 
 function makeReceiver(queueName: string) {
@@ -49,7 +49,7 @@ function makeReceiver(queueName: string) {
 
 export const Receiver = Tag<ServiceBusReceiver>()
 export function LiveReceiver(queueName: string) {
-  return makeReceiver(queueName).toScopedLayer(Receiver)
+  return makeReceiver(queueName).toLayerScoped(Receiver)
 }
 
 export function sendMessages(
@@ -90,7 +90,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
 const SubscribeTag = Tag<Effect.Success<ReturnType<typeof subscribe>>>()
 
 export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
-  return subscribe(hndlr).toScopedLayer(SubscribeTag)
+  return subscribe(hndlr).toLayerScoped(SubscribeTag)
 }
 
 export interface MessageHandlers<RMsg, RErr> {

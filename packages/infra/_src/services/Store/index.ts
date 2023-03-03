@@ -39,7 +39,7 @@ export function StoreMakerLive(config: Config<StorageConfig>) {
       makeCosmosStore(cfg).provideService(CosmosClient.CosmosClient, client)
     )
   })
-    .toScopedLayer(StoreMaker)
+    .toLayerScoped(StoreMaker)
 }
 
 function makeRedis(storageUrl: string) {
