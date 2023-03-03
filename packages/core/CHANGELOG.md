@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.30.1
+
+### Patch Changes
+
+- tag workaround
+
 ## 0.30.0
 
 ### Minor Changes
