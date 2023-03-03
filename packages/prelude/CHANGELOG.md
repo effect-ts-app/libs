@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.23.1
+
+### Patch Changes
+
+- Fix service tag
+
 ## 0.23.0
 
 ### Minor Changes
