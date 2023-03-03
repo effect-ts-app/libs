@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.22.2
+
+### Patch Changes
+
+- fix service tag
+- Updated dependencies
+  - @effect-app/core@0.30.2
+
 ## 0.22.1
 
 ### Patch Changes

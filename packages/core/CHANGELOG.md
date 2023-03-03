@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.30.2
+
+### Patch Changes
+
+- fix service tag
+
 ## 0.30.1
 
 ### Patch Changes

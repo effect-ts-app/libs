@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.22.5
+
+### Patch Changes
+
+- fix service tag
+- Updated dependencies
+  - @effect-app/core@0.30.2
+  - @effect-app/prelude@0.23.5
+  - @effect-app/schema@0.22.2
+  - @effect-app/vue@0.22.5
+
 ## 0.22.4
 
 ### Patch Changes
