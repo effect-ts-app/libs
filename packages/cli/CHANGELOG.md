@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.4.0
+
+### Minor Changes
+
+- Update Effect
+
 ## 0.3.1
 
 ### Patch Changes
