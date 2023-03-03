@@ -289,15 +289,15 @@ export const provideSomeContextEffect = <R2, E2, A2>(
 /**
  * @tsplus fluent effect/io/Effect toLayer
  */
-export function toLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
-  return Layer.effect(tag, self)
+export function toLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A> | { tag: Tag<A> }) {
+  return Layer.effect("tag" in tag ? tag.tag : tag, self)
 }
 
 /**
  * @tsplus fluent effect/io/Effect toScopedLayer
  */
-export function toScopedLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A>) {
-  return Layer.scoped(tag, self)
+export function toScopedLayer<R, E, A>(self: Effect<R, E, A>, tag: Tag<A> | { tag: Tag<A> }) {
+  return Layer.scoped("tag" in tag ? tag.tag : tag, self)
 }
 
 /**

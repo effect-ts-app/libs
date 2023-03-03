@@ -46,18 +46,17 @@ export interface AccessService<T> {
 export function assignTag<Service>() {
   return <S extends object>(cls: S) => {
     const tag = Tag<Service>()
-    const clsTag = cls as Tag<Service>
     return Object.assign(cls, {
-      _S: tag._S,
-      _id: tag._id,
-      access: Effect.service(clsTag),
-      accessWith: <B>(f: (a: Service) => B) => Effect.serviceWith(clsTag, f),
-      accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect.serviceWithEffect(clsTag, f),
-      makeLayer: (resource: Service) => Layer.succeed(clsTag, resource)
-    }) as any as S & AccessService<Service> & Tag<Service>
+      tag,
+      access: Effect.service(tag),
+      accessWith: <B>(f: (a: Service) => B) => Effect.serviceWith(tag, f),
+      accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect.serviceWithEffect(tag, f),
+      makeLayer: (resource: Service) => Layer.succeed(tag, resource)
+    }) as any as S & AccessService<Service> & { tag: Tag<Service> }
   }
 }
-export function TagClass<Service>(): Tag<Service> & {
+export function TagClass<Service>(): {
+  tag: Tag<Service>
   access: Effect<Service, never, Service>
   accessWith: <B>(f: (a: Service) => B) => Effect<Service, never, B>
   accessWithEffect: <R, E, B>(f: (a: Service) => Effect<R, E, B>) => Effect<Service, E, B>
@@ -71,7 +70,8 @@ export function TagClass<Service>(): Tag<Service> & {
 
 export function ServiceTaggedClass<Service>(): <Key extends PropertyKey>(
   _: Key
-) => Tag<Service> & {
+) => {
+  tag: Tag<Service>
   make: (t: Omit<Service, Key>) => Service
   access: Effect<Service, never, Service>
   accessWith: <B>(f: (a: Service) => B) => Effect<Service, never, B>
