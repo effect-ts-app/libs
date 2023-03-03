@@ -36,7 +36,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           Effect.tryPromise(() =>
             db
               .collection(type)
-              .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: id })
+              .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: { equals: id } })
           )
         )
         .map(Option.fromNullable)

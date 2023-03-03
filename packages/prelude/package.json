@@ -6,8 +6,8 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.2.0",
-    "@effect/io": "^0.3.0",
+    "@effect/data": "^0.3.2",
+    "@effect/io": "^0.6.0",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.1",
@@ -21,14 +21,14 @@
     "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.21.0",
     "@types/faker": "5.5.9",
-    "@types/node": "~18.14.0",
+    "@types/node": "~18.14.5",
     "@types/uuid": "^9.0.1",
-    "@types/validator": "^13.7.12",
+    "@types/validator": "^13.7.13",
     "faker": "^5.5.3",
-    "fast-check": "^3.6.3",
+    "fast-check": "^3.7.0",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
-    "vitest": "^0.28.5"
+    "vitest": "^0.29.2"
   },
   "typesVersions": {
     "*": {

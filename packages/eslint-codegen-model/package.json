@@ -15,16 +15,16 @@
   },
   "dependencies": {
     "@babel/generator": "7.21.1",
-    "@babel/parser": "7.21.1",
+    "@babel/parser": "7.21.2",
     "eslint-plugin-codegen": "0.17.0",
-    "glob": "8.1.0",
+    "glob": "9.2.1",
     "io-ts": "2.2.20",
     "io-ts-extra": "0.11.6",
     "js-yaml": "4.1.0",
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@babel/types": "7.21.0",
+    "@babel/types": "7.21.2",
     "@types/babel__generator": "7.6.4",
     "@types/babel__traverse": "7.18.3",
     "@types/glob": "8.1.0",
