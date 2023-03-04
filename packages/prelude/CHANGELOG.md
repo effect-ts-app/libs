@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.23.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.31.0
+  - @effect-app/schema@0.22.4
+
 ## 0.23.6
 
 ### Patch Changes
