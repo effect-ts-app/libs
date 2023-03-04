@@ -15,14 +15,14 @@ export namespace Either {
   // @ts-expect-error abc
   export * from "@effect/data/Either"
 }
-/** @tsplus type fp-ts/core/Either */
+/** @tsplus type effect/data/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Order {
   // @ts-expect-error abc
   export * from "@effect-app/core/Order"
 }
-/** @tsplus type fp-ts/core/typeclass/Order */
+/** @tsplus type effect/data/typeclass/Order */
 export type Order<A> = ORD.Order<A>
 
 export namespace Option {
@@ -30,8 +30,8 @@ export namespace Option {
   export * from "@effect/data/Option"
 }
 /**
- * @tsplus companion fp-ts/core/Option.Ops
- * @tsplus type fp-ts/core/Option
+ * @tsplus companion effect/data/Option.Ops
+ * @tsplus type effect/data/Option
  */
 export type Option<A> = O.Option<A>
 
@@ -59,8 +59,8 @@ export namespace ROArray {
 /**
  * @tsplus type ReadonlyArray
  * @tsplus type Iterable
- * @tsplus companion fp-ts/core/ReadonlyArray.Ops
- * @tsplus companion fp-ts/core/ReadonlyArray.Ops
+ * @tsplus companion effect/data/ReadonlyArray.Ops
+ * @tsplus companion effect/data/ReadonlyArray.Ops
  */
 export type ROArray<A> = ReadonlyArray<A>
 

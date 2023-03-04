@@ -11,7 +11,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
   : never
 
 /**
- * @tsplus fluent fp-ts/core/Option encaseInEffect
+ * @tsplus fluent effect/data/Option encaseInEffect
  */
 export function encaseMaybeInEffect_<E, A>(
   o: Option<A>,
@@ -21,12 +21,12 @@ export function encaseMaybeInEffect_<E, A>(
 }
 
 /**
- * @tsplus getter fp-ts/core/Either asEffect
+ * @tsplus getter effect/data/Either asEffect
  */
 export const EitherasEffect = Effect.fromEither
 
 /**
- * @tsplus fluent fp-ts/core/Option encaseInEither
+ * @tsplus fluent effect/data/Option encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
   o: Option<A>,

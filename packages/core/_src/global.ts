@@ -1,9 +1,9 @@
 declare global {
   /**
-   * @tsplus type fp-ts/core/ReadonlyArray
+   * @tsplus type effect/data/ReadonlyArray
    * @tsplus type ReadonlyArray
    * @tsplus type Iterable
-   * @tsplus companion fp-ts/core/ReadonlyArray.Ops
+   * @tsplus companion effect/data/ReadonlyArray.Ops
    * @tsplus companion ReadonlyArray.Ops
    */
   interface ReadonlyArray<T> {}

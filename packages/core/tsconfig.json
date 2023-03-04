@@ -13,7 +13,6 @@
             "./vendor/effect-io-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
             "./vendor/effect-stream-tsplus.json",
-            "./vendor/fp-ts-core-tsplus.json",
             "./vendor/fp-ts-optic-tsplus.json"
         ]
     },

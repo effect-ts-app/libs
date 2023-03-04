@@ -11,24 +11,24 @@ export * from "@effect/data/Option"
 export { Option as Opt } from "@effect/data/Option"
 
 /**
- * @tsplus static fp-ts/core/Option.Ops none
+ * @tsplus static effect/data/Option.Ops none
  */
 export const none = O.none()
 
 /**
- * @tsplus getter fp-ts/core/Option value
+ * @tsplus getter effect/data/Option value
  */
 export const getOrUndefined = value
 
 /**
- * @tsplus static fp-ts/core/Option.Ops omitableToNullable
+ * @tsplus static effect/data/Option.Ops omitableToNullable
  */
 export function omitableToNullable<T>(om: Option<T> | undefined) {
   return om ?? Option.fromNullable(om)
 }
 
 /**
- * @tsplus static fp-ts/core/Option.Ops toBool
+ * @tsplus static effect/data/Option.Ops toBool
  */
 export const toBool = Option.match(
   () => false,
@@ -36,7 +36,7 @@ export const toBool = Option.match(
 )
 
 /**
- * @tsplus static fp-ts/core/Option.Ops fromBool
+ * @tsplus static effect/data/Option.Ops fromBool
  */
 export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none)
 
@@ -71,7 +71,7 @@ function raisePartial<X>(): X {
 
 /**
  * Simulates a partial function
- * @tsplus static fp-ts/core/Option.Ops partial
+ * @tsplus static effect/data/Option.Ops partial
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A

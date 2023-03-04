@@ -9,24 +9,24 @@ const compare = (x: any, y: any): Ordering => {
 }
 
 /**
- * @tsplus static fp-ts/core/typeclass/Order.Ops boolean
+ * @tsplus static effect/data/typeclass/Order.Ops boolean
  */
 export const boolean: Order<boolean> = { compare }
 
 /**
- * @tsplus static fp-ts/core/typeclass/Order.Ops number
+ * @tsplus static effect/data/typeclass/Order.Ops number
  */
 
 export const number: Order<number> = { compare }
 
 /**
- * @tsplus static fp-ts/core/typeclass/Order.Ops date
+ * @tsplus static effect/data/typeclass/Order.Ops date
  */
 
 export const date: Order<Date> = Ord.contramap((date: Date) => date.valueOf())(number)
 
 /**
- * @tsplus static fp-ts/core/typeclass/Order.Ops string
+ * @tsplus static effect/data/typeclass/Order.Ops string
  */
 export const string: Order<string> = { compare }
 

@@ -23,7 +23,7 @@ export function toArray<A>(
  *
  * @tsplus pipeable Array uniq
  * @tsplus pipeable ReadonlyArray uniq
- * @tsplus static fp-ts/core/ReadonlyArray.Ops uniq
+ * @tsplus static effect/data/ReadonlyArray.Ops uniq
  */
 export function uniq<A>(E: Equivalence<A>) {
   return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
@@ -73,10 +73,10 @@ export const { isArray } = Array
 // }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray.Ops findFirstMap
+ * @tsplus static effect/data/ReadonlyArray.Ops findFirstMap
  * @tsplus static Array.Ops findFirstMap
  * @tsplus pipeable Array findFirstMap
- * @tsplus pipeable fp-ts/core/ReadonlyArray findFirstMap
+ * @tsplus pipeable effect/data/ReadonlyArray findFirstMap
  * @tsplus pipeable ReadonlyArray findFirstMap
  * @tsplus pipeable NonEmptyArray findFirstMap
  * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
@@ -97,14 +97,14 @@ export function findFirstMap<A, B>(
 }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray/NonEmptyArray.Ops fromArray
+ * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
   return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none
 }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray.Ops fromArray
+ * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray.Ops fromArray
  */
 export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
   return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
@@ -246,7 +246,7 @@ export function randomElement<A>(a: ReadonlyArray<A>) {
 }
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray randomElement 2
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray randomElement 2
  */
 export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
   return a[Math.floor(Math.random() * a.length)]
@@ -254,21 +254,21 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
 
 /**
  * @tsplus pipeable Array mapNonEmpty
- * @tsplus pipeable fp-ts/core/ReadonlyArray mapNonEmpty
- * @tsplus pipeable fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray mapNonEmpty
- * @tsplus pipeable fp-ts/core/ReadonlyArray/NonEmptyArray mapNonEmpty
+ * @tsplus pipeable effect/data/ReadonlyArray mapNonEmpty
+ * @tsplus pipeable effect/data/ReadonlyArray/NonEmptyReadonlyArray mapNonEmpty
+ * @tsplus pipeable effect/data/ReadonlyArray/NonEmptyArray mapNonEmpty
  */
 export const mapRA = ROArray.mapNonEmpty
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray sortBy
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray sortBy
  */
 export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Order<A>[]) {
   return ROArray.sortBy(...ords)(na) as unknown as NonEmptyReadonlyArray<A>
 }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray.Ops sortWithNonEmpty
+ * @tsplus static effect/data/ReadonlyArray.Ops sortWithNonEmpty
  * @tsplus pipeable ReadonlyArray sortWithNonEmpty
  */
 export function sortWithNonEmpty<A>(
@@ -278,7 +278,7 @@ export function sortWithNonEmpty<A>(
 }
 
 /**
- * @tsplus static fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray __call
+ * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray __call
  */
 export const makeNA = ROArray.make
 
@@ -323,7 +323,7 @@ export function toChunk<T>(items: Iterable<T>) {
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
  * @tsplus getter Array toNonEmpty
- * @tsplus getter fp-ts/core/ReadonlyArray toNonEmpty
+ * @tsplus getter effect/data/ReadonlyArray toNonEmpty
  */
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
   a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none
@@ -378,7 +378,7 @@ export function ext_CNKforEachEffectPar<A, R, E, B>(
 }
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray forEachEffectPar
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectPar
  */
 export function ext_NAforEachEffectPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
@@ -388,14 +388,14 @@ export function ext_NAforEachEffectPar<A, R, E, B>(
 }
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
 export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
   return T.forEach(as, f).map(_ => _.toNonEmptyArray.value!)
 }
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndexPar
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndexPar
  */
 export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
@@ -405,7 +405,7 @@ export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
 }
 
 /**
- * @tsplus fluent fp-ts/core/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndex
+ * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndex
  */
 export function ext_NAforEachWithIndex<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
