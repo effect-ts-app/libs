@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.30.3
+
+### Patch Changes
+
+- Update stream
+
 ## 0.30.2
 
 ### Patch Changes
