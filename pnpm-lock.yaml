@@ -1,8 +1,6 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@effect/data': ^0.3.2
-  '@effect/io': ^0.6.0
   '@types/node': ~18.11.12
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
@@ -15,12 +13,12 @@ patchedDependencies:
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
-  eslint-plugin-unused-imports@2.0.0:
-    hash: tnum7sl7jcutfljbv5jztcescq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: tnum7sl7jcutfljbv5jztcescq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   typescript@5.0.0-tsplus.20230205:
     hash: 3fpnb3exznmanjmuxoeacxgduu
     path: patches/typescript@5.0.0-tsplus.20230205.patch
@@ -41,7 +39,7 @@ importers:
       '@babel/plugin-transform-modules-commonjs': ^7.21.2
       '@changesets/cli': ^2.26.0
       '@dprint/typescript': ^0.83.0
-      '@effect-app/cli': ^0.3.1
+      '@effect-app/cli': ^0.4.0
       '@effect-app/compiler': workspace:*
       '@effect-app/eslint-codegen-model': workspace:*
       '@effect-app/pnpm-singleton': workspace:*
@@ -181,7 +179,7 @@ importers:
       '@babel/cli': ^7.21.0
       '@effect/data': ^0.3.2
       '@effect/io': ^0.6.0
-      '@effect/stream': ^0.5.0
+      '@effect/stream': ^0.6.0
       '@fp-ts/optic': ^0.4.0
       '@types/uuid': ^9.0.1
       '@types/validator': ^13.7.13
@@ -198,7 +196,7 @@ importers:
     dependencies:
       '@effect/data': 0.3.2
       '@effect/io': 0.6.0
-      '@effect/stream': 0.5.0
+      '@effect/stream': 0.6.0
       '@fp-ts/optic': 0.4.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
@@ -1316,8 +1314,8 @@ packages:
     dev: true
     patched: true
 
-  /@effect/stream/0.5.0:
-    resolution: {integrity: sha512-Qt+NGT8CpwTcCu8mhmSssNMDWDSokkpdhXrEDheHsjR1up3HkH4eNyxmLIITcl7byKfDpIXQDAxq9TQbkHMVEA==}
+  /@effect/stream/0.6.0:
+    resolution: {integrity: sha512-ApRI4X8tEQr88TsAvaB9/g13sduh3t/1hF8+kkJVNsm4dXkq8+zrHkgsBmgu/wddHmrCk2zGjqcGBbswyTjDmw==}
     dependencies:
       '@effect/data': 0.3.2
       '@effect/io': 0.6.0

@@ -43,8 +43,6 @@
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },
     "resolutions": {
-        "@effect/data": "^0.3.2",
-        "@effect/io": "^0.6.0",
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
@@ -63,7 +61,7 @@
         "@changesets/cli": "^2.26.0",
         "@dprint/typescript": "^0.83.0",
         "@effect-app/compiler": "workspace:*",
-        "@effect-app/cli": "^0.3.1",
+        "@effect-app/cli": "^0.4.0",
         "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
         "@effect/language-service": "^0.0.19",
@@ -71,7 +69,7 @@
         "@tsconfig/strictest": "^1.0.2",
         "@tsplus/installer": "0.0.171",
         "@types/lodash": "^4.14.191",
-        "@types/node": "~18.14.5",
+        "@types/node": "~18.14.6",
         "@typescript-eslint/eslint-plugin": "^5.54.0",
         "@typescript-eslint/parser": "^5.54.0",
         "@typescript-eslint/scope-manager": "^5.54.0",
