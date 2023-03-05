@@ -1,5 +1,5 @@
 {
-  "ModelConstructor": {
+  "SVCConstructor": {
     "prefix": "svc",
     "body": [
       "const make$1 = Effect.gen(function* ($) { $2 })",
@@ -13,6 +13,24 @@
       " */",
       "export interface $1Ops extends Tag<$1> {}",
       "export const $1: $1Ops = Tag<$1>()",
+      "",
+      "/**",
+      " * @tsplus static $1.Ops Live",
+      " */",
+      "export const Live$1 = make$1.toLayer($1)",
+    ]
+  },
+  "SVCConstructor2": {
+    "prefix": "svc2",
+    "body": [
+      "const make$1 = Effect.gen(function* ($) { $3 })",
+      "/**",
+      " * @tsplus type $1",
+      " * @tsplus companion $1.Ops",
+      " */",
+      "export class $1 extends TagClass<$1> {",
+      "  $2",
+      "}",
       "",
       "/**",
       " * @tsplus static $1.Ops Live",

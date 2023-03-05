@@ -1,15 +1,13 @@
+import { TagClass } from "@effect-app/prelude/service"
 import * as Q from "@effect/io/Queue"
 
-export interface MemQueue {
-  getOrCreateQueue: (k: string) => Effect<never, never, Queue<string>>
-}
-
 /**
- * @tsplus type MemQueue.Ops
+ * @tsplus type MemQueue
+ * @tsplus companion MemQueue.Ops
  */
-
-export interface MemQueueOps extends Tag<MemQueue> {}
-export const MemQueue: MemQueueOps = Tag<MemQueue>()
+export abstract class MemQueue extends TagClass<MemQueue>() {
+  abstract getOrCreateQueue: (k: string) => Effect<never, never, Queue<string>>
+}
 
 /**
  * @tsplus static MemQueue.Ops Live

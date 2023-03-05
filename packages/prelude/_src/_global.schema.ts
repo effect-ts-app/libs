@@ -13,6 +13,7 @@ import {
   date,
   defaultProp,
   Email,
+  EncodedClass,
   EncodedFromApi,
   EncodedOf,
   Encoder,

@@ -87,10 +87,7 @@ export abstract class StoreMaker extends TagClass<StoreMaker>() {
   ) => Effect<never, never, Store<E, Id>>
 }
 
-/**
- * @tsplus static ContextMap.Ops Make
- */
-export const makeMap = Effect.sync(() => {
+export const makeMap = Effect.sync((): ContextMap => {
   const etags = new Map<string, string>()
   const getEtag = (id: string) => etags.get(id)
   const setEtag = (id: string, eTag: string | undefined) => {
@@ -154,12 +151,16 @@ export const makeMap = Effect.sync(() => {
     parserEnv
   }
 })
-export interface ContextMap extends Effect.Success<typeof makeMap> {}
+
 /**
- * @tsplus type ContextMap.Ops
+ * @tsplus type ContextMap
+ * @tsplus companion ContextMap.Ops
  */
-export interface ContextMapOps extends Tag<ContextMap> {}
-export const ContextMap: ContextMapOps = Tag<ContextMap>()
+export abstract class ContextMap extends TagClass<ContextMap>() {
+  abstract get: (id: string) => string | undefined
+  abstract set: (id: string, eTag: string | undefined) => void
+  abstract parserEnv: ParserEnv
+}
 
 export interface PersistenceModelType<Id extends string> {
   id: Id
