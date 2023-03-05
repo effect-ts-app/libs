@@ -19,7 +19,7 @@
     "@types/validator": "^13.7.13",
     "fast-check": "^3.7.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.170/compiler/typescript.tgz",
+    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz",
     "vitest": "^0.29.2"
   },
   "scripts": {

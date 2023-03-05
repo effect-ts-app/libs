@@ -50,7 +50,7 @@ const make = Effect.sync(() => {
                   typeof _ === "object" && _ !== null && "message" in _ && LongString.Guard(_.message)
                     ? Option(_.message)
                     : Option.none
-                )?.value ?? null
+                ).value ?? null
             })
         })
       })
