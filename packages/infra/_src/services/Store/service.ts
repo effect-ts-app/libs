@@ -87,6 +87,9 @@ export abstract class StoreMaker extends TagClass<StoreMaker>() {
   ) => Effect<never, never, Store<E, Id>>
 }
 
+/**
+ * @tsplus static ContextMap.Ops Make
+ */
 export const makeMap = Effect.sync((): ContextMap => {
   const etags = new Map<string, string>()
   const getEtag = (id: string) => etags.get(id)
