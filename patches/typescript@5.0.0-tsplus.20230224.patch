@@ -26,7 +26,7 @@ index a1bc18a..b7f73d2 100644
  declare var clientInformation: Navigator;
  /** Returns true if the window has been closed, false otherwise. */
 diff --git a/lib/tsc.js b/lib/tsc.js
-index dcf619b..4fb144a 100644
+index dcf619b..ff48cd8 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -43064,7 +43064,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
@@ -331,11 +331,32 @@ index dcf619b..4fb144a 100644
            if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
              return [createDiagnosticForNode(
                arg,
-@@ -84683,6 +84742,25 @@ function createTypeChecker(host) {
+@@ -84682,7 +84741,46 @@ function createTypeChecker(host) {
+     const heritageExtensions = inheritanceSymbolCache.get(typeSymbol);
      forEach(heritage, (clause) => {
        forEach(clause.types, (node) => {
++        var _a2;
          const type = getTypeOfNode(node);
-+        if (isCallExpression(node.expression)) {
++        if (isIdentifier(node.expression)) {
++          const links = getNodeLinks(node.expression);
++          const declaration = (_a2 = links.resolvedSymbol) == null ? void 0 : _a2.valueDeclaration;
++          const vType = declaration && checker.getTypeAtLocation(declaration);
++          if (vType) {
++            if (vType.symbol) {
++              heritageExtensions.add(vType.symbol);
++            }
++            if (vType.flags & 2097152 /* Intersection */) {
++              forEach(vType.types, (type2) => {
++                if (type2.symbol) {
++                  heritageExtensions.add(type2.symbol);
++                }
++                if (type2.aliasSymbol) {
++                  heritageExtensions.add(type2.aliasSymbol);
++                }
++              });
++            }
++          }
++        } else if (isCallExpression(node.expression)) {
 +          const resolvedSignature = getResolvedSignature(node.expression);
 +          const returnType = resolvedSignature.resolvedReturnType;
 +          if (returnType) {
@@ -357,7 +378,7 @@ index dcf619b..4fb144a 100644
          if (type.symbol) {
            heritageExtensions.add(type.symbol);
          }
-@@ -89247,13 +89325,27 @@ function getOriginalNodeId(node) {
+@@ -89247,13 +89345,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -389,7 +410,7 @@ index dcf619b..4fb144a 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 574ebb6..c38b96c 100644
+index 574ebb6..4b86a29 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2225,6 +2225,7 @@ __export(server_exports, {
@@ -702,11 +723,32 @@ index 574ebb6..c38b96c 100644
            if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
              return [createDiagnosticForNode(
                arg,
-@@ -88807,6 +88867,25 @@ function createTypeChecker(host) {
+@@ -88806,7 +88866,46 @@ function createTypeChecker(host) {
+     const heritageExtensions = inheritanceSymbolCache.get(typeSymbol);
      forEach(heritage, (clause) => {
        forEach(clause.types, (node) => {
++        var _a2;
          const type = getTypeOfNode(node);
-+        if (isCallExpression(node.expression)) {
++        if (isIdentifier(node.expression)) {
++          const links = getNodeLinks(node.expression);
++          const declaration = (_a2 = links.resolvedSymbol) == null ? void 0 : _a2.valueDeclaration;
++          const vType = declaration && checker.getTypeAtLocation(declaration);
++          if (vType) {
++            if (vType.symbol) {
++              heritageExtensions.add(vType.symbol);
++            }
++            if (vType.flags & 2097152 /* Intersection */) {
++              forEach(vType.types, (type2) => {
++                if (type2.symbol) {
++                  heritageExtensions.add(type2.symbol);
++                }
++                if (type2.aliasSymbol) {
++                  heritageExtensions.add(type2.aliasSymbol);
++                }
++              });
++            }
++          }
++        } else if (isCallExpression(node.expression)) {
 +          const resolvedSignature = getResolvedSignature(node.expression);
 +          const returnType = resolvedSignature.resolvedReturnType;
 +          if (returnType) {
@@ -728,7 +770,7 @@ index 574ebb6..c38b96c 100644
          if (type.symbol) {
            heritageExtensions.add(type.symbol);
          }
-@@ -93597,13 +93676,27 @@ function getOriginalNodeId(node) {
+@@ -93597,13 +93696,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -759,7 +801,7 @@ index 574ebb6..c38b96c 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-@@ -135621,6 +135714,7 @@ __export(ts_exports3, {
+@@ -135621,6 +135734,7 @@ __export(ts_exports3, {
    tryGetDirectories: () => tryGetDirectories,
    tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
    tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -767,7 +809,7 @@ index 574ebb6..c38b96c 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -190327,6 +190421,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -190327,6 +190441,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -791,7 +833,7 @@ index 0355521..48c8e28 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index 6db4923..0068770 100644
+index 6db4923..21a2642 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
@@ -1096,11 +1138,32 @@ index 6db4923..0068770 100644
              if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
                return [createDiagnosticForNode(
                  arg,
-@@ -86491,6 +86550,25 @@ ${lanes.join("\n")}
+@@ -86490,7 +86549,46 @@ ${lanes.join("\n")}
+       const heritageExtensions = inheritanceSymbolCache.get(typeSymbol);
        forEach(heritage, (clause) => {
          forEach(clause.types, (node) => {
++          var _a2;
            const type = getTypeOfNode(node);
-+          if (isCallExpression(node.expression)) {
++          if (isIdentifier(node.expression)) {
++            const links = getNodeLinks(node.expression);
++            const declaration = (_a2 = links.resolvedSymbol) == null ? void 0 : _a2.valueDeclaration;
++            const vType = declaration && checker.getTypeAtLocation(declaration);
++            if (vType) {
++              if (vType.symbol) {
++                heritageExtensions.add(vType.symbol);
++              }
++              if (vType.flags & 2097152 /* Intersection */) {
++                forEach(vType.types, (type2) => {
++                  if (type2.symbol) {
++                    heritageExtensions.add(type2.symbol);
++                  }
++                  if (type2.aliasSymbol) {
++                    heritageExtensions.add(type2.aliasSymbol);
++                  }
++                });
++              }
++            }
++          } else if (isCallExpression(node.expression)) {
 +            const resolvedSignature = getResolvedSignature(node.expression);
 +            const returnType = resolvedSignature.resolvedReturnType;
 +            if (returnType) {
@@ -1122,7 +1185,7 @@ index 6db4923..0068770 100644
            if (type.symbol) {
              heritageExtensions.add(type.symbol);
            }
-@@ -91455,13 +91533,26 @@ ${lanes.join("\n")}
+@@ -91455,13 +91553,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -1152,7 +1215,7 @@ index 6db4923..0068770 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -91901,10 +91992,12 @@ ${lanes.join("\n")}
+@@ -91901,10 +92012,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -1165,7 +1228,7 @@ index 6db4923..0068770 100644
      }
    });
  
-@@ -186969,6 +187062,7 @@ ${e.message}`;
+@@ -186969,6 +187082,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -1173,7 +1236,7 @@ index 6db4923..0068770 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -189342,6 +189436,7 @@ ${e.message}`;
+@@ -189342,6 +189456,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -1197,7 +1260,7 @@ index ac0f972..1c8c593 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index 63dcf00..22ca854 100644
+index 63dcf00..b5d84b3 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -44995,7 +44995,8 @@ ${lanes.join("\n")}
@@ -1502,11 +1565,32 @@ index 63dcf00..22ca854 100644
              if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
                return [createDiagnosticForNode(
                  arg,
-@@ -86491,6 +86550,25 @@ ${lanes.join("\n")}
+@@ -86490,7 +86549,46 @@ ${lanes.join("\n")}
+       const heritageExtensions = inheritanceSymbolCache.get(typeSymbol);
        forEach(heritage, (clause) => {
          forEach(clause.types, (node) => {
++          var _a2;
            const type = getTypeOfNode(node);
-+          if (isCallExpression(node.expression)) {
++          if (isIdentifier(node.expression)) {
++            const links = getNodeLinks(node.expression);
++            const declaration = (_a2 = links.resolvedSymbol) == null ? void 0 : _a2.valueDeclaration;
++            const vType = declaration && checker.getTypeAtLocation(declaration);
++            if (vType) {
++              if (vType.symbol) {
++                heritageExtensions.add(vType.symbol);
++              }
++              if (vType.flags & 2097152 /* Intersection */) {
++                forEach(vType.types, (type2) => {
++                  if (type2.symbol) {
++                    heritageExtensions.add(type2.symbol);
++                  }
++                  if (type2.aliasSymbol) {
++                    heritageExtensions.add(type2.aliasSymbol);
++                  }
++                });
++              }
++            }
++          } else if (isCallExpression(node.expression)) {
 +            const resolvedSignature = getResolvedSignature(node.expression);
 +            const returnType = resolvedSignature.resolvedReturnType;
 +            if (returnType) {
@@ -1528,7 +1612,7 @@ index 63dcf00..22ca854 100644
            if (type.symbol) {
              heritageExtensions.add(type.symbol);
            }
-@@ -91455,13 +91533,26 @@ ${lanes.join("\n")}
+@@ -91455,13 +91553,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -1558,7 +1642,7 @@ index 63dcf00..22ca854 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -91901,10 +91992,12 @@ ${lanes.join("\n")}
+@@ -91901,10 +92012,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -1571,7 +1655,7 @@ index 63dcf00..22ca854 100644
      }
    });
  
-@@ -176154,6 +176247,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -176154,6 +176267,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
