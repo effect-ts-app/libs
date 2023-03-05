@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.18.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.24.0
+  - @effect-app/schema@0.23.0
+  - @effect-app/core@0.32.0
+
 ## 0.17.7
 
 ### Patch Changes

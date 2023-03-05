@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.32.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
 ## 0.31.0
 
 ### Minor Changes

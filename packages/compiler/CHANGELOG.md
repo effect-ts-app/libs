@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.15.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
 ## 0.14.0
 
 ### Minor Changes

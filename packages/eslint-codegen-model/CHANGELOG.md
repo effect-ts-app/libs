@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.13.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
 ## 0.12.2
 
 ### Patch Changes

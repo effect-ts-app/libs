@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.11.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
 ## 0.10.0
 
 ### Minor Changes

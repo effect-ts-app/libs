@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.5.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.23.0
+
+### Minor Changes
+
+- Update tsplus with companion instance extensions
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.32.0
+
 ## 0.22.4
 
 ### Patch Changes
