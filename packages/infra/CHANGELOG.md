@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.31.1
+
+### Patch Changes
+
+- Fix
+
 ## 0.31.0
 
 ### Minor Changes
