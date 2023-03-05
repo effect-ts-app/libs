@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.24.1
+
+### Patch Changes
+
+- fix svc tag
+
 ## 0.24.0
 
 ### Minor Changes
