@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.25.0
+
+### Minor Changes
+
+- Improve Encoded codegen
+
 ## 0.24.2
 
 ### Patch Changes

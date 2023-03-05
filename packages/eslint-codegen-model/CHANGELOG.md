@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.14.0
+
+### Minor Changes
+
+- Improve Encoded codegen
+
 ## 0.13.0
 
 ### Minor Changes

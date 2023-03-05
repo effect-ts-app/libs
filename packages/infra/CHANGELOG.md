@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.31.0
+
+### Minor Changes
+
+- Improve Encoded codegen
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/infra-adapters@0.25.0
+  - @effect-app/prelude@0.25.0
+
 ## 0.30.2
 
 ### Patch Changes
