@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.15.1
+
+### Patch Changes
+
+- fix glob
+
 ## 0.15.0
 
 ### Minor Changes
