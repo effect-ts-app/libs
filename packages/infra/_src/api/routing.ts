@@ -349,9 +349,9 @@ export function makeRequestHandler<
               // the first log entry should be of the request start.
               const r2 = makeMiddlewareContext
                 ? restoreFromRequestContext
-                  .zipRight(r)
-                  .setupRequestFrom
-                  .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
+                  .zipRight(r.setupRequestFrom
+                    // the db namespace must be restored, before calling provide here
+                    .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext)))
                 : restoreFromRequestContext
                   // PR is not relevant here
                   .zipRight(r) as Effect<R, E | ValidationError, void>
