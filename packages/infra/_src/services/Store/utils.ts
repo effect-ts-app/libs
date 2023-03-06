@@ -82,6 +82,14 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               ? p.value.includes(get(x, p.key))
               : p.t === "not-in"
               ? !p.value.includes(get(x, p.key))
+              : p.t === "lt"
+              ? ltCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "lte"
+              ? lteCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "gt"
+              ? gtCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "gte"
+              ? gteCaseInsensitive(get(x, p.key), p.value)
               : p.t === "not-eq"
               ? p.key.includes(".-1.")
                 ? (get(x, p.key.split(".-1.")[0]) as any[])
