@@ -1,6 +1,6 @@
 import type { FieldValues } from "./filter/types/fields.js"
 import type { FieldPath, FieldPathValue } from "./filter/types/path/eager.js"
-import type { Where } from "./services/Store.js"
+import type { SupportedValues, Where } from "./services/Store.js"
 
 /**
  * the function defaults to "eq", but has additional properties for notEq, in and notIn
@@ -52,6 +52,34 @@ function makeHelpers_<TFieldValues extends FieldValues>() {
       value: V
     ) {
       return { key: path, value, t: "not-eq" as const }
+    },
+    gt<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "gt" as const }
+    },
+    gte<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "gte" as const }
+    },
+    lt<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "lt" as const }
+    },
+    lte<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "lte" as const }
     }
   } satisfies Record<string, (...args: any[]) => Where>
 }
@@ -63,11 +91,21 @@ function makeWhereFilter_<TFieldValues extends FieldValues>() {
 }
 
 export type WhereValue<
-  T extends "eq" | "not-eq" | "starts-with" | "ends-with" | "includes" | "contains" | "not-contains",
+  T extends
+    | "eq"
+    | "not-eq"
+    | "lt"
+    | "gt"
+    | "lte"
+    | "gte"
+    | "starts-with"
+    | "ends-with"
+    | "includes"
+    | "contains"
+    | "not-contains",
   A, // extends SupportedValues,
   V extends A = A
 > = { t: T; v: V }
-type SupportedValues = string | boolean | number | null
 
 export type WhereIn<T extends "in" | "not-in", V, Values extends readonly V[] = readonly V[]> = {
   t: T
@@ -120,6 +158,7 @@ export function $notIn<A extends SupportedValues, Values extends readonly A[]>(
 
 /**
  * @tsplus fluent string $is
+ * @tsplus fluent Date $is
  * @tsplus fluent boolean $is
  * @tsplus fluent number $is
  * @tsplus fluent Object $is
@@ -129,6 +168,7 @@ export function $is<A, V extends A>(_: A, v: V): WhereValue<"eq", A, V> {
 }
 /**
  * @tsplus fluent string $isnt
+ * @tsplus fluent Date $isnt
  * @tsplus fluent boolean $isnt
  * @tsplus fluent number $isnt
  * @tsplus fluent Object $isnt
@@ -137,12 +177,72 @@ export function $isnt<A, V extends A>(_: A, v: V): WhereValue<"not-eq", A, V> {
   return $$isnt(v)
 }
 
+/**
+ * @tsplus fluent string $gt
+ * @tsplus fluent Date $gt
+ * @tsplus fluent boolean $gt
+ * @tsplus fluent number $gt
+ * @tsplus fluent Object $gt
+ */
+export function $gt<A, V extends A>(_: A, v: V): WhereValue<"gt", A, V> {
+  return $$gt(v)
+}
+
+/**
+ * @tsplus fluent string $gte
+ * @tsplus fluent Date $gte
+ * @tsplus fluent boolean $gte
+ * @tsplus fluent number $gte
+ * @tsplus fluent Object $gte
+ */
+export function $gte<A, V extends A>(_: A, v: V): WhereValue<"gte", A, V> {
+  return $$gte(v)
+}
+
+/**
+ * @tsplus fluent string $lt
+ * @tsplus fluent Date $lt
+ * @tsplus fluent boolean $lt
+ * @tsplus fluent number $lt
+ * @tsplus fluent Object $lt
+ */
+export function $lt<A, V extends A>(_: A, v: V): WhereValue<"lt", A, V> {
+  return $$lt(v)
+}
+
+/**
+ * @tsplus fluent string $lte
+ * @tsplus fluent Date $lte
+ * @tsplus fluent boolean $lte
+ * @tsplus fluent number $lte
+ * @tsplus fluent Object $lte
+ */
+export function $lte<A, V extends A>(_: A, v: V): WhereValue<"lte", A, V> {
+  return $$lte(v)
+}
+
 function $is__<V extends A, A>(v: V) {
   return (_: A) => $is(_, v)
 }
 
 function $isnt__<V extends A, A>(v: V) {
   return (_: A) => $isnt(_, v)
+}
+
+function $lt__<V extends A, A>(v: V) {
+  return (_: A) => $lt(_, v)
+}
+
+function $lte__<V extends A, A>(v: V) {
+  return (_: A) => $lte(_, v)
+}
+
+function $gt__<V extends A, A>(v: V) {
+  return (_: A) => $gt(_, v)
+}
+
+function $gte__<V extends A, A>(v: V) {
+  return (_: A) => $gte(_, v)
 }
 
 function $in__<A extends SupportedValues, Values extends readonly A[]>(
@@ -173,7 +273,11 @@ export const Filters = {
   $is: $is__,
   $isnt: $isnt__,
   $in: $in__,
-  $notIn: $notIn__
+  $notIn: $notIn__,
+  $gt: $gt__,
+  $gte: $gte__,
+  $lt: $lt__,
+  $lte: $lte__
   // $contains: $contains__,
   // $notContains: $notContains__,
 }
@@ -211,6 +315,21 @@ function $$is<A>(v: A) {
 }
 function $$isnt<A>(v: A) {
   return { t: "not-eq" as const, v }
+}
+
+function $$lt<A>(v: A) {
+  return { t: "lt" as const, v }
+}
+
+function $$lte<A>(v: A) {
+  return { t: "lte" as const, v }
+}
+function $$gt<A>(v: A) {
+  return { t: "gt" as const, v }
+}
+
+function $$gte<A>(v: A) {
+  return { t: "gte" as const, v }
 }
 
 // containsAny, containsAll?

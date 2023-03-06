@@ -12,14 +12,18 @@ export type StoreConfig<E> = {
   allowNamespace?: (namespace: string) => boolean
 }
 
-export type SupportedValues = string | boolean | number | null
+export type SupportedValues = string | boolean | number | Date | null
+export type SupportedValues2 = string | boolean | number | Date
 
 // default is eq
-export type Where = { key: string; t?: "eq" | "not-eq"; value: SupportedValues } | {
-  key: string
-  t: "in" | "not-in"
-  value: readonly (SupportedValues)[]
-}
+export type Where =
+  | { key: string; t?: "eq" | "not-eq"; value: SupportedValues }
+  | { key: string; t: "gt" | "lt" | "gte" | "lte"; value: SupportedValues2 }
+  | {
+    key: string
+    t: "in" | "not-in"
+    value: readonly (SupportedValues)[]
+  }
 
 // default is where
 export type StoreWhereFilter = {

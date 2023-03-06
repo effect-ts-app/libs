@@ -496,6 +496,14 @@ export function buildWhereCosmosQuery(
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
               ? `(NOT ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}))`
+              : x.t === "lt"
+              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} < ${lowerIfNeeded(`@v${i}`, x.value)}`
+              : x.t === "lte"
+              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <= ${lowerIfNeeded(`@v${i}`, x.value)}`
+              : x.t === "gt"
+              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} > ${lowerIfNeeded(`@v${i}`, x.value)}`
+              : x.t === "gte"
+              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} >= ${lowerIfNeeded(`@v${i}`, x.value)}`
               : x.t === "not-eq"
               ? x.value === null
                 ? `IS_NULL(${x.f}.${x.key}) = false`
@@ -512,10 +520,18 @@ export function buildWhereCosmosQuery(
       ...filter.where
         .map((x, i) => ({
           name: `@v${i}`,
-          value: x.value
+          value: isArray(x.value)
+            ? x.value.map(_ => _ instanceof Date ? _.toISOString() : _)
+            : x.value instanceof Date
+            ? x.value.toISOString()
+            : x.value
         }))
     ]
   }
+}
+
+function isArray(t: SupportedValues | readonly SupportedValues[]): t is readonly SupportedValues[] {
+  return Array.isArray(t)
 }
 
 const lowerIfNeeded = (key: unknown, value: unknown) => typeof value === "string" ? `LOWER(${key})` : `${key}`

@@ -2,7 +2,7 @@ import { get } from "@effect-app/prelude/utils"
 
 import { OptimisticConcurrencyException } from "../../errors.js"
 
-import type { Filter, FilterJoinSelect, PersistenceModelType } from "./service.js"
+import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
 
 import objectHash from "object-hash"
 
@@ -62,6 +62,14 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               ? p.value.includes(get(x, p.key))
               : p.t === "not-in"
               ? !p.value.includes(get(x, p.key))
+              : p.t === "lt"
+              ? ltCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "lte"
+              ? lteCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "gt"
+              ? gtCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "gte"
+              ? gteCaseInsensitive(get(x, p.key), p.value)
               : p.t === "not-eq"
               ? !compareCaseInsensitive(get(x, p.key), p.value)
               : compareCaseInsensitive(get(x, p.key), p.value)
@@ -123,4 +131,28 @@ function compareCaseInsensitive(valA: unknown, valB: unknown) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() === valB.toLowerCase()
     : valA === valB
+}
+
+function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+  return typeof valB === "string" && typeof valA === "string"
+    ? valA.toLowerCase() < valB.toLowerCase()
+    : valA < valB
+}
+
+function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+  return typeof valB === "string" && typeof valA === "string"
+    ? valA.toLowerCase() <= valB.toLowerCase()
+    : valA <= valB
+}
+
+function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+  return typeof valB === "string" && typeof valA === "string"
+    ? valA.toLowerCase() > valB.toLowerCase()
+    : valA > valB
+}
+
+function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+  return typeof valB === "string" && typeof valA === "string"
+    ? valA.toLowerCase() >= valB.toLowerCase()
+    : valA >= valB
 }
