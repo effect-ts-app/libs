@@ -344,15 +344,14 @@ export function makeRequestHandler<
                     .flatMap(r => respond(parsedReq, res, r))
                 )
 
-              const setNamespace = restoreFromRequestContext
-                .provideService(RequestContext.Tag, requestContext)
               // Commands should not be interruptable.
               const r = req.method !== "GET" ? handleRequest.uninterruptible : handleRequest // .instrument("Performance.RequestResponse")
               // the first log entry should be of the request start.
               const r2 = makeMiddlewareContext
-                ? setNamespace
-                  .zipRight(r.provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext)))
-                : setNamespace
+                ? restoreFromRequestContext
+                  .zipRight(r)
+                  .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
+                : restoreFromRequestContext
                   // PR is not relevant here
                   .zipRight(r) as Effect<R, E | ValidationError, void>
               return errorHandler(
@@ -412,8 +411,8 @@ export function makeRequestHandler<
                 }))
               })
             )
+            .setupRequestFrom
             .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
-            .setupRequest(requestContext)
         )
     )
   }
