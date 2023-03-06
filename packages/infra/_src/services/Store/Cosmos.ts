@@ -520,19 +520,15 @@ export function buildWhereCosmosQuery(
       ...filter.where
         .map((x, i) => ({
           name: `@v${i}`,
-          value: isArray(x.value)
-            ? x.value.map(_ => _ instanceof Date ? _.toISOString() : _)
-            : x.value instanceof Date
-            ? x.value.toISOString()
-            : x.value
+          value: x.value
         }))
     ]
   }
 }
 
-function isArray(t: SupportedValues | readonly SupportedValues[]): t is readonly SupportedValues[] {
-  return Array.isArray(t)
-}
+// function isArray(t: SupportedValues | readonly SupportedValues[]): t is readonly SupportedValues[] {
+//   return Array.isArray(t)
+// }
 
 const lowerIfNeeded = (key: unknown, value: unknown) => typeof value === "string" ? `LOWER(${key})` : `${key}`
 

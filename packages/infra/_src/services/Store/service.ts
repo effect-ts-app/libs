@@ -12,8 +12,8 @@ export type StoreConfig<E> = {
   allowNamespace?: (namespace: string) => boolean
 }
 
-export type SupportedValues = string | boolean | number | Date | null
-export type SupportedValues2 = string | boolean | number | Date
+export type SupportedValues = string | boolean | number | null
+export type SupportedValues2 = string | boolean | number
 
 // default is eq
 export type Where =
