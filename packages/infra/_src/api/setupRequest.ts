@@ -10,7 +10,8 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
       Effect.logAnnotates({
         requestRootId: requestContext.rootId,
         requestId: requestContext.id,
-        requestName: requestContext.name
+        requestName: requestContext.name,
+        ...requestContext.userId ? { requestUserId: requestContext.userId } : {}
       })
     )
   )
