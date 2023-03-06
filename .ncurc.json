@@ -1,6 +1,7 @@
 {
   "reject": [
     "glob",
+    "@types/glob",
     "jwks-rsa",
     "applicationinsights",
     "faker",
