@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.33.0
+
+### Minor Changes
+
+- Add optional `userId` to `RequestContext`
+
 ## 0.32.2
 
 ### Patch Changes
