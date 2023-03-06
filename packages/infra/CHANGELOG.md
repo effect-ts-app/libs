@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.32.2
+
+### Patch Changes
+
+- Cleanup
+- Remove unsupported Date
+- Updated dependencies
+  - @effect-app/prelude@0.25.1
+  - @effect-app/infra-adapters@0.25.1
+
 ## 0.32.1
 
 ### Patch Changes

@@ -68,69 +68,30 @@ export type RequestContextConstructor = typeof RequestContext
  */
 export const tag = Tag<RequestContext>()
 
+// codegen:start {preset: model}
+//
 /* eslint-disable */
-export interface RequestContextParent {
-  readonly createdAt: Date
-  readonly id: RequestId
-  readonly locale: "de" | "en"
-  readonly name: ReasonableString
-}
 export namespace RequestContextParent {
   /**
    * @tsplus type RequestContextParent.Encoded
+   * @tsplus companion RequestContextParent.Encoded/Ops
    */
-  export interface Encoded {
-    readonly createdAt: string
-    readonly id: string
-    readonly locale: "de" | "en"
-    readonly name: string
-  }
-  export const Encoded: EncodedOps = { $: {} }
-  /**
-   * @tsplus type RequestContextParent.Encoded.Ops
-   */
-  export interface EncodedAspects {}
-  /**
-   * @tsplus type RequestContextParent.Encoded.Ops
-   */
-  export interface EncodedOps { $: EncodedAspects }
+  export class Encoded extends EncodedClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContextParent> {}
   export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
 }
-export interface RequestContext {
-  readonly createdAt: Date
-  readonly id: RequestId
-  readonly locale: "de" | "en"
-  readonly name: ReasonableString
-  readonly parent?: RequestContextParent | undefined
-  readonly rootId: RequestId
-  readonly namespace?: ReasonableString | undefined
-}
 export namespace RequestContext {
   /**
    * @tsplus type RequestContext.Encoded
+   * @tsplus companion RequestContext.Encoded/Ops
    */
-  export interface Encoded {
-    readonly createdAt: string
-    readonly id: string
-    readonly locale: "de" | "en"
-    readonly name: string
-    readonly parent?: RequestContextParent.Encoded | undefined
-    readonly rootId: string
-    readonly namespace?: string | undefined
-  }
-  export const Encoded: EncodedOps = { $: {} }
-  /**
-   * @tsplus type RequestContext.Encoded.Ops
-   */
-  export interface EncodedAspects {}
-  /**
-   * @tsplus type RequestContext.Encoded.Ops
-   */
-  export interface EncodedOps { $: EncodedAspects }
+  export class Encoded extends EncodedClass<typeof RequestContext>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContext> {}
   export interface Props extends GetProvidedProps<typeof RequestContext> {}
 }
 /* eslint-enable */
+//
+// codegen:end
+//

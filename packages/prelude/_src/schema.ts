@@ -16,15 +16,18 @@ export function allowAnonymous(cls: any) {
   return cls
 }
 
+export interface EncodedClass<T> {
+  new(a: T): T
+}
+
 export function EncodedClassBase<T>() {
   class Encoded {
     constructor(a: T) {
       Object.assign(this, a)
     }
   }
-  return Encoded as (new(a: T) => T)
+  return Encoded as EncodedClass<T>
 }
-
 export function EncodedClass<Cls extends { [schemaField]: SchemaAny }>() {
   return EncodedClassBase<EncodedFromApi<Cls>>()
 }
