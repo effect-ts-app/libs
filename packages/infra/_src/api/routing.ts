@@ -350,6 +350,7 @@ export function makeRequestHandler<
               const r2 = makeMiddlewareContext
                 ? restoreFromRequestContext
                   .zipRight(r)
+                  .setupRequestFrom
                   .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext))
                 : restoreFromRequestContext
                   // PR is not relevant here
