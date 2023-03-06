@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.32.0
+
+### Minor Changes
+
+- Store: support lt, lte, gt, gte.
+
 ## 0.31.1
 
 ### Patch Changes
