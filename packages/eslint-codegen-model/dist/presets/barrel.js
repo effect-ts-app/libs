@@ -81,11 +81,11 @@ const barrel = ({ meta, options: opts }) => {
         .map((f) => `export * as ${lodash
         .startCase(lodash.camelCase(last(f.split("/"))))
         .replace(/ /g, "") // why?
-        .replace(/\//, '')}${"postfix" in v ? v.postfix : ''} from '${f}.js'`)
+        .replace(/\//, '')}${"postfix" in v ? v.postfix : ''} from "${f}.js"`)
         .value()
         .join('\n'))
         .default(() => {
-        return relativeFiles.map((f) => `export * from '${f}.js'`).join('\n');
+        return relativeFiles.map((f) => `export * from "${f}.js"`).join('\n');
     })
         .get())
         .case(String, (s) => {
@@ -109,7 +109,7 @@ const barrel = ({ meta, options: opts }) => {
             })))
             .value();
         const imports = withIdentifiers
-            .map((i) => `import ${importPrefix}${i.identifier} from '${i.file}.js'`)
+            .map((i) => `import ${importPrefix}${i.identifier} from "${i.file}.js"`)
             .join('\n');
         const exportProps = (0, io_ts_extra_1.match)(opts.export)
             .case({ name: String, keys: 'path' }, () => withIdentifiers.map((i) => `${JSON.stringify(i.file)}: ${i.identifier}`))
