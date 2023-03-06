@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.15.0
+
+### Minor Changes
+
+- fix double quotes
+
 ## 0.14.0
 
 ### Minor Changes
