@@ -223,7 +223,7 @@ importers:
       '@types/glob': 8.1.0
       '@types/lodash': 4.14.191
       eslint-plugin-codegen: 0.17.0
-      glob: 9.2.1
+      glob: 8.1.0
       io-ts: 2.2.20
       io-ts-extra: 0.11.6
       js-yaml: 4.1.0
@@ -235,7 +235,7 @@ importers:
       '@babel/generator': 7.21.1
       '@babel/parser': 7.21.2
       eslint-plugin-codegen: 0.17.0_3ogk7peuefdu45q3hbzcgdiuna
-      glob: 9.2.1
+      glob: 8.1.0
       io-ts: 2.2.20
       io-ts-extra: 0.11.6
       js-yaml: 4.1.0
@@ -4925,17 +4925,6 @@ packages:
       inherits: 2.0.4
       minimatch: 5.1.2
       once: 1.4.0
-    dev: true
-
-  /glob/9.2.1:
-    resolution: {integrity: sha512-Pxxgq3W0HyA3XUvSXcFhRSs+43Jsx0ddxcFrbjxNGkL2Ak5BAUBxLqI5G6ADDeCHLfzzXFhe0b1yYcctGmytMA==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    dependencies:
-      fs.realpath: 1.0.0
-      minimatch: 7.4.2
-      minipass: 4.2.4
-      path-scurry: 1.6.1
-    dev: false
 
   /global-dirs/3.0.1:
     resolution: {integrity: sha512-NBcGGFbBA9s1VzD41QXDG+3++t9Mn5t1FpLdhESY6oKY4gYTFpX4wO3sqGUa0Srjtbfj3szX0RnemmrVRUdULA==}
@@ -5928,6 +5917,7 @@ packages:
   /lru-cache/7.14.1:
     resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
     engines: {node: '>=12'}
+    dev: true
 
   /lru-memoizer/2.1.4:
     resolution: {integrity: sha512-IXAq50s4qwrOBrXJklY+KhgZF+5y98PDaNo0gi/v2KQBFLyWr+JyFvijZXkGKjQj/h9c0OwoE+JZbwUXce76hQ==}
@@ -6153,7 +6143,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
-    dev: true
 
   /minimatch/6.2.0:
     resolution: {integrity: sha512-sauLxniAmvnhhRjFwPNnJKaPFYyddAgbYdeUpHULtCT/GhzdCx/MDNy+Y40lBxTQUrMzDE8e0S43Z5uqfO0REg==}
@@ -6167,6 +6156,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
+    dev: true
 
   /minimist-options/4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
@@ -6248,6 +6238,7 @@ packages:
   /minipass/4.2.4:
     resolution: {integrity: sha512-lwycX3cBMTvcejsHITUgYj6Gy6A7Nh4Q6h9NP4sTHY1ccJlC7yKzDmiShEHsJ16Jf1nKGDEaiHxiltsJEvk0nQ==}
     engines: {node: '>=8'}
+    dev: true
 
   /minizlib/2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
@@ -6913,14 +6904,6 @@ packages:
     dependencies:
       search-params: 3.0.0
       tslib: 1.14.1
-    dev: false
-
-  /path-scurry/1.6.1:
-    resolution: {integrity: sha512-OW+5s+7cw6253Q4E+8qQ/u1fVvcJQCJo/VFD8pje+dbJCF1n5ZRMV2AEHbGp+5Q7jxQIYJxkHopnj6nzdGeZLA==}
-    engines: {node: '>=14'}
-    dependencies:
-      lru-cache: 7.14.1
-      minipass: 4.2.4
     dev: false
 
   /path-to-regexp/0.1.7:

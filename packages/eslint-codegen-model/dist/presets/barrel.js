@@ -64,7 +64,7 @@ const barrel = ({ meta, options: opts }) => {
     const ext = meta.filename.split('.').slice(-1)[0];
     const pattern = opts.include || `*.${ext}`;
     const relativeFiles = glob
-        .globSync(pattern, { cwd, ignore: opts.exclude, nodir })
+        .glob(pattern, { cwd, ignore: opts.exclude, nodir })
         .filter((f) => path.resolve(cwd, f) !== path.resolve(meta.filename))
         .map((f) => `./${f}`.replace(/(\.\/)+\./g, '.'))
         .filter((file) => nodir
