@@ -64,9 +64,8 @@ function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends Persiste
  * The Disk-backed store, flushes writes in background, but keeps the data in memory
  * and should therefore be as fast as the Memory Store.
  */
-export function makeDiskStore({ prefix }: StorageConfig) {
+export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
   return Effect.sync(() => {
-    const dir = "./.data"
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
     }
@@ -115,8 +114,8 @@ export function makeDiskStore({ prefix }: StorageConfig) {
   })
 }
 
-export function DiskStoreLive(config: Config<StorageConfig>) {
+export function DiskStoreLive(config: Config<StorageConfig>, dir: string) {
   return config.config
-    .flatMap(makeDiskStore)
+    .flatMap(_ => makeDiskStore(_, dir))
     .toLayer(StoreMaker)
 }

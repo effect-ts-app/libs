@@ -21,8 +21,9 @@ export function StoreMakerLive(config: Config<StorageConfig>) {
       return Effect(makeMemoryStore())
     }
     if (storageUrl.startsWith("disk://")) {
-      console.log("Using disk store at " + storageUrl.replace("disk://", ""))
-      return makeDiskStore(cfg)
+      const dir = storageUrl.replace("disk://", "")
+      console.log("Using disk store at " + dir)
+      return makeDiskStore(cfg, dir)
     }
     if (storageUrl.startsWith("redis://")) {
       console.log("Using Redis store")
