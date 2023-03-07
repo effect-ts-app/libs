@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.34.3
+
+### Patch Changes
+
+- fix diskdb message
+
 ## 0.34.2
 
 ### Patch Changes
