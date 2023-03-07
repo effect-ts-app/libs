@@ -179,7 +179,7 @@ importers:
       '@babel/cli': ^7.21.0
       '@effect/data': ^0.3.3
       '@effect/io': ^0.7.0
-      '@effect/stream': ^0.6.0
+      '@effect/stream': ^0.7.0
       '@fp-ts/optic': ^0.4.0
       '@types/uuid': ^9.0.1
       '@types/validator': ^13.7.13
@@ -196,7 +196,7 @@ importers:
     dependencies:
       '@effect/data': 0.3.3
       '@effect/io': 0.7.0
-      '@effect/stream': 0.6.0
+      '@effect/stream': 0.7.0
       '@fp-ts/optic': 0.4.0
       cross-fetch: 3.1.5
       lodash: 4.17.21
@@ -1300,12 +1300,6 @@ packages:
     resolution: {integrity: sha512-qDeIoVmMErcd9fJLcWsDalmty5NJ/mtv7vAsFtYbH3gOY9jHRst2TWQnUTRjpCr/KTGv+fTX+5qcEDyzymNgGg==}
     dev: false
 
-  /@effect/io/0.6.0:
-    resolution: {integrity: sha512-RqEXAt/2Gia2tzLo50rgA/rSuZCyZQjITT1YVHffqUZrG/g7a+cTB3Easm1ki4ehSh1NDyNUD4/E05Fn15cbPg==}
-    dependencies:
-      '@effect/data': 0.3.3
-    dev: false
-
   /@effect/io/0.7.0:
     resolution: {integrity: sha512-MYm1gq/z6EGLe/EJ5m09AKbYmMYj+bx53i7zoPV5rmFl19uBgtgP/+hb1LzQtIrE+fTZhVKyzVysfenIMkt02g==}
     dependencies:
@@ -1320,11 +1314,11 @@ packages:
     dev: true
     patched: true
 
-  /@effect/stream/0.6.0:
-    resolution: {integrity: sha512-ApRI4X8tEQr88TsAvaB9/g13sduh3t/1hF8+kkJVNsm4dXkq8+zrHkgsBmgu/wddHmrCk2zGjqcGBbswyTjDmw==}
+  /@effect/stream/0.7.0:
+    resolution: {integrity: sha512-NZuSDIaiZwPKXLm/Dt1ttVlhllfxshM+DXkaB2654zU7tjwu9scjbx+Pa+1kg/TJeKxQcmNVbtKcDXqwlHytxw==}
     dependencies:
       '@effect/data': 0.3.3
-      '@effect/io': 0.6.0
+      '@effect/io': 0.7.0
     dev: false
 
   /@esbuild/android-arm/0.16.17:
