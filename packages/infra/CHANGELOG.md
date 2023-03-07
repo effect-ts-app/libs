@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.34.4
+
+### Patch Changes
+
+- Proper disk location
+
 ## 0.34.3
 
 ### Patch Changes
