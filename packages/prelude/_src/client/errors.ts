@@ -1,32 +1,32 @@
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class NotFoundError extends Model<NotFoundError>()({
   _tag: prop(literal("NotFoundError")),
   message: prop(string)
 }) {}
 
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class InvalidStateError extends Model<InvalidStateError>()({
   _tag: prop(literal("InvalidStateError")),
   message: prop(string)
 }) {}
 
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class ValidationError extends Model<ValidationError>()({
   _tag: prop(literal("ValidationError")),
   errors: prop(array(unknown)) // meh
 }) {}
 
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class NotLoggedInError extends Model<NotLoggedInError>()({
   _tag: prop(literal("NotLoggedInError"))
 }) {}
 
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class UnauthorizedError extends Model<UnauthorizedError>()({
   _tag: prop(literal("UnauthorizedError"))
 }) {}
 
-@useClassNameForSchema
+@useClassFeaturesForSchema
 export class OptimisticConcurrencyException extends Model<OptimisticConcurrencyException>()(
   {
     _tag: prop(literal("OptimisticConcurrencyException"))

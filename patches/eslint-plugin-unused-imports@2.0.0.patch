@@ -7,7 +7,7 @@ index 9680809..dfd3bec 100644
  	}
  
 +	// workaround recent issue with decorator imports..
-+	if (problem.message.includes("useClassNameForSchema")) { return false }
++	if (problem.message.includes("useClassFeaturesForSchema")) { return false }
 +
  	// Only handle these 3 cases.
  	switch (parent.type) {

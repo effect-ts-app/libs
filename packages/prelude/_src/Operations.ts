@@ -3,6 +3,7 @@ import { optProp } from "./schema.js"
 export type OperationId = StringId
 export const OperationId = StringId
 
+@useClassFeaturesForSchema
 export class OperationProgress extends MNModel<
   OperationProgress,
   OperationProgress.ConstructorInput,
@@ -15,6 +16,7 @@ export class OperationProgress extends MNModel<
 /** @ignore @internal @deprecated */
 export type OperationProgressConstructor = typeof OperationProgress
 
+@useClassFeaturesForSchema
 export class Success extends MNModel<Success, Success.ConstructorInput, Success.Encoded, Success.Props>()({
   _tag: prop(literal("Success")),
   message: defaultProp(nullable(LongString))
@@ -22,6 +24,7 @@ export class Success extends MNModel<Success, Success.ConstructorInput, Success.
 /** @ignore @internal @deprecated */
 export type SuccessConstructor = typeof Success
 
+@useClassFeaturesForSchema
 export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.Encoded, Failure.Props>()({
   _tag: prop(literal("Failure")),
   message: defaultProp(nullable(LongString))
@@ -32,6 +35,7 @@ export type FailureConstructor = typeof Failure
 export const OperationResult = union({ Success, Failure })
 export type OperationResult = ParsedShapeOfCustom<typeof OperationResult>
 
+@useClassFeaturesForSchema
 export class Operation extends MNModel<Operation, Operation.ConstructorInput, Operation.Encoded, Operation.Props>()({
   id: prop(OperationId),
   progress: optProp(OperationProgress),

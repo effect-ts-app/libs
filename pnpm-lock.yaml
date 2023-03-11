@@ -7,30 +7,30 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz
 
 patchedDependencies:
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
-  eslint-plugin-unused-imports@2.0.0:
-    hash: tnum7sl7jcutfljbv5jztcescq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
-  typescript@5.0.0-tsplus.20230224:
-    hash: fmclztx4qsomluxscwycdtts54
-    path: patches/typescript@5.0.0-tsplus.20230224.patch
-  '@effect/language-service@0.0.19':
-    hash: izp2ue34jjv4swyrhg2ux4ha3e
-    path: patches/@effect__language-service@0.0.19.patch
   '@typescript-eslint/scope-manager@5.54.1':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.54.1.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: vsmxvnb6xii5fjfvmn3jylonyq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
+  '@effect/language-service@0.0.19':
+    hash: izp2ue34jjv4swyrhg2ux4ha3e
+    path: patches/@effect__language-service@0.0.19.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
-  '@fp-ts/optic@0.4.0':
-    hash: hv3tt4pi5hmbdtr252iykb5j6q
-    path: patches/@fp-ts__optic@0.4.0.patch
   date-fns@2.29.3:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
     path: patches/date-fns@2.29.3.patch
+  typescript@5.0.0-tsplus.20230224:
+    hash: fmclztx4qsomluxscwycdtts54
+    path: patches/typescript@5.0.0-tsplus.20230224.patch
+  '@fp-ts/optic@0.4.0':
+    hash: hv3tt4pi5hmbdtr252iykb5j6q
+    path: patches/@fp-ts__optic@0.4.0.patch
 
 importers:
 
@@ -121,7 +121,7 @@ importers:
       eslint-plugin-prettier-vue: 4.2.0
       eslint-plugin-simple-import-sort: 10.0.0_eslint@8.36.0
       eslint-plugin-sort-destructure-keys: 1.5.0_eslint@8.36.0
-      eslint-plugin-unused-imports: 2.0.0_tnum7sl7jcutfljbv5jztcescq_yk4l6vxr22hhx5dk7tyxpngtsi
+      eslint-plugin-unused-imports: 2.0.0_vsmxvnb6xii5fjfvmn3jylonyq_yk4l6vxr22hhx5dk7tyxpngtsi
       eslint-watch: 8.0.0_eslint@8.36.0
       history: 5.3.0
       json5: 2.2.3
@@ -4208,7 +4208,7 @@ packages:
       natural-compare-lite: 1.4.0
     dev: true
 
-  /eslint-plugin-unused-imports/2.0.0_tnum7sl7jcutfljbv5jztcescq_yk4l6vxr22hhx5dk7tyxpngtsi:
+  /eslint-plugin-unused-imports/2.0.0_vsmxvnb6xii5fjfvmn3jylonyq_yk4l6vxr22hhx5dk7tyxpngtsi:
     resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:

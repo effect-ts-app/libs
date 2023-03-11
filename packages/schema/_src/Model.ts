@@ -314,14 +314,13 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
  * instanceof the class.
  */
 export function useClassConstructorForSchema(cls: any) {
-  // TODO: call this and @useClassNameForSchema via a transform?
   const p = cls.Parser
   const c = cls.Constructor
   const upd = pipe(
     cls[schemaField],
     MO.parser((_, env) => MO.These.map_(p(_, env), _ => new cls(_))),
-    MO.constructor((_) => MO.These.map_(c(_), _ => new cls(_)))
-)
+    MO.constructor(_ => MO.These.map_(c(_), _ => new cls(_)))
+  )
   setSchema(
     cls,
     upd as any
@@ -335,6 +334,14 @@ export function useClassConstructorForSchema(cls: any) {
 export function useClassNameForSchema(cls: any) {
   setSchema(cls, pipe(cls[schemaField], MO.named(cls.name)) as any)
   return cls
+}
+
+// TODO: call this via a transform?
+/**
+ * composes @link useClassNameForSchema and @link useClassConstructorForSchema
+ */
+export function useClassFeaturesForSchema(cls: any) {
+  return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
 export type GetProps<Self> = Self extends { Api: { props: infer Props } } ? Props extends PropertyRecord ? Props

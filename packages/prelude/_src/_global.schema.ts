@@ -53,6 +53,7 @@ import {
   unknown,
   unsafe,
   useClassConstructorForSchema,
+  useClassFeaturesForSchema,
   useClassNameForSchema,
   // unsafe,
   UUID,

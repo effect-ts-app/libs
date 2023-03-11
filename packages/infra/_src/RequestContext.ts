@@ -1,6 +1,7 @@
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 
+@useClassFeaturesForSchema
 export class RequestContextParent extends MNModel<
   RequestContextParent,
   RequestContextParent.ConstructorInput,
@@ -25,6 +26,7 @@ export function makeRequestId() {
  * @tsplus type RequestContext
  * @tsplus companion RequestContext.Ops
  */
+@useClassFeaturesForSchema
 export class RequestContext extends MNModel<
   RequestContext,
   RequestContext.ConstructorInput,
