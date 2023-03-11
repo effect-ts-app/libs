@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@effect/data': ^0.4.0
+  '@effect/data': ^0.4.1
   '@types/node': ~18.11.12
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
@@ -11,27 +11,27 @@ patchedDependencies:
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
-  '@phaphoso/eslint-plugin-dprint@0.5.2':
-    hash: 5r3oafqkulzxdb6awceadivssy
-    path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
-  eslint-plugin-unused-imports@2.0.0:
-    hash: vsmxvnb6xii5fjfvmn3jylonyq
-    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
   typescript@5.0.0-tsplus.20230224:
     hash: fmclztx4qsomluxscwycdtts54
     path: patches/typescript@5.0.0-tsplus.20230224.patch
+  '@phaphoso/eslint-plugin-dprint@0.5.2':
+    hash: 5r3oafqkulzxdb6awceadivssy
+    path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
+  eslint-plugin-unused-imports@2.0.0:
+    hash: vsmxvnb6xii5fjfvmn3jylonyq
+    path: patches/eslint-plugin-unused-imports@2.0.0.patch
   '@typescript-eslint/scope-manager@5.54.1':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.54.1.patch
-  '@fp-ts/optic@0.4.0':
-    hash: hv3tt4pi5hmbdtr252iykb5j6q
-    path: patches/@fp-ts__optic@0.4.0.patch
   date-fns@2.29.3:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
     path: patches/date-fns@2.29.3.patch
+  '@fp-ts/optic@0.4.0':
+    hash: hv3tt4pi5hmbdtr252iykb5j6q
+    path: patches/@fp-ts__optic@0.4.0.patch
 
 importers:
 
@@ -181,7 +181,7 @@ importers:
   packages/core:
     specifiers:
       '@babel/cli': ^7.21.0
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@effect/stream': ^0.7.0
       '@fp-ts/optic': ^0.4.0
@@ -198,7 +198,7 @@ importers:
       vitest: ^0.29.2
       winston: ^3.8.2
     dependencies:
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@effect/stream': 0.7.0
       '@fp-ts/optic': 0.4.0_hv3tt4pi5hmbdtr252iykb5j6q
@@ -264,7 +264,7 @@ importers:
       '@effect-app/infra-adapters': workspace:*
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@sendgrid/helpers': ^7.7.0
       '@sendgrid/mail': ^7.7.0
@@ -300,7 +300,7 @@ importers:
       '@effect-app/infra-adapters': link:../infra-adapters
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@sendgrid/helpers': 7.7.0
       '@sendgrid/mail': 7.7.0
@@ -340,7 +340,7 @@ importers:
       '@effect-app/core': workspace:*
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@fp-ts/optic': ^0.4.0
       '@types/connect': ^3.4.35
@@ -361,7 +361,7 @@ importers:
       '@effect-app/core': link:../core
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@fp-ts/optic': 0.4.0_hv3tt4pi5hmbdtr252iykb5j6q
       query-string: 8.1.0
@@ -400,7 +400,7 @@ importers:
       '@effect-app/compiler': workspace:*
       '@effect-app/core': workspace:*
       '@effect-app/schema': workspace:*
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@fp-ts/optic': ^0.4.0
       '@types/faker': 5.5.9
@@ -423,7 +423,7 @@ importers:
     dependencies:
       '@effect-app/core': link:../core
       '@effect-app/schema': link:../schema
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@fp-ts/optic': 0.4.0_hv3tt4pi5hmbdtr252iykb5j6q
       date-fns: 2.29.3_g5hqt5bhnjezqo5vnkpprfkba4
@@ -483,7 +483,7 @@ importers:
   packages/schema:
     specifiers:
       '@effect-app/core': workspace:*
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@fp-ts/optic': ^0.4.0
       '@types/uuid': ^9.0.1
@@ -499,7 +499,7 @@ importers:
       vitest: ^0.29.2
     dependencies:
       '@effect-app/core': link:../core
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@fp-ts/optic': 0.4.0_hv3tt4pi5hmbdtr252iykb5j6q
       cross-fetch: 3.1.5
@@ -523,7 +523,7 @@ importers:
       '@effect-app/prelude': workspace:*
       '@effect-app/schema': workspace:*
       '@effect-app/vue': workspace:*
-      '@effect/data': ^0.4.0
+      '@effect/data': ^0.4.1
       '@effect/io': ^0.7.0
       '@fp-ts/optic': ^0.4.0
       '@rollup/pluginutils': ^5.0.2
@@ -541,7 +541,7 @@ importers:
       '@effect-app/prelude': link:../prelude
       '@effect-app/schema': link:../schema
       '@effect-app/vue': 'link:'
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
       '@fp-ts/optic': 0.4.0_hv3tt4pi5hmbdtr252iykb5j6q
       query-string: 8.1.0
@@ -1302,14 +1302,14 @@ packages:
     resolution: {integrity: sha512-xOZEJm/8R9DF0dUEzvAQfaW5e0YY4tmHYTlwyAZEYQvvLg8xx0K+CtGBgdcKHKcNe7FdjRUz+qO2+NErAc82Cg==}
     dev: true
 
-  /@effect/data/0.4.0:
-    resolution: {integrity: sha512-L5UN6twIS3gkSfcQ9T6FuW9pCZKgBNb9qvAb+GBdVQ4kbJ448Ma6ccy1aYmz+3FS8xGZDEe1CSZzEtcjWmzuMA==}
+  /@effect/data/0.4.1:
+    resolution: {integrity: sha512-FdQ0qbYL7t+GP5eWdAPC+oeN2w3zqnujrdDLp/sj58UtMxFSHg21crprmbmiAJAWsL5EdB9aZzcisBGn382xHg==}
     dev: false
 
   /@effect/io/0.7.0:
     resolution: {integrity: sha512-MYm1gq/z6EGLe/EJ5m09AKbYmMYj+bx53i7zoPV5rmFl19uBgtgP/+hb1LzQtIrE+fTZhVKyzVysfenIMkt02g==}
     dependencies:
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
     dev: false
 
   /@effect/language-service/0.0.19_izp2ue34jjv4swyrhg2ux4ha3e:
@@ -1323,7 +1323,7 @@ packages:
   /@effect/stream/0.7.0:
     resolution: {integrity: sha512-NZuSDIaiZwPKXLm/Dt1ttVlhllfxshM+DXkaB2654zU7tjwu9scjbx+Pa+1kg/TJeKxQcmNVbtKcDXqwlHytxw==}
     dependencies:
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
       '@effect/io': 0.7.0
     dev: false
 
@@ -1621,7 +1621,7 @@ packages:
   /@fp-ts/optic/0.4.0_hv3tt4pi5hmbdtr252iykb5j6q:
     resolution: {integrity: sha512-0LC6KBddl0JT1bnsrOJMMbgVjWBnEZoz0QRUpUgpguA/hBLuTjus8eCZbCGGBjKv52AYahlMOCwn8Bm6kl04uA==}
     dependencies:
-      '@effect/data': 0.4.0
+      '@effect/data': 0.4.1
     dev: false
     patched: true
 
