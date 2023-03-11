@@ -9,7 +9,8 @@
             "typescript@5.0.0-tsplus.20230224": "patches/typescript@5.0.0-tsplus.20230224.patch",
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-            "date-fns@2.29.3": "patches/date-fns@2.29.3.patch"
+            "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
+            "@fp-ts/optic@0.4.0": "patches/@fp-ts__optic@0.4.0.patch"
         }
     },
     "scripts": {
@@ -60,8 +61,8 @@
         "@babel/plugin-transform-modules-commonjs": "^7.21.2",
         "@changesets/cli": "^2.26.0",
         "@dprint/typescript": "^0.83.0",
-        "@effect-app/compiler": "workspace:*",
         "@effect-app/cli": "^0.5.0",
+        "@effect-app/compiler": "workspace:*",
         "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
         "@effect/language-service": "^0.0.19",
