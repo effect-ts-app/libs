@@ -27,6 +27,7 @@
     "Model": {
         "prefix": "mo",
         "body": [
+            "@useClassFeaturesForSchema",
             "export class $1 extends Model<$1>()({$2}) {}",
             ""
         ],
