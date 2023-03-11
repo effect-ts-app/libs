@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.24.0
+
+### Minor Changes
+
+- Update packages, add support for class features to schema and optic
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.33.0
+  - @effect-app/prelude@0.26.0
+  - @effect-app/schema@0.24.0
+  - @effect-app/vue@0.24.0
+
 ## 0.23.6
 
 ### Patch Changes

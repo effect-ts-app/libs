@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.26.0
+
+### Minor Changes
+
+- Update packages, add support for class features to schema and optic
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.33.0
+  - @effect-app/prelude@0.26.0
+  - @effect-app/schema@0.24.0
+
 ## 0.25.3
 
 ### Patch Changes

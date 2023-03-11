@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.24.0
+
+### Minor Changes
+
+- Update packages, add support for class features to schema and optic
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.33.0
+
 ## 0.23.3
 
 ### Patch Changes
