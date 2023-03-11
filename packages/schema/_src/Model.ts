@@ -309,6 +309,27 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
 }
 
 /**
+ * Run the parsed or constructed value through the class constructor
+ * inheriting the prototype and making the parsed and constructed shape
+ * instanceof the class.
+ */
+export function useClassConstructorForSchema(cls: any) {
+  // TODO: call this and @useClassNameForSchema via a transform?
+  const p = cls.Parser
+  const c = cls.Constructor
+  const upd = pipe(
+    cls[schemaField],
+    MO.parser((_, env) => MO.These.map_(p(_, env), _ => new cls(_))),
+    MO.constructor((_) => MO.These.map_(c(_), _ => new cls(_)))
+)
+  setSchema(
+    cls,
+    upd as any
+  )
+  return cls
+}
+
+/**
  * Automatically assign the name of the Class to the MO.
  */
 export function useClassNameForSchema(cls: any) {

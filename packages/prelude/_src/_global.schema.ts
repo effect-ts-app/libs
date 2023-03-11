@@ -52,6 +52,7 @@ import {
   UnionBrand,
   unknown,
   unsafe,
+  useClassConstructorForSchema,
   useClassNameForSchema,
   // unsafe,
   UUID,
