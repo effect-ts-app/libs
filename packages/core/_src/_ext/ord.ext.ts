@@ -8,7 +8,7 @@ export function sortWith<A>(
   ...ords: NonEmptyArguments<Order<A>>
 ): (a: Chunk<A>) => Chunk<A> {
   // TODO
-  return as => as.toArray.sortWith(...ords).toChunk
+  return as => as.toReadonlyArray.sortWith(...ords).toChunk
 }
 
 /**

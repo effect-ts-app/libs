@@ -18,7 +18,7 @@ export function ChunksortWith<A>(
  * @tsplus fluent effect/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {
-  return c.toReadonlyArray().groupByT(f).toChunk
+  return c.toReadonlyArray.groupByT(f).toChunk
 }
 
 /**
@@ -31,7 +31,7 @@ export function findFirstMap<A, B>(
   f: (a: A) => Option<B>
 ) {
   return (as: Chunk.Chunk<A>) => {
-    const ass = as.toReadonlyArray()
+    const ass = as.toReadonlyArray
     const len = ass.length
     for (let i = 0; i < len; i++) {
       const v = f(ass[i]!)
@@ -47,7 +47,7 @@ export function findFirstMap<A, B>(
  * @tsplus getter effect/data/Chunk toArray
  */
 export function toArray<T>(c: Chunk.Chunk<T>) {
-  return c.toReadonlyArray()
+  return c.toReadonlyArray
 }
 
 /**

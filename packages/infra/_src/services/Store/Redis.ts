@@ -55,7 +55,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                   })
                   .flatMap(set)
               )
-              .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
+              .map(_ => _.toReadonlyArray as NonEmptyReadonlyArray<PM>)
               .apply(withPermit)
               .provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {

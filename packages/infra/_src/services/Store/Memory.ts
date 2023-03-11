@@ -53,7 +53,7 @@ export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends
             })
             .flatMap(_ => store.set(_))
         )
-        .map(_ => _.toReadonlyArray() as NonEmptyReadonlyArray<PM>)
+        .map(_ => _.toReadonlyArray as NonEmptyReadonlyArray<PM>)
         .apply(withPermit)
     const s: Store<PM, Id> = {
       all,

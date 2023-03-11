@@ -77,7 +77,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   ] as const
               )
-              const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray()
+              const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray
 
               const batchResult = yield* $(
                 batches.map((x, i) => [i, x] as const)
@@ -119,7 +119,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                   )
               )
-              return batchResult.toReadonlyArray().flat() as unknown as NonEmptyReadonlyArray<PM>
+              return batchResult.toReadonlyArray.flat() as unknown as NonEmptyReadonlyArray<PM>
             }).instrument("cosmos.bulkSet")
               .logAnnotate("cosmos.db", containerId)
 

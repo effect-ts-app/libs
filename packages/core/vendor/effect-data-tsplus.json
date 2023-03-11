@@ -627,6 +627,22 @@
       ]
     },
     {
+      "definitionName": "toReadonlyArray",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/data/Chunk",
+          "name": "toReadonlyArray"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Chunk.Ops",
+          "name": "toReadonlyArray"
+        }
+      ]
+    },
+    {
       "definitionName": "append",
       "definitionKind": "const",
       "extensions": [
