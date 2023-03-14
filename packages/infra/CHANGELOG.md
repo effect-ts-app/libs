@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.36.0
+
+### Minor Changes
+
+- repo: Add `remove`
+
 ## 0.35.3
 
 ### Patch Changes
