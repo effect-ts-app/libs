@@ -13,14 +13,13 @@ import type { Filter } from "../services/Store.js"
  * @tsplus type Repository
  */
 export interface Repository<
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
-  Id extends string,
   ItemType extends string
 > {
   itemType: ItemType
-  find: (id: Id) => Effect<ContextMap | RequestContext, never, Option<T>>
+  find: (id: T["id"]) => Effect<ContextMap | RequestContext, never, Option<T>>
   all: Effect<ContextMap, never, Chunk<T>>
   saveAndPublish: (
     items: Iterable<T>,
