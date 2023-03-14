@@ -25,6 +25,7 @@ export interface Repository<
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<ContextMap | RequestContext, InvalidStateError | OptimisticConcurrencyException, void>
+  remove: (item: T) => Effect<ContextMap, never, void>
   utils: {
     mapReverse: (
       pm: PM,
