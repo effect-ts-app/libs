@@ -32,8 +32,8 @@ export interface Repository<
       setEtag: (id: string, eTag: string | undefined) => void
     ) => unknown // TODO
     parse: (a: unknown, env?: ParserEnv | undefined) => T
-    all: Effect<ContextMap, never, Chunk<PM>>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, Chunk<PM>>
+    all: Effect<never, never, Chunk<PM>>
+    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, Chunk<PM>>
   }
 }
 
