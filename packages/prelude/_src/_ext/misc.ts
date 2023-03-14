@@ -43,7 +43,7 @@ type LowerServices<T extends Record<string, Tag<any>>> = { [key in keyof T as Lo
 /**
  * @tsplus static effect/io/Effect.Ops services
  */
-export function accessLowerServices_<T extends Record<string, Tag<any>>, A>(
+export function accessLowerServices_<T extends Record<string, Tag<any>>>(
   services: T
 ) {
   return Effect.all(
