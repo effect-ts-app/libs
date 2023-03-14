@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.35.3
+
+### Patch Changes
+
+- Improve Repository id type
+
 ## 0.35.2
 
 ### Patch Changes
