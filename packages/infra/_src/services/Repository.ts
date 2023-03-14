@@ -52,14 +52,13 @@ export const AnyPureDSL: PureDSL<any, any, any> = {
  * @tsplus fluent Repository get
  */
 export function get<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
-  id: Id
+  self: Repository<T, PM, Evt, ItemType>,
+  id: T["id"]
 ) {
   return self.find(id).flatMap(_ => _.encaseInEffect(() => new NotFoundError(self.itemType, id)))
 }
@@ -68,12 +67,11 @@ export function get<
  * @tsplus fluent Repository filter
  */
 export function filter<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>, filter: Predicate<T>) {
+>(self: Repository<T, PM, Evt, ItemType>, filter: Predicate<T>) {
   return self.all.map(_ => _.filter(filter))
 }
 
@@ -81,13 +79,12 @@ export function filter<
  * @tsplus fluent Repository filterAll
  */
 export function filterAll<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S extends T
->(self: Repository<T, PM, Evt, Id, ItemType>, map: (items: Chunk<T>) => Chunk<S>) {
+>(self: Repository<T, PM, Evt, ItemType>, map: (items: Chunk<T>) => Chunk<S>) {
   return self.all.map(map)
 }
 
@@ -95,13 +92,12 @@ export function filterAll<
  * @tsplus fluent Repository collect
  */
 export function collect<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S extends T
->(self: Repository<T, PM, Evt, Id, ItemType>, collect: (item: T) => Option<S>) {
+>(self: Repository<T, PM, Evt, ItemType>, collect: (item: T) => Option<S>) {
   return self.all.map(_ => _.filterMap(collect))
 }
 
@@ -109,12 +105,11 @@ export function collect<
  * @tsplus getter Repository log
  */
 export function log<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(_: Repository<T, PM, Evt, Id, ItemType>) {
+>(_: Repository<T, PM, Evt, ItemType>) {
   return (evt: Evt) => AnyPureDSL.log(evt)
 }
 
@@ -123,8 +118,7 @@ export function log<
  * @tsplus fluent Repository projectEffect
  */
 export function projectEffect<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
@@ -132,7 +126,7 @@ export function projectEffect<
   E,
   S = PM
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
@@ -147,14 +141,13 @@ export function projectEffect<
  * @tsplus fluent Repository project
  */
 export function project<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S = PM
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.projectEffect(Effect(map))
@@ -164,8 +157,7 @@ export function project<
  * @tsplus fluent Repository queryEffect
  */
 export function queryEffect<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
@@ -173,7 +165,7 @@ export function queryEffect<
   E,
   S = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
@@ -194,8 +186,7 @@ export function queryEffect<
  * @tsplus fluent Repository queryOneEffect
  */
 export function queryOneEffect<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
@@ -203,7 +194,7 @@ export function queryOneEffect<
   E,
   S = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
 ) {
@@ -229,14 +220,13 @@ export function queryOneEffect<
  * @tsplus fluent Repository query
  */
 export function query<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
@@ -247,14 +237,13 @@ export function query<
  * @tsplus fluent Repository queryOne
  */
 export function queryOne<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
@@ -265,8 +254,7 @@ export function queryOne<
  * @tsplus fluent Repository queryAndSavePureEffect
  */
 export function queryAndSavePureEffect<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
@@ -274,7 +262,7 @@ export function queryAndSavePureEffect<
   E,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
@@ -289,14 +277,13 @@ export function queryAndSavePureEffect<
  * @tsplus fluent Repository queryAndSavePure
  */
 export function queryAndSavePure<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
@@ -307,12 +294,11 @@ export function queryAndSavePure<
  * @tsplus getter Repository saveManyWithPure
  */
 export function saveManyWithPure<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>) {
+>(self: Repository<T, PM, Evt, ItemType>) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
@@ -321,12 +307,11 @@ export function saveManyWithPure<
  * @tsplus fluent Repository byIdAndSaveWithPure
  */
 export function byIdAndSaveWithPure<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>, id: Id) {
+>(self: Repository<T, PM, Evt, ItemType>, id: T["id"]) {
   return <R, A, E, S2 extends T>(pure: Effect<FixEnv<R, Evt, T, S2>, E, A>) =>
     get(self, id).flatMap(item => saveWithPure_(self, item, pure))
 }
@@ -336,13 +321,12 @@ export function byIdAndSaveWithPure<
  * @tsplus getter Repository handleByIdAndSaveWithPure
  */
 export function handleByIdAndSaveWithPure<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>) {
-  return <Req extends { id: Id }, Context, R, A, E, S2 extends T>(
+>(self: Repository<T, PM, Evt, ItemType>) {
+  return <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
     pure: (req: Req, ctx: Context) => Effect<FixEnv<R, Evt, T, S2>, E, A>
   ) =>
   (req: Req, ctx: Context) => byIdAndSaveWithPure(self, req.id)(pure(req, ctx))
@@ -363,7 +347,7 @@ export function saveManyWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
   pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>
 ) {
@@ -388,7 +372,7 @@ export function saveWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   item: S1,
   pure: Effect<FixEnv<R, Evt, S1, S2>, E, A>
 ) {
@@ -400,8 +384,7 @@ export function saveWithPure_<
 }
 
 export function saveAllWithEffectInt<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   P extends T,
   Evt,
@@ -410,7 +393,7 @@ export function saveAllWithEffectInt<
   E,
   A
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
   return Debug.untraced(restore =>
@@ -425,8 +408,7 @@ export function saveAllWithEffectInt<
  * @tsplus fluent Repository queryAndSavePureEffectBatched
  */
 export function queryAndSavePureEffectBatched<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
@@ -434,7 +416,7 @@ export function queryAndSavePureEffectBatched<
   E,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>,
   batchSize = 100
@@ -448,14 +430,13 @@ export function queryAndSavePureEffectBatched<
  * @tsplus fluent Repository queryAndSavePureBatched
  */
 export function queryAndSavePureBatched<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
   batchSize = 100
@@ -467,12 +448,11 @@ export function queryAndSavePureBatched<
  * @tsplus fluent Repository saveManyWithPureBatched
  */
 export function saveManyWithPureBatched<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, Id, ItemType>, batchSize = 100) {
+>(self: Repository<T, PM, Evt, ItemType>, batchSize = 100) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
 }
@@ -492,7 +472,7 @@ export function saveManyWithPureBatched_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>,
+  self: Repository<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
   pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>,
   batchSize = 100
@@ -634,13 +614,12 @@ export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReado
  * @tsplus getter Repository save
  */
 export function save<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>
+  self: Repository<T, PM, Evt, ItemType>
 ) {
   return (...items: NonEmptyArray<T>) => self.saveAndPublish(items)
 }
@@ -649,13 +628,12 @@ export function save<
  * @tsplus getter Repository saveWithEvents
  */
 export function saveWithEvents<
-  Id extends string,
-  T extends { id: Id },
+  T extends { id: string },
   PM extends { id: string },
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, Id, ItemType>
+  self: Repository<T, PM, Evt, ItemType>
 ) {
   return (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) => self.saveAndPublish(items, events)
 }
