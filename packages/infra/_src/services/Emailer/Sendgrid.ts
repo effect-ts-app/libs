@@ -4,14 +4,18 @@ import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
-const makeLiveSendgrid = ({ apiKey, defaultFrom, realMail, subjectPrefix }: SendgridConfig) =>
+const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
     sgMail.setApiKey(apiKey.value)
 
     return {
       sendMail(msg_: EmailMsgOptionalFrom) {
         return Effect.gen(function*($) {
-          const msg = { ...msg_, from: msg_.from ?? defaultFrom }
+          const msg: EmailMsg = {
+            ...msg_,
+            from: msg_.from ?? defaultFrom,
+            replyTo: msg_.replyTo ?? (msg_.from ? undefined : defaultReplyTo)
+          }
           const render = renderMessage(!realMail)
 
           const renderedMsg_ = render(msg)

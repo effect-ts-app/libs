@@ -13,6 +13,7 @@ export abstract class Emailer extends TagClass<Emailer>() {
 }
 
 export interface SendgridConfig {
+  defaultReplyTo?: Email | { name?: ReasonableString; email: Email }
   subjectPrefix: string
   realMail: boolean
   defaultFrom: Email | { name?: ReasonableString; email: Email }
