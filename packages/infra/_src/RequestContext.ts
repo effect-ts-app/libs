@@ -1,3 +1,5 @@
+import type { ConstructorOfProperties } from "@effect-app/schema"
+
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 
@@ -83,6 +85,8 @@ export namespace RequestContextParent {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContextParent> {}
   export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, RequestContextParent> = CParserFor(RequestContextParent)
 }
 export namespace RequestContext {
   /**
@@ -93,6 +97,8 @@ export namespace RequestContext {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContext> {}
   export interface Props extends GetProvidedProps<typeof RequestContext> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, RequestContext> = CParserFor(RequestContext)
 }
 /* eslint-enable */
 //

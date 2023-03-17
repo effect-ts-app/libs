@@ -55,6 +55,8 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           "  export interface ConstructorInput",
           `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
           `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+          `  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}`,
+          `  export const CParser: Parser.Parser<ConstructorParserInput, any, ${modelName}> = CParserFor(${modelName})`,
           "}",
         ]
       }

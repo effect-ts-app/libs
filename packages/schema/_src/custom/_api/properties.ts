@@ -238,24 +238,24 @@ export type ShapeFromProperties<Props extends PropertyRecord> = Compute<
   "flat"
 >
 
+// TODO: it might still be nice if could actually support optional props constructor/parser,
+// as it may be useful for forms and inline values (tests/consts etc)
+export type ConstructorOf<S extends S.SchemaUPI> = S extends { Api: { props: PropertyRecord } } ?
+  ConstructorOfProperties<S["Api"]["props"]>
+  : S.ConstructorInputOf<S>
+
 export type ConstructorOfProperties<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: k extends TagsFromProps<Props> ? never
         : Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: Props[k] extends { Api: { props: PropertyRecord } } ?
-                ConstructorOfProperties<Props[k]["Api"]["props"]>
-                : S.ConstructorInputOf<Props[k]["_schema"]>
+              readonly [h in k]?: ConstructorOf<Props[k]["_schema"]>
             }
           : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
-              readonly [h in k]?: Props[k] extends { Api: { props: PropertyRecord } } ?
-                ConstructorOfProperties<Props[k]["Api"]["props"]>
-                : S.ConstructorInputOf<Props[k]["_schema"]>
+              readonly [h in k]?: ConstructorOf<Props[k]["_schema"]>
             }
           : {
-            readonly [h in k]: Props[k] extends { Api: { props: PropertyRecord } } ?
-              ConstructorOfProperties<Props[k]["Api"]["props"]>
-              : S.ConstructorInputOf<Props[k]["_schema"]>
+            readonly [h in k]: ConstructorOf<Props[k]["_schema"]>
           }
         : never
     }[keyof Props]

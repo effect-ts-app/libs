@@ -265,6 +265,13 @@ export function createUseParsedFormFromSchema<Props extends PropertyRecord>(
   return createUseParsedFormUnsafe(self.Api.props)(EParserFor(self))
 }
 
+// TODO
+// export function createUseCParsedFormFromSchema<Props extends PropertyRecord>(
+//   self: SchemaProperties<Props>
+// ) {
+//   return createUseParsedFormUnsafe(self.Api.props)(CParserFor(self))
+// }
+
 /**
  * @unsafe - because the `Shape` has no relation to `Props`
  * This is used to adapt forms to tagged unions.

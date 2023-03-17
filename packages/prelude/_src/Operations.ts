@@ -58,6 +58,8 @@ export namespace OperationProgress {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof OperationProgress> {}
   export interface Props extends GetProvidedProps<typeof OperationProgress> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, OperationProgress> = CParserFor(OperationProgress)
 }
 export namespace Success {
   /**
@@ -68,6 +70,8 @@ export namespace Success {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Success> {}
   export interface Props extends GetProvidedProps<typeof Success> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, Success> = CParserFor(Success)
 }
 export namespace Failure {
   /**
@@ -78,6 +82,8 @@ export namespace Failure {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Failure> {}
   export interface Props extends GetProvidedProps<typeof Failure> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, Failure> = CParserFor(Failure)
 }
 export namespace Operation {
   /**
@@ -88,6 +94,8 @@ export namespace Operation {
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Operation> {}
   export interface Props extends GetProvidedProps<typeof Operation> {}
+  export interface ConstructorParserInput extends ConstructorOfProperties<Props> {}
+  export const CParser: Parser.Parser<ConstructorParserInput, any, Operation> = CParserFor(Operation)
 }
 /* eslint-enable */
 //
