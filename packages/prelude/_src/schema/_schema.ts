@@ -504,6 +504,9 @@ export type EncodedFromApi<Cls extends { [schemaField]: SchemaAny }> = EncodedOf
   Cls[schemaField]
 > // Transform<
 export type ConstructorInputFromApi<Cls extends { [schemaField]: SchemaAny }> = ConstructorInputOf<Cls[schemaField]>
+
+export type ConstructorPropsOf<Cls extends { [schemaField]: { Api: { props: PropertyRecord } } }> =
+  S.ConstructorOfProperties<Cls[schemaField]["Api"]["props"]>
 // >
 
 // export type EncodedOf<X extends Schema<any, any, any, any, any>> = Transform<

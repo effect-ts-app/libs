@@ -51,6 +51,12 @@ export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
   return MO.Parser.for(schema)
 }
 
+export function CParserFor<Cls extends MO.SchemaAny & { Api: { props: MO.PropertyRecord } }>(
+  schema: Cls
+): MO.Parser.Parser<MO.ConstructorOfProperties<Cls["Api"]["props"]>, any, MO.ParsedShapeOf<Cls>> {
+  return MO.Parser.for(schema)
+}
+
 export type EncSchemaForModel<ParsedShape, Self extends MO.SchemaAny, MEnc> = MO.Schema<
   MO.ParserInputOf<Self>, // unknown lock to
   ParsedShape,
