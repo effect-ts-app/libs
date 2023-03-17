@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.36.2
+
+### Patch Changes
+
+- Sendgrid: add support for defaultReplyTo
+
 ## 0.36.1
 
 ### Patch Changes
