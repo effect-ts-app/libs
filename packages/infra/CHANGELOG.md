@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.37.0
+
+### Minor Changes
+
+- 98e14613: Move RequestContext to Container ref that can be updated
+
 ## 0.36.2
 
 ### Patch Changes
