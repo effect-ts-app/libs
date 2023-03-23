@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.37.6
+
+### Patch Changes
+
+- Improve error stack
+
 ## 0.37.5
 
 ### Patch Changes
