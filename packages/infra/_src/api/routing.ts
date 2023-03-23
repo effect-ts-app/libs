@@ -236,7 +236,10 @@ export function makeRequestHandler<
     r2: Effect<R, E | ValidationError, void>
   ) => Effect<RErr | R, never, void>,
   makeMiddlewareContext?: MakeMiddlewareContext<E, R2, PR>
-): (req: express.Request, res: express.Response) => Effect<RErr | R | R2, never, void> {
+): (
+  req: express.Request,
+  res: express.Response
+) => Effect<Exclude<RErr | R | R2, RequestContextContainer>, never, void> {
   const { Request, Response, adaptResponse, h: handle } = handler
   const response = Response ? extractSchema(Response as any) : Void
   const encoder = Encoder.for(response)
@@ -455,7 +458,7 @@ export type RouteMatch<
   | Ex.ExpressApp
   | Exclude<
     R,
-    PR
+    PR | RequestContextContainer
   >,
   never,
   RouteDescriptorAny // RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
