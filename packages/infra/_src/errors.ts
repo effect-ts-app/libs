@@ -1,3 +1,5 @@
+import * as CausePretty from "@effect/io/internal_effect_untraced/cause-pretty"
+
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
   public readonly message: string
@@ -34,17 +36,30 @@ export class InvalidStateError {
 }
 
 export class CauseException<E> extends Error {
-  readonly pretty: string
-  constructor(readonly exitCause: Cause<E>, readonly _tag: string) {
-    super(`An unexpected ${_tag} Exception occurred, see \`pretty\` for details.`)
-    this.pretty = exitCause.pretty
+  constructor(readonly originalCause: Cause<E>, readonly _tag: string) {
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 0
+    super()
+    Error.stackTraceLimit = limit
+    const pretty = (CausePretty as any).prettyErrors(this.originalCause)
+    if (pretty.length > 0) {
+      this.name = pretty[0].message.split(":")[0]
+      this.message = pretty[0].message.substring(this.name.length + 2)
+      this.stack = pretty[0].stack
+    }
+  }
+  override toString() {
+    return `[${this._tag}] ` + (CausePretty as any).pretty(this.originalCause)
+  }
+  [Symbol.for("nodejs.util.inspect.custom")]() {
+    return this.toString()
   }
 
   toJSON() {
     return {
       _tag: this._tag,
       message: this.message,
-      pretty: this.pretty
+      pretty: this.toString()
       //      cause: (this.cause as {}).$$.inspect(undefined, 10)
     }
   }
