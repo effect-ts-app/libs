@@ -7,13 +7,11 @@ import type {
   UnauthorizedError,
   ValidationError
 } from "../errors.js"
-import type { RequestContext } from "../RequestContext.js"
 import { logRequestError } from "./reportError.js"
 
 export function defaultBasicErrorHandler<R>(
   _req: express.Request,
   res: express.Response,
-  _requestContext: RequestContext,
   r2: Effect<R, ValidationError, void>
 ) {
   const sendError = (code: number) => (body: unknown) => Effect(res.status(code).send(body))
@@ -38,7 +36,6 @@ const optimisticConcurrencySchedule = Schedule.once() &&
 export function defaultErrorHandler<R>(
   req: express.Request,
   res: express.Response,
-  _: RequestContext,
   r2: Effect<R, SupportedErrors, void>
 ) {
   const r3 = req.method === "PATCH"

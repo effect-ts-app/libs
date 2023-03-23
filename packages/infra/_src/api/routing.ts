@@ -97,9 +97,8 @@ export function makeRequestParsers<
 
 export type MakeMiddlewareContext<ResE, R2 = never, PR = never> = (
   req: express.Request,
-  res: express.Response,
-  context: RequestContext
-) => Effect<R2, ResE, Context<PR>>
+  res: express.Response
+) => Effect<R2 | RequestContextContainer, ResE, Context<PR>>
 
 export type Middleware<
   R,
@@ -148,7 +147,6 @@ export function match<
   errorHandler: <R>(
     req: express.Request,
     res: express.Response,
-    requestContext: RequestContext,
     r2: Effect<R, E | ValidationError, void>
   ) => Effect<RErr, never, void>,
   middleware?: Middleware<
@@ -232,9 +230,8 @@ export function makeRequestHandler<
   errorHandler: <R>(
     req: express.Request,
     res: express.Response,
-    requestContext: RequestContext,
     r2: Effect<R, E | ValidationError, void>
-  ) => Effect<RErr | R, never, void>,
+  ) => Effect<RErr | R | RequestContextContainer, never, void>,
   makeMiddlewareContext?: MakeMiddlewareContext<E, R2, PR>
 ): (
   req: express.Request,
@@ -317,6 +314,7 @@ export function makeRequestHandler<
       })
         .flatMap(({ pars, requestContext }) =>
           RequestSettings.get.flatMap(s =>
+            // TODO: we don;t have access to user id here cause context is not yet created
             Effect.logInfo("Incoming request").apply(
               Effect.logAnnotates({
                 method: req.method,
@@ -355,14 +353,13 @@ export function makeRequestHandler<
                 ? restoreFromRequestContext
                   .zipRight(r.setupRequestFrom
                     // the db namespace must be restored, before calling provide here
-                    .provideSomeContextEffect(makeMiddlewareContext(req, res, requestContext)))
+                    .provideSomeContextEffect(makeMiddlewareContext(req, res)))
                 : restoreFromRequestContext
                   // PR is not relevant here
                   .zipRight(r) as Effect<R, E | ValidationError, void>
               return errorHandler(
                 req,
                 res,
-                requestContext,
                 r2
               )
             })
@@ -370,11 +367,13 @@ export function makeRequestHandler<
             .tapErrorCause(cause =>
               Effect.allPar(
                 Effect(res.status(500).send()),
-                reportRequestError(cause, {
-                  requestContext,
-                  path: req.originalUrl,
-                  method: req.method
-                }),
+                RequestContextContainer.get.flatMap(requestContext =>
+                  reportRequestError(cause, {
+                    requestContext,
+                    path: req.originalUrl,
+                    method: req.method
+                  })
+                ),
                 Effect.suspendSucceed(() => {
                   const headers = res.getHeaders()
                   return Effect.logErrorCauseMessage(
@@ -400,6 +399,7 @@ export function makeRequestHandler<
                 })
               )
                 .tapErrorCause(cause => Effect(console.error("Error occurred while reporting error", cause)))
+                .setupRequestFrom
             )
             .tap(() =>
               RequestSettings.get.flatMap(s => {
@@ -414,7 +414,7 @@ export function makeRequestHandler<
                     } :
                     undefined
                 }))
-              })
+              }).setupRequestFrom
             )
             .setupRequestFrom
             .provideService(RequestContextContainer, new RequestContextContainerImpl(requestContext)) // otherwise external error reporter breaks.
