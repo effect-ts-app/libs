@@ -45,7 +45,7 @@ export class CauseException<E> extends Error {
     if (pretty.length > 0) {
       this.name = pretty[0].message.split(":")[0]
       this.message = pretty[0].message.substring(this.name.length + 2)
-      this.stack = pretty[0].stack
+      this.stack = `${this.name}: ${this.message}\n` + pretty[0].stack
     }
   }
   override toString() {
