@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.37.4
+
+### Patch Changes
+
+- improve req log ctx
+
 ## 0.37.3
 
 ### Patch Changes
