@@ -1,15 +1,14 @@
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"
-
-import type { RequestContext } from "../../RequestContext.js"
+import type { RequestContextContainer } from "../RequestContextContainer.js"
 
 /**
  * @tsplus type Emailer
  * @tsplus companion Emailer.Ops
  */
 export abstract class Emailer extends TagClass<Emailer>() {
-  abstract sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContext, Error | ResponseError, void>
+  abstract sendMail: (msg: EmailMsgOptionalFrom) => Effect<RequestContextContainer, Error | ResponseError, void>
 }
 
 export interface SendgridConfig {
