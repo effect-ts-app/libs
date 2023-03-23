@@ -1,4 +1,5 @@
 import { RequestContext } from "../RequestContext.js"
+import { RequestContextContainer, RequestContextContainerImpl } from "../services/RequestContextContainer.js"
 
 /**
  * @tsplus fluent effect/io/Effect setupRequest
@@ -21,7 +22,7 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
  * @tsplus getter effect/io/Effect setupRequestFrom
  */
 export function setupRequestFrom<R, E, A>(self: Effect<R, E, A>) {
-  return Debug.untraced(() => RequestContext.Tag.accessWithEffect(requestContext => self.setupRequest(requestContext)))
+  return Debug.untraced(() => RequestContextContainer.get.flatMap(requestContext => self.setupRequest(requestContext)))
 }
 
 /**
@@ -31,7 +32,7 @@ export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
   return Debug.untraced(() =>
     self
       .setupRequestFrom
-      .provideService(RequestContext.Tag, makeInternalRequestContext(name))
+      .provideService(RequestContextContainer, new RequestContextContainerImpl(makeInternalRequestContext(name)))
   )
 }
 

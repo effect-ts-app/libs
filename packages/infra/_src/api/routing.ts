@@ -8,6 +8,7 @@ import { pretty } from "@effect-app/prelude/utils"
 import type express from "express"
 import type { ValidationError } from "../errors.js"
 import { RequestContext, RequestId } from "../RequestContext.js"
+import { RequestContextContainer, RequestContextContainerImpl } from "../services/RequestContextContainer.js"
 import { restoreFromRequestContext } from "../services/Store/Memory.js"
 import type { SupportedErrors } from "./defaultErrorHandler.js"
 import { defaultBasicErrorHandler } from "./defaultErrorHandler.js"
@@ -413,7 +414,7 @@ export function makeRequestHandler<
               })
             )
             .setupRequestFrom
-            .provideService(RequestContext.Tag, requestContext) // otherwise external error reporter breaks.
+            .provideService(RequestContextContainer, new RequestContextContainerImpl(requestContext)) // otherwise external error reporter breaks.
         )
     )
   }

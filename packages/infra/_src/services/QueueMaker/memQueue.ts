@@ -1,6 +1,7 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
+import { RequestContextContainer } from "../RequestContextContainer.js"
 import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import type { QueueBase } from "./service.js"
@@ -22,7 +23,7 @@ export function makeMemQueue<
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
   provideContext: (context: RequestContext) => <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext | RequestContext>, E, A>,
+  ) => Effect<Exclude<R, RContext | RequestContextContainer>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -36,7 +37,7 @@ export function makeMemQueue<
     return {
       publish: (...messages) =>
         Effect.gen(function*($) {
-          const requestContext = yield* $(RequestContext.Tag.access)
+          const requestContext = yield* $(RequestContextContainer.get)
           return yield* $(
             messages.forEachEffect(m =>
               // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)

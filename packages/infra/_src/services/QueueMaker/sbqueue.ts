@@ -10,6 +10,7 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
+import { RequestContextContainer } from "../RequestContextContainer.js"
 import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import type { QueueBase } from "./service.js"
@@ -31,7 +32,7 @@ export function makeServiceBusQueue<
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
   provideContext: (context: RequestContext) => <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext | RequestContext>, E, A>,
+  ) => Effect<Exclude<R, RContext | RequestContextContainer>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -86,7 +87,7 @@ export function makeServiceBusQueue<
 
       publish: (...messages) =>
         Effect.gen(function*($) {
-          const requestContext = yield* $(RequestContext.Tag.access)
+          const requestContext = yield* $(RequestContextContainer.get)
           return yield* $(
             Effect.promise(() =>
               s.sendMessages(

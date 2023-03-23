@@ -1,6 +1,6 @@
 import { logError, reportError } from "../errorReporter.js"
 import { CauseException } from "../errors.js"
-import { RequestContext } from "../RequestContext.js"
+import { RequestContextContainer } from "../services/RequestContextContainer.js"
 
 export class RequestException<E> extends CauseException<E> {
   constructor(cause: Cause<E>) {
@@ -11,14 +11,14 @@ export const reportRequestError_ = reportError(cause => new RequestException(cau
 
 export const reportRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
-    RequestContext.Tag.accessWithEffect(requestContext => reportRequestError_(cause, { requestContext, ...context }))
+    RequestContextContainer.get.flatMap(requestContext => reportRequestError_(cause, { requestContext, ...context }))
   )
 
 export const logRequestError_ = logError(cause => new RequestException(cause))
 
 export const logRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
-    RequestContext.Tag.accessWithEffect(requestContext => logRequestError_(cause, { requestContext, ...context }))
+    RequestContextContainer.get.flatMap(requestContext => logRequestError_(cause, { requestContext, ...context }))
   )
 
 /**

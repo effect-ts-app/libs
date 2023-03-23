@@ -1,6 +1,6 @@
 import { reportError } from "@effect-app/infra/errorReporter"
 import { CauseException } from "@effect-app/infra/errors"
-import { RequestContext } from "@effect-app/infra/RequestContext"
+import { RequestContextContainer } from "../RequestContextContainer.js"
 
 export class MessageException<E> extends CauseException<E> {
   constructor(cause: Cause<E>) {
@@ -17,8 +17,9 @@ export class FatalQueueException<E> extends CauseException<E> {
 const reportQueueError_ = reportError(cause => new MessageException(cause))
 
 export const reportQueueError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
-  Effect.contextWith((_: Context<never>) => Context.getOption(_, RequestContext.Tag))
-    .flatMap(requestContext => reportQueueError_(cause, { requestContext: requestContext.value, ...context }))
+  RequestContextContainer.getOption.flatMap(requestContext =>
+    reportQueueError_(cause, { requestContext: requestContext.value, ...context })
+  )
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the

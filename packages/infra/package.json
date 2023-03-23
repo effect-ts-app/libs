@@ -492,6 +492,16 @@
         "default": "./_cjs/services/Repository.cjs"
       }
     },
+    "./services/RequestContextContainer": {
+      "import": {
+        "types": "./dist/services/RequestContextContainer.d.ts",
+        "default": "./dist/services/RequestContextContainer.js"
+      },
+      "require": {
+        "types": "./dist/services/RequestContextContainer.d.ts",
+        "default": "./_cjs/services/RequestContextContainer.cjs"
+      }
+    },
     "./services/Store": {
       "import": {
         "types": "./dist/services/Store.d.ts",

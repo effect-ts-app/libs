@@ -66,11 +66,6 @@ export class RequestContext extends MNModel<
 /** @ignore @internal @deprecated */
 export type RequestContextConstructor = typeof RequestContext
 
-/**
- * @tsplus static RequestContext.Ops Tag
- */
-export const tag = Tag<RequestContext>()
-
 // codegen:start {preset: model}
 //
 /* eslint-disable */

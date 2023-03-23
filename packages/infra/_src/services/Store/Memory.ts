@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { RequestContext } from "../../RequestContext.js"
+import { RequestContextContainer } from "../RequestContextContainer.js"
 import type { Filter, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
@@ -24,7 +24,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
 }
 
 export const storeId = FiberRef.unsafeMake("primary")
-export const restoreFromRequestContext = RequestContext.Tag.accessWithEffect(ctx =>
+export const restoreFromRequestContext = RequestContextContainer.get.flatMap(ctx =>
   storeId.set(ctx.namespace ?? "primary")
 )
 
