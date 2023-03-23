@@ -5,9 +5,9 @@ import { Pure } from "@effect-app/prelude/Pure"
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
-import type { RequestContext } from "../RequestContext.js"
 import { ContextMap } from "../services/Store.js"
 import type { Filter } from "../services/Store.js"
+import type { RequestContextContainer } from "./RequestContextContainer.js"
 
 /**
  * @tsplus type Repository
@@ -19,12 +19,12 @@ export interface Repository<
   ItemType extends string
 > {
   itemType: ItemType
-  find: (id: T["id"]) => Effect<ContextMap | RequestContext, never, Option<T>>
+  find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Option<T>>
   all: Effect<ContextMap, never, Chunk<T>>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<ContextMap | RequestContext, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<ContextMap | RequestContextContainer, InvalidStateError | OptimisticConcurrencyException, void>
   remove: (item: T) => Effect<ContextMap, never, void>
   utils: {
     mapReverse: (
