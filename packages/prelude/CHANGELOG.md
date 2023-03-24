@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.26.2
+
+### Patch Changes
+
+- fix clientFor E
+
 ## 0.26.1
 
 ### Patch Changes
