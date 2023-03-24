@@ -23,7 +23,7 @@ export function makeMemQueue<
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
   provideContext: (context: RequestContext) => <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext | RequestContextContainer>, E, A>,
+  ) => Effect<Exclude<Exclude<R, RContext>, RequestContextContainer>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
