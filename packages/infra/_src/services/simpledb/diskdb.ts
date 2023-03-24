@@ -141,7 +141,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function lockFile(fileName: string) {
-  return Effect.tryPromise(() => PLF.lock(fileName).then(flow(Effect.tryPromise, _ => _.orDie)))
+  return Effect.attemptPromise(() => PLF.lock(fileName).then(flow(Effect.attemptPromise, _ => _.orDie)))
 }
 
 // TODO: ugh.

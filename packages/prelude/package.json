@@ -6,15 +6,15 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.4.1",
-    "@effect/io": "^0.7.0",
-    "@fp-ts/optic": "^0.4.0",
+    "@effect/data": "^0.5.0",
+    "@effect/io": "^0.10.0",
+    "@fp-ts/optic": "^0.5.0",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.1",
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
-    "ts-pattern": "^4.2.1",
+    "ts-pattern": "^4.2.2",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   },
@@ -22,14 +22,14 @@
     "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.21.0",
     "@types/faker": "5.5.9",
-    "@types/node": "~18.15.0",
+    "@types/node": "~18.15.7",
     "@types/uuid": "^9.0.1",
-    "@types/validator": "^13.7.13",
+    "@types/validator": "^13.7.14",
     "faker": "^5.5.3",
-    "fast-check": "^3.7.0",
+    "fast-check": "^3.7.1",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz",
-    "vitest": "^0.29.2"
+    "vitest": "^0.29.7"
   },
   "typesVersions": {
     "*": {

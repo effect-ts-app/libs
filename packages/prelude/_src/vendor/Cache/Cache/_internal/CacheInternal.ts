@@ -89,7 +89,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   get(k: Key): Effect<never, Error, Value> {
-    return Effect.suspendSucceed(() => {
+    return Effect.suspend(() => {
       let key: MapKey<Key> | undefined = undefined
       let deferred: Deferred<Error, Value> | undefined = undefined
       let value = this.cacheState.map.get(k).value
@@ -158,7 +158,7 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   refresh(k: Key): Effect<never, Error, void> {
-    return Effect.suspendSucceed(() => {
+    return Effect.suspend(() => {
       const deferred = Deferred.unsafeMake<Error, Value>(this.fiberId)
       let value = this.cacheState.map.get(k).value
       if (value == null) {

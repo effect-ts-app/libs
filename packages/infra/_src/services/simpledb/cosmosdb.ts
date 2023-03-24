@@ -13,14 +13,14 @@ class CosmosDbOperationError {
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
   Cosmos.db.tap(db =>
-    Effect.tryPromise(() =>
+    Effect.attemptPromise(() =>
       db.containers
         .create({ id: type, indexingPolicy })
         .catch(err => console.warn(err))
     )
   )
 // TODO: Error if current indexingPolicy does not match
-// Effect.flatMap((db) => Effect.tryPromise(() => db.container(type).(indexes)))
+// Effect.flatMap((db) => Effect.attemptPromise(() => db.container(type).(indexes)))
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
@@ -37,7 +37,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(id: string) {
       return Cosmos.db
-        .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
+        .flatMap(db => Effect.attemptPromise(() => db.container(type).item(id).read<{ data: EA }>()))
         .map(i => Option.fromNullable(i.resource))
         .map(
           _ =>
@@ -50,7 +50,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function findBy(parameters: Record<string, string>) {
       return Cosmos.db
         .flatMap(db =>
-          Effect.tryPromise(() =>
+          Effect.attemptPromise(() =>
             db
               .container(type)
               .items.query({
@@ -87,7 +87,7 @@ WHERE (
         yield* $(
           currentVersion.match(
             () =>
-              Effect.tryPromise(() =>
+              Effect.attemptPromise(() =>
                 db.container(type).items.create({
                   id: record.id,
                   timestamp: new Date(),
@@ -95,7 +95,7 @@ WHERE (
                 })
               ).asUnit.orDie,
             currentVersion =>
-              Effect.tryPromise(() =>
+              Effect.attemptPromise(() =>
                 db
                   .container(type)
                   .item(record.id)

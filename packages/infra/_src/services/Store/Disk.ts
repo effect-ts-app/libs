@@ -88,7 +88,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               throw new Error(`Namespace ${namespace} not allowed!`)
             }
             return storesSem.withPermits(1)(
-              Effect.suspendSucceed(() => {
+              Effect.suspend(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
                 return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, dir, name, seed).tap(store =>

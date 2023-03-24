@@ -93,7 +93,7 @@ export function condemnCustom_<X, A>(
   a: X,
   env?: Parser.ParserEnv
 ) {
-  return Effect.suspendSucceed(() => {
+  return Effect.suspend(() => {
     const res = self(a, env).effect
     if (res._tag === "Left") {
       return Effect.fail(new CustomSchemaException(res.left))

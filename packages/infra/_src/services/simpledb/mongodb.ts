@@ -13,8 +13,8 @@ import type { Version } from "./simpledb.js"
 
 const setup = (type: string, indexes: IndexDescription[]) =>
   Mongo.db
-    .tap(db => Effect.tryPromise(() => db.createCollection(type).catch(err => console.warn(err))))
-    .flatMap(db => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
+    .tap(db => Effect.attemptPromise(() => db.createCollection(type).catch(err => console.warn(err))))
+    .flatMap(db => Effect.attemptPromise(() => db.collection(type).createIndexes(indexes)))
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
@@ -33,7 +33,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function find(id: string) {
       return Mongo.db
         .flatMap(db =>
-          Effect.tryPromise(() =>
+          Effect.attemptPromise(() =>
             db
               .collection(type)
               .findOne<{ _id: TKey; version: Version; data: EA }>({ _id: { equals: id } })
@@ -46,7 +46,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function findBy(keys: Record<string, string>) {
       return Mongo.db
         .flatMap(db =>
-          Effect.tryPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
+          Effect.attemptPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
         )
         .map(Option.fromNullable)
         .mapOpt(({ _id }) => _id)
@@ -63,7 +63,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         yield* $(
           currentVersion.match(
             () =>
-              Effect.tryPromise(() =>
+              Effect.attemptPromise(() =>
                 db
                   .collection(type)
                   .insertOne(
@@ -74,7 +74,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                   )
               ).asUnit.orDie,
             currentVersion =>
-              Effect.tryPromise(() =>
+              Effect.attemptPromise(() =>
                 db.collection(type).replaceOne(
                   { _id: record.id, version: currentVersion },
                   {

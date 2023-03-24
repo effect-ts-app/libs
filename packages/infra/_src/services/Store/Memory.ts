@@ -95,7 +95,7 @@ export const makeMemoryStore = () => ({
         if (!config.allowNamespace!(namespace)) {
           throw new Error(`Namespace ${namespace} not allowed!`)
         }
-        return storesSem.withPermits(1)(Effect.suspendSucceed(() => {
+        return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
           if (store) return Effect(store)
           return makeMemoryStoreInt(name, seed).tap(store => Effect.sync(() => stores.set(namespace, store)))

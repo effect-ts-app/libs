@@ -331,7 +331,7 @@ export function makeRequestHandler<
               })
             )
           ).zipRight(
-            Effect.suspendSucceed(() => {
+            Effect.suspend(() => {
               const handleRequest = parseRequest(req)
                 .map(({ body, path, query }) => {
                   const hn = {
@@ -374,7 +374,7 @@ export function makeRequestHandler<
                     method: req.method
                   })
                 ),
-                Effect.suspendSucceed(() => {
+                Effect.suspend(() => {
                   const headers = res.getHeaders()
                   return Effect.logErrorCauseMessage(
                     "Finished request",

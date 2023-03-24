@@ -157,7 +157,7 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
       })
     )
 
-  const ex = Effect.suspendSucceed(() => {
+  const ex = Effect.suspend(() => {
     return fib
       ? fib.interrupt.zipRight(runNew)
       : runNew

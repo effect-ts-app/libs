@@ -7,7 +7,7 @@ import path from "path"
 import type internal from "stream"
 
 export function readFile(fileName: string) {
-  return Effect.tryPromise(() => fs.readFile(fileName))
+  return Effect.attemptPromise(() => fs.readFile(fileName))
 }
 
 export function createReadableStream(fileName: string) {
@@ -16,7 +16,7 @@ export function createReadableStream(fileName: string) {
 }
 
 export function openFile(fileName: string) {
-  return Effect.tryPromise(() => fs.open(fileName)).acquireRelease(f => Effect.promise(() => f.close()))
+  return Effect.attemptPromise(() => fs.open(fileName)).acquireRelease(f => Effect.promise(() => f.close()))
 }
 
 export function tempFile(
@@ -47,7 +47,7 @@ export function tempFile_(
 ) {
   return Effect(path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
     .flatMap(fp =>
-      Effect.tryPromise(() => fs.writeFile(fp, data, options))
+      Effect.attemptPromise(() => fs.writeFile(fp, data, options))
         .map(_ => fp)
         .acquireRelease(
           p => Effect.promise(() => fs.unlink(p))
@@ -61,16 +61,16 @@ export function tempFile_(
 export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
   return (
-    Effect.tryPromise(() => fs.writeFile(tmp, content, "utf-8")) >
-      Effect.tryPromise(() => fs.rename(tmp, fileName))
+    Effect.attemptPromise(() => fs.writeFile(tmp, content, "utf-8")) >
+      Effect.attemptPromise(() => fs.rename(tmp, fileName))
   ).orDie
 }
 
 export function fileExists(fileName: string) {
-  return Effect.tryPromise(() => fs.stat(fileName).then(_ => _.isFile()))
+  return Effect.attemptPromise(() => fs.stat(fileName).then(_ => _.isFile()))
     .orDie
 }
 
 export function readTextFile(fileName: string) {
-  return Effect.tryPromise(() => fs.readFile(fileName, "utf-8"))
+  return Effect.attemptPromise(() => fs.readFile(fileName, "utf-8"))
 }

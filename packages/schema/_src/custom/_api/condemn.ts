@@ -14,7 +14,7 @@ export function condemn<X, E, A>(
   self: Parser<X, E, A>
 ): (a: X, env?: ParserEnv) => Effect<never, E, A> {
   return (x, env?: ParserEnv) =>
-    Effect.suspendSucceed(() => {
+    Effect.suspend(() => {
       const y = self(x, env).effect
       if (y._tag === "Left") {
         return Effect.fail(y.left)
@@ -46,7 +46,7 @@ export class ThrowableCondemnException extends Error {
  */
 export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
   return (a: X, env?: ParserEnv) =>
-    Effect.suspendSucceed(() => {
+    Effect.suspend(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
         return Effect.fail(new CondemnException({ message: drawError(res.left) }))

@@ -114,9 +114,9 @@ export function mapOption<R, E, A, A2>(
 export type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
 /**
- * @tsplus static effect/io/Effect.Ops tryCatchPromiseWithInterrupt
+ * @tsplus static effect/io/Effect.Ops attemptCatchPromiseWithInterrupt
  */
-export function tryCatchPromiseWithInterrupt<E, A>(
+export function attemptCatchPromiseWithInterrupt<E, A>(
   promise: LazyArg<Promise<A>>,
   onReject: (reason: unknown) => E,
   canceller: () => void

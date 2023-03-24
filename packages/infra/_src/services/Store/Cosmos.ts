@@ -124,7 +124,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               .logAnnotate("cosmos.db", containerId)
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
-            return Effect.suspendSucceed(() => {
+            return Effect.suspend(() => {
               const batch = [...items].map(
                 x =>
                   [
