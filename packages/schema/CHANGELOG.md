@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.25.1
+
+### Patch Changes
+
+- fix dep
+
 ## 0.25.0
 
 ### Minor Changes
