@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.37.7
+
+### Patch Changes
+
+- Use StringId for userId
+
 ## 0.37.6
 
 ### Patch Changes
