@@ -166,12 +166,12 @@ type RequestHandlers<R, E, M extends Requests> = {
     }
     : 
       & ((
-        req: InstanceType<Schema.GetRequest<M[K]>>
+        req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: InstanceType<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>) => string
       }
 }
 
@@ -186,11 +186,11 @@ type RequestHandlersE<R, E, M extends Requests> = {
     }
     : 
       & ((
-        req: InstanceType<Schema.GetRequest<M[K]>>
+        req: EncodedOf<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: InstanceType<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: EncodedOf<Schema.GetRequest<M[K]>>) => string
       }
 }
