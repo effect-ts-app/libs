@@ -12,7 +12,7 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
         requestRootId: requestContext.rootId,
         requestId: requestContext.id,
         requestName: requestContext.name,
-        ...requestContext.userId ? { requestUserId: requestContext.userId } : {}
+        ...requestContext.user?.id ? { requestUserId: requestContext.user.id } : {}
       })
     )
   )
