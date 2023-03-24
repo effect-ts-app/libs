@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.38.0
+
+### Minor Changes
+
+- Improve RequestContext user
+
 ## 0.37.7
 
 ### Patch Changes
