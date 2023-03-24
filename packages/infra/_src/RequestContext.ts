@@ -11,7 +11,7 @@ export class RequestContextParent extends MNModel<
   _tag: prop(literal("RequestContext")),
   id: prop(RequestId),
   name: prop(ReasonableString),
-  userId: optProp(ReasonableString),
+  userId: optProp(StringId),
   locale: prop(literal("en", "de")),
   createdAt: defaultProp(date)
 }) {}
