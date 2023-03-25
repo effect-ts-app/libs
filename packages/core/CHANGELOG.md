@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.36.1
+
+### Patch Changes
+
+- Export Hash module
+
 ## 0.36.0
 
 ### Minor Changes
