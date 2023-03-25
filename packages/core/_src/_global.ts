@@ -169,6 +169,11 @@ import { Equal } from "@effect/data/Equal"
 /**
  * @tsplus global
  */
+import { Hash } from "@effect/data/Hash"
+
+/**
+ * @tsplus global
+ */
 import { NonEmptyArray, NonEmptyReadonlyArray } from "@effect/data/ReadonlyArray"
 
 /**
