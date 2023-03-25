@@ -2,4 +2,6 @@
 import "./_ext/builtIn.js"
 import "./_ext/date.js"
 import "./_ext/misc.js"
+import "./_ext/services.js"
+import "./_ext/servicesOrEffects.js"
 import "./_ext/Schema.ext.js"
