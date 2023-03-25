@@ -169,6 +169,26 @@
         "default": "./_cjs/_ext/misc.cjs"
       }
     },
+    "./_ext/services": {
+      "import": {
+        "types": "./dist/_ext/services.d.ts",
+        "default": "./dist/_ext/services.js"
+      },
+      "require": {
+        "types": "./dist/_ext/services.d.ts",
+        "default": "./_cjs/_ext/services.cjs"
+      }
+    },
+    "./_ext/servicesOrEffects": {
+      "import": {
+        "types": "./dist/_ext/servicesOrEffects.d.ts",
+        "default": "./dist/_ext/servicesOrEffects.js"
+      },
+      "require": {
+        "types": "./dist/_ext/servicesOrEffects.d.ts",
+        "default": "./_cjs/_ext/servicesOrEffects.cjs"
+      }
+    },
     "./_global": {
       "import": {
         "types": "./dist/_global.d.ts",
