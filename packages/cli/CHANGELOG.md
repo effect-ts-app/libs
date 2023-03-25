@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.7.0
+
+### Minor Changes
+
+- Update packages
+
 ## 0.6.0
 
 ### Minor Changes
