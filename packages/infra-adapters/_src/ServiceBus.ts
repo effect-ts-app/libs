@@ -20,7 +20,7 @@ export const LiveServiceBusClient = (url: string) => makeClient(url).toLayerScop
 
 function makeSender(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client.access)
+    const serviceBusClient = yield* $(Client)
 
     return yield* $(
       Effect(serviceBusClient.createSender(queueName)).acquireRelease(
@@ -37,7 +37,7 @@ export function LiveSender(queueName: string) {
 
 function makeReceiver(queueName: string) {
   return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client.access)
+    const serviceBusClient = yield* $(Client)
 
     return yield* $(
       Effect(serviceBusClient.createReceiver(queueName)).acquireRelease(
@@ -57,14 +57,14 @@ export function sendMessages(
   options?: OperationOptionsBase
 ) {
   return Effect.gen(function*($) {
-    const s = yield* $(Sender.access)
+    const s = yield* $(Sender)
     return yield* $(Effect.promise(() => s.sendMessages(messages, options)))
   })
 }
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return Effect.gen(function*($) {
-    const r = yield* $(Receiver.access)
+    const r = yield* $(Receiver)
 
     yield* $(
       Effect.runtime<RMsg | RErr>().map(rt =>

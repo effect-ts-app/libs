@@ -16,7 +16,7 @@ export interface MongoClient extends Effect.Success<ReturnType<typeof makeMongoC
 
 export const MongoClient = Tag<MongoClient>()
 
-export const db = MongoClient.accessWith(_ => _.db)
+export const db = MongoClient.map(_ => _.db)
 
 export const MongoClientLive = (mongoUrl: string, dbName?: string) =>
   makeMongoClient(mongoUrl, dbName)

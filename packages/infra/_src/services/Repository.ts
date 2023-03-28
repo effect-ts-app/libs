@@ -174,7 +174,7 @@ export function queryEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
       .flatMap(items =>
         Do($ => {
-          const { set } = $(Effect.service(ContextMap))
+          const { set } = $(ContextMap)
           return items.map(_ => self.utils.mapReverse(_, set))
         })
       )
@@ -203,7 +203,7 @@ export function queryOneEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
       .flatMap(items =>
         Do($ => {
-          const { set } = $(Effect.service(ContextMap))
+          const { set } = $(ContextMap)
           return items.map(_ => self.utils.mapReverse(_, set))
         })
       )

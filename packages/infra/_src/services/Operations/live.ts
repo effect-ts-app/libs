@@ -81,7 +81,7 @@ const make = Effect.sync(() => {
   })
 })
 
-const cleanupLoop = Operations.accessWithEffect(_ => _.cleanup)
+const cleanupLoop = Operations.flatMap(_ => _.cleanup)
   .exit
   .flatMap(_ => {
     if (_.isSuccess()) {

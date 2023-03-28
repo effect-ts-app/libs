@@ -1,4 +1,5 @@
 import type { Operation, OperationId, OperationProgress } from "@effect-app/prelude/Operations"
+import * as Scope from "@effect/io/Scope"
 
 export const OperationsId = Symbol("OperationsId")
 /**
@@ -6,7 +7,7 @@ export const OperationsId = Symbol("OperationsId")
  * @tsplus companion Operations.Ops
  */
 export abstract class Operations extends ServiceTaggedClass<Operations>()(OperationsId) {
-  abstract register: Effect<Scope, never, OperationId>
+  abstract register: Effect<Scope.Scope, never, OperationId>
   abstract update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
   abstract find: (id: OperationId) => Effect<never, never, Option<Operation>>
   abstract cleanup: Effect<never, never, void>
@@ -17,7 +18,7 @@ export abstract class Operations extends ServiceTaggedClass<Operations>()(Operat
  */
 export function forkOperation<R, E, A>(self: Effect<R, E, A>) {
   return Debug.untraced(() =>
-    Operations.accessWithEffect(
+    Operations.flatMap(
       Operations =>
         Scope.make()
           .flatMap(scope =>
@@ -40,7 +41,7 @@ export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<R,
  */
 export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<R, E, A>) {
   return Debug.untraced(restore =>
-    Operations.accessWithEffect(
+    Operations.flatMap(
       Operations =>
         Scope.make()
           .flatMap(scope =>
@@ -59,7 +60,7 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   fnc: (id: OperationId) => Effect<R2, E2, A2>
 ) {
   return Debug.untraced(restore =>
-    Operations.accessWithEffect(
+    Operations.flatMap(
       Operations =>
         Scope.make()
           .flatMap(scope =>
