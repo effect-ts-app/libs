@@ -8,33 +8,30 @@ overrides:
   typescript: https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz
 
 patchedDependencies:
-  '@effect/language-service@0.0.19':
-    hash: izp2ue34jjv4swyrhg2ux4ha3e
-    path: patches/@effect__language-service@0.0.19.patch
   '@typescript-eslint/scope-manager@5.57.0':
     hash: tp5r7mwyjl4dxldk2tuwbgrsum
     path: patches/@typescript-eslint__scope-manager@5.57.0.patch
   eslint-plugin-unused-imports@2.0.0:
     hash: vsmxvnb6xii5fjfvmn3jylonyq
     path: patches/eslint-plugin-unused-imports@2.0.0.patch
-  typescript@5.0.0-tsplus.20230224:
-    hash: fmclztx4qsomluxscwycdtts54
-    path: patches/typescript@5.0.0-tsplus.20230224.patch
-  eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
-    path: patches/eslint-plugin-codegen@0.17.0.patch
-  date-fns@2.29.3:
-    hash: g5hqt5bhnjezqo5vnkpprfkba4
-    path: patches/date-fns@2.29.3.patch
+  '@effect/language-service@0.0.19':
+    hash: izp2ue34jjv4swyrhg2ux4ha3e
+    path: patches/@effect__language-service@0.0.19.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
+  eslint-plugin-codegen@0.17.0:
+    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    path: patches/eslint-plugin-codegen@0.17.0.patch
+  typescript@5.0.0-tsplus.20230224:
+    hash: fmclztx4qsomluxscwycdtts54
+    path: patches/typescript@5.0.0-tsplus.20230224.patch
   '@fp-ts/optic@0.6.0':
     hash: w2q3sj6fgtrlizsuwcsff4miva
     path: patches/@fp-ts__optic@0.6.0.patch
-  '@effect/stream@0.13.0':
-    hash: uykoybtexcdizvbu3mvrhl5g4a
-    path: patches/@effect__stream@0.13.0.patch
+  date-fns@2.29.3:
+    hash: g5hqt5bhnjezqo5vnkpprfkba4
+    path: patches/date-fns@2.29.3.patch
 
 importers:
 
@@ -186,7 +183,7 @@ importers:
       '@babel/cli': ^7.21.0
       '@effect/data': ^0.7.4
       '@effect/io': ^0.15.1
-      '@effect/stream': ^0.13.0
+      '@effect/stream': ^0.14.0
       '@fp-ts/optic': ^0.6.0
       '@types/uuid': ^9.0.1
       '@types/validator': ^13.7.14
@@ -203,7 +200,7 @@ importers:
     dependencies:
       '@effect/data': 0.7.4
       '@effect/io': 0.15.1
-      '@effect/stream': 0.13.0_uykoybtexcdizvbu3mvrhl5g4a
+      '@effect/stream': 0.14.0
       '@fp-ts/optic': 0.6.0_w2q3sj6fgtrlizsuwcsff4miva
       cross-fetch: 3.1.5
       lodash: 4.17.21
@@ -1267,13 +1264,12 @@ packages:
     dev: true
     patched: true
 
-  /@effect/stream/0.13.0_uykoybtexcdizvbu3mvrhl5g4a:
-    resolution: {integrity: sha512-OkUJNkKmcP9oy/hmMmklLBJJnkRuWwwO3L1XKL5792BdF0LJOSnDbGXjM8dvygIAd1Sluez8S5A5Zr5o2Osvkw==}
+  /@effect/stream/0.14.0:
+    resolution: {integrity: sha512-wr6HhIN1q3L8QEj/+5ocVGoS615vzmGIQRPCI05mW6OOYNv9ORyF/NyM91NZ67C07KixC1SnP6M8HXCBBJ0QJw==}
     dependencies:
       '@effect/data': 0.7.4
       '@effect/io': 0.15.1
     dev: false
-    patched: true
 
   /@esbuild/android-arm/0.17.12:
     resolution: {integrity: sha512-E/sgkvwoIfj4aMAPL2e35VnUJspzVYl7+M1B2cqeubdBhADV4uPon0KCc8p2G+LqSJ6i8ocYPCqY3A4GGq0zkQ==}
