@@ -4828,11 +4828,6 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/data/Context/Tag",
-          "name": "flatMap"
-        },
-        {
-          "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "flatMap"
         },
@@ -5860,11 +5855,6 @@
       "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/data/Context/Tag",
-          "name": "map"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
