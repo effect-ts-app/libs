@@ -39,8 +39,8 @@ export function makeServiceBusQueue<
   ) => Effect<never, CustomSchemaException, { body: DrainEvt; meta: RequestContext }>
 ) {
   return Effect.gen(function*($) {
-    const s = yield* $(Sender.access)
-    const receiver = yield* $(Receiver.access)
+    const s = yield* $(Sender)
+    const receiver = yield* $(Receiver)
     const receiverLayer = Receiver.makeLayer(receiver)
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })

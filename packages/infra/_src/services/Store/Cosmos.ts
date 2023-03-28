@@ -23,7 +23,7 @@ import { StoreMaker } from "./service.js"
 // TODO: Retry operation when running into RU limit.
 export function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const { db } = yield* $(CosmosClient.CosmosClient.access)
+    const { db } = yield* $(CosmosClient.CosmosClient)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,

@@ -83,7 +83,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
   const app = yield* _(Effect(express))
 
-  const { exitHandler, host, port } = yield* _(ExpressAppConfig.access)
+  const { exitHandler, host, port } = yield* _(ExpressAppConfig)
 
   const connections = new Set<Socket>()
 
@@ -201,17 +201,17 @@ export function LiveExpress<R>(
   )
 }
 
-export const expressApp = ExpressApp.accessWith(_ => _.app)
+export const expressApp = ExpressApp.map(_ => _.app)
 
-export const expressServer = ExpressApp.accessWith(_ => _.server)
+export const expressServer = ExpressApp.map(_ => _.server)
 
 export function withExpressApp<R, E, A>(self: (app: express.Express) => Effect<R, E, A>) {
-  return ExpressApp.accessWithEffect(_ => self(_.app))
+  return ExpressApp.flatMap(_ => self(_.app))
 }
 export function withExpressServer<R, E, A>(
   self: (server: Server<typeof IncomingMessage, typeof ServerResponse>) => Effect<R, E, A>
 ) {
-  return ExpressApp.accessWithEffect(_ => self(_.server))
+  return ExpressApp.flatMap(_ => self(_.server))
 }
 
 export const methods = [
@@ -274,7 +274,7 @@ export interface EffectRequestHandler<
 export function expressRuntime<
   Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return ExpressApp.accessWithEffect(_ => _.runtime(handlers))
+  return ExpressApp.flatMap(_ => _.runtime(handlers))
 }
 
 export function match(method: Methods): {

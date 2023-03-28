@@ -257,7 +257,7 @@ export function requestInner<
   body: RequestBodyTypes[Req][M]
 ): Effect<RequestEnv, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
   return accessHttpHeadersM(headers =>
-    Http.accessWithEffect(h =>
+    Http.flatMap(h =>
       h.request<M, Req, Resp>(
         method,
         url,

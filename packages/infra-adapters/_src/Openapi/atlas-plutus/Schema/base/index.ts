@@ -32,7 +32,7 @@ export function referenced(x?: ConfigExtensionRef) {
     if (x && typeof x.openapiRef !== "undefined") {
       const { openapiRef } = x
       return Effect.gen(function*(_) {
-        const { ref } = yield* _(References.access)
+        const { ref } = yield* _(References)
         const jsonSchema = yield* _(schema)
         yield* _(ref.update(m => m.set(openapiRef, jsonSchema)))
         return SchemaRef(`#/components/schemas/${openapiRef}`)

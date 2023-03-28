@@ -30,7 +30,7 @@ export function makeMemQueue<
   ) => Effect<never, CustomSchemaException, { body: DrainEvt; meta: RequestContext }>
 ) {
   return Effect.gen(function*($) {
-    const mem = yield* $(MemQueue.access)
+    const mem = yield* $(MemQueue)
     const q = yield* $(mem.getOrCreateQueue(queueName))
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
 

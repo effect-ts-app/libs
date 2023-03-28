@@ -221,7 +221,7 @@ import type { lazyGetter } from "@effect-app/core/utils"
 /**
  * @tsplus global
  */
-import { Debug } from "@effect/io/Debug"
+import { Debug } from "@effect/data/Debug"
 
 // TODO: these may be problematic global imports causing bundling issues?
 // "import type {} from" doesn't work outside this package

@@ -9,7 +9,7 @@ import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 export function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const redis = yield* $(RedisClient.RedisClient.access)
+    const redis = yield* $(RedisClient.RedisClient)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,

@@ -2308,6 +2308,188 @@
       ]
     }
   ],
+  "@effect/data/Debug": [
+    {
+      "definitionName": "Debug",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Debug"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Debug.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Frame",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Debug/Frame"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Debug/Frame.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Restore",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Debug/Restore"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Debug/Restore.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SourceLocation",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Debug/SourceLocation"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Debug/SourceLocation.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Trace",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Debug/Trace"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Debug/Trace.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "bodyWithTrace",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "bodyWithTrace"
+        }
+      ]
+    },
+    {
+      "definitionName": "dualWithTrace",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "dualWithTrace"
+        }
+      ]
+    },
+    {
+      "definitionName": "methodWithTrace",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "methodWithTrace"
+        }
+      ]
+    },
+    {
+      "definitionName": "pipeableWithTrace",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "pipeableWithTrace"
+        }
+      ]
+    },
+    {
+      "definitionName": "runtimeDebug",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "runtimeDebug"
+        }
+      ]
+    },
+    {
+      "definitionName": "sourceLocation",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "sourceLocation"
+        }
+      ]
+    },
+    {
+      "definitionName": "traced",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "traced"
+        }
+      ]
+    },
+    {
+      "definitionName": "untraced",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "untraced"
+        }
+      ]
+    },
+    {
+      "definitionName": "untracedDual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "untracedDual"
+        }
+      ]
+    },
+    {
+      "definitionName": "untracedMethod",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Debug.Ops",
+          "name": "untracedMethod"
+        }
+      ]
+    }
+  ],
   "@effect/data/Differ": [
     {
       "definitionName": "Differ",

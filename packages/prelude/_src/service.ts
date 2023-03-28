@@ -30,7 +30,7 @@ export function makeService<T extends ServiceTagged<any>>(_: Omit<T, ServiceTag>
 /**
  * @tsplus fluent effect/data/Context/Tag make
  */
-export function make<T extends ServiceTagged<any>>(_: Tag<T>, t: Omit<T, ServiceTag>) {
+export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<T, ServiceTag>) {
   return t as T
 }
 
@@ -44,7 +44,14 @@ export function assignTag<Service>() {
   }
 }
 export function TagClass<Service>() {
-  abstract class TagClass {}
+  abstract class TagClass {
+    static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
+      return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+    }
+    static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
+      return Effect.map(this as unknown as Tag<Service, Service>, f)
+    }
+  }
 
   return assignTag<Service>()(TagClass)
 }
@@ -54,6 +61,12 @@ export function ServiceTaggedClass<Service>() {
     abstract class ServiceTaggedClassC {
       static make(t: Omit<Service, Key>) {
         return t as Service
+      }
+      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
+        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+      }
+      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
+        return Effect.map(this as unknown as Tag<Service, Service>, f)
       }
     }
 
