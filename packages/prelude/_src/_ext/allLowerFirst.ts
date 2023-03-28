@@ -10,9 +10,9 @@ export type LowerServices<T extends Record<string, Tag<any, any> | Effect<any, a
 }
 
 /**
- * @tsplus static effect/io/Effect.Ops servicesOrEffects
+ * @tsplus static effect/io/Effect.Ops allLowerFirst
  */
-export function accessLowerServicesOrEffects_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
+export function allLowerFirst_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
   services: T
 ) {
   return Effect.all(
@@ -25,11 +25,11 @@ export function accessLowerServicesOrEffects_<T extends Record<string, Tag<any, 
 }
 
 /**
- * @tsplus static effect/io/Effect.Ops servicesOrEffectsWith
+ * @tsplus static effect/io/Effect.Ops allLowerFirstWith
  */
 export function accessLowerServicesAndEffects_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
-  return Debug.untraced(() => accessLowerServicesOrEffects_(services).map(fn))
+  return Debug.untraced(() => allLowerFirst_(services).map(fn))
 }
