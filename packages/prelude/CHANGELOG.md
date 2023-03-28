@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.30.1
+
+### Patch Changes
+
+- rename: servicesOrEffects to allLowerFirst
+
 ## 0.30.0
 
 ### Minor Changes
