@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.30.2
+
+### Patch Changes
+
+- FUP
+
 ## 0.30.1
 
 ### Patch Changes
