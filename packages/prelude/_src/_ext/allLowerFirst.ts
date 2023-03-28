@@ -27,7 +27,7 @@ export function allLowerFirst_<T extends Record<string, Tag<any, any> | Effect<a
 /**
  * @tsplus static effect/io/Effect.Ops allLowerFirstWith
  */
-export function accessLowerServicesAndEffects_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
+export function allLowerFirstWith_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
