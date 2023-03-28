@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.37.0
+
+### Minor Changes
+
+- Update to latest effect
+
 ## 0.36.1
 
 ### Patch Changes
