@@ -403,6 +403,8 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   const maxLength = S.findAnnotation(realSelf, maxLengthIdentifier)
 
   return {
+    // TODO: various types
+    type: S.findAnnotation(self, S.numberIdentifier) ? "number" : "text",
     minLength: minLength?.minLength,
     maxLength: maxLength?.maxLength,
     required: !nullable

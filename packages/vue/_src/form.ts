@@ -53,7 +53,7 @@ abstract class PhantomTypeParameter<
 export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { in: Tin; out: Tout }> {
   rules: ((v: string) => boolean | string)[]
   metadata: FieldMetadata
-  type: "text"
+  type: "text" | "number"
 }
 
 type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
@@ -77,7 +77,7 @@ function buildFieldInfo(
   }
 
   const info = {
-    type: "text", // TODO: various types
+    type: metadata.type,
     rules: [
       (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
       (v: string) =>
