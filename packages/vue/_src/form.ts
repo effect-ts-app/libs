@@ -9,13 +9,13 @@ import type {
 } from "@effect-app/prelude/schema"
 import { capitalize } from "vue"
 
-export function convertIn(v: string | null) {
-  return v === null ? "" : v
+export function convertIn(v: string | null, type?: "string" | "number") {
+  return v === null ? "" : type === "number" ? `${v}` : v
 }
 
-export function convertOut(v: string | null, set: (v: string | null) => void) {
+export function convertOut(v: string, set: (v: unknown | null) => void, type?: "string" | "number") {
   v = v == null ? v : v.trim()
-  return set(v === "" ? null : v)
+  return set(v === "" ? null : type === "number" ? parseFloat(v) : v)
 }
 
 export function buildFieldInfoFromProps<Props extends PropertyRecord>(
@@ -76,38 +76,47 @@ function buildFieldInfo(
     } (${err.slice(err.indexOf("expected"))})`
   }
 
+  const stringRules = [
+    (v: string) =>
+      v === "" ||
+      metadata.minLength === undefined ||
+      v.length >= metadata.minLength ||
+      `The field requires at least ${metadata.minLength} characters`,
+    (v: string) =>
+      v === "" ||
+      metadata.maxLength === undefined ||
+      v.length <= metadata.maxLength ||
+      `The field cannot have more than ${metadata.maxLength} characters`
+  ]
+
+  const numberRules = [
+    (v: number) =>
+      metadata.minimum === undefined ||
+      v >= metadata.minimum ||
+      `The value should be larger than ${metadata.minimum}`
+  ]
+
+  const parseRule = (v: string) =>
+    pipe(
+      parse(v === "" ? null : metadata.type === "number" ? parseFloat(v) : v),
+      These.result,
+      _ =>
+        _.match(
+          renderError,
+          ([_, optErr]) =>
+            optErr.isSome()
+              ? renderError(optErr.value)
+              : true
+        )
+    )
+
   const info = {
     type: metadata.type,
     rules: [
+      // TODO: optimise
       (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
-      (v: string) =>
-        v === "" ||
-        metadata.minLength === undefined ||
-        v.length >= metadata.minLength ||
-        `The field requires at least ${metadata.minLength} characters`,
-      (v: number) =>
-        metadata.minimum === undefined ||
-        v >= metadata.minimum ||
-        `The value should be larger than ${metadata.minimum}`,
-
-      (v: string) =>
-        v === "" ||
-        metadata.maxLength === undefined ||
-        v.length <= metadata.maxLength ||
-        `The field cannot have more than ${metadata.maxLength} characters`,
-      (v: unknown) =>
-        pipe(
-          parse(v === "" ? null : v),
-          These.result,
-          _ =>
-            _.match(
-              renderError,
-              ([_, optErr]) =>
-                optErr.isSome()
-                  ? renderError(optErr.value)
-                  : true
-            )
-        )
+      ...(metadata.type === "string" ? stringRules : numberRules.map(r => (v: string) => r(parseFloat(v)))),
+      parseRule
     ],
     metadata
   }
