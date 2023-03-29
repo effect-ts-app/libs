@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 0.30.0
+
+### Minor Changes
+
+- Properly identify number schemas
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.32.0
+  - @effect-app/vue@0.30.0
+
 ## 0.29.0
 
 ### Minor Changes

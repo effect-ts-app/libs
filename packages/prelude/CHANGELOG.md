@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.32.0
+
+### Minor Changes
+
+- Properly identify number schemas
+
 ## 0.31.0
 
 ### Minor Changes
