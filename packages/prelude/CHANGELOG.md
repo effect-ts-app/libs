@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.31.0
+
+### Minor Changes
+
+- Update packages
+- feat(form): number vs string
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.29.0
+  - @effect-app/core@0.38.0
+
 ## 0.30.2
 
 ### Patch Changes
