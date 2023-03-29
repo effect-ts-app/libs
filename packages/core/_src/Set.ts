@@ -4,6 +4,7 @@ import "./operators.js"
 
 import { not } from "@effect/data/Predicate"
 import { identity } from "./Function.js"
+import type { ROSet } from "./Prelude.js"
 
 import { Option } from "./Option.js"
 

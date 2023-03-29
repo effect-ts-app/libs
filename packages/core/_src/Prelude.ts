@@ -11,51 +11,33 @@ import type * as EITHER from "@effect/data/Either"
 import type * as O from "@effect/data/Option"
 import type * as LNS from "@fp-ts/optic"
 
-export namespace Either {
-  // @ts-expect-error abc
-  export * from "@effect/data/Either"
-}
+export * as Either from "@effect/data/Either"
 /** @tsplus type effect/data/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
-export namespace Order {
-  // @ts-expect-error abc
-  export * from "@effect-app/core/Order"
-}
+export * as Order from "@effect-app/core/Order"
 /** @tsplus type effect/data/typeclass/Order */
 export type Order<A> = ORD.Order<A>
 
-export namespace Option {
-  // @ts-expect-error abc
-  export * from "@effect/data/Option"
-}
+export * as Option from "@effect/data/Option"
 /**
  * @tsplus companion effect/data/Option.Ops
  * @tsplus type effect/data/Option
  */
 export type Option<A> = O.Option<A>
 
-export namespace Chunk {
-  // @ts-expect-error abc
-  export * from "@effect/data/Chunk"
-}
+export * as Chunk from "@effect/data/Chunk"
 /**
  * @tsplus companion effect/data/Chunk.Ops
  * @tsplus type effect/data/Chunk
  */
 export type Chunk<A> = CNK.Chunk<A>
 
-export namespace NonEmptySet {
-  // @ts-expect-error
-  export * from "@effect-app/core/NonEmptySet"
-}
+export * as NonEmptySet from "@effect-app/core/NonEmptySet"
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-export namespace ROArray {
-  // @ts-expect-error
-  export * from "@effect-app/core/Array"
-}
+export * as ROArray from "@effect-app/core/Array"
 /**
  * @tsplus type ReadonlyArray
  * @tsplus type Iterable
@@ -71,27 +53,18 @@ export type ROArray<A> = ReadonlyArray<A>
 // /** @tsplus type Array */
 // export type ReadonlyArray<A> = A.Array<A>
 
-export namespace Set {
-  // @ts-expect-error
-  export * from "@effect-app/core/Set"
-}
+export * as Set from "@effect-app/core/Set"
 /** @tsplus type ets/Set */
 export type Set<A> = SET.Set<A>
 
-export namespace ROSet {
-  // @ts-expect-error
-  export * from "@effect-app/core/Set"
-}
+export * as ROSet from "@effect-app/core/Set"
 /**
  * @tsplus type ets/Set
  * @tsplus type ets/ROSet
  */
 export type ROSet<A> = SET.Set<A>
 
-export namespace Optic {
-  // @ts-expect-error
-  export * from "@effect-app/core/Optic"
-}
+export * as Optic from "@effect-app/core/Optic"
 export type Lens<S, A> = LNS.Lens<S, A>
 
 export type NonEmptyArguments<T> = [T, ...T[]]
