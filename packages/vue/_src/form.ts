@@ -85,6 +85,11 @@ function buildFieldInfo(
         metadata.minLength === undefined ||
         v.length >= metadata.minLength ||
         `The field requires at least ${metadata.minLength} characters`,
+      (v: number) =>
+        metadata.minimum === undefined ||
+        v >= metadata.minimum ||
+        `The value should be larger than ${metadata.minimum}`,
+
       (v: string) =>
         v === "" ||
         metadata.maxLength === undefined ||

@@ -396,15 +396,33 @@ export function getMetadataFromProp<Prop extends S.AnyProperty>(p: Prop) {
   // }
 }
 
+const numberIds = [
+  S.numberIdentifier,
+  // S.stringNumberFromStringIdentifier, actually input is string
+  S.intIdentifier,
+  S.intFromNumberIdentifier,
+  S.positiveIntIdentifier,
+  S.positiveIntFromNumberIdentifier
+]
+const positiveNumberIds = [
+  S.positiveIntIdentifier,
+  S.positiveIntFromNumberIdentifier,
+  S.positiveIdentifier
+]
+
 export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   const nullable = S.findAnnotation(self, nullableIdentifier)
   const realSelf = nullable?.self ?? self
   const minLength = S.findAnnotation(realSelf, minLengthIdentifier)
   const maxLength = S.findAnnotation(realSelf, maxLengthIdentifier)
 
+  const isNumber = numberIds.some(_ => S.findAnnotation(nullable?.self ?? self, _))
+  const isPositiveNumber = positiveNumberIds.some(_ => S.findAnnotation(nullable?.self ?? self, _))
+
   return {
     // TODO: various types
-    type: S.findAnnotation(self, S.numberIdentifier) ? "number" : "text",
+    type: isNumber || isPositiveNumber ? "number" : "text",
+    minimum: isPositiveNumber ? 0 : undefined,
     minLength: minLength?.minLength,
     maxLength: maxLength?.maxLength,
     required: !nullable
@@ -442,19 +460,10 @@ export function getRegisterFromProp<Prop extends S.AnyProperty>(p: Prop) {
 
 export function getRegisterFromSchema<Self extends S.SchemaAny>(self: Self) {
   // or take from openapi = number type?
-  const numberIds = [
-    S.numberIdentifier,
-    S.intIdentifier,
-    S.intFromNumberIdentifier,
-    S.positiveIntIdentifier,
-    S.positiveIntFromNumberIdentifier,
-    S.positiveIdentifier
-  ]
-
   const metadata = getMetadataFromSchema(self)
   const nullable = S.findAnnotation(self, nullableIdentifier)
 
-  const mapType = numberIds.some(x => S.findAnnotation(nullable?.self ?? self, x))
+  const mapType = numberIds.concat(positiveNumberIds).some(x => S.findAnnotation(nullable?.self ?? self, x))
     ? ("asNumber" as const)
     : ("normal" as const)
   const map = mapValueType(mapType)

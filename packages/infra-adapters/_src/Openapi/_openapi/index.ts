@@ -13,6 +13,7 @@ import {
   fromStringIdentifier,
   hasContinuation,
   intersectIdentifier,
+  intFromNumberIdentifier,
   intIdentifier,
   literalIdentifier,
   maxLengthIdentifier,
@@ -25,6 +26,7 @@ import {
   optionFromNullIdentifier,
   PhoneNumberFromStringIdentifier,
   PhoneNumberIdentifier,
+  positiveIdentifier,
   positiveIntFromNumberIdentifier,
   positiveIntIdentifier,
   propertiesIdentifier,
@@ -194,11 +196,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case dateIdentifier:
           return new StringSchema({ format: "date-time", ...meta })
         case numberIdentifier:
-          return new NumberSchema(meta)
         case intIdentifier:
+        case intFromNumberIdentifier:
           return new NumberSchema(meta)
+        case positiveIdentifier:
         case positiveIntIdentifier:
-          return new NumberSchema({ minimum: 0, ...meta })
         case positiveIntFromNumberIdentifier:
           return new NumberSchema({ minimum: 0, ...meta })
         case boolIdentifier:
