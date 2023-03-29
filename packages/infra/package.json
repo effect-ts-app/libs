@@ -17,7 +17,7 @@
     "change-case": "^4.1.2",
     "cross-fetch": "^3.1.5",
     "faker": "^5.5.3",
-    "fast-check": "^3.7.1",
+    "fast-check": "^3.8.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "proper-lockfile": "^4.1.2",
@@ -29,7 +29,7 @@
     "@effect-app/compiler": "workspace:*",
     "@sentry/node": "^7.45.0",
     "@types/express": "^4.17.17",
-    "@types/node": "~18.15.10",
+    "@types/node": "~18.15.11",
     "@types/proper-lockfile": "^4.1.2",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.4",
@@ -42,7 +42,7 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz",
-    "vitest": "^0.29.7"
+    "vitest": "^0.29.8"
   },
   "typesVersions": {
     "*": {

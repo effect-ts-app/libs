@@ -238,8 +238,8 @@ export function makeRequestHandler<
   res: express.Response
 ) => Effect<Exclude<RErr | R | R2, RequestContextContainer>, never, void> {
   const { Request, Response, adaptResponse, h: handle } = handler
-  const response = Response ? extractSchema(Response as any) : Void
-  const encoder = Encoder.for(response)
+  const response = Response ? extractSchema(Response) : Void
+  const encoder = Encoder.for(response as any)
   const encodeResponse = adaptResponse
     ? (req: ReqA) => Encoder.for(adaptResponse(req))
     : () => encoder

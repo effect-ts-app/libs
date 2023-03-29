@@ -17,10 +17,10 @@
   "devDependencies": {
     "@types/uuid": "^9.0.1",
     "@types/validator": "^13.7.14",
-    "fast-check": "^3.7.1",
+    "fast-check": "^3.8.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz",
-    "vitest": "^0.29.7"
+    "vitest": "^0.29.8"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

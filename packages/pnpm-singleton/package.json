@@ -28,10 +28,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~18.15.10",
+    "@types/node": "~18.15.11",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.171/compiler/typescript.tgz",
-    "vitest": "^0.29.7"
+    "vitest": "^0.29.8"
   },
   "typesVersions": {
     "*": {

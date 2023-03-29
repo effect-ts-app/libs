@@ -131,7 +131,7 @@ export function makeFromSchema<ResA>(
   )
   // const makeReqSchema = schema(Req)
 
-  const makeResSchema = jsonSchema_(Res)
+  const makeResSchema = jsonSchema_(Res as any)
 
   function makeParameters(inn: ParameterLocation) {
     return (a: Option<JSONSchema | SubSchema>) => {
