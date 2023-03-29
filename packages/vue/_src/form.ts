@@ -9,11 +9,11 @@ import type {
 } from "@effect-app/prelude/schema"
 import { capitalize } from "vue"
 
-export function convertIn(v: string | null, type?: "string" | "number") {
+export function convertIn(v: string | null, type?: "text" | "number") {
   return v === null ? "" : type === "number" ? `${v}` : v
 }
 
-export function convertOut(v: string, set: (v: unknown | null) => void, type?: "string" | "number") {
+export function convertOut(v: string, set: (v: unknown | null) => void, type?: "text" | "number") {
   v = v == null ? v : v.trim()
   return set(v === "" ? null : type === "number" ? parseFloat(v) : v)
 }
