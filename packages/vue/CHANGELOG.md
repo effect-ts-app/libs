@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 0.31.5
+
+### Patch Changes
+
+- fup
+- Updated dependencies
+  - @effect-app/prelude@0.33.3
+  - @effect-app/vue@0.31.5
+
 ## 0.31.4
 
 ### Patch Changes
