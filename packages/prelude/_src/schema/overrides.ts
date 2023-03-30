@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 
-import type { PositiveBrand, Schema } from "@effect-app/schema"
+import type { PositiveBrand, PositiveExcludeZeroBrand, Schema } from "@effect-app/schema"
 import {
   Arbitrary,
   arbitrary,
@@ -10,6 +10,7 @@ import {
   nonEmptyArray as nonEmptyArrayOriginal,
   number,
   positive,
+  positiveExcludeZero,
   set as setOriginal
 } from "@effect-app/schema"
 
@@ -17,6 +18,9 @@ import { ROSet } from "@effect-app/core/Prelude"
 
 export const PositiveNumber = positive("float")(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
+
+export const PositiveNumberZeroExclusive = positiveExcludeZero("float")(number)["|>"](brand<PositiveNumber>())
+export type PositiveNumberZeroExclusive = number & PositiveExcludeZeroBrand
 
 export interface CentimeterBrand extends PositiveBrand {
   readonly CentimeterBrand: unique symbol
