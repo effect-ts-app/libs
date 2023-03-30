@@ -1,5 +1,18 @@
 # @effect-app/vue
 
+## 0.31.0
+
+### Minor Changes
+
+- improve min/max/range for numbers.
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.33.0
+  - @effect-app/schema@0.30.0
+  - @effect-app/vue@0.31.0
+
 ## 0.30.2
 
 ### Patch Changes

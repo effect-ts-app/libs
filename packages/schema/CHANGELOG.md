@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.30.0
+
+### Minor Changes
+
+- improve min/max/range for numbers.
+
 ## 0.29.0
 
 ### Minor Changes

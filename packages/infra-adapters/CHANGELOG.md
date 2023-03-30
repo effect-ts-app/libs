@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.32.0
+
+### Minor Changes
+
+- improve min/max/range for numbers.
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.33.0
+  - @effect-app/schema@0.30.0
+
 ## 0.31.0
 
 ### Minor Changes
