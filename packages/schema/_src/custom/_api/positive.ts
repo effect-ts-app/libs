@@ -2,6 +2,7 @@
 
 import { pipe } from "@effect-app/core/Function"
 
+import { min } from "../_api.js"
 import * as S from "../_schema.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
@@ -32,7 +33,7 @@ export function min<Brand>(min: number, minimumExclusive = false, type: "float" 
         minimumExclusive
           ? (n): n is ParsedShape & Brand => n > min
           : (n): n is ParsedShape & Brand => n >= min,
-        n => S.leafE(S.positiveE(n))
+        n => S.leafE(S.customE(n, `a ${type} ${minimumExclusive ? "larger than" : "at least"} ${min}`))
       ),
       withDefaults,
       S.annotate(minIdentifier, { self, minimum: min, minimumExclusive, type })
@@ -65,7 +66,7 @@ export function max<Brand>(max: number, maximumExclusive = false, type: "float" 
         maximumExclusive
           ? (n): n is ParsedShape & Brand => n < max
           : (n): n is ParsedShape & Brand => n <= max,
-        n => S.leafE(S.positiveE(n))
+        n => S.leafE(S.customE(n, `a ${type} ${maximumExclusive ? "smaller than" : "at most"} ${max}`))
       ),
       withDefaults,
       S.annotate(maxIdentifier, { self, maximum: max, maximumExclusive, type })
@@ -113,7 +114,15 @@ export function range<Brand>(
       self,
       S.refine(
         (n): n is ParsedShape & Brand => isMin(n) && isMax(n),
-        n => S.leafE(S.positiveE(n))
+        n =>
+          S.leafE(
+            S.customE(
+              n,
+              `a ${type} ${min.exclusive ? "larger than" : "at least"} ${min.value} and ${
+                max.exclusive ? "smaller than" : "at most"
+              } ${max.value}`
+            )
+          )
       ),
       withDefaults,
       S.annotate(rangeIdentifier, {
