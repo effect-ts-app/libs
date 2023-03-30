@@ -9,13 +9,13 @@ import type {
 } from "@effect-app/prelude/schema"
 import { capitalize } from "vue"
 
-export function convertIn(v: string | null, type?: "text" | "number") {
-  return v === null ? "" : type === "number" ? `${v}` : v
+export function convertIn(v: string | null, type?: "text" | "float" | "int") {
+  return v === null ? "" : type === "text" ? v : `${v}`
 }
 
-export function convertOut(v: string, set: (v: unknown | null) => void, type?: "text" | "number") {
+export function convertOut(v: string, set: (v: unknown | null) => void, type?: "text" | "float" | "int") {
   v = v == null ? v : v.trim()
-  return set(v === "" ? null : type === "number" ? parseFloat(v) : v)
+  return set(v === "" ? null : type === "float" ? parseFloat(v) : type === "int" ? parseInt(v) : v)
 }
 
 export function buildFieldInfoFromProps<Props extends PropertyRecord>(
