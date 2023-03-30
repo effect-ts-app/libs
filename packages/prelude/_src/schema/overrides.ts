@@ -15,7 +15,7 @@ import {
 
 import { ROSet } from "@effect-app/core/Prelude"
 
-export const PositiveNumber = positive(number)["|>"](brand<PositiveNumber>())
+export const PositiveNumber = positive("float")(number)["|>"](brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
 
 export interface CentimeterBrand extends PositiveBrand {
@@ -24,7 +24,7 @@ export interface CentimeterBrand extends PositiveBrand {
 
 export type Centimeter = number & CentimeterBrand
 
-export const Centimeter = positive(number)["|>"](brand<Centimeter>())
+export const Centimeter = positive("float")(number)["|>"](brand<Centimeter>())
 
 export interface KilogramBrand extends PositiveBrand {
   readonly KilogramBrand: unique symbol
@@ -32,7 +32,7 @@ export interface KilogramBrand extends PositiveBrand {
 
 export type Kilogram = number & KilogramBrand
 
-export const Kilogram = positive(number)["|>"](brand<Kilogram>())
+export const Kilogram = positive("float")(number)["|>"](brand<Kilogram>())
 
 // Limit arbitrary collections to generate a max of 6 entries
 // TODO: dictionary, map

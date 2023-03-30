@@ -16,8 +16,10 @@ import {
   intFromNumberIdentifier,
   intIdentifier,
   literalIdentifier,
+  maxIdentifier,
   maxLengthIdentifier,
   metaIdentifier,
+  minIdentifier,
   minLengthIdentifier,
   nonEmptyStringFromStringIdentifier,
   nonEmptyStringIdentifier,
@@ -26,10 +28,8 @@ import {
   optionFromNullIdentifier,
   PhoneNumberFromStringIdentifier,
   PhoneNumberIdentifier,
-  positiveIdentifier,
-  positiveIntFromNumberIdentifier,
-  positiveIntIdentifier,
   propertiesIdentifier,
+  rangeIdentifier,
   SchemaAnnotated,
   SchemaContinuationSymbol,
   setIdentifier,
@@ -199,10 +199,26 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case intIdentifier:
         case intFromNumberIdentifier:
           return new NumberSchema(meta)
-        case positiveIdentifier:
-        case positiveIntIdentifier:
-        case positiveIntFromNumberIdentifier:
-          return new NumberSchema({ minimum: 0, ...meta })
+        case minIdentifier:
+          return new NumberSchema({
+            minimum: schemaMeta.minimum,
+            exclusiveMinimum: schemaMeta.minimumExclusive,
+            ...meta
+          })
+        case maxIdentifier:
+          return new NumberSchema({
+            maximum: schemaMeta.maximum,
+            exclusiveMaximum: schemaMeta.maximumExclusive,
+            ...meta
+          })
+        case rangeIdentifier:
+          return new NumberSchema({
+            minimum: schemaMeta.minimum,
+            exclusiveMinimum: schemaMeta.minimumExclusive,
+            maximum: schemaMeta.maximum,
+            exclusiveMaximum: schemaMeta.maximumExclusive,
+            ...meta
+          })
         case boolIdentifier:
           return new BooleanSchema(meta)
         case optionFromNullIdentifier:

@@ -7,11 +7,9 @@ import { brand } from "./brand.js"
 import type { Int } from "./int.js"
 import { intFromNumber } from "./int.js"
 import { number } from "./number.js"
-import type { Positive } from "./positive.js"
-import { positive } from "./positive.js"
+import type { Positive, PositiveExcludeZero } from "./positive.js"
+import { positive, positiveExcludeZero } from "./positive.js"
 import type { DefaultSchema } from "./withDefaults.js"
-
-export const positiveIntFromNumberIdentifier = S.makeAnnotation<{}>()
 
 // customised
 export type PositiveInt = Int & Positive
@@ -24,13 +22,10 @@ export const positiveIntFromNumber: DefaultSchema<
   S.ApiSelfType<PositiveInt>
 > = pipe(
   intFromNumber,
-  positive,
-  S.arbitrary(FC => FC.integer({ min: 1 }).map(_ => _ as PositiveInt)),
-  brand<PositiveInt>(),
-  S.annotate(positiveIntFromNumberIdentifier, {})
+  positive("int"),
+  S.arbitrary(FC => FC.integer({ min: 0 }).map(_ => _ as PositiveInt)),
+  brand<PositiveInt>()
 )
-
-export const positiveIntIdentifier = S.makeAnnotation<{}>()
 
 export const positiveInt: DefaultSchema<
   unknown,
@@ -40,6 +35,34 @@ export const positiveInt: DefaultSchema<
   S.ApiSelfType<PositiveInt>
 > = pipe(
   number[">>>"](positiveIntFromNumber),
-  brand<PositiveInt>(),
-  S.annotate(positiveIntIdentifier, {})
+  brand<PositiveInt>()
+)
+
+// customised
+export type PositiveIntZeroExclusive = Int & PositiveExcludeZero
+
+export const positiveIntZeroExclusiveFromNumber: DefaultSchema<
+  number,
+  PositiveIntZeroExclusive,
+  number,
+  number,
+  S.ApiSelfType<PositiveIntZeroExclusive>
+> = pipe(
+  intFromNumber,
+  positiveExcludeZero("int"),
+  S.arbitrary(FC => FC.integer({ min: 1 }).map(_ => _ as PositiveIntZeroExclusive)),
+  brand<PositiveIntZeroExclusive>()
+)
+
+export const positiveIntZeroExclusiveIdentifier = S.makeAnnotation<{}>()
+
+export const positiveIntZeroExclusive: DefaultSchema<
+  unknown,
+  PositiveIntZeroExclusive,
+  number,
+  number,
+  S.ApiSelfType<PositiveIntZeroExclusive>
+> = pipe(
+  number[">>>"](positiveIntZeroExclusiveFromNumber),
+  brand<PositiveIntZeroExclusive>()
 )

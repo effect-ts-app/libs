@@ -91,9 +91,15 @@ function buildFieldInfo(
 
   const numberRules = [
     (v: number) =>
-      metadata.minimum === undefined ||
-      v >= metadata.minimum ||
-      `The value should be larger than ${metadata.minimum}`
+      metadata.minimum === undefined
+      || metadata.minimumExclusive && v > metadata.minimum
+      || !metadata.minimumExclusive && v >= metadata.minimum
+      || `The value should be ${metadata.minimumExclusive ? "larger than" : "at least"} ${metadata.minimum}`,
+    (v: number) =>
+      metadata.maximum === undefined
+      || metadata.maximumExclusive && v > metadata.maximum
+      || !metadata.maximumExclusive && v >= metadata.maximum
+      || `The value should be ${metadata.maximumExclusive ? "smaller than" : "at most"} ${metadata.maximum}`
   ]
 
   const parseRule = (v: string) =>

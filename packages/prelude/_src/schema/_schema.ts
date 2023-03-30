@@ -397,17 +397,17 @@ export function getMetadataFromProp<Prop extends S.AnyProperty>(p: Prop) {
 }
 
 const numberIds = [
-  S.numberIdentifier,
+  S.numberIdentifier
   // S.stringNumberFromStringIdentifier, actually input is string
-  S.intIdentifier,
-  S.intFromNumberIdentifier,
-  S.positiveIntIdentifier,
-  S.positiveIntFromNumberIdentifier
 ]
-const positiveNumberIds = [
-  S.positiveIntIdentifier,
-  S.positiveIntFromNumberIdentifier,
-  S.positiveIdentifier
+const intIds = [
+  S.intIdentifier,
+  S.intFromNumberIdentifier
+]
+const rangeNumberIds = [
+  S.rangeIdentifier,
+  S.minIdentifier,
+  S.maxIdentifier
 ]
 
 export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
@@ -416,13 +416,21 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   const minLength = S.findAnnotation(realSelf, minLengthIdentifier)
   const maxLength = S.findAnnotation(realSelf, maxLengthIdentifier)
 
-  const isNumber = numberIds.some(_ => S.findAnnotation(nullable?.self ?? self, _))
-  const isPositiveNumber = positiveNumberIds.some(_ => S.findAnnotation(nullable?.self ?? self, _))
+  const min = S.findAnnotation(realSelf, S.minIdentifier)
+  const max = S.findAnnotation(realSelf, S.maxIdentifier)
+  const range = S.findAnnotation(realSelf, S.rangeIdentifier)
 
+  const isNumber = numberIds.some(_ => S.findAnnotation(realSelf, _))
+  const isInt = intIds.some(_ => S.findAnnotation(realSelf, _))
+  const asMin = min || range
+  const asMax = max || range
+  const typeN = asMin || asMax
   return {
-    // TODO: various types
-    type: isNumber || isPositiveNumber ? "number" : "text",
-    minimum: isPositiveNumber ? 0 : undefined,
+    type: typeN ? typeN.type : isInt ? "int" : isNumber ? "float" : "text",
+    minimum: asMin?.minimum,
+    minimumExclusive: asMin?.minimumExclusive,
+    maximum: asMax?.maximum,
+    maximumExclusive: asMax?.maximumExclusive,
     minLength: minLength?.minLength,
     maxLength: maxLength?.maxLength,
     required: !nullable
@@ -463,7 +471,7 @@ export function getRegisterFromSchema<Self extends S.SchemaAny>(self: Self) {
   const metadata = getMetadataFromSchema(self)
   const nullable = S.findAnnotation(self, nullableIdentifier)
 
-  const mapType = numberIds.concat(positiveNumberIds).some(x => S.findAnnotation(nullable?.self ?? self, x))
+  const mapType = numberIds.concat(rangeNumberIds).some(x => S.findAnnotation(nullable?.self ?? self, x))
     ? ("asNumber" as const)
     : ("normal" as const)
   const map = mapValueType(mapType)
