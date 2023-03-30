@@ -84,11 +84,11 @@ export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
  * @tsplus companion StoreMaker.Ops
  */
 export abstract class StoreMaker extends TagClass<StoreMaker>() {
-  abstract make: <E extends PersistenceModelType<Id>, Id extends string, Id2 extends Id>(
+  abstract make: <PM extends PersistenceModelType<Id>, Id extends string>(
     name: string,
-    seed?: Effect<never, never, ReadonlyMap<Id2, E>>,
-    config?: StoreConfig<E>
-  ) => Effect<never, never, Store<E, Id>>
+    seed?: Effect<never, never, Iterable<PM>>,
+    config?: StoreConfig<PM>
+  ) => Effect<never, never, Store<PM, Id>>
 }
 
 /**

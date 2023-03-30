@@ -7,12 +7,12 @@ import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 
-function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
+function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>>(
   prefix: string,
   namespace: string,
   dir: string,
   name: string,
-  seed?: Effect<never, never, ReadonlyMap<Id2, PM>>
+  seed?: Effect<never, never, Iterable<PM>>
 ) {
   return Effect.gen(function*($) {
     const file = dir + "/" + prefix + name + (namespace === "primary" ? "" : "-" + namespace) + ".json"
@@ -25,11 +25,11 @@ function makeDiskStoreInt<Id extends string, Id2 extends Id, PM extends Persiste
     }
 
     const store = yield* $(
-      makeMemoryStoreInt<Id, Id, PM>(
+      makeMemoryStoreInt<Id, PM>(
         name,
         !fs.existsSync(file)
-          ? seed ?? Effect(new Map())
-          : fsStore.get.map(x => new Map(x.map(x => [x.id, x] as const)))
+          ? seed
+          : fsStore.get
       )
     )
 
@@ -70,9 +70,9 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
       fs.mkdirSync(dir)
     }
     return {
-      make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
+      make: <Id extends string, PM extends PersistenceModelType<Id>>(
         name: string,
-        seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        seed?: Effect<never, never, Iterable<PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -91,7 +91,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, Id2, PM>(prefix, namespace, dir, name, seed).tap(store =>
+                return makeDiskStoreInt<Id, PM>(prefix, namespace, dir, name, seed).tap(store =>
                   Effect.sync(() => stores.set(namespace, store))
                 )
               })

@@ -13,7 +13,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
         name: string,
-        seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+        seed?: Effect<never, never, Iterable<PM>>,
         _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {

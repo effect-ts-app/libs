@@ -28,13 +28,14 @@ export const restoreFromRequestContext = RequestContextContainer.get.flatMap(ctx
   storeId.set(ctx.namespace ?? "primary")
 )
 
-export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
+export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>>(
   name: string,
-  seed?: Effect<never, never, ReadonlyMap<Id2, PM>>
+  seed?: Effect<never, never, Iterable<PM>>
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(name)
-    const items: ReadonlyMap<Id, PM> = yield* $(seed ?? Effect(new Map<Id, PM>()))
+    const items_ = yield* $(seed ?? Effect([]))
+    const items = new Map(items_.toChunk.map(_ => [_.id, _] as const))
     const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
     const store = Ref.unsafeMake(makeStore())
     const sem = Semaphore.unsafeMake(1)
@@ -78,14 +79,14 @@ export function makeMemoryStoreInt<Id extends string, Id2 extends Id, PM extends
 }
 
 export const makeMemoryStore = () => ({
-  make: <Id extends string, Id2 extends Id, PM extends PersistenceModelType<Id>>(
+  make: <Id extends string, PM extends PersistenceModelType<Id>>(
     name: string,
-    seed?: Effect<never, never, ReadonlyMap<Id2, PM>>,
+    seed?: Effect<never, never, Iterable<PM>>,
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
       const storesSem = Semaphore.unsafeMake(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, Id2, PM>(name, seed))
+      const primary = yield* $(makeMemoryStoreInt<Id, PM>(name, seed))
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
         const store = stores.get(namespace)
