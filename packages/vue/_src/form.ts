@@ -53,7 +53,7 @@ abstract class PhantomTypeParameter<
 export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { in: Tin; out: Tout }> {
   rules: ((v: string) => boolean | string)[]
   metadata: FieldMetadata
-  type: "text" | "number"
+  type: "text" | "float" | "int" // todo; multi-line vs single line text
 }
 
 type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
