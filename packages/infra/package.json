@@ -492,6 +492,16 @@
         "default": "./_cjs/services/Repository.cjs"
       }
     },
+    "./services/RepositoryBase": {
+      "import": {
+        "types": "./dist/services/RepositoryBase.d.ts",
+        "default": "./dist/services/RepositoryBase.js"
+      },
+      "require": {
+        "types": "./dist/services/RepositoryBase.d.ts",
+        "default": "./_cjs/services/RepositoryBase.cjs"
+      }
+    },
     "./services/RequestContextContainer": {
       "import": {
         "types": "./dist/services/RequestContextContainer.d.ts",

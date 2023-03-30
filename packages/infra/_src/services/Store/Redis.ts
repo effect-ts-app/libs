@@ -11,7 +11,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const redis = yield* $(RedisClient.RedisClient)
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>, Id2 extends Id>(
+      make: <Id extends string, PM extends PersistenceModelType<Id>>(
         name: string,
         seed?: Effect<never, never, Iterable<PM>>,
         _config?: StoreConfig<PM>
@@ -22,9 +22,9 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
           if (!current.isSome()) {
-            const m = yield* $(seed ?? Effect(new Map()))
+            const m = yield* $(seed ?? Effect([]))
             yield* $(
-              RedisClient.set(key, JSON.stringify({ data: [...m.values()].map(e => makeETag(e)) }))
+              RedisClient.set(key, JSON.stringify({ data: [...m].map(e => makeETag(e)) }))
                 .orDie
                 .provideService(RedisClient.RedisClient, redis)
             )
