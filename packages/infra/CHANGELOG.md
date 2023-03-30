@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.44.0
+
+### Minor Changes
+
+- Add new RepositoryBase impl
+
 ## 0.43.1
 
 ### Patch Changes
