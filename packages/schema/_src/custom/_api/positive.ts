@@ -2,7 +2,6 @@
 
 import { pipe } from "@effect-app/core/Function"
 
-import { min } from "../_api.js"
 import * as S from "../_schema.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
