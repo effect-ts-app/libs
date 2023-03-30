@@ -13,9 +13,14 @@ export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
 }
 
-export function convertOut(v: string, set: (v: unknown | null) => void, type?: "text" | "float" | "int") {
+export function convertOutInt(v: string, type?: "text" | "float" | "int") {
   v = v == null ? v : v.trim()
-  return set(v === "" ? null : type === "float" ? parseFloat(v) : type === "int" ? parseInt(v) : v)
+  const c = v === "" ? null : type === "float" ? parseFloat(v) : type === "int" ? parseInt(v) : v
+  return c
+}
+
+export function convertOut(v: string, set: (v: unknown | null) => void, type?: "text" | "float" | "int") {
+  return set(convertOutInt(v, type))
 }
 
 export function buildFieldInfoFromProps<Props extends PropertyRecord>(
@@ -104,7 +109,7 @@ function buildFieldInfo(
 
   const parseRule = (v: string) =>
     pipe(
-      parse(v === "" ? null : metadata.type === "number" ? parseFloat(v) : v),
+      parse(convertOutInt(v, metadata.type)),
       These.result,
       _ =>
         _.match(
@@ -121,7 +126,7 @@ function buildFieldInfo(
     rules: [
       // TODO: optimise
       (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
-      ...(metadata.type === "string" ? stringRules : numberRules.map(r => (v: string) => r(parseFloat(v)))),
+      ...(metadata.type === "text" ? stringRules : numberRules.map(r => (v: string) => r(parseFloat(v)))),
       parseRule
     ],
     metadata

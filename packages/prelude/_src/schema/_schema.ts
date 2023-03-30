@@ -426,7 +426,7 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   const asMax = max || range
   const typeN = asMin || asMax
   return {
-    type: typeN ? typeN.type : isInt ? "int" : isNumber ? "float" : "text",
+    type: typeN ? typeN.type : isInt ? "int" as const : isNumber ? "float" as const : "text" as const,
     minimum: asMin?.minimum,
     minimumExclusive: asMin?.minimumExclusive,
     maximum: asMax?.maximum,
