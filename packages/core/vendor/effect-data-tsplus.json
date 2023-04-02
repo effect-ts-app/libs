@@ -3866,18 +3866,18 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Either",
-          "name": "andThen"
+          "name": "zipRight"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Either.Ops",
-          "name": "andThen"
+          "name": "zipRight"
         }
       ]
     },
@@ -3898,18 +3898,18 @@
       ]
     },
     {
-      "definitionName": "andThenDiscard",
+      "definitionName": "zipLeft",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Either",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Either.Ops",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         }
       ]
     },
@@ -9358,18 +9358,18 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Option",
-          "name": "andThen"
+          "name": "zipRight"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Option.Ops",
-          "name": "andThen"
+          "name": "zipRight"
         }
       ]
     },
@@ -9390,18 +9390,18 @@
       ]
     },
     {
-      "definitionName": "andThenDiscard",
+      "definitionName": "zipLeft",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Option",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Option.Ops",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         }
       ]
     },
@@ -16146,13 +16146,13 @@
       ]
     },
     {
-      "definitionName": "andThenDiscard",
+      "definitionName": "zipLeft",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/data/typeclass/Chainable.Ops",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         }
       ]
     },
@@ -16602,13 +16602,13 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/data/typeclass/FlatMap.Ops",
-          "name": "andThen"
+          "name": "zipRight"
         }
       ]
     },
@@ -17221,24 +17221,24 @@
       ]
     },
     {
-      "definitionName": "andThen",
+      "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "andThen"
+          "name": "zipRight"
         }
       ]
     },
     {
-      "definitionName": "andThenDiscard",
+      "definitionName": "zipLeft",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "andThenDiscard"
+          "name": "zipLeft"
         }
       ]
     },
