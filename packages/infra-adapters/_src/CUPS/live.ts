@@ -36,7 +36,7 @@ function makeCUPS(cupsServer?: URL) {
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
-    > Effect.attemptPromise(() => exec_(command))
+    > Effect.tryPromise(() => exec_(command))
       .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", pretty(r))))
 type PrinterConfig = { url?: URL; id: string }
 

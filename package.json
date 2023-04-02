@@ -44,7 +44,8 @@
         "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
     },
     "resolutions": {
-        "@effect/io": "^0.15.2",
+        "@effect/data": "^0.10.2",
+        "@effect/io": "^0.17.0",
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
@@ -57,7 +58,7 @@
     },
     "devDependencies": {
         "@babel/cli": "^7.21.0",
-        "@babel/core": "^7.21.3",
+        "@babel/core": "^7.21.4",
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.21.2",
         "@changesets/cli": "^2.26.1",
@@ -94,7 +95,7 @@
         "madge": "^6.0.0",
         "module-alias": "^2.2.2",
         "nodemon": "^2.0.22",
-        "npm-check-updates": "^16.9.0",
+        "npm-check-updates": "^16.10.0",
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.0",
         "tsconfig-paths": "^4.2.0",

@@ -102,12 +102,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const lockKey = getIdxLockKey(index)
       // acquire
       return RED.lock
-        .flatMap(lock => Effect.attemptPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
+        .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
         .mapBoth(
           err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
           lock => ({
-            release: Effect.attemptPromise(() => lock.unlock() as unknown as Promise<void>)
+            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
         ).acquireRelease(
@@ -119,7 +119,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       // acquire
       return RED.lock
         .flatMap(lock =>
-          Effect.attemptPromise(
+          Effect.tryPromise(
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
         )
@@ -128,7 +128,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           // release
           lock => ({
             // TODO
-            release: Effect.attemptPromise(() => lock.unlock() as unknown as Promise<void>)
+            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
         ).acquireRelease(

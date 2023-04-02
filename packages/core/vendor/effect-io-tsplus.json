@@ -8287,24 +8287,24 @@
       ]
     },
     {
-      "definitionName": "attemptCatchPromise",
+      "definitionName": "tryCatchPromise",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "attemptCatchPromise"
+          "name": "tryCatchPromise"
         }
       ]
     },
     {
-      "definitionName": "attemptCatchPromiseInterrupt",
+      "definitionName": "tryCatchPromiseInterrupt",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "attemptCatchPromiseInterrupt"
+          "name": "tryCatchPromiseInterrupt"
         }
       ]
     },
@@ -8325,24 +8325,24 @@
       ]
     },
     {
-      "definitionName": "attemptPromise",
+      "definitionName": "tryPromise",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "attemptPromise"
+          "name": "tryPromise"
         }
       ]
     },
     {
-      "definitionName": "attemptPromiseInterrupt",
+      "definitionName": "tryPromiseInterrupt",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "attemptPromiseInterrupt"
+          "name": "tryPromiseInterrupt"
         }
       ]
     },
