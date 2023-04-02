@@ -3,7 +3,10 @@
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
 
+// codegen:start {preset: barrel, include: ./utils/*.ts }
+export * from "./utils/effectify.js"
 export * from "./utils/extend.js"
+// codegen:end
 
 export const unsafeRight = <E, A>(ei: Either<E, A>) => {
   if (ei.isLeft()) {
