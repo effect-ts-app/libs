@@ -1,5 +1,15 @@
 # @effect-app/core
 
+## 0.39.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- ba4849c9: add Effectify
+
 ## 0.38.1
 
 ### Patch Changes
