@@ -28,6 +28,18 @@ export const restoreFromRequestContext = RequestContextContainer.get.flatMap(ctx
   storeId.set(ctx.namespace ?? "primary")
 )
 
+function logQuery(filter: any, cursor: any) {
+  return Effect.logDebug("mem query")
+    .apply(Effect.logAnnotates({
+      query: JSON.stringify(filter, undefined, 2),
+      cursor: JSON.stringify(
+        cursor,
+        undefined,
+        2
+      )
+    }))
+}
+
 export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>>(
   name: string,
   seed?: Effect<never, never, Iterable<PM>>
@@ -59,7 +71,10 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const s: Store<PM, Id> = {
       all,
       find: id => store.get.map(_ => Option.fromNullable(_.get(id))),
-      filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) => all.map(memFilter(filter, cursor)),
+      filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
+        all
+          .tap(() => logQuery(filter, cursor))
+          .map(memFilter(filter, cursor)),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
         all.map(c => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
       set: e =>
