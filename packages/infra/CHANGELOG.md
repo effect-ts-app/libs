@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.45.2
+
+### Patch Changes
+
+- change comparison to be loose
+
 ## 0.45.1
 
 ### Patch Changes
