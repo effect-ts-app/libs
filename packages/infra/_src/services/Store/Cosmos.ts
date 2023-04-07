@@ -87,7 +87,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         .delay(Duration.makeMillis(i === 0 ? 0 : 1100))
                         .flatMap(responses =>
                           Effect.gen(function*($) {
-                            const r = responses.find(x => x.statusCode === 412)
+                            const r = responses.find(x => x.statusCode === 412 || x.statusCode === 404)
                             if (r) {
                               return yield* $(
                                 Effect.fail(
@@ -161,7 +161,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                     if (firstFailed) {
                       const code = firstFailed.statusCode ?? 0
-                      if (code === 412) {
+                      if (code === 412 || code === 404) {
                         return yield* $(
                           Effect.fail(new OptimisticConcurrencyException(name, "batch"))
                         )
@@ -297,7 +297,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                 )
                 .flatMap(x => {
-                  if (x.statusCode === 412) {
+                  if (x.statusCode === 412 || x.statusCode === 404) {
                     return Effect.fail(new OptimisticConcurrencyException(name, e.id))
                   }
                   if (x.statusCode > 299 || x.statusCode < 200) {

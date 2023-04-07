@@ -16,6 +16,12 @@ export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
 export const makeUpdateETag =
   (name: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Option<E>) =>
     Effect.gen(function*($) {
+      if (e._etag) {
+        yield* $(
+          current
+            .encaseInEffect(() => new OptimisticConcurrencyException(name, e.id, "", e._etag))
+        )
+      }
       if (current.isSome() && current.value._etag !== e._etag) {
         return yield* $(
           Effect.fail(new OptimisticConcurrencyException(name, current.value.id, current.value._etag, e._etag))
