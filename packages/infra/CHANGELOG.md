@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.46.0
+
+### Minor Changes
+
+- c592181f: fix: not finding a record while expecting one must lead to OptimisticConcurrencyException.
+
 ## 0.45.2
 
 ### Patch Changes
