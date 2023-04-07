@@ -104,7 +104,7 @@ export type Adapted<
       {}
     >,
     "required",
-    None,
-    None
+    None<any>,
+    None<any>
   >
 }>

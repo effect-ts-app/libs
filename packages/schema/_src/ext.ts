@@ -159,7 +159,7 @@ type SupportedDefaults =
   | ROSet<any>
   | ReadonlyArray<any>
   | Some<any>
-  | None
+  | None<any>
   | Date
   | boolean
   | UUID
@@ -308,19 +308,19 @@ function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "parser"
-): MO.Property<Self, "required", None, Some<["parser", () => MO.ParsedShapeOf<Self>]>>
+): MO.Property<Self, "required", None<any>, Some<["parser", () => MO.ParsedShapeOf<Self>]>>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>,
   optionality: "both"
-): MO.Property<Self, "required", None, Some<["both", () => MO.ParsedShapeOf<Self>]>>
+): MO.Property<Self, "required", None<any>, Some<["both", () => MO.ParsedShapeOf<Self>]>>
 function defProp<Self extends MO.SchemaUPI>(
   schema: Self,
   makeDefault: () => MO.ParsedShapeOf<Self>
 ): MO.Property<
   Self,
   "required",
-  None,
+  None<any>,
   Some<["constructor", () => MO.ParsedShapeOf<Self>]>
 >
 function defProp<Self extends MO.SchemaUPI>(
@@ -333,7 +333,7 @@ function defProp<Self extends MO.SchemaUPI>(
 
 export function optProp<Self extends MO.SchemaUPI>(
   schema: Self
-): Property<Self, "optional", None, None> {
+): Property<Self, "optional", None<any>, None<any>> {
   return propOpt(MO.prop(schema))
 }
 
@@ -343,7 +343,7 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
@@ -356,7 +356,7 @@ export function defaultProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -364,7 +364,7 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): null extends ParsedShape ? FromProperty<
     MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
     "required",
-    None,
+    None<any>,
     Some<["constructor", () => ParsedShape]>
   >
   : ["Not a supported type, see SupportedTypes", never]
@@ -374,7 +374,7 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<
@@ -387,7 +387,7 @@ export function defaultProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["constructor", () => ParsedShape]>
 >
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -395,7 +395,7 @@ export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): null extends ParsedShape ? FromProperty<
     MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
     "required",
-    None,
+    None<any>,
     Some<["constructor", () => ParsedShape]>
   >
   : ["Not a supported type, see SupportedTypes", never]
@@ -412,7 +412,7 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
@@ -425,7 +425,7 @@ export function defaultInputProp<
 ): FromProperty<
   MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -433,7 +433,7 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): null extends ParsedShape ? FromProperty<
     MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
     "required",
-    None,
+    None<any>,
     Some<["both", () => ParsedShape]>
   >
   : ["Not a supported type, see SupportedTypes", never]
@@ -443,7 +443,7 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): MO.Property<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<
@@ -456,7 +456,7 @@ export function defaultInputProp<
 ): FromProperty<
   MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   "required",
-  None,
+  None<any>,
   Some<["both", () => ParsedShape]>
 >
 export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
@@ -464,7 +464,7 @@ export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
 ): null extends ParsedShape ? FromProperty<
     MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
     "required",
-    None,
+    None<any>,
     Some<["both", () => ParsedShape]>
   >
   : ["Not a supported type, see SupportedTypes", never]

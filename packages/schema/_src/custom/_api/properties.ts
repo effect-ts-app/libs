@@ -37,7 +37,7 @@ export class Property<
   ) {}
 
   // Disabled because it sends the compiler down into rabbit holes..
-  // schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, None> {
+  // schema<That extends S.SchemaUPI>(schema: That): Property<That, Optional, As, None<any> {
   //   return new Property(this._as, schema, this._optional, Option.none, this._map)
   // }
 
@@ -59,7 +59,7 @@ export class Property<
   //   )
   // }
 
-  // removeFrom(): Property<Self, Optional, None, Def> {
+  // removeFrom(): Property<Self, Optional, None<any>, Def> {
   //   return new Property(
   //     Option.none,
   //     this._schema,
@@ -102,7 +102,7 @@ export class Property<
   //   )
   // }
 
-  // removeDef(): Property<Self, Optional, As, None> {
+  // removeDef(): Property<Self, Optional, As, None<any> {
   //   return new Property(this._as, this._schema, this._optional, Option.none, this._map)
   // }
 
@@ -209,12 +209,12 @@ export function propFrom<
 
 export function prop<Self extends S.SchemaUPI>(
   schema: Self
-): Property<Self, "required", None, None> {
+): Property<Self, "required", None<any>, None<any>> {
   return new Property(
-    Option.none as None,
+    Option.none as None<any>,
     schema,
     "required",
-    Option.none as None,
+    Option.none as None<any>,
     HashMap.empty()
   )
 }
@@ -355,7 +355,7 @@ export type SchemaProperties<Props extends PropertyRecord> = DefaultSchema<
 >
 
 export type TagsFromProps<Props extends PropertyRecord> = {
-  [k in keyof Props]: Props[k]["_as"] extends None
+  [k in keyof Props]: Props[k]["_as"] extends None<any>
     ? Props[k]["_optional"] extends "required"
       ? S.ApiOf<Props[k]["_schema"]> extends LiteralApi<infer KS> ? KS extends [string] ? k
         : never

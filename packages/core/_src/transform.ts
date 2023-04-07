@@ -17,7 +17,7 @@ import type * as SET from "./Set.js"
 
 type OptOf<A> = Union.Exclude<
   A extends Some<infer X> ? X | null : A,
-  None
+  None<any>
 >
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 

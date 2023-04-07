@@ -58,7 +58,7 @@ type Result<E, A> = Omit<Done<E, A>, "current"> | Omit<Refreshing<E, A>, "curren
  */
 export function isSuccess<E, A>(
   qr: QueryResult<E, A>
-): qr is Result<E, A> & { current: Right<A> } {
+): qr is Result<E, A> & { current: Right<E, A> } {
   return qr.hasValue() && qr.current.isRight()
 }
 
@@ -103,7 +103,7 @@ export function isInitializing<E, A>(
  */
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
-): qr is Result<E, A> & { current: Left<E> } {
+): qr is Result<E, A> & { current: Left<E, A> } {
   return qr.hasValue() && qr.current.isLeft()
 }
 
