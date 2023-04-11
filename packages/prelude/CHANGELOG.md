@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.36.0
+
+### Minor Changes
+
+- AllLowerFirst should be Par
+
 ## 0.35.0
 
 ### Minor Changes

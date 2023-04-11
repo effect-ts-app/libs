@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 0.47.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.36.0
+  - @effect-app/infra-adapters@0.34.1
+
 ## 0.47.0
 
 ### Minor Changes
