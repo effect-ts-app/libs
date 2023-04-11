@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.36.1
+
+### Patch Changes
+
+- fix error channel of allLowerFirst
+
 ## 0.36.0
 
 ### Minor Changes
