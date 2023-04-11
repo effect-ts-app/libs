@@ -237,6 +237,7 @@ export function append_<A, B>(init: ReadonlyArray<A>, end: B): ReadonlyArray<A |
  */
 export const appendOperator: <A>(self: ReadonlyArray<A>, a: A) => ReadonlyArray<A> = append_
 
+// A getter would be nice, but we need it fluent to manage the priority vs nonEmpty etc
 /**
  * @tsplus fluent ReadonlyArray randomElement 1
  * @tsplus fluent Array randomElement 1
