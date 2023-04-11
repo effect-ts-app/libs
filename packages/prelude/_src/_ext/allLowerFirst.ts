@@ -1,7 +1,9 @@
 export type Service<T> = T extends Effect<any, any, infer S> ? S : T extends Tag<any, infer S> ? S : never
 export type ServiceR<T> = T extends Effect<infer R, any, any> ? R : T extends Tag<any, infer S> ? S : never
+export type ServiceE<T> = T extends Effect<any, infer E, any> ? E : never
 export type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 export type ValuesR<T> = T extends { [s: string]: infer S } ? ServiceR<S> : never
+export type ValuesE<T> = T extends { [s: string]: infer S } ? ServiceE<S> : never
 
 export type LowerFirst<S extends PropertyKey> = S extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}`
   : S
@@ -21,7 +23,7 @@ export function allLowerFirst_<T extends Record<string, Tag<any, any> | Effect<a
       prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] = svc // "_id" in svc && svc._id === TagTypeId ? svc : svc
       return prev
     }, {} as any)
-  ) as any as Effect<ValuesR<T>, never, LowerServices<T>>
+  ) as any as Effect<ValuesR<T>, ValuesE<T>, LowerServices<T>>
 }
 
 /**
