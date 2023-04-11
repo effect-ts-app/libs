@@ -15,7 +15,7 @@ export type LowerServices<T extends Record<string, Tag<any, any> | Effect<any, a
 export function allLowerFirst_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
   services: T
 ) {
-  return Effect.all(
+  return Effect.allPar(
     services.$$.keys.reduce((prev, cur) => {
       const svc = services[cur]!
       prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] = svc // "_id" in svc && svc._id === TagTypeId ? svc : svc
@@ -32,4 +32,14 @@ export function allLowerFirstWith_<T extends Record<string, Tag<any, any> | Effe
   fn: (services: LowerServices<T>) => A
 ) {
   return Debug.untraced(() => allLowerFirst_(services).map(fn))
+}
+
+/**
+ * @tsplus static effect/io/Effect.Ops allLowerFirstWithEffect
+ */
+export function allLowerFirstWithEffect_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, R, E, A>(
+  services: T,
+  fn: (services: LowerServices<T>) => Effect<R, E, A>
+) {
+  return Debug.untraced(() => allLowerFirst_(services).flatMap(fn))
 }
