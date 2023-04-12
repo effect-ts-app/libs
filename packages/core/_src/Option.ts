@@ -48,7 +48,7 @@ export function p<T, K extends KeysMatching<T, Option<any>>>(
 ): (v: Option<T>) => Option<_A<T[K]>>
 export function p<T, K extends keyof T>(k: K): (v: Option<T>) => Option<T[K]>
 export function p<T>(k: any) {
-  return (v: Option<T>) => v.flatMap(a => convert(a[k]))
+  return (v: Option<T>) => v.flatMap((a) => convert(a[k]))
 }
 function convert(a: any) {
   return Option.isSome(a) || Option.isNone(a) ? a : Option.fromNullable(a)

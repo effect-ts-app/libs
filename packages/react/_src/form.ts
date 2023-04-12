@@ -126,10 +126,10 @@ const isNullOrUndefined = (value: any) => value == null
 
 const isObjectType = (value: any) => typeof value === "object"
 const isObject = (value: any) =>
-  !isNullOrUndefined(value) &&
-  !Array.isArray(value) &&
-  isObjectType(value) &&
-  !isDateObject(value)
+  !isNullOrUndefined(value)
+  && !Array.isArray(value)
+  && isObjectType(value)
+  && !isDateObject(value)
 
 function getControllerValue(event: any) {
   return isObject(event) && event.target
@@ -457,7 +457,7 @@ function useGetMeta<
         parse(meta.transform.output(i))
           ["|>"](These.result)
           ["|>"](
-            r =>
+            (r) =>
               r.match(
                 () =>
                   intl.formatMessage(

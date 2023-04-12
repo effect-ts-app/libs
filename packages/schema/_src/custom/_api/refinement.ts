@@ -21,8 +21,8 @@ export function refinement<E extends S.AnyError, NewParsedShape>(
   return pipe(
     unknown,
     S.refine(refinement, error),
-    S.mapParserError(e => ((e as any).errors as Chunk<any>).unsafeHead.error),
-    S.mapConstructorError(e => ((e as any).errors as Chunk<any>).unsafeHead.error),
+    S.mapParserError((e) => ((e as any).errors as Chunk<any>).unsafeHead.error),
+    S.mapConstructorError((e) => ((e as any).errors as Chunk<any>).unsafeHead.error),
     withDefaults,
     S.annotate(refinementIdentifier, { refinement, error })
   )

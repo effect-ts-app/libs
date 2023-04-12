@@ -19,10 +19,13 @@ export abstract class Operations extends ServiceTaggedClass<Operations>()(Operat
 export function forkOperation<R, E, A>(self: Effect<R, E, A>) {
   return Debug.untraced(() =>
     Operations.flatMap(
-      Operations =>
-        Scope.make()
-          .flatMap(scope =>
-            Operations.register.extend(scope)
+      (Operations) =>
+        Scope
+          .make()
+          .flatMap((scope) =>
+            Operations
+              .register
+              .extend(scope)
               .tap(() => self.use(scope).forkDaemonReportRequestUnexpected)
           )
     )
@@ -40,13 +43,16 @@ export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<R,
  * @tsplus static effect/io/Effect.Ops forkOperation
  */
 export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<R, E, A>) {
-  return Debug.untraced(restore =>
+  return Debug.untraced((restore) =>
     Operations.flatMap(
-      Operations =>
-        Scope.make()
-          .flatMap(scope =>
-            Operations.register.extend(scope)
-              .tap(id => restore(self)(id).use(scope).forkDaemonReportRequestUnexpected)
+      (Operations) =>
+        Scope
+          .make()
+          .flatMap((scope) =>
+            Operations
+              .register
+              .extend(scope)
+              .tap((id) => restore(self)(id).use(scope).forkDaemonReportRequestUnexpected)
           )
     )
   )
@@ -59,14 +65,17 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   self: (id: OperationId) => Effect<R, E, A>,
   fnc: (id: OperationId) => Effect<R2, E2, A2>
 ) {
-  return Debug.untraced(restore =>
+  return Debug.untraced((restore) =>
     Operations.flatMap(
-      Operations =>
-        Scope.make()
-          .flatMap(scope =>
-            Operations.register.extend(scope)
-              .tap(opId => restore(self)(opId).use(scope).forkDaemonReportRequestUnexpected)
-              .tap(opId => restore(fnc)(opId).interruptible.forkScoped.extend(scope))
+      (Operations) =>
+        Scope
+          .make()
+          .flatMap((scope) =>
+            Operations
+              .register
+              .extend(scope)
+              .tap((opId) => restore(self)(opId).use(scope).forkDaemonReportRequestUnexpected)
+              .tap((opId) => restore(fnc)(opId).interruptible.forkScoped.extend(scope))
           )
     )
   )

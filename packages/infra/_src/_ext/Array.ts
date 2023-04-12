@@ -14,8 +14,9 @@ export function getFirstById_<A extends { id: Id }, Id extends string, Type exte
   id: Id,
   type: Type
 ) {
-  return Chunk.fromIterable(a)
-    .findFirst(_ => _.id === id)
+  return Chunk
+    .fromIterable(a)
+    .findFirst((_) => _.id === id)
     .encaseInEffect(() => new NotFoundError(type, id))
 }
 

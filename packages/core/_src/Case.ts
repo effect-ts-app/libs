@@ -87,8 +87,8 @@ export const Case: CaseConstructor = class<T> implements CaseBrand, Hash.Hash, E
       let i = 0
 
       while (eq && i < len) {
-        eq = this[caseKeys][i] === kthat[i] &&
-          Equal.equals(this[this[caseKeys][i]!]!, that[kthat[i]!]!)
+        eq = this[caseKeys][i] === kthat[i]
+          && Equal.equals(this[this[caseKeys][i]!]!, that[kthat[i]!]!)
         i++
       }
 

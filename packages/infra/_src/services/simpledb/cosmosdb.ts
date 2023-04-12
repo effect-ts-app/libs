@@ -12,11 +12,12 @@ class CosmosDbOperationError {
 }
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
-  Cosmos.db.tap(db =>
+  Cosmos.db.tap((db) =>
     Effect.tryPromise(() =>
-      db.containers
+      db
+        .containers
         .create({ id: type, indexingPolicy })
-        .catch(err => console.warn(err))
+        .catch((err) => console.warn(err))
     )
   )
 // TODO: Error if current indexingPolicy does not match
@@ -36,11 +37,12 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }))
 
     function find(id: string) {
-      return Cosmos.db
-        .flatMap(db => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
-        .map(i => Option.fromNullable(i.resource))
+      return Cosmos
+        .db
+        .flatMap((db) => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
+        .map((i) => Option.fromNullable(i.resource))
         .map(
-          _ =>
+          (_) =>
             _.map(
               ({ _etag, data }) => ({ version: _etag, data } as CachedRecord<EA>)
             )
@@ -48,24 +50,26 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function findBy(parameters: Record<string, string>) {
-      return Cosmos.db
-        .flatMap(db =>
+      return Cosmos
+        .db
+        .flatMap((db) =>
           Effect.tryPromise(() =>
             db
               .container(type)
-              .items.query({
+              .items
+              .query({
                 query: `
 SELECT TOP 1 ${type}.id
 FROM ${type} i
 WHERE (
   ${
                   typedKeysOf(parameters)
-                    .map(k => `i.${k} = @${k}`)
+                    .map((k) => `i.${k} = @${k}`)
                     .join(" and ")
                 }
 )
 `,
-                parameters: typedKeysOf(parameters).map(p => ({
+                parameters: typedKeysOf(parameters).map((p) => ({
                   name: `@${p}`,
                   value: parameters[p]!
                 }))
@@ -73,8 +77,8 @@ WHERE (
               .fetchAll()
           )
         )
-        .map(x => x.resources.head)
-        .map(_ => _.map(_ => _.id))
+        .map((x) => x.resources.head)
+        .map((_) => _.map((_) => _.id))
     }
 
     function store(record: A, currentVersion: Option<Version>) {
@@ -87,44 +91,50 @@ WHERE (
         yield* $(
           currentVersion.match(
             () =>
-              Effect.tryPromise(() =>
-                db.container(type).items.create({
-                  id: record.id,
-                  timestamp: new Date(),
-                  data
-                })
-              ).asUnit.orDie,
-            currentVersion =>
-              Effect.tryPromise(() =>
-                db
-                  .container(type)
-                  .item(record.id)
-                  .replace(
-                    {
-                      id: record.id,
-                      timestamp: new Date(),
-                      data
-                    },
-                    {
-                      accessCondition: {
-                        type: "IfMatch",
-                        condition: currentVersion
+              Effect
+                .tryPromise(() =>
+                  db.container(type).items.create({
+                    id: record.id,
+                    timestamp: new Date(),
+                    data
+                  })
+                )
+                .asUnit
+                .orDie,
+            (currentVersion) =>
+              Effect
+                .tryPromise(() =>
+                  db
+                    .container(type)
+                    .item(record.id)
+                    .replace(
+                      {
+                        id: record.id,
+                        timestamp: new Date(),
+                        data
+                      },
+                      {
+                        accessCondition: {
+                          type: "IfMatch",
+                          condition: currentVersion
+                        }
                       }
-                    }
-                  )
-              ).orDie.flatMap(x => {
-                if (x.statusCode === 412) {
-                  return Effect.fail(new OptimisticLockException(type, record.id))
-                }
-                if (x.statusCode > 299 || x.statusCode < 200) {
-                  return Effect.die(
-                    new CosmosDbOperationError(
-                      "not able to update record: " + x.statusCode
                     )
-                  )
-                }
-                return Effect.unit
-              })
+                )
+                .orDie
+                .flatMap((x) => {
+                  if (x.statusCode === 412) {
+                    return Effect.fail(new OptimisticLockException(type, record.id))
+                  }
+                  if (x.statusCode > 299 || x.statusCode < 200) {
+                    return Effect.die(
+                      new CosmosDbOperationError(
+                        "not able to update record: " + x.statusCode
+                      )
+                    )
+                  }
+                  return Effect.unit
+                })
           )
         )
         return { version, data: record } as CachedRecord<A>

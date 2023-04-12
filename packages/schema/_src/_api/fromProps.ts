@@ -329,9 +329,9 @@ export type TagsFromFromProps<Props extends FromPropertyRecord> = {
 
 export function isFromPropertyRecord(u: unknown): u is FromPropertyRecord {
   return (
-    typeof u === "object" &&
-    u !== null &&
-    Object.keys(u).every(k => u[k] instanceof FromProperty)
+    typeof u === "object"
+    && u !== null
+    && Object.keys(u).every((k) => u[k] instanceof FromProperty)
   )
 }
 
@@ -347,13 +347,13 @@ export function tagsFromFromProps<Props extends FromPropertyRecord>(
     >
     const as = props[key]._as as Option<PropertyKey>
     if (
-      as.isNone() &&
-      def.isNone() &&
-      props[key]._optional === "required" &&
-      "literals" in s.Api &&
-      Array.isArray(s.Api["literals"]) &&
-      s.Api["literals"].length === 1 &&
-      typeof s.Api["literals"][0] === "string"
+      as.isNone()
+      && def.isNone()
+      && props[key]._optional === "required"
+      && "literals" in s.Api
+      && Array.isArray(s.Api["literals"])
+      && s.Api["literals"].length === 1
+      && typeof s.Api["literals"][0] === "string"
     ) {
       tags[key] = s.Api["literals"][0]
     }
@@ -470,11 +470,11 @@ export function fromProps<Props extends FromPropertyRecord>(
           continue
         }
         if (
-          isUndefined &&
-          def.isSome() &&
+          isUndefined
+          && def.isSome()
           // TODO: why def any
           // // @ts-expect-error
-          (def.value[0] === "parser" || def.value[0] === "both")
+          && (def.value[0] === "parser" || def.value[0] === "both")
         ) {
           // // @ts-expect-error
           result[key] = def.value[1]()
@@ -504,9 +504,9 @@ export function fromProps<Props extends FromPropertyRecord>(
         }
       } else {
         if (
-          def.isSome() &&
+          def.isSome()
           // // @ts-expect-error
-          (def.value[0] === "parser" || def.value[0] === "both")
+          && (def.value[0] === "parser" || def.value[0] === "both")
         ) {
           // // @ts-expect-error
           result[key] = def.value[1]()
@@ -550,11 +550,11 @@ export function fromProps<Props extends FromPropertyRecord>(
   }
 
   function arb(_: typeof fc): fc.Arbitrary<ShapeFromFromProperties<Props>> {
-    const req = Dictionary.map_(arbitrariesReq, g => g(_))
-    const par = Dictionary.map_(arbitrariesPar, g => g(_))
+    const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
+    const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
     // @ts-expect-error
-    return _.record(req).chain(a => _.record(par, { withDeletedKeys: true }).map(b => intersect(a, b)))
+    return _.record(req).chain((a) => _.record(par, { withDeletedKeys: true }).map((b) => intersect(a, b)))
   }
 
   const tags = tagsFromFromProps(props)
@@ -564,7 +564,7 @@ export function fromProps<Props extends FromPropertyRecord>(
     S.parser(parser),
     S.encoder(encoder),
     S.arbitrary(arb),
-    S.constructor(_ => {
+    S.constructor((_) => {
       const res = {} as ShapeFromFromProperties<Props>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {

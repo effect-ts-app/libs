@@ -7,18 +7,18 @@ export class RequestException<E> extends CauseException<E> {
     super(cause, "Request")
   }
 }
-export const reportRequestError_ = reportError(cause => new RequestException(cause))
+export const reportRequestError_ = reportError((cause) => new RequestException(cause))
 
 export const reportRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
-    RequestContextContainer.get.flatMap(requestContext => reportRequestError_(cause, { requestContext, ...context }))
+    RequestContextContainer.get.flatMap((requestContext) => reportRequestError_(cause, { requestContext, ...context }))
   )
 
-export const logRequestError_ = logError(cause => new RequestException(cause))
+export const logRequestError_ = logError((cause) => new RequestException(cause))
 
 export const logRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
   Debug.untraced(() =>
-    RequestContextContainer.get.flatMap(requestContext => logRequestError_(cause, { requestContext, ...context }))
+    RequestContextContainer.get.flatMap((requestContext) => logRequestError_(cause, { requestContext, ...context }))
   )
 
 /**
@@ -32,8 +32,10 @@ export const logRequestError = <E>(cause: Cause<E>, context?: Record<string, unk
  */
 export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
   return Debug.untraced(() =>
-    self.tapErrorCause(reportRequestError)
-      .fork.daemonChildren
+    self
+      .tapErrorCause(reportRequestError)
+      .fork
+      .daemonChildren
   )
 }
 
@@ -48,11 +50,13 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
  */
 export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>) {
   return Debug.untraced(() =>
-    self.tapErrorCause(cause =>
-      cause.isInterruptedOnly() || cause.isDie()
-        ? reportRequestError(cause)
-        : logRequestError(cause)
-    )
-      .fork.daemonChildren
+    self
+      .tapErrorCause((cause) =>
+        cause.isInterruptedOnly() || cause.isDie()
+          ? reportRequestError(cause)
+          : logRequestError(cause)
+      )
+      .fork
+      .daemonChildren
   )
 }

@@ -11,7 +11,7 @@ export function ChunksortWith<A>(
   ...ords: NonEmptyArguments<Order<A>>
 ): (a: Chunk.Chunk<A>) => Chunk.Chunk<A> {
   // TODO
-  return as => as.toArray.sortWith(...ords).toChunk
+  return (as) => as.toArray.sortWith(...ords).toChunk
 }
 
 /**

@@ -36,8 +36,9 @@ function makeCUPS(cupsServer?: URL) {
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
-    > Effect.tryPromise(() => exec_(command))
-      .tap(r => (Effect.logDebug(`Executed`).logAnnotate("result", pretty(r))))
+    > Effect
+      .tryPromise(() => exec_(command))
+      .tap((r) => (Effect.logDebug(`Executed`).logAnnotate("result", pretty(r))))
 type PrinterConfig = { url?: URL; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
@@ -87,10 +88,10 @@ function printBuffer(printer: PrinterConfig, options: string[]) {
 }
 
 function getAvailablePrinters(host?: string) {
-  return Do($ => {
+  return Do(($) => {
     const { stdout } = $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
     return [...stdout.matchAll(/device for (\w+):/g)]
-      .map(_ => _[1])
+      .map((_) => _[1])
       .filter(isTruthy)
       .map(ReasonableString)
   })

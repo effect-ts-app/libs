@@ -382,10 +382,10 @@ export function isAnnotated<Self extends SchemaAny, A>(
   readonly meta: A
 } {
   return (
-    (typeof self === "object" || typeof self === "function") &&
-    self != null &&
-    Identifiable in self &&
-    self["annotation"] === annotation
+    (typeof self === "object" || typeof self === "function")
+    && self != null
+    && Identifiable in self
+    && self["annotation"] === annotation
   )
 }
 
@@ -397,9 +397,9 @@ export function isAnnotatedSchema<Self extends SchemaAny>(
   readonly meta: any
 } {
   return (
-    (typeof self === "object" || typeof self === "function") &&
-    self != null &&
-    Identifiable in self
+    (typeof self === "object" || typeof self === "function")
+    && self != null
+    && Identifiable in self
   )
 }
 

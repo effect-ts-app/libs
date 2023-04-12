@@ -14,6 +14,6 @@ export interface EntryStats {
 export interface EntryStatsOps {
   (loadedMillis: number): EntryStats
 }
-export const EntryStats: EntryStatsOps = loadedMillis => ({
+export const EntryStats: EntryStatsOps = (loadedMillis) => ({
   loadedMillis
 })

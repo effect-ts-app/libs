@@ -13,7 +13,7 @@ export function getQueryParam(search: ParsedQuery, param: string) {
 export const getQueryParamO = flow(getQueryParam, Option.fromNullable)
 
 export const parseOpt = <E, A>(t: ReqRes<E, A>) => {
-  const dec = flow(EParserFor(t), x =>
+  const dec = flow(EParserFor(t), (x) =>
     x.effect._tag === "Right"
       ? x.effect.right[1]._tag === "None"
         ? Option(x.effect.right[0])
@@ -23,7 +23,7 @@ export const parseOpt = <E, A>(t: ReqRes<E, A>) => {
 }
 
 export const parseOptUnknown = <E, A>(t: ReqRes<E, A>) => {
-  const dec = flow(Parser.for(t), x =>
+  const dec = flow(Parser.for(t), (x) =>
     x.effect._tag === "Right"
       ? x.effect.right[1]._tag === "None"
         ? Option(x.effect.right[0])

@@ -56,7 +56,7 @@ export function intersection_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => S
       return empty
     }
     const r = new Set<A>()
-    x.forEach(e => {
+    x.forEach((e) => {
       if (elemE(y, e)) {
         r.add(e)
       }
@@ -70,7 +70,7 @@ export function intersection_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => S
  */
 export function intersection<A>(E: Equivalence<A>): (r: Set<A>) => (l: Set<A>) => Set<A> {
   const i = intersection_(E)
-  return x => y => i(x, y)
+  return (x) => (y) => i(x, y)
 }
 
 /**
@@ -109,9 +109,9 @@ export function toMutable<A>(s: Set<A>): MutableSet<A> {
  * Convert a set to an Array
  */
 export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
-  return x => {
+  return (x) => {
     const r: Array<A> = []
-    x.forEach(e => r.push(e))
+    x.forEach((e) => r.push(e))
     return r.sort(O.compare)
   }
 }
@@ -140,7 +140,7 @@ interface Next<A> {
  * true if one or more elements match predicate
  */
 export function some<A>(predicate: Predicate<A>): (set: Set<A>) => boolean {
-  return set => {
+  return (set) => {
     const values = set.values()
     let e: Next<A>
     let found = false
@@ -164,7 +164,7 @@ export function some_<A>(set: Set<A>, predicate: Predicate<A>): boolean {
  */
 export function map<B>(E: Equivalence<B>): <A>(f: (x: A) => B) => (set: Set<A>) => Set<B> {
   const m = map_(E)
-  return f => set => m(set, f)
+  return (f) => (set) => m(set, f)
 }
 
 /**
@@ -174,7 +174,7 @@ export function map_<B>(E: Equivalence<B>): <A>(set: Set<A>, f: (x: A) => B) => 
   const elemE = elem_(E)
   return (set, f) => {
     const r = new Set<B>()
-    set.forEach(e => {
+    set.forEach((e) => {
       const v = f(e)
       if (!elemE(r, v)) {
         r.add(v)
@@ -188,7 +188,7 @@ export function map_<B>(E: Equivalence<B>): <A>(set: Set<A>, f: (x: A) => B) => 
  * true if all elements match predicate
  */
 export function every<A>(predicate: Predicate<A>): (set: Set<A>) => boolean {
-  return set => every_(set, predicate)
+  return (set) => every_(set, predicate)
 }
 
 /**
@@ -205,7 +205,7 @@ export function chain<B>(
   E: Equivalence<B>
 ): <A>(f: (x: A) => Set<B>) => (set: Set<A>) => Set<B> {
   const c = chain_(E)
-  return f => set => c(set, f)
+  return (f) => (set) => c(set, f)
 }
 
 /**
@@ -217,8 +217,8 @@ export function chain_<B>(
   const elemE = elem_(E)
   return (set, f) => {
     const r = new Set<B>()
-    set.forEach(e => {
-      f(e).forEach(e => {
+    set.forEach((e) => {
+      f(e).forEach((e) => {
         if (!elemE(r, e)) {
           r.add(e)
         }
@@ -252,7 +252,7 @@ export function filter<A, B extends A>(
 ): (set: Set<A>) => Set<B>
 export function filter<A>(predicate: Predicate<A>): (set: Set<A>) => Set<A>
 export function filter<A>(predicate: Predicate<A>): (set: Set<A>) => Set<A> {
-  return set => filter_(set, predicate)
+  return (set) => filter_(set, predicate)
 }
 
 /**
@@ -289,7 +289,7 @@ export function partition<A>(
 export function partition<A>(
   predicate: Predicate<A>
 ): (set: Set<A>) => readonly [Set<A>, Set<A>] {
-  return set => partition_(set, predicate)
+  return (set) => partition_(set, predicate)
 }
 
 /**
@@ -342,7 +342,7 @@ export function elem_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => boolean {
  */
 export function elem<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => boolean {
   const e = elem_(E)
-  return a => set => e(set, a)
+  return (a) => (set) => e(set, a)
 }
 
 /**
@@ -412,7 +412,7 @@ export function reduce<A>(
   O: Order<A>
 ): <B>(b: B, f: (b: B, a: A) => B) => (fa: Set<A>) => B {
   const red = reduce_(O)
-  return (b, f) => fa => red(fa, b, f)
+  return (b, f) => (fa) => red(fa, b, f)
 }
 
 /**
@@ -459,7 +459,7 @@ export function singleton<A>(a: A): Set<A> {
  */
 export function insert<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const i = insert_(E)
-  return a => set => i(set, a)
+  return (a) => (set) => i(set, a)
 }
 
 /**
@@ -483,7 +483,7 @@ export function insert_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
  */
 export function remove<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const rem = remove_(E)
-  return a => set => rem(set, a)
+  return (a) => (set) => rem(set, a)
 }
 
 /**
@@ -498,7 +498,7 @@ export function remove_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
  */
 export function toggle<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const t = toggle_(E)
-  return a => set => t(set, a)
+  return (a) => (set) => t(set, a)
 }
 
 /**
@@ -516,7 +516,7 @@ export function toggle_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
  * @tsplus static ets/Set __call
  */
 export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A> {
-  return as => {
+  return (as) => {
     const len = as.length
     const r = new Set<A>()
     const has = elem_(E)
@@ -544,12 +544,12 @@ export function separate<E, A>(
   EE: Equivalence<E>,
   EA: Equivalence<A>
 ): (fa: Set<Either<E, A>>) => readonly [Set<E>, Set<A>] {
-  return fa => {
+  return (fa) => {
     const elemEE = elem_(EE)
     const elemEA = elem_(EA)
     const left: MutableSet<E> = new Set()
     const right: MutableSet<A> = new Set()
-    fa.forEach(e => {
+    fa.forEach((e) => {
       switch (e._tag) {
         case "Left":
           if (!elemEE(left, e.left)) {
@@ -574,7 +574,7 @@ export function filterMap<B>(
   E: Equivalence<B>
 ): <A>(f: (a: A) => Option<B>) => (fa: Set<A>) => Set<B> {
   const fm = filterMap_(E)
-  return f => fa => fm(fa, f)
+  return (f) => (fa) => fm(fa, f)
 }
 
 /**
@@ -586,7 +586,7 @@ export function filterMap_<B>(
   const elemE = elem_(E)
   return (fa, f) => {
     const r: MutableSet<B> = new Set()
-    fa.forEach(a => {
+    fa.forEach((a) => {
       const ob = f(a)
       if (ob._tag === "Some" && !elemE(r, ob.value)) {
         r.add(ob.value)
@@ -609,7 +609,7 @@ export function union_<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A>
       return x
     }
     const r = new Set(x)
-    y.forEach(e => {
+    y.forEach((e) => {
       if (!elemE(r, e)) {
         r.add(e)
       }
@@ -634,7 +634,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const insert__ = insert(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, x => !eq(x, a)) >= insert__(a)
+    return filter_(set, (x) => !eq(x, a)) >= insert__(a)
   }
 
   return {

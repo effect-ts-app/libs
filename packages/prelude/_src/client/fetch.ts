@@ -17,18 +17,19 @@ export class ResponseError {
 export function fetchApi(method: H.Method, path: string, body?: unknown) {
   const request = H.request(method, "JSON", "JSON")
   return getConfig(({ apiUrl, headers }) =>
-    H.withHeaders({
-      "request-id": headers.flatMap(_ => _.get("request-id")).value ?? StringId.make(),
-      ...headers.map(_ => Object.fromEntries(_)).value
-    })(request(`${apiUrl}${path}`, body))
-      .map(x => ({ ...x, body: x.body.value ?? null }))
+    H
+      .withHeaders({
+        "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
+        ...headers.map((_) => Object.fromEntries(_)).value
+      })(request(`${apiUrl}${path}`, body))
+      .map((x) => ({ ...x, body: x.body.value ?? null }))
   )
 }
 export function fetchApi2S<RequestA, RequestE, ResponseA>(
   encodeRequest: (a: RequestA) => RequestE,
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
-  const decodeRes = (u: unknown) => decodeResponse(u).mapError(err => new ResponseError(err))
+  const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
   return (method: H.Method, path: Path) => (req: RequestA) =>
     fetchApi(
       method,
@@ -39,7 +40,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
       encodeRequest(req)
     )
       .flatMap(mapResponseM(decodeRes))
-      .map(i => ({
+      .map((i) => ({
         ...i,
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         body: i.body as ResponseA
@@ -74,7 +75,7 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
 }) {
   const encodeRequest = Request.Encoder
   const encodeResponse = Encoder.for(Response)
-  const decodeResponse = flow(Parser.for(Response)["|>"](condemnCustom), x => x.map(encodeResponse))
+  const decodeResponse = flow(Parser.for(Response)["|>"](condemnCustom), (x) => x.map(encodeResponse))
   return fetchApi2S(encodeRequest, decodeResponse)(
     Request.method,
     new Path(Request.path)
@@ -95,8 +96,8 @@ export function makePathWithQuery(
   >
 ) {
   return (
-    path.build(pars, { ignoreSearch: true, ignoreConstraints: true }) +
-    (Object.keys(pars).length ? "?" + qs.stringify(pars) : "")
+    path.build(pars, { ignoreSearch: true, ignoreConstraints: true })
+    + (Object.keys(pars).length ? "?" + qs.stringify(pars) : "")
   )
 }
 
@@ -150,5 +151,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<R, E, FetchResponse<A | null>>) {
-  return eff.flatMap(r => r.body === null ? Effect.die("Not found") : Effect(r.body))
+  return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect(r.body))
 }

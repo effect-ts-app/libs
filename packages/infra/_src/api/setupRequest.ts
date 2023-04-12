@@ -22,7 +22,9 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
  * @tsplus getter effect/io/Effect setupRequestFrom
  */
 export function setupRequestFrom<R, E, A>(self: Effect<R, E, A>) {
-  return Debug.untraced(() => RequestContextContainer.get.flatMap(requestContext => self.setupRequest(requestContext)))
+  return Debug.untraced(() =>
+    RequestContextContainer.get.flatMap((requestContext) => self.setupRequest(requestContext))
+  )
 }
 
 /**

@@ -21,7 +21,7 @@ export function partialConstructor<ConstructorInput, ParsedShape>(model: {
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return partConstructor => restConstructor => partialConstructor_(model, partConstructor)(restConstructor)
+  return (partConstructor) => (restConstructor) => partialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function partialConstructor_<
@@ -37,7 +37,7 @@ export function partialConstructor_<
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return restConstructor => new model({ ...partConstructor, ...restConstructor } as any)
+  return (restConstructor) => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
 export function partialConstructorF<ConstructorInput, ParsedShape>(
@@ -48,7 +48,7 @@ export function partialConstructorF<ConstructorInput, ParsedShape>(
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return partConstructor => restConstructor => partialConstructorF_(constr, partConstructor)(restConstructor)
+  return (partConstructor) => (restConstructor) => partialConstructorF_(constr, partConstructor)(restConstructor)
 }
 
 export function partialConstructorF_<
@@ -62,7 +62,7 @@ export function partialConstructorF_<
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return restConstructor => constr({ ...partConstructor, ...restConstructor } as any)
+  return (restConstructor) => constr({ ...partConstructor, ...restConstructor } as any)
 }
 
 // TODO: morph the schema instead.
@@ -75,7 +75,7 @@ export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return partConstructor => restConstructor => derivePartialConstructor_(model, partConstructor)(restConstructor)
+  return (partConstructor) => (restConstructor) => derivePartialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function derivePartialConstructor_<
@@ -92,7 +92,7 @@ export function derivePartialConstructor_<
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
 ) => ParsedShape {
-  return restConstructor => new model({ ...partConstructor, ...restConstructor } as any)
+  return (restConstructor) => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
 export type GetPartialConstructor<A extends (...args: any) => any> = Parameters<

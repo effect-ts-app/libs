@@ -420,8 +420,8 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   const max = S.findAnnotation(realSelf, S.maxIdentifier)
   const range = S.findAnnotation(realSelf, S.rangeIdentifier)
 
-  const isNumber = numberIds.some(_ => S.findAnnotation(realSelf, _))
-  const isInt = intIds.some(_ => S.findAnnotation(realSelf, _))
+  const isNumber = numberIds.some((_) => S.findAnnotation(realSelf, _))
+  const isInt = intIds.some((_) => S.findAnnotation(realSelf, _))
   const asMin = min || range
   const asMax = max || range
   const typeN = asMin || asMax
@@ -471,7 +471,7 @@ export function getRegisterFromSchema<Self extends S.SchemaAny>(self: Self) {
   const metadata = getMetadataFromSchema(self)
   const nullable = S.findAnnotation(self, nullableIdentifier)
 
-  const mapType = numberIds.concat(rangeNumberIds).some(x => S.findAnnotation(nullable?.self ?? self, x))
+  const mapType = numberIds.concat(rangeNumberIds).some((x) => S.findAnnotation(nullable?.self ?? self, x))
     ? ("asNumber" as const)
     : ("normal" as const)
   const map = mapValueType(mapType)
@@ -702,7 +702,7 @@ export interface SmartUnion<
 export function validate<X, A>(
   self: (a: X) => Th.These<any, A>
 ): (a: X) => Either<CustomSchemaException, A> {
-  return x => {
+  return (x) => {
     const y = self(x).effect
     if (y._tag === "Left") {
       return Either.left(new CustomSchemaException(y.left))

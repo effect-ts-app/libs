@@ -50,20 +50,21 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
         ? Option(x as unknown as NE)
         : Option.none
       : filter.type === "join_find"
-      ? filter.keys.some(k => {
+      ? filter.keys.some((k) => {
           const value = get(x, k) as Record<string, unknown>[]
           // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
           return (
-            value &&
-            value.some(v => compareCaseInsensitive(v[filter.valueKey], filter.value))
+            value
+            && value.some((v) => compareCaseInsensitive(v[filter.valueKey], filter.value))
           )
         })
         ? Option(x as unknown as NE)
         : Option.none
       // TODO: support mixed or/and
       : filter.mode === "or"
-      ? filter.where
-          .some(p =>
+      ? filter
+          .where
+          .some((p) =>
             p.t === "in"
               ? p.value.includes(get(x, p.key))
               : p.t === "not-in"
@@ -82,8 +83,9 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
           )
         ? Option(x as unknown as NE)
         : Option.none
-      : filter.where
-          .every(p =>
+      : filter
+          .where
+          .every((p) =>
             p.t === "in"
               ? p.value.includes(get(x, p.key))
               : p.t === "not-in"
@@ -100,12 +102,12 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               ? p.key.includes(".-1.")
                 ? (get(x, p.key.split(".-1.")[0]) as any[])
                   // TODO: or vs and
-                  .every(_ => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+                  .every((_) => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
                 : !compareCaseInsensitive(get(x, p.key), p.value)
               : p.key.includes(".-1.")
               ? (get(x, p.key.split(".-1.")[0]) as any[])
                 // TODO: or vs and
-                .some(_ => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+                .some((_) => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
               : compareCaseInsensitive(get(x, p.key), p.value)
           )
       ? Option(x as unknown as NE)
@@ -116,21 +118,23 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
   filter: FilterJoinSelect
 ) {
   return (x: E) =>
-    filter.keys.filterMap(k => {
-      const value = get(x, k)
-      // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
-      return value
-        ? Option(
-          (value as readonly NE[]).filterMap(v =>
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            compareCaseInsensitive((v as any)[filter.valueKey], filter.value)
-              ? Option({ ...v, _rootId: x.id })
-              : Option.none
+    filter
+      .keys
+      .filterMap((k) => {
+        const value = get(x, k)
+        // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
+        return value
+          ? Option(
+            (value as readonly NE[]).filterMap((v) =>
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              compareCaseInsensitive((v as any)[filter.valueKey], filter.value)
+                ? Option({ ...v, _rootId: x.id })
+                : Option.none
+            )
           )
-        )
-        : Option.none
-    })
-      .flatMap(_ => _)
+          : Option.none
+      })
+      .flatMap((_) => _)
       .toChunk
 }
 

@@ -11,7 +11,7 @@ import { ServiceBusClient } from "@azure/service-bus"
 
 function makeClient(url: string) {
   return Effect(new ServiceBusClient(url)).acquireRelease(
-    client => Effect.promise(() => client.close())
+    (client) => Effect.promise(() => client.close())
   )
 }
 
@@ -24,7 +24,7 @@ function makeSender(queueName: string) {
 
     return yield* $(
       Effect(serviceBusClient.createSender(queueName)).acquireRelease(
-        subscription => Effect.promise(() => subscription.close())
+        (subscription) => Effect.promise(() => subscription.close())
       )
     )
   })
@@ -41,7 +41,7 @@ function makeReceiver(queueName: string) {
 
     return yield* $(
       Effect(serviceBusClient.createReceiver(queueName)).acquireRelease(
-        r => Effect.promise(() => r.close())
+        (r) => Effect.promise(() => r.close())
       )
     )
   })
@@ -67,22 +67,26 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
     const r = yield* $(Receiver)
 
     yield* $(
-      Effect.runtime<RMsg | RErr>().map(rt =>
-        r.subscribe({
-          processError: err =>
-            rt.runPromise(
-              hndlr.processError(err)
-                .catchAllCause(cause => Effect.logErrorCauseMessage("ServiceBus Error", cause))
-            ),
-          processMessage: msg =>
-            rt.runPromise(
-              hndlr.processMessage(msg)
-            )
-          // DO NOT CATCH ERRORS here as they should return to the queue!
-        })
-      ).acquireRelease(
-        subscription => Effect.promise(() => subscription.close())
-      )
+      Effect
+        .runtime<RMsg | RErr>()
+        .map((rt) =>
+          r.subscribe({
+            processError: (err) =>
+              rt.runPromise(
+                hndlr
+                  .processError(err)
+                  .catchAllCause((cause) => Effect.logErrorCauseMessage("ServiceBus Error", cause))
+              ),
+            processMessage: (msg) =>
+              rt.runPromise(
+                hndlr.processMessage(msg)
+              )
+            // DO NOT CATCH ERRORS here as they should return to the queue!
+          })
+        )
+        .acquireRelease(
+          (subscription) => Effect.promise(() => subscription.close())
+        )
     )
   })
 }

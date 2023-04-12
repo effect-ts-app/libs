@@ -49,7 +49,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return nonEmptyArrayOriginal(self)["|>"](
     arbitrary(
-      _ =>
+      (_) =>
         _.array(arbitrarySelf(_), {
           minLength: 1,
           maxLength: MAX_LENGTH
@@ -65,7 +65,7 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return arrayOriginal(self)["|>"](
     arbitrary(
-      _ =>
+      (_) =>
         _.array(arbitrarySelf(_), {
           maxLength: MAX_LENGTH
         }) as any as Arbitrary.Arbitrary<Array<ParsedShape>>
@@ -80,6 +80,6 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const arbitrarySelf = Arbitrary.for(self)
   return setOriginal(self, ord, eq)["|>"](
-    arbitrary(_ => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
+    arbitrary((_) => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
   )
 }

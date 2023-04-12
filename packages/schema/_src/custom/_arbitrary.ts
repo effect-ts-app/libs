@@ -11,9 +11,9 @@ import { hasContinuation, SchemaContinuationSymbol } from "./_schema.js"
 export type Gen<T> = { (_: typeof fc): fc.Arbitrary<T> }
 
 export const interpreters: ((schema: S.SchemaAny) => Option<() => Gen<unknown>>)[] = [
-  Option.partial(miss => (schema: S.SchemaAny): () => Gen<unknown> => {
+  Option.partial((miss) => (schema: S.SchemaAny): () => Gen<unknown> => {
     if (schema instanceof S.SchemaIdentity) {
-      return () => _ => _.anything().filter(schema.guard)
+      return () => (_) => _.anything().filter(schema.guard)
     }
     if (schema instanceof S.SchemaArbitrary) {
       return () => schema.arbitrary
@@ -21,7 +21,7 @@ export const interpreters: ((schema: S.SchemaAny) => Option<() => Gen<unknown>>)
     if (schema instanceof S.SchemaRefinement) {
       return () => {
         const self = for_(schema.self)
-        return _ => self(_).filter(schema.refinement)
+        return (_) => self(_).filter(schema.refinement)
       }
     }
     return miss()
@@ -37,7 +37,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    const arb: Gen<unknown> = __ => for_(schema.self())(__)
+    const arb: Gen<unknown> = (__) => for_(schema.self())(__)
     cache.set(schema, arb)
     return arb as Gen<ParsedShape>
   }
@@ -45,7 +45,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
     const _ = interpreter(schema)
     if (_._tag === "Some") {
       let x: Gen<unknown>
-      const arb: Gen<unknown> = __ => {
+      const arb: Gen<unknown> = (__) => {
         if (!x) {
           x = _.value()
         }
@@ -57,7 +57,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   }
   if (hasContinuation(schema)) {
     let x: Gen<unknown>
-    const arb: Gen<unknown> = __ => {
+    const arb: Gen<unknown> = (__) => {
       if (!x) {
         x = for_(schema[SchemaContinuationSymbol])
       }

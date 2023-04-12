@@ -151,15 +151,15 @@ export type JSONSchema =
   | (NumberEnumSchema & { $schema?: number })
 
 export const isTypeObject = (schema: JSONSchema | SubSchema): schema is ObjectSchema =>
-  !isTypeRef(schema) &&
-  (("type" in schema && schema.type === "object") ||
-    schema.hasOwnProperty("properties"))
+  !isTypeRef(schema)
+  && (("type" in schema && schema.type === "object")
+    || schema.hasOwnProperty("properties"))
 
 export const isTypeArray = (schema: JSONSchema | SubSchema): schema is ArraySchema =>
-  !isTypeRef(schema) &&
-  "type" in schema &&
-  schema.type !== undefined &&
-  schema.type === "array"
+  !isTypeRef(schema)
+  && "type" in schema
+  && schema.type !== undefined
+  && schema.type === "array"
 
 export const isTypeRef = (schema: JSONSchema | SubSchema): schema is Ref => schema.hasOwnProperty("$ref")
 
@@ -180,8 +180,8 @@ export const isBooleanSchema = (schema: JSONSchema): schema is BooleanSchema =>
 export const isPrimitive = (
   schema: JSONSchema | SubSchema
 ): schema is StringSchema | NumberSchema | BooleanSchema =>
-  !isTypeRef(schema) &&
-  (isStringSchema(schema) || isNumberSchema(schema) || isBooleanSchema(schema))
+  !isTypeRef(schema)
+  && (isStringSchema(schema) || isNumberSchema(schema) || isBooleanSchema(schema))
 
 export const isObjectOrRef = (
   schema: JSONSchema | SubSchema

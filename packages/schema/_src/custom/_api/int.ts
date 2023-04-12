@@ -18,14 +18,14 @@ export const intFromNumberIdentifier = S.makeAnnotation<{}>()
 
 export const intFromNumber: DefaultSchema<number, Int, number, number, {}> = pipe(
   fromNumber,
-  S.arbitrary(_ => _.integer()),
+  S.arbitrary((_) => _.integer()),
   S.refine(
     (n): n is Int => Number.isInteger(n),
-    n => S.leafE(S.invalidIntegerE(n))
+    (n) => S.leafE(S.invalidIntegerE(n))
   ),
-  S.encoder(_ => _ as number),
-  S.mapConstructorError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-  S.mapParserError(_ => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.encoder((_) => _ as number),
+  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
   S.mapApi(() => ({})),
   brand<Int>(),
   S.annotate(intFromNumberIdentifier, {})

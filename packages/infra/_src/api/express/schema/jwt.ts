@@ -13,7 +13,7 @@ export const jwtFromString: MO.Schema<string, unknown, unknown, string, {}> = pi
   MO.identity((u): u is string => {
     throw new Error("Cannot id JWT: " + u)
   }),
-  MO.constructor(n => Th.succeed(n)),
+  MO.constructor((n) => Th.succeed(n)),
   //   MO.arbitrary((_) => {
   //     throw new Error("Cannot arb JWT")
   //   }), // TODO

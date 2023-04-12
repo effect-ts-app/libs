@@ -57,17 +57,19 @@ export function LiveExpressAppConfig<R>(
     next: NextFunction
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ) {
-  return Effect.contextWith((r: Context<R>) => ({
-    _tag: ExpressAppConfigTag,
-    host,
-    port,
-    exitHandler: (
-      req: Request,
-      res: Response,
-      next: NextFunction
-    ) =>
-    (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
-  })).toLayer(ExpressAppConfig)
+  return Effect
+    .contextWith((r: Context<R>) => ({
+      _tag: ExpressAppConfigTag,
+      host,
+      port,
+      exitHandler: (
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ) =>
+      (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
+    }))
+    .toLayer(ExpressAppConfig)
 }
 
 export const ExpressAppTag = "@effect-app/express/App" as const
@@ -75,9 +77,10 @@ export const ExpressAppTag = "@effect-app/express/App" as const
 export const makeExpressApp = Effect.gen(function*(_) {
   // if scope closes, set open to false
   const open = yield* _(
-    Ref.make(true)
+    Ref
+      .make(true)
       .acquireRelease(
-        a => Effect(a.set(false))
+        (a) => Effect(a.set(false))
       )
   )
 
@@ -89,45 +92,47 @@ export const makeExpressApp = Effect.gen(function*(_) {
 
   // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
-    Effect.async<never, never, Server>(cb => {
-      const onError = (err: Error) => {
-        cb(Effect.die(new NodeServerListenError(err)))
-      }
-      const server = app.listen(port, host, () => {
-        cb(
-          Effect.sync(() => {
-            server.removeListener("error", onError)
-            return server
+    Effect
+      .async<never, never, Server>((cb) => {
+        const onError = (err: Error) => {
+          cb(Effect.die(new NodeServerListenError(err)))
+        }
+        const server = app.listen(port, host, () => {
+          cb(
+            Effect.sync(() => {
+              server.removeListener("error", onError)
+              return server
+            })
+          )
+        })
+        server.addListener("error", onError)
+        server.on("connection", (connection) => {
+          connections.add(connection)
+          connection.on("close", () => {
+            connections.delete(connection)
           })
-        )
-      })
-      server.addListener("error", onError)
-      server.on("connection", connection => {
-        connections.add(connection)
-        connection.on("close", () => {
-          connections.delete(connection)
         })
       })
-    }).acquireRelease(
-      server =>
-        Effect.async<never, never, void>(cb => {
-          connections.forEach(s => {
-            s.end()
-            s.destroy()
+      .acquireRelease(
+        (server) =>
+          Effect.async<never, never, void>((cb) => {
+            connections.forEach((s) => {
+              s.end()
+              s.destroy()
+            })
+            server.close((err) => {
+              if (err) {
+                cb(Effect.die(new NodeServerCloseError(err)))
+              } else {
+                cb(Effect.unit)
+              }
+            })
           })
-          server.close(err => {
-            if (err) {
-              cb(Effect.die(new NodeServerCloseError(err)))
-            } else {
-              cb(Effect.unit)
-            }
-          })
-        })
-    )
+      )
   )
 
   const supervisor = yield* _(
-    Supervisor.track().acquireRelease(s => s.value().flatMap(_ => _.interruptAll))
+    Supervisor.track().acquireRelease((s) => s.value().flatMap((_) => _.interruptAll))
   )
 
   function runtime<
@@ -143,14 +148,15 @@ export const makeExpressApp = Effect.gen(function*(_) {
           : never
       }[number]
     >
-    return Effect.runtime<Env>().map(r =>
+    return Effect.runtime<Env>().map((r) =>
       handlers.map(
         (handler): RequestHandler => (req, res, next) => {
           // TODO: restore trace from "handler"
-          Debug.untraced(restore =>
+          Debug.untraced((restore) =>
             r.runCallback(
-              open.get
-                .flatMap(open =>
+              open
+                .get
+                .flatMap((open) =>
                   restore(() => (open ? handler(req, res, next) : Effect.interrupt()))()
                     .onError(exitHandler(req, res, next))
                     .supervised(supervisor)
@@ -201,17 +207,17 @@ export function LiveExpress<R>(
   )
 }
 
-export const expressApp = ExpressApp.map(_ => _.app)
+export const expressApp = ExpressApp.map((_) => _.app)
 
-export const expressServer = ExpressApp.map(_ => _.server)
+export const expressServer = ExpressApp.map((_) => _.server)
 
 export function withExpressApp<R, E, A>(self: (app: express.Express) => Effect<R, E, A>) {
-  return ExpressApp.flatMap(_ => self(_.app))
+  return ExpressApp.flatMap((_) => self(_.app))
 }
 export function withExpressServer<R, E, A>(
   self: (server: Server<typeof IncomingMessage, typeof ServerResponse>) => Effect<R, E, A>
 ) {
-  return ExpressApp.flatMap(_ => self(_.server))
+  return ExpressApp.flatMap((_) => self(_.server))
 }
 
 export const methods = [
@@ -274,7 +280,7 @@ export interface EffectRequestHandler<
 export function expressRuntime<
   Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
-  return ExpressApp.flatMap(_ => _.runtime(handlers))
+  return ExpressApp.flatMap((_) => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
@@ -300,8 +306,8 @@ export function match(method: Methods): {
   >
 } {
   return function(path, ...handlers) {
-    return expressRuntime(handlers).flatMap(expressHandlers =>
-      withExpressApp(app =>
+    return expressRuntime(handlers).flatMap((expressHandlers) =>
+      withExpressApp((app) =>
         Effect.sync(() => {
           app[method](path, ...expressHandlers)
         })
@@ -315,7 +321,7 @@ export function defaultExitHandler(
   res: Response,
   _next: NextFunction
 ): (cause: Cause<never>) => Effect<never, never, void> {
-  return cause =>
+  return (cause) =>
     Effect.sync(() => {
       if (cause.isDie()) {
         console.error(cause.pretty)
@@ -360,19 +366,21 @@ export function use<
   void
 >
 export function use(...args: any[]) {
-  return withExpressApp(app => {
+  return withExpressApp((app) => {
     if (typeof args[0] === "function") {
       return expressRuntime(
         args as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect(() => app.use(...expressHandlers)))
+      )
+        .flatMap((expressHandlers) => Effect(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
-      ).flatMap(expressHandlers => Effect(() => app.use(args[0], ...expressHandlers)))
+      )
+        .flatMap((expressHandlers) => Effect(() => app.use(args[0], ...expressHandlers)))
     }
   })
 }

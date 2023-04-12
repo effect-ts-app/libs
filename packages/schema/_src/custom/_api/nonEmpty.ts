@@ -30,7 +30,7 @@ export function nonEmpty<
     self,
     S.refine(
       (n): n is ParsedShape & NonEmptyBrand => n.length > 0,
-      n => S.leafE(S.nonEmptyE(n))
+      (n) => S.leafE(S.nonEmptyE(n))
     ),
     withDefaults,
     S.annotate(nonEmptyIdentifier, { self })

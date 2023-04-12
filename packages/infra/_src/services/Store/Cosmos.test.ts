@@ -15,7 +15,7 @@ export function somethingsWhere(
   ) => Where | [Where, ...Where[]],
   mode?: "or" | "and"
 ) {
-  return makeSomethingFilter_(f => {
+  return makeSomethingFilter_((f) => {
     const m = makeWhere ? makeWhere(f) : []
     return ({
       mode,
@@ -39,52 +39,54 @@ type Something = {
 
 test("works", () => {
   expect(buildWhereCosmosQuery(
-    somethingsWhere(_ => _("b", _ => "b2")),
+    somethingsWhere((_) => _("b", (_) => "b2")),
     "Somethings",
     "importedMarkerId",
     undefined,
     10
-  )).toEqual({
-    "parameters": [
-      {
-        "name": "@id",
-        "value": "importedMarkerId"
-      },
-      {
-        "name": "@v0",
-        "value": "b2"
-      }
-    ],
-    "query": `
+  ))
+    .toEqual({
+      "parameters": [
+        {
+          "name": "@id",
+          "value": "importedMarkerId"
+        },
+        {
+          "name": "@v0",
+          "value": "b2"
+        }
+      ],
+      "query": `
     SELECT f
     FROM Somethings AS f
     
     WHERE f.id != @id AND LOWER(f.b) = LOWER(@v0)
     OFFSET 0 LIMIT 10`
-  })
+    })
 
   expect(buildWhereCosmosQuery(
-    somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a2"))),
+    somethingsWhere((_) => _("d.-1.a", (_) => _.$isnt("a2"))),
     "Somethings",
     "importedMarkerId",
     undefined,
     10
-  )).toEqual({
-    "parameters": [
-      {
-        "name": "@id",
-        "value": "importedMarkerId"
-      },
-      {
-        "name": "@v0",
-        "value": "a2"
-      }
-    ],
-    "query": `
+  ))
+    .toEqual({
+      "parameters": [
+        {
+          "name": "@id",
+          "value": "importedMarkerId"
+        },
+        {
+          "name": "@v0",
+          "value": "a2"
+        }
+      ],
+      "query": `
     SELECT f
     FROM Somethings AS f
     JOIN d IN f.d
     WHERE f.id != @id AND LOWER(d.a) <> LOWER(@v0)
     OFFSET 0 LIMIT 10`
-  })
+    })
 })

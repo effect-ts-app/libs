@@ -50,8 +50,9 @@ export function makeServiceBusQueue<
         const handleEvent = yield* $(makeHandleEvent)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function processMessage(messageBody: any) {
-          return Effect.sync(() => JSON.parse(messageBody))
-            .flatMap(x => parseDrain(x))
+          return Effect
+            .sync(() => JSON.parse(messageBody))
+            .flatMap((x) => parseDrain(x))
             .orDie
             .flatMap(({ body, meta }) =>
               Effect
@@ -78,8 +79,8 @@ export function makeServiceBusQueue<
 
         return yield* $(
           subscribe({
-            processMessage: x => processMessage(x.body).uninterruptible.flatMap(_ => _.done),
-            processError: err => Effect(captureException(err.error))
+            processMessage: (x) => processMessage(x.body).uninterruptible.flatMap((_) => _.done),
+            processError: (err) => Effect(captureException(err.error))
           })
             .provideSomeLayer(receiverLayer)
         )
@@ -89,17 +90,18 @@ export function makeServiceBusQueue<
         Effect.gen(function*($) {
           const requestContext = yield* $(RequestContextContainer.get)
           return yield* $(
-            Effect.promise(() =>
-              s.sendMessages(
-                messages.map(x => ({
-                  body: JSON.stringify(
-                    encoder({ body: x, meta: requestContext })
-                  ),
-                  messageId: x.id, /* correllationid: requestId */
-                  contentType: "application/json"
-                }))
+            Effect
+              .promise(() =>
+                s.sendMessages(
+                  messages.map((x) => ({
+                    body: JSON.stringify(
+                      encoder({ body: x, meta: requestContext })
+                    ),
+                    messageId: x.id, /* correllationid: requestId */
+                    contentType: "application/json"
+                  }))
+                )
               )
-            )
               .forkDaemonReportQueue
           )
         })

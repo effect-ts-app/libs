@@ -13,11 +13,11 @@ export const objectIdentifier = S.makeAnnotation<{}>()
 export const object: DefaultSchema<unknown, {}, {}, {}, {}> = pipe(
   refinement(
     (u): u is {} => typeof u === "object" && u != null,
-    v => S.leafE(S.parseObjectE(v))
+    (v) => S.leafE(S.parseObjectE(v))
   ),
   S.constructor((s: {}) => Th.succeed(s)),
-  S.arbitrary(_ => _.object()),
-  S.encoder(_ => _),
+  S.arbitrary((_) => _.object()),
+  S.encoder((_) => _),
   S.mapApi(() => ({})),
   withDefaults,
   S.annotate(objectIdentifier, {})

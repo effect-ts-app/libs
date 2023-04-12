@@ -15,9 +15,9 @@ export function makeWith<Key, Environment, Error, Value>(
   timeToLive: (exit: Exit<Error, Value>) => Duration,
   __tsplusTrace?: string
 ): Effect<Environment, never, Cache<Key, Error, Value>> {
-  return Effect.clockWith(clock =>
-    Effect.context<Environment>().flatMap(environment =>
-      Effect.fiberId().map(fiberId =>
+  return Effect.clockWith((clock) =>
+    Effect.context<Environment>().flatMap((environment) =>
+      Effect.fiberId().map((fiberId) =>
         new CacheInternal(
           capacity,
           lookup,

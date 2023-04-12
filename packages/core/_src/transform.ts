@@ -44,14 +44,14 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
   if (Array.isArray(value)) {
     const newAr: typeof value = []
     cacheMap.set(value, newAr)
-    value.forEach(x => newAr.push(encodeOptsAsNullable_(x, cacheMap)))
+    value.forEach((x) => newAr.push(encodeOptsAsNullable_(x, cacheMap)))
     return newAr
   }
 
   if (
-    value instanceof Date ||
-    value instanceof Function ||
-    value instanceof Promise
+    value instanceof Date
+    || value instanceof Function
+    || value instanceof Promise
   ) {
     return value
   }
@@ -70,7 +70,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)
 
-    Object.keys(value).forEach(key => {
+    Object.keys(value).forEach((key) => {
       newObj[key] = encodeOptsAsNullable_(value[key], cacheMap)
     })
     return newObj

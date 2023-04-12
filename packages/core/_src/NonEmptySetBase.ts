@@ -39,8 +39,8 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const insert_: (set: NonEmptySet<A>, a: A) => NonEmptySet<A> = insert_Original as any
 
   function replace_(set: NonEmptySet<A>, a: A) {
-    return (filter_(set, x => !eq(x, a)) >=
-      insert__(a)) as NonEmptySet<A>
+    return (filter_(set, (x) => !eq(x, a))
+      >= insert__(a)) as NonEmptySet<A>
   }
 
   const toArray__ = toArrayOriginal(ord)
@@ -77,7 +77,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>(a => f(a)), fromSet),
+    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>((a) => f(a)), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend

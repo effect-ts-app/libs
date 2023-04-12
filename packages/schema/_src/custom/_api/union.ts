@@ -174,22 +174,24 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     index: D.Dictionary<string>
     reverse: D.Dictionary<string>
     values: readonly string[]
-  }> = Object.keys(firstMemberTags).findFirstMap(tagField => {
-    const tags = entriesTags.filterMap(
-      ([member, tags]) => {
-        if (tagField in tags) {
-          return Option.some([tags[tagField], member])
+  }> = Object.keys(firstMemberTags).findFirstMap((tagField) => {
+    const tags = entriesTags
+      .filterMap(
+        ([member, tags]) => {
+          if (tagField in tags) {
+            return Option.some([tags[tagField], member])
+          }
+          return Option.none
         }
-        return Option.none
-      }
-    ).uniq((x, y) => x[0] === y[0])
+      )
+      .uniq((x, y) => x[0] === y[0])
 
     if (tags.length === entries.length) {
       return Option.some({
         key: tagField,
         index: D.fromArray(tags.map(([a, b]) => tuple(a, b))),
         reverse: D.fromArray(tags.map(([a, b]) => tuple(b, a))),
-        values: tags.map(_ => _[0])
+        values: tags.map((_) => _[0])
       })
     }
 
@@ -201,11 +203,11 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   }[keyof Props] {
     if (tag.isSome()) {
       if (
-        typeof u !== "object" ||
-        u === null ||
-        !(tag.value.key in u) ||
-        typeof u[tag.value.key] !== "string" ||
-        !(u[tag.value.key] in tag.value.index)
+        typeof u !== "object"
+        || u === null
+        || !(tag.value.key in u)
+        || typeof u[tag.value.key] !== "string"
+        || !(u[tag.value.key] in tag.value.index)
       ) {
         return false
       } else {
@@ -260,11 +262,11 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
     if (tag.isSome()) {
       if (
-        typeof u !== "object" ||
-        u === null ||
-        !(tag.value.key in u) ||
-        typeof u[tag.value.key] !== "string" ||
-        !(u[tag.value.key] in tag.value.index)
+        typeof u !== "object"
+        || u === null
+        || !(tag.value.key in u)
+        || typeof u[tag.value.key] !== "string"
+        || !(u[tag.value.key] in tag.value.index)
       ) {
         return Th.fail(
           S.compositionE(
@@ -275,7 +277,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         )
       } else {
         // // @ts-expect-error
-        return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), e =>
+        return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), (e) =>
           S.compositionE(
             Chunk(
               S.nextE(
@@ -294,7 +296,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       if (res.effect._tag === "Right") {
         return Th.mapError_(
           res,
-          e => S.compositionE(Chunk(S.nextE(S.unionE(Chunk(S.memberE(k, e))))))
+          (e) => S.compositionE(Chunk(S.nextE(S.unionE(Chunk(S.memberE(k, e))))))
         )
       } else {
         errors = errors.append(S.memberE(k, res.effect.left))
@@ -308,11 +310,11 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
     S.identity(guard),
     S.parser(parser),
     S.encoder(encoder),
-    S.arbitrary(fc => fc.oneof(...D.collect_(arbitraries, (_, g) => g(fc)))),
+    S.arbitrary((fc) => fc.oneof(...D.collect_(arbitraries, (_, g) => g(fc)))),
     S.mapApi(
       () => ({
         // @ts-ignore
-        matchS: (matcher, def) => ks => {
+        matchS: (matcher, def) => (ks) => {
           if (tag.isSome()) {
             return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
           }
@@ -324,7 +326,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           throw new Error(`bug: can't find any valid matcher`)
         },
         // @ts-ignore
-        matchW: (matcher, def) => ks => {
+        matchW: (matcher, def) => (ks) => {
           if (tag.isSome()) {
             return (matcher[tag.value.index[ks[tag.value.key]]] ?? def)(ks, ks)
           }

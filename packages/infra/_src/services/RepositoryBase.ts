@@ -94,24 +94,25 @@ export function makeRepo<
         partitionValue?: (a: PM) => string
       }
     ) {
-      return Do($ => {
+      return Do(($) => {
         const store = $(mkStore(makeInitial, config))
 
-        const allE = store.all.flatMap(items =>
-          Do($ => {
+        const allE = store.all.flatMap((items) =>
+          Do(($) => {
             const { set } = $(ContextMap)
-            return items.map(_ => mapReverse(_, set))
+            return items.map((_) => mapReverse(_, set))
           })
         )
 
-        const all = allE.flatMap(_ => _.forEachEffect(EParserFor(schema).condemnDie))
+        const all = allE.flatMap((_) => _.forEachEffect(EParserFor(schema).condemnDie))
 
         function findE(id: T["id"]) {
-          return store.find(id)
-            .flatMap(items =>
-              Do($ => {
+          return store
+            .find(id)
+            .flatMap((items) =>
+              Do(($) => {
                 const { set } = $(ContextMap)
-                return items.map(_ => mapReverse(_, set))
+                return items.map((_) => mapReverse(_, set))
               })
             )
         }
@@ -122,12 +123,12 @@ export function makeRepo<
 
         const saveAllE = (a: Iterable<E>) =>
           Effect(a.toNonEmptyArray)
-            .flatMapOpt(a =>
-              Do($ => {
+            .flatMapOpt((a) =>
+              Do(($) => {
                 const { get, set } = $(ContextMap)
-                const items = a.mapNonEmpty(_ => mapToPersistenceModel(_, get))
+                const items = a.mapNonEmpty((_) => mapToPersistenceModel(_, get))
                 const ret = $(store.batchSet(items))
-                ret.forEach(_ => set(_.id, _._etag))
+                ret.forEach((_) => set(_.id, _._etag))
               })
             )
 
@@ -141,7 +142,7 @@ export function makeRepo<
 
         const encode = Encoder.for(schema)
         function remove(item: T) {
-          return Do($ => {
+          return Do(($) => {
             const { get, set } = $(ContextMap)
             const e = encode(item)
             $(store.remove(mapToPersistenceModel(e, get)))
@@ -156,9 +157,10 @@ export function makeRepo<
           utils: {
             mapReverse,
             parse: Parser.for(schema).unsafe,
-            filter: store.filter
-              .flow(_ => _.tap(items => ContextMap.map(({ set }) => items.forEach(_ => set(_.id, _._etag))))),
-            all: store.all.tap(items => ContextMap.map(({ set }) => items.forEach(_ => set(_.id, _._etag))))
+            filter: store
+              .filter
+              .flow((_) => _.tap((items) => ContextMap.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
+            all: store.all.tap((items) => ContextMap.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
           itemType: name,
           find,
@@ -189,7 +191,7 @@ export function removeById<
   self: Repository<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.get(id).flatMap(_ => self.remove(_))
+  return self.get(id).flatMap((_) => self.remove(_))
 }
 
 export function makeWhere<PM extends { id: string; _etag: string | undefined }>() {
@@ -206,7 +208,7 @@ export function makeWhere<PM extends { id: string; _etag: string | undefined }>(
     ) => Where | readonly [Where, ...Where[]],
     mode?: "or" | "and"
   ) {
-    return makeFilter_(f => {
+    return makeFilter_((f) => {
       const m = makeWhere ? makeWhere(f) : []
       return ({
         mode,
@@ -241,7 +243,7 @@ export function makeStore<
     const [_dec, encode] = makeCodec(schema)
     function encodeToPM() {
       const getEtag = () => undefined
-      return flow(encode, v => mapToPersistenceModel(v, getEtag))
+      return flow(encode, (v) => mapToPersistenceModel(v, getEtag))
     }
 
     function mapToPersistenceModel(
@@ -257,7 +259,7 @@ export function makeStore<
         partitionValue?: (a: PM) => string
       }
     ) {
-      return Do($ => {
+      return Do(($) => {
         const { make } = $(StoreMaker)
 
         const store = $(
@@ -265,11 +267,12 @@ export function makeStore<
             pluralize(name),
             makeInitial
               ? makeInitial
-                .map(_ => _.map(encodeToPM()))
+                .map((_) => _.map(encodeToPM()))
               : undefined,
             {
               ...config,
-              partitionValue: config?.partitionValue ?? (_ => "primary") /*(isIntegrationEvent(r) ? r.companyId : r.id*/
+              partitionValue: config?.partitionValue
+                ?? ((_) => "primary") /*(isIntegrationEvent(r) ? r.companyId : r.id*/
             }
           )
         )
@@ -352,7 +355,9 @@ export const RepositoryDefaultImpl = <Service>() => {
           partitionValue?: (a: PM) => string
         }
       ) {
-        return this.make(publishEvents, makeInitial, config).map(impl => new this(impl) as any as Service).toLayer(this)
+        return this.make(publishEvents, makeInitial, config).map((impl) => new this(impl) as any as Service).toLayer(
+          this
+        )
       }
       static repo: any
       constructor(

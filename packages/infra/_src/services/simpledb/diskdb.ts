@@ -33,28 +33,31 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function store(record: A, currentVersion: Option<Version>) {
       const version = currentVersion
-        .map(cv => (parseInt(cv) + 1).toString())
+        .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
       const getData = flow(
         encode,
-        _ => _.map(data => pretty({ version, timestamp: new Date(), data }))
+        (_) => _.map((data) => pretty({ version, timestamp: new Date(), data }))
       )
 
       const idx = makeIndexKey(record)
       return currentVersion.isSome()
         ? lockIndex(record)
           .zipRight(
-            readIndex(idx).flatMap(x =>
-              x[record.id]
-                ? Effect.fail(() => new Error("Combination already exists, abort"))
-                : getData(record)
-                  .flatMap(serialised => fu.writeTextFile(getFilename(type, record.id), serialised))
-                  .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
-            ).orDie
+            readIndex(idx)
+              .flatMap((x) =>
+                x[record.id]
+                  ? Effect.fail(() => new Error("Combination already exists, abort"))
+                  : getData(record)
+                    .flatMap((serialised) => fu.writeTextFile(getFilename(type, record.id), serialised))
+                    .zipRight(writeIndex(idx, { ...x, [idx.key]: record.id }))
+              )
+              .orDie
           )
-          .scoped.map(() => ({ version, data: record } as CachedRecord<A>))
+          .scoped
+          .map(() => ({ version, data: record } as CachedRecord<A>))
         : getData(record)
-          .flatMap(serialised => fu.writeTextFile(getFilename(type, record.id), serialised))
+          .flatMap((serialised) => fu.writeTextFile(getFilename(type, record.id), serialised))
           .map(() => ({ version, data: record } as CachedRecord<A>))
     }
 
@@ -74,60 +77,64 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRecordOnDisk(type: string) {
       return (id: string) =>
-        lockFile(getFilename(type, id)).mapBoth(
-          err => new CouldNotAquireDbLockException(type, id, err as Error),
-          release => ({ release })
-        ).acquireRelease(
-          l => l.release
-        )
+        lockFile(getFilename(type, id))
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+            (release) => ({ release })
+          )
+          .acquireRelease(
+            (l) => l.release
+          )
     }
 
     function lockIndexOnDisk(type: string) {
       return (id: string) =>
-        lockFile(getIdxName(type, id)).mapBoth(
-          err => new CouldNotAquireDbLockException(type, id, err as Error),
-          release => ({ release })
-        ).acquireRelease(
-          l => l.release
-        )
+        lockFile(getIdxName(type, id))
+          .mapBoth(
+            (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+            (release) => ({ release })
+          )
+          .acquireRelease(
+            (l) => l.release
+          )
     }
 
     function readFile(filePath: string) {
       return fu
         .readTextFile(filePath)
-        .catchAll(err => Effect.die(new ConnectionException(err as Error)))
+        .catchAll((err) => Effect.die(new ConnectionException(err as Error)))
     }
 
     function find(type: string) {
       return (id: string) => {
         return tryRead(getFilename(type, id)).map(
-          _ => _.map(s => JSON.parse(s) as CachedRecord<EA>)
+          (_) => _.map((s) => JSON.parse(s) as CachedRecord<EA>)
         )
       }
     }
 
     function getIdx(index: Index) {
-      return readIndex(index).map(idx => Option.fromNullable(idx[index.key]))
+      return readIndex(index).map((idx) => Option.fromNullable(idx[index.key]))
     }
 
     function readIndex(index: Index) {
       return tryRead(getIdxName(type, index.doc)).map(
-        _ =>
+        (_) =>
           _.match(
             () => ({} as Record<string, TKey>),
-            x => JSON.parse(x) as Record<string, TKey>
+            (x) => JSON.parse(x) as Record<string, TKey>
           )
       )
     }
 
     function writeIndex(index: Index, content: Record<string, TKey>) {
-      return pipe(JSON.stringify(content), serialised => fu.writeTextFile(getIdxName(type, index.doc), serialised))
+      return pipe(JSON.stringify(content), (serialised) => fu.writeTextFile(getIdxName(type, index.doc), serialised))
     }
 
     function tryRead(filePath: string) {
       return fu
         .fileExists(filePath)
-        .flatMap(exists => !exists ? Effect(Option.none) : readFile(filePath).map(Option.some))
+        .flatMap((exists) => !exists ? Effect(Option.none) : readFile(filePath).map(Option.some))
     }
 
     function getFilename(type: string, id: string) {
@@ -141,7 +148,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 }
 
 function lockFile(fileName: string) {
-  return Effect.tryPromise(() => PLF.lock(fileName).then(flow(Effect.tryPromise, _ => _.orDie)))
+  return Effect.tryPromise(() => PLF.lock(fileName).then(flow(Effect.tryPromise, (_) => _.orDie)))
 }
 
 // TODO: ugh.

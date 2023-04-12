@@ -318,8 +318,8 @@ export function useClassConstructorForSchema(cls: any) {
   const c = cls.Constructor
   const upd = pipe(
     cls[schemaField],
-    MO.parser((_, env) => MO.These.map_(p(_, env), _ => new cls(_))),
-    MO.constructor(_ => MO.These.map_(c(_), _ => new cls(_)))
+    MO.parser((_, env) => MO.These.map_(p(_, env), (_) => new cls(_))),
+    MO.constructor((_) => MO.These.map_(c(_), (_) => new cls(_)))
   )
   setSchema(
     cls,

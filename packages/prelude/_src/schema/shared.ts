@@ -74,10 +74,11 @@ export type ShortString = string & ShortStringBrand
  */
 export const shortStringFromString = pipe(
   makeConstrainedFromString<ShortString>(3, 50),
-  arbitrary(FC =>
-    FC.lorem({ mode: "words", maxCount: 2 })
-      .filter(x => x.length < 50 && x.length >= 3)
-      .map(x => x as ShortString)
+  arbitrary((FC) =>
+    FC
+      .lorem({ mode: "words", maxCount: 2 })
+      .filter((x) => x.length < 50 && x.length >= 3)
+      .map((x) => x as ShortString)
   ),
   // arbitrary removes brand benefit
   brand<ShortString>()
@@ -107,10 +108,11 @@ export type ReasonableString3 = string & ReasonableString3Brand
  */
 export const reasonableString3FromString = pipe(
   makeConstrainedFromString<ReasonableString3>(3, 255),
-  arbitrary(FC =>
-    FC.lorem({ mode: "words", maxCount: 2 })
-      .filter(x => x.length < 255 && x.length >= 3)
-      .map(x => x as ReasonableString3)
+  arbitrary((FC) =>
+    FC
+      .lorem({ mode: "words", maxCount: 2 })
+      .filter((x) => x.length < 255 && x.length >= 3)
+      .map((x) => x as ReasonableString3)
   ),
   // arbitrary removes brand benefit
   brand<ReasonableString3>()
@@ -141,9 +143,10 @@ const size = 21
 const length = 10 * size
 export const stringIdFromString = pipe(
   makeConstrainedFromString<StringId>(MIN_LENGTH, MAX_LENGTH),
-  arbitrary(FC =>
-    FC.uint8Array({ minLength: length, maxLength: length })
-      .map(_ => customRandom(urlAlphabet, size, size => _.subarray(0, size))() as StringId)
+  arbitrary((FC) =>
+    FC
+      .uint8Array({ minLength: length, maxLength: length })
+      .map((_) => customRandom(urlAlphabet, size, (size) => _.subarray(0, size))() as StringId)
   ),
   // arbitrary removes the benefit of Brand,
   brand<StringId>()
@@ -204,11 +207,11 @@ export function prefixedStringId<Brand extends StringId>() {
       stringIdFromString,
       refine(
         refinement,
-        n => leafE(customE(n, `a StringId prefixed with '${pref}'`))
+        (n) => leafE(customE(n, `a StringId prefixed with '${pref}'`))
       ),
-      arbitrary(FC =>
+      arbitrary((FC) =>
         stringIdArb(FC).map(
-          x => (pref + x.substring(0, MAX_LENGTH - pref.length)) as Brand
+          (x) => (pref + x.substring(0, MAX_LENGTH - pref.length)) as Brand
         )
       )
     )
@@ -265,8 +268,8 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const UrlFromString: DefaultSchema<string, Url, string, string, {}> = pipe(
   fromString,
-  arbitrary(FC => FC.webUrl()),
-  refine(isUrl, n => leafE(customE(n, "a valid Web URL according to | RFC 3986 and | WHATWG URL Standard"))),
+  arbitrary((FC) => FC.webUrl()),
+  refine(isUrl, (n) => leafE(customE(n, "a valid Web URL according to | RFC 3986 and | WHATWG URL Standard"))),
   brand<Url>(),
   annotate(UrlFromStringIdentifier, {})
 )
@@ -277,7 +280,7 @@ export const Url = extendWithUtils(
   pipe(
     string[">>>"](UrlFromString),
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    arbitrary(FC => fakerArb(faker => faker.internet.url)(FC) as FC.Arbitrary<Url>),
+    arbitrary((FC) => fakerArb((faker) => faker.internet.url)(FC) as FC.Arbitrary<Url>),
     brand<Url>(),
     annotate(UrlIdentifier, {})
   )
@@ -287,7 +290,7 @@ export const avatarUrl = pipe(string[">>>"](nonEmptyStringFromString))
   ["|>"](
     arbitrary(
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      FC => fakerArb(faker => faker.internet.avatar)(FC) as FC.Arbitrary<Url>
+      (FC) => fakerArb((faker) => faker.internet.avatar)(FC) as FC.Arbitrary<Url>
     )
   )
   ["|>"](brand<avatarUrl>())
@@ -297,7 +300,7 @@ export type avatarUrl = NonEmptyString & UnionBrand
 export const customUrlFromString = (pool: readonly Url[]) =>
   pipe(
     UrlFromString,
-    arbitrary(FC => FC.oneof(...pool.map(FC.constant))),
+    arbitrary((FC) => FC.oneof(...pool.map(FC.constant))),
     brand<Url>()
   )
 
@@ -305,12 +308,14 @@ export const customUrl = (pool: readonly Url[]) => pipe(string[">>>"](customUrlF
 
 // for now be less restrictive about the PhoneNumber
 const PhoneNumber_ = StringId
-export const PhoneNumber = PhoneNumber_["|>"](
-  arbitrary(FC =>
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    fakerArb(faker => faker.phone.phoneNumber)(FC).map(x => x as StringId)
+export const PhoneNumber = PhoneNumber_
+  ["|>"](
+    arbitrary((FC) =>
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      fakerArb((faker) => faker.phone.phoneNumber)(FC).map((x) => x as StringId)
+    )
   )
-)["|>"](brand<PhoneNumber>())
+  ["|>"](brand<PhoneNumber>())
 
 export type PhoneNumber = StringId & UnionBrand
 
@@ -319,12 +324,14 @@ const endsWith = curriedMagix(
 )
 const Email__ = Object.assign(
   extendWithUtils(
-    Email_["|>"](
-      arbitrary(FC =>
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        fakerArb(faker => faker.internet.email)(FC).map(x => x as Email)
+    Email_
+      ["|>"](
+        arbitrary((FC) =>
+          // eslint-disable-next-line @typescript-eslint/unbound-method
+          fakerArb((faker) => faker.internet.email)(FC).map((x) => x as Email)
+        )
       )
-    )["|>"](brand<Email>())
+      ["|>"](brand<Email>())
   ),
   {
     eq: { equals: (a: Email, b: Email) => a.toLowerCase() === b.toLowerCase() },

@@ -52,14 +52,14 @@ function swrToQuery<E, A>(
 }
 
 export function useMutate<E, A>(self: Effect<ApiConfig | Http, E, FetchResponse<A>> & { mapPath: string }) {
-  const fn = () => run.value(self).then(_ => _.body)
+  const fn = () => run.value(self).then((_) => _.body)
   return () => mutate(self.mapPath, fn)
 }
 
 export function useMutateWithArg<Arg, E, A>(
   self: ((arg: Arg) => Effect<ApiConfig | Http, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
 ) {
-  const fn = (arg: Arg) => run.value(self(arg)).then(_ => _.body)
+  const fn = (arg: Arg) => run.value(self(arg)).then((_) => _.body)
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
 }
 
@@ -126,19 +126,19 @@ export function useSafeQuery_<E, A>(
   // }
 
   // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provideSomeLayer(Layers))
-  const swr = useSWRV<A, E>(key, () => run.value(self).then(_ => _.body), config)
+  const swr = useSWRV<A, E>(key, () => run.value(self).then((_) => _.body), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
   ) // ref<QueryResult<E, A>>()
   const latestSuccess = computed(() => {
     const value = result.value
-    return value.isSuccess() ?
-      value.current.isRight()
+    return value.isSuccess()
+      ? value.current.isRight()
         ? value.current.right
         : value.previous.isSome()
         ? value.previous.value
-        : undefined :
-      undefined
+        : undefined
+      : undefined
   })
 
   return tuple(result, latestSuccess, () => swr.mutate(), swr)
@@ -150,24 +150,28 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
   const sem = Semaphore.unsafeMake(1)
   const withPermit = sem.withPermits(1)
   let fib: Fiber.Runtime<unknown, unknown> | undefined = undefined
-  const runNew = execute.fork
-    .tap(newFiber =>
+  const runNew = execute
+    .fork
+    .tap((newFiber) =>
       Effect.sync(() => {
         fib = newFiber
       })
     )
 
-  const ex = Effect.suspend(() => {
-    return fib
-      ? fib.interrupt.zipRight(runNew)
-      : runNew
-  }).apply(withPermit)
-    .flatMap(_ => _.await())
-    .flatMap(_ => _.done)
+  const ex = Effect
+    .suspend(() => {
+      return fib
+        ? fib.interrupt.zipRight(runNew)
+        : runNew
+    })
+    .apply(withPermit)
+    .flatMap((_) => _.await())
+    .flatMap((_) => _.done)
 
   function exec() {
-    return run.value(ex)
-      .catch(err => {
+    return run
+      .value(ex)
+      .catch((err) => {
         // TODO
         if (!JSON.stringify(err).includes("InterruptedException")) throw err
       })
@@ -179,23 +183,24 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
 export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
   const result = shallowRef(new Initial() as QueryResult<E, A>)
 
-  const execute = Effect.sync(() => {
-    result.value = result.value.isInitializing()
-      ? new Loading()
-      : new Refreshing(result.value)
-  })
-    .zipRight(self.map(_ => _.body).asQueryResult)
-    .flatMap(r => Effect(result.value = r))
+  const execute = Effect
+    .sync(() => {
+      result.value = result.value.isInitializing()
+        ? new Loading()
+        : new Refreshing(result.value)
+    })
+    .zipRight(self.map((_) => _.body).asQueryResult)
+    .flatMap((r) => Effect(result.value = r))
 
   const latestSuccess = computed(() => {
     const value = result.value
-    return value.hasValue() ?
-      value.current.isRight()
+    return value.hasValue()
+      ? value.current.isRight()
         ? value.current.right
         : value.previous.isSome()
         ? value.previous.value
-        : undefined :
-      undefined
+        : undefined
+      : undefined
   })
 
   return tuple(result, latestSuccess, execute)
@@ -212,16 +217,17 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
   const handle = handleExit(loading, error, value)
   const exec = (i: I, abortSignal?: AbortSignal) =>
     run.value(
-      Effect.sync(() => {
-        loading.value = true
-        value.value = undefined
-        error.value = undefined
-      })
+      Effect
+        .sync(() => {
+          loading.value = true
+          value.value = undefined
+          error.value = undefined
+        })
         .zipRight(self(i))
         .exit
-        .flatMap(exit => Effect(handle(exit)))
+        .flatMap((exit) => Effect(handle(exit)))
         .fork
-        .flatMap(f => {
+        .flatMap((f) => {
           const cancel = () => run.value(f.interrupt)
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join
@@ -251,9 +257,9 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
     return run.value(
       self
         .exit
-        .flatMap(exit => Effect(handle(exit)))
+        .flatMap((exit) => Effect(handle(exit)))
         .fork
-        .flatMap(f => {
+        .flatMap((f) => {
           const cancel = () => f.interrupt.runPromise
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join

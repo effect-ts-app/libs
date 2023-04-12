@@ -41,7 +41,7 @@ export function encaseMaybeEither_<E, A>(
 export function toNullable<R, E, A>(
   self: Effect<R, E, Option<A>>
 ) {
-  return Debug.untraced(() => self.map(_ => _.getOrNull))
+  return Debug.untraced(() => self.map((_) => _.getOrNull))
 }
 
 /**
@@ -92,7 +92,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
   return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> =>
-    Debug.untraced(() => self.catchAll(err => Effect(f(err))))
+    Debug.untraced(() => self.catchAll((err) => Effect(f(err))))
 }
 
 /**
@@ -102,9 +102,10 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
 export function logAnnotates(kvps: Record<string, string>) {
   return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
     Debug.untraced(() =>
-      FiberRef.currentLogAnnotations
+      FiberRef
+        .currentLogAnnotations
         .get
-        .flatMap(annotations =>
+        .flatMap((annotations) =>
           Effect.suspend(() =>
             pipe(
               effect,
@@ -124,9 +125,10 @@ export function logAnnotates(kvps: Record<string, string>) {
  */
 export function logAnnotateScoped(key: string, value: string) {
   return Debug.untraced(() =>
-    FiberRef.currentLogAnnotations
+    FiberRef
+      .currentLogAnnotations
       .get
-      .flatMap(annotations =>
+      .flatMap((annotations) =>
         Effect.suspend(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
       )
   )
@@ -139,9 +141,10 @@ export function logAnnotateScoped(key: string, value: string) {
  */
 export function logAnnotatesScoped(kvps: Record<string, string>) {
   return Debug.untraced(() =>
-    FiberRef.currentLogAnnotations
+    FiberRef
+      .currentLogAnnotations
       .get
-      .flatMap(annotations =>
+      .flatMap((annotations) =>
         Effect.suspend(() =>
           FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
         )

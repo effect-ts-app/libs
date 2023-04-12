@@ -14,32 +14,34 @@ import { StoreMaker } from "./service.js"
  * @tsplus static StoreMaker.Ops Live
  */
 export function StoreMakerLive(config: Config<StorageConfig>) {
-  return config.config.flatMap(cfg => {
-    const storageUrl = cfg.url.value
-    if (storageUrl.startsWith("mem://")) {
-      console.log("Using in memory store")
-      return Effect(makeMemoryStore())
-    }
-    if (storageUrl.startsWith("disk://")) {
-      const dir = storageUrl.replace("disk://", "")
-      console.log("Using disk store at " + dir)
-      return makeDiskStore(cfg, dir)
-    }
-    if (storageUrl.startsWith("redis://")) {
-      console.log("Using Redis store")
-      return RedisClient.makeRedisClient(makeRedis(storageUrl)).flatMap(client =>
-        makeRedisStore(cfg).provideService(
-          RedisClient.RedisClient,
-          client
+  return config
+    .config
+    .flatMap((cfg) => {
+      const storageUrl = cfg.url.value
+      if (storageUrl.startsWith("mem://")) {
+        console.log("Using in memory store")
+        return Effect(makeMemoryStore())
+      }
+      if (storageUrl.startsWith("disk://")) {
+        const dir = storageUrl.replace("disk://", "")
+        console.log("Using disk store at " + dir)
+        return makeDiskStore(cfg, dir)
+      }
+      if (storageUrl.startsWith("redis://")) {
+        console.log("Using Redis store")
+        return RedisClient.makeRedisClient(makeRedis(storageUrl)).flatMap((client) =>
+          makeRedisStore(cfg).provideService(
+            RedisClient.RedisClient,
+            client
+          )
         )
-      )
-    }
+      }
 
-    console.log("Using Cosmos DB store")
-    return CosmosClient.makeCosmosClient(storageUrl, cfg.dbName).flatMap(client =>
-      makeCosmosStore(cfg).provideService(CosmosClient.CosmosClient, client)
-    )
-  })
+      console.log("Using Cosmos DB store")
+      return CosmosClient.makeCosmosClient(storageUrl, cfg.dbName).flatMap((client) =>
+        makeCosmosStore(cfg).provideService(CosmosClient.CosmosClient, client)
+      )
+    })
     .toLayerScoped(StoreMaker)
 }
 

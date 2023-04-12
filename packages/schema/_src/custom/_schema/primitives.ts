@@ -132,7 +132,7 @@ export function refine<
 ): <ParserInput, ConstructorInput, Encoded, Api>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, NewParsedShape, ConstructorInput, Encoded, Api> {
-  return self => new SchemaRefinement(self, refinement, error)
+  return (self) => new SchemaRefinement(self, refinement, error)
 }
 
 export function mapParserError<E extends AnyError, E1 extends AnyError>(
@@ -183,7 +183,7 @@ export function annotate<Meta>(
   self: Self
 ) => ReturnType<Self["annotate"]> {
   // @ts-expect-error
-  return self => self.annotate(annotation, meta)
+  return (self) => self.annotate(annotation, meta)
 }
 
 export function guard_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
@@ -198,7 +198,7 @@ export function guard<ParsedShape>(
 ): <ParserInput, ConstructorInput, Encoded, Api>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
-  return self => new SchemaGuard(self, guard)
+  return (self) => new SchemaGuard(self, guard)
 }
 
 export function into_<
@@ -222,5 +222,5 @@ export function into<Api, ThatParsedShape, ThatConstructorInput, ThatApi, Parsed
 ): <ParserInput, ConstructorInput, Encoded>(
   self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> {
-  return self => new SchemaPipe(self, that)
+  return (self) => new SchemaPipe(self, that)
 }

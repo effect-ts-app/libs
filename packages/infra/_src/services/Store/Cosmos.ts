@@ -48,139 +48,146 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
           const importedMarkerId = containerId
 
           const bulkSet = (items: NonEmptyReadonlyArray<PM>) =>
-            Effect.gen(function*($) {
-              // TODO: disable batching if need atomicity
-              // we delay and batch to keep low amount of RUs
-              const b = [...items].map(
-                x =>
-                  [
-                    x,
-                    Option.fromNullable(x._etag).match(
-                      () => ({
-                        operationType: "Create" as const,
-                        resourceBody: {
-                          ...omit(x, "_etag"),
-                          _partitionKey: config?.partitionValue(x)
-                        } as any,
-                        partitionKey: config?.partitionValue(x)
-                      }),
-                      eTag => ({
-                        operationType: "Replace" as const,
-                        id: x.id,
-                        resourceBody: {
-                          ...omit(x, "_etag"),
-                          _partitionKey: config?.partitionValue(x)
-                        } as any,
-                        ifMatch: eTag,
-                        partitionKey: config?.partitionValue(x)
-                      })
-                    )
-                  ] as const
-              )
-              const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray
+            Effect
+              .gen(function*($) {
+                // TODO: disable batching if need atomicity
+                // we delay and batch to keep low amount of RUs
+                const b = [...items].map(
+                  (x) =>
+                    [
+                      x,
+                      Option.fromNullable(x._etag).match(
+                        () => ({
+                          operationType: "Create" as const,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          partitionKey: config?.partitionValue(x)
+                        }),
+                        (eTag) => ({
+                          operationType: "Replace" as const,
+                          id: x.id,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          ifMatch: eTag,
+                          partitionKey: config?.partitionValue(x)
+                        })
+                      )
+                    ] as const
+                )
+                const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray
 
-              const batchResult = yield* $(
-                batches.map((x, i) => [i, x] as const)
-                  .forEachEffect(
-                    ([i, batch]) =>
-                      Effect.promise(() => bulk(batch.map(([, op]) => op)))
-                        .delay(Duration.makeMillis(i === 0 ? 0 : 1100))
-                        .flatMap(responses =>
-                          Effect.gen(function*($) {
-                            const r = responses.find(x => x.statusCode === 412 || x.statusCode === 404)
-                            if (r) {
-                              return yield* $(
-                                Effect.fail(
-                                  new OptimisticConcurrencyException(
-                                    name,
-                                    JSON.stringify(r.resourceBody?.["id"])
+                const batchResult = yield* $(
+                  batches
+                    .map((x, i) => [i, x] as const)
+                    .forEachEffect(
+                      ([i, batch]) =>
+                        Effect
+                          .promise(() => bulk(batch.map(([, op]) => op)))
+                          .delay(Duration.makeMillis(i === 0 ? 0 : 1100))
+                          .flatMap((responses) =>
+                            Effect.gen(function*($) {
+                              const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
+                              if (r) {
+                                return yield* $(
+                                  Effect.fail(
+                                    new OptimisticConcurrencyException(
+                                      name,
+                                      JSON.stringify(r.resourceBody?.["id"])
+                                    )
                                   )
                                 )
+                              }
+                              const r2 = responses.find(
+                                (x) => x.statusCode > 299 || x.statusCode < 200
                               )
-                            }
-                            const r2 = responses.find(
-                              x => x.statusCode > 299 || x.statusCode < 200
-                            )
-                            if (r2) {
-                              return yield* $(
-                                Effect.die(
-                                  new CosmosDbOperationError(
-                                    "not able to update record: " + r2.statusCode
+                              if (r2) {
+                                return yield* $(
+                                  Effect.die(
+                                    new CosmosDbOperationError(
+                                      "not able to update record: " + r2.statusCode
+                                    )
                                   )
                                 )
-                              )
-                            }
-                            return batch.map(([e], i) => ({
-                              ...e,
-                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                              _etag: responses[i]!.eTag
-                            }))
-                          })
-                        )
-                  )
-              )
-              return batchResult.toReadonlyArray.flat() as unknown as NonEmptyReadonlyArray<PM>
-            }).instrument("cosmos.bulkSet")
+                              }
+                              return batch.map(([e], i) => ({
+                                ...e,
+                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                _etag: responses[i]!.eTag
+                              }))
+                            })
+                          )
+                    )
+                )
+                return batchResult.toReadonlyArray.flat() as unknown as NonEmptyReadonlyArray<PM>
+              })
+              .instrument("cosmos.bulkSet")
               .logAnnotate("cosmos.db", containerId)
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
-            return Effect.suspend(() => {
-              const batch = [...items].map(
-                x =>
-                  [
-                    x,
-                    Option.fromNullable(x._etag).match(
-                      () => ({
-                        operationType: "Create" as const,
-                        resourceBody: {
-                          ...omit(x, "_etag"),
-                          _partitionKey: config?.partitionValue(x)
-                        } as any
-                      }),
-                      eTag => ({
-                        operationType: "Replace" as const,
-                        id: x.id,
-                        resourceBody: {
-                          ...omit(x, "_etag"),
-                          _partitionKey: config?.partitionValue(x)
-                        } as any,
-                        ifMatch: eTag
-                      })
-                    )
-                  ] as const
-              )
+            return Effect
+              .suspend(() => {
+                const batch = [...items].map(
+                  (x) =>
+                    [
+                      x,
+                      Option.fromNullable(x._etag).match(
+                        () => ({
+                          operationType: "Create" as const,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any
+                        }),
+                        (eTag) => ({
+                          operationType: "Replace" as const,
+                          id: x.id,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          ifMatch: eTag
+                        })
+                      )
+                    ] as const
+                )
 
-              const ex = batch.map(([, c]) => c)
+                const ex = batch.map(([, c]) => c)
 
-              return Effect.promise(() => execBatch(ex, ex[0]?.resourceBody._partitionKey))
-                .flatMap(x =>
-                  Effect.gen(function*($) {
-                    const result = x.result ?? []
-                    const firstFailed = result.find(
-                      (x: any) => x.statusCode > 299 || x.statusCode < 200
-                    )
-                    if (firstFailed) {
-                      const code = firstFailed.statusCode ?? 0
-                      if (code === 412 || code === 404) {
+                return Effect
+                  .promise(() => execBatch(ex, ex[0]?.resourceBody._partitionKey))
+                  .flatMap((x) =>
+                    Effect.gen(function*($) {
+                      const result = x.result ?? []
+                      const firstFailed = result.find(
+                        (x: any) => x.statusCode > 299 || x.statusCode < 200
+                      )
+                      if (firstFailed) {
+                        const code = firstFailed.statusCode ?? 0
+                        if (code === 412 || code === 404) {
+                          return yield* $(
+                            Effect.fail(new OptimisticConcurrencyException(name, "batch"))
+                          )
+                        }
+
                         return yield* $(
-                          Effect.fail(new OptimisticConcurrencyException(name, "batch"))
+                          Effect.die(
+                            new CosmosDbOperationError("not able to update record: " + code)
+                          )
                         )
                       }
 
-                      return yield* $(
-                        Effect.die(
-                          new CosmosDbOperationError("not able to update record: " + code)
-                        )
-                      )
-                    }
-
-                    return batch.map(([e], i) => ({
-                      ...e,
-                      _etag: result[i]?.eTag
-                    })) as unknown as NonEmptyReadonlyArray<PM>
-                  })
-                )
-            }).instrument("cosmos.batchSet")
+                      return batch.map(([e], i) => ({
+                        ...e,
+                        _etag: result[i]?.eTag
+                      })) as unknown as NonEmptyReadonlyArray<PM>
+                    })
+                  )
+              })
+              .instrument("cosmos.batchSet")
               .logAnnotate("cosmos.db", containerId)
           }
 
@@ -189,44 +196,49 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               query: `SELECT * FROM ${name} f WHERE f.id != @id`,
               parameters: [{ name: "@id", value: importedMarkerId }]
             })
-              .tap(q => logQuery(q))
-              .flatMap(q =>
+              .tap((q) => logQuery(q))
+              .flatMap((q) =>
                 Effect.promise(() =>
-                  container.items
+                  container
+                    .items
                     .query<PM>(q)
                     .fetchAll()
                     .then(({ resources }) => resources.toChunk)
                 )
-              ).instrument("cosmos.all")
+              )
+              .instrument("cosmos.all")
               .logAnnotate("cosmos.db", containerId),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
             ) =>
-              filter.keys
-                .forEachEffect(k =>
+              filter
+                .keys
+                .forEachEffect((k) =>
                   Effect(buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
-                    .tap(q => logQuery(q))
-                    .flatMap(q =>
+                    .tap((q) => logQuery(q))
+                    .flatMap((q) =>
                       Effect.promise(() =>
-                        container.items
+                        container
+                          .items
                           .query<T>(q)
                           .fetchAll()
                           .then(({ resources }) => resources.toChunk)
                       )
                     )
                 )
-                .map(a => {
+                .map((a) => {
                   const v = a
-                    .flatMap(_ => _)
-                    .map(x =>
+                    .flatMap((_) => _)
+                    .map((x) =>
                       spread(
                         x,
                         ({ r, ...rest }: any) => ({ ...rest, ...r } as T & { _rootId: string })
                       )
                     )
                   return Chunk.fromIterable(v)
-                }).instrument("cosmos.filterJoinSelect")
+                })
+                .instrument("cosmos.filterJoinSelect")
                 .logAnnotate("cosmos.db", containerId),
             /**
              * May return duplicate results for "join_find", when matching more than once.
@@ -238,43 +250,51 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra
                 // so we use multiple queries instead.
-                ? filter.keys
-                  .forEachEffect(k =>
+                ? filter
+                  .keys
+                  .forEachEffect((k) =>
                     Effect(buildFindJoinCosmosQuery(filter, k, name, skip, limit))
-                      .tap(q => logQuery(q))
-                      .flatMap(q =>
+                      .tap((q) => logQuery(q))
+                      .flatMap((q) =>
                         Effect.promise(() =>
-                          container.items
+                          container
+                            .items
                             .query<PM>(q)
                             .fetchAll()
                             .then(({ resources }) => resources.toChunk)
                         )
                       )
                   )
-                  .map(_ => _.flatMap(_ => _))
+                  .map((_) => _.flatMap((_) => _))
                 : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
-                  .tap(q => logQuery(q))
-                  .flatMap(q =>
+                  .tap((q) => logQuery(q))
+                  .flatMap((q) =>
                     Effect.promise(() =>
-                      container.items.query<{ f: PM }>(
-                        q
-                      )
+                      container
+                        .items
+                        .query<{ f: PM }>(
+                          q
+                        )
                         .fetchAll()
-                        .then(({ resources }) => resources.map(_ => _.f).toChunk)
+                        .then(({ resources }) => resources.map((_) => _.f).toChunk)
                     )
-                  )).instrument("cosmos.filter")
+                  ))
+                .instrument("cosmos.filter")
                 .logAnnotate("cosmos.db", containerId)
             },
-            find: id =>
-              Effect.promise(() =>
-                container
-                  .item(id, config?.partitionValue({ id } as PM))
-                  .read<PM>()
-                  .then(({ resource }) => Option.fromNullable(resource))
-              ).instrument("cosmos.find")
+            find: (id) =>
+              Effect
+                .promise(() =>
+                  container
+                    .item(id, config?.partitionValue({ id } as PM))
+                    .read<PM>()
+                    .then(({ resource }) => Option.fromNullable(resource))
+                )
+                .instrument("cosmos.find")
                 .logAnnotate("cosmos.db", containerId),
-            set: e =>
-              Option.fromNullable(e._etag)
+            set: (e) =>
+              Option
+                .fromNullable(e._etag)
                 .match(
                   () =>
                     Effect.promise(() =>
@@ -283,7 +303,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         _partitionKey: config?.partitionValue(e)
                       })
                     ),
-                  eTag =>
+                  (eTag) =>
                     Effect.promise(() =>
                       container.item(e.id, config?.partitionValue(e)).replace(
                         { ...e, _partitionKey: config?.partitionValue(e) },
@@ -296,7 +316,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                 )
-                .flatMap(x => {
+                .flatMap((x) => {
                   if (x.statusCode === 412 || x.statusCode === 404) {
                     return Effect.fail(new OptimisticConcurrencyException(name, e.id))
                   }
@@ -317,7 +337,8 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             batchSet,
             bulkSet,
             remove: (e: PM) =>
-              Effect.promise(() => container.item(e.id, config?.partitionValue(e)).delete())
+              Effect
+                .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .instrument("cosmos.remove")
                 .logAnnotate("cosmos.db", containerId)
           }
@@ -338,7 +359,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               const m = yield* $(seed)
               yield* $(
                 Effect(m.toNonEmptyArray)
-                  .flatMapOpt(a =>
+                  .flatMapOpt((a) =>
                     s
                       .bulkSet(a)
                       .orDie
@@ -370,7 +391,8 @@ function logQuery(q: {
     value: SupportedValues | readonly SupportedValues[]
   }[]
 }) {
-  return Effect.logDebug("cosmos query")
+  return Effect
+    .logDebug("cosmos query")
     .apply(Effect.logAnnotates({
       query: q.query,
       parameters: JSON.stringify(
@@ -477,18 +499,21 @@ export function buildWhereCosmosQuery(
     SELECT f
     FROM ${name} AS f
     ${
-      filter.where.filter(_ => _.key.includes(".-1."))
-        .map(_ => _.key.split(".-1.")[0])
-        .map(_ => `JOIN ${_} IN f.${_}`)
+      filter
+        .where
+        .filter((_) => _.key.includes(".-1."))
+        .map((_) => _.key.split(".-1.")[0])
+        .map((_) => `JOIN ${_} IN f.${_}`)
         .uniq(Equivalence.string)
         .join("\n")
     }
     WHERE f.id != @id AND ${
-      filter.where
-        .map(_ =>
-          _.key.includes(".-1.") ?
-            { ..._, f: _.key.split(".-1.")[0], key: _.key.split(".-1.")[1]! } :
-            { ..._, f: "f" }
+      filter
+        .where
+        .map((_) =>
+          _.key.includes(".-1.")
+            ? { ..._, f: _.key.split(".-1.")[0], key: _.key.split(".-1.")[1]! }
+            : { ..._, f: "f" }
         )
         .map(
           (x, i) =>
@@ -517,7 +542,8 @@ export function buildWhereCosmosQuery(
     ${lm}`,
     parameters: [
       { name: "@id", value: importedMarkerId },
-      ...filter.where
+      ...filter
+        .where
         .map((x, i) => ({
           name: `@v${i}`,
           value: x.value
@@ -539,9 +565,9 @@ export function buildCosmosQuery<PM>(
   skip?: number,
   limit?: number
 ) {
-  return filter.type === "startsWith" ||
-      filter.type === "endsWith" ||
-      filter.type === "contains"
+  return filter.type === "startsWith"
+      || filter.type === "endsWith"
+      || filter.type === "contains"
     ? buildLegacyCosmosQuery(filter, name, importedMarkerId, skip, limit)
     : buildWhereCosmosQuery(filter, name, importedMarkerId, skip, limit)
 }

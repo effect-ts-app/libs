@@ -30,7 +30,7 @@ export function withDefaultConstructorField<
   Encoded,
   Api
 > {
-  return self => {
+  return (self) => {
     const constructSelf = Constructor.for(self)
     return pipe(
       self,

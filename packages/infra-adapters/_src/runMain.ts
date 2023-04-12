@@ -5,7 +5,9 @@ export function defaultTeardown(
   id: FiberId,
   onExit: (status: number) => void
 ) {
-  Fiber.roots().flatMap(_ => _.interruptAllAs(id))
+  Fiber
+    .roots()
+    .flatMap((_) => _.interruptAllAs(id))
     .runCallback(() => {
       setTimeout(() => {
         if (Fiber.unsafeRoots().length === 0) {
@@ -26,10 +28,12 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
     process.exit(s)
   }
 
-  Fiber.fromEffect(eff)
-    .map(context => {
-      context.await()
-        .flatMap(exit =>
+  Fiber
+    .fromEffect(eff)
+    .map((context) => {
+      context
+        .await()
+        .flatMap((exit) =>
           Effect.gen(function*($) {
             if (exit.isFailure()) {
               if (exit.cause.isInterruptedOnly()) {

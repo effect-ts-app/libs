@@ -61,7 +61,7 @@ export function get<
   self: Repository<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.find(id).flatMap(_ => _.encaseInEffect(() => new NotFoundError(self.itemType, id)))
+  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError(self.itemType, id)))
 }
 
 /**
@@ -73,7 +73,7 @@ export function filter<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, ItemType>, filter: Predicate<T>) {
-  return self.all.map(_ => _.filter(filter))
+  return self.all.map((_) => _.filter(filter))
 }
 
 /**
@@ -99,7 +99,7 @@ export function collect<
   ItemType extends string,
   S extends T
 >(self: Repository<T, PM, Evt, ItemType>, collect: (item: T) => Option<S>) {
-  return self.all.map(_ => _.filterMap(collect))
+  return self.all.map((_) => _.filterMap(collect))
 }
 
 /**
@@ -131,9 +131,9 @@ export function projectEffect<
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
-  return map.flatMap(f =>
+  return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
-      .map(_ => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
   )
 }
 
@@ -170,16 +170,16 @@ export function queryEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
-  return map.flatMap(f =>
+  return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
-      .flatMap(items =>
-        Do($ => {
+      .flatMap((items) =>
+        Do(($) => {
           const { set } = $(ContextMap)
-          return items.map(_ => self.utils.mapReverse(_, set))
+          return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
-      .map(_ => _.map(_ => self.utils.parse(_)))
-      .map(_ => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
+      .map((_) => _.map((_) => self.utils.parse(_)))
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
   )
 }
 
@@ -199,20 +199,20 @@ export function queryOneEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
 ) {
-  return map.flatMap(f =>
+  return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
-      .flatMap(items =>
-        Do($ => {
+      .flatMap((items) =>
+        Do(($) => {
           const { set } = $(ContextMap)
-          return items.map(_ => self.utils.mapReverse(_, set))
+          return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
-      .map(_ => _.map(_ => self.utils.parse(_)))
-      .flatMap(_ =>
+      .map((_) => _.map((_) => self.utils.parse(_)))
+      .flatMap((_) =>
         (f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
-          .toNonEmptyArray.encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter))).map(_ =>
-            _[0]
-          )
+          .toNonEmptyArray
+          .encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter)))
+          .map((_) => _[0])
       )
   )
 }
@@ -268,9 +268,9 @@ export function queryAndSavePureEffect<
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
-    Debug.untraced(restore =>
+    Debug.untraced((restore) =>
       queryEffect(self, map)
-        .flatMap(restore(_ => self.saveManyWithPure_(_, pure)))
+        .flatMap(restore((_) => self.saveManyWithPure_(_, pure)))
     )
 }
 
@@ -314,7 +314,7 @@ export function byIdAndSaveWithPure<
   ItemType extends string
 >(self: Repository<T, PM, Evt, ItemType>, id: T["id"]) {
   return <R, A, E, S2 extends T>(pure: Effect<FixEnv<R, Evt, T, S2>, E, A>) =>
-    get(self, id).flatMap(item => saveWithPure_(self, item, pure))
+    get(self, id).flatMap((item) => saveWithPure_(self, item, pure))
 }
 
 /**
@@ -379,7 +379,8 @@ export function saveWithPure_<
 ) {
   return saveAllWithEffectInt(
     self,
-    pure.runTerm(item)
+    pure
+      .runTerm(item)
       .map(([item, events, a]) => [[item], events, a])
   )
 }
@@ -397,7 +398,7 @@ export function saveAllWithEffectInt<
   self: Repository<T, PM, Evt, ItemType>,
   gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
-  return Debug.untraced(restore =>
+  return Debug.untraced((restore) =>
     gen
       .flatMap(
         ([items, events, a]) => restore(() => self.saveAndPublish(items, events))().map(() => a)
@@ -424,7 +425,7 @@ export function queryAndSavePureEffectBatched<
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
     queryEffect(self, map)
-      .flatMap(_ => self.saveManyWithPureBatched_(_, pure, batchSize))
+      .flatMap((_) => self.saveManyWithPureBatched_(_, pure, batchSize))
 }
 
 /**
@@ -478,8 +479,9 @@ export function saveManyWithPureBatched_<
   pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>,
   batchSize = 100
 ) {
-  return items.chunk(batchSize)
-    .forEachEffect(batch =>
+  return items
+    .chunk(batchSize)
+    .forEachEffect((batch) =>
       saveAllWithEffectInt(
         self,
         pure.runTerm(batch.toChunk)
@@ -564,7 +566,7 @@ export function makeDSL<S1, S2, Evt>() {
       dsl: PureDSL<S1, S2, Evt>
     ) => Effect<R, E, A>
   ): Effect<FixEnv<R, Evt, S1, S2>, E, A> {
-    return dsl.get.flatMap(items => pure(items, dsl)) as any
+    return dsl.get.flatMap((items) => pure(items, dsl)) as any
   }
 
   function update<
@@ -576,7 +578,7 @@ export function makeDSL<S1, S2, Evt>() {
       log: (...evt: Evt[]) => PureLogT<Evt>
     ) => Effect<R, E, S2>
   ): Effect<FixEnv<R, Evt, S1, S2>, E, S2> {
-    return dsl.get.flatMap(items => pure(items, dsl.log).tap(dsl.set)) as any
+    return dsl.get.flatMap((items) => pure(items, dsl.log).tap(dsl.set)) as any
   }
 
   function withDSL<

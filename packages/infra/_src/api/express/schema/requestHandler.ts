@@ -69,90 +69,97 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
   return ({ body, cookies, headers, params, query }: express.Request) =>
-    Effect.all({
-      body: parsers
-        .parseBody(body)
-        .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure()
-            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect(
-              _.isSuccess()
-                ? { _tag: "Success" as const, value: _.value }
-                : { _tag: "Failure", errors: _.cause.failures }
-            )
-        ),
-      cookie: parsers
-        .parseCookie(cookies)
-        .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure()
-            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect(
-              _.isSuccess()
-                ? { _tag: "Success" as const, value: _.value }
-                : { _tag: "Failure", errors: _.cause.failures }
-            )
-        ),
-      headers: parsers
-        .parseHeaders(headers)
-        .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure()
-            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect(
-              _.isSuccess()
-                ? { _tag: "Success" as const, value: _.value }
-                : { _tag: "Failure", errors: _.cause.failures }
-            )
-        ),
-      query: parsers
-        .parseQuery(query)
-        .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure()
-            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect(
-              _.isSuccess()
-                ? { _tag: "Success" as const, value: _.value }
-                : { _tag: "Failure", errors: _.cause.failures }
-            )
-        ),
-      path: parsers
-        .parsePath(params)
-        .exit.flatMap(_ =>
-          _.isFailure() && !_.cause.isFailure()
-            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-            : Effect(
-              _.isSuccess()
-                ? { _tag: "Success" as const, value: _.value }
-                : { _tag: "Failure", errors: _.cause.failures }
-            )
-        )
-    }).flatMap(({ body, cookie, headers, path, query }) => {
-      const errors: unknown[] = []
-      if (body._tag === "Failure") {
-        errors.push(makeError("body")(body.errors))
-      }
-      if (cookie._tag === "Failure") {
-        errors.push(makeError("cookie")(cookie.errors))
-      }
-      if (headers._tag === "Failure") {
-        errors.push(makeError("headers")(headers.errors))
-      }
-      if (path._tag === "Failure") {
-        errors.push(makeError("path")(path.errors))
-      }
-      if (query._tag === "Failure") {
-        errors.push(makeError("query")(query.errors))
-      }
-      if (errors.length) {
-        return Effect.fail(new ValidationError(errors))
-      }
-      return Effect({
-        body: body.value!,
-        cookie: cookie.value!,
-        headers: headers.value!,
-        path: path.value!,
-        query: query.value!
+    Effect
+      .all({
+        body: parsers
+          .parseBody(body)
+          .exit
+          .flatMap((_) =>
+            _.isFailure() && !_.cause.isFailure()
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              : Effect(
+                _.isSuccess()
+                  ? { _tag: "Success" as const, value: _.value }
+                  : { _tag: "Failure", errors: _.cause.failures }
+              )
+          ),
+        cookie: parsers
+          .parseCookie(cookies)
+          .exit
+          .flatMap((_) =>
+            _.isFailure() && !_.cause.isFailure()
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              : Effect(
+                _.isSuccess()
+                  ? { _tag: "Success" as const, value: _.value }
+                  : { _tag: "Failure", errors: _.cause.failures }
+              )
+          ),
+        headers: parsers
+          .parseHeaders(headers)
+          .exit
+          .flatMap((_) =>
+            _.isFailure() && !_.cause.isFailure()
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              : Effect(
+                _.isSuccess()
+                  ? { _tag: "Success" as const, value: _.value }
+                  : { _tag: "Failure", errors: _.cause.failures }
+              )
+          ),
+        query: parsers
+          .parseQuery(query)
+          .exit
+          .flatMap((_) =>
+            _.isFailure() && !_.cause.isFailure()
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              : Effect(
+                _.isSuccess()
+                  ? { _tag: "Success" as const, value: _.value }
+                  : { _tag: "Failure", errors: _.cause.failures }
+              )
+          ),
+        path: parsers
+          .parsePath(params)
+          .exit
+          .flatMap((_) =>
+            _.isFailure() && !_.cause.isFailure()
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              : Effect(
+                _.isSuccess()
+                  ? { _tag: "Success" as const, value: _.value }
+                  : { _tag: "Failure", errors: _.cause.failures }
+              )
+          )
       })
-    })
+      .flatMap(({ body, cookie, headers, path, query }) => {
+        const errors: unknown[] = []
+        if (body._tag === "Failure") {
+          errors.push(makeError("body")(body.errors))
+        }
+        if (cookie._tag === "Failure") {
+          errors.push(makeError("cookie")(cookie.errors))
+        }
+        if (headers._tag === "Failure") {
+          errors.push(makeError("headers")(headers.errors))
+        }
+        if (path._tag === "Failure") {
+          errors.push(makeError("path")(path.errors))
+        }
+        if (query._tag === "Failure") {
+          errors.push(makeError("query")(query.errors))
+        }
+        if (errors.length) {
+          return Effect.fail(new ValidationError(errors))
+        }
+        return Effect({
+          body: body.value!,
+          cookie: cookie.value!,
+          headers: headers.value!,
+          path: path.value!,
+          query: query.value!
+        })
+      })
 }
 
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -181,8 +188,8 @@ export function respondSuccess<ReqA, A, E>(
   encodeResponse: (req: ReqA) => Encode<A, E>
 ) {
   return (req: ReqA, res: express.Response) =>
-    flow(encodeResponse(req), Effect.succeed, _ =>
-      _.flatMap(r =>
+    flow(encodeResponse(req), Effect.succeed, (_) =>
+      _.flatMap((r) =>
         Effect.sync(() => {
           r === undefined
             ? res.status(204).send()
@@ -301,44 +308,49 @@ export function makeRequestParsers<
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
   const ph = Effect(
-    Option.fromNullable(Request.Headers)
-      .map(s => s)
+    Option
+      .fromNullable(Request.Headers)
+      .map((s) => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseHeaders = (u: unknown) => ph.flatMapOpt(d => d(u))
+  const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
 
   const pq = Effect(
-    Option.fromNullable(Request.Query)
-      .map(s => s)
+    Option
+      .fromNullable(Request.Query)
+      .map((s) => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseQuery = (u: unknown) => pq.flatMapOpt(d => d(u))
+  const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
 
   const pb = Effect(
-    Option.fromNullable(Request.Body)
-      .map(s => s)
+    Option
+      .fromNullable(Request.Body)
+      .map((s) => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseBody = (u: unknown) => pb.flatMapOpt(d => d(u))
+  const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
 
   const pp = Effect(
-    Option.fromNullable(Request.Path)
-      .map(s => s)
+    Option
+      .fromNullable(Request.Path)
+      .map((s) => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parsePath = (u: unknown) => pp.flatMapOpt(d => d(u))
+  const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
 
   const pc = Effect(
-    Option.fromNullable(Request.Cookie)
-      .map(s => s)
+    Option
+      .fromNullable(Request.Cookie)
+      .map((s) => s)
       .map(Parser.for)
       .map(MO.condemn)
   )
-  const parseCookie = (u: unknown) => pc.flatMapOpt(d => d(u))
+  const parseCookie = (u: unknown) => pc.flatMapOpt((d) => d(u))
 
   return {
     parseBody,

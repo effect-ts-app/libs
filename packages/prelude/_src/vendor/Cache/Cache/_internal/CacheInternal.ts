@@ -184,7 +184,8 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
             return this.get(k).asUnit
           }
           // Only trigger the lookup if we're still the current value
-          return this.lookupValueOf(value.key.value, deferred)
+          return this
+            .lookupValueOf(value.key.value, deferred)
             .when(() => {
               const current = this.cacheState.map.get(k).value
               if (Equal.equals(current, value)) {
@@ -253,10 +254,11 @@ export class CacheInternal<Key, Environment, Error, Value> implements Cache<Key,
   }
 
   private lookupValueOf(key: Key, deferred: Deferred<Error, Value>): Effect<never, Error, Value> {
-    return this.lookup(key)
+    return this
+      .lookup(key)
       .provideContext(this.environment)
       .exit
-      .flatMap(exit => {
+      .flatMap((exit) => {
         const now = this.clock.currentTimeMillis().runSync
         const entryStats = EntryStats(now)
         this.cacheState.map.set(

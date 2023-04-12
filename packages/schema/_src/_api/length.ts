@@ -18,7 +18,7 @@ export function maxLength<Brand>(maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand => n.length <= maxLength,
-        n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
       ),
       MO.annotate(maxLengthIdentifier, { maxLength })
     )
@@ -49,7 +49,7 @@ export function minLength<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
-        n => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
+        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
       ),
       MO.annotate(minLengthIdentifier, { minLength })
     )
@@ -78,7 +78,7 @@ export function minSize<Brand>(minLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
-        n => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
+        (n) => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
       ),
       MO.annotate(minLengthIdentifier, { minLength })
     )
@@ -107,7 +107,7 @@ export function maxSize<Brand>(maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand => n.size <= maxLength,
-        n => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
       ),
       MO.annotate(maxLengthIdentifier, { maxLength })
     )
@@ -131,7 +131,7 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
       self,
       MO.refine(
         (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
-        n => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
+        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
       ),
       MO.annotate(minLengthIdentifier, { minLength }),
       MO.annotate(maxLengthIdentifier, { maxLength })

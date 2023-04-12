@@ -36,14 +36,14 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
     MO.identity(refinement),
     MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(u.toArray))),
     MO.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
-    MO.arbitrary(_ => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
+    MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
     MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
-    MO.encoder(u => toArray_(u).map(encodeSelf)),
+    MO.encoder((u) => toArray_(u).map(encodeSelf)),
     MO.mapApi(() => ({ self: self.Api, eq, ord })),
     MO.withDefaults,
     MO.annotate(setIdentifier, { self })

@@ -15,7 +15,7 @@ type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {
 const adaptedSchema =
   <Props extends MO.PropertyRecord>(properties: Props) =>
   <Key extends keyof Props>(keys: readonly Key[]): AdaptSchema<Props, Key> =>
-    D.filterWithIndex_(properties, key => keys.includes(key as Key)) as any
+    D.filterWithIndex_(properties, (key) => keys.includes(key as Key)) as any
 
 // TODO: keep existing fields
 export const adaptRes = <Props extends MO.PropertyRecord>(properties: Props) => {
@@ -83,8 +83,8 @@ export type Adapted<
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
                   readonly [
-                    h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ?
-                      AdaptSchema<Props, Key>[k]["_as"]["value"]
+                    h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
+                      ? AdaptSchema<Props, Key>[k]["_as"]["value"]
                       : k
                   ]?:
                     | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>

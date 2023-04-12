@@ -56,7 +56,7 @@ import {
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
-  Option.partial(_miss => (schema: MO.SchemaAny): Gen => {
+  Option.partial((_miss) => (schema: MO.SchemaAny): Gen => {
     // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
@@ -158,13 +158,17 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: yield* $(
-              Effect.collectAll(
-                Object.keys(schemaMeta.props).map(x => processId(schemaMeta.props[x]))
-              ).map(_ => _.toArray)
+              Effect
+                .collectAll(
+                  Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
+                )
+                .map((_) => _.toArray)
             ) as any,
-            discriminator: (schemaMeta.tag as Option<any>).map((_: any) => ({
-              propertyName: _.key // TODO
-            })).value
+            discriminator: (schemaMeta.tag as Option<any>)
+              .map((_: any) => ({
+                propertyName: _.key // TODO
+              }))
+              .value
           })
         }
         case fromStringIdentifier:
@@ -252,17 +256,21 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: (yield* $(
-              Effect.collectAll(
-                [schemaMeta.left, schemaMeta.right].map(x => processId(x))
-              ).map(_ => _.toArray)
-            )).map((v, i) => ({
-              properties: {
-                _tag: { enum: [i === 0 ? "Left" : "Right"] },
-                [i === 0 ? "left" : "right"]: v
-              },
-              required: ["_tag", i === 0 ? "left" : "right"],
-              type: "object"
-            })).toArray as any,
+              Effect
+                .collectAll(
+                  [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
+                )
+                .map((_) => _.toArray)
+            ))
+              .map((v, i) => ({
+                properties: {
+                  _tag: { enum: [i === 0 ? "Left" : "Right"] },
+                  [i === 0 ? "left" : "right"]: v
+                },
+                required: ["_tag", i === 0 ? "left" : "right"],
+                type: "object"
+              }))
+              .toArray as any,
             discriminator: { propertyName: "_tag" }
           })
         }

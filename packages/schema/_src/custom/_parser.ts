@@ -29,11 +29,11 @@ export const interpreters: ((
   schema: SchemaAny
 ) => Option<() => Parser<unknown, unknown, unknown>>)[] = [
   Option.partial(
-    miss => (schema: S.SchemaAny): () => Parser<unknown, unknown, unknown> => {
+    (miss) => (schema: S.SchemaAny): () => Parser<unknown, unknown, unknown> => {
       if (schema instanceof S.SchemaNamed) {
         return () => {
           const self = parserFor(schema.self)
-          return (u, env) => Th.mapError_(self(u, env), e => S.namedE(schema.name, e))
+          return (u, env) => Th.mapError_(self(u, env), (e) => S.namedE(schema.name, e))
         }
       }
       if (schema instanceof S.SchemaMapParserError) {
@@ -43,7 +43,7 @@ export const interpreters: ((
         }
       }
       if (schema instanceof S.SchemaIdentity) {
-        return () => u => Th.succeed(u)
+        return () => (u) => Th.succeed(u)
       }
       if (schema instanceof S.SchemaPipe) {
         return () => {
@@ -53,13 +53,13 @@ export const interpreters: ((
             Th.chain_(
               pipe(
                 self(u, env),
-                Th.mapError(e => S.compositionE(Chunk(S.prevE(e))))
+                Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
               ),
               (a, w) =>
                 pipe(
                   that(a, env),
                   Th.foldM(
-                    a => (w._tag === "Some" ? Th.warn(a, w.value) : Th.succeed(a)),
+                    (a) => (w._tag === "Some" ? Th.warn(a, w.value) : Th.succeed(a)),
                     (a, e) =>
                       w._tag === "Some"
                         ? Th.warn(
@@ -67,7 +67,7 @@ export const interpreters: ((
                           S.compositionE(w.value.errors.append(S.nextE(e)))
                         )
                         : Th.warn(a, e),
-                    e =>
+                    (e) =>
                       w._tag === "None"
                         ? Th.fail(S.compositionE(Chunk(S.nextE(e))))
                         : Th.fail(S.compositionE(w.value.errors.append(S.nextE(e))))
@@ -89,7 +89,7 @@ export const interpreters: ((
               : Th.chain_(
                 pipe(
                   self(u, env),
-                  Th.mapError(e => S.compositionE(Chunk(S.prevE(e))))
+                  Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
                 ),
                 (
                   a,

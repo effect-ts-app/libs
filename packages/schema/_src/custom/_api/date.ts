@@ -21,9 +21,9 @@ export const date: DefaultSchema<unknown, Date, Date, string, {}> = pipe(
     }
     return Th.succeed(new Date(ms))
   }),
-  S.arbitrary(_ => _.date()),
-  S.encoder(_ => _.toISOString()),
-  S.mapApi(_ => ({})),
+  S.arbitrary((_) => _.date()),
+  S.encoder((_) => _.toISOString()),
+  S.mapApi((_) => ({})),
   withDefaults,
   S.annotate(dateIdentifier, {})
 )
@@ -32,13 +32,13 @@ export const dateMsIdentifier = S.makeAnnotation<{}>()
 
 export const dateMs: DefaultSchema<unknown, Date, Date, number, {}> = pipe(
   date,
-  S.parser(u =>
+  S.parser((u) =>
     typeof u === "number"
       ? Th.succeed(new Date(u))
       : Th.fail(S.leafE(S.parseDateMsE(u)))
   ),
-  S.encoder(_ => _.getTime()),
-  S.mapApi(_ => ({})),
+  S.encoder((_) => _.getTime()),
+  S.mapApi((_) => ({})),
   withDefaults,
   S.annotate(dateMsIdentifier, {})
 )

@@ -51,7 +51,7 @@ export const Client = (fetchApi: typeof fetch) =>
 
       function makeFetch(abort: AbortController) {
         return fetchApi(url, { ...input, signal: abort.signal }).then(
-          resp => {
+          (resp) => {
             const h: Record<string, string> = {}
 
             resp.headers.forEach((val, key) => {
@@ -74,14 +74,14 @@ export const Client = (fetchApi: typeof fetch) =>
                       body: Option.fromNullable(json)
                     })),
                 () =>
-                  resp.text().then(text => ({
+                  resp.text().then((text) => ({
                     headers: h,
                     status: resp.status,
                     body: Option.fromNullable(text)
                   })),
                 () => {
                   if (resp["arrayBuffer"]) {
-                    return resp.arrayBuffer().then(arrayBuffer => ({
+                    return resp.arrayBuffer().then((arrayBuffer) => ({
                       headers: h,
                       status: resp.status,
                       body: Option.fromNullable(Buffer.from(arrayBuffer))
@@ -98,7 +98,7 @@ export const Client = (fetchApi: typeof fetch) =>
                 }
               )
             } else {
-              return resp.text().then(text => {
+              return resp.text().then((text) => {
                 throw {
                   _tag: H.HttpErrorReason.Response,
                   response: {
@@ -113,10 +113,10 @@ export const Client = (fetchApi: typeof fetch) =>
         )
       }
 
-      return makeAbort.flatMap(abort =>
+      return makeAbort.flatMap((abort) =>
         Effect.tryCatchPromiseWithInterrupt(
           () => makeFetch(abort),
-          err =>
+          (err) =>
             H.isHttpResponseError(err)
               ? (err as H.HttpResponseError<string>)
               : { _tag: H.HttpErrorReason.Request, error: err as Error },

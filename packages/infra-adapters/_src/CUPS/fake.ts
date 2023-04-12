@@ -4,7 +4,8 @@ import { CUPS } from "./service.js"
 const makeFakeCups = Effect.sync(() => {
   return {
     print: (buffer, printerId, ...options) =>
-      Effect.logInfo("Printing to fake printer")
+      Effect
+        .logInfo("Printing to fake printer")
         .zipRight(Effect({ stdout: "fake", stderr: "" }))
         .logAnnotate("printerId", printerId)
         .logAnnotate("options", pretty(options))

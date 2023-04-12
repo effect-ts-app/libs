@@ -32,14 +32,14 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary(_ => _.option(arb(_))),
+    S.arbitrary((_) => _.option(arb(_))),
     S.parser((i: ParserInput | null, env) =>
       i === null
         ? Th.succeed(null)
         : (env?.cache ? env.cache.getOrSetParser(parse) : parse)(i)
     ),
     S.constructor((x: ConstructorInput | null) => x === null ? Th.succeed(null) : create(x)),
-    S.encoder(_ => (_ === null ? null : encode(_))),
+    S.encoder((_) => (_ === null ? null : encode(_))),
     S.mapApi(() => self.Api),
     withDefaults,
     S.annotate(nullableIdentifier, { self })

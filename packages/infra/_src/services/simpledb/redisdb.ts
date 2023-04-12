@@ -19,7 +19,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
   ) => {
-    const getData = flow(encode, _ => _.map(JSON.stringify))
+    const getData = flow(encode, (_) => _.map(JSON.stringify))
     return {
       find: simpledb.find(find, decode, type),
       findByIndex: getIdx,
@@ -27,51 +27,58 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED.hmgetAll(getKey(id)).flatMapOpt(v =>
-        pipe(
-          RedisSerializedDBRecord.Parser,
-          MO.condemnFail
-        )(v)
-          .map(({ data, version }) => ({
-            data: JSON.parse(data) as EA,
-            version
-          }))
-          .mapError(e => new ConnectionException(new Error(e.toString())))
-      ).orDie
+      return RED
+        .hmgetAll(getKey(id))
+        .flatMapOpt((v) =>
+          pipe(
+            RedisSerializedDBRecord.Parser,
+            MO.condemnFail
+          )(v)
+            .map(({ data, version }) => ({
+              data: JSON.parse(data) as EA,
+              version
+            }))
+            .mapError((e) => new ConnectionException(new Error(e.toString())))
+        )
+        .orDie
     }
     function store(record: A, currentVersion: Option<string>) {
       const version = currentVersion
-        .map(cv => (parseInt(cv) + 1).toString())
+        .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
       return currentVersion.match(
         () =>
-          lockIndex(record).zipRight(
-            getIndex(record)
-              .zipRightOpt(
-                Effect.fail(() => new Error("Combination already exists, abort"))
-              )
-              .zipRight(getData(record))
-              // TODO: instead use MULTI & EXEC to make it in one command?
-              .flatMap(data =>
-                hmSetRec(getKey(record.id), {
-                  version,
-                  timestamp: new Date(),
-                  data
-                })
-              )
-              .zipRight(setIndex(record))
-              .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
-          ).scoped,
+          lockIndex(record)
+            .zipRight(
+              getIndex(record)
+                .zipRightOpt(
+                  Effect.fail(() => new Error("Combination already exists, abort"))
+                )
+                .zipRight(getData(record))
+                // TODO: instead use MULTI & EXEC to make it in one command?
+                .flatMap((data) =>
+                  hmSetRec(getKey(record.id), {
+                    version,
+                    timestamp: new Date(),
+                    data
+                  })
+                )
+                .zipRight(setIndex(record))
+                .orDie
+                .map(() => ({ version, data: record } as CachedRecord<A>))
+            )
+            .scoped,
         () =>
           getData(record)
-            .flatMap(data =>
+            .flatMap((data) =>
               hmSetRec(getKey(record.id), {
                 version,
                 timestamp: new Date(),
                 data
               })
             )
-            .orDie.map(() => ({ version, data: record } as CachedRecord<A>))
+            .orDie
+            .map(() => ({ version, data: record } as CachedRecord<A>))
       )
     }
 
@@ -91,7 +98,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).map(_ => _.map(i => i as TKey))
+      return RED.hget(getIdxKey(index), index.key).map((_) => _.map((i) => i as TKey))
     }
 
     function setIdx(index: Index, r: A) {
@@ -101,38 +108,44 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
       // acquire
-      return RED.lock
-        .flatMap(lock => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
+      return RED
+        .lock
+        .flatMap((lock) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
         .mapBoth(
-          err => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+          (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
-          lock => ({
-            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
+          (lock) => ({
+            release: Effect
+              .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        ).acquireRelease(
-          l => l.release
+        )
+        .acquireRelease(
+          (l) => l.release
         )
     }
 
     function lockRedisRecord(id: string) {
       // acquire
-      return RED.lock
-        .flatMap(lock =>
+      return RED
+        .lock
+        .flatMap((lock) =>
           Effect.tryPromise(
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
         )
         .mapBoth(
-          err => new CouldNotAquireDbLockException(type, id, err as Error),
+          (err) => new CouldNotAquireDbLockException(type, id, err as Error),
           // release
-          lock => ({
+          (lock) => ({
             // TODO
-            release: Effect.tryPromise(() => lock.unlock() as unknown as Promise<void>)
+            release: Effect
+              .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        ).acquireRelease(
-          l => l.release
+        )
+        .acquireRelease(
+          (l) => l.release
         )
     }
 
@@ -155,22 +168,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
     return RED.client.flatMap(
-      client =>
-        Effect.async<never, ConnectionException, void>(res => {
-          client.hmset(
-            key,
-            "version",
-            enc.version,
-            "timestamp",
-            enc.timestamp,
-            "data",
-            enc.data,
-            err =>
-              err
-                ? res(Effect.fail(new ConnectionException(err)))
-                : res(Effect(void 0))
-          )
-        }).uninterruptible
+      (client) =>
+        Effect
+          .async<never, ConnectionException, void>((res) => {
+            client.hmset(
+              key,
+              "version",
+              enc.version,
+              "timestamp",
+              enc.timestamp,
+              "data",
+              enc.data,
+              (err) =>
+                err
+                  ? res(Effect.fail(new ConnectionException(err)))
+                  : res(Effect(void 0))
+            )
+          })
+          .uninterruptible
     )
   }
 }

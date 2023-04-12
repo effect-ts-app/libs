@@ -6,7 +6,8 @@ import type { RouteDescriptorAny } from "./express/schema/routing.js"
 
 export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDescriptorAny>>) {
   return makeOpenApiSpecs(
-    typedValuesOf(rdescs).reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
+    typedValuesOf(rdescs)
+      .reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
       .sortWith(Order.string.contramap((a: RouteDescriptorAny) => a.path)),
     Plutus.info({
       title: "api",
@@ -14,12 +15,12 @@ export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDesc
       pageTitle: "api"
     })
   )
-    .map(_ => ({
+    .map((_) => ({
       ..._,
       tags: [
         // add the tags here
       ]
     }))
-    .flatMap(_ => writeTextFile("./openapi.json", JSON.stringify(_, undefined, 2)).orDie)
+    .flatMap((_) => writeTextFile("./openapi.json", JSON.stringify(_, undefined, 2)).orDie)
     .flatMap(() => Effect.logInfo("OpenAPI spec written to './openapi.json'"))
 }

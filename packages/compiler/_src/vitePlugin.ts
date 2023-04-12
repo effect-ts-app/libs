@@ -52,7 +52,7 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
     const opts = tsconfig.options as any
     opts.configFilePath = configPath
 
-    tsconfig.fileNames.forEach(fileName => {
+    tsconfig.fileNames.forEach((fileName) => {
       if (!(fileName in files)) {
         files[fileName] = { version: 0 }
       }
@@ -60,8 +60,8 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
 
     const servicesHost: ts.LanguageServiceHost = {
       getScriptFileNames: () => tsconfig.fileNames,
-      getScriptVersion: fileName => files[fileName]! && files[fileName]!.version.toString(),
-      getScriptSnapshot: fileName => {
+      getScriptVersion: (fileName) => files[fileName]! && files[fileName]!.version.toString(),
+      getScriptSnapshot: (fileName) => {
         if (!ts.sys.fileExists(fileName)) {
           return undefined
         }
@@ -69,10 +69,10 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
       },
       getCurrentDirectory: () => process.cwd(),
       getCompilationSettings: () => tsconfig.options,
-      getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
-      fileExists: fileName => ts.sys.fileExists(fileName),
-      readFile: fileName => ts.sys.readFile(fileName),
-      realpath: ts.sys.realpath ? fileName => ts.sys.realpath!(fileName) : undefined
+      getDefaultLibFileName: (options) => ts.getDefaultLibFilePath(options),
+      fileExists: (fileName) => ts.sys.fileExists(fileName),
+      readFile: (fileName) => ts.sys.readFile(fileName),
+      realpath: ts.sys.realpath ? (fileName) => ts.sys.realpath!(fileName) : undefined
     }
 
     services = ts.createLanguageService(servicesHost, registry)
@@ -167,12 +167,12 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
 
           const syntactic = services.getSyntacticDiagnostics(id)
           if (syntactic.length > 0) {
-            throw new Error(syntactic.map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
+            throw new Error(syntactic.map((_) => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
           }
           const semantic = services.getSemanticDiagnostics(id)
           services.cleanupSemanticCache()
           if (semantic.length > 0) {
-            throw new Error(semantic.map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
+            throw new Error(semantic.map((_) => ts.flattenDiagnosticMessageText(_.messageText, "\n")).join("\n"))
           }
           const out = services.getEmitOutput(id).outputFiles
           if (out.length === 0) {

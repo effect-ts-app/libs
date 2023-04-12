@@ -9,8 +9,10 @@ export { initRuntime } from "./internal.js"
 
 const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").withDefault("/api"),
-  headers: Config.string()
-    .table("headers").optional
+  headers: Config
+    .string()
+    .table("headers")
+    .optional
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
@@ -40,7 +42,8 @@ export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | Http
 }
 
 export function initializeAsync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
-  return makeAppRuntime(layer).runPromise
+  return makeAppRuntime(layer)
+    .runPromise
     .then(({ clean, runtime }) => {
       initRuntime(runtime)
       return {

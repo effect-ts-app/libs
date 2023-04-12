@@ -46,18 +46,18 @@ export function find<R, RDecode, EDecode, E, EA, A>(
     tryRead(id)
       .flatMapOpt(({ data, version }) =>
         decode(data).mapBoth(
-          err => new InvalidStateError("DB serialisation Issue", err),
-          data => ({ data, version })
+          (err) => new InvalidStateError("DB serialisation Issue", err),
+          (data) => ({ data, version })
         )
       )
-      .tapOpt(r => getCache(c => c.set(id, r)))
-      .mapOpt(r => r.data)
+      .tapOpt((r) => getCache((c) => c.set(id, r)))
+      .mapOpt((r) => r.data)
 
   return (id: string) =>
-    getCache(c =>
+    getCache((c) =>
       c
         .find(id)
-        .mapOpt(existing => existing.data)
+        .mapOpt((existing) => existing.data)
         .orElse(() => read(id))
     )
 }
@@ -68,13 +68,13 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 ) {
   const getCache = getM<A>(type)
   return (record: A) =>
-    getCache(c =>
+    getCache((c) =>
       c
         .find(record.id)
-        .mapOpt(x => x.version)
-        .flatMap(cv => save(record, cv))
-        .tap(r => c.set(record.id, r))
-        .map(r => r.data)
+        .mapOpt((x) => x.version)
+        .flatMap((cv) => save(record, cv))
+        .tap((r) => c.set(record.id, r))
+        .map((r) => r.data)
     )
 }
 
@@ -86,31 +86,33 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
 ) {
   const getCache = getM<A>(type)
   return (record: A) =>
-    getCache(c =>
+    getCache((c) =>
       c
         .find(record.id)
-        .mapOpt(x => x.version)
-        .flatMap(_ => _.match(() => save(record, Option.none), confirmVersionAndSave(record)))
-        .tap(r => c.set(record.id, r))
-        .map(r => r.data)
+        .mapOpt((x) => x.version)
+        .flatMap((_) => _.match(() => save(record, Option.none), confirmVersionAndSave(record)))
+        .tap((r) => c.set(record.id, r))
+        .map((r) => r.data)
     )
 
   function confirmVersionAndSave(record: A) {
     return (cv: Version) =>
-      lock(record.id).zipRight(
-        tryRead(record.id)
-          .flatMap(_ =>
-            _.match(
-              () => Effect.fail(new InvalidStateError("record is gone")),
-              Effect.succeed
+      lock(record.id)
+        .zipRight(
+          tryRead(record.id)
+            .flatMap((_) =>
+              _.match(
+                () => Effect.fail(new InvalidStateError("record is gone")),
+                Effect.succeed
+              )
             )
-          )
-          .tap(({ version }) =>
-            version !== cv
-              ? Effect.fail(new OptimisticLockException(type, record.id))
-              : Effect.unit
-          )
-          .zipRight(save(record, Option(cv)))
-      ).scoped
+            .tap(({ version }) =>
+              version !== cv
+                ? Effect.fail(new OptimisticLockException(type, record.id))
+                : Effect.unit
+            )
+            .zipRight(save(record, Option(cv)))
+        )
+        .scoped
   }
 }

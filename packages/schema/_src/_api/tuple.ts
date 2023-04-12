@@ -102,7 +102,7 @@ export function fromTuple<
 
   return pipe(
     MO.identity(refinement),
-    MO.arbitrary(_ => _.tuple(keyArb(_), arb(_))),
+    MO.arbitrary((_) => _.tuple(keyArb(_), arb(_))),
     MO.parser(parseTup),
     MO.constructor((i: Iterable<KeyParsedShape | ParsedShape>) => {
       const t = Array.from(i)
@@ -110,7 +110,7 @@ export function fromTuple<
         ? Th.succeed(t as readonly [KeyParsedShape, ParsedShape])
         : Th.fail(MO.leafE(MO.unknownArrayE(t)))
     }),
-    MO.encoder(_ => [keyEncode(_[0]), encode(_[1])] as const),
+    MO.encoder((_) => [keyEncode(_[0]), encode(_[1])] as const),
     MO.mapApi(() => ({ self: self.Api })),
     MO.withDefaults,
     MO.annotate(fromTupleIdentifier, { self })
@@ -142,7 +142,7 @@ export function tuple<
   const encodeSelf = Encoder.for(self)
   return pipe(
     MO.unknownArray[">>>"](fromTuple(key, self)),
-    MO.encoder(_ => [encodeKey(_[0]), encodeSelf(_[1])] as const),
+    MO.encoder((_) => [encodeKey(_[0]), encodeSelf(_[1])] as const),
     MO.withDefaults,
     MO.annotate(tupleIdentifier, { self })
   )

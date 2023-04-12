@@ -24,8 +24,8 @@ function isEmail(str: string): str is Email {
 
 export const EmailFromString: DefaultSchema<string, Email, string, string, {}> = pipe(
   fromString,
-  MO.arbitrary(FC => FC.emailAddress()),
-  MO.refine(isEmail, n => MO.leafE(customE(n, "a valid Email according to RFC 5322"))),
+  MO.arbitrary((FC) => FC.emailAddress()),
+  MO.refine(isEmail, (n) => MO.leafE(customE(n, "a valid Email according to RFC 5322"))),
   brand<Email>(),
   MO.annotate(EmailFromStringIdentifier, {})
 )

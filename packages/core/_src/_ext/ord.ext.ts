@@ -8,7 +8,7 @@ export function sortWith<A>(
   ...ords: NonEmptyArguments<Order<A>>
 ): (a: Chunk<A>) => Chunk<A> {
   // TODO
-  return as => as.toReadonlyArray.sortWith(...ords).toChunk
+  return (as) => as.toReadonlyArray.sortWith(...ords).toChunk
 }
 
 /**
@@ -98,7 +98,7 @@ export function elem<A>(E: Equivalence<A>, value: A) {
 export function sortWithNonEmpty<A>(
   ...ords: NonEmptyArguments<Order<A>>
 ): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return a => a.sortByNonEmpty(...ords)
+  return (a) => a.sortByNonEmpty(...ords)
 }
 
 /**

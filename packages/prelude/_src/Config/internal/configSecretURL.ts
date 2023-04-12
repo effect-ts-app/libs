@@ -32,7 +32,7 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
   const secret = Object.create(proto)
   let protocol = "unknown"
   try {
-    const url = new URL(bytes.map(byte => String.fromCharCode(byte)).join(""))
+    const url = new URL(bytes.map((byte) => String.fromCharCode(byte)).join(""))
     protocol = url.protocol.substring(0, url.protocol.length - 1)
   } catch {
     const matches = protocol.match(/^([^:]+):\/\//)
@@ -64,17 +64,17 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
 
 /** @internal */
 export const fromChunk = (chunk: Chunk.Chunk<string>): ConfigSecretURL.ConfigSecretURL => {
-  return make(Chunk.toReadonlyArray(chunk).map(char => char.charCodeAt(0)))
+  return make(Chunk.toReadonlyArray(chunk).map((char) => char.charCodeAt(0)))
 }
 
 /** @internal */
 export const fromString = (text: string): ConfigSecretURL.ConfigSecretURL => {
-  return make(text.split("").map(char => char.charCodeAt(0)))
+  return make(text.split("").map((char) => char.charCodeAt(0)))
 }
 
 /** @internal */
 export const value = (self: ConfigSecretURL.ConfigSecretURL): string => {
-  return self.raw.map(byte => String.fromCharCode(byte)).join("")
+  return self.raw.map((byte) => String.fromCharCode(byte)).join("")
 }
 
 /** @internal */

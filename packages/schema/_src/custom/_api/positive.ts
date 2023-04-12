@@ -32,7 +32,7 @@ export function min<Brand>(min: number, minimumExclusive = false, type: "float" 
         minimumExclusive
           ? (n): n is ParsedShape & Brand => n > min
           : (n): n is ParsedShape & Brand => n >= min,
-        n => S.leafE(S.customE(n, `a ${type} ${minimumExclusive ? "larger than" : "at least"} ${min}`))
+        (n) => S.leafE(S.customE(n, `a ${type} ${minimumExclusive ? "larger than" : "at least"} ${min}`))
       ),
       withDefaults,
       S.annotate(minIdentifier, { self, minimum: min, minimumExclusive, type })
@@ -65,7 +65,7 @@ export function max<Brand>(max: number, maximumExclusive = false, type: "float" 
         maximumExclusive
           ? (n): n is ParsedShape & Brand => n < max
           : (n): n is ParsedShape & Brand => n <= max,
-        n => S.leafE(S.customE(n, `a ${type} ${maximumExclusive ? "smaller than" : "at most"} ${max}`))
+        (n) => S.leafE(S.customE(n, `a ${type} ${maximumExclusive ? "smaller than" : "at most"} ${max}`))
       ),
       withDefaults,
       S.annotate(maxIdentifier, { self, maximum: max, maximumExclusive, type })
@@ -113,7 +113,7 @@ export function range<Brand>(
       self,
       S.refine(
         (n): n is ParsedShape & Brand => isMin(n) && isMax(n),
-        n =>
+        (n) =>
           S.leafE(
             S.customE(
               n,

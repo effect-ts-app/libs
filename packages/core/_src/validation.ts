@@ -1,4 +1,4 @@
-export const all_ = <T>(v: T, ...a: Predicate<T>[]) => !a.some(x => !x(v))
+export const all_ = <T>(v: T, ...a: Predicate<T>[]) => !a.some((x) => !x(v))
 export const all = <T>(...a: Predicate<T>[]) => (v: T) => all_(v, ...a)
 
 export const maxN = (max: number) => (v: number) => v <= max

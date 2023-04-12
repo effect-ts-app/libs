@@ -242,7 +242,7 @@ export const effectify: {
 } =
   (<A>(fn: Function, onError?: (e: any, args: any) => any, onSyncError?: (e: any, args: any) => any) =>
   (...args: Array<any>) =>
-    Effect.async<never, Error, A>(resume => {
+    Effect.async<never, Error, A>((resume) => {
       try {
         fn(...args, (err: Error | null, result: A) => {
           if (err) {

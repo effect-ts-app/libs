@@ -33,7 +33,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     }),
     S.encoder((u): readonly ParsedShape[] => u),
     S.arbitrary(
-      _ =>
+      (_) =>
         _.array(arbitrarySelf(_), { minLength: 1 }) as any as Arbitrary.Arbitrary<
           NonEmptyReadonlyArray<ParsedShape>
         >
@@ -42,9 +42,9 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 
   return pipe(
     S.array(self)[">>>"](fromArray),
-    S.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     S.constructor((_: NonEmptyReadonlyArray<ParsedShape>) => Th.succeed(_)),
-    S.encoder(u => u.map(encodeSelf)),
+    S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     S.withDefaults,
     S.annotate(minLengthIdentifier, { minLength: 1 }),

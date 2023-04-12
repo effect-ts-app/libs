@@ -12,11 +12,11 @@ export function readFile(fileName: string) {
 
 export function createReadableStream(fileName: string) {
   return openFile(fileName)
-    .map(file => file.createReadStream())
+    .map((file) => file.createReadStream())
 }
 
 export function openFile(fileName: string) {
-  return Effect.tryPromise(() => fs.open(fileName)).acquireRelease(f => Effect.promise(() => f.close()))
+  return Effect.tryPromise(() => fs.open(fileName)).acquireRelease((f) => Effect.promise(() => f.close()))
 }
 
 export function tempFile(
@@ -46,11 +46,12 @@ export function tempFile_(
   options?: Options
 ) {
   return Effect(path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
-    .flatMap(fp =>
-      Effect.tryPromise(() => fs.writeFile(fp, data, options))
-        .map(_ => fp)
+    .flatMap((fp) =>
+      Effect
+        .tryPromise(() => fs.writeFile(fp, data, options))
+        .map((_) => fp)
         .acquireRelease(
-          p => Effect.promise(() => fs.unlink(p))
+          (p) => Effect.promise(() => fs.unlink(p))
         )
     )
 }
@@ -61,13 +62,15 @@ export function tempFile_(
 export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
   return (
-    Effect.tryPromise(() => fs.writeFile(tmp, content, "utf-8")) >
-      Effect.tryPromise(() => fs.rename(tmp, fileName))
-  ).orDie
+    Effect.tryPromise(() => fs.writeFile(tmp, content, "utf-8"))
+      > Effect.tryPromise(() => fs.rename(tmp, fileName))
+  )
+    .orDie
 }
 
 export function fileExists(fileName: string) {
-  return Effect.tryPromise(() => fs.stat(fileName).then(_ => _.isFile()))
+  return Effect
+    .tryPromise(() => fs.stat(fileName).then((_) => _.isFile()))
     .orDie
 }
 

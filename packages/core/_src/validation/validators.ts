@@ -24,7 +24,7 @@ export const isValidPhone = (phone: string): boolean => {
   const isValidPhone = PHONE_REGEX.test(phone)
   if (!isValidPhone) return false
 
-  const isValidLength = phone.split("").filter(c => !isNaN(Number(c))).length >= PHONE_LENGTH
+  const isValidLength = phone.split("").filter((c) => !isNaN(Number(c))).length >= PHONE_LENGTH
   if (!isValidLength) return false
 
   return true

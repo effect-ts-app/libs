@@ -1,4 +1,5 @@
-const l = Optic.id<{ test: number }>()
+const l = Optic
+  .id<{ test: number }>()
   .at("test")
 
 test("fluent works", () => {

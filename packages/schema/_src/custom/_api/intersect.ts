@@ -176,10 +176,10 @@ export function intersect_<
       ...encodeSelf(_),
       ...encodeThat(_)
     })),
-    S.arbitrary(FC => {
+    S.arbitrary((FC) => {
       const self = arbSelf(FC)
       const that = arbThat(FC)
-      return self.chain(a => that.map(b => ({ ...a, ...b })))
+      return self.chain((a) => that.map((b) => ({ ...a, ...b })))
     }),
     S.mapApi(() => {
       const props = {}
@@ -221,7 +221,7 @@ export function intersect<
   Encoded & ThatEncoded,
   IntersectionApi<Api, ThatApi>
 > {
-  return self => intersect_(self, that)
+  return (self) => intersect_(self, that)
 }
 
 export function intersectLazy<

@@ -31,8 +31,8 @@ export const PhoneNumberFromString: DefaultSchema<
   {}
 > = pipe(
   fromString,
-  MO.arbitrary(FC => Numbers(7, 10)(FC)),
-  MO.refine(isPhoneNumber, n => MO.leafE(customE(n, "a valid phone number"))),
+  MO.arbitrary((FC) => Numbers(7, 10)(FC)),
+  MO.refine(isPhoneNumber, (n) => MO.leafE(customE(n, "a valid phone number"))),
   brand<PhoneNumber>(),
   MO.annotate(PhoneNumberFromStringIdentifier, {})
 )

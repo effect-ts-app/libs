@@ -117,9 +117,9 @@ export function isHttpResponseError(
   u: unknown
 ): u is HttpResponseError<unknown> {
   return (
-    typeof u === "object" &&
-    u !== null &&
-    (u as any)["_tag"] === HttpErrorReason.Response
+    typeof u === "object"
+    && u !== null
+    && (u as any)["_tag"] === HttpErrorReason.Response
   )
 }
 
@@ -130,9 +130,9 @@ export interface HttpRequestError {
 
 export function isHttpRequestError(u: unknown): u is HttpRequestError {
   return (
-    typeof u === "object" &&
-    u !== null &&
-    (u as any)["_tag"] === HttpErrorReason.Request
+    typeof u === "object"
+    && u !== null
+    && (u as any)["_tag"] === HttpErrorReason.Request
   )
 }
 
@@ -148,7 +148,7 @@ export function foldHttpError<A, B, ErrorBody>(
   onError: (e: Error) => A,
   onResponseError: (e: Response<ErrorBody>) => B
 ): (err: HttpError<ErrorBody>) => A | B {
-  return err => {
+  return (err) => {
     switch (err._tag) {
       case "HttpErrorRequest":
         return onError(err.error)
@@ -256,8 +256,8 @@ export function requestInner<
   responseType: Resp,
   body: RequestBodyTypes[Req][M]
 ): Effect<RequestEnv, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
-  return accessHttpHeadersM(headers =>
-    Http.flatMap(h =>
+  return accessHttpHeadersM((headers) =>
+    Http.flatMap((h) =>
       h.request<M, Req, Resp>(
         method,
         url,
@@ -327,7 +327,7 @@ export function request<
   Response<ResponseTypes[Resp][M]>
 > {
   return (url, body) =>
-    accessMiddlewareStackM(s =>
+    accessMiddlewareStackM((s) =>
       foldMiddlewareStack(s.getOrNull, requestInner)<M, Req, Resp>(
         method,
         url,
@@ -433,7 +433,7 @@ export function withPathHeaders(
   path: Predicate<string>,
   replace = false
 ): RequestMiddleware {
-  return req => (m, u, reqT, respT, b) =>
+  return (req) => (m, u, reqT, respT, b) =>
     path(u)
       ? withHeaders(headers, replace)(req(m, u, reqT, respT, b))
       : req(m, u, reqT, respT, b)

@@ -83,15 +83,15 @@ function buildFieldInfo(
 
   const stringRules = [
     (v: string) =>
-      v === "" ||
-      metadata.minLength === undefined ||
-      v.length >= metadata.minLength ||
-      `The field requires at least ${metadata.minLength} characters`,
+      v === ""
+      || metadata.minLength === undefined
+      || v.length >= metadata.minLength
+      || `The field requires at least ${metadata.minLength} characters`,
     (v: string) =>
-      v === "" ||
-      metadata.maxLength === undefined ||
-      v.length <= metadata.maxLength ||
-      `The field cannot have more than ${metadata.maxLength} characters`
+      v === ""
+      || metadata.maxLength === undefined
+      || v.length <= metadata.maxLength
+      || `The field cannot have more than ${metadata.maxLength} characters`
   ]
 
   const numberRules = [
@@ -111,7 +111,7 @@ function buildFieldInfo(
     pipe(
       parse(convertOutInt(v, metadata.type)),
       These.result,
-      _ =>
+      (_) =>
         _.match(
           renderError,
           ([_, optErr]) =>
@@ -126,7 +126,7 @@ function buildFieldInfo(
     rules: [
       // TODO: optimise
       (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
-      ...(metadata.type === "text" ? stringRules : numberRules.map(r => (v: string) => r(parseFloat(v)))),
+      ...(metadata.type === "text" ? stringRules : numberRules.map((r) => (v: string) => r(parseFloat(v)))),
       parseRule
     ],
     metadata

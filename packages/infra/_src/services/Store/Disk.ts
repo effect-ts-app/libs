@@ -19,9 +19,9 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const fsStore = {
       get: fu
         .readTextFile(file)
-        .map(x => JSON.parse(x) as PM[])
+        .map((x) => JSON.parse(x) as PM[])
         .orDie,
-      setRaw: (v: Iterable<PM>) => JSON.stringify([...v], undefined, 2)["|>"](json => fu.writeTextFile(file, json))
+      setRaw: (v: Iterable<PM>) => JSON.stringify([...v], undefined, 2)["|>"]((json) => fu.writeTextFile(file, json))
     }
 
     const store = yield* $(
@@ -42,19 +42,19 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
       ...store,
       batchSet: flow(
         store.batchSet,
-        t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
       ),
       bulkSet: flow(
         store.bulkSet,
-        t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
       ),
       set: flow(
         store.set,
-        t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
       ),
       remove: flow(
         store.remove,
-        t => t.tap(() => flushToDisk.tapErrorCause(err => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
       )
     } satisfies Store<PM, Id>
   })
@@ -79,7 +79,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           const storesSem = Semaphore.unsafeMake(1)
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
-          const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap(namespace => {
+          const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
             const store = stores.get(namespace)
             if (store) {
               return Effect.succeed(store)
@@ -91,7 +91,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, PM>(prefix, namespace, dir, name, seed).tap(store =>
+                return makeDiskStoreInt<Id, PM>(prefix, namespace, dir, name, seed).tap((store) =>
                   Effect.sync(() => stores.set(namespace, store))
                 )
               })
@@ -99,14 +99,14 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           })
 
           const s: Store<PM, Id> = {
-            all: getStore.flatMap(_ => _.all),
-            find: (...args) => getStore.flatMap(_ => _.find(...args)),
-            filter: (...args) => getStore.flatMap(_ => _.filter(...args)),
-            filterJoinSelect: (...args) => getStore.flatMap(_ => _.filterJoinSelect(...args)),
-            set: (...args) => getStore.flatMap(_ => _.set(...args)),
-            batchSet: (...args) => getStore.flatMap(_ => _.batchSet(...args)),
-            bulkSet: (...args) => getStore.flatMap(_ => _.bulkSet(...args)),
-            remove: (...args) => getStore.flatMap(_ => _.remove(...args))
+            all: getStore.flatMap((_) => _.all),
+            find: (...args) => getStore.flatMap((_) => _.find(...args)),
+            filter: (...args) => getStore.flatMap((_) => _.filter(...args)),
+            filterJoinSelect: (...args) => getStore.flatMap((_) => _.filterJoinSelect(...args)),
+            set: (...args) => getStore.flatMap((_) => _.set(...args)),
+            batchSet: (...args) => getStore.flatMap((_) => _.batchSet(...args)),
+            bulkSet: (...args) => getStore.flatMap((_) => _.bulkSet(...args)),
+            remove: (...args) => getStore.flatMap((_) => _.remove(...args))
           }
           return s
         })
@@ -115,7 +115,8 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
 }
 
 export function DiskStoreLive(config: Config<StorageConfig>, dir: string) {
-  return config.config
-    .flatMap(_ => makeDiskStore(_, dir))
+  return config
+    .config
+    .flatMap((_) => makeDiskStore(_, dir))
     .toLayer(StoreMaker)
 }

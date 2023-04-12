@@ -166,8 +166,8 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       }
       return Th.succeed(x)
     }),
-    S.arbitrary(_ =>
-      arb(_).map(out => {
+    S.arbitrary((_) =>
+      arb(_).map((out) => {
         // @ts-expect-error
         const x = new self() as ShapeFromClass<Self>
         x[fromFields](out)

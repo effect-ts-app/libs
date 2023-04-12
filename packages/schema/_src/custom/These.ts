@@ -53,7 +53,7 @@ export function foldM<E, A, E1, A1, E2, A2, E3, A3>(
 export function map_<E, A0, A>(self: These<E, A0>, f: (a: A0) => A) {
   return foldM_(
     self,
-    a => succeed(f(a)),
+    (a) => succeed(f(a)),
     (a, e) => warn(f(a), e),
     fail
   )
@@ -66,16 +66,16 @@ export function map<A0, A>(f: (a: A0) => A) {
 export function mapError_<E0, E, A>(self: These<E0, A>, f: (a: E0) => E): These<E, A> {
   return foldM_(
     self,
-    a => succeed(a),
+    (a) => succeed(a),
     (a, e) => warn(a, f(e)),
-    e => fail(f(e))
+    (e) => fail(f(e))
   )
 }
 
 export function mapError<E0, E>(
   f: (a: E0) => E
 ): <A>(self: These<E0, A>) => These<E, A> {
-  return self => mapError_(self, f)
+  return (self) => mapError_(self, f)
 }
 
 export function chain_<E0, A0, E, A>(
@@ -84,7 +84,7 @@ export function chain_<E0, A0, E, A>(
 ) {
   return foldM_(
     self,
-    a => f(a, Option.none),
+    (a) => f(a, Option.none),
     (a, _) => f(a, Option(_)),
     fail
   )

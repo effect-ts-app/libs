@@ -21,7 +21,7 @@ export const fakerToArb = (fakerGen: () => ReturnType<typeof faker.fake>) => (fc
     .integer()
     .noBias() // same probability to generate each of the allowed integers
     .noShrink() // shrink on a seed makes no sense
-    .map(seed => {
+    .map((seed) => {
       faker.seed(seed) // seed the generator
       return fakerGen() // call it
     })

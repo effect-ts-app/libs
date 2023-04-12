@@ -66,15 +66,15 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
   const opts = tsconfig.options as any
   opts.configFilePath = configPath
 
-  tsconfig.fileNames.forEach(fileName => {
+  tsconfig.fileNames.forEach((fileName) => {
     files.add(fileName)
   })
 
   const servicesHost: ts.LanguageServiceHost = {
-    realpath: fileName => ts.sys.realpath?.(fileName) ?? fileName,
+    realpath: (fileName) => ts.sys.realpath?.(fileName) ?? fileName,
     getScriptFileNames: () => Array.from(files),
     getScriptVersion,
-    getScriptSnapshot: fileName => {
+    getScriptSnapshot: (fileName) => {
       if (!ts.sys.fileExists(fileName)) {
         return undefined
       }
@@ -84,9 +84,9 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
     },
     getCurrentDirectory: () => process.cwd(),
     getCompilationSettings: () => tsconfig.options,
-    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
-    fileExists: fileName => ts.sys.fileExists(fileName),
-    readFile: fileName => ts.sys.readFile(fileName)
+    getDefaultLibFileName: (options) => ts.getDefaultLibFilePath(options),
+    fileExists: (fileName) => ts.sys.fileExists(fileName),
+    readFile: (fileName) => ts.sys.readFile(fileName)
   }
 
   const services = ts.createLanguageService(servicesHost, registry)
@@ -165,7 +165,7 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
     if (syntactic.length > 0) {
       throw new Error(
         syntactic
-          .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+          .map((_) => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
           .join("\n")
       )
     }
@@ -176,7 +176,7 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
     if (semantic.length > 0) {
       throw new Error(
         semantic
-          .map(_ => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
+          .map((_) => ts.flattenDiagnosticMessageText(_.messageText, "\n"))
           .join("\n")
       )
     }
@@ -249,7 +249,7 @@ export function effectPlugin(options?: Options): Array<V.PluginOption> {
         path = fn
         files.add(path)
         const compiled = getCompiled(path)
-        fs.unlink(path, err => {
+        fs.unlink(path, (err) => {
           if (err) console.error(err)
           files.delete(path)
         })

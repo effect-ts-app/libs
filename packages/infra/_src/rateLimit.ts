@@ -34,13 +34,14 @@
  */
 export function SEM_withPermitsDuration(permits: number, duration: Duration) {
   return (self: Semaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
-    return effect =>
+    return (effect) =>
       Effect.uninterruptibleMask(
-        restore =>
+        (restore) =>
           restore(self.take(permits))
             > restore(effect)
               .ensuring(
-                self.release(permits)
+                self
+                  .release(permits)
                   .delay(duration)
               )
       )
@@ -57,10 +58,12 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyChunk<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
-    items.chunk(n)
+    items
+      .chunk(n)
       .forEachEffectParWithIndex((_, i) =>
-        _.forEachParWithIndex((_, j) => forEachItem(_, j, i))
-          .flatMap(_ => forEachBatch(_ as NonEmptyChunk<A>, i))
+        _
+          .forEachParWithIndex((_, j) => forEachItem(_, j, i))
+          .flatMap((_) => forEachBatch(_ as NonEmptyChunk<A>, i))
       )
 }
 
@@ -74,10 +77,12 @@ export function batch<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyChunk<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
-    items.chunk(n)
+    items
+      .chunk(n)
       .forEachEffectWithIndex((_, i) =>
-        _.forEachParWithIndex((_, j) => forEachItem(_, j, i))
-          .flatMap(_ => forEachBatch(_ as NonEmptyChunk<A>, i))
+        _
+          .forEachParWithIndex((_, j) => forEachItem(_, j, i))
+          .flatMap((_) => forEachBatch(_ as NonEmptyChunk<A>, i))
       )
 }
 
@@ -114,11 +119,13 @@ export function naiveRateLimit(
     forEachItem: (i: T) => Effect<R, E, A>,
     forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
   ) =>
-    items.chunk(n)
+    items
+      .chunk(n)
       .forEachEffectWithIndex((batch, i) =>
         ((i === 0) ? Effect.unit : Effect.sleep(d))
           .zipRight(
-            batch.forEachEffectPar(forEachItem)
+            batch
+              .forEachEffectPar(forEachItem)
               .withParallelism(n)
               .flatMap(forEachBatch)
           )

@@ -43,20 +43,20 @@ export function map<
   const mapArb = Arbitrary.for(maparr)
 
   const refinement = (_: unknown): _ is ReadonlyMap<KeyParsedShape, ParsedShape> =>
-    _ instanceof Map &&
-    Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
+    _ instanceof Map
+    && Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
 
   return pipe(
     MO.identity(refinement),
     MO.constructor((s: ReadonlyMap<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
-    MO.arbitrary(_ => mapArb(_).map(x => new Map(x))),
+    MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
     MO.parser(
       (i: unknown, env?: ParserEnv) =>
         mapParse(i, env).apply(
-          Th.map(x => new Map(x) as ReadonlyMap<KeyParsedShape, ParsedShape>)
+          Th.map((x) => new Map(x) as ReadonlyMap<KeyParsedShape, ParsedShape>)
         )
     ),
-    MO.encoder(_ => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
+    MO.encoder((_) => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
     MO.mapApi(() => ({})),
     MO.withDefaults,
     MO.annotate(mapIdentifier, {})

@@ -14,10 +14,10 @@ export class FatalQueueException<E> extends CauseException<E> {
   }
 }
 
-const reportQueueError_ = reportError(cause => new MessageException(cause))
+const reportQueueError_ = reportError((cause) => new MessageException(cause))
 
 export const reportQueueError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
-  RequestContextContainer.getOption.flatMap(requestContext =>
+  RequestContextContainer.getOption.flatMap((requestContext) =>
     reportQueueError_(cause, { requestContext: requestContext.value, ...context })
   )
 
@@ -35,16 +35,17 @@ export function forkDaemonReportQueue<R, E, A>(self: Effect<R, E, A>) {
 }
 
 export const reportFatalQueueError = reportError(
-  cause => new FatalQueueException(cause)
+  (cause) => new FatalQueueException(cause)
 )
 
 export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
   const report = reportNonInterruptedFailureCause(context)
   return <R, E, A>(inp: Effect<R, E, A>): Effect<R, never, Exit<E, A>> =>
-    inp.exit
-      .flatMap(result =>
+    inp
+      .exit
+      .flatMap((result) =>
         result.match(
-          cause => report(cause).map(() => result),
+          (cause) => report(cause).map(() => result),
           () => Effect(result)
         )
       )

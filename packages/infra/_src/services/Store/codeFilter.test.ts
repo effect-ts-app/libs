@@ -20,7 +20,7 @@ export function somethingsWhere(
   ) => Where | [Where, ...Where[]],
   mode?: "or" | "and"
 ) {
-  return makeSomethingFilter_(f => {
+  return makeSomethingFilter_((f) => {
     const m = makeWhere ? makeWhere(f) : []
     return ({
       mode,
@@ -44,37 +44,47 @@ type Something = {
 
 test("works", () => {
   expect(
-    somethings.filterMap(codeFilter(
-      somethingsWhere(_ => _("b", _ => "b2"))
-    )).toArray
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => "b2"))
+      ))
+      .toArray
   )
     .toEqual([somethings[1]])
 
   expect(
-    somethings.filterMap(codeFilter(
-      somethingsWhere(_ => _("b", _ => "b"))
-    )).toArray
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => "b"))
+      ))
+      .toArray
   )
     .toEqual([somethings[0]])
 
   expect(
-    somethings.filterMap(codeFilter(
-      somethingsWhere(_ => _("d.-1.a", _ => "a5"))
-    )).toArray
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("d.-1.a", (_) => "a5"))
+      ))
+      .toArray
   )
     .toEqual([somethings[1]])
 
   expect(
-    somethings.filterMap(codeFilter(
-      somethingsWhere(_ => _("d.-1.a", _ => "a"))
-    )).toArray
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("d.-1.a", (_) => "a"))
+      ))
+      .toArray
   )
     .toEqual([somethings[0]])
 
   expect(
-    somethings.filterMap(codeFilter(
-      somethingsWhere(_ => _("d.-1.a", _ => _.$isnt("a")))
-    )).toArray
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("d.-1.a", (_) => _.$isnt("a")))
+      ))
+      .toArray
   )
     .toEqual([somethings[1]])
 })

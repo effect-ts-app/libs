@@ -34,7 +34,7 @@ export const inputDate = pipe(
       : dateParser(u, env)
   ),
   encoder((i): Date => i.toISOString() as unknown as Date /* sue me*/),
-  arbitrary(FC =>
+  arbitrary((FC) =>
     FC.date({
       min: subNow(350),
       max: addNow(350)
@@ -46,7 +46,7 @@ export type inputDate = Date
 export type InputDate = inputDate
 
 export const reasonablePastDate = date["|>"](
-  arbitrary(FC =>
+  arbitrary((FC) =>
     FC.date({
       min: subNow(350),
       max: subNow(1)
@@ -57,7 +57,7 @@ export type reasonablePastDate = Date
 export type ReasonablePastDate = reasonablePastDate
 
 export const reasonableFutureDate = date["|>"](
-  arbitrary(FC =>
+  arbitrary((FC) =>
     FC.date({
       min: addNow(350),
       max: addNow(1)
@@ -67,7 +67,7 @@ export const reasonableFutureDate = date["|>"](
 export type ReasonableFutureDate = Date
 
 export const reasonableDate = date["|>"](
-  arbitrary(FC =>
+  arbitrary((FC) =>
     FC.date({
       min: subNow(350),
       max: addNow(350)

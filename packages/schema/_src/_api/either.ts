@@ -60,9 +60,9 @@ export function fromEither<
   const refinement = (_: unknown): _ is Either<LeftParsedShape, ParsedShape> => {
     const ei = _ as Either<any, any>
     return (
-      typeof _ === "object" &&
-      _ != null &&
-      ((ei.isLeft() && leftGuard(ei.left)) || (ei.isRight() && guard(ei.right)))
+      typeof _ === "object"
+      && _ != null
+      && ((ei.isLeft() && leftGuard(ei.left)) || (ei.isRight() && guard(ei.right)))
     )
   }
 
@@ -82,14 +82,14 @@ export function fromEither<
   return pipe(
     MO.identity(refinement),
     MO.arbitrary(
-      _ => _.oneof(leftArb(_).map(Either.left), arb(_).map(Either.right)) as any
+      (_) => _.oneof(leftArb(_).map(Either.left), arb(_).map(Either.right)) as any
     ),
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
-    MO.encoder(_ =>
+    MO.encoder((_) =>
       _.match(
-        x => ({ _tag: "Left", left: leftEncode(x) }),
-        x => ({ _tag: "Right", right: encode(x) })
+        (x) => ({ _tag: "Left", left: leftEncode(x) }),
+        (x) => ({ _tag: "Right", right: encode(x) })
       )
     ),
     MO.mapApi(() => ({ left: left.Api, right: right.Api })),
@@ -129,7 +129,7 @@ export function either<
   const encodeSelf = Encoder.for(right)
   return pipe(
     MO.object[">>>"](fromEither(left, right)),
-    MO.encoder(_ => _.mapBoth(encodeLeft, encodeSelf)),
+    MO.encoder((_) => _.mapBoth(encodeLeft, encodeSelf)),
     MO.withDefaults,
     MO.annotate(eitherIdentifier, { left, right })
   ) as any

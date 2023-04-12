@@ -15,21 +15,21 @@ export const interpreters: ((
   schema: S.SchemaAny
 ) => Option<() => Constructor<unknown, unknown, unknown>>)[] = [
   Option.partial(
-    miss => (schema: S.SchemaAny): () => Constructor<unknown, unknown, unknown> => {
+    (miss) => (schema: S.SchemaAny): () => Constructor<unknown, unknown, unknown> => {
       if (schema instanceof S.SchemaNamed) {
         return () => {
           const self = constructorFor(schema.self)
-          return u => Th.mapError_(self(u), e => S.namedE(schema.name, e))
+          return (u) => Th.mapError_(self(u), (e) => S.namedE(schema.name, e))
         }
       }
       if (schema instanceof S.SchemaMapConstructorError) {
         return () => {
           const self = constructorFor(schema.self)
-          return u => Th.mapError_(self(u), schema.mapError)
+          return (u) => Th.mapError_(self(u), schema.mapError)
         }
       }
       if (schema instanceof S.SchemaIdentity) {
-        return () => u => Th.succeed(u)
+        return () => (u) => Th.succeed(u)
       }
       if (schema instanceof S.SchemaConstructor) {
         return () => schema.of
@@ -37,11 +37,11 @@ export const interpreters: ((
       if (schema instanceof S.SchemaRefinement) {
         return () => {
           const self = constructorFor(schema.self)
-          return u =>
+          return (u) =>
             Th.chain_(
               pipe(
                 self(u),
-                Th.mapError(e => S.compositionE(Chunk(S.prevE(e))))
+                Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
               ),
               (
                 a,
@@ -80,7 +80,7 @@ function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
-    const of_: Constructor<unknown, unknown, unknown> = __ => constructorFor(schema.self())(__)
+    const of_: Constructor<unknown, unknown, unknown> = (__) => constructorFor(schema.self())(__)
     cache.set(schema, of_)
     return of_ as Constructor<ConstructorInput, ParsedShape, any>
   }
@@ -88,7 +88,7 @@ function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api
     const _ = interpreter(schema)
     if (_._tag === "Some") {
       let x: Constructor<unknown, unknown, unknown>
-      const of_: Constructor<unknown, unknown, unknown> = __ => {
+      const of_: Constructor<unknown, unknown, unknown> = (__) => {
         if (!x) {
           x = _.value()
         }
@@ -100,7 +100,7 @@ function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api
   }
   if (hasContinuation(schema)) {
     let x: Constructor<unknown, unknown, unknown>
-    const of_: Constructor<unknown, unknown, unknown> = __ => {
+    const of_: Constructor<unknown, unknown, unknown> = (__) => {
       if (!x) {
         x = constructorFor(schema[SchemaContinuationSymbol])
       }

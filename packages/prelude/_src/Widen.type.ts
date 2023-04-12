@@ -3,8 +3,8 @@ import type { BuiltInObject } from "@effect-app/core/utils"
 
 type AllKeys<T> = T extends any ? keyof T : never
 
-type OptionalKeys<T> = T extends any ? // eslint-disable-next-line @typescript-eslint/ban-types
-  {[K in keyof T]-?: {} extends Pick<T, K> ? K : never}[keyof T]
+type OptionalKeys<T> = T extends any // eslint-disable-next-line @typescript-eslint/ban-types
+  ? { [K in keyof T]-?: {} extends Pick<T, K> ? K : never }[keyof T]
   : never
 
 type Idx<T, K extends PropertyKey, D = never> = T extends any ? K extends keyof T ? T[K]

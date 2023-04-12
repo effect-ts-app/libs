@@ -301,8 +301,8 @@ export class LiteralE<KS extends readonly string[]> extends DefaultLeafE<{
 
   get [toTreeSymbol]() {
     return tree(
-      `cannot process ${JSON.stringify(this.actual)}, expected one of ` +
-        this.literals.join(", ")
+      `cannot process ${JSON.stringify(this.actual)}, expected one of `
+        + this.literals.join(", ")
     )
   }
 }
@@ -519,7 +519,7 @@ export function toTreeWith<E>(
       case "Missing": {
         return tree(
           `${de.keys.length} error(s) found while checking keys`,
-          de.keys.map(key => tree(`missing required key ${JSON.stringify(key)}`))
+          de.keys.map((key) => tree(`missing required key ${JSON.stringify(key)}`))
         )
       }
       case "Member":

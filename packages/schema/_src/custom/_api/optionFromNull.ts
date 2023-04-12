@@ -32,15 +32,15 @@ export function optionFromNull<
   const create = Constructor.for(self)
   const parse = Parser.for(self)
   const refinement = (u: unknown): u is Option<ParsedShape> =>
-    typeof u === "object" &&
-    u !== null &&
-    ["None", "Some"].indexOf(u["_tag"]) !== -1 &&
-    ((u["_tag"] === "Some" && guard(u["value"])) || u["_tag"] === "None")
+    typeof u === "object"
+    && u !== null
+    && ["None", "Some"].indexOf(u["_tag"]) !== -1
+    && ((u["_tag"] === "Some" && guard(u["value"])) || u["_tag"] === "None")
   const encode = Encoder.for(self)
 
   return pipe(
     S.identity(refinement),
-    S.arbitrary(_ => _.option(arb(_)).map(Option.fromNullable)),
+    S.arbitrary((_) => _.option(arb(_)).map(Option.fromNullable)),
     S.parser((i: ParserInput | null, env) =>
       i === null
         ? Th.succeed(Option.none)
@@ -49,10 +49,10 @@ export function optionFromNull<
     S.constructor((x: Option<ConstructorInput>) =>
       x.match(
         () => Th.succeed(Option.none),
-        v => Th.map_(create(v), Option.some)
+        (v) => Th.map_(create(v), Option.some)
       )
     ),
-    S.encoder(_ => _.map(encode).value ?? null),
+    S.encoder((_) => _.map(encode).value ?? null),
     S.mapApi(() => self.Api),
     withDefaults,
     S.annotate(optionFromNullIdentifier, { self })

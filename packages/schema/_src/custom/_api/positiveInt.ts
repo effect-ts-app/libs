@@ -23,7 +23,7 @@ export const positiveIntFromNumber: DefaultSchema<
 > = pipe(
   intFromNumber,
   positive("int"),
-  S.arbitrary(FC => FC.integer({ min: 0 }).map(_ => _ as PositiveInt)),
+  S.arbitrary((FC) => FC.integer({ min: 0 }).map((_) => _ as PositiveInt)),
   brand<PositiveInt>()
 )
 
@@ -50,7 +50,7 @@ export const positiveIntZeroExclusiveFromNumber: DefaultSchema<
 > = pipe(
   intFromNumber,
   positiveExcludeZero("int"),
-  S.arbitrary(FC => FC.integer({ min: 1 }).map(_ => _ as PositiveIntZeroExclusive)),
+  S.arbitrary((FC) => FC.integer({ min: 1 }).map((_) => _ as PositiveIntZeroExclusive)),
   brand<PositiveIntZeroExclusive>()
 )
 

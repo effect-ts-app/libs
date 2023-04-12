@@ -57,7 +57,7 @@ export interface AnyOps<T> {
  * @tsplus fluent effect/io/Effect debug
  */
 export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return self.tap(a => {
+  return self.tap((a) => {
     let r: string | A = a
     try {
       r = pretty(a)
@@ -70,7 +70,7 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
  * @tsplus fluent effect/io/Effect debugUnsafe
  */
 export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return self.tap(a => Effect(console.log(name, a)))
+  return self.tap((a) => Effect(console.log(name, a)))
 }
 
 /**
@@ -82,7 +82,8 @@ export function debug<A>(a: AnyOps<A>, name: string) {
   try {
     r = pretty(a.subject)
   } catch { /* empty */ }
-  return Effect.logDebug("print")
+  return Effect
+    .logDebug("print")
     .logAnnotate(name, `${r}`)
     .map(() => a.subject)
 }
@@ -225,7 +226,7 @@ export function arrayMoveDropUndefined<T>(
 export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
   return (arrInput: ReadonlyArray<T | undefined>): Option<ReadonlyArray<T>> => {
     const ar = [...arrInput]
-    const index = ar.findIndex(x => x === el)
+    const index = ar.findIndex((x) => x === el)
     if (index === -1) {
       return Option.none
     }
@@ -235,7 +236,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
   return (arrInput: ReadonlySet<T | undefined>): Option<ReadonlySet<T>> =>
-    [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map(ar => new Set(ar))
+    [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map((ar) => new Set(ar))
 }
 export * from "@effect-app/core/utils"
 export { default as get } from "lodash/get.js"

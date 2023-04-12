@@ -7,11 +7,12 @@ export abstract class RequestContextContainer extends TagClass<RequestContextCon
   abstract readonly requestContext: Effect<never, never, RequestContext>
   abstract readonly update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, void>
   static get get(): Effect<RequestContextContainer, never, RequestContext> {
-    return RequestContextContainer.flatMap(_ => _.requestContext)
+    return RequestContextContainer.flatMap((_) => _.requestContext)
   }
   static get getOption() {
-    return Effect.contextWith((_: Context<never>) => Context.getOption(_, RequestContextContainer))
-      .flatMap(requestContext =>
+    return Effect
+      .contextWith((_: Context<never>) => Context.getOption(_, RequestContextContainer))
+      .flatMap((requestContext) =>
         requestContext.isSome()
           ? requestContext.value.requestContext.map(Option.some)
           : Effect(Option.none)

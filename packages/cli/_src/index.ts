@@ -89,8 +89,9 @@ function packagejson(p: string, levels = 0) {
 
   const pkg = JSON.parse(fs.readFileSync(p + "/package.json", "utf-8"))
   const t = levels
-    ? Object.keys(items)
-      .filter(_ => _.split("/").length <= (levels + 1 /* `./` */))
+    ? Object
+      .keys(items)
+      .filter((_) => _.split("/").length <= (levels + 1 /* `./` */))
       .reduce((prev, cur) => {
         prev[cur] = items[cur]
         return prev
@@ -112,7 +113,8 @@ function packagejson(p: string, levels = 0) {
         }
       }
       : undefined,
-    ...Object.keys(t)
+    ...Object
+      .keys(t)
       .reduce((prev, cur) => {
         if (cur !== "./index") prev[cur] = t[cur]
         return prev
@@ -137,7 +139,7 @@ switch (cmd) {
   case "watch": {
     const dirs = ["../resources/dist", "../types/dist", "../ui/dist"]
 
-    dirs.forEach(d => {
+    dirs.forEach((d) => {
       if (fs.existsSync(d)) {
         w.default(d, { recursive: true }, () => {
           // console.log("change!", d)
@@ -159,9 +161,10 @@ switch (cmd) {
       "./_project/models/_src",
       "./_project/ui/_src",
       "./_project/core/_src"
-    ].filter(
-      _ => fs.existsSync(_)
-    )
+    ]
+      .filter(
+        (_) => fs.existsSync(_)
+      )
       .forEach(monitorIndexes)
     break
   }
@@ -178,22 +181,24 @@ switch (cmd) {
 
   case "packagejson-target": {
     const target = process.argv[3]!
-    target.split(",").forEach(_ => monitorPackagejson(_, 1))
+    target.split(",").forEach((_) => monitorPackagejson(_, 1))
     cmds = process.argv.slice(4)
     break
   }
 
   case "packagejson-packages": {
-    fs.readdirSync(startDir + "/packages")
-      .map(_ => startDir + "/packages/" + _)
-      .filter(_ => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/_src")).forEach(_ => monitorPackagejson(_))
+    fs
+      .readdirSync(startDir + "/packages")
+      .map((_) => startDir + "/packages/" + _)
+      .filter((_) => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/_src"))
+      .forEach((_) => monitorPackagejson(_))
     break
   }
 }
 
 if (cmds.length) {
   const p = cp.spawn(cmds[0]!, cmds.slice(1), { stdio: "inherit" })
-  p.on("close", code => process.exit(code ?? 0))
-  p.on("exit", code => process.exit(code ?? 0))
+  p.on("close", (code) => process.exit(code ?? 0))
+  p.on("exit", (code) => process.exit(code ?? 0))
   p.on("disconnect", () => process.exit(1))
 }

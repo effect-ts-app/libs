@@ -44,9 +44,11 @@ export function clientFor<M extends Requests>(models: M): Client<M> {
 
 function clientFor_<M extends Requests>(models: M) {
   return (
-    models.$$.keys
+    models
+      .$$
+      .keys
       // ignore module interop with automatic default exports..
-      .filter(x => x !== "default")
+      .filter((x) => x !== "default")
       .reduce(
         (prev, cur) => {
           const h = models[cur]
@@ -64,18 +66,18 @@ function clientFor_<M extends Requests>(models: M) {
 
           const parseResponse = flow(
             Schema.Parser.for(Response)["|>"](condemnCustom),
-            _ => _.mapError(err => new ResponseError(err))
+            (_) => _.mapError((err) => new ResponseError(err))
           )
 
-          const parseResponseE = flow(parseResponse, x => x.map(Schema.Encoder.for(Response)))
+          const parseResponseE = flow(parseResponse, (x) => x.map(Schema.Encoder.for(Response)))
 
           const path = new Path(Request.path)
 
           // if we don't need props, then also dont require an argument.
           const props = [Request.Body, Request.Query, Request.Path]
-            .filter(x => x)
+            .filter((x) => x)
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            .flatMap(x => Object.keys(x.Api.props))
+            .flatMap((x) => Object.keys(x.Api.props))
           // @ts-expect-error doc
           prev[utils.uncapitalize(cur)] = Request.method === "GET"
             ? props.length === 0

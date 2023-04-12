@@ -55,9 +55,10 @@ export function keys(r: Dictionary<unknown>): ReadonlyArray<string> {
  * Extract record values
  */
 export function values<V>(r: Dictionary<V>): ReadonlyArray<V> {
-  return Object.keys(r)
+  return Object
+    .keys(r)
     .sort()
-    .map(s => r[s]!)
+    .map((s) => r[s]!)
 }
 
 /**
@@ -66,7 +67,7 @@ export function values<V>(r: Dictionary<V>): ReadonlyArray<V> {
 export function collect<A, B>(
   f: (k: string, a: A) => B
 ): (r: Dictionary<A>) => ReadonlyArray<B> {
-  return r => collect_(r, f)
+  return (r) => collect_(r, f)
 }
 
 /**
@@ -87,7 +88,7 @@ export function collect_<A, B>(
  * Insert or replace a key/value pair in a record
  */
 export function insertAt<A>(k: string, a: A): (r: Dictionary<A>) => Dictionary<A> {
-  return r => insertAt_(r, k, a)
+  return (r) => insertAt_(r, k, a)
 }
 
 /**
@@ -189,7 +190,7 @@ export function modifyAt_<A>(
 export function pop(
   k: string
 ): <A>(r: Dictionary<A>) => O.Option<readonly [A, Dictionary<A>]> {
-  return r => pop_(r, k)
+  return (r) => pop_(r, k)
 }
 
 /**
@@ -215,7 +216,7 @@ export function lookup_<A>(r: Dictionary<A>, k: string): O.Option<A> {
  * Lookup the value for a key in a record
  */
 export function lookup(k: string): <A>(r: Dictionary<A>) => O.Option<A> {
-  return r => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none)
+  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none)
 }
 
 /**
@@ -229,7 +230,7 @@ export const empty: Dictionary<never> = {}
 export function mapWithIndex<A, B>(
   f: (k: string, a: A) => B
 ): (fa: Dictionary<A>) => Dictionary<B> {
-  return fa => mapWithIndex_(fa, f)
+  return (fa) => mapWithIndex_(fa, f)
 }
 
 /**
@@ -251,7 +252,7 @@ export function mapWithIndex_<A, B>(
  * Map a record passing the values to the iterating function
  */
 export function map<A, B>(f: (a: A) => B): (fa: Dictionary<A>) => Dictionary<B> {
-  return fa => map_(fa, f)
+  return (fa) => map_(fa, f)
 }
 
 /**
@@ -268,7 +269,7 @@ export function reduceWithIndex<A, B>(
   b: B,
   f: (k: string, b: B, a: A) => B
 ): (fa: Dictionary<A>) => B {
-  return fa => reduceWithIndex_(fa, b, f)
+  return (fa) => reduceWithIndex_(fa, b, f)
 }
 
 /**
@@ -298,7 +299,7 @@ export function reduceRightWithIndex<A, B>(
   b: B,
   f: (k: string, a: A, b: B) => B
 ): (fa: Dictionary<A>) => B {
-  return fa => reduceRightWithIndex_(fa, b, f)
+  return (fa) => reduceRightWithIndex_(fa, b, f)
 }
 
 /**
@@ -334,7 +335,7 @@ export function singleton<A>(k: string, a: A): Dictionary<A> {
 export function partitionMapWithIndex<A, B, C>(
   f: (key: string, a: A) => Either<B, C>
 ): (fa: Dictionary<A>) => readonly [Dictionary<B>, Dictionary<C>] {
-  return fa => partitionMapWithIndex_(fa, f)
+  return (fa) => partitionMapWithIndex_(fa, f)
 }
 
 /**
@@ -373,7 +374,7 @@ export function partitionWithIndex<A>(
 export function partitionWithIndex<A>(
   predicateWithIndex: PredicateWithIndex<string, A>
 ): (fa: Dictionary<A>) => readonly [Dictionary<A>, Dictionary<A>] {
-  return fa => partitionWithIndex_(fa, predicateWithIndex)
+  return (fa) => partitionWithIndex_(fa, predicateWithIndex)
 }
 
 /**
@@ -414,7 +415,7 @@ export function filterMapWithIndex<A, B>(
 export function filterMapWithIndex<A, B>(
   f: (key: string, a: A) => O.Option<B>
 ): (fa: Dictionary<A>) => Dictionary<B> {
-  return fa => filterMapWithIndex_(fa, f)
+  return (fa) => filterMapWithIndex_(fa, f)
 }
 
 /**
@@ -447,7 +448,7 @@ export function filterWithIndex<A>(
 export function filterWithIndex<A>(
   predicateWithIndex: PredicateWithIndex<string, A>
 ): (fa: Dictionary<A>) => Dictionary<A> {
-  return fa => filterWithIndex_(fa, predicateWithIndex)
+  return (fa) => filterWithIndex_(fa, predicateWithIndex)
 }
 
 /**
@@ -484,7 +485,7 @@ export function filterWithIndex_<A>(
  * Checks a predicate against all the record entries
  */
 export function every<A>(predicate: Predicate<A>): (r: Dictionary<A>) => boolean {
-  return r => every_(r, predicate)
+  return (r) => every_(r, predicate)
 }
 
 /**
@@ -503,7 +504,7 @@ export function every_<A>(r: Dictionary<A>, predicate: Predicate<A>): boolean {
  * Checks a predicate against some of the record entries
  */
 export function some<A>(predicate: (a: A) => boolean): (r: Dictionary<A>) => boolean {
-  return r => some_(r, predicate)
+  return (r) => some_(r, predicate)
 }
 
 /**
@@ -629,7 +630,8 @@ export const partitionMap_ = <A, B, C>(fa: Dictionary<A>, f: (a: A) => Either<B,
 /**
  * Reduce record entries
  */
-export const reduce: <A, B>(b: B, f: (b: B, a: A) => B) => (fa: Dictionary<A>) => B = (b, f) => fa => reduce_(fa, b, f)
+export const reduce: <A, B>(b: B, f: (b: B, a: A) => B) => (fa: Dictionary<A>) => B = (b, f) => (fa) =>
+  reduce_(fa, b, f)
 
 /**
  * Reduce record entries
@@ -646,7 +648,7 @@ export const reduce_: <A, B>(fa: Dictionary<A>, b: B, f: (b: B, a: A) => B) => B
 export const reduceRight: <A, B>(
   b: B,
   f: (a: A, b: B) => B
-) => (fa: Dictionary<A>) => B = (b, f) => fa => reduceRight_(fa, b, f)
+) => (fa: Dictionary<A>) => B = (b, f) => (fa) => reduceRight_(fa, b, f)
 
 /**
  * Reduce record entries in inverted order

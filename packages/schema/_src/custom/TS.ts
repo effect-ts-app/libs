@@ -10,23 +10,23 @@ export default function augmentName(_program: ts.Program) {
       return (sourceFile: ts.SourceFile) => {
         function visitor(node: ts.Node): ts.VisitResult<ts.Node> {
           if (
-            ts.isCallExpression(node) &&
-            ts.isCallExpression(node.expression) &&
-            node.expression.typeArguments &&
-            node.expression.typeArguments.length === 1 &&
-            node.expression.arguments.length === 0
+            ts.isCallExpression(node)
+            && ts.isCallExpression(node.expression)
+            && node.expression.typeArguments
+            && node.expression.typeArguments.length === 1
+            && node.expression.arguments.length === 0
           ) {
             const signature = checker.getResolvedSignature(node.expression)
 
             if (
-              signature &&
               signature
+              && signature
                   .getJsDocTags()
                   .findIndex(
-                    _ => _.name === "inject" && _.text?.map(_ => _.text === "genericName")
-                  ) !== -1 &&
-              signature?.parameters.length === 1 &&
-              signature?.parameters[0].name === "__name"
+                    (_) => _.name === "inject" && _.text?.map((_) => _.text === "genericName")
+                  ) !== -1
+              && signature?.parameters.length === 1
+              && signature?.parameters[0].name === "__name"
             ) {
               const typeNode = node.expression.typeArguments[0]
               if (ts.isTypeReferenceNode(typeNode)) {

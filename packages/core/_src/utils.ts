@@ -112,7 +112,7 @@ export const pattern: <N extends string>(
       },
     __: (_: Exclude<X, { _tag: keyof K }>, __: Exclude<X, { _tag: keyof K }>) => H
   ): (m: X) => { [k in keyof K]: ReturnType<NonNullable<K[k]>> }[keyof K] | H
-} = n =>
+} = (n) =>
   ((_: any, d: any) => (m: any) => {
     return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
   }) as any
@@ -157,7 +157,7 @@ export const pattern_: <N extends string>(
       },
     __: (_: Exclude<X, { _tag: keyof K }>, __: Exclude<X, { _tag: keyof K }>) => H
   ): { [k in keyof K]: ReturnType<NonNullable<K[k]>> }[keyof K] | H
-} = n =>
+} = (n) =>
   ((m: any, _: any, d: any) => {
     return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
   }) as any
@@ -198,7 +198,7 @@ export const patternFor: <N extends string>(
       },
     __: (_: Exclude<X, { _tag: keyof K }>, __: Exclude<X, { _tag: keyof K }>) => H
   ): (m: X) => { [k in keyof K]: ReturnType<NonNullable<K[k]>> }[keyof K] | H
-} = n => () =>
+} = (n) => () =>
   ((_: any, d: any) => (m: any) => {
     return (_[m[n]] ? _[m[n]](m, m) : d(m, m))
   }) as any
@@ -416,8 +416,8 @@ export function LazyGetter(
         prop = (<NewDescriptor> targetOrDesc).key
         desc = Object.assign(
           {},
-          (<NewDescriptor> targetOrDesc).descriptor ||
-            /* istanbul ignore next */ targetOrDesc
+          (<NewDescriptor> targetOrDesc).descriptor
+            /* istanbul ignore next */ || targetOrDesc
         )
       }
 
@@ -428,8 +428,8 @@ export function LazyGetter(
         prop = key
         desc = Object.assign(
           {},
-          descriptor ||
-            /* istanbul ignore next */ Object.getOwnPropertyDescriptor(
+          descriptor
+            /* istanbul ignore next */ || Object.getOwnPropertyDescriptor(
               targetOrDesc,
               key
             )

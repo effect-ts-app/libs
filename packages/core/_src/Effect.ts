@@ -48,10 +48,10 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
   fm: (a: A) => Effect<R2, E2, A2>
 ): Effect<R | R2, E | E2, Option<A2>> {
   return Debug.untraced(() =>
-    self.flatMap(d =>
+    self.flatMap((d) =>
       d.match(
         () => Effect(Option.none),
-        _ => fm(_).map(Option.some)
+        (_) => fm(_).map(Option.some)
       )
     )
   )
@@ -66,10 +66,10 @@ export function tapOption<R, E, A, R2, E2, A2>(
   fm: (a: A) => Effect<R2, E2, A2>
 ): Effect<R | R2, E | E2, Option<A>> {
   return Debug.untraced(() =>
-    self.flatMap(d =>
+    self.flatMap((d) =>
       d.match(
         () => Effect(Option.none),
-        _ => fm(_).map(() => Option(_))
+        (_) => fm(_).map(() => Option(_))
       )
     )
   )
@@ -84,10 +84,10 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
   fm: Effect<R2, E2, A2>
 ) {
   return Debug.untraced(() =>
-    self.flatMap(d =>
+    self.flatMap((d) =>
       d.match(
         () => Effect(Option.none),
-        _ => fm.map(() => Option(_))
+        (_) => fm.map(() => Option(_))
       )
     )
   )
@@ -102,10 +102,10 @@ export function mapOption<R, E, A, A2>(
   fm: (a: A) => A2
 ): Effect<R, E, Option<A2>> {
   return Debug.untraced(() =>
-    self.map(d =>
+    self.map((d) =>
       d.match(
         () => Option.none,
-        _ => Option(fm(_))
+        (_) => Option(fm(_))
       )
     )
   )
@@ -122,10 +122,10 @@ export function tryCatchPromiseWithInterrupt<E, A>(
   canceller: () => void
 ): Effect<never, E, A> {
   return Debug.untraced(() =>
-    Effect.asyncInterruptEither(resolve => {
+    Effect.asyncInterruptEither((resolve) => {
       promise()
-        .then(x => pipe(x, Effect.succeed, resolve))
-        .catch(x => pipe(x, onReject, Effect.fail, resolve))
+        .then((x) => pipe(x, Effect.succeed, resolve))
+        .catch((x) => pipe(x, onReject, Effect.fail, resolve))
       return Either.left(Effect.sync(canceller))
     })
   )
@@ -158,14 +158,14 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   onSuccess: (a: A) => Effect<SR, SE, SA>
 ) =>
   Debug.untraced(() =>
-    self.exit.flatMap(_ =>
-      _.matchEffect(cause => {
+    self.exit.flatMap((_) =>
+      _.matchEffect((cause) => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return onError(firstError).flatMap(() => Effect.failCauseSync(() => cause))
         }
         return Effect.failCauseSync(() => cause)
-      }, _ => Effect(_).tap(onSuccess))
+      }, (_) => Effect(_).tap(onSuccess))
     )
   )
 
@@ -190,8 +190,8 @@ export const tapErrorInclAbort_ = <R, E, A, ER, EE, EA>(
   onError: (err: unknown) => Effect<ER, EE, EA>
 ) =>
   Debug.untraced(() =>
-    self.exit.flatMap(_ =>
-      _.matchEffect(cause => {
+    self.exit.flatMap((_) =>
+      _.matchEffect((cause) => {
         const firstError = getFirstError(cause)
         if (firstError) {
           return onError(firstError)
@@ -283,7 +283,7 @@ export const provideSomeContextEffect = <R2, E2, A2>(
 ) =>
 <R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
   Debug.untraced(() =>
-    makeCtx.flatMap(ctx => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
+    makeCtx.flatMap((ctx) => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
   )
 
 /**
@@ -295,7 +295,8 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
   return <R, E, A2>(mod: (a: A) => Effect<R, E, readonly [A2, A]>) =>
     Debug.untraced(() =>
       withPermit(
-        ref.get
+        ref
+          .get
           .flatMap(mod)
           .tap(([, _]) => ref.set(_))
           .map(([_]) => _)

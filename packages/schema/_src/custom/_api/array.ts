@@ -32,14 +32,14 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
     ),
     S.parser((u: Chunk<ParsedShape>) => Th.succeed(u.toArray)),
     S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
-    S.arbitrary(_ => _.array(arbitrarySelf(_)))
+    S.arbitrary((_) => _.array(arbitrarySelf(_)))
   )
 
   return pipe(
     chunk(self)[">>>"](fromChunk),
-    S.mapParserError(_ => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
     S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
-    S.encoder(u => u.map(encodeSelf)),
+    S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,
     S.annotate(arrayIdentifier, { self })

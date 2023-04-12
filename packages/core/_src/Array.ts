@@ -129,7 +129,7 @@ export function sortWith<A>(
 export function sortByO<A>(
   ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match(() => identity, _ => ROArray.sortBy(..._))
+  return ords.match(() => identity, (_) => ROArray.sortBy(..._))
 }
 
 /**
@@ -275,7 +275,7 @@ export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Order<A>[
 export function sortWithNonEmpty<A>(
   ...ords: NonEmptyArguments<Order<A>>
 ): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return a => a.sortByNonEmpty(...ords)
+  return (a) => a.sortByNonEmpty(...ords)
 }
 
 /**
@@ -287,7 +287,7 @@ export const makeNA = ROArray.make
  * @tsplus fluent ReadonlyArray filterWith
  */
 export function filterWith<A>(self: ReadonlyArray<A>, predicates: ReadonlyArray<Predicate<A>>) {
-  return self.filter(_ => predicates.every(f => f(_)))
+  return self.filter((_) => predicates.every((f) => f(_)))
 }
 
 /**
@@ -385,14 +385,14 @@ export function ext_NAforEachEffectPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A) => Effect<R, E, B>
 ) {
-  return T.forEachPar(as, f).map(_ => _.toNonEmptyArray.value!)
+  return T.forEachPar(as, f).map((_) => _.toNonEmptyArray.value!)
 }
 
 /**
  * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
 export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
-  return T.forEach(as, f).map(_ => _.toNonEmptyArray.value!)
+  return T.forEach(as, f).map((_) => _.toNonEmptyArray.value!)
 }
 
 /**
@@ -402,7 +402,7 @@ export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return T.forEachParWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
+  return T.forEachParWithIndex(as, f).map((_) => _.toNonEmptyArray.value!)
 }
 
 /**
@@ -412,7 +412,7 @@ export function ext_NAforEachWithIndex<A, R, E, B>(
   as: NonEmptyReadonlyArray<A>,
   f: (a: A, i: number) => Effect<R, E, B>
 ) {
-  return T.forEachWithIndex(as, f).map(_ => _.toNonEmptyArray.value!)
+  return T.forEachWithIndex(as, f).map((_) => _.toNonEmptyArray.value!)
 }
 
 /**

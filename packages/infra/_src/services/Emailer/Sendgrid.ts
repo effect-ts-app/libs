@@ -28,11 +28,11 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
               Error | sgMail.ResponseError,
               [sgMail.ClientResponse, Record<string, unknown>]
             >(
-              cb =>
+              (cb) =>
                 void sgMail.send(renderedMsg, false, (err, result) =>
-                  err ?
-                    cb(Effect.fail(err)) :
-                    cb(Effect(result)))
+                  err
+                    ? cb(Effect.fail(err))
+                    : cb(Effect(result)))
             )
           )
 
@@ -55,7 +55,8 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
  * @tsplus static Emailer.Ops LiveSendgrid
  */
 export function LiveSendgrid(config: Config<SendgridConfig>) {
-  return config.config
+  return config
+    .config
     .flatMap(makeLiveSendgrid)
     .toLayer(Emailer)
 }
@@ -86,10 +87,10 @@ export function renderMessage(forceFake: boolean) {
  */
 export function isTestAddress(to: EmailData) {
   return (
-    (typeof to === "string" && to.toLowerCase().endsWith(".test")) ||
-    (typeof to === "object" &&
-      "email" in to &&
-      to.email.toLowerCase().endsWith(".test"))
+    (typeof to === "string" && to.toLowerCase().endsWith(".test"))
+    || (typeof to === "object"
+      && "email" in to
+      && to.email.toLowerCase().endsWith(".test"))
   )
 }
 
@@ -108,7 +109,7 @@ const eq = Equivalence.string.contramap((to: { name?: string; email: string } | 
 function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
   return Array.isArray(addr)
     ? addr
-      .map(x => (isTestAddress(x) ? renderFake(x, makeId) : x))
+      .map((x) => (isTestAddress(x) ? renderFake(x, makeId) : x))
       .uniq(eq)
       .toArray
     : isTestAddress(addr)

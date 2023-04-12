@@ -24,8 +24,8 @@ const isUUID: Refinement<string, UUID> = (s: string): s is UUID => {
 
 export const UUIDFromString: DefaultSchema<string, UUID, string, string, {}> = pipe(
   fromString,
-  S.arbitrary(FC => FC.uuid()),
-  S.refine(isUUID, n => S.leafE(customE(n, "a valid UUID"))),
+  S.arbitrary((FC) => FC.uuid()),
+  S.refine(isUUID, (n) => S.leafE(customE(n, "a valid UUID"))),
   brand<UUID>(),
   S.annotate(UUIDFromStringIdentifier, {})
 )

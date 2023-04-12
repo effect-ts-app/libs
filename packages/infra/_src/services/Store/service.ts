@@ -124,8 +124,8 @@ export const makeMap = Effect.sync((): ContextMap => {
     // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
     lax: false,
     cache: {
-      getOrSetParser: p => parserCache.get(p) ?? setAndReturn(p, i => parserEnv.cache!.getOrSet(i, p)),
-      getOrSetParsers: parsers => {
+      getOrSetParser: (p) => parserCache.get(p) ?? setAndReturn(p, (i) => parserEnv.cache!.getOrSet(i, p)),
+      getOrSetParsers: (parsers) => {
         return Object.entries(parsers).reduce((prev, [k, v]) => {
           prev[k] = parserEnv.cache!.getOrSetParser(v)
           return prev
