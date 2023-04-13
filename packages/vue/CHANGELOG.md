@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.34.1
+
+### Patch Changes
+
+- Fix optional number parsing
+- Updated dependencies
+  - @effect-app/vue@0.34.1
+
 ## 0.34.0
 
 ### Minor Changes
