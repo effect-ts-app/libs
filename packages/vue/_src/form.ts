@@ -82,52 +82,70 @@ function buildFieldInfo(
   }
 
   const stringRules = [
-    (v: string) =>
-      v === ""
+    (v: string | null) =>
+      v === null
       || metadata.minLength === undefined
       || v.length >= metadata.minLength
       || `The field requires at least ${metadata.minLength} characters`,
-    (v: string) =>
-      v === ""
+    (v: string | null) =>
+      v === null
       || metadata.maxLength === undefined
       || v.length <= metadata.maxLength
       || `The field cannot have more than ${metadata.maxLength} characters`
   ]
 
   const numberRules = [
-    (v: number) =>
-      metadata.minimum === undefined
+    (v: number | null) =>
+      v === null
+      || metadata.minimum === undefined
       || metadata.minimumExclusive && v > metadata.minimum
       || !metadata.minimumExclusive && v >= metadata.minimum
       || `The value should be ${metadata.minimumExclusive ? "larger than" : "at least"} ${metadata.minimum}`,
-    (v: number) =>
-      metadata.maximum === undefined
+    (v: number | null) =>
+      v === null
+      || metadata.maximum === undefined
       || metadata.maximumExclusive && v > metadata.maximum
       || !metadata.maximumExclusive && v >= metadata.maximum
       || `The value should be ${metadata.maximumExclusive ? "smaller than" : "at most"} ${metadata.maximum}`
   ]
 
-  const parseRule = (v: string) =>
-    pipe(
-      parse(convertOutInt(v, metadata.type)),
-      These.result,
-      (_) =>
-        _.match(
-          renderError,
-          ([_, optErr]) =>
-            optErr.isSome()
-              ? renderError(optErr.value)
-              : true
-        )
-    )
+  const parseRule = flow(
+    parse,
+    These.result,
+    (_) =>
+      _.match(
+        renderError,
+        ([_, optErr]) =>
+          optErr.isSome()
+            ? renderError(optErr.value)
+            : true
+      )
+  )
+
+  type UnknownRule = (v: unknown) => boolean | string
+  const rules: UnknownRule[] = [
+    ...(metadata.type === "text"
+      ? stringRules
+      : numberRules) as UnknownRule[],
+    parseRule as UnknownRule
+  ]
 
   const info = {
     type: metadata.type,
     rules: [
-      // TODO: optimise
       (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
-      ...(metadata.type === "text" ? stringRules : numberRules.map((r) => (v: string) => r(parseFloat(v)))),
-      parseRule
+      (v: string) => {
+        const converted = convertOutInt(v, metadata.type)
+
+        for (const r of rules) {
+          const res = r(converted)
+          if (res !== true) {
+            return res
+          }
+        }
+
+        return true
+      }
     ],
     metadata
   }
