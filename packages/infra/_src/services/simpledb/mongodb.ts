@@ -1,6 +1,5 @@
+import { MongoClient } from "@effect-app/infra-adapters/mongo-client"
 import type { IndexDescription, InsertOneOptions } from "mongodb"
-
-import * as Mongo from "@effect-app/infra-adapters/mongo-client"
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"
@@ -12,8 +11,7 @@ import type { Version } from "./simpledb.js"
 // }, {} as Record<string, number>)
 
 const setup = (type: string, indexes: IndexDescription[]) =>
-  Mongo
-    .MongoClient
+  MongoClient
     .tap(({ db }) => Effect.tryPromise(() => db.createCollection(type).catch((err) => console.warn(err))))
     .flatMap(({ db }) => Effect.tryPromise(() => db.collection(type).createIndexes(indexes)))
 
@@ -32,8 +30,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }))
 
     function find(id: string) {
-      return Mongo
-        .MongoClient
+      return MongoClient
         .flatMap(({ db }) =>
           Effect.tryPromise(() =>
             db
@@ -46,8 +43,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function findBy(keys: Record<string, string>) {
-      return Mongo
-        .MongoClient
+      return MongoClient
         .flatMap(({ db }) =>
           Effect.tryPromise(() => db.collection(type).findOne<{ _id: TKey }>(keys, { projection: { _id: 1 } }))
         )
@@ -61,7 +57,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           .map((cv) => (parseInt(cv) + 1).toString())
           .getOrElse(() => "1")
 
-        const { db } = yield* $(Mongo.MongoClient)
+        const { db } = yield* $(MongoClient)
         const data = yield* $(encode(record))
         yield* $(
           currentVersion.match(
