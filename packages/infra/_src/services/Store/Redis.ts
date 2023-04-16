@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as RedisClient from "@effect-app/infra-adapters/redis-client"
+import { RedisClient } from "@effect-app/infra-adapters/redis-client"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
 
@@ -9,7 +9,7 @@ import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 export function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const redis = yield* $(RedisClient.RedisClient)
+    const redis = yield* $(RedisClient)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>>(
         name: string,
@@ -20,31 +20,31 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           const updateETag = makeUpdateETag(name)
           // Very naive implementation of course.
           const key = `${prefix}${name}`
-          const current = yield* $(RedisClient.get(key).orDie.provideService(RedisClient.RedisClient, redis))
+          const current = yield* $(redis.get(key).orDie.provideService(RedisClient, redis))
           if (!current.isSome()) {
             const m = yield* $(seed ?? Effect([]))
             yield* $(
-              RedisClient
+              redis
                 .set(key, JSON.stringify({ data: [...m].map((e) => makeETag(e)) }))
                 .orDie
-                .provideService(RedisClient.RedisClient, redis)
+                .provideService(RedisClient, redis)
             )
           }
-          const get = RedisClient
+          const get = redis
             .get(key)
             .flatMap((x) => x.encaseInEffect(() => new NotFoundError("data", "")))
             .orDie
             .map((x) => JSON.parse(x) as { data: readonly PM[] })
             .map((_) => _.data)
-            .provideService(RedisClient.RedisClient, redis)
+            .provideService(RedisClient, redis)
 
-          const set = (i: ReadonlyMap<Id, PM>) => RedisClient.set(key, JSON.stringify({ data: [...i.values()] })).orDie
+          const set = (i: ReadonlyMap<Id, PM>) => redis.set(key, JSON.stringify({ data: [...i.values()] })).orDie
 
           const sem = Semaphore.unsafeMake(1)
           const withPermit = sem.withPermits(1)
 
           const asMap = get.map((x) => new Map(x.map((x) => [x.id, x] as const)))
-          const all = get.map(Chunk.fromIterable)
+          const all = get.map(ReadonlyArray.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             items
               .forEachEffect((e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
@@ -57,9 +57,9 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                   })
                   .flatMap(set)
               )
-              .map((_) => _.toReadonlyArray as NonEmptyReadonlyArray<PM>)
+              .map((_) => _ as NonEmptyArray<PM>)
               .apply(withPermit)
-              .provideService(RedisClient.RedisClient, redis)
+              .provideService(RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
             filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
@@ -73,7 +73,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                 .flatMap((current) => updateETag(e, current))
                 .tap((e) => asMap.map((_) => new Map([..._, [e.id, e]])).flatMap(set))
                 .apply(withPermit)
-                .provideService(RedisClient.RedisClient, redis),
+                .provideService(RedisClient, redis),
             batchSet,
             bulkSet: batchSet,
             remove: (e: PM) =>
@@ -82,7 +82,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                 .flatMap(set)
                 .apply(withPermit)
                 .provideService(
-                  RedisClient.RedisClient,
+                  RedisClient,
                   redis
                 )
           }

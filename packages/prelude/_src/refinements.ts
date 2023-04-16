@@ -26,7 +26,6 @@ export function makeAwesome<T, T2 extends T>(refinement: Refinement<T, T2>, name
     is: refinement,
     collect: refinement.asCollectable,
     as,
-    asEffect: flow(as, Effect.fromEither),
     lens: Optic.id<T2>()
   }
   function validatei(item: T) {
@@ -36,9 +35,6 @@ export function makeAwesome<T, T2 extends T>(refinement: Refinement<T, T2>, name
       },
       get as() {
         return validate.as(item)
-      },
-      get asEffect() {
-        return validate.asEffect(item)
       }
     }
   }
@@ -72,7 +68,6 @@ export function makeAwesomeCollect<T, T2 extends T>(collect: Collect<T, T2>, nam
     collect,
     is,
     as,
-    asEffect: flow(as, Effect.fromEither),
     lens: Optic.id<T2>()
   }
   function validatei(item: T) {
@@ -82,9 +77,6 @@ export function makeAwesomeCollect<T, T2 extends T>(collect: Collect<T, T2>, nam
       },
       get as() {
         return validate.as(item)
-      },
-      get asEffect() {
-        return validate.asEffect(item)
       }
     }
   }

@@ -57,14 +57,14 @@ export type FilterJoinSelect = {
 }
 
 export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
-  all: Effect<never, never, Chunk<PM>>
+  all: Effect<never, never, PM[]>
   filter: (
     filter: Filter<PM>,
     cursor?: { limit?: number; skip?: number }
-  ) => Effect<never, never, Chunk<PM>>
+  ) => Effect<never, never, PM[]>
   filterJoinSelect: <T extends object>(
     filter: FilterJoinSelect
-  ) => Effect<never, never, Chunk<T & { _rootId: string }>>
+  ) => Effect<never, never, (T & { _rootId: string })[]>
   find: (id: Id) => Effect<never, never, Option<PM>>
   set: (e: PM) => Effect<never, OptimisticConcurrencyException, PM>
   batchSet: (

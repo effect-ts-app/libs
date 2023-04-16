@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { flow, pipe } from "@effect-app/core/Function"
+import { RedisClient } from "@effect-app/infra-adapters/redis-client"
 import * as MO from "@effect-app/schema"
 import type { Lock } from "redlock"
-
-import * as RED from "@effect-app/infra-adapters/redis-client"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
 import * as simpledb from "./simpledb.js"
@@ -27,8 +26,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function find(id: string) {
-      return RED
-        .hmgetAll(getKey(id))
+      return RedisClient
+        .flatMap((_) => _.hmgetAll(getKey(id)))
         .flatMapOpt((v) =>
           pipe(
             RedisSerializedDBRecord.Parser,
@@ -98,19 +97,18 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     }
 
     function getIdx(index: Index) {
-      return RED.hget(getIdxKey(index), index.key).map((_) => _.map((i) => i as TKey))
+      return RedisClient.flatMap((_) => _.hget(getIdxKey(index), index.key).map((_) => _.map((i) => i as TKey)))
     }
 
     function setIdx(index: Index, r: A) {
-      return RED.hset(getIdxKey(index), index.key, r.id)
+      return RedisClient.flatMap((_) => _.hset(getIdxKey(index), index.key, r.id))
     }
 
     function lockRedisIdx(index: Index) {
       const lockKey = getIdxLockKey(index)
       // acquire
-      return RED
-        .lock
-        .flatMap((lock) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
+      return RedisClient
+        .flatMap(({ lock }) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
         .mapBoth(
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
@@ -127,9 +125,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function lockRedisRecord(id: string) {
       // acquire
-      return RED
-        .lock
-        .flatMap((lock) =>
+      return RedisClient
+        .flatMap(({ lock }) =>
           Effect.tryPromise(
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
@@ -167,25 +164,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return RED.client.flatMap(
-      (client) =>
-        Effect
-          .async<never, ConnectionException, void>((res) => {
-            client.hmset(
-              key,
-              "version",
-              enc.version,
-              "timestamp",
-              enc.timestamp,
-              "data",
-              enc.data,
-              (err) =>
-                err
-                  ? res(Effect.fail(new ConnectionException(err)))
-                  : res(Effect(void 0))
-            )
-          })
-          .uninterruptible
+    return RedisClient.flatMap(({ client }) =>
+      Effect
+        .async<never, ConnectionException, void>((res) => {
+          client.hmset(
+            key,
+            "version",
+            enc.version,
+            "timestamp",
+            enc.timestamp,
+            "data",
+            enc.data,
+            (err) =>
+              err
+                ? res(Effect.fail(new ConnectionException(err)))
+                : res(Effect(void 0))
+          )
+        })
+        .uninterruptible
     )
   }
 }

@@ -6,7 +6,7 @@ type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 
 const rx = /:(\w+)/g
 
-type _A<C> = C extends Chunk<infer A> ? A : never
+type _A<C> = C extends ReadonlyArray<infer A> ? A : never
 
 /**
  * Work in progress JSONSchema generator.
@@ -29,7 +29,6 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
         }
       })
       return e.reduce(
-        {} as Record<string, Record<Methods, ReturnType<typeof map>>>,
         (prev, e) => {
           const path = e.path.split("?")[0].replace(rx, (_a, b) => `{${b}}`)
           prev[path] = {
@@ -37,7 +36,8 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
             ...map(e) as any
           }
           return prev
-        }
+        },
+        {} as Record<string, Record<Methods, ReturnType<typeof map>>>
       )
     })
 }

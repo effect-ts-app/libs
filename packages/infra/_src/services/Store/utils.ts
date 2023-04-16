@@ -135,7 +135,6 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
           : Option.none
       })
       .flatMap((_) => _)
-      .toChunk
 }
 
 function lowercaseIfString<T>(val: T) {

@@ -6,11 +6,11 @@ import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: { skip?: number; limit?: number }) {
-  return ((c: Chunk<T>): Chunk<T> => {
+  return ((c: T[]): T[] => {
     const skip = cursor?.skip
     const limit = cursor?.limit
     if (!skip && limit === 1) {
-      return c.findFirstMap(codeFilter(filter)).map(Chunk.make).getOrElse(() => Chunk.empty())
+      return c.findFirstMap(codeFilter(filter)).map(ReadonlyArray.make).getOrElse(() => [])
     }
     let r = c.filterMap(codeFilter(filter))
     if (skip) {
@@ -19,7 +19,7 @@ export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: 
     if (limit !== undefined) {
       r = r.take(limit)
     }
-    return r.toChunk
+    return r
   })
 }
 
@@ -54,7 +54,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
-    const all = values.map(Chunk.fromIterable)
+    const all = values.map(ReadonlyArray.fromIterable)
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
@@ -68,7 +68,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
             })
             .flatMap((_) => store.set(_))
         )
-        .map((_) => _.toReadonlyArray as NonEmptyReadonlyArray<PM>)
+        .map((_) => _ as NonEmptyArray<PM>)
         .apply(withPermit)
     const s: Store<PM, Id> = {
       all,

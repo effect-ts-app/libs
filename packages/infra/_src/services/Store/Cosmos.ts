@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import * as CosmosClient from "@effect-app/infra-adapters/cosmos-client"
-
-import { OptimisticConcurrencyException } from "../../errors.js"
-
+import { CosmosClient } from "@effect-app/infra-adapters/cosmos-client"
 import { omit } from "@effect-app/prelude/utils"
-
+import { OptimisticConcurrencyException } from "../../errors.js"
 import type {
   Filter,
   FilterJoinSelect,
@@ -23,7 +20,7 @@ import { StoreMaker } from "./service.js"
 // TODO: Retry operation when running into RU limit.
 export function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
-    const { db } = yield* $(CosmosClient.CosmosClient)
+    const { db } = yield* $(CosmosClient)
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>>(
         name: string,
@@ -122,7 +119,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           )
                     )
                 )
-                return batchResult.toReadonlyArray.flat() as unknown as NonEmptyReadonlyArray<PM>
+                return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
               .instrument("cosmos.bulkSet")
               .logAnnotate("cosmos.db", containerId)
@@ -203,7 +200,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .items
                     .query<PM>(q)
                     .fetchAll()
-                    .then(({ resources }) => resources.toChunk)
+                    .then(({ resources }) => resources)
                 )
               )
               .instrument("cosmos.all")
@@ -223,7 +220,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           .items
                           .query<T>(q)
                           .fetchAll()
-                          .then(({ resources }) => resources.toChunk)
+                          .then(({ resources }) => resources)
                       )
                     )
                 )
@@ -236,7 +233,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         ({ r, ...rest }: any) => ({ ...rest, ...r } as T & { _rootId: string })
                       )
                     )
-                  return Chunk.fromIterable(v)
+                  return v
                 })
                 .instrument("cosmos.filterJoinSelect")
                 .logAnnotate("cosmos.db", containerId),
@@ -261,7 +258,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                             .items
                             .query<PM>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources.toChunk)
+                            .then(({ resources }) => resources)
                         )
                       )
                   )
@@ -276,7 +273,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           q
                         )
                         .fetchAll()
-                        .then(({ resources }) => resources.map((_) => _.f).toChunk)
+                        .then(({ resources }) => resources.map((_) => _.f))
                     )
                   ))
                 .instrument("cosmos.filter")

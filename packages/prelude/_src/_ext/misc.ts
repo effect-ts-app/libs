@@ -21,11 +21,6 @@ export function encaseMaybeInEffect_<E, A>(
 }
 
 /**
- * @tsplus getter effect/data/Either asEffect
- */
-export const EitherasEffect = Effect.fromEither
-
-/**
  * @tsplus fluent effect/data/Option encaseInEither
  */
 export function encaseMaybeEither_<E, A>(
