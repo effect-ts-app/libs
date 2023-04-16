@@ -158,11 +158,11 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: yield* $(
-              Effect
-                .collectAll(
-                  Object.keys(schemaMeta.props).map((x) => processId(schemaMeta.props[x]))
+              Object
+                .keys(schemaMeta.props)
+                .forEachEffect(
+                  (x) => processId(schemaMeta.props[x])
                 )
-                .map((_) => _.toArray)
             ) as any,
             discriminator: (schemaMeta.tag as Option<any>)
               .map((_: any) => ({
@@ -256,11 +256,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           return new OneOfSchema({
             ...meta,
             oneOf: (yield* $(
-              Effect
-                .collectAll(
-                  [schemaMeta.left, schemaMeta.right].map((x) => processId(x))
-                )
-                .map((_) => _.toArray)
+              [schemaMeta.left, schemaMeta.right]
+                .forEachEffect((x) => processId(x))
             ))
               .map((v, i) => ({
                 properties: {
