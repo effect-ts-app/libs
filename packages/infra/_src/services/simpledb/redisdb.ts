@@ -109,8 +109,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       const lockKey = getIdxLockKey(index)
       // acquire
       return RED
-        .lock
-        .flatMap((lock) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
+        .RedisClient
+        .flatMap(({ lock }) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
         .mapBoth(
           (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
@@ -128,8 +128,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function lockRedisRecord(id: string) {
       // acquire
       return RED
-        .lock
-        .flatMap((lock) =>
+        .RedisClient
+        .flatMap(({ lock }) =>
           Effect.tryPromise(
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
@@ -167,25 +167,24 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.Encoder(val)
-    return RED.client.flatMap(
-      (client) =>
-        Effect
-          .async<never, ConnectionException, void>((res) => {
-            client.hmset(
-              key,
-              "version",
-              enc.version,
-              "timestamp",
-              enc.timestamp,
-              "data",
-              enc.data,
-              (err) =>
-                err
-                  ? res(Effect.fail(new ConnectionException(err)))
-                  : res(Effect(void 0))
-            )
-          })
-          .uninterruptible
+    return RED.RedisClient.flatMap(({ client }) =>
+      Effect
+        .async<never, ConnectionException, void>((res) => {
+          client.hmset(
+            key,
+            "version",
+            enc.version,
+            "timestamp",
+            enc.timestamp,
+            "data",
+            enc.data,
+            (err) =>
+              err
+                ? res(Effect.fail(new ConnectionException(err)))
+                : res(Effect(void 0))
+          )
+        })
+        .uninterruptible
     )
   }
 }

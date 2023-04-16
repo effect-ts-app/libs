@@ -32,9 +32,6 @@ export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisC
 
 export const RedisClient = Tag<RedisClient>()
 
-export const client = RedisClient.map((_) => _.client)
-export const lock = RedisClient.map((_) => _.lock)
-
 export const RedisClientLive = (makeClient: () => Client) => makeRedisClient(makeClient).toLayerScoped(RedisClient)
 
 function createClient(makeClient: () => Client) {
@@ -46,8 +43,8 @@ function createClient(makeClient: () => Client) {
 }
 
 export function get(key: string) {
-  return client.flatMap(
-    (client) =>
+  return RedisClient.flatMap(
+    ({ client }) =>
       Effect
         .async<never, ConnectionException, Option<string>>((res) => {
           client.get(key, (err, v) =>
@@ -60,8 +57,8 @@ export function get(key: string) {
 }
 
 export function set(key: string, val: string) {
-  return client.flatMap(
-    (client) =>
+  return RedisClient.flatMap(
+    ({ client }) =>
       Effect
         .async<never, ConnectionException, void>((res) => {
           client.set(key, val, (err) =>
@@ -74,8 +71,8 @@ export function set(key: string, val: string) {
 }
 
 export function hset(key: string, field: string, value: string) {
-  return client.flatMap(
-    (client) =>
+  return RedisClient.flatMap(
+    ({ client }) =>
       Effect
         .async<never, ConnectionException, void>((res) => {
           client.hset(key, field, value, (err) =>
@@ -88,8 +85,8 @@ export function hset(key: string, field: string, value: string) {
 }
 
 export function hget(key: string, field: string) {
-  return client.flatMap(
-    (client) =>
+  return RedisClient.flatMap(
+    ({ client }) =>
       Effect
         .async<never, ConnectionException, Option<string>>((res) => {
           client.hget(key, field, (err, v) =>
@@ -101,8 +98,8 @@ export function hget(key: string, field: string) {
   )
 }
 export function hmgetAll(key: string) {
-  return client.flatMap(
-    (client) =>
+  return RedisClient.flatMap(
+    ({ client }) =>
       Effect
         .async<never, ConnectionException, Option<{ [key: string]: string }>>(
           (res) => {
