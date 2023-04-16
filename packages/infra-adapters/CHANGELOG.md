@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.36.1
+
+### Patch Changes
+
+- fix oneOf
+
 ## 0.36.0
 
 ### Minor Changes
