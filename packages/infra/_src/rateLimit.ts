@@ -55,7 +55,7 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
 export function batchPar<R, E, A, R2, E2, A2, T>(
   n: number,
   forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<R, E, A>,
-  forEachBatch: (a: NonEmptyChunk<A>, i: number) => Effect<R2, E2, A2>
+  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
     items
@@ -63,7 +63,7 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
       .forEachEffectParWithIndex((_, i) =>
         _
           .forEachParWithIndex((_, j) => forEachItem(_, j, i))
-          .flatMap((_) => forEachBatch(_ as NonEmptyChunk<A>, i))
+          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
       )
 }
 
@@ -74,7 +74,7 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
 export function batch<R, E, A, R2, E2, A2, T>(
   n: number,
   forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<R, E, A>,
-  forEachBatch: (a: NonEmptyChunk<A>, i: number) => Effect<R2, E2, A2>
+  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<R2, E2, A2>
 ) {
   return (items: Iterable<T>) =>
     items
@@ -82,7 +82,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
       .forEachEffectWithIndex((_, i) =>
         _
           .forEachParWithIndex((_, j) => forEachItem(_, j, i))
-          .flatMap((_) => forEachBatch(_ as NonEmptyChunk<A>, i))
+          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
       )
 }
 
@@ -117,7 +117,7 @@ export function naiveRateLimit(
 ) {
   return <T>(items: Iterable<T>) => (<R, E, A, R2, E2, A2>(
     forEachItem: (i: T) => Effect<R, E, A>,
-    forEachBatch: (a: Chunk<A>) => Effect<R2, E2, A2>
+    forEachBatch: (a: A[]) => Effect<R2, E2, A2>
   ) =>
     items
       .chunk(n)

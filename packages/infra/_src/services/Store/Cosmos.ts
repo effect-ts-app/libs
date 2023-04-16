@@ -122,7 +122,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           )
                     )
                 )
-                return batchResult.toReadonlyArray.flat() as unknown as NonEmptyReadonlyArray<PM>
+                return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
               .instrument("cosmos.bulkSet")
               .logAnnotate("cosmos.db", containerId)
@@ -203,7 +203,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .items
                     .query<PM>(q)
                     .fetchAll()
-                    .then(({ resources }) => resources.toChunk)
+                    .then(({ resources }) => resources)
                 )
               )
               .instrument("cosmos.all")
@@ -223,7 +223,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           .items
                           .query<T>(q)
                           .fetchAll()
-                          .then(({ resources }) => resources.toChunk)
+                          .then(({ resources }) => resources)
                       )
                     )
                 )
@@ -236,7 +236,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         ({ r, ...rest }: any) => ({ ...rest, ...r } as T & { _rootId: string })
                       )
                     )
-                  return Chunk.fromIterable(v)
+                  return v
                 })
                 .instrument("cosmos.filterJoinSelect")
                 .logAnnotate("cosmos.db", containerId),
@@ -261,7 +261,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                             .items
                             .query<PM>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources.toChunk)
+                            .then(({ resources }) => resources)
                         )
                       )
                   )
@@ -276,7 +276,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                           q
                         )
                         .fetchAll()
-                        .then(({ resources }) => resources.map((_) => _.f).toChunk)
+                        .then(({ resources }) => resources.map((_) => _.f))
                     )
                   ))
                 .instrument("cosmos.filter")

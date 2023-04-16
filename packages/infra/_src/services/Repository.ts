@@ -20,7 +20,7 @@ export interface Repository<
 > {
   itemType: ItemType
   find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Option<T>>
-  all: Effect<ContextMap, never, Chunk<T>>
+  all: Effect<ContextMap, never, T[]>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
@@ -32,8 +32,8 @@ export interface Repository<
       setEtag: (id: string, eTag: string | undefined) => void
     ) => unknown // TODO
     parse: (a: unknown, env?: ParserEnv | undefined) => T
-    all: Effect<ContextMap, never, Chunk<PM>>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, Chunk<PM>>
+    all: Effect<ContextMap, never, PM[]>
+    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, PM[]>
   }
 }
 
@@ -85,7 +85,7 @@ export function filterAll<
   Evt,
   ItemType extends string,
   S extends T
->(self: Repository<T, PM, Evt, ItemType>, map: (items: Chunk<T>) => Chunk<S>) {
+>(self: Repository<T, PM, Evt, ItemType>, map: (items: T[]) => S[]) {
   return self.all.map(map)
 }
 
@@ -133,7 +133,7 @@ export function projectEffect<
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
   )
 }
 
@@ -179,7 +179,7 @@ export function queryEffect<
         })
       )
       .map((_) => _.map((_) => self.utils.parse(_)))
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
   )
 }
 
@@ -209,8 +209,8 @@ export function queryOneEffect<
       )
       .map((_) => _.map((_) => self.utils.parse(_)))
       .flatMap((_) =>
-        (f.collect ? _.filterMap(f.collect) : _ as unknown as Chunk<S>)
-          .toNonEmptyArray
+        (f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
+          .toNonEmpty
           .encaseInEffect(() => new NotFoundError(self.itemType, JSON.stringify(f.filter)))
           .map((_) => _[0])
       )
@@ -267,7 +267,7 @@ export function queryAndSavePureEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
     Debug.untraced((restore) =>
       queryEffect(self, map)
         .flatMap(restore((_) => self.saveManyWithPure_(_, pure)))
@@ -300,7 +300,7 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
 
@@ -350,11 +350,11 @@ export function saveManyWithPure_<
 >(
   self: Repository<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>
+  pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>
 ) {
   return saveAllWithEffectInt(
     self,
-    pure.runTerm(items.toChunk)
+    pure.runTerm([...items])
   )
 }
 
@@ -423,7 +423,7 @@ export function queryAndSavePureEffectBatched<
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>,
   batchSize = 100
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, Chunk<S>, Chunk<S2>>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
     queryEffect(self, map)
       .flatMap((_) => self.saveManyWithPureBatched_(_, pure, batchSize))
 }
@@ -455,7 +455,7 @@ export function saveManyWithPureBatched<
   Evt,
   ItemType extends string
 >(self: Repository<T, PM, Evt, ItemType>, batchSize = 100) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>) =>
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
 }
 
@@ -476,7 +476,7 @@ export function saveManyWithPureBatched_<
 >(
   self: Repository<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>,
+  pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>,
   batchSize = 100
 ) {
   return items
@@ -484,7 +484,7 @@ export function saveManyWithPureBatched_<
     .forEachEffect((batch) =>
       saveAllWithEffectInt(
         self,
-        pure.runTerm(batch.toChunk)
+        pure.runTerm(batch)
       )
     )
 }
@@ -493,8 +493,8 @@ const anyDSL = makeDSL<any, any, any>()
 
 export type AllDSL<T, Evt> =
   & (<R, A, E, S1 extends T, S2 extends T>(
-    pure: (dsl: PureDSL<Chunk<S1>, Chunk<S2>, Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>)
+    pure: (dsl: PureDSL<S1[], S2[], Evt>) => Effect<R, E, A>
+  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>)
   & AllDSLExt<T, Evt>
 
 /**
@@ -502,11 +502,11 @@ export type AllDSL<T, Evt> =
  */
 export interface AllDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
-    pure: (items: Chunk<S1>, dsl: PureDSL<Chunk<S1>, Chunk<S2>, Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, A>
+    pure: (items: S1[], dsl: PureDSL<S1[], S2[], Evt>) => Effect<R, E, A>
+  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>
   update: <R, E, S1 extends T, S2 extends T>(
-    pure: (items: Chunk<S1>, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, Chunk<S2>>
-  ) => Effect<FixEnv<R, Evt, Chunk<S1>, Chunk<S2>>, E, Chunk<S2>>
+    pure: (items: S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, S2[]>
+  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, S2[]>
 }
 
 export function makeAllDSL<T, Evt>() {
@@ -544,9 +544,9 @@ export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T
  */
 export function updateWith<T, Evt, S1 extends T, S2 extends T>(
   self: AllDSL<T, Evt>,
-  upd: (item: Chunk<S1>) => Chunk<S2>
+  upd: (item: S1[]) => S2[]
 ) {
-  return self.update((_: Chunk<S1>) => Effect(upd(_)))
+  return self.update((_: S1[]) => Effect(upd(_)))
 }
 
 export function makeOneDSL<T, Evt>(): OneDSL<T, Evt> {

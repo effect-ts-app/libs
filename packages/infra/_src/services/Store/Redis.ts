@@ -44,7 +44,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           const withPermit = sem.withPermits(1)
 
           const asMap = get.map((x) => new Map(x.map((x) => [x.id, x] as const)))
-          const all = get.map(Chunk.fromIterable)
+          const all = get.map(ReadonlyArray.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             items
               .forEachEffect((e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
@@ -57,7 +57,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                   })
                   .flatMap(set)
               )
-              .map((_) => _.toReadonlyArray as NonEmptyReadonlyArray<PM>)
+              .map((_) => _ as NonEmptyArray<PM>)
               .apply(withPermit)
               .provideService(RedisClient.RedisClient, redis)
           const s: Store<PM, Id> = {

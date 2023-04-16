@@ -8,7 +8,7 @@ import type {} from "@effect/data/Hash"
 import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { Chunk, Schema } from "@effect-app/prelude"
+import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 
@@ -22,7 +22,7 @@ export const RepositoryBase = <Service>() => {
     abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
       itemType: ItemType = itemType
       abstract find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Opt<T>>
-      abstract all: Effect<ContextMap, never, Chunk<T>>
+      abstract all: Effect<ContextMap, never, T[]>
       abstract saveAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
@@ -33,8 +33,8 @@ export const RepositoryBase = <Service>() => {
           setEtag: (id: string, eTag: string | undefined) => void
         ) => unknown // TODO
         parse: (a: unknown, env?: ParserEnv | undefined) => T
-        all: Effect<ContextMap, never, Chunk<PM>>
-        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, Chunk<PM>>
+        all: Effect<ContextMap, never, PM[]>
+        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, PM[]>
       }
       abstract remove: (item: T) => Effect<ContextMap, never, void>
       static where = makeWhere<PM>()

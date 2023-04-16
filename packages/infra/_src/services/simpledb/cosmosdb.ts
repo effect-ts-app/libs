@@ -12,7 +12,7 @@ class CosmosDbOperationError {
 }
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
-  Cosmos.db.tap((db) =>
+  Cosmos.CosmosClient.tap(({ db }) =>
     Effect.tryPromise(() =>
       db
         .containers
@@ -38,8 +38,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function find(id: string) {
       return Cosmos
-        .db
-        .flatMap((db) => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
+        .CosmosClient
+        .flatMap(({ db }) => Effect.tryPromise(() => db.container(type).item(id).read<{ data: EA }>()))
         .map((i) => Option.fromNullable(i.resource))
         .map(
           (_) =>
@@ -51,8 +51,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
     function findBy(parameters: Record<string, string>) {
       return Cosmos
-        .db
-        .flatMap((db) =>
+        .CosmosClient
+        .flatMap(({ db }) =>
           Effect.tryPromise(() =>
             db
               .container(type)
@@ -85,7 +85,7 @@ WHERE (
       return Effect.gen(function*($) {
         const version = "_etag" // we get this from the etag anyway.
 
-        const db = yield* $(Cosmos.db)
+        const { db } = yield* $(Cosmos.CosmosClient)
         const data = yield* $(encode(record))
 
         yield* $(
