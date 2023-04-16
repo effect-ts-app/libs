@@ -8,7 +8,6 @@ import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
 import { curry, flow, pipe } from "./Function.js"
-import type { Chunk } from "./Prelude.js"
 
 export * from "@effect/io/Effect"
 
@@ -32,12 +31,6 @@ export const ex_unit = Exit.unit()
  * @tsplus static effect/io/Fiber.Ops unit
  */
 export const fb_unit = Fiber.unit()
-
-/**
- * @tsplus static effect/io/Effect.Ops flatMapEither
- */
-export const flatMapEither = <E, A, A2>(ei: (a: A2) => Either<E, A>) =>
-  Debug.untraced(() => Eff.flatMap((a: A2) => Effect.fromEither(ei(a))))
 
 /**
  * @macro traced
@@ -308,7 +301,7 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
  * @tsplus getter Iterable joinAll
  * @tsplus static effect/io/Effect.Ops joinAll
  */
-export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, Chunk<A>> {
+export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, A[]> {
   return Fiber.join(Fiber.collectAll(fibers))
 }
 

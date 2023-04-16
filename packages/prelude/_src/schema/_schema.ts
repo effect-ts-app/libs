@@ -182,7 +182,7 @@ export function condemnDie_<X, A>(
   __trace?: string
 ) {
   const cl = condemnLeft(self)
-  return Effect.fromEither(cl(a, env)).orDie
+  return cl(a, env).orDie
 }
 
 export function parseCondemnDie_<A, B, C, D, E>(
@@ -309,7 +309,7 @@ export function condemnFail_<X, A>(
   __trace?: string
 ) {
   const cl = condemnLeft(self)
-  return Effect.fromEither(cl(a, env))
+  return cl(a, env)
 }
 
 export function parseCondemnFail_<A, B, C, D, E>(

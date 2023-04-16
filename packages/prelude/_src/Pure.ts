@@ -199,8 +199,7 @@ export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
 ) {
   return runAll(self, s)
     .flatMap(([evts, r]) =>
-      Effect
-        .fromEither(r)
+      r
         .map(([s3, a]) => tuple(s3, evts.toArray, a))
     )
 }
