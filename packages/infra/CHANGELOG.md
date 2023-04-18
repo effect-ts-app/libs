@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.49.2
+
+### Patch Changes
+
+- Improve sentry error report
+
 ## 0.49.1
 
 ### Patch Changes
