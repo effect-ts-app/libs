@@ -381,9 +381,8 @@ export function makeRequestHandler<
               Effect
                 .allPar(
                   Effect(res.status(500).send()),
-                  RequestContextContainer.get.flatMap((requestContext) =>
+                  Effect(
                     reportRequestError(cause, {
-                      requestContext,
                       path: req.originalUrl,
                       method: req.method
                     })
