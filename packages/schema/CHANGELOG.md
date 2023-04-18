@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.36.0
+
+### Minor Changes
+
+- support optional constructors for schema with none or only optional input.
+
 ## 0.35.0
 
 ### Minor Changes

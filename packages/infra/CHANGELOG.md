@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.51.0
+
+### Minor Changes
+
+- support optional constructors for schema with none or only optional input.
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.40.0
+  - @effect-app/schema@0.36.0
+  - @effect-app/infra-adapters@0.37.1
+
 ## 0.50.1
 
 ### Patch Changes
