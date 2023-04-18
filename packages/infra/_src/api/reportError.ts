@@ -14,7 +14,7 @@ export const reportRequestError = <E>(cause: Cause<E>, extras?: Record<string, u
 const logRequestError_ = logError((cause) => new RequestException(cause))
 
 export const logRequestError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
-  Debug.untraced(() => reportRequestError_(cause, extras))
+  Debug.untraced(() => logRequestError_(cause, extras))
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
