@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.50.1
+
+### Patch Changes
+
+- Cleanup error report
+
 ## 0.50.0
 
 ### Minor Changes
