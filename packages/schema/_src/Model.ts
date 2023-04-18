@@ -16,6 +16,7 @@ import { schemaField } from "./_schema.js"
 import type { AnyProperty, EncodedOf, ParsedShapeOf, PropertyRecord } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
 import { include } from "./utils.js"
+import { OptionalConstructor } from "./tools.js"
 
 export const nModelBrand = Symbol()
 
@@ -124,7 +125,7 @@ export interface MM<
   Props,
   ParsedShape2
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
-  new(_: ConstructorInput): ParsedShape2
+  new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
   readonly parsed: ParsedShapeOf<Self>
   readonly encoded: EncodedOf<Self>
@@ -436,7 +437,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
     static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
       new MO.SchemaAnnotated(self, identifier, meta)
 
-    constructor(inp: MO.ConstructorInputOf<any>) {
+    constructor(inp: MO.ConstructorInputOf<any> = {}) {
       // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
       fromFields(of_(inp), this)
     }

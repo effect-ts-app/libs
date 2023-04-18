@@ -73,10 +73,8 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
   return class implements Hash.Hash, Equal.Equal {
     static [schemaField] = self
     static [schemedBrand] = schemedBrand
-    constructor(inp?: S.ConstructorInputOf<Self>) {
-      if (inp) {
-        this[fromFields](of_(inp))
-      }
+    constructor(inp: S.ConstructorInputOf<Self> = {} as any) {
+      this[fromFields](of_(inp))
     }
     [fromFields](fields: any) {
       for (const k of Object.keys(fields)) {

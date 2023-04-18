@@ -883,6 +883,16 @@
         "default": "./_cjs/ext.cjs"
       }
     },
+    "./tools": {
+      "import": {
+        "types": "./dist/tools.d.ts",
+        "default": "./dist/tools.js"
+      },
+      "require": {
+        "types": "./dist/tools.d.ts",
+        "default": "./_cjs/tools.cjs"
+      }
+    },
     "./utils": {
       "import": {
         "types": "./dist/utils.d.ts",

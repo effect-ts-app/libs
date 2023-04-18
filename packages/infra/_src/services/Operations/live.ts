@@ -41,7 +41,7 @@ const make = Effect.sync(() => {
           ..._.value,
           updatedAt: new Date(),
           result: exit.isSuccess()
-            ? new Success({})
+            ? new Success()
             : new Failure({
               message: exit.cause.isInterrupted()
                 ? LongString("Interrupted")

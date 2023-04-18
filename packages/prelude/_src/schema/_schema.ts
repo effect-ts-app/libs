@@ -35,10 +35,10 @@ import {
 } from "@effect-app/schema"
 import type * as Th from "@effect-app/schema/custom/These"
 import type * as faker from "faker"
-
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import * as S from "@effect-app/schema"
 import { fakerToArb, getFaker } from "../faker.js"
+import type { OptionalConstructor } from "@effect-app/schema/tools"
 
 export { matchTag } from "@effect-app/core/utils"
 
@@ -561,13 +561,13 @@ export function enhanceClassUnion<
     prev[key] = (i: any) => new value(i)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: ConstructorInputOf<T[Key]>) => A
+    [Key in keyof T]: (i: OptionalConstructor<ConstructorInputOf<T[Key]>>) => A
   }
   const of = entries.reduce((prev, [key, value]) => {
     prev[key] = (i: any) => new value(i)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: ConstructorInputOf<T[Key]>) => InstanceType<T[Key]>
+    [Key in keyof T]: (i: OptionalConstructor<ConstructorInputOf<T[Key]>>) => InstanceType<T[Key]>
   }
 
   // Experiment with returning a constructor that returns a Union
@@ -575,7 +575,7 @@ export function enhanceClassUnion<
     prev[key] = value
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: { new(i: ConstructorInputOf<T[Key]>): A }
+    [Key in keyof T]: { new(i: OptionalConstructor<ConstructorInputOf<T[Key]>>): A }
   }
 
   const mem = entries.reduce((prev, [key, value]) => {
