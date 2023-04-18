@@ -1,25 +1,13 @@
 import { logError, reportError } from "../errorReporter.js"
 import { CauseException } from "../errors.js"
-import { RequestContextContainer } from "../services/RequestContextContainer.js"
 
 export class RequestException<E> extends CauseException<E> {
   constructor(cause: Cause<E>) {
     super(cause, "Request")
   }
 }
-export const reportRequestError_ = reportError((cause) => new RequestException(cause))
-
-export const reportRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
-  Debug.untraced(() =>
-    RequestContextContainer.get.flatMap((requestContext) => reportRequestError_(cause, { requestContext, ...context }))
-  )
-
-export const logRequestError_ = logError((cause) => new RequestException(cause))
-
-export const logRequestError = <E>(cause: Cause<E>, context?: Record<string, unknown> | undefined) =>
-  Debug.untraced(() =>
-    RequestContextContainer.get.flatMap((requestContext) => logRequestError_(cause, { requestContext, ...context }))
-  )
+export const reportRequestError = reportError((cause) => new RequestException(cause))
+export const logRequestError = logError((cause) => new RequestException(cause))
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
