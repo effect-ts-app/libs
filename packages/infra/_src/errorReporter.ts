@@ -27,14 +27,15 @@ export function reportError<E, E2 extends CauseException<unknown>>(
     )
 }
 
-function reportSentry(
-  error: unknown,
+function reportSentry<E2 extends CauseException<unknown>>(
+  error: E2,
   context: RequestContext | undefined,
   extras: Record<string, unknown> | undefined
 ) {
   const scope = new Sentry.Scope()
   if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
   if (extras) scope.setContext("extras", extras)
+  scope.setContext("error", error.toJSON())
   Sentry.captureException(error, scope)
 }
 
