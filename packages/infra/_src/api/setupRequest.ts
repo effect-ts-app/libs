@@ -32,18 +32,22 @@ export function setupRequestFrom<R, E, A>(self: Effect<R, E, A>) {
  */
 export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
   return Debug.untraced(() =>
-    self
-      .setupRequestFrom
-      .provideService(RequestContextContainer, new RequestContextContainerImpl(makeInternalRequestContext(name)))
+    makeInternalRequestContext(name).flatMap((rc) =>
+      self
+        .setupRequestFrom
+        .provideService(RequestContextContainer, new RequestContextContainerImpl(rc))
+    )
   )
 }
 
 function makeInternalRequestContext(name: string) {
-  const id = StringId.make()
-  return new RequestContext({
-    id,
-    rootId: id,
-    locale: "en",
-    name: ReasonableString(name)
+  return Effect.sync(() => {
+    const id = StringId.make()
+    return new RequestContext({
+      id,
+      rootId: id,
+      locale: "en",
+      name: ReasonableString(name)
+    })
   })
 }
