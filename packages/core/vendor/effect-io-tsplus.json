@@ -5532,6 +5532,80 @@
       ]
     },
     {
+      "definitionName": "locally",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "typeName": "effect/io/FiberRef",
+          "kind": "fluent",
+          "name": "locally"
+        },
+        {
+          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "name": "fiberRefLocally"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "locally"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "locallyScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyScopedWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/FiberRef",
+          "name": "locallyScopedWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "locallyScopedWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "typeName": "effect/io/FiberRef",
+          "kind": "fluent",
+          "name": "locallyWith"
+        },
+        {
+          "typeName": "effect/io/Effect",
+          "kind": "fluent",
+          "name": "fiberRefLocallyWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "locallyWith"
+        }
+      ]
+    },
+    {
       "definitionName": "log",
       "definitionKind": "const",
       "extensions": [
@@ -12147,80 +12221,6 @@
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
           "name": "interruptedCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "locally",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "effect/io/FiberRef",
-          "kind": "fluent",
-          "name": "locally"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "fluent",
-          "name": "fiberRefLocally"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locally"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyScoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/FiberRef",
-          "name": "locallyScoped"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyScoped"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyScopedWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/FiberRef",
-          "name": "locallyScopedWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyScopedWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "locallyWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "effect/io/FiberRef",
-          "kind": "fluent",
-          "name": "locallyWith"
-        },
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "fluent",
-          "name": "fiberRefLocallyWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
-          "name": "locallyWith"
         }
       ]
     },
