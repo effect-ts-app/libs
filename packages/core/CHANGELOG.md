@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.45.0
+
+### Minor Changes
+
+- Update dependencies
+
 ## 0.44.0
 
 ### Minor Changes
