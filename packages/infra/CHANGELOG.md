@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.51.4
+
+### Patch Changes
+
+- fix: Should create a new RequestContext on each invocation.
+
 ## 0.51.3
 
 ### Patch Changes
