@@ -1,0 +1,761 @@
+diff --git a/lib/lib.dom.d.ts b/lib/lib.dom.d.ts
+index da240cc..3170f3e 100644
+--- a/lib/lib.dom.d.ts
++++ b/lib/lib.dom.d.ts
+@@ -25650,6 +25650,12 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+     removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+     removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
++
++    // proza: Moved Option here so that it doesnt interfeir in the global space.
++    Option: {
++        new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
++    };
++
+     [index: number]: Window;
+ }
+ 
+@@ -26961,9 +26967,6 @@ declare var Audio: {
+ declare var Image: {
+     new(width?: number, height?: number): HTMLImageElement;
+ };
+-declare var Option: {
+-    new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
+-};
+ /**
+  * @deprecated This is a legacy alias of `navigator`.
+  *
+diff --git a/lib/tsc.js b/lib/tsc.js
+index fd4a3f8..e2faa4f 100644
+--- a/lib/tsc.js
++++ b/lib/tsc.js
+@@ -43605,7 +43605,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
+       for (const key of getOwnKeys(exports)) {
+         if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+           const subTarget = exports[key];
+-          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++          const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+           if (result) {
+             return result;
+           }
+@@ -43677,7 +43678,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
+   if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+     return void 0;
+   }
+-  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+   const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+   return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+   function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -44990,7 +44991,7 @@ function createTypeChecker(host) {
+   }
+   function unionIfLazy(_paramType) {
+     const isLazy = isLazyParameterByType(_paramType);
+-    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+     return paramType;
+   }
+   function getFluentExtension(targetType, name) {
+@@ -50626,6 +50627,16 @@ function createTypeChecker(host) {
+       }
+       return top;
+     }
++    function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++      let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode);
++      if (specifier && specifier.indexOf("/node_modules/") > 0) {
++        const r = tryGetImportLocation(fileMap.map, specifier);
++        if (r) {
++          specifier = r;
++        }
++      }
++      return specifier;
++    }
+     function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+       let file = getDeclarationOfKind(symbol, 311 /* SourceFile */);
+       if (!file) {
+@@ -50699,7 +50710,7 @@ function createTypeChecker(host) {
+         let assertion;
+         if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+           if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+             assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+               factory.createAssertEntry(
+                 factory.createStringLiteral("resolution-mode"),
+@@ -50710,7 +50721,7 @@ function createTypeChecker(host) {
+           }
+         }
+         if (!specifier) {
+-          specifier = getSpecifierForModuleSymbol(chain[0], context);
++          specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+         }
+         if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+           const oldSpecifier = specifier;
+@@ -72060,6 +72071,15 @@ function createTypeChecker(host) {
+     }
+     return false;
+   }
++  function isForceLazyParameterByType(type) {
++    if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++      const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++      if (tag === "tsplus/ForceLazyArgument") {
++        return true;
++      }
++    }
++    return false;
++  }
+   function getMutableArrayOrTupleType(type) {
+     return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+       getTypeArguments(type),
+@@ -72269,7 +72289,7 @@ function createTypeChecker(host) {
+       const thisArgumentType = getThisArgumentType(thisArgumentNode);
+       const originalParamType = thisType;
+       let paramType = originalParamType;
+-      if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++      if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+         const contextFreeArgType = thisArgumentType;
+         if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+           return [createDiagnosticForNode(
+@@ -72307,7 +72327,7 @@ function createTypeChecker(host) {
+           checkMode
+         );
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType)) {
++        if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+           if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+             return [createDiagnosticForNode(
+               arg,
+@@ -85902,6 +85922,25 @@ function createTypeChecker(host) {
+           }
+         }
+         const type = getTypeOfNode(node);
++        if (isCallExpression(node.expression)) {
++          const resolvedSignature = getResolvedSignature(node.expression);
++          const returnType = resolvedSignature.resolvedReturnType;
++          if (returnType) {
++            if (returnType.symbol) {
++              heritageExtensions.add(returnType.symbol);
++            }
++            if (returnType.flags & 2097152 /* Intersection */) {
++              forEach(returnType.types, (type2) => {
++                if (type2.symbol) {
++                  heritageExtensions.add(type2.symbol);
++                }
++                if (type2.aliasSymbol) {
++                  heritageExtensions.add(type2.aliasSymbol);
++                }
++              });
++            }
++          }
++        }
+         if (type.symbol) {
+           heritageExtensions.add(type.symbol);
+         }
+@@ -90461,13 +90500,27 @@ function getOriginalNodeId(node) {
+   node = getOriginalNode(node);
+   return node ? getNodeId(node) : 0;
+ }
+-function getImportLocation(fileMap, source) {
++var importLocationCache = {};
++function tryGetImportLocation(fileMap, source) {
++  if (source in importLocationCache) {
++    return importLocationCache[source];
++  }
+   for (const [path, reg] of fileMap) {
+     if (source.match(reg)) {
+-      return source.replace(reg, path);
++      const r = source.replace(reg, path);
++      importLocationCache[source] = r;
++      return r;
+     }
+   }
+-  throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++  importLocationCache[source] = void 0;
++  return void 0;
++}
++function getImportLocation(fileMap, source) {
++  const found = tryGetImportLocation(fileMap, source);
++  if (!found) {
++    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++  }
++  return found;
+ }
+ function getTraceLocation(traceMap, source) {
+   for (const [path, reg] of traceMap) {
+diff --git a/lib/tsserver.js b/lib/tsserver.js
+index b28fade..c3f5fad 100644
+--- a/lib/tsserver.js
++++ b/lib/tsserver.js
+@@ -2245,6 +2245,7 @@ __export(server_exports, {
+   tryGetDirectories: () => tryGetDirectories,
+   tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
+   tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
++  tryGetImportLocation: () => tryGetImportLocation,
+   tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
+   tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
+   tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
+@@ -47690,7 +47691,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
+       for (const key of getOwnKeys(exports)) {
+         if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+           const subTarget = exports[key];
+-          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++          const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++          const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+           if (result) {
+             return result;
+           }
+@@ -47762,7 +47764,7 @@ function tryGetModuleNameAsNodeModule({ path, isRedirect }, { getCanonicalFileNa
+   if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+     return void 0;
+   }
+-  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++  const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+   const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+   return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+   function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -49075,7 +49077,7 @@ function createTypeChecker(host) {
+   }
+   function unionIfLazy(_paramType) {
+     const isLazy = isLazyParameterByType(_paramType);
+-    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++    const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+     return paramType;
+   }
+   function getFluentExtension(targetType, name) {
+@@ -54711,6 +54713,16 @@ function createTypeChecker(host) {
+       }
+       return top;
+     }
++    function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++      let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode);
++      if (specifier && specifier.indexOf("/node_modules/") > 0) {
++        const r = tryGetImportLocation(fileMap.map, specifier);
++        if (r) {
++          specifier = r;
++        }
++      }
++      return specifier;
++    }
+     function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+       let file = getDeclarationOfKind(symbol, 311 /* SourceFile */);
+       if (!file) {
+@@ -54784,7 +54796,7 @@ function createTypeChecker(host) {
+         let assertion;
+         if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+           if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+             assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+               factory.createAssertEntry(
+                 factory.createStringLiteral("resolution-mode"),
+@@ -54795,7 +54807,7 @@ function createTypeChecker(host) {
+           }
+         }
+         if (!specifier) {
+-          specifier = getSpecifierForModuleSymbol(chain[0], context);
++          specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+         }
+         if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+           const oldSpecifier = specifier;
+@@ -76145,6 +76157,15 @@ function createTypeChecker(host) {
+     }
+     return false;
+   }
++  function isForceLazyParameterByType(type) {
++    if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++      const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++      if (tag === "tsplus/ForceLazyArgument") {
++        return true;
++      }
++    }
++    return false;
++  }
+   function getMutableArrayOrTupleType(type) {
+     return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+       getTypeArguments(type),
+@@ -76354,7 +76375,7 @@ function createTypeChecker(host) {
+       const thisArgumentType = getThisArgumentType(thisArgumentNode);
+       const originalParamType = thisType;
+       let paramType = originalParamType;
+-      if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++      if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+         const contextFreeArgType = thisArgumentType;
+         if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+           return [createDiagnosticForNode(
+@@ -76392,7 +76413,7 @@ function createTypeChecker(host) {
+           checkMode
+         );
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType)) {
++        if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+           if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+             return [createDiagnosticForNode(
+               arg,
+@@ -89987,6 +90008,25 @@ function createTypeChecker(host) {
+           }
+         }
+         const type = getTypeOfNode(node);
++        if (isCallExpression(node.expression)) {
++          const resolvedSignature = getResolvedSignature(node.expression);
++          const returnType = resolvedSignature.resolvedReturnType;
++          if (returnType) {
++            if (returnType.symbol) {
++              heritageExtensions.add(returnType.symbol);
++            }
++            if (returnType.flags & 2097152 /* Intersection */) {
++              forEach(returnType.types, (type2) => {
++                if (type2.symbol) {
++                  heritageExtensions.add(type2.symbol);
++                }
++                if (type2.aliasSymbol) {
++                  heritageExtensions.add(type2.aliasSymbol);
++                }
++              });
++            }
++          }
++        }
+         if (type.symbol) {
+           heritageExtensions.add(type.symbol);
+         }
+@@ -94772,13 +94812,27 @@ function getOriginalNodeId(node) {
+   node = getOriginalNode(node);
+   return node ? getNodeId(node) : 0;
+ }
+-function getImportLocation(fileMap, source) {
++var importLocationCache = {};
++function tryGetImportLocation(fileMap, source) {
++  if (source in importLocationCache) {
++    return importLocationCache[source];
++  }
+   for (const [path, reg] of fileMap) {
+     if (source.match(reg)) {
+-      return source.replace(reg, path);
++      const r = source.replace(reg, path);
++      importLocationCache[source] = r;
++      return r;
+     }
+   }
+-  throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++  importLocationCache[source] = void 0;
++  return void 0;
++}
++function getImportLocation(fileMap, source) {
++  const found = tryGetImportLocation(fileMap, source);
++  if (!found) {
++    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++  }
++  return found;
+ }
+ function getTraceLocation(traceMap, source) {
+   for (const [path, reg] of traceMap) {
+@@ -178626,6 +178680,7 @@ __export(ts_exports2, {
+   tryGetDirectories: () => tryGetDirectories,
+   tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
+   tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
++  tryGetImportLocation: () => tryGetImportLocation,
+   tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
+   tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
+   tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
+@@ -193076,6 +193131,7 @@ start(initializeNodeSystem(), require("os").platform());
+   tryGetDirectories,
+   tryGetExtensionFromPath,
+   tryGetImportFromModuleSpecifier,
++  tryGetImportLocation,
+   tryGetJSDocSatisfiesTypeNode,
+   tryGetModuleNameFromFile,
+   tryGetModuleSpecifierFromDeclaration,
+diff --git a/lib/tsserverlibrary.d.ts b/lib/tsserverlibrary.d.ts
+index 654c3e2..a868819 100644
+--- a/lib/tsserverlibrary.d.ts
++++ b/lib/tsserverlibrary.d.ts
+@@ -9968,6 +9968,10 @@ declare namespace ts {
+      * @param context A lexical environment context for the visitor.
+      */
+     function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: typeof visitNodes, tokenVisitor?: Visitor): T | undefined;
++    function tryGetImportLocation(fileMap: [
++        string,
++        RegExp
++    ][], source: string): string | undefined;
+     function getImportLocation(fileMap: [
+         string,
+         RegExp
+diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
+index 3e1111f..ca92743 100644
+--- a/lib/tsserverlibrary.js
++++ b/lib/tsserverlibrary.js
+@@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
+         for (const key of getOwnKeys(exports)) {
+           if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+             const subTarget = exports[key];
+-            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++            const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+             if (result) {
+               return result;
+             }
+@@ -45635,7 +45636,7 @@ ${lanes.join("\n")}
+     if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+       return void 0;
+     }
+-    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+     const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+     return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+     function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -46824,7 +46825,7 @@ ${lanes.join("\n")}
+     }
+     function unionIfLazy(_paramType) {
+       const isLazy = isLazyParameterByType(_paramType);
+-      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+       return paramType;
+     }
+     function getFluentExtension(targetType, name) {
+@@ -52460,6 +52461,16 @@ ${lanes.join("\n")}
+         }
+         return top;
+       }
++      function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++        let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode);
++        if (specifier && specifier.indexOf("/node_modules/") > 0) {
++          const r = tryGetImportLocation(fileMap.map, specifier);
++          if (r) {
++            specifier = r;
++          }
++        }
++        return specifier;
++      }
+       function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+         let file = getDeclarationOfKind(symbol, 311 /* SourceFile */);
+         if (!file) {
+@@ -52533,7 +52544,7 @@ ${lanes.join("\n")}
+           let assertion;
+           if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+             if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-              specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++              specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+               assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+                 factory.createAssertEntry(
+                   factory.createStringLiteral("resolution-mode"),
+@@ -52544,7 +52555,7 @@ ${lanes.join("\n")}
+             }
+           }
+           if (!specifier) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+           }
+           if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+             const oldSpecifier = specifier;
+@@ -73894,6 +73905,15 @@ ${lanes.join("\n")}
+       }
+       return false;
+     }
++    function isForceLazyParameterByType(type) {
++      if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++        const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++        if (tag === "tsplus/ForceLazyArgument") {
++          return true;
++        }
++      }
++      return false;
++    }
+     function getMutableArrayOrTupleType(type) {
+       return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+         getTypeArguments(type),
+@@ -74103,7 +74123,7 @@ ${lanes.join("\n")}
+         const thisArgumentType = getThisArgumentType(thisArgumentNode);
+         const originalParamType = thisType;
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++        if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+           const contextFreeArgType = thisArgumentType;
+           if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+             return [createDiagnosticForNode(
+@@ -74141,7 +74161,7 @@ ${lanes.join("\n")}
+             checkMode
+           );
+           let paramType = originalParamType;
+-          if (isLazyParameterByType(originalParamType)) {
++          if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+             if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+               return [createDiagnosticForNode(
+                 arg,
+@@ -87736,6 +87756,25 @@ ${lanes.join("\n")}
+             }
+           }
+           const type = getTypeOfNode(node);
++          if (isCallExpression(node.expression)) {
++            const resolvedSignature = getResolvedSignature(node.expression);
++            const returnType = resolvedSignature.resolvedReturnType;
++            if (returnType) {
++              if (returnType.symbol) {
++                heritageExtensions.add(returnType.symbol);
++              }
++              if (returnType.flags & 2097152 /* Intersection */) {
++                forEach(returnType.types, (type2) => {
++                  if (type2.symbol) {
++                    heritageExtensions.add(type2.symbol);
++                  }
++                  if (type2.aliasSymbol) {
++                    heritageExtensions.add(type2.aliasSymbol);
++                  }
++                });
++              }
++            }
++          }
+           if (type.symbol) {
+             heritageExtensions.add(type.symbol);
+           }
+@@ -92695,13 +92734,26 @@ ${lanes.join("\n")}
+     node = getOriginalNode(node);
+     return node ? getNodeId(node) : 0;
+   }
+-  function getImportLocation(fileMap, source) {
++  function tryGetImportLocation(fileMap, source) {
++    if (source in importLocationCache) {
++      return importLocationCache[source];
++    }
+     for (const [path, reg] of fileMap) {
+       if (source.match(reg)) {
+-        return source.replace(reg, path);
++        const r = source.replace(reg, path);
++        importLocationCache[source] = r;
++        return r;
+       }
+     }
+-    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    importLocationCache[source] = void 0;
++    return void 0;
++  }
++  function getImportLocation(fileMap, source) {
++    const found = tryGetImportLocation(fileMap, source);
++    if (!found) {
++      throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    }
++    return found;
+   }
+   function getTraceLocation(traceMap, source) {
+     for (const [path, reg] of traceMap) {
+@@ -93140,10 +93192,12 @@ ${lanes.join("\n")}
+   function accessPrivateIdentifier(env, name) {
+     return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
+   }
++  var importLocationCache;
+   var init_utilities3 = __esm({
+     "src/compiler/transformers/utilities.ts"() {
+       "use strict";
+       init_ts2();
++      importLocationCache = {};
+     }
+   });
+ 
+@@ -189712,6 +189766,7 @@ ${e.message}`;
+     tryGetDirectories: () => tryGetDirectories,
+     tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
+     tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
++    tryGetImportLocation: () => tryGetImportLocation,
+     tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
+     tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
+     tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
+@@ -192106,6 +192161,7 @@ ${e.message}`;
+     tryGetDirectories: () => tryGetDirectories,
+     tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
+     tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
++    tryGetImportLocation: () => tryGetImportLocation,
+     tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
+     tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
+     tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
+diff --git a/lib/typescript.d.ts b/lib/typescript.d.ts
+index 6260f3a..a7b6af0 100644
+--- a/lib/typescript.d.ts
++++ b/lib/typescript.d.ts
+@@ -5944,6 +5944,10 @@ declare namespace ts {
+      * @param context A lexical environment context for the visitor.
+      */
+     function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: typeof visitNodes, tokenVisitor?: Visitor): T | undefined;
++    function tryGetImportLocation(fileMap: [
++        string,
++        RegExp
++    ][], source: string): string | undefined;
+     function getImportLocation(fileMap: [
+         string,
+         RegExp
+diff --git a/lib/typescript.js b/lib/typescript.js
+index 520a7ae..1fc2395 100644
+--- a/lib/typescript.js
++++ b/lib/typescript.js
+@@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
+         for (const key of getOwnKeys(exports)) {
+           if (key === "default" || conditions.indexOf(key) >= 0 || isApplicableVersionedTypesKey(conditions, key)) {
+             const subTarget = exports[key];
+-            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions);
++            const mode2 = typeof subTarget === "string" ? endsWith(subTarget, "/") ? 1 /* Directory */ : stringContains(subTarget, "*") ? 2 /* Pattern */ : 0 /* Exact */ : 0 /* Exact */;
++            const result = tryGetModuleNameFromExports(options, targetFilePath, packageDirectory, packageName, subTarget, conditions, mode2);
+             if (result) {
+               return result;
+             }
+@@ -45635,7 +45636,7 @@ ${lanes.join("\n")}
+     if (!(startsWith(sourceDirectory, pathToTopLevelNodeModules) || globalTypingsCacheLocation && startsWith(getCanonicalFileName(globalTypingsCacheLocation), pathToTopLevelNodeModules))) {
+       return void 0;
+     }
+-    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1);
++    const nodeModulesDirectoryName = moduleSpecifier.substring(parts.topLevelPackageNameIndex + 1).replace(/\.pnpm\/[^\/]+\/node_modules\//, "");
+     const packageName = getPackageNameFromTypesPackageName(nodeModulesDirectoryName);
+     return getEmitModuleResolutionKind(options) === 1 /* Classic */ && packageName === nodeModulesDirectoryName ? void 0 : packageName;
+     function tryDirectoryWithPackageJson(packageRootIndex) {
+@@ -46824,7 +46825,7 @@ ${lanes.join("\n")}
+     }
+     function unionIfLazy(_paramType) {
+       const isLazy = isLazyParameterByType(_paramType);
+-      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : _paramType;
++      const paramType = isLazy ? getUnionType([_paramType, _paramType.resolvedTypeArguments[0]], 0 /* None */) : isForceLazyParameterByType(_paramType) ? _paramType.resolvedTypeArguments[0] : _paramType;
+       return paramType;
+     }
+     function getFluentExtension(targetType, name) {
+@@ -52460,6 +52461,16 @@ ${lanes.join("\n")}
+         }
+         return top;
+       }
++      function getSpecifierForModuleSymbolSpecial(symbol, context, overrideImportMode) {
++        let specifier = getSpecifierForModuleSymbol(symbol, context, overrideImportMode);
++        if (specifier && specifier.indexOf("/node_modules/") > 0) {
++          const r = tryGetImportLocation(fileMap.map, specifier);
++          if (r) {
++            specifier = r;
++          }
++        }
++        return specifier;
++      }
+       function getSpecifierForModuleSymbol(symbol, context, overrideImportMode) {
+         let file = getDeclarationOfKind(symbol, 311 /* SourceFile */);
+         if (!file) {
+@@ -52533,7 +52544,7 @@ ${lanes.join("\n")}
+           let assertion;
+           if (getEmitModuleResolutionKind(compilerOptions) === 3 /* Node16 */ || getEmitModuleResolutionKind(compilerOptions) === 99 /* NodeNext */) {
+             if ((targetFile == null ? void 0 : targetFile.impliedNodeFormat) === 99 /* ESNext */ && targetFile.impliedNodeFormat !== (contextFile == null ? void 0 : contextFile.impliedNodeFormat)) {
+-              specifier = getSpecifierForModuleSymbol(chain[0], context, 99 /* ESNext */);
++              specifier = getSpecifierForModuleSymbolSpecial(chain[0], context, 99 /* ESNext */);
+               assertion = factory.createImportTypeAssertionContainer(factory.createAssertClause(factory.createNodeArray([
+                 factory.createAssertEntry(
+                   factory.createStringLiteral("resolution-mode"),
+@@ -52544,7 +52555,7 @@ ${lanes.join("\n")}
+             }
+           }
+           if (!specifier) {
+-            specifier = getSpecifierForModuleSymbol(chain[0], context);
++            specifier = getSpecifierForModuleSymbolSpecial(chain[0], context);
+           }
+           if (!(context.flags & 67108864 /* AllowNodeModulesRelativePaths */) && getEmitModuleResolutionKind(compilerOptions) !== 1 /* Classic */ && specifier.indexOf("/node_modules/") >= 0) {
+             const oldSpecifier = specifier;
+@@ -73894,6 +73905,15 @@ ${lanes.join("\n")}
+       }
+       return false;
+     }
++    function isForceLazyParameterByType(type) {
++      if (type.symbol && type.symbol.declarations && type.symbol.declarations.length > 0) {
++        const tag = collectTsPlusTypeTags(type.symbol.declarations[0])[0];
++        if (tag === "tsplus/ForceLazyArgument") {
++          return true;
++        }
++      }
++      return false;
++    }
+     function getMutableArrayOrTupleType(type) {
+       return type.flags & 1048576 /* Union */ ? mapType(type, getMutableArrayOrTupleType) : type.flags & 1 /* Any */ || isMutableArrayOrTuple(getBaseConstraintOfType(type) || type) ? type : isTupleType(type) ? createTupleType(
+         getTypeArguments(type),
+@@ -74103,7 +74123,7 @@ ${lanes.join("\n")}
+         const thisArgumentType = getThisArgumentType(thisArgumentNode);
+         const originalParamType = thisType;
+         let paramType = originalParamType;
+-        if (isLazyParameterByType(originalParamType) && thisArgumentNode) {
++        if ((isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) && thisArgumentNode) {
+           const contextFreeArgType = thisArgumentType;
+           if (isTypeIdenticalTo(contextFreeArgType, anyType) || isTypeIdenticalTo(contextFreeArgType, neverType)) {
+             return [createDiagnosticForNode(
+@@ -74141,7 +74161,7 @@ ${lanes.join("\n")}
+             checkMode
+           );
+           let paramType = originalParamType;
+-          if (isLazyParameterByType(originalParamType)) {
++          if (isLazyParameterByType(originalParamType) || isForceLazyParameterByType(originalParamType)) {
+             if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
+               return [createDiagnosticForNode(
+                 arg,
+@@ -87736,6 +87756,25 @@ ${lanes.join("\n")}
+             }
+           }
+           const type = getTypeOfNode(node);
++          if (isCallExpression(node.expression)) {
++            const resolvedSignature = getResolvedSignature(node.expression);
++            const returnType = resolvedSignature.resolvedReturnType;
++            if (returnType) {
++              if (returnType.symbol) {
++                heritageExtensions.add(returnType.symbol);
++              }
++              if (returnType.flags & 2097152 /* Intersection */) {
++                forEach(returnType.types, (type2) => {
++                  if (type2.symbol) {
++                    heritageExtensions.add(type2.symbol);
++                  }
++                  if (type2.aliasSymbol) {
++                    heritageExtensions.add(type2.aliasSymbol);
++                  }
++                });
++              }
++            }
++          }
+           if (type.symbol) {
+             heritageExtensions.add(type.symbol);
+           }
+@@ -92695,13 +92734,26 @@ ${lanes.join("\n")}
+     node = getOriginalNode(node);
+     return node ? getNodeId(node) : 0;
+   }
+-  function getImportLocation(fileMap, source) {
++  function tryGetImportLocation(fileMap, source) {
++    if (source in importLocationCache) {
++      return importLocationCache[source];
++    }
+     for (const [path, reg] of fileMap) {
+       if (source.match(reg)) {
+-        return source.replace(reg, path);
++        const r = source.replace(reg, path);
++        importLocationCache[source] = r;
++        return r;
+       }
+     }
+-    throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    importLocationCache[source] = void 0;
++    return void 0;
++  }
++  function getImportLocation(fileMap, source) {
++    const found = tryGetImportLocation(fileMap, source);
++    if (!found) {
++      throw new Error(`cannot get import path for file: ${source} (Make sure to add it in your tsplus.config.json)`);
++    }
++    return found;
+   }
+   function getTraceLocation(traceMap, source) {
+     for (const [path, reg] of traceMap) {
+@@ -93140,10 +93192,12 @@ ${lanes.join("\n")}
+   function accessPrivateIdentifier(env, name) {
+     return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
+   }
++  var importLocationCache;
+   var init_utilities3 = __esm({
+     "src/compiler/transformers/utilities.ts"() {
+       "use strict";
+       init_ts2();
++      importLocationCache = {};
+     }
+   });
+ 
+@@ -178384,6 +178438,7 @@ ${options.prefix}` : "\n" : options.prefix
+     tryGetDirectories: () => tryGetDirectories,
+     tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
+     tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
++    tryGetImportLocation: () => tryGetImportLocation,
+     tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
+     tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
+     tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
