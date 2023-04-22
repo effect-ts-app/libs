@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.44.1
+
+### Patch Changes
+
+- fix withDefault
+- Updated dependencies
+  - @effect-app/schema@0.39.1
+
 ## 0.44.0
 
 ### Minor Changes

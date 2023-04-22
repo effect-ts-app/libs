@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.1
+
+### Patch Changes
+
+- fix withDefault
+
 ## 0.39.0
 
 ### Minor Changes
