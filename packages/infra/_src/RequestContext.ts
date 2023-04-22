@@ -17,8 +17,6 @@ export class RequestContextParent extends MNModel<
   locale: literal("en", "de"),
   createdAt: date.withDefault
 }) {}
-/** @ignore @internal @deprecated */
-export type RequestContextParentConstructor = typeof RequestContextParent
 
 /**
  * @tsplus type RequestContext
@@ -60,9 +58,6 @@ export class RequestContext extends MNModel<
     }
   }
 }
-
-/** @ignore @internal @deprecated */
-export type RequestContextConstructor = typeof RequestContext
 
 // codegen:start {preset: model}
 //

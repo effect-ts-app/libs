@@ -14,24 +14,18 @@ export class OperationProgress extends MNModel<
   completed: PositiveInt,
   total: PositiveInt
 }) {}
-/** @ignore @internal @deprecated */
-export type OperationProgressConstructor = typeof OperationProgress
 
 @useClassFeaturesForSchema
 export class Success extends MNModel<Success, Success.ConstructorInput, Success.Encoded, Success.Props>()({
   _tag: literal("Success"),
   message: LongString.nullable.withDefault
 }) {}
-/** @ignore @internal @deprecated */
-export type SuccessConstructor = typeof Success
 
 @useClassFeaturesForSchema
 export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.Encoded, Failure.Props>()({
   _tag: literal("Failure"),
   message: LongString.nullable.withDefault
 }) {}
-/** @ignore @internal @deprecated */
-export type FailureConstructor = typeof Failure
 
 export const OperationResult = union({ Success, Failure })
 export type OperationResult = ParsedShapeOfCustom<typeof OperationResult>
@@ -44,8 +38,6 @@ export class Operation extends MNModel<Operation, Operation.ConstructorInput, Op
   createdAt: date.withDefault,
   updatedAt: date.nullable.withDefault
 }) {}
-/** @ignore @internal @deprecated */
-export type OperationConstructor = typeof Operation
 
 // codegen:start {preset: model}
 //

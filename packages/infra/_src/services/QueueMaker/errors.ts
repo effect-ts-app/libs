@@ -16,7 +16,7 @@ export class FatalQueueException<E> extends CauseException<E> {
 const reportQueueError_ = reportError((cause) => new MessageException(cause))
 
 export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
-    reportQueueError_(cause, extras)
+  reportQueueError_(cause, extras)
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
