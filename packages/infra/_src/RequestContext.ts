@@ -1,3 +1,5 @@
+import "@effect-app/prelude/_global.ext"
+
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
 
@@ -13,7 +15,7 @@ export class RequestContextParent extends MNModel<
   name: prop(ReasonableString),
   user: optProp(props({ id: prop(StringId) })),
   locale: prop(literal("en", "de")),
-  createdAt: defaultProp(date)
+  createdAt: date.withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type RequestContextParentConstructor = typeof RequestContextParent

@@ -86,3 +86,41 @@ export const parseCondemn = Schema.parseCondemn
  * @tsplus getter ets/Schema/Schema parseECondemn
  */
 export const parseECondemn = Schema.parseECondemn
+
+/**
+ * @tsplus getter ets/Schema/Schema withDefault
+ */
+export const withDefaultProp = <ParsedShape extends Schema.SupportedDefaults, ConstructorInput, Encoded, Api>(
+  schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+) => Schema.defaultProp(schema)
+
+// /**
+//  * @tsplus getter ets/Schema/Schema withDefault
+//  */
+// export const withDefaultProp3 = <ParsedShape extends Schema.SupportedDefaults, ConstructorInput, Encoded, Api>(
+//   schema: Schema.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+// ) => Schema.defaultProp(schema)
+
+// /**
+//  * @tsplus fluent ets/Schema/Schema withDefaultN
+//  */
+// export function withDefaultPropNullable<ParsedShape extends null, ConstructorInput, Encoded, Api>(
+//   schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+// ): null extends ParsedShape ? Schema.FromProperty<
+//     Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+//     "required",
+//     None<any>,
+//     Some<["constructor", () => ParsedShape]>
+//   >
+//   : ["Not a supported type, see SupportedTypes", never]
+// {
+//   return Schema.defaultProp(schema)
+// }
+
+/**
+ * @tsplus fluent ets/Schema/Schema withDefaultMake
+ */
+export const withDefaultProp2 = <ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  makeDefault: () => ParsedShape
+) => Schema.defaultProp(schema, makeDefault)

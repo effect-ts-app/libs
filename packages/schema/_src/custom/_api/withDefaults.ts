@@ -9,6 +9,9 @@ import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import { unsafe } from "./condemn.js"
 
+/**
+ * @tsplus type ets/Schema/Schema
+ */
 export interface SchemaDefaultSchema<
   ParserInput,
   ParsedShape,

@@ -19,7 +19,7 @@ export type OperationProgressConstructor = typeof OperationProgress
 @useClassFeaturesForSchema
 export class Success extends MNModel<Success, Success.ConstructorInput, Success.Encoded, Success.Props>()({
   _tag: prop(literal("Success")),
-  message: defaultProp(nullable(LongString))
+  message: nullable(LongString).withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type SuccessConstructor = typeof Success
@@ -27,7 +27,7 @@ export type SuccessConstructor = typeof Success
 @useClassFeaturesForSchema
 export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.Encoded, Failure.Props>()({
   _tag: prop(literal("Failure")),
-  message: defaultProp(nullable(LongString))
+  message: nullable(LongString).withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type FailureConstructor = typeof Failure
@@ -40,8 +40,8 @@ export class Operation extends MNModel<Operation, Operation.ConstructorInput, Op
   id: prop(OperationId),
   progress: optProp(OperationProgress),
   result: optProp(OperationResult),
-  createdAt: defaultProp(date),
-  updatedAt: defaultProp(nullable(date))
+  createdAt: date.withDefault,
+  updatedAt: nullable(date).withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type OperationConstructor = typeof Operation
