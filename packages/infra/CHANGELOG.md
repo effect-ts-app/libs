@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.54.2
+
+### Patch Changes
+
+- Improve withDefadult
+- Updated dependencies
+  - @effect-app/prelude@0.44.2
+  - @effect-app/schema@0.39.2
+  - @effect-app/infra-adapters@0.40.2
+
 ## 0.54.1
 
 ### Patch Changes

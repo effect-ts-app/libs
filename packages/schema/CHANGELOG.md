@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.2
+
+### Patch Changes
+
+- Improve withDefadult
+
 ## 0.39.1
 
 ### Patch Changes

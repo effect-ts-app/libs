@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.44.2
+
+### Patch Changes
+
+- Improve withDefadult
+- Updated dependencies
+  - @effect-app/schema@0.39.2
+
 ## 0.44.1
 
 ### Patch Changes
