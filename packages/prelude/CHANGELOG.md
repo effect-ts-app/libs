@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.43.0
+
+### Minor Changes
+
+- Improve Schema withDefault
+
 ## 0.42.0
 
 ### Minor Changes
