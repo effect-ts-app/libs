@@ -171,7 +171,7 @@ export function propDef<
   )
 }
 
-/** @tsplus fluent ets/Schema/Property optional */
+/** @tsplus getter ets/Schema/Property optional */
 export function propOpt<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -181,7 +181,7 @@ export function propOpt<
   return new Property(prop._as, prop._schema, "optional", prop._def, prop._map)
 }
 
-/** @tsplus fluent ets/Schema/Property required */
+/** @tsplus getter ets/Schema/Property required */
 export function propReq<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
