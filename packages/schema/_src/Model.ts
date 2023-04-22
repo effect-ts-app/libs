@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ComputeFlat } from "@effect-app/core/utils"
+import { type ComputeFlat, typedKeysOf } from "@effect-app/core/utils"
 import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
@@ -15,8 +15,8 @@ import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
 import type { AnyProperty, EncodedOf, ParsedShapeOf, PropertyRecord } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
+import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
-import { OptionalConstructor } from "./tools.js"
 
 export const nModelBrand = Symbol()
 
@@ -169,10 +169,25 @@ export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
     ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(props))
 }
 
+type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
+
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
-  return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
+    const props = typedKeysOf(propsOrSchemas).reduce(
+      (prev, cur) => {
+        const v = propsOrSchemas[cur]
+        prev[cur] = MO.SchemaSym in v ? MO.prop(v) : v as any
+        return prev
+      },
+      {} as {
+        [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
+          ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
+          : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
+          : never
+      }
+    )
     const self = MO.props(props)
     return makeSpecial(__name, self) as
       & MNModel<

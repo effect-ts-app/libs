@@ -10,19 +10,15 @@ export class RequestContextParent extends MNModel<
   RequestContextParent.Encoded,
   RequestContextParent.Props
 >()({
-  _tag: prop(literal("RequestContext")),
-  id: prop(RequestId),
-  name: prop(ReasonableString),
-  user: optProp(props({ id: prop(StringId) })),
-  locale: prop(literal("en", "de")),
+  _tag: literal("RequestContext"),
+  id: RequestId,
+  name: ReasonableString,
+  user: props({ id: prop(StringId) }).optional,
+  locale: literal("en", "de"),
   createdAt: date.withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type RequestContextParentConstructor = typeof RequestContextParent
-
-export function makeRequestId() {
-  return RequestId.make()
-}
 
 /**
  * @tsplus type RequestContext
@@ -36,10 +32,10 @@ export class RequestContext extends MNModel<
   RequestContext.Props
 >()({
   ...RequestContextParent.omit("id"),
-  id: defaultProp(RequestId, makeRequestId),
-  rootId: prop(RequestId),
-  parent: optProp(RequestContextParent),
-  namespace: optProp(ReasonableString)
+  id: RequestId.withDefault,
+  rootId: RequestId,
+  parent: RequestContextParent.optional,
+  namespace: ReasonableString.optional
 }) {
   static inherit(
     this: void,

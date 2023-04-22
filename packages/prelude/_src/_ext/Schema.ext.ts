@@ -94,6 +94,27 @@ export const withDefaultProp = <ParsedShape extends Schema.SupportedDefaults, Co
   schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
 ) => Schema.defaultProp(schema)
 
+/**
+ * @tsplus getter ets/Schema/Schema optional
+ */
+export const optionalProp = <ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+) => Schema.optProp(schema)
+
+/**
+ * @tsplus getter ets/Schema/SchemaUnion optional
+ */
+export const optionalUnionProp = <Props extends Record<PropertyKey, Schema.SchemaUPI>>(
+  schema: Schema.SchemaUnion<Props>
+) => Schema.optProp(schema)
+
+/**
+ * @tsplus getter ets/Schema/Schema nullable
+ */
+export const nullableProp = <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: Schema.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+) => Schema.nullable(schema)
+
 // /**
 //  * @tsplus getter ets/Schema/Schema withDefault
 //  */

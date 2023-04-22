@@ -1,4 +1,5 @@
-import { optProp } from "./schema.js"
+import { LongString } from "./schema.js"
+import "@effect-app/prelude/_global.ext"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -10,24 +11,24 @@ export class OperationProgress extends MNModel<
   OperationProgress.Encoded,
   OperationProgress.Props
 >()({
-  completed: prop(PositiveInt),
-  total: prop(PositiveInt)
+  completed: PositiveInt,
+  total: PositiveInt
 }) {}
 /** @ignore @internal @deprecated */
 export type OperationProgressConstructor = typeof OperationProgress
 
 @useClassFeaturesForSchema
 export class Success extends MNModel<Success, Success.ConstructorInput, Success.Encoded, Success.Props>()({
-  _tag: prop(literal("Success")),
-  message: nullable(LongString).withDefault
+  _tag: literal("Success"),
+  message: LongString.nullable.withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type SuccessConstructor = typeof Success
 
 @useClassFeaturesForSchema
 export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.Encoded, Failure.Props>()({
-  _tag: prop(literal("Failure")),
-  message: nullable(LongString).withDefault
+  _tag: literal("Failure"),
+  message: LongString.nullable.withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type FailureConstructor = typeof Failure
@@ -37,11 +38,11 @@ export type OperationResult = ParsedShapeOfCustom<typeof OperationResult>
 
 @useClassFeaturesForSchema
 export class Operation extends MNModel<Operation, Operation.ConstructorInput, Operation.Encoded, Operation.Props>()({
-  id: prop(OperationId),
-  progress: optProp(OperationProgress),
-  result: optProp(OperationResult),
+  id: OperationId,
+  progress: OperationProgress.optional,
+  result: OperationResult.optional,
   createdAt: date.withDefault,
-  updatedAt: nullable(date).withDefault
+  updatedAt: date.nullable.withDefault
 }) {}
 /** @ignore @internal @deprecated */
 export type OperationConstructor = typeof Operation

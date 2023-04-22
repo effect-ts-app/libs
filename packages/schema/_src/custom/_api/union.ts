@@ -121,6 +121,7 @@ export interface UnionApi<Props extends Record<PropertyKey, S.SchemaUPI>> extend
   >
 }
 
+/** tsplus type ets/Schema/SchemaUnion */
 export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = DefaultSchema<
   unknown,
   {
