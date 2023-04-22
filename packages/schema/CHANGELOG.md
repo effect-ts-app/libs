@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.6
+
+### Patch Changes
+
+- Fix prop/schema
+
 ## 0.39.5
 
 ### Patch Changes
