@@ -28,16 +28,31 @@ function sortIt(str: string) {
 const debug = false // true
 
 export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = false) {
+  const processed: any[] = []
   return (n: ts.Node) => {
     if (/*ts.isClassDeclaration(n) || ts.isTypeAliasDeclaration(n)*/ true) {
+      
+      let modelName = null
+      if (ts.canHaveDecorators(n)) {
+        const decor = ts.getDecorators(n)
+        if (decor?.some(_ => (_.expression as any).escapedText === "useClassFeaturesForSchema")) {
+          //useClassFeaturesForSchema
+          //console.log("$$ decors", ts.getDecorators(n))
+          modelName = (n.name as any)?.escapedText
+          //console.log("$$$ modelName", modelName)
+        }
+      }
+      if (!modelName) {
       const constructorName = (n as any).name?.escapedText
-
       // TODO: Remove requirement
       if (!constructorName?.endsWith("Constructor")) {
         //console.log("$$$constructorName doesnt end with Constructor", constructorName)
         return
       }
-      const modelName = constructorName.replace("Constructor", "")
+      modelName = constructorName.replace("Constructor", "")
+    }
+    if (processed.includes(modelName)) { return }
+    processed.push(modelName)
 
       if (!writeFullTypes) {
         return [
