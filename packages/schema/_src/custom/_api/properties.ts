@@ -1,6 +1,6 @@
 import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
-import { intersect } from "@effect-app/core/utils"
+import { intersect, typedKeysOf } from "@effect-app/core/utils"
 import type { Compute, UnionToIntersection } from "@effect-app/core/utils"
 import * as HashMap from "@effect/data/HashMap"
 import type * as fc from "fast-check"
@@ -227,6 +227,26 @@ export type AnyProperty = Property<any, any, any, any>
 
 export type PropertyRecord = Record<PropertyKey, AnyProperty>
 
+export type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | S.SchemaAny>
+
+export type ToProps<ProvidedProps extends PropertyOrSchemaRecord> = {
+  [P in keyof ProvidedProps]: ProvidedProps[P] extends S.SchemaAny
+    ? Property<ProvidedProps[P], "required", None<any>, None<any>>
+    : ProvidedProps[P] extends AnyProperty ? ProvidedProps[P]
+    : never
+}
+
+export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) {
+  return typedKeysOf(propsOrSchemas).reduce(
+    (prev, cur) => {
+      const v = propsOrSchemas[cur]
+      prev[cur] = v instanceof Property ? v as any : prop(v)
+      return prev
+    },
+    {} as ToProps<ProvidedProps>
+  )
+}
+
 export type ShapeFromProperties<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
@@ -402,9 +422,11 @@ export function tagsFromProps<Props extends PropertyRecord>(
   return tags
 }
 
-export function props<Props extends PropertyRecord>(
-  props: Props
-): SchemaProperties<Props> {
+export function props<ProvidedProps extends PropertyOrSchemaRecord>(
+  _props: ProvidedProps
+): SchemaProperties<ToProps<ProvidedProps>> {
+  type Props = ToProps<ProvidedProps>
+  const props = toProps(_props)
   const parsers = {} as Record<string, Parser.Parser<unknown, unknown, unknown>>
   const encoders = {}
   const guards = {}

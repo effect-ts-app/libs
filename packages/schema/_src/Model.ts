@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type ComputeFlat, typedKeysOf } from "@effect-app/core/utils"
+import { type ComputeFlat } from "@effect-app/core/utils"
 import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
@@ -142,60 +142,40 @@ export interface MM<
 }
 
 export function Model<ParsedShape>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial<ParsedShape>(__name)(MO.props(toProps(propsOrSchemas)))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial<ParsedShape>(__name)(MO.props(propsOrSchemas))
 }
 
 export function ModelEnc<ParsedShape, Encoded>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(propsOrSchemas))
 }
 
 export function Model3<ParsedShape, ParsedShape2>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(toProps(propsOrSchemas)))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(propsOrSchemas))
 }
 
 export function Model4<ParsedShape>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial3<ParsedShape, {}>(__name)(MO.props(toProps(propsOrSchemas)))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial3<ParsedShape, {}>(__name)(MO.props(propsOrSchemas))
 }
 
 export function ModelEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(propsOrSchemas))
 }
 
 export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
-}
-
-export type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
-
-export type ToProps<ProvidedProps extends PropertyOrSchemaRecord> = {
-  [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
-    ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
-    : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
-    : never
-}
-
-export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) {
-  return typedKeysOf(propsOrSchemas).reduce(
-    (prev, cur) => {
-      const v = propsOrSchemas[cur]
-      prev[cur] = v instanceof MO.Property ? v as any : MO.prop(v)
-      return prev
-    },
-    {} as ToProps<ProvidedProps>
-  )
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(propsOrSchemas))
 }
 
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
-  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
-    const self = MO.props(toProps(propsOrSchemas))
+  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
+    const self = MO.props(MO.toProps(propsOrSchemas))
     return makeSpecial(__name, self) as
       & MNModel<
         typeof self,

@@ -7,17 +7,8 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type {
-  AnyRecord,
-  AnyRecordSchema,
-  GetProps,
-  Model,
-  PropertyOrSchemaRecord,
-  PropsExtensions,
-  StringRecord,
-  ToProps
-} from "./Model.js"
-import { ModelSpecial, setSchema, toProps } from "./Model.js"
+import type { AnyRecord, AnyRecordSchema, GetProps, Model, PropsExtensions, StringRecord } from "./Model.js"
+import { ModelSpecial, setSchema } from "./Model.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
@@ -528,20 +519,20 @@ export function ReqProps<M>() {
   function a<
     Path extends string,
     Method extends Methods,
-    ProvidedProps extends PropertyOrSchemaRecord
-  >(method: Method, path: Path): BuildRequest<ToProps<ProvidedProps>, Path, Method, M>
+    ProvidedProps extends MO.PropertyOrSchemaRecord
+  >(method: Method, path: Path): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    ProvidedProps extends PropertyOrSchemaRecord
-  >(method: Method, path: Path, props: ProvidedProps): BuildRequest<ToProps<ProvidedProps>, Path, Method, M>
+    ProvidedProps extends MO.PropertyOrSchemaRecord
+  >(method: Method, path: Path, props: ProvidedProps): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,
-    ProvidedProps extends PropertyOrSchemaRecord
+    ProvidedProps extends MO.PropertyOrSchemaRecord
   >(method: Method, path: Path, props?: ProvidedProps) {
     const req = Req<M>()
-    const r = props ? req(method, path, MO.props(toProps(props))) : req(method, path)
+    const r = props ? req(method, path, MO.props(props)) : req(method, path)
     return r
   }
 
@@ -614,18 +605,18 @@ export function MethodReqProps2_<Method extends Methods, Path extends string>(
   path: Path
 ) {
   return <M>(__name?: string) => {
-    function a<ProvidedProps extends PropertyOrSchemaRecord>(): BuildRequest<
-      ToProps<ProvidedProps>,
+    function a<ProvidedProps extends MO.PropertyOrSchemaRecord>(): BuildRequest<
+      MO.ToProps<ProvidedProps>,
       Path,
       Method,
       M
     >
-    function a<ProvidedProps extends PropertyOrSchemaRecord>(
+    function a<ProvidedProps extends MO.PropertyOrSchemaRecord>(
       props: ProvidedProps
-    ): BuildRequest<ToProps<ProvidedProps>, Path, Method, M>
-    function a<Props extends PropertyOrSchemaRecord>(props?: Props) {
+    ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
+    function a<Props extends MO.PropertyOrSchemaRecord>(props?: Props) {
       const req = Req<M>(__name)
-      const r = props ? req(method, path, MO.props(toProps(props))) : req(method, path)
+      const r = props ? req(method, path, MO.props(props)) : req(method, path)
       return r
     }
 
@@ -635,19 +626,19 @@ export function MethodReqProps2_<Method extends Methods, Path extends string>(
 
 export function MethodReqProps<Method extends Methods>(method: Method) {
   return <M>() => {
-    function a<Path extends string, ProvidedProps extends PropertyOrSchemaRecord>(
+    function a<Path extends string, ProvidedProps extends MO.PropertyOrSchemaRecord>(
       path: Path
-    ): BuildRequest<ToProps<ProvidedProps>, Path, Method, M>
-    function a<Path extends string, ProvidedProps extends PropertyOrSchemaRecord>(
+    ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
+    function a<Path extends string, ProvidedProps extends MO.PropertyOrSchemaRecord>(
       path: Path,
       props: ProvidedProps
-    ): BuildRequest<ToProps<ProvidedProps>, Path, Method, M>
-    function a<Path extends string, ProvidedProps extends PropertyOrSchemaRecord>(
+    ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
+    function a<Path extends string, ProvidedProps extends MO.PropertyOrSchemaRecord>(
       path: Path,
       props?: ProvidedProps
     ) {
       const req = Req<M>()
-      const r = props ? req(method, path, MO.props(toProps(props))) : req(method, path)
+      const r = props ? req(method, path, MO.props(props)) : req(method, path)
       return r
     }
 
