@@ -155,7 +155,7 @@ export function defaultConstructor<
   return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
 }
 
-type SupportedDefaults =
+export type SupportedDefaults =
   | ROSet<any>
   | ReadonlyArray<any>
   | Some<any>
