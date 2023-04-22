@@ -2,12 +2,15 @@
 import { pipe } from "@effect-app/core/Function"
 import type { Refinement } from "@effect-app/core/Function"
 import type {
+  ApiOf,
   ApiSelfType,
   DefaultSchema,
   NonEmptyString,
   Parser,
+  Property,
   SchemaDefaultSchema,
   SchemaUPI,
+  SupportedDefaultsSchema,
   Utils
 } from "@effect-app/schema"
 import {
@@ -132,6 +135,9 @@ export interface StringIdBrand extends ReasonableStringBrand {
   readonly StringId: unique symbol
 }
 
+/** @tsplus getter ets/Schema/Schema withDefault */
+export const withDefault = <S extends SupportedDefaultsSchema>(schema: S) => defaultProp(schema)
+
 /**
  * A string that is at least 6 characters long and a maximum of 50.
  */
@@ -167,10 +173,10 @@ export interface StringIdSchema extends
 const StringIdSchema: StringIdSchema = string[">>>"](stringIdFromString)["|>"](
   brand<StringId>()
 )
+const makeStringId = (): StringId => nanoid() as unknown as StringId
 export const StringId = extendWithUtilsAnd(StringIdSchema, () => ({
-  make(this: void): StringId {
-    return nanoid() as unknown as StringId
-  }
+  make: makeStringId,
+  withDefault: defaultProp(StringIdSchema, makeStringId)
 }))
 
 const stringIdArb = Arbitrary.for(StringId)
@@ -217,12 +223,13 @@ export function prefixedStringId<Brand extends StringId>() {
     )
 
     const schema = string[">>>"](fromString)["|>"](named(name))["|>"](brand<Brand>())
+    const make = () => (pref + StringId.make()) as Brand
 
     return extendWithUtilsAnd(
       schema,
       (ex): PrefixedStringUtils<Brand, Prefix, Separator> => ({
         EParser: EParserFor(ex),
-        create: () => (pref + StringId.make()) as Brand,
+        make,
         /**
          * Automatically adds the prefix.
          */
@@ -233,7 +240,8 @@ export function prefixedStringId<Brand extends StringId>() {
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         is: refinement,
         prefix,
-        eq: Equivalence.string as Equivalence<Brand>
+        eq: Equivalence.string as Equivalence<Brand>,
+        withDefault: defaultProp(schema, make)
       })
     )
   }
@@ -245,12 +253,18 @@ export interface PrefixedStringUtils<
   Separator extends string
 > {
   readonly EParser: Parser.Parser<string, any, Brand>
-  readonly create: () => Brand
+  readonly make: () => Brand
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly is: (x: StringId) => x is Brand
   readonly prefix: Prefix
   eq: Equivalence<Brand>
+  readonly withDefault: Property<
+    SchemaDefaultSchema<unknown, Brand, string, string, ApiOf<PrefixedStringIdSchema<Brand, Prefix, Separator>>>,
+    "required",
+    None<any>,
+    Some<["constructor", () => Brand]>
+  >
 }
 
 export interface UrlBrand {
