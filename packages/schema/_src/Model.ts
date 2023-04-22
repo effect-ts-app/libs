@@ -174,11 +174,12 @@ type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
+  // TPDP: Apply change to all
   return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
     const props = typedKeysOf(propsOrSchemas).reduce(
       (prev, cur) => {
         const v = propsOrSchemas[cur]
-        prev[cur] = MO.SchemaSym in v ? MO.prop(v) : v as any
+        prev[cur] = v instanceof MO.Property ? v as any : MO.prop(v)
         return prev
       },
       {} as {
