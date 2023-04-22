@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.54.3
+
+### Patch Changes
+
+- Improve schema prop api
+- Updated dependencies
+  - @effect-app/prelude@0.44.3
+  - @effect-app/schema@0.39.3
+  - @effect-app/infra-adapters@0.40.3
+
 ## 0.54.2
 
 ### Patch Changes

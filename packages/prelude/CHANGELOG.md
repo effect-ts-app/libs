@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.44.3
+
+### Patch Changes
+
+- Improve schema prop api
+- Updated dependencies
+  - @effect-app/schema@0.39.3
+
 ## 0.44.2
 
 ### Patch Changes

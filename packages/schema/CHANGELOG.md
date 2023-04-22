@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.3
+
+### Patch Changes
+
+- Improve schema prop api
+
 ## 0.39.2
 
 ### Patch Changes
