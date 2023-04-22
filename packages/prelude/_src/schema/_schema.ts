@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { identity } from "@effect-app/core/Function"
+import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import type {
   AnyError,
   ConstructorErrorOf,
@@ -33,12 +34,11 @@ import {
   unionIdentifier,
   unsafe
 } from "@effect-app/schema"
-import type * as Th from "@effect-app/schema/custom/These"
-import type * as faker from "faker"
-import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import * as S from "@effect-app/schema"
-import { fakerToArb, getFaker } from "../faker.js"
+import type * as Th from "@effect-app/schema/custom/These"
 import type { OptionalConstructor } from "@effect-app/schema/tools"
+import type * as faker from "faker"
+import { fakerToArb, getFaker } from "../faker.js"
 
 export { matchTag } from "@effect-app/core/utils"
 
