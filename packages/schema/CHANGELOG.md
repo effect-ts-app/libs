@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.9
+
+### Patch Changes
+
+- feat: property extensions
+
 ## 0.39.8
 
 ### Patch Changes

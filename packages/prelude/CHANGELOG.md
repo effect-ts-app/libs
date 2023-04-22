@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.44.9
+
+### Patch Changes
+
+- feat: property extensions
+- Updated dependencies
+  - @effect-app/schema@0.39.9
+
 ## 0.44.8
 
 ### Patch Changes
