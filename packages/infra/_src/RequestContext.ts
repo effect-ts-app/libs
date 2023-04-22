@@ -1,4 +1,4 @@
-import type {} "@effect-app/prelude/_global.ext"
+import type {} from "@effect-app/prelude/_global.ext"
 
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>
