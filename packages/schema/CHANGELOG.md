@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.7
+
+### Patch Changes
+
+- extend schema or prop to all Model helpers
+
 ## 0.39.6
 
 ### Patch Changes
