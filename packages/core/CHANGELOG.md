@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.47.1
+
+### Patch Changes
+
+- fix global
+
 ## 0.47.0
 
 ### Minor Changes
