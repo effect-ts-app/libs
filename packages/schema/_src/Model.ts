@@ -142,54 +142,58 @@ export interface MM<
 }
 
 export function Model<ParsedShape>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) => ModelSpecial<ParsedShape>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial<ParsedShape>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 export function ModelEnc<ParsedShape, Encoded>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 export function Model3<ParsedShape, ParsedShape2>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 export function Model4<ParsedShape>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) => ModelSpecial3<ParsedShape, {}>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecial3<ParsedShape, {}>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 export function ModelEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
-  return <Props extends MO.PropertyRecord = {}>(props: Props) =>
-    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(props))
+  return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
 type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
 
+function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) {
+  return typedKeysOf(propsOrSchemas).reduce(
+    (prev, cur) => {
+      const v = propsOrSchemas[cur]
+      prev[cur] = v instanceof MO.Property ? v as any : MO.prop(v)
+      return prev
+    },
+    {} as {
+      [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
+        ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
+        : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
+        : never
+    }
+  )
+}
+
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
-  // TPDP: Apply change to all
   return <ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
-    const props = typedKeysOf(propsOrSchemas).reduce(
-      (prev, cur) => {
-        const v = propsOrSchemas[cur]
-        prev[cur] = v instanceof MO.Property ? v as any : MO.prop(v)
-        return prev
-      },
-      {} as {
-        [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
-          ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
-          : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
-          : never
-      }
-    )
-    const self = MO.props(props)
+    const self = MO.props(toProps(propsOrSchemas))
     return makeSpecial(__name, self) as
       & MNModel<
         typeof self,
