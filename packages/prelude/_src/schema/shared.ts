@@ -136,7 +136,7 @@ export interface StringIdBrand extends ReasonableStringBrand {
 }
 
 /** @tsplus getter ets/Schema/Schema withDefault */
-export const withDefault = <S extends SupportedDefaultsSchema>(schema: S) => defaultProp(schema)
+export const withDefaultProp = <S extends SupportedDefaultsSchema>(schema: S) => defaultProp(schema)
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
