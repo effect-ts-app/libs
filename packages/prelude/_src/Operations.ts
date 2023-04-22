@@ -1,5 +1,5 @@
 import { LongString } from "./schema.js"
-import "@effect-app/prelude/_global.ext"
+import type {} "@effect-app/prelude/_global.ext"
 
 export type OperationId = StringId
 export const OperationId = StringId
