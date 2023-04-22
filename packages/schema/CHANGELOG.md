@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.40.0
+
+### Minor Changes
+
+- Improve codegen
+
 ## 0.39.12
 
 ### Patch Changes

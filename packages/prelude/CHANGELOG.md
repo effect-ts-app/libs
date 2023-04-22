@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.45.0
+
+### Minor Changes
+
+- Improve codegen
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.40.0
+
 ## 0.44.12
 
 ### Patch Changes
