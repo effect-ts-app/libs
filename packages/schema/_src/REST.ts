@@ -519,7 +519,7 @@ export function ReqProps<M>() {
   function a<
     Path extends string,
     Method extends Methods,
-    ProvidedProps extends MO.PropertyOrSchemaRecord
+    ProvidedProps extends MO.PropertyOrSchemaRecord = {}
   >(method: Method, path: Path): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M>
   function a<
     Path extends string,
@@ -605,8 +605,8 @@ export function MethodReqProps2_<Method extends Methods, Path extends string>(
   path: Path
 ) {
   return <M>(__name?: string) => {
-    function a<ProvidedProps extends MO.PropertyOrSchemaRecord>(): BuildRequest<
-      MO.ToProps<ProvidedProps>,
+    function a(): BuildRequest<
+      never,
       Path,
       Method,
       M
@@ -662,9 +662,8 @@ export function MethodReq_<Method extends Methods, Path extends string>(
 export function Req<M>(__name?: string) {
   function a<
     Path extends string,
-    Method extends Methods,
-    Props extends MO.PropertyRecord
-  >(method: Method, path: Path): BuildRequest<Props, Path, Method, M>
+    Method extends Methods
+  >(method: Method, path: Path): BuildRequest<never, Path, Method, M>
   function a<
     Path extends string,
     Method extends Methods,

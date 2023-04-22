@@ -166,6 +166,14 @@ type RequestHandlers<R, E, M extends Requests> = {
       Reponse: ExtractResponse<GetResponse<M[K]>>
       mapPath: string
     }
+    : keyof Schema.GetRequest<
+      M[K]
+    >[Schema.schemaField]["Api"]["props"] extends Record<any, never>
+      ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
+        Request: Schema.GetRequest<M[K]>
+        Reponse: ExtractResponse<GetResponse<M[K]>>
+        mapPath: string
+      }
     : 
       & ((
         req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
@@ -186,6 +194,14 @@ type RequestHandlersE<R, E, M extends Requests> = {
       Reponse: ExtractResponse<GetResponse<M[K]>>
       mapPath: string
     }
+    : keyof Schema.GetRequest<
+      M[K]
+    >[Schema.schemaField]["Api"]["props"] extends Record<any, never>
+      ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
+        Request: Schema.GetRequest<M[K]>
+        Reponse: ExtractResponse<GetResponse<M[K]>>
+        mapPath: string
+      }
     : 
       & ((
         req: EncodedOf<Schema.GetRequest<M[K]>>
