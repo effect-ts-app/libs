@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.11
+
+### Patch Changes
+
+- props or schema also in props
+
 ## 0.39.10
 
 ### Patch Changes
