@@ -121,6 +121,7 @@ export class Property<
   // }
 }
 
+/** @tsplus fluent ets/Schema/Property default */
 export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -170,6 +171,7 @@ export function propDef<
   )
 }
 
+/** @tsplus fluent ets/Schema/Property optional */
 export function propOpt<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -179,6 +181,7 @@ export function propOpt<
   return new Property(prop._as, prop._schema, "optional", prop._def, prop._map)
 }
 
+/** @tsplus fluent ets/Schema/Property required */
 export function propReq<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -188,6 +191,7 @@ export function propReq<
   return new Property(prop._as, prop._schema, "required", prop._def, prop._map)
 }
 
+/** @tsplus fluent ets/Schema/Property from */
 export function propFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",

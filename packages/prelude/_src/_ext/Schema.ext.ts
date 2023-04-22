@@ -145,3 +145,11 @@ export const withDefaultProp2 = <ParsedShape, ConstructorInput, Encoded, Api>(
   schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   makeDefault: () => ParsedShape
 ) => Schema.defaultProp(schema, makeDefault)
+
+/**
+ * @tsplus fluent ets/Schema/Schema fromProp
+ */
+export const fromPropProp = <ParsedShape, ConstructorInput, Encoded, Api, As1 extends PropertyKey>(
+  schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  as: As1
+) => Schema.prop(schema).from(as)
