@@ -171,21 +171,23 @@ export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
     ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(toProps(propsOrSchemas)))
 }
 
-type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
+export type PropertyOrSchemaRecord = Record<PropertyKey, AnyProperty | MO.SchemaAny>
 
-function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) {
+export type ToProps<ProvidedProps extends PropertyOrSchemaRecord> = {
+  [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
+    ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
+    : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
+    : never
+}
+
+export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) {
   return typedKeysOf(propsOrSchemas).reduce(
     (prev, cur) => {
       const v = propsOrSchemas[cur]
       prev[cur] = v instanceof MO.Property ? v as any : MO.prop(v)
       return prev
     },
-    {} as {
-      [P in keyof ProvidedProps]: ProvidedProps[P] extends MO.SchemaAny
-        ? MO.Property<ProvidedProps[P], "required", None<any>, None<any>>
-        : ProvidedProps[P] extends MO.AnyProperty ? ProvidedProps[P]
-        : never
-    }
+    {} as ToProps<ProvidedProps>
   )
 }
 
