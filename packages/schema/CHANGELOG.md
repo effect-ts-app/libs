@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.39.8
+
+### Patch Changes
+
+- Also apply to requests
+
 ## 0.39.7
 
 ### Patch Changes
