@@ -1,6 +1,6 @@
 import { pipe } from "@effect-app/core/Function"
 
-import { defaultProp } from "_src/ext.js"
+import { defaultProp } from "../../ext.js"
 import * as S from "../_schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Constructor from "../Constructor.js"
