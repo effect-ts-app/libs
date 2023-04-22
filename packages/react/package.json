@@ -36,7 +36,7 @@
     "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.21.0",
     "@types/node": "~18.15.13",
-    "@types/react": "^18.0.37",
+    "@types/react": "^18.0.38",
     "react": "^18.2.0",
     "react-hook-form": "7.40.0",
     "react-intl": "^6.4.1",
