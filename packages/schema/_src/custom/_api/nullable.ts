@@ -1,6 +1,5 @@
 import { pipe } from "@effect-app/core/Function"
 
-import { defaultProp } from "../../ext.js"
 import * as S from "../_schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Constructor from "../Constructor.js"
@@ -8,7 +7,7 @@ import * as Encoder from "../Encoder.js"
 import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import * as Th from "../These.js"
-import type { Property } from "./properties.js"
+import { defProp, type Property } from "./properties.js"
 import { withDefaults } from "./withDefaults.js"
 import type { DefaultSchema } from "./withDefaults.js"
 
@@ -58,6 +57,6 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
   )
 
   return Object.assign(s, {
-    withDefault: defaultProp(s as any)
+    withDefault: defProp(s as any, () => null)
   }) as any // TODO: fix this
 }

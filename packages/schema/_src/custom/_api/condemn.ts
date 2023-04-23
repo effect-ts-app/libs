@@ -9,6 +9,8 @@ import type { Parser, ParserEnv } from "../Parser.js"
 /**
  * The Effect fails with the generic `E` type when the parser produces an invalid result
  * Otherwise success with the valid result.
+ *
+ * @tsplus getter ets/Schema/Parser condemn
  */
 export function condemn<X, E, A>(
   self: Parser<X, E, A>
@@ -43,6 +45,8 @@ export class ThrowableCondemnException extends Error {
 /**
  * The Effect fails with `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise succeeds with the valid result.
+ *
+ * @tsplus getter ets/Schema/Parser condemnFail
  */
 export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
   return (a: X, env?: ParserEnv) =>
@@ -62,6 +66,8 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
 /**
  * The Effect dies with `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise succeeds with the valid result.
+ *
+ * @tsplus getter ets/Schema/Parser condemnDie
  */
 export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
   const orFail = condemnFail(self)
@@ -71,6 +77,7 @@ export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
 /**
  * Throws a classic `ThrowableCondemnException` when the parser produces an invalid result.
  * Otherwise returns the valid result.
+ * @tsplus getter ets/Schema/Parser unsafe
  */
 export function unsafe<X, A>(self: Parser<X, AnyError, A>) {
   return (a: X, env?: ParserEnv) => {
