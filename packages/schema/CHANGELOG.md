@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.43.1
+
+### Patch Changes
+
+- fix
+
 ## 0.43.0
 
 ### Minor Changes
