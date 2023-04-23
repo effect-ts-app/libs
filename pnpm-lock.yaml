@@ -245,8 +245,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@effect/stream':
         specifier: ^0.20.0
         version: 0.20.0
@@ -370,8 +370,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@sendgrid/helpers':
         specifier: ^7.7.0
         version: 7.7.0
@@ -476,8 +476,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -558,8 +558,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -677,8 +677,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -735,8 +735,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.0
-        version: 0.25.0
+        specifier: ^0.25.1
+        version: 0.25.1
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -1452,8 +1452,8 @@ packages:
       '@effect/data': 0.12.2
     dev: false
 
-  /@effect/io@0.25.0:
-    resolution: {integrity: sha512-vDwE2d+5JA5/X1gD47Tubf51mE6UQ4ge5Uw40XQnvB/1GD/OEloD/ipHeDIszluwjqr3n1DDsf41JziP1gt+9Q==}
+  /@effect/io@0.25.1:
+    resolution: {integrity: sha512-Mc28J+SDh4tpYFE/gW5fSwJDPIWfFy4hlMmBOPq9mMH/RHixKivajNR3lp/3dDw99YzuahrDCIgtWNCy5SLuCQ==}
     dependencies:
       '@effect/data': 0.12.2
     dev: false
