@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.46.0
+
+### Minor Changes
+
+- Cleanup schema ext location
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.41.0
+
 ## 0.45.0
 
 ### Minor Changes

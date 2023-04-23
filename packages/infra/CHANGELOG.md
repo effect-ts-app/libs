@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.56.0
+
+### Minor Changes
+
+- Cleanup schema ext location
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.46.0
+  - @effect-app/schema@0.41.0
+  - @effect-app/infra-adapters@0.40.14
+
 ## 0.55.0
 
 ### Minor Changes

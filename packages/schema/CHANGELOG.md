@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.41.0
+
+### Minor Changes
+
+- Cleanup schema ext location
+
 ## 0.40.0
 
 ### Minor Changes
