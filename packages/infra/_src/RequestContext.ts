@@ -1,4 +1,4 @@
-import type {} from "./_global.ext.js"
+import type {} from "./_global.js"
 
 export const RequestId = StringId
 export type RequestId = ParsedShapeOfCustom<typeof RequestId>

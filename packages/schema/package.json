@@ -883,6 +883,16 @@
         "default": "./_cjs/ext.cjs"
       }
     },
+    "./pipe.ext": {
+      "import": {
+        "types": "./dist/pipe.ext.d.ts",
+        "default": "./dist/pipe.ext.js"
+      },
+      "require": {
+        "types": "./dist/pipe.ext.d.ts",
+        "default": "./_cjs/pipe.ext.cjs"
+      }
+    },
     "./tools": {
       "import": {
         "types": "./dist/tools.d.ts",

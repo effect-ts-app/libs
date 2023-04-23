@@ -1,5 +1,3 @@
-import "@effect-app/prelude/_global.ext"
-
 /**
  * @tsplus global
  */
