@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.41.2
+
+### Patch Changes
+
+- Cleanup
+
 ## 0.41.1
 
 ### Patch Changes
