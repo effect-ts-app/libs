@@ -44,6 +44,9 @@ export const RepositoryBase = <Service>() => {
       static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
         return Effect.map(this as unknown as Tag<Service, Service>, f)
       }
+      static makeLayer(svc: Service) {
+        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+      }
     }
     return assignTag<Service>()(RepositoryBaseC)
   }
@@ -304,6 +307,7 @@ export const RepositoryBaseImpl = <Service>() => {
     ): Effect<StoreMaker, never, Repository<T, PM, Evt, ItemType>>
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+    makeLayer: (svc: Service) => Layer<never, never, Service>
     map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
   } => {
     const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
@@ -344,6 +348,7 @@ export const RepositoryDefaultImpl = <Service>() => {
     ): Layer<StoreMaker, never, Service>
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+    makeLayer: (svc: Service) => Layer<never, never, Service>
     map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
     repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
   } => {
