@@ -21,6 +21,22 @@ import type { These } from "./custom/These.js"
 import type { OptionalConstructor } from "./tools.js"
 import { Parser } from "./vendor.js"
 
+export interface EncodedClass<T> {
+  new(a: T): T
+}
+
+export function EncodedClassBase<T>() {
+  class Encoded {
+    constructor(a: T) {
+      Object.assign(this, a)
+    }
+  }
+  return Encoded as EncodedClass<T>
+}
+export function EncodedClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
+  return EncodedClassBase<EncodedFromApi<Cls>>()
+}
+
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
   new(inp: ConstructorInput): ParsedShape
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
@@ -779,7 +795,7 @@ export function parseECondemnDie_<B, C, D, E>(
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseECondemnDie
+ * @tsplus getter ets/Schema/Schema parseECondemnDie
  */
 export function parseECondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
@@ -789,7 +805,7 @@ export function parseECondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) 
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseECondemnFail
+ * @tsplus getter ets/Schema/Schema parseECondemnFail
  */
 export function parseECondemnFail<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
@@ -799,7 +815,7 @@ export function parseECondemnFail<B, C, D, E>(self: Schema<unknown, B, C, D, E>)
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseECondemnLeft
+ * @tsplus getter ets/Schema/Schema parseECondemnLeft
  */
 export function parseECondemnLeft<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
@@ -809,7 +825,7 @@ export function parseECondemnLeft<B, C, D, E>(self: Schema<unknown, B, C, D, E>)
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseECondemnCustom
+ * @tsplus getter ets/Schema/Schema parseECondemnCustom
  */
 export function parseECondemnCustom<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
@@ -819,7 +835,7 @@ export function parseECondemnCustom<B, C, D, E>(self: Schema<unknown, B, C, D, E
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseCondemnDie
+ * @tsplus getter ets/Schema/Schema parseCondemnDie
  */
 export function parseCondemnDie<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
@@ -829,7 +845,7 @@ export function parseCondemnDie<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseCondemnFail
+ * @tsplus getter ets/Schema/Schema parseCondemnFail
  */
 export function parseCondemnFail<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   return (a: A, env?: Parser.ParserEnv) => {
@@ -839,7 +855,7 @@ export function parseCondemnFail<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseCondemnLeft
+ * @tsplus getter ets/Schema/Schema parseCondemnLeft
  */
 export function parseCondemnLeft<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
@@ -849,7 +865,7 @@ export function parseCondemnLeft<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseCondemnCustom
+ * @tsplus getter ets/Schema/Schema parseCondemnCustom
  */
 export function parseCondemnCustom<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
@@ -859,7 +875,7 @@ export function parseCondemnCustom<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseCondemn
+ * @tsplus getter ets/Schema/Schema parseCondemn
  */
 export function parseCondemn<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
@@ -879,7 +895,7 @@ export function parseECondemn_<B, C, D, E>(
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseECondemn
+ * @tsplus getter ets/Schema/Schema parseECondemn
  */
 export function parseECondemn<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
@@ -889,7 +905,7 @@ export function parseECondemn<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseUnsafe
+ * @tsplus getter ets/Schema/Schema parseUnsafe
  */
 export function parseUnsafe<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
