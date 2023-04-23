@@ -720,3 +720,38 @@ export type ParserInputFromProperties<Props extends PropertyRecord> = Compute<
   >,
   "flat"
 >
+
+type Optionality = "parser" | "constructor" | "both"
+
+export function defProp<Self extends S.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => S.ParsedShapeOf<Self>,
+  optionality: "parser"
+): Property<Self, "required", None<any>, Some<["parser", () => S.ParsedShapeOf<Self>]>>
+export function defProp<Self extends S.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => S.ParsedShapeOf<Self>,
+  optionality: "both"
+): Property<Self, "required", None<any>, Some<["both", () => S.ParsedShapeOf<Self>]>>
+export function defProp<Self extends S.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => S.ParsedShapeOf<Self>
+): Property<
+  Self,
+  "required",
+  None<any>,
+  Some<["constructor", () => S.ParsedShapeOf<Self>]>
+>
+export function defProp<Self extends S.SchemaUPI>(
+  schema: Self,
+  makeDefault: () => S.ParsedShapeOf<Self>,
+  optionality: Optionality = "constructor"
+) {
+  return propDef(prop(schema), makeDefault, optionality)
+}
+
+export function optProp<Self extends S.SchemaUPI>(
+  schema: Self
+): Property<Self, "optional", None<any>, None<any>> {
+  return propOpt(prop(schema))
+}

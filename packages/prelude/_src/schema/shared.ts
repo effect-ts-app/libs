@@ -10,7 +10,6 @@ import type {
   Property,
   SchemaDefaultSchema,
   SchemaUPI,
-  SupportedDefaults,
   Utils
 } from "@effect-app/schema"
 import {
@@ -135,13 +134,6 @@ export const ReasonableString3 = extendWithUtils(
 export interface StringIdBrand extends ReasonableStringBrand {
   readonly StringId: unique symbol
 }
-
-/**
- * @tsplus getter ets/Schema/Schema withDefault
- */
-export const withDefaultProp = <ParsedShape extends SupportedDefaults, ConstructorInput, Encoded, Api>(
-  schema: Schema.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-) => defaultProp(schema)
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.

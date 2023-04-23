@@ -129,16 +129,6 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
-    "./_ext/Schema.ext": {
-      "import": {
-        "types": "./dist/_ext/Schema.ext.d.ts",
-        "default": "./dist/_ext/Schema.ext.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Schema.ext.d.ts",
-        "default": "./_cjs/_ext/Schema.ext.cjs"
-      }
-    },
     "./_ext/allLowerFirst": {
       "import": {
         "types": "./dist/_ext/allLowerFirst.d.ts",

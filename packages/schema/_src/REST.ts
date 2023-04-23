@@ -7,7 +7,7 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyRecord, AnyRecordSchema, GetProps, Model, PropsExtensions, StringRecord } from "./Model.js"
+import type { AnyRecord, AnyRecordSchema, GetModelProps, Model, PropsExtensions, StringRecord } from "./Model.js"
 import { ModelSpecial, setSchema } from "./Model.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
@@ -53,7 +53,7 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Model<M, Self>, PropsExtensions<GetProps<Self>> {
+> extends Model<M, Self>, PropsExtensions<GetModelProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -71,7 +71,7 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Model<M, Self>, PropsExtensions<GetProps<Self>> {
+> extends Model<M, Self>, PropsExtensions<GetModelProps<Self>> {
   Path: Path
   Body: Body
   Query: Query

@@ -1,6 +1,8 @@
 // Must use the pipe in effect-ts-app cause fp-ts pipe has a single argument overload, breaking >=
 import { pipe } from "@effect-app/core/_ext/pipe"
 
+import type {} from "./ext.js"
+
 /**
  * @tsplus operator ets/Schema/Schema >=
  * @tsplus fluent ets/Schema/Schema apply

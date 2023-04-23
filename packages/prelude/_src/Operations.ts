@@ -1,5 +1,4 @@
 import { LongString } from "./schema.js"
-import type {} from "./_global.ext.js"
 
 export type OperationId = StringId
 export const OperationId = StringId

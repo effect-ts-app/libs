@@ -347,7 +347,7 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
-export type GetProps<Self> = Self extends { Api: { props: infer Props } } ? Props extends PropertyRecord ? Props
+export type GetModelProps<Self> = Self extends { Api: { props: infer Props } } ? Props extends PropertyRecord ? Props
   : never
   : never
 
@@ -363,7 +363,7 @@ export interface PropsExtensions<Props> {
 export function ModelSpecial<ParsedShape>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<ParsedShape, Self> & PropsExtensions<GetProps<Self>> => {
+  ): Model<ParsedShape, Self> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -371,7 +371,7 @@ export function ModelSpecial<ParsedShape>(__name?: string) {
 export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEnc<ParsedShape, Self, Encoded> & PropsExtensions<GetProps<Self>> => {
+  ): ModelEnc<ParsedShape, Self, Encoded> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -379,7 +379,7 @@ export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
 export function ModelSpecial3<ParsedShape, ParsedShape2>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model3<ParsedShape, ParsedShape2, Self> & PropsExtensions<GetProps<Self>> => {
+  ): Model3<ParsedShape, ParsedShape2, Self> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -389,7 +389,7 @@ export function ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: st
     self: Self
   ):
     & ModelEnc3<ParsedShape, ParsedShape2, Self, Encoded>
-    & PropsExtensions<GetProps<Self>> =>
+    & PropsExtensions<GetModelProps<Self>> =>
   {
     return makeSpecial(__name, self)
   }
@@ -398,7 +398,7 @@ export function ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: st
 // export function MNModelSpecial<ParsedShape, MEnc>(__name?: string) {
 //   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
 //     self: Self
-//   ): MNModel<M, Self, MEnc> & PropsExtensions<GetProps<Self>> => {
+//   ): MNModel<M, Self, MEnc> & PropsExtensions<GetModelProps<Self>> => {
 //     return makeSpecial(__name, self)
 //   }
 // }
