@@ -51,6 +51,9 @@ export function TagClass<Service>() {
     static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
       return Effect.map(this as unknown as Tag<Service, Service>, f)
     }
+    static makeLayer(svc: Service) {
+      return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+    }
   }
 
   return assignTag<Service>()(TagClass)
@@ -67,6 +70,9 @@ export function ServiceTaggedClass<Service>() {
       }
       static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
         return Effect.map(this as unknown as Tag<Service, Service>, f)
+      }
+      static makeLayer(svc: Service) {
+        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
       }
     }
 
