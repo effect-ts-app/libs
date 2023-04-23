@@ -326,9 +326,6 @@ export function withInputDefault<
   throw new Error("Not supported")
 }
 
-/**
- * @tsplus fluent ets/Schema/Schema withDefaultMake
- */
 export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
   makeDefault: () => ParsedShape
@@ -1031,6 +1028,14 @@ export const nullableProp = <ParserInput, ParsedShape, ConstructorInput, Encoded
 // {
 //   return defaultProp(schema)
 // }
+
+/**
+ * @tsplus getter ets/Schema/Schema withDefaultMake
+ */
+export const withDefaultMake = <ParsedShape, ConstructorInput, Encoded, Api>(
+  schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+) =>
+(makeDefault: () => ParsedShape) => defaultProp(schema, makeDefault)
 
 /**
  * @tsplus fluent ets/Schema/Schema fromProp
