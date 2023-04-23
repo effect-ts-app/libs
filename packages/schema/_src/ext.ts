@@ -1081,7 +1081,7 @@ export function smartClassUnion<
   T extends Record<PropertyKey, SchemaUPI & { new(i: any): any }>
 >(members: T & EnforceNonEmptyRecord<T>, name?: string) {
   // @ts-expect-error we know this is NonEmpty
-  const u = unionOrig(members)
+  const u = MO.union(members)
   return enhanceClassUnion(u, name)
 }
 
@@ -1162,7 +1162,7 @@ export function smartUnion<T extends Record<PropertyKey, SchemaUPI>>(
   members: T & EnforceNonEmptyRecord<T>
 ) {
   // @ts-expect-error we know this is NonEmpty
-  const u = unionOrig(members)
+  const u = MO.union(members)
   return enhanceUnion(u)
 }
 
