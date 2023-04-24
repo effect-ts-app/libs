@@ -147,7 +147,7 @@ function lowercaseIfString<T>(val: T) {
 function compareCaseInsensitive(valA: unknown, valB: unknown) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() === valB.toLowerCase()
-    : valA == valB
+    : valA === valB
 }
 
 function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
