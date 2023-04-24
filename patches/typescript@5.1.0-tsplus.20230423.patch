@@ -26,7 +26,7 @@ index da240cc..3170f3e 100644
   * @deprecated This is a legacy alias of `navigator`.
   *
 diff --git a/lib/tsc.js b/lib/tsc.js
-index 85a0f3e..af9dedd 100644
+index 096078f..ea82248 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -43605,7 +43605,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
@@ -126,16 +126,7 @@ index 85a0f3e..af9dedd 100644
            if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
              return [createDiagnosticForNode(
                arg,
-@@ -86583,7 +86603,7 @@ function createTypeChecker(host) {
-         }
-         if (type.symbol) {
-           addToTypeSymbolCache(type.symbol, typeTag, "after");
--          if ((isInterfaceDeclaration(declaration) || isClassDeclaration(declaration)) && declaration.heritageClauses) {
-+          if (isInterfaceDeclaration(declaration) && declaration.heritageClauses) {
-             tryCacheTsPlusInheritance(type.symbol, declaration.heritageClauses);
-           }
-         }
-@@ -90471,13 +90491,27 @@ function getOriginalNodeId(node) {
+@@ -90481,13 +90501,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -167,7 +158,7 @@ index 85a0f3e..af9dedd 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 4170098..071b093 100644
+index 62f017b..aa1ea9e 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2245,6 +2245,7 @@ __export(server_exports, {
@@ -275,16 +266,7 @@ index 4170098..071b093 100644
            if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
              return [createDiagnosticForNode(
                arg,
-@@ -90668,7 +90689,7 @@ function createTypeChecker(host) {
-         }
-         if (type.symbol) {
-           addToTypeSymbolCache(type.symbol, typeTag, "after");
--          if ((isInterfaceDeclaration(declaration) || isClassDeclaration(declaration)) && declaration.heritageClauses) {
-+          if (isInterfaceDeclaration(declaration) && declaration.heritageClauses) {
-             tryCacheTsPlusInheritance(type.symbol, declaration.heritageClauses);
-           }
-         }
-@@ -94782,13 +94803,27 @@ function getOriginalNodeId(node) {
+@@ -94792,13 +94813,27 @@ function getOriginalNodeId(node) {
    node = getOriginalNode(node);
    return node ? getNodeId(node) : 0;
  }
@@ -315,7 +297,7 @@ index 4170098..071b093 100644
  }
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
-@@ -178636,6 +178671,7 @@ __export(ts_exports2, {
+@@ -178646,6 +178681,7 @@ __export(ts_exports2, {
    tryGetDirectories: () => tryGetDirectories,
    tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
    tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -323,7 +305,7 @@ index 4170098..071b093 100644
    tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
    tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
    tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -193086,6 +193122,7 @@ start(initializeNodeSystem(), require("os").platform());
+@@ -193096,6 +193132,7 @@ start(initializeNodeSystem(), require("os").platform());
    tryGetDirectories,
    tryGetExtensionFromPath,
    tryGetImportFromModuleSpecifier,
@@ -347,7 +329,7 @@ index 654c3e2..a868819 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index 03a2437..dd50d43 100644
+index 0ea332c..dfc81d4 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
@@ -447,16 +429,7 @@ index 03a2437..dd50d43 100644
              if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
                return [createDiagnosticForNode(
                  arg,
-@@ -88417,7 +88437,7 @@ ${lanes.join("\n")}
-           }
-           if (type.symbol) {
-             addToTypeSymbolCache(type.symbol, typeTag, "after");
--            if ((isInterfaceDeclaration(declaration) || isClassDeclaration(declaration)) && declaration.heritageClauses) {
-+            if (isInterfaceDeclaration(declaration) && declaration.heritageClauses) {
-               tryCacheTsPlusInheritance(type.symbol, declaration.heritageClauses);
-             }
-           }
-@@ -92705,13 +92725,26 @@ ${lanes.join("\n")}
+@@ -92715,13 +92735,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -486,7 +459,7 @@ index 03a2437..dd50d43 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -93150,10 +93183,12 @@ ${lanes.join("\n")}
+@@ -93160,10 +93193,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -499,7 +472,7 @@ index 03a2437..dd50d43 100644
      }
    });
  
-@@ -189722,6 +189757,7 @@ ${e.message}`;
+@@ -189732,6 +189767,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -507,7 +480,7 @@ index 03a2437..dd50d43 100644
      tryGetJSDocSatisfiesTypeNode: () => tryGetJSDocSatisfiesTypeNode,
      tryGetModuleNameFromFile: () => tryGetModuleNameFromFile,
      tryGetModuleSpecifierFromDeclaration: () => tryGetModuleSpecifierFromDeclaration,
-@@ -192116,6 +192152,7 @@ ${e.message}`;
+@@ -192126,6 +192162,7 @@ ${e.message}`;
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
@@ -531,7 +504,7 @@ index 6260f3a..a7b6af0 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index 82f68a3..7c139e2 100644
+index fedb68f..239fcc8 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
@@ -631,16 +604,7 @@ index 82f68a3..7c139e2 100644
              if ((isTypeIdenticalTo(argType, anyType) || isTypeIdenticalTo(argType, neverType)) && !(checkMode & 8 /* SkipGenericFunctions */)) {
                return [createDiagnosticForNode(
                  arg,
-@@ -88417,7 +88437,7 @@ ${lanes.join("\n")}
-           }
-           if (type.symbol) {
-             addToTypeSymbolCache(type.symbol, typeTag, "after");
--            if ((isInterfaceDeclaration(declaration) || isClassDeclaration(declaration)) && declaration.heritageClauses) {
-+            if (isInterfaceDeclaration(declaration) && declaration.heritageClauses) {
-               tryCacheTsPlusInheritance(type.symbol, declaration.heritageClauses);
-             }
-           }
-@@ -92705,13 +92725,26 @@ ${lanes.join("\n")}
+@@ -92715,13 +92735,26 @@ ${lanes.join("\n")}
      node = getOriginalNode(node);
      return node ? getNodeId(node) : 0;
    }
@@ -670,7 +634,7 @@ index 82f68a3..7c139e2 100644
    }
    function getTraceLocation(traceMap, source) {
      for (const [path, reg] of traceMap) {
-@@ -93150,10 +93183,12 @@ ${lanes.join("\n")}
+@@ -93160,10 +93193,12 @@ ${lanes.join("\n")}
    function accessPrivateIdentifier(env, name) {
      return walkUpLexicalEnvironments(env, (env2) => getPrivateIdentifier(env2.privateEnv, name));
    }
@@ -683,7 +647,7 @@ index 82f68a3..7c139e2 100644
      }
    });
  
-@@ -178394,6 +178429,7 @@ ${options.prefix}` : "\n" : options.prefix
+@@ -178404,6 +178439,7 @@ ${options.prefix}` : "\n" : options.prefix
      tryGetDirectories: () => tryGetDirectories,
      tryGetExtensionFromPath: () => tryGetExtensionFromPath2,
      tryGetImportFromModuleSpecifier: () => tryGetImportFromModuleSpecifier,
