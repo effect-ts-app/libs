@@ -239,15 +239,15 @@ export const appendOperator: <A>(self: ReadonlyArray<A>, a: A) => ReadonlyArray<
 
 // A getter would be nice, but we need it fluent to manage the priority vs nonEmpty etc
 /**
- * @tsplus fluent ReadonlyArray randomElement 1
- * @tsplus fluent Array randomElement 1
+ * @tsplus fluent ReadonlyArray randomElement 2
  */
-export function randomElement<A>(a: ReadonlyArray<A>) {
+export function randomElement<A>(a: ReadonlyArray<A>): A | undefined {
   return a[Math.floor(Math.random() * a.length)]
 }
 
+// must put on top of ReadonlyArray for it to work with [A, ...A[]] etc
 /**
- * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray randomElement 2
+ * @tsplus fluent ReadonlyArray randomElement 1
  */
 export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
   return a[Math.floor(Math.random() * a.length)]
