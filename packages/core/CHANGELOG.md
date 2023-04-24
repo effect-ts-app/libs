@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.49.1
+
+### Patch Changes
+
+- fix randomElement
+
 ## 0.49.0
 
 ### Minor Changes
