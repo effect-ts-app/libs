@@ -26,7 +26,7 @@ index da240cc..3170f3e 100644
   * @deprecated This is a legacy alias of `navigator`.
   *
 diff --git a/lib/tsc.js b/lib/tsc.js
-index afa1c12..a818b2b 100644
+index 096078f..ea82248 100644
 --- a/lib/tsc.js
 +++ b/lib/tsc.js
 @@ -43605,7 +43605,8 @@ function tryGetModuleNameFromExports(options, targetFilePath, packageDirectory,
@@ -158,7 +158,7 @@ index afa1c12..a818b2b 100644
  function getTraceLocation(traceMap, source) {
    for (const [path, reg] of traceMap) {
 diff --git a/lib/tsserver.js b/lib/tsserver.js
-index 836bb61..14fe405 100644
+index 62f017b..aa1ea9e 100644
 --- a/lib/tsserver.js
 +++ b/lib/tsserver.js
 @@ -2245,6 +2245,7 @@ __export(server_exports, {
@@ -329,7 +329,7 @@ index 654c3e2..a868819 100644
          string,
          RegExp
 diff --git a/lib/tsserverlibrary.js b/lib/tsserverlibrary.js
-index d0f532d..80fc9e4 100644
+index 0ea332c..dfc81d4 100644
 --- a/lib/tsserverlibrary.js
 +++ b/lib/tsserverlibrary.js
 @@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
@@ -504,7 +504,7 @@ index 6260f3a..a7b6af0 100644
          string,
          RegExp
 diff --git a/lib/typescript.js b/lib/typescript.js
-index 8d31c72..4e6038e 100644
+index fedb68f..239fcc8 100644
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -45563,7 +45563,8 @@ ${lanes.join("\n")}
