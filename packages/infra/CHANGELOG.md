@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.60.0
+
+### Minor Changes
+
+- Explicit ids
+
 ## 0.59.1
 
 ### Patch Changes
