@@ -175,7 +175,7 @@ export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
-    const self = MO.props(MO.toProps(propsOrSchemas))
+    const self = MO.props(propsOrSchemas)
     return makeSpecial(__name, self) as
       & MNModel<
         typeof self,
