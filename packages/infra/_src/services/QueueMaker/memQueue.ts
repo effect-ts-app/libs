@@ -1,5 +1,5 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
-import { RequestContext } from "@effect-app/infra/RequestContext"
+import { RequestContext, RequestId } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { restoreFromRequestContext } from "../Store/Memory.js"
@@ -72,7 +72,7 @@ export function makeMemQueue<
                 .apply(
                   provideContext(
                     RequestContext.inherit(meta, {
-                      id: body.id,
+                      id: RequestId(body.id),
                       locale: "en" as const,
                       name: ReasonableString(body._tag)
                     })

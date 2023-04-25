@@ -1,4 +1,4 @@
-import { RequestContext } from "../RequestContext.js"
+import { RequestContext, RequestId } from "../RequestContext.js"
 import { RequestContextContainer, RequestContextContainerImpl } from "../services/RequestContextContainer.js"
 
 /**
@@ -12,7 +12,7 @@ export function setupRequest<R, E, A>(self: Effect<R, E, A>, requestContext: Req
         requestRootId: requestContext.rootId,
         requestId: requestContext.id,
         requestName: requestContext.name,
-        ...requestContext.user?.id ? { requestUserId: requestContext.user.id } : {}
+        ...requestContext.userProfile?.sub ? { requestUserSub: requestContext.userProfile.sub } : {}
       })
     )
   )
@@ -42,7 +42,7 @@ export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
 
 function makeInternalRequestContext(name: string) {
   return Effect.sync(() => {
-    const id = StringId.make()
+    const id = RequestId.make()
     return new RequestContext({
       id,
       rootId: id,

@@ -8,7 +8,7 @@ import {
 } from "@effect-app/infra-adapters/ServiceBus"
 import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
-import { RequestContext } from "@effect-app/infra/RequestContext"
+import { RequestContext, RequestId } from "@effect-app/infra/RequestContext"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { restoreFromRequestContext } from "../Store/Memory.js"
@@ -66,7 +66,7 @@ export function makeServiceBusQueue<
                 .apply(
                   provideContext(
                     RequestContext.inherit(meta, {
-                      id: body.id,
+                      id: RequestId(body.id),
                       locale: "en" as const,
                       name: ReasonableString(body._tag)
                     })
