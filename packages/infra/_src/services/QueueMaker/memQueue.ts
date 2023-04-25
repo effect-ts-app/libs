@@ -1,5 +1,6 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
-import { RequestContext, RequestId } from "@effect-app/infra/RequestContext"
+import { RequestContext } from "@effect-app/infra/RequestContext"
+import { RequestId } from "@effect-app/prelude/ids"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { restoreFromRequestContext } from "../Store/Memory.js"

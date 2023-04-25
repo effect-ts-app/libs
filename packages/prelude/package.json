@@ -279,6 +279,16 @@
         "default": "./_cjs/faker.cjs"
       }
     },
+    "./ids": {
+      "import": {
+        "types": "./dist/ids.d.ts",
+        "default": "./dist/ids.js"
+      },
+      "require": {
+        "types": "./dist/ids.d.ts",
+        "default": "./_cjs/ids.cjs"
+      }
+    },
     "./refinements": {
       "import": {
         "types": "./dist/refinements.d.ts",
