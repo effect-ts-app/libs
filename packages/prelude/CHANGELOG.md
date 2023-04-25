@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.49.1
+
+### Patch Changes
+
+- Add brandedStringId
+
 ## 0.49.0
 
 ### Minor Changes
