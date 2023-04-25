@@ -244,6 +244,18 @@ export function prefixedStringId<Brand extends StringId>() {
   }
 }
 
+export const brandedStringId = <Brand extends StringId>() =>
+  extendWithUtilsAnd(StringId["|>"](brand<Brand>()), (s) => {
+    const make = (): Brand => StringId.make() as unknown as Brand
+
+    return ({
+      EParser: EParserFor(s),
+      make,
+      eq: Equivalence.string as Equivalence<Brand>,
+      withDefault: defaultProp(s, make)
+    })
+  })
+
 export interface PrefixedStringUtils<
   Brand extends StringId,
   Prefix extends string,
