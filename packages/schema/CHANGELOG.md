@@ -1,5 +1,17 @@
 # @effect-app/schema
 
+## 0.44.0
+
+### Minor Changes
+
+- a
+
+### Patch Changes
+
+- Fix double ToProps
+- Updated dependencies
+  - @effect-app/core@0.50.0
+
 ## 0.43.3
 
 ### Patch Changes
