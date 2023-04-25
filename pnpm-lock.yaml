@@ -245,8 +245,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@effect/stream':
         specifier: ^0.21.0
         version: 0.21.0
@@ -370,8 +370,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@sendgrid/helpers':
         specifier: ^7.7.0
         version: 7.7.0
@@ -476,8 +476,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -558,8 +558,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -677,8 +677,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -735,8 +735,8 @@ importers:
         specifier: ^0.12.2
         version: 0.12.2
       '@effect/io':
-        specifier: ^0.25.2
-        version: 0.25.2
+        specifier: ^0.25.5
+        version: 0.25.5
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -1446,8 +1446,8 @@ packages:
     resolution: {integrity: sha512-bmWRTcsSRG1FlBswT+D8SxW6r3c4B3pKJrjYfitCD03tXHnup5gLHaWqbFgIjiyYITS+UsJRRjVrNxvyGG4ZNQ==}
     dev: false
 
-  /@effect/io@0.25.2:
-    resolution: {integrity: sha512-eGkx616RF3uUqhrHHeLGgZKXR8AXZdWrvwPnPdKSqXcr6Iu+8YqFQ73dCk5ujHfNVDLIHUSrI+kjAzLeKhVITg==}
+  /@effect/io@0.25.5:
+    resolution: {integrity: sha512-/JVjyF7kSQKwV0o6gkeYvNOYc7iVgdW88DbDdua1X6upDYIiyHp3LwsbigwL0NU8j9w/INwxQ3hEwFio9TjUOQ==}
     dependencies:
       '@effect/data': 0.12.2
     dev: false
@@ -1464,7 +1464,7 @@ packages:
     resolution: {integrity: sha512-39nkKJVUt41DDn08E4we9L/7YGHAZeDjyiAapFn1Grx2npR+CRra4gZqqJF3bwO/9b9Yipl1I8WD+6v/Hx2tfA==}
     dependencies:
       '@effect/data': 0.12.2
-      '@effect/io': 0.25.2
+      '@effect/io': 0.25.5
     dev: false
 
   /@esbuild/android-arm64@0.17.12:
