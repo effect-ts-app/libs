@@ -1,12 +1,15 @@
 import type { Operation, OperationId, OperationProgress } from "@effect-app/prelude/Operations"
 import * as Scope from "@effect/io/Scope"
 
-export const OperationsId = Symbol("OperationsId")
+export interface OperationsId {
+  readonly _: unique symbol
+}
+
 /**
  * @tsplus type Operations
  * @tsplus companion Operations.Ops
  */
-export abstract class Operations extends ServiceTaggedClass<Operations>()(OperationsId) {
+export abstract class Operations extends TagClass<OperationsId, Operations>() {
   abstract register: Effect<Scope.Scope, never, OperationId>
   abstract update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
   abstract find: (id: OperationId) => Effect<never, never, Option<Operation>>

@@ -37,45 +37,46 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
 export const TagTypeId: TagTypeIdOriginal = Symbol.for("@effect/data/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
 
-export function assignTag<Service>() {
+export function assignTag<Id, Service = Id>(key?: unknown) {
   return <S extends object>(cls: S) => {
-    const tag = Tag<Service>()
+    const tag = Tag<Id, Service>(key)
     return Object.assign(cls, tag)
   }
 }
-export function TagClass<Service>() {
+export function TagClass<Id, Service = Id>(key?: unknown) {
   abstract class TagClass {
-    static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
-      return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+    static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B> {
+      return Effect.flatMap(this as unknown as Tag<Id, Service>, f)
     }
-    static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
-      return Effect.map(this as unknown as Tag<Service, Service>, f)
+    static map<B>(f: (a: Service) => B): Effect<Id, never, B> {
+      return Effect.map(this as unknown as Tag<Id, Service>, f)
     }
     static makeLayer(svc: Service) {
-      return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+      return Layer.succeed(this as unknown as Tag<Id, Service>, svc)
     }
   }
 
-  return assignTag<Service>()(TagClass)
+  return assignTag<Id, Service>(key)(TagClass)
 }
 
-export function ServiceTaggedClass<Service>() {
+/** @deprecated use `Id` of TagClass for unique id */
+export function ServiceTaggedClass<Id, Service = Id>() {
   return <Key extends PropertyKey>(_: Key) => {
     abstract class ServiceTaggedClassC {
       static make(t: Omit<Service, Key>) {
         return t as Service
       }
-      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
-        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B> {
+        return Effect.flatMap(this as unknown as Tag<Id, Service>, f)
       }
-      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
-        return Effect.map(this as unknown as Tag<Service, Service>, f)
+      static map<B>(f: (a: Service) => B): Effect<Id, never, B> {
+        return Effect.map(this as unknown as Tag<Id, Service>, f)
       }
       static makeLayer(svc: Service) {
-        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+        return Layer.succeed(this as unknown as Tag<Id, Service>, svc)
       }
     }
 
-    return assignTag<Service>()(ServiceTaggedClassC)
+    return assignTag<Id, Service>()(ServiceTaggedClassC)
   }
 }
