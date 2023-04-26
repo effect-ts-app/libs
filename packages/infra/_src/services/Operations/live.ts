@@ -6,7 +6,7 @@ import { Operations } from "./service.js"
 
 const reportAppError = reportError((cause) => new RequestException(cause))
 
-const make = Effect.sync(() => {
+const make = Effect.sync((): Operations => {
   const ops = new Map<OperationId, Operation>()
   const makeOp = Effect(OperationId.make())
 
@@ -71,7 +71,7 @@ const make = Effect.sync(() => {
       })
     )
   }
-  return Operations.make({
+  return {
     cleanup,
     register: makeOp
       .tap((id) =>
@@ -83,7 +83,7 @@ const make = Effect.sync(() => {
 
     find: findOp,
     update
-  })
+  }
 })
 
 const cleanupLoop = Operations
