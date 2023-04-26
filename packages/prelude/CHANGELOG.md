@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.50.1
+
+### Patch Changes
+
+- c78a54ff: Enhance TagClass
+
 ## 0.50.0
 
 ### Minor Changes

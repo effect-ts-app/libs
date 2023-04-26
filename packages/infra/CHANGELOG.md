@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.61.1
+
+### Patch Changes
+
+- c78a54ff: Enhance TagClass
+- Updated dependencies [c78a54ff]
+  - @effect-app/prelude@0.50.1
+  - @effect-app/infra-adapters@0.43.3
+
 ## 0.61.0
 
 ### Minor Changes
