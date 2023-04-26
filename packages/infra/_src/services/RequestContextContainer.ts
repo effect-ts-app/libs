@@ -40,3 +40,6 @@ export class RequestContextContainerImpl extends RequestContextContainer {
 export function live(inp: RequestContext.ConstructorInput) {
   return new RequestContextContainerImpl(inp)
 }
+
+/** @tsplus static RequestContext.Ops Tag */
+export const RCTag = Tag<RequestContext>()

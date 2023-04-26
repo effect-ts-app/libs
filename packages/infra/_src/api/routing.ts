@@ -365,7 +365,6 @@ export function makeRequestHandler<
                 const r2 = makeMiddlewareContext
                   ? restoreFromRequestContext
                     .zipRight(r
-                      .setupRequestFrom
                       // the db namespace must be restored, before calling provide here
                       .provideSomeContextEffect(makeMiddlewareContext(req, res)))
                   : restoreFromRequestContext
@@ -418,7 +417,6 @@ export function makeRequestHandler<
                   })
                 )
                 .tapErrorCause((cause) => Effect(console.error("Error occurred while reporting error", cause)))
-                .setupRequestFrom
             )
             .tap(() =>
               RequestSettings
@@ -436,9 +434,8 @@ export function makeRequestHandler<
                       : undefined
                   }))
                 })
-                .setupRequestFrom
             )
-            .setupRequestFrom
+            .logSpan("request")
             .provideService(RequestContextContainer, new RequestContextContainerImpl(requestContext)) // otherwise external error reporter breaks.
         )
     )
