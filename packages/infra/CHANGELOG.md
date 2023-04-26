@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.63.0
+
+### Minor Changes
+
+- Improve Request setup
+
+### Patch Changes
+
+- d52191c5: Add loggers
+
 ## 0.62.0
 
 ### Minor Changes
