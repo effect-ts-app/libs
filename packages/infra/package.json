@@ -362,6 +362,36 @@
         "default": "./_cjs/instrument.cjs"
       }
     },
+    "./logger/jsonLogger": {
+      "import": {
+        "types": "./dist/logger/jsonLogger.d.ts",
+        "default": "./dist/logger/jsonLogger.js"
+      },
+      "require": {
+        "types": "./dist/logger/jsonLogger.d.ts",
+        "default": "./_cjs/logger/jsonLogger.cjs"
+      }
+    },
+    "./logger/logFmtLogger": {
+      "import": {
+        "types": "./dist/logger/logFmtLogger.d.ts",
+        "default": "./dist/logger/logFmtLogger.js"
+      },
+      "require": {
+        "types": "./dist/logger/logFmtLogger.d.ts",
+        "default": "./_cjs/logger/logFmtLogger.cjs"
+      }
+    },
+    "./logger/shared": {
+      "import": {
+        "types": "./dist/logger/shared.d.ts",
+        "default": "./dist/logger/shared.js"
+      },
+      "require": {
+        "types": "./dist/logger/shared.d.ts",
+        "default": "./_cjs/logger/shared.cjs"
+      }
+    },
     "./rateLimit": {
       "import": {
         "types": "./dist/rateLimit.d.ts",
