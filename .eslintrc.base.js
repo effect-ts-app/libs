@@ -1,17 +1,18 @@
-module.exports = (dirName, forceTS = false) => {
+const fs = require("fs")
+module.exports = (dirName, forceTS = false, project = undefined) => {
   const enableTS = !!dirName && (forceTS || process.env.ESLINT_TS)
   return {
     parser: "@typescript-eslint/parser", // Specifies the ESLint parser
     parserOptions: {
       // https://github.com/typescript-eslint/typescript-eslint/issues/2094
-      EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
+      EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true, // !process.env["TEST_USE_FULL_DIST"] && !process.env["TEST_USE_DIST"],
       enableTS,
       parser: "@typescript-eslint/parser",
       ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
       sourceType: "module", // Allows for the use of imports
       ...(enableTS ? { 
         tsconfigRootDir: dirName,
-        project: ['./tsconfig.json'],
+        project: project ?? [dirName + '/tsconfig.json', dirName + '/tsconfig.src.json', dirName + '/tsconfig.test.json'].filter(fs.existsSync),
       } : undefined)
     },
     settings: {
@@ -33,7 +34,7 @@ module.exports = (dirName, forceTS = false) => {
      // "plugin:prettier/recommended", // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
      "plugin:@phaphoso/dprint/recommended"
     ].filter(x => x !== null),
-    plugins: ["import", "codegen", "sort-destructure-keys", "simple-import-sort",  "unused-imports"],
+    plugins: ["import", "codegen", "sort-destructure-keys", "unused-imports"],
     rules: {
       "@phaphoso/dprint/dprint": [
         "error",
@@ -90,6 +91,9 @@ module.exports = (dirName, forceTS = false) => {
       // e.g. "@typescript-eslint/explicit-function-return-type": "off",
       "sort-destructure-keys/sort-destructure-keys": "error", // Mainly to sort render props
 
+      // we want to be able to use e.g Effect.gen without having to worry about lint.
+      "require-yield": "off",
+
       "sort-imports": "off",
       "import/first": "error",
       //"import/no-cycle": "error",
@@ -98,8 +102,6 @@ module.exports = (dirName, forceTS = false) => {
       // eslint don't understand some imports very well
       "import/no-unresolved": "off",
       "import/order": "off",
-      //"simple-import-sort/imports": "error",
-      "simple-import-sort/imports": "off", // problem with dprint?
 
       "object-shorthand": "error",
 
