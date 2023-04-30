@@ -30,12 +30,12 @@
     "@effect-app/prelude": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
-    "@babel/cli": "^7.21.0",
-    "@types/node": "~18.16.1",
+    "@babel/cli": "^7.21.5",
+    "@types/node": "~18.16.3",
     "@types/react": "^18.2.0",
     "react": "^18.2.0",
     "react-hook-form": "7.40.0",
