@@ -1,6 +1,5 @@
 import * as Sentry from "@sentry/node"
 import type { CauseException } from "./errors.js"
-import type { RequestContext } from "./RequestContext.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 
 export function reportError<E, E2 extends CauseException<unknown>>(
@@ -9,18 +8,16 @@ export function reportError<E, E2 extends CauseException<unknown>>(
   return (cause: Cause<E>, extras?: Record<string, unknown>) =>
     Debug.untraced(() =>
       Effect.gen(function*($) {
-        const context = yield* $(RequestContextContainer.getOption)
         if (cause.isInterrupted()) {
-          const data = { context, ...extras }
-          yield* $(Effect.logDebug("Interrupted: " + (data ? data.$$.pretty : "")))
+          yield* $(Effect.logDebug("Interrupted").logAnnotate("extras", JSON.stringify(extras ?? {})))
           return
         }
         const error = makeError(cause)
-        reportSentry(error, context.value, extras)
+        yield* $(reportSentry(error, extras))
         yield* $(
           cause.logErrorCause.logAnnotate(
             "extras",
-            JSON.stringify({ context, extras, error: { _tag: error._tag, message: error.message } })
+            JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
           )
         )
       })
@@ -29,31 +26,33 @@ export function reportError<E, E2 extends CauseException<unknown>>(
 
 function reportSentry<E2 extends CauseException<unknown>>(
   error: E2,
-  context: RequestContext | undefined,
   extras: Record<string, unknown> | undefined
 ) {
-  const scope = new Sentry.Scope()
-  if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
-  if (extras) scope.setContext("extras", extras)
-  scope.setContext("error", error.toJSON())
-  Sentry.captureException(error, scope)
+  return RequestContextContainer.getOption.map((ctx) => {
+    const context = ctx.value!
+    const scope = new Sentry.Scope()
+    if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
+    if (extras) scope.setContext("extras", extras)
+    scope.setContext("error", error.toJSON())
+    Sentry.captureException(error, scope)
+  })
 }
 
 export function logError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
 ) {
-  return (cause: Cause<E>, context?: Record<string, unknown>) =>
+  return (cause: Cause<E>, extras?: Record<string, unknown>) =>
     Debug.untraced(() =>
       Effect.gen(function*($) {
         if (cause.isInterrupted()) {
-          yield* $(Effect.logDebug("Interrupted: " + (context ? context.$$.pretty : "")))
+          yield* $(Effect.logDebug("Interrupted").logAnnotate("extras", JSON.stringify(extras ?? {})))
           return
         }
         const error = makeError(cause)
         yield* $(
           cause.logWarningCause.logAnnotate(
             "extras",
-            JSON.stringify({ context, error: { _tag: error._tag, message: error.message } })
+            JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
           )
         )
       })
