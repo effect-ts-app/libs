@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@rollup/pluginutils": "^5.0.2",
-    "vite": "^4.3.3"
+    "vite": "^4.3.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
