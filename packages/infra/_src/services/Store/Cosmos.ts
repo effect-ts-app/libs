@@ -516,34 +516,42 @@ export function buildWhereCosmosQuery(
           (x, i) => {
             const k = `${x.f}.${x.key}`
             const v = `@v${i}`
+
+            switch (x.t) {
+              case "in":
+                return `ARRAY_CONTAINS(${v}, ${k})`
+              case "not-in":
+                return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
+              case "ends-with":
+                return `ENDSWITH(${k}, ${v}, true)`
+              case "contains":
+                return `CONTAINS(${k}, ${v}, true)`
+              case "starts-with":
+                return `STARTSWITH(${k}, ${v}, true)`
+            }
+
             const lk = lowerIfNeeded(k, x.value)
             const lv = lowerIfNeeded(v, x.value)
 
-            return x.t === "in"
-              ? `ARRAY_CONTAINS(${v}, ${k})`
-              : x.t === "not-in"
-              ? `(NOT ARRAY_CONTAINS(${v}, ${k}))`
-              : x.t === "lt"
-              ? `${lk} < ${lv}`
-              : x.t === "lte"
-              ? `${lk} <= ${lv}`
-              : x.t === "gt"
-              ? `${lk} > ${lv}`
-              : x.t === "gte"
-              ? `${lk} >= ${lv}`
-              : x.t === "ends-with"
-              ? `ENDSWITH(${k}, ${v}, true)`
-              : x.t === "contains"
-              ? `CONTAINS(${k}, ${v}, true)`
-              : x.t === "starts-with"
-              ? `STARTSWITH(${k}, ${v}, true)`
-              : x.t === "not-eq"
-              ? x.value === null
-                ? `IS_NULL(${k}) = false`
-                : `${lk} <> ${lv}`
-              : x.value === null
-              ? `IS_NULL(${k}) = true`
-              : `${lk} = ${lv}`
+            switch (x.t) {
+              case "lt":
+                return `${lk} < ${lv}`
+              case "lte":
+                return `${lk} <= ${lv}`
+              case "gt":
+                return `${lk} > ${lv}`
+              case "gte":
+                return `${lk} >= ${lv}`
+              case "not-eq":
+                return x.value === null
+                  ? `IS_NULL(${k}) = false`
+                  : `${lk} <> ${lv}`
+              case undefined:
+              case "eq":
+                return x.value === null
+                  ? `IS_NULL(${k}) = true`
+                  : `${lk} = ${lv}`
+            }
           }
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
