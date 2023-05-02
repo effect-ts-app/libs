@@ -530,11 +530,11 @@ export function buildWhereCosmosQuery(
               : x.t === "gte"
               ? `${k} >= ${v}`
               : x.t === "ends-with"
-              ? `${x.f}.${x.key} LIKE %@v${i}`
-              : x.t === "includes"
-              ? `${x.f}.${x.key} LIKE %@v${i}%`
+              ? `ENDSWITH(${x.f}.${x.key}, @v${i}, true)`
+              : x.t === "contains"
+              ? `CONTAINS(${x.f}.${x.key}, @v${i}, true)`
               : x.t === "starts-with"
-              ? `${x.f}.${x.key} LIKE @v${i}%`
+              ? `STARTSWITH(${x.f}.${x.key}, @v${i}, true)`
               : x.t === "not-eq"
               ? x.value === null
                 ? `IS_NULL(${x.f}.${x.key}) = false`

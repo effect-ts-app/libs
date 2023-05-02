@@ -79,7 +79,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 return gtCaseInsensitive(k, p.value)
               case "gte":
                 return gteCaseInsensitive(k, p.value)
-              case "includes":
+              case "contains":
                 return (k as string).toLowerCase().includes((p.value as string).toLowerCase())
               case "ends-with":
                 return (k as string).toLowerCase().endsWith((p.value as string).toLowerCase())
@@ -111,7 +111,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 return gtCaseInsensitive(k, p.value)
               case "gte":
                 return gteCaseInsensitive(k, p.value)
-              case "includes":
+              case "contains":
                 return (k as string).toLowerCase().includes((p.value as string).toLowerCase())
               case "ends-with":
                 return (k as string).toLowerCase().endsWith((p.value as string).toLowerCase())

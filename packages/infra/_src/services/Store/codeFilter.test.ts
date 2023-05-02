@@ -55,7 +55,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$includes("b")))
+        somethingsWhere((_) => _("b", (_) => _.$contains("b")))
       ))
       .toArray
   )
@@ -64,7 +64,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$includes("2")))
+        somethingsWhere((_) => _("b", (_) => _.$contains("2")))
       ))
       .toArray
   )

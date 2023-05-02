@@ -100,9 +100,9 @@ export type WhereValue<
     | "gte"
     | "starts-with"
     | "ends-with"
-    | "includes"
     | "contains"
-    | "not-contains",
+    | "in"
+    | "not-in",
   A, // extends SupportedValues,
   V extends A = A
 > = { t: T; v: V }
@@ -110,26 +110,6 @@ export type WhereValue<
 export type WhereIn<T extends "in" | "not-in", V, Values extends readonly V[] = readonly V[]> = {
   t: T
   v: Values
-}
-
-/**
- * @tsplus fluent Iterable $contains
- */
-export function $contains<A extends SupportedValues, V extends A>(
-  _: readonly A[],
-  v: V
-): WhereValue<"contains", A, V> {
-  return $$contains(v)
-}
-
-/**
- * @tsplus fluent Iterable $notContains
- */
-export function $notContains<A extends SupportedValues, V extends A>(
-  _: readonly A[],
-  v: V
-): WhereValue<"not-contains", A, V> {
-  return $$notContains(v)
 }
 
 /**
@@ -297,10 +277,10 @@ export function $endsWith<A extends string, V extends A>(_: A, v: V): WhereValue
 }
 
 /**
- * @tsplus fluent string $includes
+ * @tsplus fluent string $contains
  */
-export function $includes<A extends string, V extends A>(_: A, v: V): WhereValue<"includes", A, V> {
-  return $$includes(v)
+export function $contains<A extends string, V extends A>(_: A, v: V): WhereValue<"contains", A, V> {
+  return $$contains(v)
 }
 
 function $$in<L extends readonly any[]>(v: L) {
@@ -332,15 +312,8 @@ function $$gte<A>(v: A) {
   return { t: "gte" as const, v }
 }
 
-// containsAny, containsAll?
-function $$contains<A>(v: A) {
+function $$contains<A extends string>(v: A) {
   return { t: "contains" as const, v }
-}
-function $$notContains<A>(v: A) {
-  return { t: "not-contains" as const, v }
-}
-function $$includes<A extends string>(v: A) {
-  return { t: "includes" as const, v }
 }
 function $$startsWith<A extends string>(v: A) {
   return { t: "starts-with" as const, v }
