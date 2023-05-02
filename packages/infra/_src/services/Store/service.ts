@@ -19,7 +19,7 @@ export type SupportedValues2 = string | boolean | number
 export type Where =
   | { key: string; t?: "eq" | "not-eq"; value: SupportedValues }
   | { key: string; t: "gt" | "lt" | "gte" | "lte"; value: SupportedValues2 }
-  | { key: string; t: "includes" | "startsWith" | "endsWith"; value: SupportedValues2 }
+  | { key: string; t: "includes" | "starts-with" | "ends-with"; value: SupportedValues2 }
   | {
     key: string
     t: "in" | "not-in"

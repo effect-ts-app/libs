@@ -73,6 +73,42 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => _.$endsWith("b")))
+      ))
+      .toArray
+  )
+    .toEqual([somethings[0]])
+
+  expect(
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => _.$endsWith("2")))
+      ))
+      .toArray
+  )
+    .toEqual([somethings[1]])
+
+  expect(
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => _.$startsWith("b")))
+      ))
+      .toArray
+  )
+    .toEqual([somethings[0], somethings[1]])
+
+  expect(
+    somethings
+      .filterMap(codeFilter(
+        somethingsWhere((_) => _("b", (_) => _.$startsWith("2")))
+      ))
+      .toArray
+  )
+    .toEqual([])
+
+  expect(
+    somethings
+      .filterMap(codeFilter(
         somethingsWhere((_) => _("b", (_) => "b"))
       ))
       .toArray
