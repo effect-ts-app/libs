@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.65.0
+
+### Minor Changes
+
+- Update filters
+
 ## 0.64.0
 
 ### Minor Changes
