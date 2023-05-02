@@ -59,7 +59,7 @@ test("works", () => {
       ))
       .toArray
   )
-    .toEqual([somethings[1]])
+    .toEqual([somethings[0], somethings[1]])
 
   expect(
     somethings
