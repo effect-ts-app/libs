@@ -513,26 +513,36 @@ export function buildWhereCosmosQuery(
             : { ..._, f: "f" }
         )
         .map(
-          (x, i) =>
-            x.t === "in"
+          (x, i) => {
+            const k = lowerIfNeeded(`${x.f}.${x.key}`, x.value)
+            const v = lowerIfNeeded(`@v${i}`, x.value)
+
+            return x.t === "in"
               ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
               : x.t === "not-in"
               ? `(NOT ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}))`
               : x.t === "lt"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} < ${lowerIfNeeded(`@v${i}`, x.value)}`
+              ? `${k} < ${v}`
               : x.t === "lte"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <= ${lowerIfNeeded(`@v${i}`, x.value)}`
+              ? `${k} <= ${v}`
               : x.t === "gt"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} > ${lowerIfNeeded(`@v${i}`, x.value)}`
+              ? `${k} > ${v}`
               : x.t === "gte"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} >= ${lowerIfNeeded(`@v${i}`, x.value)}`
+              ? `${k} >= ${v}`
+              : x.t === "endsWith"
+              ? `${x.f}.${x.key} LIKE %@v${i}`
+              : x.t === "contains"
+              ? `${x.f}.${x.key} LIKE %@v${i}%`
+              : x.t === "startsWith"
+              ? `${x.f}.${x.key} LIKE @v${i}%`
               : x.t === "not-eq"
               ? x.value === null
                 ? `IS_NULL(${x.f}.${x.key}) = false`
-                : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <> ${lowerIfNeeded(`@v${i}`, x.value)}`
+                : `${k} <> ${v}`
               : x.value === null
               ? `IS_NULL(${x.f}.${x.key}) = true`
-              : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} = ${lowerIfNeeded(`@v${i}`, x.value)}`
+              : `${k} = ${v}`
+          }
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
     }
@@ -553,7 +563,9 @@ export function buildWhereCosmosQuery(
 //   return Array.isArray(t)
 // }
 
-const lowerIfNeeded = (key: unknown, value: unknown) => typeof value === "string" ? `LOWER(${key})` : `${key}`
+function lowerIfNeeded(key: unknown, value: unknown) {
+  return typeof value === "string" ? `LOWER(${key})` : `${key}`
+}
 
 export function buildCosmosQuery<PM>(
   filter: LegacyFilter<PM> | StoreWhereFilter,

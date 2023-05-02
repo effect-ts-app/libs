@@ -77,9 +77,17 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               ? gtCaseInsensitive(get(x, p.key), p.value)
               : p.t === "gte"
               ? gteCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "includes"
+              ? (get(x, p.key) as string).toLowerCase().includes((p.value as string).toLowerCase())
+              : p.t === "endsWith"
+              ? (get(x, p.key) as string).toLowerCase().endsWith((p.value as string).toLowerCase())
+              : p.t === "startsWith"
+              ? (get(x, p.key) as string).toLowerCase().startsWith((p.value as string).toLowerCase())
               : p.t === "not-eq"
               ? !compareCaseInsensitive(get(x, p.key), p.value)
-              : compareCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "eq" || p.t === undefined
+              ? compareCaseInsensitive(get(x, p.key), p.value)
+              : null as never
           )
         ? Option(x as unknown as NE)
         : Option.none
@@ -98,6 +106,12 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               ? gtCaseInsensitive(get(x, p.key), p.value)
               : p.t === "gte"
               ? gteCaseInsensitive(get(x, p.key), p.value)
+              : p.t === "includes"
+              ? (get(x, p.key) as string).toLowerCase().includes((p.value as string).toLowerCase())
+              : p.t === "endsWith"
+              ? (get(x, p.key) as string).toLowerCase().endsWith((p.value as string).toLowerCase())
+              : p.t === "startsWith"
+              ? (get(x, p.key) as string).toLowerCase().startsWith((p.value as string).toLowerCase())
               : p.t === "not-eq"
               ? p.key.includes(".-1.")
                 ? (get(x, p.key.split(".-1.")[0]) as any[])
