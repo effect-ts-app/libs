@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.63.1
+
+### Patch Changes
+
+- acd8ef1a: Cleanup error report
+
 ## 0.63.0
 
 ### Minor Changes
