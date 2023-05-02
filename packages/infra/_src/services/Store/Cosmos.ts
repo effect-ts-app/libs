@@ -514,34 +514,36 @@ export function buildWhereCosmosQuery(
         )
         .map(
           (x, i) => {
-            const k = lowerIfNeeded(`${x.f}.${x.key}`, x.value)
-            const v = lowerIfNeeded(`@v${i}`, x.value)
+            const k = `${x.f}.${x.key}`
+            const v = `@v${i}`
+            const lk = lowerIfNeeded(k, x.value)
+            const lv = lowerIfNeeded(v, x.value)
 
             return x.t === "in"
-              ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
+              ? `ARRAY_CONTAINS(${v}, ${k})`
               : x.t === "not-in"
-              ? `(NOT ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}))`
+              ? `(NOT ARRAY_CONTAINS(${v}, ${k}))`
               : x.t === "lt"
-              ? `${k} < ${v}`
+              ? `${lk} < ${lv}`
               : x.t === "lte"
-              ? `${k} <= ${v}`
+              ? `${lk} <= ${lv}`
               : x.t === "gt"
-              ? `${k} > ${v}`
+              ? `${lk} > ${lv}`
               : x.t === "gte"
-              ? `${k} >= ${v}`
+              ? `${lk} >= ${lv}`
               : x.t === "ends-with"
-              ? `ENDSWITH(${x.f}.${x.key}, @v${i}, true)`
+              ? `ENDSWITH(${k}, ${v}, true)`
               : x.t === "contains"
-              ? `CONTAINS(${x.f}.${x.key}, @v${i}, true)`
+              ? `CONTAINS(${k}, ${v}, true)`
               : x.t === "starts-with"
-              ? `STARTSWITH(${x.f}.${x.key}, @v${i}, true)`
+              ? `STARTSWITH(${k}, ${v}, true)`
               : x.t === "not-eq"
               ? x.value === null
-                ? `IS_NULL(${x.f}.${x.key}) = false`
-                : `${k} <> ${v}`
+                ? `IS_NULL(${k}) = false`
+                : `${lk} <> ${lv}`
               : x.value === null
-              ? `IS_NULL(${x.f}.${x.key}) = true`
-              : `${k} = ${v}`
+              ? `IS_NULL(${k}) = true`
+              : `${lk} = ${lv}`
           }
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
