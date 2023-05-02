@@ -64,52 +64,74 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
       : filter.mode === "or"
       ? filter
           .where
-          .some((p) =>
-            p.t === "in"
-              ? p.value.includes(get(x, p.key))
-              : p.t === "not-in"
-              ? !p.value.includes(get(x, p.key))
-              : p.t === "lt"
-              ? ltCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "lte"
-              ? lteCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "gt"
-              ? gtCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "gte"
-              ? gteCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "not-eq"
-              ? !compareCaseInsensitive(get(x, p.key), p.value)
-              : compareCaseInsensitive(get(x, p.key), p.value)
-          )
+          .some((p) => {
+            const k = get(x, p.key)
+            switch (p.t) {
+              case "in":
+                return p.value.includes(k)
+              case "not-in":
+                return !p.value.includes(k)
+              case "lt":
+                return ltCaseInsensitive(k, p.value)
+              case "lte":
+                return lteCaseInsensitive(k, p.value)
+              case "gt":
+                return gtCaseInsensitive(k, p.value)
+              case "gte":
+                return gteCaseInsensitive(k, p.value)
+              case "contains":
+                return (k as string).toLowerCase().includes((p.value as string).toLowerCase())
+              case "ends-with":
+                return (k as string).toLowerCase().endsWith((p.value as string).toLowerCase())
+              case "starts-with":
+                return (k as string).toLowerCase().startsWith((p.value as string).toLowerCase())
+              case "not-eq":
+                return !compareCaseInsensitive(k, p.value)
+              case "eq":
+              case undefined:
+                return compareCaseInsensitive(k, p.value)
+            }
+          })
         ? Option(x as unknown as NE)
         : Option.none
       : filter
           .where
-          .every((p) =>
-            p.t === "in"
-              ? p.value.includes(get(x, p.key))
-              : p.t === "not-in"
-              ? !p.value.includes(get(x, p.key))
-              : p.t === "lt"
-              ? ltCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "lte"
-              ? lteCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "gt"
-              ? gtCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "gte"
-              ? gteCaseInsensitive(get(x, p.key), p.value)
-              : p.t === "not-eq"
-              ? p.key.includes(".-1.")
-                ? (get(x, p.key.split(".-1.")[0]) as any[])
-                  // TODO: or vs and
-                  .every((_) => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-                : !compareCaseInsensitive(get(x, p.key), p.value)
-              : p.key.includes(".-1.")
-              ? (get(x, p.key.split(".-1.")[0]) as any[])
-                // TODO: or vs and
-                .some((_) => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-              : compareCaseInsensitive(get(x, p.key), p.value)
-          )
+          .every((p) => {
+            const k = get(x, p.key)
+            switch (p.t) {
+              case "in":
+                return p.value.includes(k)
+              case "not-in":
+                return !p.value.includes(k)
+              case "lt":
+                return ltCaseInsensitive(k, p.value)
+              case "lte":
+                return lteCaseInsensitive(k, p.value)
+              case "gt":
+                return gtCaseInsensitive(k, p.value)
+              case "gte":
+                return gteCaseInsensitive(k, p.value)
+              case "contains":
+                return (k as string).toLowerCase().includes((p.value as string).toLowerCase())
+              case "ends-with":
+                return (k as string).toLowerCase().endsWith((p.value as string).toLowerCase())
+              case "starts-with":
+                return (k as string).toLowerCase().startsWith((p.value as string).toLowerCase())
+              case "not-eq":
+                return p.key.includes(".-1.")
+                  ? (get(x, p.key.split(".-1.")[0]) as any[])
+                    // TODO: or vs and
+                    .every((_) => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+                  : !compareCaseInsensitive(k, p.value)
+              case "eq":
+              case undefined:
+                return p.key.includes(".-1.")
+                  ? (get(x, p.key.split(".-1.")[0]) as any[])
+                    // TODO: or vs and
+                    .some((_) => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
+                  : compareCaseInsensitive(k, p.value)
+            }
+          })
       ? Option(x as unknown as NE)
       : Option.none
 }

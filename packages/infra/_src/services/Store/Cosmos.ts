@@ -513,26 +513,46 @@ export function buildWhereCosmosQuery(
             : { ..._, f: "f" }
         )
         .map(
-          (x, i) =>
-            x.t === "in"
-              ? `ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key})`
-              : x.t === "not-in"
-              ? `(NOT ARRAY_CONTAINS(@v${i}, ${x.f}.${x.key}))`
-              : x.t === "lt"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} < ${lowerIfNeeded(`@v${i}`, x.value)}`
-              : x.t === "lte"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <= ${lowerIfNeeded(`@v${i}`, x.value)}`
-              : x.t === "gt"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} > ${lowerIfNeeded(`@v${i}`, x.value)}`
-              : x.t === "gte"
-              ? `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} >= ${lowerIfNeeded(`@v${i}`, x.value)}`
-              : x.t === "not-eq"
-              ? x.value === null
-                ? `IS_NULL(${x.f}.${x.key}) = false`
-                : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} <> ${lowerIfNeeded(`@v${i}`, x.value)}`
-              : x.value === null
-              ? `IS_NULL(${x.f}.${x.key}) = true`
-              : `${lowerIfNeeded(`${x.f}.${x.key}`, x.value)} = ${lowerIfNeeded(`@v${i}`, x.value)}`
+          (x, i) => {
+            const k = `${x.f}.${x.key}`
+            const v = `@v${i}`
+
+            switch (x.t) {
+              case "in":
+                return `ARRAY_CONTAINS(${v}, ${k})`
+              case "not-in":
+                return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
+              case "ends-with":
+                return `ENDSWITH(${k}, ${v}, true)`
+              case "contains":
+                return `CONTAINS(${k}, ${v}, true)`
+              case "starts-with":
+                return `STARTSWITH(${k}, ${v}, true)`
+            }
+
+            const lk = lowerIfNeeded(k, x.value)
+            const lv = lowerIfNeeded(v, x.value)
+
+            switch (x.t) {
+              case "lt":
+                return `${lk} < ${lv}`
+              case "lte":
+                return `${lk} <= ${lv}`
+              case "gt":
+                return `${lk} > ${lv}`
+              case "gte":
+                return `${lk} >= ${lv}`
+              case "not-eq":
+                return x.value === null
+                  ? `IS_NULL(${k}) = false`
+                  : `${lk} <> ${lv}`
+              case undefined:
+              case "eq":
+                return x.value === null
+                  ? `IS_NULL(${k}) = true`
+                  : `${lk} = ${lv}`
+            }
+          }
         )
         .join(filter.mode === "or" ? " OR " : " AND ")
     }
@@ -553,7 +573,9 @@ export function buildWhereCosmosQuery(
 //   return Array.isArray(t)
 // }
 
-const lowerIfNeeded = (key: unknown, value: unknown) => typeof value === "string" ? `LOWER(${key})` : `${key}`
+function lowerIfNeeded(key: unknown, value: unknown) {
+  return typeof value === "string" ? `LOWER(${key})` : `${key}`
+}
 
 export function buildCosmosQuery<PM>(
   filter: LegacyFilter<PM> | StoreWhereFilter,
