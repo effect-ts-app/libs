@@ -237,17 +237,17 @@ function $notIn__<A extends SupportedValues, Values extends readonly A[]>(
   return (_: A) => $notIn(_, ...v)
 }
 
-// function $contains__<A extends SupportedValues, V extends A>(
-//   v: V
-// ) {
-//   return (_: readonly A[]) => $contains(_, v)
-// }
+function $startsWith__<V extends A, A extends string>(v: V) {
+  return (_: A) => $startsWith(_, v)
+}
 
-// function $notContains__<A extends SupportedValues, V extends A>(
-//   v: V
-// ) {
-//   return (_: readonly A[]) => $notContains(_, v)
-// }
+function $endsWith__<V extends A, A extends string>(v: V) {
+  return (_: A) => $endsWith(_, v)
+}
+
+function $contains__<V extends A, A extends string>(v: V) {
+  return (_: A) => $contains(_, v)
+}
 
 export const Filters = {
   $is: $is__,
@@ -257,9 +257,10 @@ export const Filters = {
   $gt: $gt__,
   $gte: $gte__,
   $lt: $lt__,
-  $lte: $lte__
-  // $contains: $contains__,
-  // $notContains: $notContains__,
+  $lte: $lte__,
+  $contains: $contains__,
+  $endsWith: $endsWith__,
+  $startsWith: $startsWith__
 }
 
 /**
