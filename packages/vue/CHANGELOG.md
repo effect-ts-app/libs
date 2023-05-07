@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.45.0
+
+### Minor Changes
+
+- Add validation message customization
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/vue@0.45.0
+
 ## 0.44.0
 
 ### Minor Changes
