@@ -67,6 +67,7 @@ type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
 
 const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
+export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown) => string>>(new Map())
 
 export class ValidationMessage {
   constructor(
@@ -88,7 +89,8 @@ function buildFieldInfo(
 
   function renderError(e: any) {
     const err = drawError(e)
-    return new ValidationMessage(
+    const custom = customSchemaErrors.value.get(schema)
+    return custom ? custom(err, e) : new ValidationMessage(
       translate.value(
         { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
         {
@@ -101,6 +103,7 @@ function buildFieldInfo(
       ),
       {
         schema,
+        type: translate.value({
           defaultMessage: capitalize(fieldKey.toString()),
           id: `fieldNames.${String(fieldKey)}`
         }),
