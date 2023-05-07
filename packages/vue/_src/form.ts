@@ -7,7 +7,8 @@ import type {
   PropertyRecord,
   SchemaAny
 } from "@effect-app/prelude/schema"
-import { capitalize } from "vue"
+import { createIntl, type IntlFormatters } from "@formatjs/intl"
+import { capitalize, ref } from "vue"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -64,9 +65,22 @@ export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { i
 type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
   : never
 
+const defaultIntl = createIntl({ locale: "en" })
+export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
+
+export class ValidationMessage {
+  constructor(
+    public readonly message: string,
+    public readonly internal: { type: string; message: string; schema: SchemaAny }
+  ) {}
+  toString() {
+    return this.message
+  }
+}
+
 function buildFieldInfo(
   propOrSchema: AnyProperty | SchemaAny,
-  fieldKey: PropertyKey
+  fieldKey: string
 ): FieldInfo<any, any> {
   const metadata = getMetadataFromSchemaOrProp(propOrSchema)
   const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
@@ -74,11 +88,20 @@ function buildFieldInfo(
 
   function renderError(e: any) {
     const err = drawError(e)
-    return `The entered value is not a valid ${
-      capitalize(
-        fieldKey.toString()
-      )
-    } (${err.slice(err.indexOf("expected"))})`
+    return new ValidationMessage(
+      translate.value(
+        { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
+        {
+          type: translate.value({ defaultMessage: capitalize(fieldKey.toString()), id: `fieldNames.${fieldKey}` }),
+          message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
+        }
+      ),
+      {
+        schema,
+        type: translate.value({ defaultMessage: capitalize(fieldKey.toString()), id: `fieldNames.${fieldKey}` }),
+        message: err.slice(err.indexOf("expected"))
+      }
+    )
   }
 
   const stringRules = [
@@ -86,12 +109,22 @@ function buildFieldInfo(
       v === null
       || metadata.minLength === undefined
       || v.length >= metadata.minLength
-      || `The field requires at least ${metadata.minLength} characters`,
+      || translate.value({
+        defaultMessage: "The field requires at least {minLength} characters",
+        id: "validation.string.minLength"
+      }, {
+        minLength: metadata.minLength
+      }),
     (v: string | null) =>
       v === null
       || metadata.maxLength === undefined
       || v.length <= metadata.maxLength
-      || `The field cannot have more than ${metadata.maxLength} characters`
+      || translate.value({
+        defaultMessage: "The field cannot have more than {maxLength} characters",
+        id: "validation.string.maxLength"
+      }, {
+        maxLength: metadata.maxLength
+      })
   ]
 
   const numberRules = [
@@ -100,13 +133,19 @@ function buildFieldInfo(
       || metadata.minimum === undefined
       || metadata.minimumExclusive && v > metadata.minimum
       || !metadata.minimumExclusive && v >= metadata.minimum
-      || `The value should be ${metadata.minimumExclusive ? "larger than" : "at least"} ${metadata.minimum}`,
+      || translate.value({
+        defaultMessage: "The value should be {isExclusive, select, true {larger than} other {at least}} {minimum}",
+        id: "validation.number.min"
+      }, { isExclusive: metadata.minimumExclusive, minimum: metadata.minimum }),
     (v: number | null) =>
       v === null
       || metadata.maximum === undefined
       || metadata.maximumExclusive && v > metadata.maximum
       || !metadata.maximumExclusive && v >= metadata.maximum
-      || `The value should be ${metadata.maximumExclusive ? "smaller than" : "at most"} ${metadata.maximum}`
+      || translate.value({
+        defaultMessage: "The value should be {isExclusive, select, true {smaller than} other {at most}} {maximum}",
+        id: "validation.number.max"
+      }, { isExclusive: metadata.maximumExclusive, maximum: metadata.maximum })
   ]
 
   const parseRule = flow(
@@ -133,7 +172,10 @@ function buildFieldInfo(
   const info = {
     type: metadata.type,
     rules: [
-      (v: string) => !metadata.required || v !== "" || "The field cannot be empty",
+      (v: string) =>
+        !metadata.required
+        || v !== ""
+        || translate.value({ defaultMessage: "The field cannot be empty", id: "validation.empty" }),
       (v: string) => {
         const converted = convertOutInt(v, metadata.type)
 

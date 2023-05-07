@@ -737,6 +737,9 @@ importers:
       '@effect/io':
         specifier: ^0.25.8
         version: 0.25.8
+      '@formatjs/intl':
+        specifier: ^2.7.2
+        version: 2.7.2(typescript@5.1.0-tsplus.20230423)
       '@fp-ts/optic':
         specifier: ^0.7.0
         version: 0.7.0(patch_hash=w2q3sj6fgtrlizsuwcsff4miva)
@@ -1694,13 +1697,11 @@ packages:
     dependencies:
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/fast-memoize@2.0.1:
     resolution: {integrity: sha512-M2GgV+qJn5WJQAYewz7q2Cdl6fobQa69S1AzSM2y0P68ZDbK5cWrJIcPCO395Of1ksftGZoOt4LYCO/j9BKBSA==}
     dependencies:
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/icu-messageformat-parser@2.4.0:
     resolution: {integrity: sha512-6Dh5Z/gp4F/HovXXu/vmd0If5NbYLB5dZrmhWVNb+BOGOEU3wt7Z/83KY1dtd7IDhAnYHasbmKE1RbTE0J+3hw==}
@@ -1708,14 +1709,12 @@ packages:
       '@formatjs/ecma402-abstract': 1.15.0
       '@formatjs/icu-skeleton-parser': 1.4.0
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/icu-skeleton-parser@1.4.0:
     resolution: {integrity: sha512-Qq347VM616rVLkvN6QsKJELazRyNlbCiN47LdH0Mc5U7E2xV0vatiVhGqd3KFgbc055BvtnUXR7XX60dCGFuWg==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.15.0
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/intl-displaynames@6.3.2:
     resolution: {integrity: sha512-kBOh0O7QYKLUqaZujLSEF2+au017plPp63R6Hrokl+oDtLyTt9y9pEuCTbOKh/P8CC9THnDLKRKgeVWZw5Ek8A==}
@@ -1723,7 +1722,6 @@ packages:
       '@formatjs/ecma402-abstract': 1.15.0
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/intl-listformat@7.2.2:
     resolution: {integrity: sha512-YIruRGwUrmgVOXjWi6VbwPcRNBkEfgK2DFjyyqopCmpfJ+39vnl46oLpVchErnuXs6kkARy5GcGaGV7xRsH4lw==}
@@ -1731,13 +1729,11 @@ packages:
       '@formatjs/ecma402-abstract': 1.15.0
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/intl-localematcher@0.2.32:
     resolution: {integrity: sha512-k/MEBstff4sttohyEpXxCmC3MqbUn9VvHGlZ8fauLzkbwXmVrEeyzS+4uhrvAk9DWU9/7otYWxyDox4nT/KVLQ==}
     dependencies:
       tslib: 2.5.0
-    dev: true
 
   /@formatjs/intl@2.7.2(typescript@5.1.0-tsplus.20230423):
     resolution: {integrity: sha512-ziiQfnXwY0/rXhtohSAmYMqDjRsihoMKdl8H2aA+FvxG9638E0XrvfBFCb+1HhimNiuqRz5fTY7F/bZtsJxsjA==}
@@ -1755,7 +1751,6 @@ packages:
       intl-messageformat: 10.3.5
       tslib: 2.5.0
       typescript: '@cdn.jsdelivr.net/npm/@tsplus/installer@0.0.176/compiler/typescript.tgz(patch_hash=4fdmoog7xa6cp22kpahy7cule4)'
-    dev: true
 
   /@fp-ts/core@0.0.11:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
@@ -5601,7 +5596,6 @@ packages:
       '@formatjs/fast-memoize': 2.0.1
       '@formatjs/icu-messageformat-parser': 2.4.0
       tslib: 2.5.0
-    dev: true
 
   /io-ts-extra@0.11.6:
     resolution: {integrity: sha512-rTsvx3W5B2nx7p/eGf+OsEaBTmjSjLzxBDEiweCjwqIL9ZN6CZjG7hFK8zyGJyM0I2uCsRU4uYUhaTgg2SKHkQ==}
