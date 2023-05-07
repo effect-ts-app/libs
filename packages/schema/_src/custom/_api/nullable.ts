@@ -15,6 +15,8 @@ export const nullableIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 
 export type Nullable<A> = A | null
 
+const cache = new WeakMap<S.SchemaAny, S.SchemaAny>()
+
 export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
   self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
 ):
@@ -34,6 +36,7 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
     >
   }
 {
+  if (cache.has(self)) return cache.get(self)! as any
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
@@ -56,7 +59,10 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
     S.annotate(nullableIdentifier, { self })
   )
 
-  return Object.assign(s, {
+  const n = Object.assign(s, {
     withDefault: defProp(s as any, () => null)
   }) as any // TODO: fix this
+
+  cache.set(self, n)
+  return n
 }

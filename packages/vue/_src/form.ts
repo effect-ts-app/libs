@@ -69,16 +69,6 @@ const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
 export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown) => string>>(new Map())
 
-export class ValidationMessage {
-  constructor(
-    public readonly message: string,
-    public readonly internal: { type: string; message: string; schema: SchemaAny }
-  ) {}
-  toString() {
-    return this.message
-  }
-}
-
 function buildFieldInfo(
   propOrSchema: AnyProperty | SchemaAny,
   fieldKey: PropertyKey
@@ -87,9 +77,12 @@ function buildFieldInfo(
   const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
   const parse = Parser.for(schema)
 
+  const nullable = Schema.findAnnotation(schema, Schema.nullableIdentifier)
+
   function renderError(e: any) {
     const err = drawError(e)
     const custom = customSchemaErrors.value.get(schema)
+      ?? (nullable?.self ? customSchemaErrors.value.get(nullable.self) : undefined)
     return custom ? custom(err, e) : translate.value(
       { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
       {
