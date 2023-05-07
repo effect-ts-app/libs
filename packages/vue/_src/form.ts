@@ -80,7 +80,7 @@ export class ValidationMessage {
 
 function buildFieldInfo(
   propOrSchema: AnyProperty | SchemaAny,
-  fieldKey: string
+  fieldKey: PropertyKey
 ): FieldInfo<any, any> {
   const metadata = getMetadataFromSchemaOrProp(propOrSchema)
   const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
@@ -92,13 +92,18 @@ function buildFieldInfo(
       translate.value(
         { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
         {
-          type: translate.value({ defaultMessage: capitalize(fieldKey.toString()), id: `fieldNames.${fieldKey}` }),
+          type: translate.value({
+            defaultMessage: capitalize(fieldKey.toString()),
+            id: `fieldNames.${String(fieldKey)}`
+          }),
           message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
         }
       ),
       {
         schema,
-        type: translate.value({ defaultMessage: capitalize(fieldKey.toString()), id: `fieldNames.${fieldKey}` }),
+          defaultMessage: capitalize(fieldKey.toString()),
+          id: `fieldNames.${String(fieldKey)}`
+        }),
         message: err.slice(err.indexOf("expected"))
       }
     )
