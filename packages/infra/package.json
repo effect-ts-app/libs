@@ -11,7 +11,7 @@
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect/data": "^0.12.2",
-    "@effect/io": "^0.25.8",
+    "@effect/io": "^0.25.9",
     "@sendgrid/helpers": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
     "change-case": "^4.1.2",
