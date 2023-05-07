@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.45.1
+
+### Patch Changes
+
+- Improve validation
+- Updated dependencies
+  - @effect-app/vue@0.45.1
+
 ## 0.45.0
 
 ### Minor Changes
