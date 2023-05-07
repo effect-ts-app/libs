@@ -90,24 +90,14 @@ function buildFieldInfo(
   function renderError(e: any) {
     const err = drawError(e)
     const custom = customSchemaErrors.value.get(schema)
-    return custom ? custom(err, e) : new ValidationMessage(
-      translate.value(
-        { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
-        {
-          type: translate.value({
-            defaultMessage: capitalize(fieldKey.toString()),
-            id: `fieldNames.${String(fieldKey)}`
-          }),
-          message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
-        }
-      ),
+    return custom ? custom(err, e) : translate.value(
+      { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
       {
-        schema,
         type: translate.value({
           defaultMessage: capitalize(fieldKey.toString()),
           id: `fieldNames.${String(fieldKey)}`
         }),
-        message: err.slice(err.indexOf("expected"))
+        message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
       }
     )
   }
