@@ -67,7 +67,7 @@ type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
 
 const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
-export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown) => string>>(new Map())
+export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown, v: unknown) => string>>(new Map())
 
 function buildFieldInfo(
   propOrSchema: AnyProperty | SchemaAny,
@@ -79,11 +79,11 @@ function buildFieldInfo(
 
   const nullable = Schema.findAnnotation(schema, Schema.nullableIdentifier)
 
-  function renderError(e: any) {
+  function renderError(e: any, v: unknown) {
     const err = drawError(e)
     const custom = customSchemaErrors.value.get(schema)
       ?? (nullable?.self ? customSchemaErrors.value.get(nullable.self) : undefined)
-    return custom ? custom(err, e) : translate.value(
+    return custom ? custom(err, e, v) : translate.value(
       { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
       {
         type: translate.value({
@@ -139,18 +139,19 @@ function buildFieldInfo(
       }, { isExclusive: metadata.maximumExclusive, maximum: metadata.maximum })
   ]
 
-  const parseRule = flow(
-    parse,
-    These.result,
-    (_) =>
-      _.match(
-        renderError,
-        ([_, optErr]) =>
-          optErr.isSome()
-            ? renderError(optErr.value)
-            : true
-      )
-  )
+  const parseRule = (v: unknown) =>
+    pipe(
+      parse(v),
+      These.result,
+      (_) =>
+        _.match(
+          (_) => renderError(_, v),
+          ([_, optErr]) =>
+            optErr.isSome()
+              ? renderError(optErr.value, v)
+              : true
+        )
+    )
 
   type UnknownRule = (v: unknown) => boolean | string
   const rules: UnknownRule[] = [
