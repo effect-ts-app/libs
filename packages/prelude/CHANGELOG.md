@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.54.0
+
+### Minor Changes
+
+- Cleanup legacy cache
+
 ## 0.53.2
 
 ### Patch Changes
