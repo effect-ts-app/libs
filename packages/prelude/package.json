@@ -119,6 +119,16 @@
         "default": "./_cjs/Pure.cjs"
       }
     },
+    "./Request": {
+      "import": {
+        "types": "./dist/Request.d.ts",
+        "default": "./dist/Request.js"
+      },
+      "require": {
+        "types": "./dist/Request.d.ts",
+        "default": "./_cjs/Request.cjs"
+      }
+    },
     "./Widen.type": {
       "import": {
         "types": "./dist/Widen.type.d.ts",

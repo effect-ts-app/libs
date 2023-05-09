@@ -34,6 +34,26 @@ import { ConfigError } from "@effect/io/Config/Error"
  */
 import { ConfigProvider } from "@effect/io/Config/Provider"
 
+/**
+ * @tsplus global
+ */
+import { Cache, CacheStats, ConsumerCache, EntryStats } from "@effect/io/Cache"
+
+/**
+ * @tsplus global
+ */
+import { Request } from "@effect/io/Request"
+
+/**
+ * @tsplus global
+ */
+import { EffectRequest } from "@effect-app/prelude/Request"
+
+/**
+ * @tsplus global
+ */
+import { RequestResolver } from "@effect/io/RequestResolver"
+
 /* eslint-disable unused-imports/no-unused-imports */
 
 /**
