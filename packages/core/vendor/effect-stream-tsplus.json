@@ -6090,6 +6090,17 @@
       ]
     },
     {
+      "definitionName": "fromAsyncIterable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/stream/Stream.Ops",
+          "name": "fromAsyncIterable"
+        }
+      ]
+    },
+    {
       "definitionName": "fromChannel",
       "definitionKind": "const",
       "extensions": [
@@ -9409,6 +9420,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "name": "unwrapStream"
+        },
+        {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
           "name": "unwrap"
@@ -9419,6 +9435,11 @@
       "definitionName": "unwrapScoped",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/io/Effect",
+          "kind": "getter",
+          "name": "unwrapStreamScoped"
+        },
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
