@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.53.2
+
+### Patch Changes
+
+- EffectCache
+
 ## 0.53.1
 
 ### Patch Changes
