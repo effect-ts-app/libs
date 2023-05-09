@@ -1,95 +1,141 @@
 {
-  "@effect/io/Cached": [
+  "@effect/io/Cache": [
     {
-      "definitionName": "Cached",
+      "definitionName": "Cache",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Cached"
+          "typeName": "effect/io/Cache"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Cached.Ops"
+          "typeName": "effect/io/Cache.Ops"
         }
       ]
     },
     {
-      "definitionName": "CachedTypeId",
+      "definitionName": "CacheStats",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Cache.Stats"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Cache.Stats.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "CacheTypeId",
       "definitionKind": "type",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Cached.TypeId"
+          "typeName": "effect/io/Cache.TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Cached.TypeId.Ops"
+          "typeName": "effect/io/Cache.TypeId.Ops"
         }
       ]
     },
     {
-      "definitionName": "CachedTypeId",
-      "definitionKind": "const",
+      "definitionName": "ConsumerCache",
+      "definitionKind": "interface",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Cached.TypeId.Ops",
-          "name": "CachedTypeId"
-        }
-      ]
-    },
-    {
-      "definitionName": "auto",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cached.Ops",
-          "name": "auto"
-        }
-      ]
-    },
-    {
-      "definitionName": "get",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Cached",
-          "name": "get"
+          "kind": "type",
+          "typeName": "effect/io/Cache/ConsumerCache"
         },
         {
-          "kind": "static",
-          "typeName": "effect/io/Cached.Ops",
-          "name": "get"
+          "kind": "companion",
+          "typeName": "effect/io/Cache/ConsumerCache.Ops"
         }
       ]
     },
     {
-      "definitionName": "manual",
-      "definitionKind": "const",
+      "definitionName": "EntryStats",
+      "definitionKind": "interface",
       "extensions": [
         {
-          "kind": "static",
-          "typeName": "effect/io/Cached.Ops",
-          "name": "manual"
-        }
-      ]
-    },
-    {
-      "definitionName": "refresh",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Cached",
-          "name": "refresh"
+          "kind": "type",
+          "typeName": "effect/io/Cache/EntryStats"
         },
         {
+          "kind": "companion",
+          "typeName": "effect/io/Cache/EntryStats.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Lookup",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Cache/Lookup"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Cache/Lookup.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "CacheTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
           "kind": "static",
-          "typeName": "effect/io/Cached.Ops",
-          "name": "refresh"
+          "typeName": "effect/io/Cache.TypeId.Ops",
+          "name": "CacheTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cache.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeCacheStats",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cache.Stats.Ops",
+          "name": "makeCacheStats"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeEntryStats",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cache.Ops",
+          "name": "makeEntryStats"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cache.Ops",
+          "name": "makeWith"
         }
       ]
     }
@@ -1598,17 +1644,6 @@
       ]
     },
     {
-      "definitionName": "defer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "defer"
-        }
-      ]
-    },
-    {
       "definitionName": "fail",
       "definitionKind": "const",
       "extensions": [
@@ -1649,6 +1684,17 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "isConfig"
+        }
+      ]
+    },
+    {
+      "definitionName": "logLevel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "logLevel"
         }
       ]
     },
@@ -1842,6 +1888,17 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "suspend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "suspend"
         }
       ]
     },
@@ -3252,6 +3309,34 @@
   ],
   "@effect/io/Effect": [
     {
+      "definitionName": "Adapter",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect/Adapter"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect/Adapter.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Blocked",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect/Blocked"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect/Blocked.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "Effect",
       "definitionKind": "interface",
       "extensions": [
@@ -3290,6 +3375,48 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Effect.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "EffectTypeLambda",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect.TypeLambda"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect.TypeLambda.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "EffectUnify",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect.Unify"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect.Unify.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "EffectUnifyBlacklist",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect.UnifyBlacklist"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect.UnifyBlacklist.Ops"
         }
       ]
     },
@@ -3370,6 +3497,22 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "absolve"
+        }
+      ]
+    },
+    {
+      "definitionName": "absolveWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "absolveWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "absolveWith"
         }
       ]
     },
@@ -3481,6 +3624,49 @@
       ]
     },
     {
+      "definitionName": "allDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "allFilterMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "allFilterMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allFilterMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "allFilterMapPar",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "allFilterMapPar"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allFilterMapPar"
+        }
+      ]
+    },
+    {
       "definitionName": "allowInterrupt",
       "definitionKind": "const",
       "extensions": [
@@ -3499,6 +3685,49 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "allPar"
+        }
+      ]
+    },
+    {
+      "definitionName": "allParDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allParDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "allSuccesses",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "Iterable",
+          "name": "allSuccesses"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allSuccesses"
+        }
+      ]
+    },
+    {
+      "definitionName": "allSuccessesPar",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "Iterable",
+          "name": "allSuccessesPar"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "allSuccessesPar"
         }
       ]
     },
@@ -3686,17 +3915,6 @@
       ]
     },
     {
-      "definitionName": "attempt",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "attempt"
-        }
-      ]
-    },
-    {
       "definitionName": "awaitAllChildren",
       "definitionKind": "const",
       "extensions": [
@@ -3729,18 +3947,50 @@
       ]
     },
     {
-      "definitionName": "bindValue",
+      "definitionName": "bindDiscard",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "bindValue"
+          "name": "bindDiscard"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "bindValue"
+          "name": "bindDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "bindTo",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "bindTo"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "bindTo"
+        }
+      ]
+    },
+    {
+      "definitionName": "blocked",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "blocked"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "blocked"
         }
       ]
     },
@@ -3749,7 +3999,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "getter",
           "typeName": "effect/io/Effect",
           "name": "cached"
         },
@@ -3761,18 +4011,56 @@
       ]
     },
     {
-      "definitionName": "cachedInvalidate",
+      "definitionName": "cachedFunction",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "cachedFunction"
+        }
+      ]
+    },
+    {
+      "definitionName": "cachedInvalidateWithTTL",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "cachedInvalidate"
+          "name": "cachedInvalidateWithTTL"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "cachedInvalidate"
+          "name": "cachedInvalidateWithTTL"
+        }
+      ]
+    },
+    {
+      "definitionName": "cachedWithTTL",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "cachedWithTTL"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "cachedWithTTL"
+        }
+      ]
+    },
+    {
+      "definitionName": "cacheRequestResult",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "cacheRequestResult"
         }
       ]
     },
@@ -3954,22 +4242,6 @@
       ]
     },
     {
-      "definitionName": "collect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "Iterable",
-          "name": "collect"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collect"
-        }
-      ]
-    },
-    {
       "definitionName": "collectAll",
       "definitionKind": "const",
       "extensions": [
@@ -3982,22 +4254,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "collectAll"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "Iterable",
-          "name": "collectAllDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllDiscard"
         }
       ]
     },
@@ -4018,102 +4274,6 @@
       ]
     },
     {
-      "definitionName": "collectAllParDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "Iterable",
-          "name": "collectAllParDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllParDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllSuccesses",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "Iterable",
-          "name": "collectAllSuccesses"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllSuccesses"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllSuccessesPar",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "Iterable",
-          "name": "collectAllSuccessesPar"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllSuccessesPar"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "Iterable",
-          "name": "collectAllWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllWith"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllWithEffect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "Iterable",
-          "name": "collectAllWithEffect"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllWithEffect"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectAllWithPar",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "Iterable",
-          "name": "collectAllWithPar"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectAllWithPar"
-        }
-      ]
-    },
-    {
       "definitionName": "collectFirst",
       "definitionKind": "const",
       "extensions": [
@@ -4126,22 +4286,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "collectFirst"
-        }
-      ]
-    },
-    {
-      "definitionName": "collectPar",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "Iterable",
-          "name": "collectPar"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "collectPar"
         }
       ]
     },
@@ -4663,6 +4807,22 @@
       ]
     },
     {
+      "definitionName": "filterMapEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "filterMapEffect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "filterMapEffect"
+        }
+      ]
+    },
+    {
       "definitionName": "filterNot",
       "definitionKind": "const",
       "extensions": [
@@ -4827,6 +4987,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/data/Context/Tag",
+          "kind": "fluent",
+          "name": "accessWithEffect"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "flatMap"
@@ -4835,6 +5000,22 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "flatMap"
+        }
+      ]
+    },
+    {
+      "definitionName": "flatMapStep",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "flatMapStep"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "flatMapStep"
         }
       ]
     },
@@ -5186,17 +5367,6 @@
       ]
     },
     {
-      "definitionName": "fromEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "fromEither"
-        }
-      ]
-    },
-    {
       "definitionName": "fromEitherCause",
       "definitionKind": "const",
       "extensions": [
@@ -5230,17 +5400,6 @@
       ]
     },
     {
-      "definitionName": "fromOption",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "fromOption"
-        }
-      ]
-    },
-    {
       "definitionName": "gen",
       "definitionKind": "const",
       "extensions": [
@@ -5252,6 +5411,28 @@
       ]
     },
     {
+      "definitionName": "getFailureMonoid",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "getFailureMonoid"
+        }
+      ]
+    },
+    {
+      "definitionName": "getFailureSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "getFailureSemigroup"
+        }
+      ]
+    },
+    {
       "definitionName": "getFiberRefs",
       "definitionKind": "const",
       "extensions": [
@@ -5259,6 +5440,17 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "getFiberRefs"
+        }
+      ]
+    },
+    {
+      "definitionName": "getFirstSuccessSemigroup",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "getFirstSuccessSemigroup"
         }
       ]
     },
@@ -5532,6 +5724,22 @@
       ]
     },
     {
+      "definitionName": "letDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "letDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "letDiscard"
+        }
+      ]
+    },
+    {
       "definitionName": "locally",
       "definitionKind": "const",
       "extensions": [
@@ -5541,13 +5749,13 @@
           "name": "locally"
         },
         {
-          "typeName": "effect/io/Effect",
           "kind": "fluent",
-          "name": "fiberRefLocally"
+          "typeName": "effect/io/Effect",
+          "name": "locally"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
+          "typeName": "effect/io/Effect.Ops",
           "name": "locally"
         }
       ]
@@ -5594,13 +5802,13 @@
           "name": "locallyWith"
         },
         {
-          "typeName": "effect/io/Effect",
           "kind": "fluent",
-          "name": "fiberRefLocallyWith"
+          "typeName": "effect/io/Effect",
+          "name": "locallyWith"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/FiberRef.Ops",
+          "typeName": "effect/io/Effect.Ops",
           "name": "locallyWith"
         }
       ]
@@ -5930,6 +6138,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/data/Context/Tag",
+          "kind": "fluent",
+          "name": "accessWith"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "map"
@@ -6086,33 +6299,6 @@
       ]
     },
     {
-      "definitionName": "memoize",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "memoize"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "memoize"
-        }
-      ]
-    },
-    {
-      "definitionName": "memoizeFunction",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "memoizeFunction"
-        }
-      ]
-    },
-    {
       "definitionName": "merge",
       "definitionKind": "const",
       "extensions": [
@@ -6200,6 +6386,28 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "none"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmptyStruct",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "nonEmptyStruct"
+        }
+      ]
+    },
+    {
+      "definitionName": "nonEmptyTuple",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "nonEmptyTuple"
         }
       ]
     },
@@ -6617,6 +6825,22 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "provideServiceEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideSomeContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "provideSomeContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "provideSomeContext"
         }
       ]
     },
@@ -7155,6 +7379,17 @@
       ]
     },
     {
+      "definitionName": "request",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "request"
+        }
+      ]
+    },
+    {
       "definitionName": "resurrect",
       "definitionKind": "const",
       "extensions": [
@@ -7443,6 +7678,22 @@
       ]
     },
     {
+      "definitionName": "runRequestBlock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/RequestBlock",
+          "name": "runRequestBlock"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "runRequestBlock"
+        }
+      ]
+    },
+    {
       "definitionName": "runSync",
       "definitionKind": "const",
       "extensions": [
@@ -7631,50 +7882,46 @@
       ]
     },
     {
-      "definitionName": "service",
+      "definitionName": "serviceFunction",
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Context/Tag",
-          "kind": "getter",
-          "name": "access"
-        },
-        {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "service"
+          "name": "serviceFunction"
         }
       ]
     },
     {
-      "definitionName": "serviceWith",
+      "definitionName": "serviceFunctionEffect",
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Context/Tag",
-          "kind": "fluent",
-          "name": "accessWith"
-        },
-        {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "serviceWith"
+          "name": "serviceFunctionEffect"
         }
       ]
     },
     {
-      "definitionName": "serviceWithEffect",
+      "definitionName": "serviceOption",
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Context/Tag",
-          "kind": "fluent",
-          "name": "accessWithEffect"
-        },
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "serviceOption"
+        }
+      ]
+    },
+    {
+      "definitionName": "setClock",
+      "definitionKind": "const",
+      "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "serviceWithEffect"
+          "name": "setClock"
         }
       ]
     },
@@ -7707,6 +7954,82 @@
           "kind": "static",
           "typeName": "effect/io/FiberRefs.Ops",
           "name": "setFiberRefs"
+        }
+      ]
+    },
+    {
+      "definitionName": "setParallelism",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "setParallelism"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestBatching",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "setRequestBatching"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestCache",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Request/Cache",
+          "name": "setRequestCache"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request/Cache.Ops",
+          "name": "setRequestCache"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestCaching",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "setRequestCaching"
+        }
+      ]
+    },
+    {
+      "definitionName": "setScheduler",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Scheduler",
+          "name": "setScheduler"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Scheduler.Ops",
+          "name": "setScheduler"
+        }
+      ]
+    },
+    {
+      "definitionName": "setUnhandledErrorLogLevel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "setUnhandledErrorLogLevel"
         }
       ]
     },
@@ -7818,6 +8141,22 @@
       ]
     },
     {
+      "definitionName": "step",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "step"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "step"
+        }
+      ]
+    },
+    {
       "definitionName": "succeed",
       "definitionKind": "const",
       "extensions": [
@@ -7901,17 +8240,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "supervised"
-        }
-      ]
-    },
-    {
-      "definitionName": "suspend",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "suspend"
         }
       ]
     },
@@ -8421,6 +8749,17 @@
       ]
     },
     {
+      "definitionName": "trySuspend",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "trySuspend"
+        }
+      ]
+    },
+    {
       "definitionName": "uncause",
       "definitionKind": "const",
       "extensions": [
@@ -8455,6 +8794,17 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "unified"
+        }
+      ]
+    },
+    {
+      "definitionName": "unifiedFn",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "unifiedFn"
         }
       ]
     },
@@ -9037,6 +9387,22 @@
       ]
     },
     {
+      "definitionName": "withMaxFiberOps",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withMaxFiberOps"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withMaxFiberOps"
+        }
+      ]
+    },
+    {
       "definitionName": "withMetric",
       "definitionKind": "const",
       "extensions": [
@@ -9069,18 +9435,50 @@
       ]
     },
     {
-      "definitionName": "withParallelismUnbounded",
+      "definitionName": "withRequestBatching",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
+          "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "withParallelismUnbounded"
+          "name": "withRequestBatching"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "withParallelismUnbounded"
+          "name": "withRequestBatching"
+        }
+      ]
+    },
+    {
+      "definitionName": "withRequestCache",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withRequestCache"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withRequestCache"
+        }
+      ]
+    },
+    {
+      "definitionName": "withRequestCaching",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withRequestCaching"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withRequestCaching"
         }
       ]
     },
@@ -9113,6 +9511,38 @@
           "kind": "static",
           "typeName": "effect/io/Fiber/Runtime/Flags/Patch.Ops",
           "name": "withRuntimeFlagsScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "withScheduler",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withScheduler"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withScheduler"
+        }
+      ]
+    },
+    {
+      "definitionName": "withUnhandledErrorLogLevel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withUnhandledErrorLogLevel"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withUnhandledErrorLogLevel"
         }
       ]
     },
@@ -9443,6 +9873,34 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Exit.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ExitUnify",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Exit.Unify"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Exit.Unify.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ExitUnifyBlackList",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Exit.UnifyBlackList"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Exit.UnifyBlackList.Ops"
         }
       ]
     },
@@ -12068,6 +12526,17 @@
       ]
     },
     {
+      "definitionName": "currentMaxFiberOps",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "currentMaxFiberOps"
+        }
+      ]
+    },
+    {
       "definitionName": "currentMinimumLogLevel",
       "definitionKind": "const",
       "extensions": [
@@ -12086,6 +12555,39 @@
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
           "name": "currentParallelism"
+        }
+      ]
+    },
+    {
+      "definitionName": "currentRequestBatchingEnabled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "currentRequestBatchingEnabled"
+        }
+      ]
+    },
+    {
+      "definitionName": "currentRequestCache",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "currentRequestCache"
+        }
+      ]
+    },
+    {
+      "definitionName": "currentRequestCacheEnabled",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "currentRequestCacheEnabled"
         }
       ]
     },
@@ -12329,6 +12831,17 @@
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
           "name": "set"
+        }
+      ]
+    },
+    {
+      "definitionName": "unhandledErrorLogLevel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/FiberRef.Ops",
+          "name": "unhandledErrorLogLevel"
         }
       ]
     },
@@ -13345,6 +13858,17 @@
       ]
     },
     {
+      "definitionName": "fiberRefLocallyScopedWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "fiberRefLocallyScopedWith"
+        }
+      ]
+    },
+    {
       "definitionName": "flatMap",
       "definitionKind": "const",
       "extensions": [
@@ -13432,6 +13956,65 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "launch"
+        }
+      ]
+    },
+    {
+      "definitionName": "locally",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Layer",
+          "name": "locally"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "locally"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Layer",
+          "name": "locallyEffect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "locallyEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "locallyScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "locallyWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Layer",
+          "name": "locallyWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "locallyWith"
         }
       ]
     },
@@ -13850,6 +14433,28 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "toRuntime"
+        }
+      ]
+    },
+    {
+      "definitionName": "unwrapEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "unwrapEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "unwrapScoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "unwrapScoped"
         }
       ]
     },
@@ -14676,17 +15281,6 @@
       ]
     },
     {
-      "definitionName": "fromConst",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Metric.Ops",
-          "name": "fromConst"
-        }
-      ]
-    },
-    {
       "definitionName": "fromMetricKey",
       "definitionKind": "const",
       "extensions": [
@@ -14889,22 +15483,6 @@
       ]
     },
     {
-      "definitionName": "taggedWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Metric",
-          "name": "taggedWith"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Metric.Ops",
-          "name": "taggedWith"
-        }
-      ]
-    },
-    {
       "definitionName": "taggedWithLabels",
       "definitionKind": "const",
       "extensions": [
@@ -14921,18 +15499,18 @@
       ]
     },
     {
-      "definitionName": "taggedWithLabelSet",
+      "definitionName": "taggedWithLabelsInput",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Metric",
-          "name": "taggedWithLabelSet"
+          "name": "taggedWithLabelsInput"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Metric.Ops",
-          "name": "taggedWithLabelSet"
+          "name": "taggedWithLabelsInput"
         }
       ]
     },
@@ -15097,6 +15675,22 @@
           "kind": "static",
           "typeName": "effect/io/Metric.Ops",
           "name": "value"
+        }
+      ]
+    },
+    {
+      "definitionName": "withConstantInput",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Metric",
+          "name": "withConstantInput"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Metric.Ops",
+          "name": "withConstantInput"
         }
       ]
     },
@@ -17810,6 +18404,813 @@
       ]
     }
   ],
+  "@effect/io/Request": [
+    {
+      "definitionName": "Cache",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request/Cache"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request/Cache.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Entry",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request/Entry"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request/Entry.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "EntryTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request/EntryTypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request/EntryTypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Listeners",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request/Listeners"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request/Listeners.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Request",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RequestTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Request.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Request.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "EntryTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request/EntryTypeId.Ops",
+          "name": "EntryTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "RequestTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.TypeId.Ops",
+          "name": "RequestTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "complete",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "complete"
+        }
+      ]
+    },
+    {
+      "definitionName": "completeEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "completeEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "fail",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "fail"
+        }
+      ]
+    },
+    {
+      "definitionName": "interruptWhenPossible",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "interruptWhenPossible"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "interruptWhenPossible"
+        }
+      ]
+    },
+    {
+      "definitionName": "isEntry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "isEntry"
+        }
+      ]
+    },
+    {
+      "definitionName": "isRequest",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "isRequest"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeCache",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "makeCache"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeEntry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "makeEntry"
+        }
+      ]
+    },
+    {
+      "definitionName": "of",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "of"
+        }
+      ]
+    },
+    {
+      "definitionName": "succeed",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "succeed"
+        }
+      ]
+    },
+    {
+      "definitionName": "tagged",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Request.Ops",
+          "name": "tagged"
+        }
+      ]
+    }
+  ],
+  "@effect/io/RequestBlock": [
+    {
+      "definitionName": "Empty",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestBlock/Empty"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestBlock/Empty.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Par",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestBlock/Par"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestBlock/Par.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RequestBlock",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestBlock"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestBlock.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Seq",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestBlock/Seq"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestBlock/Seq.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Single",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestBlock/Single"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestBlock/Single.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramapContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "contramapContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "contramapContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "empty",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "empty"
+        }
+      ]
+    },
+    {
+      "definitionName": "locally",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "locally"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "locally"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapRequestResolvers",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "mapRequestResolvers"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "mapRequestResolvers"
+        }
+      ]
+    },
+    {
+      "definitionName": "parallel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "parallel"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "parallel"
+        }
+      ]
+    },
+    {
+      "definitionName": "reduce",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "reduce"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "reduce"
+        }
+      ]
+    },
+    {
+      "definitionName": "sequential",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestBlock",
+          "name": "sequential"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestBlock.Ops",
+          "name": "sequential"
+        }
+      ]
+    },
+    {
+      "definitionName": "single",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "single"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "single"
+        }
+      ]
+    }
+  ],
+  "@effect/io/RequestResolver": [
+    {
+      "definitionName": "RequestResolver",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestResolver"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestResolver.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RequestResolverTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/RequestResolver.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/RequestResolver.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RequestResolverTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.TypeId.Ops",
+          "name": "RequestResolverTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "around",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "around"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "around"
+        }
+      ]
+    },
+    {
+      "definitionName": "batchN",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "batchN"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "batchN"
+        }
+      ]
+    },
+    {
+      "definitionName": "contextFromEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/RequestResolver",
+          "name": "contextFromEffect"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "contextFromEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "contextFromServices",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/RequestResolver",
+          "name": "contextFromServices"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "contextFromServices"
+        }
+      ]
+    },
+    {
+      "definitionName": "contramapContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "contramapContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "contramapContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "eitherWith",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "eitherWith"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "eitherWith"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromFunction",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "fromFunction"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromFunctionBatched",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "fromFunctionBatched"
+        }
+      ]
+    },
+    {
+      "definitionName": "fromFunctionEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "fromFunctionEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "isRequestResolver",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "isRequestResolver"
+        }
+      ]
+    },
+    {
+      "definitionName": "locally",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "locally"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "locally"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeBatched",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "makeBatched"
+        }
+      ]
+    },
+    {
+      "definitionName": "makeWithEntry",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "makeWithEntry"
+        }
+      ]
+    },
+    {
+      "definitionName": "never",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "never"
+        }
+      ]
+    },
+    {
+      "definitionName": "provideContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "provideContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "provideContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "race",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/RequestResolver",
+          "name": "race"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/RequestResolver.Ops",
+          "name": "race"
+        }
+      ]
+    }
+  ],
+  "@effect/io/Resource": [
+    {
+      "definitionName": "Resource",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Resource"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Resource.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ResourceTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Resource.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Resource.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ResourceTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Resource.TypeId.Ops",
+          "name": "ResourceTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "auto",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "auto"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "auto"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Resource",
+          "name": "get"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Resource.Ops",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "manual",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "manual"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "manual"
+        }
+      ]
+    },
+    {
+      "definitionName": "refresh",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Resource",
+          "name": "refresh"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Resource.Ops",
+          "name": "refresh"
+        }
+      ]
+    }
+  ],
   "@effect/io/Runtime": [
     {
       "definitionName": "AsyncFiber",
@@ -17840,6 +19241,76 @@
       ]
     },
     {
+      "definitionName": "FiberFailure",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime/FiberFailure"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime/FiberFailure.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "FiberFailureCauseId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime/FiberFailureCauseId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime/FiberFailureCauseId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "FiberFailureId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime/FiberFailureId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime/FiberFailureId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "NodePrint",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime/NodePrint"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime/NodePrint.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "RunForkOptions",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime/RunForkOptions"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime/RunForkOptions.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "Runtime",
       "definitionKind": "interface",
       "extensions": [
@@ -17850,6 +19321,39 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Runtime.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "FiberFailureCauseId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Runtime/FiberFailureCauseId.Ops",
+          "name": "FiberFailureCauseId"
+        }
+      ]
+    },
+    {
+      "definitionName": "FiberFailureId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Runtime/FiberFailureId.Ops",
+          "name": "FiberFailureId"
+        }
+      ]
+    },
+    {
+      "definitionName": "NodePrint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Runtime/NodePrint.Ops",
+          "name": "NodePrint"
         }
       ]
     },
@@ -17865,13 +19369,13 @@
       ]
     },
     {
-      "definitionName": "defaultRuntimeFlags",
+      "definitionName": "isFiberFailure",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Fiber/Runtime/Flags.Ops",
-          "name": "defaultRuntimeFlags"
+          "typeName": "effect/io/Runtime.Ops",
+          "name": "isFiberFailure"
         }
       ]
     },
@@ -17887,12 +19391,23 @@
       ]
     },
     {
+      "definitionName": "makeFiberFailure",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Runtime.Ops",
+          "name": "makeFiberFailure"
+        }
+      ]
+    },
+    {
       "definitionName": "runCallback",
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runCallback"
         },
         {
@@ -17907,8 +19422,8 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runFork"
         },
         {
@@ -17923,13 +19438,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runPromise"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runPromise"
         }
       ]
@@ -17939,13 +19454,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runPromiseEither"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runPromiseEither"
         }
       ]
@@ -17955,13 +19470,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runPromiseExit"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runPromiseExit"
         }
       ]
@@ -17971,13 +19486,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runSync"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runSync"
         }
       ]
@@ -17987,13 +19502,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runSyncEither"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runSyncEither"
         }
       ]
@@ -18003,13 +19518,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "getter",
           "typeName": "effect/io/Runtime",
+          "kind": "getter",
           "name": "runSyncExit"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
+          "typeName": "effect/io/Runtime.Ops",
           "name": "runSyncExit"
         }
       ]
@@ -20154,6 +21669,70 @@
           "typeName": "effect/io/Scheduler/Task.Ops"
         }
       ]
+    },
+    {
+      "definitionName": "ControlledScheduler",
+      "definitionKind": "class",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Scheduler/ControlledScheduler"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Scheduler/ControlledScheduler.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "MixedScheduler",
+      "definitionKind": "class",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Scheduler/MixedScheduler"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Scheduler/MixedScheduler.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SyncScheduler",
+      "definitionKind": "class",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Scheduler/SyncScheduler"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Scheduler/SyncScheduler.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "defaultScheduler",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Scheduler.Ops",
+          "name": "defaultScheduler"
+        }
+      ]
+    },
+    {
+      "definitionName": "timeBased",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Scheduler.Ops",
+          "name": "timeBased"
+        }
+      ]
     }
   ],
   "@effect/io/Scope": [
@@ -20546,6 +22125,141 @@
           "kind": "static",
           "typeName": "effect/io/Supervisor.Ops",
           "name": "unsafeTrack"
+        }
+      ]
+    }
+  ],
+  "@effect/io/Tracer": [
+    {
+      "definitionName": "ExternalSpan",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer/ExternalSpan"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer/ExternalSpan.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "ParentSpan",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer/ParentSpan"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer/ParentSpan.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Span",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer/Span"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer/Span.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "SpanStatus",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer/SpanStatus"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer/SpanStatus.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Tracer",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TracerTypeId",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Tracer.TypeId"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Tracer.TypeId.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "TracerTypeId",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Tracer.TypeId.Ops",
+          "name": "TracerTypeId"
+        }
+      ]
+    },
+    {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Tracer.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
+      "definitionName": "useSpan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Tracer.Ops",
+          "name": "useSpan"
+        }
+      ]
+    },
+    {
+      "definitionName": "withSpan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "withSpan"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "withSpan"
         }
       ]
     }
