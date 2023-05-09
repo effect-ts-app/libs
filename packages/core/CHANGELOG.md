@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.53.1
+
+### Patch Changes
+
+- Add exports
+
 ## 0.53.0
 
 ### Minor Changes
