@@ -47,7 +47,7 @@ import { Request } from "@effect/io/Request"
 /**
  * @tsplus global
  */
-import { EffectRequest } from "@effect-app/prelude/Request"
+import { EffectCache, EffectRequest } from "@effect-app/prelude/Request"
 
 /**
  * @tsplus global
