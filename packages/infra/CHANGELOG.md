@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.67.0
+
+### Minor Changes
+
+- Add reportMainError
+
 ## 0.66.3
 
 ### Patch Changes
