@@ -9,7 +9,7 @@ export class MessageException<E> extends CauseException<E> {
 
 export class FatalQueueException<E> extends CauseException<E> {
   constructor(cause: Cause<E>) {
-    super(cause, "Message")
+    super(cause, "FatalQueue")
   }
 }
 

@@ -6,6 +6,17 @@ export class RequestException<E> extends CauseException<E> {
     super(cause, "Request")
   }
 }
+export class FatalMainException<E> extends CauseException<E> {
+  constructor(cause: Cause<E>) {
+    super(cause, "FatalMain")
+  }
+}
+
+const reportMainError_ = reportError((cause) => new FatalMainException(cause))
+
+export const reportMainError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
+  Debug.untraced(() => reportMainError_(cause, extras))
+
 const reportRequestError_ = reportError((cause) => new RequestException(cause))
 
 export const reportRequestError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
