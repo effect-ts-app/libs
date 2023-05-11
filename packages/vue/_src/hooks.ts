@@ -257,7 +257,7 @@ export const useMutation: {
         })
         .zipRight(effect)
         .exit
-        .flatMap((exit) => Effect(handle(exit)))
+        .map(handle)
         .fork
         .flatMap((f) => {
           const cancel = () => run.value(f.interrupt)
