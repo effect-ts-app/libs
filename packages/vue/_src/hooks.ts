@@ -5,7 +5,7 @@ import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { Ref } from "vue"
-import { computed, ref, shallowRef } from "vue"
+import { computed, readonly, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
 
 export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
@@ -206,26 +206,57 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
   return tuple(result, latestSuccess, execute)
 }
 
+export type MutationResult<E, A> = {
+  loading: Ref<boolean>
+  success: Ref<A | undefined>
+  error: Ref<E | undefined>
+}
+
 /**
- * Pass a function that returns an Effect, e.g from a client action.
+ * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
-export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>) {
+export const useMutation: {
+  <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): readonly [
+    MutationResult<E, A>,
+    (
+      i: I,
+      abortSignal?: AbortSignal
+    ) => Promise<Either<E, A>>
+  ]
+  <E, A>(self: Effect<ApiConfig | Http, E, A>): readonly [
+    MutationResult<E, A>,
+    (
+      abortSignal?: AbortSignal
+    ) => Promise<Either<E, A>>
+  ]
+} = <I, E, A>(self: ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>) => {
   const loading = ref(false)
   const error = ref<E>()
-  const value = ref<A>()
-  const handle = handleExit(loading, error, value)
-  const exec = (i: I, abortSignal?: AbortSignal) =>
-    run.value(
+  const success = ref<A>()
+  const handle = handleExit(loading, error, success)
+
+  const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
+    let effect: Effect<ApiConfig | Http, E, A>
+    let abortSignal: AbortSignal | undefined
+    if (typeof self === "function") {
+      effect = self(fst as I)
+      abortSignal = snd
+    } else {
+      effect = self
+      abortSignal = fst as AbortSignal | undefined
+    }
+
+    return run.value(
       Effect
         .sync(() => {
           loading.value = true
-          value.value = undefined
+          success.value = undefined
           error.value = undefined
         })
-        .zipRight(self(i))
+        .zipRight(effect)
         .exit
-        .flatMap((exit) => Effect(handle(exit)))
+        .map(handle)
         .fork
         .flatMap((f) => {
           const cancel = () => run.value(f.interrupt)
@@ -233,40 +264,10 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
           return f.join
         })
     )
-
-  const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
-
-  return tuple(
-    state,
-    exec
-  )
-}
-
-/**
- * Parameter-less variant of @see {@link useMutation}
- */
-export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
-  const loading = ref(false)
-  const error = ref<E>()
-  const value = ref<A>()
-
-  const handle = handleExit(loading, error, value)
-
-  const exec = (abortSignal?: AbortSignal) => {
-    loading.value = true
-    return run.value(
-      self
-        .exit
-        .flatMap((exit) => Effect(handle(exit)))
-        .fork
-        .flatMap((f) => {
-          const cancel = () => f.interrupt.runPromise
-          abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-          return f.join
-        })
-    )
   }
-  const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
+
+  const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
+
   return tuple(
     state,
     exec
@@ -276,12 +277,12 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
 function handleExit<E, A>(
   loading: Ref<boolean>,
   error: Ref<E | undefined>,
-  value: Ref<A | undefined>
+  success: Ref<A | undefined>
 ) {
   return (exit: Exit<E, A>): Either<E, A> => {
     loading.value = false
     if (exit.isSuccess()) {
-      value.value = exit.value
+      success.value = exit.value
       error.value = undefined
       return Either(exit.value)
     }
@@ -289,7 +290,7 @@ function handleExit<E, A>(
     const err = exit.cause.failureOption
     if (err.isSome()) {
       error.value = err.value
-      value.value = undefined
+      success.value = undefined
       return Either.left(err.value)
     }
 
