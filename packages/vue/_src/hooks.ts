@@ -211,10 +211,14 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export function useMutation<
-  I,
-  E,
-  A,
-  S extends ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>
+  S extends ((i: any) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>,
+  I = S extends ((i: infer _I) => Effect<ApiConfig | Http, unknown, unknown>) ? _I : never,
+  E = S extends ((i: any) => Effect<ApiConfig | Http, infer _E, unknown>) ? _E
+    : S extends Effect<ApiConfig | Http, infer _E, unknown> ? _E
+    : never,
+  A = S extends ((i: any) => Effect<ApiConfig | Http, unknown, infer _A>) ? _A
+    : S extends Effect<ApiConfig | Http, unknown, infer _A> ? _A
+    : never
 >(
   self: S
 ) {
@@ -245,7 +249,6 @@ export function useMutation<
           return f.join
         })
     )
-
   const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
 
   return tuple(
