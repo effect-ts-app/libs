@@ -5,7 +5,7 @@ import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { Ref } from "vue"
-import { computed, ref, shallowRef } from "vue"
+import { computed, readonly, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
 
 export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
@@ -213,14 +213,14 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
 export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>) {
   const loading = ref(false)
   const error = ref<E>()
-  const value = ref<A>()
-  const handle = handleExit(loading, error, value)
+  const success = ref<A>()
+  const handle = handleExit(loading, error, success)
   const exec = (i: I, abortSignal?: AbortSignal) =>
     run.value(
       Effect
         .sync(() => {
           loading.value = true
-          value.value = undefined
+          success.value = undefined
           error.value = undefined
         })
         .zipRight(self(i))
@@ -234,7 +234,7 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
         })
     )
 
-  const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
+  const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
 
   return tuple(
     state,
@@ -248,14 +248,20 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
 export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
   const loading = ref(false)
   const error = ref<E>()
-  const value = ref<A>()
+  const success = ref<A>()
 
-  const handle = handleExit(loading, error, value)
+  const handle = handleExit(loading, error, success)
 
   const exec = (abortSignal?: AbortSignal) => {
     loading.value = true
     return run.value(
-      self
+      Effect
+        .sync(() => {
+          loading.value = true
+          success.value = undefined
+          error.value = undefined
+        })
+        .zipRight(self)
         .exit
         .flatMap((exit) => Effect(handle(exit)))
         .fork
@@ -266,7 +272,7 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
         })
     )
   }
-  const state = computed(() => ({ loading: loading.value, value: value.value, error: error.value }))
+  const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
   return tuple(
     state,
     exec
@@ -276,12 +282,12 @@ export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
 function handleExit<E, A>(
   loading: Ref<boolean>,
   error: Ref<E | undefined>,
-  value: Ref<A | undefined>
+  success: Ref<A | undefined>
 ) {
   return (exit: Exit<E, A>): Either<E, A> => {
     loading.value = false
     if (exit.isSuccess()) {
-      value.value = exit.value
+      success.value = exit.value
       error.value = undefined
       return Either(exit.value)
     }
@@ -289,7 +295,7 @@ function handleExit<E, A>(
     const err = exit.cause.failureOption
     if (err.isSome()) {
       error.value = err.value
-      value.value = undefined
+      success.value = undefined
       return Either.left(err.value)
     }
 
