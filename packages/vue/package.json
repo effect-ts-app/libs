@@ -14,7 +14,7 @@
     "@formatjs/intl": "^2.7.2",
     "query-string": "^8.1.0",
     "swrv": "^1.0.3",
-    "vue": "^3.3.1"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
@@ -25,8 +25,7 @@
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.176/compiler/typescript.tgz",
     "vite": "^4.3.5",
-    "vitest": "^0.31.0",
-    "vue": "^3.3.1"
+    "vitest": "^0.31.0"
   },
   "typesVersions": {
     "*": {
