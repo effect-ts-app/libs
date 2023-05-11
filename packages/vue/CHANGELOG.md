@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.47.0
+
+### Minor Changes
+
+- 4269bbd8: value -> success prop renaming, unpacking fo returned computed ref
+
+### Patch Changes
+
+- Updated dependencies [4269bbd8]
+  - @effect-app/vue@0.47.0
+
 ## 0.46.3
 
 ### Patch Changes
