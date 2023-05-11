@@ -4,7 +4,7 @@ import { Done } from "@effect-app/prelude/client"
 import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
-import type { Ref } from "vue"
+import type { ComputedRef, Ref } from "vue"
 import { computed, readonly, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
 
@@ -210,27 +210,30 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
-export function useMutation<
-  S extends ((i: any) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>,
-  I = S extends ((i: infer _I) => Effect<ApiConfig | Http, unknown, unknown>) ? _I : never,
-  E = S extends ((i: any) => Effect<ApiConfig | Http, infer _E, unknown>) ? _E
-    : S extends Effect<ApiConfig | Http, infer _E, unknown> ? _E
-    : never,
-  A = S extends ((i: any) => Effect<ApiConfig | Http, unknown, infer _A>) ? _A
-    : S extends Effect<ApiConfig | Http, unknown, infer _A> ? _A
-    : never
->(
-  self: S
-) {
+export const useMutation: {
+  <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): readonly [
+    ComputedRef<{
+      loading: boolean
+      value: A | undefined
+      error: E | undefined
+    }>,
+    (i: I, abortSignal?: AbortSignal) => Promise<Left<E, A> | Right<E, A>>
+  ]
+  <E, A>(self: Effect<ApiConfig | Http, E, A>): readonly [
+    ComputedRef<{
+      loading: boolean
+      value: A | undefined
+      error: E | undefined
+    }>,
+    (abortSignal?: AbortSignal) => Promise<Left<E, A> | Right<E, A>>
+  ]
+} = <I, E, A>(self: ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>) => {
   const loading = ref(false)
   const error = ref<E>()
   const success = ref<A>()
   const handle = handleExit(loading, error, success)
 
-  type ExecArgs = S extends ((i: I) => Effect<ApiConfig | Http, E, A>) ? [i: I, abortSignal?: AbortSignal]
-    : [abortSignal?: AbortSignal]
-
-  const exec = (...args: ExecArgs) =>
+  const exec = (...args: [i: I, abortSignal?: AbortSignal]) =>
     run.value(
       Effect
         .sync(() => {
@@ -238,13 +241,13 @@ export function useMutation<
           success.value = undefined
           error.value = undefined
         })
-        .zipRight(typeof self === "function" ? self(args[0] as I) : self)
+        .zipRight(typeof self === "function" ? self(args[0]) : self)
         .exit
         .flatMap((exit) => Effect(handle(exit)))
         .fork
         .flatMap((f) => {
           const cancel = () => run.value(f.interrupt)
-          const abortSignal = (typeof self === "function" ? args[1] : args[0]) as AbortSignal | undefined
+          const abortSignal = typeof self === "function" ? args[1] : args[0] as AbortSignal | undefined
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join
         })
@@ -254,7 +257,7 @@ export function useMutation<
   return tuple(
     state,
     exec
-  )
+  ) as any
 }
 
 function handleExit<E, A>(
