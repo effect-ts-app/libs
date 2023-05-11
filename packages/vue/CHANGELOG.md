@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.47.1
+
+### Patch Changes
+
+- d72db1f1: Revert vue bump
+- Updated dependencies [d72db1f1]
+  - @effect-app/vue@0.47.1
+
 ## 0.47.0
 
 ### Minor Changes
