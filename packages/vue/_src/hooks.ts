@@ -237,7 +237,6 @@ export const useMutation: {
       effect = self(fst as I)
       abortSignal = snd
     } else {
-      self
       effect = self
       abortSignal = fst as AbortSignal | undefined
     }
