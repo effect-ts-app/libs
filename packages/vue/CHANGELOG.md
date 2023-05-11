@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.48.0
+
+### Minor Changes
+
+- a756a82d: Use ADT for MutationResult and return as single reactive value.
+
+### Patch Changes
+
+- Updated dependencies [a756a82d]
+  - @effect-app/vue@0.48.0
+
 ## 0.47.1
 
 ### Patch Changes
