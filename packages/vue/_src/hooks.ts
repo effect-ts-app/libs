@@ -4,6 +4,7 @@ import { Done } from "@effect-app/prelude/client"
 import { InterruptedException } from "@effect/io/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
+import type { I } from "vitest/dist/types-b7007192.js"
 import type { Ref } from "vue"
 import { computed, readonly, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
@@ -206,24 +207,30 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
   return tuple(result, latestSuccess, execute)
 }
 
-export type MutationResult<E, A, I = never> = readonly [
-  {
-    loading: Ref<boolean>
-    success: Ref<A | undefined>
-    error: Ref<E | undefined>
-  },
-  (
-    ...args: [I] extends [never] ? [abortSignal?: AbortSignal] : [i: I, abortSignal?: AbortSignal]
-  ) => Promise<Either<E, A>>
-]
+export type MutationResult<E, A> = {
+  loading: Ref<boolean>
+  success: Ref<A | undefined>
+  error: Ref<E | undefined>
+}
 
 /**
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useMutation: {
-  <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): MutationResult<E, A, I>
-  <E, A>(self: Effect<ApiConfig | Http, E, A>): MutationResult<E, A>
+  <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): readonly [
+    MutationResult<E, A>,
+    (
+      abortSignal?: AbortSignal
+    ) => Promise<Either<E, A>>
+  ]
+  <E, A>(self: Effect<ApiConfig | Http, E, A>): readonly [
+    MutationResult<E, A>,
+    (
+      i: I,
+      abortSignal?: AbortSignal
+    ) => Promise<Either<E, A>>
+  ]
 } = <I, E, A>(self: ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>) => {
   const loading = ref(false)
   const error = ref<E>()
