@@ -239,7 +239,7 @@ export const useMutation: {
     } else {
       self
       effect = self
-      abortSignal = snd
+      abortSignal = fst as AbortSignal | undefined
     }
 
     return run.value(
