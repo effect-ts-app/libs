@@ -27,9 +27,9 @@
   "devDependencies": {
     "@babel/cli": "^7.21.5",
     "@effect-app/compiler": "workspace:*",
-    "@sentry/node": "^7.51.0",
+    "@sentry/node": "^7.51.2",
     "@types/express": "^4.17.17",
-    "@types/node": "~20.1.0",
+    "@types/node": "~20.1.2",
     "@types/proper-lockfile": "^4.1.2",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.4",

@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.1",
-    "@types/validator": "^13.7.16",
+    "@types/validator": "^13.7.17",
     "fast-check": "^3.8.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.176/compiler/typescript.tgz",
