@@ -207,15 +207,26 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
 }
 
 /**
- * Pass a function that returns an Effect, e.g from a client action.
+ * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
-export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>) {
+export function useMutation<
+  I,
+  E,
+  A,
+  S extends ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>
+>(
+  self: S
+) {
   const loading = ref(false)
   const error = ref<E>()
   const success = ref<A>()
   const handle = handleExit(loading, error, success)
-  const exec = (i: I, abortSignal?: AbortSignal) =>
+
+  type ExecArgs = S extends ((i: I) => Effect<ApiConfig | Http, E, A>) ? [i: I, abortSignal?: AbortSignal]
+    : [abortSignal?: AbortSignal]
+
+  const exec = (...args: ExecArgs) =>
     run.value(
       Effect
         .sync(() => {
@@ -223,12 +234,13 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
           success.value = undefined
           error.value = undefined
         })
-        .zipRight(self(i))
+        .zipRight(typeof self === "function" ? self(args[0] as I) : self)
         .exit
         .flatMap((exit) => Effect(handle(exit)))
         .fork
         .flatMap((f) => {
           const cancel = () => run.value(f.interrupt)
+          const abortSignal = (typeof self === "function" ? args[1] : args[0]) as AbortSignal | undefined
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
           return f.join
         })
@@ -236,43 +248,6 @@ export function useMutation<I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E,
 
   const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
 
-  return tuple(
-    state,
-    exec
-  )
-}
-
-/**
- * Parameter-less variant of @see {@link useMutation}
- */
-export function useAction<E, A>(self: Effect<ApiConfig | Http, E, A>) {
-  const loading = ref(false)
-  const error = ref<E>()
-  const success = ref<A>()
-
-  const handle = handleExit(loading, error, success)
-
-  const exec = (abortSignal?: AbortSignal) => {
-    loading.value = true
-    return run.value(
-      Effect
-        .sync(() => {
-          loading.value = true
-          success.value = undefined
-          error.value = undefined
-        })
-        .zipRight(self)
-        .exit
-        .flatMap((exit) => Effect(handle(exit)))
-        .fork
-        .flatMap((f) => {
-          const cancel = () => f.interrupt.runPromise
-          abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-          return f.join
-        })
-    )
-  }
-  const state = { loading: readonly(loading), success: readonly(success), error: readonly(error) }
   return tuple(
     state,
     exec
