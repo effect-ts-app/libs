@@ -220,13 +220,13 @@ export const useMutation: {
   <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): readonly [
     MutationResult<E, A>,
     (
+      i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
   <E, A>(self: Effect<ApiConfig | Http, E, A>): readonly [
     MutationResult<E, A>,
     (
-      i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
