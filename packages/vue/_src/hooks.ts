@@ -216,7 +216,7 @@ export interface MutationLoading {
 
 export interface MutationSuccess<A> {
   readonly _tag: "Success"
-  readonly value: A
+  readonly data: A
 }
 
 export interface MutationError<E> {
@@ -250,7 +250,7 @@ export const useMutation: {
   function handleExit(exit: Exit<E, A>): Effect<never, never, Either<E, A>> {
     return Effect.sync(() => {
       if (exit.isSuccess()) {
-        state.value = { _tag: "Success", value: exit.value }
+        state.value = { _tag: "Success", data: exit.value }
         return Either(exit.value)
       }
 
