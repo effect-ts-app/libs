@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.49.0
+
+### Minor Changes
+
+- b7edf05e: change name of prop value to data in MutationSuccess
+
+### Patch Changes
+
+- Updated dependencies [b7edf05e]
+  - @effect-app/vue@0.49.0
+
 ## 0.48.0
 
 ### Minor Changes
