@@ -6,9 +6,9 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect/data": "^0.12.2",
-    "@effect/io": "^0.25.9",
+    "@effect/io": "^0.25.10",
     "@fp-ts/optic": "^0.7.0",
-    "cross-fetch": "^3.1.5",
+    "cross-fetch": "^3.1.6",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
     "uuid": "^9.0.0",

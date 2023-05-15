@@ -28,7 +28,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~20.1.2",
+    "@types/node": "~20.1.4",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.176/compiler/typescript.tgz",
     "vitest": "^0.31.0"
