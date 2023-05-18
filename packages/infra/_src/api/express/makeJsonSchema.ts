@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { InvalidStateError } from "../../errors.js"
 import * as RS from "./schema/routing.js"
 
 type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
@@ -15,6 +16,22 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk
     .fromIterable(r)
     .forEachEffect(RS.makeFromSchema)
+    .flatMap((paths) => {
+      const pathMethods: Record<string, string[]> = {}
+
+      for (const path of paths) {
+        if (!(path.path in pathMethods)) {
+          pathMethods[path.path] = []
+        }
+        if (pathMethods[path.path]?.includes(path.method)) {
+          // throw duplicate path-method error
+          return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
+        }
+        pathMethods[path.path]?.push(path.method)
+      }
+
+      return Effect.succeed(paths)
+    })
     .map((e) => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
