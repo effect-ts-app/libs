@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { JSONSchema, ParameterLocation, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
 import { InvalidStateError } from "../../errors.js"
 import * as RS from "./schema/routing.js"
 
@@ -9,6 +10,46 @@ const rx = /:(\w+)/g
 
 type _A<C> = C extends ReadonlyArray<infer A> ? A : never
 
+interface Path {
+  path: string
+  method: string
+  tags: readonly string[] | undefined
+  description: string | undefined
+  summary: string | undefined
+  operationId: string | undefined
+  parameters: {
+    name: string
+    in: ParameterLocation
+    required: boolean
+    schema: SubSchema | undefined
+  }[]
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: JSONSchema
+      }
+    }
+  } | undefined
+  responses: Response[]
+}
+
+export function checkDuplicatePaths(paths: readonly Path[]): Effect<never, InvalidStateError, readonly Path[]> {
+  const pathMethods: Record<string, string[]> = {}
+
+  for (const path of paths) {
+    if (!(path.path in pathMethods)) {
+      pathMethods[path.path] = []
+    }
+    if (pathMethods[path.path]?.includes(path.method)) {
+      // throw duplicate path-method error
+      return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
+    }
+    pathMethods[path.path]?.push(path.method)
+  }
+
+  return Effect.succeed(paths)
+}
+
 /**
  * Work in progress JSONSchema generator.
  */
@@ -16,22 +57,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk
     .fromIterable(r)
     .forEachEffect(RS.makeFromSchema)
-    .flatMap((paths) => {
-      const pathMethods: Record<string, string[]> = {}
-
-      for (const path of paths) {
-        if (!(path.path in pathMethods)) {
-          pathMethods[path.path] = []
-        }
-        if (pathMethods[path.path]?.includes(path.method)) {
-          // throw duplicate path-method error
-          return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
-        }
-        pathMethods[path.path]?.push(path.method)
-      }
-
-      return Effect.succeed(paths)
-    })
+    .flatMap(checkDuplicatePaths)
     .map((e) => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
