@@ -35,16 +35,27 @@ interface Path {
 
 export function checkDuplicatePaths(paths: readonly Path[]): Effect<never, InvalidStateError, readonly Path[]> {
   const pathMethods: Record<string, string[]> = {}
+  const regex = /\/([^/:\n]+)(?=\/|$)/g
 
   for (const path of paths) {
-    if (!(path.path in pathMethods)) {
-      pathMethods[path.path] = []
+    // "/subscriptions/:id/idk1/:subid/banane" -> "subscriptions/idk1/banane"
+    let matches = [...path.path.matchAll(regex)]
+      .map((match) => match[1])
+      .join("/")
+
+    // distinguish between "/subscriptions/.../:id" and "/subscriptions/.../"
+    if (/:([^/]+)$/g.test(path.path)) {
+      matches += ":arg"
     }
-    if (pathMethods[path.path]?.includes(path.method)) {
+
+    if (!(matches in pathMethods)) {
+      pathMethods[matches] = []
+    }
+    if (pathMethods[matches]?.includes(path.method)) {
       // throw duplicate path-method error
       return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
     }
-    pathMethods[path.path]?.push(path.method)
+    pathMethods[matches]?.push(path.method)
   }
 
   return Effect.succeed(paths)
