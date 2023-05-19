@@ -34,28 +34,56 @@ interface Path {
 }
 
 export function checkDuplicatePaths(paths: readonly Path[]): Effect<never, InvalidStateError, readonly Path[]> {
-  const pathMethods: Record<string, string[]> = {}
-  const regex = /\/([^/:\n]+)(?=\/|$)/g
+  const methods = Symbol("methods")
+  interface PathMethods {
+    [key: string | number]: this | undefined
+    [methods]: string[]
+  }
+  const pathMethods: PathMethods = { [methods]: [] }
+  const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
 
   for (const path of paths) {
-    // "/subscriptions/:id/idk1/:subid/banane" -> "subscriptions/idk1/banane"
-    let matches = [...path.path.matchAll(regex)]
-      .map((match) => match[1])
-      .join("/")
+    const matches = [...path.path.matchAll(regex)]
+      .map((match) =>
+        match[1]
+          ? { _tag: "resource", value: match[1] } as const
+          : { _tag: "param", value: match[2]! } as const
+      )
 
-    // distinguish between "/subscriptions/.../:id" and "/subscriptions/.../"
-    if (/:([^/]+)$/g.test(path.path)) {
-      matches += ":arg"
+    let pathNavigator: PathMethods | string[] = pathMethods
+    for (let i = 0; i < matches.length;) {
+      const match = matches[i]!
+      switch (match._tag) {
+        case "resource": {
+          if (!(match.value in (pathNavigator))) {
+            ;(pathNavigator)[match.value] = { [methods]: [] }
+          }
+          pathNavigator = (pathNavigator)[match.value]!
+          i++
+          break
+        }
+        case "param": {
+          let numberOfParams = 1
+          while (i < matches.length && matches[i + 1]?._tag === "param") {
+            numberOfParams++
+            i++
+          }
+
+          if (!(numberOfParams in pathNavigator)) {
+            ;(pathNavigator)[numberOfParams] = { [methods]: [] }
+          }
+          pathNavigator = (pathNavigator)[numberOfParams]!
+          i++
+          break
+        }
+      }
     }
 
-    if (!(matches in pathMethods)) {
-      pathMethods[matches] = []
-    }
-    if (pathMethods[matches]?.includes(path.method)) {
+    if (pathNavigator[methods].includes(path.method)) {
       // throw duplicate path-method error
       return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
     }
-    pathMethods[matches]?.push(path.method)
+    pathNavigator[methods].push(path.method)
   }
 
   return Effect.succeed(paths)
