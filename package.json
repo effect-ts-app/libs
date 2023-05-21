@@ -25,7 +25,7 @@
         "autofix": "NODE_OPTIONS=--max-old-space-size=6144 pnpm -r autofix",
         "lint": "pnpm -r lint",
         "circular:dist": "pnpm -r circular:dist",
-        "test": "pnpm -r test",
+        "test": "pnpm -r test:run",
         "testsuite": "pnpm -r testsuite",
         "up-all": "pnpm --recursive update",
         "up-ncu": "pnpm run update && pnpm i",
