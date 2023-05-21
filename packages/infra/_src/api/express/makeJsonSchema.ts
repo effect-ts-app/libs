@@ -13,11 +13,15 @@ export function checkDuplicatePaths<T extends { path: string; method: string }>(
   paths: readonly T[]
 ): Effect<never, InvalidStateError, readonly T[]> {
   const methods = Symbol("methods")
+  const params = Symbol("params")
+  const subpaths = Symbol("subpaths")
+
   interface PathMethods {
-    [key: string | number]: this | undefined
     [methods]: string[]
+    [params]: { [key: number]: PathMethods | undefined }
+    [subpaths]: { [key: string]: PathMethods | undefined }
   }
-  const pathMethods: PathMethods = { [methods]: [] }
+  const pathMethods: PathMethods = { [methods]: [], [params]: {}, [subpaths]: {} }
   const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
 
   for (const path of paths) {
@@ -28,15 +32,16 @@ export function checkDuplicatePaths<T extends { path: string; method: string }>(
           : { _tag: "param", value: match[2]! } as const
       )
 
-    let pathNavigator: PathMethods | string[] = pathMethods
+    let pathNavigator = pathMethods
     for (let i = 0; i < matches.length;) {
       const match = matches[i]!
+
       switch (match._tag) {
         case "resource": {
-          if (!(match.value in (pathNavigator))) {
-            ;(pathNavigator)[match.value] = { [methods]: [] }
+          if (!(match.value in pathNavigator[subpaths])) {
+            pathNavigator[subpaths][match.value] = { [methods]: [], [params]: {}, [subpaths]: {} }
           }
-          pathNavigator = (pathNavigator)[match.value]!
+          pathNavigator = pathNavigator[subpaths][match.value]!
           i++
           break
         }
@@ -47,10 +52,10 @@ export function checkDuplicatePaths<T extends { path: string; method: string }>(
             i++
           }
 
-          if (!(numberOfParams in pathNavigator)) {
-            ;(pathNavigator)[numberOfParams] = { [methods]: [] }
+          if (!(numberOfParams in pathNavigator[params])) {
+            pathNavigator[params][numberOfParams] = { [methods]: [], [params]: {}, [subpaths]: {} }
           }
-          pathNavigator = (pathNavigator)[numberOfParams]!
+          pathNavigator = pathNavigator[params][numberOfParams]!
           i++
           break
         }
