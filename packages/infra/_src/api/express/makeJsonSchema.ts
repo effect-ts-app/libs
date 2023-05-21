@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { InvalidStateError } from "../../errors.js"
 import * as RS from "./schema/routing.js"
 
 type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
@@ -8,6 +9,64 @@ const rx = /:(\w+)/g
 
 type _A<C> = C extends ReadonlyArray<infer A> ? A : never
 
+export function checkDuplicatePaths<T extends { path: string; method: string }>(
+  paths: readonly T[]
+): Effect<never, InvalidStateError, readonly T[]> {
+  const methods = Symbol("methods")
+  interface PathMethods {
+    [key: string | number]: this | undefined
+    [methods]: string[]
+  }
+  const pathMethods: PathMethods = { [methods]: [] }
+  const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
+
+  for (const path of paths) {
+    const matches = [...path.path.matchAll(regex)]
+      .map((match) =>
+        match[1]
+          ? { _tag: "resource", value: match[1] } as const
+          : { _tag: "param", value: match[2]! } as const
+      )
+
+    let pathNavigator: PathMethods | string[] = pathMethods
+    for (let i = 0; i < matches.length;) {
+      const match = matches[i]!
+      switch (match._tag) {
+        case "resource": {
+          if (!(match.value in (pathNavigator))) {
+            ;(pathNavigator)[match.value] = { [methods]: [] }
+          }
+          pathNavigator = (pathNavigator)[match.value]!
+          i++
+          break
+        }
+        case "param": {
+          let numberOfParams = 1
+          while (i < matches.length && matches[i + 1]?._tag === "param") {
+            numberOfParams++
+            i++
+          }
+
+          if (!(numberOfParams in pathNavigator)) {
+            ;(pathNavigator)[numberOfParams] = { [methods]: [] }
+          }
+          pathNavigator = (pathNavigator)[numberOfParams]!
+          i++
+          break
+        }
+      }
+    }
+
+    if (pathNavigator[methods].includes(path.method)) {
+      // throw duplicate path-method error
+      return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
+    }
+    pathNavigator[methods].push(path.method)
+  }
+
+  return Effect.succeed(paths)
+}
+
 /**
  * Work in progress JSONSchema generator.
  */
@@ -15,6 +74,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk
     .fromIterable(r)
     .forEachEffect(RS.makeFromSchema)
+    .flatMap(checkDuplicatePaths)
     .map((e) => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
