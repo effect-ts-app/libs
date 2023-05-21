@@ -9,19 +9,21 @@ const rx = /:(\w+)/g
 
 type _A<C> = C extends ReadonlyArray<infer A> ? A : never
 
-export function checkDuplicatePaths<T extends { path: string; method: string }>(
+export function checkPaths<T extends { path: string; method: string }>(
   paths: readonly T[]
 ): Effect<never, InvalidStateError, readonly T[]> {
-  const methods = Symbol("methods")
-  const params = Symbol("params")
-  const subpaths = Symbol("subpaths")
+  const methods_s = Symbol("methods")
+  const params_s = Symbol("params")
+  const subpaths_s = Symbol("subpaths")
+  const path_s = Symbol("path")
 
   interface PathMethods {
-    [methods]: string[]
-    [params]: { [key: number]: PathMethods | undefined }
-    [subpaths]: { [key: string]: PathMethods | undefined }
+    [methods_s]: string[]
+    [params_s]: { [key: number]: PathMethods | undefined }
+    [subpaths_s]: { [key: string]: PathMethods | undefined }
+    [path_s]: string
   }
-  const pathMethods: PathMethods = { [methods]: [], [params]: {}, [subpaths]: {} }
+  const pathMethods: PathMethods = { [methods_s]: [], [params_s]: {}, [subpaths_s]: {}, [path_s]: "/" }
   const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
 
   for (const path of paths) {
@@ -38,35 +40,65 @@ export function checkDuplicatePaths<T extends { path: string; method: string }>(
 
       switch (match._tag) {
         case "resource": {
-          if (!(match.value in pathNavigator[subpaths])) {
-            pathNavigator[subpaths][match.value] = { [methods]: [], [params]: {}, [subpaths]: {} }
+          // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
+          if (pathNavigator[params_s][1]) {
+            return Effect.fail(
+              new InvalidStateError(
+                `Path ${pathNavigator[path_s]}${match.value}/ is shadowed by ${pathNavigator[params_s][1][path_s]}`
+              )
+            )
           }
-          pathNavigator = pathNavigator[subpaths][match.value]!
+
+          if (!(match.value in pathNavigator[subpaths_s])) {
+            pathNavigator[subpaths_s][match.value] = {
+              [methods_s]: [],
+              [params_s]: {},
+              [subpaths_s]: {},
+              [path_s]: `${pathNavigator[path_s]}${match.value}/`
+            }
+          }
+
+          pathNavigator = pathNavigator[subpaths_s][match.value]!
           i++
           break
         }
         case "param": {
+          // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+          const subpaths = Object.getOwnPropertyNames(pathNavigator[subpaths_s])
+          if (subpaths.length > 0) {
+            subpaths.forEach((s) =>
+              Effect.logWarning(`Path ${path.path} is partially shadowed by ${pathNavigator[subpaths_s][s]![path_s]}`)
+            )
+          }
+
+          const paramsNames = [match.value]
           let numberOfParams = 1
           while (i < matches.length && matches[i + 1]?._tag === "param") {
             numberOfParams++
             i++
+            paramsNames.push(matches[i]!.value)
           }
 
-          if (!(numberOfParams in pathNavigator[params])) {
-            pathNavigator[params][numberOfParams] = { [methods]: [], [params]: {}, [subpaths]: {} }
+          if (!(numberOfParams in pathNavigator[params_s])) {
+            pathNavigator[params_s][numberOfParams] = {
+              [methods_s]: [],
+              [params_s]: {},
+              [subpaths_s]: {},
+              [path_s]: `${pathNavigator[path_s]}:${paramsNames.join("/:")}/`
+            }
           }
-          pathNavigator = pathNavigator[params][numberOfParams]!
+          pathNavigator = pathNavigator[params_s][numberOfParams]!
           i++
           break
         }
       }
     }
 
-    if (pathNavigator[methods].includes(path.method)) {
+    if (pathNavigator[methods_s].includes(path.method)) {
       // throw duplicate path-method error
       return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
     }
-    pathNavigator[methods].push(path.method)
+    pathNavigator[methods_s].push(path.method)
   }
 
   return Effect.succeed(paths)
@@ -79,7 +111,7 @@ export function makeJsonSchema(r: Iterable<RS.RouteDescriptorAny>) {
   return Chunk
     .fromIterable(r)
     .forEachEffect(RS.makeFromSchema)
-    .flatMap(checkDuplicatePaths)
+    .flatMap(checkPaths)
     .map((e) => {
       const map = ({ method, path, responses, ...rest }: _A<typeof e>) => ({
         [method]: {
