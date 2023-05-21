@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.68.0
+
+### Minor Changes
+
+- 4856c46c: add duplicated paths detection
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.54.0
+  - @effect-app/infra-adapters@0.47.0
+  - @effect-app/prelude@0.55.0
+  - @effect-app/schema@0.48.0
+
 ## 0.67.0
 
 ### Minor Changes
