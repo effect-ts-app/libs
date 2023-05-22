@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.68.1
+
+### Patch Changes
+
+- Flush should be uninterruptible
+
 ## 0.68.0
 
 ### Minor Changes
