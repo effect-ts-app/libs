@@ -38,23 +38,28 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const flushToDisk = store.all.flatMap(fsStore.setRaw).apply(withPermit)
+    const flushToDiskInBackground = flushToDisk
+      .tapErrorCause((err) => Effect(console.error(err)))
+      .uninterruptible
+      .forkDaemon
+
     return {
       ...store,
       batchSet: flow(
         store.batchSet,
-        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDiskInBackground)
       ),
       bulkSet: flow(
         store.bulkSet,
-        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDiskInBackground)
       ),
       set: flow(
         store.set,
-        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDiskInBackground)
       ),
       remove: flow(
         store.remove,
-        (t) => t.tap(() => flushToDisk.tapErrorCause((err) => Effect(console.error(err))).forkDaemon)
+        (t) => t.tap(() => flushToDiskInBackground)
       )
     } satisfies Store<PM, Id>
   })
