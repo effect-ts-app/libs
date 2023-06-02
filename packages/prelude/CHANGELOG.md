@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.55.2
+
+### Patch Changes
+
+- add pick and omit object extensions
+
 ## 0.55.1
 
 ### Patch Changes
