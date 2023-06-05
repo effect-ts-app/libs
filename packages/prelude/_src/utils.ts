@@ -1,11 +1,19 @@
 import { pretty, typedKeysOf } from "@effect-app/core/utils"
 import get from "lodash/get.js"
-import omit from "lodash/omit.js"
+import omit_ from "lodash/omit.js"
 import pick from "lodash/pick.js"
 
 export function assertUnreachable(x: never): never {
   throw new Error("Unknown case " + x)
 }
+
+export const omit: {
+  <T extends object, K extends PropertyKey[]>(
+    object: T | null | undefined,
+    ...paths: K
+  ): DistributiveOmit<T, K[number]>
+  <T extends object, K extends keyof T>(object: T | null | undefined, ...paths: Array<Many<K>>): DistributiveOmit<T, K>
+} = omit_
 
 export type OptPromise<T extends () => any> = (
   ...args: Parameters<T>
@@ -165,9 +173,16 @@ type Many<T> = T | ReadonlyArray<T>
 /**
  * @tsplus fluent Object.Ops omit
  */
-export function RecordOmit<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
+export function RecordOmitold<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
   return omit(o.subject, ...paths)
 }
+export const RecordOmit: {
+  <TT extends object, K extends PropertyKey[]>(
+    object: TT,
+    ...paths: K
+  ): DistributiveOmit<TT, K[number]>
+  <TT extends object, K extends keyof TT>(object: TT, ...paths: Array<Many<K>>): DistributiveOmit<TT, K>
+} = (o: ObjectOps<any>, ...paths: Many<any>[]) => omit(o.subject, ...paths)
 
 /**
  * @tsplus fluent Object.Ops pick
@@ -261,7 +276,7 @@ export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
 }
 export * from "@effect-app/core/utils"
 
-export { get, omit, pick }
+export { get, pick }
 
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K>
   : never
