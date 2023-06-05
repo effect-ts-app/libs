@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.56.1
+
+### Patch Changes
+
+- e4609777: Use distributive omit
+
 ## 0.56.0
 
 ### Minor Changes
