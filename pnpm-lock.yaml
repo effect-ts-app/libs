@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 overrides:
   '@effect/data': ^0.12.5
@@ -372,6 +376,9 @@ importers:
       '@effect/io':
         specifier: ^0.26.0
         version: 0.26.0
+      '@faker-js/faker':
+        specifier: ^8.0.2
+        version: 8.0.2
       '@sendgrid/helpers':
         specifier: ^7.7.0
         version: 7.7.0
@@ -384,9 +391,6 @@ importers:
       cross-fetch:
         specifier: ^3.1.6
         version: 3.1.6
-      faker:
-        specifier: ^5.5.3
-        version: 5.5.3
       fast-check:
         specifier: ^3.10.0
         version: 3.10.0
@@ -594,9 +598,9 @@ importers:
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:../compiler
-      '@types/faker':
-        specifier: 5.5.9
-        version: 5.5.9
+      '@faker-js/faker':
+        specifier: ^8.0.2
+        version: 8.0.2
       '@types/node':
         specifier: ~18.11.12
         version: 18.11.12
@@ -606,9 +610,6 @@ importers:
       '@types/validator':
         specifier: ^13.7.17
         version: 13.7.17
-      faker:
-        specifier: ^5.5.3
-        version: 5.5.3
       fast-check:
         specifier: ^3.10.0
         version: 3.10.0
@@ -1740,6 +1741,10 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
+  /@faker-js/faker@8.0.2:
+    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+
   /@formatjs/ecma402-abstract@1.15.0:
     resolution: {integrity: sha512-7bAYAv0w4AIao9DNg0avfOLTCPE9woAgs6SpXuMq11IN3A+l+cq8ghczwqSZBM11myvPSJA7vLn72q0rJ0QK6Q==}
     dependencies:
@@ -2350,10 +2355,6 @@ packages:
       '@types/express-serve-static-core': 4.17.33
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.0
-    dev: true
-
-  /@types/faker@5.5.9:
-    resolution: {integrity: sha512-uCx6mP3UY5SIO14XlspxsGjgaemrxpssJI0Ol+GfhxtcKpv9pgRZYsS4eeKeHVLje6Qtc8lGszuBI461+gVZBA==}
     dev: true
 
   /@types/glob@8.1.0:
@@ -4913,9 +4914,6 @@ packages:
       iconv-lite: 0.4.24
       tmp: 0.0.33
     dev: true
-
-  /faker@5.5.3:
-    resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
 
   /fast-check@3.10.0:
     resolution: {integrity: sha512-I2FldZwnCbcY6iL+H0rp9m4D+O3PotuFu9FasWjMCzUedYHMP89/37JbSt6/n7Yq/IZmJDW0B2h30sPYdzrfzw==}
