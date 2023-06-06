@@ -9,21 +9,58 @@ const rx = /:(\w+)/g
 
 type _A<C> = C extends ReadonlyArray<infer A> ? A : never
 
+class PathsTree {
+  public readonly methods: string[]
+  public readonly params: { [key: number]: PathsTree | undefined }
+  public readonly subpaths: { [key: string]: PathsTree | undefined }
+  public readonly path: string
+
+  constructor(path: string) {
+    this.methods = []
+    this.params = {}
+    this.subpaths = {}
+    this.path = path
+  }
+}
+
+interface Match {
+  _tag: "resource" | "param"
+  value: string
+}
+
+function checkShadowing(pathNavigator: PathsTree, match: Match): Either<InvalidStateError, null> {
+  switch (match._tag) {
+    case "resource": {
+      // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
+      if (pathNavigator.params[1]) {
+        return Either.left(
+          new InvalidStateError(
+            `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
+          )
+        )
+      }
+      break
+    }
+    case "param": {
+      // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+      const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+      if (subpaths.length > 0) {
+        subpaths.forEach((s) => {
+          Effect.logWarning(
+            `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
+          )
+        })
+      }
+      break
+    }
+  }
+  return Either.right(null)
+}
+
 export function checkPaths<T extends { path: string; method: string }>(
   paths: readonly T[]
 ): Effect<never, InvalidStateError, readonly T[]> {
-  const methods_s = Symbol("methods")
-  const params_s = Symbol("params")
-  const subpaths_s = Symbol("subpaths")
-  const path_s = Symbol("path")
-
-  interface PathMethods {
-    [methods_s]: string[]
-    [params_s]: { [key: number]: PathMethods | undefined }
-    [subpaths_s]: { [key: string]: PathMethods | undefined }
-    [path_s]: string
-  }
-  const pathMethods: PathMethods = { [methods_s]: [], [params_s]: {}, [subpaths_s]: {}, [path_s]: "/" }
+  const pathMethods: PathsTree = new PathsTree("/")
   const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
 
   for (const path of paths) {
@@ -38,39 +75,22 @@ export function checkPaths<T extends { path: string; method: string }>(
     for (let i = 0; i < matches.length;) {
       const match = matches[i]!
 
+      const shadowing = checkShadowing(pathNavigator, match)
+      if (Either.isLeft(shadowing)) {
+        return Effect.fail(shadowing.left)
+      }
+
       switch (match._tag) {
         case "resource": {
-          // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
-          if (pathNavigator[params_s][1]) {
-            return Effect.fail(
-              new InvalidStateError(
-                `Path ${pathNavigator[path_s]}${match.value}/ is shadowed by ${pathNavigator[params_s][1][path_s]}`
-              )
-            )
+          if (!(match.value in pathNavigator.subpaths)) {
+            pathNavigator.subpaths[match.value] = new PathsTree(`${pathNavigator.path}${match.value}/`)
           }
 
-          if (!(match.value in pathNavigator[subpaths_s])) {
-            pathNavigator[subpaths_s][match.value] = {
-              [methods_s]: [],
-              [params_s]: {},
-              [subpaths_s]: {},
-              [path_s]: `${pathNavigator[path_s]}${match.value}/`
-            }
-          }
-
-          pathNavigator = pathNavigator[subpaths_s][match.value]!
+          pathNavigator = pathNavigator.subpaths[match.value]!
           i++
           break
         }
         case "param": {
-          // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-          const subpaths = Object.getOwnPropertyNames(pathNavigator[subpaths_s])
-          if (subpaths.length > 0) {
-            subpaths.forEach((s) =>
-              Effect.logWarning(`Path ${path.path} is partially shadowed by ${pathNavigator[subpaths_s][s]![path_s]}`)
-            )
-          }
-
           const paramsNames = [match.value]
           let numberOfParams = 1
           while (i < matches.length && matches[i + 1]?._tag === "param") {
@@ -79,26 +99,23 @@ export function checkPaths<T extends { path: string; method: string }>(
             paramsNames.push(matches[i]!.value)
           }
 
-          if (!(numberOfParams in pathNavigator[params_s])) {
-            pathNavigator[params_s][numberOfParams] = {
-              [methods_s]: [],
-              [params_s]: {},
-              [subpaths_s]: {},
-              [path_s]: `${pathNavigator[path_s]}:${paramsNames.join("/:")}/`
-            }
+          if (!(numberOfParams in pathNavigator.params)) {
+            pathNavigator.params[numberOfParams] = new PathsTree(
+              `${pathNavigator.path}:${paramsNames.join("/:")}/`
+            )
           }
-          pathNavigator = pathNavigator[params_s][numberOfParams]!
+          pathNavigator = pathNavigator.params[numberOfParams]!
           i++
           break
         }
       }
     }
 
-    if (pathNavigator[methods_s].includes(path.method)) {
+    if (pathNavigator.methods.includes(path.method)) {
       // throw duplicate path-method error
       return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
     }
-    pathNavigator[methods_s].push(path.method)
+    pathNavigator.methods.push(path.method)
   }
 
   return Effect.succeed(paths)
