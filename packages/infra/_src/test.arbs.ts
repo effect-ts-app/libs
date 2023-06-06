@@ -2,7 +2,7 @@
 
 import { setFaker } from "@effect-app/prelude/faker"
 import type { Arbitrary } from "@effect-app/prelude/schema"
-import faker from "faker"
+import { faker } from "@faker-js/faker"
 import { Random } from "fast-check"
 import * as fc from "fast-check"
 import * as rand from "pure-rand"
