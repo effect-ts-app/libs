@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.70.0
+
+### Minor Changes
+
+- aa9c3126: using the new faker-js package instead of the old cursed one
+
+### Patch Changes
+
+- Updated dependencies [aa9c3126]
+  - @effect-app/prelude@0.57.0
+  - @effect-app/infra-adapters@0.48.2
+
 ## 0.69.1
 
 ### Patch Changes

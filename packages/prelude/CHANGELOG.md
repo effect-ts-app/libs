@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.57.0
+
+### Minor Changes
+
+- aa9c3126: using the new faker-js package instead of the old cursed one
+
 ## 0.56.1
 
 ### Patch Changes
