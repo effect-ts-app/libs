@@ -20,6 +20,7 @@ export type Where =
   | { key: string; t?: "eq" | "not-eq"; value: SupportedValues }
   | { key: string; t: "gt" | "lt" | "gte" | "lte"; value: SupportedValues2 }
   | { key: string; t: "contains" | "starts-with" | "ends-with"; value: string }
+  | { key: string; t: "includes" | "not-includes"; value: string }
   | {
     key: string
     t: "in" | "not-in"
