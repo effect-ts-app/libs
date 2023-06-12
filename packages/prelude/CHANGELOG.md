@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.58.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.50.0
+  - @effect-app/core@0.56.0
+
 ## 0.57.0
 
 ### Minor Changes

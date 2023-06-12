@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.23.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
 ## 0.22.0
 
 ### Minor Changes
