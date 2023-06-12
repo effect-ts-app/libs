@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.12.5",
+    "@effect/data": "^0.12.6",
     "@effect/io": "^0.26.0",
     "@fp-ts/optic": "^0.8.0",
     "date-fns": "^2.30.0",
@@ -19,16 +19,16 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
+    "@babel/cli": "^7.22.5",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.0.2",
-    "@types/node": "~20.2.5",
-    "@types/uuid": "^9.0.1",
+    "@types/node": "~20.3.0",
+    "@types/uuid": "^9.0.2",
     "@types/validator": "^13.7.17",
     "fast-check": "^3.10.0",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.0"
   },
   "typesVersions": {
     "*": {

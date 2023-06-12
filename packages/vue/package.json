@@ -8,10 +8,10 @@
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.12.5",
+    "@effect/data": "^0.12.6",
     "@effect/io": "^0.26.0",
     "@fp-ts/optic": "^0.8.0",
-    "@formatjs/intl": "^2.7.2",
+    "@formatjs/intl": "^2.9.0",
     "query-string": "^8.1.0",
     "swrv": "^1.0.3",
     "vue": "^3.3.4"
@@ -19,13 +19,13 @@
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.0.2",
-    "@babel/cli": "^7.21.5",
-    "@types/node": "~20.2.5",
+    "@babel/cli": "^7.22.5",
+    "@types/node": "~20.3.0",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
     "vite": "^4.3.9",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.0"
   },
   "typesVersions": {
     "*": {
