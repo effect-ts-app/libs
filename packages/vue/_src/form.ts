@@ -131,8 +131,8 @@ function buildFieldInfo(
     (v: number | null) =>
       v === null
       || metadata.maximum === undefined
-      || metadata.maximumExclusive && v > metadata.maximum
-      || !metadata.maximumExclusive && v >= metadata.maximum
+      || metadata.maximumExclusive && v < metadata.maximum
+      || !metadata.maximumExclusive && v <= metadata.maximum
       || translate.value({
         defaultMessage: "The value should be {isExclusive, select, true {smaller than} other {at most}} {maximum}",
         id: "validation.number.max"
