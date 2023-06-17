@@ -47,15 +47,17 @@ test("log shadowing", async () => {
   const arr: string[] = []
   const paths = ["a/b", "a/:p"].map((path) => ({ path, method: "get" }))
 
+  const CustomLogger = Logger.make((_, __, message) => {
+    arr.push(message + "")
+  })
+
   const eff = pipe(
     Effect.unit,
     Effect.flatMap(() => checkPaths(paths)),
-    Effect.provideSomeLayer(
-      Logger.replace(Logger.defaultLogger, Logger.simple((message) => arr.push(message)))
-    )
+    Effect.provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
   )
 
   await eff.runPromise
 
-  expect(arr).toStrictEqual([])
+  expect(arr).toStrictEqual([`Path /a/:p/ is partially shadowed by /a/b/`])
 })

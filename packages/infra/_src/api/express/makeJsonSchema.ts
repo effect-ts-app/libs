@@ -28,16 +28,19 @@ interface Match {
   value: string
 }
 
-function checkShadowing(pathNavigator: PathsTree, match: Match): Either<InvalidStateError, null> {
+function checkShadowing(
+  pathNavigator: PathsTree,
+  match: Match
+): Either<Effect<never, InvalidStateError, never>, Effect<never, never, void>> {
   switch (match._tag) {
     case "resource": {
       // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
       if (pathNavigator.params[1]) {
-        return Either.left(
+        return Either.left(Effect.fail(
           new InvalidStateError(
             `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
           )
-        )
+        ))
       }
       break
     }
@@ -45,16 +48,18 @@ function checkShadowing(pathNavigator: PathsTree, match: Match): Either<InvalidS
       // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
       const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
       if (subpaths.length > 0) {
-        subpaths.forEach((s) => {
-          Effect.logWarning(
-            `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
-          )
-        })
+        return Either.right(
+          Effect.all(subpaths.map((s) =>
+            Effect.logInfo(
+              `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
+            )
+          )) > Effect.succeed(void 0 as void)
+        )
       }
       break
     }
   }
-  return Either.right(null)
+  return Either.right(Effect.succeed(void 0 as void))
 }
 
 export function checkPaths<T extends { path: string; method: string }>(
@@ -62,6 +67,8 @@ export function checkPaths<T extends { path: string; method: string }>(
 ): Effect<never, InvalidStateError, readonly T[]> {
   const pathMethods: PathsTree = new PathsTree("/")
   const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
+
+  const logs: Effect<never, never, readonly T[]>[] = []
 
   for (const path of paths) {
     const matches = [...path.path.matchAll(regex)]
@@ -77,7 +84,9 @@ export function checkPaths<T extends { path: string; method: string }>(
 
       const shadowing = checkShadowing(pathNavigator, match)
       if (Either.isLeft(shadowing)) {
-        return Effect.fail(shadowing.left)
+        return shadowing.left
+      } else {
+        logs.push(shadowing.right.map((_) => []))
       }
 
       switch (match._tag) {
@@ -118,7 +127,7 @@ export function checkPaths<T extends { path: string; method: string }>(
     pathNavigator.methods.push(path.method)
   }
 
-  return Effect.succeed(paths)
+  return Effect.all(logs) > Effect.succeed(paths)
 }
 
 /**
