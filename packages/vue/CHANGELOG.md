@@ -1,5 +1,68 @@
 # @effect-app/vue
 
+## 0.51.2
+
+### Patch Changes
+
+- Updated dependencies [aa9c3126]
+  - @effect-app/prelude@0.57.0
+  - @effect-app/vue@0.51.2
+
+## 0.51.1
+
+### Patch Changes
+
+- Updated dependencies [e4609777]
+  - @effect-app/prelude@0.56.1
+  - @effect-app/vue@0.51.1
+
+## 0.51.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.55.0
+  - @effect-app/prelude@0.56.0
+  - @effect-app/schema@0.49.0
+  - @effect-app/vue@0.51.0
+
+## 0.50.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.55.2
+  - @effect-app/vue@0.50.2
+
+## 0.50.1
+
+### Patch Changes
+
+- Update packages
+- Updated dependencies
+  - @effect-app/prelude@0.55.1
+  - @effect-app/schema@0.48.1
+  - @effect-app/core@0.54.1
+  - @effect-app/vue@0.50.1
+
+## 0.50.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.54.0
+  - @effect-app/prelude@0.55.0
+  - @effect-app/schema@0.48.0
+  - @effect-app/vue@0.50.0
+
 ## 0.49.0
 
 ### Minor Changes

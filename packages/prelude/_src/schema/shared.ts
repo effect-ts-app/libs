@@ -335,7 +335,7 @@ export const PhoneNumber = PhoneNumber_
   ["|>"](
     arbitrary((FC) =>
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      fakerArb((faker) => faker.phone.phoneNumber)(FC).map((x) => x as StringId)
+      fakerArb((faker) => faker.phone.number)(FC).map((x) => x as StringId)
     )
   )
   ["|>"](brand<PhoneNumber>())

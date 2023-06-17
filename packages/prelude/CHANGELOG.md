@@ -1,5 +1,56 @@
 # @effect-app/prelude
 
+## 0.57.0
+
+### Minor Changes
+
+- aa9c3126: using the new faker-js package instead of the old cursed one
+
+## 0.56.1
+
+### Patch Changes
+
+- e4609777: Use distributive omit
+
+## 0.56.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.55.0
+  - @effect-app/schema@0.49.0
+
+## 0.55.2
+
+### Patch Changes
+
+- add pick and omit object extensions
+
+## 0.55.1
+
+### Patch Changes
+
+- Update packages
+- Updated dependencies
+  - @effect-app/schema@0.48.1
+  - @effect-app/core@0.54.1
+
+## 0.55.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.54.0
+  - @effect-app/schema@0.48.0
+
 ## 0.54.0
 
 ### Minor Changes

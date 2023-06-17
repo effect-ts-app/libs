@@ -1,5 +1,62 @@
 # @effect-app/infra-adapters
 
+## 0.48.2
+
+### Patch Changes
+
+- Updated dependencies [aa9c3126]
+  - @effect-app/prelude@0.57.0
+
+## 0.48.1
+
+### Patch Changes
+
+- Updated dependencies [e4609777]
+  - @effect-app/prelude@0.56.1
+
+## 0.48.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.55.0
+  - @effect-app/prelude@0.56.0
+  - @effect-app/schema@0.49.0
+
+## 0.47.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.55.2
+
+## 0.47.1
+
+### Patch Changes
+
+- Update packages
+- Updated dependencies
+  - @effect-app/prelude@0.55.1
+  - @effect-app/schema@0.48.1
+  - @effect-app/core@0.54.1
+
+## 0.47.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.54.0
+  - @effect-app/prelude@0.55.0
+  - @effect-app/schema@0.48.0
+
 ## 0.46.3
 
 ### Patch Changes

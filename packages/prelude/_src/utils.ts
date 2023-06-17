@@ -1,8 +1,19 @@
 import { pretty, typedKeysOf } from "@effect-app/core/utils"
+import get from "lodash/get.js"
+import omit_ from "lodash/omit.js"
+import pick from "lodash/pick.js"
 
 export function assertUnreachable(x: never): never {
   throw new Error("Unknown case " + x)
 }
+
+export const omit: {
+  <T extends object, K extends PropertyKey[]>(
+    object: T | null | undefined,
+    ...paths: K
+  ): DistributiveOmit<T, K[number]>
+  <T extends object, K extends keyof T>(object: T | null | undefined, ...paths: Array<Many<K>>): DistributiveOmit<T, K>
+} = omit_
 
 export type OptPromise<T extends () => any> = (
   ...args: Parameters<T>
@@ -157,6 +168,31 @@ export function RecordEntries<TT extends object>(o: ObjectOps<TT>) {
   return entries(o.subject)
 }
 
+type Many<T> = T | ReadonlyArray<T>
+
+/**
+ * @tsplus fluent Object.Ops omit
+ */
+export function RecordOmitold<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
+  return omit(o.subject, ...paths)
+}
+export const RecordOmit: {
+  <TT extends object, K extends PropertyKey[]>(
+    object: TT,
+    ...paths: K
+  ): DistributiveOmit<TT, K[number]>
+  <TT extends object, K extends keyof TT>(object: TT, ...paths: Array<Many<K>>): DistributiveOmit<TT, K>
+} = (o: ObjectOps<any>, ...paths: Many<any>[]) => omit(o.subject, ...paths)
+
+/**
+ * @tsplus fluent Object.Ops pick
+ */
+export function RecordPick<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
+  return pick(o.subject, ...paths)
+}
+
+// TODO: "get" extension
+
 /**
  * @tsplus getter Object.Ops keys
  */
@@ -239,9 +275,8 @@ export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
     [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map((ar) => new Set(ar))
 }
 export * from "@effect-app/core/utils"
-export { default as get } from "lodash/get.js"
-export { default as omit } from "lodash/omit.js"
-export { default as pick } from "lodash/pick.js"
+
+export { get, pick }
 
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K>
   : never

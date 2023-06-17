@@ -13,7 +13,7 @@ import {
   ReasonableString
 } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
-import type * as faker from "faker"
+import type { Faker } from "@faker-js/faker"
 import { fakerToArb, getFaker } from "../faker.js"
 
 export { matchTag } from "@effect-app/core/utils"
@@ -41,7 +41,7 @@ export function fitIntoLongString(str: string) {
 }
 
 export const fakerArb = (
-  gen: (fake: typeof faker) => () => ReturnType<typeof faker.fake>
+  gen: (fake: Faker) => () => string
 ): (a: any) => S.Arbitrary.Arbitrary<string> => fakerToArb(gen(getFaker()))
 
 export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {

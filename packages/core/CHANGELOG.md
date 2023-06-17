@@ -1,5 +1,23 @@
 # @effect-app/core
 
+## 0.55.0
+
+### Minor Changes
+
+- update packages
+
+## 0.54.1
+
+### Patch Changes
+
+- Update packages
+
+## 0.54.0
+
+### Minor Changes
+
+- update packages
+
 ## 0.53.1
 
 ### Patch Changes
