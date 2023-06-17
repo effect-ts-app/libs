@@ -1,5 +1,30 @@
 # @effect-app/vue
 
+## 0.53.0
+
+### Minor Changes
+
+- 7f4754d2: fix maximum number rule generation
+
+### Patch Changes
+
+- Updated dependencies [7f4754d2]
+  - @effect-app/vue@0.53.0
+
+## 0.52.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.58.0
+  - @effect-app/schema@0.50.0
+  - @effect-app/core@0.56.0
+  - @effect-app/vue@0.52.0
+
 ## 0.51.2
 
 ### Patch Changes

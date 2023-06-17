@@ -39,6 +39,20 @@ function makeHelpers_<TFieldValues extends FieldValues>() {
     ) {
       return { key: path, value, t: "not-in" as const }
     },
+    includes<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "includes" as const }
+    },
+    notIncludes<TFieldName extends Paths, V extends Value<TFieldName>>(
+      this: void,
+      path: TFieldName,
+      value: V
+    ) {
+      return { key: path, value, t: "not-includes" as const }
+    },
     eq<TFieldName extends Paths, V extends Value<TFieldName>>(
       this: void,
       path: TFieldName,
@@ -102,7 +116,9 @@ export type WhereValue<
     | "ends-with"
     | "contains"
     | "in"
-    | "not-in",
+    | "not-in"
+    | "includes"
+    | "not-includes",
   A, // extends SupportedValues,
   V extends A = A
 > = { t: T; v: V }
@@ -145,6 +161,23 @@ export function $notIn<A extends SupportedValues, Values extends readonly A[]>(
  */
 export function $is<A, V extends A>(_: A, v: V): WhereValue<"eq", A, V> {
   return $$is(v)
+}
+
+/**
+ * @tsplus fluent ReadonlyArray $includes
+ */
+export function $includes<A extends readonly any[], V extends A[number]>(_: A, v: V): WhereValue<"includes", A, V> {
+  return $$includes(v)
+}
+
+/**
+ * @tsplus fluent ReadonlyArray $notIncludes
+ */
+export function $notIncludes<A extends readonly any[], V extends A[number]>(
+  _: A,
+  v: V
+): WhereValue<"not-includes", A, V> {
+  return $$notIncludes(v)
 }
 /**
  * @tsplus fluent string $isnt
@@ -209,6 +242,14 @@ function $isnt__<V extends A, A>(v: V) {
   return (_: A) => $isnt(_, v)
 }
 
+function $includes__<V extends A[number], A extends readonly any[]>(v: V) {
+  return (_: A) => $includes(_, v)
+}
+
+function $notIncludes__<V extends A[number], A extends readonly any[]>(v: V) {
+  return (_: A) => $notIncludes(_, v)
+}
+
 function $lt__<V extends A, A>(v: V) {
   return (_: A) => $lt(_, v)
 }
@@ -260,7 +301,9 @@ export const Filters = {
   $lte: $lte__,
   $contains: $contains__,
   $endsWith: $endsWith__,
-  $startsWith: $startsWith__
+  $startsWith: $startsWith__,
+  $includes: $includes__,
+  $notIncludes: $notIncludes__
 }
 
 /**
@@ -296,6 +339,12 @@ function $$is<A>(v: A) {
 }
 function $$isnt<A>(v: A) {
   return { t: "not-eq" as const, v }
+}
+function $$includes<A>(v: A) {
+  return { t: "includes" as const, v }
+}
+function $$notIncludes<A>(v: A) {
+  return { t: "not-includes" as const, v }
 }
 
 function $$lt<A>(v: A) {

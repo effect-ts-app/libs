@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/pnpm-singleton",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -28,10 +28,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~20.2.5",
+    "@types/node": "~20.3.0",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.0"
   },
   "typesVersions": {
     "*": {

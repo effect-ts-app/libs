@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.56.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
 ## 0.55.0
 
 ### Minor Changes

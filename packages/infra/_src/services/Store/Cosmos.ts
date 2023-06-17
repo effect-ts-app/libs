@@ -524,6 +524,10 @@ export function buildWhereCosmosQuery(
                 return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
               case "ends-with":
                 return `ENDSWITH(${k}, ${v}, true)`
+              case "includes":
+                return `ARRAY_CONTAINS(${k}, ${v})`
+              case "not-includes":
+                return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
               case "contains":
                 return `CONTAINS(${k}, ${v}, true)`
               case "starts-with":

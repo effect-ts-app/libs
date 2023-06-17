@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.71.0
+
+### Minor Changes
+
+- housekeeping: update packages
+- 109595b4: add includes and notIncludes filters.
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/infra-adapters@0.49.0
+  - @effect-app/prelude@0.58.0
+  - @effect-app/schema@0.50.0
+  - @effect-app/core@0.56.0
+
 ## 0.70.0
 
 ### Minor Changes

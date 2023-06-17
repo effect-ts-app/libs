@@ -118,6 +118,15 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
+        somethingsWhere((_) => _("c", (_) => _.$includes("c")))
+      ))
+      .toArray
+  )
+    .toEqual([somethings[0]])
+
+  expect(
+    somethings
+      .filterMap(codeFilter(
         somethingsWhere((_) => _("d.-1.a", (_) => "a5"))
       ))
       .toArray
