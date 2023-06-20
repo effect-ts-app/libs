@@ -31,103 +31,96 @@ interface Match {
 function checkShadowing(
   pathNavigator: PathsTree,
   match: Match
-): Either<Effect<never, InvalidStateError, never>, Effect<never, never, void>> {
-  switch (match._tag) {
-    case "resource": {
-      // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
-      if (pathNavigator.params[1]) {
-        return Either.left(Effect.fail(
-          new InvalidStateError(
-            `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
-          )
-        ))
+) {
+  return Effect.gen(function*($) {
+    switch (match._tag) {
+      case "resource": {
+        // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
+        if (pathNavigator.params[1]) {
+          return yield* $(Effect.fail(
+            new InvalidStateError(
+              `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
+            )
+          ))
+        }
+        break
       }
-      break
-    }
-    case "param": {
-      // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-      const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
-      if (subpaths.length > 0) {
-        return Either.right(
-          Effect.all(subpaths.map((s) =>
+      case "param": {
+        // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+        const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+        if (subpaths.length > 0) {
+          yield* $(subpaths.forEachEffect((s) =>
             Effect.logInfo(
               `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
             )
-          )) > Effect.succeed(void 0 as void)
-        )
+          ))
+        }
+        break
       }
-      break
     }
-  }
-  return Either.right(Effect.succeed(void 0 as void))
+  })
 }
 
 export function checkPaths<T extends { path: string; method: string }>(
   paths: readonly T[]
-): Effect<never, InvalidStateError, readonly T[]> {
-  const pathMethods: PathsTree = new PathsTree("/")
-  const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
+) {
+  return Effect.gen(function*($) {
+    const pathMethods: PathsTree = new PathsTree("/")
+    const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
+    for (const path of paths) {
+      const matches = [...path.path.matchAll(regex)]
+        .map((match) =>
+          match[1]
+            ? { _tag: "resource", value: match[1] } as const
+            : { _tag: "param", value: match[2]! } as const
+        )
 
-  const logs: Effect<never, never, readonly T[]>[] = []
+      let pathNavigator = pathMethods
+      for (let i = 0; i < matches.length;) {
+        const match = matches[i]!
 
-  for (const path of paths) {
-    const matches = [...path.path.matchAll(regex)]
-      .map((match) =>
-        match[1]
-          ? { _tag: "resource", value: match[1] } as const
-          : { _tag: "param", value: match[2]! } as const
-      )
+        yield* $(checkShadowing(pathNavigator, match))
 
-    let pathNavigator = pathMethods
-    for (let i = 0; i < matches.length;) {
-      const match = matches[i]!
+        switch (match._tag) {
+          case "resource": {
+            if (!(match.value in pathNavigator.subpaths)) {
+              pathNavigator.subpaths[match.value] = new PathsTree(`${pathNavigator.path}${match.value}/`)
+            }
 
-      const shadowing = checkShadowing(pathNavigator, match)
-      if (Either.isLeft(shadowing)) {
-        return shadowing.left
-      } else {
-        logs.push(shadowing.right.map((_) => []))
-      }
-
-      switch (match._tag) {
-        case "resource": {
-          if (!(match.value in pathNavigator.subpaths)) {
-            pathNavigator.subpaths[match.value] = new PathsTree(`${pathNavigator.path}${match.value}/`)
-          }
-
-          pathNavigator = pathNavigator.subpaths[match.value]!
-          i++
-          break
-        }
-        case "param": {
-          const paramsNames = [match.value]
-          let numberOfParams = 1
-          while (i < matches.length && matches[i + 1]?._tag === "param") {
-            numberOfParams++
+            pathNavigator = pathNavigator.subpaths[match.value]!
             i++
-            paramsNames.push(matches[i]!.value)
+            break
           }
+          case "param": {
+            const paramsNames = [match.value]
+            let numberOfParams = 1
+            while (i < matches.length && matches[i + 1]?._tag === "param") {
+              numberOfParams++
+              i++
+              paramsNames.push(match.value)
+            }
 
-          if (!(numberOfParams in pathNavigator.params)) {
-            pathNavigator.params[numberOfParams] = new PathsTree(
-              `${pathNavigator.path}:${paramsNames.join("/:")}/`
-            )
+            if (!(numberOfParams in pathNavigator.params)) {
+              pathNavigator.params[numberOfParams] = new PathsTree(
+                `${pathNavigator.path}:${paramsNames.join("/:")}/`
+              )
+            }
+            pathNavigator = pathNavigator.params[numberOfParams]!
+            i++
+            break
           }
-          pathNavigator = pathNavigator.params[numberOfParams]!
-          i++
-          break
         }
       }
+
+      if (pathNavigator.methods.includes(path.method)) {
+        // throw duplicate path-method error
+        return yield* $(Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`)))
+      }
+      pathNavigator.methods.push(path.method)
     }
 
-    if (pathNavigator.methods.includes(path.method)) {
-      // throw duplicate path-method error
-      return Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
-    }
-    pathNavigator.methods.push(path.method)
-  }
-
-  return Effect.all(logs) > Effect.succeed(paths)
+    return paths
+  })
 }
 
 /**
