@@ -97,7 +97,7 @@ export function checkPaths<T extends { path: string; method: string }>(
             while (i < matches.length && matches[i + 1]?._tag === "param") {
               numberOfParams++
               i++
-              paramsNames.push(match.value)
+              paramsNames.push(matches[i]!.value)
             }
 
             if (!(numberOfParams in pathNavigator.params)) {
