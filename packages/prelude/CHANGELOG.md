@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.58.2
+
+### Patch Changes
+
+- fix type of E variants of clientFor
+
 ## 0.58.1
 
 ### Patch Changes
