@@ -1,20 +1,20 @@
 {
   "name": "@effect-app/prelude",
-  "version": "0.58.0",
+  "version": "0.58.2",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.12.6",
-    "@effect/io": "^0.26.0",
+    "@effect/data": "^0.12.8",
+    "@effect/io": "^0.26.1",
     "@fp-ts/optic": "^0.8.0",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.2",
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
-    "ts-pattern": "^4.3.0",
+    "ts-pattern": "^5.0.1",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   },
@@ -22,13 +22,13 @@
     "@babel/cli": "^7.22.5",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.0.2",
-    "@types/node": "~20.3.0",
+    "@types/node": "~20.3.1",
     "@types/uuid": "^9.0.2",
     "@types/validator": "^13.7.17",
     "fast-check": "^3.10.0",
     "ts-node": "^10.9.1",
     "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
-    "vitest": "^0.32.0"
+    "vitest": "^0.32.2"
   },
   "typesVersions": {
     "*": {
