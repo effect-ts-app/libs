@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.72.0
+
+### Minor Changes
+
+- b6af4d2f: enhance shadowing paths check
+
 ## 0.71.2
 
 ### Patch Changes
