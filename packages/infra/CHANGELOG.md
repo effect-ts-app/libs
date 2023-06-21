@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.72.1
+
+### Patch Changes
+
+- 13942e1b: disable shadowing bekause it is broken as \*\*\*\*
+
 ## 0.72.0
 
 ### Minor Changes
