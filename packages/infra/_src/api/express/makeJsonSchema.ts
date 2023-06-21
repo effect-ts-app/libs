@@ -23,43 +23,43 @@ class PathsTree {
   }
 }
 
-interface Match {
-  _tag: "resource" | "param"
-  value: string
-}
+// interface Match {
+//   _tag: "resource" | "param"
+//   value: string
+// }
 
-function checkShadowing(
-  pathNavigator: PathsTree,
-  match: Match
-) {
-  return Effect.gen(function*($) {
-    switch (match._tag) {
-      case "resource": {
-        // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
-        if (pathNavigator.params[1]) {
-          return yield* $(Effect.fail(
-            new InvalidStateError(
-              `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
-            )
-          ))
-        }
-        break
-      }
-      case "param": {
-        // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-        const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
-        if (subpaths.length > 0) {
-          yield* $(subpaths.forEachEffect((s) =>
-            Effect.logInfo(
-              `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
-            )
-          ))
-        }
-        break
-      }
-    }
-  })
-}
+// function checkShadowing(
+//   pathNavigator: PathsTree,
+//   match: Match
+// ) {
+//   return Effect.gen(function*($) {
+//     switch (match._tag) {
+//       case "resource": {
+//         // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
+//         if (pathNavigator.params[1]) {
+//           return yield* $(Effect.fail(
+//             new InvalidStateError(
+//               `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
+//             )
+//           ))
+//         }
+//         break
+//       }
+//       case "param": {
+//         // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+//         const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+//         if (subpaths.length > 0) {
+//           yield* $(subpaths.forEachEffect((s) =>
+//             Effect.logInfo(
+//               `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
+//             )
+//           ))
+//         }
+//         break
+//       }
+//     }
+//   })
+// }
 
 export function checkPaths<T extends { path: string; method: string }>(
   paths: readonly T[]
@@ -79,7 +79,7 @@ export function checkPaths<T extends { path: string; method: string }>(
       for (let i = 0; i < matches.length;) {
         const match = matches[i]!
 
-        yield* $(checkShadowing(pathNavigator, match))
+        // yield* $(checkShadowing(pathNavigator, match))
 
         switch (match._tag) {
           case "resource": {
