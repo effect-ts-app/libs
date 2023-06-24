@@ -28,19 +28,71 @@ interface Match {
   value: string
 }
 
+export function arePathsEqual(path1: string, path2: string): boolean {
+  const normalizedPath1 = normalizePath(path1)
+  const normalizedPath2 = normalizePath(path2)
+
+  if (normalizedPath1 === normalizedPath2) {
+    return true
+  } else {
+    // parameters' name does not matter
+
+    const renameParam = (m: Match) => m._tag === "param" ? { ...m, value: ":parameter" } : m
+    const toValue = (m: Match) => m.value
+
+    const renamedParams1 = normalizePath(
+      splitPath(normalizedPath1)
+        .map(flow(renameParam, toValue))
+        .join("/")
+    )
+
+    const renamedParams2 = normalizePath(
+      splitPath(normalizedPath2)
+        .map(flow(renameParam, toValue))
+        .join("/")
+    )
+
+    return renamedParams1 === renamedParams2
+  }
+}
+
+export function normalizePath(path: string): string {
+  return `${path.startsWith("/") ? "" : "/"}${path}${path.endsWith("/") ? "" : "/"}`
+}
+
+export function splitPath(path: string): Match[] {
+  return [...path.matchAll(/(?:^|\/)([^/:\n]+)|:(\w+)/g)]
+    .map((match) =>
+      match[1]
+        ? { _tag: "resource", value: match[1] } as const
+        : { _tag: "param", value: match[2]! } as const
+    )
+}
+
 function checkShadowing<T extends { path: string; method: string }>(
   pathNavigator: PathsTree,
   matches: Match[],
   path: T
-) {
+): Effect<never, InvalidStateError, void> {
   return Effect.gen(function*($) {
-    const errorOut = (path: T, shadowedBy: string) => (Effect.fail(
-      new InvalidStateError(
-        `Method: ${path.method.toUpperCase()} - Path ${path.path.startsWith("/") ? "" : "/"}${path.path}${
-          path.path.endsWith("/") ? "" : "/"
-        } is shadowed by ${shadowedBy}`
+    const errorOut = (path: T, shadowedBy: string) => {
+      const shadowedPathNormalized = normalizePath(shadowedBy)
+      const pathNormalized = normalizePath(path.path)
+      const method = path.method.toUpperCase()
+
+      const message = arePathsEqual(
+          shadowedPathNormalized,
+          pathNormalized
+        )
+        ? `Method: ${method} - Path ${pathNormalized} is a duplicate of ${shadowedPathNormalized}`
+        : `Method: ${method} - Path ${pathNormalized} is shadowed by ${shadowedPathNormalized}`
+
+      return Effect.fail(
+        new InvalidStateError(
+          message
+        )
       )
-    ))
+    }
 
     for (let i = 0; i < matches.length;) {
       const match = matches[i]!
@@ -53,11 +105,12 @@ function checkShadowing<T extends { path: string; method: string }>(
               return yield* $(errorOut(path, pathNavigator.subpaths[match.value]!.path))
             }
 
-            i++
-            pathNavigator = pathNavigator.subpaths[match.value]!
+            yield* $(checkShadowing(pathNavigator.subpaths[match.value]!, matches.slice(i + 1), path))
 
-            // but if there isn't I should retry looking at params
-          } else if (pathNavigator.param) {
+            // but if there isn't a shadow with a subpath, I should retry looking at params anyway
+          }
+
+          if (pathNavigator.param) {
             if (i === matches.length - 1 && pathNavigator.param.methods.includes(path.method)) {
               // at the end of matches there is a correspondence with a param
               return yield* $(errorOut(path, pathNavigator.param.path))
@@ -73,7 +126,19 @@ function checkShadowing<T extends { path: string; method: string }>(
           break
         }
         case "param": {
-          i++
+          if (pathNavigator.param) {
+            if (i === matches.length - 1 && pathNavigator.param.methods.includes(path.method)) {
+              // at the end of matches there is a correspondence with a param
+              return yield* $(errorOut(path, pathNavigator.param.path))
+            }
+
+            // try, there could be shadowing but with a parameter at this level
+            i++
+            pathNavigator = pathNavigator.param
+          } else {
+            return yield* $(Effect.unit)
+          }
+
           // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
           // const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
           // if (subpaths.length > 0) {
@@ -97,19 +162,15 @@ export function checkPaths<T extends { path: string; method: string }>(
 ) {
   return Effect.gen(function*($) {
     const pathsTree = new PathsTree("/")
-    const regex = /(?:^|\/)([^/:\n]+)|:(\w+)/g
+
     for (const path of paths) {
-      const matches = [...path.path.matchAll(regex)]
-        .map((match) =>
-          match[1]
-            ? { _tag: "resource", value: match[1] } as const
-            : { _tag: "param", value: match[2]! } as const
-        )
+      const matches = splitPath(path.path)
 
       let pathNavigator = pathsTree
 
       yield* $(checkShadowing(pathNavigator, matches, path))
 
+      // add path to the tree
       for (let i = 0; i < matches.length;) {
         const match = matches[i]!
 
@@ -138,10 +199,6 @@ export function checkPaths<T extends { path: string; method: string }>(
         }
       }
 
-      if (pathNavigator.methods.includes(path.method)) {
-        // throw duplicate path-method error
-        return yield* $(Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`)))
-      }
       pathNavigator.methods.push(path.method)
     }
 
