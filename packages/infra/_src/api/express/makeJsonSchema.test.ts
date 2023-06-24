@@ -1,3 +1,4 @@
+import { expect } from "vitest"
 import { InvalidStateError } from "../../errors.js"
 import { checkPaths } from "./makeJsonSchema.js"
 
@@ -34,29 +35,91 @@ test("works", async () => {
     )
   }
 
-  // should it error out? I think not
-  // expect(await checkPaths(["a/:p1/c/:p2", "a/b"].map((path) => ({ path, method: "get" }))).runPromiseEither)
-  //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Path /a/b/ is shadowed by /a/:p1/`))
-  //   )
+  // it should error out
+  expect(await checkPaths(["a/:p1/c/d", "a/:p111/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.left(new InvalidStateError(`Duplicate method get for path a/:p111/c/d`))
+    )
 
-  // should not error out
-  // expect(await checkPaths([{ path: "a/:p1/c/:p2", method: "post" }, { path: "a/b", method: "get" }]).runPromiseEither)
-  //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Path /a/b/ is shadowed by /a/:p1/`))
-  //   )
+  // shadowing
 
-  // should not error out
-  // expect(await checkPaths([{ path: "a/:param/c/d", method: "get" }, { path: "a/b/c/e", method: "get" }]).runPromiseEither)
+  expect(await checkPaths(["a/:p1/c/:p2", "a/b"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.right(["a/:p1/c/:p2", "a/b"].map((path) => ({ path, method: "get" })))
+    )
+
+  expect(await checkPaths([{ path: "a/:p1/c/:p2", method: "post" }, { path: "a/b", method: "get" }]).runPromiseEither)
+    .toStrictEqual(
+      Either.right([{ path: "a/:p1/c/:p2", method: "post" }, { path: "a/b", method: "get" }])
+    )
+
+  expect(
+    await checkPaths([{ path: "a/:param/c/d", method: "get" }, { path: "a/b/c/e", method: "get" }]).runPromiseEither
+  )
+    .toStrictEqual(
+      Either.right([{ path: "a/:param/c/d", method: "get" }, { path: "a/b/c/e", method: "get" }])
+    )
+
+  expect(await checkPaths(["a/:p", "a/b/c"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.right(["a/:p", "a/b/c"].map((path) => ({ path, method: "get" })))
+    )
+
+  // it should error out
+  // expect(await checkPaths(["a/:p", "a/b"].map((path) => ({ path, method: "get" }))).runPromiseEither)
   //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Path /a/b/ is shadowed by /a/:p1/`))
+  //     Either.left(new InvalidStateError(`Method: GET - Path /a/b/ is shadowed by /a/:p/`))
   //   )
 
   // it should error out
   // expect(await checkPaths(["a/:p1/c/:p2", "a/:p111/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
   //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Path /a/:p1/c/d/ is shadowed by /a/:p1/c/:p2/`))
+  //     Either.left(new InvalidStateError(`Path /a/:p111/c/d/ is shadowed by /a/:p1/c/:p2/`))
   //   )
+
+  // it should error out
+  // expect(await checkPaths(["a/:p1/c/d", "a/b/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+  //   .toStrictEqual(
+  //     Either.left(new InvalidStateError(`Path /a/b/c/d/ is shadowed by /a/:p1/c/d/`))
+  //   )
+
+  // it should error out
+  // expect(await checkPaths(["a/:p1/c/e", "a/b/:p2/d", "a/b/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+  //   .toStrictEqual(
+  //     Either.left(new InvalidStateError(`Path /a/b/c/d/ is shadowed by /a/b/:p2/d/`))
+  //   )
+
+  // it should error out
+  // expect(await checkPaths(["a/b/c", "a/:p1/e", "a/b/e"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+  //   .toStrictEqual(
+  //     Either.left(new InvalidStateError(`Path /a/b/e/ is shadowed by /a/:p1/e/`))
+  //   )
+
+  // it should error out
+  // expect(await checkPaths(["a/:p1/:p2/d", "a/b/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+  //   .toStrictEqual(
+  //     Either.left(new InvalidStateError(`Path /a/b/c/d/ is shadowed by /a/:p1/:p2/d/`))
+  //   )
+
+  expect(
+    await checkPaths([{ path: "a/:p1/c/:p2", method: "get" }, { path: "a/:p111/c/d", method: "post" }])
+      .runPromiseEither
+  )
+    .toStrictEqual(
+      Either.right([{ path: "a/:p1/c/:p2", method: "get" }, { path: "a/:p111/c/d", method: "post" }])
+    )
+
+  expect(
+    await checkPaths([{ path: "a/:p1/c/d", method: "get" }, { path: "a/:p111/c/d", method: "post" }]).runPromiseEither
+  )
+    .toStrictEqual(
+      Either.right([{ path: "a/:p1/c/d", method: "get" }, { path: "a/:p111/c/d", method: "post" }])
+    )
+
+  expect(await checkPaths(["a/:p1/c/d", "a/:p111/c/e"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.right(["a/:p1/c/d", "a/:p111/c/e"].map((path) => ({ path, method: "get" })))
+    )
 })
 
 // it should log
