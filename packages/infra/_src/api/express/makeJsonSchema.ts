@@ -23,73 +23,74 @@ class PathsTree {
   }
 }
 
-// interface Match {
-//   _tag: "resource" | "param"
-//   value: string
-// }
+interface Match {
+  _tag: "resource" | "param"
+  value: string
+}
 
-// function checkShadowing(
-//   pathNavigator: PathsTree,
-//   matches: Match[],
-//   method: string
-// ) {
-//   console.log("---------------------------------------")
-//   return Effect.gen(function*($) {
-//     const errorOut = (pathNavigator: PathsTree, match: Match, method: string) => (Effect.fail(
-//       new InvalidStateError(
-//         `Method: ${method.toUpperCase()} - Path ${pathNavigator.path}${match.value}/ is shadowed by ${
-//           pathNavigator.params[1]!.path
-//         }`
-//       )
-//     ))
+function checkShadowing<T extends { path: string; method: string }>(
+  pathNavigator: PathsTree,
+  matches: Match[],
+  path: T
+) {
+  return Effect.gen(function*($) {
+    const errorOut = (path: T, shadowedBy: string) => (Effect.fail(
+      new InvalidStateError(
+        `Method: ${path.method.toUpperCase()} - Path ${path.path.startsWith("/") ? "" : "/"}${path.path}${
+          path.path.endsWith("/") ? "" : "/"
+        } is shadowed by ${shadowedBy}`
+      )
+    ))
 
-//     for (let i = 0; i < matches.length;) {
-//       const match = matches[i]!
-//       console.log({ match })
-//       switch (match._tag) {
-//         case "resource": {
-//           console.log({ pathNavigator })
-//           if (pathNavigator.subpaths[match.value]) {
-//             i++
-//             pathNavigator = pathNavigator.subpaths[match.value]!
+    for (let i = 0; i < matches.length;) {
+      const match = matches[i]!
 
-//             // but if there isn't I should retry looking at params
-//           } else if (pathNavigator.params[1]) {
-//             if (i === matches.length - 1 && pathNavigator.params[1].methods.includes(method)) {
-//               // at the end of matches there is a correspondence with a param
-//               return yield* $(errorOut(pathNavigator, match, method))
-//             }
+      switch (match._tag) {
+        case "resource": {
+          if (pathNavigator.subpaths[match.value]) {
+            if (i === matches.length - 1 && pathNavigator.subpaths[match.value]!.methods.includes(path.method)) {
+              // at the end of matches there is a correspondence with a param
+              return yield* $(errorOut(path, pathNavigator.subpaths[match.value]!.path))
+            }
 
-//             // try, there could be shadowing but with a parameter at this level
-//             i++
-//             pathNavigator = pathNavigator.params[1]
+            i++
+            pathNavigator = pathNavigator.subpaths[match.value]!
 
-//             // if not I should check with more params, but how many??? FUUUUUUUUCK
-//           } else {
-//             return yield* $(Effect.unit)
-//           }
+            // but if there isn't I should retry looking at params
+          } else if (pathNavigator.param) {
+            if (i === matches.length - 1 && pathNavigator.param.methods.includes(path.method)) {
+              // at the end of matches there is a correspondence with a param
+              return yield* $(errorOut(path, pathNavigator.param.path))
+            }
 
-//           break
-//         }
-//         case "param": {
-//           i++
-//           // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-//           // const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
-//           // if (subpaths.length > 0) {
-//           //   yield* $(subpaths.forEachEffect((s) =>
-//           //     Effect.logInfo(
-//           //       `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
-//           //     )
-//           //   ))
-//           // }
-//           // break
-//         }
-//       }
-//     }
+            // try, there could be shadowing but with a parameter at this level
+            i++
+            pathNavigator = pathNavigator.param
+          } else {
+            return yield* $(Effect.unit)
+          }
 
-//     return yield* $(Effect.unit)
-//   })
-// }
+          break
+        }
+        case "param": {
+          i++
+          // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+          // const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+          // if (subpaths.length > 0) {
+          //   yield* $(subpaths.forEachEffect((s) =>
+          //     Effect.logInfo(
+          //       `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
+          //     )
+          //   ))
+          // }
+          // break
+        }
+      }
+    }
+
+    return yield* $(Effect.unit)
+  })
+}
 
 export function checkPaths<T extends { path: string; method: string }>(
   paths: readonly T[]
@@ -107,7 +108,7 @@ export function checkPaths<T extends { path: string; method: string }>(
 
       let pathNavigator = pathsTree
 
-      // yield* $(checkShadowing(pathNavigator, matches, path.method))
+      yield* $(checkShadowing(pathNavigator, matches, path))
 
       for (let i = 0; i < matches.length;) {
         const match = matches[i]!

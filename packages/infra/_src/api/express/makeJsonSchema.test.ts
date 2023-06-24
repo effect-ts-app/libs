@@ -66,10 +66,10 @@ test("works", async () => {
     )
 
   // it should error out
-  // expect(await checkPaths(["a/:p", "a/b"].map((path) => ({ path, method: "get" }))).runPromiseEither)
-  //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Method: GET - Path /a/b/ is shadowed by /a/:p/`))
-  //   )
+  expect(await checkPaths(["a/:p", "a/b"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.left(new InvalidStateError(`Method: GET - Path /a/b/ is shadowed by /a/:p/`))
+    )
 
   // it should error out
   // expect(await checkPaths(["a/:p1/c/:p2", "a/:p111/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
@@ -96,10 +96,10 @@ test("works", async () => {
   //   )
 
   // it should error out
-  // expect(await checkPaths(["a/:p1/:p2/d", "a/b/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
-  //   .toStrictEqual(
-  //     Either.left(new InvalidStateError(`Path /a/b/c/d/ is shadowed by /a/:p1/:p2/d/`))
-  //   )
+  expect(await checkPaths(["a/:p1/:p2/d", "a/b/c/d"].map((path) => ({ path, method: "get" }))).runPromiseEither)
+    .toStrictEqual(
+      Either.left(new InvalidStateError(`Method: GET - Path /a/b/c/d/ is shadowed by /a/:p1/:p2/d/`))
+    )
 
   expect(
     await checkPaths([{ path: "a/:p1/c/:p2", method: "get" }, { path: "a/:p111/c/d", method: "post" }])
