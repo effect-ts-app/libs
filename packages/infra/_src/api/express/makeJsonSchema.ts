@@ -132,7 +132,8 @@ function checkShadowing<T extends { path: string; method: string }>(
               return yield* $(errorOut(path, pathNavigator.param.path))
             }
 
-            // there could be shadowing but with a parameter, if not there are no other possibilities
+            // there could be shadowing but with a parameter, if not there are no other possibilities of error
+            // but there could be a not so harmful shadowing
             i++
             pathNavigator = pathNavigator.param
           } else {
@@ -140,7 +141,7 @@ function checkShadowing<T extends { path: string; method: string }>(
           }
 
           // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-          // const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+          const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
           // if (subpaths.length > 0) {
           //   yield* $(subpaths.forEachEffect((s) =>
           //     Effect.logInfo(
@@ -149,6 +150,21 @@ function checkShadowing<T extends { path: string; method: string }>(
           //   ))
           // }
           // break
+          // b/:p/c :e/x/c -> b/x/c
+          // b/x/c :e/:p/c -> b/x/c
+          // b/x/c/:d :e/:p/c/z -> b/x/c/z
+          // b/x/c/z :e/:p/c/:d -> b/x/c/z
+          // b/:p/c :e/:q/c -> b/??/c
+          // b/:p/c :e/:q/:e -> b/??/c
+
+          // c'è shallow non harmful se tolto il match corrente ho:
+          // 1) che il path rimanente già presente shallowa il path rimanente di ciò che vorrei aggiungere
+          //    e posso invocare ricorsivamente checkShadowing catchando l'errore (se è errore allora true)
+          //    e disabilitando la ricerca di sub shallow non harmful che in questo caso non mi interessano (check, in
+          //    caso lo scoprirei più tardi? test)
+          // 2) se il pattern rimanente già presente non shallowa il path rimanente di ciò che vorrei aggiungere
+          //    credo basti fare un check sul match corrente e se ho resource !== da resource -> false, resource === resource o resource e param
+          //    chiamata ricorsiva alla check non harmful in teoria sul rimanente del rimanente ambo i lati (test vari)
         }
       }
     }
