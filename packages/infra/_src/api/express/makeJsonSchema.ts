@@ -107,7 +107,7 @@ function checkShadowing<T extends { path: string; method: string }>(
 
             yield* $(checkShadowing(pathNavigator.subpaths[match.value]!, matches.slice(i + 1), path))
 
-            // but if there isn't a shadow with a subpath, I should retry looking at params anyway
+            // but if there isn't a shadow with a subpath, I have to retry looking at the param
           }
 
           if (pathNavigator.param) {
@@ -116,7 +116,7 @@ function checkShadowing<T extends { path: string; method: string }>(
               return yield* $(errorOut(path, pathNavigator.param.path))
             }
 
-            // try, there could be shadowing but with a parameter at this level
+            // there could be shadowing but with a parameter, if not there are no other possibilities
             i++
             pathNavigator = pathNavigator.param
           } else {
@@ -132,7 +132,7 @@ function checkShadowing<T extends { path: string; method: string }>(
               return yield* $(errorOut(path, pathNavigator.param.path))
             }
 
-            // try, there could be shadowing but with a parameter at this level
+            // there could be shadowing but with a parameter, if not there are no other possibilities
             i++
             pathNavigator = pathNavigator.param
           } else {
