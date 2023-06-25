@@ -23,11 +23,6 @@ class PathsTree {
   }
 }
 
-interface Match {
-  _tag: "resource" | "param"
-  value: string
-}
-
 export function arePathsEqual(path1: string, path2: string): boolean {
   const normalizedPath1 = normalizePath(path1)
   const normalizedPath2 = normalizePath(path2)
@@ -60,6 +55,11 @@ export function normalizePath(path: string): string {
   return `${path.startsWith("/") ? "" : "/"}${path}${path.endsWith("/") ? "" : "/"}`
 }
 
+interface Match {
+  _tag: "resource" | "param"
+  value: string
+}
+
 export function splitPath(path: string): Match[] {
   return [...path.matchAll(/(?:^|\/)([^/:\n]+)|:(\w+)/g)]
     .map((match) =>
@@ -69,10 +69,82 @@ export function splitPath(path: string): Match[] {
     )
 }
 
-function checkShadowing<T extends { path: string; method: string }>(
+function checkPartialShadowing<T extends { path: string; method: string }>(
   pathNavigator: PathsTree,
   matches: Match[],
   path: T
+): Effect<never, never, void> {
+  return Effect.gen(function*($) {
+    // base case
+    if (matches.length === 0) {
+      return undefined
+    }
+
+    const method = path.method.toUpperCase()
+
+    // base case
+    if (
+      matches.length === 1
+      && pathNavigator.methods.includes(path.method)
+    ) {
+      // yield error
+
+      return yield* $(Effect.logInfo(
+        `Method: ${method} - Path ${normalizePath(path.path)} is partially shadowed by ${
+          normalizePath(pathNavigator.path)
+        }`
+      ))
+    }
+
+    // recursive case
+    // if there is shadowing with the rest of the matches, there is a partial shadowing one level up
+
+    // poltrone sofà artigiani della qualità
+    const shadowingPath = yield* $(pipe(
+      checkShadowing(pathNavigator, matches.slice(1), path, false),
+      Effect.map(() => ""),
+      Effect.catchTag("InvalidStateError", (e) => {
+        const message = e.message
+        const shadowingPath = message.includes("is a duplicate")
+          ? message.split("is a duplicate of ")[1]
+          : message.split("is shadowed by ")[1]
+
+        return Effect.succeed(shadowingPath)
+      })
+    ))
+
+    if (shadowingPath) {
+      return yield* $(Effect.logInfo(
+        `Method: ${method} - Path ${normalizePath(path.path)} is partially shadowed by ${shadowingPath}`
+      ))
+    } else {
+      // otherwise discard current level and check recursively in subpaths
+
+      // if there is a param it doesn't matter if next match is a resource or a param
+      pathNavigator.param && (yield* $(checkPartialShadowing(pathNavigator.param, matches.slice(1), path)))
+
+      // for subpaths it does matter: if next match is a resource it must be the same,
+      // if it is a param there is no problem, all subpaths can be checked
+      const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths).filter((s) => {
+        const nextMatch = matches[1]
+        return nextMatch?._tag === "resource" && nextMatch.value === s
+          || nextMatch?._tag === "param" // in this case all subpaths must be checked
+          || false // in this case there is no match, so no subpath must be checked
+      })
+      if (subpaths.length > 0) {
+        yield* $(
+          subpaths.forEachEffect((s) => checkPartialShadowing(pathNavigator.subpaths[s]!, matches.slice(1), path))
+        )
+      }
+    }
+  })
+}
+
+function checkShadowing<T extends { path: string; method: string }>(
+  pathNavigator: PathsTree,
+  matches: Match[],
+  path: T,
+  doCheckPartialShadowing = true
 ): Effect<never, InvalidStateError, void> {
   return Effect.gen(function*($) {
     const errorOut = (path: T, shadowedBy: string) => {
@@ -105,7 +177,9 @@ function checkShadowing<T extends { path: string; method: string }>(
               return yield* $(errorOut(path, pathNavigator.subpaths[match.value]!.path))
             }
 
-            yield* $(checkShadowing(pathNavigator.subpaths[match.value]!, matches.slice(i + 1), path))
+            yield* $(
+              checkShadowing(pathNavigator.subpaths[match.value]!, matches.slice(i + 1), path, doCheckPartialShadowing)
+            )
 
             // but if there isn't a shadow with a subpath, I have to retry looking at the param
           }
@@ -133,38 +207,25 @@ function checkShadowing<T extends { path: string; method: string }>(
             }
 
             // there could be shadowing but with a parameter, if not there are no other possibilities of error
-            // but there could be a not so harmful shadowing
+            // but there could still be partial shadowing
             i++
             pathNavigator = pathNavigator.param
           } else {
-            return yield* $(Effect.unit)
+            if (doCheckPartialShadowing) {
+              // if there aren't other more serious type of shadowing
+              // just look for partial shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
+              const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
+              if (subpaths.length > 0) {
+                yield* $(
+                  subpaths.forEachEffect((s) =>
+                    checkPartialShadowing(pathNavigator.subpaths[s]!, matches.slice(i), path)
+                  )
+                )
+              }
+            }
+
+            return undefined
           }
-
-          // check shadowing: if 'a/b' comes before 'a/:param', then 'a/"param' is partially shadowed
-          const subpaths = Object.getOwnPropertyNames(pathNavigator.subpaths)
-          // if (subpaths.length > 0) {
-          //   yield* $(subpaths.forEachEffect((s) =>
-          //     Effect.logInfo(
-          //       `Path ${pathNavigator.path}:${match.value}/ is partially shadowed by ${pathNavigator.subpaths[s]!.path}`
-          //     )
-          //   ))
-          // }
-          // break
-          // b/:p/c :e/x/c -> b/x/c
-          // b/x/c :e/:p/c -> b/x/c
-          // b/x/c/:d :e/:p/c/z -> b/x/c/z
-          // b/x/c/z :e/:p/c/:d -> b/x/c/z
-          // b/:p/c :e/:q/c -> b/??/c
-          // b/:p/c :e/:q/:e -> b/??/c
-
-          // c'è shallow non harmful se tolto il match corrente ho:
-          // 1) che il path rimanente già presente shallowa il path rimanente di ciò che vorrei aggiungere
-          //    e posso invocare ricorsivamente checkShadowing catchando l'errore (se è errore allora true)
-          //    e disabilitando la ricerca di sub shallow non harmful che in questo caso non mi interessano (check, in
-          //    caso lo scoprirei più tardi? test)
-          // 2) se il pattern rimanente già presente non shallowa il path rimanente di ciò che vorrei aggiungere
-          //    credo basti fare un check sul match corrente e se ho resource !== da resource -> false, resource === resource o resource e param
-          //    chiamata ricorsiva alla check non harmful in teoria sul rimanente del rimanente ambo i lati (test vari)
         }
       }
     }
@@ -205,6 +266,8 @@ export function checkPaths<T extends { path: string; method: string }>(
 
             if (!pathNavigator.param) {
               pathNavigator.param = new PathsTree(
+                // TODO: :param instead of the param name? there could be more than one during insertion
+                // but with this I store only the first one
                 `${pathNavigator.path}:${paramName}/`
               )
             }

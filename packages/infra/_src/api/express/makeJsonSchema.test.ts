@@ -157,18 +157,191 @@ test("works", async () => {
     )
 })
 
-// it should log
-// test("log shadowing", async () => {
-//   const arr: string[] = []
-//   const paths = ["a/b", "a/:p"].map((path) => ({ path, method: "get" }))
+test("log shadowing 1", async () => {
+  const arr: string[] = []
+  const paths = ["b", ":p"].map((path) => ({ path, method: "get" }))
 
-//   const CustomLogger = Logger.make<string, void>((_, __, message) => {
-//     arr.push(message)
-//   })
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
 
-//   await checkPaths(paths)
-//     .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
-//     .runPromise
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
 
-//   expect(arr).toStrictEqual([`Path /a/:p/ is partially shadowed by /a/b/`])
-// })
+  expect(arr).toStrictEqual([`Method: GET - Path /:p/ is partially shadowed by /b/`])
+})
+
+test("log shadowing 2", async () => {
+  const arr: string[] = []
+  const paths = ["pa/b", "pa/:p"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /pa/:p/ is partially shadowed by /pa/b/`])
+})
+
+test("log shadowing 3", async () => {
+  const arr: string[] = []
+  const paths = ["/b/:p/c/", "/:e/x/c/"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/x/c/ is partially shadowed by /b/:p/c/`])
+})
+
+test("log shadowing 4", async () => {
+  const arr: string[] = []
+  const paths = ["b/x/c", ":e/:p/c"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:p/c/ is partially shadowed by /b/x/c/`])
+})
+
+test("log shadowing 5", async () => {
+  const arr: string[] = []
+  const paths = ["b/x/c/:d", ":e/:p/c/z"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:p/c/z/ is partially shadowed by /b/x/c/:d/`])
+})
+
+test("log shadowing 6", async () => {
+  const arr: string[] = []
+  const paths = ["b/x/c/z", ":e/:p/c/:d"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:p/c/:d/ is partially shadowed by /b/x/c/z/`])
+})
+
+test("log shadowing 7", async () => {
+  const arr: string[] = []
+  const paths = ["b/:p/c", ":e/:q/c"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:q/c/ is partially shadowed by /b/:p/c/`])
+})
+
+test("log shadowing 8", async () => {
+  const arr: string[] = []
+  const paths = ["b/:p/z/c", ":e/:q/:dd/c"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:q/:dd/c/ is partially shadowed by /b/:p/z/c/`])
+})
+
+test("log shadowing 9", async () => {
+  const arr: string[] = []
+  const paths = ["b/:p/c", ":e/:q/:e"].map((path) => ({ path, method: "get" }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([`Method: GET - Path /:e/:q/:e/ is partially shadowed by /b/:p/c/`])
+})
+
+test("log shadowing 10", async () => {
+  const arr: string[] = []
+  const paths = ["a/b/c", ":p/e/c"].map((path) => ({
+    path,
+    method: "get"
+  }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual([])
+})
+
+test("log shadowing 11", async () => {
+  const arr: string[] = []
+  const paths = ["a/b/c", ":p/:p/c"].map((path) => ({
+    path,
+    method: "get"
+  }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual(["Method: GET - Path /:p/:p/c/ is partially shadowed by /a/b/c/"])
+})
+
+test("log shadowing 12", async () => {
+  const arr: string[] = []
+  const paths = ["a/b/:c", ":p/:p/c"].map((path) => ({
+    path,
+    method: "get"
+  }))
+
+  const CustomLogger = Logger.make<string, void>((_, __, message) => {
+    arr.push(message)
+  })
+
+  await checkPaths(paths)
+    .provideLayer(Logger.replace(Logger.defaultLogger, CustomLogger))
+    .runPromise
+
+  expect(arr).toStrictEqual(["Method: GET - Path /:p/:p/c/ is partially shadowed by /a/b/:c/"])
+})
