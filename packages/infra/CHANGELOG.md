@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.73.0
+
+### Minor Changes
+
+- dec879f7: Replace remove with removeAndPublish
+
 ## 0.72.1
 
 ### Patch Changes
