@@ -9,6 +9,7 @@ import { ContextMap } from "../services/Store.js"
 import type { Filter } from "../services/Store.js"
 import type { RequestContextContainer } from "./RequestContextContainer.js"
 
+export type RequestCTX = ContextMap | RequestContextContainer
 /**
  * @tsplus type Repository
  */
@@ -19,16 +20,16 @@ export interface Repository<
   ItemType extends string
 > {
   itemType: ItemType
-  find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Option<T>>
+  find: (id: T["id"]) => Effect<RequestCTX, never, Option<T>>
   all: Effect<ContextMap, never, T[]>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<ContextMap | RequestContextContainer, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<RequestCTX, InvalidStateError | OptimisticConcurrencyException, void>
   removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<ContextMap | RequestContextContainer, never, void>
+  ) => Effect<RequestCTX, never, void>
   utils: {
     mapReverse: (
       pm: PM,

@@ -1,5 +1,5 @@
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
-import type { Repository } from "./Repository.js"
+import type { Repository, RequestCTX } from "./Repository.js"
 import type { RequestContextContainer } from "./RequestContextContainer.js"
 import { ContextMap, StoreMaker } from "./Store.js"
 import type { Filter, StoreConfig, Where } from "./Store.js"
@@ -94,7 +94,7 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestContextContainer, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
       makeInitial?: Effect<never, never, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -311,7 +311,7 @@ export const RepositoryBaseImpl = <Service>() => {
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
     make(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestContextContainer, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
       makeInitial?: Effect<never, never, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -345,14 +345,14 @@ export const RepositoryDefaultImpl = <Service>() => {
       impl: Repository<T, PM, Evt, ItemType>
     ): Repository<T, PM, Evt, ItemType>
     make(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestContextContainer, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
       makeInitial?: Effect<never, never, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
     ): Effect<StoreMaker, never, Repository<T, PM, Evt, ItemType>>
     toLayer(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestContextContainer, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
       makeInitial?: Effect<never, never, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -366,7 +366,7 @@ export const RepositoryDefaultImpl = <Service>() => {
   } => {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer(
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestContextContainer, never, void>,
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
         makeInitial?: Effect<never, never, readonly T[]>,
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
