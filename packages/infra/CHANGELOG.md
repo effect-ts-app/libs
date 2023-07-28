@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.73.1
+
+### Patch Changes
+
+- 3a8dc970: fix: include contextmap provided in publish
+
 ## 0.73.0
 
 ### Minor Changes
