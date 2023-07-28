@@ -36,7 +36,10 @@ export const RepositoryBase = <Service>() => {
         all: Effect<ContextMap, never, PM[]>
         filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, PM[]>
       }
-      abstract remove: (item: T) => Effect<ContextMap, never, void>
+      abstract removeAndPublish: (
+        items: Iterable<T>,
+        events?: Iterable<Evt>
+      ) => Effect<ContextMap | RequestContextContainer, never, void>
       static where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
         return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
@@ -134,8 +137,9 @@ export function makeRepo<
                 ret.forEach((_) => set(_.id, _._etag))
               })
             )
+        const encode = Encoder.for(schema)
 
-        const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(Encoder.for(schema)))
+        const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) =>
           saveAll(items)
@@ -143,13 +147,20 @@ export function makeRepo<
               // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
               .flatMapOpt(publishEvents)
 
-        const encode = Encoder.for(schema)
-        function remove(item: T) {
-          return Do(($) => {
-            const { get, set } = $(ContextMap)
-            const e = encode(item)
-            $(store.remove(mapToPersistenceModel(e, get)))
-            set(item.id, undefined)
+        function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
+          return Effect.gen(function*($) {
+            const { get, set } = yield* $(ContextMap)
+            const items = a.toChunk.map(encode)
+            // TODO: we should have a batchRemove on store so the adapter can actually batch...
+            for (const e of items) {
+              yield* $(store.remove(mapToPersistenceModel(e, get)))
+              set(e.id, undefined)
+            }
+            yield* $(
+              Effect(events.toNonEmptyArray)
+                // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+                .flatMapOpt(publishEvents)
+            )
           })
         }
 
@@ -169,7 +180,7 @@ export function makeRepo<
           find,
           all,
           saveAndPublish,
-          remove
+          removeAndPublish
         }
         return r
       })
@@ -183,6 +194,7 @@ export function makeRepo<
 }
 
 /**
+ * only use this as a shortcut if you don't have the item already
  * @tsplus fluent Repository removeById
  */
 export function removeById<
@@ -194,7 +206,7 @@ export function removeById<
   self: Repository<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.get(id).flatMap((_) => self.remove(_))
+  return self.get(id).flatMap((_) => self.removeAndPublish([_]))
 }
 
 export function makeWhere<PM extends { id: string; _etag: string | undefined }>() {
