@@ -14,8 +14,8 @@
     "postpublish": "mv -f ./tsconfig.json.bak ./tsconfig.json && rm -f tsplus.config.json"
   },
   "dependencies": {
-    "@babel/generator": "7.22.5",
-    "@babel/parser": "7.22.5",
+    "@babel/generator": "7.22.15",
+    "@babel/parser": "7.22.16",
     "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
     "io-ts": "2.2.20",
@@ -24,14 +24,14 @@
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@babel/types": "7.22.5",
-    "@types/babel__generator": "7.6.4",
-    "@types/babel__traverse": "7.20.1",
+    "@babel/types": "7.22.19",
+    "@types/babel__generator": "7.6.5",
+    "@types/babel__traverse": "7.20.2",
     "@types/glob": "8.1.0",
-    "@types/lodash": "4.14.195",
+    "@types/lodash": "4.14.198",
     "madge": "6.1.0",
     "ts-node": "10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz"
+    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",

@@ -383,6 +383,6 @@ export const RepositoryDefaultImpl = <Service>() => {
         super()
         Object.assign(this, impl)
       }
-    }
+    } as any // TODO: seems to be a compiler bug, it somehow says its missing toLayer and repo...
   }
 }

@@ -7,15 +7,15 @@
     "effect-app-cli": "./bin.js"
   },
   "dependencies": {
-    "node-watch": "^0.7.3"
+    "node-watch": "^0.7.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.5",
-    "@types/node": "~20.3.1",
+    "@babel/cli": "^7.22.15",
+    "@types/node": "~20.6.3",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
-    "vitest": "^0.32.2"
+    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
+    "vitest": "^0.34.4"
   },
   "typesVersions": {
     "*": {

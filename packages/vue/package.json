@@ -11,21 +11,21 @@
     "@effect/data": "^0.12.8",
     "@effect/io": "^0.26.1",
     "@fp-ts/optic": "^0.8.0",
-    "@formatjs/intl": "^2.9.0",
+    "@formatjs/intl": "^2.9.3",
     "query-string": "^8.1.0",
-    "swrv": "^1.0.3",
+    "swrv": "^1.0.4",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
-    "@rollup/pluginutils": "^5.0.2",
-    "@babel/cli": "^7.22.5",
-    "@types/node": "~20.3.1",
+    "@rollup/pluginutils": "^5.0.4",
+    "@babel/cli": "^7.22.15",
+    "@types/node": "~20.6.3",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "https://cdn.jsdelivr.net/npm/@tsplus/installer@0.0.177/compiler/typescript.tgz",
-    "vite": "^4.3.9",
-    "vitest": "^0.32.2"
+    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4"
   },
   "typesVersions": {
     "*": {
