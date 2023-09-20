@@ -6,9 +6,9 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/data": "^0.12.8",
-    "@effect/io": "^0.26.1",
-    "@fp-ts/optic": "^0.8.0",
+    "@effect/data": "^0.18.5",
+    "@effect/io": "^0.40.3",
+    "@fp-ts/optic": "^0.9.0",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.1",
@@ -25,7 +25,7 @@
     "@types/node": "~20.6.3",
     "@types/uuid": "^9.0.4",
     "@types/validator": "^13.11.1",
-    "fast-check": "~3.10.0",
+    "fast-check": "~3.13.0",
     "ts-node": "^10.9.1",
     "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
     "vitest": "^0.34.4"

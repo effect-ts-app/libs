@@ -8,7 +8,7 @@
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
             "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-            "@fp-ts/optic@0.8.0": "patches/@fp-ts__optic@0.8.0.patch"
+            "@fp-ts/optic@0.9.0": "patches/@fp-ts__optic@0.9.0.patch"
         }
     },
     "scripts": {
@@ -62,15 +62,15 @@
         "@changesets/cli": "^2.26.2",
         "@dprint/typescript": "^0.87.1",
         "@effect-app/cli": "^0.16.0",
+        "@effect-app/compiler": "workspace:*",
         "@effect-app/core": "workspace:*",
+        "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/infra": "workspace:*",
         "@effect-app/infra-adapters": "workspace:*",
-        "@effect-app/compiler": "workspace:*",
-        "@effect-app/eslint-codegen-model": "workspace:*",
         "@effect-app/pnpm-singleton": "workspace:*",
         "@effect-app/prelude": "workspace:*",
         "@effect-app/schema": "workspace:*",
-        "@effect/language-service": "^0.0.19",
+        "@effect/language-service": "0.0.19",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^2.0.2",
         "@tsplus/installer": "0.0.179",
