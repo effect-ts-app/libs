@@ -164,17 +164,23 @@ function buildFieldInfo(
   const info = {
     type: metadata.type,
     rules: [
-      (v: string) =>
+      (v: string | string[]) =>
         !metadata.required
-        || v !== ""
+        || typeof v === "string" && v !== ""
+        || Array.isArray(v) && v.length > 0
         || translate.value({ defaultMessage: "The field cannot be empty", id: "validation.empty" }),
-      (v: string) => {
-        const converted = convertOutInt(v, metadata.type)
+      (v: string | string[]) => {
+        const toCheck = Array.isArray(v) ? v : [v]
 
-        for (const r of rules) {
-          const res = r(converted)
-          if (res !== true) {
-            return res
+        for (const s of toCheck) {
+          const converted = convertOutInt(s, metadata.type)
+
+          for (const r of rules) {
+            // I'm returning the first validation error
+            const res = r(converted)
+            if (res !== true) {
+              return res
+            }
           }
         }
 
