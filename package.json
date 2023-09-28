@@ -3,7 +3,7 @@
     "private": true,
     "pnpm": {
         "patchedDependencies": {
-            "@typescript-eslint/scope-manager@6.7.2": "patches/@typescript-eslint__scope-manager@6.7.2.patch",
+            "@typescript-eslint/scope-manager@6.7.3": "patches/@typescript-eslint__scope-manager@6.7.3.patch",
             "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
@@ -55,12 +55,12 @@
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
-        "@babel/cli": "^7.22.15",
-        "@babel/core": "^7.22.20",
+        "@babel/cli": "^7.23.0",
+        "@babel/core": "^7.23.0",
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-        "@babel/plugin-transform-modules-commonjs": "^7.22.15",
+        "@babel/plugin-transform-modules-commonjs": "^7.23.0",
         "@changesets/cli": "^2.26.2",
-        "@dprint/typescript": "^0.87.1",
+        "@dprint/typescript": "^0.88.0",
         "@effect-app/cli": "^0.16.0",
         "@effect-app/compiler": "workspace:*",
         "@effect-app/core": "workspace:*",
@@ -74,17 +74,17 @@
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^2.0.2",
         "@tsplus/installer": "0.0.179",
-        "@types/lodash": "^4.14.198",
-        "@types/node": "~20.6.3",
-        "@typescript-eslint/eslint-plugin": "^6.7.2",
-        "@typescript-eslint/parser": "^6.7.2",
-        "@typescript-eslint/scope-manager": "^6.7.2",
+        "@types/lodash": "^4.14.199",
+        "@types/node": "~20.7.1",
+        "@typescript-eslint/eslint-plugin": "^6.7.3",
+        "@typescript-eslint/parser": "^6.7.3",
+        "@typescript-eslint/scope-manager": "^6.7.3",
         "babel-plugin-replace-import-extension": "^1.1.3",
         "concurrently": "^8.2.1",
         "dprint": "^0.41.0",
         "enhanced-resolve": "^5.15.0",
-        "eslint": "^8.49.0",
-        "eslint-import-resolver-typescript": "^3.6.0",
+        "eslint": "^8.50.0",
+        "eslint-import-resolver-typescript": "^3.6.1",
         "eslint-import-resolver-webpack": "^0.13.7",
         "eslint-plugin-codegen": "^0.17.0",
         "eslint-plugin-import": "^2.28.1",
@@ -105,6 +105,6 @@
         "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
         "typescript-transform-paths": "^3.4.6",
         "vite": "^4.4.9",
-        "vitest": "^0.34.4"
+        "vitest": "^0.34.5"
     }
 }
