@@ -3,8 +3,6 @@
 
 import { Option } from "@effect/data/Option"
 import * as Def from "@effect/io/Deferred"
-import * as Eff from "@effect/io/Effect"
-import * as Exit from "@effect/io/Exit"
 import * as Fiber from "@effect/io/Fiber"
 import * as Layer from "@effect/io/Layer"
 import { curry, flow, pipe } from "./Function.js"
@@ -16,21 +14,6 @@ export * from "@effect/io/Effect"
  * @tsplus getter effect/io/Deferred await
  */
 export const await_ = Def.await
-
-/**
- * @tsplus static effect/io/Effect.Ops unit
- */
-export const unit = Eff.unit()
-
-/**
- * @tsplus static effect/io/Exit.Ops unit
- */
-export const ex_unit = Exit.unit()
-
-/**
- * @tsplus static effect/io/Fiber.Ops unit
- */
-export const fb_unit = Fiber.unit()
 
 /**
  * @macro traced
@@ -301,8 +284,8 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
  * @tsplus getter Iterable joinAll
  * @tsplus static effect/io/Effect.Ops joinAll
  */
-export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, A[]> {
-  return Fiber.join(Fiber.collectAll(fibers))
+export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, readonly A[]> {
+  return Fiber.join(Fiber.all(fibers))
 }
 
 // /**

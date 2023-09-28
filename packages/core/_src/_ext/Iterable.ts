@@ -1,14 +1,5 @@
 import * as T from "@effect/io/Effect"
 
-/**
- * @tsplus fluent Array forEachPar
- * @tsplus fluent Array ReadonlyArray
- * @tsplus fluent Iterable forEachPar
- * @tsplus fluent effect/data/Chunk forEachPar
- * @tsplus fluent ets/Set forEachPar
- */
-export const ext_forEachPar = T.forEachPar
-
 // TODO:
 /**
  * @tsplus fluent Array forEachEffect
@@ -18,13 +9,6 @@ export const ext_forEachPar = T.forEachPar
  * @tsplus fluent ets/Set forEachEffect
  */
 export const ext_forEach = T.forEach
-
-/**
- * @tsplus fluent Array collectAll
- * @tsplus fluent effect/data/Chunk collectAll
- * @tsplus fluent ets/Set collectAll
- */
-export const ext_collectAll = T.collectAll
 
 /**
  * @tsplus fluent Array toChunk

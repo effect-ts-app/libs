@@ -358,81 +358,10 @@ export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
 }
 
 /**
- * @tsplus fluent Array forEachEffectPar
- * @tsplus fluent ReadonlyArray forEachEffectPar
- */
-export function ext_forEachEffectPar<A, R, E, B>(
-  as: ReadonlyArray<A>,
-  f: (a: A) => Effect<R, E, B>
-) {
-  return T.forEachPar(as, f)
-}
-
-/**
- * @tsplus fluent effect/data/Chunk forEachEffectPar
- */
-export function ext_CNKforEachEffectPar<A, R, E, B>(
-  as: Chunk<A>,
-  f: (a: A) => Effect<R, E, B>
-) {
-  return T.forEachPar(as, f)
-}
-
-/**
- * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectPar
- */
-export function ext_NAforEachEffectPar<A, R, E, B>(
-  as: NonEmptyReadonlyArray<A>,
-  f: (a: A) => Effect<R, E, B>
-) {
-  return T.forEachPar(as, f).map((_) => _.toNonEmptyArray.value!)
-}
-
-/**
  * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
 export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
   return T.forEach(as, f).map((_) => _.toNonEmptyArray.value!)
-}
-
-/**
- * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndexPar
- */
-export function ext_NAforEachEffectWithIndexPar<A, R, E, B>(
-  as: NonEmptyReadonlyArray<A>,
-  f: (a: A, i: number) => Effect<R, E, B>
-) {
-  return T.forEachParWithIndex(as, f).map((_) => _.toNonEmptyArray.value!)
-}
-
-/**
- * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffectWithIndex
- */
-export function ext_NAforEachWithIndex<A, R, E, B>(
-  as: NonEmptyReadonlyArray<A>,
-  f: (a: A, i: number) => Effect<R, E, B>
-) {
-  return T.forEachWithIndex(as, f).map((_) => _.toNonEmptyArray.value!)
-}
-
-/**
- * @tsplus fluent ReadonlyArray forEachEffectWithIndex
- * @tsplus fluent Array forEachEffectWithIndex
- * @tsplus fluent effect/data/Chunk forEachEffectWithIndex
- * @tsplus fluent ets/Set forEachEffectWithIndex
- */
-export function ext_forEachWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {
-  return T.forEachWithIndex(as, f)
-}
-
-/**
- * @tsplus fluent ReadonlyArray forEachEffectParWithIndex
- * @tsplus fluent Array forEachEffectParWithIndex
- * @tsplus fluent effect/data/Chunk forEachEffectParWithIndex
- * @tsplus fluent ets/Set forEachEffectParWithIndex
- */
-export function ext_forEachParWithIndex<A, R, E, B>(as: Iterable<A>, f: (a: A, i: number) => Effect<R, E, B>) {
-  return T.forEachParWithIndex(as, f)
 }
 
 /**
