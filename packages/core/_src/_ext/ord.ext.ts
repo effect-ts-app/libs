@@ -1,5 +1,5 @@
 import * as CNK from "@effect/data/Chunk"
-import * as ORD from "@effect/data/typeclass/Order"
+import * as ORD from "@effect/data/Order"
 
 /**
  * @tsplus pipeable effect/data/Chunk sortWith
@@ -107,11 +107,11 @@ export function sortWithNonEmpty<A>(
 export const ChunkPartition = CNK.partition
 
 /**
- * @tsplus pipeable effect/data/typeclass/Order contramap
+ * @tsplus pipeable effect/data/Order contramap
  */
 export const OrdContramap = ORD.contramap
 
 /**
- * @tsplus getter effect/data/typeclass/Order inverted
+ * @tsplus getter effect/data/Order inverted
  */
 export const OrdInverted = ORD.reverse

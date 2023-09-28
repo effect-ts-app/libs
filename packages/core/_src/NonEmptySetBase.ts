@@ -28,7 +28,7 @@ export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
 function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const eq = eq_
-    ?? ((x, y) => ord.compare(x, y) === 0)
+    ?? ((x, y) => ord(x, y) === 0)
 
   const fromArray_ = fromArrayOriginal(eq)
   const fromArray = flow(fromArray_, fromSet)

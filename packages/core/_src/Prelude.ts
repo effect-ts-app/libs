@@ -4,11 +4,11 @@
 import "./global.js"
 
 import type * as NS from "@effect-app/core/NonEmptySet"
-import type * as ORD from "@effect-app/core/Order"
 import type * as SET from "@effect-app/core/Set"
 import type * as CNK from "@effect/data/Chunk"
 import type * as EITHER from "@effect/data/Either"
 import type * as O from "@effect/data/Option"
+import type * as ORD from "@effect/data/Order"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
@@ -20,9 +20,9 @@ export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Order {
   // @ts-expect-error abc
-  export * from "@effect-app/core/Order"
+  export * from "@effect/data/Order"
 }
-/** @tsplus type effect/data/typeclass/Order */
+/** @tsplus type effect/data/Order */
 export type Order<A> = ORD.Order<A>
 
 export namespace Option {

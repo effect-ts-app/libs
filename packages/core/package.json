@@ -196,16 +196,6 @@
         "default": "./_cjs/Option.cjs"
       }
     },
-    "./Order": {
-      "import": {
-        "types": "./dist/Order.d.ts",
-        "default": "./dist/Order.js"
-      },
-      "require": {
-        "types": "./dist/Order.d.ts",
-        "default": "./_cjs/Order.cjs"
-      }
-    },
     "./Prelude": {
       "import": {
         "types": "./dist/Prelude.d.ts",

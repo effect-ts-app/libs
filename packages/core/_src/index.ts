@@ -4,7 +4,7 @@ export * as Either from "@effect/data/Either"
 export * as Option from "@effect/data/Option"
 export * as Optic from "@fp-ts/optic"
 
-export * as Order from "@effect-app/core/Order"
+export * as Order from "@effect/data/Order"
 
 export {} from "@effect-app/core/Effect"
 // export * as EffectOption from "@effect-app/core/EffectOption"

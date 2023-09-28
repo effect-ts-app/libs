@@ -39,7 +39,7 @@ import { NonEmptyArguments, NonEmptySet, ROSet } from "@effect-app/core/Prelude"
 /**
  * @tsplus global
  */
-import { Equivalence } from "@effect/data/typeclass/Equivalence"
+import { Equivalence } from "@effect/data/Equivalence"
 
 /**
  * @tsplus global
@@ -154,7 +154,7 @@ import { Chunk, NonEmptyChunk } from "@effect/data/Chunk"
 /**
  * @tsplus global
  */
-import { Order } from "@effect/data/typeclass/Order"
+import { Order } from "@effect/data/Order"
 
 /**
  * @tsplus global
