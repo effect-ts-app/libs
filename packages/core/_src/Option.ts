@@ -31,8 +31,7 @@ export function omitableToNullable<T>(om: Option<T> | undefined) {
  * @tsplus static effect/data/Option.Ops toBool
  */
 export const toBool = Option.match(
-  () => false,
-  () => true
+  { onNone: () => false, onSome: () => true }
 )
 
 /**

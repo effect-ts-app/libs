@@ -129,7 +129,7 @@ export function sortWith<A>(
 export function sortByO<A>(
   ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match(() => identity, (_) => ROArray.sortBy(..._))
+  return ords.match({ onNone: () => identity, onSome: (_) => ROArray.sortBy(..._) })
 }
 
 /**
