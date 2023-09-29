@@ -1,11 +1,5 @@
 # @effect-app/eslint-codegen-model
 
-## 0.24.0
-
-### Minor Changes
-
-- c80b9e7a: Updated to latest Effect
-
 ## 0.23.0
 
 ### Minor Changes
