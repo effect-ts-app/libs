@@ -73,7 +73,7 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
     try {
       r = pretty(a)
     } catch { /* empty */ }
-    return Effect.logDebug("print").logAnnotate(name, `${r}`)
+    return Effect.logDebug("print").annotateLogs(name, `${r}`)
   })
 }
 
@@ -95,7 +95,7 @@ export function debug<A>(a: AnyOps<A>, name: string) {
   } catch { /* empty */ }
   return Effect
     .logDebug("print")
-    .logAnnotate(name, `${r}`)
+    .annotateLogs(name, `${r}`)
     .map(() => a.subject)
 }
 

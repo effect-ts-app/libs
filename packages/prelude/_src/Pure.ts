@@ -148,7 +148,7 @@ export function log<W>(w: W): PureLogT<W> {
  * @tsplus static Pure.Ops logMany
  */
 export function logMany<W>(w: Iterable<W>): PureLogT<W> {
-  return castTag<W, unknown, never>().flatMap((_) => _.env.log.update((l) => l.concat(w.toChunk)))
+  return castTag<W, unknown, never>().flatMap((_) => _.env.log.update((l) => l.appendAll(w.toChunk)))
 }
 
 /**
@@ -175,7 +175,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
       (err) =>
         tagg.flatMap((env) => env.env.log.get.map((log) => tuple(log, Either.left(err) as Either<E, readonly [S3, A]>)))
     )
-    .provideSomeLayer(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
+    .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
 }
 
 /**

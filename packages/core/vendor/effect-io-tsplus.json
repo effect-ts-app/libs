@@ -5814,18 +5814,18 @@
       ]
     },
     {
-      "definitionName": "logAnnotate",
+      "definitionName": "annotateLogs",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "logAnnotate"
+          "name": "annotateLogs"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "logAnnotate"
+          "name": "annotateLogs"
         }
       ]
     },
@@ -5993,18 +5993,18 @@
       ]
     },
     {
-      "definitionName": "logSpan",
+      "definitionName": "withSpan",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "logSpan"
+          "name": "withSpan"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "logSpan"
+          "name": "withSpan"
         }
       ]
     },
@@ -8556,86 +8556,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "timeoutTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "toLayer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayer"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerContext",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerContext"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerContext"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerScoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerScoped"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScoped"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerScopedDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerScopedDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScopedDiscard"
         }
       ]
     },
@@ -12488,13 +12408,13 @@
       ]
     },
     {
-      "definitionName": "currentLogSpan",
+      "definitionName": "currentwithSpan",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
-          "name": "currentLogSpan"
+          "name": "currentwithSpan"
         }
       ]
     },
@@ -13637,6 +13557,86 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "build"
+        }
+      ]
+    },
+    {
+      "definitionName": "effect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "toLayer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayer"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "scoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "scopedDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScopedDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerScopedDiscard"
         }
       ]
     },
@@ -15120,16 +15120,16 @@
   ],
   "@effect/io/Logger/Span": [
     {
-      "definitionName": "LogSpan",
+      "definitionName": "withSpan",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Logger/Span/LogSpan"
+          "typeName": "effect/io/Logger/Span/withSpan"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Logger/Span/LogSpan.Ops"
+          "typeName": "effect/io/Logger/Span/withSpan.Ops"
         }
       ]
     },
@@ -15150,12 +15150,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/io/Logger/Span/LogSpan",
+          "typeName": "effect/io/Logger/Span/withSpan",
           "name": "render"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Span/LogSpan.Ops",
+          "typeName": "effect/io/Logger/Span/withSpan.Ops",
           "name": "render"
         }
       ]

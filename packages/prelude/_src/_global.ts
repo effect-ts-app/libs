@@ -22,17 +22,17 @@ import { ConfigSecretURL } from "@effect-app/prelude/Config/SecretURL"
 /**
  * @tsplus global
  */
-import { ConfigSecret } from "@effect/io/Config/Secret"
+import { ConfigSecret } from "@effect/io/ConfigSecret"
 
 /**
  * @tsplus global
  */
-import { ConfigError } from "@effect/io/Config/Error"
+import { ConfigError } from "@effect/io/ConfigError"
 
 /**
  * @tsplus global
  */
-import { ConfigProvider } from "@effect/io/Config/Provider"
+import { ConfigProvider } from "@effect/io/ConfigProvider"
 
 /**
  * @tsplus global
