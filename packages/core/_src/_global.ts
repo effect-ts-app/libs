@@ -154,6 +154,11 @@ import { Chunk, NonEmptyChunk } from "@effect/data/Chunk"
 /**
  * @tsplus global
  */
+import { List } from "@effect/data/List"
+
+/**
+ * @tsplus global
+ */
 import { Order } from "@effect/data/Order"
 
 /**

@@ -1779,18 +1779,18 @@
       ]
     },
     {
-      "definitionName": "optional",
+      "definitionName": "option",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/io/Config",
-          "name": "optional"
+          "name": "option"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
-          "name": "optional"
+          "name": "option"
         }
       ]
     },
@@ -5928,33 +5928,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logTrace"
-        }
-      ]
-    },
-    {
-      "definitionName": "logTraceCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logTraceCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logTraceCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logTraceCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logTraceCauseMessage"
+          "name": "logTrace"
         }
       ]
     },
@@ -5966,33 +5944,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logWarning"
-        }
-      ]
-    },
-    {
-      "definitionName": "logWarningCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logWarningCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logWarningCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logWarningCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logWarningCauseMessage"
+          "name": "logWarning"
         }
       ]
     },
@@ -8251,6 +8207,11 @@
       "definitionName": "tap",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/data/Context/Tag",
+          "kind": "fluent",
+          "name": "tap"
+        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
@@ -10938,7 +10899,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber/Id": [
+  "@effect/io/FiberId": [
     {
       "definitionName": "Composite",
       "definitionKind": "interface",

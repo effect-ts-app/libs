@@ -12,7 +12,7 @@ const DefaultApiConfig = Config.all({
   headers: Config
     .string()
     .hashMap("headers")
-    .optional
+    .option
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {

@@ -47,7 +47,7 @@ export function logError<E, E2 extends CauseException<unknown>>(
       }
       const error = makeError(cause)
       yield* $(
-        cause.logWarningCause.annotateLogs(
+        cause.logWarning.annotateLogs(
           "extras",
           JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
         )

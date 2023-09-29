@@ -1,7 +1,8 @@
+import type { AnnotationValue } from "@effect/io/Logger"
 import { getRequestContext } from "./shared.js"
 
-export const jsonLogger = Logger.make<string, void>(
-  (fiberId, logLevel, message, cause, context, spans, annotations) => {
+export const jsonLogger = Logger.make<unknown, void>(
+  ({ annotations, cause, context, fiberId, logLevel, message, spans }) => {
     const now = new Date()
     const nowMillis = now.getTime()
 
@@ -14,14 +15,12 @@ export const jsonLogger = Logger.make<string, void>(
       message,
       request: c.value,
       cause: cause != null && cause != Cause.empty ? cause.pretty : undefined,
-      spans: Chunk.isNonEmpty(spans)
-        ? spans.map((_) => ({ label: _.label, timing: nowMillis - _.startTime })).toArray
-        : undefined,
+      spans: spans.map((_) => ({ label: _.label, timing: nowMillis - _.startTime })).toReadonlyArray,
       annotations: annotations.size > 0
         ? [...annotations].reduce((prev, [k, v]) => {
           prev[k] = v
           return prev
-        }, {} as Record<string, string>)
+        }, {} as Record<string, AnnotationValue>)
         : undefined
     }
 
