@@ -145,11 +145,13 @@ function buildFieldInfo(
       These.result,
       (_) =>
         _.match(
-          (_) => renderError(_, v),
-          ([_, optErr]) =>
-            optErr.isSome()
-              ? renderError(optErr.value, v)
-              : true
+          {
+            onLeft: (_) => renderError(_, v),
+            onRight: ([_, optErr]) =>
+              optErr.isSome()
+                ? renderError(optErr.value, v)
+                : true
+          }
         )
     )
 

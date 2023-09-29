@@ -90,51 +90,53 @@ WHERE (
 
         yield* $(
           currentVersion.match(
-            () =>
-              Effect
-                .tryPromise(() =>
-                  db.container(type).items.create({
-                    id: record.id,
-                    timestamp: new Date(),
-                    data
-                  })
-                )
-                .asUnit
-                .orDie,
-            (currentVersion) =>
-              Effect
-                .tryPromise(() =>
-                  db
-                    .container(type)
-                    .item(record.id)
-                    .replace(
-                      {
-                        id: record.id,
-                        timestamp: new Date(),
-                        data
-                      },
-                      {
-                        accessCondition: {
-                          type: "IfMatch",
-                          condition: currentVersion
+            {
+              onNone: () =>
+                Effect
+                  .tryPromise(() =>
+                    db.container(type).items.create({
+                      id: record.id,
+                      timestamp: new Date(),
+                      data
+                    })
+                  )
+                  .asUnit
+                  .orDie,
+              onSome: (currentVersion) =>
+                Effect
+                  .tryPromise(() =>
+                    db
+                      .container(type)
+                      .item(record.id)
+                      .replace(
+                        {
+                          id: record.id,
+                          timestamp: new Date(),
+                          data
+                        },
+                        {
+                          accessCondition: {
+                            type: "IfMatch",
+                            condition: currentVersion
+                          }
                         }
-                      }
-                    )
-                )
-                .orDie
-                .flatMap((x) => {
-                  if (x.statusCode === 412) {
-                    return Effect.fail(new OptimisticLockException(type, record.id))
-                  }
-                  if (x.statusCode > 299 || x.statusCode < 200) {
-                    return Effect.die(
-                      new CosmosDbOperationError(
-                        "not able to update record: " + x.statusCode
                       )
-                    )
-                  }
-                  return Effect.unit
-                })
+                  )
+                  .orDie
+                  .flatMap((x) => {
+                    if (x.statusCode === 412) {
+                      return Effect.fail(new OptimisticLockException(type, record.id))
+                    }
+                    if (x.statusCode > 299 || x.statusCode < 200) {
+                      return Effect.die(
+                        new CosmosDbOperationError(
+                          "not able to update record: " + x.statusCode
+                        )
+                      )
+                    }
+                    return Effect.unit
+                  })
+            }
           )
         )
         return { version, data: record } as CachedRecord<A>

@@ -121,8 +121,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return tryRead(getIdxName(type, index.doc)).map(
         (_) =>
           _.match(
-            () => ({} as Record<string, TKey>),
-            (x) => JSON.parse(x) as Record<string, TKey>
+            { onNone: () => ({} as Record<string, TKey>), onSome: (x) => JSON.parse(x) as Record<string, TKey> }
           )
       )
     }

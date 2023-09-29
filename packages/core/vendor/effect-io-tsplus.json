@@ -7531,22 +7531,6 @@
       ]
     },
     {
-      "definitionName": "runPromiseEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "runPromiseEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "runPromiseEither"
-        }
-      ]
-    },
-    {
       "definitionName": "runPromiseExit",
       "definitionKind": "const",
       "extensions": [
@@ -19331,22 +19315,6 @@
           "kind": "static",
           "typeName": "effect/io/Runtime.Ops",
           "name": "runPromise"
-        }
-      ]
-    },
-    {
-      "definitionName": "runPromiseEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "effect/io/Runtime",
-          "kind": "getter",
-          "name": "runPromiseEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Runtime.Ops",
-          "name": "runPromiseEither"
         }
       ]
     },

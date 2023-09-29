@@ -54,24 +54,26 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     [
                       x,
                       Option.fromNullable(x._etag).match(
-                        () => ({
-                          operationType: "Create" as const,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          partitionKey: config?.partitionValue(x)
-                        }),
-                        (eTag) => ({
-                          operationType: "Replace" as const,
-                          id: x.id,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          ifMatch: eTag,
-                          partitionKey: config?.partitionValue(x)
-                        })
+                        {
+                          onNone: () => ({
+                            operationType: "Create" as const,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            } as any,
+                            partitionKey: config?.partitionValue(x)
+                          }),
+                          onSome: (eTag) => ({
+                            operationType: "Replace" as const,
+                            id: x.id,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            } as any,
+                            ifMatch: eTag,
+                            partitionKey: config?.partitionValue(x)
+                          })
+                        }
                       )
                     ] as const
                 )
@@ -132,22 +134,24 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     [
                       x,
                       Option.fromNullable(x._etag).match(
-                        () => ({
-                          operationType: "Create" as const,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any
-                        }),
-                        (eTag) => ({
-                          operationType: "Replace" as const,
-                          id: x.id,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          ifMatch: eTag
-                        })
+                        {
+                          onNone: () => ({
+                            operationType: "Create" as const,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            } as any
+                          }),
+                          onSome: (eTag) => ({
+                            operationType: "Replace" as const,
+                            id: x.id,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            } as any,
+                            ifMatch: eTag
+                          })
+                        }
                       )
                     ] as const
                 )
@@ -293,25 +297,27 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               Option
                 .fromNullable(e._etag)
                 .match(
-                  () =>
-                    Effect.promise(() =>
-                      container.items.create({
-                        ...e,
-                        _partitionKey: config?.partitionValue(e)
-                      })
-                    ),
-                  (eTag) =>
-                    Effect.promise(() =>
-                      container.item(e.id, config?.partitionValue(e)).replace(
-                        { ...e, _partitionKey: config?.partitionValue(e) },
-                        {
-                          accessCondition: {
-                            type: "IfMatch",
-                            condition: eTag
+                  {
+                    onNone: () =>
+                      Effect.promise(() =>
+                        container.items.create({
+                          ...e,
+                          _partitionKey: config?.partitionValue(e)
+                        })
+                      ),
+                    onSome: (eTag) =>
+                      Effect.promise(() =>
+                        container.item(e.id, config?.partitionValue(e)).replace(
+                          { ...e, _partitionKey: config?.partitionValue(e) },
+                          {
+                            accessCondition: {
+                              type: "IfMatch",
+                              condition: eTag
+                            }
                           }
-                        }
+                        )
                       )
-                    )
+                  }
                 )
                 .flatMap((x) => {
                   if (x.statusCode === 412 || x.statusCode === 404) {

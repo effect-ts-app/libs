@@ -61,40 +61,42 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         const data = yield* $(encode(record))
         yield* $(
           currentVersion.match(
-            () =>
-              Effect
-                .tryPromise(() =>
-                  db
-                    .collection(type)
-                    .insertOne(
-                      { _id: record.id as any, version, timestamp: new Date(), data },
-                      {
-                        checkKeys: false // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
-                      } as InsertOneOptions
-                    )
-                )
-                .asUnit
-                .orDie,
-            (currentVersion) =>
-              Effect
-                .tryPromise(() =>
-                  db.collection(type).replaceOne(
-                    { _id: record.id, version: currentVersion },
-                    {
-                      version,
-                      timestamp: new Date(),
-                      data
-                    },
-                    { upsert: false }
+            {
+              onNone: () =>
+                Effect
+                  .tryPromise(() =>
+                    db
+                      .collection(type)
+                      .insertOne(
+                        { _id: record.id as any, version, timestamp: new Date(), data },
+                        {
+                          checkKeys: false // support for keys with `.` and `$`. NOTE: you can write them, read them, but NOT query for them.
+                        } as InsertOneOptions
+                      )
                   )
-                )
-                .orDie
-                .flatMap((x) => {
-                  if (!x.modifiedCount) {
-                    return Effect.fail(new OptimisticLockException(type, record.id))
-                  }
-                  return Effect.unit
-                })
+                  .asUnit
+                  .orDie,
+              onSome: (currentVersion) =>
+                Effect
+                  .tryPromise(() =>
+                    db.collection(type).replaceOne(
+                      { _id: record.id, version: currentVersion },
+                      {
+                        version,
+                        timestamp: new Date(),
+                        data
+                      },
+                      { upsert: false }
+                    )
+                  )
+                  .orDie
+                  .flatMap((x) => {
+                    if (!x.modifiedCount) {
+                      return Effect.fail(new OptimisticLockException(type, record.id))
+                    }
+                    return Effect.unit
+                  })
+            }
           )
         )
         return { version, data: record } as CachedRecord<A>
