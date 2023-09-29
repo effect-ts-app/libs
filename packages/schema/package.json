@@ -20,7 +20,7 @@
     "fast-check": "~3.13.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
-    "vitest": "^0.34.5"
+    "vitest": "^0.34.6"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
