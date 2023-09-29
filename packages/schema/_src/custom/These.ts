@@ -33,11 +33,13 @@ export function foldM_<E, A, E1, A1, E2, A2, E3, A3>(
 ): These<E1 | E2 | E3, A1 | A2 | A3> {
   return new These(
     self.effect.match(
-      (x): Either<E1 | E2 | E3, readonly [A1 | A2 | A3, Option<E1 | E2 | E3>]> => onFail(x).effect,
-      ([result, warnings]) =>
-        warnings._tag === "None"
-          ? onSuccess(result).effect
-          : onBoth(result, warnings.value).effect
+      {
+        onLeft: (x): Either<E1 | E2 | E3, readonly [A1 | A2 | A3, Option<E1 | E2 | E3>]> => onFail(x).effect,
+        onRight: ([result, warnings]) =>
+          warnings._tag === "None"
+            ? onSuccess(result).effect
+            : onBoth(result, warnings.value).effect
+      }
     )
   )
 }

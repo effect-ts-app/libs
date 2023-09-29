@@ -500,9 +500,7 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
 }
 
 export function createUnorder<T>(): Order<T> {
-  return {
-    compare: (_a: T, _b: T) => 0
-  }
+  return (_a: T, _b: T) => 0
 }
 export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types

@@ -29,7 +29,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
     ),
     S.parser((ar: readonly ParsedShape[]) => {
       const nar = ar.toNonEmpty
-      return nar.match(() => Th.fail(leafE(customE(ar, "a non empty array")) as any), Th.succeed)
+      return nar.match({ onNone: () => Th.fail(leafE(customE(ar, "a non empty array")) as any), onSome: Th.succeed })
     }),
     S.encoder((u): readonly ParsedShape[] => u),
     S.arbitrary(

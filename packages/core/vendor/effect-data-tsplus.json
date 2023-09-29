@@ -696,7 +696,7 @@
       ]
     },
     {
-      "definitionName": "concat",
+      "definitionName": "appendAll",
       "definitionKind": "const",
       "extensions": [
         {
@@ -707,12 +707,12 @@
         {
           "kind": "fluent",
           "typeName": "effect/data/Chunk",
-          "name": "concat"
+          "name": "appendAll"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Chunk.Ops",
-          "name": "concat"
+          "name": "appendAll"
         }
       ]
     },
@@ -7099,7 +7099,7 @@
       ]
     },
     {
-      "definitionName": "concat",
+      "definitionName": "appendAll",
       "definitionKind": "const",
       "extensions": [
         {
@@ -7110,12 +7110,12 @@
         {
           "kind": "fluent",
           "typeName": "effect/data/List",
-          "name": "concat"
+          "name": "appendAll"
         },
         {
           "kind": "static",
           "typeName": "effect/data/List.Ops",
-          "name": "concat"
+          "name": "appendAll"
         }
       ]
     },

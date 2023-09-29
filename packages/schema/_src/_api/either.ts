@@ -88,8 +88,10 @@ export function fromEither<
     MO.constructor(parseEither as any),
     MO.encoder((_) =>
       _.match(
-        (x) => ({ _tag: "Left", left: leftEncode(x) }),
-        (x) => ({ _tag: "Right", right: encode(x) })
+        {
+          onLeft: (x) => ({ _tag: "Left", left: leftEncode(x) }),
+          onRight: (x) => ({ _tag: "Right", right: encode(x) })
+        }
       )
     ),
     MO.mapApi(() => ({ left: left.Api, right: right.Api })),
