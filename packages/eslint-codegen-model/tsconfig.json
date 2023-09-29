@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "rootDir": "./src",
+    "moduleResolution": "Node",
     "target": "ES2018",
     "module": "CommonJS",
     "emitDecoratorMetadata": true,
