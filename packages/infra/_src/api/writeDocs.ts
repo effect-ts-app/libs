@@ -8,7 +8,7 @@ export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDesc
   return makeOpenApiSpecs(
     typedValuesOf(rdescs)
       .reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
-      .sortWith(Order.string.contramap((a: RouteDescriptorAny) => a.path)),
+      .sortWith(Order.string.mapInput((a: RouteDescriptorAny) => a.path)),
     Plutus.info({
       title: "api",
       version: "X",

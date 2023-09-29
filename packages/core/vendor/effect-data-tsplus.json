@@ -16027,18 +16027,18 @@
       ]
     },
     {
-      "definitionName": "contramap",
+      "definitionName": "mapInput",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Equivalence",
-          "name": "contramap"
+          "name": "mapInput"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Equivalence.Ops",
-          "name": "contramap"
+          "name": "mapInput"
         }
       ]
     },
@@ -16216,18 +16216,18 @@
       ]
     },
     {
-      "definitionName": "contramap",
+      "definitionName": "mapInput",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
           "typeName": "effect/data/Order",
-          "name": "contramap"
+          "name": "mapInput"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Order.Ops",
-          "name": "contramap"
+          "name": "mapInput"
         }
       ]
     },
@@ -16349,6 +16349,50 @@
           "kind": "static",
           "typeName": "effect/data/Order.Ops",
           "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
+      "definitionName": "boolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "boolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "string"
         }
       ]
     },

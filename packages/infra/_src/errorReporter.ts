@@ -14,7 +14,7 @@ export function reportError<E, E2 extends CauseException<unknown>>(
       const error = makeError(cause)
       yield* $(reportSentry(error, extras))
       yield* $(
-        cause.logErrorCause.annotateLogs(
+        cause.logError.annotateLogs(
           "extras",
           JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
         )

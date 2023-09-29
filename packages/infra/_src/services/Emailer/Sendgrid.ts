@@ -100,7 +100,7 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equivalence.string.contramap((to: { name?: string; email: string } | string) =>
+const eq = Equivalence.string.mapInput((to: { name?: string; email: string } | string) =>
   typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
 )
 

@@ -2021,7 +2021,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Error": [
+  "@effect/io/ConfigError": [
     {
       "definitionName": "And",
       "definitionKind": "interface",
@@ -2391,7 +2391,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Provider": [
+  "@effect/io/ConfigProvider": [
     {
       "definitionName": "ConfigProvider",
       "definitionKind": "interface",
@@ -2672,7 +2672,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Provider/PathPatch": [
+  "@effect/io/ConfigProviderPathPatch": [
     {
       "definitionName": "AndThen",
       "definitionKind": "interface",
@@ -2833,7 +2833,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Secret": [
+  "@effect/io/ConfigSecret": [
     {
       "definitionName": "ConfigSecret",
       "definitionKind": "interface",
@@ -5848,33 +5848,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logDebug"
-        }
-      ]
-    },
-    {
-      "definitionName": "logDebugCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logDebugCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logDebugCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logDebugCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logDebugCauseMessage"
+          "name": "logDebug"
         }
       ]
     },
@@ -5886,33 +5864,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logError"
-        }
-      ]
-    },
-    {
-      "definitionName": "logErrorCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logErrorCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logErrorCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logErrorCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logErrorCauseMessage"
+          "name": "logError"
         }
       ]
     },
@@ -5924,33 +5880,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logFatal"
-        }
-      ]
-    },
-    {
-      "definitionName": "logFatalCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logFatalCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logFatalCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logFatalCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logFatalCauseMessage"
+          "name": "logFatal"
         }
       ]
     },
@@ -5962,33 +5896,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logInfo"
-        }
-      ]
-    },
-    {
-      "definitionName": "logInfoCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logInfoCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logInfoCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logInfoCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logInfoCauseMessage"
+          "name": "logInfo"
         }
       ]
     },
