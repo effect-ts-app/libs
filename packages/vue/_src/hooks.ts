@@ -114,8 +114,6 @@ export function useSafeQuery_<E, A>(
   //       : runNew
   //   })
   // ).flatMap(Fiber.await)
-  //   .flatMap(Effect.done)
-
   // function execWithInterruption() {
   //   return ex.provide(Layers)
   //     .runPromise()
@@ -166,7 +164,6 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
     })
     .apply(withPermit)
     .flatMap((_) => _.await())
-    .flatMap((_) => _.done)
 
   function exec() {
     return run

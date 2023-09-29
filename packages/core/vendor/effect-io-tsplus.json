@@ -9169,22 +9169,6 @@
       ]
     },
     {
-      "definitionName": "withParallelism",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withParallelism"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "withParallelism"
-        }
-      ]
-    },
-    {
       "definitionName": "withRequestBatching",
       "definitionKind": "const",
       "extensions": [
