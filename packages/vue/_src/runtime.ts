@@ -11,7 +11,7 @@ const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").withDefault("/api"),
   headers: Config
     .string()
-    .table("headers")
+    .hashMap("headers")
     .optional
 })
 

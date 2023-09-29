@@ -87,8 +87,7 @@ export function fromEither<
     MO.parser(parseEither as any),
     MO.constructor(parseEither as any),
     MO.encoder((_) =>
-      _.match(
-        {
+      _.match({
           onLeft: (x) => ({ _tag: "Left", left: leftEncode(x) }),
           onRight: (x) => ({ _tag: "Right", right: encode(x) })
         }
@@ -131,7 +130,12 @@ export function either<
   const encodeSelf = Encoder.for(right)
   return pipe(
     MO.object[">>>"](fromEither(left, right)),
-    MO.encoder((_) => _.mapBoth(encodeLeft, encodeSelf)),
+    MO.encoder((_) =>
+      _.mapBoth({
+        onFailure: encodeLeft,
+        onSuccess: encodeSelf
+      })
+    ),
     MO.withDefaults,
     MO.annotate(eitherIdentifier, { left, right })
   ) as any

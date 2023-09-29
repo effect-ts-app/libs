@@ -458,8 +458,8 @@ function useGetMeta<
           ["|>"](These.result)
           ["|>"](
             (r) =>
-              r.match(
-                { onLeft: () =>
+              r.match({
+                onLeft: () =>
                   intl.formatMessage(
                     {
                       defaultMessage: "The entered value is not a valid {modelName}",

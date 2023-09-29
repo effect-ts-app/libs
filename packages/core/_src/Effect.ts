@@ -24,9 +24,10 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
   fm: (a: A) => Effect<R2, E2, A2>
 ): Effect<R | R2, E | E2, Option<A2>> {
   return self.flatMap((d) =>
-    d.match(
-      { onNone: () => Effect(Option.none), onSome: (_) => fm(_).map(Option.some) }
-    )
+    d.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => fm(_).map(Option.some)
+    })
   )
 }
 
@@ -39,9 +40,10 @@ export function tapOption<R, E, A, R2, E2, A2>(
   fm: (a: A) => Effect<R2, E2, A2>
 ): Effect<R | R2, E | E2, Option<A>> {
   return self.flatMap((d) =>
-    d.match(
-      { onNone: () => Effect(Option.none), onSome: (_) => fm(_).map(() => Option(_)) }
-    )
+    d.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => fm(_).map(() => Option(_))
+    })
   )
 }
 
@@ -54,9 +56,10 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
   fm: Effect<R2, E2, A2>
 ) {
   return self.flatMap((d) =>
-    d.match(
-      { onNone: () => Effect(Option.none), onSome: (_) => fm.map(() => Option(_)) }
-    )
+    d.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => fm.map(() => Option(_))
+    })
   )
 }
 
@@ -69,9 +72,10 @@ export function mapOption<R, E, A, A2>(
   fm: (a: A) => A2
 ): Effect<R, E, Option<A2>> {
   return self.map((d) =>
-    d.match(
-      { onNone: () => Option.none, onSome: (_) => Option(fm(_)) }
-    )
+    d.match({
+      onNone: () => Option.none,
+      onSome: (_) => Option(fm(_))
+    })
   )
 }
 
@@ -170,7 +174,10 @@ export function encaseOpt_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
 ): Effect<never, E, A> {
-  return o.match({ onNone: () => Effect.fail(onError()), onSome: Effect.succeed })
+  return o.match({
+    onNone: () => Effect.fail(onError()),
+    onSome: Effect.succeed
+  })
 }
 
 export function encaseOption<E>(onError: LazyArg<E>) {

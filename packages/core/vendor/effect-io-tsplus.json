@@ -1699,6 +1699,22 @@
       ]
     },
     {
+      "definitionName": "hashMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config",
+          "name": "hashMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "hashMap"
+        }
+      ]
+    },
+    {
       "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
@@ -1910,22 +1926,6 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "sync"
-        }
-      ]
-    },
-    {
-      "definitionName": "table",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Config",
-          "name": "table"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "table"
         }
       ]
     },

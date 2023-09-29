@@ -111,15 +111,15 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       // acquire
       return RedisClient
         .flatMap(({ lock }) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
-        .mapBoth(
-          (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+        .mapBoth({
+          onFailure: (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
-          (lock) => ({
+          onSuccess: (lock) => ({
             release: Effect
               .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        )
+        })
         .acquireRelease(
           (l) => l.release
         )
@@ -133,16 +133,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
         )
-        .mapBoth(
-          (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+        .mapBoth({
+          onFailure: (err) => new CouldNotAquireDbLockException(type, id, err as Error),
           // release
-          (lock) => ({
+          onSuccess: (lock) => ({
             // TODO
             release: Effect
               .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        )
+        })
         .acquireRelease(
           (l) => l.release
         )

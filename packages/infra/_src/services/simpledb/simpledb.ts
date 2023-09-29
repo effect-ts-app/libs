@@ -45,10 +45,10 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const read = (id: string) =>
     tryRead(id)
       .flatMapOpt(({ data, version }) =>
-        decode(data).mapBoth(
-          (err) => new InvalidStateError("DB serialisation Issue", err),
-          (data) => ({ data, version })
-        )
+        decode(data).mapBoth({
+          onFailure: (err) => new InvalidStateError("DB serialisation Issue", err),
+          onSuccess: (data) => ({ data, version })
+        })
       )
       .tapOpt((r) => getCache((c) => c.set(id, r)))
       .mapOpt((r) => r.data)

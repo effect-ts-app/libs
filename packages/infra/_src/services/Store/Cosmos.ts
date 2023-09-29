@@ -53,8 +53,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   (x) =>
                     [
                       x,
-                      Option.fromNullable(x._etag).match(
-                        {
+                      Option.fromNullable(x._etag).match({
                           onNone: () => ({
                             operationType: "Create" as const,
                             resourceBody: {
@@ -133,8 +132,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   (x) =>
                     [
                       x,
-                      Option.fromNullable(x._etag).match(
-                        {
+                      Option.fromNullable(x._etag).match({
                           onNone: () => ({
                             operationType: "Create" as const,
                             resourceBody: {
