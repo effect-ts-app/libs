@@ -1606,13 +1606,13 @@
       ]
     },
     {
-      "definitionName": "bool",
+      "definitionName": "boolean",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
-          "name": "bool"
+          "name": "boolean"
         }
       ]
     },
@@ -1775,6 +1775,17 @@
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
           "name": "nested"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "number"
         }
       ]
     },
