@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.28.0
+
+### Minor Changes
+
+- c80b9e7a: Updated to latest Effect
+
 ## 0.27.0
 
 ### Minor Changes

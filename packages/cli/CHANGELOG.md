@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.17.0
+
+### Minor Changes
+
+- c80b9e7a: Updated to latest Effect
+
 ## 0.16.0
 
 ### Minor Changes
