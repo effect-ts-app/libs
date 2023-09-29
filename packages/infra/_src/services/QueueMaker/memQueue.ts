@@ -66,7 +66,7 @@ export function makeMemQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .tap(() => restoreFromRequestContext)
                 .zipRight(handleEvent(body))
                 .apply(silenceAndReportError)

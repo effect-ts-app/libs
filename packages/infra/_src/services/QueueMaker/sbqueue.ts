@@ -58,7 +58,7 @@ export function makeServiceBusQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.logAnnotates({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .tap(() => restoreFromRequestContext)
                 .zipRight(handleEvent(body))
                 .orDie
@@ -83,7 +83,7 @@ export function makeServiceBusQueue<
             processMessage: (x) => processMessage(x.body).uninterruptible.flatMap((_) => _.done),
             processError: (err) => Effect(captureException(err.error))
           })
-            .provideSomeLayer(receiverLayer)
+            .provide(receiverLayer)
         )
       }),
 

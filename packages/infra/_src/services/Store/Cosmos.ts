@@ -122,7 +122,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
               .instrument("cosmos.bulkSet")
-              .logAnnotate("cosmos.db", containerId)
+              .annotateLogs("cosmos.db", containerId)
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Effect
@@ -185,7 +185,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   )
               })
               .instrument("cosmos.batchSet")
-              .logAnnotate("cosmos.db", containerId)
+              .annotateLogs("cosmos.db", containerId)
           }
 
           const s: Store<PM, Id> = {
@@ -204,7 +204,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 )
               )
               .instrument("cosmos.all")
-              .logAnnotate("cosmos.db", containerId),
+              .annotateLogs("cosmos.db", containerId),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -236,7 +236,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   return v
                 })
                 .instrument("cosmos.filterJoinSelect")
-                .logAnnotate("cosmos.db", containerId),
+                .annotateLogs("cosmos.db", containerId),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -277,7 +277,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   ))
                 .instrument("cosmos.filter")
-                .logAnnotate("cosmos.db", containerId)
+                .annotateLogs("cosmos.db", containerId)
             },
             find: (id) =>
               Effect
@@ -288,7 +288,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resource }) => Option.fromNullable(resource))
                 )
                 .instrument("cosmos.find")
-                .logAnnotate("cosmos.db", containerId),
+                .annotateLogs("cosmos.db", containerId),
             set: (e) =>
               Option
                 .fromNullable(e._etag)
@@ -330,14 +330,14 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   })
                 })
                 .instrument("cosmos.set")
-                .logAnnotate("cosmos.db", containerId),
+                .annotateLogs("cosmos.db", containerId),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .instrument("cosmos.remove")
-                .logAnnotate("cosmos.db", containerId)
+                .annotateLogs("cosmos.db", containerId)
           }
 
           // handle mock data
@@ -390,7 +390,7 @@ function logQuery(q: {
 }) {
   return Effect
     .logDebug("cosmos query")
-    .apply(Effect.logAnnotates({
+    .apply(Effect.annotateLogs({
       query: q.query,
       parameters: JSON.stringify(
         q.parameters.reduce((acc, v) => {

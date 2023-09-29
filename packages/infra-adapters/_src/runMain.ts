@@ -1,4 +1,4 @@
-import type { FiberId } from "@effect/io/Fiber/Id"
+import type { FiberId } from "@effect/io/FiberId"
 
 export function defaultTeardown(
   status: number,
@@ -6,7 +6,7 @@ export function defaultTeardown(
   onExit: (status: number) => void
 ) {
   Fiber
-    .roots()
+    .roots
     .flatMap((_) => _.interruptAllAs(id))
     .runCallback(() => {
       setTimeout(() => {
@@ -41,7 +41,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
                 defaultTeardown(0, context.id(), onExit)
                 return
               } else {
-                yield* $(Effect.logErrorCauseMessage("Main process Error", exit.cause))
+                yield* $(Effect.logError("Main process Error", exit.cause))
                 defaultTeardown(1, context.id(), onExit)
                 return
               }

@@ -6,22 +6,20 @@ export function reportError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
 ) {
   return (cause: Cause<E>, extras?: Record<string, unknown>) =>
-    Debug.untraced(() =>
-      Effect.gen(function*($) {
-        if (cause.isInterrupted()) {
-          yield* $(Effect.logDebug("Interrupted").logAnnotate("extras", JSON.stringify(extras ?? {})))
-          return
-        }
-        const error = makeError(cause)
-        yield* $(reportSentry(error, extras))
-        yield* $(
-          cause.logErrorCause.logAnnotate(
-            "extras",
-            JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
-          )
+    Effect.gen(function*($) {
+      if (cause.isInterrupted()) {
+        yield* $(Effect.logDebug("Interrupted").annotateLogs("extras", JSON.stringify(extras ?? {})))
+        return
+      }
+      const error = makeError(cause)
+      yield* $(reportSentry(error, extras))
+      yield* $(
+        cause.logErrorCause.annotateLogs(
+          "extras",
+          JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
         )
-      })
-    )
+      )
+    })
 }
 
 function reportSentry<E2 extends CauseException<unknown>>(
@@ -42,21 +40,19 @@ export function logError<E, E2 extends CauseException<unknown>>(
   makeError: (cause: Cause<E>) => E2
 ) {
   return (cause: Cause<E>, extras?: Record<string, unknown>) =>
-    Debug.untraced(() =>
-      Effect.gen(function*($) {
-        if (cause.isInterrupted()) {
-          yield* $(Effect.logDebug("Interrupted").logAnnotate("extras", JSON.stringify(extras ?? {})))
-          return
-        }
-        const error = makeError(cause)
-        yield* $(
-          cause.logWarningCause.logAnnotate(
-            "extras",
-            JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
-          )
+    Effect.gen(function*($) {
+      if (cause.isInterrupted()) {
+        yield* $(Effect.logDebug("Interrupted").annotateLogs("extras", JSON.stringify(extras ?? {})))
+        return
+      }
+      const error = makeError(cause)
+      yield* $(
+        cause.logWarningCause.annotateLogs(
+          "extras",
+          JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
         )
-      })
-    )
+      )
+    })
 }
 
 export function captureException(error: unknown) {

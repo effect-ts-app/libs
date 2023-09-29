@@ -272,10 +272,8 @@ export function queryAndSavePureEffect<
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
-    Debug.untraced((restore) =>
-      queryEffect(self, map)
-        .flatMap(restore((_) => self.saveManyWithPure_(_, pure)))
-    )
+    queryEffect(self, map)
+      .flatMap((_) => self.saveManyWithPure_(_, pure))
 }
 
 /**
@@ -402,12 +400,10 @@ export function saveAllWithEffectInt<
   self: Repository<T, PM, Evt, ItemType>,
   gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
-  return Debug.untraced((restore) =>
-    gen
-      .flatMap(
-        ([items, events, a]) => restore(() => self.saveAndPublish(items, events))().map(() => a)
-      )
-  )
+  return gen
+    .flatMap(
+      ([items, events, a]) => self.saveAndPublish(items, events).map(() => a)
+    )
 }
 
 /**

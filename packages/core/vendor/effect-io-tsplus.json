@@ -6129,7 +6129,7 @@
         {
           "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
-          "name": "accessWith"
+          "name": "map"
         },
         {
           "kind": "fluent",

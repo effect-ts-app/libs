@@ -38,7 +38,7 @@ const exec = (command: string) =>
   Effect.logDebug(`Executing: ${command}`)
     > Effect
       .tryPromise(() => exec_(command))
-      .tap((r) => (Effect.logDebug(`Executed`).logAnnotate("result", pretty(r))))
+      .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
 type PrinterConfig = { url?: URL; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
