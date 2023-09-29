@@ -3882,24 +3882,13 @@
       ]
     },
     {
-      "definitionName": "asyncInterrupt",
+      "definitionName": "asyncEither",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "asyncInterrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "asyncInterruptEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "asyncInterruptEither"
+          "name": "asyncEither"
         }
       ]
     },
@@ -4409,18 +4398,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -4989,7 +4978,7 @@
         {
           "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
-          "name": "accessWithEffect"
+          "name": "flatMap"
         },
         {
           "kind": "fluent",
@@ -6765,34 +6754,18 @@
       ]
     },
     {
-      "definitionName": "provideContext",
+      "definitionName": "provide",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "provideContext"
+          "name": "provide"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "provideContext"
-        }
-      ]
-    },
-    {
-      "definitionName": "provideLayer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "provideLayer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "provideLayer"
+          "name": "provide"
         }
       ]
     },
@@ -18710,18 +18683,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/RequestBlock",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/RequestBlock.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -18938,18 +18911,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/RequestResolver",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/RequestResolver.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -19914,18 +19887,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Schedule.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },

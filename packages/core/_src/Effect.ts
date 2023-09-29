@@ -85,7 +85,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
   onReject: (reason: unknown) => E,
   canceller: () => void
 ): Effect<never, E, A> {
-  return Effect.asyncInterruptEither((resolve) => {
+  return Effect.asyncEither((resolve) => {
     promise()
       .then((x) => pipe(x, Effect.succeed, resolve))
       .catch((x) => pipe(x, onReject, Effect.fail, resolve))
@@ -237,7 +237,7 @@ export const provideSomeContextReal = <A2>(
   ctx: Context<A2>
 ) =>
 <R, E, A>(self: Effect<R | A2, E, A>): Effect<Exclude<R, A2>, E, A> =>
-  (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx))
+  (self as Effect<A2, E, A>).mapInputContext((_: Context<never>) => _.merge(ctx))
 
 /**
  * @tsplus pipeable effect/io/Effect provideSomeContextEffect
@@ -246,7 +246,7 @@ export const provideSomeContextEffect = <R2, E2, A2>(
   makeCtx: Effect<R2, E2, Context<A2>>
 ) =>
 <R, E, A>(self: Effect<R | A2, E, A>): Effect<R2 | Exclude<R, A2>, E2 | E, A> =>
-  makeCtx.flatMap((ctx) => (self as Effect<A2, E, A>).contramapContext((_: Context<never>) => _.merge(ctx)))
+  makeCtx.flatMap((ctx) => (self as Effect<A2, E, A>).mapInputContext((_: Context<never>) => _.merge(ctx)))
 
 /**
  * Ref has atomic modify support if synchronous, for Effect we need a Semaphore.

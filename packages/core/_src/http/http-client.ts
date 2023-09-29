@@ -417,9 +417,9 @@ export function withHeaders(
 ): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
   return <R, E, A>(eff: Effect<R, E, A>) =>
     replace
-      ? Effect.contextWithEffect((r: Context<R>) => eff.provideContext(Context.add(HttpHeaders, headers)(r)))
+      ? Effect.contextWithEffect((r: Context<R>) => eff.provide(Context.add(HttpHeaders, headers)(r)))
       : Effect.contextWithEffect((r: Context<R>) =>
-        eff.provideContext(
+        eff.provide(
           Context.add(HttpHeaders, {
             ...(r.getOption(HttpHeaders).value ?? {}),
             ...headers

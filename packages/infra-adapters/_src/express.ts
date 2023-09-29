@@ -67,7 +67,7 @@ export function LiveExpressAppConfig<R>(
         res: Response,
         next: NextFunction
       ) =>
-      (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
+      (cause: Cause<never>) => exitHandler(req, res, next)(cause).provide(r)
     }))
     .toLayer(ExpressAppConfig)
 }

@@ -370,18 +370,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stream/Channel",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/stream/Channel.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -5345,18 +5345,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stream/Stream",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },

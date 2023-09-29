@@ -345,18 +345,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stm/STM",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/stm/STM.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
