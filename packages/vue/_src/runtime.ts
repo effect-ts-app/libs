@@ -11,8 +11,8 @@ const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").withDefault("/api"),
   headers: Config
     .string()
-    .table("headers")
-    .optional
+    .hashMap("headers")
+    .option
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
@@ -23,7 +23,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
   return Effect.gen(function*($) {
     const scope = yield* $(Scope.make())
     const env = yield* $(layer.buildWithScope(scope))
-    const runtime = yield* $(Effect.runtime<A>().scoped.provideContext(env))
+    const runtime = yield* $(Effect.runtime<A>().scoped.provide(env))
 
     return {
       runtime,

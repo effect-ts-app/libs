@@ -112,7 +112,7 @@ export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
   return (x) => {
     const r: Array<A> = []
     x.forEach((e) => r.push(e))
-    return r.sort(O.compare)
+    return r.sort(O)
   }
 }
 
@@ -627,7 +627,7 @@ export function union<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> 
 }
 
 function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
-  const eq = eq_ ?? ((x, y) => ord.compare(x, y) === 0)
+  const eq = eq_ ?? ((x, y) => ord(x, y) === 0)
 
   const fromArray_ = fromArray(eq)
   const concat_ = (set: Set<A>, it: Iterable<A>) => fromArray_([...set, ...it])

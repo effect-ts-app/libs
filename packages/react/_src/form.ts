@@ -458,8 +458,8 @@ function useGetMeta<
           ["|>"](These.result)
           ["|>"](
             (r) =>
-              r.match(
-                () =>
+              r.match({
+                onLeft: () =>
                   intl.formatMessage(
                     {
                       defaultMessage: "The entered value is not a valid {modelName}",
@@ -468,7 +468,7 @@ function useGetMeta<
                     },
                     { modelName: capitalize(name.toString()) }
                   ),
-                ([_, optErr]) =>
+                onRight: ([_, optErr]) =>
                   optErr.isSome()
                     ? intl.formatMessage(
                       {
@@ -479,7 +479,7 @@ function useGetMeta<
                       { modelName: capitalize(name.toString()) }
                     )
                     : undefined
-              ) ?? (additionalValidation ? additionalValidation(i) : undefined)
+                    }) ?? (additionalValidation ? additionalValidation(i) : undefined)
           )
       return {
         validate,

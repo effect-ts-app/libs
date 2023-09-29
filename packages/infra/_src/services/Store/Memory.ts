@@ -31,7 +31,7 @@ export const restoreFromRequestContext = RequestContextContainer.get.flatMap((ct
 function logQuery(filter: any, cursor: any) {
   return Effect
     .logDebug("mem query")
-    .apply(Effect.logAnnotates({
+    .apply(Effect.annotateLogs({
       query: JSON.stringify(filter, undefined, 2),
       cursor: JSON.stringify(
         cursor,

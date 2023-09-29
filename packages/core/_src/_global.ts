@@ -39,7 +39,7 @@ import { NonEmptyArguments, NonEmptySet, ROSet } from "@effect-app/core/Prelude"
 /**
  * @tsplus global
  */
-import { Equivalence } from "@effect/data/typeclass/Equivalence"
+import { Equivalence } from "@effect/data/Equivalence"
 
 /**
  * @tsplus global
@@ -154,7 +154,12 @@ import { Chunk, NonEmptyChunk } from "@effect/data/Chunk"
 /**
  * @tsplus global
  */
-import { Order } from "@effect/data/typeclass/Order"
+import { List } from "@effect/data/List"
+
+/**
+ * @tsplus global
+ */
+import { Order } from "@effect/data/Order"
 
 /**
  * @tsplus global
@@ -217,11 +222,6 @@ import { Lens, lens, Optic } from "@fp-ts/optic"
  * @tsplus global
  */
 import type { lazyGetter } from "@effect-app/core/utils"
-
-/**
- * @tsplus global
- */
-import { Debug } from "@effect/data/Debug"
 
 // TODO: these may be problematic global imports causing bundling issues?
 // "import type {} from" doesn't work outside this package

@@ -1699,6 +1699,22 @@
       ]
     },
     {
+      "definitionName": "hashMap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Config",
+          "name": "hashMap"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Config.Ops",
+          "name": "hashMap"
+        }
+      ]
+    },
+    {
       "definitionName": "map",
       "definitionKind": "const",
       "extensions": [
@@ -1763,18 +1779,18 @@
       ]
     },
     {
-      "definitionName": "optional",
+      "definitionName": "option",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/io/Config",
-          "name": "optional"
+          "name": "option"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
-          "name": "optional"
+          "name": "option"
         }
       ]
     },
@@ -1914,22 +1930,6 @@
       ]
     },
     {
-      "definitionName": "table",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Config",
-          "name": "table"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Config.Ops",
-          "name": "table"
-        }
-      ]
-    },
-    {
       "definitionName": "unwrap",
       "definitionKind": "const",
       "extensions": [
@@ -2021,7 +2021,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Error": [
+  "@effect/io/ConfigError": [
     {
       "definitionName": "And",
       "definitionKind": "interface",
@@ -2391,7 +2391,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Provider": [
+  "@effect/io/ConfigProvider": [
     {
       "definitionName": "ConfigProvider",
       "definitionKind": "interface",
@@ -2672,7 +2672,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Provider/PathPatch": [
+  "@effect/io/ConfigProviderPathPatch": [
     {
       "definitionName": "AndThen",
       "definitionKind": "interface",
@@ -2833,7 +2833,7 @@
       ]
     }
   ],
-  "@effect/io/Config/Secret": [
+  "@effect/io/ConfigSecret": [
     {
       "definitionName": "ConfigSecret",
       "definitionKind": "interface",
@@ -3882,24 +3882,13 @@
       ]
     },
     {
-      "definitionName": "asyncInterrupt",
+      "definitionName": "asyncEither",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "asyncInterrupt"
-        }
-      ]
-    },
-    {
-      "definitionName": "asyncInterruptEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "asyncInterruptEither"
+          "name": "asyncEither"
         }
       ]
     },
@@ -4409,18 +4398,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -4989,7 +4978,7 @@
         {
           "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
-          "name": "accessWithEffect"
+          "name": "flatMap"
         },
         {
           "kind": "fluent",
@@ -5825,18 +5814,18 @@
       ]
     },
     {
-      "definitionName": "logAnnotate",
+      "definitionName": "annotateLogs",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "logAnnotate"
+          "name": "annotateLogs"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "logAnnotate"
+          "name": "annotateLogs"
         }
       ]
     },
@@ -5859,33 +5848,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logDebug"
-        }
-      ]
-    },
-    {
-      "definitionName": "logDebugCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logDebugCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logDebugCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logDebugCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logDebugCauseMessage"
+          "name": "logDebug"
         }
       ]
     },
@@ -5897,33 +5864,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logError"
-        }
-      ]
-    },
-    {
-      "definitionName": "logErrorCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logErrorCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logErrorCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logErrorCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logErrorCauseMessage"
+          "name": "logError"
         }
       ]
     },
@@ -5935,33 +5880,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logFatal"
-        }
-      ]
-    },
-    {
-      "definitionName": "logFatalCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logFatalCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logFatalCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logFatalCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logFatalCauseMessage"
+          "name": "logFatal"
         }
       ]
     },
@@ -5973,49 +5896,27 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logInfo"
-        }
-      ]
-    },
-    {
-      "definitionName": "logInfoCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logInfoCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logInfoCause"
+          "name": "logInfo"
         }
       ]
     },
     {
-      "definitionName": "logInfoCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logInfoCauseMessage"
-        }
-      ]
-    },
-    {
-      "definitionName": "logSpan",
+      "definitionName": "withSpan",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "logSpan"
+          "name": "withSpan"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "logSpan"
+          "name": "withSpan"
         }
       ]
     },
@@ -6027,33 +5928,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logTrace"
-        }
-      ]
-    },
-    {
-      "definitionName": "logTraceCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logTraceCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logTraceCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logTraceCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logTraceCauseMessage"
+          "name": "logTrace"
         }
       ]
     },
@@ -6065,33 +5944,11 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "logWarning"
-        }
-      ]
-    },
-    {
-      "definitionName": "logWarningCause",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "getter",
           "typeName": "effect/io/Cause",
-          "name": "logWarningCause"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Cause.Ops",
-          "name": "logWarningCause"
-        }
-      ]
-    },
-    {
-      "definitionName": "logWarningCauseMessage",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "logWarningCauseMessage"
+          "name": "logWarning"
         }
       ]
     },
@@ -6140,7 +5997,7 @@
         {
           "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
-          "name": "accessWith"
+          "name": "map"
         },
         {
           "kind": "fluent",
@@ -6765,34 +6622,18 @@
       ]
     },
     {
-      "definitionName": "provideContext",
+      "definitionName": "provide",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
-          "name": "provideContext"
+          "name": "provide"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
-          "name": "provideContext"
-        }
-      ]
-    },
-    {
-      "definitionName": "provideLayer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "provideLayer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "provideLayer"
+          "name": "provide"
         }
       ]
     },
@@ -7646,22 +7487,6 @@
       ]
     },
     {
-      "definitionName": "runPromiseEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "runPromiseEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "runPromiseEither"
-        }
-      ]
-    },
-    {
       "definitionName": "runPromiseExit",
       "definitionKind": "const",
       "extensions": [
@@ -8383,6 +8208,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "typeName": "effect/data/Context/Tag",
+          "kind": "fluent",
+          "name": "tap"
+        },
+        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "tap"
@@ -8583,86 +8413,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "timeoutTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "toLayer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayer"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerContext",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerContext"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerContext"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerDiscard"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerScoped",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerScoped"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScoped"
-        }
-      ]
-    },
-    {
-      "definitionName": "toLayerScopedDiscard",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Effect",
-          "name": "toLayerScopedDiscard"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScopedDiscard"
         }
       ]
     },
@@ -9415,22 +9165,6 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "withMetric"
-        }
-      ]
-    },
-    {
-      "definitionName": "withParallelism",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "effect/io/Effect",
-          "name": "withParallelism"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "withParallelism"
         }
       ]
     },
@@ -11149,7 +10883,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber/Id": [
+  "@effect/io/FiberId": [
     {
       "definitionName": "Composite",
       "definitionKind": "interface",
@@ -12515,13 +12249,13 @@
       ]
     },
     {
-      "definitionName": "currentLogSpan",
+      "definitionName": "currentwithSpan",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/io/FiberRef.Ops",
-          "name": "currentLogSpan"
+          "name": "currentwithSpan"
         }
       ]
     },
@@ -13664,6 +13398,86 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "build"
+        }
+      ]
+    },
+    {
+      "definitionName": "effect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "toLayer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayer"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectContext",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerContext"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerContext"
+        }
+      ]
+    },
+    {
+      "definitionName": "effectDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerDiscard"
+        }
+      ]
+    },
+    {
+      "definitionName": "scoped",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScoped"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerScoped"
+        }
+      ]
+    },
+    {
+      "definitionName": "scopedDiscard",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "toLayerScopedDiscard"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "toLayerScopedDiscard"
         }
       ]
     },
@@ -15147,16 +14961,16 @@
   ],
   "@effect/io/Logger/Span": [
     {
-      "definitionName": "LogSpan",
+      "definitionName": "withSpan",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Logger/Span/LogSpan"
+          "typeName": "effect/io/Logger/Span/withSpan"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Logger/Span/LogSpan.Ops"
+          "typeName": "effect/io/Logger/Span/withSpan.Ops"
         }
       ]
     },
@@ -15177,12 +14991,12 @@
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/io/Logger/Span/LogSpan",
+          "typeName": "effect/io/Logger/Span/withSpan",
           "name": "render"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Logger/Span/LogSpan.Ops",
+          "typeName": "effect/io/Logger/Span/withSpan.Ops",
           "name": "render"
         }
       ]
@@ -18710,18 +18524,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/RequestBlock",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/RequestBlock.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -18938,18 +18752,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/RequestResolver",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/RequestResolver.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },
@@ -19450,22 +19264,6 @@
       ]
     },
     {
-      "definitionName": "runPromiseEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "typeName": "effect/io/Runtime",
-          "kind": "getter",
-          "name": "runPromiseEither"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Runtime.Ops",
-          "name": "runPromiseEither"
-        }
-      ]
-    },
-    {
       "definitionName": "runPromiseExit",
       "definitionKind": "const",
       "extensions": [
@@ -19914,18 +19712,18 @@
       ]
     },
     {
-      "definitionName": "contramapContext",
+      "definitionName": "mapInputContext",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Schedule.Ops",
-          "name": "contramapContext"
+          "name": "mapInputContext"
         }
       ]
     },

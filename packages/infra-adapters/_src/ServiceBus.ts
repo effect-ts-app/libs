@@ -75,7 +75,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
               rt.runPromise(
                 hndlr
                   .processError(err)
-                  .catchAllCause((cause) => Effect.logErrorCauseMessage("ServiceBus Error", cause))
+                  .catchAllCause((cause) => Effect.logError("ServiceBus Error", cause))
               ),
             processMessage: (msg) =>
               rt.runPromise(

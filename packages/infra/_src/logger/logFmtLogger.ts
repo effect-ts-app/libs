@@ -1,8 +1,9 @@
 import { getRequestContext } from "./shared.js"
 
-export const logfmtLogger = Logger.make<string, void>(
-  (fiberId, logLevel, message, cause, context, spans, annotations) => {
-    const c = getRequestContext(context)
+export const logfmtLogger = Logger.make<unknown, void>(
+  (_) => {
+    let { annotations } = _
+    const c = getRequestContext(_.context)
     const requestContext = c.value
     if (requestContext) {
       annotations = HashMap.make(...[
@@ -17,7 +18,7 @@ export const logfmtLogger = Logger.make<string, void>(
           .entries
       ])
     }
-    const formatted = Logger.logfmtLogger.log(fiberId, logLevel, message, cause, context, spans, annotations)
+    const formatted = Logger.logfmtLogger.log(_)
     globalThis.console.log(formatted)
   }
 )

@@ -114,10 +114,8 @@ export function useSafeQuery_<E, A>(
   //       : runNew
   //   })
   // ).flatMap(Fiber.await)
-  //   .flatMap(Effect.done)
-
   // function execWithInterruption() {
-  //   return ex.provideSomeLayer(Layers)
+  //   return ex.provide(Layers)
   //     .runPromise()
   //     .catch(err => {
   //       if (!Cause.isInterruptedException(err)) throw err
@@ -125,7 +123,7 @@ export function useSafeQuery_<E, A>(
   //     })
   // }
 
-  // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provideSomeLayer(Layers))
+  // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provide(Layers))
   const swr = useSWRV<A, E>(key, () => run.value(self).then((_) => _.body), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
@@ -166,7 +164,6 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, Fetch
     })
     .apply(withPermit)
     .flatMap((_) => _.await())
-    .flatMap((_) => _.done)
 
   function exec() {
     return run

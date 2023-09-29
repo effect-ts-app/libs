@@ -110,7 +110,9 @@ export function makeRepo<
           })
         )
 
-        const all = allE.flatMap((_) => _.forEachEffect(EParserFor(schema).condemnDie))
+        const parse = EParserFor(schema).condemnDie
+
+        const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
         function findE(id: T["id"]) {
           return store

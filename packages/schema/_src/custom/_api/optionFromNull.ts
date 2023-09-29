@@ -48,8 +48,7 @@ export function optionFromNull<
     ),
     S.constructor((x: Option<ConstructorInput>) =>
       x.match(
-        () => Th.succeed(Option.none),
-        (v) => Th.map_(create(v), Option.some)
+        { onNone: () => Th.succeed(Option.none), onSome: (v) => Th.map_(create(v), Option.some) }
       )
     ),
     S.encoder((_) => _.map(encode).value ?? null),

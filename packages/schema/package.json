@@ -5,9 +5,9 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/data": "^0.12.8",
-    "@effect/io": "^0.26.1",
-    "@fp-ts/optic": "^0.8.0",
+    "@effect/data": "^0.18.7",
+    "@effect/io": "^0.41.1",
+    "@fp-ts/optic": "^0.9.0",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -16,11 +16,11 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.4",
-    "@types/validator": "^13.11.1",
-    "fast-check": "~3.10.0",
+    "@types/validator": "^13.11.2",
+    "fast-check": "~3.13.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20230915",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.6"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

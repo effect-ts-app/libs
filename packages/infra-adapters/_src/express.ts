@@ -67,7 +67,7 @@ export function LiveExpressAppConfig<R>(
         res: Response,
         next: NextFunction
       ) =>
-      (cause: Cause<never>) => exitHandler(req, res, next)(cause).provideContext(r)
+      (cause: Cause<never>) => exitHandler(req, res, next)(cause).provide(r)
     }))
     .toLayer(ExpressAppConfig)
 }
@@ -132,7 +132,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   )
 
   const supervisor = yield* _(
-    Supervisor.track().acquireRelease((s) => s.value().flatMap((_) => _.interruptAll))
+    Supervisor.track.acquireRelease((s) => s.value().flatMap((_) => _.interruptAll))
   )
 
   function runtime<
@@ -151,17 +151,14 @@ export const makeExpressApp = Effect.gen(function*(_) {
     return Effect.runtime<Env>().map((r) =>
       handlers.map(
         (handler): RequestHandler => (req, res, next) => {
-          // TODO: restore trace from "handler"
-          Debug.untraced((restore) =>
-            r.runCallback(
-              open
-                .get
-                .flatMap((open) =>
-                  restore(() => (open ? handler(req, res, next) : Effect.interrupt()))()
-                    .onError(exitHandler(req, res, next))
-                    .supervised(supervisor)
-                )
-            )
+          r.runCallback(
+            open
+              .get
+              .flatMap((open) =>
+                (open ? handler(req, res, next) : Effect.interrupt)
+                  .onError(exitHandler(req, res, next))
+                  .supervised(supervisor)
+              )
           )
         }
       )

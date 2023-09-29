@@ -46,38 +46,40 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .map((cv) => (parseInt(cv) + 1).toString())
         .getOrElse(() => "1")
       return currentVersion.match(
-        () =>
-          lockIndex(record)
-            .zipRight(
-              getIndex(record)
-                .zipRightOpt(
-                  Effect.fail(() => new Error("Combination already exists, abort"))
-                )
-                .zipRight(getData(record))
-                // TODO: instead use MULTI & EXEC to make it in one command?
-                .flatMap((data) =>
-                  hmSetRec(getKey(record.id), {
-                    version,
-                    timestamp: new Date(),
-                    data
-                  })
-                )
-                .zipRight(setIndex(record))
-                .orDie
-                .map(() => ({ version, data: record } as CachedRecord<A>))
-            )
-            .scoped,
-        () =>
-          getData(record)
-            .flatMap((data) =>
-              hmSetRec(getKey(record.id), {
-                version,
-                timestamp: new Date(),
-                data
-              })
-            )
-            .orDie
-            .map(() => ({ version, data: record } as CachedRecord<A>))
+        {
+          onNone: () =>
+            lockIndex(record)
+              .zipRight(
+                getIndex(record)
+                  .zipRightOpt(
+                    Effect.fail(() => new Error("Combination already exists, abort"))
+                  )
+                  .zipRight(getData(record))
+                  // TODO: instead use MULTI & EXEC to make it in one command?
+                  .flatMap((data) =>
+                    hmSetRec(getKey(record.id), {
+                      version,
+                      timestamp: new Date(),
+                      data
+                    })
+                  )
+                  .zipRight(setIndex(record))
+                  .orDie
+                  .map(() => ({ version, data: record } as CachedRecord<A>))
+              )
+              .scoped,
+          onSome: () =>
+            getData(record)
+              .flatMap((data) =>
+                hmSetRec(getKey(record.id), {
+                  version,
+                  timestamp: new Date(),
+                  data
+                })
+              )
+              .orDie
+              .map(() => ({ version, data: record } as CachedRecord<A>))
+        }
       )
     }
 
@@ -109,15 +111,15 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       // acquire
       return RedisClient
         .flatMap(({ lock }) => Effect.tryPromise(() => lock.lock(lockKey, ttl) as unknown as Promise<Lock>))
-        .mapBoth(
-          (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
+        .mapBoth({
+          onFailure: (err) => new CouldNotAquireDbLockException(type, lockKey, err as Error),
           // release
-          (lock) => ({
+          onSuccess: (lock) => ({
             release: Effect
               .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        )
+        })
         .acquireRelease(
           (l) => l.release
         )
@@ -131,16 +133,16 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             () => lock.lock(getLockKey(id), ttl) as unknown as Promise<Lock>
           )
         )
-        .mapBoth(
-          (err) => new CouldNotAquireDbLockException(type, id, err as Error),
+        .mapBoth({
+          onFailure: (err) => new CouldNotAquireDbLockException(type, id, err as Error),
           // release
-          (lock) => ({
+          onSuccess: (lock) => ({
             // TODO
             release: Effect
               .tryPromise(() => lock.unlock() as unknown as Promise<void>)
               .orDie
           })
-        )
+        })
         .acquireRelease(
           (l) => l.release
         )

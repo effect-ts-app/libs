@@ -17,7 +17,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "Equivalence"
         }
       ]
@@ -28,7 +28,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMultiply"
         }
       ]
@@ -39,7 +39,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidSum"
         }
       ]
@@ -50,7 +50,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "Order"
         }
       ]
@@ -61,7 +61,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMax"
         }
       ]
@@ -72,7 +72,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMin"
         }
       ]
@@ -83,7 +83,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMultiply"
         }
       ]
@@ -94,7 +94,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupSum"
         }
       ]
@@ -696,7 +696,7 @@
       ]
     },
     {
-      "definitionName": "concat",
+      "definitionName": "appendAll",
       "definitionKind": "const",
       "extensions": [
         {
@@ -707,12 +707,12 @@
         {
           "kind": "fluent",
           "typeName": "effect/data/Chunk",
-          "name": "concat"
+          "name": "appendAll"
         },
         {
           "kind": "static",
           "typeName": "effect/data/Chunk.Ops",
-          "name": "concat"
+          "name": "appendAll"
         }
       ]
     },
@@ -3174,7 +3174,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
+          "typeName": "effect/data/Bounded.Ops",
           "name": "Bounded"
         }
       ]
@@ -3185,7 +3185,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "Equivalence"
         }
       ]
@@ -3212,7 +3212,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMax"
         }
       ]
@@ -3223,7 +3223,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMin"
         }
       ]
@@ -3234,7 +3234,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidSum"
         }
       ]
@@ -3245,7 +3245,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "Order"
         }
       ]
@@ -3256,7 +3256,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMax"
         }
       ]
@@ -3267,7 +3267,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMin"
         }
       ]
@@ -3278,7 +3278,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupSum"
         }
       ]
@@ -3684,7 +3684,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Applicative.Ops",
+          "typeName": "effect/data/Applicative.Ops",
           "name": "Applicative"
         }
       ]
@@ -3695,7 +3695,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops",
+          "typeName": "effect/data/Bicovariant.Ops",
           "name": "Bicovariant"
         }
       ]
@@ -3706,7 +3706,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
+          "typeName": "effect/data/Chainable.Ops",
           "name": "Chainable"
         }
       ]
@@ -3717,7 +3717,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
+          "typeName": "effect/data/Covariant.Ops",
           "name": "Covariant"
         }
       ]
@@ -3739,7 +3739,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
+          "typeName": "effect/data/FlatMap.Ops",
           "name": "FlatMap"
         }
       ]
@@ -3750,7 +3750,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
+          "typeName": "effect/data/Foldable.Ops",
           "name": "Foldable"
         }
       ]
@@ -3761,7 +3761,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -3772,7 +3772,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monad.Ops",
+          "typeName": "effect/data/Monad.Ops",
           "name": "Monad"
         }
       ]
@@ -3783,7 +3783,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Pointed.Ops",
+          "typeName": "effect/data/Pointed.Ops",
           "name": "Pointed"
         }
       ]
@@ -3794,7 +3794,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
+          "typeName": "effect/data/Product.Ops",
           "name": "Product"
         }
       ]
@@ -3805,7 +3805,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiAlternative.Ops",
+          "typeName": "effect/data/SemiAlternative.Ops",
           "name": "SemiAlternative"
         }
       ]
@@ -3816,7 +3816,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
+          "typeName": "effect/data/SemiApplicative.Ops",
           "name": "SemiApplicative"
         }
       ]
@@ -3827,7 +3827,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiCoproduct.Ops",
+          "typeName": "effect/data/SemiCoproduct.Ops",
           "name": "SemiCoproduct"
         }
       ]
@@ -3838,7 +3838,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
+          "typeName": "effect/data/SemiProduct.Ops",
           "name": "SemiProduct"
         }
       ]
@@ -3849,7 +3849,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
+          "typeName": "effect/data/Traversable.Ops",
           "name": "Traversable"
         }
       ]
@@ -4279,12 +4279,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/data/typeclass/Equivalence",
+          "typeName": "effect/data/Equivalence",
           "name": "getEquivalence"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "getEquivalence"
         }
       ]
@@ -4295,12 +4295,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Monoid",
+          "typeName": "effect/data/Monoid",
           "name": "getFirstLeftMonoid"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "getFirstLeftMonoid"
         }
       ]
@@ -4311,12 +4311,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getFirstLeftSemigroup"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getFirstLeftSemigroup"
         }
       ]
@@ -4354,12 +4354,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getOptionalSemigroup"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getOptionalSemigroup"
         }
       ]
@@ -6816,7 +6816,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Applicative.Ops",
+          "typeName": "effect/data/Applicative.Ops",
           "name": "Applicative"
         }
       ]
@@ -6827,7 +6827,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
+          "typeName": "effect/data/Chainable.Ops",
           "name": "Chainable"
         }
       ]
@@ -6838,7 +6838,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
+          "typeName": "effect/data/Covariant.Ops",
           "name": "Covariant"
         }
       ]
@@ -6849,7 +6849,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
+          "typeName": "effect/data/FlatMap.Ops",
           "name": "FlatMap"
         }
       ]
@@ -6860,7 +6860,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
+          "typeName": "effect/data/Foldable.Ops",
           "name": "Foldable"
         }
       ]
@@ -6871,7 +6871,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -6882,7 +6882,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monad.Ops",
+          "typeName": "effect/data/Monad.Ops",
           "name": "Monad"
         }
       ]
@@ -6893,7 +6893,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Of.Ops",
+          "typeName": "effect/data/Of.Ops",
           "name": "Of"
         }
       ]
@@ -6904,7 +6904,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Pointed.Ops",
+          "typeName": "effect/data/Pointed.Ops",
           "name": "Pointed"
         }
       ]
@@ -6915,7 +6915,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
+          "typeName": "effect/data/Product.Ops",
           "name": "Product"
         }
       ]
@@ -6926,7 +6926,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
+          "typeName": "effect/data/SemiApplicative.Ops",
           "name": "SemiApplicative"
         }
       ]
@@ -6937,7 +6937,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
+          "typeName": "effect/data/SemiProduct.Ops",
           "name": "SemiProduct"
         }
       ]
@@ -6948,7 +6948,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
+          "typeName": "effect/data/Traversable.Ops",
           "name": "Traversable"
         }
       ]
@@ -6992,12 +6992,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getSemiAlternative"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getSemiAlternative"
         }
       ]
@@ -7008,12 +7008,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getSemiCoproduct"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getSemiCoproduct"
         }
       ]
@@ -7099,7 +7099,7 @@
       ]
     },
     {
-      "definitionName": "concat",
+      "definitionName": "appendAll",
       "definitionKind": "const",
       "extensions": [
         {
@@ -7110,12 +7110,12 @@
         {
           "kind": "fluent",
           "typeName": "effect/data/List",
-          "name": "concat"
+          "name": "appendAll"
         },
         {
           "kind": "static",
           "typeName": "effect/data/List.Ops",
-          "name": "concat"
+          "name": "appendAll"
         }
       ]
     },
@@ -8755,7 +8755,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
+          "typeName": "effect/data/Bounded.Ops",
           "name": "Bounded"
         }
       ]
@@ -8777,7 +8777,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "Equivalence"
         }
       ]
@@ -8788,7 +8788,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMax"
         }
       ]
@@ -8799,7 +8799,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMin"
         }
       ]
@@ -8810,7 +8810,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidMultiply"
         }
       ]
@@ -8821,7 +8821,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "MonoidSum"
         }
       ]
@@ -8832,7 +8832,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "Order"
         }
       ]
@@ -8843,7 +8843,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMax"
         }
       ]
@@ -8854,7 +8854,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMin"
         }
       ]
@@ -8865,7 +8865,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupMultiply"
         }
       ]
@@ -8876,7 +8876,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "SemigroupSum"
         }
       ]
@@ -9154,7 +9154,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Alternative.Ops",
+          "typeName": "effect/data/Alternative.Ops",
           "name": "Alternative"
         }
       ]
@@ -9165,7 +9165,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Applicative.Ops",
+          "typeName": "effect/data/Applicative.Ops",
           "name": "Applicative"
         }
       ]
@@ -9176,7 +9176,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
+          "typeName": "effect/data/Chainable.Ops",
           "name": "Chainable"
         }
       ]
@@ -9187,7 +9187,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Coproduct.Ops",
+          "typeName": "effect/data/Coproduct.Ops",
           "name": "Coproduct"
         }
       ]
@@ -9198,7 +9198,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
+          "typeName": "effect/data/Covariant.Ops",
           "name": "Covariant"
         }
       ]
@@ -9220,7 +9220,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
+          "typeName": "effect/data/Filterable.Ops",
           "name": "Filterable"
         }
       ]
@@ -9231,7 +9231,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
+          "typeName": "effect/data/FlatMap.Ops",
           "name": "FlatMap"
         }
       ]
@@ -9242,7 +9242,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
+          "typeName": "effect/data/Foldable.Ops",
           "name": "Foldable"
         }
       ]
@@ -9253,7 +9253,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -9264,7 +9264,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monad.Ops",
+          "typeName": "effect/data/Monad.Ops",
           "name": "Monad"
         }
       ]
@@ -9275,7 +9275,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Pointed.Ops",
+          "typeName": "effect/data/Pointed.Ops",
           "name": "Pointed"
         }
       ]
@@ -9286,7 +9286,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
+          "typeName": "effect/data/Product.Ops",
           "name": "Product"
         }
       ]
@@ -9297,7 +9297,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiAlternative.Ops",
+          "typeName": "effect/data/SemiAlternative.Ops",
           "name": "SemiAlternative"
         }
       ]
@@ -9308,7 +9308,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
+          "typeName": "effect/data/SemiApplicative.Ops",
           "name": "SemiApplicative"
         }
       ]
@@ -9319,7 +9319,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiCoproduct.Ops",
+          "typeName": "effect/data/SemiCoproduct.Ops",
           "name": "SemiCoproduct"
         }
       ]
@@ -9330,7 +9330,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
+          "typeName": "effect/data/SemiProduct.Ops",
           "name": "SemiProduct"
         }
       ]
@@ -9341,7 +9341,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
+          "typeName": "effect/data/Traversable.Ops",
           "name": "Traversable"
         }
       ]
@@ -9734,12 +9734,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Equivalence",
+          "typeName": "effect/data/Equivalence",
           "name": "getEquivalence"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "getEquivalence"
         }
       ]
@@ -9750,12 +9750,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Monoid",
+          "typeName": "effect/data/Monoid",
           "name": "getFailureMonoid"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "getFailureMonoid"
         }
       ]
@@ -9766,12 +9766,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getFailureSemigroup"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getFailureSemigroup"
         }
       ]
@@ -9809,12 +9809,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Semigroup",
+          "typeName": "effect/data/Semigroup",
           "name": "getOptionalMonoid"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "getOptionalMonoid"
         }
       ]
@@ -9825,12 +9825,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Order",
+          "typeName": "effect/data/Order",
           "name": "getOrder"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "getOrder"
         }
       ]
@@ -10433,7 +10433,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "Monoid"
         }
       ]
@@ -10444,7 +10444,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "Semigroup"
         }
       ]
@@ -10531,7 +10531,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Contravariant.Ops",
+          "typeName": "effect/data/Contravariant.Ops",
           "name": "Contravariant"
         }
       ]
@@ -10564,7 +10564,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -10575,7 +10575,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
+          "typeName": "effect/data/Product.Ops",
           "name": "Product"
         }
       ]
@@ -10586,7 +10586,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
+          "typeName": "effect/data/SemiProduct.Ops",
           "name": "SemiProduct"
         }
       ]
@@ -11261,7 +11261,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Applicative.Ops",
+          "typeName": "effect/data/Applicative.Ops",
           "name": "Applicative"
         }
       ]
@@ -11272,7 +11272,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
+          "typeName": "effect/data/Chainable.Ops",
           "name": "Chainable"
         }
       ]
@@ -11283,7 +11283,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
+          "typeName": "effect/data/Covariant.Ops",
           "name": "Covariant"
         }
       ]
@@ -11294,7 +11294,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
+          "typeName": "effect/data/Filterable.Ops",
           "name": "Filterable"
         }
       ]
@@ -11305,7 +11305,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
+          "typeName": "effect/data/FlatMap.Ops",
           "name": "FlatMap"
         }
       ]
@@ -11316,7 +11316,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
+          "typeName": "effect/data/Foldable.Ops",
           "name": "Foldable"
         }
       ]
@@ -11327,7 +11327,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -11338,7 +11338,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monad.Ops",
+          "typeName": "effect/data/Monad.Ops",
           "name": "Monad"
         }
       ]
@@ -11349,7 +11349,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Of.Ops",
+          "typeName": "effect/data/Of.Ops",
           "name": "Of"
         }
       ]
@@ -11360,7 +11360,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Pointed.Ops",
+          "typeName": "effect/data/Pointed.Ops",
           "name": "Pointed"
         }
       ]
@@ -11371,7 +11371,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
+          "typeName": "effect/data/Product.Ops",
           "name": "Product"
         }
       ]
@@ -11382,7 +11382,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
+          "typeName": "effect/data/SemiApplicative.Ops",
           "name": "SemiApplicative"
         }
       ]
@@ -11393,7 +11393,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
+          "typeName": "effect/data/SemiProduct.Ops",
           "name": "SemiProduct"
         }
       ]
@@ -11404,7 +11404,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
+          "typeName": "effect/data/Traversable.Ops",
           "name": "Traversable"
         }
       ]
@@ -11415,7 +11415,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
+          "typeName": "effect/data/TraversableFilterable.Ops",
           "name": "TraversableFilterable"
         }
       ]
@@ -12097,12 +12097,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Order",
+          "typeName": "effect/data/Order",
           "name": "getOrder"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "getOrder"
         }
       ]
@@ -12474,12 +12474,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Monoid",
+          "typeName": "effect/data/Monoid",
           "name": "liftMonoid"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "liftMonoid"
         }
       ]
@@ -13617,7 +13617,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
+          "typeName": "effect/data/Covariant.Ops",
           "name": "Covariant"
         }
       ]
@@ -13628,7 +13628,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
+          "typeName": "effect/data/Filterable.Ops",
           "name": "Filterable"
         }
       ]
@@ -13639,7 +13639,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
+          "typeName": "effect/data/Invariant.Ops",
           "name": "Invariant"
         }
       ]
@@ -13650,7 +13650,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
+          "typeName": "effect/data/Traversable.Ops",
           "name": "Traversable"
         }
       ]
@@ -13661,7 +13661,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
+          "typeName": "effect/data/TraversableFilterable.Ops",
           "name": "TraversableFilterable"
         }
       ]
@@ -14171,12 +14171,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Order",
+          "typeName": "effect/data/Order",
           "name": "empty"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "empty"
         }
       ]
@@ -14714,12 +14714,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Order",
+          "typeName": "effect/data/Order",
           "name": "empty"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "empty"
         }
       ]
@@ -15086,12 +15086,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/data/typeclass/Order",
+          "typeName": "effect/data/Order",
           "name": "empty"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "empty"
         }
       ]
@@ -15388,7 +15388,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "Equivalence"
         }
       ]
@@ -15399,7 +15399,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
+          "typeName": "effect/data/Monoid.Ops",
           "name": "Monoid"
         }
       ]
@@ -15410,7 +15410,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "Order"
         }
       ]
@@ -15421,7 +15421,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
+          "typeName": "effect/data/Semigroup.Ops",
           "name": "Semigroup"
         }
       ]
@@ -15788,7 +15788,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "Equivalence"
         }
       ]
@@ -15826,7 +15826,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops",
+          "typeName": "effect/data/Bicovariant.Ops",
           "name": "Bicovariant"
         }
       ]
@@ -15964,369 +15964,18 @@
       ]
     }
   ],
-  "@effect/data/typeclass/Alternative": [
-    {
-      "definitionName": "Alternative",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Alternative"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Alternative.Ops"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Applicative": [
-    {
-      "definitionName": "Applicative",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Applicative"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Applicative.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "getMonoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Applicative.Ops",
-          "name": "getMonoid"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Bicovariant": [
-    {
-      "definitionName": "Bicovariant",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Bicovariant"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "bimapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops",
-          "name": "bimapComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "map",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops",
-          "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapLeft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bicovariant.Ops",
-          "name": "mapLeft"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Bounded": [
-    {
-      "definitionName": "Bounded",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Bounded"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Bounded.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "BoundedTypeLambda",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Bounded.TypeLambda"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Bounded.TypeLambda.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "clamp",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
-          "name": "clamp"
-        }
-      ]
-    },
-    {
-      "definitionName": "max",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
-          "name": "max"
-        }
-      ]
-    },
-    {
-      "definitionName": "min",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
-          "name": "min"
-        }
-      ]
-    },
-    {
-      "definitionName": "reverse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Bounded.Ops",
-          "name": "reverse"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Chainable": [
-    {
-      "definitionName": "Chainable",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Chainable"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Chainable.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipLeft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
-          "name": "zipLeft"
-        }
-      ]
-    },
-    {
-      "definitionName": "bind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
-          "name": "bind"
-        }
-      ]
-    },
-    {
-      "definitionName": "tap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Chainable.Ops",
-          "name": "tap"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Contravariant": [
-    {
-      "definitionName": "Contravariant",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Contravariant"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Contravariant.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "contramapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Contravariant.Ops",
-          "name": "contramapComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Contravariant.Ops",
-          "name": "imap"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Coproduct": [
-    {
-      "definitionName": "Coproduct",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Coproduct"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Coproduct.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "getMonoid",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Coproduct.Ops",
-          "name": "getMonoid"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Covariant": [
-    {
-      "definitionName": "Covariant",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Covariant"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Covariant.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "as",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
-          "name": "as"
-        }
-      ]
-    },
-    {
-      "definitionName": "asUnit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
-          "name": "asUnit"
-        }
-      ]
-    },
-    {
-      "definitionName": "flap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
-          "name": "flap"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Covariant.Ops",
-          "name": "mapComposition"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Equivalence": [
+  "@effect/data/Equivalence": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/data/typeclass/Equivalence"
+          "typeName": "effect/data/Equivalence"
         },
         {
           "kind": "companion",
-          "typeName": "effect/data/typeclass/Equivalence.Ops"
+          "typeName": "effect/data/Equivalence.Ops"
         }
       ]
     },
@@ -16336,11 +15985,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/data/typeclass/Equivalence.TypeLambda"
+          "typeName": "effect/data/Equivalence.TypeLambda"
         },
         {
           "kind": "companion",
-          "typeName": "effect/data/typeclass/Equivalence.TypeLambda.Ops"
+          "typeName": "effect/data/Equivalence.TypeLambda.Ops"
         }
       ]
     },
@@ -16350,7 +15999,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "array"
         }
       ]
@@ -16361,7 +16010,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "bigint"
         }
       ]
@@ -16372,24 +16021,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "boolean"
         }
       ]
     },
     {
-      "definitionName": "contramap",
+      "definitionName": "mapInput",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/data/typeclass/Equivalence",
-          "name": "contramap"
+          "typeName": "effect/data/Equivalence",
+          "name": "mapInput"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
-          "name": "contramap"
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "mapInput"
         }
       ]
     },
@@ -16399,7 +16048,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "getMonoid"
         }
       ]
@@ -16410,7 +16059,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "getSemigroup"
         }
       ]
@@ -16421,7 +16070,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "make"
         }
       ]
@@ -16432,7 +16081,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "number"
         }
       ]
@@ -16443,7 +16092,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "record"
         }
       ]
@@ -16454,7 +16103,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "strict"
         }
       ]
@@ -16465,7 +16114,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "string"
         }
       ]
@@ -16476,7 +16125,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "struct"
         }
       ]
@@ -16487,7 +16136,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "symbol"
         }
       ]
@@ -16498,444 +16147,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Equivalence.Ops",
+          "typeName": "effect/data/Equivalence.Ops",
           "name": "tuple"
         }
       ]
     }
   ],
-  "@effect/data/typeclass/Filterable": [
-    {
-      "definitionName": "Filterable",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Filterable"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Filterable.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "compact",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "compact"
-        }
-      ]
-    },
-    {
-      "definitionName": "filter",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "filter"
-        }
-      ]
-    },
-    {
-      "definitionName": "filterMapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "filterMapComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "partition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "partition"
-        }
-      ]
-    },
-    {
-      "definitionName": "partitionMapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "partitionMapComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "separate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Filterable.Ops",
-          "name": "separate"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/FlatMap": [
-    {
-      "definitionName": "FlatMap",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/FlatMap"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/FlatMap.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
-          "name": "zipRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "composeK",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
-          "name": "composeK"
-        }
-      ]
-    },
-    {
-      "definitionName": "flatten",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/FlatMap.Ops",
-          "name": "flatten"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Foldable": [
-    {
-      "definitionName": "Foldable",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Foldable"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Foldable.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "combineMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "combineMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "coproductMapKind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "coproductMapKind"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "reduceComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "reduceKind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "reduceKind"
-        }
-      ]
-    },
-    {
-      "definitionName": "toArray",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "toArray"
-        }
-      ]
-    },
-    {
-      "definitionName": "toArrayMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Foldable.Ops",
-          "name": "toArrayMap"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Invariant": [
-    {
-      "definitionName": "Invariant",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Invariant"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Invariant.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "bindTo",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
-          "name": "bindTo"
-        }
-      ]
-    },
-    {
-      "definitionName": "imapComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
-          "name": "imapComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "tupled",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Invariant.Ops",
-          "name": "tupled"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Monad": [
-    {
-      "definitionName": "Monad",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Monad"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Monad.Ops"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Monoid": [
-    {
-      "definitionName": "Monoid",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Monoid"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Monoid.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "array",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "array"
-        }
-      ]
-    },
-    {
-      "definitionName": "fromSemigroup",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "fromSemigroup"
-        }
-      ]
-    },
-    {
-      "definitionName": "max",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "max"
-        }
-      ]
-    },
-    {
-      "definitionName": "min",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "min"
-        }
-      ]
-    },
-    {
-      "definitionName": "reverse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "reverse"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Monoid.Ops",
-          "name": "tuple"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Of": [
-    {
-      "definitionName": "Of",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Of"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Of.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Do",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Of.Ops",
-          "name": "Do"
-        }
-      ]
-    },
-    {
-      "definitionName": "ofComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Of.Ops",
-          "name": "ofComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "unit",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Of.Ops",
-          "name": "unit"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Order": [
+  "@effect/data/Order": [
     {
       "definitionName": "Order",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/data/typeclass/Order"
+          "typeName": "effect/data/Order"
         },
         {
           "kind": "companion",
-          "typeName": "effect/data/typeclass/Order.Ops"
+          "typeName": "effect/data/Order.Ops"
         }
       ]
     },
@@ -16945,11 +16174,11 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/data/typeclass/Order.TypeLambda"
+          "typeName": "effect/data/Order.TypeLambda"
         },
         {
           "kind": "companion",
-          "typeName": "effect/data/typeclass/Order.TypeLambda.Ops"
+          "typeName": "effect/data/Order.TypeLambda.Ops"
         }
       ]
     },
@@ -16959,7 +16188,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "array"
         }
       ]
@@ -16970,7 +16199,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "between"
         }
       ]
@@ -16981,24 +16210,24 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "clamp"
         }
       ]
     },
     {
-      "definitionName": "contramap",
+      "definitionName": "mapInput",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "pipeable",
-          "typeName": "effect/data/typeclass/Order",
-          "name": "contramap"
+          "typeName": "effect/data/Order",
+          "name": "mapInput"
         },
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
-          "name": "contramap"
+          "typeName": "effect/data/Order.Ops",
+          "name": "mapInput"
         }
       ]
     },
@@ -17008,7 +16237,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "getMonoid"
         }
       ]
@@ -17019,7 +16248,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "getSemigroup"
         }
       ]
@@ -17030,7 +16259,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "greaterThan"
         }
       ]
@@ -17041,7 +16270,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "greaterThanOrEqualTo"
         }
       ]
@@ -17052,7 +16281,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "lessThan"
         }
       ]
@@ -17063,7 +16292,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "lessThanOrEqualTo"
         }
       ]
@@ -17074,7 +16303,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "make"
         }
       ]
@@ -17085,7 +16314,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "max"
         }
       ]
@@ -17096,7 +16325,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "min"
         }
       ]
@@ -17107,7 +16336,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "reverse"
         }
       ]
@@ -17118,8 +16347,52 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "struct"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
+      "definitionName": "boolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "boolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Equivalence.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "string"
         }
       ]
     },
@@ -17129,551 +16402,8 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/typeclass/Order.Ops",
+          "typeName": "effect/data/Order.Ops",
           "name": "tuple"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Pointed": [
-    {
-      "definitionName": "Pointed",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Pointed"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Pointed.Ops"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Product": [
-    {
-      "definitionName": "Product",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Product"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Product.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Product.Ops",
-          "name": "tuple"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/SemiAlternative": [
-    {
-      "definitionName": "SemiAlternative",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/SemiAlternative"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/SemiAlternative.Ops"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/SemiApplicative": [
-    {
-      "definitionName": "SemiApplicative",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/SemiApplicative"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipRight",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "zipRight"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipLeft",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "zipLeft"
-        }
-      ]
-    },
-    {
-      "definitionName": "ap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "ap"
-        }
-      ]
-    },
-    {
-      "definitionName": "getSemigroup",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "getSemigroup"
-        }
-      ]
-    },
-    {
-      "definitionName": "lift2",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "lift2"
-        }
-      ]
-    },
-    {
-      "definitionName": "zipWith",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiApplicative.Ops",
-          "name": "zipWith"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/SemiCoproduct": [
-    {
-      "definitionName": "SemiCoproduct",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/SemiCoproduct"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/SemiCoproduct.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "getSemigroup",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiCoproduct.Ops",
-          "name": "getSemigroup"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Semigroup": [
-    {
-      "definitionName": "Semigroup",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Semigroup"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Semigroup.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "SemigroupTypeLambda",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Semigroup.TypeLambda"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Semigroup.TypeLambda.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "array",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "array"
-        }
-      ]
-    },
-    {
-      "definitionName": "constant",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "constant"
-        }
-      ]
-    },
-    {
-      "definitionName": "first",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "first"
-        }
-      ]
-    },
-    {
-      "definitionName": "imap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "imap"
-        }
-      ]
-    },
-    {
-      "definitionName": "intercalate",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "intercalate"
-        }
-      ]
-    },
-    {
-      "definitionName": "last",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "last"
-        }
-      ]
-    },
-    {
-      "definitionName": "make",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "make"
-        }
-      ]
-    },
-    {
-      "definitionName": "max",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "max"
-        }
-      ]
-    },
-    {
-      "definitionName": "min",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "min"
-        }
-      ]
-    },
-    {
-      "definitionName": "reverse",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "reverse"
-        }
-      ]
-    },
-    {
-      "definitionName": "struct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "tuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Semigroup.Ops",
-          "name": "tuple"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/SemiProduct": [
-    {
-      "definitionName": "SemiProduct",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/SemiProduct"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "andThenBind",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "andThenBind"
-        }
-      ]
-    },
-    {
-      "definitionName": "appendElement",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "appendElement"
-        }
-      ]
-    },
-    {
-      "definitionName": "nonEmptyStruct",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "nonEmptyStruct"
-        }
-      ]
-    },
-    {
-      "definitionName": "nonEmptyTuple",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "nonEmptyTuple"
-        }
-      ]
-    },
-    {
-      "definitionName": "productComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "productComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "productMany",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "productMany"
-        }
-      ]
-    },
-    {
-      "definitionName": "productManyComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/SemiProduct.Ops",
-          "name": "productManyComposition"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/Traversable": [
-    {
-      "definitionName": "Traversable",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/Traversable"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/Traversable.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "sequence",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
-          "name": "sequence"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverseComposition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
-          "name": "traverseComposition"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverseTap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/Traversable.Ops",
-          "name": "traverseTap"
-        }
-      ]
-    }
-  ],
-  "@effect/data/typeclass/TraversableFilterable": [
-    {
-      "definitionName": "TraversableFilterable",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/typeclass/TraversableFilterable"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverseFilter",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
-          "name": "traverseFilter"
-        }
-      ]
-    },
-    {
-      "definitionName": "traverseFilterMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
-          "name": "traverseFilterMap"
-        }
-      ]
-    },
-    {
-      "definitionName": "traversePartition",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
-          "name": "traversePartition"
-        }
-      ]
-    },
-    {
-      "definitionName": "traversePartitionMap",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/typeclass/TraversableFilterable.Ops",
-          "name": "traversePartitionMap"
         }
       ]
     }

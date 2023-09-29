@@ -20,7 +20,7 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
-          yield* $(Effect.logDebug("Sending email").logAnnotate("msg", inspect(renderedMsg, false, 5)))
+          yield* $(Effect.logDebug("Sending email").annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* $(
             Effect.async<
@@ -42,7 +42,7 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
           //     templateId: msg.templateId
           //   }
           // }
-          // yield* $(Effect.logDebug("Tracking email event").logAnnotate("event", event.$$.pretty))
+          // yield* $(Effect.logDebug("Tracking email event").annotateLogs("event", event.$$.pretty))
           // const { trackEvent } = yield* $(AiContextService)
           // trackEvent(event)
           return ret
@@ -100,7 +100,7 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equivalence.string.contramap((to: { name?: string; email: string } | string) =>
+const eq = Equivalence.string.mapInput((to: { name?: string; email: string } | string) =>
   typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
 )
 

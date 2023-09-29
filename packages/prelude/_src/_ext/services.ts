@@ -25,7 +25,7 @@ export function accessLowerServicesWith_<T extends Record<string, Tag<any, any>>
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
-  return Debug.untraced(() => accessLowerServices_(services).map(fn))
+  return accessLowerServices_(services).map(fn)
 }
 
 /**
@@ -35,5 +35,5 @@ export function accessLowerServicesWithEffect_<T extends Record<string, Tag<any,
   services: T,
   fn: (services: LowerServices<T>) => Effect<R, E, A>
 ) {
-  return Debug.untraced(() => accessLowerServices_(services).flatMap(fn))
+  return accessLowerServices_(services).flatMap(fn)
 }

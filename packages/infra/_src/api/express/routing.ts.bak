@@ -157,7 +157,7 @@ export function handleRequest<
       })
       .flatMap(inp => {
         const hn = handle(inp)
-        const r = h ? hn.provideSomeLayer(h(req, res)) : hn
+        const r = h ? hn.provide(h(req, res)) : hn
         return (
           r as never as Effect<Exclude<R | R2, PR>, SupportedErrors, ResA>
         ).flatMap(outp => respond(inp, res)(outp))

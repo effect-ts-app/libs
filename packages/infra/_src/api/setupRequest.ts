@@ -6,12 +6,10 @@ import { RequestContextContainer, RequestContextContainerImpl } from "../service
  * @tsplus fluent effect/io/Effect setupRequestFromWith
  */
 export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return Debug.untraced(() =>
-    makeInternalRequestContext(name).flatMap((rc) =>
-      self
-        .logSpan("request")
-        .provideService(RequestContextContainer, new RequestContextContainerImpl(rc))
-    )
+  return makeInternalRequestContext(name).flatMap((rc) =>
+    self
+      .withSpan("request")
+      .provideService(RequestContextContainer, new RequestContextContainerImpl(rc))
   )
 }
 

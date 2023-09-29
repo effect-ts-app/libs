@@ -37,7 +37,7 @@ export const interpreters: ((schema: S.SchemaAny) => Option<() => any>)[] = [
       }
       if (schema instanceof S.SchemaPipe) {
         return () => (...xs) =>
-          collectAnnotationsFor(schema.self)(...xs).concat(
+          collectAnnotationsFor(schema.self)(...xs).appendAll(
             collectAnnotationsFor(schema.that)(...xs)
           )
       }

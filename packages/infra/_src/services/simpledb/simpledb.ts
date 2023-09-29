@@ -45,10 +45,10 @@ export function find<R, RDecode, EDecode, E, EA, A>(
   const read = (id: string) =>
     tryRead(id)
       .flatMapOpt(({ data, version }) =>
-        decode(data).mapBoth(
-          (err) => new InvalidStateError("DB serialisation Issue", err),
-          (data) => ({ data, version })
-        )
+        decode(data).mapBoth({
+          onFailure: (err) => new InvalidStateError("DB serialisation Issue", err),
+          onSuccess: (data) => ({ data, version })
+        })
       )
       .tapOpt((r) => getCache((c) => c.set(id, r)))
       .mapOpt((r) => r.data)
@@ -90,7 +90,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapOpt((x) => x.version)
-        .flatMap((_) => _.match(() => save(record, Option.none), confirmVersionAndSave(record)))
+        .flatMap((_) => _.match({ onNone: () => save(record, Option.none), onSome: confirmVersionAndSave(record) }))
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
     )
@@ -102,8 +102,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
           tryRead(record.id)
             .flatMap((_) =>
               _.match(
-                () => Effect.fail(new InvalidStateError("record is gone")),
-                Effect.succeed
+                { onNone: () => Effect.fail(new InvalidStateError("record is gone")), onSome: Effect.succeed }
               )
             )
             .tap(({ version }) =>

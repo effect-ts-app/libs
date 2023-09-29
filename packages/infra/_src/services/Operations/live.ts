@@ -75,7 +75,7 @@ const make = Effect.sync((): Operations => {
     cleanup,
     register: makeOp
       .tap((id) =>
-        Effect.logAnnotateScoped("operationId", id)
+        Effect.annotateLogscoped("operationId", id)
           > addOp(id).acquireRelease(
             (_, exit) => finishOp(id, exit)
           )

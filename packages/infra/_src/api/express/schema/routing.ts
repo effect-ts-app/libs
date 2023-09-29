@@ -100,34 +100,34 @@ export function makeFromSchema<ResA>(
   // TODO EffectOption.fromNullable(Req.Headers).flatMapOpt(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
   const makeReqQuerySchema = Effect(Option.fromNullable(Req.Query)).flatMap((_) =>
-    _.match(
-      () => Effect(Option.none),
-      (_) => jsonSchema(_).map(Option.some)
-    )
+    _.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => jsonSchema(_).map(Option.some)
+    })
   )
   const makeReqHeadersSchema = Effect(Option.fromNullable(Req.Headers)).flatMap((_) =>
-    _.match(
-      () => Effect(Option.none),
-      (_) => jsonSchema(_).map(Option.some)
-    )
+    _.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => jsonSchema(_).map(Option.some)
+    })
   )
   const makeReqCookieSchema = Effect(Option.fromNullable(Req.Cookie)).flatMap((_) =>
-    _.match(
-      () => Effect(Option.none),
-      (_) => jsonSchema(_).map(Option.some)
-    )
+    _.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => jsonSchema(_).map(Option.some)
+    })
   )
   const makeReqPathSchema = Effect(Option.fromNullable(Req.Path)).flatMap((_) =>
-    _.match(
-      () => Effect(Option.none),
-      (_) => jsonSchema(_).map(Option.some)
-    )
+    _.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => jsonSchema(_).map(Option.some)
+    })
   )
   const makeReqBodySchema = Effect(Option.fromNullable(Req.Body)).flatMap((_) =>
-    _.match(
-      () => Effect(Option.none),
-      (_) => jsonSchema(_).map(Option.some)
-    )
+    _.match({
+      onNone: () => Effect(Option.none),
+      onSome: (_) => jsonSchema(_).map(Option.some)
+    })
   )
   // const makeReqSchema = schema(Req)
 
