@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.59.7
+
+### Patch Changes
+
+- fix tagclass type
+
 ## 0.59.6
 
 ### Patch Changes

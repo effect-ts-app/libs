@@ -38,7 +38,7 @@ export const TagTypeId: TagTypeIdOriginal = Symbol.for("@effect/data/Context/Tag
 export type TagTypeId = typeof TagTypeId
 
 export function assignTag<Id, Service = Id>(key?: unknown) {
-  return <S extends object>(cls: S) => {
+  return <S extends object>(cls: S): S & Tag<Id, Service> => {
     const tag = Tag<Id, Service>(key)
     const t = Object.assign(cls, (C as any).TagProto, tag)
     // TODO: this is probably useless, as we need to get it at the source instead of here
