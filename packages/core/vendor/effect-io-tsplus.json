@@ -1590,18 +1590,18 @@
       ]
     },
     {
-      "definitionName": "arrayOf",
+      "definitionName": "array",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/io/Config",
-          "name": "arrayOf"
+          "name": "array"
         },
         {
           "kind": "static",
           "typeName": "effect/io/Config.Ops",
-          "name": "arrayOf"
+          "name": "array"
         }
       ]
     },
