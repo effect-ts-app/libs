@@ -8926,17 +8926,6 @@
       ]
     },
     {
-      "definitionName": "Date",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Order.Ops",
-          "name": "date"
-        }
-      ]
-    },
-    {
       "definitionName": "decrement",
       "definitionKind": "const",
       "extensions": [
@@ -9069,17 +9058,6 @@
       ]
     },
     {
-      "definitionName": "number",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Order.Ops",
-          "name": "number"
-        }
-      ]
-    },
-    {
       "definitionName": "remainder",
       "definitionKind": "const",
       "extensions": [
@@ -9109,17 +9087,6 @@
           "kind": "static",
           "typeName": "effect/data/Number.Ops",
           "name": "subtract"
-        }
-      ]
-    },
-    {
-      "definitionName": "string",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Order.Ops",
-          "name": "string"
         }
       ]
     },
@@ -16386,9 +16353,47 @@
       ]
     },
     {
+      "definitionName": "Date",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "Date"
+        }
+      ]
+    },
+    {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "string"
+        }
+      ]
+    },
+    {
       "definitionName": "reverse",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/data/Order",
+          "name": "reverse"
+        },
         {
           "kind": "static",
           "typeName": "effect/data/Order.Ops",
