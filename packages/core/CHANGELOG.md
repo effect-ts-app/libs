@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.57.3
+
+### Patch Changes
+
+- fix missing ext
+
 ## 0.57.2
 
 ### Patch Changes
