@@ -8893,6 +8893,28 @@
       ]
     },
     {
+      "definitionName": "boolean",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "boolean"
+        }
+      ]
+    },
+    {
+      "definitionName": "bigint",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "bigint"
+        }
+      ]
+    },
+    {
       "definitionName": "clamp",
       "definitionKind": "const",
       "extensions": [
@@ -8900,6 +8922,17 @@
           "kind": "static",
           "typeName": "effect/data/Number.Ops",
           "name": "clamp"
+        }
+      ]
+    },
+    {
+      "definitionName": "Date",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "date"
         }
       ]
     },
@@ -9036,6 +9069,17 @@
       ]
     },
     {
+      "definitionName": "number",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "number"
+        }
+      ]
+    },
+    {
       "definitionName": "remainder",
       "definitionKind": "const",
       "extensions": [
@@ -9065,6 +9109,17 @@
           "kind": "static",
           "typeName": "effect/data/Number.Ops",
           "name": "subtract"
+        }
+      ]
+    },
+    {
+      "definitionName": "string",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Order.Ops",
+          "name": "string"
         }
       ]
     },
