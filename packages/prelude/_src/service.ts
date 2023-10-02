@@ -5,7 +5,7 @@
  */
 
 import type { TagTypeId as TagTypeIdOriginal } from "@effect/data/Context"
-
+import * as C from "@effect/data/internal/Context"
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
 
@@ -40,21 +40,35 @@ export type TagTypeId = typeof TagTypeId
 export function assignTag<Id, Service = Id>(key?: unknown) {
   return <S extends object>(cls: S) => {
     const tag = Tag<Id, Service>(key)
-    return Object.assign(cls, tag)
+    const t = Object.assign(cls, (C as any).TagProto, tag)
+    // TODO: this is probably useless, as we need to get it at the source instead of here
+    Object.defineProperty(t, "stack", {
+      get() {
+        return tag.stack
+      }
+    })
+    return t
+  }
+}
+
+abstract class TagClassBase {
+  static flatMap<R1, E1, B>(f: (a: unknown) => Effect<R1, E1, B>): Effect<unknown | R1, E1, B> {
+    return Effect.flatMap(this as unknown as Tag<unknown, unknown>, f)
+  }
+  static map<B>(f: (a: unknown) => B): Effect<unknown, never, B> {
+    return Effect.map(this as unknown as Tag<unknown, unknown>, f)
+  }
+  static makeLayer(svc: unknown) {
+    return Layer.succeed(this as unknown as Tag<unknown, unknown>, svc)
   }
 }
 export function TagClass<Id, Service = Id>(key?: unknown) {
-  abstract class TagClass {
-    static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B> {
-      return Effect.flatMap(this as unknown as Tag<Id, Service>, f)
-    }
-    static map<B>(f: (a: Service) => B): Effect<Id, never, B> {
-      return Effect.map(this as unknown as Tag<Id, Service>, f)
-    }
-    static makeLayer(svc: Service) {
-      return Layer.succeed(this as unknown as Tag<Id, Service>, svc)
-    }
-  }
+  abstract class TagClass extends (TagClassBase as { 
+    new(): {}
+    flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B>
+    map<B>(f: (a: Service) => B): Effect<Id, never, B>
+    makeLayer(svc: Service): Layer<never, never, Service>
+  }) {}
 
   return assignTag<Id, Service>(key)(TagClass)
 }
