@@ -40,7 +40,7 @@ export type TagTypeId = typeof TagTypeId
 export function assignTag<Id, Service = Id>(key?: unknown) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
     const tag = Tag<Id, Service>(key)
-    const t = Object.assign(cls, (C as any).TagProto, tag)
+    const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
     // TODO: this is probably useless, as we need to get it at the source instead of here
     Object.defineProperty(t, "stack", {
       get() {
@@ -63,7 +63,7 @@ abstract class TagClassBase {
   }
 }
 export function TagClass<Id, Service = Id>(key?: unknown) {
-  abstract class TagClass extends (TagClassBase as { 
+  abstract class TagClass extends (TagClassBase as {
     new(): {}
     flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B>
     map<B>(f: (a: Service) => B): Effect<Id, never, B>
