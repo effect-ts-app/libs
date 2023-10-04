@@ -14,9 +14,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@fp-ts/optic@0.9.0':
-    hash: adpno2jhv75im52ycn45burshy
-    path: patches/@fp-ts__optic@0.9.0.patch
+  '@fp-ts/optic@0.10.0':
+    hash: g6p2wvdqwpzq42ns4zy72w6lre
+    path: patches/@fp-ts__optic@0.10.0.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
@@ -254,8 +254,8 @@ importers:
   packages/core:
     dependencies:
       '@fp-ts/optic':
-        specifier: ^0.9.0
-        version: 0.9.0(patch_hash=adpno2jhv75im52ycn45burshy)
+        specifier: ^0.10.0
+        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -476,8 +476,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@fp-ts/optic':
-        specifier: ^0.9.0
-        version: 0.9.0(patch_hash=adpno2jhv75im52ycn45burshy)
+        specifier: ^0.10.0
+        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44)
       effect:
         specifier: ^2.0.0-next.44
         version: 2.0.0-next.44
@@ -555,8 +555,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@fp-ts/optic':
-        specifier: ^0.9.0
-        version: 0.9.0(patch_hash=adpno2jhv75im52ycn45burshy)
+        specifier: ^0.10.0
+        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
@@ -668,8 +668,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@fp-ts/optic':
-        specifier: ^0.9.0
-        version: 0.9.0(patch_hash=adpno2jhv75im52ycn45burshy)
+        specifier: ^0.10.0
+        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -726,8 +726,8 @@ importers:
         specifier: ^2.9.3
         version: 2.9.3(@effect-app/typescript@5.3.0-tsplus.20230915)
       '@fp-ts/optic':
-        specifier: ^0.9.0
-        version: 0.9.0(patch_hash=adpno2jhv75im52ycn45burshy)
+        specifier: ^0.10.0
+        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44)
       effect:
         specifier: ^2.0.0-next.44
         version: 2.0.0-next.44
@@ -1550,10 +1550,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /@effect/data@0.17.6:
-    resolution: {integrity: sha512-/vwz7Jh05eS0qY8kczR/YyJd18d0C+PMtUkAealh4f6gwvhABLGCnktNJTcq/+UHxY0Cbv18r5uaJ4+7PPC+WQ==}
-    dev: false
-
   /@effect/language-service@0.0.19(patch_hash=izp2ue34jjv4swyrhg2ux4ha3e):
     resolution: {integrity: sha512-sKNVo031dkwLfe1jHZzdTiF1UXgLq1lAYd2JG7q416dlmMoxRcMXrZWyw6a/SxIDM0hyIJAEmrz5iUkQPcPdBQ==}
     dependencies:
@@ -1562,10 +1558,12 @@ packages:
     dev: true
     patched: true
 
-  /@effect/typeclass@0.3.0:
-    resolution: {integrity: sha512-eg91Dfpx8FqXIoq4DDVuY/wl+92K89HEgtwVcScRu7QAsp64QzkFpmNgHKPyA3tzT7ku+cV16NdoDId58sJgiQ==}
+  /@effect/typeclass@0.6.2(effect@2.0.0-next.44):
+    resolution: {integrity: sha512-H9FklKKpzm8RjaIwHVruk+hHUK6HYW9aVRQ09YMCQMJBdxs/bPdJ6/hJvBVhPp1TmcwGLe0mI2+IQ3HSpIjgfg==}
+    peerDependencies:
+      effect: ^2.0.0-next.39
     dependencies:
-      '@effect/data': 0.17.6
+      effect: 2.0.0-next.44
     dev: false
 
   /@esbuild/android-arm64@0.18.20:
@@ -1855,11 +1853,14 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.9.0(patch_hash=adpno2jhv75im52ycn45burshy):
-    resolution: {integrity: sha512-rpMg3WX6+d7IcOVCzKhT7k8EEKUl0l9V89ywHe8CQFeyb3gQdFDTLG/aZCh4Q5DVTbCBKrT4BrfKHnpXQe+/Dw==}
+  /@fp-ts/optic@0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.44):
+    resolution: {integrity: sha512-ArMc8qawBESuvps1BR74y3s8Vn8AiDnbNe/Pu1Pxc3RwVPDxb34cui6PblAIRXEieYH2QQiwsVp+bNDfxA48Zg==}
+    peerDependencies:
+      '@effect/typeclass': ^0.6.2
+      effect: ^2.0.0-next.44
     dependencies:
-      '@effect/data': 0.17.6
-      '@effect/typeclass': 0.3.0
+      '@effect/typeclass': 0.6.2(effect@2.0.0-next.44)
+      effect: 2.0.0-next.44
     dev: false
     patched: true
 
