@@ -5,16 +5,6 @@ import * as Chunk from "effect/Chunk"
 export * from "effect/Chunk"
 
 /**
- * @tsplus pipeable effect/data/Chunk sortWith
- */
-export function ChunksortWith<A>(
-  ...ords: NonEmptyArguments<Order<A>>
-): (a: Chunk.Chunk<A>) => Chunk.Chunk<A> {
-  // TODO
-  return (as) => as.toArray.sortWith(...ords).toChunk
-}
-
-/**
  * @tsplus fluent effect/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {

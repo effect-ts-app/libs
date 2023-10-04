@@ -114,16 +114,6 @@
         "default": "./_cjs/Effect.cjs"
       }
     },
-    "./Either": {
-      "import": {
-        "types": "./dist/Either.d.ts",
-        "default": "./dist/Either.js"
-      },
-      "require": {
-        "types": "./dist/Either.d.ts",
-        "default": "./_cjs/Either.cjs"
-      }
-    },
     "./Function": {
       "import": {
         "types": "./dist/Function.d.ts",
