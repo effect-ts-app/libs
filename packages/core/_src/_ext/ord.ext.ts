@@ -1,4 +1,4 @@
-import * as CNK from "@effect/data/Chunk"
+import * as CNK from "effect/Chunk"
 
 /**
  * @tsplus pipeable effect/data/Chunk sortWith

@@ -4,8 +4,8 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { TagTypeId as TagTypeIdOriginal } from "@effect/data/Context"
-import * as C from "@effect/data/internal/Context"
+import type { TagTypeId as TagTypeIdOriginal } from "effect/Context"
+
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
 
@@ -34,7 +34,7 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
   return t as T
 }
 
-export const TagTypeId: TagTypeIdOriginal = Symbol.for("@effect/data/Context/Tag") as unknown as TagTypeIdOriginal
+export const TagTypeId: TagTypeIdOriginal = Symbol.for("effect/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
 
 export function assignTag<Id, Service = Id>(key?: unknown) {

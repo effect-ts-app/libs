@@ -1,6 +1,6 @@
 // TODO: Add effect cause/exit etc
 
-import type { Effect, EffectTypeId } from "@effect/io/Effect"
+import type { Effect, EffectTypeId } from "effect/Effect"
 import type { Chunk, Either, Option } from "./Prelude.js"
 
 /**

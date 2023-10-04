@@ -1,8 +1,8 @@
 import { Option } from "./Option.js"
 
-import * as Chunk from "@effect/data/Chunk"
+import * as Chunk from "effect/Chunk"
 
-export * from "@effect/data/Chunk"
+export * from "effect/Chunk"
 
 /**
  * @tsplus pipeable effect/data/Chunk sortWith

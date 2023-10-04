@@ -1,4 +1,4 @@
-export * from "@effect/data/Either"
+export * from "effect/Either"
 
 /**
  * @tsplus pipeable effect/data/Either mapBoth

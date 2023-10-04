@@ -1,4 +1,4 @@
-import * as CausePretty from "@effect/io/internal/cause"
+import * as CausePretty from "effect/internal/cause"
 
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"

@@ -1,4 +1,4 @@
-import * as FiberRefs from "@effect/io/FiberRefs"
+import * as FiberRefs from "effect/FiberRefs"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 
 export function getRequestContext(context: FiberRefs.FiberRefs) {

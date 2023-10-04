@@ -1,6 +1,6 @@
 import type { Http } from "@effect-app/core/http/http-client"
 import type { ApiConfig } from "@effect-app/prelude/client"
-import type { Runtime } from "@effect/io/Runtime"
+import type { Runtime } from "effect/Runtime"
 
 export const run = {
   value<E, A>(_: Effect<ApiConfig | Http, E, A>): Promise<A> {

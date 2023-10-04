@@ -1,2 +1,2 @@
-export { Cache as EffectCache } from "@effect/io/Cache"
-export { Request as EffectRequest } from "@effect/io/Request"
+export { Cache as EffectCache } from "effect/Cache"
+export { Request as EffectRequest } from "effect/Request"

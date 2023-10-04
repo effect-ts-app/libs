@@ -1,12 +1,12 @@
-import * as ROArray from "@effect/data/ReadonlyArray"
+import * as ROArray from "effect/ReadonlyArray"
 import { identity } from "./Function.js"
 import * as Option from "./Option.js"
 
-import * as T from "@effect/io/Effect"
+import * as T from "effect/Effect"
 
-import * as Dur from "@effect/data/Duration"
+import * as Dur from "effect/Duration"
 
-export * from "@effect/data/ReadonlyArray"
+export * from "effect/ReadonlyArray"
 
 /**
  * @tsplus getter Generator toArray

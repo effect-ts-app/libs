@@ -1,5 +1,5 @@
 import { TagClass } from "@effect-app/prelude/service"
-import * as Q from "@effect/io/Queue"
+import * as Q from "effect/Queue"
 
 /**
  * @tsplus type MemQueue

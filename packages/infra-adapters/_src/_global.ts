@@ -6,7 +6,7 @@ import "@effect-app/schema/_global"
 /**
  * @tsplus global
  */
-import { Logger } from "@effect/io/Logger"
+import { Logger } from "effect/Logger"
 
 /**
  * @tsplus global

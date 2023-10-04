@@ -1,4 +1,4 @@
-import * as T from "@effect/io/Effect"
+import * as T from "effect/Effect"
 
 // TODO:
 /**

@@ -1,5 +1,5 @@
 import type { Operation, OperationId, OperationProgress } from "@effect-app/prelude/Operations"
-import * as Scope from "@effect/io/Scope"
+import * as Scope from "effect/Scope"
 
 export interface OperationsId {
   readonly _: unique symbol

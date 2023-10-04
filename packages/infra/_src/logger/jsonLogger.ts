@@ -1,4 +1,4 @@
-import type { AnnotationValue } from "@effect/io/Logger"
+import type { AnnotationValue } from "effect/Logger"
 import { getRequestContext } from "./shared.js"
 
 export const jsonLogger = Logger.make<unknown, void>(
