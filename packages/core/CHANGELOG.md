@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.58.2
+
+### Patch Changes
+
+- cleanup
+
 ## 0.58.1
 
 ### Patch Changes
