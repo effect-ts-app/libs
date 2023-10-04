@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.52.0
+
+### Minor Changes
+
+- 4d2e68df: Switch to effect meta package
+
+### Patch Changes
+
+- Updated dependencies [4d2e68df]
+  - @effect-app/core@0.58.0
+
 ## 0.51.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.60.0
+
+### Minor Changes
+
+- 4d2e68df: Switch to effect meta package
+
+### Patch Changes
+
+- Updated dependencies [4d2e68df]
+  - @effect-app/schema@0.52.0
+  - @effect-app/core@0.58.0
+
 ## 0.59.7
 
 ### Patch Changes

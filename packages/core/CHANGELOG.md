@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.58.0
+
+### Minor Changes
+
+- 4d2e68df: Switch to effect meta package
+
 ## 0.57.5
 
 ### Patch Changes

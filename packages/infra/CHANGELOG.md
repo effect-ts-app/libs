@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.75.0
+
+### Minor Changes
+
+- 4d2e68df: Switch to effect meta package
+
+### Patch Changes
+
+- Updated dependencies [4d2e68df]
+  - @effect-app/infra-adapters@0.51.0
+  - @effect-app/prelude@0.60.0
+  - @effect-app/schema@0.52.0
+  - @effect-app/core@0.58.0
+
 ## 0.74.7
 
 ### Patch Changes
