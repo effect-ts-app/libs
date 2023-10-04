@@ -1,16 +1,6 @@
 import * as CNK from "effect/Chunk"
 
 /**
- * @tsplus pipeable effect/data/Chunk sortWith
- */
-export function sortWith<A>(
-  ...ords: NonEmptyArguments<Order<A>>
-): (a: Chunk<A>) => Chunk<A> {
-  // TODO
-  return (as) => as.toReadonlyArray.sortWith(...ords).toChunk
-}
-
-/**
  * @tsplus getter Generator toArray
  */
 export function toArray<A>(

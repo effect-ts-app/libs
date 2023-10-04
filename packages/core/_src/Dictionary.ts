@@ -2,8 +2,8 @@
 
 import "./operators.js"
 
+import type { Either } from "effect/Either"
 import * as A from "./Array.js"
-import type { Either } from "./Either.js"
 import type { Predicate, Refinement } from "./Function.js"
 import * as O from "./Option.js"
 import type { PredicateWithIndex, RefinementWithIndex } from "./utils.js"

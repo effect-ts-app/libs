@@ -2,34 +2,34 @@
 /**
  * @tsplus global
  */
-import { TSemaphore } from "@effect/stm/TSemaphore"
+import { TSemaphore } from "effect/TSemaphore"
 
 /**
  * @tsplus global
  */
-import { TRef } from "@effect/stm/TRef"
+import { TRef } from "effect/TRef"
 
 /**
  * @tsplus global
  */
-import { STM } from "@effect/stm/STM"
+import { STM } from "effect/STM"
 
 /**
  * @tsplus global
  */
-import { Stream } from "@effect/stream/Stream"
+import { Stream } from "effect/Stream"
 
 /**
  * @tsplus global
  */
-import { Channel } from "@effect/stream/Channel"
+import { Channel } from "effect/Channel"
 
 /**
  * @tsplus global
  */
-import { Sink } from "@effect/stream/Sink"
+import { Sink } from "effect/Sink"
 
 /**
  * @tsplus global
  */
-import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
+import { SubscriptionRef } from "effect/SubscriptionRef"

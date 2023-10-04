@@ -302,7 +302,7 @@ export interface PureOps {
 }
 
 // /**
-//  * @tsplus type Pure.Aspects
+//  * @tsplus type Pure.Ops
 //  */
 
 // export interface PureAspects {}
