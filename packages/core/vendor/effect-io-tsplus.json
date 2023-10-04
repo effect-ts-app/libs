@@ -1,5 +1,5 @@
 {
-  "@effect/io/Cache": [
+  "effect/Cache": [
     {
       "definitionName": "Cache",
       "definitionKind": "interface",
@@ -140,7 +140,7 @@
       ]
     }
   ],
-  "@effect/io/Cause": [
+  "effect/Cause": [
     {
       "definitionName": "Annotated",
       "definitionKind": "interface",
@@ -1383,7 +1383,7 @@
       ]
     }
   ],
-  "@effect/io/Clock": [
+  "effect/Clock": [
     {
       "definitionName": "CancelToken",
       "definitionKind": "type",
@@ -1510,7 +1510,7 @@
       ]
     }
   ],
-  "@effect/io/Config": [
+  "effect/Config": [
     {
       "definitionName": "Config",
       "definitionKind": "interface",
@@ -2032,7 +2032,7 @@
       ]
     }
   ],
-  "@effect/io/ConfigError": [
+  "effect/ConfigError": [
     {
       "definitionName": "And",
       "definitionKind": "interface",
@@ -2402,7 +2402,7 @@
       ]
     }
   ],
-  "@effect/io/ConfigProvider": [
+  "effect/ConfigProvider": [
     {
       "definitionName": "ConfigProvider",
       "definitionKind": "interface",
@@ -2683,7 +2683,7 @@
       ]
     }
   ],
-  "@effect/io/ConfigProviderPathPatch": [
+  "effect/ConfigProviderPathPatch": [
     {
       "definitionName": "AndThen",
       "definitionKind": "interface",
@@ -2844,7 +2844,7 @@
       ]
     }
   ],
-  "@effect/io/ConfigSecret": [
+  "effect/ConfigSecret": [
     {
       "definitionName": "ConfigSecret",
       "definitionKind": "interface",
@@ -2961,7 +2961,7 @@
       ]
     }
   ],
-  "@effect/io/DefaultServices": [
+  "effect/DefaultServices": [
     {
       "definitionName": "DefaultServices",
       "definitionKind": "type",
@@ -2988,7 +2988,7 @@
       ]
     }
   ],
-  "@effect/io/Deferred": [
+  "effect/Deferred": [
     {
       "definitionName": "Deferred",
       "definitionKind": "interface",
@@ -3318,7 +3318,7 @@
       ]
     }
   ],
-  "@effect/io/Effect": [
+  "effect/Effect": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",
@@ -9451,7 +9451,7 @@
       ]
     }
   ],
-  "@effect/io/ExecutionStrategy": [
+  "effect/ExecutionStrategy": [
     {
       "definitionName": "ExecutionStrategy",
       "definitionKind": "type",
@@ -9606,7 +9606,7 @@
       ]
     }
   ],
-  "@effect/io/Exit": [
+  "effect/Exit": [
     {
       "definitionName": "Exit",
       "definitionKind": "type",
@@ -10203,7 +10203,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber": [
+  "effect/Fiber": [
     {
       "definitionName": "Fiber",
       "definitionKind": "interface",
@@ -10894,7 +10894,7 @@
       ]
     }
   ],
-  "@effect/io/FiberId": [
+  "effect/FiberId": [
     {
       "definitionName": "Composite",
       "definitionKind": "interface",
@@ -11203,7 +11203,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber/Runtime/Flags": [
+  "effect/Fiber/Runtime/Flags": [
     {
       "definitionName": "RuntimeFlag",
       "definitionKind": "type",
@@ -11698,7 +11698,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber/Runtime/Flags/Patch": [
+  "effect/Fiber/Runtime/Flags/Patch": [
     {
       "definitionName": "RuntimeFlagsPatch",
       "definitionKind": "type",
@@ -11976,7 +11976,7 @@
       ]
     }
   ],
-  "@effect/io/Fiber/Status": [
+  "effect/Fiber/Status": [
     {
       "definitionName": "Done",
       "definitionKind": "interface",
@@ -12161,7 +12161,7 @@
       ]
     }
   ],
-  "@effect/io/FiberRef": [
+  "effect/FiberRef": [
     {
       "definitionName": "FiberRef",
       "definitionKind": "interface",
@@ -12710,7 +12710,7 @@
       ]
     }
   ],
-  "@effect/io/FiberRefs": [
+  "effect/FiberRefs": [
     {
       "definitionName": "FiberRefs",
       "definitionKind": "interface",
@@ -12874,7 +12874,7 @@
       ]
     }
   ],
-  "@effect/io/FiberRefs/Patch": [
+  "effect/FiberRefs/Patch": [
     {
       "definitionName": "Add",
       "definitionKind": "interface",
@@ -13019,7 +13019,7 @@
       ]
     }
   ],
-  "@effect/io/Hub": [
+  "effect/Hub": [
     {
       "definitionName": "Hub",
       "definitionKind": "interface",
@@ -13239,7 +13239,7 @@
       ]
     }
   ],
-  "@effect/io/KeyedPool": [
+  "effect/KeyedPool": [
     {
       "definitionName": "KeyedPool",
       "definitionKind": "interface",
@@ -13356,7 +13356,7 @@
       ]
     }
   ],
-  "@effect/io/Layer": [
+  "effect/Layer": [
     {
       "definitionName": "Layer",
       "definitionKind": "interface",
@@ -14332,7 +14332,7 @@
       ]
     }
   ],
-  "@effect/io/Logger": [
+  "effect/Logger": [
     {
       "definitionName": "Logger",
       "definitionKind": "interface",
@@ -14648,7 +14648,7 @@
       ]
     }
   ],
-  "@effect/io/Logger/Level": [
+  "effect/Logger/Level": [
     {
       "definitionName": "All",
       "definitionKind": "interface",
@@ -14970,7 +14970,7 @@
       ]
     }
   ],
-  "@effect/io/Logger/Span": [
+  "effect/Logger/Span": [
     {
       "definitionName": "withSpan",
       "definitionKind": "interface",
@@ -15013,7 +15013,7 @@
       ]
     }
   ],
-  "@effect/io/Metric": [
+  "effect/Metric": [
     {
       "definitionName": "Metric",
       "definitionKind": "interface",
@@ -15552,7 +15552,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Boundaries": [
+  "effect/Metric/Boundaries": [
     {
       "definitionName": "MetricBoundaries",
       "definitionKind": "interface",
@@ -15637,7 +15637,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Hook": [
+  "effect/Metric/Hook": [
     {
       "definitionName": "MetricHook",
       "definitionKind": "interface",
@@ -15760,7 +15760,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Key": [
+  "effect/Metric/Key": [
     {
       "definitionName": "MetricKey",
       "definitionKind": "interface",
@@ -15915,7 +15915,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/KeyType": [
+  "effect/Metric/KeyType": [
     {
       "definitionName": "CounterKeyTypeTypeId",
       "definitionKind": "type",
@@ -16174,7 +16174,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Label": [
+  "effect/Metric/Label": [
     {
       "definitionName": "MetricLabel",
       "definitionKind": "interface",
@@ -16237,7 +16237,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Pair": [
+  "effect/Metric/Pair": [
     {
       "definitionName": "MetricPair",
       "definitionKind": "interface",
@@ -16300,7 +16300,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Polling": [
+  "effect/Metric/Polling": [
     {
       "definitionName": "PollingMetric",
       "definitionKind": "interface",
@@ -16443,7 +16443,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/Registry": [
+  "effect/Metric/Registry": [
     {
       "definitionName": "MetricRegistry",
       "definitionKind": "interface",
@@ -16495,7 +16495,7 @@
       ]
     }
   ],
-  "@effect/io/Metric/State": [
+  "effect/Metric/State": [
     {
       "definitionName": "CounterStateTypeId",
       "definitionKind": "type",
@@ -16782,7 +16782,7 @@
       ]
     }
   ],
-  "@effect/io/Pool": [
+  "effect/Pool": [
     {
       "definitionName": "Pool",
       "definitionKind": "interface",
@@ -16888,7 +16888,7 @@
       ]
     }
   ],
-  "@effect/io/Queue": [
+  "effect/Queue": [
     {
       "definitionName": "BaseQueue",
       "definitionKind": "interface",
@@ -17350,7 +17350,7 @@
       ]
     }
   ],
-  "@effect/io/Random": [
+  "effect/Random": [
     {
       "definitionName": "Random",
       "definitionKind": "interface",
@@ -17473,7 +17473,7 @@
       ]
     }
   ],
-  "@effect/io/Ref": [
+  "effect/Ref": [
     {
       "definitionName": "Ref",
       "definitionKind": "interface",
@@ -17728,7 +17728,7 @@
       ]
     }
   ],
-  "@effect/io/Ref/Synchronized": [
+  "effect/Ref/Synchronized": [
     {
       "definitionName": "Synchronized",
       "definitionKind": "interface",
@@ -18111,7 +18111,7 @@
       ]
     }
   ],
-  "@effect/io/Reloadable": [
+  "effect/Reloadable": [
     {
       "definitionName": "Reloadable",
       "definitionKind": "interface",
@@ -18229,7 +18229,7 @@
       ]
     }
   ],
-  "@effect/io/Request": [
+  "effect/Request": [
     {
       "definitionName": "Cache",
       "definitionKind": "interface",
@@ -18463,7 +18463,7 @@
       ]
     }
   ],
-  "@effect/io/RequestBlock": [
+  "effect/RequestBlock": [
     {
       "definitionName": "Empty",
       "definitionKind": "interface",
@@ -18658,7 +18658,7 @@
       ]
     }
   ],
-  "@effect/io/RequestResolver": [
+  "effect/RequestResolver": [
     {
       "definitionName": "RequestResolver",
       "definitionKind": "interface",
@@ -18931,7 +18931,7 @@
       ]
     }
   ],
-  "@effect/io/Resource": [
+  "effect/Resource": [
     {
       "definitionName": "Resource",
       "definitionKind": "interface",
@@ -19036,7 +19036,7 @@
       ]
     }
   ],
-  "@effect/io/Runtime": [
+  "effect/Runtime": [
     {
       "definitionName": "AsyncFiber",
       "definitionKind": "interface",
@@ -19339,7 +19339,7 @@
       ]
     }
   ],
-  "@effect/io/Schedule": [
+  "effect/Schedule": [
     {
       "definitionName": "Schedule",
       "definitionKind": "interface",
@@ -20928,7 +20928,7 @@
       ]
     }
   ],
-  "@effect/io/Schedule/Decision": [
+  "effect/Schedule/Decision": [
     {
       "definitionName": "Continue",
       "definitionKind": "interface",
@@ -21031,7 +21031,7 @@
       ]
     }
   ],
-  "@effect/io/Schedule/Interval": [
+  "effect/Schedule/Interval": [
     {
       "definitionName": "Interval",
       "definitionKind": "interface",
@@ -21249,7 +21249,7 @@
       ]
     }
   ],
-  "@effect/io/Schedule/Intervals": [
+  "effect/Schedule/Intervals": [
     {
       "definitionName": "Intervals",
       "definitionKind": "interface",
@@ -21450,7 +21450,7 @@
       ]
     }
   ],
-  "@effect/io/Scheduler": [
+  "effect/Scheduler": [
     {
       "definitionName": "Scheduler",
       "definitionKind": "interface",
@@ -21544,7 +21544,7 @@
       ]
     }
   ],
-  "@effect/io/Scope": [
+  "effect/Scope": [
     {
       "definitionName": "CloseableScope",
       "definitionKind": "interface",
@@ -21731,7 +21731,7 @@
       ]
     }
   ],
-  "@effect/io/ScopedRef": [
+  "effect/ScopedRef": [
     {
       "definitionName": "ScopedRef",
       "definitionKind": "interface",
@@ -21826,7 +21826,7 @@
       ]
     }
   ],
-  "@effect/io/Supervisor": [
+  "effect/Supervisor": [
     {
       "definitionName": "Supervisor",
       "definitionKind": "interface",
@@ -21938,7 +21938,7 @@
       ]
     }
   ],
-  "@effect/io/Tracer": [
+  "effect/Tracer": [
     {
       "definitionName": "ExternalSpan",
       "definitionKind": "interface",

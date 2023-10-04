@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { getOrUndefined as value, Option } from "@effect/data/Option"
+import { getOrUndefined as value, Option } from "effect/Option"
 
-import * as O from "@effect/data/Option"
+import * as O from "effect/Option"
 
-export * from "@effect/data/Option"
+export * from "effect/Option"
 
-export { Option as Opt } from "@effect/data/Option"
+export { Option as Opt } from "effect/Option"
 
 /**
  * @tsplus static effect/data/Option.Ops none

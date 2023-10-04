@@ -4,7 +4,7 @@ import "./operators.js"
 /**
  * @tsplus global
  */
-import { Data } from "@effect/data/Data"
+import { Data } from "effect/Data"
 
 /**
  * @tsplus global
@@ -14,17 +14,17 @@ import { Opt, Option } from "@effect-app/core/Option"
 /**
  * @tsplus global
  */
-import { None, Some } from "@effect/data/Option"
+import { None, Some } from "effect/Option"
 
 /**
  * @tsplus global
  */
-import { Either, Left, Right } from "@effect/data/Either"
+import { Either, Left, Right } from "effect/Either"
 
 /**
  * @tsplus global
  */
-import { Predicate, Refinement } from "@effect/data/Predicate"
+import { Predicate, Refinement } from "effect/Predicate"
 
 /**
  * @tsplus global
@@ -39,102 +39,102 @@ import { NonEmptyArguments, NonEmptySet, ROSet } from "@effect-app/core/Prelude"
 /**
  * @tsplus global
  */
-import { Equivalence } from "@effect/data/Equivalence"
+import { Equivalence } from "effect/Equivalence"
 
 /**
  * @tsplus global
  */
-import { Schedule } from "@effect/io/Schedule"
+import { Schedule } from "effect/Schedule"
 
 /**
  * @tsplus global
  */
-import { Effect, Semaphore } from "@effect/io/Effect"
+import { Effect, Semaphore } from "effect/Effect"
 
 /**
  * @tsplus global
  */
-import { Stream } from "@effect/stream/Stream"
+import { Stream } from "effect/Stream"
 
 /**
  * @tsplus global
  */
-import { Sink } from "@effect/stream/Sink"
+import { Sink } from "effect/Sink"
 
 /**
  * @tsplus global
  */
-import { Channel } from "@effect/stream/Channel"
+import { Channel } from "effect/Channel"
 
 /**
  * @tsplus global
  */
-import { Take } from "@effect/stream/Take"
+import { Take } from "effect/Take"
 
 /**
  * @tsplus global
  */
-import { GroupBy } from "@effect/stream/GroupBy"
+import { GroupBy } from "effect/GroupBy"
 
 /**
  * @tsplus global
  */
-import { SubscriptionRef } from "@effect/stream/SubscriptionRef"
+import { SubscriptionRef } from "effect/SubscriptionRef"
 
 /**
  * @tsplus global
  */
-import { Dequeue, Queue } from "@effect/io/Queue"
+import { Dequeue, Queue } from "effect/Queue"
 
 /**
  * @tsplus global
  */
-import { Hub } from "@effect/io/Hub"
+import { Hub } from "effect/Hub"
 
 /**
  * @tsplus global
  */
-import { Deferred } from "@effect/io/Deferred"
+import { Deferred } from "effect/Deferred"
 
 /**
  * @tsplus global
  */
-import { FiberRef } from "@effect/io/FiberRef"
+import { FiberRef } from "effect/FiberRef"
 
 /**
  * @tsplus global
  */
-import { Layer } from "@effect/io/Layer"
+import { Layer } from "effect/Layer"
 
 /**
  * @tsplus global
  */
-import { Fiber } from "@effect/io/Fiber"
+import { Fiber } from "effect/Fiber"
 
 /**
  * @tsplus global
  */
-import { Supervisor } from "@effect/io/Supervisor"
+import { Supervisor } from "effect/Supervisor"
 
 /**
  * @tsplus global
  */
-import { Exit } from "@effect/io/Exit"
+import { Exit } from "effect/Exit"
 
 /**
  * @tsplus global
  */
-import { Cause } from "@effect/io/Cause"
+import { Cause } from "effect/Cause"
 
 /**
  * @tsplus global
  */
-import { Ref } from "@effect/io/Ref"
+import { Ref } from "effect/Ref"
 
 /**
  * @tsplus global
  */
-import { Scope } from "@effect/io/Scope"
+import { Scope } from "effect/Scope"
 
 // /**
 //  * @tsplus global
@@ -144,74 +144,74 @@ import { Scope } from "@effect/io/Scope"
 /**
  * @tsplus global
  */
-import { Context, Tag } from "@effect/data/Context"
+import { Context, Tag } from "effect/Context"
 
 /**
  * @tsplus global
  */
-import { Chunk, NonEmptyChunk } from "@effect/data/Chunk"
+import { Chunk, NonEmptyChunk } from "effect/Chunk"
 
 /**
  * @tsplus global
  */
-import { List } from "@effect/data/List"
+import { List } from "effect/List"
 
 /**
  * @tsplus global
  */
-import { Order } from "@effect/data/Order"
+import { Order } from "effect/Order"
 
 /**
  * @tsplus global
  */
-import { Ordering } from "@effect/data/Ordering"
+import { Ordering } from "effect/Ordering"
 
 /**
  * @tsplus global
  */
-import { Equal } from "@effect/data/Equal"
+import { Equal } from "effect/Equal"
 
 /**
  * @tsplus global
  */
-import { Hash } from "@effect/data/Hash"
+import { Hash } from "effect/Hash"
 
 /**
  * @tsplus global
  */
-import { NonEmptyArray, NonEmptyReadonlyArray } from "@effect/data/ReadonlyArray"
+import { NonEmptyArray, NonEmptyReadonlyArray } from "effect/ReadonlyArray"
 
 /**
  * @tsplus global
  */
-import { Duration, Duration as DUR } from "@effect/data/Duration"
+import { Duration, Duration as DUR } from "effect/Duration"
 
 /**
  * @tsplus global
  */
-import { HashMap } from "@effect/data/HashMap"
+import { HashMap } from "effect/HashMap"
 
 /**
  * @tsplus global
  */
-import { HashSet } from "@effect/data/HashSet"
+import { HashSet } from "effect/HashSet"
 
 /**
  * @tsplus global
  */
-import { MutableList } from "@effect/data/MutableList"
+import { MutableList } from "effect/MutableList"
 /**
  * @tsplus global
  */
-import { MutableHashMap } from "@effect/data/MutableHashMap"
+import { MutableHashMap } from "effect/MutableHashMap"
 /**
  * @tsplus global
  */
-import { MutableQueue } from "@effect/data/MutableQueue"
+import { MutableQueue } from "effect/MutableQueue"
 /**
  * @tsplus global
  */
-import { MutableRef } from "@effect/data/MutableRef"
+import { MutableRef } from "effect/MutableRef"
 
 /**
  * @tsplus global

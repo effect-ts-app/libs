@@ -1,4 +1,4 @@
-import type { FiberId } from "@effect/io/FiberId"
+import type { FiberId } from "effect/FiberId"
 
 export function defaultTeardown(
   status: number,

@@ -1,5 +1,5 @@
-export * from "@effect/data/Function"
-export { Predicate, Refinement } from "@effect/data/Predicate"
+export * from "effect/Function"
+export { Predicate, Refinement } from "effect/Predicate"
 
 /**
  * Construct tuples

@@ -1,13 +1,13 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import { Option } from "@effect/data/Option"
-import * as Def from "@effect/io/Deferred"
-import * as Fiber from "@effect/io/Fiber"
-import * as Layer from "@effect/io/Layer"
+import { Option } from "effect/Option"
+import * as Def from "effect/Deferred"
+import * as Fiber from "effect/Fiber"
+import * as Layer from "effect/Layer"
 import { curry, flow, pipe } from "./Function.js"
 
-export * from "@effect/io/Effect"
+export * from "effect/Effect"
 
 /**
  * @tsplus static effect/io/Deferred.Ops await

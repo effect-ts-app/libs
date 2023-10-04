@@ -7,12 +7,12 @@
 /**
  * @tsplus global
  */
-import { Runtime } from "@effect/io/Runtime"
+import { Runtime } from "effect/Runtime"
 
 /**
  * @tsplus global
  */
-import { Config } from "@effect/io/Config"
+import { Config } from "effect/Config"
 
 /**
  * @tsplus global
@@ -22,27 +22,27 @@ import { ConfigSecretURL } from "@effect-app/prelude/Config/SecretURL"
 /**
  * @tsplus global
  */
-import { ConfigSecret } from "@effect/io/ConfigSecret"
+import { ConfigSecret } from "effect/ConfigSecret"
 
 /**
  * @tsplus global
  */
-import { ConfigError } from "@effect/io/ConfigError"
+import { ConfigError } from "effect/ConfigError"
 
 /**
  * @tsplus global
  */
-import { ConfigProvider } from "@effect/io/ConfigProvider"
+import { ConfigProvider } from "effect/ConfigProvider"
 
 /**
  * @tsplus global
  */
-import { Cache, CacheStats, ConsumerCache, EntryStats } from "@effect/io/Cache"
+import { Cache, CacheStats, ConsumerCache, EntryStats } from "effect/Cache"
 
 /**
  * @tsplus global
  */
-import { Request } from "@effect/io/Request"
+import { Request } from "effect/Request"
 
 /**
  * @tsplus global
@@ -52,7 +52,7 @@ import { EffectCache, EffectRequest } from "@effect-app/prelude/Request"
 /**
  * @tsplus global
  */
-import { RequestResolver } from "@effect/io/RequestResolver"
+import { RequestResolver } from "effect/RequestResolver"
 
 /* eslint-disable unused-imports/no-unused-imports */
 

@@ -1,5 +1,3 @@
-import * as CausePretty from "@effect/io/internal/cause"
-
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
   public readonly message: string
@@ -41,15 +39,16 @@ export class CauseException<E> extends Error {
     Error.stackTraceLimit = 0
     super()
     Error.stackTraceLimit = limit
-    const pretty = (CausePretty as any).prettyErrors(this.originalCause)
-    if (pretty.length > 0) {
-      this.name = pretty[0].message.split(":")[0]
-      this.message = pretty[0].message.substring(this.name.length + 2)
-      this.stack = `${this.name}: ${this.message}\n` + pretty[0].stack
-    }
+    // TODO
+    // const pretty = (CausePretty as any).prettyErrors(this.originalCause)
+    // if (pretty.length > 0) {
+    //   this.name = pretty[0].message.split(":")[0]
+    //   this.message = pretty[0].message.substring(this.name.length + 2)
+    //   this.stack = `${this.name}: ${this.message}\n` + pretty[0].stack
+    // }
   }
   override toString() {
-    return `[${this._tag}] ` + (CausePretty as any).pretty(this.originalCause)
+    return `[${this._tag}] ` + Cause.pretty(this.originalCause)
   }
   [Symbol.for("nodejs.util.inspect.custom")]() {
     return this.toString()

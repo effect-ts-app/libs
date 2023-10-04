@@ -1,5 +1,5 @@
 {
-  "@effect/data/Bigint": [
+  "effect/Bigint": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "const",
@@ -298,7 +298,7 @@
       ]
     }
   ],
-  "@effect/data/Boolean": [
+  "effect/Boolean": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "const",
@@ -443,7 +443,7 @@
       ]
     }
   ],
-  "@effect/data/Brand": [
+  "effect/Brand": [
     {
       "definitionName": "Brand",
       "definitionKind": "interface",
@@ -569,7 +569,7 @@
       ]
     }
   ],
-  "@effect/data/Chunk": [
+  "effect/Chunk": [
     {
       "definitionName": "Chunk",
       "definitionKind": "interface",
@@ -1967,7 +1967,7 @@
       ]
     }
   ],
-  "@effect/data/Context": [
+  "effect/Context": [
     {
       "definitionName": "Context",
       "definitionKind": "interface",
@@ -2190,7 +2190,7 @@
       ]
     }
   ],
-  "@effect/data/Data": [
+  "effect/Data": [
     {
       "definitionName": "Case",
       "definitionKind": "interface",
@@ -2308,7 +2308,7 @@
       ]
     }
   ],
-  "@effect/data/Debug": [
+  "effect/Debug": [
     {
       "definitionName": "Debug",
       "definitionKind": "interface",
@@ -2490,7 +2490,7 @@
       ]
     }
   ],
-  "@effect/data/Differ": [
+  "effect/Differ": [
     {
       "definitionName": "Differ",
       "definitionKind": "interface",
@@ -2719,7 +2719,7 @@
       ]
     }
   ],
-  "@effect/data/Differ/ChunkPatch": [
+  "effect/Differ/ChunkPatch": [
     {
       "definitionName": "ChunkPatch",
       "definitionKind": "interface",
@@ -2803,7 +2803,7 @@
       ]
     }
   ],
-  "@effect/data/Differ/ContextPatch": [
+  "effect/Differ/ContextPatch": [
     {
       "definitionName": "ContextPatch",
       "definitionKind": "interface",
@@ -2887,7 +2887,7 @@
       ]
     }
   ],
-  "@effect/data/Differ/HashMapPatch": [
+  "effect/Differ/HashMapPatch": [
     {
       "definitionName": "HashMapPatch",
       "definitionKind": "interface",
@@ -2971,7 +2971,7 @@
       ]
     }
   ],
-  "@effect/data/Differ/HashSetPatch": [
+  "effect/Differ/HashSetPatch": [
     {
       "definitionName": "HashSetPatch",
       "definitionKind": "interface",
@@ -3055,7 +3055,7 @@
       ]
     }
   ],
-  "@effect/data/Differ/OrPatch": [
+  "effect/Differ/OrPatch": [
     {
       "definitionName": "OrPatch",
       "definitionKind": "interface",
@@ -3139,7 +3139,7 @@
       ]
     }
   ],
-  "@effect/data/Duration": [
+  "effect/Duration": [
     {
       "definitionName": "Duration",
       "definitionKind": "interface",
@@ -3621,7 +3621,7 @@
       ]
     }
   ],
-  "@effect/data/Either": [
+  "effect/Either": [
     {
       "definitionName": "Either",
       "definitionKind": "type",
@@ -4994,7 +4994,7 @@
       ]
     }
   ],
-  "@effect/data/Equal": [
+  "effect/Equal": [
     {
       "definitionName": "Equal",
       "definitionKind": "interface",
@@ -5079,7 +5079,7 @@
       ]
     }
   ],
-  "@effect/data/Function": [
+  "effect/Function": [
     {
       "definitionName": "FunctionN",
       "definitionKind": "interface",
@@ -5402,7 +5402,7 @@
       ]
     }
   ],
-  "@effect/data/Gen": [
+  "effect/Gen": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",
@@ -5551,7 +5551,7 @@
       ]
     }
   ],
-  "@effect/data/Global": [
+  "effect/Global": [
     {
       "definitionName": "globalValue",
       "definitionKind": "const",
@@ -5564,7 +5564,7 @@
       ]
     }
   ],
-  "@effect/data/Hash": [
+  "effect/Hash": [
     {
       "definitionName": "Hash",
       "definitionKind": "interface",
@@ -5690,7 +5690,7 @@
       ]
     }
   ],
-  "@effect/data/HashMap": [
+  "effect/HashMap": [
     {
       "definitionName": "HashMap",
       "definitionKind": "interface",
@@ -6297,7 +6297,7 @@
       ]
     }
   ],
-  "@effect/data/HashSet": [
+  "effect/HashSet": [
     {
       "definitionName": "HashSet",
       "definitionKind": "interface",
@@ -6712,7 +6712,7 @@
       ]
     }
   ],
-  "@effect/data/HKT": [
+  "effect/HKT": [
     {
       "definitionName": "Kind",
       "definitionKind": "type",
@@ -6767,7 +6767,7 @@
       ]
     }
   ],
-  "@effect/data/Identity": [
+  "effect/Identity": [
     {
       "definitionName": "Identity",
       "definitionKind": "type",
@@ -7019,7 +7019,7 @@
       ]
     }
   ],
-  "@effect/data/List": [
+  "effect/List": [
     {
       "definitionName": "Cons",
       "definitionKind": "interface",
@@ -7693,7 +7693,7 @@
       ]
     }
   ],
-  "@effect/data/MutableHashMap": [
+  "effect/MutableHashMap": [
     {
       "definitionName": "MutableHashMap",
       "definitionKind": "interface",
@@ -7873,7 +7873,7 @@
       ]
     }
   ],
-  "@effect/data/MutableHashSet": [
+  "effect/MutableHashSet": [
     {
       "definitionName": "MutableHashSet",
       "definitionKind": "interface",
@@ -8005,7 +8005,7 @@
       ]
     }
   ],
-  "@effect/data/MutableList": [
+  "effect/MutableList": [
     {
       "definitionName": "MutableList",
       "definitionKind": "interface",
@@ -8228,7 +8228,7 @@
       ]
     }
   ],
-  "@effect/data/MutableQueue": [
+  "effect/MutableQueue": [
     {
       "definitionName": "MutableQueue",
       "definitionKind": "interface",
@@ -8419,7 +8419,7 @@
       ]
     }
   ],
-  "@effect/data/MutableRef": [
+  "effect/MutableRef": [
     {
       "definitionName": "MutableRef",
       "definitionKind": "interface",
@@ -8705,7 +8705,7 @@
       ]
     }
   ],
-  "@effect/data/NonEmpty": [
+  "effect/NonEmpty": [
     {
       "definitionName": "NonEmptyIterable",
       "definitionKind": "interface",
@@ -8748,7 +8748,7 @@
       ]
     }
   ],
-  "@effect/data/Number": [
+  "effect/Number": [
     {
       "definitionName": "Bounded",
       "definitionKind": "const",
@@ -9091,7 +9091,7 @@
       ]
     }
   ],
-  "@effect/data/Option": [
+  "effect/Option": [
     {
       "definitionName": "None",
       "definitionKind": "interface",
@@ -10412,7 +10412,7 @@
       ]
     }
   ],
-  "@effect/data/Ordering": [
+  "effect/Ordering": [
     {
       "definitionName": "Ordering",
       "definitionKind": "type",
@@ -10482,7 +10482,7 @@
       ]
     }
   ],
-  "@effect/data/Predicate": [
+  "effect/Predicate": [
     {
       "definitionName": "Predicate",
       "definitionKind": "interface",
@@ -11157,7 +11157,7 @@
       ]
     }
   ],
-  "@effect/data/Random": [
+  "effect/Random": [
     {
       "definitionName": "OptionalNumber",
       "definitionKind": "type",
@@ -11212,7 +11212,7 @@
       ]
     }
   ],
-  "@effect/data/ReadonlyArray": [
+  "effect/ReadonlyArray": [
     {
       "definitionName": "NonEmptyArray",
       "definitionKind": "type",
@@ -13582,7 +13582,7 @@
       ]
     }
   ],
-  "@effect/data/ReadonlyRecord": [
+  "effect/ReadonlyRecord": [
     {
       "definitionName": "ReadonlyRecord",
       "definitionKind": "interface",
@@ -14104,7 +14104,7 @@
       ]
     }
   ],
-  "@effect/data/RedBlackTree": [
+  "effect/RedBlackTree": [
     {
       "definitionName": "RedBlackTree",
       "definitionKind": "interface",
@@ -14679,7 +14679,7 @@
       ]
     }
   ],
-  "@effect/data/SortedMap": [
+  "effect/SortedMap": [
     {
       "definitionName": "SortedMap",
       "definitionKind": "interface",
@@ -15019,7 +15019,7 @@
       ]
     }
   ],
-  "@effect/data/SortedSet": [
+  "effect/SortedSet": [
     {
       "definitionName": "SortedSet",
       "definitionKind": "interface",
@@ -15370,7 +15370,7 @@
       ]
     }
   ],
-  "@effect/data/String": [
+  "effect/String": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "const",
@@ -15702,7 +15702,7 @@
       ]
     }
   ],
-  "@effect/data/Struct": [
+  "effect/Struct": [
     {
       "definitionName": "getEquivalence",
       "definitionKind": "const",
@@ -15770,7 +15770,7 @@
       ]
     }
   ],
-  "@effect/data/Symbol": [
+  "effect/Symbol": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "const",
@@ -15805,7 +15805,7 @@
       ]
     }
   ],
-  "@effect/data/Tuple": [
+  "effect/Tuple": [
     {
       "definitionName": "TupleTypeLambda",
       "definitionKind": "interface",
@@ -15964,7 +15964,7 @@
       ]
     }
   ],
-  "@effect/data/Equivalence": [
+  "effect/Equivalence": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "interface",
@@ -16153,7 +16153,7 @@
       ]
     }
   ],
-  "@effect/data/Order": [
+  "effect/Order": [
     {
       "definitionName": "Order",
       "definitionKind": "interface",

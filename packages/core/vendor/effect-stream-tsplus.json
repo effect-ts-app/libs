@@ -1,5 +1,5 @@
 {
-  "@effect/stream/Channel": [
+  "effect/Channel": [
     {
       "definitionName": "Channel",
       "definitionKind": "interface",
@@ -1672,7 +1672,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/ChildExecutorDecision": [
+  "effect/Channel/ChildExecutorDecision": [
     {
       "definitionName": "ChildExecutorDecision",
       "definitionKind": "type",
@@ -1863,7 +1863,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/MergeDecision": [
+  "effect/Channel/MergeDecision": [
     {
       "definitionName": "MergeDecision",
       "definitionKind": "interface",
@@ -1964,7 +1964,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/MergeState": [
+  "effect/Channel/MergeState": [
     {
       "definitionName": "BothRunning",
       "definitionKind": "interface",
@@ -2155,7 +2155,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/MergeStrategy": [
+  "effect/Channel/MergeStrategy": [
     {
       "definitionName": "BackPressure",
       "definitionKind": "interface",
@@ -2305,7 +2305,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/SingleProducerAsyncInput": [
+  "effect/Channel/SingleProducerAsyncInput": [
     {
       "definitionName": "AsyncInputConsumer",
       "definitionKind": "interface",
@@ -2360,7 +2360,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/UpstreamPullRequest": [
+  "effect/Channel/UpstreamPullRequest": [
     {
       "definitionName": "NoUpstream",
       "definitionKind": "interface",
@@ -2510,7 +2510,7 @@
       ]
     }
   ],
-  "@effect/stream/Channel/UpstreamPullStrategy": [
+  "effect/Channel/UpstreamPullStrategy": [
     {
       "definitionName": "PullAfterAllEnqueued",
       "definitionKind": "interface",
@@ -2660,7 +2660,7 @@
       ]
     }
   ],
-  "@effect/stream/GroupBy": [
+  "effect/GroupBy": [
     {
       "definitionName": "GroupBy",
       "definitionKind": "interface",
@@ -2776,7 +2776,7 @@
       ]
     }
   ],
-  "@effect/stream/Sink": [
+  "effect/Sink": [
     {
       "definitionName": "Sink",
       "definitionKind": "interface",
@@ -4538,7 +4538,7 @@
       ]
     }
   ],
-  "@effect/stream/Stream": [
+  "effect/Stream": [
     {
       "definitionName": "Stream",
       "definitionKind": "interface",
@@ -9838,7 +9838,7 @@
       ]
     }
   ],
-  "@effect/stream/Stream/Emit": [
+  "effect/Stream/Emit": [
     {
       "definitionName": "Emit",
       "definitionKind": "interface",
@@ -9868,7 +9868,7 @@
       ]
     }
   ],
-  "@effect/stream/Stream/HaltStrategy": [
+  "effect/Stream/HaltStrategy": [
     {
       "definitionName": "Both",
       "definitionKind": "interface",
@@ -10064,7 +10064,7 @@
       ]
     }
   ],
-  "@effect/stream/SubscriptionRef": [
+  "effect/SubscriptionRef": [
     {
       "definitionName": "SubscriptionRef",
       "definitionKind": "interface",
@@ -10436,7 +10436,7 @@
       ]
     }
   ],
-  "@effect/stream/Take": [
+  "effect/Take": [
     {
       "definitionName": "Take",
       "definitionKind": "interface",

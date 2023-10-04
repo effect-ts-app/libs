@@ -1,12 +1,12 @@
-import * as Chunk from "@effect/data/Chunk"
-import * as EQ from "@effect/data/Equal"
-import { pipe } from "@effect/data/Function"
-import * as Hash from "@effect/data/Hash"
-import { ConfigSecretTypeId } from "@effect/io/ConfigSecret"
+import * as Chunk from "effect/Chunk"
+import { ConfigSecretTypeId } from "effect/ConfigSecret"
+import * as EQ from "effect/Equal"
+import { pipe } from "effect/Function"
+import * as Hash from "effect/Hash"
 import type * as ConfigSecretURL from "../SecretURL.js"
 
 /** @internal */
-const ConfigSecretURLSymbolKey = "@effect/io/ConfigSecret" // "@effect-app/prelude/COnfigSecretURL"
+const ConfigSecretURLSymbolKey = "effect/ConfigSecret" // "@effect-app/prelude/COnfigSecretURL"
 
 /** @internal */
 export const proto = {

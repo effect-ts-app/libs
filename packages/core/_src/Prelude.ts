@@ -5,29 +5,29 @@ import "./global.js"
 
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
-import type * as CNK from "@effect/data/Chunk"
-import type * as EITHER from "@effect/data/Either"
-import type * as O from "@effect/data/Option"
-import type * as ORD from "@effect/data/Order"
+import type * as CNK from "effect/Chunk"
+import type * as EITHER from "effect/Either"
+import type * as O from "effect/Option"
+import type * as ORD from "effect/Order"
 import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
   // @ts-expect-error abc
-  export * from "@effect/data/Either"
+  export * from "effect/Either"
 }
 /** @tsplus type effect/data/Either */
 export type Either<E, A> = EITHER.Either<E, A>
 
 export namespace Order {
   // @ts-expect-error abc
-  export * from "@effect/data/Order"
+  export * from "effect/Order"
 }
 /** @tsplus type effect/data/Order */
 export type Order<A> = ORD.Order<A>
 
 export namespace Option {
   // @ts-expect-error abc
-  export * from "@effect/data/Option"
+  export * from "effect/Option"
 }
 /**
  * @tsplus companion effect/data/Option.Ops
@@ -37,7 +37,7 @@ export type Option<A> = O.Option<A>
 
 export namespace Chunk {
   // @ts-expect-error abc
-  export * from "@effect/data/Chunk"
+  export * from "effect/Chunk"
 }
 /**
  * @tsplus companion effect/data/Chunk.Ops
