@@ -5,8 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/data": "^0.18.7",
-    "@effect/io": "^0.41.1",
+    "effect": "^2.0.0-next.44",
     "@fp-ts/optic": "^0.9.0",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
