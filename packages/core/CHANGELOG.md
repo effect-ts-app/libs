@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.58.3
+
+### Patch Changes
+
+- 6b002041: cleanup
+- rebuild
+
 ## 0.58.2
 
 ### Patch Changes
