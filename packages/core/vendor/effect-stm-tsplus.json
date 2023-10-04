@@ -1,5 +1,5 @@
 {
-  "@effect/stm/STM": [
+  "effect/STM": [
     {
       "definitionName": "STM",
       "definitionKind": "interface",
@@ -2023,7 +2023,7 @@
       ]
     }
   ],
-  "@effect/stm/TArray": [
+  "effect/TArray": [
     {
       "definitionName": "TArray",
       "definitionKind": "interface",
@@ -2689,7 +2689,7 @@
       ]
     }
   ],
-  "@effect/stm/TDeferred": [
+  "effect/TDeferred": [
     {
       "definitionName": "TDeferred",
       "definitionKind": "interface",
@@ -2805,7 +2805,7 @@
       ]
     }
   ],
-  "@effect/stm/THub": [
+  "effect/THub": [
     {
       "definitionName": "THub",
       "definitionKind": "interface",
@@ -3050,7 +3050,7 @@
       ]
     }
   ],
-  "@effect/stm/TMap": [
+  "effect/TMap": [
     {
       "definitionName": "TMap",
       "definitionKind": "interface",
@@ -3732,7 +3732,7 @@
       ]
     }
   ],
-  "@effect/stm/TPriorityQueue": [
+  "effect/TPriorityQueue": [
     {
       "definitionName": "TPriorityQueue",
       "definitionKind": "interface",
@@ -4046,7 +4046,7 @@
       ]
     }
   ],
-  "@effect/stm/TQueue": [
+  "effect/TQueue": [
     {
       "definitionName": "BaseTQueue",
       "definitionKind": "interface",
@@ -4519,7 +4519,7 @@
       ]
     }
   ],
-  "@effect/stm/TRandom": [
+  "effect/TRandom": [
     {
       "definitionName": "TRandom",
       "definitionKind": "interface",
@@ -4637,7 +4637,7 @@
       ]
     }
   ],
-  "@effect/stm/TReentrantLock": [
+  "effect/TReentrantLock": [
     {
       "definitionName": "TReentrantLock",
       "definitionKind": "interface",
@@ -4961,7 +4961,7 @@
       ]
     }
   ],
-  "@effect/stm/TRef": [
+  "effect/TRef": [
     {
       "definitionName": "TRef",
       "definitionKind": "interface",
@@ -5205,7 +5205,7 @@
       ]
     }
   ],
-  "@effect/stm/TSemaphore": [
+  "effect/TSemaphore": [
     {
       "definitionName": "TSemaphore",
       "definitionKind": "interface",
@@ -5412,7 +5412,7 @@
       ]
     }
   ],
-  "@effect/stm/TSet": [
+  "effect/TSet": [
     {
       "definitionName": "TSet",
       "definitionKind": "interface",
