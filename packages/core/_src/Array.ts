@@ -111,16 +111,6 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
 }
 
 /**
- * @tsplus pipeable Array sortWith
- * @tsplus pipeable ReadonlyArray sortWith
- */
-export function sortWith<A>(
-  ...ords: NonEmptyArguments<Order<A>>
-): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ROArray.sortBy(...ords)
-}
-
-/**
  * @tsplus pipeable Array sortByO
  * @tsplus pipeable ReadonlyArray sortByO
  * @tsplus pipeable NonEmptyArray sortByO
@@ -251,31 +241,6 @@ export function randomElement<A>(a: ReadonlyArray<A>): A | undefined {
  */
 export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
   return a[Math.floor(Math.random() * a.length)]
-}
-
-/**
- * @tsplus pipeable Array mapNonEmpty
- * @tsplus pipeable effect/data/ReadonlyArray mapNonEmpty
- * @tsplus pipeable effect/data/ReadonlyArray/NonEmptyReadonlyArray mapNonEmpty
- * @tsplus pipeable effect/data/ReadonlyArray/NonEmptyArray mapNonEmpty
- */
-export const mapRA = ROArray.mapNonEmpty
-
-/**
- * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray sortBy
- */
-export function sortBy<A>(na: NonEmptyReadonlyArray<A>, ords: readonly Order<A>[]) {
-  return ROArray.sortBy(...ords)(na) as unknown as NonEmptyReadonlyArray<A>
-}
-
-/**
- * @tsplus static effect/data/ReadonlyArray.Ops sortWithNonEmpty
- * @tsplus pipeable ReadonlyArray sortWithNonEmpty
- */
-export function sortWithNonEmpty<A>(
-  ...ords: NonEmptyArguments<Order<A>>
-): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return (a) => a.sortByNonEmpty(...ords)
 }
 
 /**
