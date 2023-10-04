@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.60.1
+
+### Patch Changes
+
+- improve tsc parsing performance 3x
+- Updated dependencies
+  - @effect-app/core@0.58.1
+  - @effect-app/schema@0.52.1
+
 ## 0.60.0
 
 ### Minor Changes

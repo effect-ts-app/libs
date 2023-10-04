@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.58.1
+
+### Patch Changes
+
+- improve tsc parsing performance 3x
+
 ## 0.58.0
 
 ### Minor Changes
