@@ -82,15 +82,6 @@ export function elem<A>(E: Equivalence<A>, value: A) {
 }
 
 /**
- * @tsplus pipeable ReadonlyArray sortWithNonEmpty
- */
-export function sortWithNonEmpty<A>(
-  ...ords: NonEmptyArguments<Order<A>>
-): (a: NonEmptyReadonlyArray<A>) => NonEmptyArray<A> {
-  return (a) => a.sortByNonEmpty(...ords)
-}
-
-/**
  * @tsplus pipeable effect/data/Chunk partition
  */
 export const ChunkPartition = CNK.partition
