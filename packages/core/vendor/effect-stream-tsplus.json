@@ -1576,7 +1576,7 @@
       ]
     }
   ],
-  "effect/Channel/ChildExecutorDecision": [
+  "effect/ChannelChildExecutorDecision": [
     {
       "definitionName": "ChildExecutorDecision",
       "definitionKind": "type",
@@ -1767,7 +1767,7 @@
       ]
     }
   ],
-  "effect/Channel/MergeDecision": [
+  "effect/ChannelMergeDecision": [
     {
       "definitionName": "MergeDecision",
       "definitionKind": "interface",
@@ -1868,7 +1868,7 @@
       ]
     }
   ],
-  "effect/Channel/MergeState": [
+  "effect/ChannelMergeState": [
     {
       "definitionName": "BothRunning",
       "definitionKind": "interface",
@@ -2059,7 +2059,7 @@
       ]
     }
   ],
-  "effect/Channel/MergeStrategy": [
+  "effect/ChannelMergeStrategy": [
     {
       "definitionName": "BackPressure",
       "definitionKind": "interface",
@@ -2209,7 +2209,7 @@
       ]
     }
   ],
-  "effect/Channel/SingleProducerAsyncInput": [
+  "effect/ChannelSingleProducerAsyncInput": [
     {
       "definitionName": "AsyncInputConsumer",
       "definitionKind": "interface",
@@ -2264,7 +2264,7 @@
       ]
     }
   ],
-  "effect/Channel/UpstreamPullRequest": [
+  "effect/ChannelUpstreamPullRequest": [
     {
       "definitionName": "NoUpstream",
       "definitionKind": "interface",
@@ -2414,7 +2414,7 @@
       ]
     }
   ],
-  "effect/Channel/UpstreamPullStrategy": [
+  "effect/ChannelUpstreamPullStrategy": [
     {
       "definitionName": "PullAfterAllEnqueued",
       "definitionKind": "interface",
@@ -8396,7 +8396,7 @@
       ]
     }
   ],
-  "effect/Stream/Emit": [
+  "effect/StreamEmit": [
     {
       "definitionName": "Emit",
       "definitionKind": "interface",
@@ -8426,7 +8426,7 @@
       ]
     }
   ],
-  "effect/Stream/HaltStrategy": [
+  "effect/StreamHaltStrategy": [
     {
       "definitionName": "Both",
       "definitionKind": "interface",
