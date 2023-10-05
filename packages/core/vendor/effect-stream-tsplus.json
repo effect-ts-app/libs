@@ -150,7 +150,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "as"
         }
       ]
@@ -166,7 +166,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "asUnit"
         }
       ]
@@ -204,7 +204,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "catchAll"
         }
       ]
@@ -220,7 +220,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "catchAllCause"
         }
       ]
@@ -236,7 +236,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "collect"
         }
       ]
@@ -252,7 +252,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatAll"
         }
       ]
@@ -268,7 +268,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatAllWith"
         }
       ]
@@ -284,7 +284,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatMap"
         }
       ]
@@ -300,7 +300,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatMapWith"
         }
       ]
@@ -316,7 +316,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatMapWithCustom"
         }
       ]
@@ -332,7 +332,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "concatOut"
         }
       ]
@@ -392,7 +392,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "doneCollect"
         }
       ]
@@ -408,7 +408,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "drain"
         }
       ]
@@ -424,7 +424,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "embedInput"
         }
       ]
@@ -440,7 +440,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "emitCollect"
         }
       ]
@@ -456,7 +456,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "ensuring"
         }
       ]
@@ -472,7 +472,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "ensuringWith"
         }
       ]
@@ -532,7 +532,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "flatMap"
         }
       ]
@@ -548,7 +548,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "flatten"
         }
       ]
@@ -564,7 +564,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "foldCauseChannel"
         }
       ]
@@ -580,7 +580,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "foldChannel"
         }
       ]
@@ -684,7 +684,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "interruptWhen"
         }
       ]
@@ -700,7 +700,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "interruptWhenDeferred"
         }
       ]
@@ -727,7 +727,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "map"
         }
       ]
@@ -743,7 +743,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapEffect"
         }
       ]
@@ -759,7 +759,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapError"
         }
       ]
@@ -775,7 +775,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapErrorCause"
         }
       ]
@@ -791,7 +791,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInput"
         }
       ]
@@ -807,7 +807,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputContext"
         }
       ]
@@ -823,7 +823,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputEffect"
         }
       ]
@@ -839,7 +839,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputError"
         }
       ]
@@ -855,7 +855,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputErrorEffect"
         }
       ]
@@ -871,7 +871,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputIn"
         }
       ]
@@ -887,7 +887,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapInputInEffect"
         }
       ]
@@ -903,7 +903,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapOut"
         }
       ]
@@ -919,7 +919,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapOutEffect"
         }
       ]
@@ -935,7 +935,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mapOutEffectPar"
         }
       ]
@@ -951,7 +951,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeAll"
         }
       ]
@@ -967,7 +967,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeAllUnbounded"
         }
       ]
@@ -983,7 +983,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeAllUnboundedWith"
         }
       ]
@@ -1010,7 +1010,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeMap"
         }
       ]
@@ -1026,7 +1026,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeOut"
         }
       ]
@@ -1042,7 +1042,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeOutWith"
         }
       ]
@@ -1058,7 +1058,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "mergeWith"
         }
       ]
@@ -1085,7 +1085,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "orDie"
         }
       ]
@@ -1101,7 +1101,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "orDieWith"
         }
       ]
@@ -1117,7 +1117,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "orElse"
         }
       ]
@@ -1133,7 +1133,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "pipeTo"
         }
       ]
@@ -1149,7 +1149,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "pipeToOrFail"
         }
       ]
@@ -1165,7 +1165,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "provideContext"
         }
       ]
@@ -1181,7 +1181,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "provideLayer"
         }
       ]
@@ -1197,7 +1197,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "provideService"
         }
       ]
@@ -1213,7 +1213,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "provideSomeLayer"
         }
       ]
@@ -1273,7 +1273,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "repeated"
         }
       ]
@@ -1289,7 +1289,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "run"
         }
       ]
@@ -1305,7 +1305,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "runCollect"
         }
       ]
@@ -1321,7 +1321,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "runDrain"
         }
       ]
@@ -1381,7 +1381,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "toPull"
         }
       ]
@@ -1408,7 +1408,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "toSink"
         }
       ]
@@ -1424,7 +1424,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "toStream"
         }
       ]
@@ -1473,7 +1473,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "updateService"
         }
       ]
@@ -1489,7 +1489,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "withSpan"
         }
       ]
@@ -1538,7 +1538,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "zip"
         }
       ]
@@ -1554,7 +1554,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "zipLeft"
         }
       ]
@@ -1570,7 +1570,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel.Aspects",
+          "typeName": "effect/stream/Channel.Ops",
           "name": "zipRight"
         }
       ]
@@ -1713,7 +1713,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Aspects",
+          "typeName": "effect/stream/Channel/ChildExecutorDecision.Ops",
           "name": "isClose"
         }
       ]
@@ -1729,7 +1729,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Aspects",
+          "typeName": "effect/stream/Channel/ChildExecutorDecision.Ops",
           "name": "isContinue"
         }
       ]
@@ -1745,7 +1745,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Aspects",
+          "typeName": "effect/stream/Channel/ChildExecutorDecision.Ops",
           "name": "isYield"
         }
       ]
@@ -1761,7 +1761,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/ChildExecutorDecision.Aspects",
+          "typeName": "effect/stream/Channel/ChildExecutorDecision.Ops",
           "name": "match"
         }
       ]
@@ -1862,7 +1862,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeDecision.Aspects",
+          "typeName": "effect/stream/Channel/MergeDecision.Ops",
           "name": "match"
         }
       ]
@@ -1994,7 +1994,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeState.Aspects",
+          "typeName": "effect/stream/Channel/MergeState.Ops",
           "name": "isBothRunning"
         }
       ]
@@ -2010,7 +2010,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeState.Aspects",
+          "typeName": "effect/stream/Channel/MergeState.Ops",
           "name": "isLeftDone"
         }
       ]
@@ -2037,7 +2037,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeState.Aspects",
+          "typeName": "effect/stream/Channel/MergeState.Ops",
           "name": "isRightDone"
         }
       ]
@@ -2053,7 +2053,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeState.Aspects",
+          "typeName": "effect/stream/Channel/MergeState.Ops",
           "name": "match"
         }
       ]
@@ -2160,7 +2160,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeStrategy.Aspects",
+          "typeName": "effect/stream/Channel/MergeStrategy.Ops",
           "name": "isBackPressure"
         }
       ]
@@ -2176,7 +2176,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeStrategy.Aspects",
+          "typeName": "effect/stream/Channel/MergeStrategy.Ops",
           "name": "isBufferSliding"
         }
       ]
@@ -2203,7 +2203,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/MergeStrategy.Aspects",
+          "typeName": "effect/stream/Channel/MergeStrategy.Ops",
           "name": "match"
         }
       ]
@@ -2365,7 +2365,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullRequest.Ops",
           "name": "isNoUpstream"
         }
       ]
@@ -2381,7 +2381,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullRequest.Ops",
           "name": "isPulled"
         }
       ]
@@ -2408,7 +2408,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullRequest.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullRequest.Ops",
           "name": "match"
         }
       ]
@@ -2515,7 +2515,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Ops",
           "name": "isPullAfterAllEnqueued"
         }
       ]
@@ -2531,7 +2531,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Ops",
           "name": "isPullAfterNext"
         }
       ]
@@ -2558,7 +2558,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Aspects",
+          "typeName": "effect/stream/Channel/UpstreamPullStrategy.Ops",
           "name": "match"
         }
       ]
@@ -2615,7 +2615,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/GroupBy.Aspects",
+          "typeName": "effect/stream/GroupBy.Ops",
           "name": "evaluate"
         }
       ]
@@ -2631,7 +2631,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/GroupBy.Aspects",
+          "typeName": "effect/stream/GroupBy.Ops",
           "name": "filter"
         }
       ]
@@ -2647,7 +2647,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/GroupBy.Aspects",
+          "typeName": "effect/stream/GroupBy.Ops",
           "name": "first"
         }
       ]
@@ -2743,7 +2743,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "as"
         }
       ]
@@ -2770,7 +2770,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "collectAllFrom"
         }
       ]
@@ -2885,7 +2885,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "collectAllWhileWith"
         }
       ]
@@ -2901,7 +2901,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "collectLeftover"
         }
       ]
@@ -3005,7 +3005,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "dimap"
         }
       ]
@@ -3021,7 +3021,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "dimapChunks"
         }
       ]
@@ -3037,7 +3037,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "dimapChunksEffect"
         }
       ]
@@ -3053,7 +3053,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "dimapEffect"
         }
       ]
@@ -3135,7 +3135,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "ensuring"
         }
       ]
@@ -3151,7 +3151,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "ensuringWith"
         }
       ]
@@ -3222,7 +3222,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "filterInput"
         }
       ]
@@ -3238,7 +3238,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "filterInputEffect"
         }
       ]
@@ -3254,7 +3254,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "findEffect"
         }
       ]
@@ -3270,7 +3270,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "flatMap"
         }
       ]
@@ -3374,7 +3374,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "foldSink"
         }
       ]
@@ -3566,7 +3566,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "ignoreLeftover"
         }
       ]
@@ -3604,7 +3604,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "map"
         }
       ]
@@ -3620,7 +3620,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "mapEffect"
         }
       ]
@@ -3636,7 +3636,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "mapError"
         }
       ]
@@ -3652,7 +3652,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "mapInputChunks"
         }
       ]
@@ -3668,7 +3668,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "mapInputChunksEffect"
         }
       ]
@@ -3684,7 +3684,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "mapLeftover"
         }
       ]
@@ -3722,7 +3722,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "orElse"
         }
       ]
@@ -3738,7 +3738,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "provideContext"
         }
       ]
@@ -3754,7 +3754,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "race"
         }
       ]
@@ -3770,7 +3770,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "raceBoth"
         }
       ]
@@ -3786,7 +3786,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "raceWith"
         }
       ]
@@ -3802,7 +3802,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "refineOrDie"
         }
       ]
@@ -3818,7 +3818,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "refineOrDieWith"
         }
       ]
@@ -3845,7 +3845,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "splitWhere"
         }
       ]
@@ -3883,7 +3883,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "summarized"
         }
       ]
@@ -3943,7 +3943,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "toChannel"
         }
       ]
@@ -3981,7 +3981,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "withDuration"
         }
       ]
@@ -3997,7 +3997,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "zip"
         }
       ]
@@ -4013,7 +4013,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "zipLeft"
         }
       ]
@@ -4029,7 +4029,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "zipRight"
         }
       ]
@@ -4045,7 +4045,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Sink.Aspects",
+          "typeName": "effect/stream/Sink.Ops",
           "name": "zipWith"
         }
       ]
@@ -4166,7 +4166,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "aggregate"
         }
       ]
@@ -4182,7 +4182,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "aggregateWithin"
         }
       ]
@@ -4198,7 +4198,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "aggregateWithinEither"
         }
       ]
@@ -4214,7 +4214,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "as"
         }
       ]
@@ -4274,7 +4274,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "bind"
         }
       ]
@@ -4290,7 +4290,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "bindEffect"
         }
       ]
@@ -4306,7 +4306,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "bindTo"
         }
       ]
@@ -4322,7 +4322,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "branchAfter"
         }
       ]
@@ -4338,7 +4338,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "broadcast"
         }
       ]
@@ -4354,7 +4354,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "broadcastDynamic"
         }
       ]
@@ -4370,7 +4370,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "broadcastedQueues"
         }
       ]
@@ -4386,7 +4386,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "broadcastedQueuesDynamic"
         }
       ]
@@ -4402,7 +4402,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "buffer"
         }
       ]
@@ -4418,7 +4418,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "bufferChunks"
         }
       ]
@@ -4434,7 +4434,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchAll"
         }
       ]
@@ -4450,7 +4450,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchAllCause"
         }
       ]
@@ -4466,7 +4466,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchSome"
         }
       ]
@@ -4482,7 +4482,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchSomeCause"
         }
       ]
@@ -4498,7 +4498,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchTag"
         }
       ]
@@ -4514,7 +4514,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "catchTags"
         }
       ]
@@ -4530,7 +4530,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "changes"
         }
       ]
@@ -4546,7 +4546,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "changesWith"
         }
       ]
@@ -4562,7 +4562,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "changesWithEffect"
         }
       ]
@@ -4578,7 +4578,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "chunks"
         }
       ]
@@ -4594,7 +4594,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "chunksWith"
         }
       ]
@@ -4610,7 +4610,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "combine"
         }
       ]
@@ -4626,7 +4626,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "combineChunks"
         }
       ]
@@ -4642,7 +4642,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "concat"
         }
       ]
@@ -4713,7 +4713,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "cross"
         }
       ]
@@ -4729,7 +4729,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "crossLeft"
         }
       ]
@@ -4745,7 +4745,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "crossRight"
         }
       ]
@@ -4761,7 +4761,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "crossWith"
         }
       ]
@@ -4777,7 +4777,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "debounce"
         }
       ]
@@ -4793,7 +4793,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "decodeText"
         }
       ]
@@ -4842,7 +4842,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "distributedWith"
         }
       ]
@@ -4858,7 +4858,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "distributedWithDynamic"
         }
       ]
@@ -4874,7 +4874,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "drain"
         }
       ]
@@ -4890,7 +4890,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "drainFork"
         }
       ]
@@ -4906,7 +4906,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "drop"
         }
       ]
@@ -4922,7 +4922,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "dropRight"
         }
       ]
@@ -4938,7 +4938,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "dropUntil"
         }
       ]
@@ -4954,7 +4954,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "dropUntilEffect"
         }
       ]
@@ -4970,7 +4970,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "dropWhile"
         }
       ]
@@ -4986,7 +4986,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "dropWhileEffect"
         }
       ]
@@ -5002,7 +5002,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "either"
         }
       ]
@@ -5029,7 +5029,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "encodeText"
         }
       ]
@@ -5045,7 +5045,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "ensuring"
         }
       ]
@@ -5061,7 +5061,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "ensuringWith"
         }
       ]
@@ -5132,7 +5132,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filter"
         }
       ]
@@ -5148,7 +5148,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filterEffect"
         }
       ]
@@ -5164,7 +5164,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filterMap"
         }
       ]
@@ -5180,7 +5180,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filterMapEffect"
         }
       ]
@@ -5196,7 +5196,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filterMapWhile"
         }
       ]
@@ -5212,7 +5212,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "filterMapWhileEffect"
         }
       ]
@@ -5239,7 +5239,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "find"
         }
       ]
@@ -5255,7 +5255,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "findEffect"
         }
       ]
@@ -5271,7 +5271,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flatMap"
         }
       ]
@@ -5287,7 +5287,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flatten"
         }
       ]
@@ -5303,7 +5303,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flattenChunks"
         }
       ]
@@ -5319,7 +5319,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flattenEffect"
         }
       ]
@@ -5335,7 +5335,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flattenExitOption"
         }
       ]
@@ -5351,7 +5351,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flattenIterables"
         }
       ]
@@ -5367,7 +5367,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "flattenTake"
         }
       ]
@@ -5383,7 +5383,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "forever"
         }
       ]
@@ -5586,7 +5586,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "groupAdjacentBy"
         }
       ]
@@ -5602,7 +5602,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "groupBy"
         }
       ]
@@ -5618,7 +5618,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "groupByKey"
         }
       ]
@@ -5634,7 +5634,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "grouped"
         }
       ]
@@ -5650,7 +5650,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "groupedWithin"
         }
       ]
@@ -5666,7 +5666,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "haltAfter"
         }
       ]
@@ -5682,7 +5682,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "haltWhen"
         }
       ]
@@ -5698,7 +5698,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "haltWhenDeferred"
         }
       ]
@@ -5725,7 +5725,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "interleave"
         }
       ]
@@ -5741,7 +5741,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "interleaveWith"
         }
       ]
@@ -5757,7 +5757,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "interruptAfter"
         }
       ]
@@ -5773,7 +5773,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "interruptWhen"
         }
       ]
@@ -5789,7 +5789,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "interruptWhenDeferred"
         }
       ]
@@ -5805,7 +5805,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "intersperse"
         }
       ]
@@ -5821,7 +5821,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "intersperseAffixes"
         }
       ]
@@ -5859,7 +5859,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "map"
         }
       ]
@@ -5875,7 +5875,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapAccum"
         }
       ]
@@ -5891,7 +5891,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapAccumEffect"
         }
       ]
@@ -5907,7 +5907,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapBoth"
         }
       ]
@@ -5923,7 +5923,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapChunks"
         }
       ]
@@ -5939,7 +5939,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapChunksEffect"
         }
       ]
@@ -5955,7 +5955,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapConcat"
         }
       ]
@@ -5971,7 +5971,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapConcatChunk"
         }
       ]
@@ -5987,7 +5987,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapConcatChunkEffect"
         }
       ]
@@ -6003,7 +6003,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapConcatEffect"
         }
       ]
@@ -6019,7 +6019,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapEffect"
         }
       ]
@@ -6035,7 +6035,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapError"
         }
       ]
@@ -6051,7 +6051,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapErrorCause"
         }
       ]
@@ -6067,7 +6067,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mapInputContext"
         }
       ]
@@ -6083,7 +6083,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "merge"
         }
       ]
@@ -6110,7 +6110,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mergeEither"
         }
       ]
@@ -6126,7 +6126,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mergeLeft"
         }
       ]
@@ -6142,7 +6142,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mergeRight"
         }
       ]
@@ -6158,7 +6158,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mergeWith"
         }
       ]
@@ -6174,7 +6174,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "mkString"
         }
       ]
@@ -6201,7 +6201,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "onDone"
         }
       ]
@@ -6217,7 +6217,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "onError"
         }
       ]
@@ -6233,7 +6233,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orDie"
         }
       ]
@@ -6249,7 +6249,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orDieWith"
         }
       ]
@@ -6265,7 +6265,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElse"
         }
       ]
@@ -6281,7 +6281,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseEither"
         }
       ]
@@ -6297,7 +6297,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseFail"
         }
       ]
@@ -6313,7 +6313,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseIfEmpty"
         }
       ]
@@ -6329,7 +6329,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseIfEmptyChunk"
         }
       ]
@@ -6345,7 +6345,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseIfEmptyStream"
         }
       ]
@@ -6361,7 +6361,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "orElseSucceed"
         }
       ]
@@ -6421,7 +6421,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "partition"
         }
       ]
@@ -6437,7 +6437,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "partitionEither"
         }
       ]
@@ -6453,7 +6453,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "peel"
         }
       ]
@@ -6469,7 +6469,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "pipeThrough"
         }
       ]
@@ -6485,7 +6485,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "pipeThroughChannel"
         }
       ]
@@ -6501,7 +6501,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "pipeThroughChannelOrFail"
         }
       ]
@@ -6517,7 +6517,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "prepend"
         }
       ]
@@ -6533,7 +6533,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideContext"
         }
       ]
@@ -6549,7 +6549,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideLayer"
         }
       ]
@@ -6565,7 +6565,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideService"
         }
       ]
@@ -6581,7 +6581,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideServiceEffect"
         }
       ]
@@ -6597,7 +6597,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideServiceStream"
         }
       ]
@@ -6613,7 +6613,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "provideSomeLayer"
         }
       ]
@@ -6640,7 +6640,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "rechunk"
         }
       ]
@@ -6656,7 +6656,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "refineOrDie"
         }
       ]
@@ -6672,7 +6672,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "refineOrDieWith"
         }
       ]
@@ -6688,7 +6688,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "repeat"
         }
       ]
@@ -6759,7 +6759,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "repeatEither"
         }
       ]
@@ -6775,7 +6775,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "repeatElements"
         }
       ]
@@ -6791,7 +6791,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "repeatElementsWith"
         }
       ]
@@ -6818,7 +6818,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "repeatWith"
         }
       ]
@@ -6834,7 +6834,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "retry"
         }
       ]
@@ -6850,7 +6850,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "run"
         }
       ]
@@ -6866,7 +6866,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runCollect"
         }
       ]
@@ -6882,7 +6882,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runCount"
         }
       ]
@@ -6898,7 +6898,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runDrain"
         }
       ]
@@ -6914,7 +6914,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFold"
         }
       ]
@@ -6930,7 +6930,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldEffect"
         }
       ]
@@ -6946,7 +6946,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldScoped"
         }
       ]
@@ -6962,7 +6962,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldScopedEffect"
         }
       ]
@@ -6978,7 +6978,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldWhile"
         }
       ]
@@ -6994,7 +6994,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldWhileEffect"
         }
       ]
@@ -7010,7 +7010,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldWhileScoped"
         }
       ]
@@ -7026,7 +7026,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runFoldWhileScopedEffect"
         }
       ]
@@ -7042,7 +7042,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEach"
         }
       ]
@@ -7058,7 +7058,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEachChunk"
         }
       ]
@@ -7074,7 +7074,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEachChunkScoped"
         }
       ]
@@ -7090,7 +7090,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEachScoped"
         }
       ]
@@ -7106,7 +7106,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEachWhile"
         }
       ]
@@ -7122,7 +7122,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runForEachWhileScoped"
         }
       ]
@@ -7138,7 +7138,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runHead"
         }
       ]
@@ -7154,7 +7154,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runIntoHub"
         }
       ]
@@ -7170,7 +7170,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runIntoHubScoped"
         }
       ]
@@ -7186,7 +7186,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runIntoQueue"
         }
       ]
@@ -7202,7 +7202,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runIntoQueueElementsScoped"
         }
       ]
@@ -7218,7 +7218,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runIntoQueueScoped"
         }
       ]
@@ -7234,7 +7234,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runLast"
         }
       ]
@@ -7250,7 +7250,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runScoped"
         }
       ]
@@ -7266,7 +7266,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "runSum"
         }
       ]
@@ -7282,7 +7282,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "scan"
         }
       ]
@@ -7298,7 +7298,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "scanEffect"
         }
       ]
@@ -7314,7 +7314,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "scanReduce"
         }
       ]
@@ -7330,7 +7330,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "scanReduceEffect"
         }
       ]
@@ -7346,7 +7346,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "schedule"
         }
       ]
@@ -7362,7 +7362,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "scheduleWith"
         }
       ]
@@ -7389,7 +7389,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "sliding"
         }
       ]
@@ -7405,7 +7405,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "slidingSize"
         }
       ]
@@ -7421,7 +7421,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "some"
         }
       ]
@@ -7437,7 +7437,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "someOrElse"
         }
       ]
@@ -7453,7 +7453,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "someOrFail"
         }
       ]
@@ -7469,7 +7469,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "split"
         }
       ]
@@ -7485,7 +7485,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "splitLines"
         }
       ]
@@ -7501,7 +7501,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "splitOnChunk"
         }
       ]
@@ -7550,7 +7550,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "take"
         }
       ]
@@ -7566,7 +7566,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "takeRight"
         }
       ]
@@ -7582,7 +7582,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "takeUntil"
         }
       ]
@@ -7598,7 +7598,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "takeUntilEffect"
         }
       ]
@@ -7614,7 +7614,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "takeWhile"
         }
       ]
@@ -7630,7 +7630,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "tap"
         }
       ]
@@ -7646,7 +7646,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "tapBoth"
         }
       ]
@@ -7662,7 +7662,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "tapError"
         }
       ]
@@ -7678,7 +7678,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "tapErrorCause"
         }
       ]
@@ -7694,7 +7694,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "tapSink"
         }
       ]
@@ -7710,7 +7710,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "throttle"
         }
       ]
@@ -7726,7 +7726,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "throttleEffect"
         }
       ]
@@ -7753,7 +7753,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "timeout"
         }
       ]
@@ -7769,7 +7769,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "timeoutFail"
         }
       ]
@@ -7785,7 +7785,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "timeoutFailCause"
         }
       ]
@@ -7801,7 +7801,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "timeoutTo"
         }
       ]
@@ -7817,7 +7817,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toChannel"
         }
       ]
@@ -7833,7 +7833,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toHub"
         }
       ]
@@ -7849,7 +7849,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toPull"
         }
       ]
@@ -7865,7 +7865,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toQueue"
         }
       ]
@@ -7881,7 +7881,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toQueueOfElements"
         }
       ]
@@ -7897,7 +7897,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "toReadableStream"
         }
       ]
@@ -7913,7 +7913,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "transduce"
         }
       ]
@@ -8016,7 +8016,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "when"
         }
       ]
@@ -8054,7 +8054,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "whenEffect"
         }
       ]
@@ -8070,7 +8070,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "withSpan"
         }
       ]
@@ -8086,7 +8086,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zip"
         }
       ]
@@ -8102,7 +8102,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAll"
         }
       ]
@@ -8118,7 +8118,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllLeft"
         }
       ]
@@ -8134,7 +8134,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllRight"
         }
       ]
@@ -8150,7 +8150,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllSortedByKey"
         }
       ]
@@ -8166,7 +8166,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllSortedByKeyLeft"
         }
       ]
@@ -8182,7 +8182,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllSortedByKeyRight"
         }
       ]
@@ -8198,7 +8198,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllSortedByKeyWith"
         }
       ]
@@ -8214,7 +8214,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipAllWith"
         }
       ]
@@ -8230,7 +8230,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipFlatten"
         }
       ]
@@ -8246,7 +8246,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipLatest"
         }
       ]
@@ -8262,7 +8262,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipLatestWith"
         }
       ]
@@ -8278,7 +8278,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipLeft"
         }
       ]
@@ -8294,7 +8294,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipRight"
         }
       ]
@@ -8310,7 +8310,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWith"
         }
       ]
@@ -8326,7 +8326,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWithChunks"
         }
       ]
@@ -8342,7 +8342,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWithIndex"
         }
       ]
@@ -8358,7 +8358,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWithNext"
         }
       ]
@@ -8374,7 +8374,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWithPrevious"
         }
       ]
@@ -8390,7 +8390,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream.Aspects",
+          "typeName": "effect/stream/Stream.Ops",
           "name": "zipWithPreviousAndNext"
         }
       ]
@@ -8577,7 +8577,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream/HaltStrategy.Aspects",
+          "typeName": "effect/stream/Stream/HaltStrategy.Ops",
           "name": "isBoth"
         }
       ]
@@ -8593,7 +8593,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream/HaltStrategy.Aspects",
+          "typeName": "effect/stream/Stream/HaltStrategy.Ops",
           "name": "isEither"
         }
       ]
@@ -8609,7 +8609,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream/HaltStrategy.Aspects",
+          "typeName": "effect/stream/Stream/HaltStrategy.Ops",
           "name": "isLeft"
         }
       ]
@@ -8625,7 +8625,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream/HaltStrategy.Aspects",
+          "typeName": "effect/stream/Stream/HaltStrategy.Ops",
           "name": "isRight"
         }
       ]
@@ -8641,7 +8641,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Stream/HaltStrategy.Aspects",
+          "typeName": "effect/stream/Stream/HaltStrategy.Ops",
           "name": "match"
         }
       ]
@@ -8698,7 +8698,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "get"
         }
       ]
@@ -8714,7 +8714,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndSet"
         }
       ]
@@ -8730,7 +8730,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdate"
         }
       ]
@@ -8746,7 +8746,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateEffect"
         }
       ]
@@ -8762,7 +8762,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateSome"
         }
       ]
@@ -8778,7 +8778,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "getAndUpdateSomeEffect"
         }
       ]
@@ -8805,7 +8805,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modify"
         }
       ]
@@ -8821,7 +8821,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modifyEffect"
         }
       ]
@@ -8837,7 +8837,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modifySome"
         }
       ]
@@ -8853,7 +8853,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "modifySomeEffect"
         }
       ]
@@ -8869,7 +8869,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "set"
         }
       ]
@@ -8885,7 +8885,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "setAndGet"
         }
       ]
@@ -8901,7 +8901,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "update"
         }
       ]
@@ -8917,7 +8917,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateAndGet"
         }
       ]
@@ -8933,7 +8933,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateAndGetEffect"
         }
       ]
@@ -8949,7 +8949,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateEffect"
         }
       ]
@@ -8965,7 +8965,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSome"
         }
       ]
@@ -8981,7 +8981,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeAndGet"
         }
       ]
@@ -8997,7 +8997,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeAndGetEffect"
         }
       ]
@@ -9013,7 +9013,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/SubscriptionRef.Aspects",
+          "typeName": "effect/stream/SubscriptionRef.Ops",
           "name": "updateSomeEffect"
         }
       ]
@@ -9103,7 +9103,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "done"
         }
       ]
@@ -9185,7 +9185,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "isDone"
         }
       ]
@@ -9201,7 +9201,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "isFailure"
         }
       ]
@@ -9217,7 +9217,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "isSuccess"
         }
       ]
@@ -9244,7 +9244,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "map"
         }
       ]
@@ -9260,7 +9260,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "match"
         }
       ]
@@ -9276,7 +9276,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "matchEffect"
         }
       ]
@@ -9303,7 +9303,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/stream/Take.Aspects",
+          "typeName": "effect/stream/Take.Ops",
           "name": "tap"
         }
       ]
