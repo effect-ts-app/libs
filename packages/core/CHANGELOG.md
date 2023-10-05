@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.58.4
+
+### Patch Changes
+
+- fix stream definitions
+
 ## 0.58.3
 
 ### Patch Changes
