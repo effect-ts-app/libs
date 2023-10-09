@@ -608,24 +608,24 @@
       ]
     },
     {
-      "definitionName": "fromHub",
+      "definitionName": "fromPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Channel.Ops",
-          "name": "fromHub"
+          "name": "fromPubSub"
         }
       ]
     },
     {
-      "definitionName": "fromHubScoped",
+      "definitionName": "fromPubSubScoped",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Channel.Ops",
-          "name": "fromHubScoped"
+          "name": "fromPubSubScoped"
         }
       ]
     },
@@ -1360,13 +1360,13 @@
       ]
     },
     {
-      "definitionName": "toHub",
+      "definitionName": "toPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Channel.Ops",
-          "name": "toHub"
+          "name": "toPubSub"
         }
       ]
     },
@@ -3512,13 +3512,13 @@
       ]
     },
     {
-      "definitionName": "fromHub",
+      "definitionName": "fromPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Sink.Ops",
-          "name": "fromHub"
+          "name": "fromPubSub"
         }
       ]
     },
@@ -5422,13 +5422,13 @@
       ]
     },
     {
-      "definitionName": "fromChunkHub",
+      "definitionName": "fromChunkPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "fromChunkHub"
+          "name": "fromChunkPubSub"
         }
       ]
     },
@@ -5477,13 +5477,13 @@
       ]
     },
     {
-      "definitionName": "fromHub",
+      "definitionName": "fromPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "fromHub"
+          "name": "fromPubSub"
         }
       ]
     },
@@ -7144,34 +7144,34 @@
       ]
     },
     {
-      "definitionName": "runIntoHub",
+      "definitionName": "runIntoPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stream/Stream",
-          "name": "runIntoHub"
+          "name": "runIntoPubSub"
         },
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "runIntoHub"
+          "name": "runIntoPubSub"
         }
       ]
     },
     {
-      "definitionName": "runIntoHubScoped",
+      "definitionName": "runIntoPubSubScoped",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stream/Stream",
-          "name": "runIntoHubScoped"
+          "name": "runIntoPubSubScoped"
         },
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "runIntoHubScoped"
+          "name": "runIntoPubSubScoped"
         }
       ]
     },
@@ -7823,18 +7823,18 @@
       ]
     },
     {
-      "definitionName": "toHub",
+      "definitionName": "toPubSub",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
           "typeName": "effect/stream/Stream",
-          "name": "toHub"
+          "name": "toPubSub"
         },
         {
           "kind": "static",
           "typeName": "effect/stream/Stream.Ops",
-          "name": "toHub"
+          "name": "toPubSub"
         }
       ]
     },

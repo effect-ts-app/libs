@@ -2602,43 +2602,43 @@
       ]
     }
   ],
-  "effect/THub": [
+  "effect/TPubSub": [
     {
-      "definitionName": "THub",
+      "definitionName": "TPubSub",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/THub"
+          "typeName": "effect/stm/TPubSub"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/THub.Ops"
+          "typeName": "effect/stm/TPubSub.Ops"
         }
       ]
     },
     {
-      "definitionName": "THubTypeId",
+      "definitionName": "TPubSubTypeId",
       "definitionKind": "type",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/stm/THub.TypeId"
+          "typeName": "effect/stm/TPubSub.TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/stm/THub.TypeId.Ops"
+          "typeName": "effect/stm/TPubSub.TypeId.Ops"
         }
       ]
     },
     {
-      "definitionName": "THubTypeId",
+      "definitionName": "TPubSubTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.TypeId.Ops",
-          "name": "THubTypeId"
+          "typeName": "effect/stm/TPubSub.TypeId.Ops",
+          "name": "TPubSubTypeId"
         }
       ]
     },
@@ -2648,12 +2648,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "awaitShutdown"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "awaitShutdown"
         }
       ]
@@ -2664,7 +2664,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "bounded"
         }
       ]
@@ -2675,12 +2675,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "capacity"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "capacity"
         }
       ]
@@ -2691,7 +2691,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "dropping"
         }
       ]
@@ -2702,12 +2702,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "isEmpty"
         }
       ]
@@ -2718,12 +2718,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "isFull"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "isFull"
         }
       ]
@@ -2734,12 +2734,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "isShutdown"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "isShutdown"
         }
       ]
@@ -2750,12 +2750,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "publish"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "publish"
         }
       ]
@@ -2766,12 +2766,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "publishAll"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "publishAll"
         }
       ]
@@ -2782,12 +2782,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "size"
         }
       ]
@@ -2798,7 +2798,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "sliding"
         }
       ]
@@ -2809,12 +2809,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "subscribe"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "subscribe"
         }
       ]
@@ -2825,12 +2825,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/stm/THub",
+          "typeName": "effect/stm/TPubSub",
           "name": "subscribeScoped"
         },
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "subscribeScoped"
         }
       ]
@@ -2841,7 +2841,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/stm/THub.Ops",
+          "typeName": "effect/stm/TPubSub.Ops",
           "name": "unbounded"
         }
       ]

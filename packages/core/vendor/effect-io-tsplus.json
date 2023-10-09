@@ -310,30 +310,30 @@
       ]
     },
     {
-      "definitionName": "InvalidHubCapacityException",
+      "definitionName": "InvalidPubSubCapacityException",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Cause/InvalidHubCapacityException"
+          "typeName": "effect/io/Cause/InvalidPubSubCapacityException"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Cause/InvalidHubCapacityException.Ops"
+          "typeName": "effect/io/Cause/InvalidPubSubCapacityException.Ops"
         }
       ]
     },
     {
-      "definitionName": "InvalidHubCapacityExceptionTypeId",
+      "definitionName": "InvalidPubSubCapacityExceptionTypeId",
       "definitionKind": "type",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Cause/InvalidHubCapacityExceptionTypeId"
+          "typeName": "effect/io/Cause/InvalidPubSubCapacityExceptionTypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Cause/InvalidHubCapacityExceptionTypeId.Ops"
+          "typeName": "effect/io/Cause/InvalidPubSubCapacityExceptionTypeId.Ops"
         }
       ]
     },
@@ -477,13 +477,13 @@
       ]
     },
     {
-      "definitionName": "InvalidHubCapacityExceptionTypeId",
+      "definitionName": "InvalidPubSubCapacityExceptionTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Cause/InvalidHubCapacityExceptionTypeId.Ops",
-          "name": "InvalidHubCapacityExceptionTypeId"
+          "typeName": "effect/io/Cause/InvalidPubSubCapacityExceptionTypeId.Ops",
+          "name": "InvalidPubSubCapacityExceptionTypeId"
         }
       ]
     },
@@ -11198,18 +11198,18 @@
       ]
     }
   ],
-  "effect/Hub": [
+  "effect/PubSub": [
     {
-      "definitionName": "Hub",
+      "definitionName": "PubSub",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/Hub"
+          "typeName": "effect/io/PubSub"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/Hub.Ops"
+          "typeName": "effect/io/PubSub.Ops"
         }
       ]
     },
@@ -11219,12 +11219,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "awaitShutdown"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "awaitShutdown"
         }
       ]
@@ -11235,7 +11235,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "bounded"
         }
       ]
@@ -11246,12 +11246,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "capacity"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "capacity"
         }
       ]
@@ -11262,7 +11262,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "dropping"
         }
       ]
@@ -11273,12 +11273,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "isEmpty"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "isEmpty"
         }
       ]
@@ -11289,12 +11289,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "isFull"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "isFull"
         }
       ]
@@ -11305,12 +11305,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "isShutdown"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "isShutdown"
         }
       ]
@@ -11321,12 +11321,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "publish"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "publish"
         }
       ]
@@ -11337,12 +11337,12 @@
       "extensions": [
         {
           "kind": "fluent",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "publishAll"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "publishAll"
         }
       ]
@@ -11353,12 +11353,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "shutdown"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "shutdown"
         }
       ]
@@ -11369,12 +11369,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "size"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "size"
         }
       ]
@@ -11385,7 +11385,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "sliding"
         }
       ]
@@ -11396,12 +11396,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/Hub",
+          "typeName": "effect/io/PubSub",
           "name": "subscribe"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "subscribe"
         }
       ]
@@ -11412,7 +11412,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/Hub.Ops",
+          "typeName": "effect/io/PubSub.Ops",
           "name": "unbounded"
         }
       ]

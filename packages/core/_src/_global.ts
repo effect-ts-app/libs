@@ -89,7 +89,7 @@ import { Dequeue, Queue } from "effect/Queue"
 /**
  * @tsplus global
  */
-import { Hub } from "effect/Hub"
+import { PubSub } from "effect/PubSub"
 
 /**
  * @tsplus global
