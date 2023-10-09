@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.53.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.59.0
+
 ## 0.52.4
 
 ### Patch Changes
