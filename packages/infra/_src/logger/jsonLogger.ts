@@ -1,4 +1,3 @@
-import type { AnnotationValue } from "effect/Logger"
 import { getRequestContext } from "./shared.js"
 
 export const jsonLogger = Logger.make<unknown, void>(
@@ -20,7 +19,7 @@ export const jsonLogger = Logger.make<unknown, void>(
         ? [...annotations].reduce((prev, [k, v]) => {
           prev[k] = v
           return prev
-        }, {} as Record<string, AnnotationValue>)
+        }, {} as Record<string, unknown>)
         : undefined
     }
 

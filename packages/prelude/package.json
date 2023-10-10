@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.0-next.47",
+    "effect": "^2.0.0-next.48",
     "@fp-ts/optic": "^0.10.0",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
@@ -21,7 +21,7 @@
     "@babel/cli": "^7.23.0",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.1.0",
-    "@types/node": "~20.8.3",
+    "@types/node": "~20.8.4",
     "@types/uuid": "^9.0.5",
     "@types/validator": "^13.11.2",
     "fast-check": "~3.13.1",

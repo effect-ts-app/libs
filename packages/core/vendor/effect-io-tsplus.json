@@ -6905,168 +6905,6 @@
       ]
     },
     {
-      "definitionName": "setClock",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setClock"
-        }
-      ]
-    },
-    {
-      "definitionName": "setConfigProvider",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/ConfigProvider",
-          "name": "setConfigProvider"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/ConfigProvider.Ops",
-          "name": "setConfigProvider"
-        }
-      ]
-    },
-    {
-      "definitionName": "setFiberRefs",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/FiberRefs",
-          "name": "setFiberRefs"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/FiberRefs.Ops",
-          "name": "setFiberRefs"
-        }
-      ]
-    },
-    {
-      "definitionName": "setParentSpan",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Tracer/ParentSpan",
-          "name": "setParentSpan"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Tracer/ParentSpan.Ops",
-          "name": "setParentSpan"
-        }
-      ]
-    },
-    {
-      "definitionName": "setRequestBatching",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setRequestBatching"
-        }
-      ]
-    },
-    {
-      "definitionName": "setRequestCache",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Request/Cache",
-          "name": "setRequestCache"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Request/Cache.Ops",
-          "name": "setRequestCache"
-        }
-      ]
-    },
-    {
-      "definitionName": "setRequestCaching",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setRequestCaching"
-        }
-      ]
-    },
-    {
-      "definitionName": "setScheduler",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Scheduler",
-          "name": "setScheduler"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Scheduler.Ops",
-          "name": "setScheduler"
-        }
-      ]
-    },
-    {
-      "definitionName": "setSpan",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setSpan"
-        }
-      ]
-    },
-    {
-      "definitionName": "setTracer",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/io/Tracer",
-          "name": "setTracer"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/io/Tracer.Ops",
-          "name": "setTracer"
-        }
-      ]
-    },
-    {
-      "definitionName": "setTracerTiming",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setTracerTiming"
-        }
-      ]
-    },
-    {
-      "definitionName": "setUnhandledErrorLogLevel",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "setUnhandledErrorLogLevel"
-        }
-      ]
-    },
-    {
       "definitionName": "sleep",
       "definitionKind": "const",
       "extensions": [
@@ -12313,6 +12151,168 @@
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "service"
+        }
+      ]
+    },
+    {
+      "definitionName": "setClock",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setClock"
+        }
+      ]
+    },
+    {
+      "definitionName": "setConfigProvider",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/ConfigProvider",
+          "name": "setConfigProvider"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setConfigProvider"
+        }
+      ]
+    },
+    {
+      "definitionName": "setFiberRefs",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/FiberRefs",
+          "name": "setFiberRefs"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setFiberRefs"
+        }
+      ]
+    },
+    {
+      "definitionName": "setParentSpan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Tracer/ParentSpan",
+          "name": "setParentSpan"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setParentSpan"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestBatching",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setRequestBatching"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestCache",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Request/Cache",
+          "name": "setRequestCache"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setRequestCache"
+        }
+      ]
+    },
+    {
+      "definitionName": "setRequestCaching",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setRequestCaching"
+        }
+      ]
+    },
+    {
+      "definitionName": "setScheduler",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Scheduler",
+          "name": "setScheduler"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setScheduler"
+        }
+      ]
+    },
+    {
+      "definitionName": "setSpan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setSpan"
+        }
+      ]
+    },
+    {
+      "definitionName": "setTracer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/io/Tracer",
+          "name": "setTracer"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setTracer"
+        }
+      ]
+    },
+    {
+      "definitionName": "setTracerTiming",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setTracerTiming"
+        }
+      ]
+    },
+    {
+      "definitionName": "setUnhandledErrorLogLevel",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/io/Layer.Ops",
+          "name": "setUnhandledErrorLogLevel"
         }
       ]
     },
