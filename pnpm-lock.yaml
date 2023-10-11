@@ -63,8 +63,8 @@ importers:
         specifier: ^0.88.1
         version: 0.88.1
       '@effect-app/cli':
-        specifier: ^0.18.0
-        version: 0.18.0
+        specifier: ^0.19.0
+        version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -98,9 +98,6 @@ importers:
       '@tsconfig/strictest':
         specifier: ^2.0.2
         version: 2.0.2
-      '@tsplus/installer':
-        specifier: 0.0.179
-        version: 0.0.179(@effect-app/typescript@5.3.0-tsplus.20231009)(@types/node@18.11.12)
       '@types/lodash':
         specifier: ^4.14.199
         version: 4.14.199
@@ -358,8 +355,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@azure/service-bus':
-        specifier: ^7.9.1
-        version: 7.9.1
+        specifier: ^7.9.2
+        version: 7.9.2
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
@@ -419,8 +416,8 @@ importers:
         specifier: ^7.73.0
         version: 7.73.0
       '@types/express':
-        specifier: ^4.17.18
-        version: 4.17.18
+        specifier: ^4.17.19
+        version: 4.17.19
       '@types/node':
         specifier: ~18.11.12
         version: 18.11.12
@@ -441,7 +438,7 @@ importers:
         version: 8.4.1
       express-jwt-authz:
         specifier: ^2.4.1
-        version: 2.4.1(@types/express@4.17.18)(express@4.18.2)
+        version: 2.4.1(@types/express@4.17.19)(express@4.18.2)
       jwks-rsa:
         specifier: 2.1.4
         version: 2.1.4
@@ -489,8 +486,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@azure/service-bus':
-        specifier: ^7.9.1
-        version: 7.9.1
+        specifier: ^7.9.2
+        version: 7.9.2
       '@types/connect':
         specifier: ^3.4.36
         version: 3.4.36
@@ -498,8 +495,8 @@ importers:
         specifier: ^1.3.4
         version: 1.3.4
       '@types/express':
-        specifier: ^4.17.18
-        version: 4.17.18
+        specifier: ^4.17.19
+        version: 4.17.19
       '@types/redis':
         specifier: ^2.8.32
         version: 2.8.32
@@ -641,8 +638,8 @@ importers:
         specifier: ~18.11.12
         version: 18.11.12
       '@types/react':
-        specifier: ^18.2.27
-        version: 18.2.27
+        specifier: ^18.2.28
+        version: 18.2.28
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -789,9 +786,9 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@azure/core-amqp@3.3.0:
-    resolution: {integrity: sha512-RYIyC8PtGpMzZRiSokADw0ezFgNq1eUkCPV8rd7tJ85dn8CAhYDEYapzMYxAwIBLWidshu14m9UWjQS7hKYDpA==}
-    engines: {node: '>=14.0.0'}
+  /@azure/core-amqp@4.0.0:
+    resolution: {integrity: sha512-5QhtJ69qLbTKTL3arLHkQCN96C7tqENF4oKkPYp5Pqb+YA5Gh0aREL2aqp98sAT/YB/G8wAfvFLnYB7bUyzFVw==}
+    engines: {node: '>=16.0.0'}
     dependencies:
       '@azure/abort-controller': 1.1.0
       '@azure/core-auth': 1.4.0
@@ -799,7 +796,6 @@ packages:
       '@azure/logger': 1.0.3
       buffer: 6.0.3
       events: 3.3.0
-      jssha: 3.3.0
       process: 0.11.10
       rhea: 3.0.2
       rhea-promise: 3.0.0
@@ -898,12 +894,12 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@azure/service-bus@7.9.1:
-    resolution: {integrity: sha512-4IqhCOV1aSA2ChqFPOWN/5Qh2V8GDBnYleAmtETcHgKkpTQ3PCKX42gP6ZdhUPdNkHET+eu+KkwKYxRZJjqadw==}
-    engines: {node: '>=14.0.0'}
+  /@azure/service-bus@7.9.2:
+    resolution: {integrity: sha512-w8d1/KhlbUz8DvY3Ca7GvoU5cJ8ONV4QBW25OfUk4Br6waAKWY+1wugEThQNCueRKvNlJlJyRbr9T14ibYMZeQ==}
+    engines: {node: '>=16.0.0'}
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/core-amqp': 3.3.0
+      '@azure/core-amqp': 4.0.0
       '@azure/core-auth': 1.4.0
       '@azure/core-client': 1.6.1
       '@azure/core-paging': 1.4.0
@@ -1542,13 +1538,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@effect-app/cli@0.18.0:
-    resolution: {integrity: sha512-puSU8TE5YXzvJaiwKvxhhHQALSU5RccktskFujxslfgbkvk9jpVNMiEXW95xeTYEIIIVMNM9WSAGiNlIby9M+g==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
 
   /@effect-app/typescript@5.3.0-tsplus.20231009:
     resolution: {integrity: sha512-sDK1Felc/AOA5g4F4d7kgj0KW9YwOw9kPg9E2ZwRQ2Mm/Y6fjf0lEZmQ0oSlw4JiO9MzdfxlZzB20LH09Dc7Tg==}
@@ -2305,22 +2294,6 @@ packages:
     resolution: {integrity: sha512-jt4jIsWKvUvuY6adJnQJlb/UR7DdjC8CjHI/OaSQruj2yX9/K6+KOvDt/vD6udqos/FUk5Op66CvYT7TBLYO5Q==}
     dev: true
 
-  /@tsplus/installer@0.0.179(@effect-app/typescript@5.3.0-tsplus.20231009)(@types/node@18.11.12):
-    resolution: {integrity: sha512-lnRIak08WLjS0oygORzRzBbjtxAUmTzF0+JsqBMr1IGTelixtnOkW7OuitN+WVCT5IK6LZJPOKtKqlp+remsCA==}
-    hasBin: true
-    dependencies:
-      mkdirp: 1.0.4
-      rimraf: 3.0.2
-      tar: 6.1.12
-      ts-node: 10.9.1(@effect-app/typescript@5.3.0-tsplus.20231009)(@types/node@18.11.12)
-      zlib: 1.0.5
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - typescript
-    dev: true
-
   /@tufjs/canonical-json@1.0.0:
     resolution: {integrity: sha512-QTnf++uxunWvG2z3UFNzAoQPHxnSXOwtaI3iJ+AohhV+5vONuArPjJE7aPXPVXfXJsqrVbZBu9b81AJoSd09IQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -2415,8 +2388,8 @@ packages:
       '@types/range-parser': 1.2.4
     dev: true
 
-  /@types/express@4.17.18:
-    resolution: {integrity: sha512-Sxv8BSLLgsBYmcnGdGjjEjqET2U+AKAdCRODmMiq02FgjwuV75Ut85DRpvFjyw/Mk0vgUOliGRU0UUmuuZHByQ==}
+  /@types/express@4.17.19:
+    resolution: {integrity: sha512-UtOfBtzN9OvpZPPbnnYunfjM7XCI4jyk1NvnFhTVz5krYAnW4o5DCoIekvms+8ApqhB4+9wSge1kBijdfTSmfg==}
     dependencies:
       '@types/body-parser': 1.19.2
       '@types/express-serve-static-core': 4.17.33
@@ -2434,7 +2407,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.27
+      '@types/react': 18.2.28
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -2532,8 +2505,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/react@18.2.27:
-    resolution: {integrity: sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==}
+  /@types/react@18.2.28:
+    resolution: {integrity: sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -4927,14 +4900,14 @@ packages:
       jest-message-util: 26.6.2
       jest-regex-util: 26.0.0
 
-  /express-jwt-authz@2.4.1(@types/express@4.17.18)(express@4.18.2):
+  /express-jwt-authz@2.4.1(@types/express@4.17.19)(express@4.18.2):
     resolution: {integrity: sha512-ruH86e2NvWicG9maStztyAyBJV0E8RsInXUm6Kuc/9pDtVJmJw3qigv1MEVs5bH+aksZuxocYZdz+N1V/9F+Dg==}
     engines: {node: '>=6'}
     peerDependencies:
       '@types/express': ^4.0.0
       express: ^4.0.0
     dependencies:
-      '@types/express': 4.17.18
+      '@types/express': 4.17.19
       express: 4.18.2
     dev: true
 
@@ -6006,22 +5979,11 @@ packages:
     dependencies:
       has-symbols: 1.0.3
 
-  /is-typed-array@1.1.10:
-    resolution: {integrity: sha512-PJqgEHiWZvMpaFZ3uTc8kHPM4+4ADTlDniuQL7cU/UDA0Ql7F70yGfHph3cLNe+c9toaigv+DFzTJKhc2CtO6A==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
-      for-each: 0.3.3
-      gopd: 1.0.1
-      has-tostringtag: 1.0.0
-
   /is-typed-array@1.1.12:
     resolution: {integrity: sha512-Z14TF2JNG8Lss5/HMqt0//T9JeHXttXy5pH/DBU4vi98ozO2btxzq9MwYDZYnKwU8nRsz/+GVFVRDq3DkVuSPg==}
     engines: {node: '>= 0.4'}
     dependencies:
       which-typed-array: 1.1.11
-    dev: true
 
   /is-typedarray@1.0.0:
     resolution: {integrity: sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==}
@@ -6252,7 +6214,7 @@ packages:
     resolution: {integrity: sha512-mpArfgPkUpX11lNtGxsF/szkasUcbWHGplZl/uFvFO2NuMHmt0dQXIihh0rkPU2yQd5niQtuUHbXnG/WKiXF6Q==}
     engines: {node: '>=10 < 13 || >=14'}
     dependencies:
-      '@types/express': 4.17.18
+      '@types/express': 4.17.19
       '@types/jsonwebtoken': 8.5.9
       debug: 4.3.4
       jose: 2.0.6
@@ -6991,6 +6953,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon@3.0.1:
     resolution: {integrity: sha512-g9AZ7HmkhQkqXkRc20w+ZfQ73cHLbE8hnPbtaFbFtCumZsjyMhKk9LajQ07U5Ux28lvFjZ5X7HvWR1xzU8jHVw==}
@@ -7880,7 +7843,7 @@ packages:
       '@formatjs/intl-displaynames': 6.5.2
       '@formatjs/intl-listformat': 7.4.2
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.2.27
+      '@types/react': 18.2.28
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.3
       react: 18.2.0
@@ -9301,8 +9264,8 @@ packages:
       inherits: 2.0.4
       is-arguments: 1.1.1
       is-generator-function: 1.0.10
-      is-typed-array: 1.1.10
-      which-typed-array: 1.1.9
+      is-typed-array: 1.1.12
+      which-typed-array: 1.1.11
 
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
@@ -9630,18 +9593,6 @@ packages:
       for-each: 0.3.3
       gopd: 1.0.1
       has-tostringtag: 1.0.0
-    dev: true
-
-  /which-typed-array@1.1.9:
-    resolution: {integrity: sha512-w9c4xkx6mPidwp7180ckYWfMmvxpjlZuIudNtDf4N/tTAUB8VJbX25qZoAsrtGuYNnGw3pa0AXgbGKRB8/EceA==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
-      for-each: 0.3.3
-      gopd: 1.0.1
-      has-tostringtag: 1.0.0
-      is-typed-array: 1.1.10
 
   /which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
@@ -9837,9 +9788,4 @@ packages:
   /yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
-    dev: true
-
-  /zlib@1.0.5:
-    resolution: {integrity: sha512-40fpE2II+Cd3k8HWTWONfeKE2jL+P42iWJ1zzps5W51qcTsOUKM5Q5m2PFb0CLxlmFAaUuUdJGc3OfZy947v0w==}
-    engines: {node: '>=0.2.0'}
     dev: true
