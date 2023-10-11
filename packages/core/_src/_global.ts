@@ -54,6 +54,11 @@ import { Effect, Semaphore } from "effect/Effect"
 /**
  * @tsplus global
  */
+import { STM } from "effect/STM"
+
+/**
+ * @tsplus global
+ */
 import { Stream } from "effect/Stream"
 
 /**
@@ -85,6 +90,11 @@ import { SubscriptionRef } from "effect/SubscriptionRef"
  * @tsplus global
  */
 import { Dequeue, Queue } from "effect/Queue"
+
+/**
+ * @tsplus global
+ */
+import { Matcher } from "effect/Match"
 
 /**
  * @tsplus global
