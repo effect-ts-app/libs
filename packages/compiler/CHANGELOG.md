@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.31.0
+
+### Minor Changes
+
+- add match and update packages
+
 ## 0.30.0
 
 ### Minor Changes
