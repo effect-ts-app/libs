@@ -20,7 +20,7 @@ function normalise(str: string) {
     return str
   }
 }
-// TODO: get shared compiler host...
+
 import { ESLintUtils } from "@typescript-eslint/utils"
 export const model: Preset<{
   writeFullTypes?: boolean
