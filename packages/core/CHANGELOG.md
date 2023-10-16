@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.62.0
+
+### Minor Changes
+
+- update packages, improve error reporting
+
 ## 0.61.0
 
 ### Minor Changes
