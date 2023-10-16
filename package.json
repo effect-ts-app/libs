@@ -8,7 +8,7 @@
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
             "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-            "@fp-ts/optic@0.10.0": "patches/@fp-ts__optic@0.10.0.patch"
+            "@fp-ts/optic@0.11.0": "patches/@fp-ts__optic@0.11.0.patch"
         }
     },
     "scripts": {
@@ -73,7 +73,7 @@
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^2.0.2",
         "@types/lodash": "^4.14.199",
-        "@types/node": "~20.8.4",
+        "@types/node": "~20.8.6",
         "@typescript-eslint/eslint-plugin": "^6.7.5",
         "@typescript-eslint/parser": "^6.7.5",
         "@typescript-eslint/scope-manager": "^6.7.5",
@@ -96,7 +96,7 @@
         "madge": "^6.1.0",
         "module-alias": "^2.2.3",
         "nodemon": "^3.0.1",
-        "npm-check-updates": "^16.14.5",
+        "npm-check-updates": "^16.14.6",
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.4",
         "tsconfig-paths": "^4.2.0",

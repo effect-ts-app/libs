@@ -14,9 +14,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@fp-ts/optic@0.10.0':
+  '@fp-ts/optic@0.11.0':
     hash: g6p2wvdqwpzq42ns4zy72w6lre
-    path: patches/@fp-ts__optic@0.10.0.patch
+    path: patches/@fp-ts__optic@0.11.0.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
@@ -171,8 +171,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       npm-check-updates:
-        specifier: ^16.14.5
-        version: 16.14.5
+        specifier: ^16.14.6
+        version: 16.14.6
       ts-transform-paths:
         specifier: ^3.0.0
         version: 3.0.0
@@ -251,8 +251,8 @@ importers:
   packages/core:
     dependencies:
       '@fp-ts/optic':
-        specifier: ^0.10.0
-        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48)
+        specifier: ^0.11.0
+        version: 0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -282,8 +282,8 @@ importers:
         specifier: ^9.0.5
         version: 9.0.5
       '@types/validator':
-        specifier: ^13.11.2
-        version: 13.11.2
+        specifier: ^13.11.3
+        version: 13.11.3
       ts-toolbelt:
         specifier: ^9.6.0
         version: 9.6.0
@@ -373,8 +373,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@faker-js/faker':
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       '@sendgrid/helpers':
         specifier: ^7.7.0
         version: 7.7.0
@@ -416,8 +416,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.73.0
-        version: 7.73.0
+        specifier: ^7.74.0
+        version: 7.74.0
       '@types/express':
         specifier: ^4.17.19
         version: 4.17.19
@@ -476,8 +476,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@fp-ts/optic':
-        specifier: ^0.10.0
-        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48)
+        specifier: ^0.11.0
+        version: 0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48)
       effect:
         specifier: ^2.0.0-next.48
         version: 2.0.0-next.48
@@ -555,8 +555,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@fp-ts/optic':
-        specifier: ^0.10.0
-        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48)
+        specifier: ^0.11.0
+        version: 0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
@@ -567,8 +567,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       nanoid:
-        specifier: ^5.0.1
-        version: 5.0.1
+        specifier: ^5.0.2
+        version: 5.0.2
       path-parser:
         specifier: ^6.1.0
         version: 6.1.0
@@ -592,8 +592,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@faker-js/faker':
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       '@types/node':
         specifier: ~18.11.12
         version: 18.11.12
@@ -601,8 +601,8 @@ importers:
         specifier: ^9.0.5
         version: 9.0.5
       '@types/validator':
-        specifier: ^13.11.2
-        version: 13.11.2
+        specifier: ^13.11.3
+        version: 13.11.3
       fast-check:
         specifier: ~3.13.1
         version: 3.13.1
@@ -650,8 +650,8 @@ importers:
         specifier: 7.40.0
         version: 7.40.0(react@18.2.0)
       react-intl:
-        specifier: ^6.4.7
-        version: 6.4.7(@effect-app/typescript@5.3.0-tsplus.20231009)(react@18.2.0)
+        specifier: ^6.5.0
+        version: 6.5.0(@effect-app/typescript@5.3.0-tsplus.20231009)(react@18.2.0)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@effect-app/typescript@5.3.0-tsplus.20231009)(@types/node@18.11.12)
@@ -668,8 +668,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@fp-ts/optic':
-        specifier: ^0.10.0
-        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48)
+        specifier: ^0.11.0
+        version: 0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -693,8 +693,8 @@ importers:
         specifier: ^9.0.5
         version: 9.0.5
       '@types/validator':
-        specifier: ^13.11.2
-        version: 13.11.2
+        specifier: ^13.11.3
+        version: 13.11.3
       fast-check:
         specifier: ~3.13.1
         version: 3.13.1
@@ -723,11 +723,11 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@formatjs/intl':
-        specifier: ^2.9.3
-        version: 2.9.3(@effect-app/typescript@5.3.0-tsplus.20231009)
+        specifier: ^2.9.4
+        version: 2.9.4(@effect-app/typescript@5.3.0-tsplus.20231009)
       '@fp-ts/optic':
-        specifier: ^0.10.0
-        version: 0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48)
+        specifier: ^0.11.0
+        version: 0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48)
       effect:
         specifier: ^2.0.0-next.48
         version: 2.0.0-next.48
@@ -1563,10 +1563,10 @@ packages:
     dev: true
     patched: true
 
-  /@effect/typeclass@0.6.2(effect@2.0.0-next.48):
-    resolution: {integrity: sha512-H9FklKKpzm8RjaIwHVruk+hHUK6HYW9aVRQ09YMCQMJBdxs/bPdJ6/hJvBVhPp1TmcwGLe0mI2+IQ3HSpIjgfg==}
+  /@effect/typeclass@0.10.0(effect@2.0.0-next.48):
+    resolution: {integrity: sha512-pELnCfLZMKU8I/ax/2ciVIIuRX22NJaSriToOS/QekCW5twK2COVDJYsTGPEDdJ86nth5/W0rt0wUZf0mjwxWQ==}
     peerDependencies:
-      effect: ^2.0.0-next.39
+      effect: 2.0.0-next.48
     dependencies:
       effect: 2.0.0-next.48
     dev: false
@@ -1780,8 +1780,8 @@ packages:
     resolution: {integrity: sha512-HxjQ8Qn+4SI3/AFv6sOrDB+g6PpUTDwSJiQqOrnneEk8L71161srI9gjzzZvYVbzHiVg/BvcH95+cK/zfIt4pg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /@faker-js/faker@8.1.0:
-    resolution: {integrity: sha512-38DT60rumHfBYynif3lmtxMqMqmsOQIxQgEuPZxCk2yUYN0eqWpTACgxi0VpidvsJB8CRxCpvP7B3anK85FjtQ==}
+  /@faker-js/faker@8.2.0:
+    resolution: {integrity: sha512-VacmzZqVxdWdf9y64lDOMZNDMM/FQdtM9IsaOPKOm2suYwEatb8VkdHqOzXcDnZbk7YDE2BmsJmy/2Hmkn563g==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   /@formatjs/ecma402-abstract@1.17.2:
@@ -1795,8 +1795,8 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@formatjs/icu-messageformat-parser@2.6.2:
-    resolution: {integrity: sha512-nF/Iww7sc5h+1MBCDRm68qpHTCG4xvGzYs/x9HFcDETSGScaJ1Fcadk5U/NXjXeCtzD+DhN4BAwKFVclHfKMdA==}
+  /@formatjs/icu-messageformat-parser@2.7.0:
+    resolution: {integrity: sha512-7uqC4C2RqOaBQtcjqXsSpGRYVn+ckjhNga5T/otFh6MgxRrCJQqvjfbrGLpX1Lcbxdm5WH3Z2WZqt1+Tm/cn/Q==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
       '@formatjs/icu-skeleton-parser': 1.6.2
@@ -1808,15 +1808,15 @@ packages:
       '@formatjs/ecma402-abstract': 1.17.2
       tslib: 2.5.0
 
-  /@formatjs/intl-displaynames@6.5.2:
-    resolution: {integrity: sha512-uC2VBlz+WydGTDDpJwMTQuPH3CUpTricr91WH1QMfz5oEHg2sB7mUERcZONE/lu8MOe1jREIx4vBciZEVTqkmA==}
+  /@formatjs/intl-displaynames@6.6.0:
+    resolution: {integrity: sha512-bskUou9boZOzTqI8JdNCNkDavXf8uWWz/6NG1og/XJKpn4zsfiLdQ9EYKhVe/CfbCjlSyieJYn7/NztdoprHjw==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
       '@formatjs/intl-localematcher': 0.4.2
       tslib: 2.5.0
 
-  /@formatjs/intl-listformat@7.4.2:
-    resolution: {integrity: sha512-+6bSVudEQkf12Hh7kuKt8Xv/MyFlqdwA4V4NLnTZW8uYdF9RxlOELDD0rPaOc2++TMKIzI5o6XXwHPvpL6VrPA==}
+  /@formatjs/intl-listformat@7.5.0:
+    resolution: {integrity: sha512-n9FsXGl1T2ZbX6wSyrzCDJHrbJR0YJ9ZNsAqUvHXfbY3nsOmGnSTf5+bkuIp1Xiywu7m1X1Pfm/Ngp/yK1H84A==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
       '@formatjs/intl-localematcher': 0.4.2
@@ -1827,8 +1827,8 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@formatjs/intl@2.9.3(@effect-app/typescript@5.3.0-tsplus.20231009):
-    resolution: {integrity: sha512-hclPdyCF1zk2XmhgdXfl5Sd30QEdRBnIijH7Vc1AWz2K0/saVRrxuL3UYn+m3xEyfOa4yDbTWVbmXDL0XEzlsQ==}
+  /@formatjs/intl@2.9.4(@effect-app/typescript@5.3.0-tsplus.20231009):
+    resolution: {integrity: sha512-hY0UlbDz8jY12RkQtkzxe3OfUmsIcUcsvVYyr1TFue6oTrUHqpkmYLdQ626V3BCSLc90EZDXdvmsPfMd3hTcYQ==}
     peerDependencies:
       typescript: npm:@effect-app/typescript@5.3.0-tsplus.20231009
     peerDependenciesMeta:
@@ -1837,10 +1837,10 @@ packages:
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
       '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.6.2
-      '@formatjs/intl-displaynames': 6.5.2
-      '@formatjs/intl-listformat': 7.4.2
-      intl-messageformat: 10.5.3
+      '@formatjs/icu-messageformat-parser': 2.7.0
+      '@formatjs/intl-displaynames': 6.6.0
+      '@formatjs/intl-listformat': 7.5.0
+      intl-messageformat: 10.5.4
       tslib: 2.5.0
       typescript: /@effect-app/typescript@5.3.0-tsplus.20231009
 
@@ -1854,13 +1854,13 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.10.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.6.2)(effect@2.0.0-next.48):
-    resolution: {integrity: sha512-ArMc8qawBESuvps1BR74y3s8Vn8AiDnbNe/Pu1Pxc3RwVPDxb34cui6PblAIRXEieYH2QQiwsVp+bNDfxA48Zg==}
+  /@fp-ts/optic@0.11.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.10.0)(effect@2.0.0-next.48):
+    resolution: {integrity: sha512-mMVx0u6M051iKkGMXS34TyvwTRptpwo9xWTC32oXwdRSdC0B8TYX0eb/sMvWPj4kx3UD0ybLMEVBGFz1CjeOpA==}
     peerDependencies:
-      '@effect/typeclass': ^0.6.2
-      effect: ^2.0.0-next.44
+      '@effect/typeclass': ^0.10.0
+      effect: ^2.0.0-next.48
     dependencies:
-      '@effect/typeclass': 0.6.2(effect@2.0.0-next.48)
+      '@effect/typeclass': 0.10.0(effect@2.0.0-next.48)
       effect: 2.0.0-next.48
     dev: false
     patched: true
@@ -2192,33 +2192,33 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.73.0:
-    resolution: {integrity: sha512-ig3WL/Nqp8nRQ52P205NaypGKNfIl/G+cIqge9xPW6zfRb5kJdM1YParw9GSJ1SPjEZBkBORGAML0on5H2FILw==}
+  /@sentry-internal/tracing@7.74.0:
+    resolution: {integrity: sha512-JK6IRGgdtZjswGfaGIHNWIThffhOHzVIIaGmglui+VFIzOsOqePjoxaDV0MEvzafxXZD7eWqGE5RGuZ0n6HFVg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.73.0
-      '@sentry/types': 7.73.0
-      '@sentry/utils': 7.73.0
+      '@sentry/core': 7.74.0
+      '@sentry/types': 7.74.0
+      '@sentry/utils': 7.74.0
       tslib: 2.5.0
     dev: true
 
-  /@sentry/core@7.73.0:
-    resolution: {integrity: sha512-9FEz4Gq848LOgVN2OxJGYuQqxv7cIVw69VlAzWHEm3njt8mjvlTq+7UiFsGRo84+59V2FQuHxzA7vVjl90WfSg==}
+  /@sentry/core@7.74.0:
+    resolution: {integrity: sha512-83NRuqn7nDZkSVBN5yJQqcpXDG4yMYiB7TkYUKrGTzBpRy6KUOrkCdybuKk0oraTIGiGSe5WEwCFySiNgR9FzA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.73.0
-      '@sentry/utils': 7.73.0
+      '@sentry/types': 7.74.0
+      '@sentry/utils': 7.74.0
       tslib: 2.5.0
     dev: true
 
-  /@sentry/node@7.73.0:
-    resolution: {integrity: sha512-i50bRfmgkRRx0XXUbg9jGD/RuznDJxJXc4rBILhoJuhl+BjRIaoXA3ayplfJn8JLZxsNh75uJaCq4IUK70SORw==}
+  /@sentry/node@7.74.0:
+    resolution: {integrity: sha512-uBmW2/z0cz/WFIG74ZF7lSipO0XNzMf9yrdqnZXnGDYsUZE4I4QiqDN0hNi6fkTgf9MYRC8uFem2OkAvyPJ74Q==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.73.0
-      '@sentry/core': 7.73.0
-      '@sentry/types': 7.73.0
-      '@sentry/utils': 7.73.0
+      '@sentry-internal/tracing': 7.74.0
+      '@sentry/core': 7.74.0
+      '@sentry/types': 7.74.0
+      '@sentry/utils': 7.74.0
       cookie: 0.5.0
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -2227,16 +2227,16 @@ packages:
       - supports-color
     dev: true
 
-  /@sentry/types@7.73.0:
-    resolution: {integrity: sha512-/v8++bly8jW7r4cP2wswYiiVpn7eLLcqwnfPUMeCQze4zj3F3nTRIKc9BGHzU0V+fhHa3RwRC2ksqTGq1oJMDg==}
+  /@sentry/types@7.74.0:
+    resolution: {integrity: sha512-rI5eIRbUycWjn6s6o3yAjjWtIvYSxZDdnKv5je2EZINfLKcMPj1dkl6wQd2F4y7gLfD/N6Y0wZYIXC3DUdJQQg==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.73.0:
-    resolution: {integrity: sha512-h3ZK/qpf4k76FhJV9uiSbvMz3V/0Ovy94C+5/9UgPMVCJXFmVsdw8n/dwANJ7LupVPfYP23xFGgebDMFlK1/2w==}
+  /@sentry/utils@7.74.0:
+    resolution: {integrity: sha512-k3np8nuTPtx5KDODPtULfFln4UXdE56MZCcF19Jv6Ljxf+YN/Ady1+0Oi3e0XoSvFpWNyWnglauT7M65qCE6kg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.73.0
+      '@sentry/types': 7.74.0
       tslib: 2.5.0
     dev: true
 
@@ -2552,8 +2552,8 @@ packages:
     resolution: {integrity: sha512-xfHdwa1FMJ082prjSJpoEI57GZITiQz10r3vEJCHa2khEFQjKy91aWKz6+zybzssCvXUwE1LQWgWVwZ4nYUvHQ==}
     dev: true
 
-  /@types/validator@13.11.2:
-    resolution: {integrity: sha512-nIKVVQKT6kGKysnNt+xLobr+pFJNssJRi2s034wgWeFBUx01fI8BeHTW2TcRp7VcFu9QCYG8IlChTuovcm0oKQ==}
+  /@types/validator@13.11.3:
+    resolution: {integrity: sha512-jxjhh33aTYDHnrV1vZ3AvWQHfrGx2f5UxKjaP13l5q04fG+/hCKKm0MfodIoCqxevhbcfBb6ZjynyHuQ/jueGQ==}
     dev: true
 
   /@types/webidl-conversions@7.0.0:
@@ -5155,8 +5155,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /fp-and-or@0.1.3:
-    resolution: {integrity: sha512-wJaE62fLaB3jCYvY2ZHjZvmKK2iiLiiehX38rz5QZxtdN8fVPJDeZUiVvJrHStdTc+23LHlyZuSEKgFc0pxi2g==}
+  /fp-and-or@0.1.4:
+    resolution: {integrity: sha512-+yRYRhpnFPWXSly/6V4Lw9IfOV26uu30kynGJ03PW+MnjOEQe45RZ141QcS0aJehYBYA50GfCDnsRbFJdhssRw==}
     engines: {node: '>=10'}
     dev: true
 
@@ -5342,13 +5342,13 @@ packages:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
     dev: true
 
-  /glob@10.3.4:
-    resolution: {integrity: sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==}
+  /glob@10.3.10:
+    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
     dependencies:
       foreground-child: 3.1.1
-      jackspeak: 2.2.0
+      jackspeak: 2.3.6
       minimatch: 9.0.3
       minipass: 5.0.0
       path-scurry: 1.10.1
@@ -5712,12 +5712,12 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /intl-messageformat@10.5.3:
-    resolution: {integrity: sha512-TzKn1uhJBMyuKTO4zUX47SU+d66fu1W9tVzIiZrQ6hBqQQeYscBMIzKL/qEXnFbJrH9uU5VV3+T5fWib4SIcKA==}
+  /intl-messageformat@10.5.4:
+    resolution: {integrity: sha512-z+hrFdiJ/heRYlzegrdFYqU1m/KOMOVMqNilIArj+PbsuU8TNE7v4TWdQgSoxlxbT4AcZH3Op3/Fu15QTp+W1w==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
       '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.6.2
+      '@formatjs/icu-messageformat-parser': 2.7.0
       tslib: 2.5.0
 
   /io-ts-extra@0.11.6:
@@ -5990,8 +5990,8 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  /jackspeak@2.2.0:
-    resolution: {integrity: sha512-r5XBrqIJfwRIjRt/Xr5fv9Wh09qyhHfKnYddDlpM+ibRR20qrYActpCAgU6U+d53EOEjzkvxPMVHSlgR7leXrQ==}
+  /jackspeak@2.3.6:
+    resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
     engines: {node: '>=14'}
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -6822,8 +6822,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  /nanoid@5.0.1:
-    resolution: {integrity: sha512-vWeVtV5Cw68aML/QaZvqN/3QQXc6fBfIieAlu05m7FZW2Dgb+3f0xc0TTxuJW+7u30t7iSDTV/j3kVI0oJqIfQ==}
+  /nanoid@5.0.2:
+    resolution: {integrity: sha512-2ustYUX1R2rL/Br5B/FMhi8d5/QzvkJ912rBYxskcpu0myTHzSZfTr1LAS2Sm7jxRUObRrSBFoyzwAhL49aVSg==}
     engines: {node: ^18 || >=20}
     hasBin: true
     dev: false
@@ -6973,8 +6973,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates@16.14.5:
-    resolution: {integrity: sha512-f7v3YzPUgadtkB2LAVhiWMjrSejJ0N8OM9JjjVfxBz2neHqmPSWQUAUA+U/p3xeXHl9bghRD6knRqBhm9dkRGg==}
+  /npm-check-updates@16.14.6:
+    resolution: {integrity: sha512-sJ6w4AmSDP7YzBXah94Ul2JhiIbjBDfx9XYgib15um2wtiQkOyjE7Lov3MNUSQ84Ry7T81mE4ynMbl/mGbK4HQ==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -6983,7 +6983,7 @@ packages:
       commander: 10.0.1
       fast-memoize: 2.5.2
       find-up: 5.0.0
-      fp-and-or: 0.1.3
+      fp-and-or: 0.1.4
       get-stdin: 8.0.0
       globby: 11.1.0
       hosted-git-info: 5.2.1
@@ -7001,11 +7001,11 @@ packages:
       prompts-ncu: 3.0.0
       rc-config-loader: 4.1.3
       remote-git-tags: 3.0.0
-      rimraf: 5.0.1
+      rimraf: 5.0.5
       semver: 7.5.4
       semver-utils: 1.1.4
       source-map-support: 0.5.21
-      spawn-please: 2.0.1
+      spawn-please: 2.0.2
       strip-ansi: 7.1.0
       strip-json-comments: 5.0.1
       untildify: 4.0.0
@@ -7770,8 +7770,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-intl@6.4.7(@effect-app/typescript@5.3.0-tsplus.20231009)(react@18.2.0):
-    resolution: {integrity: sha512-0hnOHAZhxTFqD1hGTxrF40qNyZJPPYiGhWIIxIz0Udz+3e3c7sdN80qlxArR+AbJ+jb5ALXZkJYH20+GPFCM0Q==}
+  /react-intl@6.5.0(@effect-app/typescript@5.3.0-tsplus.20231009)(react@18.2.0):
+    resolution: {integrity: sha512-ZnBYFlFUU1ivhvWBA87XJLAr9nR8yeC1/83e6AL7yiHbWH7xQE7tyMyIyw6or78EvU9Hx8Sh8LUDC4bGrNxXOA==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
       typescript: npm:@effect-app/typescript@5.3.0-tsplus.20231009
@@ -7780,14 +7780,14 @@ packages:
         optional: true
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.2
-      '@formatjs/icu-messageformat-parser': 2.6.2
-      '@formatjs/intl': 2.9.3(@effect-app/typescript@5.3.0-tsplus.20231009)
-      '@formatjs/intl-displaynames': 6.5.2
-      '@formatjs/intl-listformat': 7.4.2
+      '@formatjs/icu-messageformat-parser': 2.7.0
+      '@formatjs/intl': 2.9.4(@effect-app/typescript@5.3.0-tsplus.20231009)
+      '@formatjs/intl-displaynames': 6.6.0
+      '@formatjs/intl-listformat': 7.5.0
       '@types/hoist-non-react-statics': 3.3.1
       '@types/react': 18.2.28
       hoist-non-react-statics: 3.3.2
-      intl-messageformat: 10.5.3
+      intl-messageformat: 10.5.4
       react: 18.2.0
       tslib: 2.5.0
       typescript: /@effect-app/typescript@5.3.0-tsplus.20231009
@@ -8065,12 +8065,12 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /rimraf@5.0.1:
-    resolution: {integrity: sha512-OfFZdwtd3lZ+XZzYP/6gTACubwFcHdLRqS9UX3UwpU2dnGQYkPFISRwvM3w9IiB2w7bW5qGo/uAwE4SmXXSKvg==}
+  /rimraf@5.0.5:
+    resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      glob: 10.3.4
+      glob: 10.3.10
     dev: true
 
   /rollup@3.29.2:
@@ -8387,8 +8387,8 @@ packages:
     resolution: {integrity: sha512-zC8zGoGkmc8J9ndvml8Xksr1Amk9qBujgbF0JAIWO7kXr43w0h/0GJNM/Vustixu+YE8N/MTrQ7N31FvHUACxQ==}
     dev: true
 
-  /spawn-please@2.0.1:
-    resolution: {integrity: sha512-W+cFbZR2q2mMTfjz5ZGvhBAiX+e/zczFCNlbS9mxiSdYswBXwUuBUT+a0urH+xZZa8f/bs0mXHyZsZHR9hKogA==}
+  /spawn-please@2.0.2:
+    resolution: {integrity: sha512-KM8coezO6ISQ89c1BzyWNtcn2V2kAVtwIXd3cN/V5a0xPYc1F/vydrRc01wsKFEQ/p+V1a4sw4z2yMITIXrgGw==}
     engines: {node: '>=14'}
     dependencies:
       cross-spawn: 7.0.3
