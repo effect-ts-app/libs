@@ -1,3 +1,5 @@
+import { makeFiberFailure } from "effect/Runtime"
+
 export class NotFoundError<T extends string = string> {
   public readonly _tag = "NotFoundError"
   public readonly message: string
@@ -39,28 +41,26 @@ export class CauseException<E> extends Error {
     Error.stackTraceLimit = 0
     super()
     Error.stackTraceLimit = limit
-    // TODO
-    // const pretty = (CausePretty as any).prettyErrors(this.originalCause)
-    // if (pretty.length > 0) {
-    //   this.name = pretty[0].message.split(":")[0]
-    //   this.message = pretty[0].message.substring(this.name.length + 2)
-    //   this.stack = `${this.name}: ${this.message}\n` + pretty[0].stack
-    // }
+    const ff = makeFiberFailure(originalCause)
+    this.name = ff.name
+    this.message = ff.message
+    this.stack = ff.stack
   }
-  override toString() {
-    return `[${this._tag}] ` + Cause.pretty(this.originalCause)
-  }
-  [Symbol.for("nodejs.util.inspect.custom")]() {
-    return this.toString()
-  }
-
   toJSON() {
     return {
       _tag: this._tag,
+      name: this.name,
       message: this.message,
-      pretty: this.toString()
-      //      cause: (this.cause as {}).$$.inspect(undefined, 10)
+      pretty: this.toString(),
+      cause: this.originalCause.toJSON()
     }
+  }
+
+  [Symbol.for("nodejs.util.inspect.custom")]() {
+    return this.toJSON()
+  }
+  override toString() {
+    return `[${this._tag}] ` + Cause.pretty(this.originalCause)
   }
 }
 
