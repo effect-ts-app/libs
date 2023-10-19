@@ -5,8 +5,8 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "effect": "^2.0.0-next.48",
-    "@fp-ts/optic": "^0.11.0",
+    "effect": "^2.0.0-next.50",
+    "@fp-ts/optic": "^0.13.0",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -14,8 +14,8 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.5",
-    "@types/validator": "^13.11.3",
+    "@types/uuid": "^9.0.6",
+    "@types/validator": "^13.11.5",
     "fast-check": "~3.13.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.202310102",
