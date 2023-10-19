@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.79.1
+
+### Patch Changes
+
+- 55eccedb: improve request span name
+
 ## 0.79.0
 
 ### Minor Changes
