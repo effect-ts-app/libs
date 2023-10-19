@@ -8,7 +8,7 @@ import { RequestContextContainer, RequestContextContainerImpl } from "../service
 export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
   return makeInternalRequestContext(name).flatMap((rc) =>
     self
-      .withSpan("request")
+      .withSpan("request#" + name)
       .provideService(RequestContextContainer, new RequestContextContainerImpl(rc))
   )
 }
