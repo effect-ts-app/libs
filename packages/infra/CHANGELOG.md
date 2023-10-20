@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.80.1
+
+### Patch Changes
+
+- improve: add request id to span
+
 ## 0.80.0
 
 ### Minor Changes
