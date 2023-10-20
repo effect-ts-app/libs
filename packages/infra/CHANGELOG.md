@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.80.2
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+- Updated dependencies
+  - @effect-app/core@0.63.1
+  - @effect-app/infra-adapters@0.56.1
+  - @effect-app/prelude@0.65.1
+  - @effect-app/schema@0.57.1
+
 ## 0.80.1
 
 ### Patch Changes

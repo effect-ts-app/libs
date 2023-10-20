@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.32.1
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+
 ## 0.32.0
 
 ### Minor Changes

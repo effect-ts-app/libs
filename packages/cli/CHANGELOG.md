@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.21.1
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+
 ## 0.21.0
 
 ### Minor Changes

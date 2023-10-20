@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.25.1
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+
 ## 0.25.0
 
 ### Minor Changes

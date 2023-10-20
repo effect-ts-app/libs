@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.65.1
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+- Updated dependencies
+  - @effect-app/core@0.63.1
+  - @effect-app/schema@0.57.1
+
 ## 0.65.0
 
 ### Minor Changes

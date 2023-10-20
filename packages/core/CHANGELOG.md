@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.63.1
+
+### Patch Changes
+
+- fix tsplus.config for pnpm
+
 ## 0.63.0
 
 ### Minor Changes
