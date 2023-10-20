@@ -28,5 +28,7 @@ function makeInternalRequestContext(name: string) {
 /** @tsplus getter effect/io/Effect withRequestSpan */
 export const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
   RequestContextContainer.flatMap((c) => c.requestContext).flatMap((ctx) =>
-    f.withSpan(`request[${ctx.name}]#${ctx.id}`)
+    f
+      .withSpan(`request[${ctx.name}]#${ctx.id}`)
+      .withLogSpan(`request[${ctx.name}]#${ctx.id}`)
   )
