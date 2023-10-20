@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.80.3
+
+### Patch Changes
+
+- a85c80d7: trace and log span
+- Updated dependencies [87e29b7d]
+  - @effect-app/prelude@0.65.2
+  - @effect-app/core@0.63.2
+  - @effect-app/infra-adapters@0.56.2
+  - @effect-app/schema@0.57.2
+
 ## 0.80.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.63.2
+
+### Patch Changes
+
+- 87e29b7d: export httpclient
+
 ## 0.63.1
 
 ### Patch Changes
