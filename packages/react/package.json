@@ -36,12 +36,12 @@
     "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.23.0",
     "@types/node": "~20.8.7",
-    "@types/react": "^18.2.29",
+    "@types/react": "^18.2.30",
     "react": "^18.2.0",
     "react-hook-form": "7.40.0",
     "react-intl": "^6.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.202310102",
+    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20231020",
     "vitest": "^0.34.6"
   },
   "typesVersions": {

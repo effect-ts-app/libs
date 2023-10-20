@@ -14,7 +14,7 @@
     "@faker-js/faker": "^8.2.0",
     "@sendgrid/helpers": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
-    "change-case": "^5.1.0",
+    "change-case": "^5.1.1",
     "cross-fetch": "^4.0.0",
     "fast-check": "~3.13.1",
     "object-hash": "^3.0.0",
@@ -40,7 +40,7 @@
     "mongodb": "6.1.0",
     "redis": "^3.1.2",
     "ts-node": "^10.9.1",
-    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.202310102",
+    "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20231020",
     "vitest": "^0.34.6"
   },
   "typesVersions": {
