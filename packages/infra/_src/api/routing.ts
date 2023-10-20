@@ -437,7 +437,7 @@ export function makeRequestHandler<
                 }))
               })
           )
-          .withSpan("request#" + requestContext.name)
+          .withRequestSpan
           .provideService(RequestContextContainer, new RequestContextContainerImpl(requestContext)) // otherwise external error reporter breaks.
       )
   }

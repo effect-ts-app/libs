@@ -8,7 +8,7 @@ import { RequestContextContainer, RequestContextContainerImpl } from "../service
 export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
   return makeInternalRequestContext(name).flatMap((rc) =>
     self
-      .withSpan("request#" + name)
+      .withRequestSpan
       .provideService(RequestContextContainer, new RequestContextContainerImpl(rc))
   )
 }
@@ -24,3 +24,9 @@ function makeInternalRequestContext(name: string) {
     })
   })
 }
+
+/** @tsplus getter effect/io/Effect withRequestSpan */
+export const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
+  RequestContextContainer.flatMap((c) => c.requestContext).flatMap((ctx) =>
+    f.withSpan(`request[${ctx.name}]#${ctx.id}`)
+  )
