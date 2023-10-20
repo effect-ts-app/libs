@@ -1,5 +1,4 @@
 import type { Http } from "@effect-app/core/http/http-client"
-import * as HF from "@effect-app/core/http/http-client-fetch"
 import { ApiConfig } from "@effect-app/prelude/client"
 import { fetch } from "cross-fetch"
 import * as Scope from "effect/Scope"
@@ -16,7 +15,7 @@ const DefaultApiConfig = Config.all({
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
-  return HF.Client(fetch) + ApiConfig.Live(config)
+  return HttpClientFetch.Client(fetch) + ApiConfig.Live(config)
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {

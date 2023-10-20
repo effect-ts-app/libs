@@ -1,8 +1,8 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
+export * as Optic from "@fp-ts/optic"
 export * as Chunk from "effect/Chunk"
 export * as Either from "effect/Either"
 export * as Option from "effect/Option"
-export * as Optic from "@fp-ts/optic"
 
 export * as Order from "effect/Order"
 
