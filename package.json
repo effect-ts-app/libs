@@ -81,7 +81,7 @@
         "concurrently": "^8.2.2",
         "dprint": "^0.41.0",
         "enhanced-resolve": "^5.15.0",
-        "eslint": "^8.51.0",
+        "eslint": "^8.52.0",
         "eslint-import-resolver-typescript": "^3.6.1",
         "eslint-import-resolver-webpack": "^0.13.7",
         "eslint-plugin-codegen": "^0.17.0",

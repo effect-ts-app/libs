@@ -13,7 +13,7 @@
     "@formatjs/intl": "^2.9.4",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
-    "vue": "^3.3.5"
+    "vue": "^3.3.6"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
