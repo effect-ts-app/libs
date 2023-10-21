@@ -5,8 +5,6 @@ import type { GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect
 import { condemnCustom } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
-
-import type { Http } from "@effect-app/core/http/http-client"
 import type { ApiConfig } from "./config.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
 import {
@@ -29,8 +27,8 @@ type AnyRequest = Omit<QueryRequest<any, any, any, any, any>, "method"> & {
 const cache = new Map<any, Client<any>>()
 
 export type Client<M extends Requests> =
-  & RequestHandlers<ApiConfig | Http, FetchError | ResponseError, M>
-  & RequestHandlersE<ApiConfig | Http, FetchError | ResponseError, M>
+  & RequestHandlers<ApiConfig | HttpClient.Default, FetchError | ResponseError, M>
+  & RequestHandlersE<ApiConfig | HttpClient.Default, FetchError | ResponseError, M>
 
 export function clientFor<M extends Requests>(models: M): Client<M> {
   const found = cache.get(models)
