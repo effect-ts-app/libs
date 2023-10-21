@@ -109,6 +109,17 @@
       ]
     },
     {
+      "definitionName": "catchTag",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "catchTag"
+        }
+      ]
+    },
+    {
       "definitionName": "catchTags",
       "definitionKind": "const",
       "extensions": [
