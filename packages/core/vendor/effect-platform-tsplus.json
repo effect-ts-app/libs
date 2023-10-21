@@ -21,6 +21,17 @@
       ]
     },
     {
+      "definitionName": "map",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "map"
+        }
+      ]
+    },
+    {
       "definitionName": "mapEffect",
       "definitionKind": "const",
       "extensions": [
@@ -43,6 +54,28 @@
       ]
     },
     {
+      "definitionName": "mapRequestEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "mapRequestEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "tap",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "tap"
+        }
+      ]
+    },
+    {
       "definitionName": "tapRequest",
       "definitionKind": "const",
       "extensions": [
@@ -50,6 +83,28 @@
           "kind": "fluent",
           "typeName": "effect/platform/Http/Client",
           "name": "tapRequest"
+        }
+      ]
+    },
+    {
+      "definitionName": "transform",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "transform"
+        }
+      ]
+    },
+    {
+      "definitionName": "transformResponse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "transformResponse"
         }
       ]
     },
