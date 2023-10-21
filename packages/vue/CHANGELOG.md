@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.61.0
+
+### Minor Changes
+
+- 51b546c5: feat: Convert clientFor to use @effect/platform HttpClient
+
+### Patch Changes
+
+- Updated dependencies [51b546c5]
+  - @effect-app/prelude@0.67.0
+  - @effect-app/core@0.65.0
+  - @effect-app/vue@0.61.0
+  - @effect-app/schema@0.57.4
+
 ## 0.60.3
 
 ### Patch Changes

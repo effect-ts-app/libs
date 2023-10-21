@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.65.0
+
+### Minor Changes
+
+- 51b546c5: feat: Convert clientFor to use @effect/platform HttpClient
+
 ## 0.64.0
 
 ### Minor Changes
