@@ -125,6 +125,17 @@
       ]
     },
     {
+      "definitionName": "patch",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "patch"
+        }
+      ]
+    },
+    {
       "definitionName": "put",
       "definitionKind": "const",
       "extensions": [
@@ -184,6 +195,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "jsonBody"
+        },
+        {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
           "name": "jsonBody"
@@ -194,6 +210,11 @@
       "definitionName": "unsafeJsonBody",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "unsafeJsonBody"
+        },
         {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
