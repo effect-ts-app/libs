@@ -1,36 +1,85 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient } from "@effect-app/core/http"
+import type { HttpClient as HttpClientLegacy } from "@effect-app/core/http"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
-import { StringId } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
-import { getConfig } from "./config.js"
+import { ApiConfig } from "./config.js"
 
-export type FetchError = HttpClient.HttpError<string>
+export type FetchError = HttpClientLegacy.HttpError<string>
 
 export class ResponseError {
   public readonly _tag = "ResponseError"
   constructor(public readonly error: unknown) {}
 }
 
-export function fetchApi(method: HttpClient.Method, path: string, body?: unknown) {
-  const request = HttpClient.request(method, "JSON", "JSON")
-  return getConfig(({ apiUrl, headers }) =>
-    HttpClient
-      .withHeaders({
-        "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
-        ...headers.map((_) => Object.fromEntries(_)).value
-      })(request(`${apiUrl}${path}`, body))
-      .map((x) => ({ ...x, body: x.body.value ?? null }))
-  )
+const getClient = HttpClient.flatMap((defaultClient) =>
+  ApiConfig
+    .Tag
+    .map(({ apiUrl, headers }) =>
+      defaultClient
+        .filterStatusOk
+        .mapRequest(ClientRequest.acceptJson)
+        .mapRequest(ClientRequest.prependUrl(apiUrl))
+        .mapRequest(ClientRequest.setHeaders({
+          "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
+          ...headers.map((_) => Object.fromEntries(_)).value
+        }))
+        .tapRequest((r) =>
+          Effect
+            .logDebug(`[HTTP] ${r.method}`)
+            .annotateLogs("url", r.url)
+            .annotateLogs("body", r.body._tag === "Uint8Array" ? new TextDecoder().decode(r.body.body) : r.body._tag)
+            .annotateLogs("headers", r.headers)
+        )
+        .mapEffect((_) => _.json.map((body) => ({ status: _.status, body, headers: _.headers })))
+        .catchTags({
+          "ResponseError": (err) =>
+            err
+              .response
+              .text
+              // TODO
+              .orDie
+              .flatMap((_) =>
+                Effect.fail({
+                  _tag: "HttpErrorResponse" as const,
+                  response: { body: Option.fromNullable(_), status: err.response.status, headers: err.response.headers }
+                } as HttpClientLegacy.HttpResponseError<unknown>)
+              ),
+          "RequestError": (err) =>
+            Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpClientLegacy.HttpRequestError)
+        })
+    )
+)
+
+export function fetchApi(
+  method: HttpClientLegacy.Method,
+  path: string,
+  body?: unknown
+) {
+  return getClient
+    .flatMap((client) => {
+      const req = method === "DELETE"
+        ? ClientRequest.del
+        : method === "GET"
+        ? ClientRequest.get
+        : method === "POST"
+        ? ClientRequest.post
+        : method === "PUT"
+        ? ClientRequest.put
+        : ClientRequest.patch
+
+      return client(req(path).unsafeJsonBody(body))
+        .map((x) => ({ ...x, body: x.body ?? null }))
+    })
 }
+
 export function fetchApi2S<RequestA, RequestE, ResponseA>(
   encodeRequest: (a: RequestA) => RequestE,
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
   const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
-  return (method: HttpClient.Method, path: Path) => (req: RequestA) =>
+  return (method: HttpClientLegacy.Method, path: Path) => (req: RequestA) =>
     fetchApi(
       method,
       method === "DELETE"
@@ -132,7 +181,7 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
     })
   }
 }
-export type FetchResponse<T> = { body: T; headers: HttpClient.Headers; status: number }
+export type FetchResponse<T> = { body: T; headers: HttpClientLegacy.Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
 export const EmptyResponseM = Effect(EmptyResponse)
