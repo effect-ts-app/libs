@@ -34,7 +34,8 @@
             "./node_modules/@effect-app/core/vendor/effect-match-tsplus.json",
             "./node_modules/@effect-app/core/vendor/effect-stm-tsplus.json",
             "./node_modules/@effect-app/core/vendor/effect-stream-tsplus.json",
-            "./node_modules/@effect-app/core/vendor/fp-ts-optic-tsplus.json"
+            "./node_modules/@effect-app/core/vendor/fp-ts-optic-tsplus.json",
+            "./node_modules/@effect-app/core/vendor/effect-platform-tsplus.json"
         ],
         //"preserveSymlinks": true
         "plugins": [

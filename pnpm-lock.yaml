@@ -554,6 +554,9 @@ importers:
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
+      '@effect/platform':
+        specifier: ^0.24.0
+        version: 0.24.0(@effect/schema@0.45.5)(effect@2.0.0-next.50)
       '@fp-ts/optic':
         specifier: ^0.13.0
         version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.50)
@@ -1562,6 +1565,28 @@ packages:
       '@fp-ts/data': 0.0.40
     dev: true
     patched: true
+
+  /@effect/platform@0.24.0(@effect/schema@0.45.5)(effect@2.0.0-next.50):
+    resolution: {integrity: sha512-IDfdNxgfEMOlONXL2/cQ9/Mx7z5jz68ufeOkofo12xkzUOAZzw4c96BPQ9K7kmwaEjIve9YNF52dv1HO3z78AA==}
+    peerDependencies:
+      '@effect/schema': ^0.45.0
+      effect: 2.0.0-next.50
+    dependencies:
+      '@effect/schema': 0.45.5(effect@2.0.0-next.50)(fast-check@3.13.1)
+      effect: 2.0.0-next.50
+      find-my-way: 7.7.0
+      path-browserify: 1.0.1
+    dev: false
+
+  /@effect/schema@0.45.5(effect@2.0.0-next.50)(fast-check@3.13.1):
+    resolution: {integrity: sha512-YiZP0j8XfpzbhZI1GjELXqDmM5DZlsAWNhfQhJSrDtHIUpwvuMYanUZx6W5PBFeadXXyJv3V/s8i75/Vh5J/sw==}
+    peerDependencies:
+      effect: 2.0.0-next.50
+      fast-check: ^3.13.1
+    dependencies:
+      effect: 2.0.0-next.50
+      fast-check: 3.13.1
+    dev: false
 
   /@effect/typeclass@0.12.0(effect@2.0.0-next.50):
     resolution: {integrity: sha512-UJjn4OTb+NAYhdEgJkOgK/E+noLZW5FwKqmx8IZqsMGLAFzeh4wCwnRIXf/oTHosQ6Zoq13J7Yloi/24pPYv1Q==}
@@ -5022,6 +5047,10 @@ packages:
     dependencies:
       pure-rand: 6.0.4
 
+  /fast-decode-uri-component@1.0.1:
+    resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
+    dev: false
+
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -5048,6 +5077,12 @@ packages:
   /fast-memoize@2.5.2:
     resolution: {integrity: sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==}
     dev: true
+
+  /fast-querystring@1.1.2:
+    resolution: {integrity: sha512-g6KuKWmFXc0fID8WWH0jit4g0AGBoJhCkJMb1RmbsSEUNvQ+ZC8D6CUZ+GtF8nMzSPXnhiePyyqqipzNNEnHjg==}
+    dependencies:
+      fast-decode-uri-component: 1.0.1
+    dev: false
 
   /fast-xml-parser@4.0.11:
     resolution: {integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==}
@@ -5132,6 +5167,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /find-my-way@7.7.0:
+    resolution: {integrity: sha512-+SrHpvQ52Q6W9f3wJoJBbAQULJuNEEQwBvlvYwACDhBTLOTMiQ0HYWh4+vC3OivGP2ENcTI1oKlFA2OepJNjhQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-querystring: 1.1.2
+      safe-regex2: 2.0.0
+    dev: false
 
   /find-root@1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
@@ -7439,6 +7483,10 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
+  /path-browserify@1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
+    dev: false
+
   /path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
@@ -8117,6 +8165,11 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
+  /ret@0.2.2:
+    resolution: {integrity: sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==}
+    engines: {node: '>=4'}
+    dev: false
+
   /retry@0.12.0:
     resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
     engines: {node: '>= 4'}
@@ -8193,6 +8246,12 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.1.3
       is-regex: 1.1.4
+
+  /safe-regex2@2.0.0:
+    resolution: {integrity: sha512-PaUSFsUaNNuKwkBijoAPHAK6/eM6VirvyPWlZ7BAQy4D+hCvh4B6lIG+nPdhbFfIbP+gTGBcrdsOaUs0F+ZBOQ==}
+    dependencies:
+      ret: 0.2.2
+    dev: false
 
   /safe-stable-stringify@2.4.1:
     resolution: {integrity: sha512-dVHE6bMtS/bnL2mwualjc6IxEv1F+OCUpA46pKUj6F8uDbUM0jCCulPqRNPSnWwGNKx5etqMjZYdXtrm5KJZGA==}

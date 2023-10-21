@@ -47,6 +47,16 @@ import { Request } from "effect/Request"
 /**
  * @tsplus global
  */
+import { Client as HttpClient } from "@effect/platform/Http/Client"
+
+/**
+ * @tsplus global
+ */
+import { ClientRequest } from "@effect/platform/Http/ClientRequest"
+
+/**
+ * @tsplus global
+ */
 import { EffectCache, EffectRequest } from "@effect-app/prelude/Request"
 
 /**

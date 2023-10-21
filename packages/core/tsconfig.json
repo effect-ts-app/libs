@@ -14,7 +14,8 @@
             "./vendor/effect-match-tsplus.json",
             "./vendor/effect-stm-tsplus.json",
             "./vendor/effect-stream-tsplus.json",
-            "./vendor/fp-ts-optic-tsplus.json"
+            "./vendor/fp-ts-optic-tsplus.json",
+            "./vendor/effect-platform-tsplus.json"
         ]
     },
     "include": [

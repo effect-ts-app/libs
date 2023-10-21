@@ -1,0 +1,205 @@
+{
+  "@effect/platform/Http/Client": [
+    {
+      "definitionName": "Client",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/platform/Http/Client"
+        }
+      ]
+    },
+    {
+      "definitionName": "Client",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "companion",
+          "typeName": "effect/platform/Http/Client.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapEffect",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "mapEffect"
+        }
+      ]
+    },
+    {
+      "definitionName": "mapRequest",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "mapRequest"
+        }
+      ]
+    },
+    {
+      "definitionName": "tapRequest",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "tapRequest"
+        }
+      ]
+    },
+    {
+      "definitionName": "catchTags",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Client",
+          "name": "catchTags"
+        }
+      ]
+    },
+    {
+      "definitionName": "filterStatusOk",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/platform/Http/Client",
+          "name": "filterStatusOk"
+        }
+      ]
+    }
+  ],
+  "@effect/platform/Http/ClientRequest": [
+    {
+      "definitionName": "ClientRequest",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/platform/Http/ClientRequest"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/platform/Http/ClientRequest.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "get",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "get"
+        }
+      ]
+    },
+    {
+      "definitionName": "del",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "del"
+        }
+      ]
+    },
+    {
+      "definitionName": "post",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "post"
+        }
+      ]
+    },
+    {
+      "definitionName": "put",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "put"
+        }
+      ]
+    },
+    {
+      "definitionName": "accept",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "accept"
+        }
+      ]
+    },
+    {
+      "definitionName": "acceptJson",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "acceptJson"
+        }
+      ]
+    },
+    {
+      "definitionName": "prependUrl",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "prependUrl"
+        }
+      ]
+    },
+    {
+      "definitionName": "setHeaders",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "setHeaders"
+        }
+      ]
+    },
+    {
+      "definitionName": "jsonBody",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "jsonBody"
+        }
+      ]
+    },
+    {
+      "definitionName": "unsafeJsonBody",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "unsafeJsonBody"
+        }
+      ]
+    }
+  ]
+}
