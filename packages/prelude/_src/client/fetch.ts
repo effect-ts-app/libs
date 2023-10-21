@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { HttpClient as HttpClientLegacy } from "@effect-app/core/http"
+import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"
 
-export type FetchError = HttpClientLegacy.HttpError<string>
+export type FetchError = HttpError<string>
 
 export class ResponseError {
   public readonly _tag = "ResponseError"
@@ -44,16 +44,15 @@ const getClient = HttpClient.flatMap((defaultClient) =>
                 Effect.fail({
                   _tag: "HttpErrorResponse" as const,
                   response: { body: Option.fromNullable(_), status: err.response.status, headers: err.response.headers }
-                } as HttpClientLegacy.HttpResponseError<unknown>)
+                } as HttpResponseError<unknown>)
               ),
-          "RequestError": (err) =>
-            Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpClientLegacy.HttpRequestError)
+          "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
         })
     )
 )
 
 export function fetchApi(
-  method: HttpClientLegacy.Method,
+  method: Method,
   path: string,
   body?: unknown
 ) {
@@ -79,7 +78,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
   const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
-  return (method: HttpClientLegacy.Method, path: Path) => (req: RequestA) =>
+  return (method: Method, path: Path) => (req: RequestA) =>
     fetchApi(
       method,
       method === "DELETE"
@@ -181,7 +180,7 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
     })
   }
 }
-export type FetchResponse<T> = { body: T; headers: HttpClientLegacy.Headers; status: number }
+export type FetchResponse<T> = { body: T; headers: Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
 export const EmptyResponseM = Effect(EmptyResponse)

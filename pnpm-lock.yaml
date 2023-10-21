@@ -250,6 +250,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@effect/platform':
+        specifier: ^0.24.0
+        version: 0.24.0(@effect/schema@0.45.5)(effect@2.0.0-next.50)
       '@fp-ts/optic':
         specifier: ^0.13.0
         version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.50)
