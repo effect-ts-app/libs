@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.65.1
+
+### Patch Changes
+
+- add missing exts
+
 ## 0.65.0
 
 ### Minor Changes
