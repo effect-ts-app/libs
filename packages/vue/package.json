@@ -4,13 +4,14 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@effect/platform-browser": "^0.12.0",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.0-next.50",
     "@fp-ts/optic": "^0.13.0",
     "@formatjs/intl": "^2.9.4",
+    "effect": "^2.0.0-next.50",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
     "vue": "^3.3.6"

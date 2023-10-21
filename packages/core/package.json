@@ -294,16 +294,6 @@
         "default": "./_cjs/global.cjs"
       }
     },
-    "./http": {
-      "import": {
-        "types": "./dist/http.d.ts",
-        "default": "./dist/http.js"
-      },
-      "require": {
-        "types": "./dist/http.d.ts",
-        "default": "./_cjs/http.cjs"
-      }
-    },
     "./http/http-client": {
       "import": {
         "types": "./dist/http/http-client.d.ts",

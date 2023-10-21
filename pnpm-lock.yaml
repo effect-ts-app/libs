@@ -725,6 +725,9 @@ importers:
       '@effect-app/vue':
         specifier: workspace:*
         version: 'link:'
+      '@effect/platform-browser':
+        specifier: ^0.12.0
+        version: 0.12.0(@effect/schema@0.45.5)(effect@2.0.0-next.50)
       '@formatjs/intl':
         specifier: ^2.9.4
         version: 2.9.4(@effect-app/typescript@5.3.0-tsplus.20231009)
@@ -1565,6 +1568,17 @@ packages:
       '@fp-ts/data': 0.0.40
     dev: true
     patched: true
+
+  /@effect/platform-browser@0.12.0(@effect/schema@0.45.5)(effect@2.0.0-next.50):
+    resolution: {integrity: sha512-VB7Lj/6sO4avWZWcDQy2yPsJU7GAvBFr5BtunWjM2OYH6AfS0aq3gRTxKd+xdRqIh1Lbq1VHoJudBMtaMdSOPQ==}
+    peerDependencies:
+      effect: 2.0.0-next.50
+    dependencies:
+      '@effect/platform': 0.24.0(@effect/schema@0.45.5)(effect@2.0.0-next.50)
+      effect: 2.0.0-next.50
+    transitivePeerDependencies:
+      - '@effect/schema'
+    dev: false
 
   /@effect/platform@0.24.0(@effect/schema@0.45.5)(effect@2.0.0-next.50):
     resolution: {integrity: sha512-IDfdNxgfEMOlONXL2/cQ9/Mx7z5jz68ufeOkofo12xkzUOAZzw4c96BPQ9K7kmwaEjIve9YNF52dv1HO3z78AA==}

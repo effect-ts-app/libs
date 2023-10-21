@@ -1,8 +1,9 @@
 import type { Http } from "@effect-app/core/http/http-client"
 import { ApiConfig } from "@effect-app/prelude/client"
-import { fetch } from "cross-fetch"
 import * as Scope from "effect/Scope"
 import { initRuntime } from "./internal.js"
+
+import * as HttpClientBrowser from "@effect/platform-browser/HttpClient"
 
 export { initRuntime } from "./internal.js"
 
@@ -15,7 +16,7 @@ const DefaultApiConfig = Config.all({
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
-  return HttpClientFetch.Client(fetch) + ApiConfig.Live(config)
+  return HttpClientBrowser.client.layer + ApiConfig.Live(config)
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
