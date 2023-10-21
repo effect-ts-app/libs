@@ -233,11 +233,6 @@ import { Lens, lens, Optic } from "@fp-ts/optic"
  */
 import type { lazyGetter } from "@effect-app/core/utils"
 
-/**
- * @tsplus global
- */
-import { HttpClient, HttpClientFetch } from "@effect-app/core/http"
-
 // TODO: these may be problematic global imports causing bundling issues?
 // "import type {} from" doesn't work outside this package
 import "./_global.ext.js"
