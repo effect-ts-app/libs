@@ -1,4 +1,3 @@
-import type { Http } from "@effect-app/core/http/http-client"
 import { ApiConfig } from "@effect-app/prelude/client"
 import * as Scope from "effect/Scope"
 import { initRuntime } from "./internal.js"
@@ -32,7 +31,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
   })
 }
 
-export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
+export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | HttpClient.Default>) {
   const { clean, runtime } = makeAppRuntime(layer).runSync
   initRuntime(runtime)
   return {
@@ -41,7 +40,7 @@ export function initializeSync<E, A>(layer: Layer<never, E, A | ApiConfig | Http
   }
 }
 
-export function initializeAsync<E, A>(layer: Layer<never, E, A | ApiConfig | Http>) {
+export function initializeAsync<E, A>(layer: Layer<never, E, A | ApiConfig | HttpClient.Default>) {
   return makeAppRuntime(layer)
     .runPromise
     .then(({ clean, runtime }) => {

@@ -1,4 +1,3 @@
-import type { Http } from "@effect-app/core/http/http-client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
@@ -51,13 +50,15 @@ function swrToQuery<E, A>(
   return r.isValidating ? new Loading() : new Initial()
 }
 
-export function useMutate<E, A>(self: Effect<ApiConfig | Http, E, FetchResponse<A>> & { mapPath: string }) {
+export function useMutate<E, A>(
+  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string }
+) {
   const fn = () => run.value(self).then((_) => _.body)
   return () => mutate(self.mapPath, fn)
 }
 
 export function useMutateWithArg<Arg, E, A>(
-  self: ((arg: Arg) => Effect<ApiConfig | Http, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
+  self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
 ) {
   const fn = (arg: Arg) => run.value(self(arg)).then((_) => _.body)
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
@@ -65,7 +66,7 @@ export function useMutateWithArg<Arg, E, A>(
 
 // TODO: same trick with mutations/actions
 export function useSafeQueryWithArg<Arg, E, A>(
-  self: ((arg: Arg) => Effect<ApiConfig | Http, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string },
+  self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string },
   arg: Arg,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
@@ -73,14 +74,14 @@ export function useSafeQueryWithArg<Arg, E, A>(
 }
 
 export function useSafeQuery<E, A>(
-  self: Effect<ApiConfig | Http, E, FetchResponse<A>> & { mapPath: string },
+  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string },
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   return useSafeQuery_(self.mapPath, self, config)
 }
 
 export function useSafeQueryWithArg_<Arg, E, A>(
-  self: (arg: Arg) => Effect<ApiConfig | Http, E, FetchResponse<A>>,
+  self: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
   mapPath: (arg: Arg) => string,
   arg: Arg,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
@@ -90,7 +91,7 @@ export function useSafeQueryWithArg_<Arg, E, A>(
 
 export function useSafeQuery_<E, A>(
   key: string,
-  self: Effect<ApiConfig | Http, E, FetchResponse<A>>,
+  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   // const [result, latestSuccess, execute] = make(self)
@@ -142,7 +143,7 @@ export function useSafeQuery_<E, A>(
   return tuple(result, latestSuccess, () => swr.mutate(), swr)
 }
 
-export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | Http, E, FetchResponse<A>>) {
+export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) {
   const [result, latestSuccess, execute] = make(self)
 
   const sem = Semaphore.unsafeMake(1)
@@ -228,20 +229,22 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useMutation: {
-  <I, E, A>(self: (i: I) => Effect<ApiConfig | Http, E, A>): readonly [
+  <I, E, A>(self: (i: I) => Effect<ApiConfig | HttpClient.Default, E, A>): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
-  <E, A>(self: Effect<ApiConfig | Http, E, A>): readonly [
+  <E, A>(self: Effect<ApiConfig | HttpClient.Default, E, A>): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
-} = <I, E, A>(self: ((i: I) => Effect<ApiConfig | Http, E, A>) | Effect<ApiConfig | Http, E, A>) => {
+} = <I, E, A>(
+  self: ((i: I) => Effect<ApiConfig | HttpClient.Default, E, A>) | Effect<ApiConfig | HttpClient.Default, E, A>
+) => {
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
   function handleExit(exit: Exit<E, A>): Effect<never, never, Either<E, A>> {
@@ -270,7 +273,7 @@ export const useMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<ApiConfig | Http, E, A>
+    let effect: Effect<ApiConfig | HttpClient.Default, E, A>
     let abortSignal: AbortSignal | undefined
     if (typeof self === "function") {
       effect = self(fst as I)
