@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.66.0
+
+### Minor Changes
+
+- 5f3ae060: feat: add HttpClient from @effect/platform
+
+### Patch Changes
+
+- Updated dependencies [5f3ae060]
+  - @effect-app/core@0.64.0
+  - @effect-app/schema@0.57.3
+
 ## 0.65.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.64.0
+
+### Minor Changes
+
+- 5f3ae060: feat: add HttpClient from @effect/platform
+
 ## 0.63.2
 
 ### Patch Changes
