@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.67.2
+
+### Patch Changes
+
+- fix HttpClient global
+
 ## 0.67.1
 
 ### Patch Changes
