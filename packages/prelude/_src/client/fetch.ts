@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as H from "@effect-app/core/http/http-client"
+import { HttpClient } from "@effect-app/core/http"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
 import { StringId } from "@effect-app/prelude/schema"
@@ -7,17 +7,17 @@ import { Path } from "path-parser"
 import qs from "query-string"
 import { getConfig } from "./config.js"
 
-export type FetchError = H.HttpError<string>
+export type FetchError = HttpClient.HttpError<string>
 
 export class ResponseError {
   public readonly _tag = "ResponseError"
   constructor(public readonly error: unknown) {}
 }
 
-export function fetchApi(method: H.Method, path: string, body?: unknown) {
-  const request = H.request(method, "JSON", "JSON")
+export function fetchApi(method: HttpClient.Method, path: string, body?: unknown) {
+  const request = HttpClient.request(method, "JSON", "JSON")
   return getConfig(({ apiUrl, headers }) =>
-    H
+    HttpClient
       .withHeaders({
         "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
         ...headers.map((_) => Object.fromEntries(_)).value
@@ -30,7 +30,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
   const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
-  return (method: H.Method, path: Path) => (req: RequestA) =>
+  return (method: HttpClient.Method, path: Path) => (req: RequestA) =>
     fetchApi(
       method,
       method === "DELETE"
@@ -132,7 +132,7 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
     })
   }
 }
-export type FetchResponse<T> = { body: T; headers: H.Headers; status: number }
+export type FetchResponse<T> = { body: T; headers: HttpClient.Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
 export const EmptyResponseM = Effect(EmptyResponse)
