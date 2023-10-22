@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.67.5
+
+### Patch Changes
+
+- 26087368: update platform extensions
+- Updated dependencies [26087368]
+  - @effect-app/core@0.65.3
+  - @effect-app/schema@0.57.7
+
 ## 0.67.4
 
 ### Patch Changes

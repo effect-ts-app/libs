@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.65.3
+
+### Patch Changes
+
+- 26087368: update platform extensions
+
 ## 0.65.2
 
 ### Patch Changes
