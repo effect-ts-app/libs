@@ -61,16 +61,18 @@ export function fetchApi(
 ) {
   return getClient
     .flatMap((client) =>
-      client.request(
-        method === "GET"
-          ? ClientRequest.make(method)(path)
-          : body === undefined
-          ? ClientRequest
+      method === "GET"
+        ? client.request(ClientRequest.make(method)(path))
+        : body === undefined
+        ? client.request(
+          ClientRequest
             .make(method)(path)
-          : ClientRequest
+        )
+        : client.request(
+          ClientRequest
             .make(method)(path)
             .jsonBody(body)
-      )
+        )
     )
     .map((x) => ({ ...x, body: x.body ?? null }))
 }
