@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.67.7
+
+### Patch Changes
+
+- 50c7fe31: fix typo
+
 ## 0.67.6
 
 ### Patch Changes
