@@ -19,12 +19,15 @@ const getClient = HttpClient.flatMap((defaultClient) =>
     .map(({ apiUrl, headers }) =>
       defaultClient
         .filterStatusOk
-        .mapRequest(ClientRequest.acceptJson)
-        .mapRequest(ClientRequest.prependUrl(apiUrl))
-        .mapRequest(ClientRequest.setHeaders({
-          "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
-          ...headers.map((_) => Object.fromEntries(_)).value
-        }))
+        .mapRequest((_) =>
+          _
+            .acceptJson
+            .prependUrl(apiUrl)
+            .setHeaders({
+              "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
+              ...headers.map((_) => Object.fromEntries(_)).value
+            })
+        )
         .tapRequest((r) =>
           Effect
             .logDebug(`[HTTP] ${r.method}`)
@@ -58,12 +61,15 @@ export function fetchApi(
 ) {
   return getClient
     .flatMap((client) =>
-      client(
+      client.request(
         method === "GET"
           ? ClientRequest.make(method)(path)
+          : body === undefined
+          ? ClientRequest
+            .make(method)(path)
           : ClientRequest
             .make(method)(path)
-            .unsafeJsonBody(body)
+            .jsonBody(body)
       )
     )
     .map((x) => ({ ...x, body: x.body ?? null }))

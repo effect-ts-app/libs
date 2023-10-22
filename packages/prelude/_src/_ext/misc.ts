@@ -146,3 +146,15 @@ export function annotateLogsScoped(kvps: Record<string, string>) {
 export function flow<Args extends readonly any[], B, C>(f: (...args: Args) => B, g: (b: B) => C): (...args: Args) => C {
   return (...args) => g(f(...args))
 }
+
+/** @tsplus fluent effect/platform/Http/Client request */
+export const client: {
+  <A, B, C, R, E>(
+    client: HttpClient<A, B, C>,
+    req: ClientRequest | Effect<R, E, ClientRequest>
+  ): Effect<A | R, B | E, C>
+  <A, B, C>(client: HttpClient<A, B, C>, req: ClientRequest): Effect<A, B, C>
+} = (client: HttpClient<any, any, any>, req: Effect<any, any, ClientRequest> | ClientRequest) =>
+  Effect.isEffect(req)
+    ? req.flatMap(client)
+    : client(req)
