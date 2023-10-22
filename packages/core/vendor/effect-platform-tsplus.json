@@ -158,6 +158,17 @@
       ]
     },
     {
+      "definitionName": "make",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "make"
+        }
+      ]
+    },
+    {
       "definitionName": "get",
       "definitionKind": "const",
       "extensions": [
@@ -217,6 +228,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "accept"
+        },
+        {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
           "name": "accept"
@@ -228,9 +244,30 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "acceptJson"
+        },
+        {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
           "name": "acceptJson"
+        }
+      ]
+    },
+    {
+      "definitionName": "setUrl",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "setUrl"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "setUrl"
         }
       ]
     },
@@ -239,6 +276,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "prependUrl"
+        },
+        {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
           "name": "prependUrl"
@@ -246,9 +288,30 @@
       ]
     },
     {
+      "definitionName": "setHeader",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "setHeader"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "setHeader"
+        }
+      ]
+    },
+    {
       "definitionName": "setHeaders",
       "definitionKind": "const",
       "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "setHeaders"
+        },
         {
           "kind": "static",
           "typeName": "effect/platform/Http/ClientRequest.Ops",
@@ -261,7 +324,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "jsonBody"
         },
@@ -277,7 +340,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "unsafeJsonBody"
         },

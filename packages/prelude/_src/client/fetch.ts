@@ -57,20 +57,16 @@ export function fetchApi(
   body?: unknown
 ) {
   return getClient
-    .flatMap((client) => {
-      const req = method === "DELETE"
-        ? ClientRequest.del
-        : method === "GET"
-        ? ClientRequest.get
-        : method === "POST"
-        ? ClientRequest.post
-        : method === "PUT"
-        ? ClientRequest.put
-        : ClientRequest.patch
-
-      return client(req(path).unsafeJsonBody(body))
-        .map((x) => ({ ...x, body: x.body ?? null }))
-    })
+    .flatMap((client) =>
+      client(
+        method === "GET"
+          ? ClientRequest.make(method)(path)
+          : ClientRequest
+            .make(method)(path)
+            .unsafeJsonBody(body)
+      )
+    )
+    .map((x) => ({ ...x, body: x.body ?? null }))
 }
 
 export function fetchApi2S<RequestA, RequestE, ResponseA>(
