@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.67.6
+
+### Patch Changes
+
+- 7fc3cfbe: improve client api
+
 ## 0.67.5
 
 ### Patch Changes
