@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.25.2
+
+### Patch Changes
+
+- 838eeb10: update packages
+
 ## 0.25.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.32.2
+
+### Patch Changes
+
+- 838eeb10: update packages
+
 ## 0.32.1
 
 ### Patch Changes

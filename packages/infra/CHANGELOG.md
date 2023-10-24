@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.80.14
+
+### Patch Changes
+
+- 838eeb10: update packages
+- Updated dependencies [838eeb10]
+  - @effect-app/prelude@0.67.9
+  - @effect-app/schema@0.57.9
+  - @effect-app/infra-adapters@0.56.13
+
 ## 0.80.13
 
 ### Patch Changes

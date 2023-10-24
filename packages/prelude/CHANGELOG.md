@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.67.9
+
+### Patch Changes
+
+- 838eeb10: update packages
+- Updated dependencies [838eeb10]
+  - @effect-app/schema@0.57.9
+
 ## 0.67.8
 
 ### Patch Changes

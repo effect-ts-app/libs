@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.57.9
+
+### Patch Changes
+
+- 838eeb10: update packages
+
 ## 0.57.8
 
 ### Patch Changes
