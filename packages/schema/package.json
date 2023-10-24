@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/uuid": "^9.0.6",
     "@types/validator": "^13.11.5",
-    "fast-check": "~3.13.1",
+    "fast-check": "~3.13.2",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.3.0-tsplus.20231020",
     "vitest": "^0.34.6"
