@@ -1999,7 +1999,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "setUrlParam"
         },
@@ -2015,7 +2015,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "setUrlParams"
         },
@@ -2031,7 +2031,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "appendUrlParam"
         },
@@ -2047,7 +2047,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "pipeable",
+          "kind": "fluent",
           "typeName": "effect/platform/Http/ClientRequest",
           "name": "appendUrlParams"
         },
