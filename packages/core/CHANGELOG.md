@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.65.5
+
+### Patch Changes
+
+- 89bae16e: fix set
+
 ## 0.65.4
 
 ### Patch Changes
