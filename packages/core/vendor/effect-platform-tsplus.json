@@ -1995,6 +1995,70 @@
       ]
     },
     {
+      "definitionName": "setUrlParam",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "setUrlParam"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "setUrlParam"
+        }
+      ]
+    },
+    {
+      "definitionName": "setUrlParams",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "setUrlParams"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "setUrlParams"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendUrlParam",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "appendUrlParam"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "appendUrlParam"
+        }
+      ]
+    },
+    {
+      "definitionName": "appendUrlParams",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/ClientRequest",
+          "name": "appendUrlParams"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ClientRequest.Ops",
+          "name": "appendUrlParams"
+        }
+      ]
+    },
+    {
       "definitionName": "streamBody",
       "definitionKind": "const",
       "extensions": [
