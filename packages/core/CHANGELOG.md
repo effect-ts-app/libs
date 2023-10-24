@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.65.4
+
+### Patch Changes
+
+- 0b279a80: add missing exts
+
 ## 0.65.3
 
 ### Patch Changes
