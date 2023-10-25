@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.82.4
+
+### Patch Changes
+
+- fix request log span name
+
 ## 0.82.3
 
 ### Patch Changes
