@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.59.0
+
+### Minor Changes
+
+- 56a4418f: improve error ergo
+
 ## 0.58.0
 
 ### Minor Changes

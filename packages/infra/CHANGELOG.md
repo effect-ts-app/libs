@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.82.0
+
+### Minor Changes
+
+- 56a4418f: improve error ergo
+
+### Patch Changes
+
+- Updated dependencies [56a4418f]
+  - @effect-app/schema@0.59.0
+  - @effect-app/infra-adapters@0.57.1
+  - @effect-app/prelude@0.68.1
+
 ## 0.81.0
 
 ### Minor Changes
