@@ -13,10 +13,7 @@ export class ValidationError extends Data.TaggedError("ValidationError")<{ error
 
 export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{}> {}
 
-export class UnauthorizedError {
-  public readonly _tag = "UnauthorizedError"
-}
-
+export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{}> {}
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
