@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.66.0
+
+### Minor Changes
+
+- 271e2c7a: yieldable errors
+
 ## 0.65.5
 
 ### Patch Changes

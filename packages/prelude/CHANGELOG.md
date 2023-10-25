@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.68.0
+
+### Minor Changes
+
+- 271e2c7a: yieldable errors
+
+### Patch Changes
+
+- Updated dependencies [271e2c7a]
+  - @effect-app/schema@0.58.0
+  - @effect-app/core@0.66.0
+
 ## 0.67.10
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.58.0
+
+### Minor Changes
+
+- 271e2c7a: yieldable errors
+
+### Patch Changes
+
+- Updated dependencies [271e2c7a]
+  - @effect-app/core@0.66.0
+
 ## 0.57.10
 
 ### Patch Changes
