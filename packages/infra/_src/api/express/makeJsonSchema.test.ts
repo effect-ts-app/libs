@@ -30,7 +30,7 @@ test("works", async () => {
 
   for (const p of equalPaths) {
     expect(await checkPaths([path, p]).runPromiseExit).toStrictEqual(
-      Exit.fail(new InvalidStateError({ message: `Duplicate method ${p.method} for path ${p.path}` }))
+      Exit.fail(new InvalidStateError(`Duplicate method ${p.method} for path ${p.path}`))
     )
   }
 

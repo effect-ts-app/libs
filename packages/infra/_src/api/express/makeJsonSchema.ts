@@ -114,7 +114,7 @@ export function checkPaths<T extends { path: string; method: string }>(
 
       if (pathNavigator.methods.includes(path.method)) {
         // throw duplicate path-method error
-        return yield* $(new InvalidStateError({ message: `Duplicate method ${path.method} for path ${path.path}` }))
+        return yield* $(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`))
       }
       pathNavigator.methods.push(path.method)
     }

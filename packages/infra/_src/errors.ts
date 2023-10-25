@@ -20,9 +20,17 @@ export class UnauthorizedError {
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
-export class LoginError extends Data.TaggedError("NotLoggeInError")<{ message: string }> {}
+export class LoginError extends Data.TaggedError("NotLoggeInError")<{ message: string }> {
+  constructor(message: string) {
+    super({ message })
+  }
+}
 
-export class InvalidStateError extends Data.TaggedError("InvalidStateError")<{ message: string }> {}
+export class InvalidStateError extends Data.TaggedError("InvalidStateError")<{ message: string }> {
+  constructor(message: string) {
+    super({ message })
+  }
+}
 
 export class CauseException<E> extends Error {
   constructor(readonly originalCause: Cause<E>, readonly _tag: string) {

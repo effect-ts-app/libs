@@ -24,7 +24,11 @@ export function condemn<X, E, A>(
     })
 }
 
-export class CondemnException extends Data.TaggedError("CondemnException")<{ readonly message: string }> {}
+export class CondemnException extends Data.TaggedError("CondemnException")<{ readonly message: string }> {
+  constructor(message: string) {
+    super({ message })
+  }
+}
 
 export class ThrowableCondemnException extends Error {
   readonly _tag = "CondemnException"
@@ -45,11 +49,11 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
     Effect.suspend(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
-        return new CondemnException({ message: drawError(res.left) })
+        return new CondemnException(drawError(res.left))
       }
       const warn = res.right[1]
       if (warn._tag === "Some") {
-        return new CondemnException({ message: drawError(warn.value) })
+        return new CondemnException(drawError(warn.value))
       }
       return Effect(res.right[0])
     })
