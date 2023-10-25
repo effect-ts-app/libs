@@ -27,14 +27,16 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
 ] ? E
   : never
 
-export class NodeServerCloseError {
-  readonly _tag = "NodeServerCloseError"
-  constructor(readonly error: Error) {}
+export class NodeServerCloseError extends Data.TaggedError("NodeServerCloseError")<{ cause: Error }> {
+  constructor(cause: Error) {
+    super({ cause })
+  }
 }
 
-export class NodeServerListenError {
-  readonly _tag = "NodeServerListenError"
-  constructor(readonly error: Error) {}
+export class NodeServerListenError extends Data.TaggedError("NodeServerListenError")<{ cause: Error }> {
+  constructor(cause: Error) {
+    super({ cause })
+  }
 }
 
 export const ExpressAppConfigTag = "@effect-app/express/AppConfig" as const

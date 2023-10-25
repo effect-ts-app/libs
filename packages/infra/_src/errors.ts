@@ -1,21 +1,17 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { makeFiberFailure } from "effect/Runtime"
 
-export class NotFoundError<T extends string = string> {
-  public readonly _tag = "NotFoundError"
-  public readonly message: string
-  constructor(type: T, id: string) {
-    this.message = `Didn't find ${type}#${id}`
+export class NotFoundError<T extends string = string>
+  extends Data.TaggedError("NotFoundError")<{ message: string; type: T; id: string }>
+{
+  constructor(args: { readonly type: T; readonly id: string }) {
+    super({ ...args, message: `Didn't find ${args.type}#${args.id}` })
   }
 }
 
-export class ValidationError {
-  public readonly _tag = "ValidationError"
-  constructor(public readonly errors: ReadonlyArray<unknown>) {}
-}
+export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
 
-export class NotLoggedInError {
-  public readonly _tag = "NotLoggedInError"
-}
+export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{}> {}
 
 export class UnauthorizedError {
   public readonly _tag = "UnauthorizedError"
@@ -24,16 +20,9 @@ export class UnauthorizedError {
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
-export class LoginError extends NotLoggedInError {
-  constructor(readonly message: string) {
-    super()
-  }
-}
+export class LoginError extends Data.TaggedError("NotLoggeInError")<{ message: string }> {}
 
-export class InvalidStateError {
-  public readonly _tag = "InvalidStateError"
-  constructor(public readonly message: string) {}
-}
+export class InvalidStateError extends Data.TaggedError("InvalidStateError")<{ message: string }> {}
 
 export class CauseException<E> extends Error {
   constructor(readonly originalCause: Cause<E>, readonly _tag: string) {
@@ -64,10 +53,12 @@ export class CauseException<E> extends Error {
   }
 }
 
-export class OptimisticConcurrencyException {
-  readonly _tag = "OptimisticConcurrencyException"
-  readonly message: string
-  constructor(readonly type: string, readonly id: string, readonly current?: string, readonly found?: string) {
-    this.message = `Existing ${type} ${id} record changed`
+export class OptimisticConcurrencyException extends Data.TaggedError("OptimisticConcurrencyException")<
+  { type: string; id: string; current?: string; found?: string; message: string }
+> {
+  constructor(
+    args: { readonly type: string; readonly id: string; readonly current?: string; readonly found?: string }
+  ) {
+    super({ ...args, message: `Existing ${args.type} ${args.id} record changed` })
   }
 }

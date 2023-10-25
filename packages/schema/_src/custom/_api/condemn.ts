@@ -1,7 +1,5 @@
 // tracing: off
 
-import { Case } from "@effect-app/core/Case"
-
 import type { AnyError } from "../_schema.js"
 import { drawError } from "../_schema.js"
 import type { Parser, ParserEnv } from "../Parser.js"
@@ -26,13 +24,7 @@ export function condemn<X, E, A>(
     })
 }
 
-export class CondemnException extends Case<{ readonly message: string }> {
-  readonly _tag = "CondemnException"
-
-  override toString() {
-    return this.message
-  }
-}
+export class CondemnException extends Data.TaggedError("CondemnException")<{ readonly message: string }> {}
 
 export class ThrowableCondemnException extends Error {
   readonly _tag = "CondemnException"
@@ -53,11 +45,11 @@ export function condemnFail<X, A>(self: Parser<X, AnyError, A>) {
     Effect.suspend(() => {
       const res = self(a, env).effect
       if (res._tag === "Left") {
-        return Effect.fail(new CondemnException({ message: drawError(res.left) }))
+        return new CondemnException({ message: drawError(res.left) })
       }
       const warn = res.right[1]
       if (warn._tag === "Some") {
-        return Effect.fail(new CondemnException({ message: drawError(warn.value) }))
+        return new CondemnException({ message: drawError(warn.value) })
       }
       return Effect(res.right[0])
     })

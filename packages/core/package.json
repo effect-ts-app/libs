@@ -75,16 +75,6 @@
         "default": "./_cjs/Array.cjs"
       }
     },
-    "./Case": {
-      "import": {
-        "types": "./dist/Case.d.ts",
-        "default": "./dist/Case.js"
-      },
-      "require": {
-        "types": "./dist/Case.d.ts",
-        "default": "./_cjs/Case.cjs"
-      }
-    },
     "./Chunk": {
       "import": {
         "types": "./dist/Chunk.d.ts",

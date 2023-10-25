@@ -1,15 +1,14 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tagged } from "@effect-app/core/Case"
 
 export { matchTag } from "@effect-app/core/utils"
 
-export class Initial extends Tagged("Initial")<{}> {}
+export class Initial extends Data.TaggedClass("Initial")<{}> {}
 
-export class Loading extends Tagged("Loading")<{}> {}
+export class Loading extends Data.TaggedClass("Loading")<{}> {}
 
-export class Refreshing<E, A> extends Tagged("Refreshing")<{
+export class Refreshing<E, A> extends Data.TaggedClass("Refreshing")<{
   readonly current: Either<E, A>
   readonly previous: Option<A>
 }> {
@@ -27,7 +26,7 @@ export class Refreshing<E, A> extends Tagged("Refreshing")<{
   }
 }
 
-export class Done<E, A> extends Tagged("Done")<{
+export class Done<E, A> extends Data.TaggedClass("Done")<{
   readonly current: Either<E, A>
   readonly previous: Option<A>
 }> {

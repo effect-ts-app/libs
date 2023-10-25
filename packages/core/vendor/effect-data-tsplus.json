@@ -2237,6 +2237,28 @@
       ]
     },
     {
+      "definitionName": "Error",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Data.Ops",
+          "name": "Error"
+        }
+      ]
+    },
+    {
+      "definitionName": "TaggedError",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Data.Ops",
+          "name": "TaggedError"
+        }
+      ]
+    },
+    {
       "definitionName": "tuple",
       "definitionKind": "const",
       "extensions": [

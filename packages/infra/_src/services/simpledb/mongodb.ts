@@ -92,7 +92,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                   .orDie
                   .flatMap((x) => {
                     if (!x.modifiedCount) {
-                      return Effect.fail(new OptimisticLockException(type, record.id))
+                      return new OptimisticLockException(type, record.id)
                     }
                     return Effect.unit
                   })

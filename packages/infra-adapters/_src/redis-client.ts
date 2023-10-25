@@ -1,10 +1,9 @@
 import type { RedisClient as Client } from "redis"
 import Redlock from "redlock"
 
-export class ConnectionException extends Error {
-  readonly _errorTag = "ConnectionException"
-  constructor(readonly error: Error) {
-    super("A connection error ocurred")
+export class ConnectionException extends Data.TaggedError("ConnectionException")<{ cause: Error; message: string }> {
+  constructor(cause: Error) {
+    super({ message: "A connection error ocurred", cause })
   }
 }
 
@@ -19,7 +18,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
           .async<never, ConnectionException, Option<string>>((res) => {
             client.get(key, (err, v) =>
               err
-                ? res(Effect.fail(new ConnectionException(err)))
+                ? res(new ConnectionException(err))
                 : res(Effect(Option.fromNullable(v))))
           })
           .uninterruptible
@@ -30,7 +29,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
           .async<never, ConnectionException, void>((res) => {
             client.set(key, val, (err) =>
               err
-                ? res(Effect.fail(new ConnectionException(err)))
+                ? res(new ConnectionException(err))
                 : res(Effect(void 0)))
           })
           .uninterruptible
@@ -41,7 +40,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
           .async<never, ConnectionException, void>((res) => {
             client.hset(key, field, value, (err) =>
               err
-                ? res(Effect.fail(new ConnectionException(err)))
+                ? res(new ConnectionException(err))
                 : res(Effect(void 0)))
           })
           .uninterruptible
@@ -52,7 +51,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
           .async<never, ConnectionException, Option<string>>((res) => {
             client.hget(key, field, (err, v) =>
               err
-                ? res(Effect.fail(new ConnectionException(err)))
+                ? res(new ConnectionException(err))
                 : res(Effect(Option.fromNullable(v))))
           })
           .uninterruptible
@@ -63,7 +62,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
             (res) => {
               client.hgetall(key, (err, v) =>
                 err
-                  ? res(Effect.fail(new ConnectionException(err)))
+                  ? res(new ConnectionException(err))
                   : res(Effect(Option.fromNullable(v))))
             }
           )

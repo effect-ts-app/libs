@@ -54,26 +54,25 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     [
                       x,
                       Option.fromNullable(x._etag).match({
-                          onNone: () => ({
-                            operationType: "Create" as const,
-                            resourceBody: {
-                              ...omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            } as any,
-                            partitionKey: config?.partitionValue(x)
-                          }),
-                          onSome: (eTag) => ({
-                            operationType: "Replace" as const,
-                            id: x.id,
-                            resourceBody: {
-                              ...omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            } as any,
-                            ifMatch: eTag,
-                            partitionKey: config?.partitionValue(x)
-                          })
-                        }
-                      )
+                        onNone: () => ({
+                          operationType: "Create" as const,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          partitionKey: config?.partitionValue(x)
+                        }),
+                        onSome: (eTag) => ({
+                          operationType: "Replace" as const,
+                          id: x.id,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          ifMatch: eTag,
+                          partitionKey: config?.partitionValue(x)
+                        })
+                      })
                     ] as const
                 )
                 const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray
@@ -93,8 +92,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                                 return yield* $(
                                   Effect.fail(
                                     new OptimisticConcurrencyException(
-                                      name,
-                                      JSON.stringify(r.resourceBody?.["id"])
+                                      { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
                                     )
                                   )
                                 )
@@ -133,24 +131,23 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     [
                       x,
                       Option.fromNullable(x._etag).match({
-                          onNone: () => ({
-                            operationType: "Create" as const,
-                            resourceBody: {
-                              ...omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            } as any
-                          }),
-                          onSome: (eTag) => ({
-                            operationType: "Replace" as const,
-                            id: x.id,
-                            resourceBody: {
-                              ...omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            } as any,
-                            ifMatch: eTag
-                          })
-                        }
-                      )
+                        onNone: () => ({
+                          operationType: "Create" as const,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any
+                        }),
+                        onSome: (eTag) => ({
+                          operationType: "Replace" as const,
+                          id: x.id,
+                          resourceBody: {
+                            ...omit(x, "_etag"),
+                            _partitionKey: config?.partitionValue(x)
+                          } as any,
+                          ifMatch: eTag
+                        })
+                      })
                     ] as const
                 )
 
@@ -168,7 +165,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         const code = firstFailed.statusCode ?? 0
                         if (code === 412 || code === 404) {
                           return yield* $(
-                            Effect.fail(new OptimisticConcurrencyException(name, "batch"))
+                            new OptimisticConcurrencyException({ type: name, id: "batch" })
                           )
                         }
 
@@ -319,7 +316,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 .flatMap((x) => {
                   if (x.statusCode === 412 || x.statusCode === 404) {
-                    return Effect.fail(new OptimisticConcurrencyException(name, e.id))
+                    return new OptimisticConcurrencyException({ type: name, id: e.id })
                   }
                   if (x.statusCode > 299 || x.statusCode < 200) {
                     return Effect.die(

@@ -8,11 +8,11 @@ import { withDefaults } from "./withDefaults.js"
 
 export const jsonFromStringIdentifier = S.makeAnnotation<{}>()
 
-export class JsonDecodingE extends S.DefaultLeafE<{ readonly actual: string; readonly error: unknown }>
-  implements S.Actual<string>
+export class JsonDecodingE
+  extends Data.TaggedError("NotJsonString")<{ readonly actual: string; readonly error: unknown }>
+  implements S.Actual<string>, S.HasDefaultLeafE
 {
-  readonly _tag = "NotJsonString"
-
+  readonly [S.defaultLeafSymbol] = S.defaultLeafSymbol
   get [S.toTreeSymbol](): S.Tree<string> {
     return S.tree(
       `cannot decode JSON from ${this.actual}, expected a valid JSON string`

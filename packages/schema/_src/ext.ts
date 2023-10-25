@@ -649,12 +649,11 @@ export const asUpi = <ParsedShape, ConstructorInput, Encoded, Api>(
   s: MO.Schema<any, ParsedShape, ConstructorInput, Encoded, Api>
 ) => s as AsUPI<ParsedShape, ConstructorInput, Encoded, Api>
 
-export class CustomSchemaException extends Error {
-  readonly _tag = "ValidationError"
-  readonly errors: ReadonlyArray<unknown>
+export class CustomSchemaException
+  extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown>; message: string }>
+{
   constructor(error: AnyError) {
-    super(drawError(error))
-    this.errors = [error]
+    super({ errors: [error], message: drawError(error) })
   }
 
   toJSON() {
@@ -677,11 +676,11 @@ export function condemnCustom_<X, A>(
   return Effect.suspend(() => {
     const res = self(a, env).effect
     if (res._tag === "Left") {
-      return Effect.fail(new CustomSchemaException(res.left))
+      return new CustomSchemaException(res.left)
     }
     const warn = res.right[1]
     if (warn._tag === "Some") {
-      return Effect.fail(new CustomSchemaException(warn.value))
+      return new CustomSchemaException(warn.value)
     }
     return Effect(res.right[0])
   })

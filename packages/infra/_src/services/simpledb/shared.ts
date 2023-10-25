@@ -1,27 +1,26 @@
 import * as MO from "@effect-app/schema"
 import type { SchemaAny } from "@effect-app/schema"
 
-class BaseError {
-  constructor(public message: string) {}
-}
-export class CouldNotAquireDbLockException extends BaseError {
-  readonly _errorTag = "CouldNotAquireDbLockException"
-  constructor(readonly type: string, readonly id: string, readonly error: Error) {
-    super(`Couldn't lock db record ${type}: ${id}`)
+export class CouldNotAquireDbLockException
+  extends Data.TaggedError("CouldNotAquireDbLockException")<{ type: string; id: string; error: Error; message: string }>
+{
+  constructor(type: string, id: string, error: Error) {
+    super({ type, id, error, message: `Couldn't lock db record ${type}: ${id}` })
   }
 }
 
-export class OptimisticLockException extends Error {
-  readonly _errorTag = "OptimisticLockException"
-  constructor(readonly type: string, readonly id: string) {
-    super(`Existing ${type} ${id} record changed`)
+export class OptimisticLockException
+  extends Data.TaggedError("OptimisticLockException")<{ type: string; id: string; message: string }>
+{
+  constructor(type: string, id: string) {
+    super({ type, id, message: `Existing ${type} ${id} record changed` })
   }
 }
 
-export class ConnectionException extends Error {
+export class ConnectionException extends Data.TaggedError("ConnectionException")<{ cause: Error; message: string }> {
   readonly _errorTag = "ConnectionException"
-  constructor(readonly error: Error) {
-    super("A connection error ocurred")
+  constructor(cause: Error) {
+    super({ cause, message: "A connection error ocurred" })
   }
 }
 

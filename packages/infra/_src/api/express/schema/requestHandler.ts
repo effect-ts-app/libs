@@ -150,7 +150,7 @@ export function parseRequestParams<PathA, CookieA, QueryA, BodyA, HeaderA>(
           errors.push(makeError("query")(query.errors))
         }
         if (errors.length) {
-          return Effect.fail(new ValidationError(errors))
+          return new ValidationError({ errors })
         }
         return Effect({
           body: body.value!,

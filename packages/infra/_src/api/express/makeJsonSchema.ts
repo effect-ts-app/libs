@@ -37,11 +37,11 @@ class PathsTree {
 //       case "resource": {
 //         // check shadowing: if 'a/:param' comes before 'a/b', then 'a/b' is shadowed
 //         if (pathNavigator.params[1]) {
-//           return yield* $(Effect.fail(
+//           return yield* $(
 //             new InvalidStateError(
 //               `Path ${pathNavigator.path}${match.value}/ is shadowed by ${pathNavigator.params[1].path}`
 //             )
-//           ))
+//           )
 //         }
 //         break
 //       }
@@ -114,7 +114,7 @@ export function checkPaths<T extends { path: string; method: string }>(
 
       if (pathNavigator.methods.includes(path.method)) {
         // throw duplicate path-method error
-        return yield* $(Effect.fail(new InvalidStateError(`Duplicate method ${path.method} for path ${path.path}`)))
+        return yield* $(new InvalidStateError({ message: `Duplicate method ${path.method} for path ${path.path}` }))
       }
       pathNavigator.methods.push(path.method)
     }

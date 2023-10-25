@@ -14,17 +14,22 @@ export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
     _etag: objectHash(e)
   }) as any
 export const makeUpdateETag =
-  (name: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Option<E>) =>
+  (type: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Option<E>) =>
     Effect.gen(function*($) {
       if (e._etag) {
         yield* $(
           current
-            .encaseInEffect(() => new OptimisticConcurrencyException(name, e.id, "", e._etag))
+            .encaseInEffect(() => new OptimisticConcurrencyException({ type, id: e.id, current: "", found: e._etag }))
         )
       }
       if (current.isSome() && current.value._etag !== e._etag) {
         return yield* $(
-          Effect.fail(new OptimisticConcurrencyException(name, current.value.id, current.value._etag, e._etag))
+          new OptimisticConcurrencyException({
+            type,
+            id: current.value.id,
+            current: current.value._etag,
+            found: e._etag
+          })
         )
       }
       const newE = makeETag(e)
@@ -84,11 +89,11 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               case "not-includes":
                 return !(k as Array<string>).includes(p.value)
               case "contains":
-                return (k as string).toLowerCase().includes((p.value).toLowerCase())
+                return (k as string).toLowerCase().includes(p.value.toLowerCase())
               case "ends-with":
-                return (k as string).toLowerCase().endsWith((p.value).toLowerCase())
+                return (k as string).toLowerCase().endsWith(p.value.toLowerCase())
               case "starts-with":
-                return (k as string).toLowerCase().startsWith((p.value).toLowerCase())
+                return (k as string).toLowerCase().startsWith(p.value.toLowerCase())
               case "not-eq":
                 return !compareCaseInsensitive(k, p.value)
               case "eq":
@@ -120,11 +125,11 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               case "not-includes":
                 return !(k as Array<string>).includes(p.value)
               case "contains":
-                return (k as string).toLowerCase().includes((p.value).toLowerCase())
+                return (k as string).toLowerCase().includes(p.value.toLowerCase())
               case "ends-with":
-                return (k as string).toLowerCase().endsWith((p.value).toLowerCase())
+                return (k as string).toLowerCase().endsWith(p.value.toLowerCase())
               case "starts-with":
-                return (k as string).toLowerCase().startsWith((p.value).toLowerCase())
+                return (k as string).toLowerCase().startsWith(p.value.toLowerCase())
               case "not-eq":
                 return p.key.includes(".-1.")
                   ? (get(x, p.key.split(".-1.")[0]) as any[])

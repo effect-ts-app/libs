@@ -107,7 +107,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
             )
             .tap(({ version }) =>
               version !== cv
-                ? Effect.fail(new OptimisticLockException(type, record.id))
+                ? new OptimisticLockException(type, record.id)
                 : Effect.unit
             )
             .zipRight(save(record, Option(cv)))

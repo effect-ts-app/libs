@@ -7,8 +7,10 @@ import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"
 import type { Version } from "./simpledb.js"
 
-class CosmosDbOperationError {
-  constructor(readonly message: string) {}
+class CosmosDbOperationError extends Data.TaggedError("CosmosDbOperationError")<{ message: string }> {
+  constructor(message: string) {
+    super({ message })
+  }
 }
 
 const setup = (type: string, indexingPolicy: IndexingPolicy) =>
@@ -125,7 +127,7 @@ WHERE (
                   .orDie
                   .flatMap((x) => {
                     if (x.statusCode === 412) {
-                      return Effect.fail(new OptimisticLockException(type, record.id))
+                      return new OptimisticLockException(type, record.id)
                     }
                     if (x.statusCode > 299 || x.statusCode < 200) {
                       return Effect.die(

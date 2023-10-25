@@ -32,7 +32,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
           }
           const get = redis
             .get(key)
-            .flatMap((x) => x.encaseInEffect(() => new NotFoundError("data", "")))
+            .flatMap((x) => x.encaseInEffect(() => new NotFoundError({ type: "data", id: "" })))
             .orDie
             .map((x) => JSON.parse(x) as { data: readonly PM[] })
             .map((_) => _.data)

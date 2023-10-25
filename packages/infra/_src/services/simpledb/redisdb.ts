@@ -179,7 +179,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             enc.data,
             (err) =>
               err
-                ? res(Effect.fail(new ConnectionException(err)))
+                ? res(new ConnectionException(err))
                 : res(Effect(void 0))
           )
         })
