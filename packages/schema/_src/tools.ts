@@ -3,4 +3,6 @@ export type _OptionalKeys<O> = {
     : never
 }[keyof O]
 export type FilterOptionalKeys<A> = Omit<A, _OptionalKeys<A>>
-export type OptionalConstructor<A> = A extends Record<PropertyKey, never> ? void : FilterOptionalKeys<A> extends Record<PropertyKey, never> ? void | A : A
+export type OptionalConstructor<A> = A extends Record<PropertyKey, never> ? void
+  : FilterOptionalKeys<A> extends Record<PropertyKey, never> ? void | A
+  : A

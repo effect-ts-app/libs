@@ -479,7 +479,7 @@ function useGetMeta<
                       { modelName: capitalize(name.toString()) }
                     )
                     : undefined
-                    }) ?? (additionalValidation ? additionalValidation(i) : undefined)
+              }) ?? (additionalValidation ? additionalValidation(i) : undefined)
           )
       return {
         validate,

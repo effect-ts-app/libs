@@ -5,11 +5,11 @@ import "./global.js"
 
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
+import type * as LNS from "@fp-ts/optic"
 import type * as CNK from "effect/Chunk"
 import type * as EITHER from "effect/Either"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
-import type * as LNS from "@fp-ts/optic"
 
 export namespace Either {
   // @ts-expect-error abc

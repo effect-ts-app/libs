@@ -546,21 +546,21 @@ export type BuiltInObject =
   | WebAssembly
 
 export type ComputeRaw<A> = A extends Function ? A
-  : 
+  :
     & {
       [K in keyof A]: A[K]
     }
     & {}
 
 export type ComputeFlat<A> = A extends BuiltInObject ? A
-  : 
+  :
     & {
       [K in keyof A]: A[K]
     }
     & {}
 
 export type ComputeDeep<A> = A extends BuiltInObject ? A
-  : 
+  :
     & {
       [K in keyof A]: ComputeDeep<A[K]>
     }
