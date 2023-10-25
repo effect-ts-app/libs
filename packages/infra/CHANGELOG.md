@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.82.2
+
+### Patch Changes
+
+- 7118bf61: fix error type
+- Updated dependencies [7118bf61]
+  - @effect-app/prelude@0.68.2
+  - @effect-app/infra-adapters@0.57.2
+
 ## 0.82.1
 
 ### Patch Changes

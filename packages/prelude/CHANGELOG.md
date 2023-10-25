@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.68.2
+
+### Patch Changes
+
+- 7118bf61: fix error type
+
 ## 0.68.1
 
 ### Patch Changes
