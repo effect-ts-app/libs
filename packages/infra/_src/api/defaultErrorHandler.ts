@@ -1,12 +1,5 @@
+import type { SupportedErrors, ValidationError } from "@effect-app/prelude/client/errors"
 import type express from "express"
-import type {
-  InvalidStateError,
-  NotFoundError,
-  NotLoggedInError,
-  OptimisticConcurrencyException,
-  UnauthorizedError,
-  ValidationError
-} from "../errors.js"
 import { logRequestError } from "./reportError.js"
 
 export function defaultBasicErrorHandler<R>(
@@ -62,11 +55,3 @@ export function defaultErrorHandler<R>(
         .flatMap(Effect.die)
     )
 }
-
-export type SupportedErrors =
-  | ValidationError
-  | NotFoundError
-  | NotLoggedInError
-  | UnauthorizedError
-  | InvalidStateError
-  | OptimisticConcurrencyException

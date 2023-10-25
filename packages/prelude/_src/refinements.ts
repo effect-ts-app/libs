@@ -1,4 +1,8 @@
-import { InvalidStateError } from "./client.js"
+class InvalidStateError extends Data.TaggedError("InvalidStateError")<{ message: string }> {
+  constructor(message: string) {
+    super({ message })
+  }
+}
 
 /**
  * @tsplus getter function asCollectable
@@ -13,7 +17,7 @@ export function asCollectable<T, T2 extends T>(refinement: Refinement<T, T2>) {
 export function as<T, T2 extends T>(refinement: Refinement<T, T2>, name: string) {
   return flow(
     asCollectable(refinement),
-    (_) => _.encaseInEither(() => new InvalidStateError({ message: `Cannot be ${name}` }))
+    (_) => _.encaseInEither(() => new InvalidStateError(`Cannot be ${name}`))
   )
 }
 
@@ -53,7 +57,7 @@ export interface Collect<A, B extends A> {
  * @tsplus fluent function as
  */
 export function asOption<T, T2 extends T>(collect: Collect<T, T2>, name: string) {
-  return flow(collect, (_) => _.encaseInEither(() => new InvalidStateError({ message: `Cannot be ${name}` })))
+  return flow(collect, (_) => _.encaseInEither(() => new InvalidStateError(`Cannot be ${name}`)))
 }
 
 /**
