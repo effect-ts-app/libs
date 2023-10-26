@@ -6,14 +6,14 @@ import type { Chunk, Either, Option } from "./Prelude.js"
 /**
  * @tsplus unify effect/io/Effect
  */
-export function unifyEffect<X extends Effect<any, any, any>>(
+export function unifyEffect<X extends { readonly [EffectTypeId]: Effect.VarianceStruct<any, any, any> }>(
   self: X
 ): Effect<
   [X] extends [{ readonly [EffectTypeId]: { _R: (_: never) => infer R } }] ? R : never,
   [X] extends [{ readonly [EffectTypeId]: { _E: (_: never) => infer E } }] ? E : never,
   [X] extends [{ readonly [EffectTypeId]: { _A: (_: never) => infer A } }] ? A : never
 > {
-  return self
+  return self as any
 }
 
 /**

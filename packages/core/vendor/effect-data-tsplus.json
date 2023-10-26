@@ -2126,6 +2126,20 @@
   ],
   "effect/Data": [
     {
+      "definitionName": "YieldableError",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Data/YieldableError"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Data/YieldableError.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "Case",
       "definitionKind": "interface",
       "extensions": [
