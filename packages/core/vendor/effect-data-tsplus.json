@@ -10923,37 +10923,10 @@
           "kind": "static",
           "typeName": "effect/data/ReadonlyArray.Ops",
           "name": "map"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapAccum",
-      "definitionKind": "const",
-      "extensions": [
+        },
         {
           "kind": "fluent",
           "typeName": "ReadonlyArray",
-          "name": "mapAccum"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/data/ReadonlyArray.Ops",
-          "name": "mapAccum"
-        }
-      ]
-    },
-    {
-      "definitionName": "mapNonEmpty",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "fluent",
-          "typeName": "ReadonlyArray",
-          "name": "mapNonEmpty"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/data/ReadonlyArray.Ops",
           "name": "mapNonEmpty"
         }
       ]
