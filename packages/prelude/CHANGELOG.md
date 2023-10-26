@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.69.2
+
+### Patch Changes
+
+- f8cb0efd: schemaJsonBody
+
 ## 0.69.1
 
 ### Patch Changes
