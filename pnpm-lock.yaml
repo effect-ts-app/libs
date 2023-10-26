@@ -14,9 +14,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@fp-ts/optic@0.13.0':
-    hash: g6p2wvdqwpzq42ns4zy72w6lre
-    path: patches/@fp-ts__optic@0.13.0.patch
+  '@fp-ts/optic@0.14.0':
+    hash: orc3an4mj6brdedl2xbkwnaiiy
+    path: patches/@fp-ts__optic@0.14.0.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
@@ -63,7 +63,7 @@ importers:
         specifier: ^0.88.3
         version: 0.88.3
       '@effect-app/cli':
-        specifier: ^0.21.2
+        specifier: ^0.22.0
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -254,8 +254,8 @@ importers:
         specifier: ^0.25.1
         version: 0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       '@fp-ts/optic':
-        specifier: ^0.13.0
-        version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52)
+        specifier: ^0.14.0
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -479,8 +479,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@fp-ts/optic':
-        specifier: ^0.13.0
-        version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52)
+        specifier: ^0.14.0
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
       effect:
         specifier: ^2.0.0-next.52
         version: 2.0.0-next.52
@@ -561,8 +561,8 @@ importers:
         specifier: ^0.25.1
         version: 0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       '@fp-ts/optic':
-        specifier: ^0.13.0
-        version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52)
+        specifier: ^0.14.0
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
@@ -647,8 +647,8 @@ importers:
         specifier: ~18.11.12
         version: 18.11.12
       '@types/react':
-        specifier: ^18.2.32
-        version: 18.2.32
+        specifier: ^18.2.33
+        version: 18.2.33
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -674,8 +674,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@fp-ts/optic':
-        specifier: ^0.13.0
-        version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52)
+        specifier: ^0.14.0
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -735,8 +735,8 @@ importers:
         specifier: ^2.9.5
         version: 2.9.5(@effect-app/typescript@5.3.0-tsplus.20231009)
       '@fp-ts/optic':
-        specifier: ^0.13.0
-        version: 0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52)
+        specifier: ^0.14.0
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
       effect:
         specifier: ^2.0.0-next.52
         version: 2.0.0-next.52
@@ -1605,10 +1605,10 @@ packages:
       fast-check: 3.13.2
     dev: false
 
-  /@effect/typeclass@0.12.0(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-UJjn4OTb+NAYhdEgJkOgK/E+noLZW5FwKqmx8IZqsMGLAFzeh4wCwnRIXf/oTHosQ6Zoq13J7Yloi/24pPYv1Q==}
+  /@effect/typeclass@0.13.1(effect@2.0.0-next.52):
+    resolution: {integrity: sha512-8dRe8Rn7Fb/UT8h+bVYYiQWvRdV0gfSDQJCd8p5mE0pPltDxioCY0uyJyVWkrU+Q1xT4aSNHQGdB+gBsVNf0hw==}
     peerDependencies:
-      effect: 2.0.0-next.50
+      effect: 2.0.0-next.52
     dependencies:
       effect: 2.0.0-next.52
     dev: false
@@ -1896,13 +1896,13 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.13.0(patch_hash=g6p2wvdqwpzq42ns4zy72w6lre)(@effect/typeclass@0.12.0)(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-JG+xltbuXr9AkMBB8tFgIJsY/CCP94PTPI0MP5CbBaxp70TIlv4kChZSD9OcxHpcTw0182AbS4qpBYSmO+/2VA==}
+  /@fp-ts/optic@0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52):
+    resolution: {integrity: sha512-H2zooOtlXDqAR+Vv5Mb4ziRWfws1S5Kztrsws3iydLVxDyCI8cRqki43Yh2/ikZpIWxbyXBpBtUAZQcE4abfhA==}
     peerDependencies:
-      '@effect/typeclass': ^0.12.0
-      effect: 2.0.0-next.50
+      '@effect/typeclass': ^0.13.1
+      effect: 2.0.0-next.52
     dependencies:
-      '@effect/typeclass': 0.12.0(effect@2.0.0-next.52)
+      '@effect/typeclass': 0.13.1(effect@2.0.0-next.52)
       effect: 2.0.0-next.52
     dev: false
     patched: true
@@ -2444,7 +2444,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.32
+      '@types/react': 18.2.33
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -2541,8 +2541,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/react@18.2.32:
-    resolution: {integrity: sha512-F0FVIZQ1x5Gxy/VYJb7XcWvCcHR28Sjwt1dXLspdIatfPq1MVACfnBDwKe6ANLxQ64riIJooXClpUR6oxTiepg==}
+  /@types/react@18.2.33:
+    resolution: {integrity: sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -7936,7 +7936,7 @@ packages:
       '@formatjs/intl-displaynames': 6.6.1
       '@formatjs/intl-listformat': 7.5.0
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.2.32
+      '@types/react': 18.2.33
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.4
       react: 18.2.0
