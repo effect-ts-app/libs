@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.48.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.69.0
+  - @effect-app/schema@0.60.0
+  - @effect-app/core@0.67.0
+
 ## 0.47.18
 
 ### Patch Changes

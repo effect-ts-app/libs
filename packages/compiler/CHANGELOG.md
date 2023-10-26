@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.33.0
+
+### Minor Changes
+
+- housekeeping: update packages
+
 ## 0.32.2
 
 ### Patch Changes
