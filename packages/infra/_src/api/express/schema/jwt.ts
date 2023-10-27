@@ -4,7 +4,7 @@
 import { pipe } from "@effect-app/core/Function"
 import * as MO from "@effect-app/schema"
 import { These as Th } from "@effect-app/schema"
-import jwt_decode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 
 export const jwtIdentifier = MO.makeAnnotation<{}>()
 
@@ -24,8 +24,7 @@ export const jwtFromString: MO.Schema<string, unknown, unknown, string, {}> = pi
     try {
       return Th.succeed(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        jwt_decode(p)
+        jwtDecode(p)
       )
     } catch (err) {
       return Th.fail(MO.leafE(MO.parseStringE(p))) // "not a JWT: " + err as anyw
