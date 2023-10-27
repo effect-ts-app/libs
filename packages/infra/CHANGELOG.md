@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.83.5
+
+### Patch Changes
+
+- 3cc74a42: fix jwt
+
 ## 0.83.4
 
 ### Patch Changes
