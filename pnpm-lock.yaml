@@ -120,8 +120,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       dprint:
-        specifier: ^0.41.0
-        version: 0.41.0
+        specifier: ^0.42.2
+        version: 0.42.2
       enhanced-resolve:
         specifier: ^5.15.0
         version: 5.15.0
@@ -251,8 +251,8 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.25.1
-        version: 0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.26.2
+        version: 0.26.2(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       '@fp-ts/optic':
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
@@ -558,8 +558,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.25.1
-        version: 0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.26.2
+        version: 0.26.2(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       '@fp-ts/optic':
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
@@ -729,8 +729,8 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.13.1
-        version: 0.13.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.14.3
+        version: 0.14.3(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       '@formatjs/intl':
         specifier: ^2.9.5
         version: 2.9.5(@effect-app/typescript@5.3.0-tsplus.20231009)
@@ -1507,40 +1507,40 @@ packages:
       kuler: 2.0.0
     dev: true
 
-  /@dprint/darwin-arm64@0.41.0:
-    resolution: {integrity: sha512-P9PtcQI0mrI4U6yyd+/iI664BHSqC9KTS6ogq0ptEdnLtlaWzf09D1nv6FBaHiG9m3conuBRlPsoUqt3j6PZ2w==}
+  /@dprint/darwin-arm64@0.42.2:
+    resolution: {integrity: sha512-GKD7fj2YnEsFhwQ2mvlGy7QrR/KwlzAQj93FMPUa4f1DGx6aFYviAqg1RMptTxX8PGqf/wwm2/AqBERS6rRbgg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/darwin-x64@0.41.0:
-    resolution: {integrity: sha512-mSYnSoH0uyCkjgIWTny2DZAcaiRTe3kRWY5SeZECLGO37e+SdVg+ZjSzndhOvvEb9pv8EeBO1NJ9gHOSceT5Xw==}
+  /@dprint/darwin-x64@0.42.2:
+    resolution: {integrity: sha512-4K8HokDFYPxWD2ZNsT/Q/VLHDNphMvzooSwmq2RoJDp9foLcDx4RdWEAu7JvBpUUJ1RuDCaWY2BqLPAB8mCIBw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-arm64-glibc@0.41.0:
-    resolution: {integrity: sha512-U4xWzjjO/aAct8cSSMZFhg8l1jWy6VahXh8zWjGBufwX7t3xEcxMG9RyAp/ioYSY6wl4YXAmnUHywhC+wSjDHQ==}
+  /@dprint/linux-arm64-glibc@0.42.2:
+    resolution: {integrity: sha512-kfJRXVbO3pB/2d92UEXWLWENNaxRoSKOOnrR4epXHlbcHc98PDXD0leYytzzICy2JJYJjDMSHRK0/BpGBl6KvA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-x64-glibc@0.41.0:
-    resolution: {integrity: sha512-wjv5l4mGns7E8i32E8FfAk45tw5O7v4NM17gtvhe6ggOiOD6quHowOH00pLfEakMLMF9y0J5ZO2hxJ/w06bXmQ==}
+  /@dprint/linux-x64-glibc@0.42.2:
+    resolution: {integrity: sha512-2Rl9s/j+bjgxC7TomS5YxPT520PakNAnzAdMZDpxELMmleFQU7jyTlCqPzUcVMClOE0plUnxmNG0P2xx3fVvlQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-x64-musl@0.41.0:
-    resolution: {integrity: sha512-ZZOqiur9Xi/2uhz0Ce215VTSajAlSrduX/5k/hpIjI7Rgz22Vn77p5fmYxzWkTt/Li1zq5zboTvmGYx0QVNMrQ==}
+  /@dprint/linux-x64-musl@0.42.2:
+    resolution: {integrity: sha512-1cJSmuWOP/0Qo4ukXLEtxu7+6P2GjbOejVV6TB35GSdvCGJNCv0YKj7M/f0a2mVaBfWyt/p87iujmLfsqynCyQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -1551,8 +1551,8 @@ packages:
     resolution: {integrity: sha512-g7yzIg3kZu9ad1Bs2S6NfAtjCXclGMEaSTPfuHEti3iEq+QCv4Ama+Qa5Gru/um4i5gIsCg+OXQt0TAQqfofoA==}
     dev: true
 
-  /@dprint/win32-x64@0.41.0:
-    resolution: {integrity: sha512-mFx6x4Hn848/D4gPbDm7g1wlnOh2SGoVF9c9HMGCuOobUU2WIBztzV4L5qlFCB3gprlS0ru9BhlMpGhrp0CBYA==}
+  /@dprint/win32-x64@0.42.2:
+    resolution: {integrity: sha512-6RKkS1j4zp7Yh9ayZmb0GcotMvm6UTKTZoPaB4qv6CS3lGR9u9/DpXJnOC6EJvGRgZpf0sRQJj1eDraXezTzLg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -1572,19 +1572,19 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.13.1(@effect/schema@0.46.1)(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-AeZqWmsokUuRyshMEf+zlhcwEYjdrFvFbeCeAv5Usy35IEygHA3L4iaCmXCOSKz5Fzitp+bTNuIAtpCgVa37Ng==}
+  /@effect/platform-browser@0.14.3(@effect/schema@0.46.1)(effect@2.0.0-next.52):
+    resolution: {integrity: sha512-7TwY4g8Fw0HTKKTebZfy4AUAthdxnyNcoRqMhPuXAYboPoC+q4x/koRMVB3SngtSxuUHTURZaturZq6ne8F+xg==}
     peerDependencies:
       effect: 2.0.0-next.52
     dependencies:
-      '@effect/platform': 0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+      '@effect/platform': 0.26.2(@effect/schema@0.46.1)(effect@2.0.0-next.52)
       effect: 2.0.0-next.52
     transitivePeerDependencies:
       - '@effect/schema'
     dev: false
 
-  /@effect/platform@0.25.1(@effect/schema@0.46.1)(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-BBoOKrkAr3P2TvZSai3fTJOnegLVtAVipChWLTA1Uv3hgS7A74M4rCNzmcMEsJLOCvvMq50Y4HnDvpTxr+wd0w==}
+  /@effect/platform@0.26.2(@effect/schema@0.46.1)(effect@2.0.0-next.52):
+    resolution: {integrity: sha512-eQif6w4f9IjdhbJtRw4fA3itgANPVzdRtpq5P8z6NupJbJ9EMq/Sfc8yyyypy1A8tfoIRgTxtVN6R7ZvbY1+vg==}
     peerDependencies:
       '@effect/schema': ^0.46.1
       effect: 2.0.0-next.52
@@ -4337,17 +4337,17 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dprint@0.41.0:
-    resolution: {integrity: sha512-9Ctv6EnwOy5Ai566DczI/QhAC6y+AhWDA2gFU8Zz4xezUy1BevHaIYhfdLWZQxh4Qf4H28lRu1Lq+hhIm1US9w==}
+  /dprint@0.42.2:
+    resolution: {integrity: sha512-T7CZvcAU6xaE4R8vYOmQp0Agy8/rVn9CG1xoWNqBQzg3BECes2dbVAa1sbyg9gtG0VgPTWwZhLcSpzsCED8O1Q==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@dprint/darwin-arm64': 0.41.0
-      '@dprint/darwin-x64': 0.41.0
-      '@dprint/linux-arm64-glibc': 0.41.0
-      '@dprint/linux-x64-glibc': 0.41.0
-      '@dprint/linux-x64-musl': 0.41.0
-      '@dprint/win32-x64': 0.41.0
+      '@dprint/darwin-arm64': 0.42.2
+      '@dprint/darwin-x64': 0.42.2
+      '@dprint/linux-arm64-glibc': 0.42.2
+      '@dprint/linux-x64-glibc': 0.42.2
+      '@dprint/linux-x64-musl': 0.42.2
+      '@dprint/win32-x64': 0.42.2
     dev: true
 
   /duplexer@0.1.2:
