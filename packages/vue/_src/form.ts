@@ -1,4 +1,4 @@
-import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These } from "@effect-app/prelude/schema"
+import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
 import type {
   AnyProperty,
   EncodedOf,
@@ -8,7 +8,8 @@ import type {
   SchemaAny
 } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
-import { capitalize, ref } from "vue"
+import type { Ref } from "vue"
+import { capitalize, ref, watch } from "vue"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -187,4 +188,48 @@ function buildFieldInfo(
   }
 
   return info as any
+}
+
+export const buildFormFromSchema = <
+  ParsedShape,
+  Encoded,
+  ConstructorInput,
+  Props extends PropertyRecord,
+  OnSubmitA
+>(
+  s: Schema.Schema<
+    unknown,
+    ParsedShape,
+    ConstructorInput,
+    Encoded,
+    { props: Props }
+  >,
+  state: Ref<Encoded>,
+  onSubmit: (a: ParsedShape) => Promise<OnSubmitA>
+) => {
+  const fields = buildFieldInfoFromProps(s.Api.props)
+  const parse = unsafe(Schema.Parser.for(s))
+  const isDirty = ref(false)
+  const isValid = ref(true)
+
+  const submit1 =
+    <A>(onSubmit: (a: ParsedShape) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+      const r = await e
+      if (!r.valid) return
+      return onSubmit(parse(state.value))
+    }
+  const submit = submit1(onSubmit)
+
+  watch(
+    state,
+    (v) => {
+      // TODO: do better
+      isDirty.value = JSON.stringify(v) !== JSON.stringify(state.value)
+    },
+    { deep: true }
+  )
+
+  const submitFromState = () => submit(Promise.resolve({ valid: isValid.value }))
+
+  return { fields, submit, submitFromState, isDirty, isValid }
 }
