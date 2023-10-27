@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.69.4
+
+### Patch Changes
+
+- 84e54d54: Update packages
+- Updated dependencies [84e54d54]
+  - @effect-app/core@0.67.3
+  - @effect-app/schema@0.60.3
+
 ## 0.69.3
 
 ### Patch Changes
