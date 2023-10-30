@@ -30,7 +30,7 @@ export const schemaJsonBody = <ParsedShape, Encoded, A, B>(
   client: HttpClient<A, B, ClientResponse>,
   schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
 ) => {
-  const parse = Parser.for(schema).condemnFail
+  const parse = Parser.for(schema).condemnCustom
   return client.mapEffect((_) => _.json.flatMap(parse))
 }
 
@@ -41,7 +41,8 @@ export const schemaJsonBodyUnsafe = <ParsedShape, Encoded, A, B>(
   client: HttpClient<A, B, ClientResponse>,
   schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
 ) => {
-  const parse = Parser.for(schema).condemnDie
+  const _parse = Parser.for(schema).condemnCustom
+  const parse = flow(_parse, Effect.orDie)
   return client.mapEffect((_) => _.json.flatMap(parse))
 }
 
