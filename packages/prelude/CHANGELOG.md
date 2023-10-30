@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.69.5
+
+### Patch Changes
+
+- 8c0b8270: improve json parse error
+
 ## 0.69.4
 
 ### Patch Changes
