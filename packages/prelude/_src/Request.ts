@@ -1,3 +1,4 @@
+import { HttpClientError } from "@effect/platform/Http/ClientError"
 import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
 import type { Headers } from "@effect/platform/Http/Headers"
 
@@ -9,6 +10,9 @@ export { Request as EffectRequest } from "effect/Request"
 export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "status" | "remoteAddress"> {
   readonly body: A
 }
+
+// TODO: consider rebuilding the text/json helpers to use a cached effect
+// https://discord.com/channels/795981131316985866/1098177242598756412/1168565257569046712
 
 /**
  * @tsplus getter effect/platform/Http/ClientResponse responseWithJsonBody
@@ -85,3 +89,20 @@ export const schemaJsonUnsafe = <
   const parse = Parser.for(schema).condemnDie
   return client.mapEffect((_) => _.responseWithJsonBody.flatMap((_) => parse(_)))
 }
+
+/** @tsplus getter effect/platform/Http/Client demandJson */
+export const demandJson = <R, E>(client: HttpClient<R, E, ClientResponse>) =>
+  client
+    .mapRequest((_) => _.acceptJson)
+    .transform((r, request) =>
+      r.tap((response) =>
+        response.headers.get("Content-Type").value?.startsWith("application/json")
+          ? Effect.unit
+          : Effect.fail(HttpClientError.ResponseError({
+            request,
+            response,
+            reason: "Decode",
+            error: "not json response: " + response.headers.get("Content-Type").value
+          }))
+      )
+    )
