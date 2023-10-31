@@ -1,3 +1,4 @@
+// @ts-expect-error wtf
 import { HttpClientError } from "@effect/platform/Http/ClientError"
 import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
 import type { Headers } from "@effect/platform/Http/Headers"
