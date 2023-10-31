@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.67.4
+
+### Patch Changes
+
+- 780a6718: update packages
+
 ## 0.67.3
 
 ### Patch Changes
