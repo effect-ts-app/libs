@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.69.6
+
+### Patch Changes
+
+- 57f506e7: feat: add demandJson for HttpClient
+
 ## 0.69.5
 
 ### Patch Changes
