@@ -14,10 +14,13 @@ export function reportError<E, E2 extends CauseException<unknown>>(
       const error = makeError(cause)
       yield* $(reportSentry(error, extras))
       yield* $(
-        cause.logError.annotateLogs(
-          "extras",
-          JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
-        )
+        cause
+          .logError
+          .annotateLogs({
+            extras,
+            __cause__: error.toJSON(),
+            __error__: { _tag: error._tag, message: error.message }
+          })
       )
     })
 }
@@ -47,10 +50,13 @@ export function logError<E, E2 extends CauseException<unknown>>(
       }
       const error = makeError(cause)
       yield* $(
-        cause.logWarning.annotateLogs(
-          "extras",
-          JSON.stringify({ ...extras, __error__: { _tag: error._tag, message: error.message } })
-        )
+        cause
+          .logWarning
+          .annotateLogs({
+            extras,
+            __cause__: error.toJSON(),
+            __error__: { _tag: error._tag, message: error.message }
+          })
       )
     })
 }
