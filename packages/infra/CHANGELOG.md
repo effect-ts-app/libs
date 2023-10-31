@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.83.9
+
+### Patch Changes
+
+- d442aa04: improve: error logging should include toJSON
+
 ## 0.83.8
 
 ### Patch Changes
