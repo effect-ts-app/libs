@@ -62,7 +62,7 @@ importers:
         specifier: ^0.88.3
         version: 0.88.3
       '@effect-app/cli':
-        specifier: ^0.22.0
+        specifier: ^0.22.1
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -250,17 +250,17 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.26.3
-        version: 0.26.3(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.27.2
+        version: 0.27.2(@effect/schema@0.47.2)(effect@2.0.0-next.54)
       '@fp-ts/optic':
         specifier: ^0.14.0
-        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -390,8 +390,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       fast-check:
         specifier: ~3.13.2
         version: 3.13.2
@@ -418,8 +418,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.76.0
-        version: 7.76.0
+        specifier: ^7.77.0
+        version: 7.77.0
       '@types/express':
         specifier: ^4.17.20
         version: 4.17.20
@@ -479,10 +479,10 @@ importers:
         version: link:../schema
       '@fp-ts/optic':
         specifier: ^0.14.0
-        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -557,17 +557,17 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.26.3
-        version: 0.26.3(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.27.2
+        version: 0.27.2(@effect/schema@0.47.2)(effect@2.0.0-next.54)
       '@fp-ts/optic':
         specifier: ^0.14.0
-        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -646,8 +646,8 @@ importers:
         specifier: ~18.11.12
         version: 18.11.12
       '@types/react':
-        specifier: ^18.2.33
-        version: 18.2.33
+        specifier: ^18.2.34
+        version: 18.2.34
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -674,13 +674,13 @@ importers:
         version: link:../core
       '@fp-ts/optic':
         specifier: ^0.14.0
-        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -728,17 +728,17 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.14.4
-        version: 0.14.4(@effect/schema@0.46.1)(effect@2.0.0-next.52)
+        specifier: ^0.15.2
+        version: 0.15.2(@effect/schema@0.47.2)(effect@2.0.0-next.54)
       '@formatjs/intl':
         specifier: ^2.9.5
         version: 2.9.5(@effect-app/typescript@5.3.0-tsplus.20231020)
       '@fp-ts/optic':
         specifier: ^0.14.0
-        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52)
+        version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: ^2.0.0-next.52
-        version: 2.0.0-next.52
+        specifier: ^2.0.0-next.54
+        version: 2.0.0-next.54
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -1579,45 +1579,45 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.14.4(@effect/schema@0.46.1)(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-JBf44dvUtoZmBm73wLGGSibAMJAe0yVHW4XWw0QXnetK6MD8NxcpakLjhOpK6f7eeJMHAofuaAk+qZHoRpqGIg==}
+  /@effect/platform-browser@0.15.2(@effect/schema@0.47.2)(effect@2.0.0-next.54):
+    resolution: {integrity: sha512-mtnVw5zwHxq3JY001TTXxHpJxnGE2Zlg+MrkODGbF3OgySqjxRv+2rDgPdmXS38777xdmrk3R6xvq9iqmMzpWg==}
     peerDependencies:
-      effect: 2.0.0-next.52
+      effect: 2.0.0-next.54
     dependencies:
-      '@effect/platform': 0.26.3(@effect/schema@0.46.1)(effect@2.0.0-next.52)
-      effect: 2.0.0-next.52
+      '@effect/platform': 0.27.2(@effect/schema@0.47.2)(effect@2.0.0-next.54)
+      effect: 2.0.0-next.54
     transitivePeerDependencies:
       - '@effect/schema'
     dev: false
 
-  /@effect/platform@0.26.3(@effect/schema@0.46.1)(effect@2.0.0-next.52):
-    resolution: {integrity: sha512-Zo4f1n6d9GfHIyEQmLlFd3nFVjoRQl9PCOJhtMf49qPYcFS8RuyuF4IP5x1izgUfUds4k0UaSw6DQjA3mbZmKw==}
+  /@effect/platform@0.27.2(@effect/schema@0.47.2)(effect@2.0.0-next.54):
+    resolution: {integrity: sha512-Ya8clQi5FWdlrsyPfhsh4zldvDM+NZe50QPANVXByqOpAWTw3XgPNRTMom/Yx464+VTORN6Pc4q82THWat1iOA==}
     peerDependencies:
-      '@effect/schema': ^0.46.1
-      effect: 2.0.0-next.52
+      '@effect/schema': ^0.47.1
+      effect: 2.0.0-next.54
     dependencies:
-      '@effect/schema': 0.46.1(effect@2.0.0-next.52)(fast-check@3.13.2)
-      effect: 2.0.0-next.52
+      '@effect/schema': 0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2)
+      effect: 2.0.0-next.54
       find-my-way: 7.7.0
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.46.1(effect@2.0.0-next.52)(fast-check@3.13.2):
-    resolution: {integrity: sha512-+uaJy6vn2wd5cuYzeCZ68EMPcwNran5/JPL0+MUlRL8x23Bp15YCiT9oqOPH+Bo9+JPVuS7BOPQD3tj/MNLzWQ==}
+  /@effect/schema@0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2):
+    resolution: {integrity: sha512-AwZg9c/NCD2rKEQuWjQUwFMWBi7xokJyL3jid5jtiLB7kjmrtRnHBxleeOEVoSrdBMJu6yXle3HvdHXefyA2jQ==}
     peerDependencies:
-      effect: 2.0.0-next.52
+      effect: 2.0.0-next.54
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.0.0-next.52
+      effect: 2.0.0-next.54
       fast-check: 3.13.2
     dev: false
 
-  /@effect/typeclass@0.13.1(effect@2.0.0-next.52):
+  /@effect/typeclass@0.13.1(effect@2.0.0-next.54):
     resolution: {integrity: sha512-8dRe8Rn7Fb/UT8h+bVYYiQWvRdV0gfSDQJCd8p5mE0pPltDxioCY0uyJyVWkrU+Q1xT4aSNHQGdB+gBsVNf0hw==}
     peerDependencies:
       effect: 2.0.0-next.52
     dependencies:
-      effect: 2.0.0-next.52
+      effect: 2.0.0-next.54
     dev: false
 
   /@esbuild/android-arm64@0.18.20:
@@ -1903,14 +1903,14 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.52):
+  /@fp-ts/optic@0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54):
     resolution: {integrity: sha512-H2zooOtlXDqAR+Vv5Mb4ziRWfws1S5Kztrsws3iydLVxDyCI8cRqki43Yh2/ikZpIWxbyXBpBtUAZQcE4abfhA==}
     peerDependencies:
       '@effect/typeclass': ^0.13.1
       effect: 2.0.0-next.52
     dependencies:
-      '@effect/typeclass': 0.13.1(effect@2.0.0-next.52)
-      effect: 2.0.0-next.52
+      '@effect/typeclass': 0.13.1(effect@2.0.0-next.54)
+      effect: 2.0.0-next.54
     dev: false
     patched: true
 
@@ -2241,46 +2241,46 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.76.0:
-    resolution: {integrity: sha512-QQVIv+LS2sbGf/e5P2dRisHzXpy02dAcLqENLPG4sZ9otRaFNjdFYEqnlJ4qko+ORpJGQEQp/BX7Q/qzZQHlAg==}
+  /@sentry-internal/tracing@7.77.0:
+    resolution: {integrity: sha512-8HRF1rdqWwtINqGEdx8Iqs9UOP/n8E0vXUu3Nmbqj4p5sQPA7vvCfq+4Y4rTqZFc7sNdFpDsRION5iQEh8zfZw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.76.0
-      '@sentry/types': 7.76.0
-      '@sentry/utils': 7.76.0
+      '@sentry/core': 7.77.0
+      '@sentry/types': 7.77.0
+      '@sentry/utils': 7.77.0
     dev: true
 
-  /@sentry/core@7.76.0:
-    resolution: {integrity: sha512-M+ptkCTeCNf6fn7p2MmEb1Wd9/JXUWxIT/0QEc+t11DNR4FYy1ZP2O9Zb3Zp2XacO7ORrlL3Yc+VIfl5JTgjfw==}
+  /@sentry/core@7.77.0:
+    resolution: {integrity: sha512-Tj8oTYFZ/ZD+xW8IGIsU6gcFXD/gfE+FUxUaeSosd9KHwBQNOLhZSsYo/tTVf/rnQI/dQnsd4onPZLiL+27aTg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.76.0
-      '@sentry/utils': 7.76.0
+      '@sentry/types': 7.77.0
+      '@sentry/utils': 7.77.0
     dev: true
 
-  /@sentry/node@7.76.0:
-    resolution: {integrity: sha512-C+YZ5S5W9oTphdWTBgV+3nDdcV1ldnupIHylHzf2Co+xNtJ76V06N5NjdJ/l9+qvQjMn0DdSp7Uu7KCEeNBT/g==}
+  /@sentry/node@7.77.0:
+    resolution: {integrity: sha512-Ob5tgaJOj0OYMwnocc6G/CDLWC7hXfVvKX/ofkF98+BbN/tQa5poL+OwgFn9BA8ud8xKzyGPxGU6LdZ8Oh3z/g==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.76.0
-      '@sentry/core': 7.76.0
-      '@sentry/types': 7.76.0
-      '@sentry/utils': 7.76.0
+      '@sentry-internal/tracing': 7.77.0
+      '@sentry/core': 7.77.0
+      '@sentry/types': 7.77.0
+      '@sentry/utils': 7.77.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sentry/types@7.76.0:
-    resolution: {integrity: sha512-vj6z+EAbVrKAXmJPxSv/clpwS9QjPqzkraMFk2hIdE/kii8s8kwnkBwTSpIrNc8GnzV3qYC4r3qD+BXDxAGPaw==}
+  /@sentry/types@7.77.0:
+    resolution: {integrity: sha512-nfb00XRJVi0QpDHg+JkqrmEBHsqBnxJu191Ded+Cs1OJ5oPXEW6F59LVcBScGvMqe+WEk1a73eH8XezwfgrTsA==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.76.0:
-    resolution: {integrity: sha512-40jFD+yfQaKpFYINghdhovzec4IEpB7aAuyH/GtE7E0gLpcqnC72r55krEIVILfqIR2Mlr5OKUzyeoCyWAU/yw==}
+  /@sentry/utils@7.77.0:
+    resolution: {integrity: sha512-NmM2kDOqVchrey3N5WSzdQoCsyDkQkiRxExPaNI2oKQ/jMWHs9yt0tSy7otPBcXs0AP59ihl75Bvm1tDRcsp5g==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.76.0
+      '@sentry/types': 7.77.0
     dev: true
 
   /@sideway/address@4.1.4:
@@ -2451,7 +2451,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.33
+      '@types/react': 18.2.34
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -2548,8 +2548,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/react@18.2.33:
-    resolution: {integrity: sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==}
+  /@types/react@18.2.34:
+    resolution: {integrity: sha512-U6eW/alrRk37FU/MS2RYMjx0Va2JGIVXELTODaTIYgvWGCV4Y4TfTUzG8DdmpDNIT0Xpj/R7GfyHOJJrDttcvg==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -4376,8 +4376,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.0.0-next.52:
-    resolution: {integrity: sha512-6VmmfS6xyOZsJRT0hcEsMx03HxXSeG/VmcniDvVw0nzBudlu+4qUvj8GBGYVFVgJfKcISSRey0tzfO9HXIzApg==}
+  /effect@2.0.0-next.54:
+    resolution: {integrity: sha512-qROhKMxlm6fpa90YRfWSgKeelDfhaDq2igPK+pIKupGehiCnZH4vd2qrY71HVZ10qZgXxh0VXpGyDQxJC+EQqw==}
     dev: false
 
   /electron-to-chromium@1.4.525:
@@ -7945,7 +7945,7 @@ packages:
       '@formatjs/intl-displaynames': 6.6.1
       '@formatjs/intl-listformat': 7.5.0
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.2.33
+      '@types/react': 18.2.34
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.4
       react: 18.2.0
