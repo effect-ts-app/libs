@@ -1,13 +1,10 @@
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
-import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { Ref } from "vue"
-import { computed, ref, shallowRef } from "vue"
+import { computed, ref, watch } from "vue"
 import { run } from "./internal.js"
-
-export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
 
 type useSWRVType = {
   <Data, Error>(key: IKey): IResponse<Data, Error>
@@ -36,18 +33,12 @@ export const mutate = (swrv.default.mutate ? swrv.default.mutate : swrv.mutate) 
 function swrToQuery<E, A>(
   r: { error: E | undefined; data: A | undefined; isValidating: boolean }
 ): QueryResult<E, A> {
-  if (r.error) {
-    return r.isValidating
-      ? Refreshing.fail<E, A>(r.error, r.data)
-      : Done.fail<E, A>(r.error, r.data)
-  }
-  if (r.data !== undefined) {
-    return r.isValidating
-      ? Refreshing.succeed<A, E>(r.data)
-      : Done.succeed<A, E>(r.data)
-  }
-
-  return r.isValidating ? new Loading() : new Initial()
+  const s = r.error
+    ? Result.fail<E, A>(r.error)
+    : r.data
+    ? Result.success<E, A>(r.data)
+    : Result.initial<E, A>()
+  return new QueryResult(r.isValidating ? Result.waiting(s) : s, r.data)
 }
 
 export function useMutate<E, A>(
@@ -128,19 +119,9 @@ export function useSafeQuery_<E, A>(
   const swr = useSWRV<A, E>(key, () => run.value(self).then((_) => _.body), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
-  ) // ref<QueryResult<E, A>>()
-  const latestSuccess = computed(() => {
-    const value = result.value
-    return value.isSuccess()
-      ? value.current.isRight()
-        ? value.current.right
-        : value.previous.isSome()
-        ? value.previous.value
-        : undefined
-      : undefined
-  })
+  )
 
-  return tuple(result, latestSuccess, () => swr.mutate(), swr)
+  return tuple(result, () => swr.mutate(), swr)
 }
 
 export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) {
@@ -178,27 +159,23 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Def
   return tuple(result, latestSuccess, exec)
 }
 
+// TODO: use Rx
 export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
-  const result = shallowRef(new Initial() as QueryResult<E, A>)
+  const result = ref<Result.Result<E, A>>(Result.initial<E, A>())
 
   const execute = Effect
     .sync(() => {
-      result.value = result.value.isInitializing()
-        ? new Loading()
-        : new Refreshing(result.value)
+      result.value = Result.isWaiting(result.value)
+        ? result.value
+        : Result.waiting(result.value)
     })
     .zipRight(self.map((_) => _.body).asQueryResult)
     .flatMap((r) => Effect(result.value = r))
 
-  const latestSuccess = computed(() => {
-    const value = result.value
-    return value.hasValue()
-      ? value.current.isRight()
-        ? value.current.right
-        : value.previous.isSome()
-        ? value.previous.value
-        : undefined
-      : undefined
+  const latestSuccess = ref<A>()
+  watch(result, (r) => {
+    const s = Result.value(r)
+    if (Option.isSome(s)) latestSuccess.value = s.value
   })
 
   return tuple(result, latestSuccess, execute)
