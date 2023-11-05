@@ -517,22 +517,22 @@ export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Delete<Path extends string>(path: Path) {
-  return MethodReqProps2_("DELETE", path)
+export function Delete<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReqProps2_("DELETE", path, config)
 }
-export function DeleteSpecial<Path extends string>(path: Path) {
-  return MethodReqProps2_("POST", path)
+export function DeleteSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReqProps2_("POST", path, config)
 }
 /**
  * PUT http method.
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Put<Path extends string>(path: Path) {
-  return MethodReqProps2_("PUT", path)
+export function Put<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReqProps2_("PUT", path, config)
 }
-export function PutSpecial<Path extends string>(path: Path) {
-  return MethodReq_("PUT", path)
+export function PutSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReq_("PUT", path, config)
 }
 
 /**
@@ -540,22 +540,22 @@ export function PutSpecial<Path extends string>(path: Path) {
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Get<Path extends string>(path: Path) {
-  return MethodReqProps2_("GET", path)
+export function Get<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReqProps2_("GET", path, config)
 }
-export function GetSpecial<Path extends string>(path: Path) {
-  return MethodReq_("GET", path)
+export function GetSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReq_("GET", path, config)
 }
 /**
  * PATCH http method.
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Patch<Path extends string>(path: Path) {
-  return MethodReqProps2_("PATCH", path)
+export function Patch<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReqProps2_("PATCH", path, config)
 }
-export function PatchSpecial<Path extends string>(path: Path) {
-  return MethodReq_("PATCH", path)
+export function PatchSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+  return MethodReq_("PATCH", path, config)
 }
 /**
  * POST http method.
@@ -570,7 +570,8 @@ export function PostSpecial<Path extends string, Config extends object = {}>(pat
 }
 
 export function MethodReqProps2<Method extends Methods>(method: Method) {
-  return <Path extends string>(path: Path) => MethodReqProps2_(method, path)
+  return <Path extends string, Config extends object = {}>(path: Path, config?: Config) =>
+    MethodReqProps2_(method, path, config)
 }
 
 export function MethodReqProps2_<Method extends Methods, Path extends string, Config extends object = {}>(
