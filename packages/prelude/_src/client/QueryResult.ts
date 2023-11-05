@@ -15,5 +15,5 @@ export function queryResult<R, E, A>(
 }
 
 export class QueryResult<E, A> {
-  constructor(readonly latest: Result.Result<E, A>, readonly latestSuccess: Option<A>) {}
+  constructor(readonly latest: Result.Result<E, A>, readonly latestSuccess: A | undefined) {}
 }

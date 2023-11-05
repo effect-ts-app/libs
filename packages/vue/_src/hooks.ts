@@ -38,7 +38,7 @@ function swrToQuery<E, A>(
     : r.data
     ? Result.success<E, A>(r.data)
     : Result.initial<E, A>()
-  return new QueryResult(r.isValidating ? Result.waiting(s) : s, r.data === undefined ? Option.none : Option(r.data))
+  return new QueryResult(r.isValidating ? Result.waiting(s) : s, r.data)
 }
 
 export function useMutate<E, A>(
@@ -121,13 +121,7 @@ export function useSafeQuery_<E, A>(
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
   )
 
-  return tuple(
-    result,
-    // easier to render in template based on undefined.
-    computed(() => result.value.latestSuccess.value),
-    () => swr.mutate(),
-    swr
-  )
+  return tuple(result, () => swr.mutate(), swr)
 }
 
 export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) {
