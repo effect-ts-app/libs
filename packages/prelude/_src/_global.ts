@@ -111,6 +111,11 @@ import { assignTag, ServiceTagged, ServiceTaggedClass, TagClass } from "@effect-
  */
 import { match, Pattern } from "ts-pattern"
 
+/**
+ * @tsplus global
+ */
+import { Registry, Result, Rx, RxRef } from "@effect-rx/rx"
+
 import "@effect-app/core/_global"
 import "@effect-app/core/Prelude"
 import "@effect-app/schema/_global"
