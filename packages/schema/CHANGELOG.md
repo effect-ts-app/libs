@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.61.1
+
+### Patch Changes
+
+- 9c347b64: fix missing arg
+
 ## 0.61.0
 
 ### Minor Changes
