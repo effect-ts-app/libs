@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 0.62.9
+
+### Patch Changes
+
+- Updated dependencies [fdd19b0b]
+  - @effect-app/schema@0.61.0
+  - @effect-app/prelude@0.69.9
+  - @effect-app/vue@0.62.9
+
 ## 0.62.8
 
 ### Patch Changes

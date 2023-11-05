@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.61.0
+
+### Minor Changes
+
+- fdd19b0b: feat: add REST request type level config support
+
 ## 0.60.5
 
 ### Patch Changes
