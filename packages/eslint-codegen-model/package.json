@@ -16,8 +16,8 @@
   "dependencies": {
     "@babel/generator": "7.23.0",
     "@babel/parser": "7.23.0",
-    "@typescript-eslint/utils": "^6.9.1",
-    "eslint-plugin-codegen": "0.17.0",
+    "@typescript-eslint/utils": "^6.10.0",
+    "eslint-plugin-codegen": "0.18.0",
     "glob": "8.1.0",
     "io-ts": "2.2.20",
     "io-ts-extra": "0.11.6",
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@babel/types": "7.23.0",
-    "@types/babel__generator": "7.6.6",
-    "@types/babel__traverse": "7.20.3",
+    "@types/babel__generator": "7.6.7",
+    "@types/babel__traverse": "7.20.4",
     "@types/glob": "8.1.0",
     "@types/lodash": "4.14.200",
     "madge": "6.1.0",
