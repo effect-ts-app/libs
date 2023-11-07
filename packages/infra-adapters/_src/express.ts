@@ -86,7 +86,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
       )
   )
 
-  const app = yield* _(Effect.sync(() => express))
+  const app = yield* _(Effect.sync(() => express()))
 
   const { exitHandler, host, port } = yield* _(ExpressAppConfig)
 

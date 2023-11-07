@@ -80,67 +80,6 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 // }
 
 /**
- * Recovers from all errors.
- *
- * @tsplus static effect/io/Effect.Ops catchAllMap
- * @tsplus pipeable effect/io/Effect catchAllMap
- */
-export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll((err) => Effect.sync(() => f(err)))
-}
-
-/**
- * Annotates each log in this effect with the specified log annotations.
- * @tsplus static effect/io/Effect.Ops annotateLogs
- */
-export function annotateLogs(kvps: Record<string, string>) {
-  return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
-    FiberRef
-      .currentLogAnnotations
-      .get
-      .flatMap((annotations) =>
-        Effect.suspend(() =>
-          pipe(
-            effect,
-            FiberRef.currentLogAnnotations.locally(
-              HashMap.fromIterable([...annotations, ...kvps.$$.entries])
-            )
-          )
-        )
-      )
-}
-
-/**
- * Annotates each log in this scope with the specified log annotation.
- *
- * @tsplus static effect/io/Effect.Ops annotateLogscoped
- */
-export function annotateLogscoped(key: string, value: string) {
-  return FiberRef
-    .currentLogAnnotations
-    .get
-    .flatMap((annotations) =>
-      Effect.suspend(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
-    )
-}
-
-/**
- * Annotates each log in this scope with the specified log annotations.
- *
- * @tsplus static effect/io/Effect.Ops annotateLogsScoped
- */
-export function annotateLogsScoped(kvps: Record<string, string>) {
-  return FiberRef
-    .currentLogAnnotations
-    .get
-    .flatMap((annotations) =>
-      Effect.suspend(() =>
-        FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
-      )
-    )
-}
-
-/**
  * @tsplus fluent function flow
  */
 export function flow<Args extends readonly any[], B, C>(f: (...args: Args) => B, g: (b: B) => C): (...args: Args) => C {

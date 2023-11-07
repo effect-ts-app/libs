@@ -1,4 +1,3 @@
-import * as Dur from "effect/Duration"
 import * as T from "effect/Effect"
 import * as ROArray from "effect/ReadonlyArray"
 import { identity } from "./Function.js"
@@ -47,11 +46,6 @@ function arrayIncludes<A>(E: Equivalence<A>) {
     return false
   }
 }
-
-/**
- * @tsplus static effect/data/Duration.Ops makeMillis
- */
-export const millis_ = Dur.millis
 
 export const { isArray } = Array
 

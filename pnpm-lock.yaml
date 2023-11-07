@@ -7,7 +7,7 @@ settings:
 overrides:
   '@types/node': ~18.11.12
   date-fns: ^2.29.3
-  effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+  effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
   http-proxy: npm:http-proxy-node16@1.0.0
   typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
 
@@ -261,8 +261,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -392,8 +392,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       fast-check:
         specifier: ~3.13.2
         version: 3.13.2
@@ -483,8 +483,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -568,8 +568,8 @@ importers:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -681,8 +681,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -739,8 +739,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
-        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+        specifier: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
+        version: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -1468,10 +1468,10 @@ packages:
   /@effect/platform-browser@0.15.3(@effect/schema@0.47.2)(effect@2.0.0-next.54):
     resolution: {integrity: sha512-3CVjz7g5cwFwppIg7TuNxGexodeoU/zOtoYHchlNe4cWnsUU83IsQVfzB9/tfYv0nbmzfMbSvfBlXdEomCcNwA==}
     peerDependencies:
-      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+      effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
     dependencies:
       '@effect/platform': 0.27.3(@effect/schema@0.47.2)(effect@2.0.0-next.54)
-      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+      effect: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
     transitivePeerDependencies:
       - '@effect/schema'
     dev: false
@@ -1480,10 +1480,10 @@ packages:
     resolution: {integrity: sha512-CnG/Yddsy7nx224h8Gdlj8ho6Hc7qjpAF4sQDk9HqjS2kMOAOjlalWi2skpi2YcZPaNqSJ/r7yT06HvD6sHVrg==}
     peerDependencies:
       '@effect/schema': ^0.47.1
-      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+      effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
     dependencies:
       '@effect/schema': 0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2)
-      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+      effect: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       find-my-way: 7.7.0
       path-browserify: 1.0.1
     dev: false
@@ -1491,19 +1491,19 @@ packages:
   /@effect/schema@0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2):
     resolution: {integrity: sha512-AwZg9c/NCD2rKEQuWjQUwFMWBi7xokJyL3jid5jtiLB7kjmrtRnHBxleeOEVoSrdBMJu6yXle3HvdHXefyA2jQ==}
     peerDependencies:
-      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+      effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
       fast-check: ^3.13.2
     dependencies:
-      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+      effect: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
       fast-check: 3.13.2
     dev: false
 
   /@effect/typeclass@0.13.1(effect@2.0.0-next.54):
     resolution: {integrity: sha512-8dRe8Rn7Fb/UT8h+bVYYiQWvRdV0gfSDQJCd8p5mE0pPltDxioCY0uyJyVWkrU+Q1xT4aSNHQGdB+gBsVNf0hw==}
     peerDependencies:
-      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+      effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
     dependencies:
-      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+      effect: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
     dev: false
 
   /@esbuild/android-arm64@0.18.20:
@@ -1793,10 +1793,10 @@ packages:
     resolution: {integrity: sha512-H2zooOtlXDqAR+Vv5Mb4ziRWfws1S5Kztrsws3iydLVxDyCI8cRqki43Yh2/ikZpIWxbyXBpBtUAZQcE4abfhA==}
     peerDependencies:
       '@effect/typeclass': ^0.13.1
-      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+      effect: github:Effect-TS/effect#c5e40712da094db1a542526266ddeb9f4991df39
     dependencies:
       '@effect/typeclass': 0.13.1(effect@2.0.0-next.54)
-      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
+      effect: github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39
     dev: false
     patched: true
 
@@ -9681,8 +9681,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481:
-    resolution: {tarball: https://codeload.github.com/Effect-TS/effect/tar.gz/878e704672e7b622a53193a95b6feafe1901b481}
+  github.com/Effect-TS/effect/c5e40712da094db1a542526266ddeb9f4991df39:
+    resolution: {tarball: https://codeload.github.com/Effect-TS/effect/tar.gz/c5e40712da094db1a542526266ddeb9f4991df39}
     name: effect
     version: 2.0.0-next.54
     prepare: true

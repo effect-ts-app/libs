@@ -5,10 +5,9 @@ import { ContextMap, StoreMaker } from "./Store.js"
 import type { Filter, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
-import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { Schema } from "@effect-app/prelude"
+import type { Option, Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 
@@ -21,7 +20,7 @@ export const RepositoryBase = <Service>() => {
   ) => {
     abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
       itemType: ItemType = itemType
-      abstract find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Opt<T>>
+      abstract find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Option<T>>
       abstract all: Effect<ContextMap, never, T[]>
       abstract saveAndPublish: (
         items: Iterable<T>,
@@ -130,7 +129,8 @@ export function makeRepo<
         }
 
         const saveAllE = (a: Iterable<E>) =>
-          Effect.sync(() => a.toNonEmptyArray)
+          Effect
+            .sync(() => a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(ContextMap)
@@ -145,7 +145,8 @@ export function makeRepo<
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) =>
           saveAll(items)
-            > Effect.sync(() => events.toNonEmptyArray)
+            > Effect
+              .sync(() => events.toNonEmptyArray)
               // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
               .flatMapOpt(publishEvents)
 
@@ -159,7 +160,8 @@ export function makeRepo<
               set(e.id, undefined)
             }
             yield* $(
-              Effect.sync(() => events.toNonEmptyArray)
+              Effect
+                .sync(() => events.toNonEmptyArray)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(publishEvents)
             )

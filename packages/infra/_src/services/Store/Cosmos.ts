@@ -84,7 +84,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       ([i, batch]) =>
                         Effect
                           .promise(() => bulk(batch.map(([, op]) => op)))
-                          .delay(Duration.makeMillis(i === 0 ? 0 : 1100))
+                          .delay(Duration.millis(i === 0 ? 0 : 1100))
                           .flatMap((responses) =>
                             Effect.gen(function*($) {
                               const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
@@ -188,10 +188,11 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect.sync(() => {
-              query: `SELECT * FROM ${name} f WHERE f.id != @id`,
-              parameters: [{ name: "@id", value: importedMarkerId }]
-            })
+            all: Effect
+              .sync(() => ({
+                query: `SELECT * FROM ${name} f WHERE f.id != @id`,
+                parameters: [{ name: "@id", value: importedMarkerId }]
+              }))
               .tap((q) => logQuery(q))
               .flatMap((q) =>
                 Effect.promise(() =>
@@ -211,7 +212,8 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               filter
                 .keys
                 .forEachEffect((k) =>
-                  Effect.sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                  Effect
+                    .sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -249,7 +251,8 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 ? filter
                   .keys
                   .forEachEffect((k) =>
-                    Effect.sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                    Effect
+                      .sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
                       .tap((q) => logQuery(q))
                       .flatMap((q) =>
                         Effect.promise(() =>
@@ -262,7 +265,8 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                   )
                   .map((_) => _.flatMap((_) => _))
-                : Effect.sync(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                : Effect
+                  .sync(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
                   .tap((q) => logQuery(q))
                   .flatMap((q) =>
                     Effect.promise(() =>
@@ -325,10 +329,10 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect.sync(() => {
+                  return Effect.sync(() => ({
                     ...e,
                     _etag: x.etag
-                  })
+                  }))
                 })
                 .instrument("cosmos.set")
                 .annotateLogs("cosmos.db", containerId),
@@ -356,13 +360,14 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             if (seed) {
               const m = yield* $(seed)
               yield* $(
-                Effect.sync(() => m.toNonEmptyArray)
+                Effect
+                  .sync(() => m.toNonEmptyArray)
                   .flatMapOpt((a) =>
                     s
                       .bulkSet(a)
                       .orDie
                       // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                      .delay(Duration.makeMillis(1100))
+                      .delay(Duration.millis(1100))
                   )
               )
             }

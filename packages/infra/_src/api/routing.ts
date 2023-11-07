@@ -47,7 +47,7 @@ export function makeRequestParsers<
     Errors
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Effect.sync(() => 
+  const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
       .map((s) => s)
@@ -56,7 +56,7 @@ export function makeRequestParsers<
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
 
-  const pq = Effect.sync(() => 
+  const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
       .map((s) => s)
@@ -65,7 +65,7 @@ export function makeRequestParsers<
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
 
-  const pb = Effect.sync(() => 
+  const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
       .map((s) => s)
@@ -74,7 +74,7 @@ export function makeRequestParsers<
   )
   const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
 
-  const pp = Effect.sync(() => 
+  const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
       .map((s) => s)
@@ -83,7 +83,7 @@ export function makeRequestParsers<
   )
   const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
 
-  const pc = Effect.sync(() => 
+  const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
       .map((s) => s)
@@ -185,7 +185,7 @@ export function match<
       )
     )
     .zipRight(
-      Effect.sync(() => 
+      Effect.sync(() =>
         makeRouteDescriptor(
           requestHandler.Request.path,
           requestHandler.Request.method,
@@ -199,7 +199,8 @@ export function respondSuccess<ReqA, A, E>(
   encodeResponse: (req: ReqA) => Encode<A, E>
 ) {
   return (req: ReqA, res: express.Response, a: A) =>
-    Effect.sync(() => encodeResponse(req)(a))
+    Effect
+      .sync(() => encodeResponse(req)(a))
       .flatMap((r) =>
         Effect.sync(() => {
           r === undefined
@@ -258,13 +259,13 @@ export function makeRequestHandler<
   const respond = respondSuccess(encodeResponse)
 
   function getParams(req: express.Request) {
-    return Effect.sync(() => {
+    return Effect.sync(() => ({
       path: req.params,
       query: req.query,
       body: req.body,
       headers: req.headers,
       cookies: req.cookies
-    })
+    }))
   }
 
   function makeContext(req: express.Request) {
@@ -381,7 +382,7 @@ export function makeRequestHandler<
               .all(
                 [
                   Effect.sync(() => res.status(500).send()),
-                  Effect.sync(() => 
+                  Effect.sync(() =>
                     reportRequestError(cause, {
                       path: req.originalUrl,
                       method: req.method
