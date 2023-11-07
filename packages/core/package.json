@@ -4,10 +4,10 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@effect/platform": "^0.27.2",
     "@fp-ts/optic": "^0.14.0",
-    "@effect/platform": "^0.27.3",
-    "effect": "^2.0.0-next.54",
     "cross-fetch": "^4.0.0",
+    "effect": "^2.0.0-next.54",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
     "query-string": "^8.1.0",
@@ -15,9 +15,9 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
     "@types/uuid": "^9.0.6",
     "@types/validator": "^13.11.5",
-    "@babel/cli": "^7.23.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072",
     "vitest": "^0.34.6",
