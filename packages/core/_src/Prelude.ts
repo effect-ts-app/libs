@@ -52,18 +52,6 @@ export namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-export namespace ROArray {
-  // @ts-expect-error
-  export * from "@effect-app/core/Array"
-}
-/**
- * @tsplus type ReadonlyArray
- * @tsplus type Iterable
- * @tsplus companion effect/data/ReadonlyArray.Ops
- * @tsplus companion effect/data/ReadonlyArray.Ops
- */
-export type ROArray<A> = ReadonlyArray<A>
-
 // export namespace ReadonlyArray {
 //   // @ts-expect-error
 //   export * from "@effect-app/core/Array"

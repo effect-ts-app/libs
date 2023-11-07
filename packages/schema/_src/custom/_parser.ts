@@ -28,7 +28,7 @@ export type Parser<I, E, A> = {
 export const interpreters: ((
   schema: SchemaAny
 ) => Option<() => Parser<unknown, unknown, unknown>>)[] = [
-  Option.partial(
+  OptionX.partial(
     (miss) => (schema: S.SchemaAny): () => Parser<unknown, unknown, unknown> => {
       if (schema instanceof S.SchemaNamed) {
         return () => {
@@ -53,7 +53,7 @@ export const interpreters: ((
             Th.chain_(
               pipe(
                 self(u, env),
-                Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
+                Th.mapError((e) => S.compositionE(Chunk.make(S.prevE(e))))
               ),
               (a, w) =>
                 pipe(
@@ -69,7 +69,7 @@ export const interpreters: ((
                         : Th.warn(a, e),
                     (e) =>
                       w._tag === "None"
-                        ? Th.fail(S.compositionE(Chunk(S.nextE(e))))
+                        ? Th.fail(S.compositionE(Chunk.make(S.nextE(e))))
                         : Th.fail(S.compositionE(w.value.errors.append(S.nextE(e))))
                   )
                 )
@@ -89,7 +89,7 @@ export const interpreters: ((
               : Th.chain_(
                 pipe(
                   self(u, env),
-                  Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
+                  Th.mapError((e) => S.compositionE(Chunk.make(S.prevE(e))))
                 ),
                 (
                   a,
@@ -107,7 +107,7 @@ export const interpreters: ((
                     : Th.fail(
                       S.compositionE(
                         w._tag === "None"
-                          ? Chunk(S.nextE(S.refinementE(schema.error(a))))
+                          ? Chunk.make(S.nextE(S.refinementE(schema.error(a))))
                           : w.value.errors.append(
                             S.nextE(S.refinementE(schema.error(a)))
                           )

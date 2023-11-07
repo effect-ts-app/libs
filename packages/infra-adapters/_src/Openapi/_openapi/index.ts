@@ -56,7 +56,7 @@ import {
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
-  Option.partial((_miss) => (schema: MO.SchemaAny): Gen => {
+  OptionX.partial((_miss) => (schema: MO.SchemaAny): Gen => {
     // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
@@ -99,7 +99,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
   }
   if ("lazy" in schema) {
     // TODO: Support recursive structures
-    return Effect(new ObjectSchema({}))
+    return Effect.sync(() => new ObjectSchema({}))
   }
   return Effect.gen(function*($) {
     if (schema instanceof MO.SchemaRefinement) {
@@ -150,8 +150,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
 
           return yield* $(
             noRef
-              ? Effect(obj)
-              : referenced({ openapiRef: ref })(Effect(obj))
+              ? Effect.sync(() => obj)
+              : referenced({ openapiRef: ref })(Effect.sync(() => obj))
           )
         }
         case unionIdentifier: {
@@ -280,9 +280,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? Effect(obj)
+              ? Effect.sync(() => obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                Effect(obj)
+                Effect.sync(() => obj)
               )
           )
         }
@@ -305,9 +305,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           })
           return yield* $(
             noRef
-              ? Effect(obj)
+              ? Effect.sync(() => obj)
               : referenced({ openapiRef: openapiRef || rest.title })(
-                Effect(obj)
+                Effect.sync(() => obj)
               )
           )
         }

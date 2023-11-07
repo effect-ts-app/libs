@@ -1,5 +1,5 @@
 {
-  "effect/Channel": [
+  "effect/Channel.int": [
     {
       "definitionName": "Channel",
       "definitionKind": "interface",
@@ -2664,7 +2664,7 @@
       ]
     }
   ],
-  "effect/Sink": [
+  "effect/Sink.int": [
     {
       "definitionName": "Sink",
       "definitionKind": "interface",
@@ -4051,7 +4051,7 @@
       ]
     }
   ],
-  "effect/Stream": [
+  "effect/Stream.int": [
     {
       "definitionName": "Stream",
       "definitionKind": "interface",

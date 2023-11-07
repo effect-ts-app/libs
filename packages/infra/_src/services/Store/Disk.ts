@@ -39,7 +39,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const withPermit = sem.withPermits(1)
     const flushToDisk = store.all.flatMap(fsStore.setRaw).apply(withPermit)
     const flushToDiskInBackground = flushToDisk
-      .tapErrorCause((err) => Effect(console.error(err)))
+      .tapErrorCause((err) => Effect.sync(() => console.error(err)))
       .uninterruptible
       .forkDaemon
 
@@ -84,10 +84,10 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           const storesSem = Semaphore.unsafeMake(1)
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
-          const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
+          const getStore = !config?.allowNamespace ? Effect.sync(() => primary) : storeId.get.flatMap((namespace) => {
             const store = stores.get(namespace)
             if (store) {
-              return Effect.succeed(store)
+              return Effect.sync(() => store)
             }
             if (!config.allowNamespace!(namespace)) {
               throw new Error(`Namespace ${namespace} not allowed!`)
@@ -95,7 +95,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
             return storesSem.withPermits(1)(
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
-                if (existing) return Effect(existing)
+                if (existing) return Effect.sync(() => existing)
                 return makeDiskStoreInt<Id, PM>(prefix, namespace, dir, name, seed).tap((store) =>
                   Effect.sync(() => stores.set(namespace, store))
                 )

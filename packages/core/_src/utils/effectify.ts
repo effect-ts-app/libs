@@ -248,7 +248,7 @@ export const effectify: {
           if (err) {
             resume(Effect.fail(onError ? onError(err, args) : err))
           } else {
-            resume(Effect.succeed(result))
+            resume(Effect.sync(() => result))
           }
         })
       } catch (err) {

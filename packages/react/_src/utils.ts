@@ -123,9 +123,9 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
     const ar = [...arrInput]
     const index = ar.findIndex((x) => x === el)
     if (index === -1) {
-      return Option.none
+      return Option.none()
     }
-    return Option(arrayMoveDropUndefined(ar, index, newIndex))
+    return Option.some(arrayMoveDropUndefined(ar, index, newIndex))
   }
 }
 

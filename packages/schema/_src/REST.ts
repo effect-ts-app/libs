@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Erase } from "@effect-app/core/Effect"
+import type { Erase } from "@effect-app/core/EffectX"
 import { Path } from "path-parser"
 
 import { Void } from "./_api.js"

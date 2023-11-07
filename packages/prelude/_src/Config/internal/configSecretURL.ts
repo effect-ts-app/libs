@@ -63,7 +63,7 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
 }
 
 /** @internal */
-export const fromChunk = (chunk: Chunk.Chunk<string>): ConfigSecretURL.ConfigSecretURL => {
+export const fromChunk = (chunk: Chunk<string>): ConfigSecretURL.ConfigSecretURL => {
   return make(Chunk.toReadonlyArray(chunk).map((char) => char.charCodeAt(0)))
 }
 

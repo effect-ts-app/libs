@@ -95,14 +95,14 @@
         "default": "./_cjs/Dictionary.cjs"
       }
     },
-    "./Effect": {
+    "./EffectX": {
       "import": {
-        "types": "./dist/Effect.d.ts",
-        "default": "./dist/Effect.js"
+        "types": "./dist/EffectX.d.ts",
+        "default": "./dist/EffectX.js"
       },
       "require": {
-        "types": "./dist/Effect.d.ts",
-        "default": "./_cjs/Effect.cjs"
+        "types": "./dist/EffectX.d.ts",
+        "default": "./_cjs/EffectX.cjs"
       }
     },
     "./Function": {
@@ -165,14 +165,14 @@
         "default": "./_cjs/Optic.cjs"
       }
     },
-    "./Option": {
+    "./OptionX": {
       "import": {
-        "types": "./dist/Option.d.ts",
-        "default": "./dist/Option.js"
+        "types": "./dist/OptionX.d.ts",
+        "default": "./dist/OptionX.js"
       },
       "require": {
-        "types": "./dist/Option.d.ts",
-        "default": "./_cjs/Option.cjs"
+        "types": "./dist/OptionX.d.ts",
+        "default": "./_cjs/OptionX.cjs"
       }
     },
     "./Prelude": {

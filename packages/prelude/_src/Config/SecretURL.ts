@@ -67,7 +67,7 @@ export const make: (bytes: Array<number>) => ConfigSecretURL = internal.make
  * @since 1.0.0
  * @category constructors
  */
-export const fromChunk: (chunk: Chunk.Chunk<string>) => ConfigSecretURL = internal.fromChunk
+export const fromChunk: (chunk: Chunk<string>) => ConfigSecretURL = internal.fromChunk
 
 /**
  * @tsplus static ConfigSecretURL.Ops fromString
@@ -96,7 +96,7 @@ export const unsafeWipe: (self: ConfigSecretURL) => void = internal.unsafeWipe
 export const secretURL = (name?: string): Config<ConfigSecretURL> => {
   const config = Config.primitive(
     "a secret property",
-    (text) => Either(fromString(text))
+    (text) => Either.right(fromString(text))
   )
   return name === undefined ? config : config.nested(name)
 }

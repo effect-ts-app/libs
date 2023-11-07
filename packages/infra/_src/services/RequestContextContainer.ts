@@ -15,7 +15,7 @@ export abstract class RequestContextContainer extends TagClass<RequestContextCon
       .flatMap((requestContext) =>
         requestContext.isSome()
           ? requestContext.value.requestContext.map(Option.some)
-          : Effect(Option.none)
+          : Effect.sync(() => Option.none())
       )
   }
 }

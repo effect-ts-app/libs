@@ -155,7 +155,7 @@ export function project<
   self: Repository<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.projectEffect(Effect(map))
+  return self.projectEffect(Effect.sync(() => map))
 }
 
 /**
@@ -235,7 +235,7 @@ export function query<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.queryEffect(Effect(map))
+  return self.queryEffect(Effect.sync(() => map))
 }
 
 /**
@@ -252,7 +252,7 @@ export function queryOne<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
-  return self.queryOneEffect(Effect(map))
+  return self.queryOneEffect(Effect.sync(() => map))
 }
 
 /**
@@ -290,7 +290,7 @@ export function queryAndSavePure<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.queryAndSavePureEffect(Effect(map))
+  return self.queryAndSavePureEffect(Effect.sync(() => map))
 }
 
 /**
@@ -443,7 +443,7 @@ export function queryAndSavePureBatched<
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
   batchSize = 100
 ) {
-  return self.queryAndSavePureEffectBatched(Effect(map), batchSize)
+  return self.queryAndSavePureEffectBatched(Effect.sync(() => map), batchSize)
 }
 
 /**
@@ -536,7 +536,7 @@ export interface OneDSLExt<T, Evt> {
  * @tsplus fluent DSLExt updateWith
  */
 export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T, Evt>, upd: (item: S1) => S2) {
-  return self.update((_: S1) => Effect(upd(_)))
+  return self.update((_: S1) => Effect.sync(() => upd(_)))
 }
 
 /**
@@ -546,7 +546,7 @@ export function updateWith<T, Evt, S1 extends T, S2 extends T>(
   self: AllDSL<T, Evt>,
   upd: (item: S1[]) => S2[]
 ) {
-  return self.update((_: S1[]) => Effect(upd(_)))
+  return self.update((_: S1[]) => Effect.sync(() => upd(_)))
 }
 
 export function makeOneDSL<T, Evt>(): OneDSL<T, Evt> {
@@ -603,14 +603,14 @@ export function makeDSL<S1, S2, Evt>() {
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> {}
 
 export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return (items: Iterable<T>) => Effect(items.toNonEmptyArray).flatMapOpt(fn)
+  return (items: Iterable<T>) => Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
 }
 
 /**
  * @tsplus fluent Iterable ifAny
  */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
-  return Effect(items.toNonEmptyArray).flatMapOpt(fn)
+  return Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
 }
 
 /**

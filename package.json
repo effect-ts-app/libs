@@ -45,7 +45,9 @@
     "resolutions": {
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
-        "http-proxy": "npm:http-proxy-node16@1.0.0"
+        "effect": "github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481",
+        "http-proxy": "npm:http-proxy-node16@1.0.0",
+        "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231107"
     },
     "dependencies": {
         "cross-env": "^7.0.3",

@@ -1,12 +1,7 @@
+import * as Dur from "effect/Duration"
+import * as T from "effect/Effect"
 import * as ROArray from "effect/ReadonlyArray"
 import { identity } from "./Function.js"
-import * as Option from "./Option.js"
-
-import * as T from "effect/Effect"
-
-import * as Dur from "effect/Duration"
-
-export * from "effect/ReadonlyArray"
 
 /**
  * @tsplus getter Generator toArray
@@ -92,7 +87,7 @@ export function findFirstMap<A, B>(
         return v
       }
     }
-    return Option.none
+    return Option.none()
   }
 }
 
@@ -100,14 +95,14 @@ export function findFirstMap<A, B>(
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
-  return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none
+  return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none()
 }
 
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray.Ops fromArray
  */
 export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
-  return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
+  return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none()
 }
 
 /**
@@ -282,9 +277,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
  * @tsplus getter ReadonlyArray toChunk
  * @tsplus getter Iterable toChunk
  */
-export function toChunk<T>(items: Iterable<T>) {
-  return Chunk.fromIterable(items)
-}
+export const toChunk = <T>(items: Iterable<T>) => Chunk.fromIterable(items)
 
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
@@ -292,7 +285,7 @@ export function toChunk<T>(items: Iterable<T>) {
  * @tsplus getter effect/data/ReadonlyArray toNonEmpty
  */
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
-  a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none
+  a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
 /**
  * @tsplus getter Iterable toArray

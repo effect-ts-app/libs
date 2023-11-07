@@ -3509,7 +3509,7 @@
       ]
     }
   ],
-  "effect/Effect": [
+  "effect/Effect.int": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",
@@ -3545,9 +3545,15 @@
         {
           "kind": "type",
           "typeName": "effect/io/Effect"
-        },
+        }
+      ]
+    },
+    {
+      "definitionName": "Effect",
+      "definitionKind": "const",
+      "extensions": [
         {
-          "kind": "companion",
+          "kind": "type",
           "typeName": "effect/io/Effect.Ops"
         }
       ]
@@ -8325,7 +8331,7 @@
       ]
     }
   ],
-  "effect/Exit": [
+  "effect/Exit.int": [
     {
       "definitionName": "Exit",
       "definitionKind": "type",
@@ -11373,7 +11379,7 @@
       ]
     }
   ],
-  "effect/Layer": [
+  "effect/Layer.int": [
     {
       "definitionName": "Layer",
       "definitionKind": "interface",

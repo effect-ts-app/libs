@@ -28,7 +28,7 @@ export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 // module tag
 export const RecordCache = Tag<RecordCache>()
 
-export const LiveRecordCache = Effect(makeLiveRecordCache()).toLayer(RecordCache)
+export const LiveRecordCache = Effect.sync(() => makeLiveRecordCache()).toLayer(RecordCache)
 
 const getM = <T>(type: string) => <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
   Effect.gen(function*($) {
@@ -90,7 +90,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapOpt((x) => x.version)
-        .flatMap((_) => _.match({ onNone: () => save(record, Option.none), onSome: confirmVersionAndSave(record) }))
+        .flatMap((_) => _.match({ onNone: () => save(record, Option.none()), onSome: confirmVersionAndSave(record) }))
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
     )
@@ -110,7 +110,7 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
                 ? new OptimisticLockException(type, record.id)
                 : Effect.unit
             )
-            .zipRight(save(record, Option(cv)))
+            .zipRight(save(record, Option.some(cv)))
         )
         .scoped
   }

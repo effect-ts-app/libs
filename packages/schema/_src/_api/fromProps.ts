@@ -35,7 +35,7 @@ export class FromProperty<
   // schema<That extends S.SchemaAny>(
   //   schema: That
   // ): FromProperty<That, Optional, As, None<any> {
-  //   return new FromProperty(this._as, schema, this._optional, Option.none, this._map)
+  //   return new FromProperty(this._as, schema, this._optional, Option.none(), this._map)
   // }
 
   // opt(): FromProperty<Self, "optional", As, Def> {
@@ -50,7 +50,7 @@ export class FromProperty<
   //   as: As1
   // ): FromProperty<Self, Optional, Some<As1>, Def> {
   //   return new FromProperty(
-  //     Option(as),
+  //     Option.some(as),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -60,7 +60,7 @@ export class FromProperty<
 
   // removeFrom(): FromProperty<Self, Optional, None<any>, Def> {
   //   return new FromProperty(
-  //     Option.none,
+  //     Option.none(),
   //     this._schema,
   //     this._optional,
   //     this._def,
@@ -96,7 +96,7 @@ export class FromProperty<
   //     this._schema,
   //     this._optional,
   //     // @ts-expect-error
-  //     Option([k ?? "both", _]),
+  //     Option.some([k ?? "both", _]),
   //     this._map
   //   )
   // }
@@ -106,7 +106,7 @@ export class FromProperty<
   //     this._as,
   //     this._schema,
   //     this._optional,
-  //     Option.none,
+  //     Option.none(),
   //     this._map
   //   )
   // }
@@ -140,7 +140,7 @@ export function fromPropFrom<
   as: As1
 ): FromProperty<Self, Optional, Some<As1>, Def> {
   return new FromProperty(
-    Option(as) as Some<As1>,
+    Option.some(as) as Some<As1>,
     prop._schema,
     prop._optional,
     prop._def,
@@ -152,10 +152,10 @@ export function fromProp<Self extends S.SchemaAny>(
   schema: Self
 ): FromProperty<Self, "required", None<any>, None<any>> {
   return new FromProperty(
-    Option.none as None<any>,
+    Option.none() as None<any>,
     schema,
     "required",
-    Option.none as None<any>,
+    Option.none() as None<any>,
     HashMap.empty()
   )
 }
@@ -425,7 +425,7 @@ export function fromProps<Props extends FromPropertyRecord>(
   ): Th.These<any, ShapeFromFromProperties<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
-        S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
+        S.compositionE(Chunk.make(S.prevE(S.leafE(S.unknownRecordE(_)))))
       )
     }
     let missingKeys = Chunk.empty<string>()
@@ -437,8 +437,8 @@ export function fromProps<Props extends FromPropertyRecord>(
     if (!missingKeys.isEmpty()) {
       return Th.fail(
         S.compositionE(
-          Chunk(
-            S.nextE(S.compositionE(Chunk(S.prevE(S.missingKeysE(missingKeys)))))
+          Chunk.make(
+            S.nextE(S.compositionE(Chunk.make(S.prevE(S.missingKeysE(missingKeys)))))
           )
         )
       )
@@ -522,8 +522,8 @@ export function fromProps<Props extends FromPropertyRecord>(
       return Th.succeed(result as ShapeFromFromProperties<Props>)
     }
 
-    const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
-    const error = hasRequired ? S.compositionE(Chunk(S.nextE(error_))) : error_
+    const error_ = S.compositionE(Chunk.make(S.nextE(S.structE(errors))))
+    const error = hasRequired ? S.compositionE(Chunk.make(S.nextE(error_))) : error_
 
     if (isError) {
       return Th.fail(error)

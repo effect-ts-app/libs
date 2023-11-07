@@ -32,7 +32,7 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
                 void sgMail.send(renderedMsg, false, (err, result) =>
                   err
                     ? cb(Effect.fail(err))
-                    : cb(Effect(result)))
+                    : cb(Effect.sync(() => result)))
             )
           )
 

@@ -539,7 +539,7 @@
       ]
     }
   ],
-  "effect/Chunk": [
+  "effect/Chunk.int": [
     {
       "definitionName": "Chunk",
       "definitionKind": "interface",
@@ -1846,7 +1846,7 @@
       ]
     }
   ],
-  "effect/Context": [
+  "effect/Context.int": [
     {
       "definitionName": "Context",
       "definitionKind": "interface",
@@ -3097,7 +3097,7 @@
       ]
     }
   ],
-  "effect/Either": [
+  "effect/Either.int": [
     {
       "definitionName": "Either",
       "definitionKind": "type",
@@ -7751,7 +7751,7 @@
       ]
     }
   ],
-  "effect/Option": [
+  "effect/Option.int": [
     {
       "definitionName": "None",
       "definitionKind": "interface",
@@ -9823,7 +9823,7 @@
       ]
     }
   ],
-  "effect/ReadonlyArray": [
+  "effect/ReadonlyArray.int": [
     {
       "definitionName": "NonEmptyArray",
       "definitionKind": "type",

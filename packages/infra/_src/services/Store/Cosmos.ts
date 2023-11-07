@@ -188,7 +188,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect({
+            all: Effect.sync(() => {
               query: `SELECT * FROM ${name} f WHERE f.id != @id`,
               parameters: [{ name: "@id", value: importedMarkerId }]
             })
@@ -211,7 +211,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               filter
                 .keys
                 .forEachEffect((k) =>
-                  Effect(buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                  Effect.sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -249,7 +249,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 ? filter
                   .keys
                   .forEachEffect((k) =>
-                    Effect(buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                    Effect.sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
                       .tap((q) => logQuery(q))
                       .flatMap((q) =>
                         Effect.promise(() =>
@@ -262,7 +262,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                   )
                   .map((_) => _.flatMap((_) => _))
-                : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                : Effect.sync(() => buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
                   .tap((q) => logQuery(q))
                   .flatMap((q) =>
                     Effect.promise(() =>
@@ -325,7 +325,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect({
+                  return Effect.sync(() => {
                     ...e,
                     _etag: x.etag
                   })
@@ -356,7 +356,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             if (seed) {
               const m = yield* $(seed)
               yield* $(
-                Effect(m.toNonEmptyArray)
+                Effect.sync(() => m.toNonEmptyArray)
                   .flatMapOpt((a) =>
                     s
                       .bulkSet(a)

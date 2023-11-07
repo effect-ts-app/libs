@@ -7,7 +7,7 @@ export function defaultBasicErrorHandler<R>(
   res: express.Response,
   r2: Effect<R, ValidationError, void>
 ) {
-  const sendError = (code: number) => (body: unknown) => Effect(res.status(code).send(body))
+  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.status(code).send(body))
   return r2
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", (err) => sendError(400)(err.errors))
@@ -33,7 +33,7 @@ export function defaultErrorHandler<R>(
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
-  const sendError = (code: number) => (body: unknown) => Effect(res.status(code).send(body))
+  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.status(code).send(body))
   return r3
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTags({

@@ -14,11 +14,11 @@ export class These<E, A> {
 }
 
 export function succeed<A>(a: A) {
-  return new These(Either(tuple(a, Option.none)))
+  return new These(Either.right(tuple(a, Option.none())))
 }
 
 export function warn<E, A>(a: A, e: E) {
-  return new These(Either(tuple(a, Option(e))))
+  return new These(Either.right(tuple(a, Option.some(e))))
 }
 
 export function fail<E>(e: E) {
@@ -86,8 +86,8 @@ export function chain_<E0, A0, E, A>(
 ) {
   return foldM_(
     self,
-    (a) => f(a, Option.none),
-    (a, _) => f(a, Option(_)),
+    (a) => f(a, Option.none()),
+    (a, _) => f(a, Option.some(_)),
     fail
   )
 }

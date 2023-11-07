@@ -8,7 +8,7 @@ const reportAppError = reportError((cause) => new RequestException(cause))
 
 const make = Effect.sync((): Operations => {
   const ops = new Map<OperationId, Operation>()
-  const makeOp = Effect(OperationId.make())
+  const makeOp = Effect.sync(() => OperationId.make())
 
   const cleanup = Effect.sync(() => {
     const before = new Date().subHours(1)
@@ -29,7 +29,7 @@ const make = Effect.sync((): Operations => {
     })
   }
   function findOp(id: OperationId) {
-    return Effect(Option.fromNullable(ops.get(id)))
+    return Effect.sync(() => Option.fromNullable(ops.get(id)))
   }
   function finishOp(id: OperationId, exit: Exit<unknown, unknown>) {
     return findOp(id).flatMap((_) =>
@@ -52,8 +52,8 @@ const make = Effect.sync((): Operations => {
                   .failureOption
                   .flatMap((_) =>
                     typeof _ === "object" && _ !== null && "message" in _ && LongString.Guard(_.message)
-                      ? Option(_.message)
-                      : Option.none
+                      ? Option.some(_.message)
+                      : Option.none()
                   )
                   .value ?? null
             })

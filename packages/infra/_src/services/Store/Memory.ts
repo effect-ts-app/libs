@@ -47,7 +47,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(name)
-    const items_ = yield* $(seed ?? Effect([]))
+    const items_ = yield* $(seed ?? Effect.sync(() => []))
     const items = new Map(items_.toChunk.map((_) => [_.id, _] as const))
     const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
     const store = Ref.unsafeMake(makeStore())
@@ -108,17 +108,17 @@ export const makeMemoryStore = () => ({
       const storesSem = Semaphore.unsafeMake(1)
       const primary = yield* $(makeMemoryStoreInt<Id, PM>(name, seed))
       const stores = new Map([["primary", primary]])
-      const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
+      const getStore = !config?.allowNamespace ? Effect.sync(() => primary) : storeId.get.flatMap((namespace) => {
         const store = stores.get(namespace)
         if (store) {
-          return Effect.succeed(store)
+          return Effect.sync(() => store)
         }
         if (!config.allowNamespace!(namespace)) {
           throw new Error(`Namespace ${namespace} not allowed!`)
         }
         return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
-          if (store) return Effect(store)
+          if (store) return Effect.sync(() => store)
           return makeMemoryStoreInt(name, seed).tap((store) => Effect.sync(() => stores.set(namespace, store)))
         }))
       })

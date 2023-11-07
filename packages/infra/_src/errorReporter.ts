@@ -73,5 +73,5 @@ export function reportMessage(message: string) {
 }
 
 export function reportMessageM(message: string) {
-  return Effect(reportMessage(message))
+  return Effect.sync(() => reportMessage(message))
 }

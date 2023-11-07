@@ -14,7 +14,7 @@ export type Constructor<Input, Output, ConstructorError> = {
 export const interpreters: ((
   schema: S.SchemaAny
 ) => Option<() => Constructor<unknown, unknown, unknown>>)[] = [
-  Option.partial(
+  OptionX.partial(
     (miss) => (schema: S.SchemaAny): () => Constructor<unknown, unknown, unknown> => {
       if (schema instanceof S.SchemaNamed) {
         return () => {
@@ -41,7 +41,7 @@ export const interpreters: ((
             Th.chain_(
               pipe(
                 self(u),
-                Th.mapError((e) => S.compositionE(Chunk(S.prevE(e))))
+                Th.mapError((e) => S.compositionE(Chunk.make(S.prevE(e))))
               ),
               (
                 a,
@@ -57,7 +57,7 @@ export const interpreters: ((
                   : Th.fail(
                     S.compositionE(
                       w._tag === "None"
-                        ? Chunk(S.nextE(S.refinementE(schema.error(a))))
+                        ? Chunk.make(S.nextE(S.refinementE(schema.error(a))))
                         : w.value.errors.append(
                           S.nextE(S.refinementE(schema.error(a)))
                         )

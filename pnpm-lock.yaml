@@ -7,7 +7,9 @@ settings:
 overrides:
   '@types/node': ~18.11.12
   date-fns: ^2.29.3
+  effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
   http-proxy: npm:http-proxy-node16@1.0.0
+  typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
 
 patchedDependencies:
   '@effect/language-service@0.0.19':
@@ -41,7 +43,7 @@ importers:
         version: /http-proxy-node16@1.0.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.0
@@ -63,7 +65,7 @@ importers:
         version: 0.88.3
       '@effect-app/cli':
         specifier: ^0.22.1
-        version: link:packages/cli
+        version: 0.22.1
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -105,10 +107,10 @@ importers:
         version: 18.11.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.10.0
-        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0)
+        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0)
       '@typescript-eslint/parser':
         specifier: ^6.10.0
-        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       '@typescript-eslint/scope-manager':
         specifier: ^6.10.0
         version: 6.10.0(patch_hash=tp5r7mwyjl4dxldk2tuwbgrsum)
@@ -162,7 +164,7 @@ importers:
         version: 2.2.3
       madge:
         specifier: ^6.1.0
-        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20231107)
       module-alias:
         specifier: ^2.2.3
         version: 2.2.3
@@ -177,16 +179,16 @@ importers:
         version: 3.0.0
       tsc-watch:
         specifier: ^6.0.4
-        version: 6.0.4(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 6.0.4(@effect-app/typescript@5.4.0-tsplus.20231107)
       tsconfig-paths:
         specifier: ^4.2.0
         version: 4.2.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       typescript-transform-paths:
         specifier: ^3.4.6
-        version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.20231107)
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@18.11.12)
@@ -211,10 +213,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -239,10 +241,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -259,8 +261,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -290,8 +292,8 @@ importers:
         specifier: ^9.6.0
         version: 9.6.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -309,7 +311,7 @@ importers:
         version: 7.23.0
       '@typescript-eslint/utils':
         specifier: ^6.10.0
-        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+        version: 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       eslint-plugin-codegen:
         specifier: 0.18.0
         version: 0.18.0
@@ -346,13 +348,13 @@ importers:
         version: 4.14.200
       madge:
         specifier: 6.1.0
-        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20231107)
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
 
   packages/infra:
     dependencies:
@@ -390,8 +392,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       fast-check:
         specifier: ~3.13.2
         version: 3.13.2
@@ -458,10 +460,10 @@ importers:
         version: 3.1.2
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -481,8 +483,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -527,8 +529,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       winston:
         specifier: ^3.11.0
         version: 3.11.0
@@ -540,10 +542,10 @@ importers:
         version: 18.11.12
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -566,8 +568,8 @@ importers:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -613,10 +615,10 @@ importers:
         version: 3.13.2
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -647,7 +649,7 @@ importers:
         version: 18.11.12
       '@types/react':
         specifier: ^18.2.36
-        version: 18.2.36
+        version: 18.2.37
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -656,13 +658,13 @@ importers:
         version: 7.40.0(react@18.2.0)
       react-intl:
         specifier: ^6.5.2
-        version: 6.5.2(@effect-app/typescript@5.4.0-tsplus.202311072)(react@18.2.0)
+        version: 6.5.2(@effect-app/typescript@5.4.0-tsplus.20231107)(react@18.2.0)
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -679,8 +681,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -707,8 +709,8 @@ importers:
         specifier: ^9.6.0
         version: 9.6.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -732,13 +734,13 @@ importers:
         version: 0.15.3(@effect/schema@0.47.2)(effect@2.0.0-next.54)
       '@formatjs/intl':
         specifier: ^2.9.6
-        version: 2.9.6(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 2.9.6(@effect-app/typescript@5.4.0-tsplus.20231107)
       '@fp-ts/optic':
         specifier: ^0.14.0
         version: 0.14.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.13.1)(effect@2.0.0-next.54)
       effect:
-        specifier: ^2.0.0-next.54
-        version: 2.0.0-next.54
+        specifier: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
+        version: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -747,7 +749,7 @@ importers:
         version: 1.0.4(vue@3.3.8)
       vue:
         specifier: ^3.3.8
-        version: 3.3.8(@effect-app/typescript@5.4.0-tsplus.202311072)
+        version: 3.3.8(@effect-app/typescript@5.4.0-tsplus.20231107)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.0
@@ -766,10 +768,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
-        version: /@effect-app/typescript@5.4.0-tsplus.202311072
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231107
+        version: /@effect-app/typescript@5.4.0-tsplus.20231107
       vite:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@18.11.12)
@@ -1443,8 +1445,15 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/typescript@5.4.0-tsplus.202311072:
-    resolution: {integrity: sha512-dmlwMS/fQNibWo3y5Bg+rJ+kgvmSmMvXuemg0F7dsT5S7mgHR+8Xnpf8YNxrcnL54gBTO46D+XLq9ggGHYtbpQ==}
+  /@effect-app/cli@0.22.1:
+    resolution: {integrity: sha512-YSJ3JzXdL8OHJAS0iEyQKPY2k0nJQE99Dr11B93qc2H5CbgWxLG/G3QW3Btilq7tes3Gik+tGcVCW9iA6BQwUw==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.4
+    dev: true
+
+  /@effect-app/typescript@5.4.0-tsplus.20231107:
+    resolution: {integrity: sha512-7RlkK9e74xjy0Y4IjcbRGscaukrqBlhxutogL3Z63VHsnZGQzei9pMI46zNE7yEzmXGu9/ibn+T7E4LAKwSndw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1459,10 +1468,10 @@ packages:
   /@effect/platform-browser@0.15.3(@effect/schema@0.47.2)(effect@2.0.0-next.54):
     resolution: {integrity: sha512-3CVjz7g5cwFwppIg7TuNxGexodeoU/zOtoYHchlNe4cWnsUU83IsQVfzB9/tfYv0nbmzfMbSvfBlXdEomCcNwA==}
     peerDependencies:
-      effect: 2.0.0-next.54
+      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
     dependencies:
       '@effect/platform': 0.27.3(@effect/schema@0.47.2)(effect@2.0.0-next.54)
-      effect: 2.0.0-next.54
+      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
     transitivePeerDependencies:
       - '@effect/schema'
     dev: false
@@ -1471,10 +1480,10 @@ packages:
     resolution: {integrity: sha512-CnG/Yddsy7nx224h8Gdlj8ho6Hc7qjpAF4sQDk9HqjS2kMOAOjlalWi2skpi2YcZPaNqSJ/r7yT06HvD6sHVrg==}
     peerDependencies:
       '@effect/schema': ^0.47.1
-      effect: 2.0.0-next.54
+      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
     dependencies:
       '@effect/schema': 0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2)
-      effect: 2.0.0-next.54
+      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       find-my-way: 7.7.0
       path-browserify: 1.0.1
     dev: false
@@ -1482,19 +1491,19 @@ packages:
   /@effect/schema@0.47.2(effect@2.0.0-next.54)(fast-check@3.13.2):
     resolution: {integrity: sha512-AwZg9c/NCD2rKEQuWjQUwFMWBi7xokJyL3jid5jtiLB7kjmrtRnHBxleeOEVoSrdBMJu6yXle3HvdHXefyA2jQ==}
     peerDependencies:
-      effect: 2.0.0-next.54
+      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.0.0-next.54
+      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
       fast-check: 3.13.2
     dev: false
 
   /@effect/typeclass@0.13.1(effect@2.0.0-next.54):
     resolution: {integrity: sha512-8dRe8Rn7Fb/UT8h+bVYYiQWvRdV0gfSDQJCd8p5mE0pPltDxioCY0uyJyVWkrU+Q1xT4aSNHQGdB+gBsVNf0hw==}
     peerDependencies:
-      effect: 2.0.0-next.52
+      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
     dependencies:
-      effect: 2.0.0-next.54
+      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
     dev: false
 
   /@esbuild/android-arm64@0.18.20:
@@ -1753,10 +1762,10 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@formatjs/intl@2.9.6(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /@formatjs/intl@2.9.6(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-pHvVycu4g1S8zsZhYm0naf/ODCsDXHw00ITMMUM9TK9MYa8zGkf4W5gdItVbUX7elYN3JdDwp0d5fLNBBljhgQ==}
     peerDependencies:
-      typescript: '5'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -1768,7 +1777,7 @@ packages:
       '@formatjs/intl-listformat': 7.5.1
       intl-messageformat: 10.5.5
       tslib: 2.5.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
 
   /@fp-ts/core@0.0.11:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
@@ -1784,10 +1793,10 @@ packages:
     resolution: {integrity: sha512-H2zooOtlXDqAR+Vv5Mb4ziRWfws1S5Kztrsws3iydLVxDyCI8cRqki43Yh2/ikZpIWxbyXBpBtUAZQcE4abfhA==}
     peerDependencies:
       '@effect/typeclass': ^0.13.1
-      effect: 2.0.0-next.52
+      effect: github:Effect-TS/effect#878e704672e7b622a53193a95b6feafe1901b481
     dependencies:
       '@effect/typeclass': 0.13.1(effect@2.0.0-next.54)
-      effect: 2.0.0-next.54
+      effect: github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481
     dev: false
     patched: true
 
@@ -2326,7 +2335,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.36
+      '@types/react': 18.2.37
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -2423,8 +2432,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/react@18.2.36:
-    resolution: {integrity: sha512-o9XFsHYLLZ4+sb9CWUYwHqFVoG61SesydF353vFMMsQziiyRu8np4n2OYMUSDZ8XuImxDr9c5tR7gidlH29Vnw==}
+  /@types/react@18.2.37:
+    resolution: {integrity: sha512-RGAYMi2bhRgEXT3f4B92WTohopH6bIXw05FuGlmJEnv/omEn190+QYEIYxIAuIBdKgboYYdVved2p1AxZVQnaw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -2493,7 +2502,7 @@ packages:
     dependencies:
       '@types/yargs-parser': 21.0.0
 
-  /@typescript-eslint/eslint-plugin@6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0):
+  /@typescript-eslint/eslint-plugin@6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0):
     resolution: {integrity: sha512-uoLj4g2OTL8rfUQVx2AFO1hp/zja1wABJq77P6IclQs6I/m9GLrm7jCdgzZkvWdDCQf1uEvoa8s8CupsgWQgVg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2505,10 +2514,10 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.8.1
-      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       '@typescript-eslint/scope-manager': 6.10.0(patch_hash=tp5r7mwyjl4dxldk2tuwbgrsum)
-      '@typescript-eslint/type-utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
-      '@typescript-eslint/utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+      '@typescript-eslint/type-utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
+      '@typescript-eslint/utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       '@typescript-eslint/visitor-keys': 6.10.0
       debug: 4.3.4
       eslint: 8.53.0
@@ -2516,13 +2525,13 @@ packages:
       ignore: 5.2.4
       natural-compare: 1.4.0
       semver: 7.5.4
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311072)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231107)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@typescript-eslint/parser@6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0):
+  /@typescript-eslint/parser@6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0):
     resolution: {integrity: sha512-+sZwIj+s+io9ozSxIWbNB5873OSdfeBEH/FR0re14WLI6BaKuSOnnwCJ2foUiu8uXf4dRp1UqHP0vrZ1zXGrog==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2534,11 +2543,11 @@ packages:
     dependencies:
       '@typescript-eslint/scope-manager': 6.10.0(patch_hash=tp5r7mwyjl4dxldk2tuwbgrsum)
       '@typescript-eslint/types': 6.10.0
-      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)
+      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)
       '@typescript-eslint/visitor-keys': 6.10.0
       debug: 4.3.4
       eslint: 8.53.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2551,7 +2560,7 @@ packages:
       '@typescript-eslint/visitor-keys': 6.10.0
     patched: true
 
-  /@typescript-eslint/type-utils@6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0):
+  /@typescript-eslint/type-utils@6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0):
     resolution: {integrity: sha512-wYpPs3hgTFblMYwbYWPT3eZtaDOjbLyIYuqpwuLBBqhLiuvJ+9sEp2gNRJEtR5N/c9G1uTtQQL5AhV0fEPJYcg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2561,12 +2570,12 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)
-      '@typescript-eslint/utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)
+      '@typescript-eslint/utils': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       debug: 4.3.4
       eslint: 8.53.0
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311072)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231107)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2585,7 +2594,7 @@ packages:
     resolution: {integrity: sha512-36Fq1PWh9dusgo3vH7qmQAj5/AZqARky1Wi6WpINxB6SkQdY5vQoT2/7rW7uBIsPDcvvGCLi4r10p0OJ7ITAeg==}
     engines: {node: ^16.0.0 || >=18.0.0}
 
-  /@typescript-eslint/typescript-estree@4.33.0(typescript@3.9.10):
+  /@typescript-eslint/typescript-estree@4.33.0(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-rkWRY1MPFzjwnEVHsxGemDzqqddw2QbTJlICPD9p9I9LfsO8fdmfQPOX3uKfUaGRDFJbfrtm/sXhVXN4E+bzCA==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
@@ -2600,13 +2609,13 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
-      tsutils: 3.21.0(typescript@3.9.10)
-      typescript: 3.9.10
+      tsutils: 3.21.0(@effect-app/typescript@5.4.0-tsplus.20231107)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@typescript-eslint/typescript-estree@5.59.9(typescript@4.9.5):
+  /@typescript-eslint/typescript-estree@5.59.9(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-pmM0/VQ7kUhd1QyIxgS+aRvMgw+ZljB3eDb+jYyp6d2bC0mQWLzUDF+DLwCTkQ3tlNyVsvZRXjFyV0LkU/aXjA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2621,13 +2630,13 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
-      tsutils: 3.21.0(typescript@4.9.5)
-      typescript: 4.9.5
+      tsutils: 3.21.0(@effect-app/typescript@5.4.0-tsplus.20231107)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@typescript-eslint/typescript-estree@6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /@typescript-eslint/typescript-estree@6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-ek0Eyuy6P15LJVeghbWhSrBCj/vJpPXXR+EpaRZqou7achUWL8IdYnMSC5WHAeTWswYQuP2hAZgij/bC9fanBg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2642,12 +2651,12 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311072)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231107)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/utils@6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0):
+  /@typescript-eslint/utils@6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0):
     resolution: {integrity: sha512-v+pJ1/RcVyRc0o4wAGux9x42RHmAjIGzPRo538Z8M1tVx6HOnoQBCX/NoadHQlZeC+QO2yr4nNSFWOoraZCAyg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2658,7 +2667,7 @@ packages:
       '@types/semver': 7.5.2
       '@typescript-eslint/scope-manager': 6.10.0(patch_hash=tp5r7mwyjl4dxldk2tuwbgrsum)
       '@typescript-eslint/types': 6.10.0
-      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)
+      '@typescript-eslint/typescript-estree': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)
       eslint: 8.53.0
       semver: 7.5.4
     transitivePeerDependencies:
@@ -2812,7 +2821,7 @@ packages:
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
-      magic-string: 0.30.5
+      magic-string: 0.30.3
     dev: true
 
   /@vue/reactivity-transform@3.3.8:
@@ -2853,7 +2862,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.3.8
       '@vue/shared': 3.3.8
-      vue: 3.3.8(@effect-app/typescript@5.4.0-tsplus.202311072)
+      vue: 3.3.8(@effect-app/typescript@5.4.0-tsplus.20231107)
     dev: false
 
   /@vue/shared@3.3.4:
@@ -4003,7 +4012,7 @@ packages:
       debug: 4.3.4
       filing-cabinet: 3.3.0
       precinct: 9.0.1
-      typescript: 4.9.5
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4147,10 +4156,10 @@ packages:
     resolution: {integrity: sha512-unqovnhxzvkCz3m1/W4QW4qGsvXCU06aU2BAm8tkza+xLnp9SOFnob2QsTxUv5PdnQKfDvWcv9YeOeFckWejwA==}
     engines: {node: ^10.13 || >=12.0.0}
     dependencies:
-      '@typescript-eslint/typescript-estree': 4.33.0(typescript@3.9.10)
+      '@typescript-eslint/typescript-estree': 4.33.0(@effect-app/typescript@5.4.0-tsplus.20231107)
       ast-module-types: 2.7.1
       node-source-walk: 4.3.0
-      typescript: 3.9.10
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4159,10 +4168,10 @@ packages:
     resolution: {integrity: sha512-lR78AugfUSBojwlSRZBeEqQ1l8LI7rbxOl1qTUnGLcjZQDjZmrZCb7R46rK8U8B5WzFvJrxa7fEBA8FoD/n5fA==}
     engines: {node: ^12.20.0 || ^14.14.0 || >=16.0.0}
     dependencies:
-      '@typescript-eslint/typescript-estree': 5.59.9(typescript@4.9.5)
+      '@typescript-eslint/typescript-estree': 5.59.9(@effect-app/typescript@5.4.0-tsplus.20231107)
       ast-module-types: 3.0.0
       node-source-walk: 5.0.0
-      typescript: 4.9.5
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4236,10 +4245,6 @@ packages:
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
-
-  /effect@2.0.0-next.54:
-    resolution: {integrity: sha512-qROhKMxlm6fpa90YRfWSgKeelDfhaDq2igPK+pIKupGehiCnZH4vd2qrY71HVZ10qZgXxh0VXpGyDQxJC+EQqw==}
-    dev: false
 
   /electron-to-chromium@1.4.525:
     resolution: {integrity: sha512-GIZ620hDK4YmIqAWkscG4W6RwY6gOx1y5J6f4JUQwctiJrqH2oxZYU4mXHi35oV32tr630UcepBzSBGJ/WYcZA==}
@@ -4520,7 +4525,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       debug: 3.2.7(supports-color@5.5.0)
       eslint: 8.53.0
       eslint-import-resolver-node: 0.3.9
@@ -4582,7 +4587,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(eslint@8.53.0)
+      '@typescript-eslint/parser': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(eslint@8.53.0)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -4646,7 +4651,7 @@ packages:
       '@typescript-eslint/eslint-plugin':
         optional: true
     dependencies:
-      '@typescript-eslint/eslint-plugin': 6.10.0(@effect-app/typescript@5.4.0-tsplus.202311072)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0)
+      '@typescript-eslint/eslint-plugin': 6.10.0(@effect-app/typescript@5.4.0-tsplus.20231107)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0)
       eslint: 8.53.0
       eslint-rule-composer: 0.3.0
     dev: true
@@ -4996,7 +5001,7 @@ packages:
       sass-lookup: 3.0.0
       stylus-lookup: 3.0.2
       tsconfig-paths: 3.14.2
-      typescript: 3.9.10
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6356,12 +6361,12 @@ packages:
       lru-cache: 4.0.2
     dev: true
 
-  /madge@6.1.0(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /madge@6.1.0(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-irWhT5RpFOc6lkzGHKLihonCVgM0YtfNUh4IrFeW3EqHpnt/JHUG3z26j8PeJEktCGB4tmGOOOJi1Rl/ACWucQ==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
-      typescript: ^3.9.5 || ^4.9.5 || ^5
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -6387,7 +6392,7 @@ packages:
       rc: 1.2.8
       stream-to-array: 2.3.0
       ts-graphviz: 1.5.2
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
       walkdir: 0.4.1
     transitivePeerDependencies:
       - supports-color
@@ -6412,6 +6417,7 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: false
 
   /make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -6878,7 +6884,6 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon@3.0.1:
     resolution: {integrity: sha512-g9AZ7HmkhQkqXkRc20w+ZfQ73cHLbE8hnPbtaFbFtCumZsjyMhKk9LajQ07U5Ux28lvFjZ5X7HvWR1xzU8jHVw==}
@@ -7757,27 +7762,27 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-intl@6.5.2(@effect-app/typescript@5.4.0-tsplus.202311072)(react@18.2.0):
+  /react-intl@6.5.2(@effect-app/typescript@5.4.0-tsplus.20231107)(react@18.2.0):
     resolution: {integrity: sha512-o6rmAViKusLQMVu2bKAULBiQVdkk88TurPUAJiNxUAmoxubSu+pAYjLpOuByM52HSLOKPrRvDXQrrCOSykQusw==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
-      typescript: '5'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.3
       '@formatjs/icu-messageformat-parser': 2.7.1
-      '@formatjs/intl': 2.9.6(@effect-app/typescript@5.4.0-tsplus.202311072)
+      '@formatjs/intl': 2.9.6(@effect-app/typescript@5.4.0-tsplus.20231107)
       '@formatjs/intl-displaynames': 6.6.2
       '@formatjs/intl-listformat': 7.5.1
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.2.36
+      '@types/react': 18.2.37
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.5
       react: 18.2.0
       tslib: 2.5.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     dev: true
 
   /react-is@16.13.1:
@@ -8641,7 +8646,7 @@ packages:
     peerDependencies:
       vue: '>=3.2.26 < 4'
     dependencies:
-      vue: 3.3.8(@effect-app/typescript@5.4.0-tsplus.202311072)
+      vue: 3.3.8(@effect-app/typescript@5.4.0-tsplus.20231107)
     dev: false
 
   /synckit@0.8.5:
@@ -8800,27 +8805,27 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: true
 
-  /ts-api-utils@1.0.3(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /ts-api-utils@1.0.3(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
     engines: {node: '>=16.13.0'}
     peerDependencies:
-      typescript: '>=4.2.0'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     dependencies:
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
 
   /ts-graphviz@1.5.2:
     resolution: {integrity: sha512-/V4N6wIvE+mcQicUfqSNxzFUX4xNccpwi3fGafEUSqGBSZYp9HVP8RZdjTfxCQvTjavxqUrEDB5ucEqKPLgp+w==}
     engines: {node: '>=14.16'}
     dev: true
 
-  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.202311072)(@types/node@18.11.12):
+  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.20231107)(@types/node@18.11.12):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
       '@types/node': ~18.11.12
-      typescript: '>=2.7'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -8839,7 +8844,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
@@ -8855,18 +8860,18 @@ packages:
     resolution: {integrity: sha512-6zaET4Gz6/65Zia2jzQkh2v4WJA1NK3IvxXP0GlFkfWL9rwnInIMzQbjDunJb+m22L9S9I4XZVgW6xC+fZ2n6g==}
     dev: true
 
-  /tsc-watch@6.0.4(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /tsc-watch@6.0.4(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-cHvbvhjO86w2aGlaHgSCeQRl+Aqw6X6XN4sQMPZKF88GoP30O+oTuh5lRIJr5pgFWrRpF1AgXnJJ2DoFEIPHyg==}
     engines: {node: '>=12.12.0'}
     hasBin: true
     peerDependencies:
-      typescript: '*'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     dependencies:
       cross-spawn: 7.0.3
       node-cleanup: 2.1.2
       ps-tree: 1.2.0
       string-argv: 0.3.1
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     dev: true
 
   /tsconfig-paths@3.14.2:
@@ -8893,24 +8898,14 @@ packages:
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
 
-  /tsutils@3.21.0(typescript@3.9.10):
+  /tsutils@3.21.0(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
     engines: {node: '>= 6'}
     peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     dependencies:
       tslib: 1.14.1
-      typescript: 3.9.10
-    dev: true
-
-  /tsutils@3.21.0(typescript@4.9.5):
-    resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
-    engines: {node: '>= 6'}
-    peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
-    dependencies:
-      tslib: 1.14.1
-      typescript: 4.9.5
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     dev: true
 
   /tty-table@4.1.6:
@@ -9031,25 +9026,13 @@ packages:
       is-typedarray: 1.0.0
     dev: true
 
-  /typescript-transform-paths@3.4.6(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /typescript-transform-paths@3.4.6(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-qdgpCk9oRHkIBhznxaHAapCFapJt5e4FbFik7Y4qdqtp6VyC3smAIPoDEIkjZ2eiF7x5+QxUPYNwJAtw0thsTw==}
     peerDependencies:
-      typescript: '>=3.6.5'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     dependencies:
       minimatch: 3.1.2
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
-    dev: true
-
-  /typescript@3.9.10:
-    resolution: {integrity: sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
-
-  /typescript@4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     dev: true
 
   /ufo@1.3.0:
@@ -9371,10 +9354,10 @@ packages:
       - terser
     dev: true
 
-  /vue@3.3.8(@effect-app/typescript@5.4.0-tsplus.202311072):
+  /vue@3.3.8(@effect-app/typescript@5.4.0-tsplus.20231107):
     resolution: {integrity: sha512-5VSX/3DabBikOXMsxzlW8JyfeLKlG9mzqnWgLQLty88vdZL7ZJgrdgBOmrArwxiLtmS+lNNpPcBYqrhE6TQW5w==}
     peerDependencies:
-      typescript: '*'
+      typescript: npm:@effect-app/typescript@5.4.0-tsplus.20231107
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -9384,7 +9367,7 @@ packages:
       '@vue/runtime-dom': 3.3.8
       '@vue/server-renderer': 3.3.8(vue@3.3.8)
       '@vue/shared': 3.3.8
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311072
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231107
     dev: false
 
   /walkdir@0.4.1:
@@ -9697,3 +9680,11 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  github.com/Effect-TS/effect/878e704672e7b622a53193a95b6feafe1901b481:
+    resolution: {tarball: https://codeload.github.com/Effect-TS/effect/tar.gz/878e704672e7b622a53193a95b6feafe1901b481}
+    name: effect
+    version: 2.0.0-next.54
+    prepare: true
+    requiresBuild: true
+    dev: false

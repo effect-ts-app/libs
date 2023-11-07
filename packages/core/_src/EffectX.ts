@@ -2,12 +2,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import * as Def from "effect/Deferred"
+import type { Semaphore } from "effect/Effect.int"
 import * as Fiber from "effect/Fiber"
 import * as Layer from "effect/Layer"
 import { Option } from "effect/Option"
 import { curry, flow, pipe } from "./Function.js"
 
-export * from "effect/Effect"
+export * as EffectX from "./EffectX.js"
 
 /**
  * @tsplus static effect/io/Deferred.Ops await
@@ -25,7 +26,7 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A2>> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
+      onNone: () => Effect.sync(() => Option.none()),
       onSome: (_) => fm(_).map(Option.some)
     })
   )
@@ -41,8 +42,8 @@ export function tapOption<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A>> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
-      onSome: (_) => fm(_).map(() => Option(_))
+      onNone: () => Effect.sync(() => Option.none()),
+      onSome: (_) => fm(_).map(() => Option.some(_))
     })
   )
 }
@@ -57,8 +58,8 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
-      onSome: (_) => fm.map(() => Option(_))
+      onNone: () => Effect.sync(() => Option.none()),
+      onSome: (_) => fm.map(() => Option.some(_))
     })
   )
 }
@@ -73,8 +74,8 @@ export function mapOption<R, E, A, A2>(
 ): Effect<R, E, Option<A2>> {
   return self.map((d) =>
     d.match({
-      onNone: () => Option.none,
-      onSome: (_) => Option(fm(_))
+      onNone: () => Option.none(),
+      onSome: (_) => Option.some(fm(_))
     })
   )
 }
@@ -123,7 +124,7 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
   onError: (err: unknown) => Effect<ER, EE, EA>,
   onSuccess: (a: A) => Effect<SR, SE, SA>
 ) =>
-  self.exit.flatMap((_) =>
+  self.pipe(Effect.exit).flatMap((_) =>
     _.matchEffect({
       onFailure: (cause) => {
         const firstError = getFirstError(cause)
@@ -132,7 +133,7 @@ export const tapBothInclAbort_ = <R, E, A, ER, EE, EA, SR, SE, SA>(
         }
         return Effect.failCauseSync(() => cause)
       },
-      onSuccess: (_) => Effect(_).tap(onSuccess)
+      onSuccess: (_) => Effect.sync(() => _).tap(onSuccess)
     })
   )
 
@@ -195,7 +196,7 @@ export function liftM<A, B>(a: (a: A) => B) {
 export function tupleTap<A, B, R, E, C>(
   f: (b: B) => (a: A) => Effect<R, E, C>
 ) {
-  return (t: readonly [A, B]) => Effect(t[0]).tap(f(t[1]))
+  return (t: readonly [A, B]) => Effect.sync(() => t[0]).tap(f(t[1]))
 }
 
 /**

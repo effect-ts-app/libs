@@ -6,11 +6,11 @@ const makeFakeCups = Effect.sync(() => {
     print: (buffer, printerId, ...options) =>
       Effect
         .logInfo("Printing to fake printer")
-        .zipRight(Effect({ stdout: "fake", stderr: "" }))
+        .zipRight(Effect.sync(() => { stdout: "fake", stderr: "" }))
         .annotateLogs("printerId", printerId)
         .annotateLogs("options", pretty(options))
         .annotateLogs("bufferSize", buffer.byteLength.toString()),
-    getAvailablePrinters: Effect([])
+    getAvailablePrinters: Effect.sync(() => [])
   } satisfies CUPS
 })
 

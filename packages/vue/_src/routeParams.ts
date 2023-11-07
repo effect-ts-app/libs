@@ -16,9 +16,9 @@ export const parseOpt = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(EParserFor(t), (x) =>
     x.effect._tag === "Right"
       ? x.effect.right[1]._tag === "None"
-        ? Option(x.effect.right[0])
-        : Option.none
-      : Option.none)
+        ? Option.some(x.effect.right[0])
+        : Option.none()
+      : Option.none())
   return dec
 }
 
@@ -26,9 +26,9 @@ export const parseOptUnknown = <E, A>(t: ReqRes<E, A>) => {
   const dec = flow(Parser.for(t), (x) =>
     x.effect._tag === "Right"
       ? x.effect.right[1]._tag === "None"
-        ? Option(x.effect.right[0])
-        : Option.none
-      : Option.none)
+        ? Option.some(x.effect.right[0])
+        : Option.none()
+      : Option.none())
   return dec
 }
 

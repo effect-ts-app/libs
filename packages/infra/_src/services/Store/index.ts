@@ -20,7 +20,7 @@ export function StoreMakerLive(config: Config<StorageConfig>) {
       const storageUrl = cfg.url.value
       if (storageUrl.startsWith("mem://")) {
         console.log("Using in memory store")
-        return Effect(makeMemoryStore())
+        return Effect.sync(() => makeMemoryStore())
       }
       if (storageUrl.startsWith("disk://")) {
         const dir = storageUrl.replace("disk://", "")

@@ -81,7 +81,7 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
  * @tsplus fluent effect/io/Effect debugUnsafe
  */
 export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return self.tap((a) => Effect(console.log(name, a)))
+  return self.tap((a) => Effect.sync(() => console.log(name, a)))
 }
 
 /**
@@ -264,9 +264,9 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
     const ar = [...arrInput]
     const index = ar.findIndex((x) => x === el)
     if (index === -1) {
-      return Option.none
+      return Option.none()
     }
-    return Option(arrayMoveDropUndefined(ar, index, newIndex))
+    return Option.some(arrayMoveDropUndefined(ar, index, newIndex))
   }
 }
 

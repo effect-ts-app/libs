@@ -42,7 +42,7 @@ export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
       .exit
       .flatMap((result) =>
         result.match(
-          { onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect(result) }
+          { onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect.sync(() => result) }
         )
       )
 }

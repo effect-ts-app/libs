@@ -1,13 +1,7 @@
-import { Option } from "./Option.js"
-
-import * as Chunk from "effect/Chunk"
-
-export * from "effect/Chunk"
-
 /**
  * @tsplus fluent effect/data/Chunk groupByT
  */
-export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {
+export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk<A>, f: (a: A) => Key) {
   return c.toReadonlyArray.groupByT(f).toChunk
 }
 
@@ -20,7 +14,7 @@ export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f:
 export function findFirstMap<A, B>(
   f: (a: A) => Option<B>
 ) {
-  return (as: Chunk.Chunk<A>) => {
+  return (as: Chunk<A>) => {
     const ass = as.toReadonlyArray
     const len = ass.length
     for (let i = 0; i < len; i++) {
@@ -29,14 +23,14 @@ export function findFirstMap<A, B>(
         return v
       }
     }
-    return Option.none
+    return Option.none()
   }
 }
 
 /**
  * @tsplus getter effect/data/Chunk toArray
  */
-export function toArray<T>(c: Chunk.Chunk<T>) {
+export function toArray<T>(c: Chunk<T>) {
   return c.toReadonlyArray
 }
 
@@ -47,7 +41,7 @@ export function toArray<T>(c: Chunk.Chunk<T>) {
  * @tsplus pipeable effect/data/Chunk uniq
  */
 export function uniq<A>(E: Equivalence<A>) {
-  return (self: Chunk.Chunk<A>): Chunk.Chunk<A> => {
+  return (self: Chunk<A>): Chunk<A> => {
     let out = ([] as A[]).toChunk
     for (let i = 0; i < self.length; i++) {
       const a = self.unsafeGet(i)
@@ -68,7 +62,7 @@ export function uniq<A>(E: Equivalence<A>) {
  * @tsplus pipeable effect/data/Chunk elem2
  */
 export function elem<A>(E: Equivalence<A>, value: A) {
-  return (self: Chunk.Chunk<A>): boolean => {
+  return (self: Chunk<A>): boolean => {
     for (let i = 0; i < self.length; i++) {
       if (E(self.unsafeGet(i)!, value)) {
         return true
@@ -87,14 +81,14 @@ export const ChunkPartition = Chunk.partition
  * @tsplus fluent effect/data/Chunk findFirst
  */
 export const findFirstSimple: {
-  <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>
-  <A>(self: Chunk.Chunk<A>, predicate: Predicate<A>): Option<A>
+  <A, B extends A>(self: Chunk<A>, refinement: Refinement<A, B>): Option<B>
+  <A>(self: Chunk<A>, predicate: Predicate<A>): Option<A>
 } = Chunk.findFirst
 
 /**
  * @tsplus fluent effect/data/Chunk findLast
  */
 export const findLastSimple: {
-  <A, B extends A>(self: Chunk.Chunk<A>, refinement: Refinement<A, B>): Option<B>
-  <A>(self: Chunk.Chunk<A>, predicate: Predicate<A>): Option<A>
+  <A, B extends A>(self: Chunk<A>, refinement: Refinement<A, B>): Option<B>
+  <A>(self: Chunk<A>, predicate: Predicate<A>): Option<A>
 } = Chunk.findLast

@@ -9,12 +9,12 @@ import { Data } from "effect/Data"
 /**
  * @tsplus global
  */
-import { Opt, Option } from "@effect-app/core/Option"
+import { None, Option, Some } from "effect/Option"
 
 /**
  * @tsplus global
  */
-import { None, Some } from "effect/Option"
+import { OptionX } from "@effect-app/core/OptionX"
 
 /**
  * @tsplus global
@@ -50,6 +50,11 @@ import { Schedule } from "effect/Schedule"
  * @tsplus global
  */
 import { Effect, Semaphore } from "effect/Effect"
+
+/**
+ * @tsplus global
+ */
+import { EffectX } from "@effect-app/core/EffectX"
 
 /**
  * @tsplus global
@@ -239,9 +244,7 @@ import "./_global.ext.js"
 import "./Array.js"
 // import "./Aspects.js"
 import "./Chunk.js"
-import "./Effect.js"
 import "./global.js"
 import "./Optic.js"
-import "./Option.js"
 import "./Tag.js"
 import "./Unify.js"

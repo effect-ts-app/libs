@@ -130,7 +130,7 @@ export function makeRepo<
         }
 
         const saveAllE = (a: Iterable<E>) =>
-          Effect(a.toNonEmptyArray)
+          Effect.sync(() => a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(ContextMap)
@@ -145,7 +145,7 @@ export function makeRepo<
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) =>
           saveAll(items)
-            > Effect(events.toNonEmptyArray)
+            > Effect.sync(() => events.toNonEmptyArray)
               // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
               .flatMapOpt(publishEvents)
 
@@ -159,7 +159,7 @@ export function makeRepo<
               set(e.id, undefined)
             }
             yield* $(
-              Effect(events.toNonEmptyArray)
+              Effect.sync(() => events.toNonEmptyArray)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(publishEvents)
             )

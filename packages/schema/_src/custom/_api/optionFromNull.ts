@@ -43,12 +43,12 @@ export function optionFromNull<
     S.arbitrary((_) => _.option(arb(_)).map(Option.fromNullable)),
     S.parser((i: ParserInput | null, env) =>
       i === null
-        ? Th.succeed(Option.none)
+        ? Th.succeed(Option.none())
         : Th.map_((env?.cache ? env.cache.getOrSetParser(parse) : parse)(i), Option.some)
     ),
     S.constructor((x: Option<ConstructorInput>) =>
       x.match(
-        { onNone: () => Th.succeed(Option.none), onSome: (v) => Th.map_(create(v), Option.some) }
+        { onNone: () => Th.succeed(Option.none()), onSome: (v) => Th.map_(create(v), Option.some) }
       )
     ),
     S.encoder((_) => _.map(encode).value ?? null),

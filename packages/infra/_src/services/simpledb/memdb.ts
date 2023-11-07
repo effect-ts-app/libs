@@ -47,7 +47,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
               decode(cr.data)
                 .flatMap((d) =>
                   eq(keys, d as unknown as V)
-                    ? Effect(d)
+                    ? Effect.sync(() => d)
                     : Effect.fail("not equals")
                 )
                 .exit

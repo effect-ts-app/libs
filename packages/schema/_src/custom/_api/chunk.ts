@@ -13,6 +13,9 @@ import { unknownArray } from "./unknownArray.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
+// load exts?
+import type {} from "@effect-app/core/Array"
+
 export const fromChunkIdentifier = makeAnnotation<{ self: S.SchemaAny }>()
 
 export function fromChunk<

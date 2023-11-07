@@ -3,9 +3,7 @@
 import "./operators.js"
 
 import type { Either } from "effect/Either"
-import * as A from "./Array.js"
 import type { Predicate, Refinement } from "./Function.js"
-import * as O from "./Option.js"
 import type { PredicateWithIndex, RefinementWithIndex } from "./utils.js"
 
 export type MutableRecord<K extends string, T> = Record<K, T>
@@ -135,7 +133,7 @@ export function deleteAt_<A>(r: Dictionary<A>, k: string): Dictionary<A> {
 export function updateAt<A>(
   k: string,
   a: A
-): (r: Dictionary<A>) => O.Option<Dictionary<A>> {
+): (r: Dictionary<A>) => Option<Dictionary<A>> {
   return (r: Dictionary<A>) => updateAt_(r, k, a)
 }
 
@@ -146,16 +144,16 @@ export function updateAt_<A>(
   r: Dictionary<A>,
   k: string,
   a: A
-): O.Option<Dictionary<A>> {
+): Option<Dictionary<A>> {
   if (!hasOwnProperty(r, k)) {
-    return O.none
+    return Option.none()
   }
   if (r[k] === a) {
-    return O.some(r)
+    return Option.some(r)
   }
   const out: MutableRecord<string, A> = Object.assign({}, r)
   out[k] = a
-  return O.some(out)
+  return Option.some(out)
 }
 
 /**
@@ -164,7 +162,7 @@ export function updateAt_<A>(
 export function modifyAt<A>(
   k: string,
   f: (a: A) => A
-): (r: Dictionary<A>) => O.Option<Dictionary<A>> {
+): (r: Dictionary<A>) => Option<Dictionary<A>> {
   return (r: Dictionary<A>) => modifyAt_(r, k, f)
 }
 
@@ -175,13 +173,13 @@ export function modifyAt_<A>(
   r: Dictionary<A>,
   k: string,
   f: (a: A) => A
-): O.Option<Dictionary<A>> {
+): Option<Dictionary<A>> {
   if (!hasOwnProperty(r, k)) {
-    return O.none
+    return Option.none()
   }
   const out: MutableRecord<string, A> = Object.assign({}, r)
   out[k] = f(r[k]!)
-  return O.some(out)
+  return Option.some(out)
 }
 
 /**
@@ -189,7 +187,7 @@ export function modifyAt_<A>(
  */
 export function pop(
   k: string
-): <A>(r: Dictionary<A>) => O.Option<readonly [A, Dictionary<A>]> {
+): <A>(r: Dictionary<A>) => Option<readonly [A, Dictionary<A>]> {
   return (r) => pop_(r, k)
 }
 
@@ -199,24 +197,24 @@ export function pop(
 export function pop_<A>(
   r: Dictionary<A>,
   k: string
-): O.Option<readonly [A, Dictionary<A>]> {
+): Option<readonly [A, Dictionary<A>]> {
   const deleteAtk = deleteAt(k)
   const oa = lookup_(r, k)
-  return O.isNone(oa) ? O.none : O.some(tuple(oa.value, deleteAtk(r)))
+  return Option.isNone(oa) ? Option.none() : Option.some(tuple(oa.value, deleteAtk(r)))
 }
 
 /**
  * Lookup the value for a key in a record
  */
-export function lookup_<A>(r: Dictionary<A>, k: string): O.Option<A> {
-  return Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none
+export function lookup_<A>(r: Dictionary<A>, k: string): Option<A> {
+  return Object.prototype.hasOwnProperty.call(r, k) ? Option.some(r[k]!) : Option.none()
 }
 
 /**
  * Lookup the value for a key in a record
  */
-export function lookup(k: string): <A>(r: Dictionary<A>) => O.Option<A> {
-  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none)
+export function lookup(k: string): <A>(r: Dictionary<A>) => Option<A> {
+  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? Option.some(r[k]!) : Option.none())
 }
 
 /**
@@ -410,10 +408,10 @@ export function partitionWithIndex_<A>(
  * Filter & map the record entries with f that consumes also the entry index
  */
 export function filterMapWithIndex<A, B>(
-  f: (key: string, a: A) => O.Option<B>
+  f: (key: string, a: A) => Option<B>
 ): (fa: Dictionary<A>) => Dictionary<B>
 export function filterMapWithIndex<A, B>(
-  f: (key: string, a: A) => O.Option<B>
+  f: (key: string, a: A) => Option<B>
 ): (fa: Dictionary<A>) => Dictionary<B> {
   return (fa) => filterMapWithIndex_(fa, f)
 }
@@ -423,13 +421,13 @@ export function filterMapWithIndex<A, B>(
  */
 export function filterMapWithIndex_<A, B>(
   fa: Dictionary<A>,
-  f: (key: string, a: A) => O.Option<B>
+  f: (key: string, a: A) => Option<B>
 ): Dictionary<B> {
   const r: MutableRecord<string, B> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
     const optionB = f(key, fa[key]!)
-    if (O.isSome(optionB)) {
+    if (Option.isSome(optionB)) {
       r[key] = optionB.value
     }
   }
@@ -522,12 +520,12 @@ export function some_<A>(r: Dictionary<A>, predicate: (a: A) => boolean): boolea
 /**
  * Drop the None entries
  */
-export const compact = <A>(fa: Dictionary<O.Option<A>>): Dictionary<A> => {
+export const compact = <A>(fa: Dictionary<Option<A>>): Dictionary<A> => {
   const r: MutableRecord<string, A> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
     const optionA = fa[key]!
-    if (O.isSome(optionA)) {
+    if (Option.isSome(optionA)) {
       r[key] = optionA.value
     }
   }
@@ -576,12 +574,12 @@ export const filter_: {
 /**
  * Filter & map record entries according to a predicate
  */
-export const filterMap = <A, B>(f: (a: A) => O.Option<B>) => (fa: Dictionary<A>) => filterMap_(fa, f)
+export const filterMap = <A, B>(f: (a: A) => Option<B>) => (fa: Dictionary<A>) => filterMap_(fa, f)
 
 /**
  * Filter & map record entries according to a predicate
  */
-export const filterMap_ = <A, B>(fa: Dictionary<A>, f: (a: A) => O.Option<B>) =>
+export const filterMap_ = <A, B>(fa: Dictionary<A>, f: (a: A) => Option<B>) =>
   filterMapWithIndex_(fa, (_, a: A) => f(a))
 
 /**
@@ -668,4 +666,4 @@ export const toArray: <A>(r: Dictionary<A>) => ReadonlyArray<readonly [string, A
  * Converts an array of [key, value] into a record
  */
 export const fromArray = <V>(_: ReadonlyArray<readonly [string, V]>): Dictionary<V> =>
-  _["|>"](A.reduce({} as Dictionary<V>, (b, [k, v]) => Object.assign(b, { [k]: v })))
+  _.reduce((b, [k, v]) => Object.assign(b, { [k]: v }), {} as Dictionary<V>)

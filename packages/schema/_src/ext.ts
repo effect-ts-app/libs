@@ -260,7 +260,7 @@ export function withDefault<
     return propDef(p, makeCurrentDate as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Option.none as any, "constructor")
+    return propDef(p, () => Option.none() as any, "constructor")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
@@ -306,7 +306,7 @@ export function withInputDefault<
     return propDef(p, makeCurrentDate as any, "both")
   }
   if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
-    return propDef(p, () => Option.none as any, "both")
+    return propDef(p, () => Option.none() as any, "both")
   }
   if (findAnnotation(p._schema, MO.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")
@@ -682,7 +682,7 @@ export function condemnCustom_<X, A>(
     if (warn._tag === "Some") {
       return new CustomSchemaException(warn.value)
     }
-    return Effect(res.right[0])
+    return Effect.sync(() => res.right[0])
   })
 }
 
@@ -703,7 +703,7 @@ export function condemn_<X, E, A>(
     const [a, w] = y.right
     return w._tag === "Some"
       ? Effect.fail(w.value)
-      : Effect(a)
+      : Effect.sync(() => a)
   })
 }
 
@@ -727,7 +727,7 @@ export function condemnLeft_<X, A>(
   if (warn._tag === "Some") {
     return Either.left(new CustomSchemaException(warn.value))
   }
-  return Either(res.right[0])
+  return Either.right(res.right[0])
 }
 
 /**
@@ -1245,7 +1245,7 @@ export function validate<X, A>(
     const [a, w] = y.right
     return w._tag === "Some"
       ? Either.left(new CustomSchemaException(w.value))
-      : Either(a)
+      : Either.right(a)
   }
 }
 

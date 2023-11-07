@@ -43,7 +43,7 @@ export function makeMemQueue<
             messages
               .forEachEffect((m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                Effect(
+                Effect.sync(() => 
                   JSON.stringify(
                     encoder({ body: m, meta: requestContext })
                   )
@@ -60,7 +60,7 @@ export function makeMemQueue<
         const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
         const processMessage = (msg: string) =>
           // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-          Effect(JSON.parse(msg))
+          Effect.sync(() => JSON.parse(msg))
             .flatMap(parseDrain)
             .orDie
             .flatMap(({ body, meta }) =>

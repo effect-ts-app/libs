@@ -182,7 +182,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           if (tagField in tags) {
             return Option.some([tags[tagField], member])
           }
-          return Option.none
+          return Option.none()
         }
       )
       .uniq((x, y) => x[0] === y[0])
@@ -196,7 +196,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       })
     }
 
-    return Option.none
+    return Option.none()
   })
 
   function guard(u: unknown): u is {
@@ -271,7 +271,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       ) {
         return Th.fail(
           S.compositionE(
-            Chunk(
+            Chunk.make(
               S.prevE(S.leafE(S.extractKeyE(tag.value.key, tag.value.values, u)))
             )
           )
@@ -280,9 +280,9 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
         // // @ts-expect-error
         return Th.mapError_(parsersv2[tag.value.index[u[tag.value.key]]](u), (e) =>
           S.compositionE(
-            Chunk(
+            Chunk.make(
               S.nextE(
-                S.unionE(Chunk(S.memberE(tag.value.index[u[tag.value.key]], e)))
+                S.unionE(Chunk.make(S.memberE(tag.value.index[u[tag.value.key]], e)))
               )
             )
           ))
@@ -297,14 +297,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       if (res.effect._tag === "Right") {
         return Th.mapError_(
           res,
-          (e) => S.compositionE(Chunk(S.nextE(S.unionE(Chunk(S.memberE(k, e))))))
+          (e) => S.compositionE(Chunk.make(S.nextE(S.unionE(Chunk.make(S.memberE(k, e))))))
         )
       } else {
         errors = errors.append(S.memberE(k, res.effect.left))
       }
     }
 
-    return Th.fail(S.compositionE(Chunk(S.nextE(S.unionE(errors)))))
+    return Th.fail(S.compositionE(Chunk.make(S.nextE(S.unionE(errors)))))
   }
 
   return pipe(
