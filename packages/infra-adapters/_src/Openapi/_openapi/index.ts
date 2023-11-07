@@ -56,7 +56,7 @@ import {
 export type Gen = Effect<never, never, JSONSchema>
 
 export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
-  OptionX.partial((_miss) => (schema: MO.SchemaAny): Gen => {
+  Option.partial((_miss) => (schema: MO.SchemaAny): Gen => {
     // if (schema instanceof MO.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)

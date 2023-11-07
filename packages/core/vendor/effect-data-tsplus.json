@@ -7751,7 +7751,51 @@
       ]
     }
   ],
-  "effect/Option.int": [
+  "effect/Option": [
+    {
+      "definitionName": "Some",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Option/Some"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Option/Some.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "None",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Option/None"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Option/None.Ops"
+        }
+      ]
+    },
+    {
+      "definitionName": "Option",
+      "definitionKind": "type",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/Option"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/Option.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/Option.impl": [
     {
       "definitionName": "None",
       "definitionKind": "interface",
@@ -7819,20 +7863,6 @@
         {
           "kind": "companion",
           "typeName": "effect/data/Option.UnifyBlacklist.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Some",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/Option/Some"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/Option/Some.Ops"
         }
       ]
     },

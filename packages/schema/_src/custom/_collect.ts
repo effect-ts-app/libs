@@ -14,7 +14,7 @@ export interface CollectAnnotations {
 }
 
 export const interpreters: ((schema: S.SchemaAny) => Option<() => any>)[] = [
-  OptionX.partial(
+  Option.partial(
     (miss) => (schema: S.SchemaAny): () => (...xs: S.Annotation<any>[]) => Chunk<any> => {
       if (S.isAnnotatedSchema(schema)) {
         return () => (...xs) => {

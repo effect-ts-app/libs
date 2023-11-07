@@ -3509,7 +3509,23 @@
       ]
     }
   ],
-  "effect/Effect.int": [
+  "effect/Effect": [
+    {
+      "definitionName": "Effect",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Effect"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Effect.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/Effect.impl": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",
@@ -3535,26 +3551,6 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Effect/Blocked.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Effect",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Effect"
-        }
-      ]
-    },
-    {
-      "definitionName": "Effect",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Effect.Ops"
         }
       ]
     },

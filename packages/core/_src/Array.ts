@@ -71,7 +71,7 @@ export const { isArray } = Array
  * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
  */
 export function findFirstMap<A, B>(
-  f: (a: A) => Option.Option<B>
+  f: (a: A) => Option<B>
 ) {
   return (as: ReadonlyArray<A>) => {
     const len = as.length
@@ -106,7 +106,7 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO
  */
 export function sortByO<A>(
-  ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
+  ords: Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
   return ords.match({ onNone: () => identity, onSome: (_) => ROArray.sortBy(..._) })
 }
