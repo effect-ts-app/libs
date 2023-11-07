@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import * as Def from "effect/Deferred"
-import type { Semaphore } from "effect/Effect.int"
+import type { Semaphore } from "effect/Effect"
 import * as Fiber from "effect/Fiber"
 import * as Layer from "effect/Layer"
 import { Option } from "effect/Option"

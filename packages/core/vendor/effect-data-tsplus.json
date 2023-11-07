@@ -3836,7 +3836,7 @@
       ]
     }
   ],
-  "effect/Equivalence": [
+  "effect/Equivalence.int": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "interface",
