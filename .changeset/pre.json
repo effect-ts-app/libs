@@ -15,6 +15,7 @@
     "@effect-app/vue": "0.62.10"
   },
   "changesets": [
-    "angry-plums-warn"
+    "angry-plums-warn",
+    "slow-snails-brush"
   ]
 }
