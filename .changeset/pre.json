@@ -14,5 +14,7 @@
     "@effect-app/schema": "0.61.1",
     "@effect-app/vue": "0.62.10"
   },
-  "changesets": []
+  "changesets": [
+    "angry-plums-warn"
+  ]
 }
