@@ -1,5 +1,15 @@
 # @effect-app/react
 
+## 0.50.0-next.1
+
+### Patch Changes
+
+- 6b9fccac:
+- Updated dependencies [6b9fccac]
+  - @effect-app/prelude@0.71.0-next.1
+  - @effect-app/schema@0.63.0-next.1
+  - @effect-app/core@0.69.0-next.1
+
 ## 0.49.0
 
 ### Minor Changes
