@@ -7,12 +7,12 @@ import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 
-function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>>(
+function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R, E>(
   prefix: string,
   namespace: string,
   dir: string,
   name: string,
-  seed?: Effect<never, never, Iterable<PM>>
+  seed?: Effect<R, E, Iterable<PM>>
 ) {
   return Effect.gen(function*($) {
     const file = dir + "/" + prefix + name + (namespace === "primary" ? "" : "-" + namespace) + ".json"
@@ -25,7 +25,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     }
 
     const store = yield* $(
-      makeMemoryStoreInt<Id, PM>(
+      makeMemoryStoreInt<Id, PM, R, E>(
         name,
         !fs.existsSync(file)
           ? seed
@@ -75,15 +75,16 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
       fs.mkdirSync(dir)
     }
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>>(
+      make: <Id extends string, PM extends PersistenceModelType<Id>, R, E>(
         name: string,
-        seed?: Effect<never, never, Iterable<PM>>,
+        seed?: Effect<R, E, Iterable<PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
           const storesSem = Semaphore.unsafeMake(1)
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
+          const ctx = yield* $(Effect.context<R>())
           const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
             const store = stores.get(namespace)
             if (store) {
@@ -96,9 +97,10 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, PM>(prefix, namespace, dir, name, seed).tap((store) =>
-                  Effect.sync(() => stores.set(namespace, store))
-                )
+                return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed)
+                  .orDie
+                  .provide(ctx)
+                  .tap((store) => Effect.sync(() => stores.set(namespace, store)))
               })
             )
           })
