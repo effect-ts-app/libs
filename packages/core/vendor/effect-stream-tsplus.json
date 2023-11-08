@@ -1,5 +1,5 @@
 {
-  "effect/Channel.int": [
+  "effect/Channel": [
     {
       "definitionName": "Channel",
       "definitionKind": "interface",
@@ -13,7 +13,9 @@
           "typeName": "effect/stream/Channel.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Channel.impl": [
     {
       "definitionName": "ChannelException",
       "definitionKind": "interface",
@@ -2664,7 +2666,7 @@
       ]
     }
   ],
-  "effect/Sink.int": [
+  "effect/Sink": [
     {
       "definitionName": "Sink",
       "definitionKind": "interface",
@@ -2678,7 +2680,9 @@
           "typeName": "effect/stream/Sink.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Sink.impl": [
     {
       "definitionName": "SinkTypeId",
       "definitionKind": "type",
@@ -4051,7 +4055,7 @@
       ]
     }
   ],
-  "effect/Stream.int": [
+  "effect/Stream": [
     {
       "definitionName": "Stream",
       "definitionKind": "interface",
@@ -4065,7 +4069,9 @@
           "typeName": "effect/stream/Stream.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Stream.impl": [
     {
       "definitionName": "StreamTypeId",
       "definitionKind": "type",

@@ -1,9 +1,9 @@
 /**
  * @since 1.0.0
  */
-import type * as Chunk from "effect/Chunk"
+import type { Chunk } from "effect/Chunk"
 import type { ConfigSecretTypeId } from "effect/ConfigSecret"
-import type * as Equal from "effect/Equal"
+import type { Equal } from "effect/Equal"
 import * as internal from "./internal/configSecretURL.js"
 
 // /**
@@ -23,7 +23,7 @@ import * as internal from "./internal/configSecretURL.js"
  * @since 1.0.0
  * @category models
  */
-export interface ConfigSecretURL extends ConfigSecretURL.Proto, Equal.Equal {
+export interface ConfigSecretURL extends ConfigSecretURL.Proto, Equal {
   /** @internal */
   readonly raw: Array<number>
 }

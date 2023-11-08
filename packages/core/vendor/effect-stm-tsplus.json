@@ -1,19 +1,5 @@
 {
-  "effect/STM.int": [
-    {
-      "definitionName": "Adapter",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/stm/STM/Adapter"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/stm/STM/Adapter.Ops"
-        }
-      ]
-    },
+  "effect/STM": [
     {
       "definitionName": "STM",
       "definitionKind": "interface",
@@ -25,6 +11,22 @@
         {
           "kind": "companion",
           "typeName": "effect/stm/STM.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/STM.impl": [
+    {
+      "definitionName": "Adapter",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/stm/STM/Adapter"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/stm/STM/Adapter.Ops"
         }
       ]
     },

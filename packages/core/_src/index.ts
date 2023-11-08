@@ -1,10 +1,6 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
 export * as Optic from "@fp-ts/optic"
-export * as Chunk from "effect/Chunk"
-export * as Either from "effect/Either"
-export * as Option from "effect/Option"
-
-export * as Order from "effect/Order"
+export { Chunk, Either, Option, Order } from "effect"
 
 export {} from "@effect-app/core/Array"
 export {} from "@effect-app/core/EffectX"

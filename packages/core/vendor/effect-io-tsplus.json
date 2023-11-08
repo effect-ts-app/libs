@@ -142,20 +142,6 @@
   ],
   "effect/Cause": [
     {
-      "definitionName": "Annotated",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Cause/Annotated"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/Cause/Annotated.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "Cause",
       "definitionKind": "type",
       "extensions": [
@@ -166,6 +152,22 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Cause.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/Cause.impl": [
+    {
+      "definitionName": "Annotated",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Cause/Annotated"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Cause/Annotated.Ops"
         }
       ]
     },
@@ -1439,7 +1441,9 @@
           "typeName": "effect/io/Config.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Config.impl": [
     {
       "definitionName": "ConfigTypeId",
       "definitionKind": "type",
@@ -2748,7 +2752,9 @@
           "typeName": "effect/io/ConfigSecret.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/ConfigSecret.impl": [
     {
       "definitionName": "ConfigSecretTypeId",
       "definitionKind": "type",
@@ -8327,7 +8333,7 @@
       ]
     }
   ],
-  "effect/Exit.int": [
+  "effect/Exit": [
     {
       "definitionName": "Exit",
       "definitionKind": "type",
@@ -8341,7 +8347,9 @@
           "typeName": "effect/io/Exit.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Exit.impl": [
     {
       "definitionName": "ExitUnify",
       "definitionKind": "interface",
@@ -8938,7 +8946,9 @@
           "typeName": "effect/io/Fiber.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Fiber.impl": [
     {
       "definitionName": "FiberTypeId",
       "definitionKind": "type",
@@ -9633,20 +9643,6 @@
   ],
   "effect/FiberId": [
     {
-      "definitionName": "Composite",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/FiberId/Composite"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/FiberId/Composite.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "FiberId",
       "definitionKind": "type",
       "extensions": [
@@ -9657,6 +9653,22 @@
         {
           "kind": "companion",
           "typeName": "effect/io/FiberId.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/FiberId.impl": [
+    {
+      "definitionName": "Composite",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/FiberId/Composite"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/FiberId/Composite.Ops"
         }
       ]
     },
@@ -9954,7 +9966,9 @@
           "typeName": "effect/io/FiberRef.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/FiberRef.impl": [
     {
       "definitionName": "FiberRefTypeId",
       "definitionKind": "type",
@@ -11375,7 +11389,7 @@
       ]
     }
   ],
-  "effect/Layer.int": [
+  "effect/Layer": [
     {
       "definitionName": "Layer",
       "definitionKind": "interface",
@@ -11389,7 +11403,9 @@
           "typeName": "effect/io/Layer.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Layer.impl": [
     {
       "definitionName": "LayerTypeId",
       "definitionKind": "type",
@@ -15842,7 +15858,9 @@
           "typeName": "effect/io/Ref.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Ref.impl": [
     {
       "definitionName": "RefTypeId",
       "definitionKind": "type",
@@ -17010,6 +17028,22 @@
   ],
   "effect/Runtime": [
     {
+      "definitionName": "Runtime",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Runtime"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Runtime.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/Runtime.impl": [
+    {
       "definitionName": "AsyncFiberException",
       "definitionKind": "interface",
       "extensions": [
@@ -17090,20 +17124,6 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Runtime/RunForkOptions.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Runtime",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Runtime"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/Runtime.Ops"
         }
       ]
     },
@@ -20093,6 +20113,22 @@
   ],
   "effect/Scope": [
     {
+      "definitionName": "Scope",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/io/Scope"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/io/Scope.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/Scope.impl": [
+    {
       "definitionName": "CloseableScope",
       "definitionKind": "interface",
       "extensions": [
@@ -20117,20 +20153,6 @@
         {
           "kind": "companion",
           "typeName": "effect/io/Scope/CloseableScopeTypeId.Ops"
-        }
-      ]
-    },
-    {
-      "definitionName": "Scope",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/io/Scope"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/io/Scope.Ops"
         }
       ]
     },

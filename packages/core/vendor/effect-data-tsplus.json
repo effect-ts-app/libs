@@ -539,7 +539,7 @@
       ]
     }
   ],
-  "effect/Chunk.int": [
+  "effect/Chunk": [
     {
       "definitionName": "Chunk",
       "definitionKind": "interface",
@@ -553,7 +553,9 @@
           "typeName": "effect/data/Chunk.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Chunk.impl": [
     {
       "definitionName": "ChunkTypeLambda",
       "definitionKind": "interface",
@@ -1846,7 +1848,7 @@
       ]
     }
   ],
-  "effect/Context.int": [
+  "effect/Context": [
     {
       "definitionName": "Context",
       "definitionKind": "interface",
@@ -1860,7 +1862,9 @@
           "typeName": "effect/data/Context.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Context.impl": [
     {
       "definitionName": "Tag",
       "definitionKind": "interface",
@@ -3097,7 +3101,7 @@
       ]
     }
   ],
-  "effect/Either.int": [
+  "effect/Either": [
     {
       "definitionName": "Either",
       "definitionKind": "type",
@@ -3111,7 +3115,9 @@
           "typeName": "effect/data/Either.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Either.impl": [
     {
       "definitionName": "EitherTypeLambda",
       "definitionKind": "interface",
@@ -3836,7 +3842,7 @@
       ]
     }
   ],
-  "effect/Equivalence.int": [
+  "effect/Equivalence": [
     {
       "definitionName": "Equivalence",
       "definitionKind": "interface",
@@ -3850,7 +3856,9 @@
           "typeName": "effect/data/Equivalence.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Equivalence.impl": [
     {
       "definitionName": "EquivalenceTypeLambda",
       "definitionKind": "interface",
@@ -4652,7 +4660,9 @@
           "typeName": "effect/data/HashMap.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/HashMap.impl": [
     {
       "definitionName": "TypeId",
       "definitionKind": "type",
@@ -5700,20 +5710,6 @@
   ],
   "effect/List": [
     {
-      "definitionName": "Cons",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/data/List/Cons"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/data/List/Cons.Ops"
-        }
-      ]
-    },
-    {
       "definitionName": "List",
       "definitionKind": "type",
       "extensions": [
@@ -5724,6 +5720,22 @@
         {
           "kind": "companion",
           "typeName": "effect/data/List.Ops"
+        }
+      ]
+    }
+  ],
+  "effect/List.impl": [
+    {
+      "definitionName": "Cons",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/data/List/Cons"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/data/List/Cons.Ops"
         }
       ]
     },
@@ -8766,7 +8778,9 @@
           "typeName": "effect/data/Order.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/Order.impl": [
     {
       "definitionName": "OrderTypeLambda",
       "definitionKind": "interface",
@@ -9853,7 +9867,7 @@
       ]
     }
   ],
-  "effect/ReadonlyArray.int": [
+  "effect/ReadonlyArray": [
     {
       "definitionName": "NonEmptyArray",
       "definitionKind": "type",
@@ -9867,7 +9881,9 @@
           "typeName": "effect/data/ReadonlyArray/NonEmptyArray.Ops"
         }
       ]
-    },
+    }
+  ],
+  "effect/ReadonlyArray.impl": [
     {
       "definitionName": "NonEmptyReadonlyArray",
       "definitionKind": "type",
