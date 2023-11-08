@@ -372,14 +372,14 @@ export function use(...args: any[]) {
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
-        .flatMap((expressHandlers) => Effect.sync(() => () => app.use(...expressHandlers)))
+        .flatMap((expressHandlers) => Effect.sync(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArguments<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
-        .flatMap((expressHandlers) => Effect.sync(() => () => app.use(args[0], ...expressHandlers)))
+        .flatMap((expressHandlers) => Effect.sync(() => app.use(args[0], ...expressHandlers)))
     }
   })
 }
