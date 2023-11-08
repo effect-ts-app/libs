@@ -45,7 +45,7 @@
     "resolutions": {
         "@types/node": "~18.11.12",
         "date-fns": "^2.29.3",
-        "effect": "github:Effect-TS/effect#e918d0e5c5bf5e1aa7a91a27f6106317461622df",
+        "effect": "github:Effect-TS/effect#6f952756314206ab8c7bbbfb461d7bf724734a2b",
         "http-proxy": "npm:http-proxy-node16@1.0.0",
         "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231107"
     },
