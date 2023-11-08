@@ -1,0 +1,18 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@effect-app/cli": "0.22.1",
+    "@effect-app/compiler": "0.33.1",
+    "@effect-app/core": "0.67.5",
+    "@effect-app/eslint-codegen-model": "0.25.3",
+    "@effect-app/infra": "0.83.12",
+    "@effect-app/infra-adapters": "0.58.10",
+    "@effect-app/pnpm-singleton": "0.26.1",
+    "@effect-app/prelude": "0.69.10",
+    "@effect-app/react": "0.48.10",
+    "@effect-app/schema": "0.61.1",
+    "@effect-app/vue": "0.62.10"
+  },
+  "changesets": []
+}
