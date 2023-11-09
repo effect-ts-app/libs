@@ -156,7 +156,7 @@
       ]
     }
   ],
-  "effect/Cause.impl": [
+  "effect/impl/Cause": [
     {
       "definitionName": "Annotated",
       "definitionKind": "interface",
@@ -1443,7 +1443,7 @@
       ]
     }
   ],
-  "effect/Config.impl": [
+  "effect/impl/Config": [
     {
       "definitionName": "ConfigTypeId",
       "definitionKind": "type",
@@ -2754,7 +2754,7 @@
       ]
     }
   ],
-  "effect/ConfigSecret.impl": [
+  "effect/impl/ConfigSecret": [
     {
       "definitionName": "ConfigSecretTypeId",
       "definitionKind": "type",
@@ -3531,7 +3531,7 @@
       ]
     }
   ],
-  "effect/Effect.impl": [
+  "effect/impl/Effect": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",
@@ -8349,7 +8349,7 @@
       ]
     }
   ],
-  "effect/Exit.impl": [
+  "effect/impl/Exit": [
     {
       "definitionName": "ExitUnify",
       "definitionKind": "interface",
@@ -8948,7 +8948,7 @@
       ]
     }
   ],
-  "effect/Fiber.impl": [
+  "effect/impl/Fiber": [
     {
       "definitionName": "FiberTypeId",
       "definitionKind": "type",
@@ -9657,7 +9657,7 @@
       ]
     }
   ],
-  "effect/FiberId.impl": [
+  "effect/impl/FiberId": [
     {
       "definitionName": "Composite",
       "definitionKind": "interface",
@@ -9968,7 +9968,7 @@
       ]
     }
   ],
-  "effect/FiberRef.impl": [
+  "effect/impl/FiberRef": [
     {
       "definitionName": "FiberRefTypeId",
       "definitionKind": "type",
@@ -11405,7 +11405,7 @@
       ]
     }
   ],
-  "effect/Layer.impl": [
+  "effect/impl/Layer": [
     {
       "definitionName": "LayerTypeId",
       "definitionKind": "type",
@@ -15860,7 +15860,7 @@
       ]
     }
   ],
-  "effect/Ref.impl": [
+  "effect/impl/Ref": [
     {
       "definitionName": "RefTypeId",
       "definitionKind": "type",
@@ -17042,7 +17042,7 @@
       ]
     }
   ],
-  "effect/Runtime.impl": [
+  "effect/impl/Runtime": [
     {
       "definitionName": "AsyncFiberException",
       "definitionKind": "interface",
@@ -20127,7 +20127,7 @@
       ]
     }
   ],
-  "effect/Scope.impl": [
+  "effect/impl/Scope": [
     {
       "definitionName": "CloseableScope",
       "definitionKind": "interface",

@@ -15,7 +15,7 @@
       ]
     }
   ],
-  "effect/Channel.impl": [
+  "effect/impl/Channel": [
     {
       "definitionName": "ChannelException",
       "definitionKind": "interface",
@@ -2682,7 +2682,7 @@
       ]
     }
   ],
-  "effect/Sink.impl": [
+  "effect/impl/Sink": [
     {
       "definitionName": "SinkTypeId",
       "definitionKind": "type",
@@ -4071,7 +4071,7 @@
       ]
     }
   ],
-  "effect/Stream.impl": [
+  "effect/impl/Stream": [
     {
       "definitionName": "StreamTypeId",
       "definitionKind": "type",

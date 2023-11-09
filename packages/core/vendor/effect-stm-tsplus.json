@@ -15,7 +15,7 @@
       ]
     }
   ],
-  "effect/STM.impl": [
+  "effect/impl/STM": [
     {
       "definitionName": "Adapter",
       "definitionKind": "interface",

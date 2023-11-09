@@ -555,7 +555,7 @@
       ]
     }
   ],
-  "effect/Chunk.impl": [
+  "effect/impl/Chunk": [
     {
       "definitionName": "ChunkTypeLambda",
       "definitionKind": "interface",
@@ -1864,7 +1864,7 @@
       ]
     }
   ],
-  "effect/Context.impl": [
+  "effect/impl/Context": [
     {
       "definitionName": "Tag",
       "definitionKind": "interface",
@@ -3117,7 +3117,7 @@
       ]
     }
   ],
-  "effect/Either.impl": [
+  "effect/impl/Either": [
     {
       "definitionName": "EitherTypeLambda",
       "definitionKind": "interface",
@@ -3858,7 +3858,7 @@
       ]
     }
   ],
-  "effect/Equivalence.impl": [
+  "effect/impl/Equivalence": [
     {
       "definitionName": "EquivalenceTypeLambda",
       "definitionKind": "interface",
@@ -4173,7 +4173,7 @@
       ]
     }
   ],
-  "effect/Function.impl": [
+  "effect/impl/Function": [
     {
       "definitionName": "FunctionN",
       "definitionKind": "interface",
@@ -4662,7 +4662,7 @@
       ]
     }
   ],
-  "effect/HashMap.impl": [
+  "effect/impl/HashMap": [
     {
       "definitionName": "TypeId",
       "definitionKind": "type",
@@ -5724,7 +5724,7 @@
       ]
     }
   ],
-  "effect/List.impl": [
+  "effect/impl/List": [
     {
       "definitionName": "Cons",
       "definitionKind": "interface",
@@ -7807,7 +7807,7 @@
       ]
     }
   ],
-  "effect/Option.impl": [
+  "effect/impl/Option": [
     {
       "definitionName": "None",
       "definitionKind": "interface",
@@ -8780,7 +8780,7 @@
       ]
     }
   ],
-  "effect/Order.impl": [
+  "effect/impl/Order": [
     {
       "definitionName": "OrderTypeLambda",
       "definitionKind": "interface",
@@ -9883,7 +9883,7 @@
       ]
     }
   ],
-  "effect/ReadonlyArray.impl": [
+  "effect/impl/ReadonlyArray": [
     {
       "definitionName": "NonEmptyReadonlyArray",
       "definitionKind": "type",
