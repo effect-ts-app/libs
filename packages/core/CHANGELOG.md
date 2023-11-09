@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.69.0-next.2
+
+### Patch Changes
+
+- update exts
+
 ## 0.69.0-next.1
 
 ### Patch Changes
