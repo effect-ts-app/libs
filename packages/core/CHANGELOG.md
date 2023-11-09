@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.69.0-next.3
+
+### Patch Changes
+
+- c26bad83: rebuild
+
 ## 0.69.0-next.2
 
 ### Patch Changes

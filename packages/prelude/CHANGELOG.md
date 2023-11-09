@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.71.0-next.3
+
+### Patch Changes
+
+- c26bad83: rebuild
+- Updated dependencies [c26bad83]
+  - @effect-app/schema@0.63.0-next.3
+  - @effect-app/core@0.69.0-next.3
+
 ## 0.71.0-next.2
 
 ### Patch Changes
