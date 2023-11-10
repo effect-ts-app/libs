@@ -1,10 +1,14 @@
+import { RuntimeFlags } from "effect"
 import * as FiberRefs from "effect/FiberRefs"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 
-export function getRequestContext(context: FiberRefs.FiberRefs) {
-  const ctx = FiberRefs.getOrDefault(context, FiberRef.currentContext)
-  // TODO: use `RequestContext.Tag` once switched?
-  const a = ctx.getOption(RequestContextContainer)
-  const c = a.map((_) => _.requestContext.runSync)
+export function getRequestContext(fiberRefs: FiberRefs.FiberRefs) {
+  const context = FiberRefs.getOrDefault(fiberRefs, FiberRef.currentContext)
+  const a = context.getOption(RequestContextContainer)
+  const c = a.map((_) => {
+    // TODO: perhaps a litle expensive?
+    const rt = Runtime.make({ context, fiberRefs, runtimeFlags: RuntimeFlags.none })
+    return rt.runSync(_.requestContext)
+  })
   return c
 }
