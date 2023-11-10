@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.85.2
+
+### Patch Changes
+
+- dcf87bc4: fix type
+
 ## 0.85.1
 
 ### Patch Changes
