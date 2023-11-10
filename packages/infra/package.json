@@ -531,6 +531,16 @@
         "default": "./_cjs/services/Store.cjs"
       }
     },
+    "./services/Store/ContextMapContainer": {
+      "import": {
+        "types": "./dist/services/Store/ContextMapContainer.d.ts",
+        "default": "./dist/services/Store/ContextMapContainer.js"
+      },
+      "require": {
+        "types": "./dist/services/Store/ContextMapContainer.d.ts",
+        "default": "./_cjs/services/Store/ContextMapContainer.cjs"
+      }
+    },
     "./services/Store/Cosmos": {
       "import": {
         "types": "./dist/services/Store/Cosmos.d.ts",
