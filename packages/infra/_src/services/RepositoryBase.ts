@@ -67,17 +67,17 @@ export function makeRepo<
     T extends { id: string },
     ConstructorInput,
     Api,
-    E extends { id: string }
+    Encoded extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
-    mapFrom: (pm: Omit<PM, "_etag">) => E,
-    mapTo: (e: E, etag: string | undefined) => PM
+    schema: Schema.Schema<unknown, T, ConstructorInput, Encoded, Api>,
+    mapFrom: (pm: Omit<PM, "_etag">) => Encoded,
+    mapTo: (e: Encoded, etag: string | undefined) => PM
   ) => {
     const where = makeWhere<PM>()
 
     function mapToPersistenceModel(
-      e: E,
+      e: Encoded,
       getEtag: (id: string) => string | undefined
     ): PM {
       return mapTo(e, getEtag(e.id))
@@ -86,22 +86,30 @@ export function makeRepo<
     function mapReverse(
       { _etag, ...e }: PM,
       setEtag: (id: string, eTag: string | undefined) => void
-    ): E {
+    ): Encoded {
       setEtag(e.id, _etag)
       return mapFrom(e)
     }
 
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
-    function make(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
-      makeInitial?: Effect<never, never, readonly T[]>,
-      config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-        partitionValue?: (a: PM) => string
-      }
+    function make<R, E>(
+      args: Evt extends never ? {
+          makeInitial?: Effect<R, E, readonly T[]>
+          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+            partitionValue?: (a: PM) => string
+          }
+        }
+        : {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>
+          makeInitial?: Effect<R, E, readonly T[]>
+          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+            partitionValue?: (a: PM) => string
+          }
+        }
     ) {
       return Do(($) => {
-        const store = $(mkStore(makeInitial, config))
+        const store = $(mkStore(args.makeInitial, args.config))
         const cms = $(ContextMapContainer)
 
         const allE = store.all.flatMap((items) =>
@@ -112,6 +120,8 @@ export function makeRepo<
         )
 
         const parse = EParserFor(schema).condemnDie
+
+        const pub = "publishEvents" in args ? args.publishEvents : () => Effect.unit
 
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
@@ -130,7 +140,7 @@ export function makeRepo<
           return findE(id).flatMapOpt(EParserFor(schema).condemnDie)
         }
 
-        const saveAllE = (a: Iterable<E>) =>
+        const saveAllE = (a: Iterable<Encoded>) =>
           Effect(a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
@@ -148,7 +158,7 @@ export function makeRepo<
           saveAll(items)
             > Effect(events.toNonEmptyArray)
               // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-              .flatMapOpt(publishEvents)
+              .flatMapOpt(pub)
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
@@ -162,7 +172,7 @@ export function makeRepo<
             yield* $(
               Effect(events.toNonEmptyArray)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-                .flatMapOpt(publishEvents)
+                .flatMapOpt(pub)
             )
           })
         }
@@ -314,11 +324,19 @@ export const RepositoryBaseImpl = <Service>() => {
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
     make<R = never, E = never>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
-      makeInitial?: Effect<R, E, readonly T[]>,
-      config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-        partitionValue?: (a: PM) => string
-      }
+      args: Evt extends never ? {
+          makeInitial?: Effect<R, E, readonly T[]>
+          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+            partitionValue?: (a: PM) => string
+          }
+        }
+        : {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>
+          makeInitial?: Effect<R, E, readonly T[]>
+          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+            partitionValue?: (a: PM) => string
+          }
+        }
     ): Effect<StoreMaker | ContextMapContainer | R, E, Repository<T, PM, Evt, ItemType>>
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
@@ -343,41 +361,73 @@ export const RepositoryDefaultImpl = <Service>() => {
     schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
     mapFrom: (pm: Omit<PM, "_etag">) => E,
     mapTo: (e: E, etag: string | undefined) => PM
-  ): Tag<Service, Service> & {
-    new(
-      impl: Repository<T, PM, Evt, ItemType>
-    ): Repository<T, PM, Evt, ItemType>
-    make<R = never, E = never>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
-      makeInitial?: Effect<R, E, readonly T[]>,
-      config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-        partitionValue?: (a: PM) => string
-      }
-    ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
-    toLayer<R = never, E = never>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
-      makeInitial?: Effect<R, E, readonly T[]>,
-      config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-        partitionValue?: (a: PM) => string
-      }
-    ): Layer<StoreMaker | R, E, Service>
-    where: ReturnType<typeof makeWhere<PM>>
-    flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
-    makeLayer: (svc: Service) => Layer<never, never, Service>
-    map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
-    repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
-  } => {
+  ):
+    & Tag<Service, Service>
+    & {
+      new(
+        impl: Repository<T, PM, Evt, ItemType>
+      ): Repository<T, PM, Evt, ItemType>
+
+      where: ReturnType<typeof makeWhere<PM>>
+      flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+      makeLayer: (svc: Service) => Layer<never, never, Service>
+      map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+      repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
+
+      make<R = never, E = never>(
+        args: Evt extends never ? {
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+          : {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+      ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
+      toLayer<R = never, E = never>(
+        args: Evt extends never ? {
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+          : {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+      ): Layer<StoreMaker | R, E, Service>
+    } =>
+  {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never>(
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
-        makeInitial?: Effect<R, E, readonly T[]>,
-        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-          partitionValue?: (a: PM) => string
-        }
+        args: Evt extends never ? {
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+          : {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
       ) {
-        return this.make(publishEvents, makeInitial, config).map((impl) => new this(impl) as any as Service).toLayer(
-          this
-        )
+        return this
+          .make(args)
+          .map((impl) => new this(impl) as any as Service)
+          .toLayer(
+            this
+          )
       }
       static repo: any
       constructor(
