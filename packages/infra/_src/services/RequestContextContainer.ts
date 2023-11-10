@@ -1,3 +1,4 @@
+import { RequestId } from "@effect-app/prelude/ids"
 import { RequestContext } from "../RequestContext.js"
 
 /**
@@ -5,7 +6,8 @@ import { RequestContext } from "../RequestContext.js"
  */
 export abstract class RequestContextContainer extends TagClass<RequestContextContainer>() {
   abstract readonly requestContext: Effect<never, never, RequestContext>
-  abstract readonly update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, void>
+  abstract readonly update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, RequestContext>
+  abstract readonly start: (f: RequestContext) => Effect<never, never, void>
   static get get(): Effect<RequestContextContainer, never, RequestContext> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }
@@ -21,10 +23,12 @@ export abstract class RequestContextContainer extends TagClass<RequestContextCon
 }
 
 export class RequestContextContainerImpl extends RequestContextContainer {
-  #ref: Ref<RequestContext>
-  constructor(inp: RequestContext.ConstructorInput) {
+  #ref: FiberRef<RequestContext>
+  constructor() {
     super()
-    this.#ref = Ref.unsafeMake<RequestContext>(new RequestContext(inp))
+    this.#ref = FiberRef.unsafeMake<RequestContext>(
+      new RequestContext({ name: ReasonableString("root"), rootId: RequestId("root"), locale: "en" })
+    )
   }
 
   override get requestContext() {
@@ -32,13 +36,14 @@ export class RequestContextContainerImpl extends RequestContextContainer {
   }
 
   override update = (f: (a: RequestContext) => RequestContext) => this.#ref.getAndUpdate(f)
+  override start = (a: RequestContext) => this.#ref.set(a)
 }
 
 /**
  * @tsplus static RequestContextContainer.Ops live
  */
-export function live(inp: RequestContext.ConstructorInput) {
-  return new RequestContextContainerImpl(inp)
+export function live() {
+  return new RequestContextContainerImpl()
 }
 
 /** @tsplus static RequestContext.Ops Tag */

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as MO from "@effect-app/schema"
 import type { Methods } from "@effect-app/schema"
@@ -5,7 +6,37 @@ import type { Methods } from "@effect-app/schema"
 import type { JSONSchema, ParameterLocation, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
 import { isObjectSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
 import * as OpenApi from "@effect-app/infra-adapters/Openapi/index"
-import type { RequestHandler, RequestHandlerOptRes } from "./requestHandler.js"
+
+export type Request<
+  PathA,
+  CookieA,
+  QueryA,
+  BodyA,
+  HeaderA,
+  ReqA extends PathA & QueryA & BodyA
+> = MO.ReqResSchemed<unknown, ReqA> & {
+  method: Methods
+  path: string
+  Cookie?: MO.ReqRes<Record<string, string>, CookieA>
+  Path?: MO.ReqRes<Record<string, string>, PathA>
+  Body?: MO.ReqRes<unknown, BodyA>
+  Query?: MO.ReqRes<Record<string, string>, QueryA>
+  Headers?: MO.ReqRes<Record<string, string>, HeaderA>
+}
+
+export interface RouteRequestHandler<
+  PathA,
+  CookieA,
+  QueryA,
+  BodyA,
+  HeaderA,
+  ReqA extends PathA & QueryA & BodyA,
+  ResA
+> {
+  Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
+  Response?: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
+  ResponseOpenApi?: any
+}
 
 export function asRouteDescriptionAny<R extends RouteDescriptorAny>(i: R) {
   return i as RouteDescriptorAny
@@ -18,7 +49,6 @@ export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
 }
 
 export interface RouteDescriptor<
-  R,
   PathA,
   CookieA,
   QueryA,
@@ -26,12 +56,12 @@ export interface RouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA,
-  Errors,
   METHOD extends Methods = Methods
 > {
+  _tag: "Schema"
   path: string
   method: METHOD
-  handler: RequestHandler<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, Errors>
+  handler: RouteRequestHandler<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
   info?: {
     tags: ReadonlyArray<string>
   }
@@ -44,13 +74,10 @@ export type RouteDescriptorAny = RouteDescriptor<
   any,
   any,
   any,
-  any,
-  any,
   any
 >
 
 export function makeRouteDescriptor<
-  R,
   PathA,
   CookieA,
   QueryA,
@@ -58,39 +85,34 @@ export function makeRouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA = void,
-  Errors = any,
   METHOD extends Methods = Methods
 >(
   path: string,
   method: METHOD,
-  handler: RequestHandlerOptRes<
-    R,
+  handler: RouteRequestHandler<
     PathA,
     CookieA,
     QueryA,
     BodyA,
     HeaderA,
     ReqA,
-    ResA,
-    Errors
+    ResA
   >
-) {
-  return { path, method, handler, _tag: "Schema" } as RouteDescriptor<
-    R,
-    PathA,
-    CookieA,
-    QueryA,
-    BodyA,
-    HeaderA,
-    ReqA,
-    ResA,
-    Errors,
-    METHOD
-  >
+): RouteDescriptor<
+  PathA,
+  CookieA,
+  QueryA,
+  BodyA,
+  HeaderA,
+  ReqA,
+  ResA,
+  METHOD
+> {
+  return { path, handler, method, _tag: "Schema" }
 }
 
 export function makeFromSchema<ResA>(
-  e: RouteDescriptor<any, any, any, any, any, any, ResA, any, any>
+  e: RouteDescriptor<any, any, any, any, any, ResA, any>
 ) {
   const jsonSchema_ = OpenApi.for
   const jsonSchema = <E, A>(r: MO.ReqRes<E, A>) => jsonSchema_(r)

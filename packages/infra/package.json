@@ -171,16 +171,6 @@
         "default": "./_cjs/api/express/schema/jwt.cjs"
       }
     },
-    "./api/express/schema/requestHandler": {
-      "import": {
-        "types": "./dist/api/express/schema/requestHandler.d.ts",
-        "default": "./dist/api/express/schema/requestHandler.js"
-      },
-      "require": {
-        "types": "./dist/api/express/schema/requestHandler.d.ts",
-        "default": "./_cjs/api/express/schema/requestHandler.cjs"
-      }
-    },
     "./api/express/schema/routing": {
       "import": {
         "types": "./dist/api/express/schema/routing.d.ts",
@@ -199,16 +189,6 @@
       "require": {
         "types": "./dist/api/reportError.d.ts",
         "default": "./_cjs/api/reportError.cjs"
-      }
-    },
-    "./api/routing": {
-      "import": {
-        "types": "./dist/api/routing.d.ts",
-        "default": "./dist/api/routing.js"
-      },
-      "require": {
-        "types": "./dist/api/routing.d.ts",
-        "default": "./_cjs/api/routing.cjs"
       }
     },
     "./api/setupRequest": {
