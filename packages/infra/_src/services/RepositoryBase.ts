@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
@@ -94,14 +95,14 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make<R = never, E = never, R2 = never>(
-      args: Evt extends never ? {
+      args: Evt extends {} ? {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
@@ -315,7 +316,7 @@ export function makeStore<
 export const RepositoryBaseImpl = <Service>() => {
   return <
     PM extends { id: string; _etag: string | undefined },
-    Evt = never
+    Evt = unknown
   >() =>
   <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
     itemType: ItemType,
@@ -324,14 +325,14 @@ export const RepositoryBaseImpl = <Service>() => {
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
     make<R = never, E = never, R2 = never>(
-      args: Evt extends never ? {
+      args: Evt extends {} ? {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
@@ -375,14 +376,14 @@ export const RepositoryDefaultImpl = <Service>() => {
       repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
 
       make<R = never, E = never, R2 = never>(
-        args: Evt extends never ? {
+        args: Evt extends {} ? {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
             }
           }
           : {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
@@ -390,14 +391,14 @@ export const RepositoryDefaultImpl = <Service>() => {
           }
       ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
       toLayer<R = never, E = never, R2 = never>(
-        args: Evt extends never ? {
+        args: Evt extends {} ? {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
             }
           }
           : {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
@@ -408,14 +409,14 @@ export const RepositoryDefaultImpl = <Service>() => {
   {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never, R2 = never>(
-        args: Evt extends never ? {
+        args: Evt extends {} ? {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
             }
           }
           : {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
               partitionValue?: (a: PM) => string
