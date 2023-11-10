@@ -271,7 +271,7 @@ export function makeStore<
       return mapTo(e, getEtag(e.id))
     }
 
-    function makeStore<R, E>(
+    function makeStore<R = never, E = never>(
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -313,7 +313,7 @@ export const RepositoryBaseImpl = <Service>() => {
     mapFrom: (pm: Omit<PM, "_etag">) => E,
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
-    make<R, E>(
+    make<R = never, E = never>(
       publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
@@ -347,14 +347,14 @@ export const RepositoryDefaultImpl = <Service>() => {
     new(
       impl: Repository<T, PM, Evt, ItemType>
     ): Repository<T, PM, Evt, ItemType>
-    make<R, E>(
+    make<R = never, E = never>(
       publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
     ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
-    toLayer<R, E>(
+    toLayer<R = never, E = never>(
       publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
@@ -368,7 +368,7 @@ export const RepositoryDefaultImpl = <Service>() => {
     repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
   } => {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
-      static toLayer<R, E>(
+      static toLayer<R = never, E = never>(
         publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
         makeInitial?: Effect<R, E, readonly T[]>,
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
