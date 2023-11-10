@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.86.0
+
+### Minor Changes
+
+- e32dfd57: context map container
+
 ## 0.85.7
 
 ### Patch Changes
