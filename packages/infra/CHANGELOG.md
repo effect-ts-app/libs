@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.87.1
+
+### Patch Changes
+
+- 0ab1eada: fix type
+
 ## 0.87.0
 
 ### Minor Changes
