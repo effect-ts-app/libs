@@ -1,6 +1,5 @@
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository, RequestCTX } from "./Repository.js"
-import type { RequestContextContainer } from "./RequestContextContainer.js"
 import { ContextMap, StoreMaker } from "./Store.js"
 import type { Filter, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
@@ -21,12 +20,12 @@ export const RepositoryBase = <Service>() => {
   ) => {
     abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
       itemType: ItemType = itemType
-      abstract find: (id: T["id"]) => Effect<ContextMap | RequestContextContainer, never, Opt<T>>
+      abstract find: (id: T["id"]) => Effect<RequestCTX, never, Opt<T>>
       abstract all: Effect<ContextMap, never, T[]>
       abstract saveAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
-      ) => Effect<ContextMap | RequestContextContainer, InvalidStateError | OptimisticConcurrencyException, void>
+      ) => Effect<RequestCTX, InvalidStateError | OptimisticConcurrencyException, void>
       abstract utils: {
         mapReverse: (
           pm: PM,
@@ -39,7 +38,7 @@ export const RepositoryBase = <Service>() => {
       abstract removeAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
-      ) => Effect<ContextMap | RequestContextContainer, never, void>
+      ) => Effect<RequestCTX, never, void>
       static where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
         return Effect.flatMap(this as unknown as Tag<Service, Service>, f)

@@ -7,9 +7,8 @@ import type { InvalidStateError, OptimisticConcurrencyException } from "../error
 import { NotFoundError } from "../errors.js"
 import { ContextMap } from "../services/Store.js"
 import type { Filter } from "../services/Store.js"
-import type { RequestContextContainer } from "./RequestContextContainer.js"
 
-export type RequestCTX = ContextMap | RequestContextContainer
+export type RequestCTX = ContextMap
 /**
  * @tsplus type Repository
  */
