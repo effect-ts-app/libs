@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.85.0
+
+### Minor Changes
+
+- refactor: drop routing from infra, just leave schema related
+
 ## 0.84.0
 
 ### Minor Changes
