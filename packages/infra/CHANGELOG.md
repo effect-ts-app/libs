@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.85.4
+
+### Patch Changes
+
+- de410f52: fix log
+
 ## 0.85.3
 
 ### Patch Changes
