@@ -42,9 +42,7 @@ export class RequestContextContainerImpl extends RequestContextContainer {
 /**
  * @tsplus static RequestContextContainer.Ops live
  */
-export function live() {
-  return new RequestContextContainerImpl()
-}
+export const live = Effect.sync(() => new RequestContextContainerImpl()).toLayer(RequestContextContainer)
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = Tag<RequestContext>()
