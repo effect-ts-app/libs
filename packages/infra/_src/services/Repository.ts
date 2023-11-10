@@ -8,7 +8,6 @@ import { NotFoundError } from "../errors.js"
 import { ContextMap } from "../services/Store.js"
 import type { Filter } from "../services/Store.js"
 
-export type RequestCTX = ContextMap
 /**
  * @tsplus type Repository
  */
@@ -19,24 +18,24 @@ export interface Repository<
   ItemType extends string
 > {
   itemType: ItemType
-  find: (id: T["id"]) => Effect<RequestCTX, never, Option<T>>
-  all: Effect<ContextMap, never, T[]>
+  find: (id: T["id"]) => Effect<never, never, Option<T>>
+  all: Effect<never, never, T[]>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<RequestCTX, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
   removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<RequestCTX, never, void>
+  ) => Effect<never, never, void>
   utils: {
     mapReverse: (
       pm: PM,
       setEtag: (id: string, eTag: string | undefined) => void
     ) => unknown // TODO
     parse: (a: unknown, env?: ParserEnv | undefined) => T
-    all: Effect<ContextMap, never, PM[]>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, PM[]>
+    all: Effect<never, never, PM[]>
+    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
   }
 }
 

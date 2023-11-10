@@ -1,6 +1,6 @@
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
-import type { Repository, RequestCTX } from "./Repository.js"
-import { ContextMap, StoreMaker } from "./Store.js"
+import type { Repository } from "./Repository.js"
+import { StoreMaker } from "./Store.js"
 import type { Filter, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
@@ -10,6 +10,7 @@ import { makeFilters } from "@effect-app/infra/filter"
 import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
+import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
  * A base for creating an abstract class usable as Tag, Companion and interface to create your own implementation.
@@ -20,25 +21,25 @@ export const RepositoryBase = <Service>() => {
   ) => {
     abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
       itemType: ItemType = itemType
-      abstract find: (id: T["id"]) => Effect<RequestCTX, never, Opt<T>>
-      abstract all: Effect<ContextMap, never, T[]>
+      abstract find: (id: T["id"]) => Effect<never, never, Opt<T>>
+      abstract all: Effect<never, never, T[]>
       abstract saveAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
-      ) => Effect<RequestCTX, InvalidStateError | OptimisticConcurrencyException, void>
+      ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
       abstract utils: {
         mapReverse: (
           pm: PM,
           setEtag: (id: string, eTag: string | undefined) => void
         ) => unknown // TODO
         parse: (a: unknown, env?: ParserEnv | undefined) => T
-        all: Effect<ContextMap, never, PM[]>
-        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<ContextMap, never, PM[]>
+        all: Effect<never, never, PM[]>
+        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
       }
       abstract removeAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
-      ) => Effect<RequestCTX, never, void>
+      ) => Effect<never, never, void>
       static where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
         return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
@@ -93,7 +94,7 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<never, never, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -101,10 +102,11 @@ export function makeRepo<
     ) {
       return Do(($) => {
         const store = $(mkStore(makeInitial, config))
+        const cms = $(ContextMapContainer)
 
         const allE = store.all.flatMap((items) =>
           Do(($) => {
-            const { set } = $(ContextMap)
+            const { set } = $(cms.get)
             return items.map((_) => mapReverse(_, set))
           })
         )
@@ -118,7 +120,7 @@ export function makeRepo<
             .find(id)
             .flatMap((items) =>
               Do(($) => {
-                const { set } = $(ContextMap)
+                const { set } = $(cms.get)
                 return items.map((_) => mapReverse(_, set))
               })
             )
@@ -132,7 +134,7 @@ export function makeRepo<
           Effect(a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
-                const { get, set } = $(ContextMap)
+                const { get, set } = $(cms.get)
                 const items = a.mapNonEmpty((_) => mapToPersistenceModel(_, get))
                 const ret = $(store.batchSet(items))
                 ret.forEach((_) => set(_.id, _._etag))
@@ -150,7 +152,7 @@ export function makeRepo<
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
-            const { get, set } = yield* $(ContextMap)
+            const { get, set } = yield* $(cms.get)
             const items = a.toChunk.map(encode)
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
@@ -174,8 +176,8 @@ export function makeRepo<
             parse: Parser.for(schema).unsafe,
             filter: store
               .filter
-              .flow((_) => _.tap((items) => ContextMap.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
-            all: store.all.tap((items) => ContextMap.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
+              .flow((_) => _.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
+            all: store.all.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
           itemType: name,
           find,
@@ -312,12 +314,12 @@ export const RepositoryBaseImpl = <Service>() => {
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
     make<R, E>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
-    ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
+    ): Effect<StoreMaker | ContextMapContainer | R, E, Repository<T, PM, Evt, ItemType>>
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
     makeLayer: (svc: Service) => Layer<never, never, Service>
@@ -346,14 +348,14 @@ export const RepositoryDefaultImpl = <Service>() => {
       impl: Repository<T, PM, Evt, ItemType>
     ): Repository<T, PM, Evt, ItemType>
     make<R, E>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
     ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
     toLayer<R, E>(
-      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
+      publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
       makeInitial?: Effect<R, E, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
@@ -367,7 +369,7 @@ export const RepositoryDefaultImpl = <Service>() => {
   } => {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R, E>(
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<RequestCTX, never, void>,
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<never, never, void>,
         makeInitial?: Effect<R, E, readonly T[]>,
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
