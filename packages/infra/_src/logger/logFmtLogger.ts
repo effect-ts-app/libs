@@ -18,7 +18,7 @@ export const logfmtLogger = Logger.make<unknown, void>(
           .entries
       ])
     }
-    const formatted = Logger.logfmtLogger.log(_)
+    const formatted = Logger.logfmtLogger.log({ ..._, annotations })
     globalThis.console.log(formatted)
   }
 )
