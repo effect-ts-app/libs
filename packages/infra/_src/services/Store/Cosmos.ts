@@ -22,9 +22,9 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient)
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>>(
+      make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
         name: string,
-        seed?: Effect<never, never, Iterable<PM>>,
+        seed?: Effect<R, E, Iterable<PM>>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {

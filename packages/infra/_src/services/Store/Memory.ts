@@ -41,9 +41,9 @@ function logQuery(filter: any, cursor: any) {
     }))
 }
 
-export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>>(
+export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
   name: string,
-  seed?: Effect<never, never, Iterable<PM>>
+  seed?: Effect<R, E, Iterable<PM>>
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(name)
@@ -99,14 +99,15 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 }
 
 export const makeMemoryStore = () => ({
-  make: <Id extends string, PM extends PersistenceModelType<Id>>(
+  make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
     name: string,
-    seed?: Effect<never, never, Iterable<PM>>,
+    seed?: Effect<R, E, Iterable<PM>>,
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
       const storesSem = Semaphore.unsafeMake(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, PM>(name, seed))
+      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(name, seed))
+      const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
         const store = stores.get(namespace)
@@ -119,7 +120,10 @@ export const makeMemoryStore = () => ({
         return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
           if (store) return Effect(store)
-          return makeMemoryStoreInt(name, seed).tap((store) => Effect.sync(() => stores.set(namespace, store)))
+          return makeMemoryStoreInt(name, seed)
+            .orDie
+            .provide(ctx)
+            .tap((store) => Effect.sync(() => stores.set(namespace, store)))
         }))
       })
       const s: Store<PM, Id> = {

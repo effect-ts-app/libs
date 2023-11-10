@@ -11,9 +11,9 @@ export function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const redis = yield* $(RedisClient)
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>>(
+      make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
         name: string,
-        seed?: Effect<never, never, Iterable<PM>>,
+        seed?: Effect<R, E, Iterable<PM>>,
         _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
