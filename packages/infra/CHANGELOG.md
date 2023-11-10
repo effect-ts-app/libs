@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.85.6
+
+### Patch Changes
+
+- be616fda: allow deps in makeInitial
+
 ## 0.85.5
 
 ### Patch Changes
