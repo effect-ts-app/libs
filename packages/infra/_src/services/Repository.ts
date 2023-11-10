@@ -5,8 +5,8 @@ import { Pure } from "@effect-app/prelude/Pure"
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
-import { ContextMap } from "../services/Store.js"
 import type { Filter } from "../services/Store.js"
+import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
  * @tsplus type Repository
@@ -176,7 +176,7 @@ export function queryEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
       .flatMap((items) =>
         Do(($) => {
-          const { set } = $(ContextMap)
+          const { set } = $(ContextMapContainer.flatMap((_) => _.get))
           return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
@@ -205,7 +205,7 @@ export function queryOneEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
       .flatMap((items) =>
         Do(($) => {
-          const { set } = $(ContextMap)
+          const { set } = $(ContextMapContainer.flatMap((_) => _.get))
           return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
