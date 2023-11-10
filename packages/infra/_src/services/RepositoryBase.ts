@@ -375,45 +375,45 @@ export const RepositoryDefaultImpl = <Service>() => {
       map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
       repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
     }
-    & Evt extends never ? {
-      make<R = never, E = never>(
-        args: {
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
+    & (Evt extends object ? {
+        make<R = never, E = never, R2 = never>(
+          args: {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
           }
-        }
-      ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
-      toLayer<R = never, E = never>(
-        args: {
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
-          }
-        }
-      ): Layer<StoreMaker | R, E, Service>
-    }
-    : {
-      make<R = never, E = never, R2 = never>(
-        args: {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
-          }
-        }
-      ): Effect<StoreMaker | R | R2, E, Repository<T, PM, Evt, ItemType>>
+        ): Effect<StoreMaker | R | R2, E, Repository<T, PM, Evt, ItemType>>
 
-      toLayer<R = never, E = never, R2 = never>(
-        args: {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
+        toLayer<R = never, E = never, R2 = never>(
+          args: {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
           }
-        }
-      ): Layer<StoreMaker | R | R2, E, Service>
-    } =>
+        ): Layer<StoreMaker | R | R2, E, Service>
+      }
+      : {
+        make<R = never, E = never>(
+          args: {
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+        ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
+        toLayer<R = never, E = never>(
+          args: {
+            makeInitial?: Effect<R, E, readonly T[]>
+            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+              partitionValue?: (a: PM) => string
+            }
+          }
+        ): Layer<StoreMaker | R, E, Service>
+      }) =>
   {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never, R2 = never>(
