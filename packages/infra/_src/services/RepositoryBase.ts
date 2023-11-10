@@ -61,7 +61,7 @@ export const RepositoryBase = <Service>() => {
  */
 export function makeRepo<
   PM extends { id: string; _etag: string | undefined },
-  Evt = never
+  Evt = unknown
 >() {
   return <
     ItemType extends string,
@@ -355,7 +355,7 @@ export const RepositoryBaseImpl = <Service>() => {
 export const RepositoryDefaultImpl = <Service>() => {
   return <
     PM extends { id: string; _etag: string | undefined },
-    Evt = never
+    Evt = unknown
   >() =>
   <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
     itemType: ItemType,
