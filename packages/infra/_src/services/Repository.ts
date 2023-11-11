@@ -156,6 +156,12 @@ export function project<
   return self.projectEffect(Effect(map))
 }
 
+const getCM = Effect
+  .contextWith((_: Context<never>) => Context.getOption(_, ContextMapContainer))
+  .flatMap((c) => c.encaseInEffect(() => new Error("ContextMapContainer not found")))
+  .orDie
+  .flatMap((_) => _.get)
+
 /**
  * @tsplus fluent Repository queryEffect
  */
@@ -176,7 +182,7 @@ export function queryEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
       .flatMap((items) =>
         Do(($) => {
-          const { set } = $(ContextMapContainer.flatMap((_) => _.get))
+          const { set } = $(getCM)
           return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
@@ -205,7 +211,7 @@ export function queryOneEffect<
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
       .flatMap((items) =>
         Do(($) => {
-          const { set } = $(ContextMapContainer.flatMap((_) => _.get))
+          const { set } = $(getCM)
           return items.map((_) => self.utils.mapReverse(_, set))
         })
       )
