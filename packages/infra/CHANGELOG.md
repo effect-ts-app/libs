@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.90.0
+
+### Minor Changes
+
+- a95c8eb9: improve context setup
+
 ## 0.89.3
 
 ### Patch Changes
