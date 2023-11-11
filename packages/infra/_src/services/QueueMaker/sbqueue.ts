@@ -12,7 +12,6 @@ import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
@@ -31,9 +30,9 @@ export function makeServiceBusQueue<
   queueDrainName: string,
   encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
-  provideContext: (context: RequestContext) => <R, E, A>(
+  provideContext: <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext | RequestContextContainer>, E, A>,
+  ) => Effect<Exclude<R, RContext>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -45,6 +44,7 @@ export function makeServiceBusQueue<
     const receiverLayer = Receiver.makeLayer(receiver)
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
+    const rcc = yield* $(RequestContextContainer)
 
     return {
       drain: Effect.gen(function*($) {
@@ -56,23 +56,20 @@ export function makeServiceBusQueue<
             .flatMap((x) => parseDrain(x))
             .orDie
             .flatMap(({ body, meta }) =>
-              Effect
-                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                .tap(() => restoreFromRequestContext)
-                .zipRight(handleEvent(body))
-                .orDie
-                // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                .apply(silenceAndReportError)
-                .apply(
-                  provideContext(
-                    RequestContext.inherit(meta, {
-                      id: RequestId(body.id),
-                      locale: "en" as const,
-                      name: ReasonableString(body._tag)
-                    })
-                  )
-                )
+              rcc.start(RequestContext.inherit(meta, {
+                id: RequestId(body.id),
+                locale: "en" as const,
+                name: ReasonableString(body._tag)
+              }))
+                > rcc.requestContext.flatMap((_) => _.restoreStoreId)
+                > Effect
+                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                  .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                  .zipRight(handleEvent(body))
+                  .orDie
+                  // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                  .apply(silenceAndReportError)
+                  .apply(provideContext)
             )
             // we reportError here, so that we report the error only, and keep flowing
             .tapErrorCause(reportError)
@@ -89,7 +86,7 @@ export function makeServiceBusQueue<
 
       publish: (...messages) =>
         Effect.gen(function*($) {
-          const requestContext = yield* $(RequestContextContainer.get)
+          const requestContext = yield* $(rcc.requestContext)
           return yield* $(
             Effect
               .promise(() =>

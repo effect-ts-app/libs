@@ -3,7 +3,6 @@ import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
 import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { restoreFromRequestContext } from "../Store/Memory.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import type { QueueBase } from "./service.js"
 
@@ -22,9 +21,9 @@ export function makeMemQueue<
   queueDrainName: string,
   encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
-  provideContext: (context: RequestContext) => <R, E, A>(
+  provideContext: <R, E, A>(
     eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext | RequestContextContainer>, E, A>,
+  ) => Effect<Exclude<R, RContext>, E, A>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -34,11 +33,12 @@ export function makeMemQueue<
     const mem = yield* $(MemQueue)
     const q = yield* $(mem.getOrCreateQueue(queueName))
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
+    const rcc = yield* $(RequestContextContainer)
 
     return {
       publish: (...messages) =>
         Effect.gen(function*($) {
-          const requestContext = yield* $(RequestContextContainer.get)
+          const requestContext = yield* $(rcc.requestContext)
           return yield* $(
             messages
               .forEachEffect((m) =>
@@ -64,21 +64,18 @@ export function makeMemQueue<
             .flatMap(parseDrain)
             .orDie
             .flatMap(({ body, meta }) =>
-              Effect
-                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                .tap(() => restoreFromRequestContext)
-                .zipRight(handleEvent(body))
-                .apply(silenceAndReportError)
-                .apply(
-                  provideContext(
-                    RequestContext.inherit(meta, {
-                      id: RequestId(body.id),
-                      locale: "en" as const,
-                      name: ReasonableString(body._tag)
-                    })
-                  )
-                )
+              rcc.start(RequestContext.inherit(meta, {
+                id: RequestId(body.id),
+                locale: "en" as const,
+                name: ReasonableString(body._tag)
+              }))
+                > rcc.requestContext.flatMap((_) => _.restoreStoreId)
+                > Effect
+                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                  .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                  .zipRight(handleEvent(body))
+                  .apply(silenceAndReportError)
+                  .apply(provideContext)
             )
         return yield* $(
           qDrain
