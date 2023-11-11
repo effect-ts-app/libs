@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.89.3
+
+### Patch Changes
+
+- 7c09ea89: fix type
+
 ## 0.89.2
 
 ### Patch Changes
