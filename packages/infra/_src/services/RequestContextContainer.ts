@@ -2,6 +2,7 @@ import { RequestId } from "@effect-app/prelude/ids"
 import { RequestContext } from "../RequestContext.js"
 
 /**
+ * @tsplus type RequestContextContainer
  * @tsplus companion RequestContextContainer.Ops
  */
 export abstract class RequestContextContainer extends TagClass<RequestContextContainer>() {
@@ -36,7 +37,7 @@ export class RequestContextContainerImpl extends RequestContextContainer {
   }
 
   override update = (f: (a: RequestContext) => RequestContext) => this.#ref.getAndUpdate(f)
-  override start = (a: RequestContext) => this.#ref.set(a)
+  override start = (a: RequestContext) => this.#ref.set(a) > a.restoreStoreId
 }
 
 /**

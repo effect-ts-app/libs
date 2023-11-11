@@ -1,5 +1,8 @@
+import type { RequestContextContainer } from "../RequestContextContainer.js"
+import type { ContextMapContainer } from "../Store/ContextMapContainer.js"
+
 export interface QueueBase<RContext, Evt> {
-  drain: Effect<Scope | RContext, never, void>
+  drain: Effect<Scope | RequestContextContainer | ContextMapContainer | RContext, never, void>
   publish: (
     ...messages: NonEmptyReadonlyArray<Evt>
   ) => Effect<never, never, void>

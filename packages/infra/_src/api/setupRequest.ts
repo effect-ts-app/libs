@@ -1,15 +1,13 @@
 import { RequestId } from "@effect-app/prelude/ids"
 import { RequestContext } from "../RequestContext.js"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
+import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 
 /**
- * @tsplus fluent effect/io/Effect setupRequestFromWith
+ * @tsplus fluent effect/io/Effect setupRequestContextFromName
  */
-export function setupReq3<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return makeInternalRequestContext(name)
-    .flatMap((rc) => RequestContextContainer.flatMap((_) => _.start(rc)))
-    > self
-      .withRequestSpan
+export function setupRequestContextFromName<R, E, A>(self: Effect<R, E, A>, name: string) {
+  return makeInternalRequestContext(name).flatMap((rc) => setupRequestContext(self, rc))
 }
 
 function makeInternalRequestContext(name: string) {
@@ -24,8 +22,7 @@ function makeInternalRequestContext(name: string) {
   })
 }
 
-/** @tsplus getter effect/io/Effect withRequestSpan */
-export const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
+const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
   RequestContextContainer
     .get
     .flatMap((ctx) =>
@@ -33,3 +30,16 @@ export const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
         .withSpan(`request[${ctx.name}]#${ctx.id}`)
         .withLogSpan("request")
     )
+
+function setupContextMap<R, E, A>(self: Effect<R, E, A>) {
+  return (ContextMapContainer.flatMap((_) => _.start)
+    > self)
+}
+
+/**
+ * @tsplus fluent effect/io/Effect setupRequestContext
+ */
+export function setupRequestContext<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext) {
+  return RequestContextContainer.flatMap((_) => _.start(requestContext))
+    > withRequestSpan(setupContextMap(self))
+}

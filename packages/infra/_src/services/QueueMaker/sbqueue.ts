@@ -52,19 +52,18 @@ export function makeServiceBusQueue<
             .flatMap((x) => parseDrain(x))
             .orDie
             .flatMap(({ body, meta }) =>
-              rcc.start(RequestContext.inherit(meta, {
-                id: RequestId(body.id),
-                locale: "en" as const,
-                name: ReasonableString(body._tag)
-              }))
-                > rcc.requestContext.flatMap((_) => _.restoreStoreId)
-                > Effect
-                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                  .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                  .zipRight(handleEvent(body))
-                  .orDie
-                  // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                  .apply(silenceAndReportError)
+              Effect
+                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .zipRight(handleEvent(body))
+                .orDie
+                // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                .apply(silenceAndReportError)
+                .setupRequestContext(RequestContext.inherit(meta, {
+                  id: RequestId(body.id),
+                  locale: "en" as const,
+                  name: ReasonableString(body._tag)
+                }))
             )
             // we reportError here, so that we report the error only, and keep flowing
             .tapErrorCause(reportError)
