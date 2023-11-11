@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.89.0
+
+### Minor Changes
+
+- ee322d46: Cleanup Queue
+
 ## 0.88.0
 
 ### Minor Changes
