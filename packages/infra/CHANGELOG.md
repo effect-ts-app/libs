@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.88.0
+
+### Minor Changes
+
+- 8d312e3d: updater queue for updated requestcontext
+
 ## 0.87.5
 
 ### Patch Changes
