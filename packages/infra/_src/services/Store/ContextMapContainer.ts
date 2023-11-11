@@ -6,13 +6,17 @@ import { ContextMap, makeContextMap } from "./service.js"
 // we can call another start after startup. but it would be even better if we could Die on accessing rootmap
 // we could also make the ContextMap optional, and when missing, issue a warning instead?
 
+export interface ContextMapContainerId {
+  readonly _: unique symbol
+}
+
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export abstract class ContextMapContainer extends TagClass<ContextMapContainer>() {
+export abstract class ContextMapContainer extends TagClass<ContextMapContainerId, ContextMapContainer>() {
   abstract readonly get: Effect<never, never, ContextMap>
   abstract readonly start: Effect<never, never, void>
-  static get get(): Effect<ContextMapContainer, never, ContextMap> {
+  static get get(): Effect<ContextMapContainerId, never, ContextMap> {
     return ContextMapContainer.flatMap((_) => _.get)
   }
   static get getOption() {
