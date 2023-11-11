@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.89.2
+
+### Patch Changes
+
+- revert id change
+
 ## 0.89.1
 
 ### Patch Changes
