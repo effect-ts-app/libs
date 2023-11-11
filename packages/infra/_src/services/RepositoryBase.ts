@@ -95,7 +95,7 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make<R = never, E = never, R2 = never>(
-      args: Evt extends {} ? {
+      args: [Evt] extends [object] ? {
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
@@ -325,7 +325,7 @@ export const RepositoryBaseImpl = <Service>() => {
     mapTo: (e: E, etag: string | undefined) => PM
   ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
     make<R = never, E = never, R2 = never>(
-      args: Evt extends {} ? {
+      args: [Evt] extends [object] ? {
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
@@ -375,7 +375,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
       repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
     }
-    & (Evt extends object ? {
+    & ([Evt] extends [object] ? {
         make<R = never, E = never, R2 = never>(
           args: {
             publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
@@ -417,7 +417,7 @@ export const RepositoryDefaultImpl = <Service>() => {
   {
     return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never, R2 = never>(
-        args: Evt extends {} ? {
+        args: [Evt] extends [object] ? {
             publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
             makeInitial?: Effect<R, E, readonly T[]>
             config?: Omit<StoreConfig<PM>, "partitionValue"> & {
