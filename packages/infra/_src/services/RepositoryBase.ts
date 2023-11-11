@@ -12,7 +12,6 @@ import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import type { ContextMapContainerId } from "./Store/ContextMapContainer.js"
 
 /**
  * A base for creating an abstract class usable as Tag, Companion and interface to create your own implementation.
@@ -339,7 +338,7 @@ export const RepositoryBaseImpl = <Service>() => {
             partitionValue?: (a: PM) => string
           }
         }
-    ): Effect<StoreMaker | ContextMapContainerId | R | R2, E, Repository<T, PM, Evt, ItemType>>
+    ): Effect<StoreMaker | ContextMapContainer | R | R2, E, Repository<T, PM, Evt, ItemType>>
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
     makeLayer: (svc: Service) => Layer<never, never, Service>

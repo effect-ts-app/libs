@@ -1,18 +1,14 @@
 import { RequestId } from "@effect-app/prelude/ids"
 import { RequestContext } from "../RequestContext.js"
 
-export interface RequestContextContainerId {
-  readonly _: unique symbol
-}
-
 /**
  * @tsplus companion RequestContextContainer.Ops
  */
-export abstract class RequestContextContainer extends TagClass<RequestContextContainerId, RequestContextContainer>() {
+export abstract class RequestContextContainer extends TagClass<RequestContextContainer>() {
   abstract readonly requestContext: Effect<never, never, RequestContext>
   abstract readonly update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, RequestContext>
   abstract readonly start: (f: RequestContext) => Effect<never, never, void>
-  static get get(): Effect<RequestContextContainerId, never, RequestContext> {
+  static get get(): Effect<RequestContextContainer, never, RequestContext> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }
   static get getOption() {
