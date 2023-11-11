@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "effect": "^2.0.0-next.54",
-    "@fp-ts/optic": "^0.14.0",
+    "@fp-ts/optic": "^0.15.0",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
@@ -14,8 +14,8 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.6",
-    "@types/validator": "^13.11.5",
+    "@types/uuid": "^9.0.7",
+    "@types/validator": "^13.11.6",
     "fast-check": "~3.13.2",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072",

@@ -35,8 +35,8 @@
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
     "@babel/cli": "^7.23.0",
-    "@types/node": "~20.8.10",
-    "@types/react": "^18.2.36",
+    "@types/node": "~20.9.0",
+    "@types/react": "^18.2.37",
     "react": "^18.2.0",
     "react-hook-form": "7.40.0",
     "react-intl": "^6.5.2",

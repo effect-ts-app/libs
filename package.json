@@ -8,7 +8,7 @@
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
             "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-            "@fp-ts/optic@0.14.0": "patches/@fp-ts__optic@0.14.0.patch"
+            "@fp-ts/optic@0.15.0": "patches/@fp-ts__optic@0.15.0.patch"
         }
     },
     "scripts": {
@@ -54,12 +54,12 @@
     },
     "devDependencies": {
         "@babel/cli": "^7.23.0",
-        "@babel/core": "^7.23.2",
+        "@babel/core": "^7.23.3",
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-        "@babel/plugin-transform-modules-commonjs": "^7.23.0",
+        "@babel/plugin-transform-modules-commonjs": "^7.23.3",
         "@changesets/cli": "^2.26.2",
         "@dprint/typescript": "^0.88.3",
-        "@effect-app/cli": "^0.22.1",
+        "@effect-app/cli": "^0.23.0",
         "@effect-app/compiler": "workspace:*",
         "@effect-app/core": "workspace:*",
         "@effect-app/eslint-codegen-model": "workspace:*",
@@ -71,8 +71,8 @@
         "@effect/language-service": "0.0.19",
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^2.0.2",
-        "@types/lodash": "^4.14.200",
-        "@types/node": "~20.8.10",
+        "@types/lodash": "^4.14.201",
+        "@types/node": "~20.9.0",
         "@typescript-eslint/eslint-plugin": "^6.10.0",
         "@typescript-eslint/parser": "^6.10.0",
         "@typescript-eslint/scope-manager": "^6.10.0",
