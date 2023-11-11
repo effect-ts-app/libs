@@ -13,17 +13,13 @@ export function makeMemQueue<
   DrainR,
   Evt,
   DrainEvt extends { id: StringId; _tag: string },
-  RContext,
   EvtE,
   DrainE
 >(
   queueName: string,
   queueDrainName: string,
   encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
-  provideContext: <R, E, A>(
-    eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext>, E, A>,
+  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -75,7 +71,6 @@ export function makeMemQueue<
                   .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                   .zipRight(handleEvent(body))
                   .apply(silenceAndReportError)
-                  .apply(provideContext)
             )
         return yield* $(
           qDrain

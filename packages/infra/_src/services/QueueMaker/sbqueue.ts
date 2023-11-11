@@ -22,17 +22,13 @@ export function makeServiceBusQueue<
   DrainR,
   Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
-  RContext,
   EvtE,
   DrainE
 >(
   _queueName: string,
   queueDrainName: string,
   encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<RContext, DrainE, void>>,
-  provideContext: <R, E, A>(
-    eff: Effect<RContext | R, E, A>
-  ) => Effect<Exclude<R, RContext>, E, A>,
+  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
   parseDrain: (
     a: unknown,
     env?: Parser.ParserEnv | undefined
@@ -69,7 +65,6 @@ export function makeServiceBusQueue<
                   .orDie
                   // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
                   .apply(silenceAndReportError)
-                  .apply(provideContext)
             )
             // we reportError here, so that we report the error only, and keep flowing
             .tapErrorCause(reportError)
