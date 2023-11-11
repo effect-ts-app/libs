@@ -17,7 +17,7 @@
     "@babel/generator": "7.23.3",
     "@babel/parser": "7.23.3",
     "@typescript-eslint/utils": "^6.10.0",
-    "eslint-plugin-codegen": "0.18.1",
+    "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
     "io-ts": "2.2.20",
     "io-ts-extra": "0.11.6",
