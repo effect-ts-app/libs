@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.91.0
+
+### Minor Changes
+
+- 6f44f892: improve queue constructor
+
 ## 0.90.1
 
 ### Patch Changes
