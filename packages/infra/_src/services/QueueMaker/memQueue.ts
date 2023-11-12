@@ -18,7 +18,7 @@ export function makeMemQueue<
 >(
   queueName: string,
   queueDrainName: string,
-  encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
+  encoder: (e: Evt) => EvtE,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
   parseDrain: (
     a: unknown,
@@ -41,7 +41,7 @@ export function makeMemQueue<
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 Effect(
                   JSON.stringify(
-                    encoder({ body: m, meta: requestContext })
+                    { body: encoder(m), meta: RequestContext.Encoder(requestContext) }
                   )
                 )
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))

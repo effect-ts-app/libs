@@ -27,7 +27,7 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  encoder: (e: { body: Evt; meta: RequestContext }) => EvtE,
+  encoder: (e: Evt) => EvtE,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
   parseDrain: (
     a: unknown,
@@ -87,7 +87,7 @@ export function makeServiceBusQueue<
                 s.sendMessages(
                   messages.map((x) => ({
                     body: JSON.stringify(
-                      encoder({ body: x, meta: requestContext })
+                      { body: encoder(x), meta: RequestContext.Encoder(requestContext) }
                     ),
                     messageId: x.id, /* correllationid: requestId */
                     contentType: "application/json"
