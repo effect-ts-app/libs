@@ -93,6 +93,7 @@ export abstract class StoreMaker extends TagClass<StoreMaker>() {
   ) => Effect<R, E, Store<PM, Id>>
 }
 
+/** @tsplus static ContextMap make */
 export const makeContextMap = (): ContextMap => {
   const etags = new Map<string, string>()
   const getEtag = (id: string) => etags.get(id)
@@ -157,11 +158,6 @@ export const makeContextMap = (): ContextMap => {
     parserEnv
   }
 }
-
-/**
- * @tsplus static ContextMap.Ops Make
- */
-export const makeMap = Effect.sync(() => makeContextMap())
 
 /**
  * @tsplus type ContextMap

@@ -37,7 +37,7 @@ export class ContextMapContainerImpl extends ContextMapContainer {
     return this.#ref.get
   }
 
-  override start = ContextMap.Make.flatMap((_) => this.#ref.set(_))
+  override start = Effect(ContextMap.make).flatMap((_) => this.#ref.set(_))
 }
 
 /**
