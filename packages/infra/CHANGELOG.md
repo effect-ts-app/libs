@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.91.1
+
+### Patch Changes
+
+- a11be216: fix types
+
 ## 0.91.0
 
 ### Minor Changes
