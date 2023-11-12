@@ -1,7 +1,6 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
-import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import type { QueueBase } from "./service.js"
@@ -18,18 +17,20 @@ export function makeMemQueue<
 >(
   queueName: string,
   queueDrainName: string,
-  encoder: (e: Evt) => EvtE,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
-  parseDrain: (
-    a: unknown,
-    env?: Parser.ParserEnv | undefined
-  ) => Effect<never, CustomSchemaException, { body: DrainEvt; meta: RequestContext }>
+  schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
+  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
+  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)
     const q = yield* $(mem.getOrCreateQueue(queueName))
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
     const rcc = yield* $(RequestContextContainer)
+
+    const wireSchema = props({ body: schema, meta: RequestContext })
+    const encoder = wireSchema.Encoder
+    const drainW = props({ body: drainSchema, meta: RequestContext })
+    const parseDrain = drainW.parseCondemnDie
 
     return {
       publish: (...messages) =>
@@ -40,9 +41,7 @@ export function makeMemQueue<
               .forEachEffect((m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 Effect(
-                  JSON.stringify(
-                    { body: encoder(m), meta: RequestContext.Encoder(requestContext) }
-                  )
+                  JSON.stringify(encoder({ body: m, meta: requestContext }))
                 )
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
                   .flatMap((_) => q.offer(_))

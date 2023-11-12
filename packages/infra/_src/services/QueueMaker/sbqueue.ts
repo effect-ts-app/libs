@@ -10,7 +10,6 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
-import type { CustomSchemaException } from "@effect-app/prelude/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import type { QueueBase } from "./service.js"
@@ -27,13 +26,15 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  encoder: (e: Evt) => EvtE,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>,
-  parseDrain: (
-    a: unknown,
-    env?: Parser.ParserEnv | undefined
-  ) => Effect<never, CustomSchemaException, { body: DrainEvt; meta: RequestContext }>
+  schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
+  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
+  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
 ) {
+  const wireSchema = props({ body: schema, meta: RequestContext })
+  const encoder = wireSchema.Encoder
+  const drainW = props({ body: drainSchema, meta: RequestContext })
+  const parseDrain = drainW.parseCondemnDie
+
   return Effect.gen(function*($) {
     const s = yield* $(Sender)
     const receiver = yield* $(Receiver)
@@ -85,11 +86,9 @@ export function makeServiceBusQueue<
             Effect
               .promise(() =>
                 s.sendMessages(
-                  messages.map((x) => ({
-                    body: JSON.stringify(
-                      { body: encoder(x), meta: RequestContext.Encoder(requestContext) }
-                    ),
-                    messageId: x.id, /* correllationid: requestId */
+                  messages.map((m) => ({
+                    body: JSON.stringify(encoder({ body: m, meta: requestContext })),
+                    messageId: m.id, /* correllationid: requestId */
                     contentType: "application/json"
                   }))
                 )
