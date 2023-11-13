@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.63.2
+
+### Patch Changes
+
+- 263a56b9: update packages
+- Updated dependencies [263a56b9]
+  - @effect-app/prelude@0.70.2
+  - @effect-app/core@0.68.2
+  - @effect-app/vue@0.63.2
+  - @effect-app/schema@0.62.2
+
 ## 0.63.1
 
 ### Patch Changes
