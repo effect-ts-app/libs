@@ -8,6 +8,8 @@
     "@types/faker",
     "redis",
     "@types/redis",
-    "react-hook-form"
+    "react-hook-form",
+    "@effect/language-service",
+    "eslint-plugin-codegen"
   ]
 }
