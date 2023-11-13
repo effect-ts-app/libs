@@ -1,6 +1,8 @@
 import type { SupportedErrors, ValidationError } from "@effect-app/prelude/client/errors"
 import type express from "express"
-import { logRequestError } from "./reportError.js"
+import { logError } from "../errorReporter.js"
+
+const logRequestError = logError("Request")
 
 export function defaultBasicErrorHandler<R>(
   _req: express.Request,

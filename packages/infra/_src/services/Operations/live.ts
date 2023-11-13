@@ -1,27 +1,28 @@
-import { RequestException } from "@effect-app/infra/api/reportError"
 import { reportError } from "@effect-app/infra/errorReporter"
 import type { OperationProgress } from "@effect-app/prelude/Operations"
 import { Failure, Operation, OperationId, Success } from "@effect-app/prelude/Operations"
 import { Operations } from "./service.js"
 
-const reportAppError = reportError((cause) => new RequestException(cause))
+const reportAppError = reportError("Operations.Cleanup")
 
 const make = Effect.sync((): Operations => {
   const ops = new Map<OperationId, Operation>()
   const makeOp = Effect(OperationId.make())
 
-  const cleanup = Effect.sync(() => {
-    const before = new Date().subHours(1)
-    ops
-      .entries()
-      .toChunk
-      .forEach(([id, op]) => {
-        const lastChanged = Option.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
-        if (lastChanged < before) {
-          ops.delete(id)
-        }
-      })
-  })
+  const cleanup = Effect
+    .sync(() => {
+      const before = new Date().subHours(1)
+      ops
+        .entries()
+        .toChunk
+        .forEach(([id, op]) => {
+          const lastChanged = Option.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
+          if (lastChanged < before) {
+            ops.delete(id)
+          }
+        })
+    })
+    .withSpan("Operations.cleanup")
 
   function addOp(id: OperationId) {
     return Effect.sync(() => {

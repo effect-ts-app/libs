@@ -1,19 +1,6 @@
 import { reportError } from "@effect-app/infra/errorReporter"
-import { CauseException } from "@effect-app/infra/errors"
 
-export class MessageException<E> extends CauseException<E> {
-  constructor(cause: Cause<E>) {
-    super(cause, "Message")
-  }
-}
-
-export class FatalQueueException<E> extends CauseException<E> {
-  constructor(cause: Cause<E>) {
-    super(cause, "FatalQueue")
-  }
-}
-
-const reportQueueError_ = reportError((cause) => new MessageException(cause))
+const reportQueueError_ = reportError("Queue")
 
 export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
   reportQueueError_(cause, extras)
@@ -32,7 +19,7 @@ export function forkDaemonReportQueue<R, E, A>(self: Effect<R, E, A>) {
 }
 
 export const reportFatalQueueError = reportError(
-  (cause) => new FatalQueueException(cause)
+  "FatalQueue"
 )
 
 export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
@@ -41,9 +28,7 @@ export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
     inp
       .exit
       .flatMap((result) =>
-        result.match(
-          { onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect(result) }
-        )
+        result.match({ onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect(result) })
       )
 }
 

@@ -1,31 +1,4 @@
 import { logError, reportError } from "../errorReporter.js"
-import { CauseException } from "../errors.js"
-
-export class RequestException<E> extends CauseException<E> {
-  constructor(cause: Cause<E>) {
-    super(cause, "Request")
-  }
-}
-export class FatalMainException<E> extends CauseException<E> {
-  constructor(cause: Cause<E>) {
-    super(cause, "FatalMain")
-  }
-}
-
-const reportMainError_ = reportError((cause) => new FatalMainException(cause))
-
-export const reportMainError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
-  reportMainError_(cause, extras)
-
-const reportRequestError_ = reportError((cause) => new RequestException(cause))
-
-export const reportRequestError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
-  reportRequestError_(cause, extras)
-
-const logRequestError_ = logError((cause) => new RequestException(cause))
-
-export const logRequestError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
-  logRequestError_(cause, extras)
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
@@ -38,7 +11,7 @@ export const logRequestError = <E>(cause: Cause<E>, extras?: Record<string, unkn
  */
 export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
   return self
-    .tapErrorCause(reportRequestError)
+    .tapErrorCause(reportError("Request"))
     .fork
     .daemonChildren
 }
@@ -56,8 +29,8 @@ export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>
   return self
     .tapErrorCause((cause) =>
       cause.isInterruptedOnly() || cause.isDie()
-        ? reportRequestError(cause)
-        : logRequestError(cause)
+        ? reportError("request")(cause)
+        : logError("request")(cause)
     )
     .fork
     .daemonChildren
