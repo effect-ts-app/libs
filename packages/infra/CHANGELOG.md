@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.91.4
+
+### Patch Changes
+
+- fd45c85a: span trial
+
 ## 0.91.3
 
 ### Patch Changes
