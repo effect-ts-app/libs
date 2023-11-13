@@ -278,8 +278,3 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
 export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, readonly A[]> {
   return Fiber.join(Fiber.all(fibers))
 }
-
-// /**
-//  * @tsplus static effect/io/Effect.Ops __call
-//  */
-// export const effectSync: <A>(evaluate: ForceLazyArg<A>) => Effect<never, never, A> = Effect.sync
