@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@fp-ts/optic": "^0.15.0",
-    "@effect/platform": "^0.28.1",
+    "@effect/platform": "^0.28.2",
     "effect": "^2.0.0-next.54",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
