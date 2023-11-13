@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.92.1
+
+### Patch Changes
+
+- 9719df41: improve sentry error
+
 ## 0.92.0
 
 ### Minor Changes
