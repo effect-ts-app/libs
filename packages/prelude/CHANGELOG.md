@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.70.4
+
+### Patch Changes
+
+- housekeeping: update packages
+- Updated dependencies
+  - @effect-app/core@0.68.3
+  - @effect-app/schema@0.62.3
+
 ## 0.70.3
 
 ### Patch Changes
