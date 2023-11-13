@@ -14,8 +14,8 @@ export function reportError(
       }
       yield* $(reportSentry(cause, name, extras))
       yield* $(
-        cause
-          .logError
+        Effect
+          .logError("Reporting error", cause)
           .annotateLogs(dropUndefined({
             extras,
             // __cause__: error.toJSON(), // logs too much garbage
@@ -51,8 +51,8 @@ export function logError<E>(
         return
       }
       yield* $(
-        cause
-          .logWarning
+        Effect
+          .logWarning("Logging error", cause)
           .annotateLogs(dropUndefined({
             extras,
             // __cause__: error.toJSON(), // logs too much garbage
