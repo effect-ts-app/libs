@@ -34,8 +34,9 @@ function reportSentry(
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
-    scope.setContext("error", cause.toJSON() as any)
-    Sentry.captureException(new CauseException(cause, name), scope)
+    const error = new CauseException(cause, name)
+    scope.setContext("error", error.toJSON() as any)
+    Sentry.captureException(error, scope)
   })
 }
 
