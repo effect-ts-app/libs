@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.92.0
+
+### Minor Changes
+
+- 9e5f6d69: cleanup error mess
+
 ## 0.91.4
 
 ### Patch Changes
