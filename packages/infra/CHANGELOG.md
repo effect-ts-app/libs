@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.92.3
+
+### Patch Changes
+
+- edfd9237: improve error
+
 ## 0.92.2
 
 ### Patch Changes
