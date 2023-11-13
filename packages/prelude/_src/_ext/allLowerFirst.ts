@@ -1,9 +1,25 @@
 export type Service<T> = T extends Effect<any, any, infer S> ? S : T extends Tag<any, infer S> ? S : never
-export type ServiceR<T> = T extends Effect<infer R, any, any> ? R : T extends Tag<any, infer S> ? S : never
+export type ServiceR<T> = T extends Effect<infer R, any, any> ? R : T extends Tag<infer R, any> ? R : never
 export type ServiceE<T> = T extends Effect<any, infer E, any> ? E : never
 export type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 export type ValuesR<T> = T extends { [s: string]: infer S } ? ServiceR<S> : never
 export type ValuesE<T> = T extends { [s: string]: infer S } ? ServiceE<S> : never
+
+/**
+ * Due to tsplus unification (tsplus unify tag), when trying to use the Effect type in a type constraint
+ * the compiler will cause basically anything to match. as such, use this type instead.
+ * ```ts
+ * const a = <
+ *  SVC extends Record<
+ *    string,
+ *    ((req: number) => Effect<any, any, any>) | Effect<any, any, any>
+ *   >
+ * >(svc: SVC) => svc
+ *
+ * const b = a({ str: "" })   // valid, but shouldn't be!
+ * ```
+ */
+export interface EffectUnunified<R, E, A> extends Effect<R, E, A> {}
 
 export type LowerFirst<S extends PropertyKey> = S extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}`
   : S
