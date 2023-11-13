@@ -1,3 +1,4 @@
+import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
 import { CauseException } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
@@ -15,11 +16,11 @@ export function reportError(
       yield* $(
         cause
           .logError
-          .annotateLogs({
+          .annotateLogs(dropUndefined({
             extras,
             // __cause__: error.toJSON(), // logs too much garbage
             __error_name__: name
-          })
+          }))
       )
     })
 }
@@ -46,17 +47,17 @@ export function logError<E>(
   return (cause: Cause<E>, extras?: Record<string, unknown>) =>
     Effect.gen(function*($) {
       if (cause.isInterrupted()) {
-        yield* $(Effect.logDebug("Interrupted").annotateLogs("extras", JSON.stringify(extras ?? {})))
+        yield* $(Effect.logDebug("Interrupted").annotateLogs(dropUndefined({ extras })))
         return
       }
       yield* $(
         cause
           .logWarning
-          .annotateLogs({
+          .annotateLogs(dropUndefined({
             extras,
             // __cause__: error.toJSON(), // logs too much garbage
             __error_name__: name
-          })
+          }))
       )
     })
 }
