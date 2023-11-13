@@ -18,7 +18,7 @@ export function reportError<E, E2 extends CauseException<unknown>>(
           .logError
           .annotateLogs({
             extras,
-            __cause__: error.toJSON(),
+            // __cause__: error.toJSON(), // logs too much garbage
             __error__: { _tag: error._tag, message: error.message }
           })
       )
@@ -54,7 +54,7 @@ export function logError<E, E2 extends CauseException<unknown>>(
           .logWarning
           .annotateLogs({
             extras,
-            __cause__: error.toJSON(),
+            // __cause__: error.toJSON(), // logs too much garbage
             __error__: { _tag: error._tag, message: error.message }
           })
       )

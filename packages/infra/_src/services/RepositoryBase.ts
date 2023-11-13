@@ -198,6 +198,8 @@ export function makeRepo<
         }
         return r
       })
+        .withSpan("@effect-app/infra/Repository.make: " + name)
+        .withLogSpan("Repository.make: " + name)
     }
 
     return {
