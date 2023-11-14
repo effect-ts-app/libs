@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.93.6
+
+### Patch Changes
+
+- ec723ef6: fix recalc
+
 ## 0.93.5
 
 ### Patch Changes
