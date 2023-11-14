@@ -120,7 +120,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
-              .instrument("cosmos.bulkSet", { containerId, modelName: name })
+              .instrument("@effect-app/infra/Store/Cosmos.bulkSet", { containerId, modelName: name })
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Effect
@@ -182,7 +182,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     })
                   )
               })
-              .instrument("cosmos.batchSet", { containerId, modelName: name })
+              .instrument("@effect-app/infra/Store/Cosmos.batchSet", { containerId, modelName: name })
           }
 
           const s: Store<PM, Id> = {
@@ -200,7 +200,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resources }) => resources)
                 )
               )
-              .instrument("cosmos.all", { containerId, modelName: name }),
+              .instrument("@effect-app/infra/Store/Cosmos.all", { containerId, modelName: name }),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -231,7 +231,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   return v
                 })
-                .instrument("cosmos.filterJoinSelect", { containerId, modelName: name }),
+                .instrument("@effect-app/infra/Store/Cosmos.filterJoinSelect", { containerId, modelName: name }),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -271,7 +271,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.map((_) => _.f))
                     )
                   ))
-                .instrument("cosmos.filter", { containerId, modelName: name })
+                .instrument("@effect-app/infra/Store/Cosmos.filter", { containerId, modelName: name })
             },
             find: (id) =>
               Effect
@@ -281,7 +281,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .read<PM>()
                     .then(({ resource }) => Option.fromNullable(resource))
                 )
-                .instrument("cosmos.find", { containerId, modelName: name }),
+                .instrument("@effect-app/infra/Store/Cosmos.find", { containerId, modelName: name }),
             set: (e) =>
               Option
                 .fromNullable(e._etag)
@@ -324,13 +324,13 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     _etag: x.etag
                   })
                 })
-                .instrument("cosmos.set", { containerId, modelName: name }),
+                .instrument("@effect-app/infra/Store/Cosmos.set", { containerId, modelName: name }),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
-                .instrument("cosmos.remove", { containerId, modelName: name })
+                .instrument("@effect-app/infra/Store/Cosmos.remove", { containerId, modelName: name })
           }
 
           // handle mock data

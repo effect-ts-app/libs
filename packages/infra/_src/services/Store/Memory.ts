@@ -57,7 +57,10 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
-    const all = values.map(ReadonlyArray.fromIterable).instrument("mem.all", { modelName, namespace })
+    const all = values.map(ReadonlyArray.fromIterable).instrument("@effect-app/infra/Store/Memory.all", {
+      modelName,
+      namespace
+    })
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
@@ -76,32 +79,41 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const s: Store<PM, Id> = {
       all,
       find: (id) =>
-        store.get.map((_) => Option.fromNullable(_.get(id))).instrument("mem.find", { modelName, namespace }),
+        store.get.map((_) => Option.fromNullable(_.get(id))).instrument("@effect-app/infra/Store/Memory.find", {
+          modelName,
+          namespace
+        }),
       filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
         all
           .tap(() => logQuery(filter, cursor))
           .map(memFilter(filter, cursor))
-          .instrument("mem.filter", { modelName, namespace }),
+          .instrument("@effect-app/infra/Store/Memory.filter", { modelName, namespace }),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument("mem.filterJoinSelect", {
-          modelName
-        }),
+        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument(
+          "@effect-app/infra/Store/Memory.filterJoinSelect",
+          {
+            modelName
+          }
+        ),
       set: (e) =>
         s
           .find(e.id)
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
           .apply(withPermit)
-          .instrument("mem.set", { modelName, namespace }),
-      batchSet: flow(batchSet, (_) => _.instrument("mem.batchSet", { modelName, namespace })),
-      bulkSet: flow(batchSet, (_) => _.instrument("mem.bulkSet", { modelName, namespace })),
+          .instrument("@effect-app/infra/Store/Memory.set", { modelName, namespace }),
+      batchSet: flow(
+        batchSet,
+        (_) => _.instrument("@effect-app/infra/Store/Memory.batchSet", { modelName, namespace })
+      ),
+      bulkSet: flow(batchSet, (_) => _.instrument("@effect-app/infra/Store/Memory.bulkSet", { modelName, namespace })),
       remove: (e: PM) =>
         store
           .get
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
           .apply(withPermit)
-          .instrument("mem.remove", { modelName, namespace })
+          .instrument("@effect-app/infra/Store/Memory.remove", { modelName, namespace })
     }
     return s
   })

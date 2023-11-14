@@ -20,8 +20,15 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
       get: fu
         .readTextFile(file)
         .map((x) => JSON.parse(x) as PM[])
-        .orDie,
-      setRaw: (v: Iterable<PM>) => JSON.stringify([...v], undefined, 2)["|>"]((json) => fu.writeTextFile(file, json))
+        .orDie
+        .withSpan("@effect-app/infra/Store/Disk.read", { attributes: { file } }),
+      setRaw: (v: Iterable<PM>) =>
+        JSON.stringify([...v], undefined, 2)["|>"](
+          (json) =>
+            fu
+              .writeTextFile(file, json)
+              .withSpan("@effect-app/infra/Store/Disk.write", { attributes: { file, size: json.length } })
+        )
     }
 
     const store = yield* $(
