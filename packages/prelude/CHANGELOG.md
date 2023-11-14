@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.71.0
+
+### Minor Changes
+
+- 40a6c3b6: update packages
+
+### Patch Changes
+
+- Updated dependencies [40a6c3b6]
+  - @effect-app/core@0.69.0
+  - @effect-app/schema@0.62.4
+
 ## 0.70.4
 
 ### Patch Changes
