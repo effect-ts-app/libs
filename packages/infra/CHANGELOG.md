@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.93.5
+
+### Patch Changes
+
+- improve trace
+
 ## 0.93.4
 
 ### Patch Changes
