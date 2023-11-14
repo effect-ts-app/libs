@@ -27,7 +27,7 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
     .get
     .flatMap((ctx) =>
       f
-        .withSpan(`request[${ctx.name}]#${ctx.id}`)
+        .withSpan(`request`, { attributes: { requestId: ctx.id, requestName: ctx.name } })
         .withLogSpan("request")
     )
 

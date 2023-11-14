@@ -56,7 +56,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
-    const all = values.map(ReadonlyArray.fromIterable)
+    const all = values.map(ReadonlyArray.fromIterable).instrument("mem.all")
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
@@ -72,29 +72,33 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
         )
         .map((_) => _ as NonEmptyArray<PM>)
         .apply(withPermit)
+        .instrument("mem.batchSet")
     const s: Store<PM, Id> = {
       all,
-      find: (id) => store.get.map((_) => Option.fromNullable(_.get(id))),
+      find: (id) => store.get.map((_) => Option.fromNullable(_.get(id))).instrument("mem.find"),
       filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
         all
           .tap(() => logQuery(filter, cursor))
-          .map(memFilter(filter, cursor)),
+          .map(memFilter(filter, cursor))
+          .instrument("mem.filter"),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
+        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument("mem.filterJoinSelect"),
       set: (e) =>
         s
           .find(e.id)
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
-          .apply(withPermit),
-      batchSet,
-      bulkSet: batchSet,
+          .apply(withPermit)
+          .instrument("mem.set"),
+      batchSet: flow(batchSet, (_) => _.instrument("mem.batchSet")),
+      bulkSet: flow(batchSet, (_) => _.instrument("mem.bulkSet")),
       remove: (e: PM) =>
         store
           .get
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
           .apply(withPermit)
+          .instrument("mem.remove")
     }
     return s
   })
