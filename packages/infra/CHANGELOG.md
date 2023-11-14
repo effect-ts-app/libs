@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.93.4
+
+### Patch Changes
+
+- 070bf27d: fix logger filter
+
 ## 0.93.3
 
 ### Patch Changes
