@@ -3,7 +3,7 @@
 import type { RequestContext } from "../../RequestContext.js"
 import type { Filter, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
-import { codeFilter, codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
+import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: { skip?: number; limit?: number }) {
   return ((c: T[]): T[] => {
@@ -52,15 +52,17 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const updateETag = makeUpdateETag(modelName)
     const items_ = yield* $(seed ?? Effect([]))
     const items = new Map(items_.toChunk.map((_) => [_.id, _] as const))
-    const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
-    const store = Ref.unsafeMake(makeStore())
+    const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
-    const all = values.map(ReadonlyArray.fromIterable).instrument("@effect-app/infra/Store/Memory.all", {
-      modelName,
-      namespace
-    })
+
+    const all = values
+      .map(ReadonlyArray.fromIterable)
+      .instrument("@effect-app/infra/Store/Memory.all", {
+        modelName,
+        namespace
+      })
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
