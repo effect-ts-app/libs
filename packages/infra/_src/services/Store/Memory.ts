@@ -44,11 +44,12 @@ function logQuery(filter: any, cursor: any) {
 }
 
 export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
-  name: string,
+  modelName: string,
+  namespace: string,
   seed?: Effect<R, E, Iterable<PM>>
 ) {
   return Effect.gen(function*($) {
-    const updateETag = makeUpdateETag(name)
+    const updateETag = makeUpdateETag(modelName)
     const items_ = yield* $(seed ?? Effect([]))
     const items = new Map(items_.toChunk.map((_) => [_.id, _] as const))
     const makeStore = (): ReadonlyMap<Id, PM> => new Map([...items.entries()].map(([id, e]) => [id, makeETag(e)]))
@@ -56,7 +57,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
-    const all = values.map(ReadonlyArray.fromIterable).instrument("mem.all")
+    const all = values.map(ReadonlyArray.fromIterable).instrument("mem.all", { modelName, namespace })
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
@@ -72,33 +73,35 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
         )
         .map((_) => _ as NonEmptyArray<PM>)
         .apply(withPermit)
-        .instrument("mem.batchSet")
     const s: Store<PM, Id> = {
       all,
-      find: (id) => store.get.map((_) => Option.fromNullable(_.get(id))).instrument("mem.find"),
+      find: (id) =>
+        store.get.map((_) => Option.fromNullable(_.get(id))).instrument("mem.find", { modelName, namespace }),
       filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
         all
           .tap(() => logQuery(filter, cursor))
           .map(memFilter(filter, cursor))
-          .instrument("mem.filter"),
+          .instrument("mem.filter", { modelName, namespace }),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument("mem.filterJoinSelect"),
+        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument("mem.filterJoinSelect", {
+          modelName
+        }),
       set: (e) =>
         s
           .find(e.id)
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
           .apply(withPermit)
-          .instrument("mem.set"),
-      batchSet: flow(batchSet, (_) => _.instrument("mem.batchSet")),
-      bulkSet: flow(batchSet, (_) => _.instrument("mem.bulkSet")),
+          .instrument("mem.set", { modelName, namespace }),
+      batchSet: flow(batchSet, (_) => _.instrument("mem.batchSet", { modelName, namespace })),
+      bulkSet: flow(batchSet, (_) => _.instrument("mem.bulkSet", { modelName, namespace })),
       remove: (e: PM) =>
         store
           .get
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
           .apply(withPermit)
-          .instrument("mem.remove")
+          .instrument("mem.remove", { modelName, namespace })
     }
     return s
   })
@@ -106,13 +109,13 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 
 export const makeMemoryStore = () => ({
   make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
-    name: string,
+    modelName: string,
     seed?: Effect<R, E, Iterable<PM>>,
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
       const storesSem = Semaphore.unsafeMake(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(name, seed))
+      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
@@ -126,7 +129,7 @@ export const makeMemoryStore = () => ({
         return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
           if (store) return Effect(store)
-          return makeMemoryStoreInt(name, seed)
+          return makeMemoryStoreInt(modelName, namespace, seed)
             .orDie
             .provide(ctx)
             .tap((store) => Effect.sync(() => stores.set(namespace, store)))

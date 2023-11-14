@@ -5,7 +5,7 @@ export const logfmtLogger = Logger.make<unknown, void>(
     let { annotations } = _
     const c = getRequestContext(_.context)
     const requestContext = c.value
-    if (requestContext) {
+    if (requestContext && requestContext.name !== "_root") {
       annotations = HashMap.make(...[
         ...annotations,
         ...{

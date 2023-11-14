@@ -27,6 +27,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const store = yield* $(
       makeMemoryStoreInt<Id, PM, R, E>(
         name,
+        namespace,
         !fs.existsSync(file)
           ? seed
           : fsStore.get

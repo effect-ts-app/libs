@@ -22,5 +22,5 @@ export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDesc
       ]
     }))
     .flatMap((_) => writeTextFile("./openapi.json", JSON.stringify(_, undefined, 2)).orDie)
-    .flatMap(() => Effect.logInfo("OpenAPI spec written to './openapi.json'"))
+    .flatMap(() => Effect.logDebug("OpenAPI spec written to './openapi.json'"))
 }

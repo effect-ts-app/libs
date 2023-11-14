@@ -120,8 +120,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
-              .instrument("cosmos.bulkSet")
-              .annotateLogs("cosmos.db", containerId)
+              .instrument("cosmos.bulkSet", { containerId, modelName: name })
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Effect
@@ -183,8 +182,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     })
                   )
               })
-              .instrument("cosmos.batchSet")
-              .annotateLogs("cosmos.db", containerId)
+              .instrument("cosmos.batchSet", { containerId, modelName: name })
           }
 
           const s: Store<PM, Id> = {
@@ -202,8 +200,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resources }) => resources)
                 )
               )
-              .instrument("cosmos.all")
-              .annotateLogs("cosmos.db", containerId),
+              .instrument("cosmos.all", { containerId, modelName: name }),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -234,8 +231,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   return v
                 })
-                .instrument("cosmos.filterJoinSelect")
-                .annotateLogs("cosmos.db", containerId),
+                .instrument("cosmos.filterJoinSelect", { containerId, modelName: name }),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -275,8 +271,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.map((_) => _.f))
                     )
                   ))
-                .instrument("cosmos.filter")
-                .annotateLogs("cosmos.db", containerId)
+                .instrument("cosmos.filter", { containerId, modelName: name })
             },
             find: (id) =>
               Effect
@@ -286,8 +281,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .read<PM>()
                     .then(({ resource }) => Option.fromNullable(resource))
                 )
-                .instrument("cosmos.find")
-                .annotateLogs("cosmos.db", containerId),
+                .instrument("cosmos.find", { containerId, modelName: name }),
             set: (e) =>
               Option
                 .fromNullable(e._etag)
@@ -330,15 +324,13 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     _etag: x.etag
                   })
                 })
-                .instrument("cosmos.set")
-                .annotateLogs("cosmos.db", containerId),
+                .instrument("cosmos.set", { containerId, modelName: name }),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
-                .instrument("cosmos.remove")
-                .annotateLogs("cosmos.db", containerId)
+                .instrument("cosmos.remove", { containerId, modelName: name })
           }
 
           // handle mock data
