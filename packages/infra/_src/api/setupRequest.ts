@@ -27,7 +27,8 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
     .get
     .flatMap((ctx) =>
       f
-        .withSpan(`request`, { attributes: { requestId: ctx.id, requestName: ctx.name } })
+        .withSpan("request", { attributes: { requestId: ctx.id, requestName: ctx.name, ...ctx.userProfile?.sub ? { requestUserSub: ctx.userProfile.sub } : {} } })
+        // request context info is picked up directly in the logger for annotations.
         .withLogSpan("request")
     )
 
