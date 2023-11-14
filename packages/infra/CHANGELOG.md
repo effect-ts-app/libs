@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.92.6
+
+### Patch Changes
+
+- a29f57f2: improve tracing
+
 ## 0.92.5
 
 ### Patch Changes
