@@ -19,16 +19,21 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const fsStore = {
       get: fu
         .readTextFile(file)
-        .map((x) => JSON.parse(x) as PM[])
+        .withSpan("@effect-app/infra/Store/Disk.read.readFile")
+        .flatMap((x) => Effect.sync(() => JSON.parse(x) as PM[]).withSpan("@effect-app/infra/Store/Disk.read.parse"))
         .orDie
         .withSpan("@effect-app/infra/Store/Disk.read", { attributes: { file } }),
       setRaw: (v: Iterable<PM>) =>
-        JSON.stringify([...v], undefined, 2)["|>"](
-          (json) =>
-            fu
-              .writeTextFile(file, json)
-              .withSpan("@effect-app/infra/Store/Disk.write", { attributes: { file, size: json.length } })
-        )
+        Effect
+          .sync(() => JSON.stringify([...v], undefined, 2))
+          .withSpan("@effect-app/infra/Store/Disk.stringify", { attributes: { file } })
+          .flatMap(
+            (json) =>
+              fu
+                .writeTextFile(file, json)
+                .withSpan("@effect-app/infra/Store/Disk.write.writeFile")
+          )
+          .withSpan("@effect-app/infra/Store/Disk.write", { attributes: { file, size: json.length } })
     }
 
     const store = yield* $(
