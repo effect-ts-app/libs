@@ -71,72 +71,90 @@ function clientFor_<M extends Requests>(models: M) {
 
           const path = new Path(Request.path)
 
+          // @ts-expect-error doc
+          const actionName = utils.uncapitalize(cur)
+
           // if we don't need props, then also dont require an argument.
           const props = [Request.Body, Request.Query, Request.Path]
             .filter((x) => x)
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             .flatMap((x) => Object.keys(x.Api.props))
           // @ts-expect-error doc
-          prev[utils.uncapitalize(cur)] = Request.method === "GET"
+          prev[actionName] = Request.method === "GET"
             ? props.length === 0
               ? Object.assign(
-                fetchApi(Request.method, Request.path).flatMap(
-                  mapResponseM(parseResponse)
-                ),
+                fetchApi(Request.method, Request.path)
+                  .flatMap(
+                    mapResponseM(parseResponse)
+                  )
+                  .withSpan("client.request", { attributes: { actionName } }),
                 meta
               )
               : Object.assign(
                 (req: any) =>
-                  fetchApi(Request.method, makePathWithQuery(path, req)).flatMap(
-                    mapResponseM(parseResponse)
-                  ),
+                  fetchApi(Request.method, makePathWithQuery(path, req))
+                    .flatMap(
+                      mapResponseM(parseResponse)
+                    )
+                    .withSpan("client.request", { attributes: { actionName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3S(b)({}), meta)
-            : Object.assign((req: any) => fetchApi3S(b)(req), {
-              ...meta,
-              mapPath: (req: any) =>
-                req
-                  ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, req)
-                    : makePathWithBody(path, req)
-                  : Request.path
-            }) // generate handler
+            ? Object.assign(fetchApi3S(b)({}).withSpan("client.request", { attributes: { actionName } }), meta)
+            : Object.assign(
+              (req: any) => fetchApi3S(b)(req).withSpan("client.request", { attributes: { actionName } }),
+              {
+                ...meta,
+                mapPath: (req: any) =>
+                  req
+                    ? Request.method === "DELETE"
+                      ? makePathWithQuery(path, req)
+                      : makePathWithBody(path, req)
+                    : Request.path
+              }
+            )
+          // generate handler
 
           // @ts-expect-error doc
-          prev[`${utils.uncapitalize(cur)}E`] = Request.method === "GET"
+          prev[`${actionName}E`] = Request.method === "GET"
             ? props.length === 0
               ? Object.assign(
-                fetchApi(Request.method, Request.path).flatMap(
-                  mapResponseM(parseResponseE)
-                ),
+                fetchApi(Request.method, Request.path)
+                  .flatMap(
+                    mapResponseM(parseResponseE)
+                  )
+                  .withSpan("client.request", { attributes: { actionName } }),
                 meta
               )
               : Object.assign(
                 (req: any) =>
-                  fetchApi(Request.method, makePathWithQuery(path, req)).flatMap(
-                    mapResponseM(parseResponseE)
-                  ),
+                  fetchApi(Request.method, makePathWithQuery(path, req))
+                    .flatMap(
+                      mapResponseM(parseResponseE)
+                    )
+                    .withSpan("client.request", { attributes: { actionName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3SE(b)({}), meta)
-            : Object.assign((req: any) => fetchApi3SE(b)(req), {
-              ...meta,
-              mapPath: (req: any) =>
-                req
-                  ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, req)
-                    : makePathWithBody(path, req)
-                  : Request.path
-            }) // generate handler
+            ? Object.assign(fetchApi3SE(b)({}).withSpan("client.request", { attributes: { actionName } }), meta)
+            : Object.assign(
+              (req: any) => fetchApi3SE(b)(req).withSpan("client.request", { attributes: { actionName } }),
+              {
+                ...meta,
+                mapPath: (req: any) =>
+                  req
+                    ? Request.method === "DELETE"
+                      ? makePathWithQuery(path, req)
+                      : makePathWithBody(path, req)
+                    : Request.path
+              }
+            ) // generate handler
 
           return prev
         },

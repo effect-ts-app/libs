@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
+import {
+  type Headers,
+  type HttpError,
+  type HttpRequestError,
+  type HttpResponseError,
+  type Method
+} from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
@@ -61,7 +67,7 @@ export function fetchApi(
 ) {
   return getClient
     .flatMap((client) =>
-      method === "GET"
+      (method === "GET"
         ? client.request(ClientRequest.make(method)(path))
         : body === undefined
         ? client.request(
@@ -72,7 +78,8 @@ export function fetchApi(
           ClientRequest
             .make(method)(path)
             .jsonBody(body)
-        )
+        ))
+        .withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
     )
     .map((x) => ({ ...x, body: x.body ?? null }))
 }

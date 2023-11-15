@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
+    "@effect/platform": "^0.29.1",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "effect": "^2.0.0-next.54",

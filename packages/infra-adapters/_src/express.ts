@@ -2,10 +2,11 @@
 // ets_tracing: off
 // tracing: off
 
+import type { IncomingMessage } from "@effect/platform/Http/IncomingMessage"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
-import express from "express"
-import type { IncomingMessage, Server, ServerResponse } from "http"
+import express, { request } from "express"
+import type { Server, ServerResponse } from "http"
 import type { Socket } from "net"
 
 export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
@@ -157,7 +158,19 @@ export const makeExpressApp = Effect.gen(function*(_) {
             open
               .get
               .flatMap((open) =>
-                (open ? handler(req, res, next) : Effect.interrupt)
+                (request.headers["x-b3-traceid"] || request.headers["b3"]
+                  ? (req as any as IncomingMessage<unknown>)
+                    .schemaExternalSpan
+                    .orElseSucceed(() => undefined)
+                  : Effect.succeed(undefined))
+                  .flatMap(
+                    (parent) =>
+                      Effect.withSpan(
+                        open ? handler(req, res, next) : Effect.interrupt,
+                        `http ${request.method}`,
+                        { attributes: { "http.method": request.method, "http.url": request.url }, parent }
+                      )
+                  )
                   .onError(exitHandler(req, res, next))
                   .supervised(supervisor)
               )

@@ -2761,6 +2761,22 @@
       ]
     },
     {
+      "definitionName": "schemaExternalSpan",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/platform/Http/IncomingMessage",
+          "name": "schemaExternalSpan"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/IncomingMessage.Ops",
+          "name": "schemaExternalSpan"
+        }
+      ]
+    },
+    {
       "definitionName": "schemaHeaders",
       "definitionKind": "const",
       "extensions": [
