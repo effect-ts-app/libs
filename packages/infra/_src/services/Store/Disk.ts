@@ -19,21 +19,21 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const fsStore = {
       get: fu
         .readTextFile(file)
-        .withSpan("@effect-app/infra/Store/Disk.read.readFile")
-        .flatMap((x) => Effect.sync(() => JSON.parse(x) as PM[]).withSpan("@effect-app/infra/Store/Disk.read.parse"))
+        .withSpan("Disk.read.readFile [effect-app/infra/Store]")
+        .flatMap((x) => Effect.sync(() => JSON.parse(x) as PM[]).withSpan("Disk.read.parse [effect-app/infra/Store]"))
         .orDie
-        .withSpan("@effect-app/infra/Store/Disk.read", { attributes: { file } }),
+        .withSpan("Disk.read [effect-app/infra/Store]", { attributes: { file } }),
       setRaw: (v: Iterable<PM>) =>
         Effect
           .sync(() => JSON.stringify([...v], undefined, 2))
-          .withSpan("@effect-app/infra/Store/Disk.stringify", { attributes: { file } })
+          .withSpan("Disk.stringify [effect-app/infra/Store]", { attributes: { file } })
           .flatMap(
             (json) =>
               fu
                 .writeTextFile(file, json)
-                .withSpan("@effect-app/infra/Store/Disk.write.writeFile")
+                .withSpan("Disk.write.writeFile [effect-app/infra/Store]")
           )
-          .withSpan("@effect-app/infra/Store/Disk.write", { attributes: { file, size: json.length } })
+          .withSpan("Disk.write [effect-app/infra/Store]", { attributes: { file, size: json.length } })
     }
 
     const store = yield* $(

@@ -120,7 +120,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
-              .instrument("@effect-app/infra/Store/Cosmos.bulkSet", { containerId, modelName: name })
+              .withSpan("Cosmos.bulkSet [effect-app/infra/Store]", { attributes: { containerId, modelName: name } })
 
           const batchSet = (items: NonEmptyReadonlyArray<PM>) => {
             return Effect
@@ -182,7 +182,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     })
                   )
               })
-              .instrument("@effect-app/infra/Store/Cosmos.batchSet", { containerId, modelName: name })
+              .withSpan("Cosmos.batchSet [effect-app/infra/Store]", { attributes: { containerId, modelName: name } })
           }
 
           const s: Store<PM, Id> = {
@@ -200,7 +200,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .then(({ resources }) => resources)
                 )
               )
-              .instrument("@effect-app/infra/Store/Cosmos.all", { containerId, modelName: name }),
+              .withSpan("Cosmos.all [effect-app/infra/Store]", { attributes: { containerId, modelName: name } }),
             filterJoinSelect: <T extends object>(
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
@@ -231,7 +231,9 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                   return v
                 })
-                .instrument("@effect-app/infra/Store/Cosmos.filterJoinSelect", { containerId, modelName: name }),
+                .withSpan("Cosmos.filterJoinSelect [effect-app/infra/Store]", {
+                  attributes: { containerId, modelName: name }
+                }),
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
@@ -271,7 +273,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         .then(({ resources }) => resources.map((_) => _.f))
                     )
                   ))
-                .instrument("@effect-app/infra/Store/Cosmos.filter", { containerId, modelName: name })
+                .withSpan("Cosmos.filter [effect-app/infra/Store]", { attributes: { containerId, modelName: name } })
             },
             find: (id) =>
               Effect
@@ -281,7 +283,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     .read<PM>()
                     .then(({ resource }) => Option.fromNullable(resource))
                 )
-                .instrument("@effect-app/infra/Store/Cosmos.find", { containerId, modelName: name }),
+                .withSpan("Cosmos.find [effect-app/infra/Store]", { attributes: { containerId, modelName: name } }),
             set: (e) =>
               Option
                 .fromNullable(e._etag)
@@ -324,13 +326,13 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     _etag: x.etag
                   })
                 })
-                .instrument("@effect-app/infra/Store/Cosmos.set", { containerId, modelName: name }),
+                .withSpan("Cosmos.set [effect-app/infra/Store]", { attributes: { containerId, modelName: name } }),
             batchSet,
             bulkSet,
             remove: (e: PM) =>
               Effect
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
-                .instrument("@effect-app/infra/Store/Cosmos.remove", { containerId, modelName: name })
+                .withSpan("Cosmos.remove [effect-app/infra/Store]", { attributes: { containerId, modelName: name } })
           }
 
           // handle mock data

@@ -59,9 +59,11 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 
     const all = values
       .map(ReadonlyArray.fromIterable)
-      .instrument("@effect-app/infra/Store/Memory.all", {
-        modelName,
-        namespace
+      .withSpan("Memory.all [effect-app/infra/Store]", {
+        attributes: {
+          modelName,
+          namespace
+        }
       })
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
@@ -81,20 +83,24 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const s: Store<PM, Id> = {
       all,
       find: (id) =>
-        store.get.map((_) => Option.fromNullable(_.get(id))).instrument("@effect-app/infra/Store/Memory.find", {
-          modelName,
-          namespace
+        store.get.map((_) => Option.fromNullable(_.get(id))).withSpan("Memory.find [effect-app/infra/Store]", {
+          attributes: {
+            modelName,
+            namespace
+          }
         }),
       filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
         all
           .tap(() => logQuery(filter, cursor))
           .map(memFilter(filter, cursor))
-          .instrument("@effect-app/infra/Store/Memory.filter", { modelName, namespace }),
+          .withSpan("Memory.filter [effect-app/infra/Store]", { attributes: { modelName, namespace } }),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).instrument(
-          "@effect-app/infra/Store/Memory.filterJoinSelect",
+        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).withSpan(
+          "Memory.filterJoinSelect [effect-app/infra/Store]",
           {
-            modelName
+            attributes: {
+              modelName
+            }
           }
         ),
       set: (e) =>
@@ -103,19 +109,22 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
           .apply(withPermit)
-          .instrument("@effect-app/infra/Store/Memory.set", { modelName, namespace }),
+          .withSpan("Memory.set [effect-app/infra/Store]", { attributes: { modelName, namespace } }),
       batchSet: flow(
         batchSet,
-        (_) => _.instrument("@effect-app/infra/Store/Memory.batchSet", { modelName, namespace })
+        (_) => _.withSpan("Memory.batchSet [effect-app/infra/Store]", { attributes: { modelName, namespace } })
       ),
-      bulkSet: flow(batchSet, (_) => _.instrument("@effect-app/infra/Store/Memory.bulkSet", { modelName, namespace })),
+      bulkSet: flow(
+        batchSet,
+        (_) => _.withSpan("Memory.bulkSet [effect-app/infra/Store]", { attributes: { modelName, namespace } })
+      ),
       remove: (e: PM) =>
         store
           .get
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
           .apply(withPermit)
-          .instrument("@effect-app/infra/Store/Memory.remove", { modelName, namespace })
+          .withSpan("Memory.remove [effect-app/infra/Store]", { attributes: { modelName, namespace } })
     }
     return s
   })

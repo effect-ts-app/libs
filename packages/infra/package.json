@@ -331,16 +331,6 @@
         "default": "./_cjs/filter/types/validator.cjs"
       }
     },
-    "./instrument": {
-      "import": {
-        "types": "./dist/instrument.d.ts",
-        "default": "./dist/instrument.js"
-      },
-      "require": {
-        "types": "./dist/instrument.d.ts",
-        "default": "./_cjs/instrument.cjs"
-      }
-    },
     "./logger/jsonLogger": {
       "import": {
         "types": "./dist/logger/jsonLogger.d.ts",

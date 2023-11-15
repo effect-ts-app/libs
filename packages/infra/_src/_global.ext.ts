@@ -25,10 +25,6 @@ import type {} from "@effect-app/infra/_ext/Array"
 /**
  * @tsplus global
  */
-import type {} from "@effect-app/infra/instrument"
-/**
- * @tsplus global
- */
 import type {} from "@effect-app/infra/rateLimit"
 
 /**
