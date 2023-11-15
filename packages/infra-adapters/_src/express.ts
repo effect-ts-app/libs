@@ -153,24 +153,39 @@ export const makeExpressApp = Effect.gen(function*(_) {
     >
     return Effect.runtime<Env>().map((r) =>
       handlers.map(
-        (handler): RequestHandler => (req, res, next) => {
+        (handler, i): RequestHandler => (req, res, next) => {
           r.runCallback(
             open
               .get
               .flatMap((open) =>
-                (req.headers["x-b3-traceid"] || req.headers["b3"]
-                  ? (req as any as IncomingMessage<unknown>)
-                    .schemaExternalSpan
-                    .orElseSucceed(() => undefined)
-                  : Effect.succeed(undefined))
-                  .flatMap(
-                    (parent) =>
-                      Effect.withSpan(
-                        open ? handler(req, res, next) : Effect.interrupt,
-                        `http ${req.method}`,
-                        { attributes: { "http.method": req.method, "http.url": req.url }, parent }
-                      )
-                  )
+                // only the last handler is the actual request handler
+                // which we will give a span, so we ignore middlewares atm
+                // we do this because it's hard to share the span due to the current design
+                // we will solve it instead by switching to @effect/platform Http Server
+                (i === handlers.length - 1
+                  ? (req.headers["x-b3-traceid"] || req.headers["b3"]
+                    ? (req as any as IncomingMessage<unknown>)
+                      .schemaExternalSpan
+                      .orElseSucceed(() => undefined)
+                    : Effect.succeed(undefined))
+                    .flatMap(
+                      (parent) =>
+                        (
+                          open
+                            ? handler(req, res, next)
+                              .exit
+                              .flatMap((_) => Effect.annotateCurrentSpan("http.status", res.statusCode) > _)
+                            : Effect.interrupt
+                        )
+                          .withSpan(
+                            `http ${req.method}`,
+                            { attributes: { "http.method": req.method, "http.url": req.url }, parent }
+                          )
+                    )
+                  : open
+                  ? handler(req, res, next)
+                  : Effect
+                    .interrupt)
                   .onError(exitHandler(req, res, next))
                   .supervised(supervisor)
               )
