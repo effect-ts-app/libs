@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.94.9
+
+### Patch Changes
+
+- 3b33ecee: enable span update on rc update
+
 ## 0.94.8
 
 ### Patch Changes
