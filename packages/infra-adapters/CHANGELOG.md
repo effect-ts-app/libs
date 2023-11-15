@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.60.2
+
+### Patch Changes
+
+- fix typos
+
 ## 0.60.1
 
 ### Patch Changes
