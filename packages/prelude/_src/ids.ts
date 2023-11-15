@@ -1,4 +1,9 @@
-import { brandedStringId, type StringIdBrand } from "@effect-app/prelude/schema"
+import {
+  brandedStringId,
+  extendWithUtils,
+  reasonableStringFromString,
+  type StringIdBrand
+} from "@effect-app/prelude/schema"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol
@@ -8,7 +13,15 @@ export interface RequestIdBrand extends StringIdBrand {
  * @tsplus type RequestId
  */
 export type RequestId = ReasonableString
-export const RequestId = Object.assign(ReasonableString, { withDefault: defaultProp(ReasonableString, StringId.make) })
+export const RequestId = Object.assign(
+  extendWithUtils(
+    pipe(Schema.string[">>>"](reasonableStringFromString), Schema.brand<ReasonableString>())
+  ),
+  {
+    withDefault: defaultProp(ReasonableString, StringId.make),
+    make: StringId.make
+  }
+)
 
 export interface UserProfileIdBrand extends StringIdBrand {
   readonly UserProfileId: unique symbol
