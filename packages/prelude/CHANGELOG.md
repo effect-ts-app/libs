@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.3
+
+### Patch Changes
+
+- f03b6b48: fix
+
 ## 0.72.2
 
 ### Patch Changes
