@@ -1,4 +1,4 @@
-import { RequestId } from "@effect-app/prelude/ids"
+import type { RequestId } from "@effect-app/prelude/ids"
 import { RequestContext } from "../RequestContext.js"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
@@ -12,7 +12,7 @@ export function setupRequestContextFromName<R, E, A>(self: Effect<R, E, A>, name
 
 function makeInternalRequestContext(name: string) {
   return Effect.sync(() => {
-    const id = RequestId.make()
+    const id = StringId.make() as RequestId
     return new RequestContext({
       id,
       rootId: id,

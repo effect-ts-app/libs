@@ -6,7 +6,7 @@ export interface RequestIdBrand extends StringIdBrand {
 /**
  * @tsplus type RequestId
  */
-export type RequestId = StringId & RequestIdBrand
+export type RequestId = ReasonableString & RequestIdBrand
 export const RequestId = brandedStringId<RequestId>()
 
 export interface UserProfileIdBrand extends StringIdBrand {
