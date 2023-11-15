@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.1
+
+### Patch Changes
+
+- 8b0e01b4: workaround new Ref variance
+
 ## 0.72.0
 
 ### Minor Changes
