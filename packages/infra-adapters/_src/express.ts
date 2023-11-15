@@ -5,7 +5,7 @@
 import type { IncomingMessage } from "@effect/platform/Http/IncomingMessage"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
-import express, { request } from "express"
+import express from "express"
 import type http from "http"
 import type { Socket } from "net"
 
@@ -158,7 +158,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
             open
               .get
               .flatMap((open) =>
-                (request.headers["x-b3-traceid"] || request.headers["b3"]
+                (req.headers["x-b3-traceid"] || req.headers["b3"]
                   ? (req as any as IncomingMessage<unknown>)
                     .schemaExternalSpan
                     .orElseSucceed(() => undefined)
@@ -167,8 +167,8 @@ export const makeExpressApp = Effect.gen(function*(_) {
                     (parent) =>
                       Effect.withSpan(
                         open ? handler(req, res, next) : Effect.interrupt,
-                        `http ${request.method}`,
-                        { attributes: { "http.method": request.method, "http.url": request.url }, parent }
+                        `http ${req.method}`,
+                        { attributes: { "http.method": req.method, "http.url": req.url }, parent }
                       )
                   )
                   .onError(exitHandler(req, res, next))
