@@ -32,7 +32,7 @@ export function runMain<E, A>(eff: Effect<never, E, A>) {
     .fromEffect(eff)
     .map((context) => {
       context
-        .await()
+        .await
         .flatMap((exit) =>
           Effect.gen(function*($) {
             if (exit.isFailure()) {

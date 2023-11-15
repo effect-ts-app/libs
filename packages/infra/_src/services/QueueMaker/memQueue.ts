@@ -83,7 +83,7 @@ export function makeMemQueue<
             )
         return yield* $(
           qDrain
-            .take()
+            .take
             .flatMap((x) => processMessage(x).uninterruptible.fork.flatMap((_) => _.join))
             // TODO: normally a failed item would be returned to the queue and retried up to X times.
             // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.

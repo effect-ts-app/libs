@@ -135,7 +135,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   )
 
   const supervisor = yield* _(
-    Supervisor.track.acquireRelease((s) => s.value().flatMap((_) => _.interruptAll))
+    Supervisor.track.acquireRelease((s) => s.value.flatMap((_) => _.interruptAll))
   )
 
   function runtime<

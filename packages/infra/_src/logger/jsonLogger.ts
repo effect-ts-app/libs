@@ -14,7 +14,7 @@ export const jsonLogger = Logger.make<unknown, void>(
       message,
       request: c.value,
       cause: cause != null && cause != Cause.empty ? cause.pretty : undefined,
-      spans: spans.map((_) => ({ label: _.label, timing: nowMillis - _.startTime })).toReadonlyArray,
+      spans: spans.map((_) => ({ label: _.label, timing: nowMillis - _.startTime })).toArray,
       annotations: annotations.size > 0
         ? [...annotations].reduce((prev, [k, v]) => {
           prev[k] = v

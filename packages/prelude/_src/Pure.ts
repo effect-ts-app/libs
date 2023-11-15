@@ -159,9 +159,11 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
   s: S4
 ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
+  const t = castTag<W3, S1, S3>()
+
   return self
     .flatMap((x) =>
-      castTag<W3, S1, S3>()
+      t
         .flatMap(
           ({ env: _ }) => Effect.all({ log: _.log.get, state: _.state.get }) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
         )
@@ -173,9 +175,13 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
     )
     .catchAll(
       (err) =>
-        tagg.flatMap((env) => env.env.log.get.map((log) => tuple(log, Either.left(err) as Either<E, readonly [S3, A]>)))
+        t.flatMap((env) => env.env.log.get.map((log) => tuple(log, Either.left(err) as Either<E, readonly [S3, A]>)))
     )
-    .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
+    .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any) as Effect<
+      Exclude<R, { env: PureEnv<W3, S1, S3> }>,
+      never,
+      readonly [Chunk<W3>, Either<E, readonly [S3, A]>]
+    >
 }
 
 /**

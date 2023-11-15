@@ -6377,18 +6377,18 @@
       ]
     },
     {
-      "definitionName": "toReadonlyArray",
+      "definitionName": "toArray",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/data/List",
-          "name": "toReadonlyArray"
+          "name": "toArray"
         },
         {
           "kind": "static",
           "typeName": "effect/data/List.Ops",
-          "name": "toReadonlyArray"
+          "name": "toArray"
         }
       ]
     },

@@ -164,7 +164,7 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Def
         : runNew
     })
     .apply(withPermit)
-    .flatMap((_) => _.await())
+    .flatMap((_) => _.await)
 
   function exec() {
     return run
