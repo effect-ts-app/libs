@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.94.7
+
+### Patch Changes
+
+- 2c791991: improve spans
+
 ## 0.94.6
 
 ### Patch Changes
