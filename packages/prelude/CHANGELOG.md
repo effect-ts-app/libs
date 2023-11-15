@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.4
+
+### Patch Changes
+
+- fix id
+
 ## 0.72.3
 
 ### Patch Changes
