@@ -36,7 +36,8 @@ export class RequestContextContainerImpl extends RequestContextContainer {
     return this.#ref.get
   }
 
-  override update = (f: (a: RequestContext) => RequestContext) => this.#ref.getAndUpdate(f)
+  override update = (f: (a: RequestContext) => RequestContext) =>
+    this.#ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes))
   override start = (a: RequestContext) => this.#ref.set(a) > a.restoreStoreId
 }
 
@@ -47,3 +48,24 @@ export const live = Effect.sync(() => new RequestContextContainerImpl()).toLayer
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = Tag<RequestContext>()
+
+/**
+ * @tsplus getter RequestContext spanAttributes
+ */
+export const spanAttributes = (ctx: RequestContext) => ({
+  "request.id": ctx.id,
+  "request.name": ctx.name,
+  "request.locale": ctx.locale,
+  "request.namespace": ctx.namespace,
+  ...ctx.userProfile?.sub
+    ? {
+      "request.user.sub": ctx
+        .userProfile
+        .sub,
+      "request.user.roles": "roles" in ctx
+          .userProfile
+        ? ctx.userProfile.roles
+        : undefined
+    }
+    : {}
+})
