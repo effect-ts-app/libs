@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  type Headers,
-  type HttpError,
-  type HttpRequestError,
-  type HttpResponseError,
-  type Method
-} from "@effect-app/core/http/http-client"
+import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
 import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"

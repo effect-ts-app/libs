@@ -6,7 +6,7 @@ import type { IncomingMessage } from "@effect/platform/Http/IncomingMessage"
 import type { NextHandleFunction } from "connect"
 import type { NextFunction, Request, RequestHandler, Response } from "express"
 import express, { request } from "express"
-import type { Server, ServerResponse } from "http"
+import type http from "http"
 import type { Socket } from "net"
 
 export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
@@ -96,7 +96,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   // if scope opens, create server, on scope close, close connections and server.
   const server = yield* _(
     Effect
-      .async<never, never, Server>((cb) => {
+      .async<never, never, http.Server>((cb) => {
         const onError = (err: Error) => {
           cb(Effect.die(new NodeServerListenError(err)))
         }
@@ -227,7 +227,7 @@ export function withExpressApp<R, E, A>(self: (app: express.Express) => Effect<R
   return ExpressApp.flatMap((_) => self(_.app))
 }
 export function withExpressServer<R, E, A>(
-  self: (server: Server<typeof IncomingMessage, typeof ServerResponse>) => Effect<R, E, A>
+  self: (server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>) => Effect<R, E, A>
 ) {
   return ExpressApp.flatMap((_) => self(_.server))
 }
