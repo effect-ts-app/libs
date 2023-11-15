@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.5
+
+### Patch Changes
+
+- 60615760: cleanup
+
 ## 0.72.4
 
 ### Patch Changes
