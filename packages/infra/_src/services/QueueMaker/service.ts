@@ -1,3 +1,4 @@
+import { RequestContext } from "../../RequestContext.js"
 import type { RequestContextContainer } from "../RequestContextContainer.js"
 import type { ContextMapContainer } from "../Store/ContextMapContainer.js"
 
@@ -13,3 +14,13 @@ export interface QueueBase<RContext, Evt> {
  */
 export interface QueueMakerOps {}
 export const QueueMaker: QueueMakerOps = {}
+
+export const QueueMeta = props({
+  requestContext: RequestContext,
+  span: props({
+    spanId: string,
+    traceId: string,
+    sampled: bool.optional
+  })
+    .optional
+})

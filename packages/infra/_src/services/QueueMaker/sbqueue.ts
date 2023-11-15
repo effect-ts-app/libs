@@ -10,9 +10,10 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
+import { Tracer } from "effect"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
-import type { QueueBase } from "./service.js"
+import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
  * @tsplus static QueueMaker.Ops makeServiceBus
@@ -30,9 +31,12 @@ export function makeServiceBusQueue<
   drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
 ) {
-  const wireSchema = props({ body: schema, meta: RequestContext })
+  const wireSchema = props({
+    body: schema,
+    meta: QueueMeta
+  })
   const encoder = wireSchema.Encoder
-  const drainW = props({ body: drainSchema, meta: RequestContext })
+  const drainW = props({ body: drainSchema, meta: QueueMeta })
   const parseDrain = drainW.parseCondemnDie
 
   return Effect.gen(function*($) {
@@ -60,11 +64,17 @@ export function makeServiceBusQueue<
                 .orDie
                 // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
                 .apply(silenceAndReportError)
-                .setupRequestContext(RequestContext.inherit(meta, {
+                .setupRequestContext(RequestContext.inherit(meta.requestContext, {
                   id: RequestId(body.id),
                   locale: "en" as const,
                   name: ReasonableString(body._tag)
                 }))
+                .withSpan("queue.drain", {
+                  attributes: { "queue.name": queueDrainName },
+                  parent: meta.span
+                    ? Tracer.externalSpan(meta.span)
+                    : undefined
+                })
             )
             // we reportError here, so that we report the error only, and keep flowing
             .tapErrorCause(reportError)
@@ -82,12 +92,16 @@ export function makeServiceBusQueue<
       publish: (...messages) =>
         Effect.gen(function*($) {
           const requestContext = yield* $(rcc.requestContext)
+          const currentSpan = yield* $(Effect.currentSpan)
+          const span = currentSpan.map(Tracer.externalSpan).value
           return yield* $(
             Effect
               .promise(() =>
                 s.sendMessages(
                   messages.map((m) => ({
-                    body: JSON.stringify(encoder({ body: m, meta: requestContext })),
+                    body: JSON.stringify(
+                      encoder({ body: m, meta: { requestContext, span } })
+                    ),
                     messageId: m.id, /* correllationid: requestId */
                     contentType: "application/json"
                   }))

@@ -1,9 +1,10 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
+import { Tracer } from "effect"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
-import type { QueueBase } from "./service.js"
+import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
  * @tsplus static QueueMaker.Ops makeMem
@@ -27,21 +28,25 @@ export function makeMemQueue<
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
     const rcc = yield* $(RequestContextContainer)
 
-    const wireSchema = props({ body: schema, meta: RequestContext })
+    const wireSchema = props({ body: schema, meta: QueueMeta })
     const encoder = wireSchema.Encoder
-    const drainW = props({ body: drainSchema, meta: RequestContext })
+    const drainW = props({ body: drainSchema, meta: QueueMeta })
     const parseDrain = drainW.parseCondemnDie
 
     return {
       publish: (...messages) =>
         Effect.gen(function*($) {
           const requestContext = yield* $(rcc.requestContext)
+          const currentSpan = yield* $(Effect.currentSpan)
+          const span = currentSpan.map(Tracer.externalSpan).value
           return yield* $(
             messages
               .forEachEffect((m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 Effect(
-                  JSON.stringify(encoder({ body: m, meta: requestContext }))
+                  JSON.stringify(
+                    encoder({ body: m, meta: { requestContext, span } })
+                  )
                 )
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
                   .flatMap((_) => q.offer(_))
@@ -64,11 +69,17 @@ export function makeMemQueue<
                 .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .zipRight(handleEvent(body))
                 .apply(silenceAndReportError)
-                .setupRequestContext(RequestContext.inherit(meta, {
+                .setupRequestContext(RequestContext.inherit(meta.requestContext, {
                   id: RequestId(body.id),
                   locale: "en" as const,
                   name: ReasonableString(body._tag)
                 }))
+                .withSpan("queue.drain", {
+                  attributes: { "queue.name": queueDrainName },
+                  parent: meta.span
+                    ? Tracer.externalSpan(meta.span)
+                    : undefined
+                })
             )
         return yield* $(
           qDrain
