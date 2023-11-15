@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.69.1
+
+### Patch Changes
+
+- d1a6193b: feat: support span across client and api
+
 ## 0.69.0
 
 ### Minor Changes

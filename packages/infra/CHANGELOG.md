@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.93.7
+
+### Patch Changes
+
+- 69b7e8a6: include span across queue call
+- d1a6193b: feat: support span across client and api
+- Updated dependencies [d1a6193b]
+  - @effect-app/infra-adapters@0.59.6
+  - @effect-app/prelude@0.71.1
+  - @effect-app/core@0.69.1
+  - @effect-app/schema@0.62.5
+
 ## 0.93.6
 
 ### Patch Changes

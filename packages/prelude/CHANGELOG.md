@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.71.1
+
+### Patch Changes
+
+- d1a6193b: feat: support span across client and api
+- Updated dependencies [d1a6193b]
+  - @effect-app/core@0.69.1
+  - @effect-app/schema@0.62.5
+
 ## 0.71.0
 
 ### Minor Changes
