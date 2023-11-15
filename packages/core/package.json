@@ -325,16 +325,6 @@
         "default": "./_cjs/transform.cjs"
       }
     },
-    "./type": {
-      "import": {
-        "types": "./dist/type.d.ts",
-        "default": "./dist/type.js"
-      },
-      "require": {
-        "types": "./dist/type.d.ts",
-        "default": "./_cjs/type.cjs"
-      }
-    },
     "./utils": {
       "import": {
         "types": "./dist/utils.d.ts",

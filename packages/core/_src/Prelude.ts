@@ -93,5 +93,3 @@ export namespace Optic {
   export * from "@effect-app/core/Optic"
 }
 export type Lens<S, A> = LNS.Lens<S, A>
-
-export type NonEmptyArguments<T> = [T, ...T[]]

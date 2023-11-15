@@ -9,6 +9,31 @@ import express from "express"
 import type http from "http"
 import type { Socket } from "net"
 
+const performanceNowNanos = (function() {
+  const bigint1e6 = BigInt(1_000_000)
+
+  if (typeof performance === "undefined") {
+    return () => BigInt(Date.now()) * bigint1e6
+  }
+
+  const origin = "timeOrigin" in performance && typeof performance.timeOrigin === "number"
+    ? BigInt(Math.round(performance.timeOrigin * 1_000_000))
+    : (BigInt(Date.now()) * bigint1e6) - BigInt(Math.round(performance.now() * 1_000_000))
+
+  return () => origin + BigInt(Math.round(performance.now() * 1_000_000))
+})()
+const processOrPerformanceNow = (function() {
+  const processHrtime =
+    typeof process === "object" && "hrtime" in process && typeof process.hrtime.bigint === "function"
+      ? process.hrtime
+      : undefined
+  if (!processHrtime) {
+    return performanceNowNanos
+  }
+  const origin = performanceNowNanos() - processHrtime.bigint()
+  return () => origin + processHrtime.bigint()
+})()
+
 export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
   readonly 0: A
 }
@@ -139,7 +164,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
   )
 
   function runtime<
-    Handlers extends NonEmptyArguments<
+    Handlers extends NonEmptyArray<
       EffectRequestHandler<any, any, any, any, any, any>
     >
   >(handlers: Handlers) {
@@ -153,42 +178,17 @@ export const makeExpressApp = Effect.gen(function*(_) {
     >
     return Effect.runtime<Env>().map((r) =>
       handlers.map(
-        (handler, i): RequestHandler => (req, res, next) => {
+        (handler): RequestHandler => (req, res, next) => {
+          const anyReq = req as any
+          if (!anyReq["___START_TIME"]) anyReq["___START_TIME"] = processOrPerformanceNow()
+
           r.runCallback(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             open
               .get
-              .flatMap((open) =>
-                // only the last handler is the actual request handler
-                // which we will give a span, so we ignore middlewares atm
-                // we do this because it's hard to share the span due to the current design
-                // we will solve it instead by switching to @effect/platform Http Server
-                (i === handlers.length - 1
-                  ? (req.headers["x-b3-traceid"] || req.headers["b3"]
-                    ? (req as any as IncomingMessage<unknown>)
-                      .schemaExternalSpan
-                      .orElseSucceed(() => undefined)
-                    : Effect.succeed(undefined))
-                    .flatMap(
-                      (parent) =>
-                        (
-                          open
-                            ? handler(req, res, next)
-                              .exit
-                              .flatMap((_) => Effect.annotateCurrentSpan("http.status", res.statusCode) > _)
-                            : Effect.interrupt
-                        )
-                          .withSpan(
-                            `http ${req.method}`,
-                            { attributes: { "http.method": req.method, "http.url": req.url }, parent }
-                          )
-                    )
-                  : open
-                  ? handler(req, res, next)
-                  : Effect
-                    .interrupt)
-                  .onError(exitHandler(req, res, next))
-                  .supervised(supervisor)
-              )
+              .flatMap((open) => open ? handler(req, res, next) : Effect.interrupt)
+              .onError(exitHandler(req, res, next))
+              .supervised(supervisor)
           )
         }
       )
@@ -305,14 +305,14 @@ export interface EffectRequestHandler<
 }
 
 export function expressRuntime<
-  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(handlers: Handlers) {
   return ExpressApp.flatMap((_) => _.runtime(handlers))
 }
 
 export function match(method: Methods): {
   <
-    Handlers extends NonEmptyArguments<
+    Handlers extends NonEmptyArray<
       EffectRequestHandler<any, any, any, any, any, any>
     >
   >(
@@ -333,13 +333,44 @@ export function match(method: Methods): {
   >
 } {
   return function(path, ...handlers) {
-    return expressRuntime(handlers).flatMap((expressHandlers) =>
-      withExpressApp((app) =>
-        Effect.sync(() => {
-          app[method](path, ...expressHandlers)
-        })
+    return expressRuntime(
+      handlers.mapNonEmpty(
+        (_, i) => (req: Request<any, any, any, any, any>, res: Response<any, any>, next: NextFunction) =>
+          (req.headers["x-b3-traceid"] || req.headers["b3"]
+            ? (req as any as IncomingMessage<unknown>)
+              .schemaExternalSpan
+              .orElseSucceed(() => undefined)
+            : Effect.succeed(undefined))
+            .flatMap(
+              (parent) =>
+                // skip bs middleware for now not to create multiple spans
+                i < handlers.length - 1
+                  ? _(req, res, next)
+                  : (req as any)["___START_TIME"]
+                  ? Effect
+                    .currentSpan
+                    // restore start time due to handler bs
+                    .map((_) => _.map((_) => _.status.startTime = (req as any)["___START_TIME"]))
+                    .zipRight(
+                      _(req, res, next)
+                    )
+                    .withSpan(
+                      `http ${req.method}`,
+                      { attributes: { "http.method": req.method, "http.url": req.url }, parent }
+                    )
+                  : _(req, res, next)
+            )
       )
     )
+      .flatMap((
+        expressHandlers
+      ) =>
+        withExpressApp((app) =>
+          Effect.sync(() => {
+            app[method](path, ...expressHandlers)
+          })
+        )
+      )
   }
 }
 
@@ -358,7 +389,7 @@ export function defaultExitHandler(
 }
 
 export function use<
-  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   ...handlers: Handlers
 ): Effect<
@@ -375,7 +406,7 @@ export function use<
   void
 >
 export function use<
-  Handlers extends NonEmptyArguments<EffectRequestHandler<any, any, any, any, any, any>>
+  Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   path: PathParams,
   ...handlers: Handlers
@@ -396,14 +427,14 @@ export function use(...args: any[]) {
   return withExpressApp((app) => {
     if (typeof args[0] === "function") {
       return expressRuntime(
-        args as unknown as NonEmptyArguments<
+        args as unknown as NonEmptyArray<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
         .flatMap((expressHandlers) => Effect(() => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
-        args.slice(1) as unknown as NonEmptyArguments<
+        args.slice(1) as unknown as NonEmptyArray<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
