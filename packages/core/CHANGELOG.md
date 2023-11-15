@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.70.1
+
+### Patch Changes
+
+- 3f0dba21: express bs
+
 ## 0.70.0
 
 ### Minor Changes

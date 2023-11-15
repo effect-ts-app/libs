@@ -1,5 +1,15 @@
 # @effect-app/infra-adapters
 
+## 0.60.4
+
+### Patch Changes
+
+- 3f0dba21: express bs
+- Updated dependencies [3f0dba21]
+  - @effect-app/core@0.70.1
+  - @effect-app/prelude@0.72.2
+  - @effect-app/schema@0.63.1
+
 ## 0.60.3
 
 ### Patch Changes
