@@ -29,13 +29,19 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
       f
         .withSpan("request", {
           attributes: {
-            requestId: ctx.id,
-            requestName: ctx.name,
+            "request.id": ctx.id,
+            "request.name": ctx.name,
+            "request.locale": ctx.locale,
+            "request.namespace": ctx.namespace,
             ...ctx.userProfile?.sub
               ? {
-                requestUserSub: ctx
+                "request.user.sub": ctx
                   .userProfile
-                  .sub
+                  .sub,
+                "request.user.roles": "roles" in ctx
+                    .userProfile
+                  ? ctx.userProfile.roles
+                  : undefined
               }
               : {}
           }
