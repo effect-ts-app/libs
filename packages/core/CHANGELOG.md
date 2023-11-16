@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.70.2
+
+### Patch Changes
+
+- ff54e102: update packages
+
 ## 0.70.1
 
 ### Patch Changes
