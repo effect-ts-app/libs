@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect-app/prelude/schema"
-import { condemnCustom } from "@effect-app/prelude/schema"
+import { condemnCustom, SchemaNamed } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
@@ -73,6 +73,9 @@ function clientFor_<M extends Requests>(models: M) {
 
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
+          const requestName = ReasonableString(
+            Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
+          )
 
           // if we don't need props, then also dont require an argument.
           const props = [Request.Body, Request.Query, Request.Path]
@@ -87,7 +90,7 @@ function clientFor_<M extends Requests>(models: M) {
                   .flatMap(
                     mapResponseM(parseResponse)
                   )
-                  .withSpan("client.request", { attributes: { actionName } }),
+                  .withSpan("client.request", { attributes: { requestName } }),
                 meta
               )
               : Object.assign(
@@ -96,16 +99,16 @@ function clientFor_<M extends Requests>(models: M) {
                     .flatMap(
                       mapResponseM(parseResponse)
                     )
-                    .withSpan("client.request", { attributes: { actionName } }),
+                    .withSpan("client.request", { attributes: { requestName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3S(b)({}).withSpan("client.request", { attributes: { actionName } }), meta)
+            ? Object.assign(fetchApi3S(b)({}).withSpan("client.request", { attributes: { requestName } }), meta)
             : Object.assign(
-              (req: any) => fetchApi3S(b)(req).withSpan("client.request", { attributes: { actionName } }),
+              (req: any) => fetchApi3S(b)(req).withSpan("client.request", { attributes: { requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
@@ -126,7 +129,7 @@ function clientFor_<M extends Requests>(models: M) {
                   .flatMap(
                     mapResponseM(parseResponseE)
                   )
-                  .withSpan("client.request", { attributes: { actionName } }),
+                  .withSpan("client.request", { attributes: { requestName } }),
                 meta
               )
               : Object.assign(
@@ -135,16 +138,16 @@ function clientFor_<M extends Requests>(models: M) {
                     .flatMap(
                       mapResponseM(parseResponseE)
                     )
-                    .withSpan("client.request", { attributes: { actionName } }),
+                    .withSpan("client.request", { attributes: { requestName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3SE(b)({}).withSpan("client.request", { attributes: { actionName } }), meta)
+            ? Object.assign(fetchApi3SE(b)({}).withSpan("client.request", { attributes: { requestName } }), meta)
             : Object.assign(
-              (req: any) => fetchApi3SE(b)(req).withSpan("client.request", { attributes: { actionName } }),
+              (req: any) => fetchApi3SE(b)(req).withSpan("client.request", { attributes: { requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
