@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.6
+
+### Patch Changes
+
+- ef626697: improve client span
+
 ## 0.72.5
 
 ### Patch Changes
