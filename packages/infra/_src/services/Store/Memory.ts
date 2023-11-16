@@ -57,14 +57,8 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
 
-    const all = values
-      .map(ReadonlyArray.fromIterable)
-      .withSpan("Memory.all [effect-app/infra/Store]", {
-        attributes: {
-          modelName,
-          namespace
-        }
-      })
+    const all = values.map(ReadonlyArray.fromIterable)
+
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       items
         .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
@@ -81,28 +75,38 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
         .map((_) => _ as NonEmptyArray<PM>)
         .apply(withPermit)
     const s: Store<PM, Id> = {
-      all,
+      all: all.withSpan("Memory.all [effect-app/infra/Store]", {
+        attributes: {
+          modelName,
+          namespace
+        }
+      }),
       find: (id) =>
-        store.get.map((_) => Option.fromNullable(_.get(id))).withSpan("Memory.find [effect-app/infra/Store]", {
-          attributes: {
-            modelName,
-            namespace
-          }
-        }),
+        store
+          .get
+          .map((_) => Option.fromNullable(_.get(id)))
+          .withSpan("Memory.find [effect-app/infra/Store]", {
+            attributes: {
+              modelName,
+              namespace
+            }
+          }),
       filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
         all
           .tap(() => logQuery(filter, cursor))
           .map(memFilter(filter, cursor))
           .withSpan("Memory.filter [effect-app/infra/Store]", { attributes: { modelName, namespace } }),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))).withSpan(
-          "Memory.filterJoinSelect [effect-app/infra/Store]",
-          {
-            attributes: {
-              modelName
+        all
+          .map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter)))
+          .withSpan(
+            "Memory.filterJoinSelect [effect-app/infra/Store]",
+            {
+              attributes: {
+                modelName
+              }
             }
-          }
-        ),
+          ),
       set: (e) =>
         s
           .find(e.id)
