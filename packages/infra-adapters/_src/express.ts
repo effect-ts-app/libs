@@ -353,6 +353,11 @@ export function match(method: Methods): {
                     .map((_) => _.map((_) => _.status.startTime = (req as any)["___START_TIME"]))
                     .zipRight(
                       _(req, res, next)
+                        .exit
+                        .flatMap((exit) =>
+                          Effect.annotateCurrentSpan("http.status", res.statusCode)
+                            > exit
+                        )
                     )
                     .withSpan(
                       `http ${req.method}`,
