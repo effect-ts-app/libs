@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.94.13
+
+### Patch Changes
+
+- reduce span noise
+
 ## 0.94.12
 
 ### Patch Changes
