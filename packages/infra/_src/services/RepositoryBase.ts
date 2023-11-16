@@ -198,7 +198,7 @@ export function makeRepo<
         }
         return r
       })
-        .withSpan("@effect-app/infra/Repository.make", { attributes: { modelName: name } })
+        .withSpan("Repository.make [effect-app/infra]", { attributes: { modelName: name } })
         .withLogSpan("Repository.make: " + name)
     }
 
@@ -299,7 +299,7 @@ export function makeStore<
             makeInitial
               ? (makeInitial
                 .map((_) => _.map(encodeToPM())))
-                .withSpan("@effect-app/infra/Repository.makeInitial")
+                .withSpan("Repository.makeInitial [effect-app/infra]")
               : undefined,
             {
               ...config,
