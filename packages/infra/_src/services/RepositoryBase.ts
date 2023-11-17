@@ -371,6 +371,26 @@ type Repos<
     E,
     Repository<T, PM, Evt, ItemType>
   >
+  makeWith<Out, R = never, E = never, R2 = never>(
+    args: [Evt] extends [never] ? {
+        makeInitial?: Effect<R, E, readonly T[]>
+        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+          partitionValue?: (a: PM) => string
+        }
+      }
+      : {
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+        makeInitial?: Effect<R, E, readonly T[]>
+        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+          partitionValue?: (a: PM) => string
+        }
+      },
+    f: (r: Repository<T, PM, Evt, ItemType>) => Out
+  ): Effect<
+    StoreMaker | ContextMapContainer | R | R2,
+    E,
+    Out
+  >
   where: ReturnType<typeof makeWhere<PM>>
   flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
   makeLayer: (svc: Service) => Layer<never, never, Service>
@@ -404,6 +424,7 @@ export const RepositoryBaseImpl = <Service>() => {
         super(itemType)
       }
       static readonly make = mkRepo.make
+      static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
