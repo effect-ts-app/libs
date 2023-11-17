@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.9
+
+### Patch Changes
+
+- de419614: enhance errors
+
 ## 0.72.8
 
 ### Patch Changes

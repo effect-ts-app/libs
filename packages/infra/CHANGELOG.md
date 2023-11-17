@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.94.15
+
+### Patch Changes
+
+- de419614: enhance errors
+- Updated dependencies [de419614]
+  - @effect-app/prelude@0.72.9
+  - @effect-app/infra-adapters@0.60.11
+
 ## 0.94.14
 
 ### Patch Changes
