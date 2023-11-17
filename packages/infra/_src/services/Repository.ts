@@ -3,12 +3,10 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
-import type { ParserEnv } from "@effect-app/schema/custom/Parser"
-import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
 import type { Filter } from "../services/Store.js"
-import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import type { RepositoryBaseC } from "./RepositoryBase.js"
+import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
  * @tsplus type Repository
@@ -18,29 +16,7 @@ export interface Repository<
   PM extends { id: string },
   Evt,
   ItemType extends string
-> {
-  itemType: ItemType
-  find: (id: T["id"]) => Effect<never, never, Option<T>>
-  all: Effect<never, never, T[]>
-  saveAndPublish: (
-    items: Iterable<T>,
-    events?: Iterable<Evt>
-  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
-  removeAndPublish: (
-    items: Iterable<T>,
-    events?: Iterable<Evt>
-  ) => Effect<never, never, void>
-  utils: {
-    mapReverse: (
-      pm: PM,
-      setEtag: (id: string, eTag: string | undefined) => void
-    ) => unknown // TODO
-    parse: (a: unknown, env?: ParserEnv | undefined) => T
-    all: Effect<never, never, PM[]>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
-  }
-  changeFeed: PubSub<[T[], "save" | "remove"]>
-}
+> extends RepositoryBaseC<T, PM, Evt, ItemType> {}
 
 export interface PureDSL<S, S2, W> {
   get: ReturnType<typeof Pure.get<S>>
