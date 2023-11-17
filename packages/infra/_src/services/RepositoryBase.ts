@@ -14,6 +14,9 @@ import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
+export const RepoType = Symbol("RepoType")
+export type RepoType = typeof RepoType
+
 /**
  * @tsplus type Repository
  */
@@ -391,11 +394,14 @@ type Repos<
     E,
     Out
   >
-  where: ReturnType<typeof makeWhere<PM>>
-  flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
-  makeLayer: (svc: Service) => Layer<never, never, Service>
-  map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+  readonly where: ReturnType<typeof makeWhere<PM>>
+  readonly flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+  readonly makeLayer: (svc: Service) => Layer<never, never, Service>
+  readonly map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+  readonly [RepoType]: Repository<T, PM, Evt, ItemType>
 }
+
+export type GetRepoType<T> = T extends { [RepoType]: infer R } ? R : never
 
 export const RepositoryBaseImpl = <Service>() => {
   return <
@@ -436,6 +442,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static makeLayer(svc: Service) {
         return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
       }
+      static readonly [RepoType]: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls)
   }
@@ -483,6 +490,8 @@ export const RepositoryDefaultImpl = <Service>() => {
       static makeLayer(svc: Service) {
         return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
       }
+
+      static readonly [RepoType]: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
   }
