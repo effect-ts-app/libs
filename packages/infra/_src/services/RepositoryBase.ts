@@ -15,6 +15,9 @@ import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
+/**
+ * @tsplus type Repository
+ */
 export abstract class RepositoryBaseC<
   T extends { id: string },
   PM extends { id: string },
@@ -482,21 +485,3 @@ export const RepositoryDefaultImpl = <Service>() => {
         })
   }
 }
-
-@useClassFeaturesForSchema
-export class Shop extends Model<Shop>()({ id: string }) {}
-
-export class ShopRepo extends RepositoryDefaultImpl<ShopRepo>()<Shop & { _etag: string | undefined }>()(
-  "Shop",
-  Shop,
-  (pm) => pm,
-  (e, _etag) => ({ ...e, _etag })
-) {
-  override saveAndPublish = (a: any, b: any) => {
-    console.log("yiha")
-    return this.saveAndPublish(a, b)
-  }
-}
-
-useClassFeaturesForSchema
-export class TestModel extends Model<TestModel>()({ id: string }) {}
