@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.96.0
+
+### Minor Changes
+
+- 54c5d3cb: feat: add changeFeed to Repository
+
+### Patch Changes
+
+- 868919c8: cleanup
+- Updated dependencies [868919c8]
+  - @effect-app/schema@0.64.1
+  - @effect-app/core@0.71.1
+  - @effect-app/infra-adapters@0.61.1
+  - @effect-app/prelude@0.73.1
+
 ## 0.95.0
 
 ### Minor Changes
