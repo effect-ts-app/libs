@@ -10,6 +10,7 @@ import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { Schema } from "@effect-app/prelude"
+import type { AnyFromProperty } from "@effect-app/prelude/schema"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
@@ -390,59 +391,7 @@ export const RepositoryDefaultImpl = <Service>() => {
     schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
     mapFrom: (pm: Omit<PM, "_etag">) => E,
     mapTo: (e: E, etag: string | undefined) => PM
-  ):
-    & Tag<Service, Service>
-    & {
-      new(
-        impl: Repository<T, PM, Evt, ItemType>
-      ): Repository<T, PM, Evt, ItemType>
-
-      where: ReturnType<typeof makeWhere<PM>>
-      flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
-      makeLayer: (svc: Service) => Layer<never, never, Service>
-      map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
-      repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
-    }
-    & ([Evt] extends [object] ? {
-        make<R = never, E = never, R2 = never>(
-          args: {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Effect<StoreMaker | R | R2, E, Repository<T, PM, Evt, ItemType>>
-
-        toLayer<R = never, E = never, R2 = never>(
-          args: {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Layer<StoreMaker | R | R2, E, Service>
-      }
-      : {
-        make<R = never, E = never>(
-          args: {
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
-        toLayer<R = never, E = never>(
-          args: {
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Layer<StoreMaker | R, E, Service>
-      }) =>
-  {
+  ) => {
     const cls = class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never, R2 = never>(
         args: [Evt] extends [object] ? {
@@ -464,34 +413,88 @@ export const RepositoryDefaultImpl = <Service>() => {
           .map((impl) => new this(impl) as any as Service)
           .toLayer(this)
       }
-      static repo: any
-      readonly #impl: Repository<T, PM, Evt, ItemType>
+      static repo: AnyFromProperty
       constructor(
-        impl: Repository<T, PM, Evt, ItemType>
+        public impl: Repository<T, PM, Evt, ItemType>
       ) {
         super()
-        this.#impl = impl
-        Object.assign(this, impl)
       }
-      // to make super calls work
-      override get saveAndPublish() {
-        return this.#impl.saveAndPublish
-      }
-      override get removeAndPublish() {
-        return this.#impl.removeAndPublish
-      }
-      override get find() {
-        return this.#impl.find
-      }
-      override get all() {
-        return this.#impl.all
-      }
-      override get utils() {
-        return this.#impl.utils
-      }
+      // makes super calls a compiler error, as it should
+      override saveAndPublish = this.impl.saveAndPublish
+      override removeAndPublish = this.impl.removeAndPublish
+      override find = this.impl.find
+      override all = this.impl.all
+      override utils = this.impl.utils
+      override changeFeed = this.impl.changeFeed
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return cls as any // TODO: seems to be a compiler bug, it somehow says its missing toLayer and repo...
+    return cls as any as
+      & Tag<Service, Service>
+      & {
+        new(
+          impl: Repository<T, PM, Evt, ItemType>
+        ): InstanceType<typeof cls>
+
+        where: ReturnType<typeof makeWhere<PM>>
+        flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+        makeLayer: (svc: Service) => Layer<never, never, Service>
+        map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+        repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
+      }
+      & ([Evt] extends [object] ? {
+          make<R = never, E = never, R2 = never>(
+            args: {
+              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+              makeInitial?: Effect<R, E, readonly T[]>
+              config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+                partitionValue?: (a: PM) => string
+              }
+            }
+          ): Effect<StoreMaker | R | R2, E, Repository<T, PM, Evt, ItemType>>
+
+          toLayer<R = never, E = never, R2 = never>(
+            args: {
+              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+              makeInitial?: Effect<R, E, readonly T[]>
+              config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+                partitionValue?: (a: PM) => string
+              }
+            }
+          ): Layer<StoreMaker | R | R2, E, Service>
+        }
+        : {
+          make<R = never, E = never>(
+            args: {
+              makeInitial?: Effect<R, E, readonly T[]>
+              config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+                partitionValue?: (a: PM) => string
+              }
+            }
+          ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
+          toLayer<R = never, E = never>(
+            args: {
+              makeInitial?: Effect<R, E, readonly T[]>
+              config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+                partitionValue?: (a: PM) => string
+              }
+            }
+          ): Layer<StoreMaker | R, E, Service>
+        })
+  }
+}
+
+@useClassFeaturesForSchema
+export class Shop extends Model<Shop>()({ id: string }) {}
+
+export class ShopRepo extends RepositoryDefaultImpl<ShopRepo>()<Shop & { _etag: string | undefined }>()(
+  "Shop",
+  Shop,
+  (pm) => pm,
+  (e, _etag) => ({ ...e, _etag })
+) {
+  override saveAndPublish = (a: any, b: any) => {
+    console.log("yiha")
+    return this.saveAndPublish(a, b)
   }
 }
 
