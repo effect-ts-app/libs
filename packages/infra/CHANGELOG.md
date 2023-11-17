@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.94.14
+
+### Patch Changes
+
+- ed346253: Improve NotLoggedInError
+- Updated dependencies [ed346253]
+- Updated dependencies [9003d920]
+  - @effect-app/prelude@0.72.8
+  - @effect-app/infra-adapters@0.60.10
+
 ## 0.94.13
 
 ### Patch Changes

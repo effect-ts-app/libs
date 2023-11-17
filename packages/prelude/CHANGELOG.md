@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.72.8
+
+### Patch Changes
+
+- ed346253: Improve NotLoggedInError
+
 ## 0.72.7
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @effect-app/infra-adapters
 
+## 0.60.10
+
+### Patch Changes
+
+- 9003d920: add status code
+- Updated dependencies [ed346253]
+  - @effect-app/prelude@0.72.8
+
 ## 0.60.9
 
 ### Patch Changes
