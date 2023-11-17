@@ -36,8 +36,8 @@ export function findFirstMap<A, B>(
 /**
  * @tsplus getter effect/data/Chunk toArray
  */
-export function toArray<T>(c: Chunk.Chunk<T>) {
-  return c.toReadonlyArray
+export function toArray<T>(c: Chunk.Chunk<T>): T[] {
+  return c.toReadonlyArray as T[]
 }
 
 /**

@@ -73,7 +73,7 @@ export function fromChunk<
       return Th.succeed(b.toChunk)
     }),
     S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.fromIterable(i))),
-    S.encoder((_) => _.map(encode).toArray),
+    S.encoder((_) => _.map(encode).toReadonlyArray),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,
     S.annotate(fromChunkIdentifier, { self })
@@ -94,7 +94,7 @@ export function chunk<ParsedShape, ConstructorInput, Encoded, Api>(
   const encodeSelf = Encoder.for(self)
   return pipe(
     unknownArray[">>>"](fromChunk(self)),
-    S.encoder((_) => _.map(encodeSelf).toArray),
+    S.encoder((_) => _.map(encodeSelf).toReadonlyArray),
     withDefaults,
     S.annotate(chunkIdentifier, { self })
   )
