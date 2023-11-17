@@ -18,7 +18,8 @@ export class ValidationError extends Model<ValidationError>()({
 
 @useClassFeaturesForSchema
 export class NotLoggedInError extends Model<NotLoggedInError>()({
-  _tag: prop(literal("NotLoggedInError"))
+  _tag: prop(literal("NotLoggedInError")),
+  message: prop(string).optional
 }) {}
 
 @useClassFeaturesForSchema

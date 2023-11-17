@@ -11,7 +11,7 @@ export class NotFoundError<T extends string = string>
 
 export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
 
-export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{}> {}
+export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string }> {}
 
 export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{}> {}
 /**
