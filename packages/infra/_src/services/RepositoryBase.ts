@@ -82,7 +82,7 @@ export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string 
  */
 export function makeRepo<
   PM extends { id: string; _etag: string | undefined },
-  Evt = unknown
+  Evt = never
 >() {
   return <
     ItemType extends string,
@@ -116,14 +116,14 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make<R = never, E = never, R2 = never>(
-      args: [Evt] extends [object] ? {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+      args: [Evt] extends [never] ? {
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
@@ -353,14 +353,14 @@ type Repos<
   Evt
 > = {
   make<R = never, E = never, R2 = never>(
-    args: [Evt] extends [object] ? {
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+    args: [Evt] extends [never] ? {
         makeInitial?: Effect<R, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
       : {
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
         makeInitial?: Effect<R, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
@@ -380,7 +380,7 @@ type Repos<
 export const RepositoryBaseImpl = <Service>() => {
   return <
     PM extends { id: string; _etag: string | undefined },
-    Evt = unknown
+    Evt = never
   >() =>
   <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
     itemType: ItemType,
@@ -423,7 +423,7 @@ export const RepositoryBaseImpl = <Service>() => {
 export const RepositoryDefaultImpl = <Service>() => {
   return <
     PM extends { id: string; _etag: string | undefined },
-    Evt = unknown
+    Evt = never
   >() =>
   <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
     itemType: ItemType,
