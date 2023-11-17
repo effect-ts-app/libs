@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.97.0
+
+### Minor Changes
+
+- e9628e75: Cleanup Repository mess
+
+### Patch Changes
+
+- e9628e75: fix repository class type
+
 ## 0.96.1
 
 ### Patch Changes
