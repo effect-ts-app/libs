@@ -14,6 +14,35 @@ import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
+export abstract class RepositoryBaseC<
+  T extends { id: string },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+> implements Repository<T, PM, Evt, ItemType> {
+  abstract readonly itemType: ItemType
+  abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
+  abstract readonly all: Effect<never, never, T[]>
+  abstract readonly saveAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
+  abstract readonly utils: {
+    mapReverse: (
+      pm: PM,
+      setEtag: (id: string, eTag: string | undefined) => void
+    ) => unknown // TODO
+    parse: (a: unknown, env?: ParserEnv | undefined) => T
+    all: Effect<never, never, PM[]>
+    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
+  }
+  abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
+  abstract readonly removeAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<never, never, void>
+}
+
 /**
  * A base for creating an abstract class usable as Tag, Companion and interface to create your own implementation.
  */
@@ -21,28 +50,8 @@ export const RepositoryBase = <Service>() => {
   return <T extends { id: string }, PM extends { id: string; _etag: string | undefined }, Evt, ItemType extends string>(
     itemType: ItemType
   ) => {
-    abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
+    abstract class C extends RepositoryBaseC<T, PM, Evt, ItemType> {
       readonly itemType: ItemType = itemType
-      abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
-      abstract readonly all: Effect<never, never, T[]>
-      abstract readonly saveAndPublish: (
-        items: Iterable<T>,
-        events?: Iterable<Evt>
-      ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
-      abstract readonly utils: {
-        mapReverse: (
-          pm: PM,
-          setEtag: (id: string, eTag: string | undefined) => void
-        ) => unknown // TODO
-        parse: (a: unknown, env?: ParserEnv | undefined) => T
-        all: Effect<never, never, PM[]>
-        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
-      }
-      abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
-      abstract readonly removeAndPublish: (
-        items: Iterable<T>,
-        events?: Iterable<Evt>
-      ) => Effect<never, never, void>
       static readonly where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
         return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
@@ -54,7 +63,7 @@ export const RepositoryBase = <Service>() => {
         return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
       }
     }
-    return assignTag<Service>()(RepositoryBaseC)
+    return assignTag<Service>()(C)
   }
 }
 
@@ -351,7 +360,13 @@ export const RepositoryBaseImpl = <Service>() => {
             partitionValue?: (a: PM) => string
           }
         }
-    ): Effect<StoreMaker | ContextMapContainer | R | R2, E, Repository<T, PM, Evt, ItemType>>
+    ): Effect<
+      StoreMaker | ContextMapContainer | R | R2,
+      E,
+      Repository<T, PM, Evt, ItemType> & {
+        readonly itemType: ItemType
+      }
+    >
     where: ReturnType<typeof makeWhere<PM>>
     flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
     makeLayer: (svc: Service) => Layer<never, never, Service>
@@ -428,7 +443,7 @@ export const RepositoryDefaultImpl = <Service>() => {
         ): Layer<StoreMaker | R, E, Service>
       }) =>
   {
-    return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
+    const cls = class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
       static toLayer<R = never, E = never, R2 = never>(
         args: [Evt] extends [object] ? {
             publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
@@ -447,17 +462,38 @@ export const RepositoryDefaultImpl = <Service>() => {
         return this
           .make(args)
           .map((impl) => new this(impl) as any as Service)
-          .toLayer(
-            this
-          )
+          .toLayer(this)
       }
       static repo: any
+      readonly #impl: Repository<T, PM, Evt, ItemType>
       constructor(
         impl: Repository<T, PM, Evt, ItemType>
       ) {
         super()
+        this.#impl = impl
         Object.assign(this, impl)
       }
-    } as any // TODO: seems to be a compiler bug, it somehow says its missing toLayer and repo...
+      // to make super calls work
+      override get saveAndPublish() {
+        return this.#impl.saveAndPublish
+      }
+      override get removeAndPublish() {
+        return this.#impl.removeAndPublish
+      }
+      override get find() {
+        return this.#impl.find
+      }
+      override get all() {
+        return this.#impl.all
+      }
+      override get utils() {
+        return this.#impl.utils
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return cls as any // TODO: seems to be a compiler bug, it somehow says its missing toLayer and repo...
   }
 }
+
+useClassFeaturesForSchema
+export class TestModel extends Model<TestModel>()({ id: string }) {}
