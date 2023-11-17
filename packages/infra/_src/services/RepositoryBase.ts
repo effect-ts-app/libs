@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
@@ -21,14 +22,14 @@ export const RepositoryBase = <Service>() => {
     itemType: ItemType
   ) => {
     abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
-      itemType: ItemType = itemType
-      abstract find: (id: T["id"]) => Effect<never, never, Opt<T>>
-      abstract all: Effect<never, never, T[]>
-      abstract saveAndPublish: (
+      readonly itemType: ItemType = itemType
+      abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
+      abstract readonly all: Effect<never, never, T[]>
+      abstract readonly saveAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
       ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
-      abstract utils: {
+      abstract readonly utils: {
         mapReverse: (
           pm: PM,
           setEtag: (id: string, eTag: string | undefined) => void
@@ -37,11 +38,12 @@ export const RepositoryBase = <Service>() => {
         all: Effect<never, never, PM[]>
         filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
       }
-      abstract removeAndPublish: (
+      abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
+      abstract readonly removeAndPublish: (
         items: Iterable<T>,
         events?: Iterable<Evt>
       ) => Effect<never, never, void>
-      static where = makeWhere<PM>()
+      static readonly where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
         return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
       }
@@ -114,6 +116,7 @@ export function makeRepo<
         const cms = $(ContextMapContainer)
         const pubCfg = $(Effect.context<R2>())
         const pub = "publishEvents" in args ? flow(args.publishEvents, (_) => _.provide(pubCfg)) : () => Effect.unit
+        const changeFeed = $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
         const allE = store.all.flatMap((items) =>
           Do(($) => {
@@ -155,16 +158,20 @@ export function makeRepo<
 
         const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
 
-        const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) =>
-          saveAll(items)
+        const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
+          const it = items.toChunk
+          return saveAll(it)
             > Effect(events.toNonEmptyArray)
               // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
               .flatMapOpt(pub)
+            > changeFeed.publish([it.toArray, "save"])
+        }
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
             const { get, set } = yield* $(cms.get)
-            const items = a.toChunk.map(encode)
+            const it = a.toChunk
+            const items = it.map(encode)
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
               yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -175,6 +182,8 @@ export function makeRepo<
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(pub)
             )
+
+            yield* $(changeFeed.publish([it.toArray, "remove"]))
           })
         }
 
@@ -190,6 +199,7 @@ export function makeRepo<
               .flow((_) => _.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
             all: store.all.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
+          changeFeed,
           itemType: name,
           find,
           all,

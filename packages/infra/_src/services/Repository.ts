@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
@@ -37,6 +38,7 @@ export interface Repository<
     all: Effect<never, never, PM[]>
     filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
   }
+  changeFeed: PubSub<[T[], "save" | "remove"]>
 }
 
 export interface PureDSL<S, S2, W> {
