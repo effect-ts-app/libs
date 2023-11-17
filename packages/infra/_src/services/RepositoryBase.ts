@@ -411,7 +411,7 @@ export const RepositoryBaseImpl = <Service>() => {
     mapFrom: (pm: Omit<PM, "_etag">) => E,
     mapTo: (e: E, etag: string | undefined) => PM
   ):
-    & (abstract new() => Omit<RepositoryBaseC1<T, PM, Evt, ItemType>, "impl">)
+    & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
     & Tag<Service, Service>
     & Repos<
       Service,
