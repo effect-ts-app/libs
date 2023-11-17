@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.73.2
+
+### Patch Changes
+
+- 002cdb31: update packages
+- Updated dependencies [002cdb31]
+  - @effect-app/core@0.71.2
+  - @effect-app/schema@0.64.2
+
 ## 0.73.1
 
 ### Patch Changes
