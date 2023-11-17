@@ -476,6 +476,7 @@ export const RepositoryDefaultImpl = <Service>() => {
         super(itemType, impl)
       }
       static readonly make = mkRepo.make
+      static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
       static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
