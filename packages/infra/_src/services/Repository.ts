@@ -3,10 +3,9 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
-import type { ParserEnv } from "@effect-app/schema/custom/Parser"
-import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
 import type { Filter } from "../services/Store.js"
+import type { RepositoryBaseC } from "./RepositoryBase.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
@@ -17,29 +16,7 @@ export interface Repository<
   PM extends { id: string },
   Evt,
   ItemType extends string
-> {
-  itemType: ItemType
-  find: (id: T["id"]) => Effect<never, never, Option<T>>
-  all: Effect<never, never, T[]>
-  saveAndPublish: (
-    items: Iterable<T>,
-    events?: Iterable<Evt>
-  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
-  removeAndPublish: (
-    items: Iterable<T>,
-    events?: Iterable<Evt>
-  ) => Effect<never, never, void>
-  utils: {
-    mapReverse: (
-      pm: PM,
-      setEtag: (id: string, eTag: string | undefined) => void
-    ) => unknown // TODO
-    parse: (a: unknown, env?: ParserEnv | undefined) => T
-    all: Effect<never, never, PM[]>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
-  }
-  changeFeed: PubSub<[T[], "save" | "remove"]>
-}
+> extends RepositoryBaseC<T, PM, Evt, ItemType> {}
 
 export interface PureDSL<S, S2, W> {
   get: ReturnType<typeof Pure.get<S>>
@@ -62,7 +39,7 @@ export function get<
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
   return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError({ type: self.itemType, id })))
@@ -76,7 +53,7 @@ export function filter<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, ItemType>, filter: Predicate<T>) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>, filter: Predicate<T>) {
   return self.all.map((_) => _.filter(filter))
 }
 
@@ -89,7 +66,7 @@ export function filterAll<
   Evt,
   ItemType extends string,
   S extends T
->(self: Repository<T, PM, Evt, ItemType>, map: (items: T[]) => S[]) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>, map: (items: T[]) => S[]) {
   return self.all.map(map)
 }
 
@@ -102,7 +79,7 @@ export function collect<
   Evt,
   ItemType extends string,
   S extends T
->(self: Repository<T, PM, Evt, ItemType>, collect: (item: T) => Option<S>) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>, collect: (item: T) => Option<S>) {
   return self.all.map((_) => _.filterMap(collect))
 }
 
@@ -114,7 +91,7 @@ export function log<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(_: Repository<T, PM, Evt, ItemType>) {
+>(_: RepositoryBaseC<T, PM, Evt, ItemType>) {
   return (evt: Evt) => AnyPureDSL.log(evt)
 }
 
@@ -131,7 +108,7 @@ export function projectEffect<
   E,
   S = PM
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }>
 ) {
   // TODO: a projection that gets sent to the db instead.
@@ -152,7 +129,7 @@ export function project<
   ItemType extends string,
   S = PM
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.projectEffect(Effect(map))
@@ -176,7 +153,7 @@ export function queryEffect<
   E,
   S = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
@@ -205,7 +182,7 @@ export function queryOneEffect<
   E,
   S = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
 ) {
@@ -237,7 +214,7 @@ export function query<
   ItemType extends string,
   S = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
@@ -254,7 +231,7 @@ export function queryOne<
   ItemType extends string,
   S = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
@@ -273,7 +250,7 @@ export function queryAndSavePureEffect<
   E,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
@@ -292,7 +269,7 @@ export function queryAndSavePure<
   ItemType extends string,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
@@ -307,7 +284,7 @@ export function saveManyWithPure<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, ItemType>) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
@@ -320,7 +297,7 @@ export function byIdAndSaveWithPure<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, ItemType>, id: T["id"]) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>, id: T["id"]) {
   return <R, A, E, S2 extends T>(pure: Effect<FixEnv<R, Evt, T, S2>, E, A>) =>
     get(self, id).flatMap((item) => saveWithPure_(self, item, pure))
 }
@@ -334,7 +311,7 @@ export function handleByIdAndSaveWithPure<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, ItemType>) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
   return <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
     pure: (req: Req, ctx: Context) => Effect<FixEnv<R, Evt, T, S2>, E, A>
   ) =>
@@ -356,7 +333,7 @@ export function saveManyWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
   pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>
 ) {
@@ -381,7 +358,7 @@ export function saveWithPure_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   item: S1,
   pure: Effect<FixEnv<R, Evt, S1, S2>, E, A>
 ) {
@@ -403,7 +380,7 @@ export function saveAllWithEffectInt<
   E,
   A
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
 ) {
   return gen
@@ -424,7 +401,7 @@ export function queryAndSavePureEffectBatched<
   E,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>,
   batchSize = 100
@@ -444,7 +421,7 @@ export function queryAndSavePureBatched<
   ItemType extends string,
   S extends T = T
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
   batchSize = 100
@@ -460,7 +437,7 @@ export function saveManyWithPureBatched<
   PM extends { id: string },
   Evt,
   ItemType extends string
->(self: Repository<T, PM, Evt, ItemType>, batchSize = 100) {
+>(self: RepositoryBaseC<T, PM, Evt, ItemType>, batchSize = 100) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
   (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
 }
@@ -480,7 +457,7 @@ export function saveManyWithPureBatched_<
   S2 extends T,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
   pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>,
   batchSize = 100
@@ -628,7 +605,7 @@ export function save<
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>
+  self: RepositoryBaseC<T, PM, Evt, ItemType>
 ) {
   return (...items: NonEmptyArray<T>) => self.saveAndPublish(items)
 }
@@ -642,7 +619,7 @@ export function saveWithEvents<
   Evt,
   ItemType extends string
 >(
-  self: Repository<T, PM, Evt, ItemType>
+  self: RepositoryBaseC<T, PM, Evt, ItemType>
 ) {
   return (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) => self.saveAndPublish(items, events)
 }

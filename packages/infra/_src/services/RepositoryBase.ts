@@ -15,47 +15,66 @@ import type { InvalidStateError, OptimisticConcurrencyException } from "../error
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
- * A base for creating an abstract class usable as Tag, Companion and interface to create your own implementation.
+ * @tsplus type Repository
  */
-export const RepositoryBase = <Service>() => {
-  return <T extends { id: string }, PM extends { id: string; _etag: string | undefined }, Evt, ItemType extends string>(
-    itemType: ItemType
-  ) => {
-    abstract class RepositoryBaseC implements Repository<T, PM, Evt, ItemType> {
-      readonly itemType: ItemType = itemType
-      abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
-      abstract readonly all: Effect<never, never, T[]>
-      abstract readonly saveAndPublish: (
-        items: Iterable<T>,
-        events?: Iterable<Evt>
-      ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
-      abstract readonly utils: {
-        mapReverse: (
-          pm: PM,
-          setEtag: (id: string, eTag: string | undefined) => void
-        ) => unknown // TODO
-        parse: (a: unknown, env?: ParserEnv | undefined) => T
-        all: Effect<never, never, PM[]>
-        filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
-      }
-      abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
-      abstract readonly removeAndPublish: (
-        items: Iterable<T>,
-        events?: Iterable<Evt>
-      ) => Effect<never, never, void>
-      static readonly where = makeWhere<PM>()
-      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
-        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
-      }
-      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
-        return Effect.map(this as unknown as Tag<Service, Service>, f)
-      }
-      static makeLayer(svc: Service) {
-        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
-      }
-    }
-    return assignTag<Service>()(RepositoryBaseC)
+export abstract class RepositoryBaseC<
+  T extends { id: string },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+> {
+  abstract readonly itemType: ItemType
+  abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
+  abstract readonly all: Effect<never, never, T[]>
+  abstract readonly saveAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
+  abstract readonly utils: {
+    mapReverse: (
+      pm: PM,
+      setEtag: (id: string, eTag: string | undefined) => void
+    ) => unknown // TODO
+    parse: (a: unknown, env?: ParserEnv | undefined) => T
+    all: Effect<never, never, PM[]>
+    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
   }
+  abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
+  abstract readonly removeAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<never, never, void>
+}
+
+export abstract class RepositoryBaseC1<
+  T extends { id: string },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+> extends RepositoryBaseC<T, PM, Evt, ItemType> {
+  constructor(
+    public readonly itemType: ItemType
+  ) {
+    super()
+  }
+}
+
+export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string }, Evt, ItemType extends string>
+  extends RepositoryBaseC1<T, PM, Evt, ItemType>
+{
+  constructor(
+    itemType: ItemType,
+    protected readonly impl: Repository<T, PM, Evt, ItemType>
+  ) {
+    super(itemType)
+  }
+  // makes super calls a compiler error, as it should
+  override saveAndPublish = this.impl.saveAndPublish
+  override removeAndPublish = this.impl.removeAndPublish
+  override find = this.impl.find
+  override all = this.impl.all
+  override utils = this.impl.utils
+  override changeFeed = this.impl.changeFeed
 }
 
 /**
@@ -63,7 +82,7 @@ export const RepositoryBase = <Service>() => {
  */
 export function makeRepo<
   PM extends { id: string; _etag: string | undefined },
-  Evt = unknown
+  Evt = never
 >() {
   return <
     ItemType extends string,
@@ -97,14 +116,14 @@ export function makeRepo<
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
     function make<R = never, E = never, R2 = never>(
-      args: [Evt] extends [object] ? {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+      args: [Evt] extends [never] ? {
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
           makeInitial?: Effect<R, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
@@ -326,49 +345,42 @@ export function makeStore<
   }
 }
 
+type Repos<
+  Service,
+  Out,
+  T extends { id: string },
+  PM extends { id: string; _etag: string | undefined },
+  Evt
+> = {
+  make<R = never, E = never, R2 = never>(
+    args: [Evt] extends [never] ? {
+        makeInitial?: Effect<R, E, readonly T[]>
+        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+          partitionValue?: (a: PM) => string
+        }
+      }
+      : {
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
+        makeInitial?: Effect<R, E, readonly T[]>
+        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
+          partitionValue?: (a: PM) => string
+        }
+      }
+  ): Effect<
+    StoreMaker | ContextMapContainer | R | R2,
+    E,
+    Out
+  >
+  where: ReturnType<typeof makeWhere<PM>>
+  flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+  makeLayer: (svc: Service) => Layer<never, never, Service>
+  map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
+}
+
 export const RepositoryBaseImpl = <Service>() => {
   return <
     PM extends { id: string; _etag: string | undefined },
-    Evt = unknown
-  >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
-    itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
-    mapFrom: (pm: Omit<PM, "_etag">) => E,
-    mapTo: (e: E, etag: string | undefined) => PM
-  ): (abstract new() => Repository<T, PM, Evt, ItemType>) & Tag<Service, Service> & {
-    make<R = never, E = never, R2 = never>(
-      args: [Evt] extends [object] ? {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
-          }
-        }
-        : {
-          makeInitial?: Effect<R, E, readonly T[]>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
-          }
-        }
-    ): Effect<StoreMaker | ContextMapContainer | R | R2, E, Repository<T, PM, Evt, ItemType>>
-    where: ReturnType<typeof makeWhere<PM>>
-    flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
-    makeLayer: (svc: Service) => Layer<never, never, Service>
-    map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
-  } => {
-    const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
-    abstract class Cls extends RepositoryBase<Service>()<T, PM, Evt, ItemType>(itemType) {
-      static readonly make = mkRepo.make
-    }
-    return Cls
-  }
-}
-
-export const RepositoryDefaultImpl = <Service>() => {
-  return <
-    PM extends { id: string; _etag: string | undefined },
-    Evt = unknown
+    Evt = never
   >() =>
   <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
     itemType: ItemType,
@@ -376,88 +388,99 @@ export const RepositoryDefaultImpl = <Service>() => {
     mapFrom: (pm: Omit<PM, "_etag">) => E,
     mapTo: (e: E, etag: string | undefined) => PM
   ):
+    & (abstract new() => Omit<RepositoryBaseC1<T, PM, Evt, ItemType>, "impl">)
     & Tag<Service, Service>
-    & {
-      new(
-        impl: Repository<T, PM, Evt, ItemType>
-      ): Repository<T, PM, Evt, ItemType>
-
-      where: ReturnType<typeof makeWhere<PM>>
-      flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
-      makeLayer: (svc: Service) => Layer<never, never, Service>
-      map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
-      repo: Repository<T, PM, Evt, ItemType> // just a helper to type the constructor
-    }
-    & ([Evt] extends [object] ? {
-        make<R = never, E = never, R2 = never>(
-          args: {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Effect<StoreMaker | R | R2, E, Repository<T, PM, Evt, ItemType>>
-
-        toLayer<R = never, E = never, R2 = never>(
-          args: {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Layer<StoreMaker | R | R2, E, Service>
-      }
-      : {
-        make<R = never, E = never>(
-          args: {
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Effect<StoreMaker | R, E, Repository<T, PM, Evt, ItemType>>
-        toLayer<R = never, E = never>(
-          args: {
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-        ): Layer<StoreMaker | R, E, Service>
-      }) =>
+    & Repos<
+      Service,
+      Repository<T, PM, Evt, ItemType>,
+      T,
+      PM,
+      Evt
+    > =>
   {
-    return class extends RepositoryBaseImpl<Service>()<PM, Evt>()(itemType, schema, mapFrom, mapTo) {
-      static toLayer<R = never, E = never, R2 = never>(
-        args: [Evt] extends [object] ? {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-          : {
-            makeInitial?: Effect<R, E, readonly T[]>
-            config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-              partitionValue?: (a: PM) => string
-            }
-          }
-      ) {
-        return this
-          .make(args)
-          .map((impl) => new this(impl) as any as Service)
-          .toLayer(
-            this
-          )
+    const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
+    abstract class Cls extends RepositoryBaseC1<T, PM, Evt, ItemType> {
+      constructor() {
+        super(itemType)
       }
-      static repo: any
+      static readonly make = mkRepo.make
+
+      static readonly where = makeWhere<PM>()
+      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
+        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+      }
+      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
+        return Effect.map(this as unknown as Tag<Service, Service>, f)
+      }
+      static makeLayer(svc: Service) {
+        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+      }
+    }
+    return assignTag<Service>()(Cls)
+  }
+}
+
+export const RepositoryDefaultImpl = <Service>() => {
+  return <
+    PM extends { id: string; _etag: string | undefined },
+    Evt = never
+  >() =>
+  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
+    itemType: ItemType,
+    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
+    mapFrom: (pm: Omit<PM, "_etag">) => E,
+    mapTo: (e: E, etag: string | undefined) => PM
+  ):
+    & (abstract new(
+      impl: Repository<T, PM, Evt, ItemType>
+    ) => RepositoryBaseC2<T, PM, Evt, ItemType>)
+    & Tag<Service, Service>
+    & Repos<
+      Service,
+      RepositoryBaseC2<T, PM, Evt, ItemType>,
+      T,
+      PM,
+      Evt
+    > =>
+  {
+    const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
+    abstract class Cls extends RepositoryBaseC2<T, PM, Evt, ItemType> {
       constructor(
         impl: Repository<T, PM, Evt, ItemType>
       ) {
-        super()
-        Object.assign(this, impl)
+        super(itemType, impl)
       }
-    } as any // TODO: seems to be a compiler bug, it somehow says its missing toLayer and repo...
+      static readonly make = mkRepo.make
+
+      static readonly where = makeWhere<PM>()
+      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
+        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
+      }
+      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
+        return Effect.map(this as unknown as Tag<Service, Service>, f)
+      }
+      static makeLayer(svc: Service) {
+        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
+      }
+    }
+    return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
   }
 }
+
+// @useClassFeaturesForSchema
+// export class Shop extends Model<Shop>()({ id: string }) {}
+
+// /**
+//  * @tsplus type ShopRepo
+//  * @tsplus companion ShopRepo.Ops
+//  */
+// export class ShopRepo extends RepositoryDefaultImpl<ShopRepo>()<Shop & { _etag: string | undefined }>()(
+//   "Shop",
+//   Shop,
+//   (pm) => pm,
+//   (e, _etag) => ({ ...e, _etag })
+// ) {
+//   override saveAndPublish = (items: Iterable<Shop>, events?: Iterable<unknown> | undefined) => {
+//     return this.impl.saveAndPublish(items, events)
+//   }
+// }
