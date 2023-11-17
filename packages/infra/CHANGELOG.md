@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.97.3
+
+### Patch Changes
+
+- 2155f02c: add type utility
+
 ## 0.97.2
 
 ### Patch Changes
