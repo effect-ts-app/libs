@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.97.6
+
+### Patch Changes
+
+- 92bbcedd: fix typo
+
 ## 0.97.5
 
 ### Patch Changes
