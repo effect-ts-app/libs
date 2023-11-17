@@ -11,9 +11,18 @@ export class NotFoundError<T extends string = string>
 
 export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
 
-export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string }> {}
+export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string }> {
+  constructor(message?: string) {
+    super({ message })
+  }
+}
 
-export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{}> {}
+export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{ message?: string }> {
+  constructor(message?: string) {
+    super({ message })
+  }
+}
+
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */

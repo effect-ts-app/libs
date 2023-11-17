@@ -24,7 +24,8 @@ export class NotLoggedInError extends Model<NotLoggedInError>()({
 
 @useClassFeaturesForSchema
 export class UnauthorizedError extends Model<UnauthorizedError>()({
-  _tag: prop(literal("UnauthorizedError"))
+  _tag: prop(literal("UnauthorizedError")),
+  message: prop(string).optional
 }) {}
 
 @useClassFeaturesForSchema
