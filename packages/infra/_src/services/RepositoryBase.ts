@@ -347,10 +347,10 @@ export function makeStore<
 
 type Repos<
   Service,
-  Out,
   T extends { id: string },
   PM extends { id: string; _etag: string | undefined },
-  Evt
+  Evt,
+  ItemType extends string
 > = {
   make<R = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
@@ -369,7 +369,7 @@ type Repos<
   ): Effect<
     StoreMaker | ContextMapContainer | R | R2,
     E,
-    Out
+    Repository<T, PM, Evt, ItemType>
   >
   where: ReturnType<typeof makeWhere<PM>>
   flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
@@ -392,10 +392,10 @@ export const RepositoryBaseImpl = <Service>() => {
     & Tag<Service, Service>
     & Repos<
       Service,
-      Repository<T, PM, Evt, ItemType>,
       T,
       PM,
-      Evt
+      Evt,
+      ItemType
     > =>
   {
     const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
@@ -437,10 +437,10 @@ export const RepositoryDefaultImpl = <Service>() => {
     & Tag<Service, Service>
     & Repos<
       Service,
-      RepositoryBaseC2<T, PM, Evt, ItemType>,
       T,
       PM,
-      Evt
+      Evt,
+      ItemType
     > =>
   {
     const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
