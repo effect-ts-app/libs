@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.35.0
+
+### Minor Changes
+
+- 90af6a41: update packages
+
 ## 0.34.1
 
 ### Patch Changes

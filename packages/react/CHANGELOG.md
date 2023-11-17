@@ -1,5 +1,18 @@
 # @effect-app/react
 
+## 0.51.0
+
+### Minor Changes
+
+- 90af6a41: update packages
+
+### Patch Changes
+
+- Updated dependencies [90af6a41]
+  - @effect-app/prelude@0.73.0
+  - @effect-app/schema@0.64.0
+  - @effect-app/core@0.71.0
+
 ## 0.50.11
 
 ### Patch Changes
