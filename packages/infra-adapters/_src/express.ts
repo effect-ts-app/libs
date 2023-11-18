@@ -34,9 +34,6 @@ const processOrPerformanceNow = (function() {
   return () => origin + processHrtime.bigint()
 })()
 
-export type NonEmptyReadonlyArray<A> = ReadonlyArray<A> & {
-  readonly 0: A
-}
 // export type _A<T extends Effect<any, any, any>> = [T] extends [
 //   Effect<infer R, infer E, infer A>
 // ]
