@@ -1007,6 +1007,22 @@
       ]
     },
     {
+      "definitionName": "withPreResponseHandler",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/App",
+          "name": "withPreResponseHandler"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/App.Ops",
+          "name": "withPreResponseHandler"
+        }
+      ]
+    },
+    {
       "definitionName": "appendPreResponseHandler",
       "definitionKind": "const",
       "extensions": [
@@ -1017,7 +1033,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/platform/Http/App/PreResponseHandler.Ops",
+          "typeName": "effect/platform/Http/App.Ops",
           "name": "appendPreResponseHandler"
         }
       ]
@@ -2846,12 +2862,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/platform/Http/App/Default",
+          "typeName": "effect/platform/Http/App",
           "name": "logger"
         },
         {
           "kind": "static",
-          "typeName": "effect/platform/Http/App/Default.Ops",
+          "typeName": "effect/platform/Http/Middleware.Ops",
           "name": "logger"
         }
       ]
@@ -3432,7 +3448,7 @@
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/platform/Http/Server/Address"
+          "typeName": "effect/platform/Http/Serverddress"
         },
         {
           "kind": "companion",
@@ -3537,13 +3553,13 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
-          "typeName": "effect/platform/Http/App/Default",
+          "kind": "pipeable",
+          "typeName": "effect/platform/Http/App",
           "name": "serve"
         },
         {
           "kind": "static",
-          "typeName": "effect/platform/Http/App/Default.Ops",
+          "typeName": "effect/platform/Http/App.Ops",
           "name": "serve"
         }
       ]
@@ -3941,6 +3957,22 @@
           "kind": "static",
           "typeName": "effect/platform/Http/ServerResponse.Ops",
           "name": "setBody"
+        }
+      ]
+    },
+    {
+      "definitionName": "setStatus",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/ServerResponse",
+          "name": "setStatus"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/ServerResponse.Ops",
+          "name": "setStatus"
         }
       ]
     },
@@ -4660,6 +4692,19 @@
           "kind": "static",
           "typeName": "effect/platform/WorkerRunner.Ops",
           "name": "make"
+        }
+      ]
+    }
+  ],
+  "@effect/platform-node/Http/Server": [
+    {
+      "definitionName": "layer",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/platform/Http/App.Ops",
+          "name": "nodeLayer"
         }
       ]
     }
