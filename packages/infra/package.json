@@ -33,8 +33,6 @@
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
     "express": "^4.18.2",
-    "express-jwt": "^8.4.1",
-    "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "2.1.4",
     "jwt-decode": "^4.0.0",
     "mongodb": "6.3.0",
@@ -42,6 +40,9 @@
     "ts-node": "^10.9.1",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072",
     "vitest": "^0.34.6"
+  },
+  "peerDependencies": {
+    "express": "^4.18.2"
   },
   "typesVersions": {
     "*": {
@@ -109,16 +110,6 @@
       "require": {
         "types": "./dist/_global.schema.d.ts",
         "default": "./_cjs/_global.schema.cjs"
-      }
-    },
-    "./api/authorization.jwt": {
-      "import": {
-        "types": "./dist/api/authorization.jwt.d.ts",
-        "default": "./dist/api/authorization.jwt.js"
-      },
-      "require": {
-        "types": "./dist/api/authorization.jwt.d.ts",
-        "default": "./_cjs/api/authorization.jwt.cjs"
       }
     },
     "./api/codec": {
