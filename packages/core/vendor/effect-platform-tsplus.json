@@ -3407,11 +3407,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
-          "typeName": "effect/platform/Http/Router",
-          "name": "route"
-        },
-        {
           "kind": "static",
           "typeName": "effect/platform/Http/Router.Ops",
           "name": "route"
