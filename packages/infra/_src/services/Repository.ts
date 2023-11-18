@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
-import type { Predicate } from "@effect-app/core/Function"
-import type { Option } from "@effect-app/prelude"
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
 import { NotFoundError } from "../errors.js"

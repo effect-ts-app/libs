@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Predicate } from "@effect-app/core/Function"
 import type { ParsedQuery } from "query-string"
 
 /* tested in the implementation packages */
