@@ -3407,6 +3407,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "fluent",
+          "typeName": "effect/platform/Http/Router",
+          "name": "route"
+        },
+        {
           "kind": "static",
           "typeName": "effect/platform/Http/Router.Ops",
           "name": "route"
@@ -3552,11 +3557,6 @@
       "definitionName": "serve",
       "definitionKind": "const",
       "extensions": [
-        {
-          "kind": "pipeable",
-          "typeName": "effect/platform/Http/App",
-          "name": "serve"
-        },
         {
           "kind": "static",
           "typeName": "effect/platform/Http/App.Ops",
@@ -3965,7 +3965,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/platform/Http/ServerResponse",
           "name": "setStatus"
         },
