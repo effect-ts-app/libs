@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.98.2
+
+### Patch Changes
+
+- 67dd115d: tag error types
+
 ## 0.98.1
 
 ### Patch Changes
