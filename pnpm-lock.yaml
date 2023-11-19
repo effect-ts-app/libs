@@ -250,8 +250,8 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.30.5
-        version: 0.30.5(@effect/schema@0.48.0)(effect@2.0.0-next.55)
+        specifier: ^0.30.6
+        version: 0.30.6(@effect/schema@0.48.0)(effect@2.0.0-next.55)
       '@fp-ts/optic':
         specifier: ^0.16.0
         version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.55)
@@ -472,8 +472,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.30.5
-        version: 0.30.5(@effect/schema@0.48.0)(effect@2.0.0-next.55)
+        specifier: ^0.30.6
+        version: 0.30.6(@effect/schema@0.48.0)(effect@2.0.0-next.55)
       '@fp-ts/optic':
         specifier: ^0.16.0
         version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.55)
@@ -554,8 +554,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.30.5
-        version: 0.30.5(@effect/schema@0.48.0)(effect@2.0.0-next.55)
+        specifier: ^0.30.6
+        version: 0.30.6(@effect/schema@0.48.0)(effect@2.0.0-next.55)
       '@fp-ts/optic':
         specifier: ^0.16.0
         version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.55)
@@ -725,8 +725,8 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.18.5
-        version: 0.18.5(@effect/schema@0.48.0)(effect@2.0.0-next.55)
+        specifier: ^0.18.6
+        version: 0.18.6(@effect/schema@0.48.0)(effect@2.0.0-next.55)
       '@formatjs/intl':
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311072)
@@ -1453,19 +1453,19 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.18.5(@effect/schema@0.48.0)(effect@2.0.0-next.55):
-    resolution: {integrity: sha512-kxyvUpB3kMmhuGym6ApBbBevqtlIlAu4ekZHSkbWfQjvO/nMBnIqWOpL4AWEB58r8NYwdi2HWJ46v+BdeIG7Lw==}
+  /@effect/platform-browser@0.18.6(@effect/schema@0.48.0)(effect@2.0.0-next.55):
+    resolution: {integrity: sha512-vUgrUPUx+E3Lt9TuDr9AW0JfjlipTY7X7rrb80/FLxI4taXWd95JYkeNzY3oiW6GLcrTSKryuu/X9z/4iHECbw==}
     peerDependencies:
       effect: 2.0.0-next.55
     dependencies:
-      '@effect/platform': 0.30.5(@effect/schema@0.48.0)(effect@2.0.0-next.55)
+      '@effect/platform': 0.30.6(@effect/schema@0.48.0)(effect@2.0.0-next.55)
       effect: 2.0.0-next.55
     transitivePeerDependencies:
       - '@effect/schema'
     dev: false
 
-  /@effect/platform@0.30.5(@effect/schema@0.48.0)(effect@2.0.0-next.55):
-    resolution: {integrity: sha512-zWQ09GWGjNBYyRIcEgfXwH+TFwucET4ziV4xAHvJCzrFXN43Z2AHb/LtIby28IBNBtxcSWa8pAe76S20WkALtw==}
+  /@effect/platform@0.30.6(@effect/schema@0.48.0)(effect@2.0.0-next.55):
+    resolution: {integrity: sha512-TJpE5BAaXhtV0qGcR9mvzuW3QsIPmzYoEAwhxmJyzefvlGyD9UC5KXzWwQeQW9J7yQ7/48J8feGTp5ZJAvUOFA==}
     peerDependencies:
       '@effect/schema': ^0.48.0
       effect: 2.0.0-next.55
