@@ -29,6 +29,9 @@
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072",
     "winston": "^3.11.0"
   },
+  "peerDependencies": {
+    "express": "^4.18.2"
+  },
   "scripts": {
     "watch": "pnpm build:tsc -w",
     "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
