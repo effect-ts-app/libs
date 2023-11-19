@@ -5,10 +5,15 @@ import { makeOpenApiSpecs } from "./express/makeOpenApiSpecs.js"
 import type { RouteDescriptorAny } from "./express/schema/routing.js"
 
 export function writeOpenapiDocs(rdescs: Record<string, Record<string, RouteDescriptorAny>>) {
-  return makeOpenApiSpecs(
+  return writeOpenapiDocsI(
     typedValuesOf(rdescs)
       .reduce((prev, cur) => prev.concat(typedValuesOf(cur)), [] as readonly RouteDescriptorAny[])
-      .sortBy(Order.string.mapInput((a: RouteDescriptorAny) => a.path)),
+  )
+}
+
+export function writeOpenapiDocsI(rdescs: readonly RouteDescriptorAny[]) {
+  return makeOpenApiSpecs(
+    rdescs.sortBy(Order.string.mapInput((a: RouteDescriptorAny) => a.path)),
     Plutus.info({
       title: "api",
       version: "X",
