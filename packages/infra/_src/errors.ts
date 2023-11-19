@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { makeFiberFailure } from "effect/Runtime"
 
+/** @tsplus type NotFoundError */
 export class NotFoundError<T extends string = string>
   extends Data.TaggedError("NotFoundError")<{ message: string; type: T; id: string }>
 {
@@ -9,14 +10,17 @@ export class NotFoundError<T extends string = string>
   }
 }
 
+/** @tsplus type ValidationError */
 export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
 
+/** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string }> {
   constructor(message?: string) {
     super({ message })
   }
 }
 
+/** @tsplus type UnauthorizedError */
 export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{ message?: string }> {
   constructor(message?: string) {
     super({ message })
@@ -26,18 +30,21 @@ export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{ m
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
+/** @tsplus type LoginError */
 export class LoginError extends Data.TaggedError("NotLoggeInError")<{ message: string }> {
   constructor(message: string) {
     super({ message })
   }
 }
 
+/** @tsplus type InvalidStateError */
 export class InvalidStateError extends Data.TaggedError("InvalidStateError")<{ message: string }> {
   constructor(message: string) {
     super({ message })
   }
 }
 
+/** @tsplus type CauseException */
 export class CauseException<E> extends Error {
   constructor(readonly originalCause: Cause<E>, readonly _tag: string) {
     const limit = Error.stackTraceLimit
@@ -67,6 +74,7 @@ export class CauseException<E> extends Error {
   }
 }
 
+/** @tsplus type OptimisticConcurrencyException */
 export class OptimisticConcurrencyException extends Data.TaggedError("OptimisticConcurrencyException")<
   { type: string; id: string; current?: string; found?: string; message: string }
 > {
