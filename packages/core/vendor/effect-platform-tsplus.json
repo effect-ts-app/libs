@@ -2905,7 +2905,7 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/platform/Http/App/Default.Ops",
+          "typeName": "effect/platform/Http/Middleware.Ops",
           "name": "xForwardedHeaders"
         }
       ]
