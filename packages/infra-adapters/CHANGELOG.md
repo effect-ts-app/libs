@@ -1,5 +1,15 @@
 # @effect-app/infra-adapters
 
+## 0.62.1
+
+### Patch Changes
+
+- 99205b44: enhance platform
+- Updated dependencies [99205b44]
+  - @effect-app/core@0.71.3
+  - @effect-app/prelude@0.73.3
+  - @effect-app/schema@0.64.3
+
 ## 0.62.0
 
 ### Minor Changes

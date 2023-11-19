@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.71.3
+
+### Patch Changes
+
+- 99205b44: enhance platform
+
 ## 0.71.2
 
 ### Patch Changes
