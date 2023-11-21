@@ -655,13 +655,6 @@ export class CustomSchemaException
   constructor(error: AnyError) {
     super({ errors: [error], message: drawError(error) })
   }
-
-  toJSON() {
-    return {
-      message: this.message,
-      errors: this.errors
-    }
-  }
 }
 
 /**

@@ -266,7 +266,7 @@ export const useMutation: {
       }
       const interrupted = exit.cause.interruptOption
       if (interrupted.value) {
-        throw InterruptedException()
+        throw new InterruptedException()
       }
       throw new Error("Invalid state")
     })
