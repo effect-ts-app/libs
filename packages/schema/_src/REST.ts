@@ -60,6 +60,7 @@ export interface QueryRequest<
   Headers: Headers
   path: string
   method: ReadMethods
+  Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -78,6 +79,7 @@ export interface BodyRequest<
   Headers: Headers
   path: string
   method: WriteMethods
+  Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -229,6 +231,7 @@ export function QueryRequest<M>(__name?: string) {
       static Headers = _.headers
       static path = path
       static method = method
+      static Tag = Tag<M, M>()
       static [reqBrand] = reqBrand
     }
   }
@@ -482,6 +485,7 @@ export function BodyRequest<M>(__name?: string) {
       static Headers = _.headers
       static path = path
       static method = method
+      static Tag = Tag<M, M>()
       static [reqBrand] = reqBrand
     }
   }
