@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.65.1
+
+### Patch Changes
+
+- a7a9f51f: request models include a tag
+
 ## 0.65.0
 
 ### Minor Changes
