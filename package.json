@@ -8,7 +8,7 @@
             "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
             "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
             "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-            "@fp-ts/optic@0.16.0": "patches/@fp-ts__optic@0.16.0.patch"
+            "@fp-ts/optic@0.17.0": "patches/@fp-ts__optic@0.17.0.patch"
         }
     },
     "scripts": {
@@ -59,7 +59,7 @@
         "@babel/plugin-transform-modules-commonjs": "^7.23.3",
         "@changesets/cli": "^2.26.2",
         "@dprint/typescript": "^0.88.4",
-        "@effect-app/cli": "^0.24.0",
+        "@effect-app/cli": "^0.25.0",
         "@effect-app/compiler": "workspace:*",
         "@effect-app/core": "workspace:*",
         "@effect-app/eslint-codegen-model": "workspace:*",
@@ -101,7 +101,7 @@
         "tsconfig-paths": "^4.2.0",
         "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072",
         "typescript-transform-paths": "^3.4.6",
-        "vite": "^5.0.0",
+        "vite": "^5.0.2",
         "vitest": "^0.34.6"
     }
 }

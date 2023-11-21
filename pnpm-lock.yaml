@@ -13,9 +13,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@fp-ts/optic@0.16.0':
-    hash: orc3an4mj6brdedl2xbkwnaiiy
-    path: patches/@fp-ts__optic@0.16.0.patch
+  '@fp-ts/optic@0.17.0':
+    hash: ybg5rclpc63jenmzlpxbmrqkr4
+    path: patches/@fp-ts__optic@0.17.0.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
@@ -62,7 +62,7 @@ importers:
         specifier: ^0.88.4
         version: 0.88.4
       '@effect-app/cli':
-        specifier: ^0.24.0
+        specifier: ^0.25.0
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -188,8 +188,8 @@ importers:
         specifier: ^3.4.6
         version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.202311072)
       vite:
-        specifier: ^5.0.0
-        version: 5.0.0(@types/node@18.11.12)
+        specifier: ^5.0.2
+        version: 5.0.2(@types/node@18.11.12)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -225,8 +225,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
       vite:
-        specifier: ^5.0.0
-        version: 5.0.0(@types/node@18.11.12)
+        specifier: ^5.0.2
+        version: 5.0.2(@types/node@18.11.12)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -253,8 +253,8 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0(@effect/schema@0.49.1)(effect@2.0.0-next.56)
       '@fp-ts/optic':
-        specifier: ^0.16.0
-        version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56)
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -418,8 +418,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.81.0
-        version: 7.81.0
+        specifier: ^7.81.1
+        version: 7.81.1
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -475,8 +475,8 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0(@effect/schema@0.49.1)(effect@2.0.0-next.56)
       '@fp-ts/optic':
-        specifier: ^0.16.0
-        version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56)
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56)
       effect:
         specifier: ^2.0.0-next.56
         version: 2.0.0-next.56
@@ -557,8 +557,8 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0(@effect/schema@0.49.1)(effect@2.0.0-next.56)
       '@fp-ts/optic':
-        specifier: ^0.16.0
-        version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56)
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
@@ -670,8 +670,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@fp-ts/optic':
-        specifier: ^0.16.0
-        version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56)
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -731,8 +731,8 @@ importers:
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311072)
       '@fp-ts/optic':
-        specifier: ^0.16.0
-        version: 0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56)
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56)
       effect:
         specifier: ^2.0.0-next.56
         version: 2.0.0-next.56
@@ -768,8 +768,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311072
         version: /@effect-app/typescript@5.4.0-tsplus.202311072
       vite:
-        specifier: ^5.0.0
-        version: 5.0.0(@types/node@18.11.12)
+        specifier: ^5.0.2
+        version: 5.0.2(@types/node@18.11.12)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -1487,10 +1487,10 @@ packages:
       fast-check: 3.14.0
     dev: false
 
-  /@effect/typeclass@0.15.0(effect@2.0.0-next.56):
-    resolution: {integrity: sha512-4ow25i4n4EaJGElAQNA66ZLquqU32cV+B9RAaSZe7FHATsJFgkmeRK6aF/a0EwLuwrWo2wnzP57UhiP6uVAtKw==}
+  /@effect/typeclass@0.16.0(effect@2.0.0-next.56):
+    resolution: {integrity: sha512-W7K9BucF+/rd2E6HdhWamDW/IbShwG1duhRk1N9/CiP0JacAqghvP8CA+P2UQLqU9k9d+vBW5Lka1F/LF00Wrw==}
     peerDependencies:
-      effect: 2.0.0-next.55
+      effect: 2.0.0-next.56
     dependencies:
       effect: 2.0.0-next.56
     dev: false
@@ -1976,13 +1976,13 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.16.0(patch_hash=orc3an4mj6brdedl2xbkwnaiiy)(@effect/typeclass@0.15.0)(effect@2.0.0-next.56):
-    resolution: {integrity: sha512-mDZE0akN+rE0faXa1sEpxunzFtADZ4Ihw6bfiovOfuzZscAQHwBOr+QCNCGZbgKUoA9NNEDh1A8zev91zad1Sg==}
+  /@fp-ts/optic@0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.56):
+    resolution: {integrity: sha512-iE7oaWUu7wG7GZI17jc0f896WADdYthOrB8zguRQCUywtgXNmDLNGvDa/Odhd4o5BYwa8ScqsVD2M8ht/15f+g==}
     peerDependencies:
-      '@effect/typeclass': ^0.15.0
-      effect: 2.0.0-next.55
+      '@effect/typeclass': ^0.16.0
+      effect: 2.0.0-next.56
     dependencies:
-      '@effect/typeclass': 0.15.0(effect@2.0.0-next.56)
+      '@effect/typeclass': 0.16.0(effect@2.0.0-next.56)
       effect: 2.0.0-next.56
     dev: false
     patched: true
@@ -2398,46 +2398,46 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.81.0:
-    resolution: {integrity: sha512-mc3tdOEvAE6kaCvT3BpMwCgfTT2yfXjWpC7g+3N8U/yuQEmQSCDZA/ut7EkzU0DyhG3t8HzT0c+CAG3HtilEAQ==}
+  /@sentry-internal/tracing@7.81.1:
+    resolution: {integrity: sha512-E5xm27xrLXL10knH2EWDQsQYh5nb4SxxZzJ3sJwDGG9XGKzBdlp20UUhKqx00wixooVX9uCj3e4Jg8SvNB1hKg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.81.0
-      '@sentry/types': 7.81.0
-      '@sentry/utils': 7.81.0
+      '@sentry/core': 7.81.1
+      '@sentry/types': 7.81.1
+      '@sentry/utils': 7.81.1
     dev: true
 
-  /@sentry/core@7.81.0:
-    resolution: {integrity: sha512-FCAKlqo9Z6fku69bkahw1AN+eBfAgRgOL1RpBLZgyG7YBW12vtSkHb5SDvZZTkm541Fo3hhepUTLtX0qmpA4yw==}
+  /@sentry/core@7.81.1:
+    resolution: {integrity: sha512-tU37yAmckOGCw/moWKSwekSCWWJP15O6luIq+u7wal22hE88F3Vc5Avo8SeF3upnPR+4ejaOFH+BJTr6bgrs6Q==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.81.0
-      '@sentry/utils': 7.81.0
+      '@sentry/types': 7.81.1
+      '@sentry/utils': 7.81.1
     dev: true
 
-  /@sentry/node@7.81.0:
-    resolution: {integrity: sha512-hFfDxKGB+JhkhpZtM1ntyZDZoMlS8rMsynCSQcqJS39iYcCgdvgy9zOb34mXrX9kXOJNhWWmoloBZGA+KKFTdg==}
+  /@sentry/node@7.81.1:
+    resolution: {integrity: sha512-bKS3Mb95bar8AUEZSLKQ/RTSfFXo5sCSPNiBr5dDFuVljDFdkLq6NE3svG5bisrbENqfi0bqWsB4GZ7NHRTPbA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.81.0
-      '@sentry/core': 7.81.0
-      '@sentry/types': 7.81.0
-      '@sentry/utils': 7.81.0
+      '@sentry-internal/tracing': 7.81.1
+      '@sentry/core': 7.81.1
+      '@sentry/types': 7.81.1
+      '@sentry/utils': 7.81.1
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sentry/types@7.81.0:
-    resolution: {integrity: sha512-rbYNYSSrrnwNndC7S+eVT84GRLEyCZNh9oXUQqzgSD6ngXCZ0xFJW6si75uv/XQBWIw4rkj9xfRcy8DU0Tj4fg==}
+  /@sentry/types@7.81.1:
+    resolution: {integrity: sha512-dvJvGyctiaPMIQqa46k56Re5IODWMDxiHJ1UjBs/WYDLrmWFPGrEbyJ8w8CYLhYA+7qqrCyIZmHbWSTRIxstHw==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.81.0:
-    resolution: {integrity: sha512-yC9IvfeVbG4dygi4b+iUUMHp9xeHJfCn6XLbqjJVfq3xjAzBGHgfrpw6fYPNyTljXKb6CTiSXSqaNaQJE4CkPA==}
+  /@sentry/utils@7.81.1:
+    resolution: {integrity: sha512-gq+MDXIirHKxNZ+c9/lVvCXd6y2zaZANujwlFggRH2u9SRiPaIXVilLpvMm4uJqmqBMEcY81ArujExtHvkbCqg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.81.0
+      '@sentry/types': 7.81.1
     dev: true
 
   /@sideway/address@4.1.4:
@@ -9488,7 +9488,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.0(@types/node@18.11.12)
+      vite: 5.0.2(@types/node@18.11.12)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9536,8 +9536,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.0(@types/node@18.11.12):
-    resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==}
+  /vite@5.0.2(@types/node@18.11.12):
+    resolution: {integrity: sha512-6CCq1CAJCNM1ya2ZZA7+jS2KgnhbzvxakmlIjN24cF/PXhRMzpM/z8QgsVJA/Dm5fWUWnVEsmtBoMhmerPxT0g==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
