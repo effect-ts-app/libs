@@ -44,6 +44,8 @@ export type WriteMethods = POST | PUT | PATCH | DELETE
 
 export type Methods = ReadMethods | WriteMethods
 
+const RequestTag = Tag<never, never>()
+
 export const reqBrand = Symbol()
 
 // Actually GET + DELETE
@@ -231,7 +233,7 @@ export function QueryRequest<M>(__name?: string) {
       static Headers = _.headers
       static path = path
       static method = method
-      static Tag = Tag<M, M>()
+      static Tag = RequestTag
       static [reqBrand] = reqBrand
     }
   }
@@ -485,7 +487,7 @@ export function BodyRequest<M>(__name?: string) {
       static Headers = _.headers
       static path = path
       static method = method
-      static Tag = Tag<M, M>()
+      static Tag = RequestTag
       static [reqBrand] = reqBrand
     }
   }
