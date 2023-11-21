@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.98.4
+
+### Patch Changes
+
+- 56583d9b: align span names
+- Updated dependencies [baf5a2b7]
+- Updated dependencies [56583d9b]
+  - @effect-app/core@0.71.5
+  - @effect-app/prelude@0.73.5
+  - @effect-app/infra-adapters@0.62.3
+  - @effect-app/schema@0.64.5
+
 ## 0.98.3
 
 ### Patch Changes

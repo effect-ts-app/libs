@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.73.5
+
+### Patch Changes
+
+- 56583d9b: align span names
+- Updated dependencies [baf5a2b7]
+  - @effect-app/core@0.71.5
+  - @effect-app/schema@0.64.5
+
 ## 0.73.4
 
 ### Patch Changes
