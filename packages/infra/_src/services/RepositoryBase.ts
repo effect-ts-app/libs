@@ -227,7 +227,7 @@ export function makeRepo<
         }
         return r
       })
-        .withSpan("Repository.make [effect-app/infra]", { attributes: { modelName: name } })
+        // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
         .withLogSpan("Repository.make: " + name)
     }
 

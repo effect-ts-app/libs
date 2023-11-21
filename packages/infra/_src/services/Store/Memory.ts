@@ -95,7 +95,9 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
         all
           .tap(() => logQuery(filter, cursor))
           .map(memFilter(filter, cursor))
-          .withSpan("Memory.filter [effect-app/infra/Store]", { attributes: { modelName, namespace } }),
+          .withSpan("Memory.filter [effect-app/infra/Store]", {
+            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+          }),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
         all
           .map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter)))
@@ -113,14 +115,22 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
           .apply(withPermit)
-          .withSpan("Memory.set [effect-app/infra/Store]", { attributes: { modelName, namespace } }),
+          .withSpan("Memory.set [effect-app/infra/Store]", {
+            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+          }),
       batchSet: flow(
         batchSet,
-        (_) => _.withSpan("Memory.batchSet [effect-app/infra/Store]", { attributes: { modelName, namespace } })
+        (_) =>
+          _.withSpan("Memory.batchSet [effect-app/infra/Store]", {
+            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+          })
       ),
       bulkSet: flow(
         batchSet,
-        (_) => _.withSpan("Memory.bulkSet [effect-app/infra/Store]", { attributes: { modelName, namespace } })
+        (_) =>
+          _.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
+            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+          })
       ),
       remove: (e: PM) =>
         store
@@ -128,7 +138,9 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
           .apply(withPermit)
-          .withSpan("Memory.remove [effect-app/infra/Store]", { attributes: { modelName, namespace } })
+          .withSpan("Memory.remove [effect-app/infra/Store]", {
+            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+          })
     }
     return s
   })

@@ -90,7 +90,7 @@ function clientFor_<M extends Requests>(models: M) {
                   .flatMap(
                     mapResponseM(parseResponse)
                   )
-                  .withSpan("client.request", { attributes: { requestName } }),
+                  .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 meta
               )
               : Object.assign(
@@ -99,16 +99,20 @@ function clientFor_<M extends Requests>(models: M) {
                     .flatMap(
                       mapResponseM(parseResponse)
                     )
-                    .withSpan("client.request", { attributes: { requestName } }),
+                    .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3S(b)({}).withSpan("client.request", { attributes: { requestName } }), meta)
+            ? Object.assign(
+              fetchApi3S(b)({}).withSpan("client.request", { attributes: { "request.name": requestName } }),
+              meta
+            )
             : Object.assign(
-              (req: any) => fetchApi3S(b)(req).withSpan("client.request", { attributes: { requestName } }),
+              (req: any) =>
+                fetchApi3S(b)(req).withSpan("client.request", { attributes: { "request.name": requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
@@ -129,7 +133,7 @@ function clientFor_<M extends Requests>(models: M) {
                   .flatMap(
                     mapResponseM(parseResponseE)
                   )
-                  .withSpan("client.request", { attributes: { requestName } }),
+                  .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 meta
               )
               : Object.assign(
@@ -138,16 +142,20 @@ function clientFor_<M extends Requests>(models: M) {
                     .flatMap(
                       mapResponseM(parseResponseE)
                     )
-                    .withSpan("client.request", { attributes: { requestName } }),
+                    .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 {
                   ...meta,
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
             : props.length === 0
-            ? Object.assign(fetchApi3SE(b)({}).withSpan("client.request", { attributes: { requestName } }), meta)
+            ? Object.assign(
+              fetchApi3SE(b)({}).withSpan("client.request", { attributes: { "request.name": requestName } }),
+              meta
+            )
             : Object.assign(
-              (req: any) => fetchApi3SE(b)(req).withSpan("client.request", { attributes: { requestName } }),
+              (req: any) =>
+                fetchApi3SE(b)(req).withSpan("client.request", { attributes: { "request.name": requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
