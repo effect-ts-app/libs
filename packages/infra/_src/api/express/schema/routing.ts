@@ -8,6 +8,7 @@ import { isObjectSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
 import * as OpenApi from "@effect-app/infra-adapters/Openapi/index"
 
 export type Request<
+  M,
   PathA,
   CookieA,
   QueryA,
@@ -22,9 +23,11 @@ export type Request<
   Body?: MO.ReqRes<unknown, BodyA>
   Query?: MO.ReqRes<Record<string, string>, QueryA>
   Headers?: MO.ReqRes<Record<string, string>, HeaderA>
+  Tag: Tag<M, M>
 }
 
 export interface RouteRequestHandler<
+  M,
   PathA,
   CookieA,
   QueryA,
@@ -33,7 +36,7 @@ export interface RouteRequestHandler<
   ReqA extends PathA & QueryA & BodyA,
   ResA
 > {
-  Request: Request<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
+  Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
   Response?: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
 }
@@ -49,6 +52,7 @@ export function arrAsRouteDescriptionAny<R extends RouteDescriptorAny>(
 }
 
 export interface RouteDescriptor<
+  M,
   PathA,
   CookieA,
   QueryA,
@@ -61,7 +65,7 @@ export interface RouteDescriptor<
   _tag: "Schema"
   path: string
   method: METHOD
-  handler: RouteRequestHandler<PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
+  handler: RouteRequestHandler<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
   info?: {
     tags: ReadonlyArray<string>
   }
@@ -74,10 +78,12 @@ export type RouteDescriptorAny = RouteDescriptor<
   any,
   any,
   any,
+  any,
   any
 >
 
 export function makeRouteDescriptor<
+  M,
   PathA,
   CookieA,
   QueryA,
@@ -90,6 +96,7 @@ export function makeRouteDescriptor<
   path: string,
   method: METHOD,
   handler: RouteRequestHandler<
+    M,
     PathA,
     CookieA,
     QueryA,
@@ -99,6 +106,7 @@ export function makeRouteDescriptor<
     ResA
   >
 ): RouteDescriptor<
+  M,
   PathA,
   CookieA,
   QueryA,
@@ -112,7 +120,7 @@ export function makeRouteDescriptor<
 }
 
 export function makeFromSchema<ResA>(
-  e: RouteDescriptor<any, any, any, any, any, ResA, any>
+  e: RouteDescriptor<any, any, any, any, any, any, ResA, any>
 ) {
   const jsonSchema_ = OpenApi.for
   const jsonSchema = <E, A>(r: MO.ReqRes<E, A>) => jsonSchema_(r)
