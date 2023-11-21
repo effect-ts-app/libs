@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.65.2
+
+### Patch Changes
+
+- 07c0dbfc: reuse same tag for each request
+
 ## 0.65.1
 
 ### Patch Changes
