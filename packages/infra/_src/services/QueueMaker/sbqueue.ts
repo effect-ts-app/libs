@@ -7,6 +7,7 @@ import {
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
 import type {} from "@azure/service-bus"
+import { pretty } from "@effect-app/core/utils"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
@@ -59,7 +60,7 @@ export function makeServiceBusQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: pretty(meta) }))
                 .zipRight(handleEvent(body))
                 .orDie
                 // we silenceAndReportError here, so that the error is reported, and moves into the Exit.

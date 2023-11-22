@@ -552,7 +552,7 @@ export type ComputeRaw<A> = A extends Function ? A
     }
     & {}
 
-export type ComputeFlat<A> = A extends BuiltInObject ? A
+export type ComputeFlat<A> = A extends {} ? A
   :
     & {
       [K in keyof A]: A[K]

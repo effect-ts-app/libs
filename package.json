@@ -99,7 +99,7 @@
         "ts-transform-paths": "^3.0.0",
         "tsc-watch": "^6.0.4",
         "tsconfig-paths": "^4.2.0",
-        "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
+        "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231122",
         "typescript-transform-paths": "^3.4.6",
         "vite": "^5.0.2",
         "vitest": "^0.34.6"

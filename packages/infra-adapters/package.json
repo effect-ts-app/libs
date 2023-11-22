@@ -26,7 +26,7 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
+    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231122",
     "winston": "^3.11.0"
   },
   "peerDependencies": {
