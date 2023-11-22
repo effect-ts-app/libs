@@ -32,7 +32,7 @@
     "@types/lodash": "4.14.202",
     "madge": "6.1.0",
     "ts-node": "10.9.1",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311072"
+    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",
