@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.66.0
+
+### Minor Changes
+
+- f436ce54: cleanup legacy model
+
 ## 0.65.3
 
 ### Patch Changes
