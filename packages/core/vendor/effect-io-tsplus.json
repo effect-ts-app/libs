@@ -725,6 +725,22 @@
       ]
     },
     {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Cause",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Cause.Ops",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
       "definitionName": "flatten",
       "definitionKind": "const",
       "extensions": [
@@ -4871,6 +4887,22 @@
           "kind": "static",
           "typeName": "effect/io/Effect.Ops",
           "name": "flatMapStep"
+        }
+      ]
+    },
+    {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Effect",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Effect.Ops",
+          "name": "andThen"
         }
       ]
     },

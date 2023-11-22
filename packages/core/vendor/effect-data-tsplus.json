@@ -3235,6 +3235,22 @@
       ]
     },
     {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Either",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Either.Ops",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
       "definitionName": "fromNullable",
       "definitionKind": "const",
       "extensions": [
