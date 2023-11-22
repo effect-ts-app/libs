@@ -1,4 +1,3 @@
-import { pretty } from "@effect-app/core/utils"
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
@@ -67,7 +66,7 @@ export function makeMemQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: pretty(meta) }))
+                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .zipRight(handleEvent(body))
                 .apply(silenceAndReportError)
                 .setupRequestContext(RequestContext.inherit(meta.requestContext, {
