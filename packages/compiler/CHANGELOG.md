@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.37.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
 ## 0.36.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.29.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
 ## 0.28.0
 
 ### Minor Changes

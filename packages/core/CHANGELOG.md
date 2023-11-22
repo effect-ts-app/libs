@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.73.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
 ## 0.72.1
 
 ### Patch Changes

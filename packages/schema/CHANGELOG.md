@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.67.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
+### Patch Changes
+
+- Updated dependencies [6c180253]
+  - @effect-app/core@0.73.0
+
 ## 0.66.0
 
 ### Minor Changes

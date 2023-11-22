@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.68.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
+### Patch Changes
+
+- Updated dependencies [6c180253]
+  - @effect-app/prelude@0.75.0
+  - @effect-app/schema@0.67.0
+  - @effect-app/core@0.73.0
+  - @effect-app/vue@0.68.0
+
 ## 0.67.4
 
 ### Patch Changes

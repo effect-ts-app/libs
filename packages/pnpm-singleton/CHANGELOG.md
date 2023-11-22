@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.30.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
 ## 0.29.1
 
 ### Patch Changes

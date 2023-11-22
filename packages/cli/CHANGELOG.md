@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.26.0
+
+### Minor Changes
+
+- 6c180253: cleanup
+
 ## 0.25.1
 
 ### Patch Changes
