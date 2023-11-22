@@ -5,7 +5,7 @@
   "version": "0.28.0",
   "scripts": {
     "watch": "pnpm build:tsc -w",
-    "build:tsc": "pnpm clean-dist && node ../../scripts/package.js && NODE_OPTIONS=--max-old-space-size=6144 tsc --build",
+    "build:tsc": "pnpm clean-dist && effect-app-cli packagejson tsc --build",
     "build": "tsc",
     "circular": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "ncu": "ncu",
