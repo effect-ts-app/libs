@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.100.1
+
+### Patch Changes
+
+- a644e7b5: fix methods exports
+- Updated dependencies [a644e7b5]
+  - @effect-app/prelude@0.75.1
+  - @effect-app/schema@0.67.1
+  - @effect-app/infra-adapters@0.64.1
+
 ## 0.100.0
 
 ### Minor Changes

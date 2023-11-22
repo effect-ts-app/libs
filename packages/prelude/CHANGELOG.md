@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.75.1
+
+### Patch Changes
+
+- a644e7b5: fix methods exports
+- Updated dependencies [a644e7b5]
+  - @effect-app/schema@0.67.1
+
 ## 0.75.0
 
 ### Minor Changes

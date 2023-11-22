@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.67.1
+
+### Patch Changes
+
+- a644e7b5: fix methods exports
+
 ## 0.67.0
 
 ### Minor Changes
