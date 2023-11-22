@@ -58,16 +58,6 @@
         "default": "./_cjs/Config/SecretURL.cjs"
       }
     },
-    "./Config/internal/configSecretURL": {
-      "import": {
-        "types": "./dist/Config/internal/configSecretURL.d.ts",
-        "default": "./dist/Config/internal/configSecretURL.js"
-      },
-      "require": {
-        "types": "./dist/Config/internal/configSecretURL.d.ts",
-        "default": "./_cjs/Config/internal/configSecretURL.cjs"
-      }
-    },
     "./Function": {
       "import": {
         "types": "./dist/Function.d.ts",

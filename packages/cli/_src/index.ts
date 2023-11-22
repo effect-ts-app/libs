@@ -116,7 +116,7 @@ function packagejson(p: string, levels = 0) {
     ...Object
       .keys(t)
       .reduce((prev, cur) => {
-        if (cur !== "./index") prev[cur] = t[cur]
+        if (cur !== "./index" && !cur.includes("/internal/")) prev[cur] = t[cur]
         return prev
       }, {} as Record<string, unknown>)
     // ...pkg.name === "@effect-app/core" ? {

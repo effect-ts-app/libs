@@ -7,44 +7,15 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
+import type { Methods, ReadMethods, WriteMethods } from "./internal/Methods.js"
 import type { AnyRecord, AnyRecordSchema, GetModelProps, Model, PropsExtensions, StringRecord } from "./Model.js"
 import { ModelSpecial, setSchema } from "./Model.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
-export const GET = "GET"
-export type GET = typeof GET
-
-export const POST = "POST"
-export type POST = typeof POST
-
-export const PUT = "PUT"
-export type PUT = typeof PUT
-
-export const PATCH = "PATCH"
-export type PATCH = typeof PATCH
-
-export const DELETE = "DELETE"
-export type DELETE = typeof DELETE
-
-export const UPDATE = "UPDATE"
-export type UPDATE = typeof UPDATE
-
-export const OPTIONS = "OPTIONS"
-export type OPTIONS = typeof OPTIONS
-
-export const HEAD = "HEAD"
-export type HEAD = typeof HEAD
-
-export const TRACE = "TRACE"
-export type TRACE = typeof TRACE
-
-export type ReadMethods = GET
-export type WriteMethods = POST | PUT | PATCH | DELETE
-
-export type Methods = ReadMethods | WriteMethods
-
 const RequestTag = Tag<never, never>()
+
+export * as Methods from "./internal/Methods.js"
 
 export const reqBrand = Symbol()
 
@@ -526,9 +497,6 @@ export type IfPathPropsProvided<Path extends string, B extends MO.PropertyRecord
 export function Delete<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("DELETE", path, config)
 }
-export function DeleteSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("POST", path, config)
-}
 /**
  * PUT http method.
  * Input parameters other than Path, will be sent as Body.
@@ -536,9 +504,6 @@ export function DeleteSpecial<Path extends string, Config extends object = {}>(p
  */
 export function Put<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("PUT", path, config)
-}
-export function PutSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReq_("PUT", path, config)
 }
 
 /**
@@ -549,9 +514,6 @@ export function PutSpecial<Path extends string, Config extends object = {}>(path
 export function Get<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("GET", path, config)
 }
-export function GetSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReq_("GET", path, config)
-}
 /**
  * PATCH http method.
  * Input parameters other than Path, will be sent as Body.
@@ -559,9 +521,6 @@ export function GetSpecial<Path extends string, Config extends object = {}>(path
  */
 export function Patch<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("PATCH", path, config)
-}
-export function PatchSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReq_("PATCH", path, config)
 }
 /**
  * POST http method.
@@ -571,16 +530,8 @@ export function PatchSpecial<Path extends string, Config extends object = {}>(pa
 export function Post<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("POST", path, config)
 }
-export function PostSpecial<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReq_("POST", path, config)
-}
 
-export function MethodReqProps2<Method extends Methods>(method: Method) {
-  return <Path extends string, Config extends object = {}>(path: Path, config?: Config) =>
-    MethodReqProps2_(method, path, config)
-}
-
-export function MethodReqProps2_<Method extends Methods, Path extends string, Config extends object = {}>(
+function MethodReqProps2_<Method extends Methods, Path extends string, Config extends object = {}>(
   method: Method,
   path: Path,
   config?: Config
@@ -606,21 +557,10 @@ export function MethodReqProps2_<Method extends Methods, Path extends string, Co
   }
 }
 
-export function MethodReq_<Method extends Methods, Path extends string, Config extends object = {}>(
-  method: Method,
-  path: Path,
-  config?: Config
-) {
-  return <M>(__name?: string) => <Props extends MO.PropertyRecord>(self: MO.SchemaProperties<Props>) => {
-    const req = Req<M>(__name)
-    return req(method, path, self, config)
-  }
-}
-
 /**
  * Automatically picks path, query and body, based on Path params and Request Method.
  */
-export function Req<M>(__name?: string) {
+function Req<M>(__name?: string) {
   function a<
     Path extends string,
     Method extends Methods,

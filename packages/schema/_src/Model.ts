@@ -38,15 +38,6 @@ export interface Model<ParsedShape, Self extends MO.SchemaAny> extends
   >
 {}
 
-export interface Model3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny> extends
-  Model2<
-    ParsedShape,
-    Self,
-    EncSchemaForModel<ParsedShape, Self, MO.EncodedOf<Self>>,
-    ParsedShape2
-  >
-{}
-
 export interface ModelEnc<
   ParsedShape,
   Self extends MO.SchemaAny,
@@ -54,18 +45,6 @@ export interface ModelEnc<
   // makes it pretty, but also helps compatibility with WebStorm it seems...
   ParsedShape2 = ComputeFlat<MO.ParsedShapeOf<Self>>
 > extends
-  MM<
-    Self,
-    EncSchemaForModel<ParsedShape, Self, MEnc>,
-    ParsedShape,
-    MO.ConstructorInputOf<Self>,
-    MEnc,
-    GetApiProps<Self>,
-    ParsedShape2
-  >
-{}
-
-export interface ModelEnc3<ParsedShape, ParsedShape2, Self extends MO.SchemaAny, MEnc> extends
   MM<
     Self,
     EncSchemaForModel<ParsedShape, Self, MEnc>,
@@ -141,36 +120,19 @@ export interface MM<
   readonly Arbitrary: MO.ArbitraryFor<SelfM>
 }
 
+/** opaque model only on ParsedShape type param */
 export function Model<ParsedShape>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
     ModelSpecial<ParsedShape>(__name)(MO.props(propsOrSchemas))
 }
 
+/** opaque model on ParsedShape and Encoded type params */
 export function ModelEnc<ParsedShape, Encoded>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
     ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(propsOrSchemas))
 }
 
-export function Model3<ParsedShape, ParsedShape2>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial3<ParsedShape, ParsedShape2>(__name)(MO.props(propsOrSchemas))
-}
-
-export function Model4<ParsedShape>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial3<ParsedShape, {}>(__name)(MO.props(propsOrSchemas))
-}
-
-export function ModelEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name)(MO.props(propsOrSchemas))
-}
-
-export function ModelEnc4<ParsedShape, Encoded>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc3<ParsedShape, {}, Encoded>(__name)(MO.props(propsOrSchemas))
-}
-
+/** fully opaque model on all type params */
 export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
@@ -186,44 +148,7 @@ export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
       >
       & PropsExtensions<Props>
   }
-  // MNModelSpecial<M, MEnc>(__name)(MO.props(props))
 }
-
-// export function MNModel3<ParsedShape, ParsedShape2, ConstructorInput, Encoded, Props>(
-//   __name?: string
-// ) {
-//   return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
-//     const self = MO.props(props)
-//     return makeSpecial(__name, self) as MNModel<
-//       typeof self,
-//       ParsedShape,
-//       ConstructorInput,
-//       Encoded,
-//       Props,
-//     > &
-//       PropsExtensions<Props>
-//   }
-//   //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
-// }
-
-// export function MNModel4<ParsedShape, ConstructorInput, Encoded, Props>(
-//   __name?: string
-// ) {
-//   return <ProvidedProps extends MO.PropertyRecord = {}>(props: ProvidedProps) => {
-//     const self = MO.props(props)
-//     return makeSpecial(__name, self) as MNModel<
-//       typeof self,
-//       ParsedShape,
-//       ConstructorInput,
-//       Encoded,
-//       Props,
-//       ProvidedProps,
-//       {}
-//     > &
-//       PropsExtensions<Props>
-//   }
-//   //MNModelSpecial<M, MEnc>(__name)(MO.props(props))
-// }
 
 export function fromModel<ParsedShape>(__name?: string) {
   return <Props extends FromPropertyRecord = {}>(props: Props) => ModelSpecial<ParsedShape>(__name)(fromProps(props))
@@ -376,33 +301,6 @@ export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
   }
 }
 
-export function ModelSpecial3<ParsedShape, ParsedShape2>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
-    self: Self
-  ): Model3<ParsedShape, ParsedShape2, Self> & PropsExtensions<GetModelProps<Self>> => {
-    return makeSpecial(__name, self)
-  }
-}
-
-export function ModelSpecialEnc3<ParsedShape, ParsedShape2, Encoded>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
-    self: Self
-  ):
-    & ModelEnc3<ParsedShape, ParsedShape2, Self, Encoded>
-    & PropsExtensions<GetModelProps<Self>> =>
-  {
-    return makeSpecial(__name, self)
-  }
-}
-
-// export function MNModelSpecial<ParsedShape, MEnc>(__name?: string) {
-//   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
-//     self: Self
-//   ): MNModel<M, Self, MEnc> & PropsExtensions<GetModelProps<Self>> => {
-//     return makeSpecial(__name, self)
-//   }
-// }
-
 function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
   const schema = __name ? self >= MO.named(__name) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
   const of_ = MO.Constructor.for(schema) >= unsafe
@@ -478,8 +376,5 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
       }
       return eq
     }
-    // static copy(this, that) {
-    //   return fromFields(that, this)
-    // }
   }
 }
