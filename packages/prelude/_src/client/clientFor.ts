@@ -21,7 +21,7 @@ export * from "./config.js"
 
 type Requests = Record<string, Record<string, any>>
 type AnyRequest = Omit<QueryRequest<any, any, any, any, any>, "method"> & {
-  method: Methods.Methods
+  method: Methods.Rest
 } & RequestSchemed<any, any>
 
 const cache = new Map<any, Client<any>>()

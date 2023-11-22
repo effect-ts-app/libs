@@ -7,15 +7,17 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { Methods, ReadMethods, WriteMethods } from "./internal/Methods.js"
+import type { ReadMethods, WriteMethods } from "./Methods.js"
 import type { AnyRecord, AnyRecordSchema, GetModelProps, Model, PropsExtensions, StringRecord } from "./Model.js"
 import { ModelSpecial, setSchema } from "./Model.js"
+
+import * as Methods from "./Methods.js"
 
 export type StringRecordSchema = MO.Schema<unknown, any, any, StringRecord, any>
 
 const RequestTag = Tag<never, never>()
 
-export * as Methods from "./internal/Methods.js"
+export { Methods }
 
 export const reqBrand = Symbol()
 
@@ -469,7 +471,7 @@ export interface Request<
   M,
   Self extends MO.SchemaAny,
   Path extends string,
-  Method extends Methods
+  Method extends Methods.Rest
 > extends Model<M, Self> {
   method: Method
   path: Path
@@ -531,7 +533,7 @@ export function Post<Path extends string, Config extends object = {}>(path: Path
   return MethodReqProps2_("POST", path, config)
 }
 
-function MethodReqProps2_<Method extends Methods, Path extends string, Config extends object = {}>(
+function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Config extends object = {}>(
   method: Method,
   path: Path,
   config?: Config
@@ -563,12 +565,12 @@ function MethodReqProps2_<Method extends Methods, Path extends string, Config ex
 function Req<M>(__name?: string) {
   function a<
     Path extends string,
-    Method extends Methods,
+    Method extends Methods.Rest,
     Config extends object = {}
   >(method: Method, path: Path, config?: Config): BuildRequest<never, Path, Method, M, Config>
   function a<
     Path extends string,
-    Method extends Methods,
+    Method extends Methods.Rest,
     Props extends MO.PropertyRecord,
     Config extends object = {}
   >(
@@ -579,7 +581,7 @@ function Req<M>(__name?: string) {
   ): BuildRequest<Props, Path, Method, M, Config>
   function a<
     Path extends string,
-    Method extends Methods,
+    Method extends Methods.Rest,
     Props extends MO.PropertyRecord,
     Config extends object = {}
   >(method: Method, path: Path, self?: MO.SchemaProperties<Props>, config?: Config) {
@@ -603,7 +605,7 @@ export function parsePathParams<Path extends string>(path: Path) {
 type BuildRequest<
   Props extends MO.PropertyRecord,
   Path extends string,
-  Method extends Methods,
+  Method extends Methods.Rest,
   M,
   Config extends object = {}
 > = IfPathPropsProvided<
@@ -634,7 +636,7 @@ type BuildRequest<
 export function makeRequest<
   Props extends MO.PropertyRecord,
   Path extends string,
-  Method extends Methods,
+  Method extends Methods.Rest,
   M,
   Config extends object = {}
 >(
@@ -685,7 +687,7 @@ export function makeRequest<
 export function adaptRequest<
   Props extends MO.PropertyRecord,
   Path extends string,
-  Method extends Methods,
+  Method extends Methods.Rest,
   M,
   Config extends object = {}
 >(req: Request<M, MO.SchemaProperties<Props>, Path, Method>, config?: Config) {
@@ -721,7 +723,7 @@ export type ReqResSchemed<E, A> = {
 }
 
 export type RequestSchemed<E, A> = ReqResSchemed<E, A> & {
-  method: Methods
+  method: Methods.Rest
   path: string
 }
 

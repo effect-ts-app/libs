@@ -72,6 +72,16 @@
         "default": "./_cjs/FastCheck.cjs"
       }
     },
+    "./Methods": {
+      "import": {
+        "types": "./dist/Methods.d.ts",
+        "default": "./dist/Methods.js"
+      },
+      "require": {
+        "types": "./dist/Methods.d.ts",
+        "default": "./_cjs/Methods.cjs"
+      }
+    },
     "./Model": {
       "import": {
         "types": "./dist/Model.d.ts",

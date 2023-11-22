@@ -16,7 +16,7 @@ export type Request<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA
 > = MO.ReqResSchemed<unknown, ReqA> & {
-  method: Methods.Methods
+  method: Methods.Rest
   path: string
   Cookie?: MO.ReqRes<Record<string, string>, CookieA>
   Path?: MO.ReqRes<Record<string, string>, PathA>
@@ -60,7 +60,7 @@ export interface RouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA,
-  METHOD extends Methods.Methods = Methods.Methods
+  METHOD extends Methods.Rest = Methods.Rest
 > {
   _tag: "Schema"
   path: string
@@ -91,7 +91,7 @@ export function makeRouteDescriptor<
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
   ResA = void,
-  METHOD extends Methods.Methods = Methods.Methods
+  METHOD extends Methods.Rest = Methods.Rest
 >(
   path: string,
   method: METHOD,
