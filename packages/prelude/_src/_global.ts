@@ -104,7 +104,7 @@ import {
 /**
  * @tsplus global
  */
-import { ServiceTagged, TagClass } from "@effect-app/prelude/service"
+import { assignTag, ServiceTagged, TagClass } from "@effect-app/prelude/service"
 
 /**
  * @tsplus global

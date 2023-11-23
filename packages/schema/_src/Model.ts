@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { assignTag, type ComputeFlat } from "@effect-app/core/utils"
+import { type ComputeFlat } from "@effect-app/core/utils"
 import * as Lens from "@fp-ts/optic"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
@@ -103,7 +103,7 @@ export interface MM<
   Encoded,
   Props,
   ParsedShape2
-> extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>, Tag<ParsedShape, ParsedShape> {
+> extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
   readonly parsed: ParsedShapeOf<Self>
@@ -311,72 +311,70 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
   }
   const parser = MO.Parser.for(schema)
 
-  return assignTag<any, any>()(
-    class implements Hash.Hash, Equal.Equal {
-      static [nModelBrand] = nModelBrand
+  return class implements Hash.Hash, Equal.Equal {
+    static [nModelBrand] = nModelBrand
 
-      static [schemaField] = schema
-      static [MO.SchemaContinuationSymbol] = schema
-      static Model = schema
-      static Api = schema.Api
-      static [">>>"] = schema[">>>"]
+    static [schemaField] = schema
+    static [MO.SchemaContinuationSymbol] = schema
+    static Model = schema
+    static Api = schema.Api
+    static [">>>"] = schema[">>>"]
 
-      static Parser = parser
-      static EParser = parser
-      static Encoder = MO.Encoder.for(schema)
-      static Constructor = MO.Constructor.for(schema)
-      static Guard = MO.Guard.for(schema)
-      static Arbitrary = MO.Arbitrary.for(schema)
+    static Parser = parser
+    static EParser = parser
+    static Encoder = MO.Encoder.for(schema)
+    static Constructor = MO.Constructor.for(schema)
+    static Guard = MO.Guard.for(schema)
+    static Arbitrary = MO.Arbitrary.for(schema)
 
-      static lens = Lens.id<any>()
-      static lenses = lensFromProps()(schema.Api.props)
+    static lens = Lens.id<any>()
+    static lenses = lensFromProps()(schema.Api.props)
 
-      static include = include(schema.Api.props)
-      static pick = (...props: any[]) => pick(schema.Api.props, props)
-      static omit = (...props: any[]) => omit(schema.Api.props, props)
+    static include = include(schema.Api.props)
+    static pick = (...props: any[]) => pick(schema.Api.props, props)
+    static omit = (...props: any[]) => omit(schema.Api.props, props)
 
-      static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
-        new MO.SchemaAnnotated(self, identifier, meta)
+    static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
+      new MO.SchemaAnnotated(self, identifier, meta)
 
-      constructor(inp: MO.ConstructorInputOf<any> = {}) {
-        // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
-        fromFields(of_(inp), this)
-      }
-      [Hash.symbol](): number {
-        const ka = Object.keys(this).sort()
-        if (ka.length === 0) {
-          return 0
-        }
-        let hash = Hash.combine(Hash.hash(this[ka[0]!]))(Hash.string(ka[0]!))
-        let i = 1
-        while (hash && i < ka.length) {
-          hash = Hash.combine(
-            Hash.combine(Hash.hash(this[ka[i]!]))(Hash.string(ka[i]!))
-          )(hash)
-          i++
-        }
-        return hash
-      }
-
-      [Equal.symbol](that: unknown): boolean {
-        if (!(that instanceof this.constructor)) {
-          return false
-        }
-        const ka = Object.keys(this)
-        const kb = Object.keys(that)
-        if (ka.length !== kb.length) {
-          return false
-        }
-        let eq = true
-        let i = 0
-        const ka_ = ka.sort()
-        const kb_ = kb.sort()
-        while (eq && i < ka.length) {
-          eq = ka_[i] === kb_[i] && Equal.equals(this[ka_[i]!], this[kb_[i]!])
-          i++
-        }
-        return eq
-      }
+    constructor(inp: MO.ConstructorInputOf<any> = {}) {
+      // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
+      fromFields(of_(inp), this)
     }
-  )
+    [Hash.symbol](): number {
+      const ka = Object.keys(this).sort()
+      if (ka.length === 0) {
+        return 0
+      }
+      let hash = Hash.combine(Hash.hash(this[ka[0]!]))(Hash.string(ka[0]!))
+      let i = 1
+      while (hash && i < ka.length) {
+        hash = Hash.combine(
+          Hash.combine(Hash.hash(this[ka[i]!]))(Hash.string(ka[i]!))
+        )(hash)
+        i++
+      }
+      return hash
+    }
+
+    [Equal.symbol](that: unknown): boolean {
+      if (!(that instanceof this.constructor)) {
+        return false
+      }
+      const ka = Object.keys(this)
+      const kb = Object.keys(that)
+      if (ka.length !== kb.length) {
+        return false
+      }
+      let eq = true
+      let i = 0
+      const ka_ = ka.sort()
+      const kb_ = kb.sort()
+      while (eq && i < ka.length) {
+        eq = ka_[i] === kb_[i] && Equal.equals(this[ka_[i]!], this[kb_[i]!])
+        i++
+      }
+      return eq
+    }
+  }
 }

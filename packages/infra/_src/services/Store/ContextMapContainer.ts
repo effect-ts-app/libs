@@ -44,3 +44,6 @@ export class ContextMapContainerImpl extends ContextMapContainer {
  * @tsplus static ContextMapContainer.Ops live
  */
 export const live = Effect.sync(() => new ContextMapContainerImpl()).toLayer(ContextMapContainer)
+
+/** @tsplus static ContextMap.Ops Tag */
+export const RCTag = Tag<ContextMap>()

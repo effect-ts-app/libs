@@ -5,7 +5,6 @@
  */
 
 import type { TagTypeId as TagTypeIdOriginal } from "effect/Context"
-import { assignTag } from "./utils.js"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
@@ -37,6 +36,20 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
 
 export const TagTypeId: TagTypeIdOriginal = Symbol.for("effect/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
+
+export function assignTag<Id, Service = Id>(key?: unknown) {
+  return <S extends object>(cls: S): S & Tag<Id, Service> => {
+    const tag = Tag<Id, Service>(key)
+    const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
+    // TODO: this is probably useless, as we need to get it at the source instead of here
+    Object.defineProperty(t, "stack", {
+      get() {
+        return tag.stack
+      }
+    })
+    return t
+  }
+}
 
 abstract class TagClassBase {
   static flatMap<R1, E1, B>(f: (a: unknown) => Effect<R1, E1, B>): Effect<unknown | R1, E1, B> {
