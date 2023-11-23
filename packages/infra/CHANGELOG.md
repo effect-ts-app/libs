@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.101.0
+
+### Minor Changes
+
+- 46719cec: feat: schema classes double as Tag
+
+### Patch Changes
+
+- Updated dependencies [46719cec]
+  - @effect-app/prelude@0.76.0
+  - @effect-app/schema@0.68.0
+  - @effect-app/core@0.74.0
+  - @effect-app/infra-adapters@0.64.3
+
 ## 0.100.2
 
 ### Patch Changes

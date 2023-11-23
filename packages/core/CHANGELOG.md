@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.74.0
+
+### Minor Changes
+
+- 46719cec: feat: schema classes double as Tag
+
 ## 0.73.1
 
 ### Patch Changes
