@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.102.0
+
+### Minor Changes
+
+- 88f5695c: revert schema classes double as tag
+
+### Patch Changes
+
+- Updated dependencies [88f5695c]
+  - @effect-app/prelude@0.77.0
+  - @effect-app/schema@0.69.0
+  - @effect-app/core@0.75.0
+  - @effect-app/infra-adapters@0.64.4
+
 ## 0.101.0
 
 ### Minor Changes

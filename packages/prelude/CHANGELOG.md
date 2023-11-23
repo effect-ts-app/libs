@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.77.0
+
+### Minor Changes
+
+- 88f5695c: revert schema classes double as tag
+
+### Patch Changes
+
+- Updated dependencies [88f5695c]
+  - @effect-app/schema@0.69.0
+  - @effect-app/core@0.75.0
+
 ## 0.76.0
 
 ### Minor Changes

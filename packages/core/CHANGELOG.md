@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.75.0
+
+### Minor Changes
+
+- 88f5695c: revert schema classes double as tag
+
 ## 0.74.0
 
 ### Minor Changes
