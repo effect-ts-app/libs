@@ -62,7 +62,7 @@ importers:
         specifier: ^0.88.4
         version: 0.88.4
       '@effect-app/cli':
-        specifier: ^0.25.1
+        specifier: ^0.26.0
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
