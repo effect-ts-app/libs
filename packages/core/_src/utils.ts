@@ -607,3 +607,17 @@ export function exhaustiveMatch<T extends string>() {
 export function exhaustiveMatch_<T extends string>(t: T) {
   return <Out extends Record<T, (t: T) => any>>(handlers: Out): ReturnType<Out[keyof Out]> => handlers[t](t)
 }
+
+export function assignTag<Id, Service = Id>(key?: unknown) {
+  return <S extends object>(cls: S): S & Tag<Id, Service> => {
+    const tag = Tag<Id, Service>(key)
+    const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
+    // TODO: this is probably useless, as we need to get it at the source instead of here
+    Object.defineProperty(t, "stack", {
+      get() {
+        return tag.stack
+      }
+    })
+    return t
+  }
+}
