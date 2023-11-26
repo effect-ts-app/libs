@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.75.1
+
+### Patch Changes
+
+- 9efeed84: add ext
+
 ## 0.75.0
 
 ### Minor Changes
