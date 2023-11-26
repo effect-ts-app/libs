@@ -31,11 +31,7 @@ export abstract class RepositoryBaseC<
     events?: Iterable<Evt>
   ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
   abstract readonly utils: {
-    mapReverse: (
-      pm: PM,
-      setEtag: (id: string, eTag: string | undefined) => void
-    ) => unknown // TODO
-    parse: (a: unknown, env?: ParserEnv | undefined) => T
+    parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
     filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
   }
@@ -206,13 +202,14 @@ export function makeRepo<
           })
         }
 
+        const p = Parser.for(schema).unsafe
+
         const r: Repository<T, PM, Evt, ItemType> = {
           /**
            * @internal
            */
           utils: {
-            mapReverse,
-            parse: Parser.for(schema).unsafe,
+            parseMany: (items) => cms.get.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
             filter: store
               .filter
               .flow((_) => _.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),

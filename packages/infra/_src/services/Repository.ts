@@ -6,7 +6,6 @@ import { Pure } from "@effect-app/prelude/Pure"
 import { NotFoundError } from "../errors.js"
 import type { Filter } from "../services/Store.js"
 import type { RepositoryBaseC } from "./RepositoryBase.js"
-import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
 /**
  * @tsplus type Repository
@@ -135,12 +134,6 @@ export function project<
   return self.projectEffect(Effect(map))
 }
 
-const getCM = Effect
-  .contextWith((_: Context<never>) => Context.getOption(_, ContextMapContainer))
-  .flatMap((c) => c.encaseInEffect(() => new Error("ContextMapContainer not found")))
-  .orDie
-  .flatMap((_) => _.get)
-
 /**
  * @tsplus fluent Repository queryEffect
  */
@@ -159,14 +152,8 @@ export function queryEffect<
 ) {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
-      .flatMap((items) =>
-        Do(($) => {
-          const { set } = $(getCM)
-          return items.map((_) => self.utils.mapReverse(_, set))
-        })
-      )
-      .map((_) => _.map((_) => self.utils.parse(_)))
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
+      .flatMap((_) => self.utils.parseMany(_))
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as any as S[])
   )
 }
 
@@ -188,15 +175,9 @@ export function queryOneEffect<
 ) {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
-      .flatMap((items) =>
-        Do(($) => {
-          const { set } = $(getCM)
-          return items.map((_) => self.utils.mapReverse(_, set))
-        })
-      )
-      .map((_) => _.map((_) => self.utils.parse(_)))
+      .flatMap((_) => self.utils.parseMany(_))
       .flatMap((_) =>
-        (f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
+        (f.collect ? _.filterMap(f.collect) : _ as any as S[])
           .toNonEmpty
           .encaseInEffect(() => new NotFoundError({ type: self.itemType, id: JSON.stringify(f.filter) }))
           .map((_) => _[0])
