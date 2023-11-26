@@ -45,11 +45,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             const cr = { data: JSON.parse(sdb.data) as EA, version: sdb.version }
             const r = yield* $(
               decode(cr.data)
-                .flatMap((d) =>
-                  eq(keys, d as unknown as V)
-                    ? Effect(d)
-                    : Effect.fail("not equals")
-                )
+                .filterOrFail((d) => eq(keys, d as unknown as V), () => "not equals")
                 .exit
             )
             if (r.isSuccess()) {
