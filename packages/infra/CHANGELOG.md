@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.102.2
+
+### Patch Changes
+
+- a37810fc: fix: dont access CM on repo request
+
 ## 0.102.1
 
 ### Patch Changes
