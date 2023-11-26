@@ -12477,6 +12477,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "effect/io/Effect",
+          "name": "unwrapLayer"
+        },
+        {
           "kind": "static",
           "typeName": "effect/io/Layer.Ops",
           "name": "unwrapEffect"
