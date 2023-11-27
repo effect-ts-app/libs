@@ -9,10 +9,11 @@ export const logfmtLogger = Logger.make<unknown, void>(
       annotations = HashMap.make(...[
         ...annotations,
         ...{
-          requestRootId: requestContext.rootId,
-          requestId: requestContext.id,
-          requestName: requestContext.name,
-          ...requestContext.userProfile?.sub ? { requestUserSub: requestContext.userProfile.sub } : {}
+          "request.root.id": requestContext.rootId,
+          "request.id": requestContext.id,
+          "request.name": requestContext.name,
+          "request.namespace": requestContext.namespace,
+          ...requestContext.userProfile?.sub ? { "request.user.sub": requestContext.userProfile.sub } : {}
         }
           .$$
           .entries
