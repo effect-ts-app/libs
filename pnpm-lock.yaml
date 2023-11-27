@@ -104,13 +104,13 @@ importers:
         specifier: ~18.11.12
         version: 18.11.12
       '@typescript-eslint/eslint-plugin':
-        specifier: ^6.12.0
+        specifier: 6.12.0
         version: 6.12.0(@effect-app/typescript@5.4.0-tsplus.202311222)(@typescript-eslint/parser@6.12.0)(eslint@8.54.0)
       '@typescript-eslint/parser':
-        specifier: ^6.12.0
+        specifier: 6.12.0
         version: 6.12.0(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.54.0)
       '@typescript-eslint/scope-manager':
-        specifier: ^6.12.0
+        specifier: 6.12.0
         version: 6.12.0(patch_hash=tp5r7mwyjl4dxldk2tuwbgrsum)
       babel-plugin-replace-import-extension:
         specifier: ^1.1.3
@@ -308,7 +308,7 @@ importers:
         specifier: 7.23.4
         version: 7.23.4
       '@typescript-eslint/utils':
-        specifier: ^6.12.0
+        specifier: 6.12.0
         version: 6.12.0(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.54.0)
       eslint-plugin-codegen:
         specifier: 0.17.0
@@ -418,8 +418,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.81.1
-        version: 7.81.1
+        specifier: ^7.82.0
+        version: 7.82.0
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -2398,46 +2398,46 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.81.1:
-    resolution: {integrity: sha512-E5xm27xrLXL10knH2EWDQsQYh5nb4SxxZzJ3sJwDGG9XGKzBdlp20UUhKqx00wixooVX9uCj3e4Jg8SvNB1hKg==}
+  /@sentry-internal/tracing@7.82.0:
+    resolution: {integrity: sha512-kgZVHYbZCeOb5apTDZJG9bioaKNPImmHTggZSWMmZj1Q037ft4481EleIVtKWOUvJzmEndEmD91mglkXBGPQwA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.81.1
-      '@sentry/types': 7.81.1
-      '@sentry/utils': 7.81.1
+      '@sentry/core': 7.82.0
+      '@sentry/types': 7.82.0
+      '@sentry/utils': 7.82.0
     dev: true
 
-  /@sentry/core@7.81.1:
-    resolution: {integrity: sha512-tU37yAmckOGCw/moWKSwekSCWWJP15O6luIq+u7wal22hE88F3Vc5Avo8SeF3upnPR+4ejaOFH+BJTr6bgrs6Q==}
+  /@sentry/core@7.82.0:
+    resolution: {integrity: sha512-Wc+AYPzDIgFbuKkyYd/8tFm4E8CQboDkxefsz26N66CU1Ueqlk0RA8nVbzhbklhO/SuPJeR+fVOOx1spXYoybg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.81.1
-      '@sentry/utils': 7.81.1
+      '@sentry/types': 7.82.0
+      '@sentry/utils': 7.82.0
     dev: true
 
-  /@sentry/node@7.81.1:
-    resolution: {integrity: sha512-bKS3Mb95bar8AUEZSLKQ/RTSfFXo5sCSPNiBr5dDFuVljDFdkLq6NE3svG5bisrbENqfi0bqWsB4GZ7NHRTPbA==}
+  /@sentry/node@7.82.0:
+    resolution: {integrity: sha512-/Eg8FxXaXbthoU6NaAilWMzQQuyG48oeeZKMKqFEKnul334GX+vNEOp8Xlnd72FMiACMKjFJqgb+amBVh5jOxw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.81.1
-      '@sentry/core': 7.81.1
-      '@sentry/types': 7.81.1
-      '@sentry/utils': 7.81.1
+      '@sentry-internal/tracing': 7.82.0
+      '@sentry/core': 7.82.0
+      '@sentry/types': 7.82.0
+      '@sentry/utils': 7.82.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sentry/types@7.81.1:
-    resolution: {integrity: sha512-dvJvGyctiaPMIQqa46k56Re5IODWMDxiHJ1UjBs/WYDLrmWFPGrEbyJ8w8CYLhYA+7qqrCyIZmHbWSTRIxstHw==}
+  /@sentry/types@7.82.0:
+    resolution: {integrity: sha512-mWiSaWXas2zAyO7Kt5Eb9/W2vEiDiTw56NGRjKWsZnmKyl9bK3Mnxuk0TR7M6F+q8OoAFZPK1rECnyGIcb0fqQ==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.81.1:
-    resolution: {integrity: sha512-gq+MDXIirHKxNZ+c9/lVvCXd6y2zaZANujwlFggRH2u9SRiPaIXVilLpvMm4uJqmqBMEcY81ArujExtHvkbCqg==}
+  /@sentry/utils@7.82.0:
+    resolution: {integrity: sha512-Tba4yemyePW+bwKO/UR5/hlY3CBuBWc/PiKMLLfE6VNhFgZN/Ei9T/Wfp2ld/ANhfC0imqSd2iCv2rUuDPNRpQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.81.1
+      '@sentry/types': 7.82.0
     dev: true
 
   /@sideway/address@4.1.4:
