@@ -4,7 +4,8 @@ import { InterruptedException } from "effect/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { Ref } from "vue"
-import { computed, ref, shallowRef } from "vue"
+import { computed, shallowRef } from "vue"
+import { useMutationEffect } from "./hooks2.js"
 import { run } from "./internal.js"
 
 export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
@@ -234,30 +235,28 @@ export const useMutation: {
     (
       i: I,
       abortSignal?: AbortSignal
-    ) => Promise<Either<E, A>>
+    ) => Promise<MutationSuccess<A> | MutationError<E>>
   ]
   <E, A>(self: Effect<ApiConfig | HttpClient.Default, E, A>): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
-    ) => Promise<Either<E, A>>
+    ) => Promise<MutationSuccess<A> | MutationError<E>>
   ]
 } = <I, E, A>(
   self: ((i: I) => Effect<ApiConfig | HttpClient.Default, E, A>) | Effect<ApiConfig | HttpClient.Default, E, A>
 ) => {
-  const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
-
-  function handleExit(exit: Exit<E, A>): Effect<never, never, Either<E, A>> {
+  function handleExit(
+    exit: Exit<never, MutationSuccess<A> | MutationError<E>>
+  ): Effect<never, never, MutationSuccess<A> | MutationError<E>> {
     return Effect.sync(() => {
       if (exit.isSuccess()) {
-        state.value = { _tag: "Success", data: exit.value }
-        return Either(exit.value)
+        return exit.value
       }
 
       const err = exit.cause.failureOption
       if (err.isSome()) {
-        state.value = { _tag: "Error", error: err.value }
-        return Either.left(err.value)
+        throw err.value
       }
 
       const died = exit.cause.dieOption
@@ -272,23 +271,21 @@ export const useMutation: {
     })
   }
 
+  const [r, execEff] = useMutationEffect(self)
+
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<ApiConfig | HttpClient.Default, E, A>
+    let effect: Effect<ApiConfig | HttpClient.Default, never, MutationSuccess<A> | MutationError<E>>
     let abortSignal: AbortSignal | undefined
     if (typeof self === "function") {
-      effect = self(fst as I)
+      effect = execEff(fst as I) as any
       abortSignal = snd
     } else {
-      effect = self
+      effect = execEff as any
       abortSignal = fst as AbortSignal | undefined
     }
 
     return run.value(
-      Effect
-        .sync(() => {
-          state.value = { _tag: "Loading" }
-        })
-        .zipRight(effect)
+      effect
         .exit
         .flatMap(handleExit)
         .fork
@@ -300,8 +297,5 @@ export const useMutation: {
     )
   }
 
-  return tuple(
-    state,
-    exec
-  )
+  return tuple(r, exec)
 }

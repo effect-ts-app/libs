@@ -233,3 +233,46 @@ export const buildFormFromSchema = <
 
   return { fields, submit, submitFromState, isDirty, isValid }
 }
+
+export const buildFormFromSchemaEffect = <
+  ParsedShape,
+  Encoded,
+  ConstructorInput,
+  Props extends PropertyRecord,
+  OnSubmitA,
+  R,
+  E
+>(
+  s: Schema.Schema<
+    unknown,
+    ParsedShape,
+    ConstructorInput,
+    Encoded,
+    { props: Props }
+  >,
+  state: Ref<Encoded>,
+  onSubmit: (a: ParsedShape) => Effect<R, E, OnSubmitA>
+) => {
+  const fields = buildFieldInfoFromProps(s.Api.props)
+  const parse = unsafe(Schema.Parser.for(s))
+  const isDirty = ref(false)
+  const isValid = ref(true)
+
+  const submit1 =
+    <R, E, A>(onSubmit: (a: ParsedShape) => Effect<R, E, A>) => <T extends Promise<{ valid: boolean }>>(e: T) =>
+      Effect.promise(() => e).andThen((r) => r.valid ? onSubmit(parse(state.value)) : Effect.unit)
+  const submit = submit1(onSubmit)
+
+  watch(
+    state,
+    (v) => {
+      // TODO: do better
+      isDirty.value = JSON.stringify(v) !== JSON.stringify(state.value)
+    },
+    { deep: true }
+  )
+
+  const submitFromState = Effect.sync(() => Promise.resolve({ valid: isValid.value })).andThen(submit)
+
+  return { fields, submit, submitFromState, isDirty, isValid }
+}
