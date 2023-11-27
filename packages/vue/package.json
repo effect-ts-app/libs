@@ -75,6 +75,16 @@
         "default": "./_cjs/hooks.cjs"
       }
     },
+    "./hooks2": {
+      "import": {
+        "types": "./dist/hooks2.d.ts",
+        "default": "./dist/hooks2.js"
+      },
+      "require": {
+        "types": "./dist/hooks2.d.ts",
+        "default": "./_cjs/hooks2.cjs"
+      }
+    },
     "./internal": {
       "import": {
         "types": "./dist/internal.d.ts",
@@ -103,6 +113,16 @@
       "require": {
         "types": "./dist/runtime.d.ts",
         "default": "./_cjs/runtime.cjs"
+      }
+    },
+    "./swrv": {
+      "import": {
+        "types": "./dist/swrv.d.ts",
+        "default": "./dist/swrv.js"
+      },
+      "require": {
+        "types": "./dist/swrv.d.ts",
+        "default": "./_cjs/swrv.cjs"
       }
     }
   },

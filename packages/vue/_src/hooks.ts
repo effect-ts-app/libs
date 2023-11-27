@@ -1,68 +1,28 @@
-import { Done, Initial, Loading } from "@effect-app/prelude/client"
+import { Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
 import * as swrv from "swrv"
-import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
+import type { fetcherFn } from "swrv/dist/types.js"
 import type { Ref } from "vue"
 import { computed, shallowRef } from "vue"
 import { useMutationEffect } from "./hooks2.js"
 import { run } from "./internal.js"
+import { swrToQuery, useSWRV } from "./swrv.js"
 
 export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
-
-type useSWRVType = {
-  <Data, Error>(key: IKey): IResponse<Data, Error>
-  <Data, Error>(
-    key: IKey,
-    fn?: fetcherFn<Data>,
-    config?: swrv.IConfig<Data, fetcherFn<Data>>
-  ): IResponse<Data, Error>
-}
-type MutateType = {
-  <Data>(
-    key: string,
-    res: Data | Promise<Data>,
-    cache?: swrv.SWRVCache<Omit<IResponse<any, any>, "mutate">>,
-    ttl?: number
-  ): Promise<{
-    data: any
-    error: any
-    isValidating: any
-  }>
-}
-// madness - workaround different import behavior on server and client
-const useSWRV = (swrv.default.default ? swrv.default.default : swrv.default) as unknown as useSWRVType
-export const mutate = (swrv.default.mutate ? swrv.default.mutate : swrv.mutate) as unknown as MutateType
-
-function swrToQuery<E, A>(
-  r: { error: E | undefined; data: A | undefined; isValidating: boolean }
-): QueryResult<E, A> {
-  if (r.error) {
-    return r.isValidating
-      ? Refreshing.fail<E, A>(r.error, r.data)
-      : Done.fail<E, A>(r.error, r.data)
-  }
-  if (r.data !== undefined) {
-    return r.isValidating
-      ? Refreshing.succeed<A, E>(r.data)
-      : Done.succeed<A, E>(r.data)
-  }
-
-  return r.isValidating ? new Loading() : new Initial()
-}
 
 export function useMutate<E, A>(
   self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string }
 ) {
   const fn = () => run.value(self).then((_) => _.body)
-  return () => mutate(self.mapPath, fn)
+  return () => swrv.mutate(self.mapPath, fn)
 }
 
 export function useMutateWithArg<Arg, E, A>(
   self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
 ) {
   const fn = (arg: Arg) => run.value(self(arg)).then((_) => _.body)
-  return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
+  return (arg: Arg) => swrv.mutate(self.mapPath(arg), fn(arg))
 }
 
 // TODO: same trick with mutations/actions
