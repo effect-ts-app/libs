@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.102.3
+
+### Patch Changes
+
+- 5e32c256: improve request attribute logging
+
 ## 0.102.2
 
 ### Patch Changes
