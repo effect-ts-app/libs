@@ -10,6 +10,7 @@
     "@types/redis",
     "react-hook-form",
     "@effect/language-service",
-    "eslint-plugin-codegen"
+    "eslint-plugin-codegen",
+    "@typescript-eslint/*"
   ]
 }
