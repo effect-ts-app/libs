@@ -325,7 +325,9 @@ export function makeStore<
             makeInitial
               ? (makeInitial
                 .map((_) => _.map(encodeToPM())))
-                .withSpan("Repository.makeInitial [effect-app/infra]")
+                .withSpan("Repository.makeInitial [effect-app/infra]", {
+                  attributes: { "repository.model_name": name }
+                })
               : undefined,
             {
               ...config,
