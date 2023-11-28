@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.69.2
+
+### Patch Changes
+
+- 26a3bc8: fix: Model lenses should ignore optional attribute
+
 ## 0.69.1
 
 ### Patch Changes
