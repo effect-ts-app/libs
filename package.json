@@ -57,7 +57,7 @@
         "@babel/core": "^7.23.3",
         "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
         "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-        "@changesets/cli": "^2.27.0",
+        "@changesets/cli": "^2.27.1",
         "@dprint/typescript": "^0.88.6",
         "@effect-app/cli": "^0.26.0",
         "@effect-app/compiler": "workspace:*",
@@ -101,7 +101,7 @@
         "tsconfig-paths": "^4.2.0",
         "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
         "typescript-transform-paths": "^3.4.6",
-        "vite": "^5.0.2",
+        "vite": "^5.0.3",
         "vitest": "^0.34.6"
     }
 }
