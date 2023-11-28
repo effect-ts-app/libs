@@ -155,7 +155,7 @@ export function fromModel<ParsedShape>(__name?: string) {
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
-  [K in keyof ParsedShapeOf<Self>]: Lens.Lens<T, ParsedShapeOf<Self>[K]>
+  [K in keyof ParsedShapeOf<Self>]-?: Lens.Lens<T, ParsedShapeOf<Self>[K]>
 }
 
 export type PropsToLenses<T, Props extends MO.PropertyRecord> = {
