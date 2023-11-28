@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.70.0
+
+### Minor Changes
+
+- d462c64: rename `apply` to `pipe` to align with Effect
+
+### Patch Changes
+
+- Updated dependencies [d462c64]
+  - @effect-app/core@0.76.0
+
 ## 0.69.2
 
 ### Patch Changes

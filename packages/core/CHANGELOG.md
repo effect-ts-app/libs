@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.76.0
+
+### Minor Changes
+
+- d462c64: rename `apply` to `pipe` to align with Effect
+
 ## 0.75.1
 
 ### Patch Changes

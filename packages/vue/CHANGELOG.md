@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.69.0
+
+### Minor Changes
+
+- d462c64: rename `apply` to `pipe` to align with Effect
+
+### Patch Changes
+
+- Updated dependencies [d462c64]
+  - @effect-app/schema@0.70.0
+  - @effect-app/core@0.76.0
+  - @effect-app/vue@0.69.0
+  - @effect-app/prelude@0.77.3
+
 ## 0.68.6
 
 ### Patch Changes
