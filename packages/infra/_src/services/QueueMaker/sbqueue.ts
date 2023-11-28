@@ -59,11 +59,11 @@ export function makeServiceBusQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .zipRight(handleEvent(body))
                 .orDie
                 // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                .apply(silenceAndReportError)
+                .pipe(silenceAndReportError)
                 .setupRequestContext(RequestContext.inherit(meta.requestContext, {
                   id: RequestId(body.id),
                   locale: "en" as const,

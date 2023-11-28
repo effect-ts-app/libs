@@ -399,7 +399,7 @@ function logQuery(q: {
 }) {
   return Effect
     .logDebug("cosmos query")
-    .apply(Effect.annotateLogs({
+    .pipe(Effect.annotateLogs({
       query: q.query,
       parameters: JSON.stringify(
         q.parameters.reduce((acc, v) => {

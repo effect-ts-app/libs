@@ -58,7 +58,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                   .flatMap(set)
               )
               .map((_) => _ as NonEmptyArray<PM>)
-              .apply(withPermit)
+              .pipe(withPermit)
               .provideService(RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
@@ -72,7 +72,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
                 .find(e.id)
                 .flatMap((current) => updateETag(e, current))
                 .tap((e) => asMap.map((_) => new Map([..._, [e.id, e]])).flatMap(set))
-                .apply(withPermit)
+                .pipe(withPermit)
                 .provideService(RedisClient, redis),
             batchSet,
             bulkSet: batchSet,
@@ -80,7 +80,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
               asMap
                 .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
                 .flatMap(set)
-                .apply(withPermit)
+                .pipe(withPermit)
                 .provideService(
                   RedisClient,
                   redis

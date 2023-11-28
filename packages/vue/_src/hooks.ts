@@ -163,7 +163,7 @@ export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Def
         ? fib.interrupt.zipRight(runNew)
         : runNew
     })
-    .apply(withPermit)
+    .pipe(withPermit)
     .flatMap((_) => _.await)
 
   function exec() {

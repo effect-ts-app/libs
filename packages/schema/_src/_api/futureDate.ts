@@ -27,7 +27,7 @@ export const fromStringOrDate: MO.DefaultSchema<string | Date, Date, Date, strin
   MO.annotate(fromStringOrDateIdentifier, {})
 )
 
-export const FutureDateFromDate = fromDate.apply(
+export const FutureDateFromDate = fromDate.pipe(
   onParseOrConstruct((i) => {
     const errors: MO.AnyError[] = []
     if (i < new Date()) {
@@ -37,7 +37,7 @@ export const FutureDateFromDate = fromDate.apply(
   })
 )
 
-export const FutureDateFromStringOrDate = fromStringOrDate.apply(
+export const FutureDateFromStringOrDate = fromStringOrDate.pipe(
   onParseOrConstruct((i) => {
     const errors: MO.AnyError[] = []
     if (i < new Date()) {

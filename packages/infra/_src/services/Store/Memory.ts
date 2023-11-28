@@ -33,7 +33,7 @@ export const restoreFromRequestContext = (ctx: RequestContext) => storeId.set(ct
 function logQuery(filter: any, cursor: any) {
   return Effect
     .logDebug("mem query")
-    .apply(Effect.annotateLogs({
+    .pipe(Effect.annotateLogs({
       query: JSON.stringify(filter, undefined, 2),
       cursor: JSON.stringify(
         cursor,
@@ -73,7 +73,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
             .flatMap((_) => store.set(_))
         )
         .map((_) => _ as NonEmptyArray<PM>)
-        .apply(withPermit)
+        .pipe(withPermit)
     const s: Store<PM, Id> = {
       all: all.withSpan("Memory.all [effect-app/infra/Store]", {
         attributes: {
@@ -114,7 +114,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .find(e.id)
           .flatMap((current) => updateETag(e, current))
           .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
-          .apply(withPermit)
+          .pipe(withPermit)
           .withSpan("Memory.set [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           }),
@@ -137,7 +137,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .get
           .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
           .flatMap((_) => store.set(_))
-          .apply(withPermit)
+          .pipe(withPermit)
           .withSpan("Memory.remove [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           })

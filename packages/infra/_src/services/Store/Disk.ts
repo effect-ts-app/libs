@@ -52,7 +52,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
 
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
-    const flushToDisk = store.all.flatMap(fsStore.setRaw).apply(withPermit)
+    const flushToDisk = store.all.flatMap(fsStore.setRaw).pipe(withPermit)
     const flushToDiskInBackground = flushToDisk
       .tapErrorCause((err) => Effect(console.error(err)))
       .uninterruptible

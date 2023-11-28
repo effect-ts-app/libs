@@ -66,9 +66,9 @@ export function makeMemQueue<
             .flatMap(({ body, meta }) =>
               Effect
                 .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .apply(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
                 .zipRight(handleEvent(body))
-                .apply(silenceAndReportError)
+                .pipe(silenceAndReportError)
                 .setupRequestContext(RequestContext.inherit(meta.requestContext, {
                   id: RequestId(body.id),
                   locale: "en" as const,
@@ -87,7 +87,7 @@ export function makeMemQueue<
             .flatMap((x) => processMessage(x).uninterruptible.fork.flatMap((_) => _.join))
             // TODO: normally a failed item would be returned to the queue and retried up to X times.
             // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
-            .apply(silenceAndReportError)
+            .pipe(silenceAndReportError)
             .forever
             .forkScoped
         )
