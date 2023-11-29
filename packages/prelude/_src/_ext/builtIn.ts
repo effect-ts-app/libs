@@ -38,6 +38,9 @@ declare global {
     ): NonEmptyArray<B>
   }
   interface ReadonlyArray<T> {
+    // Subsequent property declarations must have the same type.  Property 'length' must be of type 'number', but here has type 'PositiveInt'.
+    // readonly length: PositiveInt
+
     map<A, B>(
       this: NonEmptyReadonlyArray<A>,
       map: (a: A, index: number) => B

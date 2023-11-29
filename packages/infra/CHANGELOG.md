@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.104.1
+
+### Patch Changes
+
+- 01dfa9d: add openapi bearer auth to spec
+
 ## 0.104.0
 
 ### Minor Changes
