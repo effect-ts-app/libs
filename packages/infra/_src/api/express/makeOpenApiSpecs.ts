@@ -52,7 +52,10 @@ export function makeOpenApiSpecs(
       },
       tags: [],
       paths,
-      components
+      components,
+      security: {
+        bearerAuth: []
+      }
       // test,
     }
   })
