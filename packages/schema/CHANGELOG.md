@@ -1,5 +1,17 @@
 # @effect-app/schema
 
+## 0.71.0
+
+### Minor Changes
+
+- da85f48: cleanup operators. add nonEmpty map variant
+
+### Patch Changes
+
+- Updated dependencies [ab7eddc]
+- Updated dependencies [da85f48]
+  - @effect-app/core@0.77.0
+
 ## 0.70.0
 
 ### Minor Changes

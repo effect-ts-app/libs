@@ -1,5 +1,19 @@
 # @effect-app/prelude
 
+## 0.78.0
+
+### Minor Changes
+
+- da85f48: cleanup operators. add nonEmpty map variant
+
+### Patch Changes
+
+- ab7eddc: update packages
+- Updated dependencies [ab7eddc]
+- Updated dependencies [da85f48]
+  - @effect-app/core@0.77.0
+  - @effect-app/schema@0.71.0
+
 ## 0.77.3
 
 ### Patch Changes
