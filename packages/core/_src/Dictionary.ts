@@ -1,7 +1,5 @@
 // ets_tracing: off
 
-import "./operators.js"
-
 import type { Either } from "effect/Either"
 import * as A from "./Array.js"
 import type { Predicate, Refinement } from "./Function.js"
@@ -668,4 +666,4 @@ export const toArray: <A>(r: Dictionary<A>) => ReadonlyArray<readonly [string, A
  * Converts an array of [key, value] into a record
  */
 export const fromArray = <V>(_: ReadonlyArray<readonly [string, V]>): Dictionary<V> =>
-  _["|>"](A.reduce({} as Dictionary<V>, (b, [k, v]) => Object.assign(b, { [k]: v })))
+  _.pipe(A.reduce({} as Dictionary<V>, (b, [k, v]) => Object.assign(b, { [k]: v })))

@@ -20,13 +20,6 @@
     ],
     "description": "Compose Operator"
   },
-  "Operators Import": {
-    "prefix": "op",
-    "body": [
-      "import \"@effect-app/core/operators\""
-    ],
-    "description": "Operators Import"
-  },
   "Gen Function $": {
     "prefix": "$gen",
     "body": [

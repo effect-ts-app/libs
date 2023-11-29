@@ -331,7 +331,7 @@ export function match(method: Methods): {
 } {
   return function(path, ...handlers) {
     return expressRuntime(
-      handlers.mapNonEmpty(
+      handlers.map(
         (_, i) => (req: Request<any, any, any, any, any>, res: Response<any, any>, next: NextFunction) =>
           (req.headers["x-b3-traceid"] || req.headers["b3"]
             ? (req as any as IncomingMessage<unknown>)

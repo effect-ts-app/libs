@@ -167,7 +167,7 @@ export interface StringIdSchema extends
     ApiSelfType<StringId>
   >
 {}
-const StringIdSchema: StringIdSchema = string[">>>"](stringIdFromString)["|>"](
+const StringIdSchema: StringIdSchema = string[">>>"](stringIdFromString).pipe(
   brand<StringId>()
 )
 const makeStringId = (): StringId => nanoid() as unknown as StringId
@@ -219,7 +219,7 @@ export function prefixedStringId<Brand extends StringId>() {
       )
     )
 
-    const schema = string[">>>"](fromString)["|>"](named(name))["|>"](brand<Brand>())
+    const schema = string[">>>"](fromString).pipe(named(name)).pipe(brand<Brand>())
     const make = () => (pref + StringId.make()) as Brand
 
     return extendWithUtilsAnd(
@@ -245,7 +245,7 @@ export function prefixedStringId<Brand extends StringId>() {
 }
 
 export const brandedStringId = <Brand extends StringId>() =>
-  extendWithUtilsAnd(StringId["|>"](brand<Brand>()), (s) => {
+  extendWithUtilsAnd(StringId.pipe(brand<Brand>()), (s) => {
     const make = (): Brand => StringId.make() as unknown as Brand
 
     return ({
@@ -310,13 +310,13 @@ export const Url = extendWithUtils(
 )
 
 export const avatarUrl = pipe(string[">>>"](nonEmptyStringFromString))
-  ["|>"](
+  .pipe(
     arbitrary(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       (FC) => fakerArb((faker) => faker.internet.avatar)(FC) as FC.Arbitrary<Url>
     )
   )
-  ["|>"](brand<avatarUrl>())
+  .pipe(brand<avatarUrl>())
 
 export type avatarUrl = NonEmptyString & UnionBrand
 
@@ -332,13 +332,13 @@ export const customUrl = (pool: readonly Url[]) => pipe(string[">>>"](customUrlF
 // for now be less restrictive about the PhoneNumber
 const PhoneNumber_ = StringId
 export const PhoneNumber = PhoneNumber_
-  ["|>"](
+  .pipe(
     arbitrary((FC) =>
       // eslint-disable-next-line @typescript-eslint/unbound-method
       fakerArb((faker) => faker.phone.number)(FC).map((x) => x as StringId)
     )
   )
-  ["|>"](brand<PhoneNumber>())
+  .pipe(brand<PhoneNumber>())
 
 export type PhoneNumber = StringId & UnionBrand
 
@@ -348,13 +348,13 @@ const endsWith = curriedMagix(
 const Email__ = Object.assign(
   extendWithUtils(
     Email_
-      ["|>"](
+      .pipe(
         arbitrary((FC) =>
           // eslint-disable-next-line @typescript-eslint/unbound-method
           fakerArb((faker) => faker.internet.email)(FC).map((x) => x as Email)
         )
       )
-      ["|>"](brand<Email>())
+      .pipe(brand<Email>())
   ),
   {
     eq: { equals: (a: Email, b: Email) => a.toLowerCase() === b.toLowerCase() },

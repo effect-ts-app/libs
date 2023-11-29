@@ -9,7 +9,7 @@ export * from "./api/date.js"
 /**
  * @deprecated - implement true decimal!
  */
-export const PositiveDecimal = PositiveNumber["|>"](brand<PositiveDecimal>())
+export const PositiveDecimal = PositiveNumber.pipe(brand<PositiveDecimal>())
 /**
  * @deprecated - implement true decimal!
  */

@@ -291,7 +291,7 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
   return <Shape, ParserE extends AnyError>(
     parser: Parser.Parser<Encoded, ParserE, Shape>
   ) => {
-    const parse = parser["|>"](unsafe)
+    const parse = parser.pipe(unsafe)
     return <
       // eslint-disable-next-line @typescript-eslint/ban-types
       TContext extends object = object
@@ -455,8 +455,8 @@ function useGetMeta<
       const parse = Schema.Parser.for(schema)
       const validate = (i: PathValue<TFieldValues, TFieldName>) =>
         parse(meta.transform.output(i))
-          ["|>"](These.result)
-          ["|>"](
+          .pipe(These.result)
+          .pipe(
             (r) =>
               r.match({
                 onLeft: () =>

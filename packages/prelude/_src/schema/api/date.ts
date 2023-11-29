@@ -45,7 +45,7 @@ export const inputDate = pipe(
 export type inputDate = Date
 export type InputDate = inputDate
 
-export const reasonablePastDate = date["|>"](
+export const reasonablePastDate = date.pipe(
   arbitrary((FC) =>
     FC.date({
       min: subNow(350),
@@ -56,7 +56,7 @@ export const reasonablePastDate = date["|>"](
 export type reasonablePastDate = Date
 export type ReasonablePastDate = reasonablePastDate
 
-export const reasonableFutureDate = date["|>"](
+export const reasonableFutureDate = date.pipe(
   arbitrary((FC) =>
     FC.date({
       min: addNow(350),
@@ -66,7 +66,7 @@ export const reasonableFutureDate = date["|>"](
 )
 export type ReasonableFutureDate = Date
 
-export const reasonableDate = date["|>"](
+export const reasonableDate = date.pipe(
   arbitrary((FC) =>
     FC.date({
       min: subNow(350),

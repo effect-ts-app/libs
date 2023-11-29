@@ -131,7 +131,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
   return (arrInput: ReadonlySet<T | undefined>): Option<ReadonlySet<T>> =>
-    [...arrInput]["|>"](arMoveElDropUndefined(el, newIndex)).map((ar) => new Set(ar))
+    [...arrInput].pipe(arMoveElDropUndefined(el, newIndex)).map((ar) => new Set(ar))
 }
 export * from "@effect-app/core/Function"
 export * from "@effect-app/core/utils"

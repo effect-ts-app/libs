@@ -305,16 +305,6 @@
         "default": "./_cjs/http/http-client-fetch.cjs"
       }
     },
-    "./operators": {
-      "import": {
-        "types": "./dist/operators.d.ts",
-        "default": "./dist/operators.js"
-      },
-      "require": {
-        "types": "./dist/operators.d.ts",
-        "default": "./_cjs/operators.cjs"
-      }
-    },
     "./transform": {
       "import": {
         "types": "./dist/transform.d.ts",
@@ -377,7 +367,6 @@
     }
   },
   "sideEffects": [
-    "./dist/operators.js",
     "./dist/fluent/polyfill/Array.js",
     "./dist/fluent/polyfill/browser.js",
     "./dist/fluent/polyfill/Chunk.js",
@@ -395,7 +384,6 @@
     "./dist/fluent/polyfill/Sync.js",
     "./dist/fluent/polyfill/SyncOpt.js",
     "./dist/fluent/polyfill/util.js",
-    "./_cjs/operators.cjs",
     "./_cjs/fluent/polyfill/Array.cjs",
     "./_cjs/fluent/polyfill/browser.cjs",
     "./_cjs/fluent/polyfill/Chunk.cjs",

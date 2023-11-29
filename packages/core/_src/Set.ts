@@ -1,7 +1,5 @@
 // ets_tracing: off
 
-import "./operators.js"
-
 import { not } from "effect/Predicate"
 import { identity } from "./Function.js"
 

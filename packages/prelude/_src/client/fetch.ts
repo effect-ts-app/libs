@@ -110,7 +110,7 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   Response: ReqRes<ResponseE, ResponseA>
 }) {
   const encodeRequest = Request.Encoder
-  const decodeResponse = Parser.for(Response)["|>"](condemnCustom)
+  const decodeResponse = Parser.for(Response).pipe(condemnCustom)
   return fetchApi2S(encodeRequest, decodeResponse)(
     Request.method,
     new Path(Request.path)
@@ -128,7 +128,7 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
 }) {
   const encodeRequest = Request.Encoder
   const encodeResponse = Encoder.for(Response)
-  const decodeResponse = flow(Parser.for(Response)["|>"](condemnCustom), (x) => x.map(encodeResponse))
+  const decodeResponse = flow(Parser.for(Response).pipe(condemnCustom), (x) => x.map(encodeResponse))
   return fetchApi2S(encodeRequest, decodeResponse)(
     Request.method,
     new Path(Request.path)

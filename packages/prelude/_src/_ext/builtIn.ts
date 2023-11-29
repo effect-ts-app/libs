@@ -1,3 +1,5 @@
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect/ReadonlyArray"
+
 declare global {
   interface String {
     /**
@@ -27,5 +29,18 @@ declare global {
 
   interface Body {
     json(): Promise<unknown>
+  }
+
+  interface Array<T> {
+    map<A, B>(
+      this: NonEmptyArray<A>,
+      map: (a: A, index: number) => B
+    ): NonEmptyArray<B>
+  }
+  interface ReadonlyArray<T> {
+    map<A, B>(
+      this: NonEmptyReadonlyArray<A>,
+      map: (a: A, index: number) => B
+    ): NonEmptyReadonlyArray<B>
   }
 }

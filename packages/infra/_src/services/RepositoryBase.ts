@@ -164,7 +164,7 @@ export function makeRepo<
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(cms.get)
-                const items = a.mapNonEmpty((_) => mapToPersistenceModel(_, get))
+                const items = a.map((_) => mapToPersistenceModel(_, get))
                 const ret = $(store.batchSet(items))
                 ret.forEach((_) => set(_.id, _._etag))
               })

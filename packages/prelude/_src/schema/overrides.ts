@@ -16,10 +16,10 @@ import {
 
 import { ROSet } from "@effect-app/core/Prelude"
 
-export const PositiveNumber = positive("float")(number)["|>"](brand<PositiveNumber>())
+export const PositiveNumber = positive("float")(number).pipe(brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand
 
-export const PositiveNumberZeroExclusive = positiveExcludeZero("float")(number)["|>"](brand<PositiveNumber>())
+export const PositiveNumberZeroExclusive = positiveExcludeZero("float")(number).pipe(brand<PositiveNumber>())
 export type PositiveNumberZeroExclusive = number & PositiveExcludeZeroBrand
 
 export interface CentimeterBrand extends PositiveBrand {
@@ -28,7 +28,7 @@ export interface CentimeterBrand extends PositiveBrand {
 
 export type Centimeter = number & CentimeterBrand
 
-export const Centimeter = positive("float")(number)["|>"](brand<Centimeter>())
+export const Centimeter = positive("float")(number).pipe(brand<Centimeter>())
 
 export interface KilogramBrand extends PositiveBrand {
   readonly KilogramBrand: unique symbol
@@ -36,7 +36,7 @@ export interface KilogramBrand extends PositiveBrand {
 
 export type Kilogram = number & KilogramBrand
 
-export const Kilogram = positive("float")(number)["|>"](brand<Kilogram>())
+export const Kilogram = positive("float")(number).pipe(brand<Kilogram>())
 
 // Limit arbitrary collections to generate a max of 6 entries
 // TODO: dictionary, map
@@ -47,7 +47,7 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const arbitrarySelf = Arbitrary.for(self)
 
-  return nonEmptyArrayOriginal(self)["|>"](
+  return nonEmptyArrayOriginal(self).pipe(
     arbitrary(
       (_) =>
         _.array(arbitrarySelf(_), {
@@ -63,7 +63,7 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 ) {
   const arbitrarySelf = Arbitrary.for(self)
 
-  return arrayOriginal(self)["|>"](
+  return arrayOriginal(self).pipe(
     arbitrary(
       (_) =>
         _.array(arbitrarySelf(_), {
@@ -79,7 +79,7 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   eq: Equivalence<ParsedShape>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
-  return setOriginal(self, ord, eq)["|>"](
+  return setOriginal(self, ord, eq).pipe(
     arbitrary((_) => _.uniqueArray(arbitrarySelf(_), { maxLength: MAX_LENGTH }).map(ROSet.fromArray(eq)))
   )
 }

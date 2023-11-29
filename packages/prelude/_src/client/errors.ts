@@ -51,18 +51,18 @@ export const SupportedErrors = union({
   ...MutationOnlyErrors,
   ...GeneralErrors
 })
-  ["|>"](named("SupportedErrors"))
-  ["|>"](withDefaults)
+  .pipe(named("SupportedErrors"))
+  .pipe(withDefaults)
 export type SupportedErrors = ParsedShapeOf<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
-//   ["|>"](named("QueryErrors"))
-//   ["|>"](withDefaults)
+//   .pipe(named("QueryErrors"))
+//   .pipe(withDefaults)
 // export type QueryErrors = ParsedShapeOf<typeof QueryErrors>
 // export const MutationErrors = union({ ...GeneralErrors, ...GeneralErrors })
-//   ["|>"](named("MutationErrors"))
-//   ["|>"](withDefaults)
+//   .pipe(named("MutationErrors"))
+//   .pipe(withDefaults)
 
 // export type MutationErrors = ParsedShapeOf<typeof MutationErrors>
 

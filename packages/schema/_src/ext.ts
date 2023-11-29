@@ -1081,7 +1081,7 @@ export function enhanceClassUnion<
   E,
   CI
 >(u: MO.DefaultSchema<any, A, CI, E, MO.UnionApi<T>>, name?: string) {
-  if (name) u = u["|>"](MO.named(name)) as typeof u
+  if (name) u = u.pipe(MO.named(name)) as typeof u
   const members = findAnnotation(u, MO.unionIdentifier)!.props as T
 
   const entries = Object.entries(members)
@@ -1178,7 +1178,7 @@ export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>
     ) => These<MO.ConstructorErrorOf<T[Key]>, A>
   }
   const of = entries.reduce((prev, [key, value]) => {
-    prev[key] = MO.Constructor.for(value)["|>"](unsafe)
+    prev[key] = MO.Constructor.for(value).pipe(unsafe)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
     [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.ParsedShapeOf<T[Key]> // These<ConstructorErrorOf<T[Key]>, ParsedShapeOf<T[Key]>>

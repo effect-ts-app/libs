@@ -63,7 +63,7 @@ function clientFor_<M extends Requests>(models: M) {
           }
 
           const parseResponse = flow(
-            Schema.Parser.for(Response)["|>"](condemnCustom),
+            Schema.Parser.for(Response).pipe(condemnCustom),
             (_) => _.mapError((err) => new ResponseError(err))
           )
 
