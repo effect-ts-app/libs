@@ -282,16 +282,6 @@
         "types": "./dist/redis-client.d.ts",
         "default": "./_cjs/redis-client.cjs"
       }
-    },
-    "./runMain": {
-      "import": {
-        "types": "./dist/runMain.d.ts",
-        "default": "./dist/runMain.js"
-      },
-      "require": {
-        "types": "./dist/runMain.d.ts",
-        "default": "./_cjs/runMain.cjs"
-      }
     }
   },
   "sideEffects": false,

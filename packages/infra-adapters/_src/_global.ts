@@ -7,8 +7,3 @@ import "@effect-app/schema/_global"
  * @tsplus global
  */
 import { Logger } from "effect/Logger"
-
-/**
- * @tsplus global
- */
-import {} from "@effect-app/infra-adapters/runMain"
