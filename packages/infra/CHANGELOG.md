@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.104.4
+
+### Patch Changes
+
+- e0cde00: fix openapi typo
+
 ## 0.104.3
 
 ### Patch Changes
