@@ -1,7 +1,7 @@
 import type * as Cause from "effect/Cause"
 import * as Effect from "effect/Effect"
 import * as RT from "effect/Runtime"
-import type * as Runtime from "effect/Runtime"
+import type { Runtime } from "effect/Runtime"
 import type { NoInfer } from "effect/Types"
 
 /**
