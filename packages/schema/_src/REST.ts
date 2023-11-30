@@ -194,7 +194,7 @@ export function QueryRequest<M>(__name?: string) {
     Headers,
     OrAny<Erase<typeof _.path & typeof _.query, MO.SchemaAny>>
   > {
-    const self: MO.SchemaAny = MO.props({
+    const self: MO.SchemaAny = MO.struct({
       ..._.query?.Api.props,
       ..._.path?.Api.props
     })
@@ -446,7 +446,7 @@ export function BodyRequest<M>(__name?: string) {
     Headers,
     OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, MO.SchemaAny>>
   > {
-    const self: MO.SchemaAny = MO.props({
+    const self: MO.SchemaAny = MO.struct({
       ..._.body?.Api.props,
       ..._.query?.Api.props,
       ..._.path?.Api.props
@@ -551,7 +551,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Conf
     ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M, Config>
     function a<Props extends MO.PropertyOrSchemaRecord>(props?: Props) {
       const req = Req<M>(__name)
-      const r = props ? req(method, path, MO.props(props), config) : req(method, path, config)
+      const r = props ? req(method, path, MO.struct(props), config) : req(method, path, config)
       return r
     }
 
@@ -588,7 +588,7 @@ function Req<M>(__name?: string) {
     return makeRequest<Props, Path, Method, M, Config>(
       method,
       path,
-      self ?? (MO.props({}) as any),
+      self ?? (MO.struct({}) as any),
       undefined,
       config
     )
@@ -647,7 +647,7 @@ export function makeRequest<
   config?: Config
 ): BuildRequest<Props, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
-  // TODO: path props must be parsed "from string"
+  // TODO: path struct must be parsed "from string"
   const remainProps = { ...self.Api.props }
   const pathProps = pathParams.length
     ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
@@ -659,10 +659,10 @@ export function makeRequest<
 
   const dest = method === "GET" || method === "DELETE" ? "query" : "body"
   const newSchema = {
-    path: pathProps ? MO.props(pathProps) : undefined,
+    path: pathProps ? MO.struct(pathProps) : undefined,
     // TODO: query props must be parsed "from string"
 
-    [dest]: MO.props(remainProps)
+    [dest]: MO.struct(remainProps)
   }
   if (method === "GET" || method === "DELETE") {
     return class extends Object.assign(

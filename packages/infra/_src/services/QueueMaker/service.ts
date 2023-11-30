@@ -15,9 +15,9 @@ export interface QueueBase<RContext, Evt> {
 export interface QueueMakerOps {}
 export const QueueMaker: QueueMakerOps = {}
 
-export const QueueMeta = props({
+export const QueueMeta = struct({
   requestContext: RequestContext,
-  span: props({
+  span: struct({
     spanId: string,
     traceId: string,
     sampled: bool.optional

@@ -2,7 +2,7 @@
 import * as D from "@effect-app/core/Dictionary"
 
 import type { ComputeFlat, UnionToIntersection } from "@effect-app/core/utils"
-import { array, prop, props } from "./_schema.js"
+import { array, prop, struct } from "./_schema.js"
 import * as MO from "./_schema.js"
 import { positiveInt } from "./custom.js"
 
@@ -20,8 +20,8 @@ const adaptedSchema =
 export const adaptRes = <Props extends MO.PropertyRecord>(properties: Props) => {
   const adapt = adaptedSchema(properties)
   return <Key extends keyof Props>(keys: readonly Key[]) =>
-    props({
-      items: prop(array(props(adapt(keys)))),
+    MO.struct({
+      items: prop(array(struct(adapt(keys)))),
       // TODO: hide count when not asked for $count. and demand non-opt count, when asked.
       count: MO.optProp(positiveInt)
     })

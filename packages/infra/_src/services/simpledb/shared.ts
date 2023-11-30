@@ -36,7 +36,7 @@ export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
 
 // unknown -> string -> SDB?
 export function makeSerialisedDBRecord(s: SchemaAny) {
-  return MO.props({
+  return MO.struct({
     version: MO.prop(MO.number),
     timestamp: MO.prop(MO.date),
     data: MO.prop(s)

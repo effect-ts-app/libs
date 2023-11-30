@@ -123,13 +123,13 @@ export interface MM<
 /** opaque model only on ParsedShape type param */
 export function Model<ParsedShape>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial<ParsedShape>(__name)(MO.props(propsOrSchemas))
+    ModelSpecial<ParsedShape>(__name)(MO.struct(propsOrSchemas))
 }
 
 /** opaque model on ParsedShape and Encoded type params */
 export function ModelEnc<ParsedShape, Encoded>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.props(propsOrSchemas))
+    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.struct(propsOrSchemas))
 }
 
 /** fully opaque model on all type params */
@@ -137,7 +137,7 @@ export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
   __name?: string
 ) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
-    const self = MO.props(propsOrSchemas)
+    const self = MO.struct(propsOrSchemas)
     return makeSpecial(__name, self) as
       & MNModel<
         typeof self,

@@ -422,7 +422,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
   return tags
 }
 
-export function props<ProvidedProps extends PropertyOrSchemaRecord>(
+export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   _props: ProvidedProps
 ): SchemaProperties<ToProps<ProvidedProps>> {
   type Props = ToProps<ProvidedProps>
@@ -646,7 +646,7 @@ export function props<ProvidedProps extends PropertyOrSchemaRecord>(
   )
 }
 
-export function propsPick<Props extends PropertyRecord, KS extends (keyof Props)[]>(
+export function pickProps<Props extends PropertyRecord, KS extends (keyof Props)[]>(
   ...ks: KS
 ) {
   return (
@@ -670,7 +670,7 @@ export function propsPick<Props extends PropertyRecord, KS extends (keyof Props)
   }
 }
 
-export function propsOmit<Props extends PropertyRecord, KS extends (keyof Props)[]>(
+export function omitProps<Props extends PropertyRecord, KS extends (keyof Props)[]>(
   ...ks: KS
 ) {
   return (

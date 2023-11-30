@@ -10,7 +10,7 @@ export class RequestContextParent extends MNModel<
   _tag: literal("RequestContext"),
   id: RequestId,
   name: ReasonableString,
-  userProfile: props({ sub: prop(UserProfileId) }).optional,
+  userProfile: struct({ sub: prop(UserProfileId) }).optional,
   locale: literal("en", "de"),
   createdAt: date.withDefault
 }) {}
