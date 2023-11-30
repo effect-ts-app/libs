@@ -268,6 +268,26 @@
         "default": "./_cjs/faker.cjs"
       }
     },
+    "./fluent-extensions": {
+      "import": {
+        "types": "./dist/fluent-extensions.d.ts",
+        "default": "./dist/fluent-extensions.js"
+      },
+      "require": {
+        "types": "./dist/fluent-extensions.d.ts",
+        "default": "./_cjs/fluent-extensions.cjs"
+      }
+    },
+    "./fluent-extensions-ext.d": {
+      "import": {
+        "types": "./dist/fluent-extensions-ext.d.d.ts",
+        "default": "./dist/fluent-extensions-ext.d.js"
+      },
+      "require": {
+        "types": "./dist/fluent-extensions-ext.d.d.ts",
+        "default": "./_cjs/fluent-extensions-ext.d.cjs"
+      }
+    },
     "./ids": {
       "import": {
         "types": "./dist/ids.d.ts",
