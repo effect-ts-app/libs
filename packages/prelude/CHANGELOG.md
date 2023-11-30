@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.78.2
+
+### Patch Changes
+
+- d4a6be2: fix ext
+
 ## 0.78.1
 
 ### Patch Changes
