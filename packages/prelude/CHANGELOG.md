@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.78.1
+
+### Patch Changes
+
+- 4c9e60a: add basic fluent extensions for projects without tsplus
+
 ## 0.78.0
 
 ### Minor Changes
