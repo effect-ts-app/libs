@@ -278,16 +278,6 @@
         "default": "./_cjs/fluent-extensions.cjs"
       }
     },
-    "./fluent-extensions-ext.d": {
-      "import": {
-        "types": "./dist/fluent-extensions-ext.d.d.ts",
-        "default": "./dist/fluent-extensions-ext.d.js"
-      },
-      "require": {
-        "types": "./dist/fluent-extensions-ext.d.d.ts",
-        "default": "./_cjs/fluent-extensions-ext.d.cjs"
-      }
-    },
     "./ids": {
       "import": {
         "types": "./dist/ids.d.ts",
