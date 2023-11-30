@@ -53,9 +53,9 @@ export function makeOpenApiSpecs(
       tags: [],
       paths,
       components,
-      security: {
-        bearerAuth: []
-      }
+      security: [
+        { bearerAuth: [] }
+      ]
       // test,
     }
   })
