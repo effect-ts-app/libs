@@ -3,7 +3,7 @@
 import { pipe } from "@effect-app/core/Function"
 import { isValidEmail } from "@effect-app/core/validation"
 
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { DefaultSchema, NonEmptyString } from "../_schema.js"
 import { brand, customE, fromString, string } from "../_schema.js"
 import { extendWithUtils } from "./_shared.js"
@@ -16,7 +16,7 @@ export interface EmailBrand {
 
 export type Email = NonEmptyString & EmailBrand
 
-export const EmailFromStringIdentifier = MO.makeAnnotation<{}>()
+export const EmailFromStringIdentifier = S.makeAnnotation<{}>()
 
 function isEmail(str: string): str is Email {
   return isValidEmail(str)
@@ -24,14 +24,14 @@ function isEmail(str: string): str is Email {
 
 export const EmailFromString: DefaultSchema<string, Email, string, string, {}> = pipe(
   fromString,
-  MO.arbitrary((FC) => FC.emailAddress()),
-  MO.refine(isEmail, (n) => MO.leafE(customE(n, "a valid Email according to RFC 5322"))),
+  S.arbitrary((FC) => FC.emailAddress()),
+  S.refine(isEmail, (n) => S.leafE(customE(n, "a valid Email according to RFC 5322"))),
   brand<Email>(),
-  MO.annotate(EmailFromStringIdentifier, {})
+  S.annotate(EmailFromStringIdentifier, {})
 )
 
-export const EmailIdentifier = MO.makeAnnotation<{}>()
+export const EmailIdentifier = S.makeAnnotation<{}>()
 
 export const Email = extendWithUtils(
-  pipe(string[">>>"](EmailFromString), brand<Email>(), MO.annotate(EmailIdentifier, {}))
+  pipe(string[">>>"](EmailFromString), brand<Email>(), S.annotate(EmailIdentifier, {}))
 )

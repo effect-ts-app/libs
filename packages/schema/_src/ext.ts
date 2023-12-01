@@ -9,7 +9,7 @@ import { v4 } from "uuid"
 import type { SpecificField } from "./_api.js"
 import { EParserFor, set, setIdentifier } from "./_api.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
-import * as MO from "./_schema.js"
+import * as S from "./_schema.js"
 import type { UUID } from "./_schema.js"
 import { propDef, propOpt, propReq } from "./_schema.js"
 
@@ -33,7 +33,7 @@ export function FromClassBase<T>() {
   }
   return From as FromClass<T>
 }
-export function FromClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
+export function FromClass<Cls extends { [S.schemaField]: S.SchemaAny }>() {
   return FromClassBase<FromApi<Cls>>()
 }
 
@@ -91,7 +91,7 @@ export function partialConstructorF_<
 
 // TODO: morph the schema instead.
 export function derivePartialConstructor<ConstructorInput, To>(model: {
-  [MO.schemaField]: MO.Schema<any, To, ConstructorInput, any, any>
+  [S.schemaField]: S.Schema<any, To, ConstructorInput, any, any>
   new(inp: ConstructorInput): To
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
@@ -108,7 +108,7 @@ export function derivePartialConstructor_<
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
   model: {
-    [MO.schemaField]: MO.Schema<any, To, ConstructorInput, any, any>
+    [S.schemaField]: S.Schema<any, To, ConstructorInput, any, any>
     new(inp: ConstructorInput): To
   },
   // TODO: Prevent over provide
@@ -124,7 +124,7 @@ export type GetPartialConstructor<A extends (...args: any) => any> = Parameters<
 >[0]
 
 export function makeUuid() {
-  return v4() as MO.UUID
+  return v4() as S.UUID
 }
 
 type LazyPartial<T> = {
@@ -137,11 +137,11 @@ export function withDefaultConstructorFields<
   ConstructorInput,
   From,
   Api
->(self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) {
+>(self: S.Schema<ParserInput, To, ConstructorInput, From, Api>) {
   // TODO: but allow NO OTHERS!
   return <Changes extends LazyPartial<ConstructorInput>>(
     kvs: Changes
-  ): MO.Schema<
+  ): S.Schema<
     ParserInput,
     To,
     & Omit<ConstructorInput, keyof Changes>
@@ -150,10 +150,10 @@ export function withDefaultConstructorFields<
     From,
     Api
   > => {
-    const constructSelf = MO.Constructor.for(self)
+    const constructSelf = S.Constructor.for(self)
     return pipe(
       self,
-      MO.constructor((u: any) =>
+      S.constructor((u: any) =>
         constructSelf({
           ...u,
           ...Object.keys(kvs).reduce((prev, cur) => {
@@ -172,11 +172,11 @@ export function makeCurrentDate() {
   return new Date()
 }
 export function defaultConstructor<
-  Self extends MO.SchemaUPI,
+  Self extends S.SchemaUPI,
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => MO.To<Self>]>
->(p: MO.Field<Self, "required", As, Def>) {
-  return (makeDefault: () => MO.To<Self>) => propDef(p, makeDefault, "constructor")
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
+>(p: S.Field<Self, "required", As, Def>) {
+  return (makeDefault: () => S.To<Self>) => propDef(p, makeDefault, "constructor")
 }
 
 export type SupportedDefaults =
@@ -189,21 +189,21 @@ export type SupportedDefaults =
   | UUID
 
 export function findAnnotation<A>(
-  schema: MO.SchemaAny,
-  id: MO.Annotation<A>
+  schema: S.SchemaAny,
+  id: S.Annotation<A>
 ): A | undefined {
-  if (MO.isAnnotated(schema, id)) {
+  if (S.isAnnotated(schema, id)) {
     return schema.meta
   }
 
-  if (MO.hasContinuation(schema)) {
-    return findAnnotation(schema[MO.SchemaContinuationSymbol], id)
+  if (S.hasContinuation(schema)) {
+    return findAnnotation(schema[S.SchemaContinuationSymbol], id)
   }
 
   return undefined
 }
 
-export type SupportedDefaultsSchema = MO.Schema<any, SupportedDefaults, any, any, any>
+export type SupportedDefaultsSchema = S.Schema<any, SupportedDefaults, any, any, any>
 export type DefaultProperty = SpecificField<any, any, any, any>
 
 export type DefaultFieldRecord = Record<PropertyKey, DefaultProperty>
@@ -214,8 +214,8 @@ export type WithDefault<
   From,
   Api,
   As extends Option<PropertyKey>
-> = MO.Field<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+> = S.Field<
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
   Some<["constructor", () => To]>
@@ -227,8 +227,8 @@ export type WithInputDefault<
   From,
   Api,
   As extends Option<PropertyKey>
-> = MO.Field<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+> = S.Field<
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
   Some<["both", () => To]>
@@ -243,38 +243,38 @@ export function withDefault<
   Def extends Option<
     [
       "parser" | "constructor" | "both",
-      () => MO.To<
-        MO.Schema<unknown, To, ConstructorInput, From, Api>
+      () => S.To<
+        S.Schema<unknown, To, ConstructorInput, From, Api>
       >
     ]
   >
 >(
-  p: MO.Field<
-    MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  p: S.Field<
+    S.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
     Def
   >
 ): WithDefault<To, ConstructorInput, From, Api, As> {
-  if (findAnnotation(p._schema, MO.dateIdentifier)) {
+  if (findAnnotation(p._schema, S.dateIdentifier)) {
     return propDef(p, makeCurrentDate as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
+  if (findAnnotation(p._schema, S.optionFromNullIdentifier)) {
     return propDef(p, () => Option.none as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
+  if (findAnnotation(p._schema, S.nullableIdentifier)) {
     return propDef(p, () => null as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.arrayIdentifier)) {
+  if (findAnnotation(p._schema, S.arrayIdentifier)) {
     return propDef(p, () => [] as any, "constructor")
   }
   if (findAnnotation(p._schema, setIdentifier)) {
     return propDef(p, () => new Set() as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.boolIdentifier)) {
+  if (findAnnotation(p._schema, S.boolIdentifier)) {
     return propDef(p, () => false as any, "constructor")
   }
-  if (findAnnotation(p._schema, MO.UUIDIdentifier)) {
+  if (findAnnotation(p._schema, S.UUIDIdentifier)) {
     return propDef(p, makeUuid as any, "constructor")
   }
   throw new Error("Not supported")
@@ -289,48 +289,48 @@ export function withInputDefault<
   Def extends Option<
     [
       "parser" | "constructor" | "both",
-      () => MO.To<
-        MO.Schema<unknown, To, ConstructorInput, From, Api>
+      () => S.To<
+        S.Schema<unknown, To, ConstructorInput, From, Api>
       >
     ]
   >
 >(
-  p: MO.Field<
-    MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  p: S.Field<
+    S.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
     Def
   >
 ): WithInputDefault<To, ConstructorInput, From, Api, As> {
-  if (findAnnotation(p._schema, MO.dateIdentifier)) {
+  if (findAnnotation(p._schema, S.dateIdentifier)) {
     return propDef(p, makeCurrentDate as any, "both")
   }
-  if (findAnnotation(p._schema, MO.optionFromNullIdentifier)) {
+  if (findAnnotation(p._schema, S.optionFromNullIdentifier)) {
     return propDef(p, () => Option.none as any, "both")
   }
-  if (findAnnotation(p._schema, MO.nullableIdentifier)) {
+  if (findAnnotation(p._schema, S.nullableIdentifier)) {
     return propDef(p, () => null as any, "both")
   }
-  if (findAnnotation(p._schema, MO.arrayIdentifier)) {
+  if (findAnnotation(p._schema, S.arrayIdentifier)) {
     return propDef(p, () => [] as any, "both")
   }
   if (findAnnotation(p._schema, setIdentifier)) {
     return propDef(p, () => new Set() as any, "both")
   }
-  if (findAnnotation(p._schema, MO.boolIdentifier)) {
+  if (findAnnotation(p._schema, S.boolIdentifier)) {
     return propDef(p, () => false as any, "both")
   }
-  if (findAnnotation(p._schema, MO.UUIDIdentifier)) {
+  if (findAnnotation(p._schema, S.UUIDIdentifier)) {
     return propDef(p, makeUuid as any, "both")
   }
   throw new Error("Not supported")
 }
 
 export function defaultProp<To, ConstructorInput, From, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Field<
-  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+): S.Field<
+  S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["constructor", () => To]>
@@ -341,27 +341,27 @@ export function defaultProp<
   From,
   Api
 >(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): SpecificField<
-  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["constructor", () => To]>
 >
 export function defaultProp<To, ConstructorInput, From, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): null extends To ? SpecificField<
-    MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+    S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
     Some<["constructor", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp<To, ConstructorInput, From, Api>(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Field<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+): S.Field<
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["constructor", () => To]>
@@ -372,34 +372,34 @@ export function defaultProp<
   From,
   Api
 >(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): SpecificField<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["constructor", () => To]>
 >
 export function defaultProp<To, ConstructorInput, From, Api>(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): null extends To ? SpecificField<
-    MO.Schema<unknown, To, ConstructorInput, From, Api>,
+    S.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
     Some<["constructor", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
-  schema: MO.Schema<unknown, any, any, any, any>,
+  schema: S.Schema<unknown, any, any, any, any>,
   makeDefault?: () => any
 ) {
-  return makeDefault ? MO.defProp(schema, makeDefault) : MO.field(schema) >= withDefault
+  return makeDefault ? S.defProp(schema, makeDefault) : S.field(schema) >= withDefault
 }
 
 export function defaultInputProp<To, ConstructorInput, From, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Field<
-  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+): S.Field<
+  S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["both", () => To]>
@@ -410,27 +410,27 @@ export function defaultInputProp<
   From,
   Api
 >(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): SpecificField<
-  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["both", () => To]>
 >
 export function defaultInputProp<To, ConstructorInput, From, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+  schema: S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): null extends To ? SpecificField<
-    MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+    S.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
     Some<["both", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp<To, ConstructorInput, From, Api>(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Field<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+): S.Field<
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["both", () => To]>
@@ -441,36 +441,36 @@ export function defaultInputProp<
   From,
   Api
 >(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): SpecificField<
-  MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  S.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
   Some<["both", () => To]>
 >
 export function defaultInputProp<To, ConstructorInput, From, Api>(
-  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+  schema: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): null extends To ? SpecificField<
-    MO.Schema<unknown, To, ConstructorInput, From, Api>,
+    S.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
     Some<["both", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
-  schema: MO.Schema<unknown, any, any, any, any>,
+  schema: S.Schema<unknown, any, any, any, any>,
   makeDefault?: () => any
 ) {
   return makeDefault
-    ? MO.defProp(schema, makeDefault, "both")
-    : MO.field(schema) >= withInputDefault
+    ? S.defProp(schema, makeDefault, "both")
+    : S.field(schema) >= withInputDefault
 }
 
 // TODO: support schema mix with property
-export function makeOptional<NER extends Record<string, MO.AnyField>>(
+export function makeOptional<NER extends Record<string, S.AnyField>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: MO.Field<
+  [K in keyof NER]: S.Field<
     NER[K]["_schema"],
     "optional",
     NER[K]["_as"],
@@ -483,10 +483,10 @@ export function makeOptional<NER extends Record<string, MO.AnyField>>(
   }, {} as any)
 }
 
-export function makeRequired<NER extends Record<string, MO.AnyField>>(
+export function makeRequired<NER extends Record<string, S.AnyField>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: MO.Field<
+  [K in keyof NER]: S.Field<
     NER[K]["_schema"],
     "required",
     NER[K]["_as"],
@@ -504,7 +504,7 @@ export function createUnorder<T>(): Order<T> {
 }
 export function makeSet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  type: S.Schema<unknown, To, ConstructorInput, From, Api>,
   ord: Order<To>,
   eq?: Equivalence<To>
 ) {
@@ -520,7 +520,7 @@ export function makeSet<To, ConstructorInput, From, Api>(
 //   MA extends string
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   type: S.Schema<unknown, To, ConstructorInput, From, Api>,
 //   contramap: (a: To) => MA
 // ) {
 //   return makeUnorderedSet(type, Eq.contramap(contramap)(Eq.string))
@@ -528,7 +528,7 @@ export function makeSet<To, ConstructorInput, From, Api>(
 
 export function makeUnorderedStringSet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<
+  type: S.Schema<
     unknown, // ParserInput,
     A,
     any, // ConstructorInput,
@@ -541,7 +541,7 @@ export function makeUnorderedStringSet<A extends string>(
 
 export function makeUnorderedSet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  type: S.Schema<unknown, To, ConstructorInput, From, Api>,
   eq: Equivalence<To>
 ) {
   return makeSet(type, createUnorder<To>(), eq)
@@ -549,7 +549,7 @@ export function makeUnorderedSet<To, ConstructorInput, From, Api>(
 
 // export function makeContramappedSet<To, ConstructorInput, From, Api, MA>(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   type: S.Schema<unknown, To, ConstructorInput, From, Api>,
 //   contramap: (a: To) => MA,
 //   ord: Order<MA>,
 //   eq: Equivalence<MA>
@@ -559,7 +559,7 @@ export function makeUnorderedSet<To, ConstructorInput, From, Api>(
 
 export function makeNonEmptySet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  type: S.Schema<unknown, To, ConstructorInput, From, Api>,
   ord: Order<To>,
   eq?: Equivalence<To>
 ) {
@@ -575,7 +575,7 @@ export function makeNonEmptySet<To, ConstructorInput, From, Api>(
 //   MA extends string
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   type: S.Schema<unknown, To, ConstructorInput, From, Api>,
 //   contramap: (a: To) => MA
 // ) {
 //   return makeUnorderedNonEmptySet(type, Eq.contramap(contramap)(Eq.string))
@@ -583,7 +583,7 @@ export function makeNonEmptySet<To, ConstructorInput, From, Api>(
 
 export function makeUnorderedStringNonEmptySet<A extends string>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<
+  type: S.Schema<
     unknown, // ParserInput,
     A,
     any, // ConstructorInput,
@@ -596,7 +596,7 @@ export function makeUnorderedStringNonEmptySet<A extends string>(
 
 export function makeUnorderedNonEmptySet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  type: S.Schema<unknown, To, ConstructorInput, From, Api>,
   eq: Equivalence<To>
 ) {
   return makeNonEmptySet(type, createUnorder<To>(), eq)
@@ -610,7 +610,7 @@ export function makeUnorderedNonEmptySet<To, ConstructorInput, From, Api>(
 //   MA
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   type: S.Schema<unknown, To, ConstructorInput, From, Api>,
 //   contramap: (a: To) => MA,
 //   ord: Order<MA>,
 //   eq: Equivalence<MA>
@@ -626,7 +626,7 @@ export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { fields: infer Fields }
-} ? Fields extends MO.FieldRecord ? MO.ParserInputSpecificStruct<Fields>
+} ? Fields extends S.FieldRecord ? S.ParserInputSpecificStruct<Fields>
   : never
   : never
 
@@ -634,7 +634,7 @@ export type ParserInputFromSchemaProperties<T> = T extends {
  * We know that the Parser will work from `unknown`, but we also want to expose the knowledge that we can parse from a ParserInput of type X
  * as such we can use specificStruct, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
  */
-export type AsUPI<To, ConstructorInput, From, Api> = MO.Schema<
+export type AsUPI<To, ConstructorInput, From, Api> = S.Schema<
   unknown,
   To,
   ConstructorInput,
@@ -646,7 +646,7 @@ export type AsUPI<To, ConstructorInput, From, Api> = MO.Schema<
  * @see AsUPI
  */
 export const asUpi = <To, ConstructorInput, From, Api>(
-  s: MO.Schema<any, To, ConstructorInput, From, Api>
+  s: S.Schema<any, To, ConstructorInput, From, Api>
 ) => s as AsUPI<To, ConstructorInput, From, Api>
 
 export class CustomSchemaException
@@ -980,14 +980,14 @@ export const withDefaultProp = <To extends SupportedDefaults, ConstructorInput, 
  */
 export const optionalProp = <To, ConstructorInput, From, Api>(
   schema: Schema<unknown, To, ConstructorInput, From, Api>
-) => MO.optProp(schema)
+) => S.optProp(schema)
 
 /**
  * @tsplus getter ets/Schema/SchemaUnion optional
  */
 export const optionalUnionProp = <Fields extends Record<PropertyKey, SchemaUPI>>(
   schema: SchemaUnion<Fields>
-) => MO.optProp(schema)
+) => S.optProp(schema)
 
 /**
  * @tsplus getter ets/Schema/Schema nullable
@@ -1035,21 +1035,21 @@ export const fromPropProp = <To, ConstructorInput, From, Api, As1 extends Proper
   as: As1
 ) => field(schema).from(as)
 
-export type SchemaFrom<Cls extends { Class: MO.SchemaAny }> = Cls["Class"]
+export type SchemaFrom<Cls extends { Class: S.SchemaAny }> = Cls["Class"]
 
-export type GetProps<Cls extends { Api: { fields: MO.FieldRecord } }> = // Transform<
+export type GetProps<Cls extends { Api: { fields: S.FieldRecord } }> = // Transform<
   Cls["Api"]["fields"]
 
 export type FieldsClass<
-  Cls extends { [MO.schemaField]: { Api: { fields: MO.FieldRecord } } }
-> = GetProps<Cls[MO.schemaField]>
+  Cls extends { [S.schemaField]: { Api: { fields: S.FieldRecord } } }
+> = GetProps<Cls[S.schemaField]>
 // Cls["ProvidedProps"] //Transform<
 
-export type FromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.From<
-  Cls[MO.schemaField]
+export type FromApi<Cls extends { [S.schemaField]: S.SchemaAny }> = S.From<
+  Cls[S.schemaField]
 > // Transform<
-export type ConstructorInputApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.ConstructorInputOf<
-  Cls[MO.schemaField]
+export type ConstructorInputApi<Cls extends { [S.schemaField]: S.SchemaAny }> = S.ConstructorInputOf<
+  Cls[S.schemaField]
 >
 // >
 
@@ -1057,13 +1057,13 @@ export type ConstructorInputApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> 
 //   FromOrig<X>
 // >
 
-export type OpaqueFrom<OpaqueE, Schema> = Schema extends MO.DefaultSchema<
+export type OpaqueFrom<OpaqueE, Schema> = Schema extends S.DefaultSchema<
   unknown,
   infer A,
   infer B,
   OpaqueE,
   infer C
-> ? MO.DefaultSchema<unknown, A, B, OpaqueE, C>
+> ? S.DefaultSchema<unknown, A, B, OpaqueE, C>
   : never
 
 // TODO: Add `is` guards (esp. for tagged unions.)
@@ -1071,7 +1071,7 @@ export function smartClassUnion<
   T extends Record<PropertyKey, SchemaUPI & { new(i: any): any }>
 >(members: T & EnforceNonEmptyRecord<T>, name?: string) {
   // @ts-expect-error we know this is NonEmpty
-  const u = MO.union(members)
+  const u = S.union(members)
   return enhanceClassUnion(u, name)
 }
 
@@ -1080,22 +1080,22 @@ export function enhanceClassUnion<
   A,
   E,
   CI
->(u: MO.DefaultSchema<any, A, CI, E, MO.UnionApi<T>>, name?: string) {
-  if (name) u = u.pipe(MO.named(name)) as typeof u
-  const members = findAnnotation(u, MO.unionIdentifier)!.fields as T
+>(u: S.DefaultSchema<any, A, CI, E, S.UnionApi<T>>, name?: string) {
+  if (name) u = u.pipe(S.named(name)) as typeof u
+  const members = findAnnotation(u, S.unionIdentifier)!.fields as T
 
   const entries = Object.entries(members)
   const as = entries.reduce((prev, [key, value]) => {
     prev[key] = (i: any) => new value(i)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: OptionalConstructor<MO.ConstructorInputOf<T[Key]>>) => A
+    [Key in keyof T]: (i: OptionalConstructor<S.ConstructorInputOf<T[Key]>>) => A
   }
   const of = entries.reduce((prev, [key, value]) => {
     prev[key] = (i: any) => new value(i)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: OptionalConstructor<MO.ConstructorInputOf<T[Key]>>) => InstanceType<T[Key]>
+    [Key in keyof T]: (i: OptionalConstructor<S.ConstructorInputOf<T[Key]>>) => InstanceType<T[Key]>
   }
 
   // Experiment with returning a constructor that returns a Union
@@ -1103,7 +1103,7 @@ export function enhanceClassUnion<
     prev[key] = value
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: { new(i: OptionalConstructor<MO.ConstructorInputOf<T[Key]>>): A }
+    [Key in keyof T]: { new(i: OptionalConstructor<S.ConstructorInputOf<T[Key]>>): A }
   }
 
   const mem = entries.reduce((prev, [key, value]) => {
@@ -1133,17 +1133,17 @@ export interface SmartClassUnion<
 > {
   members: T
   cas: {
-    [Key in keyof T]: { new(i: MO.ConstructorInputOf<T[Key]>): To }
+    [Key in keyof T]: { new(i: S.ConstructorInputOf<T[Key]>): To }
   }
   mem: {
     [Key in keyof T]: T[Key]
   }
   of: {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => InstanceType<T[Key]>
+    [Key in keyof T]: (i: S.ConstructorInputOf<T[Key]>) => InstanceType<T[Key]>
   }
   of_: (i: To) => To
   as: {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => To
+    [Key in keyof T]: (i: S.ConstructorInputOf<T[Key]>) => To
   }
   EParser: Parser.Parser<From, any, To>
 }
@@ -1152,14 +1152,14 @@ export function smartUnion<T extends Record<PropertyKey, SchemaUPI>>(
   members: T & EnforceNonEmptyRecord<T>
 ) {
   // @ts-expect-error we know this is NonEmpty
-  const u = MO.union(members)
+  const u = S.union(members)
   return enhanceUnion(u)
 }
 
 export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>(
-  u: MO.DefaultSchema<any, A, CI, E, MO.UnionApi<T>>
+  u: S.DefaultSchema<any, A, CI, E, S.UnionApi<T>>
 ) {
-  const members = findAnnotation(u, MO.unionIdentifier)!.fields as T
+  const members = findAnnotation(u, S.unionIdentifier)!.fields as T
   const entries = Object.entries(members)
   // const as = entries.reduce((prev, [key, value]) => {
   //   prev[key] = Constructor.for(value)
@@ -1170,18 +1170,18 @@ export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>
   //   ) => These<ConstructorErrorOf<T[Key]>, A>
   // }
   const as = entries.reduce((prev, [key, value]) => {
-    prev[key] = MO.Constructor.for(value)
+    prev[key] = S.Constructor.for(value)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
     [Key in keyof T]: (
-      i: MO.ConstructorInputOf<T[Key]>
-    ) => These<MO.ConstructorErrorOf<T[Key]>, A>
+      i: S.ConstructorInputOf<T[Key]>
+    ) => These<S.ConstructorErrorOf<T[Key]>, A>
   }
   const of = entries.reduce((prev, [key, value]) => {
-    prev[key] = MO.Constructor.for(value).pipe(unsafe)
+    prev[key] = S.Constructor.for(value).pipe(unsafe)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.To<T[Key]> // These<ConstructorErrorOf<T[Key]>, To<T[Key]>>
+    [Key in keyof T]: (i: S.ConstructorInputOf<T[Key]>) => S.To<T[Key]> // These<ConstructorErrorOf<T[Key]>, To<T[Key]>>
   }
   const mem = entries.reduce((prev, [key, value]) => {
     prev[key] = value
@@ -1212,13 +1212,13 @@ export interface SmartUnion<
     [Key in keyof T]: T[Key]
   }
   of: {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.To<T[Key]>
+    [Key in keyof T]: (i: S.ConstructorInputOf<T[Key]>) => S.To<T[Key]>
   }
   of_: (i: To) => To
   as: {
     [Key in keyof T]: (
-      i: MO.ConstructorInputOf<T[Key]>
-    ) => These<MO.ConstructorErrorOf<T[Key]>, To>
+      i: S.ConstructorInputOf<T[Key]>
+    ) => These<S.ConstructorErrorOf<T[Key]>, To>
   }
   EParser: Parser.Parser<From, any, To>
 }
@@ -1246,7 +1246,7 @@ export function validate<X, A>(
  * Value: The value you want to submit after validation. e.g for text input: `ReasonableString`
  * InputValue: The internal value of the input, e.g for text input: `string`
  */
-export type InputSchema<Value, InputValue> = MO.DefaultSchema<
+export type InputSchema<Value, InputValue> = S.DefaultSchema<
   unknown,
   Value,
   any,
@@ -1275,8 +1275,8 @@ export function makeValidatorFromUnknown<Value, InputValue>(
 // TODO: Opaque UnionApi (return/input type of matchW etc?)
 export function OpaqueSchema<A, E = A, CI = A>() {
   function abc<OriginalA, ParserInput, Api>(
-    self: MO.DefaultSchema<any, OriginalA, any, any, Api>
-  ): MO.DefaultSchema<ParserInput, A, CI, E, Api> & { original: OriginalA }
+    self: S.DefaultSchema<any, OriginalA, any, any, Api>
+  ): S.DefaultSchema<ParserInput, A, CI, E, Api> & { original: OriginalA }
   function abc<
     OriginalA,
     ParserInput,
@@ -1285,9 +1285,9 @@ export function OpaqueSchema<A, E = A, CI = A>() {
     A2,
     A3
   >(
-    self: MO.DefaultSchema<any, OriginalA, any, any, Api> & SmartClassUnion<A1, A2, A3>
+    self: S.DefaultSchema<any, OriginalA, any, any, Api> & SmartClassUnion<A1, A2, A3>
   ):
-    & MO.DefaultSchema<ParserInput, A, CI, E, Api>
+    & S.DefaultSchema<ParserInput, A, CI, E, Api>
     & SmartClassUnion<A1, A2, A3>
     & { original: OriginalA }
   // function abc<
@@ -1331,10 +1331,10 @@ export function replace<S, T>(l: PreparedLens<S, T>) {
   return (t: T) => l.set(t)
 }
 
-export function makePreparedLenses<S, Fields extends MO.FieldRecord>(
+export function makePreparedLenses<S, Fields extends S.FieldRecord>(
   fields: Fields,
   s: S
-): { [K in keyof Fields]: PreparedLens<S, MO.To<Fields[K]["_schema"]>> } {
+): { [K in keyof Fields]: PreparedLens<S, S.To<Fields[K]["_schema"]>> } {
   function makeLens<T>(l: Lens<S, T>) {
     return new PreparedLens(s, l)
   }

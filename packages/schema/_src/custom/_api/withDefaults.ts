@@ -1,6 +1,6 @@
 import type { UnionToIntersection } from "@effect-app/core/utils"
 import type { Annotation } from "../_schema.js"
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Constructor from "../Constructor.js"
@@ -60,7 +60,7 @@ export function withDefaults<ParserInput, To, ConstructorInput, From, Api>(
     return of_(_)
   }
 
-  Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
+  Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
     value: self
   })
 

@@ -3,7 +3,7 @@
 import { pipe } from "@effect-app/core/Function"
 import { isValidPhone } from "@effect-app/core/validation"
 
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { DefaultSchema, NonEmptyString } from "../_schema.js"
 import { brand, customE, fromString, string } from "../_schema.js"
 import { Numbers } from "../FastCheck.js"
@@ -17,7 +17,7 @@ export interface PhoneNumberBrand {
 
 export type PhoneNumber = NonEmptyString & PhoneNumberBrand
 
-export const PhoneNumberFromStringIdentifier = MO.makeAnnotation<{}>()
+export const PhoneNumberFromStringIdentifier = S.makeAnnotation<{}>()
 
 function isPhoneNumber(str: string): str is PhoneNumber {
   return isValidPhone(str)
@@ -31,18 +31,18 @@ export const PhoneNumberFromString: DefaultSchema<
   {}
 > = pipe(
   fromString,
-  MO.arbitrary((FC) => Numbers(7, 10)(FC)),
-  MO.refine(isPhoneNumber, (n) => MO.leafE(customE(n, "a valid phone number"))),
+  S.arbitrary((FC) => Numbers(7, 10)(FC)),
+  S.refine(isPhoneNumber, (n) => S.leafE(customE(n, "a valid phone number"))),
   brand<PhoneNumber>(),
-  MO.annotate(PhoneNumberFromStringIdentifier, {})
+  S.annotate(PhoneNumberFromStringIdentifier, {})
 )
 
-export const PhoneNumberIdentifier = MO.makeAnnotation<{}>()
+export const PhoneNumberIdentifier = S.makeAnnotation<{}>()
 
 export const PhoneNumber = extendWithUtils(
   pipe(
     string[">>>"](PhoneNumberFromString),
     brand<PhoneNumber>(),
-    MO.annotate(PhoneNumberIdentifier, {})
+    S.annotate(PhoneNumberIdentifier, {})
   )
 )

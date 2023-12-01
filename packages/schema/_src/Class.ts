@@ -11,7 +11,7 @@ import * as Hash from "effect/Hash"
 
 import type { EncSchemaForClass, EParserFor, SpecificFieldRecord } from "./_api.js"
 import { specificStruct } from "./_api.js"
-import * as MO from "./_schema.js"
+import * as S from "./_schema.js"
 import { schemaField } from "./_schema.js"
 import type { AnyField, FieldRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
@@ -24,32 +24,32 @@ export type StringRecord = Record<string, string>
 
 export type AnyRecord = Record<string, any>
 
-export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
+export type AnyRecordSchema = S.Schema<unknown, any, any, AnyRecord, any>
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Class2 so we only compute it once.
-export interface Class<To, Self extends MO.SchemaAny> extends
+export interface Class<To, Self extends S.SchemaAny> extends
   Class2<
     To,
     Self,
-    EncSchemaForClass<To, Self, MO.From<Self>>,
+    EncSchemaForClass<To, Self, S.From<Self>>,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
-    ComputeFlat<MO.To<Self>>
+    ComputeFlat<S.To<Self>>
   >
 {}
 
 export interface ClassFrom<
   To,
-  Self extends MO.SchemaAny,
+  Self extends S.SchemaAny,
   MEnc,
   // makes it pretty, but also helps compatibility with WebStorm it seems...
-  To2 = ComputeFlat<MO.To<Self>>
+  To2 = ComputeFlat<S.To<Self>>
 > extends
   MM<
     Self,
     EncSchemaForClass<To, Self, MEnc>,
     To,
-    MO.ConstructorInputOf<Self>,
+    S.ConstructorInputOf<Self>,
     MEnc,
     GetApiProps<Self>,
     To2
@@ -58,86 +58,86 @@ export interface ClassFrom<
 
 export interface Class2<
   M,
-  Self extends MO.SchemaAny,
-  SelfM extends MO.SchemaAny,
+  Self extends S.SchemaAny,
+  SelfM extends S.SchemaAny,
   To2
 > extends
   MM<
     Self,
     SelfM,
     M,
-    MO.ConstructorInputOf<Self>,
-    MO.From<Self>,
+    S.ConstructorInputOf<Self>,
+    S.From<Self>,
     GetApiProps<Self>,
     To2
   >
 {}
 
-type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Fields> ? Fields
+type GetApiProps<T extends S.SchemaAny> = T extends S.SchemaProperties<infer Fields> ? Fields
   : never
 
 export interface ExtendedClass<
-  Self extends MO.SchemaAny,
-  To = MO.To<Self>,
-  ConstructorInput = MO.ConstructorInputOf<Self>,
-  From = MO.From<Self>,
+  Self extends S.SchemaAny,
+  To = S.To<Self>,
+  ConstructorInput = S.ConstructorInputOf<Self>,
+  From = S.From<Self>,
   Fields = GetApiProps<Self>
 > extends
   MM<
     Self,
-    MO.Schema<unknown, To, ConstructorInput, From, { fields: Fields }>,
+    S.Schema<unknown, To, ConstructorInput, From, { fields: Fields }>,
     To,
     ConstructorInput,
     From,
     Fields,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
-    ComputeFlat<MO.To<Self>>
+    ComputeFlat<S.To<Self>>
   >
 {}
 
 export interface MM<
-  Self extends MO.SchemaAny,
-  SelfM extends MO.SchemaAny,
+  Self extends S.SchemaAny,
+  SelfM extends S.SchemaAny,
   To,
   ConstructorInput,
   From,
   Fields,
   To2
-> extends MO.Schema<unknown, To, ConstructorInput, From, { fields: Fields }> {
+> extends S.Schema<unknown, To, ConstructorInput, From, { fields: Fields }> {
   new(_: OptionalConstructor<ConstructorInput>): To2
-  [MO.schemaField]: Self
-  readonly to: MO.To<Self>
-  readonly from: MO.From<Self>
+  [S.schemaField]: Self
+  readonly to: S.To<Self>
+  readonly from: S.From<Self>
   readonly Class: SelfM // added
   readonly lens: Lens.Lens<To, To> // added
   readonly lenses: RecordSchemaToLenses<To, Self>
 
-  readonly Parser: MO.ParserFor<SelfM>
+  readonly Parser: S.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
-  readonly Constructor: MO.ConstructorFor<SelfM>
-  readonly Encoder: MO.EncoderFor<SelfM>
-  readonly Guard: MO.GuardFor<SelfM>
-  readonly Arbitrary: MO.ArbitraryFor<SelfM>
+  readonly Constructor: S.ConstructorFor<SelfM>
+  readonly Encoder: S.EncoderFor<SelfM>
+  readonly Guard: S.GuardFor<SelfM>
+  readonly Arbitrary: S.ArbitraryFor<SelfM>
 }
 
 /** opaque model only on To type param */
 export function Class<To>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ClassSpecial<To>(__name)(MO.struct(propsOrSchemas))
+  return <ProvidedProps extends S.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ClassSpecial<To>(__name)(S.struct(propsOrSchemas))
 }
 
 /** opaque model on To and From type params */
 export function ClassFrom<To, From>(__name?: string) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ClassSpecialEnc<To, From>(__name)(MO.struct(propsOrSchemas))
+  return <ProvidedProps extends S.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
+    ClassSpecialEnc<To, From>(__name)(S.struct(propsOrSchemas))
 }
 
 /** fully opaque model on all type params */
 export function ExtendedClass<To, ConstructorInput, From, Fields>(
   __name?: string
 ) {
-  return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
-    const self = MO.struct(propsOrSchemas)
+  return <ProvidedProps extends S.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
+    const self = S.struct(propsOrSchemas)
     return makeSpecial(__name, self) as
       & ExtendedClass<
         typeof self,
@@ -158,11 +158,11 @@ export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
   [K in keyof To<Self>]-?: Lens.Lens<T, To<Self>[K]>
 }
 
-export type PropsToLenses<T, Fields extends MO.FieldRecord> = {
-  [K in keyof Fields]: Lens.Lens<T, MO.To<Fields[K]["_schema"]>>
+export type PropsToLenses<T, Fields extends S.FieldRecord> = {
+  [K in keyof Fields]: Lens.Lens<T, S.To<Fields[K]["_schema"]>>
 }
 export function lensFields<T>() {
-  return <Fields extends MO.FieldRecord>(fields: Fields): PropsToLenses<T, Fields> => {
+  return <Fields extends S.FieldRecord>(fields: Fields): PropsToLenses<T, Fields> => {
     const id = Lens.id<T>()
     return Object.keys(fields).reduce((prev, cur) => {
       prev[cur] = id.at(cur as any)
@@ -171,13 +171,13 @@ export function lensFields<T>() {
   }
 }
 
-export function setSchema<Self extends MO.SchemaProperties<any>>(
+export function setSchema<Self extends S.SchemaProperties<any>>(
   schemed: any,
   self: Self
 ) {
-  schemed[MO.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Class = self
+  schemed[S.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Class = self
 
-  // Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
+  // Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
   //   value: self,
   // })
 
@@ -201,37 +201,37 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
   })
 
   Object.defineProperty(schemed, "Parser", {
-    value: MO.Parser.for(self),
+    value: S.Parser.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "EParser", {
-    value: MO.Parser.for(self),
+    value: S.Parser.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "Constructor", {
-    value: MO.Constructor.for(self),
+    value: S.Constructor.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "Encoder", {
-    value: MO.Encoder.for(self),
+    value: S.Encoder.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "Guard", {
-    value: MO.Guard.for(self),
+    value: S.Guard.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "Arbitrary", {
-    value: MO.Arbitrary.for(self),
+    value: S.Arbitrary.for(self),
     configurable: true
   })
 
   Object.defineProperty(schemed, "annotate", {
-    value: <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) => new MO.SchemaAnnotated(self, identifier, meta),
+    value: <Meta>(identifier: S.Annotation<Meta>, meta: Meta) => new S.SchemaAnnotated(self, identifier, meta),
     configurable: true
   })
 }
@@ -246,8 +246,8 @@ export function useClassConstructorForSchema(cls: any) {
   const c = cls.Constructor
   const upd = pipe(
     cls[schemaField],
-    MO.parser((_, env) => MO.These.map_(p(_, env), (_) => new cls(_))),
-    MO.constructor((_) => MO.These.map_(c(_), (_) => new cls(_)))
+    S.parser((_, env) => S.These.map_(p(_, env), (_) => new cls(_))),
+    S.constructor((_) => S.These.map_(c(_), (_) => new cls(_)))
   )
   setSchema(
     cls,
@@ -257,10 +257,10 @@ export function useClassConstructorForSchema(cls: any) {
 }
 
 /**
- * Automatically assign the name of the Class to the MO.
+ * Automatically assign the name of the Class to the S.
  */
 export function useClassNameForSchema(cls: any) {
-  setSchema(cls, pipe(cls[schemaField], MO.named(cls.name)) as any)
+  setSchema(cls, pipe(cls[schemaField], S.named(cls.name)) as any)
   return cls
 }
 
@@ -286,7 +286,7 @@ export interface PropsExtensions<Fields> {
 
 // We don't want Copy interface from the official implementation
 export function ClassSpecial<To>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
+  return <Self extends S.SchemaAny & { Api: { fields: any } }>(
     self: Self
   ): Class<To, Self> & PropsExtensions<GetClassProps<Self>> => {
     return makeSpecial(__name, self)
@@ -294,38 +294,38 @@ export function ClassSpecial<To>(__name?: string) {
 }
 
 export function ClassSpecialEnc<To, From>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
+  return <Self extends S.SchemaAny & { Api: { fields: any } }>(
     self: Self
   ): ClassFrom<To, Self, From> & PropsExtensions<GetClassProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
 
-function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
-  const schema = __name ? self >= MO.named(__name) : self // TODO  ?? "Class(Anonymous)", but atm auto deriving openapiRef from this.
-  const of_ = MO.Constructor.for(schema) >= unsafe
+function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
+  const schema = __name ? self >= S.named(__name) : self // TODO  ?? "Class(Anonymous)", but atm auto deriving openapiRef from this.
+  const of_ = S.Constructor.for(schema) >= unsafe
   const fromFields = (fields: any, target: any) => {
     for (const k of Object.keys(fields)) {
       target[k] = fields[k]
     }
   }
-  const parser = MO.Parser.for(schema)
+  const parser = S.Parser.for(schema)
 
   return class implements Hash.Hash, Equal.Equal {
     static [nClassBrand] = nClassBrand
 
     static [schemaField] = schema
-    static [MO.SchemaContinuationSymbol] = schema
+    static [S.SchemaContinuationSymbol] = schema
     static Class = schema
     static Api = schema.Api
     static [">>>"] = schema[">>>"]
 
     static Parser = parser
     static EParser = parser
-    static Encoder = MO.Encoder.for(schema)
-    static Constructor = MO.Constructor.for(schema)
-    static Guard = MO.Guard.for(schema)
-    static Arbitrary = MO.Arbitrary.for(schema)
+    static Encoder = S.Encoder.for(schema)
+    static Constructor = S.Constructor.for(schema)
+    static Guard = S.Guard.for(schema)
+    static Arbitrary = S.Arbitrary.for(schema)
 
     static lens = Lens.id<any>()
     static lenses = lensFields()(schema.Api.fields)
@@ -334,10 +334,10 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
     static pick = (...fields: any[]) => pick(schema.Api.fields, fields)
     static omit = (...fields: any[]) => omit(schema.Api.fields, fields)
 
-    static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
-      new MO.SchemaAnnotated(self, identifier, meta)
+    static annotate = <Meta>(identifier: S.Annotation<Meta>, meta: Meta) =>
+      new S.SchemaAnnotated(self, identifier, meta)
 
-    constructor(inp: MO.ConstructorInputOf<any> = {}) {
+    constructor(inp: S.ConstructorInputOf<any> = {}) {
       // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
       fromFields(of_(inp), this)
     }

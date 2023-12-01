@@ -40,7 +40,7 @@
             "export interface $1Schema extends Identity<typeof $1_> {}",
             "export const $1: $1Schema = $1_",
             "export namespace $1 {",
-            "  export type From = From<typeof $1__> & UnionBrand",
+            "  export type From = S.From<typeof $1__> & UnionBrand",
             "}"
         ]
     },

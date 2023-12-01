@@ -38,7 +38,7 @@ import {
   unknownIdentifier,
   UUIDFromStringIdentifier
 } from "@effect-app/schema"
-import * as MO from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 
 import type { JSONSchema } from "../atlas-plutus.js"
 import {
@@ -55,14 +55,14 @@ import {
 
 export type Gen = Effect<never, never, JSONSchema>
 
-export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
-  Option.partial((_miss) => (schema: MO.SchemaAny): Gen => {
-    // if (schema instanceof MO.SchemaOpenApi) {
+export const interpreters: ((schema: S.SchemaAny) => Option<Gen>)[] = [
+  Option.partial((_miss) => (schema: S.SchemaAny): Gen => {
+    // if (schema instanceof S.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
     // }
 
-    // if (schema instanceof MO.SchemaRecur) {
+    // if (schema instanceof S.SchemaRecur) {
     //   if (interpreterCache.has(schema)) {
     //     return interpreterCache.get(schema)
     //   }
@@ -85,7 +85,7 @@ export const interpreters: ((schema: MO.SchemaAny) => Option<Gen>)[] = [
 ]
 
 // TODO: Cache
-type Meta = MO.Meta & {
+type Meta = S.Meta & {
   title?: string
   noRef?: boolean
   openapiRef?: string
@@ -93,7 +93,7 @@ type Meta = MO.Meta & {
   maxLength?: number
 }
 
-function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
+function processId(schema: S.SchemaAny, meta: Meta = {}): any {
   if (!schema) {
     throw new Error("schema undefined")
   }
@@ -102,23 +102,23 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
     return Effect(new ObjectSchema({}))
   }
   return Effect.gen(function*($) {
-    if (schema instanceof MO.SchemaRefinement) {
+    if (schema instanceof S.SchemaRefinement) {
       return yield* $(processId(schema.self, meta))
     }
-    //   if (schema instanceof MO.SchemaPipe) {
+    //   if (schema instanceof S.SchemaPipe) {
     //     return processId(schema.that, meta)
     //   }
-    //   if (schema instanceof MO.SchemaConstructor) {
+    //   if (schema instanceof S.SchemaConstructor) {
     //     return processId(schema.self, meta)
     //   }
 
     // console.log("$$$", schema.annotation)
 
-    // if (schema instanceof MO.SchemaOpenApi) {
+    // if (schema instanceof S.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   meta = { ...meta, ...cfg }
     // }
-    if (schema instanceof MO.SchemaNamed) {
+    if (schema instanceof S.SchemaNamed) {
       meta = { title: schema.name, ...meta }
     }
 
@@ -126,7 +126,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
       // TODO: proper narrow the types
       const schemaMeta = schema.meta
       switch (schema.annotation) {
-        case MO.reqId: {
+        case S.reqId: {
           meta = { noRef: true, ...meta }
           break
         }
@@ -291,7 +291,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const properties: Record<string, any> = {}
           const required: string[] = []
           for (const k in schemaMeta.fields) {
-            const p: MO.AnyField = schemaMeta.fields[k]
+            const p: S.AnyField = schemaMeta.fields[k]
             properties[k] = yield* $(processId(p["_schema"]))
             if (p["_optional"] === "required") {
               required.push(k)
@@ -356,7 +356,7 @@ function merge(schema: any) {
 const cache = new WeakMap()
 
 function for_<ParserInput, To, ConstructorInput, From, Api>(
-  schema: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
+  schema: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): Gen {
   if (cache.has(schema)) {
     return cache.get(schema)

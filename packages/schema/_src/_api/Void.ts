@@ -1,16 +1,16 @@
 import { pipe } from "@effect-app/core/Function"
-import * as MO from "../custom.js"
+import * as S from "../custom.js"
 import { withDefaults } from "../custom.js"
 
 export const Void = pipe(
-  MO.unknown,
-  MO.encoder(() => void 0),
-  MO.refine(
+  S.unknown,
+  S.encoder(() => void 0),
+  S.refine(
     (_u: unknown): _u is void => true,
-    (n) => MO.leafE(MO.customE(n, "void"))
+    (n) => S.leafE(S.customE(n, "void"))
   ),
-  MO.named("void"),
+  S.named("void"),
   withDefaults
 )
 
-export type Void = MO.To<typeof Void>
+export type Void = S.To<typeof Void>

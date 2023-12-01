@@ -1,8 +1,8 @@
 import { pipe } from "@effect-app/core/Function"
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { NonEmptyBrand } from "../custom.js"
 
-export const maxLengthIdentifier = MO.makeAnnotation<{ maxLength: number }>()
+export const maxLengthIdentifier = S.makeAnnotation<{ maxLength: number }>()
 
 export function maxLength<Brand>(maxLength: number) {
   return <
@@ -12,19 +12,19 @@ export function maxLength<Brand>(maxLength: number) {
     From,
     Api
   >(
-    self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
-  ): MO.Schema<ParserInput, To & Brand, ConstructorInput, From, Api> =>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<ParserInput, To & Brand, ConstructorInput, From, Api> =>
     pipe(
       self,
-      MO.refine(
+      S.refine(
         (n): n is To & Brand => n.length <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+        (n) => S.leafE(S.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
-export const minLengthIdentifier = MO.makeAnnotation<{ minLength: number }>()
+export const minLengthIdentifier = S.makeAnnotation<{ minLength: number }>()
 
 export function minLength<Brand>(minLength: number) {
   if (minLength < 1) {
@@ -37,8 +37,8 @@ export function minLength<Brand>(minLength: number) {
     From,
     Api
   >(
-    self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
     To & Brand & NonEmptyBrand,
     ConstructorInput,
@@ -47,11 +47,11 @@ export function minLength<Brand>(minLength: number) {
   > =>
     pipe(
       self,
-      MO.refine(
+      S.refine(
         (n): n is To & Brand & NonEmptyBrand => n.length >= minLength,
-        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
+        (n) => S.leafE(S.customE(n, `at least a length of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength })
+      S.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -66,8 +66,8 @@ export function minSize<Brand>(minLength: number) {
     From,
     Api
   >(
-    self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
     To & Brand & NonEmptyBrand,
     ConstructorInput,
@@ -76,11 +76,11 @@ export function minSize<Brand>(minLength: number) {
   > =>
     pipe(
       self,
-      MO.refine(
+      S.refine(
         (n): n is To & Brand & NonEmptyBrand => n.size >= minLength,
-        (n) => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
+        (n) => S.leafE(S.customE(n, `at least a size of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength })
+      S.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -95,8 +95,8 @@ export function maxSize<Brand>(maxLength: number) {
     From,
     Api
   >(
-    self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
     To & Brand,
     ConstructorInput,
@@ -105,11 +105,11 @@ export function maxSize<Brand>(maxLength: number) {
   > =>
     pipe(
       self,
-      MO.refine(
+      S.refine(
         (n): n is To & Brand => n.size <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+        (n) => S.leafE(S.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
@@ -121,7 +121,7 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
     From,
     Api
   >(
-    self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ) => {
     if (minLength < 1) {
       throw new Error("Must be at least 1")
@@ -129,12 +129,12 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
     // Combinging refinements into 1 to reduce complexity and improve performance
     return pipe(
       self,
-      MO.refine(
+      S.refine(
         (n): n is To & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
+        (n) => S.leafE(S.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength }),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(minLengthIdentifier, { minLength }),
+      S.annotate(maxLengthIdentifier, { maxLength })
       /*minLength<Brand>(min), maxLength<Brand>(max)*/
     )
   }

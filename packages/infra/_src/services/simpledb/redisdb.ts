@@ -2,7 +2,7 @@
 
 import { flow, pipe } from "@effect-app/core/Function"
 import { RedisClient } from "@effect-app/infra-adapters/redis-client"
-import * as MO from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 import type { Lock } from "redlock"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
@@ -31,7 +31,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMapOpt((v) =>
           pipe(
             RedisSerializedDBRecord.Parser,
-            MO.condemnFail
+            S.condemnFail
           )(v)
             .map(({ data, version }) => ({
               data: JSON.parse(data) as EA,
@@ -188,8 +188,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   }
 }
 
-export class RedisSerializedDBRecord extends MO.Class<RedisSerializedDBRecord>()({
-  version: MO.string,
-  timestamp: MO.date,
-  data: MO.string
+export class RedisSerializedDBRecord extends S.Class<RedisSerializedDBRecord>()({
+  version: S.string,
+  timestamp: S.date,
+  data: S.string
 }) {}

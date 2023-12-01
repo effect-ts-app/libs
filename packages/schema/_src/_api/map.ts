@@ -3,7 +3,7 @@
 
 import { pipe } from "@effect-app/core/Function"
 
-import * as MO from "../custom.js"
+import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
@@ -12,7 +12,7 @@ import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
 import { tuple } from "./tuple.js"
 
-export const mapIdentifier = MO.makeAnnotation<{}>()
+export const mapIdentifier = S.makeAnnotation<{}>()
 
 export function map<
   KeyTo,
@@ -24,9 +24,9 @@ export function map<
   From,
   Api
 >(
-  key: MO.Schema<unknown, KeyTo, KeyConstructorInput, KeyFrom, KeyApi>,
-  self: MO.Schema<unknown, To, ConstructorInput, From, Api>
-): MO.DefaultSchema<
+  key: S.Schema<unknown, KeyTo, KeyConstructorInput, KeyFrom, KeyApi>,
+  self: S.Schema<unknown, To, ConstructorInput, From, Api>
+): S.DefaultSchema<
   unknown,
   ReadonlyMap<KeyTo, To>,
   ReadonlyMap<KeyTo, To>,
@@ -37,7 +37,7 @@ export function map<
 
   const guard = Guard.for(self)
 
-  const maparr = MO.array(tuple(key, self))
+  const maparr = S.array(tuple(key, self))
   const mapParse = Parser.for(maparr)
   const mapEncode = Encoder.for(maparr)
   const mapArb = Arbitrary.for(maparr)
@@ -47,18 +47,18 @@ export function map<
     && Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
 
   return pipe(
-    MO.identity(refinement),
-    MO.constructor((s: ReadonlyMap<KeyTo, To>) => Th.succeed(s)),
-    MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
-    MO.parser(
+    S.identity(refinement),
+    S.constructor((s: ReadonlyMap<KeyTo, To>) => Th.succeed(s)),
+    S.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
+    S.parser(
       (i: unknown, env?: ParserEnv) =>
         mapParse(i, env).pipe(
           Th.map((x) => new Map(x) as ReadonlyMap<KeyTo, To>)
         )
     ),
-    MO.encoder((_) => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
-    MO.mapApi(() => ({})),
-    MO.withDefaults,
-    MO.annotate(mapIdentifier, {})
+    S.encoder((_) => mapEncode(ReadonlyArray.fromIterable(_.entries()))),
+    S.mapApi(() => ({})),
+    S.withDefaults,
+    S.annotate(mapIdentifier, {})
   )
 }

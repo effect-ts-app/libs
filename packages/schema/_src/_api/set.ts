@@ -2,19 +2,19 @@
 
 import { every_, fromArray, Set, toArray } from "@effect-app/core/Set"
 
-import * as MO from "../custom.js"
+import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 
-export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
+export const setIdentifier = S.makeAnnotation<{ self: S.SchemaUPI }>()
 
 export function set<To, ConstructorInput, From, Api>(
-  self: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  self: S.Schema<unknown, To, ConstructorInput, From, Api>,
   ord: Order<To>,
   eq_?: Equivalence<To>
-): MO.DefaultSchema<
+): S.DefaultSchema<
   unknown,
   Set<To>,
   Set<To>,
@@ -33,19 +33,19 @@ export function set<To, ConstructorInput, From, Api>(
   const toArray_ = toArray(ord)
 
   const fromChunk = pipe(
-    MO.identity(refinement),
-    MO.parser((u: Chunk<To>) => Th.succeed(fromArray_(u.toReadonlyArray))),
-    MO.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
-    MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
+    S.identity(refinement),
+    S.parser((u: Chunk<To>) => Th.succeed(fromArray_(u.toReadonlyArray))),
+    S.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
+    S.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
-    MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-    MO.constructor((_: Set<To>) => Th.succeed(_)),
-    MO.encoder((u) => toArray_(u).map(encodeSelf)),
-    MO.mapApi(() => ({ self: self.Api, eq, ord })),
-    MO.withDefaults,
-    MO.annotate(setIdentifier, { self })
+    S.chunk(self)[">>>"](fromChunk),
+    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    S.constructor((_: Set<To>) => Th.succeed(_)),
+    S.encoder((u) => toArray_(u).map(encodeSelf)),
+    S.mapApi(() => ({ self: self.Api, eq, ord })),
+    S.withDefaults,
+    S.annotate(setIdentifier, { self })
   )
 }
