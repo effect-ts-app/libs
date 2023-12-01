@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.74.1
+
+### Patch Changes
+
+- fix
+
 ## 0.74.0
 
 ### Minor Changes
