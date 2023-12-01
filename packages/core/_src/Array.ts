@@ -18,6 +18,18 @@ export function toArray<A>(
   return Array.from(gen)
 }
 
+/** @tsplus getter ReadonlyArray flatten */
+export const flane: <A>(self: NonEmptyReadonlyArray<NonEmptyReadonlyArray<A>>) => NonEmptyArray<A> =
+  ReadonlyArray.flatten
+
+/** @tsplus getter ReadonlyArray flatten */
+export const fla: <A>(self: ReadonlyArray<ReadonlyArray<A>>) => Array<A> = ReadonlyArray.flatten
+
+/** @tsplus pipeable ReadonlyArray sortBy */
+export const sortByne: <B>(
+  ...orders: ReadonlyArray<Order<B>>
+) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ReadonlyArray.sortBy
+
 /** @tsplus pipeable Iterable sortBy */
 export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ROArray.sortBy
 

@@ -119,6 +119,5 @@ export function makeServiceBusQueue<
  * @tsplus static QueueMaker.Ops makeServiceBusLayers
  */
 export function makeServiceBusLayers(url: string, queueName: string, queueDrainName: string) {
-  return LiveServiceBusClient(url)
-    >> (LiveReceiver(queueDrainName) + LiveSender(queueName))
+  return (LiveReceiver(queueDrainName) + LiveSender(queueName)) >> LiveServiceBusClient(url)
 }
