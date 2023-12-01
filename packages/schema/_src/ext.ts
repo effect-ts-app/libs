@@ -625,8 +625,8 @@ export function makeUnorderedNonEmptySet<To, ConstructorInput, From, Api>(
 export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
-  Api: { props: infer Props }
-} ? Props extends MO.PropertyRecord ? MO.ParserInputFromProperties<Props>
+  Api: { props: infer Fields }
+} ? Fields extends MO.PropertyRecord ? MO.ParserInputFromProperties<Fields>
   : never
   : never
 
@@ -985,8 +985,8 @@ export const optionalProp = <To, ConstructorInput, From, Api>(
 /**
  * @tsplus getter ets/Schema/SchemaUnion optional
  */
-export const optionalUnionProp = <Props extends Record<PropertyKey, SchemaUPI>>(
-  schema: SchemaUnion<Props>
+export const optionalUnionProp = <Fields extends Record<PropertyKey, SchemaUPI>>(
+  schema: SchemaUnion<Fields>
 ) => MO.optProp(schema)
 
 /**
@@ -1331,10 +1331,10 @@ export function replace<S, T>(l: PreparedLens<S, T>) {
   return (t: T) => l.set(t)
 }
 
-export function makePreparedLenses<S, Props extends MO.PropertyRecord>(
-  props: Props,
+export function makePreparedLenses<S, Fields extends MO.PropertyRecord>(
+  props: Fields,
   s: S
-): { [K in keyof Props]: PreparedLens<S, MO.To<Props[K]["_schema"]>> } {
+): { [K in keyof Fields]: PreparedLens<S, MO.To<Fields[K]["_schema"]>> } {
   function makeLens<T>(l: Lens<S, T>) {
     return new PreparedLens(s, l)
   }

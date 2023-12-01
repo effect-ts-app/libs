@@ -549,7 +549,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Conf
     function a<ProvidedProps extends MO.PropertyOrSchemaRecord>(
       props: ProvidedProps
     ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M, Config>
-    function a<Props extends MO.PropertyOrSchemaRecord>(props?: Props) {
+    function a<Fields extends MO.PropertyOrSchemaRecord>(props?: Fields) {
       const req = Req<M>(__name)
       const r = props ? req(method, path, MO.struct(props), config) : req(method, path, config)
       return r
@@ -571,21 +571,21 @@ function Req<M>(__name?: string) {
   function a<
     Path extends string,
     Method extends Methods.Rest,
-    Props extends MO.PropertyRecord,
+    Fields extends MO.PropertyRecord,
     Config extends object = {}
   >(
     method: Method,
     path: Path,
-    self: MO.SchemaProperties<Props>,
+    self: MO.SchemaProperties<Fields>,
     config?: Config
-  ): BuildRequest<Props, Path, Method, M, Config>
+  ): BuildRequest<Fields, Path, Method, M, Config>
   function a<
     Path extends string,
     Method extends Methods.Rest,
-    Props extends MO.PropertyRecord,
+    Fields extends MO.PropertyRecord,
     Config extends object = {}
-  >(method: Method, path: Path, self?: MO.SchemaProperties<Props>, config?: Config) {
-    return makeRequest<Props, Path, Method, M, Config>(
+  >(method: Method, path: Path, self?: MO.SchemaProperties<Fields>, config?: Config) {
+    return makeRequest<Fields, Path, Method, M, Config>(
       method,
       path,
       self ?? (MO.struct({}) as any),
@@ -603,38 +603,38 @@ export function parsePathParams<Path extends string>(path: Path) {
 }
 
 type BuildRequest<
-  Props extends MO.PropertyRecord,
+  Fields extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
 > = IfPathPropsProvided<
   Path,
-  Props,
+  Fields,
   Method extends "GET" | "DELETE" ?
       & QueryRequest<
         M,
-        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Pick<Fields, PathParams<Path>>>,
+        MO.SchemaProperties<Omit<Fields, PathParams<Path>>>,
         undefined,
-        MO.SchemaProperties<Props>
+        MO.SchemaProperties<Fields>
       >
       & Config
     :
       & BodyRequest<
         M,
-        MO.SchemaProperties<Pick<Props, PathParams<Path>>>,
-        MO.SchemaProperties<Omit<Props, PathParams<Path>>>,
+        MO.SchemaProperties<Pick<Fields, PathParams<Path>>>,
+        MO.SchemaProperties<Omit<Fields, PathParams<Path>>>,
         undefined,
         undefined,
-        MO.SchemaProperties<Props>
+        MO.SchemaProperties<Fields>
       >
       & Config
 >
 
 // NOTE: This ignores the original schema after building the new
 export function makeRequest<
-  Props extends MO.PropertyRecord,
+  Fields extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods.Rest,
   M,
@@ -642,10 +642,10 @@ export function makeRequest<
 >(
   method: Method,
   path: Path,
-  self: MO.SchemaProperties<Props>,
+  self: MO.SchemaProperties<Fields>,
   __name?: string,
   config?: Config
-): BuildRequest<Props, Path, Method, M, Config> {
+): BuildRequest<Fields, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
   // TODO: path struct must be parsed "from string"
   const remainProps = { ...self.Api.props }
@@ -685,13 +685,13 @@ export function makeRequest<
 }
 
 export function adaptRequest<
-  Props extends MO.PropertyRecord,
+  Fields extends MO.PropertyRecord,
   Path extends string,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
->(req: Request<M, MO.SchemaProperties<Props>, Path, Method>, config?: Config) {
-  return makeRequest<Props, Path, Method, M, Config>(req.method, req.path, req[MO.schemaField], undefined, config)
+>(req: Request<M, MO.SchemaProperties<Fields>, Path, Method>, config?: Config) {
+  return makeRequest<Fields, Path, Method, M, Config>(req.method, req.path, req[MO.schemaField], undefined, config)
 }
 
 export type Meta = { description?: string; summary?: string; openapiRef?: string }

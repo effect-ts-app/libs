@@ -39,29 +39,29 @@ import { useIntl } from "react-intl"
 import { capitalize, isBetweenMidnightAndEndOfDay } from "./utils.js"
 
 export interface ControlMui<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TContext extends object = object
 > extends Control<TFieldValues, TContext> {
-  props: Props
+  props: Fields
 }
 
 export interface ControllerMuiProps<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends Omit<UseControllerProps<TFieldValues, TName>, "control"> {
-  control: ControlMui<Props, TFieldValues>
+  control: ControlMui<Fields, TFieldValues>
 }
 
 export function useControllerMui<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.PropertyRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->(props: ControllerMuiProps<Props, TFieldValues, TName>) {
+>(props: ControllerMuiProps<Fields, TFieldValues, TName>) {
   const [getFieldMetadata, getMetadata, getRegisterMeta] = useGetMeta<
     TFieldValues,
-    Props
+    Fields
   >(props.control.props)
   const r = useController({
     ...props,
@@ -177,9 +177,9 @@ export interface MuiRenderProps<
 export interface MuiProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
+  Fields extends Schema.PropertyRecord = Schema.PropertyRecord
 > extends Omit<ControllerProps<TFieldValues, TName>, "control" | "render"> {
-  control: ControlMui<Props, TFieldValues>
+  control: ControlMui<Fields, TFieldValues>
   render: (_: MuiRenderProps<TFieldValues, TName>) => React.ReactElement
 }
 
@@ -187,8 +187,8 @@ export interface MuiProps<
 export function ControllerMui<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
->(props: MuiProps<TFieldValues, TName, Props>) {
+  Fields extends Schema.PropertyRecord = Schema.PropertyRecord
+>(props: MuiProps<TFieldValues, TName, Fields>) {
   return props.render(useControllerMui(props))
 }
 
@@ -249,41 +249,41 @@ function getFormMetadata(
   }
 }
 
-export type SchemaProperties<Props extends PropertyRecord> = Schema.Schema<
+export type SchemaProperties<Fields extends PropertyRecord> = Schema.Schema<
   unknown,
-  StructTo<Props>,
-  StructConstructor<Props>,
-  StructFrom<Props>,
+  StructTo<Fields>,
+  StructConstructor<Fields>,
+  StructFrom<Fields>,
   {
-    props: Props
+    props: Fields
   }
 >
 
-export function createUseParsedFormFromSchema<Props extends PropertyRecord>(
-  self: SchemaProperties<Props>
+export function createUseParsedFormFromSchema<Fields extends PropertyRecord>(
+  self: SchemaProperties<Fields>
 ) {
   return createUseParsedFormUnsafe(self.Api.props)(EParserFor(self))
 }
 
 /**
- * @unsafe - because the `Shape` has no relation to `Props`
+ * @unsafe - because the `Shape` has no relation to `Fields`
  * This is used to adapt forms to tagged unions.
  * It would be better to make first class support for that instead.
  */
 export function createUseCustomParsedFormFromSchemaUnsafe<
-  Props extends PropertyRecord,
+  Fields extends PropertyRecord,
   To
->(input: SchemaProperties<Props>, target: Schema.Schema<unknown, To, any, any, any>) {
+>(input: SchemaProperties<Fields>, target: Schema.Schema<unknown, To, any, any, any>) {
   return createUseParsedFormUnsafe(input.Api.props)(Parser.for(target))
 }
 
 /**
- * @unsafe - because the `Shape` has no relation to `Props`
+ * @unsafe - because the `Shape` has no relation to `Fields`
  * This is used to adapt forms to tagged unions.
  * It would be better to make first class support for that instead.
  */
-export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: Props) {
-  type From = StructFrom<Props>
+export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(props: Fields) {
+  type From = StructFrom<Fields>
   type NEncoded = From // Transform<From>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
@@ -327,10 +327,10 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
   }
 }
 
-export function createUseForm<Props extends PropertyRecord = PropertyRecord>(
-  props: Props
+export function createUseForm<Fields extends PropertyRecord = PropertyRecord>(
+  props: Fields
 ) {
-  type From = StructFrom<Props>
+  type From = StructFrom<Fields>
   type NEncoded = From // Transform<From>
   return function useFormInternal<
     TFieldValues extends NEncoded,
@@ -432,8 +432,8 @@ function getPropOrSchemaFromPath(
 
 function useGetMeta<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
->(props: Props) {
+  Fields extends Schema.PropertyRecord
+>(props: Fields) {
   const intl = useIntl()
   const { getFieldMetadata, getMetadata, getRegisterMeta } = useMemo(() => {
     const getMetadata = <TFieldName extends FieldPath<TFieldValues>>(
@@ -506,9 +506,9 @@ function useGetMeta<
 
 function useRegister<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
->(register_: UseFormRegister<TFieldValues>, props: Props) {
-  const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Props>(props)
+  Fields extends Schema.PropertyRecord
+>(register_: UseFormRegister<TFieldValues>, props: Fields) {
+  const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Fields>(props)
   const register = useCallback(
     <TFieldName extends FieldPath<TFieldValues>>(
       name: TFieldName,

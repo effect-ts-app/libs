@@ -13,27 +13,27 @@ import { isPropertyRecord, tagsFromProps } from "./properties.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
-export interface MatchS<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
+export interface MatchS<Fields extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <
     M extends {
-      [K in keyof Props]?: (
-        x0: S.To<Props[K]>,
-        x1: S.To<Props[K]>
+      [K in keyof Fields]?: (
+        x0: S.To<Fields[K]>,
+        x1: S.To<Fields[K]>
       ) => Result
     },
     Result
   >(
     mat: M,
     def: (
-      x0: { [K in keyof Props]: S.To<Props[K]> }[
+      x0: { [K in keyof Fields]: S.To<Fields[K]> }[
         Exclude<
-          keyof Props,
+          keyof Fields,
           keyof M
         >
       ],
-      x1: { [K in keyof Props]: S.To<Props[K]> }[
+      x1: { [K in keyof Fields]: S.To<Fields[K]> }[
         Exclude<
-          keyof Props,
+          keyof Fields,
           keyof M
         >
       ]
@@ -41,35 +41,35 @@ export interface MatchS<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   ): (ks: AS) => Result
   <Result>(
     mat: {
-      [K in keyof Props]: (
-        _: S.To<Props[K]>,
-        __: S.To<Props[K]>
+      [K in keyof Fields]: (
+        _: S.To<Fields[K]>,
+        __: S.To<Fields[K]>
       ) => Result
     }
   ): (ks: AS) => Result
 }
 
-export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
+export interface MatchW<Fields extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <
     M extends {
-      [K in keyof Props]?: (
-        _: S.To<Props[K]>,
-        __: S.To<Props[K]>
+      [K in keyof Fields]?: (
+        _: S.To<Fields[K]>,
+        __: S.To<Fields[K]>
       ) => any
     },
     Result
   >(
     mat: M,
     def: (
-      x0: { [K in keyof Props]: S.To<Props[K]> }[
+      x0: { [K in keyof Fields]: S.To<Fields[K]> }[
         Exclude<
-          keyof Props,
+          keyof Fields,
           keyof M
         >
       ],
-      x1: { [K in keyof Props]: S.To<Props[K]> }[
+      x1: { [K in keyof Fields]: S.To<Fields[K]> }[
         Exclude<
-          keyof Props,
+          keyof Fields,
           keyof M
         >
       ]
@@ -77,8 +77,8 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   ): (ks: AS) => Unify<
     | {
       [K in keyof M]: M[K] extends (
-        _: S.To<Props[K]>,
-        __: S.To<Props[K]>
+        _: S.To<Fields[K]>,
+        __: S.To<Fields[K]>
       ) => any ? ReturnType<M[K]>
         : never
     }[keyof M]
@@ -86,9 +86,9 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   >
   <
     M extends {
-      [K in keyof Props]: (
-        _: S.To<Props[K]>,
-        __: S.To<Props[K]>
+      [K in keyof Fields]: (
+        _: S.To<Fields[K]>,
+        __: S.To<Fields[K]>
       ) => any
     }
   >(
@@ -100,40 +100,40 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   >
 }
 
-export interface UnionApi<Props extends Record<PropertyKey, S.SchemaUPI>> extends S.ApiSelfType<unknown> {
+export interface UnionApi<Fields extends Record<PropertyKey, S.SchemaUPI>> extends S.ApiSelfType<unknown> {
   readonly matchS: MatchS<
-    Props,
+    Fields,
     S.GetApiSelfType<
       this,
       {
-        [k in keyof Props]: S.To<Props[k]>
-      }[keyof Props]
+        [k in keyof Fields]: S.To<Fields[k]>
+      }[keyof Fields]
     >
   >
   readonly matchW: MatchW<
-    Props,
+    Fields,
     S.GetApiSelfType<
       this,
       {
-        [k in keyof Props]: S.To<Props[k]>
-      }[keyof Props]
+        [k in keyof Fields]: S.To<Fields[k]>
+      }[keyof Fields]
     >
   >
 }
 
 /** tsplus type ets/Schema/SchemaUnion */
-export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = DefaultSchema<
+export type SchemaUnion<Fields extends Record<PropertyKey, S.SchemaUPI>> = DefaultSchema<
   unknown,
   {
-    [k in keyof Props]: S.To<Props[k]>
-  }[keyof Props],
+    [k in keyof Fields]: S.To<Fields[k]>
+  }[keyof Fields],
   {
-    [k in keyof Props]: S.To<Props[k]>
-  }[keyof Props],
+    [k in keyof Fields]: S.To<Fields[k]>
+  }[keyof Fields],
   {
-    [k in keyof Props]: S.From<Props[k]>
-  }[keyof Props],
-  UnionApi<Props>
+    [k in keyof Fields]: S.From<Fields[k]>
+  }[keyof Fields],
+  UnionApi<Fields>
 >
 
 export const unionIdentifier = S.makeAnnotation<{
@@ -146,9 +146,9 @@ export const unionIdentifier = S.makeAnnotation<{
   }>
 }>()
 
-export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
-  props: Props & EnforceNonEmptyRecord<Props>
-): SchemaUnion<Props> {
+export function union<Fields extends Record<PropertyKey, S.SchemaUPI>>(
+  props: Fields & EnforceNonEmptyRecord<Fields>
+): SchemaUnion<Fields> {
   const parsers = D.map_(props, Parser.for)
   const guards = D.map_(props, Guard.for)
   const encoders = D.map_(props, Encoder.for)
@@ -200,8 +200,8 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   })
 
   function guard(u: unknown): u is {
-    [k in keyof Props]: S.To<Props[k]>
-  }[keyof Props] {
+    [k in keyof Fields]: S.To<Fields[k]>
+  }[keyof Fields] {
     if (tag.isSome()) {
       if (
         typeof u !== "object"
@@ -225,11 +225,11 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   function encoder(
     u: {
-      [k in keyof Props]: S.To<Props[k]>
-    }[keyof Props]
+      [k in keyof Fields]: S.To<Fields[k]>
+    }[keyof Fields]
   ): {
-    [k in keyof Props]: S.From<Props[k]>
-  }[keyof Props] {
+    [k in keyof Fields]: S.From<Fields[k]>
+  }[keyof Fields] {
     if (tag.isSome()) {
       return encoders[tag.value.index[u[tag.value.key]]](u)
     }
@@ -250,14 +250,14 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       | S.NextE<
         S.UnionE<
           {
-            [k in keyof Props]: S.MemberE<k, S.ParserErrorOf<Props[k]>>
-          }[keyof Props]
+            [k in keyof Fields]: S.MemberE<k, S.ParserErrorOf<Fields[k]>>
+          }[keyof Fields]
         >
       >
     >,
     {
-      [k in keyof Props]: S.To<Props[k]>
-    }[keyof Props]
+      [k in keyof Fields]: S.To<Fields[k]>
+    }[keyof Fields]
   > {
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
@@ -338,7 +338,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
           }
           throw new Error(`bug: can't find any valid matcher`)
         }
-      } as UnionApi<Props>)
+      } as UnionApi<Fields>)
     ),
     withDefaults,
     S.annotate(unionIdentifier, { props, tag })

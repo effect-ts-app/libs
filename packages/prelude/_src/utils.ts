@@ -110,17 +110,17 @@ export function debugUnsafe<A>(a: AnyOps<A>, name: string) {
 
 export function spread<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Props extends Record<any, any>,
+  Fields extends Record<any, any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   NewProps
->(props: Props, fnc: (props: Props) => NewProps) {
+>(props: Fields, fnc: (props: Fields) => NewProps) {
   return fnc(props)
 }
 
 export function spreadS<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Props extends Record<any, any>
->(props: Props, fnc: (props: Props) => Props) {
+  Fields extends Record<any, any>
+>(props: Fields, fnc: (props: Fields) => Fields) {
   return fnc(props)
 }
 

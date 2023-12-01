@@ -16,7 +16,7 @@
         "prefix": "moc",
         "body": [
             "@useClassFeaturesForSchema",
-            "export class $1 extends ModelFrom<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.From, $1.Props> ()({",
+            "export class $1 extends ModelFrom<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.From, $1.Fields> ()({",
             "$2",
             "}) {}"
         ],

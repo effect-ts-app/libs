@@ -73,7 +73,7 @@ export interface Model2<
   >
 {}
 
-type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Props> ? Props
+type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Fields> ? Fields
   : never
 
 export interface MNModel<
@@ -81,15 +81,15 @@ export interface MNModel<
   To = MO.To<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
   From = MO.From<Self>,
-  Props = GetApiProps<Self>
+  Fields = GetApiProps<Self>
 > extends
   MM<
     Self,
-    MO.Schema<unknown, To, ConstructorInput, From, { props: Props }>,
+    MO.Schema<unknown, To, ConstructorInput, From, { props: Fields }>,
     To,
     ConstructorInput,
     From,
-    Props,
+    Fields,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.To<Self>>
   >
@@ -101,9 +101,9 @@ export interface MM<
   To,
   ConstructorInput,
   From,
-  Props,
+  Fields,
   ParsedShape2
-> extends MO.Schema<unknown, To, ConstructorInput, From, { props: Props }> {
+> extends MO.Schema<unknown, To, ConstructorInput, From, { props: Fields }> {
   new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
   readonly to: MO.To<Self>
@@ -133,7 +133,7 @@ export function ModelFrom<To, From>(__name?: string) {
 }
 
 /** fully opaque model on all type params */
-export function MNModel<To, ConstructorInput, From, Props>(
+export function MNModel<To, ConstructorInput, From, Fields>(
   __name?: string
 ) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
@@ -144,25 +144,25 @@ export function MNModel<To, ConstructorInput, From, Props>(
         To,
         ConstructorInput,
         From,
-        Props
+        Fields
       >
-      & PropsExtensions<Props>
+      & PropsExtensions<Fields>
   }
 }
 
 export function fromModel<To>(__name?: string) {
-  return <Props extends FromPropertyRecord = {}>(props: Props) => ModelSpecial<To>(__name)(fromProps(props))
+  return <Fields extends FromPropertyRecord = {}>(props: Fields) => ModelSpecial<To>(__name)(fromProps(props))
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
   [K in keyof To<Self>]-?: Lens.Lens<T, To<Self>[K]>
 }
 
-export type PropsToLenses<T, Props extends MO.PropertyRecord> = {
-  [K in keyof Props]: Lens.Lens<T, MO.To<Props[K]["_schema"]>>
+export type PropsToLenses<T, Fields extends MO.PropertyRecord> = {
+  [K in keyof Fields]: Lens.Lens<T, MO.To<Fields[K]["_schema"]>>
 }
 export function lensFromProps<T>() {
-  return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {
+  return <Fields extends MO.PropertyRecord>(props: Fields): PropsToLenses<T, Fields> => {
     const id = Lens.id<T>()
     return Object.keys(props).reduce((prev, cur) => {
       prev[cur] = id.at(cur as any)
@@ -272,16 +272,16 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
-export type GetModelProps<Self> = Self extends { Api: { props: infer Props } } ? Props extends PropertyRecord ? Props
+export type GetModelProps<Self> = Self extends { Api: { props: infer Fields } } ? Fields extends PropertyRecord ? Fields
   : never
   : never
 
-export interface PropsExtensions<Props> {
+export interface PropsExtensions<Fields> {
   include: <NewProps extends Record<string, AnyProperty>>(
-    fnc: (props: Props) => NewProps
+    fnc: (props: Fields) => NewProps
   ) => NewProps
-  pick: <P extends keyof Props>(...keys: readonly P[]) => Pick<Props, P>
-  omit: <P extends keyof Props>(...keys: readonly P[]) => Omit<Props, P>
+  pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
+  omit: <P extends keyof Fields>(...keys: readonly P[]) => Omit<Fields, P>
 }
 
 // We don't want Copy interface from the official implementation

@@ -98,7 +98,7 @@ function processNode(tc, root, writeFullTypes = false) {
                     // `  export interface EncodedAspects {}`,
                     "  export interface ConstructorInput",
                     `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-                    `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+                    `  export interface Fields extends GetProvidedProps<typeof ${modelName}> {}`,
                     "}",
                 ];
             }
@@ -272,7 +272,7 @@ function processNode(tc, root, writeFullTypes = false) {
                 `  export interface EncodedOps {}`,
                 "  export interface ConstructorInput",
                 `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-                `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+                `  export interface Fields extends GetProvidedProps<typeof ${modelName}> {}`,
                 "}",
             ];
         }

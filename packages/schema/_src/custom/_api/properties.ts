@@ -247,146 +247,147 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   )
 }
 
-export type StructTo<Props extends PropertyRecord> = Compute<
+export type StructTo<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
-            readonly [h in k]?: S.To<Props[k]["_schema"]>
+      [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
+            readonly [h in k]?: S.To<Fields[k]["_schema"]>
           }
         : {
-          readonly [h in k]: S.To<Props[k]["_schema"]>
+          readonly [h in k]: S.To<Fields[k]["_schema"]>
         }
         : never
-    }[keyof Props]
+    }[keyof Fields]
   >,
   "flat"
 >
 
-export type StructConstructor<Props extends PropertyRecord> = Compute<
+export type StructConstructor<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: k extends TagsFromProps<Props> ? never
-        : Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.To<Props[k]["_schema"]>
+      [k in keyof Fields]: k extends TagsFromProps<Fields> ? never
+        : Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
+              readonly [h in k]?: S.To<Fields[k]["_schema"]>
             }
-          : Props[k]["_def"] extends Some<["constructor" | "both", any]> ? {
-              readonly [h in k]?: S.To<Props[k]["_schema"]>
+          : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
+              readonly [h in k]?: S.To<Fields[k]["_schema"]>
             }
           : {
-            readonly [h in k]: S.To<Props[k]["_schema"]>
+            readonly [h in k]: S.To<Fields[k]["_schema"]>
           }
         : never
-    }[keyof Props]
+    }[keyof Fields]
   >,
   "flat"
 >
 
-export type StructFrom<Props extends PropertyRecord> = Compute<
+export type StructFrom<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
-              h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Props[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]>
           }
         : {
           readonly [
-            h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: S.From<Props[k]["_schema"]>
+          ]: S.From<Fields[k]["_schema"]>
         }
         : never
-    }[keyof Props]
+    }[keyof Fields]
   >,
   "flat"
 >
 
-export type HasRequiredProperty<Props extends PropertyRecord> = unknown extends {
-  [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "required" ? unknown
+export type HasRequiredProperty<Fields extends PropertyRecord> = unknown extends {
+  [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "required" ? unknown
     : never
     : never
-}[keyof Props] ? true
+}[keyof Fields] ? true
   : false
 
-export type ParserErrorFromProperties<Props extends PropertyRecord> = S.CompositionE<
+export type ParserErrorFromProperties<Fields extends PropertyRecord> = S.CompositionE<
   | S.PrevE<S.LeafE<S.UnknownRecordE>>
   | S.NextE<
-    HasRequiredProperty<Props> extends true ? S.CompositionE<
+    HasRequiredProperty<Fields> extends true ? S.CompositionE<
         | S.PrevE<
           S.MissingKeysE<
             {
-              [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? never
-                : Props[k]["_def"] extends Some<["parser" | "both", any]> ? never
-                : Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+              [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? never
+                : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? never
+                : Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
                 : never
-            }[keyof Props]
+            }[keyof Fields]
           >
         >
         | S.NextE<
           S.StructE<
             {
-              [k in keyof Props]: Props[k] extends AnyProperty
-                ? Props[k]["_optional"] extends "optional" ? S.OptionalKeyE<
-                    Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+              [k in keyof Fields]: Fields[k] extends AnyProperty
+                ? Fields[k]["_optional"] extends "optional" ? S.OptionalKeyE<
+                    Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                       : k,
-                    S.ParserErrorOf<Props[k]["_schema"]>
+                    S.ParserErrorOf<Fields[k]["_schema"]>
                   >
-                : Props[k]["_def"] extends Some<["parser" | "both", any]> ? S.OptionalKeyE<
-                    Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+                : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? S.OptionalKeyE<
+                    Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                       : k,
-                    S.ParserErrorOf<Props[k]["_schema"]>
+                    S.ParserErrorOf<Fields[k]["_schema"]>
                   >
                 : S.RequiredKeyE<
-                  Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+                  Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                     : k,
-                  S.ParserErrorOf<Props[k]["_schema"]>
+                  S.ParserErrorOf<Fields[k]["_schema"]>
                 >
                 : never
-            }[keyof Props]
+            }[keyof Fields]
           >
         >
       >
       : S.StructE<
         {
-          [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? S.OptionalKeyE<
-                Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"] : k,
-                S.ParserErrorOf<Props[k]["_schema"]>
+          [k in keyof Fields]: Fields[k] extends AnyProperty
+            ? Fields[k]["_optional"] extends "optional" ? S.OptionalKeyE<
+                Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"] : k,
+                S.ParserErrorOf<Fields[k]["_schema"]>
               >
-            : Props[k]["_def"] extends Some<["parser" | "both", any]> ? S.OptionalKeyE<
-                Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"] : k,
-                S.ParserErrorOf<Props[k]["_schema"]>
+            : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? S.OptionalKeyE<
+                Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"] : k,
+                S.ParserErrorOf<Fields[k]["_schema"]>
               >
             : S.RequiredKeyE<
-              Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"] : k,
-              S.ParserErrorOf<Props[k]["_schema"]>
+              Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"] : k,
+              S.ParserErrorOf<Fields[k]["_schema"]>
             >
             : never
-        }[keyof Props]
+        }[keyof Fields]
       >
   >
 >
 
 export const propertiesIdentifier = S.makeAnnotation<{ props: PropertyRecord }>()
 
-export type SchemaProperties<Props extends PropertyRecord> = DefaultSchema<
+export type SchemaProperties<Fields extends PropertyRecord> = DefaultSchema<
   unknown,
-  StructTo<Props>,
-  StructConstructor<Props>,
-  StructFrom<Props>,
-  { props: Props }
+  StructTo<Fields>,
+  StructConstructor<Fields>,
+  StructFrom<Fields>,
+  { props: Fields }
 >
 
-export type TagsFromProps<Props extends PropertyRecord> = {
-  [k in keyof Props]: Props[k]["_as"] extends None<any>
-    ? Props[k]["_optional"] extends "required"
-      ? S.ApiOf<Props[k]["_schema"]> extends LiteralApi<infer KS> ? KS extends [string] ? k
+export type TagsFromProps<Fields extends PropertyRecord> = {
+  [k in keyof Fields]: Fields[k]["_as"] extends None<any>
+    ? Fields[k]["_optional"] extends "required"
+      ? S.ApiOf<Fields[k]["_schema"]> extends LiteralApi<infer KS> ? KS extends [string] ? k
         : never
       : never
     : never
     : never
-}[keyof Props]
+}[keyof Fields]
 
 export function isPropertyRecord(u: unknown): u is PropertyRecord {
   return (
@@ -396,8 +397,8 @@ export function isPropertyRecord(u: unknown): u is PropertyRecord {
   )
 }
 
-export function tagsFromProps<Props extends PropertyRecord>(
-  props: Props
+export function tagsFromProps<Fields extends PropertyRecord>(
+  props: Fields
 ): Record<string, string> {
   const keys = Object.keys(props)
   const tags = {}
@@ -425,7 +426,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
 export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   _props: ProvidedProps
 ): SchemaProperties<ToProps<ProvidedProps>> {
-  type Props = ToProps<ProvidedProps>
+  type Fields = ToProps<ProvidedProps>
   const props = toProps(_props)
   const parsers = {} as Record<string, Parser.Parser<unknown, unknown, unknown>>
   const encoders = {}
@@ -461,7 +462,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
   const hasRequired = required.length > 0
 
-  function guard(_: unknown): _ is StructTo<Props> {
+  function guard(_: unknown): _ is StructTo<Fields> {
     if (typeof _ !== "object" || _ === null) {
       return false
     }
@@ -487,7 +488,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   function parser(
     _: unknown,
     env?: ParserEnv
-  ): Th.These<ParserErrorFromProperties<Props>, StructTo<Props>> {
+  ): Th.These<ParserErrorFromProperties<Fields>, StructTo<Fields>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -584,7 +585,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     }
 
     if (errors.isEmpty()) {
-      return Th.succeed(result as StructTo<Props>)
+      return Th.succeed(result as StructTo<Fields>)
     }
 
     const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
@@ -599,7 +600,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return Th.warn(result, error)
   }
 
-  function encoder(_: StructTo<Props>): StructFrom<Props> {
+  function encoder(_: StructTo<Fields>): StructFrom<Fields> {
     const enc = {}
 
     for (const key of keys) {
@@ -613,7 +614,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return enc
   }
 
-  function arb(_: typeof fc): fc.Arbitrary<StructTo<Props>> {
+  function arb(_: typeof fc): fc.Arbitrary<StructTo<Fields>> {
     const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
     const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
@@ -629,7 +630,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     S.encoder(encoder),
     S.arbitrary(arb),
     S.constructor((_) => {
-      const res = {} as StructTo<Props>
+      const res = {} as StructTo<Fields>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
         if (!(k in res) || res[k] === undefined) {
@@ -646,16 +647,16 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   )
 }
 
-export function pickProps<Props extends PropertyRecord, KS extends (keyof Props)[]>(
+export function pickProps<Fields extends PropertyRecord, KS extends (keyof Fields)[]>(
   ...ks: KS
 ) {
   return (
-    self: Props
+    self: Fields
   ): Compute<
     UnionToIntersection<
       {
-        [k in keyof Props]: k extends KS[number] ? { [h in k]: Props[h] } : never
-      }[keyof Props]
+        [k in keyof Fields]: k extends KS[number] ? { [h in k]: Fields[h] } : never
+      }[keyof Fields]
     >,
     "flat"
   > => {
@@ -670,16 +671,16 @@ export function pickProps<Props extends PropertyRecord, KS extends (keyof Props)
   }
 }
 
-export function omitProps<Props extends PropertyRecord, KS extends (keyof Props)[]>(
+export function omitProps<Fields extends PropertyRecord, KS extends (keyof Fields)[]>(
   ...ks: KS
 ) {
   return (
-    self: Props
+    self: Fields
   ): Compute<
     UnionToIntersection<
       {
-        [k in keyof Props]: k extends KS[number] ? never : { [h in k]: Props[h] }
-      }[keyof Props]
+        [k in keyof Fields]: k extends KS[number] ? never : { [h in k]: Fields[h] }
+      }[keyof Fields]
     >,
     "flat"
   > => {
@@ -694,29 +695,29 @@ export function omitProps<Props extends PropertyRecord, KS extends (keyof Props)
   }
 }
 
-export type ParserInputFromProperties<Props extends PropertyRecord> = Compute<
+export type ParserInputFromProperties<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
-              h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Props[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]>
           }
-        : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
+        : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
-              h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Props[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]>
           }
         : {
           readonly [
-            h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
+            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: S.From<Props[k]["_schema"]>
+          ]: S.From<Fields[k]["_schema"]>
         }
         : never
-    }[keyof Props]
+    }[keyof Fields]
   >,
   "flat"
 >

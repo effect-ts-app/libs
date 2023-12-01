@@ -25,8 +25,8 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromProps<Props extends PropertyRecord>(
-  props: Props
+export function buildFieldInfoFromProps<Fields extends PropertyRecord>(
+  props: Fields
 ) {
   return props.$$.keys.reduce(
     (prev, cur) => {
@@ -34,9 +34,9 @@ export function buildFieldInfoFromProps<Props extends PropertyRecord>(
       return prev
     },
     {} as {
-      [K in keyof Props]: FieldInfo<
-        From<GetSchemaFromProp<Props[K]>>,
-        To<GetSchemaFromProp<Props[K]>>
+      [K in keyof Fields]: FieldInfo<
+        From<GetSchemaFromProp<Fields[K]>>,
+        To<GetSchemaFromProp<Fields[K]>>
       >
     }
   )
@@ -194,7 +194,7 @@ export const buildFormFromSchema = <
   To,
   From,
   ConstructorInput,
-  Props extends PropertyRecord,
+  Fields extends PropertyRecord,
   OnSubmitA
 >(
   s: Schema.Schema<
@@ -202,7 +202,7 @@ export const buildFormFromSchema = <
     To,
     ConstructorInput,
     From,
-    { props: Props }
+    { props: Fields }
   >,
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>

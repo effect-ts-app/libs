@@ -5,7 +5,7 @@ export class RequestContextParent extends MNModel<
   RequestContextParent,
   RequestContextParent.ConstructorInput,
   RequestContextParent.From,
-  RequestContextParent.Props
+  RequestContextParent.Fields
 >()({
   _tag: literal("RequestContext"),
   id: RequestId,
@@ -24,7 +24,7 @@ export class RequestContext extends MNModel<
   RequestContext,
   RequestContext.ConstructorInput,
   RequestContext.From,
-  RequestContext.Props
+  RequestContext.Fields
 >()({
   ...RequestContextParent.omit("id"),
   id: RequestId.withDefault,
@@ -67,7 +67,7 @@ export namespace RequestContextParent {
   export class From extends FromClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContextParent> {}
-  export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
+  export interface Fields extends GetProvidedProps<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
@@ -77,7 +77,7 @@ export namespace RequestContext {
   export class From extends FromClass<typeof RequestContext>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContext> {}
-  export interface Props extends GetProvidedProps<typeof RequestContext> {}
+  export interface Fields extends GetProvidedProps<typeof RequestContext> {}
 }
 /* eslint-enable */
 //

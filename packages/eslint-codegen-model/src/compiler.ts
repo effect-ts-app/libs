@@ -69,7 +69,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           // `  export interface EncodedAspects {}`,
           "  export interface ConstructorInput",
           `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-          `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+          `  export interface Fields extends GetProvidedProps<typeof ${modelName}> {}`,
           "}",
         ]
       }
@@ -264,7 +264,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
         `  export interface EncodedOps {}`,
         "  export interface ConstructorInput",
         `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-        `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+        `  export interface Fields extends GetProvidedProps<typeof ${modelName}> {}`,
         "}",
       ]
     }
