@@ -104,7 +104,7 @@ type OrAny<T> = T extends MO.SchemaAny ? T : MO.SchemaAny
 // type OrUndefined<T> = T extends MO.SchemaAny ? undefined : MO.SchemaAny
 
 // TODO: Somehow ensure that Self and M are related..
-// type Ensure<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? M : never
+// type Ensure<M, Self extends MO.SchemaAny> = M extends MO.To<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StringRecordSchema>(
     method: ReadMethods,

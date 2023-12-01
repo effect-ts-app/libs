@@ -31,7 +31,7 @@ import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { curriedMagix } from "../Function.js"
-import type { ParsedShapeOfCustom, ReasonableStringBrand, UnionBrand } from "./_schema.js"
+import type { To, ReasonableStringBrand, UnionBrand } from "./_schema.js"
 import {
   Arbitrary,
   arbitrary,
@@ -370,6 +370,6 @@ const Email__ = Object.assign(
 type EmailSchema__ = typeof Email__
 export interface EmailSchema extends EmailSchema__ {}
 export const Email: EmailSchema = Email__
-export type Email = ParsedShapeOfCustom<typeof Email_> & {
+export type Email = To<typeof Email_> & {
   split: (separator: "@") => [ReasonableString, ReasonableString]
 }

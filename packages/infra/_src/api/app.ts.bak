@@ -18,7 +18,7 @@ export function handle<
       MO.GetRequest<TModule> extends { new(...args: any[]): any } ? MO.GetRequest<TModule>
         : never
     >
-  ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
+  ) => Effect<R, E, MO.To<Extr<MO.GetResponse<TModule>>>>
 ) => {
   h: typeof h
   Request: MO.GetRequest<TModule>
@@ -35,7 +35,7 @@ export function handle<
         MO.GetRequest<TModule> extends { new(...args: any[]): any } ? MO.GetRequest<TModule>
           : never
       >
-    ) => Effect<R, E, MO.ParsedShapeOf<Extr<MO.GetResponse<TModule>>>>
+    ) => Effect<R, E, MO.To<Extr<MO.GetResponse<TModule>>>>
   ) => ({
     adaptResponse,
     h,

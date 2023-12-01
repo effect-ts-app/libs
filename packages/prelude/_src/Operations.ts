@@ -27,7 +27,7 @@ export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.
 }) {}
 
 export const OperationResult = union({ Success, Failure })
-export type OperationResult = ParsedShapeOfCustom<typeof OperationResult>
+export type OperationResult = To<typeof OperationResult>
 
 @useClassFeaturesForSchema
 export class Operation extends MNModel<Operation, Operation.ConstructorInput, Operation.Encoded, Operation.Props>()({

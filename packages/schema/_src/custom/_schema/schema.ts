@@ -122,15 +122,19 @@ export type ConstructorErrorOf<X extends Schema<any, any, any, any, any>> = [
     */
   : never
 
-export type EncodedOf<X extends Schema<any, any, any, any, any>> = [X] extends [
+export type From<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, infer Y, any>
 ] ? Y
   : never
 
-export type ParsedShapeOf<X extends Schema<any, any, any, any, any>> = [X] extends [
-  Schema<any, infer Y, any, any, any>
-] ? Y
-  : never
+// export type To<X extends Schema<any, any, any, any, any>> = [X] extends [
+//   Schema<any, infer Y, any, any, any>
+// ] ? Y
+//   : never
+
+export type To<X extends Schema<any, any, any, any, any>> = ReturnType<
+  X["_ParsedShape"]
+>
 
 export type ApiOf<X extends Schema<any, any, any, any, any>> = [X] extends [
   Schema<any, any, any, any, infer Y>

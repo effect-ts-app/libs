@@ -42,11 +42,11 @@ export type Adapted<
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
                   readonly [h in k]?:
-                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | MO.To<AdaptSchema<Props, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
-                readonly [h in k]: MO.ParsedShapeOf<
+                readonly [h in k]: MO.To<
                   AdaptSchema<Props, Key>[k]["_schema"]
                 >
               }
@@ -62,11 +62,11 @@ export type Adapted<
               Key
             >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
                   readonly [h in k]?:
-                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | MO.To<AdaptSchema<Props, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
-                readonly [h in k]: MO.ParsedShapeOf<
+                readonly [h in k]: MO.To<
                   AdaptSchema<Props, Key>[k]["_schema"]
                 >
               }
@@ -86,14 +86,14 @@ export type Adapted<
                       ? AdaptSchema<Props, Key>[k]["_as"]["value"]
                       : k
                   ]?:
-                    | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | MO.From<AdaptSchema<Props, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
                 readonly [
                   h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ? AdaptSchema<Props, Key>[k]["_as"]["value"]
                     : k
-                ]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                ]: MO.From<AdaptSchema<Props, Key>[k]["_schema"]>
               }
               : never
           }[Key]

@@ -13,4 +13,4 @@ export const Void = pipe(
   withDefaults
 )
 
-export type Void = MO.ParsedShapeOf<typeof Void>
+export type Void = MO.To<typeof Void>

@@ -14,7 +14,7 @@ export type schemaField = typeof schemaField
 
 export interface SchemedOut<Self extends S.SchemaAny> {
   [schemaField]: Self
-  new(_: any): S.ParsedShapeOf<Self>
+  new(_: any): S.To<Self>
 }
 
 export const schemedBrand = Symbol()
@@ -51,7 +51,7 @@ export interface Copy {
 
 export interface Schemed<Self extends S.SchemaAny> {
   [schemaField]: Self
-  new(_: S.ConstructorInputOf<Self>): S.ParsedShapeOf<Self> & Copy
+  new(_: S.ConstructorInputOf<Self>): S.To<Self> & Copy
 }
 
 type ShapeFromClass<

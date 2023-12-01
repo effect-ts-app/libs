@@ -26,7 +26,7 @@ export class Property<
   Self extends S.SchemaUPI,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 > {
   constructor(
     readonly _as: As,
@@ -71,25 +71,25 @@ export class Property<
 
   // def(
   //   _: Optional extends "required"
-  //     ? () => S.ParsedShapeOf<Self>
+  //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never]
-  // ): Property<Self, Optional, As, Some<["both", () => S.ParsedShapeOf<Self>]>>
+  // ): Property<Self, Optional, As, Some<["both", () => S.To<Self>]>>
   // def<K extends "parser" | "constructor" | "both">(
   //   _: Optional extends "required"
-  //     ? () => S.ParsedShapeOf<Self>
+  //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never],
   //   k: K
-  // ): Property<Self, Optional, As, Some<[K, () => S.ParsedShapeOf<Self>]>>
+  // ): Property<Self, Optional, As, Some<[K, () => S.To<Self>]>>
   // def(
   //   _: Optional extends "required"
-  //     ? () => S.ParsedShapeOf<Self>
+  //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never],
   //   k?: "parser" | "constructor" | "both"
   // ): Property<
   //   Self,
   //   Optional,
   //   As,
-  //   Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  //   Some<["parser" | "constructor" | "both", () => S.To<Self>]>
   // > {
   //   // @ts-expect-error
   //   return new Property(
@@ -126,39 +126,39 @@ export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
-  _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
+  _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never]
-): Property<Self, Optional, As, Some<["both", () => S.ParsedShapeOf<Self>]>>
+): Property<Self, Optional, As, Some<["both", () => S.To<Self>]>>
 export function propDef<
   K extends "parser" | "constructor" | "both",
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
-  _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
+  _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never],
   k: K
-): Property<Self, Optional, As, Some<[K, () => S.ParsedShapeOf<Self>]>>
+): Property<Self, Optional, As, Some<[K, () => S.To<Self>]>>
 export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
   prop: Property<Self, Optional, As, Def>,
-  _: Optional extends "required" ? () => S.ParsedShapeOf<Self>
+  _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never],
   k?: "parser" | "constructor" | "both"
 ): Property<
   Self,
   Optional,
   As,
-  Some<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Some<["parser" | "constructor" | "both", () => S.To<Self>]>
 > {
   // @ts-expect-error
   return new Property(
@@ -176,7 +176,7 @@ export function propOpt<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(prop: Property<Self, Optional, As, Def>): Property<Self, "optional", As, Def> {
   return new Property(prop._as, prop._schema, "optional", prop._def, prop._map)
 }
@@ -186,7 +186,7 @@ export function propReq<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(prop: Property<Self, Optional, As, Def>): Property<Self, "required", As, Def> {
   return new Property(prop._as, prop._schema, "required", prop._def, prop._map)
 }
@@ -196,7 +196,7 @@ export function propFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => S.ParsedShapeOf<Self>]>,
+  Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>,
   As1 extends PropertyKey
 >(
   prop: Property<Self, Optional, As, Def>,
@@ -251,10 +251,10 @@ export type ShapeFromProperties<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
-            readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+            readonly [h in k]?: S.To<Props[k]["_schema"]>
           }
         : {
-          readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
+          readonly [h in k]: S.To<Props[k]["_schema"]>
         }
         : never
     }[keyof Props]
@@ -267,13 +267,13 @@ export type ConstructorFromProperties<Props extends PropertyRecord> = Compute<
     {
       [k in keyof Props]: k extends TagsFromProps<Props> ? never
         : Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+              readonly [h in k]?: S.To<Props[k]["_schema"]>
             }
           : Props[k]["_def"] extends Some<["constructor" | "both", any]> ? {
-              readonly [h in k]?: S.ParsedShapeOf<Props[k]["_schema"]>
+              readonly [h in k]?: S.To<Props[k]["_schema"]>
             }
           : {
-            readonly [h in k]: S.ParsedShapeOf<Props[k]["_schema"]>
+            readonly [h in k]: S.To<Props[k]["_schema"]>
           }
         : never
     }[keyof Props]
@@ -288,13 +288,13 @@ export type EncodedFromProperties<Props extends PropertyRecord> = Compute<
             readonly [
               h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
                 : k
-            ]?: S.EncodedOf<Props[k]["_schema"]>
+            ]?: S.From<Props[k]["_schema"]>
           }
         : {
           readonly [
             h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
               : k
-          ]: S.EncodedOf<Props[k]["_schema"]>
+          ]: S.From<Props[k]["_schema"]>
         }
         : never
     }[keyof Props]
@@ -404,7 +404,7 @@ export function tagsFromProps<Props extends PropertyRecord>(
   for (const key of keys) {
     const s: S.SchemaUPI = props[key]._schema
     const def = props[key]._def as Option<
-      ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+      ["parser" | "constructor" | "both", () => S.To<any>]
     >
     const as = props[key]._as as Option<PropertyKey>
     if (
@@ -443,7 +443,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
     if (props[key]._optional === "required") {
       const def = props[key]._def as Option<
-        ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+        ["parser" | "constructor" | "both", () => S.To<any>]
       >
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
         const as = props[key]._as as Option<string>
@@ -526,7 +526,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
       const _as: string = as.getOrElse(() => key)
 
       const def = prop._def as Option<
-        ["parser" | "constructor" | "both", () => S.ParsedShapeOf<any>]
+        ["parser" | "constructor" | "both", () => S.To<any>]
       >
       // TODO: support actual optionallity vs explicit `| undefined`
       if (_as in _) {
@@ -701,19 +701,19 @@ export type ParserInputFromProperties<Props extends PropertyRecord> = Compute<
             readonly [
               h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
                 : k
-            ]?: S.EncodedOf<Props[k]["_schema"]>
+            ]?: S.From<Props[k]["_schema"]>
           }
         : Props[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
               h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
                 : k
-            ]?: S.EncodedOf<Props[k]["_schema"]>
+            ]?: S.From<Props[k]["_schema"]>
           }
         : {
           readonly [
             h in Props[k]["_as"] extends Some<any> ? Props[k]["_as"]["value"]
               : k
-          ]: S.EncodedOf<Props[k]["_schema"]>
+          ]: S.From<Props[k]["_schema"]>
         }
         : never
     }[keyof Props]
@@ -725,26 +725,26 @@ type Optionality = "parser" | "constructor" | "both"
 
 export function defProp<Self extends S.SchemaUPI>(
   schema: Self,
-  makeDefault: () => S.ParsedShapeOf<Self>,
+  makeDefault: () => S.To<Self>,
   optionality: "parser"
-): Property<Self, "required", None<any>, Some<["parser", () => S.ParsedShapeOf<Self>]>>
+): Property<Self, "required", None<any>, Some<["parser", () => S.To<Self>]>>
 export function defProp<Self extends S.SchemaUPI>(
   schema: Self,
-  makeDefault: () => S.ParsedShapeOf<Self>,
+  makeDefault: () => S.To<Self>,
   optionality: "both"
-): Property<Self, "required", None<any>, Some<["both", () => S.ParsedShapeOf<Self>]>>
+): Property<Self, "required", None<any>, Some<["both", () => S.To<Self>]>>
 export function defProp<Self extends S.SchemaUPI>(
   schema: Self,
-  makeDefault: () => S.ParsedShapeOf<Self>
+  makeDefault: () => S.To<Self>
 ): Property<
   Self,
   "required",
   None<any>,
-  Some<["constructor", () => S.ParsedShapeOf<Self>]>
+  Some<["constructor", () => S.To<Self>]>
 >
 export function defProp<Self extends S.SchemaUPI>(
   schema: Self,
-  makeDefault: () => S.ParsedShapeOf<Self>,
+  makeDefault: () => S.To<Self>,
   optionality: Optionality = "constructor"
 ) {
   return propDef(prop(schema), makeDefault, optionality)

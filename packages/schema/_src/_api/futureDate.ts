@@ -48,4 +48,4 @@ export const FutureDateFromStringOrDate = fromStringOrDate.pipe(
 )
 
 export const FutureDate = extendWithUtils(MO.date[">>>"](FutureDateFromDate))
-export type FutureDate = MO.ParsedShapeOf<typeof FutureDate>
+export type FutureDate = MO.To<typeof FutureDate>

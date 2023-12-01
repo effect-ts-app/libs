@@ -1,4 +1,4 @@
-import type { ParsedShapeOfCustom, ReqRes, SchemaAny } from "@effect-app/prelude/schema"
+import type { To, ReqRes, SchemaAny } from "@effect-app/prelude/schema"
 import { EParserFor, Parser, unsafe } from "@effect-app/prelude/schema"
 import type { ParsedQuery } from "query-string"
 
@@ -36,7 +36,7 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: Option<ParsedShapeOfCustom<NER[K]>>
+  [K in keyof NER]: Option<To<NER[K]>>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -46,7 +46,7 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: Option<ParsedShapeOfCustom<NER[K]>>
+      [K in keyof NER]: Option<To<NER[K]>>
     }
   )
 }
@@ -55,7 +55,7 @@ export function parseRouteParams<NER extends Record<string, SchemaAny>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: ParsedShapeOfCustom<NER[K]>
+  [K in keyof NER]: To<NER[K]>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -65,7 +65,7 @@ export function parseRouteParams<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: ParsedShapeOfCustom<NER[K]>
+      [K in keyof NER]: To<NER[K]>
     }
   )
 }

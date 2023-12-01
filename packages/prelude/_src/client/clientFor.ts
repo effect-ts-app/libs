@@ -174,13 +174,13 @@ function clientFor_<M extends Requests>(models: M) {
   )
 }
 
-export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? ParsedShapeOfCustom<T["Model"]>
-  : T extends Schema.SchemaAny ? ParsedShapeOfCustom<T>
+export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? To<T["Model"]>
+  : T extends Schema.SchemaAny ? To<T>
   : T extends unknown ? Schema.Void
   : never
 
-export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? EncodedOf<T["Model"]>
-  : T extends Schema.SchemaAny ? EncodedOf<T>
+export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? From<T["Model"]>
+  : T extends Schema.SchemaAny ? From<T>
   : T extends unknown ? Schema.Void
   : never
 
@@ -203,12 +203,12 @@ type RequestHandlers<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
+        req: To<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
       }
 }
 
@@ -231,11 +231,11 @@ type RequestHandlersE<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
+        req: To<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
       }
 }

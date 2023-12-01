@@ -17,21 +17,21 @@ export interface MatchS<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <
     M extends {
       [K in keyof Props]?: (
-        x0: S.ParsedShapeOf<Props[K]>,
-        x1: S.ParsedShapeOf<Props[K]>
+        x0: S.To<Props[K]>,
+        x1: S.To<Props[K]>
       ) => Result
     },
     Result
   >(
     mat: M,
     def: (
-      x0: { [K in keyof Props]: S.ParsedShapeOf<Props[K]> }[
+      x0: { [K in keyof Props]: S.To<Props[K]> }[
         Exclude<
           keyof Props,
           keyof M
         >
       ],
-      x1: { [K in keyof Props]: S.ParsedShapeOf<Props[K]> }[
+      x1: { [K in keyof Props]: S.To<Props[K]> }[
         Exclude<
           keyof Props,
           keyof M
@@ -42,8 +42,8 @@ export interface MatchS<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <Result>(
     mat: {
       [K in keyof Props]: (
-        _: S.ParsedShapeOf<Props[K]>,
-        __: S.ParsedShapeOf<Props[K]>
+        _: S.To<Props[K]>,
+        __: S.To<Props[K]>
       ) => Result
     }
   ): (ks: AS) => Result
@@ -53,21 +53,21 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <
     M extends {
       [K in keyof Props]?: (
-        _: S.ParsedShapeOf<Props[K]>,
-        __: S.ParsedShapeOf<Props[K]>
+        _: S.To<Props[K]>,
+        __: S.To<Props[K]>
       ) => any
     },
     Result
   >(
     mat: M,
     def: (
-      x0: { [K in keyof Props]: S.ParsedShapeOf<Props[K]> }[
+      x0: { [K in keyof Props]: S.To<Props[K]> }[
         Exclude<
           keyof Props,
           keyof M
         >
       ],
-      x1: { [K in keyof Props]: S.ParsedShapeOf<Props[K]> }[
+      x1: { [K in keyof Props]: S.To<Props[K]> }[
         Exclude<
           keyof Props,
           keyof M
@@ -77,8 +77,8 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   ): (ks: AS) => Unify<
     | {
       [K in keyof M]: M[K] extends (
-        _: S.ParsedShapeOf<Props[K]>,
-        __: S.ParsedShapeOf<Props[K]>
+        _: S.To<Props[K]>,
+        __: S.To<Props[K]>
       ) => any ? ReturnType<M[K]>
         : never
     }[keyof M]
@@ -87,8 +87,8 @@ export interface MatchW<Props extends Record<PropertyKey, S.SchemaUPI>, AS> {
   <
     M extends {
       [K in keyof Props]: (
-        _: S.ParsedShapeOf<Props[K]>,
-        __: S.ParsedShapeOf<Props[K]>
+        _: S.To<Props[K]>,
+        __: S.To<Props[K]>
       ) => any
     }
   >(
@@ -106,7 +106,7 @@ export interface UnionApi<Props extends Record<PropertyKey, S.SchemaUPI>> extend
     S.GetApiSelfType<
       this,
       {
-        [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+        [k in keyof Props]: S.To<Props[k]>
       }[keyof Props]
     >
   >
@@ -115,7 +115,7 @@ export interface UnionApi<Props extends Record<PropertyKey, S.SchemaUPI>> extend
     S.GetApiSelfType<
       this,
       {
-        [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+        [k in keyof Props]: S.To<Props[k]>
       }[keyof Props]
     >
   >
@@ -125,13 +125,13 @@ export interface UnionApi<Props extends Record<PropertyKey, S.SchemaUPI>> extend
 export type SchemaUnion<Props extends Record<PropertyKey, S.SchemaUPI>> = DefaultSchema<
   unknown,
   {
-    [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+    [k in keyof Props]: S.To<Props[k]>
   }[keyof Props],
   {
-    [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+    [k in keyof Props]: S.To<Props[k]>
   }[keyof Props],
   {
-    [k in keyof Props]: S.EncodedOf<Props[k]>
+    [k in keyof Props]: S.From<Props[k]>
   }[keyof Props],
   UnionApi<Props>
 >
@@ -200,7 +200,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
   })
 
   function guard(u: unknown): u is {
-    [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+    [k in keyof Props]: S.To<Props[k]>
   }[keyof Props] {
     if (tag.isSome()) {
       if (
@@ -225,10 +225,10 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
 
   function encoder(
     u: {
-      [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+      [k in keyof Props]: S.To<Props[k]>
     }[keyof Props]
   ): {
-    [k in keyof Props]: S.EncodedOf<Props[k]>
+    [k in keyof Props]: S.From<Props[k]>
   }[keyof Props] {
     if (tag.isSome()) {
       return encoders[tag.value.index[u[tag.value.key]]](u)
@@ -256,7 +256,7 @@ export function union<Props extends Record<PropertyKey, S.SchemaUPI>>(
       >
     >,
     {
-      [k in keyof Props]: S.ParsedShapeOf<Props[k]>
+      [k in keyof Props]: S.To<Props[k]>
     }[keyof Props]
   > {
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers

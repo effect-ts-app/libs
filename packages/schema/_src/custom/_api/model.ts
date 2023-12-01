@@ -12,35 +12,35 @@ export type SchemaForModel<M, Self extends MO.SchemaAny> = MO.Schema<
   MO.ParserInputOf<Self>,
   M,
   MO.ConstructorInputOf<Self>,
-  MO.EncodedOf<Self>,
+  MO.From<Self>,
   MO.ApiOf<Self> & MO.ApiSelfType<M>
 >
 
 export type ParserFor<Self extends MO.SchemaAny> = Parser.Parser<
   MO.ParserInputOf<Self>,
   MO.ParserErrorOf<Self>,
-  MO.ParsedShapeOf<Self>
+  MO.To<Self>
 >
 
 export type ConstructorFor<Self extends MO.SchemaAny> = Constructor.Constructor<
   MO.ConstructorInputOf<Self>,
-  MO.ParsedShapeOf<Self>,
+  MO.To<Self>,
   MO.ConstructorErrorOf<Self>
 >
 
 export type EncoderFor<Self extends MO.SchemaAny> = Encoder.Encoder<
-  MO.ParsedShapeOf<Self>,
-  MO.EncodedOf<Self>
+  MO.To<Self>,
+  MO.From<Self>
 >
 
-export type GuardFor<Self extends MO.SchemaAny> = Guard.Guard<MO.ParsedShapeOf<Self>>
+export type GuardFor<Self extends MO.SchemaAny> = Guard.Guard<MO.To<Self>>
 
 export type ArbitraryFor<Self extends MO.SchemaAny> = Arbitrary.Gen<
-  MO.ParsedShapeOf<Self>
+  MO.To<Self>
 >
 
-export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? SchemaForModel<M, Self>
-  : SchemaForModel<MO.ParsedShapeOf<Self>, Self>
+export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.To<Self> ? SchemaForModel<M, Self>
+  : SchemaForModel<MO.To<Self>, Self>
 
 export interface Model<M, Self extends MO.SchemaAny> extends
   S.Schemed<Self>,
@@ -48,7 +48,7 @@ export interface Model<M, Self extends MO.SchemaAny> extends
     MO.ParserInputOf<Self>,
     M,
     MO.ConstructorInputOf<Self>,
-    MO.EncodedOf<Self>,
+    MO.From<Self>,
     MO.ApiOf<Self>
   >
 {

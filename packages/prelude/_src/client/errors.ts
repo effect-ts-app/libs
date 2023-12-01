@@ -53,20 +53,20 @@ export const SupportedErrors = union({
 })
   .pipe(named("SupportedErrors"))
   .pipe(withDefaults)
-export type SupportedErrors = ParsedShapeOf<typeof SupportedErrors>
+export type SupportedErrors = To<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
 //   .pipe(named("QueryErrors"))
 //   .pipe(withDefaults)
-// export type QueryErrors = ParsedShapeOf<typeof QueryErrors>
+// export type QueryErrors = To<typeof QueryErrors>
 // export const MutationErrors = union({ ...GeneralErrors, ...GeneralErrors })
 //   .pipe(named("MutationErrors"))
 //   .pipe(withDefaults)
 
-// export type MutationErrors = ParsedShapeOf<typeof MutationErrors>
+// export type MutationErrors = To<typeof MutationErrors>
 
 export const MutationErrors = SupportedErrors
 export const QueryErrors = SupportedErrors
-export type MutationErrors = ParsedShapeOf<typeof MutationErrors>
-export type QueryErrors = ParsedShapeOf<typeof QueryErrors>
+export type MutationErrors = To<typeof MutationErrors>
+export type QueryErrors = To<typeof QueryErrors>

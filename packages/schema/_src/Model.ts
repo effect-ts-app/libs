@@ -13,7 +13,7 @@ import type { EncSchemaForModel, EParserFor, FromPropertyRecord } from "./_api.j
 import { fromProps } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyProperty, EncodedOf, ParsedShapeOf, PropertyRecord } from "./custom.js"
+import type { AnyProperty, From, PropertyRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
@@ -32,9 +32,9 @@ export interface Model<ParsedShape, Self extends MO.SchemaAny> extends
   Model2<
     ParsedShape,
     Self,
-    EncSchemaForModel<ParsedShape, Self, MO.EncodedOf<Self>>,
+    EncSchemaForModel<ParsedShape, Self, MO.From<Self>>,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
-    ComputeFlat<MO.ParsedShapeOf<Self>>
+    ComputeFlat<MO.To<Self>>
   >
 {}
 
@@ -43,7 +43,7 @@ export interface ModelEnc<
   Self extends MO.SchemaAny,
   MEnc,
   // makes it pretty, but also helps compatibility with WebStorm it seems...
-  ParsedShape2 = ComputeFlat<MO.ParsedShapeOf<Self>>
+  ParsedShape2 = ComputeFlat<MO.To<Self>>
 > extends
   MM<
     Self,
@@ -67,7 +67,7 @@ export interface Model2<
     SelfM,
     M,
     MO.ConstructorInputOf<Self>,
-    MO.EncodedOf<Self>,
+    MO.From<Self>,
     GetApiProps<Self>,
     ParsedShape2
   >
@@ -78,9 +78,9 @@ type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer P
 
 export interface MNModel<
   Self extends MO.SchemaAny,
-  ParsedShape = MO.ParsedShapeOf<Self>,
+  ParsedShape = MO.To<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
-  Encoded = MO.EncodedOf<Self>,
+  Encoded = MO.From<Self>,
   Props = GetApiProps<Self>
 > extends
   MM<
@@ -91,7 +91,7 @@ export interface MNModel<
     Encoded,
     Props,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
-    ComputeFlat<MO.ParsedShapeOf<Self>>
+    ComputeFlat<MO.To<Self>>
   >
 {}
 
@@ -106,8 +106,8 @@ export interface MM<
 > extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
   new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
-  readonly parsed: ParsedShapeOf<Self>
-  readonly encoded: EncodedOf<Self>
+  readonly parsed: To<Self>
+  readonly encoded: From<Self>
   readonly Model: SelfM // added
   readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
   readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
@@ -155,11 +155,11 @@ export function fromModel<ParsedShape>(__name?: string) {
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
-  [K in keyof ParsedShapeOf<Self>]-?: Lens.Lens<T, ParsedShapeOf<Self>[K]>
+  [K in keyof To<Self>]-?: Lens.Lens<T, To<Self>[K]>
 }
 
 export type PropsToLenses<T, Props extends MO.PropertyRecord> = {
-  [K in keyof Props]: Lens.Lens<T, MO.ParsedShapeOf<Props[K]["_schema"]>>
+  [K in keyof Props]: Lens.Lens<T, MO.To<Props[K]["_schema"]>>
 }
 export function lensFromProps<T>() {
   return <Props extends MO.PropertyRecord>(props: Props): PropsToLenses<T, Props> => {

@@ -1,8 +1,8 @@
 import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
 import type {
   AnyProperty,
-  EncodedOf,
-  ParsedShapeOfCustom,
+  From,
+  To,
   Property,
   PropertyRecord,
   SchemaAny
@@ -35,8 +35,8 @@ export function buildFieldInfoFromProps<Props extends PropertyRecord>(
     },
     {} as {
       [K in keyof Props]: FieldInfo<
-        EncodedOf<GetSchemaFromProp<Props[K]>>,
-        ParsedShapeOfCustom<GetSchemaFromProp<Props[K]>>
+        From<GetSchemaFromProp<Props[K]>>,
+        To<GetSchemaFromProp<Props[K]>>
       >
     }
   )

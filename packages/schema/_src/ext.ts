@@ -174,9 +174,9 @@ export function makeCurrentDate() {
 export function defaultConstructor<
   Self extends MO.SchemaUPI,
   As extends Option<PropertyKey>,
-  Def extends Option<["parser" | "constructor" | "both", () => MO.ParsedShapeOf<Self>]>
+  Def extends Option<["parser" | "constructor" | "both", () => MO.To<Self>]>
 >(p: MO.Property<Self, "required", As, Def>) {
-  return (makeDefault: () => MO.ParsedShapeOf<Self>) => propDef(p, makeDefault, "constructor")
+  return (makeDefault: () => MO.To<Self>) => propDef(p, makeDefault, "constructor")
 }
 
 export type SupportedDefaults =
@@ -243,7 +243,7 @@ export function withDefault<
   Def extends Option<
     [
       "parser" | "constructor" | "both",
-      () => MO.ParsedShapeOf<
+      () => MO.To<
         MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
       >
     ]
@@ -289,7 +289,7 @@ export function withInputDefault<
   Def extends Option<
     [
       "parser" | "constructor" | "both",
-      () => MO.ParsedShapeOf<
+      () => MO.To<
         MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
       >
     ]
@@ -1045,7 +1045,7 @@ export type GetProvidedProps<
 > = GetProps<Cls[MO.schemaField]>
 // Cls["ProvidedProps"] //Transform<
 
-export type EncodedFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.EncodedOf<
+export type EncodedFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.From<
   Cls[MO.schemaField]
 > // Transform<
 export type ConstructorInputFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.ConstructorInputOf<
@@ -1053,8 +1053,8 @@ export type ConstructorInputFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny
 >
 // >
 
-// export type EncodedOf<X extends Schema<any, any, any, any, any>> = Transform<
-//   EncodedOfOrig<X>
+// export type From<X extends Schema<any, any, any, any, any>> = Transform<
+//   FromOrig<X>
 // >
 
 export type OpaqueEncoded<OpaqueE, Schema> = Schema extends MO.DefaultSchema<
@@ -1181,7 +1181,7 @@ export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>
     prev[key] = MO.Constructor.for(value).pipe(unsafe)
     return prev
   }, {} as Record<PropertyKey, any>) as any as {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.ParsedShapeOf<T[Key]> // These<ConstructorErrorOf<T[Key]>, ParsedShapeOf<T[Key]>>
+    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.To<T[Key]> // These<ConstructorErrorOf<T[Key]>, To<T[Key]>>
   }
   const mem = entries.reduce((prev, [key, value]) => {
     prev[key] = value
@@ -1212,7 +1212,7 @@ export interface SmartUnion<
     [Key in keyof T]: T[Key]
   }
   of: {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.ParsedShapeOf<T[Key]>
+    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.To<T[Key]>
   }
   of_: (i: ParsedShape) => ParsedShape
   as: {
@@ -1271,10 +1271,6 @@ export function makeValidatorFromUnknown<Value, InputValue>(
 ) {
   return validate(Parser.for(self))
 }
-
-export type ParsedShapeOfCustom<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_ParsedShape"]
->
 
 // TODO: Opaque UnionApi (return/input type of matchW etc?)
 export function OpaqueSchema<A, E = A, CI = A>() {
@@ -1338,7 +1334,7 @@ export function replace<S, T>(l: PreparedLens<S, T>) {
 export function makePreparedLenses<S, Props extends MO.PropertyRecord>(
   props: Props,
   s: S
-): { [K in keyof Props]: PreparedLens<S, MO.ParsedShapeOf<Props[K]["_schema"]>> } {
+): { [K in keyof Props]: PreparedLens<S, MO.To<Props[K]["_schema"]>> } {
   function makeLens<T>(l: Lens<S, T>) {
     return new PreparedLens(s, l)
   }

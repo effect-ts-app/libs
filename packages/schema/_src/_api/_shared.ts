@@ -36,14 +36,14 @@ export function extendWithUtilsAnd<Schema extends MO.SchemaUPI, Additional>(
 }
 
 export type EParserFor<Self extends MO.SchemaAny> = MO.Parser.Parser<
-  MO.EncodedOf<Self>,
+  MO.From<Self>,
   MO.ParserErrorOf<Self>,
-  MO.ParsedShapeOf<Self>
+  MO.To<Self>
 >
 
 export type UnsafeEParserFor<Self extends MO.SchemaAny> = (
-  e: MO.EncodedOf<Self>
-) => MO.ParsedShapeOf<Self>
+  e: MO.From<Self>
+) => MO.To<Self>
 
 export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
   schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>

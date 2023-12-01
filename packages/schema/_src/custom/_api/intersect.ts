@@ -23,9 +23,9 @@ export type IntersectionSchema<
   Api
 > = DefaultSchema<
   unknown,
-  S.ParsedShapeOf<Self> & S.ParsedShapeOf<That>,
+  S.To<Self> & S.To<That>,
   S.ConstructorInputOf<Self> & S.ConstructorInputOf<That>,
-  S.EncodedOf<Self> & S.EncodedOf<That>,
+  S.From<Self> & S.From<That>,
   Api
 >
 
