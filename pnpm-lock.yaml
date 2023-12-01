@@ -5,7 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@types/node': ~18.11.12
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
 
@@ -41,7 +40,7 @@ importers:
         version: /http-proxy-node16@1.0.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -63,7 +62,7 @@ importers:
         version: 0.88.6
       '@effect-app/cli':
         specifier: ^0.26.0
-        version: link:packages/cli
+        version: 0.26.0
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -101,8 +100,8 @@ importers:
         specifier: ^4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       '@typescript-eslint/eslint-plugin':
         specifier: 6.12.0
         version: 6.12.0(@effect-app/typescript@5.4.0-tsplus.202311222)(@typescript-eslint/parser@6.12.0)(eslint@8.54.0)
@@ -189,7 +188,7 @@ importers:
         version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.202311222)
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(@types/node@18.11.12)
+        version: 5.0.4(@types/node@20.10.1)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -204,14 +203,14 @@ importers:
         specifier: ^7.23.4
         version: 7.23.4(@babel/core@7.23.5)
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -226,20 +225,20 @@ importers:
         version: 5.1.0
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(@types/node@18.11.12)
+        version: 5.0.4(@types/node@20.10.1)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
         version: 7.23.4(@babel/core@7.23.5)
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -349,7 +348,7 @@ importers:
         version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.202311222)
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -424,8 +423,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       '@types/proper-lockfile':
         specifier: ^4.1.4
         version: 4.1.4
@@ -452,7 +451,7 @@ importers:
         version: 3.1.2
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -533,11 +532,11 @@ importers:
   packages/pnpm-singleton:
     devDependencies:
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -597,8 +596,8 @@ importers:
         specifier: ^8.3.1
         version: 8.3.1
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       '@types/uuid':
         specifier: ^9.0.7
         version: 9.0.7
@@ -610,7 +609,7 @@ importers:
         version: 3.14.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -640,8 +639,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       '@types/react':
         specifier: ^18.2.39
         version: 18.2.39
@@ -656,7 +655,7 @@ importers:
         version: 6.5.5(@effect-app/typescript@5.4.0-tsplus.202311222)(react@18.2.0)
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
@@ -756,20 +755,20 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       '@types/node':
-        specifier: ~18.11.12
-        version: 18.11.12
+        specifier: ~20.10.0
+        version: 20.10.1
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(@types/node@18.11.12)
+        version: 5.0.4(@types/node@20.10.1)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -1522,6 +1521,13 @@ packages:
     dev: true
     optional: true
 
+  /@effect-app/cli@0.26.0:
+    resolution: {integrity: sha512-d7JqCFq8kBkg81eFzmPoce4v9mIzbIu57Pl1LQzQ2v72VRuvxzz9Z1zU5T/oMuUq2DbX+oVHLMUTa895Torfbw==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.4
+    dev: true
+
   /@effect-app/typescript@5.4.0-tsplus.202311222:
     resolution: {integrity: sha512-QZQC5/bU2uG4TUmgCVkEYZM8buFDisGgvuO6NUOXVWZXjQRPkOv4YHlMPBVNi+DmW3k1O7oNWmkHRm7MO+ddNg==}
     engines: {node: '>=14.17'}
@@ -2125,7 +2131,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       '@types/yargs': 15.0.14
       chalk: 4.1.2
 
@@ -2181,7 +2187,7 @@ packages:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
     dependencies:
       '@babel/runtime': 7.20.1
-      '@types/node': 18.11.12
+      '@types/node': 12.20.55
       find-up: 4.1.0
       fs-extra: 8.1.0
     dev: true
@@ -2610,13 +2616,13 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/bunyan@1.8.8:
     resolution: {integrity: sha512-Cblq+Yydg3u+sGiz2mjHjC5MPmdjY+No4qvHrF+BUhblsmSfMvsHLbOG62tPbonsqBj6sbWv1LHcsoe5Jw+/Ow==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/chai-subset@1.3.3:
@@ -2632,7 +2638,7 @@ packages:
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/dynamodb@1.3.7:
@@ -2666,7 +2672,7 @@ packages:
   /@types/express-serve-static-core@4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: true
@@ -2684,7 +2690,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/hoist-non-react-statics@3.3.1:
@@ -2701,13 +2707,13 @@ packages:
   /@types/ioredis@4.28.10:
     resolution: {integrity: sha512-69LyhUgrXdgcNDv7ogs1qXZomnfOEnSmrmMFqKgt1XMJxmoOSG/u3wYy13yACIfKuMJ8IhKgHafDO3sx19zVQQ==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/is-buffer@2.0.0:
     resolution: {integrity: sha512-0f7N/e3BAz32qDYvgB4d2cqv1DqUwvGxHkXsrucICn8la1Vb6Yl6Eg8mPScGwUiqHJeE7diXlzaK+QMA9m4Gxw==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
 
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -2732,7 +2738,7 @@ packages:
   /@types/jsonwebtoken@8.5.9:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/lodash@4.14.202:
@@ -2751,8 +2757,14 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/node@18.11.12:
-    resolution: {integrity: sha512-FgD3NtTAKvyMmD44T07zz2fEf+OKwutgBCEVM8GcvMGVGaDktiLNTDvPwC/LUe3PinMW+X6CuLOF2Ui1mAlSXg==}
+  /@types/node@12.20.55:
+    resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+    dev: true
+
+  /@types/node@20.10.1:
+    resolution: {integrity: sha512-T2qwhjWwGH81vUEx4EXmBKsTJRXFXNZTL4v0gi01+zyBmCwzE6TyHszqX01m+QHTEq+EZNo13NeJIdEqf+Myrg==}
+    dependencies:
+      undici-types: 5.26.5
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -2786,7 +2798,7 @@ packages:
   /@types/redis@2.8.32:
     resolution: {integrity: sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/redlock@4.0.7:
@@ -2812,7 +2824,7 @@ packages:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
     dev: true
 
   /@types/stack-utils@2.0.1:
@@ -6341,7 +6353,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -7186,7 +7198,6 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon@3.0.1:
     resolution: {integrity: sha512-g9AZ7HmkhQkqXkRc20w+ZfQ73cHLbE8hnPbtaFbFtCumZsjyMhKk9LajQ07U5Ux28lvFjZ5X7HvWR1xzU8jHVw==}
@@ -9138,13 +9149,13 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@18.11.12):
+  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
-      '@types/node': ~18.11.12
+      '@types/node': '*'
       typescript: '>=2.7'
     peerDependenciesMeta:
       '@swc/core':
@@ -9157,7 +9168,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       acorn: 8.8.1
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -9393,6 +9404,9 @@ packages:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   /uniq@1.0.1:
     resolution: {integrity: sha512-Gw+zz50YNKPDKXs+9d+aKAjVwpjNwqzvNpLigIruT4HA9lMZNdMqs9x07kKHB/L9WRzqp4+DlTU5s4wG2esdoA==}
     dev: true
@@ -9538,7 +9552,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node@0.34.6(@types/node@18.11.12):
+  /vite-node@0.34.6(@types/node@20.10.1):
     resolution: {integrity: sha512-nlBMJ9x6n7/Amaz6F3zJ97EBwR2FkzhBRxF5e+jE6LA3yi6Wtc2lyTij1OnDMIr34v5g/tVQtsVAzhT0jc5ygA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -9548,7 +9562,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.4(@types/node@18.11.12)
+      vite: 5.0.4(@types/node@20.10.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9560,12 +9574,12 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.9(@types/node@18.11.12):
+  /vite@4.4.9(@types/node@20.10.1):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
-      '@types/node': ~18.11.12
+      '@types/node': '>= 14'
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
@@ -9588,7 +9602,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       esbuild: 0.18.20
       postcss: 8.4.30
       rollup: 3.29.2
@@ -9596,12 +9610,12 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.4(@types/node@18.11.12):
+  /vite@5.0.4(@types/node@20.10.1):
     resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
-      '@types/node': ~18.11.12
+      '@types/node': ^18.0.0 || >=20.0.0
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
@@ -9624,7 +9638,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       esbuild: 0.19.5
       postcss: 8.4.31
       rollup: 4.4.1
@@ -9664,7 +9678,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.11.12
+      '@types/node': 20.10.1
       '@vitest/expect': 0.34.6
       '@vitest/runner': 0.34.6
       '@vitest/snapshot': 0.34.6
@@ -9683,8 +9697,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.7.0
-      vite: 4.4.9(@types/node@18.11.12)
-      vite-node: 0.34.6(@types/node@18.11.12)
+      vite: 4.4.9(@types/node@20.10.1)
+      vite-node: 0.34.6(@types/node@20.10.1)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
