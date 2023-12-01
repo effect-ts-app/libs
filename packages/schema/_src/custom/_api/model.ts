@@ -42,7 +42,7 @@ export type ArbitraryFor<Self extends MO.SchemaAny> = Arbitrary.Gen<
 export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.To<Self> ? SchemaForModel<M, Self>
   : SchemaForModel<MO.To<Self>, Self>
 
-export interface Model<M, Self extends MO.SchemaAny> extends
+export interface Class<M, Self extends MO.SchemaAny> extends
   S.Schemed<Self>,
   MO.Schema<
     MO.ParserInputOf<Self>,
@@ -68,9 +68,9 @@ export interface Model<M, Self extends MO.SchemaAny> extends
 /**
  * @inject genericName
  */
-export function Model<M>(__name?: string) {
-  return <Self extends MO.SchemaAny>(self: Self): Model<M, Self> => {
-    const schemed = S.Schemed(named(__name ?? "Model(Anonymous)")(self))
+export function Class<M>(__name?: string) {
+  return <Self extends MO.SchemaAny>(self: Self): Class<M, Self> => {
+    const schemed = S.Schemed(named(__name ?? "Class(Anonymous)")(self))
     const schema = S.schema(schemed)
 
     Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {

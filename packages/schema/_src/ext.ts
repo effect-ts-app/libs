@@ -1035,7 +1035,7 @@ export const fromPropProp = <To, ConstructorInput, From, Api, As1 extends Proper
   as: As1
 ) => field(schema).from(as)
 
-export type SchemaFrom<Cls extends { Model: MO.SchemaAny }> = Cls["Model"]
+export type SchemaFrom<Cls extends { Class: MO.SchemaAny }> = Cls["Class"]
 
 export type GetProps<Cls extends { Api: { fields: MO.PropertyRecord } }> = // Transform<
   Cls["Api"]["fields"]

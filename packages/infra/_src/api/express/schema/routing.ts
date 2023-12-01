@@ -182,7 +182,7 @@ export function makeFromSchema<ResA>(
 
   return Effect
     .all({
-      req: jsonSchema(Req.Model),
+      req: jsonSchema(Req.Class),
       reqQuery: makeReqQuerySchema,
       reqHeaders: makeReqHeadersSchema,
       reqBody: makeReqBodySchema,

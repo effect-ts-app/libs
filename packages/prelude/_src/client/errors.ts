@@ -1,35 +1,35 @@
 @useClassFeaturesForSchema
-export class NotFoundError extends Model<NotFoundError>()({
+export class NotFoundError extends Class<NotFoundError>()({
   _tag: literal("NotFoundError"),
   message: string
 }) {}
 
 @useClassFeaturesForSchema
-export class InvalidStateError extends Model<InvalidStateError>()({
+export class InvalidStateError extends Class<InvalidStateError>()({
   _tag: literal("InvalidStateError"),
   message: string
 }) {}
 
 @useClassFeaturesForSchema
-export class ValidationError extends Model<ValidationError>()({
+export class ValidationError extends Class<ValidationError>()({
   _tag: literal("ValidationError"),
   errors: array(unknown) // meh
 }) {}
 
 @useClassFeaturesForSchema
-export class NotLoggedInError extends Model<NotLoggedInError>()({
+export class NotLoggedInError extends Class<NotLoggedInError>()({
   _tag: literal("NotLoggedInError"),
   message: string.optional
 }) {}
 
 @useClassFeaturesForSchema
-export class UnauthorizedError extends Model<UnauthorizedError>()({
+export class UnauthorizedError extends Class<UnauthorizedError>()({
   _tag: literal("UnauthorizedError"),
   message: string.optional
 }) {}
 
 @useClassFeaturesForSchema
-export class OptimisticConcurrencyException extends Model<OptimisticConcurrencyException>()(
+export class OptimisticConcurrencyException extends Class<OptimisticConcurrencyException>()(
   {
     _tag: literal("OptimisticConcurrencyException")
   }

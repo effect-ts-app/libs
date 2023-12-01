@@ -1,7 +1,7 @@
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 
 @useClassFeaturesForSchema
-export class RequestContextParent extends MNModel<
+export class RequestContextParent extends ExtendedClass<
   RequestContextParent,
   RequestContextParent.ConstructorInput,
   RequestContextParent.From,
@@ -20,7 +20,7 @@ export class RequestContextParent extends MNModel<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends MNModel<
+export class RequestContext extends ExtendedClass<
   RequestContext,
   RequestContext.ConstructorInput,
   RequestContext.From,

@@ -1,4 +1,4 @@
-import type { To, ReqRes, SchemaAny } from "@effect-app/prelude/schema"
+import type { ReqRes, SchemaAny, To } from "@effect-app/prelude/schema"
 import { EParserFor, Parser, unsafe } from "@effect-app/prelude/schema"
 import type { ParsedQuery } from "query-string"
 

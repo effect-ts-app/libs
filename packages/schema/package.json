@@ -62,6 +62,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Class": {
+      "import": {
+        "types": "./dist/Class.d.ts",
+        "default": "./dist/Class.js"
+      },
+      "require": {
+        "types": "./dist/Class.d.ts",
+        "default": "./_cjs/Class.cjs"
+      }
+    },
     "./FastCheck": {
       "import": {
         "types": "./dist/FastCheck.d.ts",
@@ -80,16 +90,6 @@
       "require": {
         "types": "./dist/Methods.d.ts",
         "default": "./_cjs/Methods.cjs"
-      }
-    },
-    "./Model": {
-      "import": {
-        "types": "./dist/Model.d.ts",
-        "default": "./dist/Model.js"
-      },
-      "require": {
-        "types": "./dist/Model.d.ts",
-        "default": "./_cjs/Model.cjs"
       }
     },
     "./REST": {

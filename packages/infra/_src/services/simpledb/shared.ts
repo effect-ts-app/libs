@@ -28,7 +28,7 @@ export interface DBRecord<TKey extends string> {
   id: TKey
 }
 
-export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
+export class SerializedDBRecord extends MO.Class<SerializedDBRecord>()({
   version: MO.string,
   timestamp: MO.date,
   data: MO.string

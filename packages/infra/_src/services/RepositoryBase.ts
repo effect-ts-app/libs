@@ -495,7 +495,7 @@ export const RepositoryDefaultImpl = <Service>() => {
 }
 
 // @useClassFeaturesForSchema
-// export class Shop extends Model<Shop>()({ id: string }) {}
+// export class Shop extends Class<Shop>()({ id: string }) {}
 
 // /**
 //  * @tsplus type ShopRepo

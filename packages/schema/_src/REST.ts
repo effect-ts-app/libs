@@ -7,9 +7,9 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
+import type { AnyRecord, AnyRecordSchema, Class, GetModelProps, PropsExtensions, StringRecord } from "./Class.js"
+import { ModelSpecial, setSchema } from "./Class.js"
 import type { ReadMethods, WriteMethods } from "./Methods.js"
-import type { AnyRecord, AnyRecordSchema, GetModelProps, Model, PropsExtensions, StringRecord } from "./Model.js"
-import { ModelSpecial, setSchema } from "./Model.js"
 
 import * as Methods from "./Methods.js"
 
@@ -28,7 +28,7 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Model<M, Self>, PropsExtensions<GetModelProps<Self>> {
+> extends Class<M, Self>, PropsExtensions<GetModelProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -47,7 +47,7 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Model<M, Self>, PropsExtensions<GetModelProps<Self>> {
+> extends Class<M, Self>, PropsExtensions<GetModelProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
@@ -472,7 +472,7 @@ export interface Request<
   Self extends MO.SchemaAny,
   Path extends string,
   Method extends Methods.Rest
-> extends Model<M, Self> {
+> extends Class<M, Self> {
   method: Method
   path: Path
 }
@@ -699,8 +699,7 @@ export const metaIdentifier = MO.makeAnnotation<Meta>()
 export function meta<ParserInput, To, ConstructorInput, From, Api>(
   meta: Meta
 ) {
-  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) =>
-    self.annotate(metaIdentifier, meta)
+  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) => self.annotate(metaIdentifier, meta)
 }
 export const metaC = (m: Meta) => {
   return function(cls: any) {
@@ -719,7 +718,7 @@ export type ReqRes<E, A> = MO.Schema<
 export type ReqResSchemed<E, A> = {
   new(...args: any[]): any
   Encoder: MO.Encoder.Encoder<A, E>
-  Model: ReqRes<E, A>
+  Class: ReqRes<E, A>
 }
 
 export type RequestSchemed<E, A> = ReqResSchemed<E, A> & {
@@ -732,7 +731,7 @@ export function extractSchema<ResE, ResA>(
 ) {
   const res_ = Res_ as any
   const Res = res_[schemaField]
-    ? (res_.Model as ReqRes<ResE, ResA>)
+    ? (res_.Class as ReqRes<ResE, ResA>)
     : (res_ as ReqRes<ResE, ResA>)
   return Res
 }

@@ -74,7 +74,7 @@ function clientFor_<M extends Requests>(models: M) {
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
           const requestName = ReasonableString(
-            Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
+            Request.Class instanceof SchemaNamed ? Request.Class.name : Request.name
           )
 
           // if we don't need fields, then also dont require an argument.
@@ -174,12 +174,12 @@ function clientFor_<M extends Requests>(models: M) {
   )
 }
 
-export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? To<T["Model"]>
+export type ExtractResponse<T> = T extends { Class: Schema.SchemaAny } ? To<T["Class"]>
   : T extends Schema.SchemaAny ? To<T>
   : T extends unknown ? Schema.Void
   : never
 
-export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? From<T["Model"]>
+export type ExtractEResponse<T> = T extends { Class: Schema.SchemaAny } ? From<T["Class"]>
   : T extends Schema.SchemaAny ? From<T>
   : T extends unknown ? Schema.Void
   : never

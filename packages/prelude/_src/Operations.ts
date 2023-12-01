@@ -4,7 +4,7 @@ export type OperationId = StringId
 export const OperationId = StringId
 
 @useClassFeaturesForSchema
-export class OperationProgress extends MNModel<
+export class OperationProgress extends ExtendedClass<
   OperationProgress,
   OperationProgress.ConstructorInput,
   OperationProgress.From,
@@ -15,13 +15,13 @@ export class OperationProgress extends MNModel<
 }) {}
 
 @useClassFeaturesForSchema
-export class Success extends MNModel<Success, Success.ConstructorInput, Success.From, Success.Fields>()({
+export class Success extends ExtendedClass<Success, Success.ConstructorInput, Success.From, Success.Fields>()({
   _tag: literal("Success"),
   message: LongString.nullable.withDefault
 }) {}
 
 @useClassFeaturesForSchema
-export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.From, Failure.Fields>()({
+export class Failure extends ExtendedClass<Failure, Failure.ConstructorInput, Failure.From, Failure.Fields>()({
   _tag: literal("Failure"),
   message: LongString.nullable.withDefault
 }) {}
@@ -30,13 +30,15 @@ export const OperationResult = union({ Success, Failure })
 export type OperationResult = To<typeof OperationResult>
 
 @useClassFeaturesForSchema
-export class Operation extends MNModel<Operation, Operation.ConstructorInput, Operation.From, Operation.Fields>()({
-  id: OperationId,
-  progress: OperationProgress.optional,
-  result: OperationResult.optional,
-  createdAt: date.withDefault,
-  updatedAt: date.nullable.withDefault
-}) {}
+export class Operation
+  extends ExtendedClass<Operation, Operation.ConstructorInput, Operation.From, Operation.Fields>()({
+    id: OperationId,
+    progress: OperationProgress.optional,
+    result: OperationResult.optional,
+    createdAt: date.withDefault,
+    updatedAt: date.nullable.withDefault
+  })
+{}
 
 // codegen:start {preset: model}
 //

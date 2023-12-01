@@ -188,7 +188,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   }
 }
 
-export class RedisSerializedDBRecord extends MO.Model<RedisSerializedDBRecord>()({
+export class RedisSerializedDBRecord extends MO.Class<RedisSerializedDBRecord>()({
   version: MO.string,
   timestamp: MO.date,
   data: MO.string

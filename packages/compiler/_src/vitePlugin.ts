@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFilter } from "@rollup/pluginutils"
 import fs from "fs"
 import json5 from "json5"

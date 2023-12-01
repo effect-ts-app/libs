@@ -28,7 +28,7 @@ export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<To, Self extends MO.SchemaAny> extends
+export interface Class<To, Self extends MO.SchemaAny> extends
   Model2<
     To,
     Self,
@@ -76,7 +76,7 @@ export interface Model2<
 type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer Fields> ? Fields
   : never
 
-export interface MNModel<
+export interface ExtendedClass<
   Self extends MO.SchemaAny,
   To = MO.To<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
@@ -108,7 +108,7 @@ export interface MM<
   [MO.schemaField]: Self
   readonly to: MO.To<Self>
   readonly from: MO.From<Self>
-  readonly Model: SelfM // added
+  readonly Class: SelfM // added
   readonly lens: Lens.Lens<To, To> // added
   readonly lenses: RecordSchemaToLenses<To, Self>
 
@@ -121,7 +121,7 @@ export interface MM<
 }
 
 /** opaque model only on To type param */
-export function Model<To>(__name?: string) {
+export function Class<To>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
     ModelSpecial<To>(__name)(MO.struct(propsOrSchemas))
 }
@@ -133,13 +133,13 @@ export function ModelFrom<To, From>(__name?: string) {
 }
 
 /** fully opaque model on all type params */
-export function MNModel<To, ConstructorInput, From, Fields>(
+export function ExtendedClass<To, ConstructorInput, From, Fields>(
   __name?: string
 ) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
     const self = MO.struct(propsOrSchemas)
     return makeSpecial(__name, self) as
-      & MNModel<
+      & ExtendedClass<
         typeof self,
         To,
         ConstructorInput,
@@ -175,7 +175,7 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
   schemed: any,
   self: Self
 ) {
-  schemed[MO.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Model = self
+  schemed[MO.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Class = self
 
   // Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
   //   value: self,
@@ -289,7 +289,7 @@ export interface PropsExtensions<Fields> {
 export function ModelSpecial<To>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
     self: Self
-  ): Model<To, Self> & PropsExtensions<GetModelProps<Self>> => {
+  ): Class<To, Self> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -303,7 +303,7 @@ export function ModelSpecialEnc<To, From>(__name?: string) {
 }
 
 function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
-  const schema = __name ? self >= MO.named(__name) : self // TODO  ?? "Model(Anonymous)", but atm auto deriving openapiRef from this.
+  const schema = __name ? self >= MO.named(__name) : self // TODO  ?? "Class(Anonymous)", but atm auto deriving openapiRef from this.
   const of_ = MO.Constructor.for(schema) >= unsafe
   const fromFields = (fields: any, target: any) => {
     for (const k of Object.keys(fields)) {
@@ -317,7 +317,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
 
     static [schemaField] = schema
     static [MO.SchemaContinuationSymbol] = schema
-    static Model = schema
+    static Class = schema
     static Api = schema.Api
     static [">>>"] = schema[">>>"]
 

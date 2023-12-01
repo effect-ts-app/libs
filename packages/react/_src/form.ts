@@ -4,11 +4,11 @@
 import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } from "@effect-app/prelude/schema"
 import {
   type AnyError,
-  type StructConstructor,
-  type StructFrom,
   EParserFor,
   Parser,
   type PropertyRecord,
+  type StructConstructor,
+  type StructFrom,
   type StructTo,
   These,
   unsafe

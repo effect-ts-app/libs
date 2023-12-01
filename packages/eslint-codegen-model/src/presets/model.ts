@@ -26,7 +26,7 @@ export const model: Preset<{
   writeFullTypes?: boolean
 }> = ({ meta, options }, context: any) => {
   if (!context.parserOptions.project) {
-    console.warn(`${meta.filename}: Cannot run ESLint Model plugin, because no TS Compiler is enabled`)
+    console.warn(`${meta.filename}: Cannot run ESLint Class plugin, because no TS Compiler is enabled`)
     return meta.existingContent
   }
 
