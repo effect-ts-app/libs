@@ -7,8 +7,8 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyRecord, AnyRecordSchema, Class, GetModelProps, PropsExtensions, StringRecord } from "./Class.js"
-import { ModelSpecial, setSchema } from "./Class.js"
+import type { AnyRecord, AnyRecordSchema, Class, GetClassProps, PropsExtensions, StringRecord } from "./Class.js"
+import { ClassSpecial, setSchema } from "./Class.js"
 import type { ReadMethods, WriteMethods } from "./Methods.js"
 
 import * as Methods from "./Methods.js"
@@ -28,7 +28,7 @@ export interface QueryRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends MO.SchemaAny
-> extends Class<M, Self>, PropsExtensions<GetModelProps<Self>> {
+> extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
@@ -47,7 +47,7 @@ export interface BodyRequest<
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
   Self extends AnyRecordSchema
-> extends Class<M, Self>, PropsExtensions<GetModelProps<Self>> {
+> extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
@@ -200,7 +200,7 @@ export function QueryRequest<M>(__name?: string) {
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(schema) {
+    return class extends ClassSpecial<M>(__name)(schema) {
       static Path = _.path
       static Query = _.query
       static Headers = _.headers
@@ -453,7 +453,7 @@ export function BodyRequest<M>(__name?: string) {
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
-    return class extends ModelSpecial<M>(__name)(schema) {
+    return class extends ClassSpecial<M>(__name)(schema) {
       static Path = _.path
       static Body = _.body
       static Query = _.query

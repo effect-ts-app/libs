@@ -9,7 +9,7 @@ import pick from "lodash/pick.js"
 import * as Equal from "effect/Equal"
 import * as Hash from "effect/Hash"
 
-import type { EncSchemaForModel, EParserFor, SpecificFieldRecord } from "./_api.js"
+import type { EncSchemaForClass, EParserFor, SpecificFieldRecord } from "./_api.js"
 import { specificStruct } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
@@ -18,7 +18,7 @@ import { unsafe } from "./custom/_api/condemn.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
 
-export const nModelBrand = Symbol()
+export const nClassBrand = Symbol()
 
 export type StringRecord = Record<string, string>
 
@@ -27,18 +27,18 @@ export type AnyRecord = Record<string, any>
 export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
 
 // Not inheriting from Schemed because we don't want `copy`
-// passing SelfM down to Model2 so we only compute it once.
+// passing SelfM down to Class2 so we only compute it once.
 export interface Class<To, Self extends MO.SchemaAny> extends
-  Model2<
+  Class2<
     To,
     Self,
-    EncSchemaForModel<To, Self, MO.From<Self>>,
+    EncSchemaForClass<To, Self, MO.From<Self>>,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.To<Self>>
   >
 {}
 
-export interface ModelFrom<
+export interface ClassFrom<
   To,
   Self extends MO.SchemaAny,
   MEnc,
@@ -47,7 +47,7 @@ export interface ModelFrom<
 > extends
   MM<
     Self,
-    EncSchemaForModel<To, Self, MEnc>,
+    EncSchemaForClass<To, Self, MEnc>,
     To,
     MO.ConstructorInputOf<Self>,
     MEnc,
@@ -56,7 +56,7 @@ export interface ModelFrom<
   >
 {}
 
-export interface Model2<
+export interface Class2<
   M,
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
@@ -123,13 +123,13 @@ export interface MM<
 /** opaque model only on To type param */
 export function Class<To>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial<To>(__name)(MO.struct(propsOrSchemas))
+    ClassSpecial<To>(__name)(MO.struct(propsOrSchemas))
 }
 
 /** opaque model on To and From type params */
-export function ModelFrom<To, From>(__name?: string) {
+export function ClassFrom<To, From>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc<To, From>(__name)(MO.struct(propsOrSchemas))
+    ClassSpecialEnc<To, From>(__name)(MO.struct(propsOrSchemas))
 }
 
 /** fully opaque model on all type params */
@@ -150,8 +150,8 @@ export function ExtendedClass<To, ConstructorInput, From, Fields>(
   }
 }
 
-export function fromModel<To>(__name?: string) {
-  return <Fields extends SpecificFieldRecord = {}>(fields: Fields) => ModelSpecial<To>(__name)(specificStruct(fields))
+export function fromClass<To>(__name?: string) {
+  return <Fields extends SpecificFieldRecord = {}>(fields: Fields) => ClassSpecial<To>(__name)(specificStruct(fields))
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
@@ -272,7 +272,7 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
-export type GetModelProps<Self> = Self extends { Api: { fields: infer Fields } } ? Fields extends FieldRecord ? Fields
+export type GetClassProps<Self> = Self extends { Api: { fields: infer Fields } } ? Fields extends FieldRecord ? Fields
   : never
   : never
 
@@ -285,18 +285,18 @@ export interface PropsExtensions<Fields> {
 }
 
 // We don't want Copy interface from the official implementation
-export function ModelSpecial<To>(__name?: string) {
+export function ClassSpecial<To>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
     self: Self
-  ): Class<To, Self> & PropsExtensions<GetModelProps<Self>> => {
+  ): Class<To, Self> & PropsExtensions<GetClassProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
 
-export function ModelSpecialEnc<To, From>(__name?: string) {
+export function ClassSpecialEnc<To, From>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
     self: Self
-  ): ModelFrom<To, Self, From> & PropsExtensions<GetModelProps<Self>> => {
+  ): ClassFrom<To, Self, From> & PropsExtensions<GetClassProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
@@ -312,7 +312,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
   const parser = MO.Parser.for(schema)
 
   return class implements Hash.Hash, Equal.Equal {
-    static [nModelBrand] = nModelBrand
+    static [nClassBrand] = nClassBrand
 
     static [schemaField] = schema
     static [MO.SchemaContinuationSymbol] = schema

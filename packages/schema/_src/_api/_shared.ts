@@ -51,7 +51,7 @@ export function EParserFor<To, ConstructorInput, From, Api>(
   return MO.Parser.for(schema)
 }
 
-export type EncSchemaForModel<To, Self extends MO.SchemaAny, MEnc> = MO.Schema<
+export type EncSchemaForClass<To, Self extends MO.SchemaAny, MEnc> = MO.Schema<
   MO.ParserInputOf<Self>, // unknown lock to
   To,
   MO.ConstructorInputOf<Self>,
