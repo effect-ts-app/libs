@@ -106,7 +106,7 @@ function processNode(tc, root, writeFullTypes = false) {
             const t = tc.getTypeAtLocation(n);
             const result = { encoded: [], parsed: [] };
             const unions = {};
-            //console.log("$$$ props", t.getProperties().map(x => x.escapedName))
+            //console.log("$$$ fields", t.getProperties().map(x => x.escapedName))
             t.getProperties().forEach((c) => {
                 const method = c.name;
                 if (method === "encoded" || method === "parsed") {

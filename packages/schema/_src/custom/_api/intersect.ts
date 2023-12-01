@@ -14,7 +14,7 @@ import { lazy } from "./lazy.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
-export type IntersectionApi<Self, That> = Self & That extends { props: infer X } ? { props: { [k in keyof X]: X[k] } }
+export type IntersectionApi<Self, That> = Self & That extends { fields: infer X } ? { fields: { [k in keyof X]: X[k] } }
   : {}
 
 export type IntersectionSchema<
@@ -182,21 +182,21 @@ export function intersect_<
       return self.chain((a) => that.map((b) => ({ ...a, ...b })))
     }),
     S.mapApi(() => {
-      const props = {}
+      const fields = {}
       const anySelfApi = self.Api as any
-      if ("props" in anySelfApi) {
-        for (const k of Object.keys(anySelfApi["props"])) {
-          props[k] = self.Api["props"][k]
+      if ("fields" in anySelfApi) {
+        for (const k of Object.keys(anySelfApi["fields"])) {
+          fields[k] = self.Api["fields"][k]
         }
       }
       const anyThatApi = that.Api as any
-      if ("props" in anyThatApi) {
-        for (const k of Object.keys(anyThatApi["props"])) {
-          props[k] = anyThatApi["props"][k]
+      if ("fields" in anyThatApi) {
+        for (const k of Object.keys(anyThatApi["fields"])) {
+          fields[k] = anyThatApi["fields"][k]
         }
       }
-      if (Object.keys(props).length > 0) {
-        return { props } as IntersectionApi<Api, ThatApi>
+      if (Object.keys(fields).length > 0) {
+        return { fields } as IntersectionApi<Api, ThatApi>
       }
       return {} as IntersectionApi<Api, ThatApi>
     }),

@@ -29,17 +29,17 @@ export interface DBRecord<TKey extends string> {
 }
 
 export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
-  version: MO.prop(MO.string),
-  timestamp: MO.prop(MO.date),
-  data: MO.prop(MO.string)
+  version: MO.string,
+  timestamp: MO.date,
+  data: MO.string
 }) {}
 
 // unknown -> string -> SDB?
 export function makeSerialisedDBRecord(s: SchemaAny) {
   return MO.struct({
-    version: MO.prop(MO.number),
-    timestamp: MO.prop(MO.date),
-    data: MO.prop(s)
+    version: MO.number,
+    timestamp: MO.date,
+    data: s
   })
 }
 

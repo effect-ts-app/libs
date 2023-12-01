@@ -85,7 +85,7 @@ export interface MNModel<
 > extends
   MM<
     Self,
-    MO.Schema<unknown, To, ConstructorInput, From, { props: Fields }>,
+    MO.Schema<unknown, To, ConstructorInput, From, { fields: Fields }>,
     To,
     ConstructorInput,
     From,
@@ -103,7 +103,7 @@ export interface MM<
   From,
   Fields,
   ParsedShape2
-> extends MO.Schema<unknown, To, ConstructorInput, From, { props: Fields }> {
+> extends MO.Schema<unknown, To, ConstructorInput, From, { fields: Fields }> {
   new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
   readonly to: MO.To<Self>
@@ -151,7 +151,7 @@ export function MNModel<To, ConstructorInput, From, Fields>(
 }
 
 export function fromModel<To>(__name?: string) {
-  return <Fields extends FromPropertyRecord = {}>(props: Fields) => ModelSpecial<To>(__name)(fromProps(props))
+  return <Fields extends FromPropertyRecord = {}>(fields: Fields) => ModelSpecial<To>(__name)(fromProps(fields))
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
@@ -161,10 +161,10 @@ export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
 export type PropsToLenses<T, Fields extends MO.PropertyRecord> = {
   [K in keyof Fields]: Lens.Lens<T, MO.To<Fields[K]["_schema"]>>
 }
-export function lensFromProps<T>() {
-  return <Fields extends MO.PropertyRecord>(props: Fields): PropsToLenses<T, Fields> => {
+export function lensFromFields<T>() {
+  return <Fields extends MO.PropertyRecord>(fields: Fields): PropsToLenses<T, Fields> => {
     const id = Lens.id<T>()
-    return Object.keys(props).reduce((prev, cur) => {
+    return Object.keys(fields).reduce((prev, cur) => {
       prev[cur] = id.at(cur as any)
       return prev
     }, {} as any)
@@ -182,12 +182,12 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
   // })
 
   Object.defineProperty(schemed, "include", {
-    value: include(self.Api.props),
+    value: include(self.Api.fields),
     configurable: true
   })
 
   Object.defineProperty(schemed, "lenses", {
-    value: lensFromProps()(self.Api.props),
+    value: lensFromFields()(self.Api.fields),
     configurable: true
   })
   Object.defineProperty(schemed, "Api", {
@@ -272,13 +272,14 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
-export type GetModelProps<Self> = Self extends { Api: { props: infer Fields } } ? Fields extends PropertyRecord ? Fields
+export type GetModelProps<Self> = Self extends { Api: { fields: infer Fields } }
+  ? Fields extends PropertyRecord ? Fields
   : never
   : never
 
 export interface PropsExtensions<Fields> {
   include: <NewProps extends Record<string, AnyProperty>>(
-    fnc: (props: Fields) => NewProps
+    fnc: (fields: Fields) => NewProps
   ) => NewProps
   pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
   omit: <P extends keyof Fields>(...keys: readonly P[]) => Omit<Fields, P>
@@ -286,7 +287,7 @@ export interface PropsExtensions<Fields> {
 
 // We don't want Copy interface from the official implementation
 export function ModelSpecial<To>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+  return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
     self: Self
   ): Model<To, Self> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
@@ -294,7 +295,7 @@ export function ModelSpecial<To>(__name?: string) {
 }
 
 export function ModelSpecialEnc<To, From>(__name?: string) {
-  return <Self extends MO.SchemaAny & { Api: { props: any } }>(
+  return <Self extends MO.SchemaAny & { Api: { fields: any } }>(
     self: Self
   ): ModelFrom<To, Self, From> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
@@ -328,11 +329,11 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
     static Arbitrary = MO.Arbitrary.for(schema)
 
     static lens = Lens.id<any>()
-    static lenses = lensFromProps()(schema.Api.props)
+    static lenses = lensFromFields()(schema.Api.fields)
 
-    static include = include(schema.Api.props)
-    static pick = (...props: any[]) => pick(schema.Api.props, props)
-    static omit = (...props: any[]) => omit(schema.Api.props, props)
+    static include = include(schema.Api.fields)
+    static pick = (...fields: any[]) => pick(schema.Api.fields, fields)
+    static omit = (...fields: any[]) => omit(schema.Api.fields, fields)
 
     static annotate = <Meta>(identifier: MO.Annotation<Meta>, meta: Meta) =>
       new MO.SchemaAnnotated(self, identifier, meta)

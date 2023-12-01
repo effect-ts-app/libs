@@ -81,7 +81,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
       const result = { encoded: [] as string[], parsed: [] as string[] }
       const unions: Record<string, string> = {}
 
-      //console.log("$$$ props", t.getProperties().map(x => x.escapedName))
+      //console.log("$$$ fields", t.getProperties().map(x => x.escapedName))
       t.getProperties().forEach((c) => {
         const method = c.name
         if (method === "encoded" || method === "parsed") {

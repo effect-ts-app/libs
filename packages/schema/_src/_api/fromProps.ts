@@ -136,15 +136,15 @@ export function fromPropFrom<
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>,
   As1 extends PropertyKey
 >(
-  prop: FromProperty<Self, Optional, As, Def>,
+  field: FromProperty<Self, Optional, As, Def>,
   as: As1
 ): FromProperty<Self, Optional, Some<As1>, Def> {
   return new FromProperty(
     Option(as) as Some<As1>,
-    prop._schema,
-    prop._optional,
-    prop._def,
-    prop._map
+    field._schema,
+    field._optional,
+    field._def,
+    field._map
   )
 }
 
@@ -182,7 +182,7 @@ export type ShapeFromFromProperties<Fields extends FromPropertyRecord> = Compute
 export type ConstructorFromFromProperties<Fields extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: k extends TagsFromFromProps<Fields> ? never
+      [k in keyof Fields]: k extends TagsFromFromFields<Fields> ? never
         : Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
               readonly [h in k]?: S.To<Fields[k]["_schema"]>
             }
@@ -306,7 +306,7 @@ export type HasRequiredFromProperty<Fields extends FromPropertyRecord> = unknown
 //   >
 
 export const fromPropertiesIdentifier = S.makeAnnotation<{
-  props: FromPropertyRecord
+  fields: FromPropertyRecord
 }>()
 
 export type SchemaFromProperties<Fields extends FromPropertyRecord> = S.DefaultSchema<
@@ -314,10 +314,10 @@ export type SchemaFromProperties<Fields extends FromPropertyRecord> = S.DefaultS
   ShapeFromFromProperties<Fields>,
   ConstructorFromFromProperties<Fields>,
   EncodedFromFromProperties<Fields>,
-  { props: Fields }
+  { fields: Fields }
 >
 
-export type TagsFromFromProps<Fields extends FromPropertyRecord> = {
+export type TagsFromFromFields<Fields extends FromPropertyRecord> = {
   [k in keyof Fields]: Fields[k]["_as"] extends None<any>
     ? Fields[k]["_optional"] extends "required"
       ? S.ApiOf<Fields[k]["_schema"]> extends S.LiteralApi<infer KS> ? KS extends [string] ? k
@@ -335,21 +335,21 @@ export function isFromPropertyRecord(u: unknown): u is FromPropertyRecord {
   )
 }
 
-export function tagsFromFromProps<Fields extends FromPropertyRecord>(
-  props: Fields
+export function tagsFromFromFields<Fields extends FromPropertyRecord>(
+  fields: Fields
 ): Record<string, string> {
-  const keys = Object.keys(props)
+  const keys = Object.keys(fields)
   const tags = {}
   for (const key of keys) {
-    const s: S.SchemaAny = props[key]._schema
-    const def = props[key]._def as Option<
+    const s: S.SchemaAny = fields[key]._schema
+    const def = fields[key]._def as Option<
       ["parser" | "constructor" | "both", () => S.To<any>]
     >
-    const as = props[key]._as as Option<PropertyKey>
+    const as = fields[key]._as as Option<PropertyKey>
     if (
       as.isNone()
       && def.isNone()
-      && props[key]._optional === "required"
+      && fields[key]._optional === "required"
       && "literals" in s.Api
       && Array.isArray(s.Api["literals"])
       && s.Api["literals"].length === 1
@@ -362,27 +362,27 @@ export function tagsFromFromProps<Fields extends FromPropertyRecord>(
 }
 
 export function fromProps<Fields extends FromPropertyRecord>(
-  props: Fields
+  fields: Fields
 ): SchemaFromProperties<Fields> {
   const parsers = {} as Record<string, Parser.Parser<unknown, unknown, unknown>>
   const encoders = {}
   const guards = {}
   const arbitrariesReq = {} as Record<string, Arbitrary.Gen<unknown>>
   const arbitrariesPar = {} as Record<string, Arbitrary.Gen<unknown>>
-  const keys = Object.keys(props)
+  const keys = Object.keys(fields)
   const required = [] as string[]
   const defaults = [] as [string, [string, any]][]
 
   for (const key of keys) {
-    parsers[key] = Parser.for(props[key]._schema)
-    encoders[key] = Encoder.for(props[key]._schema)
-    guards[key] = Guard.for(props[key]._schema)
+    parsers[key] = Parser.for(fields[key]._schema)
+    encoders[key] = Encoder.for(fields[key]._schema)
+    guards[key] = Guard.for(fields[key]._schema)
 
-    if (props[key]._optional === "required") {
-      const def = props[key]._def as Option<
+    if (fields[key]._optional === "required") {
+      const def = fields[key]._def as Option<
         ["parser" | "constructor" | "both", () => S.To<any>]
       >
-      const as = props[key]._as as Option<string>
+      const as = fields[key]._as as Option<string>
 
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
         required.push(as.getOrElse(() => key))
@@ -391,9 +391,9 @@ export function fromProps<Fields extends FromPropertyRecord>(
         defaults.push([key, def.value])
       }
 
-      arbitrariesReq[key] = Arbitrary.for(props[key]._schema)
+      arbitrariesReq[key] = Arbitrary.for(fields[key]._schema)
     } else {
-      arbitrariesPar[key] = Arbitrary.for(props[key]._schema)
+      arbitrariesPar[key] = Arbitrary.for(fields[key]._schema)
     }
   }
 
@@ -405,7 +405,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     }
 
     for (const key of keys) {
-      const s = props[key]
+      const s = fields[key]
 
       if (s._optional === "required" && !(key in _)) {
         return false
@@ -455,18 +455,18 @@ export function fromProps<Fields extends FromPropertyRecord>(
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const key of keys) {
-      const prop = props[key]
-      const as = props[key]._as as Option<string>
+      const field = fields[key]
+      const as = fields[key]._as as Option<string>
       const _as: string = as.getOrElse(() => key)
 
-      const def = prop._def as Option<
+      const def = field._def as Option<
         ["parser" | "constructor" | "both", () => S.To<any>]
       >
 
       // TODO: support actual optionallity vs explicit `| undefined`
       if (_as in _) {
         const isUndefined = typeof _[_as] === "undefined"
-        if (prop._optional === "optional" && isUndefined) {
+        if (field._optional === "optional" && isUndefined) {
           continue
         }
         if (
@@ -484,7 +484,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
 
         if (res.effect._tag === "Left") {
           errors = errors.append(
-            prop._optional === "required"
+            field._optional === "required"
               ? S.requiredKeyE(_as, res.effect.left)
               : S.optionalKeyE(_as, res.effect.left)
           )
@@ -496,7 +496,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
 
           if (warnings._tag === "Some") {
             errors = errors.append(
-              prop._optional === "required"
+              field._optional === "required"
                 ? S.requiredKeyE(_as, warnings.value)
                 : S.optionalKeyE(_as, warnings.value)
             )
@@ -540,7 +540,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const as = props[key]._as as Option<string>
+        const as = fields[key]._as as Option<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }
@@ -557,7 +557,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     return _.record(req).chain((a) => _.record(par, { withDeletedKeys: true }).map((b) => intersect(a, b)))
   }
 
-  const tags = tagsFromFromProps(props)
+  const tags = tagsFromFromFields(fields)
 
   return pipe(
     S.identity(guard),
@@ -576,9 +576,9 @@ export function fromProps<Fields extends FromPropertyRecord>(
       }
       return Th.succeed(res)
     }),
-    S.mapApi(() => ({ props })),
+    S.mapApi(() => ({ fields })),
     S.withDefaults,
-    S.annotate(fromPropertiesIdentifier, { props })
+    S.annotate(fromPropertiesIdentifier, { fields })
   )
 }
 
@@ -701,7 +701,7 @@ export type ParserInputFromParserInputOrStructFrom<
 >
 
 export type ParserInputFromParserInputOrEncodedFromSchema<T> = T extends {
-  Api: { props: infer Fields }
+  Api: { fields: infer Fields }
 } ? Fields extends FromPropertyRecord ? ParserInputFromParserInputOrStructFrom<Fields>
   : never
   : never
@@ -734,7 +734,7 @@ export type ParserInputFromStructFrom<Fields extends FromPropertyRecord> = Compu
 >
 
 export type ParserInputFromEncodedFromSchema<T> = T extends {
-  Api: { props: infer Fields }
+  Api: { fields: infer Fields }
 } ? Fields extends FromPropertyRecord ? ParserInputFromStructFrom<Fields>
   : never
   : never

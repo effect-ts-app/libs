@@ -33,15 +33,15 @@ export function spread<
   Fields extends Record<any, any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   NewProps
->(props: Fields, fnc: (props: Fields) => NewProps) {
-  return fnc(props)
+>(fields: Fields, fnc: (fields: Fields) => NewProps) {
+  return fnc(fields)
 }
 
 export function spreadS<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Fields extends Record<any, any>
->(props: Fields, fnc: (props: Fields) => Fields) {
-  return fnc(props)
+>(fields: Fields, fnc: (fields: Fields) => Fields) {
+  return fnc(fields)
 }
 
 export function makeAzureFriendly(path: string) {

@@ -24,14 +24,13 @@ import {
   makeAnnotation,
   named,
   nonEmptyStringFromString,
-  prop,
   refine
 } from "@effect-app/schema"
 import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { curriedMagix } from "../Function.js"
-import type { To, ReasonableStringBrand, UnionBrand } from "./_schema.js"
+import type { ReasonableStringBrand, To, UnionBrand } from "./_schema.js"
 import {
   Arbitrary,
   arbitrary,
@@ -48,7 +47,7 @@ import {
 } from "./_schema.js"
 
 export function tag<K extends string>(tag: K) {
-  return prop(literal(tag))
+  return literal(tag)
 }
 
 export const stringPositiveIntIdentifier = makeAnnotation<{}>()

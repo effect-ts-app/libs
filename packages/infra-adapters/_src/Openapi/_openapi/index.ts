@@ -159,9 +159,9 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
             ...meta,
             oneOf: yield* $(
               Object
-                .keys(schemaMeta.props)
+                .keys(schemaMeta.fields)
                 .forEachEffect(
-                  (x) => processId(schemaMeta.props[x])
+                  (x) => processId(schemaMeta.fields[x])
                 )
             ) as any,
             discriminator: (schemaMeta.tag as Option<any>)
@@ -290,8 +290,8 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
         case propertiesIdentifier: {
           const properties: Record<string, any> = {}
           const required: string[] = []
-          for (const k in schemaMeta.props) {
-            const p: MO.AnyProperty = schemaMeta.props[k]
+          for (const k in schemaMeta.fields) {
+            const p: MO.AnyProperty = schemaMeta.fields[k]
             properties[k] = yield* $(processId(p["_schema"]))
             if (p["_optional"] === "required") {
               required.push(k)

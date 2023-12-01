@@ -1,12 +1,5 @@
 import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
-import type {
-  AnyProperty,
-  From,
-  To,
-  Property,
-  PropertyRecord,
-  SchemaAny
-} from "@effect-app/prelude/schema"
+import type { AnyProperty, From, Property, PropertyRecord, SchemaAny, To } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -25,12 +18,12 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromProps<Fields extends PropertyRecord>(
-  props: Fields
+export function buildFieldInfoFromFields<Fields extends PropertyRecord>(
+  fields: Fields
 ) {
-  return props.$$.keys.reduce(
+  return fields.$$.keys.reduce(
     (prev, cur) => {
-      prev[cur] = buildFieldInfo(props[cur] as AnyProperty, cur)
+      prev[cur] = buildFieldInfo(fields[cur] as AnyProperty, cur)
       return prev
     },
     {} as {
@@ -202,22 +195,21 @@ export const buildFormFromSchema = <
     To,
     ConstructorInput,
     From,
-    { props: Fields }
+    { fields: Fields }
   >,
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromProps(s.Api.props)
+  const fields = buildFieldInfoFromFields(s.Api.fields)
   const parse = unsafe(Schema.Parser.for(s))
   const isDirty = ref(false)
   const isValid = ref(true)
 
-  const submit1 =
-    <A>(onSubmit: (a: To) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
-      const r = await e
-      if (!r.valid) return
-      return onSubmit(parse(state.value))
-    }
+  const submit1 = <A>(onSubmit: (a: To) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+    const r = await e
+    if (!r.valid) return
+    return onSubmit(parse(state.value))
+  }
   const submit = submit1(onSubmit)
 
   watch(

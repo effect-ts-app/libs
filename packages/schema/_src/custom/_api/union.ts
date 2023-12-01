@@ -9,7 +9,7 @@ import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import type { ParserEnv } from "../Parser.js"
 import * as Th from "../These.js"
-import { isPropertyRecord, tagsFromProps } from "./properties.js"
+import { isPropertyRecord, tagsFromFields } from "./properties.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
@@ -137,7 +137,7 @@ export type SchemaUnion<Fields extends Record<PropertyKey, S.SchemaUPI>> = Defau
 >
 
 export const unionIdentifier = S.makeAnnotation<{
-  props: Record<PropertyKey, S.SchemaUPI>
+  fields: Record<PropertyKey, S.SchemaUPI>
   tag: Option<{
     key: string
     index: D.Dictionary<string>
@@ -147,23 +147,23 @@ export const unionIdentifier = S.makeAnnotation<{
 }>()
 
 export function union<Fields extends Record<PropertyKey, S.SchemaUPI>>(
-  props: Fields & EnforceNonEmptyRecord<Fields>
+  fields: Fields & EnforceNonEmptyRecord<Fields>
 ): SchemaUnion<Fields> {
-  const parsers = D.map_(props, Parser.for)
-  const guards = D.map_(props, Guard.for)
-  const encoders = D.map_(props, Encoder.for)
-  const arbitraries = D.map_(props, Arbitrary.for)
+  const parsers = D.map_(fields, Parser.for)
+  const guards = D.map_(fields, Guard.for)
+  const encoders = D.map_(fields, Encoder.for)
+  const arbitraries = D.map_(fields, Arbitrary.for)
 
-  const keys = Object.keys(props)
+  const keys = Object.keys(fields)
 
-  const entries = D.collect_(props, (k, v) => [k, v] as const)
+  const entries = D.collect_(fields, (k, v) => [k, v] as const)
 
   const entriesTags = entries.map(
     ([k, s]) =>
       [
         k,
-        "props" in s.Api && isPropertyRecord(s.Api["props"])
-          ? tagsFromProps(s.Api["props"])
+        "fields" in s.Api && isPropertyRecord(s.Api["fields"])
+          ? tagsFromFields(s.Api["fields"])
           : {}
       ] as const
   )
@@ -341,6 +341,6 @@ export function union<Fields extends Record<PropertyKey, S.SchemaUPI>>(
       } as UnionApi<Fields>)
     ),
     withDefaults,
-    S.annotate(unionIdentifier, { props, tag })
+    S.annotate(unionIdentifier, { fields, tag })
   )
 }

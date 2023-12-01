@@ -128,7 +128,7 @@ export function propDef<
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
-  prop: Property<Self, Optional, As, Def>,
+  field: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never]
 ): Property<Self, Optional, As, Some<["both", () => S.To<Self>]>>
@@ -139,7 +139,7 @@ export function propDef<
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
-  prop: Property<Self, Optional, As, Def>,
+  field: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never],
   k: K
@@ -150,7 +150,7 @@ export function propDef<
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
 >(
-  prop: Property<Self, Optional, As, Def>,
+  field: Property<Self, Optional, As, Def>,
   _: Optional extends "required" ? () => S.To<Self>
     : ["default can be set only for required properties", never],
   k?: "parser" | "constructor" | "both"
@@ -162,12 +162,12 @@ export function propDef<
 > {
   // @ts-expect-error
   return new Property(
-    prop._as,
-    prop._schema,
-    prop._optional,
+    field._as,
+    field._schema,
+    field._optional,
     // @ts-expect-error
     Option([k ?? "both", _]),
-    prop._map
+    field._map
   )
 }
 
@@ -177,8 +177,8 @@ export function propOpt<
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
->(prop: Property<Self, Optional, As, Def>): Property<Self, "optional", As, Def> {
-  return new Property(prop._as, prop._schema, "optional", prop._def, prop._map)
+>(field: Property<Self, Optional, As, Def>): Property<Self, "optional", As, Def> {
+  return new Property(field._as, field._schema, "optional", field._def, field._map)
 }
 
 /** @tsplus getter ets/Schema/Property required */
@@ -187,8 +187,8 @@ export function propReq<
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>
->(prop: Property<Self, Optional, As, Def>): Property<Self, "required", As, Def> {
-  return new Property(prop._as, prop._schema, "required", prop._def, prop._map)
+>(field: Property<Self, Optional, As, Def>): Property<Self, "required", As, Def> {
+  return new Property(field._as, field._schema, "required", field._def, field._map)
 }
 
 /** @tsplus fluent ets/Schema/Property from */
@@ -199,19 +199,19 @@ export function propFrom<
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>,
   As1 extends PropertyKey
 >(
-  prop: Property<Self, Optional, As, Def>,
+  field: Property<Self, Optional, As, Def>,
   as: As1
 ): Property<Self, Optional, Some<As1>, Def> {
   return new Property(
     Option(as) as Some<As1>,
-    prop._schema,
-    prop._optional,
-    prop._def,
-    prop._map
+    field._schema,
+    field._optional,
+    field._def,
+    field._map
   )
 }
 
-export function prop<Self extends S.SchemaUPI>(
+export function field<Self extends S.SchemaUPI>(
   schema: Self
 ): Property<Self, "required", None<any>, None<any>> {
   return new Property(
@@ -240,7 +240,7 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   return typedKeysOf(propsOrSchemas).reduce(
     (prev, cur) => {
       const v = propsOrSchemas[cur]
-      prev[cur] = v instanceof Property ? v as any : prop(v)
+      prev[cur] = v instanceof Property ? v as any : field(v)
       return prev
     },
     {} as ToProps<ProvidedProps>
@@ -265,7 +265,7 @@ export type StructTo<Fields extends PropertyRecord> = Compute<
 export type StructConstructor<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: k extends TagsFromProps<Fields> ? never
+      [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
         : Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
               readonly [h in k]?: S.To<Fields[k]["_schema"]>
             }
@@ -369,17 +369,17 @@ export type ParserErrorFromProperties<Fields extends PropertyRecord> = S.Composi
   >
 >
 
-export const propertiesIdentifier = S.makeAnnotation<{ props: PropertyRecord }>()
+export const propertiesIdentifier = S.makeAnnotation<{ fields: PropertyRecord }>()
 
 export type SchemaProperties<Fields extends PropertyRecord> = DefaultSchema<
   unknown,
   StructTo<Fields>,
   StructConstructor<Fields>,
   StructFrom<Fields>,
-  { props: Fields }
+  { fields: Fields }
 >
 
-export type TagsFromProps<Fields extends PropertyRecord> = {
+export type TagsFromFields<Fields extends PropertyRecord> = {
   [k in keyof Fields]: Fields[k]["_as"] extends None<any>
     ? Fields[k]["_optional"] extends "required"
       ? S.ApiOf<Fields[k]["_schema"]> extends LiteralApi<infer KS> ? KS extends [string] ? k
@@ -397,21 +397,21 @@ export function isPropertyRecord(u: unknown): u is PropertyRecord {
   )
 }
 
-export function tagsFromProps<Fields extends PropertyRecord>(
-  props: Fields
+export function tagsFromFields<Fields extends PropertyRecord>(
+  fields: Fields
 ): Record<string, string> {
-  const keys = Object.keys(props)
+  const keys = Object.keys(fields)
   const tags = {}
   for (const key of keys) {
-    const s: S.SchemaUPI = props[key]._schema
-    const def = props[key]._def as Option<
+    const s: S.SchemaUPI = fields[key]._schema
+    const def = fields[key]._def as Option<
       ["parser" | "constructor" | "both", () => S.To<any>]
     >
-    const as = props[key]._as as Option<PropertyKey>
+    const as = fields[key]._as as Option<PropertyKey>
     if (
       as.isNone()
       && def.isNone()
-      && props[key]._optional === "required"
+      && fields[key]._optional === "required"
       && "literals" in s.Api
       && Array.isArray(s.Api["literals"])
       && s.Api["literals"].length === 1
@@ -427,36 +427,36 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   _props: ProvidedProps
 ): SchemaProperties<ToProps<ProvidedProps>> {
   type Fields = ToProps<ProvidedProps>
-  const props = toProps(_props)
+  const fields = toProps(_props)
   const parsers = {} as Record<string, Parser.Parser<unknown, unknown, unknown>>
   const encoders = {}
   const guards = {}
   const arbitrariesReq = {} as Record<string, Arbitrary.Gen<unknown>>
   const arbitrariesPar = {} as Record<string, Arbitrary.Gen<unknown>>
-  const keys = Object.keys(props)
+  const keys = Object.keys(fields)
   const required = [] as string[]
   const defaults = [] as [string, [string, any]][]
 
   for (const key of keys) {
-    parsers[key] = Parser.for(props[key]._schema)
-    encoders[key] = Encoder.for(props[key]._schema)
-    guards[key] = Guard.for(props[key]._schema)
+    parsers[key] = Parser.for(fields[key]._schema)
+    encoders[key] = Encoder.for(fields[key]._schema)
+    guards[key] = Guard.for(fields[key]._schema)
 
-    if (props[key]._optional === "required") {
-      const def = props[key]._def as Option<
+    if (fields[key]._optional === "required") {
+      const def = fields[key]._def as Option<
         ["parser" | "constructor" | "both", () => S.To<any>]
       >
       if (def.isNone() || (def.isSome() && def.value[0] === "constructor")) {
-        const as = props[key]._as as Option<string>
+        const as = fields[key]._as as Option<string>
         required.push(as.getOrElse(() => key))
       }
       if (def.isSome() && (def.value[0] === "constructor" || def.value[0] === "both")) {
         defaults.push([key, def.value])
       }
 
-      arbitrariesReq[key] = Arbitrary.for(props[key]._schema)
+      arbitrariesReq[key] = Arbitrary.for(fields[key]._schema)
     } else {
-      arbitrariesPar[key] = Arbitrary.for(props[key]._schema)
+      arbitrariesPar[key] = Arbitrary.for(fields[key]._schema)
     }
   }
 
@@ -468,7 +468,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     }
 
     for (const key of keys) {
-      const s = props[key]
+      const s = fields[key]
 
       if (s._optional === "required" && !(key in _)) {
         return false
@@ -522,17 +522,17 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     const parsersv2 = env?.cache ? env.cache.getOrSetParsers(parsers) : parsers
 
     for (const key of keys) {
-      const prop = props[key]
-      const as = props[key]._as as Option<string>
+      const field = fields[key]
+      const as = fields[key]._as as Option<string>
       const _as: string = as.getOrElse(() => key)
 
-      const def = prop._def as Option<
+      const def = field._def as Option<
         ["parser" | "constructor" | "both", () => S.To<any>]
       >
       // TODO: support actual optionallity vs explicit `| undefined`
       if (_as in _) {
         const isUndefined = typeof _[_as] === "undefined"
-        if (prop._optional === "optional" && isUndefined) {
+        if (field._optional === "optional" && isUndefined) {
           continue
         }
         if (
@@ -550,7 +550,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
         if (res.effect._tag === "Left") {
           errors = errors.append(
-            prop._optional === "required"
+            field._optional === "required"
               ? S.requiredKeyE(_as, res.effect.left)
               : S.optionalKeyE(_as, res.effect.left)
           )
@@ -562,7 +562,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
           if (warnings._tag === "Some") {
             errors = errors.append(
-              prop._optional === "required"
+              field._optional === "required"
                 ? S.requiredKeyE(_as, warnings.value)
                 : S.optionalKeyE(_as, warnings.value)
             )
@@ -605,7 +605,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
     for (const key of keys) {
       if (key in _) {
-        const as = props[key]._as as Option<string>
+        const as = fields[key]._as as Option<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
       }
@@ -622,7 +622,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return _.record(req).chain((a) => _.record(par, { withDeletedKeys: true }).map((b) => intersect(a, b)))
   }
 
-  const tags = tagsFromProps(props)
+  const tags = tagsFromFields(fields)
 
   return pipe(
     S.identity(guard),
@@ -641,9 +641,9 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
       }
       return Th.succeed(res)
     }),
-    S.mapApi(() => ({ props })),
+    S.mapApi(() => ({ fields })),
     withDefaults,
-    S.annotate(propertiesIdentifier, { props })
+    S.annotate(propertiesIdentifier, { fields })
   )
 }
 
@@ -748,11 +748,11 @@ export function defProp<Self extends S.SchemaUPI>(
   makeDefault: () => S.To<Self>,
   optionality: Optionality = "constructor"
 ) {
-  return propDef(prop(schema), makeDefault, optionality)
+  return propDef(field(schema), makeDefault, optionality)
 }
 
 export function optProp<Self extends S.SchemaUPI>(
   schema: Self
 ): Property<Self, "optional", None<any>, None<any>> {
-  return propOpt(prop(schema))
+  return propOpt(field(schema))
 }

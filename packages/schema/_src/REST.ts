@@ -195,8 +195,8 @@ export function QueryRequest<M>(__name?: string) {
     OrAny<Erase<typeof _.path & typeof _.query, MO.SchemaAny>>
   > {
     const self: MO.SchemaAny = MO.struct({
-      ..._.query?.Api.props,
-      ..._.path?.Api.props
+      ..._.query?.Api.fields,
+      ..._.path?.Api.fields
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
@@ -447,9 +447,9 @@ export function BodyRequest<M>(__name?: string) {
     OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, MO.SchemaAny>>
   > {
     const self: MO.SchemaAny = MO.struct({
-      ..._.body?.Api.props,
-      ..._.query?.Api.props,
-      ..._.path?.Api.props
+      ..._.body?.Api.fields,
+      ..._.query?.Api.fields,
+      ..._.path?.Api.fields
     })
     const schema = self >= MO.annotate(reqId, {})
     // @ts-expect-error the following is correct
@@ -547,11 +547,11 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Conf
       Config
     >
     function a<ProvidedProps extends MO.PropertyOrSchemaRecord>(
-      props: ProvidedProps
+      fields: ProvidedProps
     ): BuildRequest<MO.ToProps<ProvidedProps>, Path, Method, M, Config>
-    function a<Fields extends MO.PropertyOrSchemaRecord>(props?: Fields) {
+    function a<Fields extends MO.PropertyOrSchemaRecord>(fields?: Fields) {
       const req = Req<M>(__name)
-      const r = props ? req(method, path, MO.struct(props), config) : req(method, path, config)
+      const r = fields ? req(method, path, MO.struct(fields), config) : req(method, path, config)
       return r
     }
 
@@ -648,10 +648,10 @@ export function makeRequest<
 ): BuildRequest<Fields, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
   // TODO: path struct must be parsed "from string"
-  const remainProps = { ...self.Api.props }
+  const remainProps = { ...self.Api.fields }
   const pathProps = pathParams.length
     ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
-      prev[cur] = self.Api.props[cur]
+      prev[cur] = self.Api.fields[cur]
       delete remainProps[cur]
       return prev
     }, {} as Record<PathParams<Path>, any>)
@@ -660,7 +660,7 @@ export function makeRequest<
   const dest = method === "GET" || method === "DELETE" ? "query" : "body"
   const newSchema = {
     path: pathProps ? MO.struct(pathProps) : undefined,
-    // TODO: query props must be parsed "from string"
+    // TODO: query fields must be parsed "from string"
 
     [dest]: MO.struct(remainProps)
   }

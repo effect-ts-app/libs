@@ -41,7 +41,7 @@ export type DefaultSchema<ParserInput, To, ConstructorInput, From, Api> =
   & SchemaDefaultSchema<ParserInput, To, ConstructorInput, From, Api>
   & CarryFromApi<Api>
 
-const carryOver = ["matchW", "matchS", "props"] as const
+const carryOver = ["matchW", "matchS", "fields"] as const
 
 type CarryOverFromApi = typeof carryOver[number]
 

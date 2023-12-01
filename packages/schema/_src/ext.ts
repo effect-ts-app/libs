@@ -16,7 +16,7 @@ import { propDef, propOpt, propReq } from "./_schema.js"
 // We're using getters with curried functions, instead of fluent functions, so that they can be used directly in lambda callbacks
 
 import type { AnyError, Schema, SchemaUnion, SchemaUPI } from "./custom.js"
-import { drawError, nullable, prop, unsafe } from "./custom.js"
+import { drawError, field, nullable, unsafe } from "./custom.js"
 import type { These } from "./custom/These.js"
 import type { OptionalConstructor } from "./tools.js"
 import { Parser } from "./vendor.js"
@@ -392,7 +392,7 @@ export function defaultProp(
   schema: MO.Schema<unknown, any, any, any, any>,
   makeDefault?: () => any
 ) {
-  return makeDefault ? MO.defProp(schema, makeDefault) : MO.prop(schema) >= withDefault
+  return makeDefault ? MO.defProp(schema, makeDefault) : MO.field(schema) >= withDefault
 }
 
 export function defaultInputProp<To, ConstructorInput, From, Api>(
@@ -463,7 +463,7 @@ export function defaultInputProp(
 ) {
   return makeDefault
     ? MO.defProp(schema, makeDefault, "both")
-    : MO.prop(schema) >= withInputDefault
+    : MO.field(schema) >= withInputDefault
 }
 
 // TODO: support schema mix with property
@@ -625,7 +625,7 @@ export function makeUnorderedNonEmptySet<To, ConstructorInput, From, Api>(
 export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
-  Api: { props: infer Fields }
+  Api: { fields: infer Fields }
 } ? Fields extends MO.PropertyRecord ? MO.ParserInputFromProperties<Fields>
   : never
   : never
@@ -1033,15 +1033,15 @@ export const withDefaultMake = <To, ConstructorInput, From, Api>(
 export const fromPropProp = <To, ConstructorInput, From, Api, As1 extends PropertyKey>(
   schema: Schema<unknown, To, ConstructorInput, From, Api>,
   as: As1
-) => prop(schema).from(as)
+) => field(schema).from(as)
 
 export type SchemaFrom<Cls extends { Model: MO.SchemaAny }> = Cls["Model"]
 
-export type GetProps<Cls extends { Api: { props: MO.PropertyRecord } }> = // Transform<
-  Cls["Api"]["props"]
+export type GetProps<Cls extends { Api: { fields: MO.PropertyRecord } }> = // Transform<
+  Cls["Api"]["fields"]
 
 export type GetProvidedProps<
-  Cls extends { [MO.schemaField]: { Api: { props: MO.PropertyRecord } } }
+  Cls extends { [MO.schemaField]: { Api: { fields: MO.PropertyRecord } } }
 > = GetProps<Cls[MO.schemaField]>
 // Cls["ProvidedProps"] //Transform<
 
@@ -1082,7 +1082,7 @@ export function enhanceClassUnion<
   CI
 >(u: MO.DefaultSchema<any, A, CI, E, MO.UnionApi<T>>, name?: string) {
   if (name) u = u.pipe(MO.named(name)) as typeof u
-  const members = findAnnotation(u, MO.unionIdentifier)!.props as T
+  const members = findAnnotation(u, MO.unionIdentifier)!.fields as T
 
   const entries = Object.entries(members)
   const as = entries.reduce((prev, [key, value]) => {
@@ -1159,7 +1159,7 @@ export function smartUnion<T extends Record<PropertyKey, SchemaUPI>>(
 export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>(
   u: MO.DefaultSchema<any, A, CI, E, MO.UnionApi<T>>
 ) {
-  const members = findAnnotation(u, MO.unionIdentifier)!.props as T
+  const members = findAnnotation(u, MO.unionIdentifier)!.fields as T
   const entries = Object.entries(members)
   // const as = entries.reduce((prev, [key, value]) => {
   //   prev[key] = Constructor.for(value)
@@ -1332,14 +1332,14 @@ export function replace<S, T>(l: PreparedLens<S, T>) {
 }
 
 export function makePreparedLenses<S, Fields extends MO.PropertyRecord>(
-  props: Fields,
+  fields: Fields,
   s: S
 ): { [K in keyof Fields]: PreparedLens<S, MO.To<Fields[K]["_schema"]>> } {
   function makeLens<T>(l: Lens<S, T>) {
     return new PreparedLens(s, l)
   }
   const id = Optic.id<S>()
-  return Object.keys(props).reduce((prev, cur) => {
+  return Object.keys(fields).reduce((prev, cur) => {
     prev[cur] = makeLens(id.at(cur as any))
     return prev
   }, {} as any)

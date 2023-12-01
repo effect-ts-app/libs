@@ -5,17 +5,17 @@ import { flow, pipe } from "@effect-app/core/Function"
 import * as MO from "./_schema.js"
 import { Constructor, Parser, These as Th } from "./_schema.js"
 
-export function include<Fields extends Record<string, MO.AnyProperty>>(props: Fields) {
+export function include<Fields extends Record<string, MO.AnyProperty>>(fields: Fields) {
   return <NewProps extends Record<string, MO.AnyProperty>>(
-    fnc: (props: Fields) => NewProps
-  ) => include_(props, fnc)
+    fnc: (fields: Fields) => NewProps
+  ) => include_(fields, fnc)
 }
 
 export function include_<
   Fields extends Record<string, MO.AnyProperty>,
   NewProps extends Record<string, MO.AnyProperty>
->(props: Fields, fnc: (props: Fields) => NewProps) {
-  return fnc(props)
+>(fields: Fields, fnc: (fields: Fields) => NewProps) {
+  return fnc(fields)
 }
 
 export function onParseOrConstruct<
