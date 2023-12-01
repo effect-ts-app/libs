@@ -56,12 +56,12 @@ const cache = new WeakMap()
 
 export function collectAnnotationsFor<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  schema: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  schema: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): CollectAnnotations {
   if (cache.has(schema)) {
     return cache.get(schema)

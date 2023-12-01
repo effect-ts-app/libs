@@ -1,35 +1,35 @@
 import { pipe } from "@effect-app/core/Function"
 
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import { domainEE, domainResponse2, onParseOrConstruct } from "../utils.js"
 import { Parser, These } from "../vendor.js"
 import { extendWithUtils } from "./_shared.js"
 
-export const fromDateIdentifier = MO.makeAnnotation<{}>()
-export const fromDate: MO.DefaultSchema<Date, Date, Date, Date, {}> = pipe(
-  MO.identity((u): u is Date => u instanceof Date),
-  MO.arbitrary((_) => _.date()),
-  MO.mapApi(() => ({})),
-  MO.withDefaults,
-  MO.annotate(fromDateIdentifier, {})
+export const fromDateIdentifier = S.makeAnnotation<{}>()
+export const fromDate: S.DefaultSchema<Date, Date, Date, Date, {}> = pipe(
+  S.identity((u): u is Date => u instanceof Date),
+  S.arbitrary((_) => _.date()),
+  S.mapApi(() => ({})),
+  S.withDefaults,
+  S.annotate(fromDateIdentifier, {})
 )
 
-const parseDate = Parser.for(MO.date)
+const parseDate = Parser.for(S.date)
 
-export const fromStringOrDateIdentifier = MO.makeAnnotation<{}>()
-export const fromStringOrDate: MO.DefaultSchema<string | Date, Date, Date, string, {}> = pipe(
-  MO.identity((u): u is Date => u instanceof Date),
-  MO.parser((u, env) => (u instanceof Date ? These.succeed(u) : parseDate(u, env))),
-  MO.arbitrary((_) => _.date()),
-  MO.encoder((_) => _.toISOString()),
-  MO.mapApi(() => ({})),
-  MO.withDefaults,
-  MO.annotate(fromStringOrDateIdentifier, {})
+export const fromStringOrDateIdentifier = S.makeAnnotation<{}>()
+export const fromStringOrDate: S.DefaultSchema<string | Date, Date, Date, string, {}> = pipe(
+  S.identity((u): u is Date => u instanceof Date),
+  S.parser((u, env) => (u instanceof Date ? These.succeed(u) : parseDate(u, env))),
+  S.arbitrary((_) => _.date()),
+  S.encoder((_) => _.toISOString()),
+  S.mapApi(() => ({})),
+  S.withDefaults,
+  S.annotate(fromStringOrDateIdentifier, {})
 )
 
 export const FutureDateFromDate = fromDate.pipe(
   onParseOrConstruct((i) => {
-    const errors: MO.AnyError[] = []
+    const errors: S.AnyError[] = []
     if (i < new Date()) {
       errors.push(domainEE("Date is not in the future"))
     }
@@ -39,7 +39,7 @@ export const FutureDateFromDate = fromDate.pipe(
 
 export const FutureDateFromStringOrDate = fromStringOrDate.pipe(
   onParseOrConstruct((i) => {
-    const errors: MO.AnyError[] = []
+    const errors: S.AnyError[] = []
     if (i < new Date()) {
       errors.push(domainEE("Date is not in the future"))
     }
@@ -47,5 +47,5 @@ export const FutureDateFromStringOrDate = fromStringOrDate.pipe(
   })
 )
 
-export const FutureDate = extendWithUtils(MO.date[">>>"](FutureDateFromDate))
-export type FutureDate = MO.ParsedShapeOf<typeof FutureDate>
+export const FutureDate = extendWithUtils(S.date[">>>"](FutureDateFromDate))
+export type FutureDate = S.To<typeof FutureDate>

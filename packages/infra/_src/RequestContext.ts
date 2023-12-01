@@ -1,16 +1,16 @@
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 
 @useClassFeaturesForSchema
-export class RequestContextParent extends MNModel<
+export class RequestContextParent extends ExtendedClass<
   RequestContextParent,
   RequestContextParent.ConstructorInput,
-  RequestContextParent.Encoded,
-  RequestContextParent.Props
+  RequestContextParent.From,
+  RequestContextParent.Fields
 >()({
   _tag: literal("RequestContext"),
   id: RequestId,
   name: ReasonableString,
-  userProfile: props({ sub: prop(UserProfileId) }).optional,
+  userProfile: struct({ sub: UserProfileId }).optional,
   locale: literal("en", "de"),
   createdAt: date.withDefault
 }) {}
@@ -20,11 +20,11 @@ export class RequestContextParent extends MNModel<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends MNModel<
+export class RequestContext extends ExtendedClass<
   RequestContext,
   RequestContext.ConstructorInput,
-  RequestContext.Encoded,
-  RequestContext.Props
+  RequestContext.From,
+  RequestContext.Fields
 >()({
   ...RequestContextParent.omit("id"),
   id: RequestId.withDefault,
@@ -61,23 +61,23 @@ export class RequestContext extends MNModel<
 /* eslint-disable */
 export namespace RequestContextParent {
   /**
-   * @tsplus type RequestContextParent.Encoded
-   * @tsplus companion RequestContextParent.Encoded/Ops
+   * @tsplus type RequestContextParent.From
+   * @tsplus companion RequestContextParent.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof RequestContextParent>() {}
+  export class From extends FromClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof RequestContextParent> {}
-  export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
+    extends ConstructorInputApi<typeof RequestContextParent> {}
+  export interface Fields extends FieldsClass<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
-   * @tsplus type RequestContext.Encoded
-   * @tsplus companion RequestContext.Encoded/Ops
+   * @tsplus type RequestContext.From
+   * @tsplus companion RequestContext.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof RequestContext>() {}
+  export class From extends FromClass<typeof RequestContext>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof RequestContext> {}
-  export interface Props extends GetProvidedProps<typeof RequestContext> {}
+    extends ConstructorInputApi<typeof RequestContext> {}
+  export interface Fields extends FieldsClass<typeof RequestContext> {}
 }
 /* eslint-enable */
 //

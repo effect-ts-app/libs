@@ -16,31 +16,31 @@
         "prefix": "moc",
         "body": [
             "@useClassFeaturesForSchema",
-            "export class $1 extends ModelEnc<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.Encoded, $1.Props> ()({",
+            "export class $1 extends ExtendedClass<$1, $1.ConstructorInput, $1.From, $1.Fields> ()({",
             "$2",
             "}) {}"
         ],
-        "description": "Defines a Model signature"
+        "description": "Defines a Class signature"
     },
-    "Model": {
+    "Class": {
         "prefix": "mo",
         "body": [
             "@useClassFeaturesForSchema",
-            "export class $1 extends Model<$1>()({$2}) {}",
+            "export class $1 extends Class<$1>()({$2}) {}",
             ""
         ],
-        "description": "Defines a Model signature"
+        "description": "Defines a Class signature"
     },
     "UnionOpaque": {
         "prefix": "un",
         "body": [
             "const $1__ = union({ $2 })",
-            "const $1_ = enhanceClassUnion(OpaqueSchema<$1, $1.Encoded>()($1__))",
-            "export type $1 = ParsedShapeOfCustom<typeof $1__> & UnionBrand",
+            "const $1_ = enhanceClassUnion(OpaqueSchema<$1, $1.From>()($1__))",
+            "export type $1 = To<typeof $1__> & UnionBrand",
             "export interface $1Schema extends Identity<typeof $1_> {}",
             "export const $1: $1Schema = $1_",
             "export namespace $1 {",
-            "  export type Encoded = EncodedOf<typeof $1__> & UnionBrand",
+            "  export type From = S.From<typeof $1__> & UnionBrand",
             "}"
         ]
     },
@@ -87,7 +87,7 @@
     "Response": {
         "prefix": "res",
         "body": [
-            "export class Response extends Model<Response()({$1}) {}",
+            "export class Response extends Class<Response()({$1}) {}",
             ""
         ],
         "description": "Defines a Response signature"

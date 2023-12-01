@@ -4,82 +4,84 @@ export type OperationId = StringId
 export const OperationId = StringId
 
 @useClassFeaturesForSchema
-export class OperationProgress extends MNModel<
+export class OperationProgress extends ExtendedClass<
   OperationProgress,
   OperationProgress.ConstructorInput,
-  OperationProgress.Encoded,
-  OperationProgress.Props
+  OperationProgress.From,
+  OperationProgress.Fields
 >()({
   completed: PositiveInt,
   total: PositiveInt
 }) {}
 
 @useClassFeaturesForSchema
-export class Success extends MNModel<Success, Success.ConstructorInput, Success.Encoded, Success.Props>()({
+export class Success extends ExtendedClass<Success, Success.ConstructorInput, Success.From, Success.Fields>()({
   _tag: literal("Success"),
   message: LongString.nullable.withDefault
 }) {}
 
 @useClassFeaturesForSchema
-export class Failure extends MNModel<Failure, Failure.ConstructorInput, Failure.Encoded, Failure.Props>()({
+export class Failure extends ExtendedClass<Failure, Failure.ConstructorInput, Failure.From, Failure.Fields>()({
   _tag: literal("Failure"),
   message: LongString.nullable.withDefault
 }) {}
 
 export const OperationResult = union({ Success, Failure })
-export type OperationResult = ParsedShapeOfCustom<typeof OperationResult>
+export type OperationResult = To<typeof OperationResult>
 
 @useClassFeaturesForSchema
-export class Operation extends MNModel<Operation, Operation.ConstructorInput, Operation.Encoded, Operation.Props>()({
-  id: OperationId,
-  progress: OperationProgress.optional,
-  result: OperationResult.optional,
-  createdAt: date.withDefault,
-  updatedAt: date.nullable.withDefault
-}) {}
+export class Operation
+  extends ExtendedClass<Operation, Operation.ConstructorInput, Operation.From, Operation.Fields>()({
+    id: OperationId,
+    progress: OperationProgress.optional,
+    result: OperationResult.optional,
+    createdAt: date.withDefault,
+    updatedAt: date.nullable.withDefault
+  })
+{}
 
 // codegen:start {preset: model}
 //
 /* eslint-disable */
 export namespace OperationProgress {
   /**
-   * @tsplus type OperationProgress.Encoded
-   * @tsplus companion OperationProgress.Encoded/Ops
+   * @tsplus type OperationProgress.From
+   * @tsplus companion OperationProgress.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof OperationProgress>() {}
+  export class From extends FromClass<typeof OperationProgress>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof OperationProgress> {}
-  export interface Props extends GetProvidedProps<typeof OperationProgress> {}
+    extends ConstructorInputApi<typeof OperationProgress> {}
+  export interface Fields extends FieldsClass<typeof OperationProgress> {}
 }
 export namespace Success {
   /**
-   * @tsplus type Success.Encoded
-   * @tsplus companion Success.Encoded/Ops
+   * @tsplus type Success.From
+   * @tsplus companion Success.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof Success>() {}
+  export class From extends FromClass<typeof Success>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Success> {}
-  export interface Props extends GetProvidedProps<typeof Success> {}
+    extends ConstructorInputApi<typeof Success> {}
+  export interface Fields extends FieldsClass<typeof Success> {}
 }
 export namespace Failure {
   /**
-   * @tsplus type Failure.Encoded
-   * @tsplus companion Failure.Encoded/Ops
+   * @tsplus type Failure.From
+   * @tsplus companion Failure.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof Failure>() {}
+  export class From extends FromClass<typeof Failure>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Failure> {}
-  export interface Props extends GetProvidedProps<typeof Failure> {}
+    extends ConstructorInputApi<typeof Failure> {}
+  export interface Fields extends FieldsClass<typeof Failure> {}
 }
 export namespace Operation {
   /**
-   * @tsplus type Operation.Encoded
-   * @tsplus companion Operation.Encoded/Ops
+   * @tsplus type Operation.From
+   * @tsplus companion Operation.From/Ops
    */
-  export class Encoded extends EncodedClass<typeof Operation>() {}
+  export class From extends FromClass<typeof Operation>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Operation> {}
-  export interface Props extends GetProvidedProps<typeof Operation> {}
+    extends ConstructorInputApi<typeof Operation> {}
+  export interface Fields extends FieldsClass<typeof Operation> {}
 }
 /* eslint-enable */
 //

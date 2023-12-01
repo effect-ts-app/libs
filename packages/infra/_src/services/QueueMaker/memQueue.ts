@@ -28,9 +28,9 @@ export function makeMemQueue<
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
     const rcc = yield* $(RequestContextContainer)
 
-    const wireSchema = props({ body: schema, meta: QueueMeta })
+    const wireSchema = struct({ body: schema, meta: QueueMeta })
     const encoder = wireSchema.Encoder
-    const drainW = props({ body: drainSchema, meta: QueueMeta })
+    const drainW = struct({ body: drainSchema, meta: QueueMeta })
     const parseDrain = drainW.parseCondemnDie
 
     return {

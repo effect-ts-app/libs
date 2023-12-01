@@ -62,6 +62,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Class": {
+      "import": {
+        "types": "./dist/Class.d.ts",
+        "default": "./dist/Class.js"
+      },
+      "require": {
+        "types": "./dist/Class.d.ts",
+        "default": "./_cjs/Class.cjs"
+      }
+    },
     "./FastCheck": {
       "import": {
         "types": "./dist/FastCheck.d.ts",
@@ -80,16 +90,6 @@
       "require": {
         "types": "./dist/Methods.d.ts",
         "default": "./_cjs/Methods.cjs"
-      }
-    },
-    "./Model": {
-      "import": {
-        "types": "./dist/Model.d.ts",
-        "default": "./dist/Model.js"
-      },
-      "require": {
-        "types": "./dist/Model.d.ts",
-        "default": "./_cjs/Model.cjs"
       }
     },
     "./REST": {
@@ -182,16 +182,6 @@
         "default": "./_cjs/_api/fromArray.cjs"
       }
     },
-    "./_api/fromProps": {
-      "import": {
-        "types": "./dist/_api/fromProps.d.ts",
-        "default": "./dist/_api/fromProps.js"
-      },
-      "require": {
-        "types": "./dist/_api/fromProps.d.ts",
-        "default": "./_cjs/_api/fromProps.cjs"
-      }
-    },
     "./_api/futureDate": {
       "import": {
         "types": "./dist/_api/futureDate.d.ts",
@@ -270,6 +260,16 @@
       "require": {
         "types": "./dist/_api/set.d.ts",
         "default": "./_cjs/_api/set.cjs"
+      }
+    },
+    "./_api/specificStruct": {
+      "import": {
+        "types": "./dist/_api/specificStruct.d.ts",
+        "default": "./dist/_api/specificStruct.js"
+      },
+      "require": {
+        "types": "./dist/_api/specificStruct.d.ts",
+        "default": "./_cjs/_api/specificStruct.cjs"
       }
     },
     "./_api/string": {
@@ -642,16 +642,6 @@
         "default": "./_cjs/custom/_api/positiveInt.cjs"
       }
     },
-    "./custom/_api/properties": {
-      "import": {
-        "types": "./dist/custom/_api/properties.d.ts",
-        "default": "./dist/custom/_api/properties.js"
-      },
-      "require": {
-        "types": "./dist/custom/_api/properties.d.ts",
-        "default": "./_cjs/custom/_api/properties.cjs"
-      }
-    },
     "./custom/_api/refinement": {
       "import": {
         "types": "./dist/custom/_api/refinement.d.ts",
@@ -680,6 +670,16 @@
       "require": {
         "types": "./dist/custom/_api/string.d.ts",
         "default": "./_cjs/custom/_api/string.cjs"
+      }
+    },
+    "./custom/_api/struct": {
+      "import": {
+        "types": "./dist/custom/_api/struct.d.ts",
+        "default": "./dist/custom/_api/struct.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/struct.d.ts",
+        "default": "./_cjs/custom/_api/struct.cjs"
       }
     },
     "./custom/_api/union": {

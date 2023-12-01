@@ -2,26 +2,26 @@
 
 import { every_, fromArray, Set, toArray } from "@effect-app/core/Set"
 
-import * as MO from "../custom.js"
+import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
 import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 
-export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
+export const setIdentifier = S.makeAnnotation<{ self: S.SchemaUPI }>()
 
-export function set<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Order<ParsedShape>,
-  eq_?: Equivalence<ParsedShape>
-): MO.DefaultSchema<
+export function set<To, ConstructorInput, From, Api>(
+  self: S.Schema<unknown, To, ConstructorInput, From, Api>,
+  ord: Order<To>,
+  eq_?: Equivalence<To>
+): S.DefaultSchema<
   unknown,
-  Set<ParsedShape>,
-  Set<ParsedShape>,
-  readonly Encoded[],
-  { self: Api; eq: Equivalence<ParsedShape>; ord: Order<ParsedShape> }
+  Set<To>,
+  Set<To>,
+  readonly From[],
+  { self: Api; eq: Equivalence<To>; ord: Order<To> }
 > {
-  const refinement = (_: unknown): _ is Set<ParsedShape> => _ instanceof Set && every_(_, guardSelf)
+  const refinement = (_: unknown): _ is Set<To> => _ instanceof Set && every_(_, guardSelf)
 
   const guardSelf = Guard.for(self)
   const arbitrarySelf = Arbitrary.for(self)
@@ -33,19 +33,19 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
   const toArray_ = toArray(ord)
 
   const fromChunk = pipe(
-    MO.identity(refinement),
-    MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(u.toReadonlyArray))),
-    MO.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
-    MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
+    S.identity(refinement),
+    S.parser((u: Chunk<To>) => Th.succeed(fromArray_(u.toReadonlyArray))),
+    S.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
+    S.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
-    MO.chunk(self)[">>>"](fromChunk),
-    MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-    MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
-    MO.encoder((u) => toArray_(u).map(encodeSelf)),
-    MO.mapApi(() => ({ self: self.Api, eq, ord })),
-    MO.withDefaults,
-    MO.annotate(setIdentifier, { self })
+    S.chunk(self)[">>>"](fromChunk),
+    S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
+    S.constructor((_: Set<To>) => Th.succeed(_)),
+    S.encoder((u) => toArray_(u).map(encodeSelf)),
+    S.mapApi(() => ({ self: self.Api, eq, ord })),
+    S.withDefaults,
+    S.annotate(setIdentifier, { self })
   )
 }

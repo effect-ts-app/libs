@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 

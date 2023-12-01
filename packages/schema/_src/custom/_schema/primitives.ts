@@ -25,15 +25,15 @@ import {
 } from "./schema.js"
 
 export function opaque<Shape>() {
-  return <ConstructorInput, ParserInput, Encoded, Api>(
-    schema: Schema<ParserInput, Shape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, Shape, ConstructorInput, Encoded, Api & ApiSelfType<Shape>> => schema as any
+  return <ConstructorInput, ParserInput, From, Api>(
+    schema: Schema<ParserInput, Shape, ConstructorInput, From, Api>
+  ): Schema<ParserInput, Shape, ConstructorInput, From, Api & ApiSelfType<Shape>> => schema as any
 }
 
 export function named<Name extends string>(name: Name) {
-  return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaNamed(self, name)
+  return <ParserInput, To, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, From, Api> => new SchemaNamed(self, name)
 }
 
 export function identity<A>(guard: (_: unknown) => _ is A): Schema<A, A, A, A, {}> {
@@ -43,132 +43,132 @@ export function identity<A>(guard: (_: unknown) => _ is A): Schema<A, A, A, A, {
 export function constructor<
   NewConstructorInput,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
->(f: (_: NewConstructorInput) => Th.These<any, ParsedShape>) {
+>(f: (_: NewConstructorInput) => Th.These<any, To>) {
   return (
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api> => new SchemaConstructor(self, f)
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, NewConstructorInput, From, Api> => new SchemaConstructor(self, f)
 }
 
 export function constructor_<
   NewConstructorInput,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  f: (_: NewConstructorInput) => Th.These<any, ParsedShape>
-): Schema<ParserInput, ParsedShape, NewConstructorInput, Encoded, Api> {
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  f: (_: NewConstructorInput) => Th.These<any, To>
+): Schema<ParserInput, To, NewConstructorInput, From, Api> {
   return new SchemaConstructor(self, f)
 }
 
 export function parser<
   NewParserInput,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
->(f: (_: NewParserInput, env?: ParserEnv) => Th.These<any, ParsedShape>) {
+>(f: (_: NewParserInput, env?: ParserEnv) => Th.These<any, To>) {
   return (
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaParser(self, f)
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<NewParserInput, To, ConstructorInput, From, Api> => new SchemaParser(self, f)
 }
 
 export function parser_<
   NewParserInput,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  f: (_: NewParserInput) => Th.These<any, ParsedShape>
-): Schema<NewParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  f: (_: NewParserInput) => Th.These<any, To>
+): Schema<NewParserInput, To, ConstructorInput, From, Api> {
   return new SchemaParser(self, f)
 }
 
-export function arbitrary<A extends ParsedShape, ParsedShape>(
+export function arbitrary<A extends To, To>(
   f: (_: typeof fc) => fc.Arbitrary<A>
 ) {
-  return <ParserInput, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaArbitrary(self, f) as any
+  return <ParserInput, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, From, Api> => new SchemaArbitrary(self, f) as any
 }
 
-export function arbitrary_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  f: (_: typeof fc) => fc.Arbitrary<ParsedShape>
-): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+export function arbitrary_<ParserInput, To, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  f: (_: typeof fc) => fc.Arbitrary<To>
+): Schema<ParserInput, To, ConstructorInput, From, Api> {
   return new SchemaArbitrary(self, f)
 }
 
-export function encoder<ParsedShape, A>(f: (_: ParsedShape) => A) {
-  return <ParserInput, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, A, Api> => new SchemaEncoder(self, f)
+export function encoder<To, A>(f: (_: To) => A) {
+  return <ParserInput, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, A, Api> => new SchemaEncoder(self, f)
 }
 
-export function encoder_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api, A>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  f: (_: ParsedShape) => A
-): Schema<ParserInput, ParsedShape, ConstructorInput, A, Api> {
+export function encoder_<ParserInput, To, ConstructorInput, From, Api, A>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  f: (_: To) => A
+): Schema<ParserInput, To, ConstructorInput, A, Api> {
   return new SchemaEncoder(self, f)
 }
 
 export function refine<
   E extends AnyError,
-  NewParsedShape extends ParsedShape,
-  ParsedShape
+  NewTo extends To,
+  To
 >(
-  refinement: Refinement<ParsedShape, NewParsedShape>,
-  error: (value: ParsedShape) => E
-): <ParserInput, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-) => Schema<ParserInput, NewParsedShape, ConstructorInput, Encoded, Api> {
+  refinement: Refinement<To, NewTo>,
+  error: (value: To) => E
+): <ParserInput, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>
+) => Schema<ParserInput, NewTo, ConstructorInput, From, Api> {
   return (self) => new SchemaRefinement(self, refinement, error)
 }
 
 export function mapParserError<E extends AnyError, E1 extends AnyError>(
   f: (e: E) => E1
 ) {
-  return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaMapParserError(self, f)
+  return <ParserInput, To, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, From, Api> => new SchemaMapParserError(self, f)
 }
 
 export function mapConstructorError<E extends AnyError, E1 extends AnyError>(
   f: (e: E) => E1
 ) {
-  return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaMapConstructorError(self, f)
+  return <ParserInput, To, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, From, Api> => new SchemaMapConstructorError(self, f)
 }
 
 export function mapApi<E, E1>(f: (e: E) => E1) {
-  return <ParserInput, ParsedShape, ConstructorInput, Encoded>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, E>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, E1> => new SchemaMapApi(self, f)
+  return <ParserInput, To, ConstructorInput, From>(
+    self: Schema<ParserInput, To, ConstructorInput, From, E>
+  ): Schema<ParserInput, To, ConstructorInput, From, E1> => new SchemaMapApi(self, f)
 }
 
 export function identified_<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Meta
 >(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
   identifier: Annotation<Meta>,
   meta: Meta
-): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+): Schema<ParserInput, To, ConstructorInput, From, Api> {
   return new SchemaAnnotated(self, identifier, meta)
 }
 
@@ -186,41 +186,41 @@ export function annotate<Meta>(
   return (self) => self.annotate(annotation, meta)
 }
 
-export function guard_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  guard: (u: unknown) => u is ParsedShape
-): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+export function guard_<ParserInput, To, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  guard: (u: unknown) => u is To
+): Schema<ParserInput, To, ConstructorInput, From, Api> {
   return new SchemaGuard(self, guard)
 }
 
-export function guard<ParsedShape>(
-  guard: (u: unknown) => u is ParsedShape
-): <ParserInput, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-) => Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+export function guard<To>(
+  guard: (u: unknown) => u is To
+): <ParserInput, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>
+) => Schema<ParserInput, To, ConstructorInput, From, Api> {
   return (self) => new SchemaGuard(self, guard)
 }
 
 export function into_<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
-  ThatParsedShape,
+  ThatTo,
   ThatConstructorInput,
   ThatApi
 >(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  that: Schema<ParsedShape, ThatParsedShape, ThatConstructorInput, ParsedShape, ThatApi>
-): Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> {
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
+  that: Schema<To, ThatTo, ThatConstructorInput, To, ThatApi>
+): Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> {
   return new SchemaPipe(self, that)
 }
 
-export function into<Api, ThatParsedShape, ThatConstructorInput, ThatApi, ParsedShape>(
-  that: Schema<ParsedShape, ThatParsedShape, ThatConstructorInput, ParsedShape, ThatApi>
-): <ParserInput, ConstructorInput, Encoded>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-) => Schema<ParserInput, ThatParsedShape, ThatConstructorInput, Encoded, ThatApi> {
+export function into<Api, ThatTo, ThatConstructorInput, ThatApi, To>(
+  that: Schema<To, ThatTo, ThatConstructorInput, To, ThatApi>
+): <ParserInput, ConstructorInput, From>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>
+) => Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> {
   return (self) => new SchemaPipe(self, that)
 }

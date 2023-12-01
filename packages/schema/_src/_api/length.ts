@@ -1,30 +1,30 @@
 import { pipe } from "@effect-app/core/Function"
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { NonEmptyBrand } from "../custom.js"
 
-export const maxLengthIdentifier = MO.makeAnnotation<{ maxLength: number }>()
+export const maxLengthIdentifier = S.makeAnnotation<{ maxLength: number }>()
 
 export function maxLength<Brand>(maxLength: number) {
   return <
     ParserInput,
-    ParsedShape extends { length: number },
+    To extends { length: number },
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): MO.Schema<ParserInput, ParsedShape & Brand, ConstructorInput, Encoded, Api> =>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<ParserInput, To & Brand, ConstructorInput, From, Api> =>
     pipe(
       self,
-      MO.refine(
-        (n): n is ParsedShape & Brand => n.length <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+      S.refine(
+        (n): n is To & Brand => n.length <= maxLength,
+        (n) => S.leafE(S.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
-export const minLengthIdentifier = MO.makeAnnotation<{ minLength: number }>()
+export const minLengthIdentifier = S.makeAnnotation<{ minLength: number }>()
 
 export function minLength<Brand>(minLength: number) {
   if (minLength < 1) {
@@ -32,26 +32,26 @@ export function minLength<Brand>(minLength: number) {
   }
   return <
     ParserInput,
-    ParsedShape extends { length: number },
+    To extends { length: number },
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
-    ParsedShape & Brand & NonEmptyBrand,
+    To & Brand & NonEmptyBrand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
-      MO.refine(
-        (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength,
-        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength}`))
+      S.refine(
+        (n): n is To & Brand & NonEmptyBrand => n.length >= minLength,
+        (n) => S.leafE(S.customE(n, `at least a length of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength })
+      S.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -61,26 +61,26 @@ export function minSize<Brand>(minLength: number) {
   }
   return <
     ParserInput,
-    ParsedShape extends { size: number },
+    To extends { size: number },
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
-    ParsedShape & Brand & NonEmptyBrand,
+    To & Brand & NonEmptyBrand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
-      MO.refine(
-        (n): n is ParsedShape & Brand & NonEmptyBrand => n.size >= minLength,
-        (n) => MO.leafE(MO.customE(n, `at least a size of ${minLength}`))
+      S.refine(
+        (n): n is To & Brand & NonEmptyBrand => n.size >= minLength,
+        (n) => S.leafE(S.customE(n, `at least a size of ${minLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength })
+      S.annotate(minLengthIdentifier, { minLength })
     )
 }
 
@@ -90,38 +90,38 @@ export function maxSize<Brand>(maxLength: number) {
   }
   return <
     ParserInput,
-    ParsedShape extends { size: number },
+    To extends { size: number },
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): MO.Schema<
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): S.Schema<
     ParserInput,
-    ParsedShape & Brand,
+    To & Brand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
-      MO.refine(
-        (n): n is ParsedShape & Brand => n.size <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at most a size of ${maxLength}`))
+      S.refine(
+        (n): n is To & Brand => n.size <= maxLength,
+        (n) => S.leafE(S.customE(n, `at most a size of ${maxLength}`))
       ),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(maxLengthIdentifier, { maxLength })
     )
 }
 
 export function constrained<Brand>(minLength: number, maxLength: number) {
   return <
     ParserInput,
-    ParsedShape extends { length: number },
+    To extends { length: number },
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ) => {
     if (minLength < 1) {
       throw new Error("Must be at least 1")
@@ -129,12 +129,12 @@ export function constrained<Brand>(minLength: number, maxLength: number) {
     // Combinging refinements into 1 to reduce complexity and improve performance
     return pipe(
       self,
-      MO.refine(
-        (n): n is ParsedShape & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
-        (n) => MO.leafE(MO.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
+      S.refine(
+        (n): n is To & Brand & NonEmptyBrand => n.length >= minLength && n.length <= maxLength,
+        (n) => S.leafE(S.customE(n, `at least a length of ${minLength} and at most ${maxLength}`))
       ),
-      MO.annotate(minLengthIdentifier, { minLength }),
-      MO.annotate(maxLengthIdentifier, { maxLength })
+      S.annotate(minLengthIdentifier, { minLength }),
+      S.annotate(maxLengthIdentifier, { maxLength })
       /*minLength<Brand>(min), maxLength<Brand>(max)*/
     )
   }

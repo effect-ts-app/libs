@@ -13,25 +13,25 @@ export const minIdentifier = S.makeAnnotation<
 export function min<Brand>(min: number, minimumExclusive = false, type: "float" | "int" = "float") {
   return <
     ParserInput,
-    ParsedShape extends number,
+    To extends number,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     ParserInput,
-    ParsedShape & Brand,
+    To & Brand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
       S.refine(
         minimumExclusive
-          ? (n): n is ParsedShape & Brand => n > min
-          : (n): n is ParsedShape & Brand => n >= min,
+          ? (n): n is To & Brand => n > min
+          : (n): n is To & Brand => n >= min,
         (n) => S.leafE(S.customE(n, `a ${type} ${minimumExclusive ? "larger than" : "at least"} ${min}`))
       ),
       withDefaults,
@@ -46,25 +46,25 @@ export const maxIdentifier = S.makeAnnotation<
 export function max<Brand>(max: number, maximumExclusive = false, type: "float" | "int" = "float") {
   return <
     ParserInput,
-    ParsedShape extends number,
+    To extends number,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     ParserInput,
-    ParsedShape & Brand,
+    To & Brand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
       S.refine(
         maximumExclusive
-          ? (n): n is ParsedShape & Brand => n < max
-          : (n): n is ParsedShape & Brand => n <= max,
+          ? (n): n is To & Brand => n < max
+          : (n): n is To & Brand => n <= max,
         (n) => S.leafE(S.customE(n, `a ${type} ${maximumExclusive ? "smaller than" : "at most"} ${max}`))
       ),
       withDefaults,
@@ -96,23 +96,23 @@ export function range<Brand>(
     : (n: number) => n <= max.value
   return <
     ParserInput,
-    ParsedShape extends number,
+    To extends number,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     ParserInput,
-    ParsedShape & Brand,
+    To & Brand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > =>
     pipe(
       self,
       S.refine(
-        (n): n is ParsedShape & Brand => isMin(n) && isMax(n),
+        (n): n is To & Brand => isMin(n) && isMax(n),
         (n) =>
           S.leafE(
             S.customE(
@@ -144,17 +144,17 @@ export type Positive = number & PositiveBrand
 export function positive(type: "float" | "int") {
   return <
     ParserInput,
-    ParsedShape extends number,
+    To extends number,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     ParserInput,
-    ParsedShape & PositiveBrand,
+    To & PositiveBrand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > => min<PositiveBrand>(0, false, type)(self)
 }
@@ -168,17 +168,17 @@ export type PositiveExcludeZero = number & PositiveExcludeZeroBrand
 export function positiveExcludeZero(type: "float" | "int") {
   return <
     ParserInput,
-    ParsedShape extends number,
+    To extends number,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   >(
-    self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+    self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     ParserInput,
-    ParsedShape & PositiveExcludeZeroBrand,
+    To & PositiveExcludeZeroBrand,
     ConstructorInput,
-    Encoded,
+    From,
     Api
   > => min<PositiveExcludeZeroBrand>(0, true, type)(self)
 }

@@ -42,8 +42,8 @@ export const Kilogram = positive("float")(number).pipe(brand<Kilogram>())
 // TODO: dictionary, map
 const MAX_LENGTH = 6
 
-export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export function nonEmptyArray<To, ConstructorInput, From, Api>(
+  self: Schema<unknown, To, ConstructorInput, From, Api>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
 
@@ -53,13 +53,13 @@ export function nonEmptyArray<ParsedShape, ConstructorInput, Encoded, Api>(
         _.array(arbitrarySelf(_), {
           minLength: 1,
           maxLength: MAX_LENGTH
-        }) as any as Arbitrary.Arbitrary<NonEmptyReadonlyArray<ParsedShape>>
+        }) as any as Arbitrary.Arbitrary<NonEmptyReadonlyArray<To>>
     )
   )
 }
 
-export function array<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export function array<To, ConstructorInput, From, Api>(
+  self: Schema<unknown, To, ConstructorInput, From, Api>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
 
@@ -68,15 +68,15 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
       (_) =>
         _.array(arbitrarySelf(_), {
           maxLength: MAX_LENGTH
-        }) as any as Arbitrary.Arbitrary<Array<ParsedShape>>
+        }) as any as Arbitrary.Arbitrary<Array<To>>
     )
   )
 }
 
-export function set<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Order<ParsedShape>,
-  eq: Equivalence<ParsedShape>
+export function set<To, ConstructorInput, From, Api>(
+  self: Schema<unknown, To, ConstructorInput, From, Api>,
+  ord: Order<To>,
+  eq: Equivalence<To>
 ) {
   const arbitrarySelf = Arbitrary.for(self)
   return setOriginal(self, ord, eq).pipe(

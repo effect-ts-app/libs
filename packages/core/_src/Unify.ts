@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Add effect cause/exit etc
 
 import type { Effect, EffectTypeId } from "effect/Effect"

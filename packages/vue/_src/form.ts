@@ -1,12 +1,5 @@
 import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
-import type {
-  AnyProperty,
-  EncodedOf,
-  ParsedShapeOfCustom,
-  Property,
-  PropertyRecord,
-  SchemaAny
-} from "@effect-app/prelude/schema"
+import type { AnyField, Field, FieldRecord, From, SchemaAny, To } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -25,18 +18,18 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromProps<Props extends PropertyRecord>(
-  props: Props
+export function buildFieldInfoFromFields<Fields extends FieldRecord>(
+  fields: Fields
 ) {
-  return props.$$.keys.reduce(
+  return fields.$$.keys.reduce(
     (prev, cur) => {
-      prev[cur] = buildFieldInfo(props[cur] as AnyProperty, cur)
+      prev[cur] = buildFieldInfo(fields[cur] as AnyField, cur)
       return prev
     },
     {} as {
-      [K in keyof Props]: FieldInfo<
-        EncodedOf<GetSchemaFromProp<Props[K]>>,
-        ParsedShapeOfCustom<GetSchemaFromProp<Props[K]>>
+      [K in keyof Fields]: FieldInfo<
+        From<GetSchemaFromProp<Fields[K]>>,
+        To<GetSchemaFromProp<Fields[K]>>
       >
     }
   )
@@ -63,7 +56,7 @@ export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { i
   type: "text" | "float" | "int" // todo; multi-line vs single line text
 }
 
-type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
+type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
   : never
 
 const defaultIntl = createIntl({ locale: "en" })
@@ -71,7 +64,7 @@ export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.format
 export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown, v: unknown) => string>>(new Map())
 
 function buildFieldInfo(
-  propOrSchema: AnyProperty | SchemaAny,
+  propOrSchema: AnyField | SchemaAny,
   fieldKey: PropertyKey
 ): FieldInfo<any, any> {
   const metadata = getMetadataFromSchemaOrProp(propOrSchema)
@@ -191,33 +184,32 @@ function buildFieldInfo(
 }
 
 export const buildFormFromSchema = <
-  ParsedShape,
-  Encoded,
+  To,
+  From,
   ConstructorInput,
-  Props extends PropertyRecord,
+  Fields extends FieldRecord,
   OnSubmitA
 >(
   s: Schema.Schema<
     unknown,
-    ParsedShape,
+    To,
     ConstructorInput,
-    Encoded,
-    { props: Props }
+    From,
+    { fields: Fields }
   >,
-  state: Ref<Encoded>,
-  onSubmit: (a: ParsedShape) => Promise<OnSubmitA>
+  state: Ref<From>,
+  onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromProps(s.Api.props)
+  const fields = buildFieldInfoFromFields(s.Api.fields)
   const parse = unsafe(Schema.Parser.for(s))
   const isDirty = ref(false)
   const isValid = ref(true)
 
-  const submit1 =
-    <A>(onSubmit: (a: ParsedShape) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
-      const r = await e
-      if (!r.valid) return
-      return onSubmit(parse(state.value))
-    }
+  const submit1 = <A>(onSubmit: (a: To) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+    const r = await e
+    if (!r.valid) return
+    return onSubmit(parse(state.value))
+  }
   const submit = submit1(onSubmit)
 
   watch(

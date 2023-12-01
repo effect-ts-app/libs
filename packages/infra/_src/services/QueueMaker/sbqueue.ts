@@ -10,6 +10,7 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { RequestId } from "@effect-app/prelude/ids"
+import { struct } from "@effect-app/schema"
 import { Tracer } from "effect"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
@@ -31,12 +32,12 @@ export function makeServiceBusQueue<
   drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
   makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
 ) {
-  const wireSchema = props({
+  const wireSchema = struct({
     body: schema,
     meta: QueueMeta
   })
   const encoder = wireSchema.Encoder
-  const drainW = props({ body: drainSchema, meta: QueueMeta })
+  const drainW = struct({ body: drainSchema, meta: QueueMeta })
   const parseDrain = drainW.parseCondemnDie
 
   return Effect.gen(function*($) {

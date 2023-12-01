@@ -1,37 +1,37 @@
 @useClassFeaturesForSchema
-export class NotFoundError extends Model<NotFoundError>()({
-  _tag: prop(literal("NotFoundError")),
-  message: prop(string)
+export class NotFoundError extends Class<NotFoundError>()({
+  _tag: literal("NotFoundError"),
+  message: string
 }) {}
 
 @useClassFeaturesForSchema
-export class InvalidStateError extends Model<InvalidStateError>()({
-  _tag: prop(literal("InvalidStateError")),
-  message: prop(string)
+export class InvalidStateError extends Class<InvalidStateError>()({
+  _tag: literal("InvalidStateError"),
+  message: string
 }) {}
 
 @useClassFeaturesForSchema
-export class ValidationError extends Model<ValidationError>()({
-  _tag: prop(literal("ValidationError")),
-  errors: prop(array(unknown)) // meh
+export class ValidationError extends Class<ValidationError>()({
+  _tag: literal("ValidationError"),
+  errors: array(unknown) // meh
 }) {}
 
 @useClassFeaturesForSchema
-export class NotLoggedInError extends Model<NotLoggedInError>()({
-  _tag: prop(literal("NotLoggedInError")),
-  message: prop(string).optional
+export class NotLoggedInError extends Class<NotLoggedInError>()({
+  _tag: literal("NotLoggedInError"),
+  message: string.optional
 }) {}
 
 @useClassFeaturesForSchema
-export class UnauthorizedError extends Model<UnauthorizedError>()({
-  _tag: prop(literal("UnauthorizedError")),
-  message: prop(string).optional
+export class UnauthorizedError extends Class<UnauthorizedError>()({
+  _tag: literal("UnauthorizedError"),
+  message: string.optional
 }) {}
 
 @useClassFeaturesForSchema
-export class OptimisticConcurrencyException extends Model<OptimisticConcurrencyException>()(
+export class OptimisticConcurrencyException extends Class<OptimisticConcurrencyException>()(
   {
-    _tag: prop(literal("OptimisticConcurrencyException"))
+    _tag: literal("OptimisticConcurrencyException")
   }
 ) {}
 
@@ -53,20 +53,20 @@ export const SupportedErrors = union({
 })
   .pipe(named("SupportedErrors"))
   .pipe(withDefaults)
-export type SupportedErrors = ParsedShapeOf<typeof SupportedErrors>
+export type SupportedErrors = To<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
 //   .pipe(named("QueryErrors"))
 //   .pipe(withDefaults)
-// export type QueryErrors = ParsedShapeOf<typeof QueryErrors>
+// export type QueryErrors = To<typeof QueryErrors>
 // export const MutationErrors = union({ ...GeneralErrors, ...GeneralErrors })
 //   .pipe(named("MutationErrors"))
 //   .pipe(withDefaults)
 
-// export type MutationErrors = ParsedShapeOf<typeof MutationErrors>
+// export type MutationErrors = To<typeof MutationErrors>
 
 export const MutationErrors = SupportedErrors
 export const QueryErrors = SupportedErrors
-export type MutationErrors = ParsedShapeOf<typeof MutationErrors>
-export type QueryErrors = ParsedShapeOf<typeof QueryErrors>
+export type MutationErrors = To<typeof MutationErrors>
+export type QueryErrors = To<typeof QueryErrors>

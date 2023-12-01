@@ -4,9 +4,9 @@ import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
 export function brand<B>() {
-  return <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): DefaultSchema<ParserInput, B, ConstructorInput, Encoded, Api & ApiSelfType<B>> => {
+  return <ParserInput, To, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): DefaultSchema<ParserInput, B, ConstructorInput, From, Api & ApiSelfType<B>> => {
     // @ts-expect-error
     return withDefaults(self)
   }

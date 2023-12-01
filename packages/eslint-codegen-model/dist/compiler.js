@@ -87,18 +87,18 @@ function processNode(tc, root, writeFullTypes = false) {
                 return [
                     `export namespace ${modelName} {`,
                     `  /**`,
-                    `   * @tsplus type ${modelName}.Encoded`,
-                    `   * @tsplus companion ${modelName}.Encoded/Ops`,
+                    `   * @tsplus type ${modelName}.From`,
+                    `   * @tsplus companion ${modelName}.From/Ops`,
                     `   */`,
-                    `  export class Encoded extends EncodedClass<typeof ${modelName}>() {}`,
-                    // `  export const Encoded: EncodedOps = { $: {} }`,
+                    `  export class From extends FromClass<typeof ${modelName}>() {}`,
+                    // `  export const From: FromOps = { $: {} }`,
                     // `  /**`,
-                    // `   * @tsplus type ${modelName}.Encoded/Aspects`,
+                    // `   * @tsplus type ${modelName}.From/Aspects`,
                     // `   */`,
-                    // `  export interface EncodedAspects {}`,
+                    // `  export interface FromAspects {}`,
                     "  export interface ConstructorInput",
-                    `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-                    `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+                    `    extends ConstructorInputApi<typeof ${modelName}> {}`,
+                    `  export interface Fields extends FieldsClass<typeof ${modelName}> {}`,
                     "}",
                 ];
             }
@@ -106,7 +106,7 @@ function processNode(tc, root, writeFullTypes = false) {
             const t = tc.getTypeAtLocation(n);
             const result = { encoded: [], parsed: [] };
             const unions = {};
-            //console.log("$$$ props", t.getProperties().map(x => x.escapedName))
+            //console.log("$$$ fields", t.getProperties().map(x => x.escapedName))
             t.getProperties().forEach((c) => {
                 const method = c.name;
                 if (method === "encoded" || method === "parsed") {
@@ -124,8 +124,8 @@ function processNode(tc, root, writeFullTypes = false) {
                         //if (p.escapedName === "opposite") {
                         //console.log("$$$ a union!", p.declarations?.map(x => x.forEachChild(c => {
                         // TODO: have to find nullable, array, set, map, etc.
-                        // TODO: "Encoded"
-                        // but also should find fully custom sets like PurchaseOrderModulesSet - we should be able to just use those directly, incl PurchaseOrderModulesSet.Encoded
+                        // TODO: "From"
+                        // but also should find fully custom sets like PurchaseOrderModulesSet - we should be able to just use those directly, incl PurchaseOrderModulesSet.From
                         // for now just skip them?
                         (_a = p.declarations) === null || _a === void 0 ? void 0 : _a.map(x => x.forEachChild(c => {
                             var _a;
@@ -257,22 +257,22 @@ function processNode(tc, root, writeFullTypes = false) {
                 `export interface ${modelName} {${parsed.length ? "\n" + parsed.map(l => "  " + l).join("\n") + "\n" : ""}}`,
                 `export namespace ${modelName} {`,
                 `  /**`,
-                `   * @tsplus type ${modelName}.Encoded`,
+                `   * @tsplus type ${modelName}.From`,
                 `   */`,
-                `  export interface Encoded {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
-                `  export const Encoded: EncodedOps = {}`,
-                // `  export const Encoded: EncodedOps = { $: {} }`,
+                `  export interface From {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
+                `  export const From: FromOps = {}`,
+                // `  export const From: FromOps = { $: {} }`,
                 // `  /**`,
-                // `   * @tsplus type ${modelName}.Encoded/Aspects`,
+                // `   * @tsplus type ${modelName}.From/Aspects`,
                 // `   */`,
-                // `  export interface EncodedAspects {}`,
+                // `  export interface FromAspects {}`,
                 `  /**`,
-                `   * @tsplus type ${modelName}.Encoded/Ops`,
+                `   * @tsplus type ${modelName}.From/Ops`,
                 `   */`,
-                `  export interface EncodedOps {}`,
+                `  export interface FromOps {}`,
                 "  export interface ConstructorInput",
-                `    extends ConstructorInputFromApi<typeof ${modelName}> {}`,
-                `  export interface Props extends GetProvidedProps<typeof ${modelName}> {}`,
+                `    extends ConstructorInputApi<typeof ${modelName}> {}`,
+                `  export interface Fields extends FieldsClass<typeof ${modelName}> {}`,
                 "}",
             ];
         }

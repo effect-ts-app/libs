@@ -18,23 +18,23 @@ export const fromChunkIdentifier = makeAnnotation<{ self: S.SchemaAny }>()
 export function fromChunk<
   ParserInput,
   ParserError extends S.AnyError,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): DefaultSchema<
   readonly ParserInput[],
-  Chunk<ParsedShape>,
-  Iterable<ParsedShape>,
-  readonly Encoded[],
+  Chunk<To>,
+  Iterable<To>,
+  readonly From[],
   { self: Api }
 > {
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
-  const refinement = (_: unknown): _ is Chunk<ParsedShape> => Chunk.isChunk(_) && _.every(guard)
+  const refinement = (_: unknown): _ is Chunk<To> => Chunk.isChunk(_) && _.every(guard)
   const encode = Encoder.for(self)
 
   return pipe(
@@ -42,7 +42,7 @@ export function fromChunk<
     S.arbitrary((_) => _.array(arb(_)).map(Chunk.fromIterable)),
     S.parser((i: readonly ParserInput[], env) => {
       const parseEl = env?.cache ? env.cache.getOrSetParser(parse) : parse
-      const b: ParsedShape[] = []
+      const b: To[] = []
       const e: S.OptionalIndexE<number, ParserError[]>[] = []
       let j = 0
       let err = false
@@ -72,7 +72,7 @@ export function fromChunk<
       }
       return Th.succeed(b.toChunk)
     }),
-    S.constructor((i: Iterable<ParsedShape>) => Th.succeed(Chunk.fromIterable(i))),
+    S.constructor((i: Iterable<To>) => Th.succeed(Chunk.fromIterable(i))),
     S.encoder((_) => _.map(encode).toReadonlyArray),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,
@@ -82,13 +82,13 @@ export function fromChunk<
 
 export const chunkIdentifier = makeAnnotation<{ self: S.SchemaAny }>()
 
-export function chunk<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export function chunk<To, ConstructorInput, From, Api>(
+  self: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): DefaultSchema<
   unknown,
-  Chunk<ParsedShape>,
-  Iterable<ParsedShape>,
-  readonly Encoded[],
+  Chunk<To>,
+  Iterable<To>,
+  readonly From[],
   { self: Api }
 > {
   const encodeSelf = Encoder.for(self)

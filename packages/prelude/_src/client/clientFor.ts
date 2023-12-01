@@ -74,17 +74,17 @@ function clientFor_<M extends Requests>(models: M) {
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
           const requestName = ReasonableString(
-            Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
+            Request.Class instanceof SchemaNamed ? Request.Class.name : Request.name
           )
 
-          // if we don't need props, then also dont require an argument.
-          const props = [Request.Body, Request.Query, Request.Path]
+          // if we don't need fields, then also dont require an argument.
+          const fields = [Request.Body, Request.Query, Request.Path]
             .filter((x) => x)
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            .flatMap((x) => Object.keys(x.Api.props))
+            .flatMap((x) => Object.keys(x.Api.fields))
           // @ts-expect-error doc
           prev[actionName] = Request.method === "GET"
-            ? props.length === 0
+            ? fields.length === 0
               ? Object.assign(
                 fetchApi(Request.method, Request.path)
                   .flatMap(
@@ -105,7 +105,7 @@ function clientFor_<M extends Requests>(models: M) {
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
-            : props.length === 0
+            : fields.length === 0
             ? Object.assign(
               fetchApi3S(b)({}).withSpan("client.request", { attributes: { "request.name": requestName } }),
               meta
@@ -127,7 +127,7 @@ function clientFor_<M extends Requests>(models: M) {
 
           // @ts-expect-error doc
           prev[`${actionName}E`] = Request.method === "GET"
-            ? props.length === 0
+            ? fields.length === 0
               ? Object.assign(
                 fetchApi(Request.method, Request.path)
                   .flatMap(
@@ -148,7 +148,7 @@ function clientFor_<M extends Requests>(models: M) {
                   mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
                 }
               )
-            : props.length === 0
+            : fields.length === 0
             ? Object.assign(
               fetchApi3SE(b)({}).withSpan("client.request", { attributes: { "request.name": requestName } }),
               meta
@@ -174,20 +174,20 @@ function clientFor_<M extends Requests>(models: M) {
   )
 }
 
-export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? ParsedShapeOfCustom<T["Model"]>
-  : T extends Schema.SchemaAny ? ParsedShapeOfCustom<T>
+export type ExtractResponse<T> = T extends { Class: Schema.SchemaAny } ? To<T["Class"]>
+  : T extends Schema.SchemaAny ? To<T>
   : T extends unknown ? Schema.Void
   : never
 
-export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? EncodedOf<T["Model"]>
-  : T extends Schema.SchemaAny ? EncodedOf<T>
+export type ExtractEResponse<T> = T extends { Class: Schema.SchemaAny } ? From<T["Class"]>
+  : T extends Schema.SchemaAny ? From<T>
   : T extends unknown ? Schema.Void
   : never
 
 type RequestHandlers<R, E, M extends Requests> = {
   [K in keyof M & string as Uncapitalize<K>]: keyof Schema.GetRequest<
     M[K]
-  >[Schema.schemaField]["Api"]["props"] extends never
+  >[Schema.schemaField]["Api"]["fields"] extends never
     ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
       Request: Schema.GetRequest<M[K]>
       Reponse: ExtractResponse<GetResponse<M[K]>>
@@ -195,7 +195,7 @@ type RequestHandlers<R, E, M extends Requests> = {
     }
     : keyof Schema.GetRequest<
       M[K]
-    >[Schema.schemaField]["Api"]["props"] extends Record<any, never>
+    >[Schema.schemaField]["Api"]["fields"] extends Record<any, never>
       ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
@@ -203,19 +203,19 @@ type RequestHandlers<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
+        req: To<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
       }
 }
 
 type RequestHandlersE<R, E, M extends Requests> = {
   [K in keyof M & string as `${Uncapitalize<K>}E`]: keyof Schema.GetRequest<
     M[K]
-  >[Schema.schemaField]["Api"]["props"] extends never
+  >[Schema.schemaField]["Api"]["fields"] extends never
     ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
       Request: Schema.GetRequest<M[K]>
       Reponse: ExtractResponse<GetResponse<M[K]>>
@@ -223,7 +223,7 @@ type RequestHandlersE<R, E, M extends Requests> = {
     }
     : keyof Schema.GetRequest<
       M[K]
-    >[Schema.schemaField]["Api"]["props"] extends Record<any, never>
+    >[Schema.schemaField]["Api"]["fields"] extends Record<any, never>
       ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
@@ -231,11 +231,11 @@ type RequestHandlersE<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>
+        req: To<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: ParsedShapeOfCustom<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
       }
 }

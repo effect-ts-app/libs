@@ -1,4 +1,4 @@
-import * as MO from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 import type { SchemaAny } from "@effect-app/schema"
 
 export class CouldNotAquireDbLockException
@@ -28,18 +28,18 @@ export interface DBRecord<TKey extends string> {
   id: TKey
 }
 
-export class SerializedDBRecord extends MO.Model<SerializedDBRecord>()({
-  version: MO.prop(MO.string),
-  timestamp: MO.prop(MO.date),
-  data: MO.prop(MO.string)
+export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
+  version: S.string,
+  timestamp: S.date,
+  data: S.string
 }) {}
 
 // unknown -> string -> SDB?
 export function makeSerialisedDBRecord(s: SchemaAny) {
-  return MO.props({
-    version: MO.prop(MO.number),
-    timestamp: MO.prop(MO.date),
-    data: MO.prop(s)
+  return S.struct({
+    version: S.number,
+    timestamp: S.date,
+    data: s
   })
 }
 
@@ -80,7 +80,7 @@ export interface EffectMap<TKey, T> {
 }
 
 // export function encodeOnlyWhenStrictMatch<A, E>(
-//   encode: MO.HasEncoder<A, E>["encode_"],
+//   encode: S.HasEncoder<A, E>["encode_"],
 //   v: A
 // ) {
 //   const e1 = Sync.run(encode(v, "strict"))
@@ -98,7 +98,7 @@ export interface EffectMap<TKey, T> {
 // }
 
 // export function decodeOnlyWhenStrictMatch<A, E>(
-//   decode: MO.HasDecoder<A, E>["decode_"],
+//   decode: S.HasDecoder<A, E>["decode_"],
 //   u: unknown
 // ) {
 //   return pipe(

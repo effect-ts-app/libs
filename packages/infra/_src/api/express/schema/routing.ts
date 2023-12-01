@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 import type { Methods } from "@effect-app/schema"
 
 import type { JSONSchema, ParameterLocation, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"
@@ -15,14 +15,14 @@ export type Request<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA
-> = MO.ReqResSchemed<unknown, ReqA> & {
+> = S.ReqResSchemed<unknown, ReqA> & {
   method: Methods.Rest
   path: string
-  Cookie?: MO.ReqRes<Record<string, string>, CookieA>
-  Path?: MO.ReqRes<Record<string, string>, PathA>
-  Body?: MO.ReqRes<unknown, BodyA>
-  Query?: MO.ReqRes<Record<string, string>, QueryA>
-  Headers?: MO.ReqRes<Record<string, string>, HeaderA>
+  Cookie?: S.ReqRes<Record<string, string>, CookieA>
+  Path?: S.ReqRes<Record<string, string>, PathA>
+  Body?: S.ReqRes<unknown, BodyA>
+  Query?: S.ReqRes<Record<string, string>, QueryA>
+  Headers?: S.ReqRes<Record<string, string>, HeaderA>
   Tag: Tag<M, M>
 }
 
@@ -37,7 +37,7 @@ export interface RouteRequestHandler<
   ResA
 > {
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
-  Response?: MO.ReqRes<unknown, ResA> | MO.ReqResSchemed<unknown, ResA>
+  Response?: S.ReqRes<unknown, ResA> | S.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
 }
 
@@ -123,10 +123,10 @@ export function makeFromSchema<ResA>(
   e: RouteDescriptor<any, any, any, any, any, any, ResA, any>
 ) {
   const jsonSchema_ = OpenApi.for
-  const jsonSchema = <E, A>(r: MO.ReqRes<E, A>) => jsonSchema_(r)
+  const jsonSchema = <E, A>(r: S.ReqRes<E, A>) => jsonSchema_(r)
   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
   const r = ResponseOpenApi ?? Res_
-  const Res = r ? MO.extractSchema(r) : MO.Void
+  const Res = r ? S.extractSchema(r) : S.Void
   // TODO EffectOption.fromNullable(Req.Headers).flatMapOpt(jsonSchema)
   // TODO: use the path vs body etc serialisation also in the Client.
   const makeReqQuerySchema = Effect(Option.fromNullable(Req.Query)).flatMap((_) =>
@@ -182,7 +182,7 @@ export function makeFromSchema<ResA>(
 
   return Effect
     .all({
-      req: jsonSchema(Req.Model),
+      req: jsonSchema(Req.Class),
       reqQuery: makeReqQuerySchema,
       reqHeaders: makeReqHeadersSchema,
       reqBody: makeReqBodySchema,
@@ -192,7 +192,7 @@ export function makeFromSchema<ResA>(
     })
     .map((_) => {
       // console.log("$$$ REQ", _.req)
-      const isEmpty = !e.handler.Response || e.handler.Response === MO.Void
+      const isEmpty = !e.handler.Response || e.handler.Response === S.Void
       return {
         path: e.path,
         method: e.method.toLowerCase(),

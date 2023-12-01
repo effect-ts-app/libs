@@ -1,6 +1,6 @@
 import type { UnionToIntersection } from "@effect-app/core/utils"
 import type { Annotation } from "../_schema.js"
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Constructor from "../Constructor.js"
@@ -14,34 +14,34 @@ import { unsafe } from "./condemn.js"
  */
 export interface SchemaDefaultSchema<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
-> extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
-  (_: ConstructorInput): ParsedShape
+> extends Schema<ParserInput, To, ConstructorInput, From, Api> {
+  (_: ConstructorInput): To
 
-  readonly Parser: Parser.Parser<ParserInput, any, ParsedShape>
+  readonly Parser: Parser.Parser<ParserInput, any, To>
 
-  readonly Constructor: Constructor.Constructor<ConstructorInput, ParsedShape, any>
+  readonly Constructor: Constructor.Constructor<ConstructorInput, To, any>
 
-  readonly Encoder: Encoder.Encoder<ParsedShape, Encoded>
+  readonly Encoder: Encoder.Encoder<To, From>
 
-  readonly Guard: Guard.Guard<ParsedShape>
+  readonly Guard: Guard.Guard<To>
 
-  readonly Arbitrary: Arbitrary.Gen<ParsedShape>
+  readonly Arbitrary: Arbitrary.Gen<To>
 
   readonly annotate: <Meta>(
     identifier: Annotation<Meta>,
     meta: Meta
-  ) => DefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  ) => DefaultSchema<ParserInput, To, ConstructorInput, From, Api>
 }
 
-export type DefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> =
-  & SchemaDefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+export type DefaultSchema<ParserInput, To, ConstructorInput, From, Api> =
+  & SchemaDefaultSchema<ParserInput, To, ConstructorInput, From, Api>
   & CarryFromApi<Api>
 
-const carryOver = ["matchW", "matchS", "props"] as const
+const carryOver = ["matchW", "matchS", "fields"] as const
 
 type CarryOverFromApi = typeof carryOver[number]
 
@@ -51,16 +51,16 @@ type CarryFromApi<Api> = UnionToIntersection<
   }[keyof Api]
 >
 
-export function withDefaults<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-): DefaultSchema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+export function withDefaults<ParserInput, To, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>
+): DefaultSchema<ParserInput, To, ConstructorInput, From, Api> {
   const of_ = Constructor.for(self) >= unsafe
 
   function schemed(_: ConstructorInput) {
     return of_(_)
   }
 
-  Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
+  Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
     value: self
   })
 

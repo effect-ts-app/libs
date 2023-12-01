@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as MO from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 import { Encoder, extractSchema } from "@effect-app/schema"
 import type express from "express"
 
@@ -106,7 +106,7 @@ export function makeRequestHandler<
   h?: (req: express.Request, res: express.Response) => Layer<R2, SupportedErrors, PR>
 ) {
   const { Request, Response } = handle
-  const res = Response ? extractSchema(Response as any) : MO.Void
+  const res = Response ? extractSchema(Response as any) : S.Void
   const encodeResponse = handle.adaptResponse
     ? (req: ReqA) => Encoder.for(handle.adaptResponse(req))
     : () => Encoder.for(res)

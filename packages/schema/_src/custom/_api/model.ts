@@ -1,58 +1,58 @@
 import type { Annotation } from "../_schema.js"
-import * as MO from "../_schema.js"
+import * as S from "../_schema.js"
 import { named } from "../_schema.js"
 import * as Arbitrary from "../Arbitrary.js"
 import * as Constructor from "../Constructor.js"
 import * as Encoder from "../Encoder.js"
 import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
-import * as S from "./schemed.js"
+import * as Schemed from "./schemed.js"
 
-export type SchemaForModel<M, Self extends MO.SchemaAny> = MO.Schema<
-  MO.ParserInputOf<Self>,
+export type SchemaForModel<M, Self extends S.SchemaAny> = S.Schema<
+  S.ParserInputOf<Self>,
   M,
-  MO.ConstructorInputOf<Self>,
-  MO.EncodedOf<Self>,
-  MO.ApiOf<Self> & MO.ApiSelfType<M>
+  S.ConstructorInputOf<Self>,
+  S.From<Self>,
+  S.ApiOf<Self> & S.ApiSelfType<M>
 >
 
-export type ParserFor<Self extends MO.SchemaAny> = Parser.Parser<
-  MO.ParserInputOf<Self>,
-  MO.ParserErrorOf<Self>,
-  MO.ParsedShapeOf<Self>
+export type ParserFor<Self extends S.SchemaAny> = Parser.Parser<
+  S.ParserInputOf<Self>,
+  S.ParserErrorOf<Self>,
+  S.To<Self>
 >
 
-export type ConstructorFor<Self extends MO.SchemaAny> = Constructor.Constructor<
-  MO.ConstructorInputOf<Self>,
-  MO.ParsedShapeOf<Self>,
-  MO.ConstructorErrorOf<Self>
+export type ConstructorFor<Self extends S.SchemaAny> = Constructor.Constructor<
+  S.ConstructorInputOf<Self>,
+  S.To<Self>,
+  S.ConstructorErrorOf<Self>
 >
 
-export type EncoderFor<Self extends MO.SchemaAny> = Encoder.Encoder<
-  MO.ParsedShapeOf<Self>,
-  MO.EncodedOf<Self>
+export type EncoderFor<Self extends S.SchemaAny> = Encoder.Encoder<
+  S.To<Self>,
+  S.From<Self>
 >
 
-export type GuardFor<Self extends MO.SchemaAny> = Guard.Guard<MO.ParsedShapeOf<Self>>
+export type GuardFor<Self extends S.SchemaAny> = Guard.Guard<S.To<Self>>
 
-export type ArbitraryFor<Self extends MO.SchemaAny> = Arbitrary.Gen<
-  MO.ParsedShapeOf<Self>
+export type ArbitraryFor<Self extends S.SchemaAny> = Arbitrary.Gen<
+  S.To<Self>
 >
 
-export type ModelFor<M, Self extends MO.SchemaAny> = M extends MO.ParsedShapeOf<Self> ? SchemaForModel<M, Self>
-  : SchemaForModel<MO.ParsedShapeOf<Self>, Self>
+export type ModelFor<M, Self extends S.SchemaAny> = M extends S.To<Self> ? SchemaForModel<M, Self>
+  : SchemaForModel<S.To<Self>, Self>
 
-export interface Model<M, Self extends MO.SchemaAny> extends
-  S.Schemed<Self>,
-  MO.Schema<
-    MO.ParserInputOf<Self>,
+export interface Class<M, Self extends S.SchemaAny> extends
+  Schemed.Schemed<Self>,
+  S.Schema<
+    S.ParserInputOf<Self>,
     M,
-    MO.ConstructorInputOf<Self>,
-    MO.EncodedOf<Self>,
-    MO.ApiOf<Self>
+    S.ConstructorInputOf<Self>,
+    S.From<Self>,
+    S.ApiOf<Self>
   >
 {
-  [S.schemaField]: Self
+  [Schemed.schemaField]: Self
 
   readonly Parser: ParserFor<SchemaForModel<M, Self>>
 
@@ -68,12 +68,12 @@ export interface Model<M, Self extends MO.SchemaAny> extends
 /**
  * @inject genericName
  */
-export function Model<M>(__name?: string) {
-  return <Self extends MO.SchemaAny>(self: Self): Model<M, Self> => {
-    const schemed = S.Schemed(named(__name ?? "Model(Anonymous)")(self))
-    const schema = S.schema(schemed)
+export function Class<M>(__name?: string) {
+  return <Self extends S.SchemaAny>(self: Self): Class<M, Self> => {
+    const schemed = Schemed.Schemed(named(__name ?? "Class(Anonymous)")(self))
+    const schema = Schemed.schema(schemed)
 
-    Object.defineProperty(schemed, MO.SchemaContinuationSymbol, {
+    Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
       value: schema
     })
 
@@ -108,7 +108,7 @@ export function Model<M>(__name?: string) {
     })
 
     Object.defineProperty(schemed, "annotate", {
-      value: <Meta>(identifier: Annotation<Meta>, meta: Meta) => new MO.SchemaAnnotated(schema, identifier, meta)
+      value: <Meta>(identifier: Annotation<Meta>, meta: Meta) => new S.SchemaAnnotated(schema, identifier, meta)
     })
 
     // @ts-expect-error the following is correct

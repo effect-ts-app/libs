@@ -4,13 +4,13 @@
 import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } from "@effect-app/prelude/schema"
 import {
   type AnyError,
-  type ConstructorFromProperties,
-  type EncodedFromProperties,
   EParserFor,
+  type FieldRecord,
+  type FromStruct,
   Parser,
-  type PropertyRecord,
-  type ShapeFromProperties,
+  type StructConstructor,
   These,
+  type ToStruct,
   unsafe
 } from "@effect-app/schema"
 import type { BaseSyntheticEvent } from "react"
@@ -39,33 +39,33 @@ import { useIntl } from "react-intl"
 import { capitalize, isBetweenMidnightAndEndOfDay } from "./utils.js"
 
 export interface ControlMui<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TContext extends object = object
 > extends Control<TFieldValues, TContext> {
-  props: Props
+  fields: Fields
 }
 
 export interface ControllerMuiProps<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends Omit<UseControllerProps<TFieldValues, TName>, "control"> {
-  control: ControlMui<Props, TFieldValues>
+  control: ControlMui<Fields, TFieldValues>
 }
 
 export function useControllerMui<
-  Props extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->(props: ControllerMuiProps<Props, TFieldValues, TName>) {
+>(fields: ControllerMuiProps<Fields, TFieldValues, TName>) {
   const [getFieldMetadata, getMetadata, getRegisterMeta] = useGetMeta<
     TFieldValues,
-    Props
-  >(props.control.props)
+    Fields
+  >(fields.control.fields)
   const r = useController({
-    ...props,
-    rules: { ...getFieldMetadata(props.name), ...props.rules }
+    ...fields,
+    rules: { ...getFieldMetadata(fields.name), ...fields.rules }
   })
 
   const {
@@ -85,16 +85,16 @@ export function useControllerMui<
         helperText: error?.message
       }
     }
-    const { transform } = getRegisterMeta(props.name)
+    const { transform } = getRegisterMeta(fields.name)
     const onChange = (evt: any) => fieldOnChange(transform.output(getControllerValue(evt)))
 
     return {
-      metadata: getMetadata(props.name),
-      metadataMui: getMetadataMui(props.name),
+      metadata: getMetadata(fields.name),
+      metadataMui: getMetadataMui(fields.name),
       onChange,
       transform
     }
-  }, [getRegisterMeta, props.name, fieldOnChange, getMetadata, error])
+  }, [getRegisterMeta, fields.name, fieldOnChange, getMetadata, error])
 
   const { ref, ...restField } = field
 
@@ -177,9 +177,9 @@ export interface MuiRenderProps<
 export interface MuiProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
+  Fields extends Schema.FieldRecord = Schema.FieldRecord
 > extends Omit<ControllerProps<TFieldValues, TName>, "control" | "render"> {
-  control: ControlMui<Props, TFieldValues>
+  control: ControlMui<Fields, TFieldValues>
   render: (_: MuiRenderProps<TFieldValues, TName>) => React.ReactElement
 }
 
@@ -187,9 +187,9 @@ export interface MuiProps<
 export function ControllerMui<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Props extends Schema.PropertyRecord = Schema.PropertyRecord
->(props: MuiProps<TFieldValues, TName, Props>) {
-  return props.render(useControllerMui(props))
+  Fields extends Schema.FieldRecord = Schema.FieldRecord
+>(fields: MuiProps<TFieldValues, TName, Fields>) {
+  return fields.render(useControllerMui(fields))
 }
 
 export interface Val<T> {
@@ -205,7 +205,7 @@ export interface FormMetadata {
 
 function getFormMetadata(
   intl: IntlShape,
-  p: Schema.AnyProperty | Schema.SchemaAny
+  p: Schema.AnyField | Schema.SchemaAny
 ): FormMetadata {
   const { maxLength, minLength, required } = getMetadataFromSchemaOrProp(p)
 
@@ -249,64 +249,64 @@ function getFormMetadata(
   }
 }
 
-export type SchemaProperties<Props extends PropertyRecord> = Schema.Schema<
+export type SchemaProperties<Fields extends FieldRecord> = Schema.Schema<
   unknown,
-  ShapeFromProperties<Props>,
-  ConstructorFromProperties<Props>,
-  EncodedFromProperties<Props>,
+  ToStruct<Fields>,
+  StructConstructor<Fields>,
+  FromStruct<Fields>,
   {
-    props: Props
+    fields: Fields
   }
 >
 
-export function createUseParsedFormFromSchema<Props extends PropertyRecord>(
-  self: SchemaProperties<Props>
+export function createUseParsedFormFromSchema<Fields extends FieldRecord>(
+  self: SchemaProperties<Fields>
 ) {
-  return createUseParsedFormUnsafe(self.Api.props)(EParserFor(self))
+  return createUseParsedFormUnsafe(self.Api.fields)(EParserFor(self))
 }
 
 /**
- * @unsafe - because the `Shape` has no relation to `Props`
+ * @unsafe - because the `Shape` has no relation to `Fields`
  * This is used to adapt forms to tagged unions.
  * It would be better to make first class support for that instead.
  */
 export function createUseCustomParsedFormFromSchemaUnsafe<
-  Props extends PropertyRecord,
-  ParsedShape
->(input: SchemaProperties<Props>, target: Schema.Schema<unknown, ParsedShape, any, any, any>) {
-  return createUseParsedFormUnsafe(input.Api.props)(Parser.for(target))
+  Fields extends FieldRecord,
+  To
+>(input: SchemaProperties<Fields>, target: Schema.Schema<unknown, To, any, any, any>) {
+  return createUseParsedFormUnsafe(input.Api.fields)(Parser.for(target))
 }
 
 /**
- * @unsafe - because the `Shape` has no relation to `Props`
+ * @unsafe - because the `Shape` has no relation to `Fields`
  * This is used to adapt forms to tagged unions.
  * It would be better to make first class support for that instead.
  */
-export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: Props) {
-  type Encoded = EncodedFromProperties<Props>
-  type NEncoded = Encoded // Transform<Encoded>
+export function createUseParsedFormUnsafe<Fields extends FieldRecord>(fields: Fields) {
+  type From = FromStruct<Fields>
+  type NFrom = From // Transform<From>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
-  // TODO: Encoded should extend Shape (provide at least, or over provide)
+  // TODO: From should extend Shape (provide at least, or over provide)
   return <Shape, ParserE extends AnyError>(
-    parser: Parser.Parser<Encoded, ParserE, Shape>
+    parser: Parser.Parser<From, ParserE, Shape>
   ) => {
     const parse = parser.pipe(unsafe)
     return <
       // eslint-disable-next-line @typescript-eslint/ban-types
       TContext extends object = object
     >(
-      _?: Omit<UseFormProps<NEncoded, TContext>, "defaultValues"> & {
-        defaultValues: NEncoded
+      _?: Omit<UseFormProps<NFrom, TContext>, "defaultValues"> & {
+        defaultValues: NFrom
       }
     ) => {
-      const originalForm_ = createUseForm(props)
-      const form = originalForm_<NEncoded, TContext>(_ as any)
+      const originalForm_ = createUseForm(fields)
+      const form = originalForm_<NFrom, TContext>(_ as any)
       return {
         ...form,
         handleSubmit: (
           onValid: (data: Shape, event?: React.BaseSyntheticEvent) => Promise<unknown>,
-          onInvalid?: SubmitErrorHandler<Encoded>,
+          onInvalid?: SubmitErrorHandler<From>,
           preValidate?: () => boolean
         ) => {
           const hs = form.handleSubmit as any
@@ -327,21 +327,21 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
   }
 }
 
-export function createUseForm<Props extends PropertyRecord = PropertyRecord>(
-  props: Props
+export function createUseForm<Fields extends FieldRecord = FieldRecord>(
+  fields: Fields
 ) {
-  type Encoded = EncodedFromProperties<Props>
-  type NEncoded = Encoded // Transform<Encoded>
+  type From = FromStruct<Fields>
+  type NFrom = From // Transform<From>
   return function useFormInternal<
-    TFieldValues extends NEncoded,
+    TFieldValues extends NFrom,
     // eslint-disable-next-line @typescript-eslint/ban-types
     TContext extends object = object
   >(_?: UseFormProps<TFieldValues, TContext>) {
     const r = useFormOriginal(_)
-    const [register, getFieldMetadata, getMetadata] = useRegister(r.register, props)
+    const [register, getFieldMetadata, getMetadata] = useRegister(r.register, fields)
     const { errors } = r.formState
 
-    const control = useMemo(() => ({ ...r.control, props }), [r.control])
+    const control = useMemo(() => ({ ...r.control, fields }), [r.control])
 
     const getMetadataMui = useCallback(
       <TFieldName extends FieldPath<TFieldValues>>(name: TFieldName) => {
@@ -365,7 +365,7 @@ export function createUseForm<Props extends PropertyRecord = PropertyRecord>(
         name: TFieldName,
         options?: RegisterOptions<TFieldValues, TFieldName>
       ) => {
-        const propOrSchema = getPropOrSchemaFromPath({ props }, name)
+        const propOrSchema = getPropOrSchemaFromPath({ fields }, name)
         const { transform, ...customReg } = getRegisterFromSchemaOrProp(propOrSchema)
 
         // TODO: check and filter options for custom setValueAs / valueAsNumber / valueAsDate
@@ -404,11 +404,11 @@ function isNumber(a: string) {
   return isNumber
 }
 
-// We have to differentiate between Prop and raw schema.
+// We have to differentiate between Field and raw schema.
 function getPropOrSchemaFromPath(
   current: any,
   name: string
-): Schema.AnyProperty | Schema.SchemaAny {
+): Schema.AnyField | Schema.SchemaAny {
   const path = name.split(".")
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const last = path[path.length - 1]!
@@ -417,29 +417,29 @@ function getPropOrSchemaFromPath(
   // array = a.0.b.c
   for (const p of left) {
     if (isNumber(p)) {
-      current = current.self // returns a schema, not a prop
+      current = current.self // returns a schema, not a field
     } else {
-      current = current.props[p]._schema.Api
+      current = current.fields[p]._schema.Api
     }
   }
   if (isNumber(last)) {
-    current = current.self // returns a schema, not a prop
+    current = current.self // returns a schema, not a field
   } else {
-    current = current.props[last]
+    current = current.fields[last]
   }
   return current
 }
 
 function useGetMeta<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
->(props: Props) {
+  Fields extends Schema.FieldRecord
+>(fields: Fields) {
   const intl = useIntl()
   const { getFieldMetadata, getMetadata, getRegisterMeta } = useMemo(() => {
     const getMetadata = <TFieldName extends FieldPath<TFieldValues>>(
       name: TFieldName
     ) => {
-      const propOrSchema = getPropOrSchemaFromPath({ props }, name)
+      const propOrSchema = getPropOrSchemaFromPath({ fields }, name)
       return getMetadataFromSchemaOrProp(propOrSchema)
     }
     const getFieldMetadata = <TFieldName extends FieldPath<TFieldValues>>(
@@ -449,7 +449,7 @@ function useGetMeta<
         // | Record<string, Validate<PathValue<TFieldValues, TFieldName>>>
         | undefined
     ) => {
-      const propOrSchema = getPropOrSchemaFromPath({ props }, name)
+      const propOrSchema = getPropOrSchemaFromPath({ fields }, name)
       const meta = getRegisterFromSchemaOrProp(propOrSchema)
       const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
       const parse = Schema.Parser.for(schema)
@@ -489,7 +489,7 @@ function useGetMeta<
     const getRegisterMeta = <TFieldName extends FieldPath<TFieldValues>>(
       name: TFieldName
     ) => {
-      const propOrSchema = getPropOrSchemaFromPath({ props }, name)
+      const propOrSchema = getPropOrSchemaFromPath({ fields }, name)
       const meta = getRegisterFromSchemaOrProp(propOrSchema)
 
       return meta
@@ -499,16 +499,16 @@ function useGetMeta<
       getRegisterMeta,
       getFieldMetadata
     }
-  }, [props, intl])
+  }, [fields, intl])
 
   return [getFieldMetadata, getMetadata, getRegisterMeta] as const
 }
 
 function useRegister<
   TFieldValues extends FieldValues,
-  Props extends Schema.PropertyRecord
->(register_: UseFormRegister<TFieldValues>, props: Props) {
-  const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Props>(props)
+  Fields extends Schema.FieldRecord
+>(register_: UseFormRegister<TFieldValues>, fields: Fields) {
+  const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Fields>(fields)
   const register = useCallback(
     <TFieldName extends FieldPath<TFieldValues>>(
       name: TFieldName,

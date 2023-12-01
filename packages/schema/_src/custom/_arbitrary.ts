@@ -30,16 +30,16 @@ export const interpreters: ((schema: S.SchemaAny) => Option<() => Gen<unknown>>)
 
 const cache = new WeakMap()
 
-function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-): Gen<ParsedShape> {
+function for_<ParserInput, To, ConstructorInput, From, Api>(
+  schema: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+): Gen<To> {
   if (cache.has(schema)) {
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
     const arb: Gen<unknown> = (__) => for_(schema.self())(__)
     cache.set(schema, arb)
-    return arb as Gen<ParsedShape>
+    return arb as Gen<To>
   }
   for (const interpreter of interpreters) {
     const _ = interpreter(schema)
@@ -52,7 +52,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
         return x(__)
       }
       cache.set(schema, arb)
-      return arb as Gen<ParsedShape>
+      return arb as Gen<To>
     }
   }
   if (hasContinuation(schema)) {
@@ -64,7 +64,7 @@ function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
       return x(__)
     }
     cache.set(schema, arb)
-    return arb as Gen<ParsedShape>
+    return arb as Gen<To>
   }
   throw new Error(`Missing arbitrary integration for: ${schema.constructor}`)
 }

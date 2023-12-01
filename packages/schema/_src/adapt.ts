@@ -2,52 +2,52 @@
 import * as D from "@effect-app/core/Dictionary"
 
 import type { ComputeFlat, UnionToIntersection } from "@effect-app/core/utils"
-import { array, prop, props } from "./_schema.js"
-import * as MO from "./_schema.js"
+import { array, struct } from "./_schema.js"
+import * as S from "./_schema.js"
 import { positiveInt } from "./custom.js"
 
-type AdaptSchema<Props extends MO.PropertyRecord, Key extends keyof Props> = {
-  [K in Key]: Props[K]
+type AdaptSchema<Fields extends S.FieldRecord, Key extends keyof Fields> = {
+  [K in Key]: Fields[K]
 }
 
 // TODO: adapt error types too; low prio
 const adaptedSchema =
-  <Props extends MO.PropertyRecord>(properties: Props) =>
-  <Key extends keyof Props>(keys: readonly Key[]): AdaptSchema<Props, Key> =>
+  <Fields extends S.FieldRecord>(properties: Fields) =>
+  <Key extends keyof Fields>(keys: readonly Key[]): AdaptSchema<Fields, Key> =>
     D.filterWithIndex_(properties, (key) => keys.includes(key as Key)) as any
 
 // TODO: keep existing fields
-export const adaptRes = <Props extends MO.PropertyRecord>(properties: Props) => {
+export const adaptRes = <Fields extends S.FieldRecord>(properties: Fields) => {
   const adapt = adaptedSchema(properties)
-  return <Key extends keyof Props>(keys: readonly Key[]) =>
-    props({
-      items: prop(array(props(adapt(keys)))),
+  return <Key extends keyof Fields>(keys: readonly Key[]) =>
+    S.struct({
+      items: array(struct(adapt(keys))),
       // TODO: hide count when not asked for $count. and demand non-opt count, when asked.
-      count: MO.optProp(positiveInt)
+      count: S.optProp(positiveInt)
     })
 }
 
 export type Adapted<
-  Props extends MO.PropertyRecord,
-  Key extends keyof Props
-> = /* copy pasted from return type of function */ MO.SchemaProperties<{
-  items: MO.Property<
-    MO.SchemaDefaultSchema<
+  Fields extends S.FieldRecord,
+  Key extends keyof Fields
+> = /* copy pasted from return type of function */ S.SchemaProperties<{
+  items: S.Field<
+    S.SchemaDefaultSchema<
       unknown,
       readonly ComputeFlat<
         UnionToIntersection<
           {
-            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-              Props,
+            [k in keyof AdaptSchema<Fields, Key>]: AdaptSchema<
+              Fields,
               Key
-            >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
+            >[k] extends S.AnyField ? AdaptSchema<Fields, Key>[k]["_optional"] extends "optional" ? {
                   readonly [h in k]?:
-                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | S.To<AdaptSchema<Fields, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
-                readonly [h in k]: MO.ParsedShapeOf<
-                  AdaptSchema<Props, Key>[k]["_schema"]
+                readonly [h in k]: S.To<
+                  AdaptSchema<Fields, Key>[k]["_schema"]
                 >
               }
               : never
@@ -57,17 +57,17 @@ export type Adapted<
       readonly ComputeFlat<
         UnionToIntersection<
           {
-            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-              Props,
+            [k in keyof AdaptSchema<Fields, Key>]: AdaptSchema<
+              Fields,
               Key
-            >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
+            >[k] extends S.AnyField ? AdaptSchema<Fields, Key>[k]["_optional"] extends "optional" ? {
                   readonly [h in k]?:
-                    | MO.ParsedShapeOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | S.To<AdaptSchema<Fields, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
-                readonly [h in k]: MO.ParsedShapeOf<
-                  AdaptSchema<Props, Key>[k]["_schema"]
+                readonly [h in k]: S.To<
+                  AdaptSchema<Fields, Key>[k]["_schema"]
                 >
               }
               : never
@@ -77,23 +77,24 @@ export type Adapted<
       readonly ComputeFlat<
         UnionToIntersection<
           {
-            [k in keyof AdaptSchema<Props, Key>]: AdaptSchema<
-              Props,
+            [k in keyof AdaptSchema<Fields, Key>]: AdaptSchema<
+              Fields,
               Key
-            >[k] extends MO.AnyProperty ? AdaptSchema<Props, Key>[k]["_optional"] extends "optional" ? {
+            >[k] extends S.AnyField ? AdaptSchema<Fields, Key>[k]["_optional"] extends "optional" ? {
                   readonly [
-                    h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any>
-                      ? AdaptSchema<Props, Key>[k]["_as"]["value"]
+                    h in AdaptSchema<Fields, Key>[k]["_as"] extends Some<any>
+                      ? AdaptSchema<Fields, Key>[k]["_as"]["value"]
                       : k
                   ]?:
-                    | MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                    | S.From<AdaptSchema<Fields, Key>[k]["_schema"]>
                     | undefined
                 }
               : {
                 readonly [
-                  h in AdaptSchema<Props, Key>[k]["_as"] extends Some<any> ? AdaptSchema<Props, Key>[k]["_as"]["value"]
+                  h in AdaptSchema<Fields, Key>[k]["_as"] extends Some<any>
+                    ? AdaptSchema<Fields, Key>[k]["_as"]["value"]
                     : k
-                ]: MO.EncodedOf<AdaptSchema<Props, Key>[k]["_schema"]>
+                ]: S.From<AdaptSchema<Fields, Key>[k]["_schema"]>
               }
               : never
           }[Key]

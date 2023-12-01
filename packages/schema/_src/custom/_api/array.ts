@@ -13,13 +13,13 @@ import { withDefaults } from "./withDefaults.js"
 
 export const arrayIdentifier = S.makeAnnotation<{ self: S.SchemaUPI }>()
 
-export function array<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: S.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export function array<To, ConstructorInput, From, Api>(
+  self: S.Schema<unknown, To, ConstructorInput, From, Api>
 ): DefaultSchema<
   unknown,
-  readonly ParsedShape[],
-  readonly ParsedShape[],
-  readonly Encoded[],
+  readonly To[],
+  readonly To[],
+  readonly From[],
   { self: Api }
 > {
   const guardSelf = Guard.for(self)
@@ -28,17 +28,17 @@ export function array<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     S.identity(
-      (u): u is readonly ParsedShape[] => Array.isArray(u) && u.every(guardSelf)
+      (u): u is readonly To[] => Array.isArray(u) && u.every(guardSelf)
     ),
-    S.parser((u: Chunk<ParsedShape>) => Th.succeed(u.toReadonlyArray)),
-    S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
+    S.parser((u: Chunk<To>) => Th.succeed(u.toReadonlyArray)),
+    S.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
     S.arbitrary((_) => _.array(arbitrarySelf(_)))
   )
 
   return pipe(
     chunk(self)[">>>"](fromChunk),
     S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-    S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
+    S.constructor((_: readonly To[]) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     withDefaults,

@@ -1,36 +1,36 @@
 import { pipe } from "@effect-app/core/Function"
 
-import * as MO from "../vendor.js"
+import * as S from "../vendor.js"
 import type { NonEmptyBrand } from "../vendor.js"
 import { extendWithUtils } from "./_shared.js"
 import { constrained } from "./length.js"
 
 // TODO: Word, for lorem ipsum generation, but as composition?
 
-export const constrainedStringIdentifier = MO.makeAnnotation<{ minLength: number; maxLength: number }>()
+export const constrainedStringIdentifier = S.makeAnnotation<{ minLength: number; maxLength: number }>()
 export function makeConstrainedFromString<Brand>(minLength: number, maxLength: number) {
   return pipe(
-    MO.fromString,
-    MO.arbitrary((FC) => FC.string({ minLength, maxLength })),
+    S.fromString,
+    S.arbitrary((FC) => FC.string({ minLength, maxLength })),
     constrained<Brand>(minLength, maxLength),
-    MO.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
-    MO.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+    S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+    S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
     // NOTE: brand must come after, to reap benefits of showing Opaque types in editor
     // if combining types further down the line, must re-apply brand.
-    MO.brand<Brand>()
+    S.brand<Brand>()
   )
 }
 
-export type UUID = MO.UUID
-export const UUID = extendWithUtils(MO.UUID)
+export type UUID = S.UUID
+export const UUID = extendWithUtils(S.UUID)
 
-export const Int = extendWithUtils(MO.int)
-export type Int = MO.Int
-export const PositiveInt = extendWithUtils(MO.positiveInt)
-export type PositiveInt = MO.PositiveInt
+export const Int = extendWithUtils(S.int)
+export type Int = S.Int
+export const PositiveInt = extendWithUtils(S.positiveInt)
+export type PositiveInt = S.PositiveInt
 
-export const NonEmptyString = extendWithUtils(MO.nonEmptyString)
-export type NonEmptyString = MO.NonEmptyString
+export const NonEmptyString = extendWithUtils(S.nonEmptyString)
+export type NonEmptyString = S.NonEmptyString
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
@@ -49,21 +49,21 @@ export type ReasonableString = string & ReasonableStringBrand
  */
 export const reasonableStringFromString = pipe(
   makeConstrainedFromString<ReasonableString>(1, 256 - 1),
-  MO.arbitrary((FC) =>
+  S.arbitrary((FC) =>
     FC
       .lorem({ mode: "words", maxCount: 2 })
       .filter((x) => x.length < 256 - 1 && x.length > 0)
       .map((x) => x as ReasonableString)
   ),
   // arbitrary removes brand benefit
-  MO.brand<ReasonableString>()
+  S.brand<ReasonableString>()
 )
 
 /**
  * A string that is at least 1 character long and a maximum of 255.
  */
 export const ReasonableString = extendWithUtils(
-  pipe(MO.string[">>>"](reasonableStringFromString), MO.brand<ReasonableString>())
+  pipe(S.string[">>>"](reasonableStringFromString), S.brand<ReasonableString>())
 )
 
 /**
@@ -83,21 +83,21 @@ export type LongString = string & LongStringBrand
  */
 export const longStringFromString = pipe(
   makeConstrainedFromString<LongString>(1, 2048 - 1),
-  MO.arbitrary((FC) =>
+  S.arbitrary((FC) =>
     FC
       .lorem({ mode: "words", maxCount: 25 })
       .filter((x) => x.length < 2048 - 1 && x.length > 0)
       .map((x) => x as LongString)
   ),
   // arbitrary removes brand benefit
-  MO.brand<LongString>()
+  S.brand<LongString>()
 )
 
 /**
  * A string that is at least 1 character long and a maximum of 2047.
  */
 export const LongString = extendWithUtils(
-  pipe(MO.string[">>>"](longStringFromString), MO.brand<LongString>())
+  pipe(S.string[">>>"](longStringFromString), S.brand<LongString>())
 )
 
 /**
@@ -118,19 +118,19 @@ export type TextString = string & TextStringBrand
  */
 export const textStringFromString = pipe(
   makeConstrainedFromString<TextString>(1, 64 * 1024),
-  MO.arbitrary((FC) =>
+  S.arbitrary((FC) =>
     FC
       .lorem({ mode: "sentences", maxCount: 25 })
       .filter((x) => x.length < 64 * 1024 && x.length > 0)
       .map((x) => x as TextString)
   ),
   // arbitrary removes brand benefit
-  MO.brand<TextString>()
+  S.brand<TextString>()
 )
 
 /**
  * A string that is at least 1 character long and a maximum of 64kb.
  */
 export const TextString = extendWithUtils(
-  pipe(MO.string[">>>"](textStringFromString), MO.brand<TextString>())
+  pipe(S.string[">>>"](textStringFromString), S.brand<TextString>())
 )

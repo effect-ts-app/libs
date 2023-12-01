@@ -21,13 +21,13 @@ export function withDefaultConstructorField<
 >(
   key: Key,
   value: LazyArg<ConstructorInput[Key]>
-): <ParserInput, ParsedShape, Encoded, Api>(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+): <ParserInput, To, From, Api>(
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ) => DefaultSchema<
   ParserInput,
-  ParsedShape,
+  To,
   OptionalKey<ConstructorInput, Key>,
-  Encoded,
+  From,
   Api
 > {
   return (self) => {

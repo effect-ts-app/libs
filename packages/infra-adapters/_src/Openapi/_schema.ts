@@ -4,14 +4,14 @@ import { Schema, SchemaContinuationSymbol } from "@effect-app/schema"
 
 import type { JSONSchema } from "./atlas-plutus.js"
 
-export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  extends Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+export class SchemaOpenApi<ParserInput, To, ConstructorInput, From, Api>
+  extends Schema<ParserInput, To, ConstructorInput, From, Api>
   implements HasContinuation
 {
   readonly Api = this.self.Api
   readonly [SchemaContinuationSymbol]: SchemaAny
   constructor(
-    readonly self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
+    readonly self: Schema<ParserInput, To, ConstructorInput, From, Api>,
     readonly jsonSchema: () => JSONSchema
   ) {
     super()
@@ -19,15 +19,15 @@ export class SchemaOpenApi<ParserInput, ParsedShape, ConstructorInput, Encoded, 
   }
 }
 
-export function openapi<ParsedShape>(f: () => JSONSchema) {
-  return <ParserInput, ConstructorInput, Encoded, Api>(
-    self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-  ): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> => new SchemaOpenApi(self, f) as any
+export function openapi<To>(f: () => JSONSchema) {
+  return <ParserInput, ConstructorInput, From, Api>(
+    self: Schema<ParserInput, To, ConstructorInput, From, Api>
+  ): Schema<ParserInput, To, ConstructorInput, From, Api> => new SchemaOpenApi(self, f) as any
 }
 
-export function openapi_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
+export function openapi_<ParserInput, To, ConstructorInput, From, Api>(
+  self: Schema<ParserInput, To, ConstructorInput, From, Api>,
   f: () => JSONSchema
-): Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api> {
+): Schema<ParserInput, To, ConstructorInput, From, Api> {
   return new SchemaOpenApi(self, f)
 }
