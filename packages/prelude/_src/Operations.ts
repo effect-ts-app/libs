@@ -46,7 +46,7 @@ export namespace OperationProgress {
    * @tsplus type OperationProgress.Encoded
    * @tsplus companion OperationProgress.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof OperationProgress>() {}
+  export class Encoded extends FromClass<typeof OperationProgress>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof OperationProgress> {}
   export interface Props extends GetProvidedProps<typeof OperationProgress> {}
@@ -56,7 +56,7 @@ export namespace Success {
    * @tsplus type Success.Encoded
    * @tsplus companion Success.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof Success>() {}
+  export class Encoded extends FromClass<typeof Success>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Success> {}
   export interface Props extends GetProvidedProps<typeof Success> {}
@@ -66,7 +66,7 @@ export namespace Failure {
    * @tsplus type Failure.Encoded
    * @tsplus companion Failure.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof Failure>() {}
+  export class Encoded extends FromClass<typeof Failure>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Failure> {}
   export interface Props extends GetProvidedProps<typeof Failure> {}
@@ -76,7 +76,7 @@ export namespace Operation {
    * @tsplus type Operation.Encoded
    * @tsplus companion Operation.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof Operation>() {}
+  export class Encoded extends FromClass<typeof Operation>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof Operation> {}
   export interface Props extends GetProvidedProps<typeof Operation> {}

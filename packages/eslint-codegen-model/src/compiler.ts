@@ -61,7 +61,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           `   * @tsplus type ${modelName}.Encoded`,
           `   * @tsplus companion ${modelName}.Encoded/Ops`,
           `   */`,
-          `  export class Encoded extends EncodedClass<typeof ${modelName}>() {}`,
+          `  export class Encoded extends FromClass<typeof ${modelName}>() {}`,
           // `  export const Encoded: EncodedOps = { $: {} }`,
           // `  /**`,
           // `   * @tsplus type ${modelName}.Encoded/Aspects`,

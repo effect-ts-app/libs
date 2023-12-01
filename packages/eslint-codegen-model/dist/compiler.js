@@ -90,7 +90,7 @@ function processNode(tc, root, writeFullTypes = false) {
                     `   * @tsplus type ${modelName}.Encoded`,
                     `   * @tsplus companion ${modelName}.Encoded/Ops`,
                     `   */`,
-                    `  export class Encoded extends EncodedClass<typeof ${modelName}>() {}`,
+                    `  export class Encoded extends FromClass<typeof ${modelName}>() {}`,
                     // `  export const Encoded: EncodedOps = { $: {} }`,
                     // `  /**`,
                     // `   * @tsplus type ${modelName}.Encoded/Aspects`,

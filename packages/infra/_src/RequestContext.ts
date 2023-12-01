@@ -64,7 +64,7 @@ export namespace RequestContextParent {
    * @tsplus type RequestContextParent.Encoded
    * @tsplus companion RequestContextParent.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof RequestContextParent>() {}
+  export class Encoded extends FromClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContextParent> {}
   export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
@@ -74,7 +74,7 @@ export namespace RequestContext {
    * @tsplus type RequestContext.Encoded
    * @tsplus companion RequestContext.Encoded/Ops
    */
-  export class Encoded extends EncodedClass<typeof RequestContext>() {}
+  export class Encoded extends FromClass<typeof RequestContext>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContext> {}
   export interface Props extends GetProvidedProps<typeof RequestContext> {}

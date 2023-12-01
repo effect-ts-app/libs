@@ -21,20 +21,20 @@ import type { These } from "./custom/These.js"
 import type { OptionalConstructor } from "./tools.js"
 import { Parser } from "./vendor.js"
 
-export interface EncodedClass<T> {
+export interface FromClass<T> {
   new(a: T): T
 }
 
-export function EncodedClassBase<T>() {
+export function FromClassBase<T>() {
   class Encoded {
     constructor(a: T) {
       Object.assign(this, a)
     }
   }
-  return Encoded as EncodedClass<T>
+  return Encoded as FromClass<T>
 }
-export function EncodedClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
-  return EncodedClassBase<EncodedFromApi<Cls>>()
+export function FromClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
+  return FromClassBase<EncodedFromApi<Cls>>()
 }
 
 export function partialConstructor<ConstructorInput, ParsedShape>(model: {
