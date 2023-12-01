@@ -316,7 +316,7 @@ function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
 
     static [schemaField] = schema
     static [S.SchemaContinuationSymbol] = schema
-    static Class = schema
+    static Model = schema
     static Api = schema.Api
     static [">>>"] = schema[">>>"]
 
