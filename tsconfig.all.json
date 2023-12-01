@@ -34,5 +34,8 @@
     {
       "path": "packages/react"
     },
+    {
+      "path": "packages/fluent-extensions"
+    },
   ]
 }

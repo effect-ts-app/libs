@@ -268,16 +268,6 @@
         "default": "./_cjs/faker.cjs"
       }
     },
-    "./fluent-extensions": {
-      "import": {
-        "types": "./dist/fluent-extensions.d.ts",
-        "default": "./dist/fluent-extensions.js"
-      },
-      "require": {
-        "types": "./dist/fluent-extensions.d.ts",
-        "default": "./_cjs/fluent-extensions.cjs"
-      }
-    },
     "./ids": {
       "import": {
         "types": "./dist/ids.d.ts",
