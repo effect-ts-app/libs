@@ -12,3 +12,4 @@ coverage/
 !dist/
 !_cjs/
 .swcrc
+.cache/
