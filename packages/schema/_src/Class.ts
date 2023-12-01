@@ -175,7 +175,7 @@ export function setSchema<Self extends S.SchemaProperties<any>>(
   schemed: any,
   self: Self
 ) {
-  schemed[S.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Class = self
+  schemed[S.SchemaContinuationSymbol] = schemed[schemaField] = schemed.Model = self
 
   // Object.defineProperty(schemed, S.SchemaContinuationSymbol, {
   //   value: self,
