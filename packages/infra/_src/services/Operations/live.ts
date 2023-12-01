@@ -103,6 +103,6 @@ const cleanupLoop = Operations
 /**
  * @tsplus static Operations.Ops Live
  */
-export const Live = make.toLayer(Operations)
-  > cleanupLoop
-    .toLayerScopedDiscard
+export const Live = cleanupLoop
+  .toLayerScopedDiscard
+  .provideMerge(make.toLayer(Operations))
