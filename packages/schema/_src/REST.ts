@@ -717,7 +717,7 @@ export type ReqRes<E, A> = S.Schema<
 >
 export type ReqResSchemed<E, A> = {
   new(...args: any[]): any
-  Encoder: S.Encoder.Encoder<A, E>
+  encodeSync: S.Encoder.Encoder<A, E>
   Model: ReqRes<E, A>
 }
 

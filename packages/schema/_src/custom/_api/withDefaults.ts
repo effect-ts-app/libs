@@ -25,9 +25,9 @@ export interface SchemaDefaultSchema<
 
   readonly Constructor: Constructor.Constructor<ConstructorInput, To, any>
 
-  readonly Encoder: Encoder.Encoder<To, From>
+  readonly encodeSync: Encoder.Encoder<To, From>
 
-  readonly Guard: Guard.Guard<To>
+  readonly is: Guard.Guard<To>
 
   readonly Arbitrary: Arbitrary.Gen<To>
 

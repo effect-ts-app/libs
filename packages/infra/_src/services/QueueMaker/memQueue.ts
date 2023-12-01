@@ -29,7 +29,6 @@ export function makeMemQueue<
     const rcc = yield* $(RequestContextContainer)
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
-    const encoder = wireSchema.Encoder
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
     const parseDrain = drainW.parseCondemnDie
 
@@ -45,7 +44,7 @@ export function makeMemQueue<
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 Effect(
                   JSON.stringify(
-                    encoder({ body: m, meta: { requestContext, span } })
+                    wireSchema.encodeSync({ body: m, meta: { requestContext, span } })
                   )
                 )
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))

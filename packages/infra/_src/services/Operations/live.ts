@@ -52,7 +52,7 @@ const make = Effect.sync((): Operations => {
                   .cause
                   .failureOption
                   .flatMap((_) =>
-                    typeof _ === "object" && _ !== null && "message" in _ && LongString.Guard(_.message)
+                    typeof _ === "object" && _ !== null && "message" in _ && LongString.is(_.message)
                       ? Option(_.message)
                       : Option.none
                   )

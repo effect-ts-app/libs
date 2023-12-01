@@ -165,7 +165,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
   }
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
-    const enc = RedisSerializedDBRecord.Encoder(val)
+    const enc = RedisSerializedDBRecord.encodeSync(val)
     return RedisClient.flatMap(({ client }) =>
       Effect
         .async<never, ConnectionException, void>((res) => {

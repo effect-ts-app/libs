@@ -234,7 +234,6 @@ export function prefixedStringId<Brand extends StringId>() {
          * Must provide a literal string starting with prefix.
          */
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
-        is: refinement,
         prefix,
         eq: Equivalence.string as Equivalence<Brand>,
         withDefault: defaultProp(schema, make)
@@ -264,7 +263,6 @@ export interface PrefixedStringUtils<
   readonly make: () => Brand
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
-  readonly is: (x: StringId) => x is Brand
   readonly prefix: Prefix
   eq: Equivalence<Brand>
   readonly withDefault: Field<

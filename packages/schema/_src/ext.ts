@@ -701,6 +701,16 @@ export function condemn_<X, E, A>(
 }
 
 /**
+ * @tsplus getter ets/Schema/Schema encodeSync
+ */
+export function encodeSync<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+  const encoder = S.Encoder.for(self)
+  return (a: B) => {
+    return encoder(a)
+  }
+}
+
+/**
  * @tsplus getter ets/Schema/Parser condemnCustom
  */
 export function condemnCustom<X, A>(self: Parser.Parser<X, AnyError, A>) {
@@ -795,9 +805,9 @@ export function parseECondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) 
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseECondemnFail
+ * @tsplus getter ets/Schema/Schema parseEEither
  */
-export function parseECondemnFail<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseEEither<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemnFail_(parser, a, env)
@@ -835,9 +845,9 @@ export function parseCondemnDie<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseCondemnFail
+ * @tsplus getter ets/Schema/Schema parseEither
  */
-export function parseCondemnFail<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
+export function parseEither<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   return (a: A, env?: Parser.ParserEnv) => {
     const parser = Parser.for(self)
     return condemnFail_(parser, a, env)
@@ -895,9 +905,9 @@ export function parseECondemn<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseUnsafe
+ * @tsplus getter ets/Schema/Schema parseSync
  */
-export function parseUnsafe<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
+export function parseSync<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   const parser = Parser.for(self)
   const uns = unsafe(parser)
   return (a: A, env?: Parser.ParserEnv) => {
@@ -906,9 +916,9 @@ export function parseUnsafe<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseEUnsafe
+ * @tsplus getter ets/Schema/Parser parseESync
  */
-export function parseEUnsafe<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseESync<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   const uns = unsafe(parser)
   return (a: D, env?: Parser.ParserEnv) => {

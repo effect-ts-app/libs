@@ -58,9 +58,9 @@ export interface Class<M, Self extends S.SchemaAny> extends
 
   readonly Constructor: ConstructorFor<SchemaForModel<M, Self>>
 
-  readonly Encoder: EncoderFor<SchemaForModel<M, Self>>
+  readonly encodeSync: EncoderFor<SchemaForModel<M, Self>>
 
-  readonly Guard: GuardFor<SchemaForModel<M, Self>>
+  readonly is: GuardFor<SchemaForModel<M, Self>>
 
   readonly Arbitrary: ArbitraryFor<SchemaForModel<M, Self>>
 }

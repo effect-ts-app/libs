@@ -43,9 +43,9 @@ export const { condemnDie } = Schema
 // export const { parseCondemnDie } = Schema
 
 // /**
-//  * @tsplus getter ets/Schema/Schema parseECondemnFail
+//  * @tsplus getter ets/Schema/Schema parseEEither
 //  */
-// export const { parseECondemnFail } = Schema
+// export const { parseEEither } = Schema
 
 // /**
 //  * @tsplus getter ets/Schema/Schema parseECondemnDie
@@ -68,14 +68,14 @@ export const { condemnDie } = Schema
 // export const { parseECondemnLeft } = Schema
 
 // /**
-//  * @tsplus getter ets/Schema/Schema parseEUnsafe
+//  * @tsplus getter ets/Schema/Schema parseESync
 //  */
-// export const { parseEUnsafe } = Schema
+// export const { parseESync } = Schema
 
 // /**
-//  * @tsplus getter ets/Schema/Schema parseUnsafe
+//  * @tsplus getter ets/Schema/Schema parseSync
 //  */
-// export const { parseUnsafe } = Schema
+// export const { parseSync } = Schema
 
 // /**
 //  * @tsplus getter ets/Schema/Schema parseCondemn

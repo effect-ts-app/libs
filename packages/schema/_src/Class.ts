@@ -115,8 +115,8 @@ export interface MM<
   readonly Parser: S.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
   readonly Constructor: S.ConstructorFor<SelfM>
-  readonly Encoder: S.EncoderFor<SelfM>
-  readonly Guard: S.GuardFor<SelfM>
+  readonly encodeSync: S.EncoderFor<SelfM>
+  readonly is: S.GuardFor<SelfM>
   readonly Arbitrary: S.ArbitraryFor<SelfM>
 }
 
@@ -215,12 +215,12 @@ export function setSchema<Self extends S.SchemaProperties<any>>(
     configurable: true
   })
 
-  Object.defineProperty(schemed, "Encoder", {
+  Object.defineProperty(schemed, "encodeSync", {
     value: S.Encoder.for(self),
     configurable: true
   })
 
-  Object.defineProperty(schemed, "Guard", {
+  Object.defineProperty(schemed, "is", {
     value: S.Guard.for(self),
     configurable: true
   })
@@ -322,9 +322,9 @@ function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
 
     static Parser = parser
     static EParser = parser
-    static Encoder = S.Encoder.for(schema)
+    static encodeSync = S.Encoder.for(schema)
     static Constructor = S.Constructor.for(schema)
-    static Guard = S.Guard.for(schema)
+    static is = S.Guard.for(schema)
     static Arbitrary = S.Arbitrary.for(schema)
 
     static lens = Lens.id<any>()

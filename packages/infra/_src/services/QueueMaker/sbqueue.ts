@@ -36,7 +36,6 @@ export function makeServiceBusQueue<
     body: schema,
     meta: QueueMeta
   })
-  const encoder = wireSchema.Encoder
   const drainW = struct({ body: drainSchema, meta: QueueMeta })
   const parseDrain = drainW.parseCondemnDie
 
@@ -101,7 +100,7 @@ export function makeServiceBusQueue<
                 s.sendMessages(
                   messages.map((m) => ({
                     body: JSON.stringify(
-                      encoder({ body: m, meta: { requestContext, span } })
+                      wireSchema.encodeSync({ body: m, meta: { requestContext, span } })
                     ),
                     messageId: m.id, /* correllationid: requestId */
                     contentType: "application/json"
