@@ -235,19 +235,23 @@ export function setSchema<Self extends S.SchemaProperties<any>>(
   })
 
   Object.defineProperty(schemed, "parseEither", {
-    value: parseEither(self)
+    value: parseEither(self),
+    configurable: true
   })
 
   Object.defineProperty(schemed, "parseSync", {
-    value: parseSync(self)
+    value: parseSync(self),
+    configurable: true
   })
 
   Object.defineProperty(schemed, "parseFromEither", {
-    value: parseFromEither(self)
+    value: parseFromEither(self),
+    configurable: true
   })
 
   Object.defineProperty(schemed, "parseFromSync", {
-    value: parseFromSync(self)
+    value: parseFromSync(self),
+    configurable: true
   })
 
   Object.defineProperty(schemed, "is", {
