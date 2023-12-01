@@ -5,9 +5,9 @@ import type {
   ApiOf,
   ApiSelfType,
   DefaultSchema,
+  Field,
   NonEmptyString,
   Parser,
-  Property,
   SchemaDefaultSchema,
   SchemaUPI,
   Utils
