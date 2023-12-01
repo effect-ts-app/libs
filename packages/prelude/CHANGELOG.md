@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.83.0
+
+### Minor Changes
+
+- fa908e8: move fluent-extensions
+
 ## 0.82.3
 
 ### Patch Changes
