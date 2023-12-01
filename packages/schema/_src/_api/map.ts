@@ -19,18 +19,18 @@ export function map<
   KeyConstructorInput,
   KeyEncoded,
   KeyApi,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
   key: MO.Schema<unknown, KeyParsedShape, KeyConstructorInput, KeyEncoded, KeyApi>,
-  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  self: MO.Schema<unknown, To, ConstructorInput, From, Api>
 ): MO.DefaultSchema<
   unknown,
-  ReadonlyMap<KeyParsedShape, ParsedShape>,
-  ReadonlyMap<KeyParsedShape, ParsedShape>,
-  readonly (readonly [KeyEncoded, Encoded])[],
+  ReadonlyMap<KeyParsedShape, To>,
+  ReadonlyMap<KeyParsedShape, To>,
+  readonly (readonly [KeyEncoded, From])[],
   {}
 > {
   const keyGuard = Guard.for(key)
@@ -42,18 +42,18 @@ export function map<
   const mapEncode = Encoder.for(maparr)
   const mapArb = Arbitrary.for(maparr)
 
-  const refinement = (_: unknown): _ is ReadonlyMap<KeyParsedShape, ParsedShape> =>
+  const refinement = (_: unknown): _ is ReadonlyMap<KeyParsedShape, To> =>
     _ instanceof Map
     && Array.from(_.entries()).every(([key, value]) => keyGuard(key) && guard(value))
 
   return pipe(
     MO.identity(refinement),
-    MO.constructor((s: ReadonlyMap<KeyParsedShape, ParsedShape>) => Th.succeed(s)),
+    MO.constructor((s: ReadonlyMap<KeyParsedShape, To>) => Th.succeed(s)),
     MO.arbitrary((_) => mapArb(_).map((x) => new Map(x))),
     MO.parser(
       (i: unknown, env?: ParserEnv) =>
         mapParse(i, env).pipe(
-          Th.map((x) => new Map(x) as ReadonlyMap<KeyParsedShape, ParsedShape>)
+          Th.map((x) => new Map(x) as ReadonlyMap<KeyParsedShape, To>)
         )
     ),
     MO.encoder((_) => mapEncode(ReadonlyArray.fromIterable(_.entries()))),

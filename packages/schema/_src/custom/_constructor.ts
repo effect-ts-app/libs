@@ -73,16 +73,16 @@ export const interpreters: ((
 
 const cache = new WeakMap()
 
-function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-): Constructor<ConstructorInput, ParsedShape, any> {
+function constructorFor<ParserInput, To, ConstructorInput, From, Api>(
+  schema: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+): Constructor<ConstructorInput, To, any> {
   if (cache.has(schema)) {
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
     const of_: Constructor<unknown, unknown, unknown> = (__) => constructorFor(schema.self())(__)
     cache.set(schema, of_)
-    return of_ as Constructor<ConstructorInput, ParsedShape, any>
+    return of_ as Constructor<ConstructorInput, To, any>
   }
   for (const interpreter of interpreters) {
     const _ = interpreter(schema)
@@ -95,7 +95,7 @@ function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api
         return x(__)
       }
       cache.set(schema, of_)
-      return of_ as Constructor<ConstructorInput, ParsedShape, any>
+      return of_ as Constructor<ConstructorInput, To, any>
     }
   }
   if (hasContinuation(schema)) {
@@ -106,7 +106,7 @@ function constructorFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api
       }
       return x(__)
     }
-    return of_ as Constructor<ConstructorInput, ParsedShape, any>
+    return of_ as Constructor<ConstructorInput, To, any>
   }
   throw new Error(`Missing constructor integration for: ${JSON.stringify(schema)}`)
 }

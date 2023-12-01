@@ -25,16 +25,16 @@ export const interpreters: ((schema: S.SchemaAny) => Option<() => Guard<unknown>
 
 const cache = new WeakMap()
 
-function guardFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
-): Guard<ParsedShape> {
+function guardFor<ParserInput, To, ConstructorInput, From, Api>(
+  schema: S.Schema<ParserInput, To, ConstructorInput, From, Api>
+): Guard<To> {
   if (cache.has(schema)) {
     return cache.get(schema)
   }
   if (schema instanceof S.SchemaLazy) {
     const guard: Guard<unknown> = (__): __ is unknown => guardFor(schema.self())(__)
     cache.set(schema, guard)
-    return guard as Guard<ParsedShape>
+    return guard as Guard<To>
   }
   for (const interpreter of interpreters) {
     const _ = interpreter(schema)
@@ -46,7 +46,7 @@ function guardFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
         }
         return x(__)
       }
-      return guard as Guard<ParsedShape>
+      return guard as Guard<To>
     }
   }
   if (hasContinuation(schema)) {
@@ -57,7 +57,7 @@ function guardFor<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
       }
       return x(__)
     }
-    return guard as Guard<ParsedShape>
+    return guard as Guard<To>
   }
   throw new Error(`Missing guard integration for: ${schema.constructor}`)
 }

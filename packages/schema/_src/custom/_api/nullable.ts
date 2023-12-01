@@ -17,22 +17,22 @@ export type Nullable<A> = A | null
 
 const cache = new WeakMap<S.SchemaAny, S.SchemaAny>()
 
-export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+export function nullable<ParserInput, To, ConstructorInput, From, Api>(
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ):
   & DefaultSchema<
     ParserInput | null,
-    ParsedShape | null,
+    To | null,
     ConstructorInput | null,
-    Encoded | null,
+    From | null,
     Api
   >
   & {
     withDefault: Property<
-      S.Schema<unknown, ParsedShape | null, ConstructorInput | null, Encoded | null, Api>,
+      S.Schema<unknown, To | null, ConstructorInput | null, From | null, Api>,
       "required",
       None<any>,
-      Some<["constructor", () => ParsedShape]>
+      Some<["constructor", () => To]>
     >
   }
 {
@@ -41,7 +41,7 @@ export function nullable<ParserInput, ParsedShape, ConstructorInput, Encoded, Ap
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is ParsedShape | null => u === null || guard(u)
+  const refinement = (u: unknown): u is To | null => u === null || guard(u)
   const encode = Encoder.for(self)
 
   const s = pipe(

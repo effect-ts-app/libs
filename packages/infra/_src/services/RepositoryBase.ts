@@ -85,17 +85,17 @@ export function makeRepo<
     T extends { id: string },
     ConstructorInput,
     Api,
-    Encoded extends { id: string }
+    From extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, Encoded, Api>,
-    mapFrom: (pm: Omit<PM, "_etag">) => Encoded,
-    mapTo: (e: Encoded, etag: string | undefined) => PM
+    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    mapFrom: (pm: Omit<PM, "_etag">) => From,
+    mapTo: (e: From, etag: string | undefined) => PM
   ) => {
     const where = makeWhere<PM>()
 
     function mapToPersistenceModel(
-      e: Encoded,
+      e: From,
       getEtag: (id: string) => string | undefined
     ): PM {
       return mapTo(e, getEtag(e.id))
@@ -104,7 +104,7 @@ export function makeRepo<
     function mapReverse(
       { _etag, ...e }: PM,
       setEtag: (id: string, eTag: string | undefined) => void
-    ): Encoded {
+    ): From {
       setEtag(e.id, _etag)
       return mapFrom(e)
     }
@@ -159,7 +159,7 @@ export function makeRepo<
           return findE(id).flatMapOpt(EParserFor(schema).condemnDie)
         }
 
-        const saveAllE = (a: Iterable<Encoded>) =>
+        const saveAllE = (a: Iterable<From>) =>
           Effect(a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {

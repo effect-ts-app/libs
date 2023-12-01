@@ -10,13 +10,13 @@ import * as Th from "../custom/These.js"
 
 export const fromArrayIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 
-export function fromArray<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+export function fromArray<ParserInput, To, ConstructorInput, From, Api>(
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): S.DefaultSchema<
   readonly ParserInput[],
-  readonly ParsedShape[],
-  readonly ParsedShape[],
-  readonly Encoded[],
+  readonly To[],
+  readonly To[],
+  readonly From[],
   { self: Api }
 > {
   const guardSelf = Guard.for(self)
@@ -25,17 +25,17 @@ export function fromArray<ParserInput, ParsedShape, ConstructorInput, Encoded, A
 
   const fromFromChunk = pipe(
     S.identity(
-      (u): u is readonly ParsedShape[] => Array.isArray(u) && u.every(guardSelf)
+      (u): u is readonly To[] => Array.isArray(u) && u.every(guardSelf)
     ),
-    S.parser((u: Chunk<ParsedShape>) => Th.succeed(u.toReadonlyArray)),
-    S.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
+    S.parser((u: Chunk<To>) => Th.succeed(u.toReadonlyArray)),
+    S.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
     S.arbitrary((_) => _.array(arbitrarySelf(_)))
   )
 
   return pipe(
     S.fromChunk(self)[">>>"](fromFromChunk),
     S.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead().error),
-    S.constructor((_: readonly ParsedShape[]) => Th.succeed(_)),
+    S.constructor((_: readonly To[]) => Th.succeed(_)),
     S.encoder((u) => u.map(encodeSelf)),
     S.mapApi(() => ({ self: self.Api })),
     S.withDefaults,

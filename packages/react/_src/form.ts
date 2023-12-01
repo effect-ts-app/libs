@@ -272,8 +272,8 @@ export function createUseParsedFormFromSchema<Props extends PropertyRecord>(
  */
 export function createUseCustomParsedFormFromSchemaUnsafe<
   Props extends PropertyRecord,
-  ParsedShape
->(input: SchemaProperties<Props>, target: Schema.Schema<unknown, ParsedShape, any, any, any>) {
+  To
+>(input: SchemaProperties<Props>, target: Schema.Schema<unknown, To, any, any, any>) {
   return createUseParsedFormUnsafe(input.Api.props)(Parser.for(target))
 }
 
@@ -283,13 +283,13 @@ export function createUseCustomParsedFormFromSchemaUnsafe<
  * It would be better to make first class support for that instead.
  */
 export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: Props) {
-  type Encoded = StructFrom<Props>
-  type NEncoded = Encoded // Transform<Encoded>
+  type From = StructFrom<Props>
+  type NEncoded = From // Transform<From>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
-  // TODO: Encoded should extend Shape (provide at least, or over provide)
+  // TODO: From should extend Shape (provide at least, or over provide)
   return <Shape, ParserE extends AnyError>(
-    parser: Parser.Parser<Encoded, ParserE, Shape>
+    parser: Parser.Parser<From, ParserE, Shape>
   ) => {
     const parse = parser.pipe(unsafe)
     return <
@@ -306,7 +306,7 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
         ...form,
         handleSubmit: (
           onValid: (data: Shape, event?: React.BaseSyntheticEvent) => Promise<unknown>,
-          onInvalid?: SubmitErrorHandler<Encoded>,
+          onInvalid?: SubmitErrorHandler<From>,
           preValidate?: () => boolean
         ) => {
           const hs = form.handleSubmit as any
@@ -330,8 +330,8 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
 export function createUseForm<Props extends PropertyRecord = PropertyRecord>(
   props: Props
 ) {
-  type Encoded = StructFrom<Props>
-  type NEncoded = Encoded // Transform<Encoded>
+  type From = StructFrom<Props>
+  type NEncoded = From // Transform<From>
   return function useFormInternal<
     TFieldValues extends NEncoded,
     // eslint-disable-next-line @typescript-eslint/ban-types

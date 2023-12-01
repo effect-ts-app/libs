@@ -13,23 +13,23 @@ export const nonEmptyIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
 
 export function nonEmpty<
   ParserInput,
-  ParsedShape extends { length: number },
+  To extends { length: number },
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): DefaultSchema<
   ParserInput,
-  ParsedShape & NonEmptyBrand,
+  To & NonEmptyBrand,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 > {
   return pipe(
     self,
     S.refine(
-      (n): n is ParsedShape & NonEmptyBrand => n.length > 0,
+      (n): n is To & NonEmptyBrand => n.length > 0,
       (n) => S.leafE(S.nonEmptyE(n))
     ),
     withDefaults,

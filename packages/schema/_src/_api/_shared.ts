@@ -45,16 +45,16 @@ export type UnsafeEParserFor<Self extends MO.SchemaAny> = (
   e: MO.From<Self>
 ) => MO.To<Self>
 
-export function EParserFor<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): MO.Parser.Parser<Encoded, any, ParsedShape> {
+export function EParserFor<To, ConstructorInput, From, Api>(
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+): MO.Parser.Parser<From, any, To> {
   return MO.Parser.for(schema)
 }
 
-export type EncSchemaForModel<ParsedShape, Self extends MO.SchemaAny, MEnc> = MO.Schema<
+export type EncSchemaForModel<To, Self extends MO.SchemaAny, MEnc> = MO.Schema<
   MO.ParserInputOf<Self>, // unknown lock to
-  ParsedShape,
+  To,
   MO.ConstructorInputOf<Self>,
   MEnc,
-  MO.ApiOf<Self> & MO.ApiSelfType<ParsedShape>
+  MO.ApiOf<Self> & MO.ApiSelfType<To>
 >

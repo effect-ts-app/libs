@@ -35,12 +35,12 @@ export type ShapeFromSchemedOut<
 export type SchemaForSchemed<Self extends SchemedOut<S.SchemaAny>> = [
   Self[schemaField]
 ] extends [
-  S.Schema<infer ParserInput, any, infer ConstructorInput, infer Encoded, infer Api>
+  S.Schema<infer ParserInput, any, infer ConstructorInput, infer From, infer Api>
 ] ? S.Schema<
     ParserInput,
     ShapeFromSchemedOut<Self>,
     ConstructorInput,
-    Encoded,
+    From,
     Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
   >
   : never

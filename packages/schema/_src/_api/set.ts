@@ -10,18 +10,18 @@ import * as Th from "../custom/These.js"
 
 export const setIdentifier = MO.makeAnnotation<{ self: MO.SchemaUPI }>()
 
-export function set<ParsedShape, ConstructorInput, Encoded, Api>(
-  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Order<ParsedShape>,
-  eq_?: Equivalence<ParsedShape>
+export function set<To, ConstructorInput, From, Api>(
+  self: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  ord: Order<To>,
+  eq_?: Equivalence<To>
 ): MO.DefaultSchema<
   unknown,
-  Set<ParsedShape>,
-  Set<ParsedShape>,
-  readonly Encoded[],
-  { self: Api; eq: Equivalence<ParsedShape>; ord: Order<ParsedShape> }
+  Set<To>,
+  Set<To>,
+  readonly From[],
+  { self: Api; eq: Equivalence<To>; ord: Order<To> }
 > {
-  const refinement = (_: unknown): _ is Set<ParsedShape> => _ instanceof Set && every_(_, guardSelf)
+  const refinement = (_: unknown): _ is Set<To> => _ instanceof Set && every_(_, guardSelf)
 
   const guardSelf = Guard.for(self)
   const arbitrarySelf = Arbitrary.for(self)
@@ -34,15 +34,15 @@ export function set<ParsedShape, ConstructorInput, Encoded, Api>(
 
   const fromChunk = pipe(
     MO.identity(refinement),
-    MO.parser((u: Chunk<ParsedShape>) => Th.succeed(fromArray_(u.toReadonlyArray))),
-    MO.encoder((u): Chunk<ParsedShape> => Chunk.fromIterable(u)),
+    MO.parser((u: Chunk<To>) => Th.succeed(fromArray_(u.toReadonlyArray))),
+    MO.encoder((u): Chunk<To> => Chunk.fromIterable(u)),
     MO.arbitrary((_) => _.uniqueArray(arbitrarySelf(_)).map(fromArray_))
   )
 
   return pipe(
     MO.chunk(self)[">>>"](fromChunk),
     MO.mapParserError((_) => ((_ as any).errors as Chunk<any>).unsafeHead.error),
-    MO.constructor((_: Set<ParsedShape>) => Th.succeed(_)),
+    MO.constructor((_: Set<To>) => Th.succeed(_)),
     MO.encoder((u) => toArray_(u).map(encodeSelf)),
     MO.mapApi(() => ({ self: self.Api, eq, ord })),
     MO.withDefaults,

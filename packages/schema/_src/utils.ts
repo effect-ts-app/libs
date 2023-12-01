@@ -20,75 +20,75 @@ export function include_<
 
 export function onParseOrConstruct<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
->(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onParseOrConstruct_(self, mod)
+>(mod: (i: To) => Th.These<Errors, To>) {
+  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) => onParseOrConstruct_(self, mod)
 }
 
 export function onParseOrConstruct_<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
 >(
-  self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>
+  self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>,
+  mod: (i: To) => Th.These<Errors, To>
 ) {
   return pipe(self, onParse(mod), onConstruct(mod))
 }
 
 export function onParse<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
->(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onParse_(self, mod)
+>(mod: (i: To) => Th.These<Errors, To>) {
+  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) => onParse_(self, mod)
 }
 
 export function onParse_<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
 >(
-  self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>
+  self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>,
+  mod: (i: To) => Th.These<Errors, To>
 ) {
   return pipe(self, MO.parser(flow(Parser.for(self), Th.chain(mod))))
 }
 
 export function onConstruct<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
->(mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) => onConstruct_(self, mod)
+>(mod: (i: To) => Th.These<Errors, To>) {
+  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) => onConstruct_(self, mod)
 }
 
 export function onConstruct_<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   Errors extends MO.AnyError
 >(
-  self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>,
-  mod: (i: ParsedShape) => Th.These<Errors, ParsedShape>
+  self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>,
+  mod: (i: To) => Th.These<Errors, To>
 ) {
   return pipe(self, MO.constructor(flow(Constructor.for(self), Th.chain(mod))))
 }

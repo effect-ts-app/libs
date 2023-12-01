@@ -696,10 +696,10 @@ export function adaptRequest<
 
 export type Meta = { description?: string; summary?: string; openapiRef?: string }
 export const metaIdentifier = MO.makeAnnotation<Meta>()
-export function meta<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
+export function meta<ParserInput, To, ConstructorInput, From, Api>(
   meta: Meta
 ) {
-  return (self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) =>
+  return (self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) =>
     self.annotate(metaIdentifier, meta)
 }
 export const metaC = (m: Meta) => {
@@ -711,9 +711,9 @@ export const metaC = (m: Meta) => {
 
 export type ReqRes<E, A> = MO.Schema<
   unknown, // ParserInput,
-  A, // ParsedShape,
+  A, // To,
   any, // ConstructorInput,
-  E, // Encoded,
+  E, // From,
   any // Api
 >
 export type ReqResSchemed<E, A> = {

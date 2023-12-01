@@ -27,9 +27,9 @@ export function fromEither<
   LeftEncoded,
   LeftApi,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
   left: MO.Schema<
@@ -39,12 +39,12 @@ export function fromEither<
     LeftEncoded,
     LeftApi
   >,
-  right: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  right: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): MO.DefaultSchema<
   object,
-  Either<LeftParsedShape, ParsedShape>,
+  Either<LeftParsedShape, To>,
   object,
-  Either<LeftEncoded, Encoded>,
+  Either<LeftEncoded, From>,
   { left: LeftApi; right: Api }
 > {
   const leftGuard = Guard.for(left)
@@ -57,7 +57,7 @@ export function fromEither<
   const parse = Parser.for(right)
   const encode = Encoder.for(right)
 
-  const refinement = (_: unknown): _ is Either<LeftParsedShape, ParsedShape> => {
+  const refinement = (_: unknown): _ is Either<LeftParsedShape, To> => {
     const ei = _ as Either<any, any>
     return (
       typeof _ === "object"
@@ -111,18 +111,18 @@ export function either<
   LeftConstructorInput,
   LeftEncoded,
   LeftApi,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
   left: MO.Schema<unknown, LeftParsedShape, LeftConstructorInput, LeftEncoded, LeftApi>,
-  right: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  right: MO.Schema<unknown, To, ConstructorInput, From, Api>
 ): MO.DefaultSchema<
   unknown,
-  Either<LeftParsedShape, ParsedShape>,
+  Either<LeftParsedShape, To>,
   object,
-  Either<LeftEncoded, Encoded>,
+  Either<LeftEncoded, From>,
   { left: LeftApi; right: Api }
 > {
   const encodeLeft = Encoder.for(left)

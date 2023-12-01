@@ -27,7 +27,7 @@ import {
   LongString,
   MNModel,
   Model,
-  ModelEnc,
+  ModelFrom,
   named,
   nonEmptyArray,
   nullable,

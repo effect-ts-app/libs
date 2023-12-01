@@ -26,96 +26,96 @@ export interface FromClass<T> {
 }
 
 export function FromClassBase<T>() {
-  class Encoded {
+  class From {
     constructor(a: T) {
       Object.assign(this, a)
     }
   }
-  return Encoded as FromClass<T>
+  return From as FromClass<T>
 }
 export function FromClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
   return FromClassBase<EncodedFromApi<Cls>>()
 }
 
-export function partialConstructor<ConstructorInput, ParsedShape>(model: {
-  new(inp: ConstructorInput): ParsedShape
+export function partialConstructor<ConstructorInput, To>(model: {
+  new(inp: ConstructorInput): To
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (partConstructor) => (restConstructor) => partialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function partialConstructor_<
   ConstructorInput,
-  ParsedShape,
+  To,
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
   model: {
-    new(inp: ConstructorInput): ParsedShape
+    new(inp: ConstructorInput): To
   },
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (restConstructor) => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
-export function partialConstructorF<ConstructorInput, ParsedShape>(
-  constr: (inp: ConstructorInput) => ParsedShape
+export function partialConstructorF<ConstructorInput, To>(
+  constr: (inp: ConstructorInput) => To
 ): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (partConstructor) => (restConstructor) => partialConstructorF_(constr, partConstructor)(restConstructor)
 }
 
 export function partialConstructorF_<
   ConstructorInput,
-  ParsedShape,
+  To,
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
-  constr: (inp: ConstructorInput) => ParsedShape,
+  constr: (inp: ConstructorInput) => To,
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (restConstructor) => constr({ ...partConstructor, ...restConstructor } as any)
 }
 
 // TODO: morph the schema instead.
-export function derivePartialConstructor<ConstructorInput, ParsedShape>(model: {
-  [MO.schemaField]: MO.Schema<any, ParsedShape, ConstructorInput, any, any>
-  new(inp: ConstructorInput): ParsedShape
+export function derivePartialConstructor<ConstructorInput, To>(model: {
+  [MO.schemaField]: MO.Schema<any, To, ConstructorInput, any, any>
+  new(inp: ConstructorInput): To
 }): <PartialConstructorInput extends Partial<ConstructorInput>>(
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ) => (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (partConstructor) => (restConstructor) => derivePartialConstructor_(model, partConstructor)(restConstructor)
 }
 
 export function derivePartialConstructor_<
   ConstructorInput,
-  ParsedShape,
+  To,
   PartialConstructorInput extends Partial<ConstructorInput>
 >(
   model: {
-    [MO.schemaField]: MO.Schema<any, ParsedShape, ConstructorInput, any, any>
-    new(inp: ConstructorInput): ParsedShape
+    [MO.schemaField]: MO.Schema<any, To, ConstructorInput, any, any>
+    new(inp: ConstructorInput): To
   },
   // TODO: Prevent over provide
   partConstructor: PartialConstructorInput
 ): (
   restConstructor: ComputeFlat<Omit<ConstructorInput, keyof PartialConstructorInput>>
-) => ParsedShape {
+) => To {
   return (restConstructor) => new model({ ...partConstructor, ...restConstructor } as any)
 }
 
@@ -133,21 +133,21 @@ type LazyPartial<T> = {
 
 export function withDefaultConstructorFields<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
->(self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>) {
+>(self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>) {
   // TODO: but allow NO OTHERS!
   return <Changes extends LazyPartial<ConstructorInput>>(
     kvs: Changes
   ): MO.Schema<
     ParserInput,
-    ParsedShape,
+    To,
     & Omit<ConstructorInput, keyof Changes>
     & // @ts-expect-error we know keyof Changes matches
     Partial<Pick<ConstructorInput, keyof Changes>>,
-    Encoded,
+    From,
     Api
   > => {
     const constructSelf = MO.Constructor.for(self)
@@ -209,53 +209,53 @@ export type DefaultProperty = FromProperty<any, any, any, any>
 export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
 
 export type WithDefault<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   As extends Option<PropertyKey>
 > = MO.Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
-  Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => To]>
 >
 
 export type WithInputDefault<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   As extends Option<PropertyKey>
 > = MO.Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
-  Some<["both", () => ParsedShape]>
+  Some<["both", () => To]>
 >
 
 export function withDefault<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   As extends Option<PropertyKey>,
   Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.To<
-        MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+        MO.Schema<unknown, To, ConstructorInput, From, Api>
       >
     ]
   >
 >(
   p: MO.Property<
-    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
     Def
   >
-): WithDefault<ParsedShape, ConstructorInput, Encoded, Api, As> {
+): WithDefault<To, ConstructorInput, From, Api, As> {
   if (findAnnotation(p._schema, MO.dateIdentifier)) {
     return propDef(p, makeCurrentDate as any, "constructor")
   }
@@ -281,27 +281,27 @@ export function withDefault<
 }
 
 export function withInputDefault<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api,
   As extends Option<PropertyKey>,
   Def extends Option<
     [
       "parser" | "constructor" | "both",
       () => MO.To<
-        MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+        MO.Schema<unknown, To, ConstructorInput, From, Api>
       >
     ]
   >
 >(
   p: MO.Property<
-    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+    MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
     Def
   >
-): WithInputDefault<ParsedShape, ConstructorInput, Encoded, Api, As> {
+): WithInputDefault<To, ConstructorInput, From, Api, As> {
   if (findAnnotation(p._schema, MO.dateIdentifier)) {
     return propDef(p, makeCurrentDate as any, "both")
   }
@@ -326,66 +326,66 @@ export function withInputDefault<
   throw new Error("Not supported")
 }
 
-export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  makeDefault: () => ParsedShape
+export function defaultProp<To, ConstructorInput, From, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  makeDefault: () => To
 ): MO.Property<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => To]>
 >
 export function defaultProp<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): FromProperty<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => To]>
 >
-export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape ? FromProperty<
-    MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+export function defaultProp<To, ConstructorInput, From, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+): null extends To ? FromProperty<
+    MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
-    Some<["constructor", () => ParsedShape]>
+    Some<["constructor", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
-export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  makeDefault: () => ParsedShape
+export function defaultProp<To, ConstructorInput, From, Api>(
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  makeDefault: () => To
 ): MO.Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => To]>
 >
 export function defaultProp<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
 ): FromProperty<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["constructor", () => ParsedShape]>
+  Some<["constructor", () => To]>
 >
-export function defaultProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape ? FromProperty<
-    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+export function defaultProp<To, ConstructorInput, From, Api>(
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+): null extends To ? FromProperty<
+    MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
-    Some<["constructor", () => ParsedShape]>
+    Some<["constructor", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultProp(
@@ -395,66 +395,66 @@ export function defaultProp(
   return makeDefault ? MO.defProp(schema, makeDefault) : MO.prop(schema) >= withDefault
 }
 
-export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  makeDefault: () => ParsedShape
+export function defaultInputProp<To, ConstructorInput, From, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
+  makeDefault: () => To
 ): MO.Property<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["both", () => ParsedShape]>
+  Some<["both", () => To]>
 >
 export function defaultInputProp<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 ): FromProperty<
-  MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["both", () => ParsedShape]>
+  Some<["both", () => To]>
 >
-export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape ? FromProperty<
-    MO.SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+export function defaultInputProp<To, ConstructorInput, From, Api>(
+  schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
+): null extends To ? FromProperty<
+    MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
-    Some<["both", () => ParsedShape]>
+    Some<["both", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
-export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  makeDefault: () => ParsedShape
+export function defaultInputProp<To, ConstructorInput, From, Api>(
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  makeDefault: () => To
 ): MO.Property<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["both", () => ParsedShape]>
+  Some<["both", () => To]>
 >
 export function defaultInputProp<
-  ParsedShape extends SupportedDefaults,
+  To extends SupportedDefaults,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
 ): FromProperty<
-  MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+  MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
-  Some<["both", () => ParsedShape]>
+  Some<["both", () => To]>
 >
-export function defaultInputProp<ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-): null extends ParsedShape ? FromProperty<
-    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+export function defaultInputProp<To, ConstructorInput, From, Api>(
+  schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
+): null extends To ? FromProperty<
+    MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
-    Some<["both", () => ParsedShape]>
+    Some<["both", () => To]>
   >
   : ["Not a supported type, see SupportedTypes", never]
 export function defaultInputProp(
@@ -502,26 +502,26 @@ export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
 export function createUnorder<T>(): Order<T> {
   return (_a: T, _b: T) => 0
 }
-export function makeSet<ParsedShape, ConstructorInput, Encoded, Api>(
+export function makeSet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Order<ParsedShape>,
-  eq?: Equivalence<ParsedShape>
+  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  ord: Order<To>,
+  eq?: Equivalence<To>
 ) {
   const s = set(type, ord, eq)
   return Object.assign(s, ROSet.make(ord, eq))
 }
 
 // export function makeUnorderedContramappedStringSet<
-//   ParsedShape,
+//   To,
 //   ConstructorInput,
-//   Encoded,
+//   From,
 //   Api,
 //   MA extends string
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-//   contramap: (a: ParsedShape) => MA
+//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   contramap: (a: To) => MA
 // ) {
 //   return makeUnorderedSet(type, Eq.contramap(contramap)(Eq.string))
 // }
@@ -532,51 +532,51 @@ export function makeUnorderedStringSet<A extends string>(
     unknown, // ParserInput,
     A,
     any, // ConstructorInput,
-    any, // Encoded
+    any, // From
     any // Api
   >
 ) {
   return makeUnorderedSet(type, Equivalence.string)
 }
 
-export function makeUnorderedSet<ParsedShape, ConstructorInput, Encoded, Api>(
+export function makeUnorderedSet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  eq: Equivalence<ParsedShape>
+  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  eq: Equivalence<To>
 ) {
-  return makeSet(type, createUnorder<ParsedShape>(), eq)
+  return makeSet(type, createUnorder<To>(), eq)
 }
 
-// export function makeContramappedSet<ParsedShape, ConstructorInput, Encoded, Api, MA>(
+// export function makeContramappedSet<To, ConstructorInput, From, Api, MA>(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-//   contramap: (a: ParsedShape) => MA,
+//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   contramap: (a: To) => MA,
 //   ord: Order<MA>,
 //   eq: Equivalence<MA>
 // ) {
 //   return makeSet(type, LegacyOrder.contramap_(ord, contramap), Eq.contramap(contramap)(eq))
 // }
 
-export function makeNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
+export function makeNonEmptySet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  ord: Order<ParsedShape>,
-  eq?: Equivalence<ParsedShape>
+  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  ord: Order<To>,
+  eq?: Equivalence<To>
 ) {
   const s = nonEmptySet(type, ord, eq)
   return Object.assign(s, NonEmptySet.make(ord, eq))
 }
 
 // export function makeUnorderedContramappedStringNonEmptySet<
-//   ParsedShape,
+//   To,
 //   ConstructorInput,
-//   Encoded,
+//   From,
 //   Api,
 //   MA extends string
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-//   contramap: (a: ParsedShape) => MA
+//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   contramap: (a: To) => MA
 // ) {
 //   return makeUnorderedNonEmptySet(type, Eq.contramap(contramap)(Eq.string))
 // }
@@ -587,31 +587,31 @@ export function makeUnorderedStringNonEmptySet<A extends string>(
     unknown, // ParserInput,
     A,
     any, // ConstructorInput,
-    any, // Encoded
+    any, // From
     any // Api
   >
 ) {
   return makeUnorderedNonEmptySet(type, Equivalence.string)
 }
 
-export function makeUnorderedNonEmptySet<ParsedShape, ConstructorInput, Encoded, Api>(
+export function makeUnorderedNonEmptySet<To, ConstructorInput, From, Api>(
   // eslint-disable-next-line @typescript-eslint/ban-types
-  type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-  eq: Equivalence<ParsedShape>
+  type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+  eq: Equivalence<To>
 ) {
-  return makeNonEmptySet(type, createUnorder<ParsedShape>(), eq)
+  return makeNonEmptySet(type, createUnorder<To>(), eq)
 }
 
 // export function makeContramappedNonEmptySet<
-//   ParsedShape,
+//   To,
 //   ConstructorInput,
-//   Encoded,
+//   From,
 //   Api,
 //   MA
 // >(
 //   // eslint-disable-next-line @typescript-eslint/ban-types
-//   type: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
-//   contramap: (a: ParsedShape) => MA,
+//   type: MO.Schema<unknown, To, ConstructorInput, From, Api>,
+//   contramap: (a: To) => MA,
 //   ord: Order<MA>,
 //   eq: Equivalence<MA>
 // ) {
@@ -634,20 +634,20 @@ export type ParserInputFromSchemaProperties<T> = T extends {
  * We know that the Parser will work from `unknown`, but we also want to expose the knowledge that we can parse from a ParserInput of type X
  * as such we can use fromProps, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
  */
-export type AsUPI<ParsedShape, ConstructorInput, Encoded, Api> = MO.Schema<
+export type AsUPI<To, ConstructorInput, From, Api> = MO.Schema<
   unknown,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >
 
 /**
  * @see AsUPI
  */
-export const asUpi = <ParsedShape, ConstructorInput, Encoded, Api>(
-  s: MO.Schema<any, ParsedShape, ConstructorInput, Encoded, Api>
-) => s as AsUPI<ParsedShape, ConstructorInput, Encoded, Api>
+export const asUpi = <To, ConstructorInput, From, Api>(
+  s: MO.Schema<any, To, ConstructorInput, From, Api>
+) => s as AsUPI<To, ConstructorInput, From, Api>
 
 export class CustomSchemaException
   extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown>; message: string }>
@@ -971,15 +971,15 @@ export function parseECondemnLeft_<B, C, D, E>(
 /**
  * @tsplus getter ets/Schema/Schema withDefault
  */
-export const withDefaultProp = <ParsedShape extends SupportedDefaults, ConstructorInput, Encoded, Api>(
-  schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export const withDefaultProp = <To extends SupportedDefaults, ConstructorInput, From, Api>(
+  schema: Schema<unknown, To, ConstructorInput, From, Api>
 ) => defaultProp(schema)
 
 /**
  * @tsplus getter ets/Schema/Schema optional
  */
-export const optionalProp = <ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export const optionalProp = <To, ConstructorInput, From, Api>(
+  schema: Schema<unknown, To, ConstructorInput, From, Api>
 ) => MO.optProp(schema)
 
 /**
@@ -992,27 +992,27 @@ export const optionalUnionProp = <Props extends Record<PropertyKey, SchemaUPI>>(
 /**
  * @tsplus getter ets/Schema/Schema nullable
  */
-export const nullableProp = <ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+export const nullableProp = <ParserInput, To, ConstructorInput, From, Api>(
+  schema: Schema<ParserInput, To, ConstructorInput, From, Api>
 ) => nullable(schema)
 
 // /**
 //  * @tsplus getter ets/Schema/Schema withDefault
 //  */
-// export const withDefaultProp3 = <ParsedShape extends SupportedDefaults, ConstructorInput, Encoded, Api>(
-//   schema: SchemaDefaultSchema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+// export const withDefaultProp3 = <To extends SupportedDefaults, ConstructorInput, From, Api>(
+//   schema: SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
 // ) => defaultProp(schema)
 
 // /**
 //  * @tsplus fluent ets/Schema/Schema withDefaultN
 //  */
-// export function withDefaultPropNullable<ParsedShape extends null, ConstructorInput, Encoded, Api>(
-//   schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
-// ): null extends ParsedShape ? FromProperty<
-//     Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+// export function withDefaultPropNullable<To extends null, ConstructorInput, From, Api>(
+//   schema: Schema<unknown, To, ConstructorInput, From, Api>
+// ): null extends To ? FromProperty<
+//     Schema<unknown, To, ConstructorInput, From, Api>,
 //     "required",
 //     None<any>,
-//     Some<["constructor", () => ParsedShape]>
+//     Some<["constructor", () => To]>
 //   >
 //   : ["Not a supported type, see SupportedTypes", never]
 // {
@@ -1022,16 +1022,16 @@ export const nullableProp = <ParserInput, ParsedShape, ConstructorInput, Encoded
 /**
  * @tsplus getter ets/Schema/Schema withDefaultMake
  */
-export const withDefaultMake = <ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+export const withDefaultMake = <To, ConstructorInput, From, Api>(
+  schema: Schema<unknown, To, ConstructorInput, From, Api>
 ) =>
-(makeDefault: () => ParsedShape) => defaultProp(schema, makeDefault)
+(makeDefault: () => To) => defaultProp(schema, makeDefault)
 
 /**
  * @tsplus fluent ets/Schema/Schema fromProp
  */
-export const fromPropProp = <ParsedShape, ConstructorInput, Encoded, Api, As1 extends PropertyKey>(
-  schema: Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>,
+export const fromPropProp = <To, ConstructorInput, From, Api, As1 extends PropertyKey>(
+  schema: Schema<unknown, To, ConstructorInput, From, Api>,
   as: As1
 ) => prop(schema).from(as)
 
@@ -1128,12 +1128,12 @@ export function enhanceClassUnion<
 
 export interface SmartClassUnion<
   T extends Record<PropertyKey, SchemaUPI & { new(i: any): any }>,
-  Encoded,
-  ParsedShape
+  From,
+  To
 > {
   members: T
   cas: {
-    [Key in keyof T]: { new(i: MO.ConstructorInputOf<T[Key]>): ParsedShape }
+    [Key in keyof T]: { new(i: MO.ConstructorInputOf<T[Key]>): To }
   }
   mem: {
     [Key in keyof T]: T[Key]
@@ -1141,11 +1141,11 @@ export interface SmartClassUnion<
   of: {
     [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => InstanceType<T[Key]>
   }
-  of_: (i: ParsedShape) => ParsedShape
+  of_: (i: To) => To
   as: {
-    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => ParsedShape
+    [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => To
   }
-  EParser: Parser.Parser<Encoded, any, ParsedShape>
+  EParser: Parser.Parser<From, any, To>
 }
 
 export function smartUnion<T extends Record<PropertyKey, SchemaUPI>>(
@@ -1204,8 +1204,8 @@ export function enhanceUnion<T extends Record<PropertyKey, SchemaUPI>, A, E, CI>
 
 export interface SmartUnion<
   T extends Record<PropertyKey, SchemaUPI>,
-  Encoded,
-  ParsedShape
+  From,
+  To
 > {
   members: T
   mem: {
@@ -1214,13 +1214,13 @@ export interface SmartUnion<
   of: {
     [Key in keyof T]: (i: MO.ConstructorInputOf<T[Key]>) => MO.To<T[Key]>
   }
-  of_: (i: ParsedShape) => ParsedShape
+  of_: (i: To) => To
   as: {
     [Key in keyof T]: (
       i: MO.ConstructorInputOf<T[Key]>
-    ) => These<MO.ConstructorErrorOf<T[Key]>, ParsedShape>
+    ) => These<MO.ConstructorErrorOf<T[Key]>, To>
   }
-  EParser: Parser.Parser<Encoded, any, ParsedShape>
+  EParser: Parser.Parser<From, any, To>
 }
 
 /**

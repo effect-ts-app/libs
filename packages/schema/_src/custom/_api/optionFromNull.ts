@@ -14,24 +14,24 @@ export const optionFromNullIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>(
 
 export function optionFromNull<
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
-  self: S.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  self: S.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): DefaultSchema<
   ParserInput | null,
-  Option<ParsedShape>,
+  Option<To>,
   Option<ConstructorInput>,
-  Encoded | null,
+  From | null,
   Api
 > {
   const guard = Guard.for(self)
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
-  const refinement = (u: unknown): u is Option<ParsedShape> =>
+  const refinement = (u: unknown): u is Option<To> =>
     typeof u === "object"
     && u !== null
     && ["None", "Some"].indexOf(u["_tag"]) !== -1

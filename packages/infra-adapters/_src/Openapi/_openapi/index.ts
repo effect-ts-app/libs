@@ -355,8 +355,8 @@ function merge(schema: any) {
 
 const cache = new WeakMap()
 
-function for_<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>(
-  schema: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+function for_<ParserInput, To, ConstructorInput, From, Api>(
+  schema: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): Gen {
   if (cache.has(schema)) {
     return cache.get(schema)

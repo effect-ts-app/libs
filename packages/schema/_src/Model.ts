@@ -13,7 +13,7 @@ import type { EncSchemaForModel, EParserFor, FromPropertyRecord } from "./_api.j
 import { fromProps } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyProperty, From, PropertyRecord, To } from "./custom.js"
+import type { AnyProperty, PropertyRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
@@ -28,18 +28,18 @@ export type AnyRecordSchema = MO.Schema<unknown, any, any, AnyRecord, any>
 
 // Not inheriting from Schemed because we don't want `copy`
 // passing SelfM down to Model2 so we only compute it once.
-export interface Model<ParsedShape, Self extends MO.SchemaAny> extends
+export interface Model<To, Self extends MO.SchemaAny> extends
   Model2<
-    ParsedShape,
+    To,
     Self,
-    EncSchemaForModel<ParsedShape, Self, MO.From<Self>>,
+    EncSchemaForModel<To, Self, MO.From<Self>>,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.To<Self>>
   >
 {}
 
-export interface ModelEnc<
-  ParsedShape,
+export interface ModelFrom<
+  To,
   Self extends MO.SchemaAny,
   MEnc,
   // makes it pretty, but also helps compatibility with WebStorm it seems...
@@ -47,8 +47,8 @@ export interface ModelEnc<
 > extends
   MM<
     Self,
-    EncSchemaForModel<ParsedShape, Self, MEnc>,
-    ParsedShape,
+    EncSchemaForModel<To, Self, MEnc>,
+    To,
     MO.ConstructorInputOf<Self>,
     MEnc,
     GetApiProps<Self>,
@@ -78,17 +78,17 @@ type GetApiProps<T extends MO.SchemaAny> = T extends MO.SchemaProperties<infer P
 
 export interface MNModel<
   Self extends MO.SchemaAny,
-  ParsedShape = MO.To<Self>,
+  To = MO.To<Self>,
   ConstructorInput = MO.ConstructorInputOf<Self>,
-  Encoded = MO.From<Self>,
+  From = MO.From<Self>,
   Props = GetApiProps<Self>
 > extends
   MM<
     Self,
-    MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }>,
-    ParsedShape,
+    MO.Schema<unknown, To, ConstructorInput, From, { props: Props }>,
+    To,
     ConstructorInput,
-    Encoded,
+    From,
     Props,
     // makes it pretty, but also helps compatibility with WebStorm it seems...
     ComputeFlat<MO.To<Self>>
@@ -98,19 +98,19 @@ export interface MNModel<
 export interface MM<
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Props,
   ParsedShape2
-> extends MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, { props: Props }> {
+> extends MO.Schema<unknown, To, ConstructorInput, From, { props: Props }> {
   new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
   [MO.schemaField]: Self
-  readonly parsed: To<Self>
-  readonly encoded: From<Self>
+  readonly to: MO.To<Self>
+  readonly from: MO.From<Self>
   readonly Model: SelfM // added
-  readonly lens: Lens.Lens<ParsedShape, ParsedShape> // added
-  readonly lenses: RecordSchemaToLenses<ParsedShape, Self>
+  readonly lens: Lens.Lens<To, To> // added
+  readonly lenses: RecordSchemaToLenses<To, Self>
 
   readonly Parser: MO.ParserFor<SelfM>
   readonly EParser: EParserFor<SelfM>
@@ -120,20 +120,20 @@ export interface MM<
   readonly Arbitrary: MO.ArbitraryFor<SelfM>
 }
 
-/** opaque model only on ParsedShape type param */
-export function Model<ParsedShape>(__name?: string) {
+/** opaque model only on To type param */
+export function Model<To>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecial<ParsedShape>(__name)(MO.struct(propsOrSchemas))
+    ModelSpecial<To>(__name)(MO.struct(propsOrSchemas))
 }
 
-/** opaque model on ParsedShape and Encoded type params */
-export function ModelEnc<ParsedShape, Encoded>(__name?: string) {
+/** opaque model on To and From type params */
+export function ModelFrom<To, From>(__name?: string) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) =>
-    ModelSpecialEnc<ParsedShape, Encoded>(__name)(MO.struct(propsOrSchemas))
+    ModelSpecialEnc<To, From>(__name)(MO.struct(propsOrSchemas))
 }
 
 /** fully opaque model on all type params */
-export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
+export function MNModel<To, ConstructorInput, From, Props>(
   __name?: string
 ) {
   return <ProvidedProps extends MO.PropertyOrSchemaRecord = {}>(propsOrSchemas: ProvidedProps) => {
@@ -141,17 +141,17 @@ export function MNModel<ParsedShape, ConstructorInput, Encoded, Props>(
     return makeSpecial(__name, self) as
       & MNModel<
         typeof self,
-        ParsedShape,
+        To,
         ConstructorInput,
-        Encoded,
+        From,
         Props
       >
       & PropsExtensions<Props>
   }
 }
 
-export function fromModel<ParsedShape>(__name?: string) {
-  return <Props extends FromPropertyRecord = {}>(props: Props) => ModelSpecial<ParsedShape>(__name)(fromProps(props))
+export function fromModel<To>(__name?: string) {
+  return <Props extends FromPropertyRecord = {}>(props: Props) => ModelSpecial<To>(__name)(fromProps(props))
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
@@ -285,18 +285,18 @@ export interface PropsExtensions<Props> {
 }
 
 // We don't want Copy interface from the official implementation
-export function ModelSpecial<ParsedShape>(__name?: string) {
+export function ModelSpecial<To>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): Model<ParsedShape, Self> & PropsExtensions<GetModelProps<Self>> => {
+  ): Model<To, Self> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }
 
-export function ModelSpecialEnc<ParsedShape, Encoded>(__name?: string) {
+export function ModelSpecialEnc<To, From>(__name?: string) {
   return <Self extends MO.SchemaAny & { Api: { props: any } }>(
     self: Self
-  ): ModelEnc<ParsedShape, Self, Encoded> & PropsExtensions<GetModelProps<Self>> => {
+  ): ModelFrom<To, Self, From> & PropsExtensions<GetModelProps<Self>> => {
     return makeSpecial(__name, self)
   }
 }

@@ -191,21 +191,21 @@ function buildFieldInfo(
 }
 
 export const buildFormFromSchema = <
-  ParsedShape,
-  Encoded,
+  To,
+  From,
   ConstructorInput,
   Props extends PropertyRecord,
   OnSubmitA
 >(
   s: Schema.Schema<
     unknown,
-    ParsedShape,
+    To,
     ConstructorInput,
-    Encoded,
+    From,
     { props: Props }
   >,
-  state: Ref<Encoded>,
-  onSubmit: (a: ParsedShape) => Promise<OnSubmitA>
+  state: Ref<From>,
+  onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
   const fields = buildFieldInfoFromProps(s.Api.props)
   const parse = unsafe(Schema.Parser.for(s))
@@ -213,7 +213,7 @@ export const buildFormFromSchema = <
   const isValid = ref(true)
 
   const submit1 =
-    <A>(onSubmit: (a: ParsedShape) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+    <A>(onSubmit: (a: To) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
       const r = await e
       if (!r.valid) return
       return onSubmit(parse(state.value))

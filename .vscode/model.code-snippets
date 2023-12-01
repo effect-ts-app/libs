@@ -16,7 +16,7 @@
         "prefix": "moc",
         "body": [
             "@useClassFeaturesForSchema",
-            "export class $1 extends ModelEnc<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.Encoded, $1.Props> ()({",
+            "export class $1 extends ModelFrom<$1, $1>()({ // TODO MNModel<$1, $1.ConstructorInput, $1.From, $1.Props> ()({",
             "$2",
             "}) {}"
         ],
@@ -35,12 +35,12 @@
         "prefix": "un",
         "body": [
             "const $1__ = union({ $2 })",
-            "const $1_ = enhanceClassUnion(OpaqueSchema<$1, $1.Encoded>()($1__))",
+            "const $1_ = enhanceClassUnion(OpaqueSchema<$1, $1.From>()($1__))",
             "export type $1 = To<typeof $1__> & UnionBrand",
             "export interface $1Schema extends Identity<typeof $1_> {}",
             "export const $1: $1Schema = $1_",
             "export namespace $1 {",
-            "  export type Encoded = From<typeof $1__> & UnionBrand",
+            "  export type From = From<typeof $1__> & UnionBrand",
             "}"
         ]
     },

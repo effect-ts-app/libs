@@ -22,9 +22,9 @@ export function fromTuple<
   KeyEncoded,
   KeyApi,
   ParserInput,
-  ParsedShape,
+  To,
   ConstructorInput,
-  Encoded,
+  From,
   Api
 >(
   key: MO.Schema<
@@ -34,12 +34,12 @@ export function fromTuple<
     KeyEncoded,
     KeyApi
   >,
-  self: MO.Schema<ParserInput, ParsedShape, ConstructorInput, Encoded, Api>
+  self: MO.Schema<ParserInput, To, ConstructorInput, From, Api>
 ): MO.DefaultSchema<
   readonly (KeyParserInput | ParserInput)[],
-  readonly [KeyParsedShape, ParsedShape],
-  Iterable<KeyParsedShape | ParsedShape>,
-  readonly [KeyEncoded, Encoded],
+  readonly [KeyParsedShape, To],
+  Iterable<KeyParsedShape | To>,
+  readonly [KeyEncoded, From],
   { self: Api }
 > {
   const keyGuard = Guard.for(key)
@@ -52,7 +52,7 @@ export function fromTuple<
   const parse = Parser.for(self)
   const encode = Encoder.for(self)
 
-  const refinement = (_: unknown): _ is readonly [KeyParsedShape, ParsedShape] =>
+  const refinement = (_: unknown): _ is readonly [KeyParsedShape, To] =>
     Array.isArray(_) && keyGuard(_[0]) && guard(_[1])
 
   const parseTup = (i: readonly (KeyParserInput | ParserInput)[], env?: ParserEnv) => {
@@ -60,7 +60,7 @@ export function fromTuple<
     let err = false
     let warn = false
 
-    let v: readonly [KeyParsedShape, ParsedShape] | undefined
+    let v: readonly [KeyParsedShape, To] | undefined
 
     const keyParsev2 = env?.cache ? env.cache.getOrSetParser(keyParse) : keyParse
     const parsev2 = env?.cache ? env.cache.getOrSetParser(parse) : parse
@@ -104,10 +104,10 @@ export function fromTuple<
     MO.identity(refinement),
     MO.arbitrary((_) => _.tuple(keyArb(_), arb(_))),
     MO.parser(parseTup),
-    MO.constructor((i: Iterable<KeyParsedShape | ParsedShape>) => {
+    MO.constructor((i: Iterable<KeyParsedShape | To>) => {
       const t = Array.from(i)
       return refinement(t)
-        ? Th.succeed(t as readonly [KeyParsedShape, ParsedShape])
+        ? Th.succeed(t as readonly [KeyParsedShape, To])
         : Th.fail(MO.leafE(MO.unknownArrayE(t)))
     }),
     MO.encoder((_) => [keyEncode(_[0]), encode(_[1])] as const),
@@ -120,8 +120,8 @@ export function fromTuple<
 export const tupleIdentifier = MO.makeAnnotation<{ self: MO.SchemaAny }>()
 
 export function tuple<
-  ParsedShape,
-  Encoded,
+  To,
+  From,
   KeyParsedShape,
   KeyConstructorInput,
   KeyEncoded,
@@ -130,12 +130,12 @@ export function tuple<
   Api
 >(
   key: MO.Schema<unknown, KeyParsedShape, KeyConstructorInput, KeyEncoded, KeyApi>,
-  self: MO.Schema<unknown, ParsedShape, ConstructorInput, Encoded, Api>
+  self: MO.Schema<unknown, To, ConstructorInput, From, Api>
 ): MO.DefaultSchema<
   unknown,
-  readonly [KeyParsedShape, ParsedShape],
-  Iterable<KeyParsedShape | ParsedShape>,
-  readonly [KeyEncoded, Encoded],
+  readonly [KeyParsedShape, To],
+  Iterable<KeyParsedShape | To>,
+  readonly [KeyEncoded, From],
   { self: Api }
 > {
   const encodeKey = Encoder.for(key)

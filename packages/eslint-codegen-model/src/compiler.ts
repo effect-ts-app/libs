@@ -58,13 +58,13 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
         return [
           `export namespace ${modelName} {`,
           `  /**`,
-          `   * @tsplus type ${modelName}.Encoded`,
-          `   * @tsplus companion ${modelName}.Encoded/Ops`,
+          `   * @tsplus type ${modelName}.From`,
+          `   * @tsplus companion ${modelName}.From/Ops`,
           `   */`,
-          `  export class Encoded extends FromClass<typeof ${modelName}>() {}`,
-          // `  export const Encoded: EncodedOps = { $: {} }`,
+          `  export class From extends FromClass<typeof ${modelName}>() {}`,
+          // `  export const From: EncodedOps = { $: {} }`,
           // `  /**`,
-          // `   * @tsplus type ${modelName}.Encoded/Aspects`,
+          // `   * @tsplus type ${modelName}.From/Aspects`,
           // `   */`,
           // `  export interface EncodedAspects {}`,
           "  export interface ConstructorInput",
@@ -103,8 +103,8 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
               //console.log("$$$ a union!", p.declarations?.map(x => x.forEachChild(c => {
 
               // TODO: have to find nullable, array, set, map, etc.
-              // TODO: "Encoded"
-              // but also should find fully custom sets like PurchaseOrderModulesSet - we should be able to just use those directly, incl PurchaseOrderModulesSet.Encoded
+              // TODO: "From"
+              // but also should find fully custom sets like PurchaseOrderModulesSet - we should be able to just use those directly, incl PurchaseOrderModulesSet.From
               // for now just skip them?
                 p.declarations?.map(x => x.forEachChild(c => {
                   if (isLookup) {
@@ -249,17 +249,17 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
         `export interface ${modelName} {${parsed.length ? "\n" + parsed.map(l => "  " + l).join("\n") + "\n" : ""}}`,
         `export namespace ${modelName} {`,
         `  /**`,
-        `   * @tsplus type ${modelName}.Encoded`,
+        `   * @tsplus type ${modelName}.From`,
         `   */`,
-        `  export interface Encoded {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
-        `  export const Encoded: EncodedOps = {}`,
-        // `  export const Encoded: EncodedOps = { $: {} }`,
+        `  export interface From {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
+        `  export const From: EncodedOps = {}`,
+        // `  export const From: EncodedOps = { $: {} }`,
         // `  /**`,
-        // `   * @tsplus type ${modelName}.Encoded/Aspects`,
+        // `   * @tsplus type ${modelName}.From/Aspects`,
         // `   */`,
         // `  export interface EncodedAspects {}`,
         `  /**`,
-        `   * @tsplus type ${modelName}.Encoded/Ops`,
+        `   * @tsplus type ${modelName}.From/Ops`,
         `   */`,
         `  export interface EncodedOps {}`,
         "  export interface ConstructorInput",

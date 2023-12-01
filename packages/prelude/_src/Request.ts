@@ -31,9 +31,9 @@ export const responseWithJsonBody = (
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonBody
  */
-export const schemaJsonBody = <ParsedShape, Encoded, A, B>(
+export const schemaJsonBody = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
+  schema: Schema.Schema<unknown, To, any, From, any>
 ) => {
   const parse = Parser.for(schema).condemnCustom
   return client.mapEffect((_) => _.json.flatMap(parse))
@@ -42,9 +42,9 @@ export const schemaJsonBody = <ParsedShape, Encoded, A, B>(
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonBodyUnsafe
  */
-export const schemaJsonBodyUnsafe = <ParsedShape, Encoded, A, B>(
+export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
+  schema: Schema.Schema<unknown, To, any, From, any>
 ) => {
   const _parse = Parser.for(schema).condemnCustom
   const parse = flow(_parse, Effect.orDie)
@@ -55,17 +55,17 @@ export const schemaJsonBodyUnsafe = <ParsedShape, Encoded, A, B>(
  * @tsplus fluent effect/platform/Http/Client schemaJson
  */
 export const schemaJson = <
-  Encoded extends {
+  From extends {
     readonly status?: number
     readonly headers?: Headers
     readonly body?: unknown
   },
-  ParsedShape,
+  To,
   A,
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
+  schema: Schema.Schema<unknown, To, any, From, any>
 ) => {
   const parse = Parser.for(schema).condemnFail
   return client.mapEffect((_) => _.responseWithJsonBody.flatMap(parse))
@@ -75,17 +75,17 @@ export const schemaJson = <
  * @tsplus fluent effect/platform/Http/Client schemaJsonUnsafe
  */
 export const schemaJsonUnsafe = <
-  Encoded extends {
+  From extends {
     readonly status?: number
     readonly headers?: Headers
     readonly body?: unknown
   },
-  ParsedShape,
+  To,
   A,
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, ParsedShape, any, Encoded, any>
+  schema: Schema.Schema<unknown, To, any, From, any>
 ) => {
   const parse = Parser.for(schema).condemnDie
   return client.mapEffect((_) => _.responseWithJsonBody.flatMap((_) => parse(_)))

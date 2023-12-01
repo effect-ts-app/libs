@@ -4,7 +4,7 @@ import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 export class RequestContextParent extends MNModel<
   RequestContextParent,
   RequestContextParent.ConstructorInput,
-  RequestContextParent.Encoded,
+  RequestContextParent.From,
   RequestContextParent.Props
 >()({
   _tag: literal("RequestContext"),
@@ -23,7 +23,7 @@ export class RequestContextParent extends MNModel<
 export class RequestContext extends MNModel<
   RequestContext,
   RequestContext.ConstructorInput,
-  RequestContext.Encoded,
+  RequestContext.From,
   RequestContext.Props
 >()({
   ...RequestContextParent.omit("id"),
@@ -61,20 +61,20 @@ export class RequestContext extends MNModel<
 /* eslint-disable */
 export namespace RequestContextParent {
   /**
-   * @tsplus type RequestContextParent.Encoded
-   * @tsplus companion RequestContextParent.Encoded/Ops
+   * @tsplus type RequestContextParent.From
+   * @tsplus companion RequestContextParent.From/Ops
    */
-  export class Encoded extends FromClass<typeof RequestContextParent>() {}
+  export class From extends FromClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContextParent> {}
   export interface Props extends GetProvidedProps<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
-   * @tsplus type RequestContext.Encoded
-   * @tsplus companion RequestContext.Encoded/Ops
+   * @tsplus type RequestContext.From
+   * @tsplus companion RequestContext.From/Ops
    */
-  export class Encoded extends FromClass<typeof RequestContext>() {}
+  export class From extends FromClass<typeof RequestContext>() {}
   export interface ConstructorInput
     extends ConstructorInputFromApi<typeof RequestContext> {}
   export interface Props extends GetProvidedProps<typeof RequestContext> {}
