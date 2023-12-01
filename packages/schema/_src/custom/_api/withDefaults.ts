@@ -1,4 +1,6 @@
 import type { UnionToIntersection } from "@effect-app/core/utils"
+import type { CustomSchemaException } from "_src/ext.js"
+import { parseEither, parseSync } from "_src/ext.js"
 import type { Annotation } from "../_schema.js"
 import * as S from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"
@@ -26,6 +28,10 @@ export interface SchemaDefaultSchema<
   readonly Constructor: Constructor.Constructor<ConstructorInput, To, any>
 
   readonly encodeSync: Encoder.Encoder<To, From>
+  readonly parseSync: (i: ParserInput, env?: Parser.ParserEnv) => To
+  readonly parseEither: (i: ParserInput, env?: Parser.ParserEnv) => Either<CustomSchemaException, To>
+  // readonly parseFromEither: (i: From, env?: Parser.ParserEnv) => Either<, To>
+  // readonly parseFromSync: (i: From, env?: Parser.ParserEnv) => To
 
   readonly is: Guard.Guard<To>
 
@@ -82,11 +88,19 @@ export function withDefaults<ParserInput, To, ConstructorInput, From, Api>(
     value: Constructor.for(self)
   })
 
-  Object.defineProperty(schemed, "Encoder", {
+  Object.defineProperty(schemed, "encodeSync", {
     value: Encoder.for(self)
   })
 
-  Object.defineProperty(schemed, "Guard", {
+  Object.defineProperty(schemed, "parseEither", {
+    value: parseEither(self)
+  })
+
+  Object.defineProperty(schemed, "parseSync", {
+    value: parseSync(self)
+  })
+
+  Object.defineProperty(schemed, "is", {
     value: Guard.for(self)
   })
 

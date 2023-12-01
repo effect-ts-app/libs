@@ -1,3 +1,4 @@
+import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "_src/ext.js"
 import type { Annotation } from "../_schema.js"
 import * as S from "../_schema.js"
 import { named } from "../_schema.js"
@@ -59,6 +60,19 @@ export interface Class<M, Self extends S.SchemaAny> extends
   readonly Constructor: ConstructorFor<SchemaForModel<M, Self>>
 
   readonly encodeSync: EncoderFor<SchemaForModel<M, Self>>
+  readonly parseSync: (
+    i: S.ParserInputOf<SchemaForModel<M, Self>>,
+    env?: Parser.ParserEnv
+  ) => S.To<SchemaForModel<M, Self>>
+  readonly parseEither: (
+    i: S.ParserInputOf<SchemaForModel<M, Self>>,
+    env?: Parser.ParserEnv
+  ) => Either<CustomSchemaException, S.To<SchemaForModel<M, Self>>>
+  readonly parseFromEither: (
+    i: S.From<SchemaForModel<M, Self>>,
+    env?: Parser.ParserEnv
+  ) => Either<CustomSchemaException, S.To<SchemaForModel<M, Self>>>
+  readonly parseFromSync: (i: S.From<SchemaForModel<M, Self>>, env?: Parser.ParserEnv) => S.To<SchemaForModel<M, Self>>
 
   readonly is: GuardFor<SchemaForModel<M, Self>>
 
@@ -95,11 +109,27 @@ export function Class<M>(__name?: string) {
       value: Constructor.for(schema)
     })
 
-    Object.defineProperty(schemed, "Encoder", {
+    Object.defineProperty(schemed, "encodeSync", {
       value: Encoder.for(schema)
     })
 
-    Object.defineProperty(schemed, "Guard", {
+    Object.defineProperty(schemed, "parseEither", {
+      value: parseEither(self)
+    })
+
+    Object.defineProperty(schemed, "parseSync", {
+      value: parseSync(self)
+    })
+
+    Object.defineProperty(schemed, "parseFromEither", {
+      value: parseFromEither(self)
+    })
+
+    Object.defineProperty(schemed, "parseFromSync", {
+      value: parseFromSync(self)
+    })
+
+    Object.defineProperty(schemed, "is", {
       value: Guard.for(schema)
     })
 

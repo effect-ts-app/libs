@@ -750,7 +750,7 @@ export function parseCondemnCustom_<A, B, C, D, E>(
   return condemnCustom_(parser, a, env)
 }
 
-export function parseECondemnCustom_<B, C, D, E>(
+export function parseFromCondemnCustom_<B, C, D, E>(
   self: Schema<unknown, B, C, D, E>,
   a: D,
   env?: Parser.ParserEnv,
@@ -784,7 +784,7 @@ export function parseCondemnDie_<A, B, C, D, E>(
   return condemnDie_(parser, a, env)
 }
 
-export function parseECondemnDie_<B, C, D, E>(
+export function parseFromCondemnDie_<B, C, D, E>(
   self: Schema<unknown, B, C, D, E>,
   a: D,
   env?: Parser.ParserEnv,
@@ -795,9 +795,9 @@ export function parseECondemnDie_<B, C, D, E>(
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseECondemnDie
+ * @tsplus getter ets/Schema/Schema parseFromCondemnDie
  */
-export function parseECondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromCondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemnDie_(parser, a, env)
@@ -805,9 +805,9 @@ export function parseECondemnDie<B, C, D, E>(self: Schema<unknown, B, C, D, E>) 
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseEEither
+ * @tsplus getter ets/Schema/Schema parseFromEither
  */
-export function parseEEither<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromEither<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemnFail_(parser, a, env)
@@ -815,9 +815,9 @@ export function parseEEither<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseECondemnLeft
+ * @tsplus getter ets/Schema/Schema parseFromCondemnLeft
  */
-export function parseECondemnLeft<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromCondemnLeft<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemnLeft_(parser, a, env)
@@ -825,9 +825,9 @@ export function parseECondemnLeft<B, C, D, E>(self: Schema<unknown, B, C, D, E>)
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseECondemnCustom
+ * @tsplus getter ets/Schema/Schema parseFromCondemnCustom
  */
-export function parseECondemnCustom<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromCondemnCustom<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemnCustom_(parser, a, env)
@@ -884,7 +884,7 @@ export function parseCondemn<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
   }
 }
 
-export function parseECondemn_<B, C, D, E>(
+export function parseFromCondemn_<B, C, D, E>(
   self: Schema<unknown, B, C, D, E>,
   a: D,
   env?: Parser.ParserEnv,
@@ -895,9 +895,9 @@ export function parseECondemn_<B, C, D, E>(
 }
 
 /**
- * @tsplus getter ets/Schema/Schema parseECondemn
+ * @tsplus getter ets/Schema/Schema parseFromCondemn
  */
-export function parseECondemn<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromCondemn<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   return (a: D, env?: Parser.ParserEnv) => {
     return condemn_(parser, a, env)
@@ -916,9 +916,9 @@ export function parseSync<A, B, C, D, E>(self: Schema<A, B, C, D, E>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Parser parseESync
+ * @tsplus getter ets/Schema/Schema parseFromSync
  */
-export function parseESync<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
+export function parseFromSync<B, C, D, E>(self: Schema<unknown, B, C, D, E>) {
   const parser = EParserFor(self)
   const uns = unsafe(parser)
   return (a: D, env?: Parser.ParserEnv) => {
@@ -950,7 +950,7 @@ export function parseCondemnFail_<A, B, C, D, E>(
   return condemnFail_(parser, a, env)
 }
 
-export function parseECondemnFail_<B, C, D, E>(
+export function parseFromCondemnFail_<B, C, D, E>(
   self: Schema<unknown, B, C, D, E>,
   a: D,
   env?: Parser.ParserEnv,
@@ -969,7 +969,7 @@ export function parseCondemnLeft_<A, B, C, D, E>(
   return condemnLeft_(parser, a, env)
 }
 
-export function parseECondemnLeft_<B, C, D, E>(
+export function parseFromCondemnLeft_<B, C, D, E>(
   self: Schema<unknown, B, C, D, E>,
   a: D,
   env?: Parser.ParserEnv

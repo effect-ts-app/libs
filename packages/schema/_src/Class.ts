@@ -15,6 +15,7 @@ import * as S from "./_schema.js"
 import { schemaField } from "./_schema.js"
 import type { AnyField, FieldRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
+import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "./ext.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
 
@@ -116,6 +117,19 @@ export interface MM<
   readonly EParser: EParserFor<SelfM>
   readonly Constructor: S.ConstructorFor<SelfM>
   readonly encodeSync: S.EncoderFor<SelfM>
+  readonly parseSync: (
+    i: S.ParserInputOf<SelfM>,
+    env?: S.Parser.ParserEnv
+  ) => S.To<SelfM>
+  readonly parseEither: (
+    i: S.ParserInputOf<SelfM>,
+    env?: S.Parser.ParserEnv
+  ) => Either<CustomSchemaException, S.To<SelfM>>
+  readonly parseFromEither: (
+    i: S.From<SelfM>,
+    env?: S.Parser.ParserEnv
+  ) => Either<CustomSchemaException, S.To<SelfM>>
+  readonly parseFromSync: (i: S.From<SelfM>, env?: S.Parser.ParserEnv) => S.To<SelfM>
   readonly is: S.GuardFor<SelfM>
   readonly Arbitrary: S.ArbitraryFor<SelfM>
 }
@@ -218,6 +232,22 @@ export function setSchema<Self extends S.SchemaProperties<any>>(
   Object.defineProperty(schemed, "encodeSync", {
     value: S.Encoder.for(self),
     configurable: true
+  })
+
+  Object.defineProperty(schemed, "parseEither", {
+    value: parseEither(self)
+  })
+
+  Object.defineProperty(schemed, "parseSync", {
+    value: parseSync(self)
+  })
+
+  Object.defineProperty(schemed, "parseFromEither", {
+    value: parseFromEither(self)
+  })
+
+  Object.defineProperty(schemed, "parseFromSync", {
+    value: parseFromSync(self)
   })
 
   Object.defineProperty(schemed, "is", {
