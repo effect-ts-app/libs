@@ -247,7 +247,7 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   )
 }
 
-export type ShapeFromProperties<Props extends PropertyRecord> = Compute<
+export type StructTo<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
@@ -262,7 +262,7 @@ export type ShapeFromProperties<Props extends PropertyRecord> = Compute<
   "flat"
 >
 
-export type ConstructorFromProperties<Props extends PropertyRecord> = Compute<
+export type StructConstructor<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: k extends TagsFromProps<Props> ? never
@@ -281,7 +281,7 @@ export type ConstructorFromProperties<Props extends PropertyRecord> = Compute<
   "flat"
 >
 
-export type EncodedFromProperties<Props extends PropertyRecord> = Compute<
+export type StructFrom<Props extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: Props[k] extends AnyProperty ? Props[k]["_optional"] extends "optional" ? {
@@ -372,9 +372,9 @@ export const propertiesIdentifier = S.makeAnnotation<{ props: PropertyRecord }>(
 
 export type SchemaProperties<Props extends PropertyRecord> = DefaultSchema<
   unknown,
-  ShapeFromProperties<Props>,
-  ConstructorFromProperties<Props>,
-  EncodedFromProperties<Props>,
+  StructTo<Props>,
+  StructConstructor<Props>,
+  StructFrom<Props>,
   { props: Props }
 >
 
@@ -461,7 +461,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
   const hasRequired = required.length > 0
 
-  function guard(_: unknown): _ is ShapeFromProperties<Props> {
+  function guard(_: unknown): _ is StructTo<Props> {
     if (typeof _ !== "object" || _ === null) {
       return false
     }
@@ -487,7 +487,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   function parser(
     _: unknown,
     env?: ParserEnv
-  ): Th.These<ParserErrorFromProperties<Props>, ShapeFromProperties<Props>> {
+  ): Th.These<ParserErrorFromProperties<Props>, StructTo<Props>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -584,7 +584,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     }
 
     if (errors.isEmpty()) {
-      return Th.succeed(result as ShapeFromProperties<Props>)
+      return Th.succeed(result as StructTo<Props>)
     }
 
     const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
@@ -599,7 +599,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return Th.warn(result, error)
   }
 
-  function encoder(_: ShapeFromProperties<Props>): EncodedFromProperties<Props> {
+  function encoder(_: StructTo<Props>): StructFrom<Props> {
     const enc = {}
 
     for (const key of keys) {
@@ -613,7 +613,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return enc
   }
 
-  function arb(_: typeof fc): fc.Arbitrary<ShapeFromProperties<Props>> {
+  function arb(_: typeof fc): fc.Arbitrary<StructTo<Props>> {
     const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
     const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
@@ -629,7 +629,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     S.encoder(encoder),
     S.arbitrary(arb),
     S.constructor((_) => {
-      const res = {} as ShapeFromProperties<Props>
+      const res = {} as StructTo<Props>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
         if (!(k in res) || res[k] === undefined) {

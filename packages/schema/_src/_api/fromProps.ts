@@ -662,7 +662,7 @@ export type ParserInputFromFromProperties<Props extends FromPropertyRecord> = Co
 type IsAnyOrUnknown<T> = any extends T ? never : T
 type AorB<A, B> = IsAnyOrUnknown<A> extends never ? B : A
 
-export type ParserInputFromParserInputOrEncodedFromProperties<
+export type ParserInputFromParserInputOrStructFrom<
   Props extends FromPropertyRecord
 > = Compute<
   UnionToIntersection<
@@ -702,11 +702,11 @@ export type ParserInputFromParserInputOrEncodedFromProperties<
 
 export type ParserInputFromParserInputOrEncodedFromSchema<T> = T extends {
   Api: { props: infer Props }
-} ? Props extends FromPropertyRecord ? ParserInputFromParserInputOrEncodedFromProperties<Props>
+} ? Props extends FromPropertyRecord ? ParserInputFromParserInputOrStructFrom<Props>
   : never
   : never
 
-export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecord> = Compute<
+export type ParserInputFromStructFrom<Props extends FromPropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Props]: Props[k] extends AnyFromProperty ? Props[k]["_optional"] extends "optional" ? {
@@ -735,6 +735,6 @@ export type ParserInputFromEncodedFromProperties<Props extends FromPropertyRecor
 
 export type ParserInputFromEncodedFromSchema<T> = T extends {
   Api: { props: infer Props }
-} ? Props extends FromPropertyRecord ? ParserInputFromEncodedFromProperties<Props>
+} ? Props extends FromPropertyRecord ? ParserInputFromStructFrom<Props>
   : never
   : never

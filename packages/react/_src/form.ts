@@ -4,12 +4,12 @@
 import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } from "@effect-app/prelude/schema"
 import {
   type AnyError,
-  type ConstructorFromProperties,
-  type EncodedFromProperties,
+  type StructConstructor,
+  type StructFrom,
   EParserFor,
   Parser,
   type PropertyRecord,
-  type ShapeFromProperties,
+  type StructTo,
   These,
   unsafe
 } from "@effect-app/schema"
@@ -251,9 +251,9 @@ function getFormMetadata(
 
 export type SchemaProperties<Props extends PropertyRecord> = Schema.Schema<
   unknown,
-  ShapeFromProperties<Props>,
-  ConstructorFromProperties<Props>,
-  EncodedFromProperties<Props>,
+  StructTo<Props>,
+  StructConstructor<Props>,
+  StructFrom<Props>,
   {
     props: Props
   }
@@ -283,7 +283,7 @@ export function createUseCustomParsedFormFromSchemaUnsafe<
  * It would be better to make first class support for that instead.
  */
 export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: Props) {
-  type Encoded = EncodedFromProperties<Props>
+  type Encoded = StructFrom<Props>
   type NEncoded = Encoded // Transform<Encoded>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
@@ -330,7 +330,7 @@ export function createUseParsedFormUnsafe<Props extends PropertyRecord>(props: P
 export function createUseForm<Props extends PropertyRecord = PropertyRecord>(
   props: Props
 ) {
-  type Encoded = EncodedFromProperties<Props>
+  type Encoded = StructFrom<Props>
   type NEncoded = Encoded // Transform<Encoded>
   return function useFormInternal<
     TFieldValues extends NEncoded,
