@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.75.2
+
+### Patch Changes
+
+- 086c2b1: fix imports
+
 ## 0.75.1
 
 ### Patch Changes
