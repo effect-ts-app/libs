@@ -182,16 +182,6 @@
         "default": "./_cjs/_api/fromArray.cjs"
       }
     },
-    "./_api/fromProps": {
-      "import": {
-        "types": "./dist/_api/fromProps.d.ts",
-        "default": "./dist/_api/fromProps.js"
-      },
-      "require": {
-        "types": "./dist/_api/fromProps.d.ts",
-        "default": "./_cjs/_api/fromProps.cjs"
-      }
-    },
     "./_api/futureDate": {
       "import": {
         "types": "./dist/_api/futureDate.d.ts",
@@ -270,6 +260,16 @@
       "require": {
         "types": "./dist/_api/set.d.ts",
         "default": "./_cjs/_api/set.cjs"
+      }
+    },
+    "./_api/specificStruct": {
+      "import": {
+        "types": "./dist/_api/specificStruct.d.ts",
+        "default": "./dist/_api/specificStruct.js"
+      },
+      "require": {
+        "types": "./dist/_api/specificStruct.d.ts",
+        "default": "./_cjs/_api/specificStruct.cjs"
       }
     },
     "./_api/string": {
@@ -642,16 +642,6 @@
         "default": "./_cjs/custom/_api/positiveInt.cjs"
       }
     },
-    "./custom/_api/properties": {
-      "import": {
-        "types": "./dist/custom/_api/properties.d.ts",
-        "default": "./dist/custom/_api/properties.js"
-      },
-      "require": {
-        "types": "./dist/custom/_api/properties.d.ts",
-        "default": "./_cjs/custom/_api/properties.cjs"
-      }
-    },
     "./custom/_api/refinement": {
       "import": {
         "types": "./dist/custom/_api/refinement.d.ts",
@@ -680,6 +670,16 @@
       "require": {
         "types": "./dist/custom/_api/string.d.ts",
         "default": "./_cjs/custom/_api/string.cjs"
+      }
+    },
+    "./custom/_api/struct": {
+      "import": {
+        "types": "./dist/custom/_api/struct.d.ts",
+        "default": "./dist/custom/_api/struct.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/struct.d.ts",
+        "default": "./_cjs/custom/_api/struct.cjs"
       }
     },
     "./custom/_api/union": {

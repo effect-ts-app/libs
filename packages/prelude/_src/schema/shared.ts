@@ -267,7 +267,7 @@ export interface PrefixedStringUtils<
   readonly is: (x: StringId) => x is Brand
   readonly prefix: Prefix
   eq: Equivalence<Brand>
-  readonly withDefault: Property<
+  readonly withDefault: Field<
     SchemaDefaultSchema<unknown, Brand, string, string, ApiOf<PrefixedStringIdSchema<Brand, Prefix, Separator>>>,
     "required",
     None<any>,

@@ -9,7 +9,7 @@ import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import type { ParserEnv } from "../Parser.js"
 import * as Th from "../These.js"
-import { isPropertyRecord, tagsFromFields } from "./properties.js"
+import { isFieldRecord, tagsFields } from "./struct.js"
 import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
@@ -162,8 +162,8 @@ export function union<Fields extends Record<PropertyKey, S.SchemaUPI>>(
     ([k, s]) =>
       [
         k,
-        "fields" in s.Api && isPropertyRecord(s.Api["fields"])
-          ? tagsFromFields(s.Api["fields"])
+        "fields" in s.Api && isFieldRecord(s.Api["fields"])
+          ? tagsFields(s.Api["fields"])
           : {}
       ] as const
   )

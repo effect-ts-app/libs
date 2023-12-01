@@ -39,18 +39,18 @@ export function intersect_<
   ConstructorInput,
   From,
   Api,
-  ThatParsedShape extends {},
+  ThatTo extends {},
   ThatConstructorInput,
-  ThatEncoded,
+  ThatFrom,
   ThatApi
 >(
   self: S.Schema<unknown, To, ConstructorInput, From, Api>,
-  that: S.Schema<unknown, ThatParsedShape, ThatConstructorInput, ThatEncoded, ThatApi>
+  that: S.Schema<unknown, ThatTo, ThatConstructorInput, ThatFrom, ThatApi>
 ): DefaultSchema<
   unknown,
-  To & ThatParsedShape,
+  To & ThatTo,
   ConstructorInput & ThatConstructorInput,
-  From & ThatEncoded,
+  From & ThatFrom,
   IntersectionApi<Api, ThatApi>
 > {
   const guardSelf = Guard.for(self)
@@ -64,7 +64,7 @@ export function intersect_<
   const arbSelf = Arbitrary.for(self)
   const arbThat = Arbitrary.for(that)
 
-  const guard = (u: unknown): u is To & ThatParsedShape => guardSelf(u) && guardThat(u)
+  const guard = (u: unknown): u is To & ThatTo => guardSelf(u) && guardThat(u)
 
   return pipe(
     S.identity(guard),
@@ -81,7 +81,7 @@ export function intersect_<
       let errored = false
       let warned = false
 
-      const intersection = {} as unknown as To & ThatParsedShape
+      const intersection = {} as unknown as To & ThatTo
 
       if (left._tag === "Left") {
         errors = errors.append(S.memberE(0, left.left))
@@ -131,7 +131,7 @@ export function intersect_<
       let errored = false
       let warned = false
 
-      const intersection = {} as unknown as To & ThatParsedShape
+      const intersection = {} as unknown as To & ThatTo
 
       if (left._tag === "Left") {
         errors = errors.append(S.memberE(0, left.left))
@@ -172,7 +172,7 @@ export function intersect_<
 
       return Th.succeed(intersection)
     }),
-    S.encoder((_): From & ThatEncoded => ({
+    S.encoder((_): From & ThatFrom => ({
       ...encodeSelf(_),
       ...encodeThat(_)
     })),
@@ -206,35 +206,35 @@ export function intersect_<
 }
 
 export function intersect<
-  ThatParsedShape extends {},
+  ThatTo extends {},
   ThatConstructorInput,
-  ThatEncoded,
+  ThatFrom,
   ThatApi
 >(
-  that: S.Schema<unknown, ThatParsedShape, ThatConstructorInput, ThatEncoded, ThatApi>
+  that: S.Schema<unknown, ThatTo, ThatConstructorInput, ThatFrom, ThatApi>
 ): <To extends {}, ConstructorInput, From, Api>(
   self: S.Schema<unknown, To, ConstructorInput, From, Api>
 ) => DefaultSchema<
   unknown,
-  To & ThatParsedShape,
+  To & ThatTo,
   ConstructorInput & ThatConstructorInput,
-  From & ThatEncoded,
+  From & ThatFrom,
   IntersectionApi<Api, ThatApi>
 > {
   return (self) => intersect_(self, that)
 }
 
 export function intersectLazy<
-  ThatParsedShape extends {},
+  ThatTo extends {},
   ThatConstructorInput,
-  ThatEncoded,
+  ThatFrom,
   ThatApi
 >(
   that: () => S.Schema<
     unknown,
-    ThatParsedShape,
+    ThatTo,
     ThatConstructorInput,
-    ThatEncoded,
+    ThatFrom,
     ThatApi
   >
 ) {
@@ -242,9 +242,9 @@ export function intersectLazy<
     self: S.Schema<unknown, To, ConstructorInput, From, Api>
   ): DefaultSchema<
     unknown,
-    To & ThatParsedShape,
+    To & ThatTo,
     ConstructorInput & ThatConstructorInput,
-    From & ThatEncoded,
+    From & ThatFrom,
     Api
   > => {
     return pipe(

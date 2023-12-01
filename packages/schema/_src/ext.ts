@@ -6,7 +6,7 @@ import { typedKeysOf } from "@effect-app/core/utils"
 import type { None, Some } from "effect/Option"
 import { v4 } from "uuid"
 
-import type { FromProperty } from "./_api.js"
+import type { SpecificField } from "./_api.js"
 import { EParserFor, set, setIdentifier } from "./_api.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
 import * as MO from "./_schema.js"
@@ -34,7 +34,7 @@ export function FromClassBase<T>() {
   return From as FromClass<T>
 }
 export function FromClass<Cls extends { [MO.schemaField]: MO.SchemaAny }>() {
-  return FromClassBase<EncodedFromApi<Cls>>()
+  return FromClassBase<FromApi<Cls>>()
 }
 
 export function partialConstructor<ConstructorInput, To>(model: {
@@ -175,7 +175,7 @@ export function defaultConstructor<
   Self extends MO.SchemaUPI,
   As extends Option<PropertyKey>,
   Def extends Option<["parser" | "constructor" | "both", () => MO.To<Self>]>
->(p: MO.Property<Self, "required", As, Def>) {
+>(p: MO.Field<Self, "required", As, Def>) {
   return (makeDefault: () => MO.To<Self>) => propDef(p, makeDefault, "constructor")
 }
 
@@ -204,9 +204,9 @@ export function findAnnotation<A>(
 }
 
 export type SupportedDefaultsSchema = MO.Schema<any, SupportedDefaults, any, any, any>
-export type DefaultProperty = FromProperty<any, any, any, any>
+export type DefaultProperty = SpecificField<any, any, any, any>
 
-export type DefaultPropertyRecord = Record<PropertyKey, DefaultProperty>
+export type DefaultFieldRecord = Record<PropertyKey, DefaultProperty>
 
 export type WithDefault<
   To extends SupportedDefaults,
@@ -214,7 +214,7 @@ export type WithDefault<
   From,
   Api,
   As extends Option<PropertyKey>
-> = MO.Property<
+> = MO.Field<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
@@ -227,7 +227,7 @@ export type WithInputDefault<
   From,
   Api,
   As extends Option<PropertyKey>
-> = MO.Property<
+> = MO.Field<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   As,
@@ -249,7 +249,7 @@ export function withDefault<
     ]
   >
 >(
-  p: MO.Property<
+  p: MO.Field<
     MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
@@ -295,7 +295,7 @@ export function withInputDefault<
     ]
   >
 >(
-  p: MO.Property<
+  p: MO.Field<
     MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     As,
@@ -329,7 +329,7 @@ export function withInputDefault<
 export function defaultProp<To, ConstructorInput, From, Api>(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Property<
+): MO.Field<
   MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -342,7 +342,7 @@ export function defaultProp<
   Api
 >(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
-): FromProperty<
+): SpecificField<
   MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -350,7 +350,7 @@ export function defaultProp<
 >
 export function defaultProp<To, ConstructorInput, From, Api>(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
-): null extends To ? FromProperty<
+): null extends To ? SpecificField<
     MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
@@ -360,7 +360,7 @@ export function defaultProp<To, ConstructorInput, From, Api>(
 export function defaultProp<To, ConstructorInput, From, Api>(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Property<
+): MO.Field<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -373,7 +373,7 @@ export function defaultProp<
   Api
 >(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
-): FromProperty<
+): SpecificField<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -381,7 +381,7 @@ export function defaultProp<
 >
 export function defaultProp<To, ConstructorInput, From, Api>(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
-): null extends To ? FromProperty<
+): null extends To ? SpecificField<
     MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
@@ -398,7 +398,7 @@ export function defaultProp(
 export function defaultInputProp<To, ConstructorInput, From, Api>(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Property<
+): MO.Field<
   MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -411,7 +411,7 @@ export function defaultInputProp<
   Api
 >(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
-): FromProperty<
+): SpecificField<
   MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -419,7 +419,7 @@ export function defaultInputProp<
 >
 export function defaultInputProp<To, ConstructorInput, From, Api>(
   schema: MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>
-): null extends To ? FromProperty<
+): null extends To ? SpecificField<
     MO.SchemaDefaultSchema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
@@ -429,7 +429,7 @@ export function defaultInputProp<To, ConstructorInput, From, Api>(
 export function defaultInputProp<To, ConstructorInput, From, Api>(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>,
   makeDefault: () => To
-): MO.Property<
+): MO.Field<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -442,7 +442,7 @@ export function defaultInputProp<
   Api
 >(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
-): FromProperty<
+): SpecificField<
   MO.Schema<unknown, To, ConstructorInput, From, Api>,
   "required",
   None<any>,
@@ -450,7 +450,7 @@ export function defaultInputProp<
 >
 export function defaultInputProp<To, ConstructorInput, From, Api>(
   schema: MO.Schema<unknown, To, ConstructorInput, From, Api>
-): null extends To ? FromProperty<
+): null extends To ? SpecificField<
     MO.Schema<unknown, To, ConstructorInput, From, Api>,
     "required",
     None<any>,
@@ -467,10 +467,10 @@ export function defaultInputProp(
 }
 
 // TODO: support schema mix with property
-export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
+export function makeOptional<NER extends Record<string, MO.AnyField>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: MO.Property<
+  [K in keyof NER]: MO.Field<
     NER[K]["_schema"],
     "optional",
     NER[K]["_as"],
@@ -483,10 +483,10 @@ export function makeOptional<NER extends Record<string, MO.AnyProperty>>(
   }, {} as any)
 }
 
-export function makeRequired<NER extends Record<string, MO.AnyProperty>>(
+export function makeRequired<NER extends Record<string, MO.AnyField>>(
   t: NER // TODO: enforce non empty
 ): {
-  [K in keyof NER]: MO.Property<
+  [K in keyof NER]: MO.Field<
     NER[K]["_schema"],
     "required",
     NER[K]["_as"],
@@ -626,13 +626,13 @@ export const constArray = constant(ReadonlyArray.empty)
 
 export type ParserInputFromSchemaProperties<T> = T extends {
   Api: { fields: infer Fields }
-} ? Fields extends MO.PropertyRecord ? MO.ParserInputFromProperties<Fields>
+} ? Fields extends MO.FieldRecord ? MO.ParserInputSpecificStruct<Fields>
   : never
   : never
 
 /**
  * We know that the Parser will work from `unknown`, but we also want to expose the knowledge that we can parse from a ParserInput of type X
- * as such we can use fromProps, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
+ * as such we can use specificStruct, fromProp, fromArray etc, but still embed this Schema into one that parses from unknown.
  */
 export type AsUPI<To, ConstructorInput, From, Api> = MO.Schema<
   unknown,
@@ -1008,7 +1008,7 @@ export const nullableProp = <ParserInput, To, ConstructorInput, From, Api>(
 //  */
 // export function withDefaultPropNullable<To extends null, ConstructorInput, From, Api>(
 //   schema: Schema<unknown, To, ConstructorInput, From, Api>
-// ): null extends To ? FromProperty<
+// ): null extends To ? SpecificField<
 //     Schema<unknown, To, ConstructorInput, From, Api>,
 //     "required",
 //     None<any>,
@@ -1037,18 +1037,18 @@ export const fromPropProp = <To, ConstructorInput, From, Api, As1 extends Proper
 
 export type SchemaFrom<Cls extends { Class: MO.SchemaAny }> = Cls["Class"]
 
-export type GetProps<Cls extends { Api: { fields: MO.PropertyRecord } }> = // Transform<
+export type GetProps<Cls extends { Api: { fields: MO.FieldRecord } }> = // Transform<
   Cls["Api"]["fields"]
 
-export type GetProvidedProps<
-  Cls extends { [MO.schemaField]: { Api: { fields: MO.PropertyRecord } } }
+export type FieldsClass<
+  Cls extends { [MO.schemaField]: { Api: { fields: MO.FieldRecord } } }
 > = GetProps<Cls[MO.schemaField]>
 // Cls["ProvidedProps"] //Transform<
 
-export type EncodedFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.From<
+export type FromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.From<
   Cls[MO.schemaField]
 > // Transform<
-export type ConstructorInputFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.ConstructorInputOf<
+export type ConstructorInputApi<Cls extends { [MO.schemaField]: MO.SchemaAny }> = MO.ConstructorInputOf<
   Cls[MO.schemaField]
 >
 // >
@@ -1057,7 +1057,7 @@ export type ConstructorInputFromApi<Cls extends { [MO.schemaField]: MO.SchemaAny
 //   FromOrig<X>
 // >
 
-export type OpaqueEncoded<OpaqueE, Schema> = Schema extends MO.DefaultSchema<
+export type OpaqueFrom<OpaqueE, Schema> = Schema extends MO.DefaultSchema<
   unknown,
   infer A,
   infer B,
@@ -1331,7 +1331,7 @@ export function replace<S, T>(l: PreparedLens<S, T>) {
   return (t: T) => l.set(t)
 }
 
-export function makePreparedLenses<S, Fields extends MO.PropertyRecord>(
+export function makePreparedLenses<S, Fields extends MO.FieldRecord>(
   fields: Fields,
   s: S
 ): { [K in keyof Fields]: PreparedLens<S, MO.To<Fields[K]["_schema"]>> } {

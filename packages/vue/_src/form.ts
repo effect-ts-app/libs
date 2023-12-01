@@ -1,5 +1,5 @@
 import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
-import type { AnyProperty, From, Property, PropertyRecord, SchemaAny, To } from "@effect-app/prelude/schema"
+import type { AnyField, Field, FieldRecord, From, SchemaAny, To } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -18,12 +18,12 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromFields<Fields extends PropertyRecord>(
+export function buildFieldInfoFromFields<Fields extends FieldRecord>(
   fields: Fields
 ) {
   return fields.$$.keys.reduce(
     (prev, cur) => {
-      prev[cur] = buildFieldInfo(fields[cur] as AnyProperty, cur)
+      prev[cur] = buildFieldInfo(fields[cur] as AnyField, cur)
       return prev
     },
     {} as {
@@ -56,7 +56,7 @@ export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { i
   type: "text" | "float" | "int" // todo; multi-line vs single line text
 }
 
-type GetSchemaFromProp<T> = T extends Property<infer S, any, any, any> ? S
+type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
   : never
 
 const defaultIntl = createIntl({ locale: "en" })
@@ -64,7 +64,7 @@ export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.format
 export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown, v: unknown) => string>>(new Map())
 
 function buildFieldInfo(
-  propOrSchema: AnyProperty | SchemaAny,
+  propOrSchema: AnyField | SchemaAny,
   fieldKey: PropertyKey
 ): FieldInfo<any, any> {
   const metadata = getMetadataFromSchemaOrProp(propOrSchema)
@@ -187,7 +187,7 @@ export const buildFormFromSchema = <
   To,
   From,
   ConstructorInput,
-  Fields extends PropertyRecord,
+  Fields extends FieldRecord,
   OnSubmitA
 >(
   s: Schema.Schema<

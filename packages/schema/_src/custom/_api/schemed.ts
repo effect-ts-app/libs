@@ -23,7 +23,7 @@ export function isSchemed(u: unknown): u is SchemedOut<any> {
   return typeof u === "function" && u != null && u[schemedBrand] === schemedBrand
 }
 
-export type ShapeFromSchemedOut<
+export type ToSchemedOut<
   C extends {
     new(_: any): any
   }
@@ -38,10 +38,10 @@ export type SchemaForSchemed<Self extends SchemedOut<S.SchemaAny>> = [
   S.Schema<infer ParserInput, any, infer ConstructorInput, infer From, infer Api>
 ] ? S.Schema<
     ParserInput,
-    ShapeFromSchemedOut<Self>,
+    ToSchemedOut<Self>,
     ConstructorInput,
     From,
-    Api & S.ApiSelfType<ShapeFromSchemedOut<Self>>
+    Api & S.ApiSelfType<ToSchemedOut<Self>>
   >
   : never
 
@@ -54,7 +54,7 @@ export interface Schemed<Self extends S.SchemaAny> {
   new(_: S.ConstructorInputOf<Self>): S.To<Self> & Copy
 }
 
-type ShapeFromClass<
+type ToClass<
   C extends {
     new(_: any): any
   }
@@ -126,7 +126,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
 }
 
 export function schema<Self extends SchemedOut<any>>(self: Self) {
-  const guard = (u: unknown): u is ShapeFromClass<Self> => u instanceof self
+  const guard = (u: unknown): u is ToClass<Self> => u instanceof self
   const of_ = Constructor.for(self[schemaField])
   const parse_ = Parser.for(self[schemaField])
   const arb = Arbitrary.for(self[schemaField])
@@ -142,7 +142,7 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       const warnings = res.effect.right[1]
       const out = res.effect.right[0]
       // @ts-expect-error
-      const x = new self() as ShapeFromClass<Self>
+      const x = new self() as ToClass<Self>
       x[fromFields](out)
       if (warnings._tag === "Some") {
         return Th.warn(x, warnings.value)
@@ -157,7 +157,7 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
       const warnings = res.effect.right[1]
       const out = res.effect.right[0]
       // @ts-expect-error
-      const x = new self() as ShapeFromClass<Self>
+      const x = new self() as ToClass<Self>
       x[fromFields](out)
       if (warnings._tag === "Some") {
         return Th.warn(x, warnings.value)
@@ -167,7 +167,7 @@ export function schema<Self extends SchemedOut<any>>(self: Self) {
     S.arbitrary((_) =>
       arb(_).map((out) => {
         // @ts-expect-error
-        const x = new self() as ShapeFromClass<Self>
+        const x = new self() as ToClass<Self>
         x[fromFields](out)
         return x
       })

@@ -50,8 +50,8 @@ export namespace OperationProgress {
    */
   export class From extends FromClass<typeof OperationProgress>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof OperationProgress> {}
-  export interface Fields extends GetProvidedProps<typeof OperationProgress> {}
+    extends ConstructorInputApi<typeof OperationProgress> {}
+  export interface Fields extends FieldsClass<typeof OperationProgress> {}
 }
 export namespace Success {
   /**
@@ -60,8 +60,8 @@ export namespace Success {
    */
   export class From extends FromClass<typeof Success>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Success> {}
-  export interface Fields extends GetProvidedProps<typeof Success> {}
+    extends ConstructorInputApi<typeof Success> {}
+  export interface Fields extends FieldsClass<typeof Success> {}
 }
 export namespace Failure {
   /**
@@ -70,8 +70,8 @@ export namespace Failure {
    */
   export class From extends FromClass<typeof Failure>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Failure> {}
-  export interface Fields extends GetProvidedProps<typeof Failure> {}
+    extends ConstructorInputApi<typeof Failure> {}
+  export interface Fields extends FieldsClass<typeof Failure> {}
 }
 export namespace Operation {
   /**
@@ -80,8 +80,8 @@ export namespace Operation {
    */
   export class From extends FromClass<typeof Operation>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof Operation> {}
-  export interface Fields extends GetProvidedProps<typeof Operation> {}
+    extends ConstructorInputApi<typeof Operation> {}
+  export interface Fields extends FieldsClass<typeof Operation> {}
 }
 /* eslint-enable */
 //

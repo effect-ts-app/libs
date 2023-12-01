@@ -7,7 +7,8 @@ import * as Encoder from "../Encoder.js"
 import * as Guard from "../Guard.js"
 import * as Parser from "../Parser.js"
 import * as Th from "../These.js"
-import { defProp, type Property } from "./properties.js"
+import type { Field } from "./struct.js"
+import { defProp } from "./struct.js"
 import { withDefaults } from "./withDefaults.js"
 import type { DefaultSchema } from "./withDefaults.js"
 
@@ -28,7 +29,7 @@ export function nullable<ParserInput, To, ConstructorInput, From, Api>(
     Api
   >
   & {
-    withDefault: Property<
+    withDefault: Field<
       S.Schema<unknown, To | null, ConstructorInput | null, From | null, Api>,
       "required",
       None<any>,

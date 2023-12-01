@@ -9,11 +9,11 @@ import pick from "lodash/pick.js"
 import * as Equal from "effect/Equal"
 import * as Hash from "effect/Hash"
 
-import type { EncSchemaForModel, EParserFor, FromPropertyRecord } from "./_api.js"
-import { fromProps } from "./_api.js"
+import type { EncSchemaForModel, EParserFor, SpecificFieldRecord } from "./_api.js"
+import { specificStruct } from "./_api.js"
 import * as MO from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyProperty, PropertyRecord, To } from "./custom.js"
+import type { AnyField, FieldRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
@@ -43,7 +43,7 @@ export interface ModelFrom<
   Self extends MO.SchemaAny,
   MEnc,
   // makes it pretty, but also helps compatibility with WebStorm it seems...
-  ParsedShape2 = ComputeFlat<MO.To<Self>>
+  To2 = ComputeFlat<MO.To<Self>>
 > extends
   MM<
     Self,
@@ -52,7 +52,7 @@ export interface ModelFrom<
     MO.ConstructorInputOf<Self>,
     MEnc,
     GetApiProps<Self>,
-    ParsedShape2
+    To2
   >
 {}
 
@@ -60,7 +60,7 @@ export interface Model2<
   M,
   Self extends MO.SchemaAny,
   SelfM extends MO.SchemaAny,
-  ParsedShape2
+  To2
 > extends
   MM<
     Self,
@@ -69,7 +69,7 @@ export interface Model2<
     MO.ConstructorInputOf<Self>,
     MO.From<Self>,
     GetApiProps<Self>,
-    ParsedShape2
+    To2
   >
 {}
 
@@ -102,9 +102,9 @@ export interface MM<
   ConstructorInput,
   From,
   Fields,
-  ParsedShape2
+  To2
 > extends MO.Schema<unknown, To, ConstructorInput, From, { fields: Fields }> {
-  new(_: OptionalConstructor<ConstructorInput>): ParsedShape2
+  new(_: OptionalConstructor<ConstructorInput>): To2
   [MO.schemaField]: Self
   readonly to: MO.To<Self>
   readonly from: MO.From<Self>
@@ -151,18 +151,18 @@ export function ExtendedClass<To, ConstructorInput, From, Fields>(
 }
 
 export function fromModel<To>(__name?: string) {
-  return <Fields extends FromPropertyRecord = {}>(fields: Fields) => ModelSpecial<To>(__name)(fromProps(fields))
+  return <Fields extends SpecificFieldRecord = {}>(fields: Fields) => ModelSpecial<To>(__name)(specificStruct(fields))
 }
 
 export type RecordSchemaToLenses<T, Self extends AnyRecordSchema> = {
   [K in keyof To<Self>]-?: Lens.Lens<T, To<Self>[K]>
 }
 
-export type PropsToLenses<T, Fields extends MO.PropertyRecord> = {
+export type PropsToLenses<T, Fields extends MO.FieldRecord> = {
   [K in keyof Fields]: Lens.Lens<T, MO.To<Fields[K]["_schema"]>>
 }
-export function lensFromFields<T>() {
-  return <Fields extends MO.PropertyRecord>(fields: Fields): PropsToLenses<T, Fields> => {
+export function lensFields<T>() {
+  return <Fields extends MO.FieldRecord>(fields: Fields): PropsToLenses<T, Fields> => {
     const id = Lens.id<T>()
     return Object.keys(fields).reduce((prev, cur) => {
       prev[cur] = id.at(cur as any)
@@ -187,7 +187,7 @@ export function setSchema<Self extends MO.SchemaProperties<any>>(
   })
 
   Object.defineProperty(schemed, "lenses", {
-    value: lensFromFields()(self.Api.fields),
+    value: lensFields()(self.Api.fields),
     configurable: true
   })
   Object.defineProperty(schemed, "Api", {
@@ -272,13 +272,12 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(useClassConstructorForSchema(cls))
 }
 
-export type GetModelProps<Self> = Self extends { Api: { fields: infer Fields } }
-  ? Fields extends PropertyRecord ? Fields
+export type GetModelProps<Self> = Self extends { Api: { fields: infer Fields } } ? Fields extends FieldRecord ? Fields
   : never
   : never
 
 export interface PropsExtensions<Fields> {
-  include: <NewProps extends Record<string, AnyProperty>>(
+  include: <NewProps extends Record<string, AnyField>>(
     fnc: (fields: Fields) => NewProps
   ) => NewProps
   pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
@@ -329,7 +328,7 @@ function makeSpecial<Self extends MO.SchemaAny>(__name: any, self: Self): any {
     static Arbitrary = MO.Arbitrary.for(schema)
 
     static lens = Lens.id<any>()
-    static lenses = lensFromFields()(schema.Api.fields)
+    static lenses = lensFields()(schema.Api.fields)
 
     static include = include(schema.Api.fields)
     static pick = (...fields: any[]) => pick(schema.Api.fields, fields)

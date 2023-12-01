@@ -66,8 +66,8 @@ export namespace RequestContextParent {
    */
   export class From extends FromClass<typeof RequestContextParent>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof RequestContextParent> {}
-  export interface Fields extends GetProvidedProps<typeof RequestContextParent> {}
+    extends ConstructorInputApi<typeof RequestContextParent> {}
+  export interface Fields extends FieldsClass<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
@@ -76,8 +76,8 @@ export namespace RequestContext {
    */
   export class From extends FromClass<typeof RequestContext>() {}
   export interface ConstructorInput
-    extends ConstructorInputFromApi<typeof RequestContext> {}
-  export interface Fields extends GetProvidedProps<typeof RequestContext> {}
+    extends ConstructorInputApi<typeof RequestContext> {}
+  export interface Fields extends FieldsClass<typeof RequestContext> {}
 }
 /* eslint-enable */
 //

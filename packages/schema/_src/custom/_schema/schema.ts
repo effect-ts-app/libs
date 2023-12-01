@@ -35,21 +35,21 @@ export abstract class Schema<ParserInput, To, ConstructorInput, From, Api> {
   readonly [SchemaSym]: SchemaSym = SchemaSym
   readonly _ParserInput!: (_: ParserInput, env?: ParserEnv) => void
   readonly _ParserError!: () => any
-  readonly _ParsedShape!: () => To
+  readonly _To!: () => To
   readonly _ConstructorInput!: (_: ConstructorInput) => void
   readonly _ConstructorError!: () => any
-  readonly _Encoded!: () => From
+  readonly _From!: () => From
   abstract readonly Api: Api
 
-  readonly [">>>"] = <ThatParsedShape, ThatConstructorInput, ThatApi>(
+  readonly [">>>"] = <ThatTo, ThatConstructorInput, ThatApi>(
     that: Schema<
       To,
-      ThatParsedShape,
+      ThatTo,
       ThatConstructorInput,
       To,
       ThatApi
     >
-  ): Schema<ParserInput, ThatParsedShape, ThatConstructorInput, From, ThatApi> => new SchemaPipe(this, that)
+  ): Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> => new SchemaPipe(this, that)
 
   readonly annotate = <Meta>(
     identifier: Annotation<Meta>,
@@ -133,7 +133,7 @@ export type From<X extends Schema<any, any, any, any, any>> = [X] extends [
 //   : never
 
 export type To<X extends Schema<any, any, any, any, any>> = ReturnType<
-  X["_ParsedShape"]
+  X["_To"]
 >
 
 export type ApiOf<X extends Schema<any, any, any, any, any>> = [X] extends [
@@ -219,8 +219,8 @@ export class SchemaEncoder<
   ConstructorInput,
   From,
   Api,
-  Encoded2
-> extends Schema<ParserInput, To, ConstructorInput, Encoded2, Api> implements HasContinuation {
+  From2
+> extends Schema<ParserInput, To, ConstructorInput, From2, Api> implements HasContinuation {
   get Api() {
     return this.self.Api
   }
@@ -229,7 +229,7 @@ export class SchemaEncoder<
 
   constructor(
     readonly self: Schema<ParserInput, To, ConstructorInput, From, Api>,
-    readonly encoder: (_: To) => Encoded2
+    readonly encoder: (_: To) => From2
   ) {
     super()
     this[SchemaContinuationSymbol] = self
@@ -238,20 +238,20 @@ export class SchemaEncoder<
 
 export class SchemaRefinement<
   E extends AnyError,
-  NewParsedShape extends To,
+  NewTo extends To,
   ParserInput,
   To,
   ConstructorInput,
   From,
   Api
-> extends Schema<ParserInput, NewParsedShape, ConstructorInput, From, Api> {
+> extends Schema<ParserInput, NewTo, ConstructorInput, From, Api> {
   get Api() {
     return this.self.Api
   }
 
   constructor(
     readonly self: Schema<ParserInput, To, ConstructorInput, From, Api>,
-    readonly refinement: Refinement<To, NewParsedShape>,
+    readonly refinement: Refinement<To, NewTo>,
     readonly error: (value: To) => E
   ) {
     super()
@@ -264,10 +264,10 @@ export class SchemaPipe<
   ConstructorInput,
   From,
   Api,
-  ThatParsedShape,
+  ThatTo,
   ThatConstructorInput,
   ThatApi
-> extends Schema<ParserInput, ThatParsedShape, ThatConstructorInput, From, ThatApi> implements HasContinuation {
+> extends Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> implements HasContinuation {
   get Api() {
     return this.that.Api
   }
@@ -278,7 +278,7 @@ export class SchemaPipe<
     readonly self: Schema<ParserInput, To, ConstructorInput, From, Api>,
     readonly that: Schema<
       To,
-      ThatParsedShape,
+      ThatTo,
       ThatConstructorInput,
       To,
       ThatApi

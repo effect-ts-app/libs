@@ -5,9 +5,9 @@ import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } fr
 import {
   type AnyError,
   EParserFor,
+  type FieldRecord,
   type FromStruct,
   Parser,
-  type PropertyRecord,
   type StructConstructor,
   These,
   type ToStruct,
@@ -39,7 +39,7 @@ import { useIntl } from "react-intl"
 import { capitalize, isBetweenMidnightAndEndOfDay } from "./utils.js"
 
 export interface ControlMui<
-  Fields extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TContext extends object = object
 > extends Control<TFieldValues, TContext> {
@@ -47,7 +47,7 @@ export interface ControlMui<
 }
 
 export interface ControllerMuiProps<
-  Fields extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends Omit<UseControllerProps<TFieldValues, TName>, "control"> {
@@ -55,7 +55,7 @@ export interface ControllerMuiProps<
 }
 
 export function useControllerMui<
-  Fields extends Schema.PropertyRecord,
+  Fields extends Schema.FieldRecord,
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(fields: ControllerMuiProps<Fields, TFieldValues, TName>) {
@@ -177,7 +177,7 @@ export interface MuiRenderProps<
 export interface MuiProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Fields extends Schema.PropertyRecord = Schema.PropertyRecord
+  Fields extends Schema.FieldRecord = Schema.FieldRecord
 > extends Omit<ControllerProps<TFieldValues, TName>, "control" | "render"> {
   control: ControlMui<Fields, TFieldValues>
   render: (_: MuiRenderProps<TFieldValues, TName>) => React.ReactElement
@@ -187,7 +187,7 @@ export interface MuiProps<
 export function ControllerMui<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  Fields extends Schema.PropertyRecord = Schema.PropertyRecord
+  Fields extends Schema.FieldRecord = Schema.FieldRecord
 >(fields: MuiProps<TFieldValues, TName, Fields>) {
   return fields.render(useControllerMui(fields))
 }
@@ -205,7 +205,7 @@ export interface FormMetadata {
 
 function getFormMetadata(
   intl: IntlShape,
-  p: Schema.AnyProperty | Schema.SchemaAny
+  p: Schema.AnyField | Schema.SchemaAny
 ): FormMetadata {
   const { maxLength, minLength, required } = getMetadataFromSchemaOrProp(p)
 
@@ -249,7 +249,7 @@ function getFormMetadata(
   }
 }
 
-export type SchemaProperties<Fields extends PropertyRecord> = Schema.Schema<
+export type SchemaProperties<Fields extends FieldRecord> = Schema.Schema<
   unknown,
   ToStruct<Fields>,
   StructConstructor<Fields>,
@@ -259,7 +259,7 @@ export type SchemaProperties<Fields extends PropertyRecord> = Schema.Schema<
   }
 >
 
-export function createUseParsedFormFromSchema<Fields extends PropertyRecord>(
+export function createUseParsedFormFromSchema<Fields extends FieldRecord>(
   self: SchemaProperties<Fields>
 ) {
   return createUseParsedFormUnsafe(self.Api.fields)(EParserFor(self))
@@ -271,7 +271,7 @@ export function createUseParsedFormFromSchema<Fields extends PropertyRecord>(
  * It would be better to make first class support for that instead.
  */
 export function createUseCustomParsedFormFromSchemaUnsafe<
-  Fields extends PropertyRecord,
+  Fields extends FieldRecord,
   To
 >(input: SchemaProperties<Fields>, target: Schema.Schema<unknown, To, any, any, any>) {
   return createUseParsedFormUnsafe(input.Api.fields)(Parser.for(target))
@@ -282,9 +282,9 @@ export function createUseCustomParsedFormFromSchemaUnsafe<
  * This is used to adapt forms to tagged unions.
  * It would be better to make first class support for that instead.
  */
-export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(fields: Fields) {
+export function createUseParsedFormUnsafe<Fields extends FieldRecord>(fields: Fields) {
   type From = FromStruct<Fields>
-  type NEncoded = From // Transform<From>
+  type NFrom = From // Transform<From>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
   // TODO: From should extend Shape (provide at least, or over provide)
@@ -296,12 +296,12 @@ export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(fields:
       // eslint-disable-next-line @typescript-eslint/ban-types
       TContext extends object = object
     >(
-      _?: Omit<UseFormProps<NEncoded, TContext>, "defaultValues"> & {
-        defaultValues: NEncoded
+      _?: Omit<UseFormProps<NFrom, TContext>, "defaultValues"> & {
+        defaultValues: NFrom
       }
     ) => {
       const originalForm_ = createUseForm(fields)
-      const form = originalForm_<NEncoded, TContext>(_ as any)
+      const form = originalForm_<NFrom, TContext>(_ as any)
       return {
         ...form,
         handleSubmit: (
@@ -327,13 +327,13 @@ export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(fields:
   }
 }
 
-export function createUseForm<Fields extends PropertyRecord = PropertyRecord>(
+export function createUseForm<Fields extends FieldRecord = FieldRecord>(
   fields: Fields
 ) {
   type From = FromStruct<Fields>
-  type NEncoded = From // Transform<From>
+  type NFrom = From // Transform<From>
   return function useFormInternal<
-    TFieldValues extends NEncoded,
+    TFieldValues extends NFrom,
     // eslint-disable-next-line @typescript-eslint/ban-types
     TContext extends object = object
   >(_?: UseFormProps<TFieldValues, TContext>) {
@@ -408,7 +408,7 @@ function isNumber(a: string) {
 function getPropOrSchemaFromPath(
   current: any,
   name: string
-): Schema.AnyProperty | Schema.SchemaAny {
+): Schema.AnyField | Schema.SchemaAny {
   const path = name.split(".")
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const last = path[path.length - 1]!
@@ -432,7 +432,7 @@ function getPropOrSchemaFromPath(
 
 function useGetMeta<
   TFieldValues extends FieldValues,
-  Fields extends Schema.PropertyRecord
+  Fields extends Schema.FieldRecord
 >(fields: Fields) {
   const intl = useIntl()
   const { getFieldMetadata, getMetadata, getRegisterMeta } = useMemo(() => {
@@ -506,7 +506,7 @@ function useGetMeta<
 
 function useRegister<
   TFieldValues extends FieldValues,
-  Fields extends Schema.PropertyRecord
+  Fields extends Schema.FieldRecord
 >(register_: UseFormRegister<TFieldValues>, fields: Fields) {
   const [getFieldMetadata, getMetadata] = useGetMeta<TFieldValues, Fields>(fields)
   const register = useCallback(

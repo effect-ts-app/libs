@@ -124,14 +124,14 @@ export function encoder_<ParserInput, To, ConstructorInput, From, Api, A>(
 
 export function refine<
   E extends AnyError,
-  NewParsedShape extends To,
+  NewTo extends To,
   To
 >(
-  refinement: Refinement<To, NewParsedShape>,
+  refinement: Refinement<To, NewTo>,
   error: (value: To) => E
 ): <ParserInput, ConstructorInput, From, Api>(
   self: Schema<ParserInput, To, ConstructorInput, From, Api>
-) => Schema<ParserInput, NewParsedShape, ConstructorInput, From, Api> {
+) => Schema<ParserInput, NewTo, ConstructorInput, From, Api> {
   return (self) => new SchemaRefinement(self, refinement, error)
 }
 
@@ -207,20 +207,20 @@ export function into_<
   ConstructorInput,
   From,
   Api,
-  ThatParsedShape,
+  ThatTo,
   ThatConstructorInput,
   ThatApi
 >(
   self: Schema<ParserInput, To, ConstructorInput, From, Api>,
-  that: Schema<To, ThatParsedShape, ThatConstructorInput, To, ThatApi>
-): Schema<ParserInput, ThatParsedShape, ThatConstructorInput, From, ThatApi> {
+  that: Schema<To, ThatTo, ThatConstructorInput, To, ThatApi>
+): Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> {
   return new SchemaPipe(self, that)
 }
 
-export function into<Api, ThatParsedShape, ThatConstructorInput, ThatApi, To>(
-  that: Schema<To, ThatParsedShape, ThatConstructorInput, To, ThatApi>
+export function into<Api, ThatTo, ThatConstructorInput, ThatApi, To>(
+  that: Schema<To, ThatTo, ThatConstructorInput, To, ThatApi>
 ): <ParserInput, ConstructorInput, From>(
   self: Schema<ParserInput, To, ConstructorInput, From, Api>
-) => Schema<ParserInput, ThatParsedShape, ThatConstructorInput, From, ThatApi> {
+) => Schema<ParserInput, ThatTo, ThatConstructorInput, From, ThatApi> {
   return (self) => new SchemaPipe(self, that)
 }

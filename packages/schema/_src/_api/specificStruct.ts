@@ -17,7 +17,7 @@ import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
 
-export class FromProperty<
+export class SpecificField<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
   As extends Option<PropertyKey>,
@@ -34,22 +34,22 @@ export class FromProperty<
   // Disabled because it sends the compiler down into rabbit holes..
   // schema<That extends S.SchemaAny>(
   //   schema: That
-  // ): FromProperty<That, Optional, As, None<any> {
-  //   return new FromProperty(this._as, schema, this._optional, Option.none, this._map)
+  // ): SpecificField<That, Optional, As, None<any> {
+  //   return new SpecificField(this._as, schema, this._optional, Option.none, this._map)
   // }
 
-  // opt(): FromProperty<Self, "optional", As, Def> {
-  //   return new FromProperty(this._as, this._schema, "optional", this._def, this._map)
+  // opt(): SpecificField<Self, "optional", As, Def> {
+  //   return new SpecificField(this._as, this._schema, "optional", this._def, this._map)
   // }
 
-  // req(): FromProperty<Self, "required", As, Def> {
-  //   return new FromProperty(this._as, this._schema, "required", this._def, this._map)
+  // req(): SpecificField<Self, "required", As, Def> {
+  //   return new SpecificField(this._as, this._schema, "required", this._def, this._map)
   // }
 
   // from<As1 extends PropertyKey>(
   //   as: As1
-  // ): FromProperty<Self, Optional, Some<As1>, Def> {
-  //   return new FromProperty(
+  // ): SpecificField<Self, Optional, Some<As1>, Def> {
+  //   return new SpecificField(
   //     Option(as),
   //     this._schema,
   //     this._optional,
@@ -58,8 +58,8 @@ export class FromProperty<
   //   )
   // }
 
-  // removeFrom(): FromProperty<Self, Optional, None<any>, Def> {
-  //   return new FromProperty(
+  // removeFrom(): SpecificField<Self, Optional, None<any>, Def> {
+  //   return new SpecificField(
   //     Option.none,
   //     this._schema,
   //     this._optional,
@@ -72,26 +72,26 @@ export class FromProperty<
   //   _: Optional extends "required"
   //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never]
-  // ): FromProperty<Self, Optional, As, Some<["both", () => S.To<Self>]>>
+  // ): SpecificField<Self, Optional, As, Some<["both", () => S.To<Self>]>>
   // def<K extends "parser" | "constructor" | "both">(
   //   _: Optional extends "required"
   //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never],
   //   k: K
-  // ): FromProperty<Self, Optional, As, Some<[K, () => S.To<Self>]>>
+  // ): SpecificField<Self, Optional, As, Some<[K, () => S.To<Self>]>>
   // def(
   //   _: Optional extends "required"
   //     ? () => S.To<Self>
   //     : ["default can be set only for required properties", never],
   //   k?: "parser" | "constructor" | "both"
-  // ): FromProperty<
+  // ): SpecificField<
   //   Self,
   //   Optional,
   //   As,
   //   Some<["parser" | "constructor" | "both", () => S.To<Self>]>
   // > {
   //   // @ts-expect-error
-  //   return new FromProperty(
+  //   return new SpecificField(
   //     this._as,
   //     this._schema,
   //     this._optional,
@@ -101,8 +101,8 @@ export class FromProperty<
   //   )
   // }
 
-  // removeDef(): FromProperty<Self, Optional, As, None<any> {
-  //   return new FromProperty(
+  // removeDef(): SpecificField<Self, Optional, As, None<any> {
+  //   return new SpecificField(
   //     this._as,
   //     this._schema,
   //     this._optional,
@@ -118,8 +118,8 @@ export class FromProperty<
   // annotate<A>(
   //   annotation: Annotation<A>,
   //   value: A
-  // ): FromProperty<Self, Optional, As, Def> {
-  //   return new FromProperty(
+  // ): SpecificField<Self, Optional, As, Def> {
+  //   return new SpecificField(
   //     this._as,
   //     this._schema,
   //     this._optional,
@@ -136,10 +136,10 @@ export function fromPropFrom<
   Def extends Option<["parser" | "constructor" | "both", () => S.To<Self>]>,
   As1 extends PropertyKey
 >(
-  field: FromProperty<Self, Optional, As, Def>,
+  field: SpecificField<Self, Optional, As, Def>,
   as: As1
-): FromProperty<Self, Optional, Some<As1>, Def> {
-  return new FromProperty(
+): SpecificField<Self, Optional, Some<As1>, Def> {
+  return new SpecificField(
     Option(as) as Some<As1>,
     field._schema,
     field._optional,
@@ -150,8 +150,8 @@ export function fromPropFrom<
 
 export function fromProp<Self extends S.SchemaAny>(
   schema: Self
-): FromProperty<Self, "required", None<any>, None<any>> {
-  return new FromProperty(
+): SpecificField<Self, "required", None<any>, None<any>> {
+  return new SpecificField(
     Option.none as None<any>,
     schema,
     "required",
@@ -160,14 +160,14 @@ export function fromProp<Self extends S.SchemaAny>(
   )
 }
 
-export type AnyFromProperty = FromProperty<any, any, any, any>
+export type AnySpecificField = SpecificField<any, any, any, any>
 
-export type FromPropertyRecord = Record<PropertyKey, AnyFromProperty>
+export type SpecificFieldRecord = Record<PropertyKey, AnySpecificField>
 
-export type ShapeFromFromProperties<Fields extends FromPropertyRecord> = Compute<
+export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
             readonly [h in k]?: S.To<Fields[k]["_schema"]>
           }
         : {
@@ -179,11 +179,11 @@ export type ShapeFromFromProperties<Fields extends FromPropertyRecord> = Compute
   "flat"
 >
 
-export type ConstructorFromFromProperties<Fields extends FromPropertyRecord> = Compute<
+export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: k extends TagsFromFromFields<Fields> ? never
-        : Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
+        : Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
               readonly [h in k]?: S.To<Fields[k]["_schema"]>
             }
           : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
@@ -198,10 +198,10 @@ export type ConstructorFromFromProperties<Fields extends FromPropertyRecord> = C
   "flat"
 >
 
-export type EncodedFromFromProperties<Fields extends FromPropertyRecord> = Compute<
+export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
@@ -219,23 +219,23 @@ export type EncodedFromFromProperties<Fields extends FromPropertyRecord> = Compu
   "flat"
 >
 
-export type HasRequiredFromProperty<Fields extends FromPropertyRecord> = unknown extends {
-  [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "required" ? unknown
+export type HasRequiredSpecificField<Fields extends SpecificFieldRecord> = unknown extends {
+  [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "required" ? unknown
     : never
     : never
 }[keyof Fields] ? true
   : false
 
-// export type ParserErrorFromFromProperties<Fields extends FromPropertyRecord> =
+// export type ParserErrorFromSpecificStruct<Fields extends SpecificFieldRecord> =
 //   S.CompositionE<
 //     | S.PrevE<S.LeafE<S.UnknownRecordE>>
 //     | S.NextE<
-//         HasRequiredFromProperty<Fields> extends true
+//         HasRequiredSpecificField<Fields> extends true
 //           ? S.CompositionE<
 //               | S.PrevE<
 //                   S.MissingKeysE<
 //                     {
-//                       [k in keyof Fields]: Fields[k] extends AnyFromProperty
+//                       [k in keyof Fields]: Fields[k] extends AnySpecificField
 //                         ? Fields[k]["_optional"] extends "optional"
 //                           ? never
 //                           : Fields[k]["_def"] extends Some<["parser" | "both", any]>
@@ -250,7 +250,7 @@ export type HasRequiredFromProperty<Fields extends FromPropertyRecord> = unknown
 //               | S.NextE<
 //                   S.StructE<
 //                     {
-//                       [k in keyof Fields]: Fields[k] extends AnyFromProperty
+//                       [k in keyof Fields]: Fields[k] extends AnySpecificField
 //                         ? Fields[k]["_optional"] extends "optional"
 //                           ? S.OptionalKeyE<
 //                               Fields[k]["_as"] extends Some<any>
@@ -278,7 +278,7 @@ export type HasRequiredFromProperty<Fields extends FromPropertyRecord> = unknown
 //             >
 //           : S.StructE<
 //               {
-//                 [k in keyof Fields]: Fields[k] extends AnyFromProperty
+//                 [k in keyof Fields]: Fields[k] extends AnySpecificField
 //                   ? Fields[k]["_optional"] extends "optional"
 //                     ? S.OptionalKeyE<
 //                         Fields[k]["_as"] extends Some<any>
@@ -306,18 +306,18 @@ export type HasRequiredFromProperty<Fields extends FromPropertyRecord> = unknown
 //   >
 
 export const fromPropertiesIdentifier = S.makeAnnotation<{
-  fields: FromPropertyRecord
+  fields: SpecificFieldRecord
 }>()
 
-export type SchemaFromProperties<Fields extends FromPropertyRecord> = S.DefaultSchema<
-  ParserInputFromFromProperties<Fields>,
-  ShapeFromFromProperties<Fields>,
-  ConstructorFromFromProperties<Fields>,
-  EncodedFromFromProperties<Fields>,
+export type SchemaSpecificStruct<Fields extends SpecificFieldRecord> = S.DefaultSchema<
+  ParserInputFromSpecificStruct<Fields>,
+  ToSpecificStruct<Fields>,
+  ConstructorSpecificStruct<Fields>,
+  FromSpecificStruct<Fields>,
   { fields: Fields }
 >
 
-export type TagsFromFromFields<Fields extends FromPropertyRecord> = {
+export type TagsFromFields<Fields extends SpecificFieldRecord> = {
   [k in keyof Fields]: Fields[k]["_as"] extends None<any>
     ? Fields[k]["_optional"] extends "required"
       ? S.ApiOf<Fields[k]["_schema"]> extends S.LiteralApi<infer KS> ? KS extends [string] ? k
@@ -327,15 +327,15 @@ export type TagsFromFromFields<Fields extends FromPropertyRecord> = {
     : never
 }[keyof Fields]
 
-export function isFromPropertyRecord(u: unknown): u is FromPropertyRecord {
+export function isSpecificFieldRecord(u: unknown): u is SpecificFieldRecord {
   return (
     typeof u === "object"
     && u !== null
-    && Object.keys(u).every((k) => u[k] instanceof FromProperty)
+    && Object.keys(u).every((k) => u[k] instanceof SpecificField)
   )
 }
 
-export function tagsFromFromFields<Fields extends FromPropertyRecord>(
+export function tagsFromFields<Fields extends SpecificFieldRecord>(
   fields: Fields
 ): Record<string, string> {
   const keys = Object.keys(fields)
@@ -361,9 +361,9 @@ export function tagsFromFromFields<Fields extends FromPropertyRecord>(
   return tags
 }
 
-export function fromProps<Fields extends FromPropertyRecord>(
+export function specificStruct<Fields extends SpecificFieldRecord>(
   fields: Fields
-): SchemaFromProperties<Fields> {
+): SchemaSpecificStruct<Fields> {
   const parsers = {} as Record<string, Parser.Parser<unknown, unknown, unknown>>
   const encoders = {}
   const guards = {}
@@ -399,7 +399,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
 
   const hasRequired = required.length > 0
 
-  function guard(_: unknown): _ is ShapeFromFromProperties<Fields> {
+  function guard(_: unknown): _ is ToSpecificStruct<Fields> {
     if (typeof _ !== "object" || _ === null) {
       return false
     }
@@ -422,7 +422,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
   function parser(
     _: unknown,
     env?: ParserEnv
-  ): Th.These<any, ShapeFromFromProperties<Fields>> {
+  ): Th.These<any, ToSpecificStruct<Fields>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -519,7 +519,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     }
 
     if (errors.isEmpty()) {
-      return Th.succeed(result as ShapeFromFromProperties<Fields>)
+      return Th.succeed(result as ToSpecificStruct<Fields>)
     }
 
     const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
@@ -534,8 +534,8 @@ export function fromProps<Fields extends FromPropertyRecord>(
   }
 
   function encoder(
-    _: ShapeFromFromProperties<Fields>
-  ): EncodedFromFromProperties<Fields> {
+    _: ToSpecificStruct<Fields>
+  ): FromSpecificStruct<Fields> {
     const enc = {}
 
     for (const key of keys) {
@@ -549,7 +549,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     return enc
   }
 
-  function arb(_: typeof fc): fc.Arbitrary<ShapeFromFromProperties<Fields>> {
+  function arb(_: typeof fc): fc.Arbitrary<ToSpecificStruct<Fields>> {
     const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
     const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
@@ -557,7 +557,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     return _.record(req).chain((a) => _.record(par, { withDeletedKeys: true }).map((b) => intersect(a, b)))
   }
 
-  const tags = tagsFromFromFields(fields)
+  const tags = tagsFromFields(fields)
 
   return pipe(
     S.identity(guard),
@@ -565,7 +565,7 @@ export function fromProps<Fields extends FromPropertyRecord>(
     S.encoder(encoder),
     S.arbitrary(arb),
     S.constructor((_) => {
-      const res = {} as ShapeFromFromProperties<Fields>
+      const res = {} as ToSpecificStruct<Fields>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
         if (!(k in res)) {
@@ -582,8 +582,8 @@ export function fromProps<Fields extends FromPropertyRecord>(
   )
 }
 
-export function fromPropsPick<
-  Fields extends FromPropertyRecord,
+export function specificStructPick<
+  Fields extends SpecificFieldRecord,
   KS extends (keyof Fields)[]
 >(...ks: KS) {
   return (
@@ -607,8 +607,8 @@ export function fromPropsPick<
   }
 }
 
-export function fromPropsOmit<
-  Fields extends FromPropertyRecord,
+export function specificStructOmit<
+  Fields extends SpecificFieldRecord,
   KS extends (keyof Fields)[]
 >(...ks: KS) {
   return (
@@ -632,10 +632,10 @@ export function fromPropsOmit<
   }
 }
 
-export type ParserInputFromFromProperties<Fields extends FromPropertyRecord> = Compute<
+export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
@@ -663,11 +663,11 @@ type IsAnyOrUnknown<T> = any extends T ? never : T
 type AorB<A, B> = IsAnyOrUnknown<A> extends never ? B : A
 
 export type ParserInputFromParserInputOrStructFrom<
-  Fields extends FromPropertyRecord
+  Fields extends SpecificFieldRecord
 > = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
@@ -700,16 +700,16 @@ export type ParserInputFromParserInputOrStructFrom<
   "flat"
 >
 
-export type ParserInputFromParserInputOrEncodedFromSchema<T> = T extends {
+export type ParserInputFromParserInputOrFromSchema<T> = T extends {
   Api: { fields: infer Fields }
-} ? Fields extends FromPropertyRecord ? ParserInputFromParserInputOrStructFrom<Fields>
+} ? Fields extends SpecificFieldRecord ? ParserInputFromParserInputOrStructFrom<Fields>
   : never
   : never
 
-export type ParserInputFromStructFrom<Fields extends FromPropertyRecord> = Compute<
+export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
-      [k in keyof Fields]: Fields[k] extends AnyFromProperty ? Fields[k]["_optional"] extends "optional" ? {
+      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
@@ -733,8 +733,8 @@ export type ParserInputFromStructFrom<Fields extends FromPropertyRecord> = Compu
   "flat"
 >
 
-export type ParserInputFromEncodedFromSchema<T> = T extends {
+export type ParserInputFromFromSchema<T> = T extends {
   Api: { fields: infer Fields }
-} ? Fields extends FromPropertyRecord ? ParserInputFromStructFrom<Fields>
+} ? Fields extends SpecificFieldRecord ? ParserInputFromStructFrom<Fields>
   : never
   : never

@@ -59,12 +59,12 @@ export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {
 }
 
 export function isSchema(
-  p: S.SchemaAny | S.AnyProperty
+  p: S.SchemaAny | S.AnyField
 ): p is S.SchemaAny {
   return !!(p as any)[S.SchemaSym]
 }
 
-export function getMetadataFromSchemaOrProp(p: S.SchemaAny | S.AnyProperty) {
+export function getMetadataFromSchemaOrProp(p: S.SchemaAny | S.AnyField) {
   if (isSchema(p)) {
     return getMetadataFromSchema(p)
   }
@@ -74,12 +74,12 @@ export function getMetadataFromSchemaOrProp(p: S.SchemaAny | S.AnyProperty) {
 // 1. get metadata from properties, use it to constrain fields
 // 2. use the metadata for custom validation error messges?
 // 3. or leverage the actual validation errors that come from parsing the fields.
-// function getMetadataFromProp_<Field extends S.AnyProperty>(p: Field) {
+// function getMetadataFromProp_<Field extends S.AnyField>(p: Field) {
 //   return {
 //     required: p._optional === "required",
 //   }
 // }
-export function getMetadataFromProp<Field extends S.AnyProperty>(p: Field) {
+export function getMetadataFromProp<Field extends S.AnyField>(p: Field) {
   const schemaMetadata = getMetadataFromSchema(p._schema)
   // const propMetadata = getMetadataFromProp_(p)
 
@@ -131,7 +131,7 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   }
 }
 
-export function getRegisterFromSchemaOrProp(p: S.SchemaAny | S.AnyProperty) {
+export function getRegisterFromSchemaOrProp(p: S.SchemaAny | S.AnyField) {
   if (isSchema(p)) {
     return getRegisterFromSchema(p)
   }
@@ -142,7 +142,7 @@ export function getRegisterFromSchemaOrProp(p: S.SchemaAny | S.AnyProperty) {
 // 2. use the metadata for custom validation error messges?
 // 3. or leverage the actual validation errors that come from parsing the fields.
 
-export function getRegisterFromProp<Field extends S.AnyProperty>(p: Field) {
+export function getRegisterFromProp<Field extends S.AnyField>(p: Field) {
   const schemaMetadata = getRegisterFromSchema(p._schema)
   // const metadata = getMetadataFromProp_(p)
 

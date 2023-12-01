@@ -291,7 +291,7 @@ function processId(schema: MO.SchemaAny, meta: Meta = {}): any {
           const properties: Record<string, any> = {}
           const required: string[] = []
           for (const k in schemaMeta.fields) {
-            const p: MO.AnyProperty = schemaMeta.fields[k]
+            const p: MO.AnyField = schemaMeta.fields[k]
             properties[k] = yield* $(processId(p["_schema"]))
             if (p["_optional"] === "required") {
               required.push(k)
