@@ -1,6 +1,6 @@
 import type { UnionToIntersection } from "@effect-app/core/utils"
-import type { CustomSchemaException } from "_src/ext.js"
-import { parseEither, parseSync } from "_src/ext.js"
+import type { CustomSchemaException } from "../../ext.js"
+import { parseEither, parseSync } from "../../ext.js"
 import type { Annotation } from "../_schema.js"
 import * as S from "../_schema.js"
 import type { Schema } from "../_schema/schema.js"

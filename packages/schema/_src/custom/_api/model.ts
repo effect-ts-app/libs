@@ -1,4 +1,4 @@
-import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "_src/ext.js"
+import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "../../ext.js"
 import type { Annotation } from "../_schema.js"
 import * as S from "../_schema.js"
 import { named } from "../_schema.js"
