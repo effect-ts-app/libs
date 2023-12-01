@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.82.0
+
+### Minor Changes
+
+- 68359de: more schema alignment
+
+### Patch Changes
+
+- Updated dependencies [68359de]
+  - @effect-app/schema@0.75.0
+
 ## 0.81.2
 
 ### Patch Changes

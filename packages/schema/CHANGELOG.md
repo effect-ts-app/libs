@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.75.0
+
+### Minor Changes
+
+- 68359de: more schema alignment
+
 ## 0.74.2
 
 ### Patch Changes

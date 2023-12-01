@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.108.0
+
+### Minor Changes
+
+- 68359de: more schema alignment
+
+### Patch Changes
+
+- Updated dependencies [68359de]
+  - @effect-app/prelude@0.82.0
+  - @effect-app/schema@0.75.0
+  - @effect-app/infra-adapters@0.67.5
+
 ## 0.107.2
 
 ### Patch Changes
