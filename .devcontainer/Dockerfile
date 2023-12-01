@@ -27,7 +27,7 @@ RUN curl https://get.volta.sh | bash
 WORKDIR /workspaces/macs-configurator
 
 # and install node and pnpm
-RUN volta install node@18
+RUN volta install node@20
 RUN npm i -g pnpm
 
 RUN echo 
