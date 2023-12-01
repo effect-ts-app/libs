@@ -227,7 +227,7 @@ export function LiveExpress<R>(
   ) => (cause: Cause<never>) => Effect<R, never, void>
 ): Layer<R, never, ExpressEnv> {
   return (
-    LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler) > LiveExpressApp
+    LiveExpressApp.provideMerge(LiveExpressAppConfig(host, port, exitHandler || defaultExitHandler))
   )
 }
 

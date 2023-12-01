@@ -18,6 +18,9 @@ export function toArray<A>(
   return Array.from(gen)
 }
 
+/** @tsplus pipeable Iterable sortBy */
+export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ROArray.sortBy
+
 /**
  * Remove duplicates from an array, keeping the first occurrence of an element.
  *
