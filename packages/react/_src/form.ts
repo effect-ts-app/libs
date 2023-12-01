@@ -5,12 +5,12 @@ import { getMetadataFromSchemaOrProp, getRegisterFromSchemaOrProp, isSchema } fr
 import {
   type AnyError,
   EParserFor,
+  type FromStruct,
   Parser,
   type PropertyRecord,
   type StructConstructor,
-  type StructFrom,
-  type StructTo,
   These,
+  type ToStruct,
   unsafe
 } from "@effect-app/schema"
 import type { BaseSyntheticEvent } from "react"
@@ -251,9 +251,9 @@ function getFormMetadata(
 
 export type SchemaProperties<Fields extends PropertyRecord> = Schema.Schema<
   unknown,
-  StructTo<Fields>,
+  ToStruct<Fields>,
   StructConstructor<Fields>,
-  StructFrom<Fields>,
+  FromStruct<Fields>,
   {
     fields: Fields
   }
@@ -283,7 +283,7 @@ export function createUseCustomParsedFormFromSchemaUnsafe<
  * It would be better to make first class support for that instead.
  */
 export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(fields: Fields) {
-  type From = StructFrom<Fields>
+  type From = FromStruct<Fields>
   type NEncoded = From // Transform<From>
 
   // We support a separate Parser so that the form may provide at-least, or over-provide.
@@ -330,7 +330,7 @@ export function createUseParsedFormUnsafe<Fields extends PropertyRecord>(fields:
 export function createUseForm<Fields extends PropertyRecord = PropertyRecord>(
   fields: Fields
 ) {
-  type From = StructFrom<Fields>
+  type From = FromStruct<Fields>
   type NEncoded = From // Transform<From>
   return function useFormInternal<
     TFieldValues extends NEncoded,

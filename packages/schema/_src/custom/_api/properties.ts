@@ -247,7 +247,7 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   )
 }
 
-export type StructTo<Fields extends PropertyRecord> = Compute<
+export type ToStruct<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
@@ -281,7 +281,7 @@ export type StructConstructor<Fields extends PropertyRecord> = Compute<
   "flat"
 >
 
-export type StructFrom<Fields extends PropertyRecord> = Compute<
+export type FromStruct<Fields extends PropertyRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnyProperty ? Fields[k]["_optional"] extends "optional" ? {
@@ -373,9 +373,9 @@ export const propertiesIdentifier = S.makeAnnotation<{ fields: PropertyRecord }>
 
 export type SchemaProperties<Fields extends PropertyRecord> = DefaultSchema<
   unknown,
-  StructTo<Fields>,
+  ToStruct<Fields>,
   StructConstructor<Fields>,
-  StructFrom<Fields>,
+  FromStruct<Fields>,
   { fields: Fields }
 >
 
@@ -462,7 +462,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
   const hasRequired = required.length > 0
 
-  function guard(_: unknown): _ is StructTo<Fields> {
+  function guard(_: unknown): _ is ToStruct<Fields> {
     if (typeof _ !== "object" || _ === null) {
       return false
     }
@@ -488,7 +488,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   function parser(
     _: unknown,
     env?: ParserEnv
-  ): Th.These<ParserErrorFromProperties<Fields>, StructTo<Fields>> {
+  ): Th.These<ParserErrorFromProperties<Fields>, ToStruct<Fields>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -585,7 +585,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     }
 
     if (errors.isEmpty()) {
-      return Th.succeed(result as StructTo<Fields>)
+      return Th.succeed(result as ToStruct<Fields>)
     }
 
     const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
@@ -600,7 +600,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return Th.warn(result, error)
   }
 
-  function encoder(_: StructTo<Fields>): StructFrom<Fields> {
+  function encoder(_: ToStruct<Fields>): FromStruct<Fields> {
     const enc = {}
 
     for (const key of keys) {
@@ -614,7 +614,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return enc
   }
 
-  function arb(_: typeof fc): fc.Arbitrary<StructTo<Fields>> {
+  function arb(_: typeof fc): fc.Arbitrary<ToStruct<Fields>> {
     const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
     const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
@@ -630,7 +630,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     S.encoder(encoder),
     S.arbitrary(arb),
     S.constructor((_) => {
-      const res = {} as StructTo<Fields>
+      const res = {} as ToStruct<Fields>
       Object.assign(res, _, tags)
       for (const [k, v] of defaults) {
         if (!(k in res) || res[k] === undefined) {
