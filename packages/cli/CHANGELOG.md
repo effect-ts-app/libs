@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.27.0
+
+### Minor Changes
+
+- c528c33: initial alignment of Schema with effect/schema
+
 ## 0.26.0
 
 ### Minor Changes

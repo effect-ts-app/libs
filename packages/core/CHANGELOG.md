@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.78.0
+
+### Minor Changes
+
+- c528c33: initial alignment of Schema with effect/schema
+
 ## 0.77.0
 
 ### Minor Changes

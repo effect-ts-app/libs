@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.79.0
+
+### Minor Changes
+
+- c528c33: initial alignment of Schema with effect/schema
+
+### Patch Changes
+
+- Updated dependencies [c528c33]
+  - @effect-app/schema@0.72.0
+  - @effect-app/core@0.78.0
+
 ## 0.78.2
 
 ### Patch Changes

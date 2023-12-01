@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.31.0
+
+### Minor Changes
+
+- c528c33: initial alignment of Schema with effect/schema
+
 ## 0.30.0
 
 ### Minor Changes

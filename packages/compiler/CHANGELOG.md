@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.38.0
+
+### Minor Changes
+
+- c528c33: initial alignment of Schema with effect/schema
+
 ## 0.37.1
 
 ### Patch Changes
