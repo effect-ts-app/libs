@@ -18,8 +18,8 @@ import type { DefaultSchema } from "./withDefaults.js"
 import { withDefaults } from "./withDefaults.js"
 
 /**
- * @tsplus type ets/Schema/Property
- * @tsplus companion ets/Schema/PropertyOps
+ * @tsplus type ets/Schema/Field
+ * @tsplus companion ets/Schema/FieldOps
  */
 export class Field<
   Self extends S.SchemaUPI,
@@ -120,7 +120,7 @@ export class Field<
   // }
 }
 
-/** @tsplus fluent ets/Schema/Property default */
+/** @tsplus fluent ets/Schema/Field default */
 export function propDef<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -170,7 +170,7 @@ export function propDef<
   )
 }
 
-/** @tsplus getter ets/Schema/Property optional */
+/** @tsplus getter ets/Schema/Field optional */
 export function propOpt<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -180,7 +180,7 @@ export function propOpt<
   return new Field(field._as, field._schema, "optional", field._def, field._map)
 }
 
-/** @tsplus getter ets/Schema/Property required */
+/** @tsplus getter ets/Schema/Field required */
 export function propReq<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",
@@ -190,7 +190,7 @@ export function propReq<
   return new Field(field._as, field._schema, "required", field._def, field._map)
 }
 
-/** @tsplus fluent ets/Schema/Property from */
+/** @tsplus fluent ets/Schema/Field from */
 export function propFrom<
   Self extends S.SchemaAny,
   Optional extends "optional" | "required",

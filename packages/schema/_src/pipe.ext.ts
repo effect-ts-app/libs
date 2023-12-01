@@ -10,9 +10,9 @@ import { pipe } from "@effect-app/core/_ext/pipe"
 export const pipeSchema = pipe
 
 /**
- * @tsplus operator ets/Schema/Property >=
- * @tsplus fluent ets/Schema/Property pipe
- * @tsplus fluent ets/Schema/Property __call
+ * @tsplus operator ets/Schema/Field >=
+ * @tsplus fluent ets/Schema/Field pipe
+ * @tsplus fluent ets/Schema/Field __call
  * @tsplus macro pipe
  */
 export const pipeSchemaProperty = pipe
