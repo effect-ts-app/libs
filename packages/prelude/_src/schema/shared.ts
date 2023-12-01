@@ -7,6 +7,7 @@ import type {
   DefaultSchema,
   Field,
   NonEmptyString,
+  NonEmptyString50Brand,
   Parser,
   SchemaDefaultSchema,
   SchemaUPI,
@@ -30,7 +31,7 @@ import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { curriedMagix } from "../Function.js"
-import type { ReasonableStringBrand, To, UnionBrand } from "./_schema.js"
+import type { NonEmptyString255Brand, To, UnionBrand } from "./_schema.js"
 import {
   Arbitrary,
   arbitrary,
@@ -39,8 +40,8 @@ import {
   fakerArb,
   fromString,
   makeConstrainedFromString,
+  NonEmptyString255,
   PositiveInt,
-  ReasonableString,
   string,
   stringNumber,
   withDefaults
@@ -60,77 +61,43 @@ export const StringPositiveInt: DefaultSchema<unknown, PositiveInt, PositiveInt,
 export type StringPositiveInt = PositiveInt
 
 /**
- * A string that is at least 3 character long and a maximum of 50.
- */
-export interface ShortStringBrand extends ReasonableStringBrand {
-  readonly ShortString: unique symbol
-}
-
-/**
- * A string that is at least 3 character long and a maximum of 50.
- */
-export type ShortString = string & ShortStringBrand
-
-/**
- * A string that is at least 3 character long and a maximum of 50.
- */
-export const shortStringFromString = pipe(
-  makeConstrainedFromString<ShortString>(3, 50),
-  arbitrary((FC) =>
-    FC
-      .lorem({ mode: "words", maxCount: 2 })
-      .filter((x) => x.length < 50 && x.length >= 3)
-      .map((x) => x as ShortString)
-  ),
-  // arbitrary removes brand benefit
-  brand<ShortString>()
-)
-
-/**
- * A string that is at least 3 character long and a maximum of 50.
- */
-export const ShortString = extendWithUtils(
-  pipe(string[">>>"](shortStringFromString), brand<ShortString>())
-)
-
-/**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export interface ReasonableString3Brand extends ReasonableStringBrand {
-  readonly ReasonableString3: unique symbol
+export interface NonEmptyString3_255Brand extends NonEmptyString255Brand {
+  readonly NonEmptyString3_255: unique symbol
 }
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export type ReasonableString3 = string & ReasonableString3Brand
+export type NonEmptyString3_255 = string & NonEmptyString3_255Brand
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export const reasonableString3FromString = pipe(
-  makeConstrainedFromString<ReasonableString3>(3, 255),
+export const nonEmptyString2553FromString = pipe(
+  makeConstrainedFromString<NonEmptyString3_255>(3, 255),
   arbitrary((FC) =>
     FC
       .lorem({ mode: "words", maxCount: 2 })
       .filter((x) => x.length < 255 && x.length >= 3)
-      .map((x) => x as ReasonableString3)
+      .map((x) => x as NonEmptyString3_255)
   ),
   // arbitrary removes brand benefit
-  brand<ReasonableString3>()
+  brand<NonEmptyString3_255>()
 )
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export const ReasonableString3 = extendWithUtils(
-  pipe(string[">>>"](reasonableString3FromString), brand<ReasonableString3>())
+export const NonEmptyString3_255 = extendWithUtils(
+  pipe(string[">>>"](nonEmptyString2553FromString), brand<NonEmptyString3_255>())
 )
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
  */
-export interface StringIdBrand extends ReasonableStringBrand {
+export interface StringIdBrand extends NonEmptyString50Brand, NonEmptyString3_255Brand {
   readonly StringId: unique symbol
 }
 
@@ -356,7 +323,7 @@ const Email__ = Object.assign(
   {
     eq: { equals: (a: Email, b: Email) => a.toLowerCase() === b.toLowerCase() },
     endsWith,
-    toDomain: (email: Email) => ReasonableString(email.split("@")[1]),
+    toDomain: (email: Email) => NonEmptyString255(email.split("@")[1]),
     isDomain: curriedMagix(
       (e: Email) => (domain: string) => endsWith._("@" + domain, e)
     ),
@@ -368,5 +335,5 @@ type EmailSchema__ = typeof Email__
 export interface EmailSchema extends EmailSchema__ {}
 export const Email: EmailSchema = Email__
 export type Email = To<typeof Email_> & {
-  split: (separator: "@") => [ReasonableString, ReasonableString]
+  split: (separator: "@") => [NonEmptyString255, NonEmptyString255]
 }

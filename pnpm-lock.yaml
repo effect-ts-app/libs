@@ -353,6 +353,79 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
 
+  packages/fluent-extensions:
+    dependencies:
+      '@effect-app/core':
+        specifier: workspace:*
+        version: link:../core
+      '@effect-app/schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@effect/platform':
+        specifier: ^0.32.2
+        version: 0.32.2(@effect/schema@0.51.1)(effect@2.0.0-next.58)
+      '@fp-ts/optic':
+        specifier: ^0.17.0
+        version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.58)
+      date-fns:
+        specifier: ^2.29.3
+        version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+      effect:
+        specifier: ^2.0.0-next.58
+        version: 2.0.0-next.58
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      nanoid:
+        specifier: ^5.0.3
+        version: 5.0.3
+      path-parser:
+        specifier: ^6.1.0
+        version: 6.1.0
+      query-string:
+        specifier: ^8.1.0
+        version: 8.1.0
+      ts-pattern:
+        specifier: ^5.0.5
+        version: 5.0.5
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+      validator:
+        specifier: ^13.11.0
+        version: 13.11.0
+    devDependencies:
+      '@babel/cli':
+        specifier: ^7.23.4
+        version: 7.23.4(@babel/core@7.23.5)
+      '@effect-app/compiler':
+        specifier: workspace:*
+        version: link:../compiler
+      '@faker-js/faker':
+        specifier: ^8.3.1
+        version: 8.3.1
+      '@types/node':
+        specifier: ~20.10.1
+        version: 20.10.1
+      '@types/uuid':
+        specifier: ^9.0.7
+        version: 9.0.7
+      '@types/validator':
+        specifier: ^13.11.7
+        version: 13.11.7
+      fast-check:
+        specifier: ~3.14.0
+        version: 3.14.0
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.1)
+      typescript:
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
+        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
+
   packages/infra:
     dependencies:
       '@azure/cosmos':

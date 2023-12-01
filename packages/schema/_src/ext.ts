@@ -1253,7 +1253,7 @@ export function validate<X, A>(
 }
 
 /**
- * Value: The value you want to submit after validation. e.g for text input: `ReasonableString`
+ * Value: The value you want to submit after validation. e.g for text input: `NonEmptyString255`
  * InputValue: The internal value of the input, e.g for text input: `string`
  */
 export type InputSchema<Value, InputValue> = S.DefaultSchema<

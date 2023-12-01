@@ -9,7 +9,7 @@ export class RequestContextParent extends ExtendedClass<
 >()({
   _tag: literal("RequestContext"),
   id: RequestId,
-  name: ReasonableString,
+  name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional,
   locale: literal("en", "de"),
   createdAt: date.withDefault
@@ -30,7 +30,7 @@ export class RequestContext extends ExtendedClass<
   id: RequestId.withDefault,
   rootId: RequestId,
   parent: RequestContextParent.optional,
-  namespace: ReasonableString.optional
+  namespace: NonEmptyString255.optional
 }) {
   static inherit(
     this: void,

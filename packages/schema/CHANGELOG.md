@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.76.0
+
+### Minor Changes
+
+- improve String schemas
+
 ## 0.75.3
 
 ### Patch Changes

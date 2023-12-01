@@ -45,14 +45,14 @@ const make = Effect.sync((): Operations => {
             ? new Success()
             : new Failure({
               message: exit.cause.isInterrupted()
-                ? LongString("Interrupted")
+                ? NonEmptyString2k("Interrupted")
                 : exit.cause.isDie()
-                ? LongString("Unknown error")
+                ? NonEmptyString2k("Unknown error")
                 : exit
                   .cause
                   .failureOption
                   .flatMap((_) =>
-                    typeof _ === "object" && _ !== null && "message" in _ && LongString.is(_.message)
+                    typeof _ === "object" && _ !== null && "message" in _ && NonEmptyString2k.is(_.message)
                       ? Option(_.message)
                       : Option.none
                   )

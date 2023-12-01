@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.84.0
+
+### Minor Changes
+
+- improve String schemas
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.76.0
+
 ## 0.83.0
 
 ### Minor Changes

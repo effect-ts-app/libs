@@ -67,7 +67,7 @@ export function makeServiceBusQueue<
                 .setupRequestContext(RequestContext.inherit(meta.requestContext, {
                   id: RequestId(body.id),
                   locale: "en" as const,
-                  name: ReasonableString(body._tag)
+                  name: NonEmptyString255(body._tag)
                 }))
                 .withSpan("queue.drain", {
                   attributes: { "queue.name": queueDrainName },

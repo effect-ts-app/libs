@@ -28,7 +28,7 @@ export class RequestContextContainerImpl extends RequestContextContainer {
   constructor() {
     super()
     this.#ref = FiberRef.unsafeMake<RequestContext>(
-      new RequestContext({ name: ReasonableString("_root_"), rootId: RequestId("_root_"), locale: "en" })
+      new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" })
     )
   }
 

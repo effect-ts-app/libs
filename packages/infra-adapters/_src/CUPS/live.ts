@@ -3,7 +3,7 @@ import util from "util"
 import { tempFile } from "../fileUtil.js"
 
 import { isTruthy, pretty } from "@effect-app/core/utils"
-import { ReasonableString } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -93,7 +93,7 @@ function getAvailablePrinters(host?: string) {
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(isTruthy)
-      .map(ReasonableString)
+      .map(NonEmptyString255)
   })
 }
 

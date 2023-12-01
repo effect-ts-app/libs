@@ -11,10 +11,10 @@ export abstract class Emailer extends TagClass<Emailer>() {
 }
 
 export interface SendgridConfig {
-  defaultReplyTo?: Email | { name?: ReasonableString; email: Email }
+  defaultReplyTo?: Email | { name?: NonEmptyString255; email: Email }
   subjectPrefix: string
   realMail: boolean
-  defaultFrom: Email | { name?: ReasonableString; email: Email }
+  defaultFrom: Email | { name?: NonEmptyString255; email: Email }
   apiKey: ConfigSecret
 }
 export type EmailMsg = sgMail.MailDataRequired

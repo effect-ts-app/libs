@@ -6,11 +6,11 @@ import { identity } from "@effect-app/core/Function"
 import type { AnyError, Parser } from "@effect-app/schema"
 import {
   Guard,
-  LongString,
   maxLengthIdentifier,
   minLengthIdentifier,
-  nullableIdentifier,
-  ReasonableString
+  NonEmptyString255,
+  NonEmptyString2k,
+  nullableIdentifier
 } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
 import type { Faker } from "@faker-js/faker"
@@ -24,20 +24,20 @@ export { matchTag } from "@effect-app/core/utils"
  */
 export type Identity<T> = T
 
-export function fitIntoReasonableString(str: string) {
-  if (Guard.for(ReasonableString)(str)) {
+export function fitIntoNonEmptyString255(str: string) {
+  if (Guard.for(NonEmptyString255)(str)) {
     return str
   }
 
-  return ReasonableString(str.substring(0, 255 - 3) + "...")
+  return NonEmptyString255(str.substring(0, 255 - 3) + "...")
 }
 
-export function fitIntoLongString(str: string) {
-  if (Guard.for(LongString)(str)) {
+export function fitIntoNonEmptyString2k(str: string) {
+  if (Guard.for(NonEmptyString2k)(str)) {
     return str
   }
 
-  return LongString(str.substring(0, 2047 - 3) + "...")
+  return NonEmptyString2k(str.substring(0, 2047 - 3) + "...")
 }
 
 export const fakerArb = (

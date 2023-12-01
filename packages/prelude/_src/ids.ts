@@ -1,7 +1,8 @@
 import {
   brandedStringId,
   extendWithUtils,
-  reasonableStringFromString,
+  nonEmptyString255FromString,
+  NonEmptyString50,
   type StringIdBrand
 } from "@effect-app/prelude/schema"
 
@@ -12,13 +13,13 @@ export interface RequestIdBrand extends StringIdBrand {
 /**
  * @tsplus type RequestId
  */
-export type RequestId = ReasonableString
+export type RequestId = NonEmptyString50
 export const RequestId = Object.assign(
   extendWithUtils(
-    pipe(Schema.string[">>>"](reasonableStringFromString), Schema.brand<ReasonableString>())
+    pipe(Schema.string[">>>"](nonEmptyString255FromString), Schema.brand<NonEmptyString50>())
   ),
   {
-    withDefault: defaultProp(ReasonableString, StringId.make),
+    withDefault: defaultProp(NonEmptyString50, StringId.make),
     make: StringId.make
   }
 )

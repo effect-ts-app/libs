@@ -17,7 +17,7 @@ function makeInternalRequestContext(name: string) {
       id,
       rootId: id,
       locale: "en",
-      name: ReasonableString(name)
+      name: NonEmptyString255(name)
     })
   })
 }

@@ -1,4 +1,4 @@
-import { LongString } from "./schema.js"
+import { NonEmptyString2k } from "./schema.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -17,13 +17,13 @@ export class OperationProgress extends ExtendedClass<
 @useClassFeaturesForSchema
 export class Success extends ExtendedClass<Success, Success.ConstructorInput, Success.From, Success.Fields>()({
   _tag: literal("Success"),
-  message: LongString.nullable.withDefault
+  message: NonEmptyString2k.nullable.withDefault
 }) {}
 
 @useClassFeaturesForSchema
 export class Failure extends ExtendedClass<Failure, Failure.ConstructorInput, Failure.From, Failure.Fields>()({
   _tag: literal("Failure"),
-  message: LongString.nullable.withDefault
+  message: NonEmptyString2k.nullable.withDefault
 }) {}
 
 export const OperationResult = union({ Success, Failure })

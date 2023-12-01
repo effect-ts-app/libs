@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 0.68.0
+
+### Minor Changes
+
+- improve String schemas
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/prelude@0.84.0
+  - @effect-app/schema@0.76.0
+
 ## 0.67.9
 
 ### Patch Changes

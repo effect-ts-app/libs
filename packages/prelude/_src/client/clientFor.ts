@@ -73,7 +73,7 @@ function clientFor_<M extends Requests>(models: M) {
 
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
-          const requestName = ReasonableString(
+          const requestName = NonEmptyString255(
             Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
           )
 

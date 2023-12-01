@@ -1,8 +1,8 @@
 import { TagClass } from "@effect-app/prelude/service"
-import { ReasonableString } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema"
 
-export const PrinterId = ReasonableString
-export type PrinterId = ReasonableString
+export const PrinterId = NonEmptyString255
+export type PrinterId = NonEmptyString255
 
 /**
  * @tsplus type CUPS
@@ -13,5 +13,5 @@ export abstract class CUPS extends TagClass<CUPS>() {
     stdout: string
     stderr: string
   }>
-  abstract getAvailablePrinters: Effect<never, unknown, ReasonableString[]>
+  abstract getAvailablePrinters: Effect<never, unknown, NonEmptyString255[]>
 }
