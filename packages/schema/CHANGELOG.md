@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.75.1
+
+### Patch Changes
+
+- parser alignment
+
 ## 0.75.0
 
 ### Minor Changes
