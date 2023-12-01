@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.81.0
+
+### Minor Changes
+
+- 771d7e6: Fix model name
+
+### Patch Changes
+
+- Updated dependencies [771d7e6]
+  - @effect-app/schema@0.74.0
+
 ## 0.80.1
 
 ### Patch Changes

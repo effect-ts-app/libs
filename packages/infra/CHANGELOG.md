@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.107.0
+
+### Minor Changes
+
+- 771d7e6: Fix model name
+
+### Patch Changes
+
+- Updated dependencies [771d7e6]
+  - @effect-app/prelude@0.81.0
+  - @effect-app/schema@0.74.0
+  - @effect-app/infra-adapters@0.67.2
+
 ## 0.106.2
 
 ### Patch Changes

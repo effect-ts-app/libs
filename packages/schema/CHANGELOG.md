@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.74.0
+
+### Minor Changes
+
+- 771d7e6: Fix model name
+
 ## 0.73.1
 
 ### Patch Changes
