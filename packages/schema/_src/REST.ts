@@ -718,7 +718,7 @@ export type ReqRes<E, A> = S.Schema<
 export type ReqResSchemed<E, A> = {
   new(...args: any[]): any
   Encoder: S.Encoder.Encoder<A, E>
-  Class: ReqRes<E, A>
+  Model: ReqRes<E, A>
 }
 
 export type RequestSchemed<E, A> = ReqResSchemed<E, A> & {
@@ -731,7 +731,7 @@ export function extractSchema<ResE, ResA>(
 ) {
   const res_ = Res_ as any
   const Res = res_[schemaField]
-    ? (res_.Class as ReqRes<ResE, ResA>)
+    ? (res_.Model as ReqRes<ResE, ResA>)
     : (res_ as ReqRes<ResE, ResA>)
   return Res
 }

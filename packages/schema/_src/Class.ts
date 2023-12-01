@@ -108,7 +108,7 @@ export interface MM<
   [S.schemaField]: Self
   readonly to: S.To<Self>
   readonly from: S.From<Self>
-  readonly Class: SelfM // added
+  readonly Model: SelfM // added
   readonly lens: Lens.Lens<To, To> // added
   readonly lenses: RecordSchemaToLenses<To, Self>
 
