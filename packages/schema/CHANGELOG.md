@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.77.0
+
+### Minor Changes
+
+- feat: support constructor input for clientFor requests
+
 ## 0.76.0
 
 ### Minor Changes

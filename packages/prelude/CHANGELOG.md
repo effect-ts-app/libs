@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.85.0
+
+### Minor Changes
+
+- feat: support constructor input for clientFor requests
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.77.0
+
 ## 0.84.0
 
 ### Minor Changes
