@@ -111,8 +111,8 @@ export function withDefaults<ParserInput, To, ConstructorInput, From, Api>(
   Object.defineProperty(schemed, "annotate", {
     value: <Meta>(annotation: Annotation<Meta>, meta: Meta) => withDefaults(self.annotate(annotation, meta))
   })
-
-  for (const k of carryOver) {
+  // workaround: vite issue, so don't use `carryOver` here, but have it statically defined.
+  for (const k of ["matchW", "matchS", "fields"]) {
     Object.defineProperty(schemed, k, {
       get() {
         return self.Api[k]
