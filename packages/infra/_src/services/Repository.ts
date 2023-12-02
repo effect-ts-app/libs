@@ -135,6 +135,24 @@ export function project<
 }
 
 /**
+ * TODO: count inside the db.
+ * @tsplus fluent Repository project
+ */
+export function count<
+  T extends { id: string },
+  PM extends { id: string },
+  Evt,
+  ItemType extends string
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  filter?: Filter<PM>
+) {
+  return self
+    .projectEffect(Effect({ filter }))
+    .map((_) => PositiveInt(_.length))
+}
+
+/**
  * @tsplus fluent Repository queryEffect
  */
 export function queryEffect<
