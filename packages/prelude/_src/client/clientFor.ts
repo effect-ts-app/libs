@@ -64,11 +64,13 @@ function clientFor_<M extends Requests>(models: M) {
 
           const wm = new WeakMap()
 
-          // TODO: we need to have the same constructed value for fetch aswell as mapPath
+          const cstri = Constructor.for(Request.Model).pipe(unsafeCstr)
+
+          // we need to have the same constructed value for fetch aswell as mapPath
           const cstr = (req: any) => {
             const e = wm.get(req)
             if (e) return e
-            const v = Constructor.for(Request.Model).pipe(unsafeCstr)
+            const v = cstri(req)
             wm.set(req, v)
             return v
           }
