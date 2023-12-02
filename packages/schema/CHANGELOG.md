@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.77.1
+
+### Patch Changes
+
+- 081418b: workaround vite issue
+
 ## 0.77.0
 
 ### Minor Changes
