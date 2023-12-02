@@ -34,6 +34,7 @@ export abstract class RepositoryBaseC<
     parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
     filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
+    // count: (filter?: Filter<PM>) => Effect<never, never, PositiveInt>
   }
   abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
   abstract readonly removeAndPublish: (

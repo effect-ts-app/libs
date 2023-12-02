@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.109.6
+
+### Patch Changes
+
+- bc8aa57: feat: Repo poor mans count
+
 ## 0.109.5
 
 ### Patch Changes
