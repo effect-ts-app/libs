@@ -68,7 +68,7 @@ function clientFor_<M extends Requests>(models: M) {
           const cstr = (req: any) => {
             const e = wm.get(req)
             if (e) return e
-            const v = Constructor.for(Request).pipe(unsafeCstr)
+            const v = Constructor.for(Request.Model).pipe(unsafeCstr)
             return wm.set(req, v)
           }
 
