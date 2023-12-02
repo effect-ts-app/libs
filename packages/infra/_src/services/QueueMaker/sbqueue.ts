@@ -20,17 +20,14 @@ import { type QueueBase, QueueMeta } from "./service.js"
  * @tsplus static QueueMaker.Ops makeServiceBus
  */
 export function makeServiceBusQueue<
-  DrainR,
   Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
-  EvtE,
-  DrainE
+  EvtE
 >(
   _queueName: string,
   queueDrainName: string,
   schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
-  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
+  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>
 ) {
   const wireSchema = struct({
     body: schema,
@@ -48,46 +45,48 @@ export function makeServiceBusQueue<
     const rcc = yield* $(RequestContextContainer)
 
     return {
-      drain: Effect.gen(function*($) {
-        const handleEvent = yield* $(makeHandleEvent)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        function processMessage(messageBody: any) {
-          return Effect
-            .sync(() => JSON.parse(messageBody))
-            .flatMap((x) => parseDrain(x))
-            .orDie
-            .flatMap(({ body, meta }) =>
-              Effect
-                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                .zipRight(handleEvent(body))
-                .orDie
-                // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                .pipe(silenceAndReportError)
-                .setupRequestContext(RequestContext.inherit(meta.requestContext, {
-                  id: RequestId(body.id),
-                  locale: "en" as const,
-                  name: NonEmptyString255(body._tag)
-                }))
-                .withSpan("queue.drain", {
-                  attributes: { "queue.name": queueDrainName },
-                  parent: meta.span
-                    ? Tracer.externalSpan(meta.span)
-                    : undefined
-                })
-            )
-            // we reportError here, so that we report the error only, and keep flowing
-            .tapErrorCause(reportError)
-        }
+      makeDrain: <DrainE, DrainR>(
+        handleEvent: (ks: DrainEvt) => Effect<DrainR, DrainE, void>
+      ) =>
+        Effect.gen(function*($) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          function processMessage(messageBody: any) {
+            return Effect
+              .sync(() => JSON.parse(messageBody))
+              .flatMap((x) => parseDrain(x))
+              .orDie
+              .flatMap(({ body, meta }) =>
+                Effect
+                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                  .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                  .zipRight(handleEvent(body))
+                  .orDie
+                  // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                  .pipe(silenceAndReportError)
+                  .setupRequestContext(RequestContext.inherit(meta.requestContext, {
+                    id: RequestId(body.id),
+                    locale: "en" as const,
+                    name: NonEmptyString255(body._tag)
+                  }))
+                  .withSpan("queue.drain", {
+                    attributes: { "queue.name": queueDrainName },
+                    parent: meta.span
+                      ? Tracer.externalSpan(meta.span)
+                      : undefined
+                  })
+              )
+              // we reportError here, so that we report the error only, and keep flowing
+              .tapErrorCause(reportError)
+          }
 
-        return yield* $(
-          subscribe({
-            processMessage: (x) => processMessage(x.body).uninterruptible,
-            processError: (err) => Effect(captureException(err.error))
-          })
-            .provide(receiverLayer)
-        )
-      }),
+          return yield* $(
+            subscribe({
+              processMessage: (x) => processMessage(x.body).uninterruptible,
+              processError: (err) => Effect(captureException(err.error))
+            })
+              .provide(receiverLayer)
+          )
+        }),
 
       publish: (...messages) =>
         Effect.gen(function*($) {
@@ -110,7 +109,7 @@ export function makeServiceBusQueue<
               .forkDaemonReportQueue
           )
         })
-    } satisfies QueueBase<DrainR, Evt>
+    } satisfies QueueBase<Evt, DrainEvt>
   })
 }
 

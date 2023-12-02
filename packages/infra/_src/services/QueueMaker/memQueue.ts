@@ -10,17 +10,14 @@ import { type QueueBase, QueueMeta } from "./service.js"
  * @tsplus static QueueMaker.Ops makeMem
  */
 export function makeMemQueue<
-  DrainR,
-  Evt,
+  Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
-  EvtE,
-  DrainE
+  EvtE
 >(
   queueName: string,
   queueDrainName: string,
   schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
-  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>,
-  makeHandleEvent: Effect<DrainR, never, (ks: DrainEvt) => Effect<never, DrainE, void>>
+  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)
@@ -54,43 +51,45 @@ export function makeMemQueue<
               .forkDaemonReportQueue
           )
         }),
-      drain: Effect.gen(function*($) {
-        const handleEvent = yield* $(makeHandleEvent)
-        const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
-        const processMessage = (msg: string) =>
-          // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-          Effect(JSON.parse(msg))
-            .flatMap(parseDrain)
-            .orDie
-            .flatMap(({ body, meta }) =>
-              Effect
-                .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                .zipRight(handleEvent(body))
-                .pipe(silenceAndReportError)
-                .setupRequestContext(RequestContext.inherit(meta.requestContext, {
-                  id: RequestId(body.id),
-                  locale: "en" as const,
-                  name: NonEmptyString255(body._tag)
-                }))
-                .withSpan("queue.drain", {
-                  attributes: { "queue.name": queueDrainName },
-                  parent: meta.span
-                    ? Tracer.externalSpan(meta.span)
-                    : undefined
-                })
-            )
-        return yield* $(
-          qDrain
-            .take
-            .flatMap((x) => processMessage(x).uninterruptible.fork.flatMap((_) => _.join))
-            // TODO: normally a failed item would be returned to the queue and retried up to X times.
-            // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
-            .pipe(silenceAndReportError)
-            .forever
-            .forkScoped
-        )
-      })
-    } satisfies QueueBase<DrainR, Evt>
+      makeDrain: <DrainE, DrainR>(
+        handleEvent: (ks: DrainEvt) => Effect<DrainR, DrainE, void>
+      ) =>
+        Effect.gen(function*($) {
+          const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
+          const processMessage = (msg: string) =>
+            // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
+            Effect(JSON.parse(msg))
+              .flatMap(parseDrain)
+              .orDie
+              .flatMap(({ body, meta }) =>
+                Effect
+                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                  .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
+                  .zipRight(handleEvent(body))
+                  .pipe(silenceAndReportError)
+                  .setupRequestContext(RequestContext.inherit(meta.requestContext, {
+                    id: RequestId(body.id),
+                    locale: "en" as const,
+                    name: NonEmptyString255(body._tag)
+                  }))
+                  .withSpan("queue.drain", {
+                    attributes: { "queue.name": queueDrainName },
+                    parent: meta.span
+                      ? Tracer.externalSpan(meta.span)
+                      : undefined
+                  })
+              )
+          return yield* $(
+            qDrain
+              .take
+              .flatMap((x) => processMessage(x).uninterruptible.fork.flatMap((_) => _.join))
+              // TODO: normally a failed item would be returned to the queue and retried up to X times.
+              // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
+              .pipe(silenceAndReportError)
+              .forever
+              .forkScoped
+          )
+        })
+    } satisfies QueueBase<Evt, DrainEvt>
   })
 }
