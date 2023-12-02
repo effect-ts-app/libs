@@ -69,7 +69,8 @@ function clientFor_<M extends Requests>(models: M) {
             const e = wm.get(req)
             if (e) return e
             const v = Constructor.for(Request.Model).pipe(unsafeCstr)
-            return wm.set(req, v)
+            wm.set(req, v)
+            return v
           }
 
           const parseResponse = flow(
