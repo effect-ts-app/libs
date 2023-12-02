@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect-app/prelude/schema"
-import { condemnCustom, SchemaNamed } from "@effect-app/prelude/schema"
+import type { ConstructorInputOf, GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect-app/prelude/schema"
+import { condemnCustom, Constructor, SchemaNamed, unsafeCstr } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
@@ -62,6 +62,16 @@ function clientFor_<M extends Requests>(models: M) {
             mapPath: Request.path
           }
 
+          const wm = new WeakMap()
+
+          // TODO: we need to have the same constructed value for fetch aswell as mapPath
+          const cstr = (req: any) => {
+            const e = wm.get(req)
+            if (e) return e
+            const v = Constructor.for(Request).pipe(unsafeCstr)
+            return wm.set(req, v)
+          }
+
           const parseResponse = flow(
             Schema.Parser.for(Response).pipe(condemnCustom),
             (_) => _.mapError((err) => new ResponseError(err))
@@ -95,14 +105,12 @@ function clientFor_<M extends Requests>(models: M) {
               )
               : Object.assign(
                 (req: any) =>
-                  fetchApi(Request.method, makePathWithQuery(path, req))
-                    .flatMap(
-                      mapResponseM(parseResponse)
-                    )
+                  fetchApi(Request.method, makePathWithQuery(path, cstr(req)))
+                    .flatMap(mapResponseM(parseResponse))
                     .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 {
                   ...meta,
-                  mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
+                  mapPath: (req: any) => req ? makePathWithQuery(path, cstr(req)) : Request.path
                 }
               )
             : fields.length === 0
@@ -112,14 +120,14 @@ function clientFor_<M extends Requests>(models: M) {
             )
             : Object.assign(
               (req: any) =>
-                fetchApi3S(b)(req).withSpan("client.request", { attributes: { "request.name": requestName } }),
+                fetchApi3S(b)(cstr(req)).withSpan("client.request", { attributes: { "request.name": requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
                   req
                     ? Request.method === "DELETE"
-                      ? makePathWithQuery(path, req)
-                      : makePathWithBody(path, req)
+                      ? makePathWithQuery(path, cstr(req))
+                      : makePathWithBody(path, cstr(req))
                     : Request.path
               }
             )
@@ -138,14 +146,14 @@ function clientFor_<M extends Requests>(models: M) {
               )
               : Object.assign(
                 (req: any) =>
-                  fetchApi(Request.method, makePathWithQuery(path, req))
+                  fetchApi(Request.method, makePathWithQuery(path, cstr(req)))
                     .flatMap(
                       mapResponseM(parseResponseE)
                     )
                     .withSpan("client.request", { attributes: { "request.name": requestName } }),
                 {
                   ...meta,
-                  mapPath: (req: any) => req ? makePathWithQuery(path, req) : Request.path
+                  mapPath: (req: any) => req ? makePathWithQuery(path, cstr(req)) : Request.path
                 }
               )
             : fields.length === 0
@@ -155,14 +163,14 @@ function clientFor_<M extends Requests>(models: M) {
             )
             : Object.assign(
               (req: any) =>
-                fetchApi3SE(b)(req).withSpan("client.request", { attributes: { "request.name": requestName } }),
+                fetchApi3SE(b)(cstr(req)).withSpan("client.request", { attributes: { "request.name": requestName } }),
               {
                 ...meta,
                 mapPath: (req: any) =>
                   req
                     ? Request.method === "DELETE"
-                      ? makePathWithQuery(path, req)
-                      : makePathWithBody(path, req)
+                      ? makePathWithQuery(path, cstr(req))
+                      : makePathWithBody(path, cstr(req))
                     : Request.path
               }
             ) // generate handler
@@ -203,12 +211,13 @@ type RequestHandlers<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: To<Schema.GetRequest<M[K]>>
+        req: ConstructorInputOf<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
+        // we use a weakmap as cache for converting constructor input to constructed.
+        mapPath: (req?: ConstructorInputOf<Schema.GetRequest<M[K]>>) => string
       }
 }
 
@@ -231,11 +240,12 @@ type RequestHandlersE<R, E, M extends Requests> = {
       }
     :
       & ((
-        req: To<Schema.GetRequest<M[K]>>
+        req: ConstructorInputOf<Schema.GetRequest<M[K]>>
       ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
       & {
         Request: Schema.GetRequest<M[K]>
         Reponse: ExtractResponse<GetResponse<M[K]>>
-        mapPath: (req?: To<Schema.GetRequest<M[K]>>) => string
+        // we use a weakmap as cache for converting constructor input to constructed.
+        mapPath: (req?: ConstructorInputOf<Schema.GetRequest<M[K]>>) => string
       }
 }

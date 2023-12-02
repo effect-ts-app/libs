@@ -1,5 +1,6 @@
 // tracing: off
 
+import type { Constructor } from "../_constructor.js"
 import type { AnyError } from "../_schema.js"
 import { drawError } from "../_schema.js"
 import type { Parser, ParserEnv } from "../Parser.js"
@@ -78,6 +79,25 @@ export function condemnDie<X, A>(self: Parser<X, AnyError, A>) {
 export function unsafe<X, A>(self: Parser<X, AnyError, A>) {
   return (a: X, env?: ParserEnv) => {
     const res = self(a, env).effect
+    if (res._tag === "Left") {
+      throw new ThrowableCondemnException(res.left)
+    }
+    const warn = res.right[1]
+    if (warn._tag === "Some") {
+      throw new ThrowableCondemnException(warn.value)
+    }
+    return res.right[0]
+  }
+}
+
+/**
+ * Throws a classic `ThrowableCondemnException` when the parser produces an invalid result.
+ * Otherwise returns the valid result.
+ * @tsplus getter ets/Schema/Parser unsafe
+ */
+export function unsafeCstr<X, A>(self: Constructor<X, A, AnyError>) {
+  return (a: X) => {
+    const res = self(a).effect
     if (res._tag === "Left") {
       throw new ThrowableCondemnException(res.left)
     }
