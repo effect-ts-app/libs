@@ -13,30 +13,35 @@ export const installFluentExtensions = <R>(runtime: Runtime<R>) => {
   const runSync = RT.runSync(runtime)
   Object.defineProperty(Object.prototype, "runPromise", {
     enumerable: false,
+    configurable: true,
     get() {
       return runPromise(this)
     }
   })
   Object.defineProperty(Object.prototype, "runFork", {
     enumerable: false,
+    configurable: true,
     value(arg: any) {
       return runFork(this, arg)
     }
   })
   Object.defineProperty(Object.prototype, "runSync", {
     enumerable: false,
+    configurable: true,
     get() {
       return runSync(this)
     }
   })
   Object.defineProperty(Object.prototype, "andThen", {
     enumerable: false,
+    configurable: true,
     value(arg: any) {
       return Effect.andThen(this, arg)
     }
   })
   Object.defineProperty(Object.prototype, "tap", {
     enumerable: false,
+    configurable: true,
     value(arg: any) {
       return Effect.tap(this, arg)
     }
