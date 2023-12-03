@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.110.0
+
+### Minor Changes
+
+- 9309a1f: queue maker has drain constructor instead of drain function
+
+### Patch Changes
+
+- Updated dependencies [4627526]
+  - @effect-app/prelude@0.85.5
+  - @effect-app/infra-adapters@0.68.6
+
 ## 0.109.6
 
 ### Patch Changes

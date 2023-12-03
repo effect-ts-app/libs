@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.85.5
+
+### Patch Changes
+
+- 4627526: improve string name
+
 ## 0.85.4
 
 ### Patch Changes

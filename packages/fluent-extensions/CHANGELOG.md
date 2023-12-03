@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.83.4
+
+### Patch Changes
+
+- e4afaa4: fix: make fluent extensions configuratable
+
 ## 0.83.3
 
 ### Patch Changes
