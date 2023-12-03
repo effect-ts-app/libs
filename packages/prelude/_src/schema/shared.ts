@@ -63,41 +63,41 @@ export type StringPositiveInt = PositiveInt
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export interface NonEmptyString3_255Brand extends NonEmptyString255Brand {
-  readonly NonEmptyString3_255: unique symbol
+export interface Min3String255Brand extends NonEmptyString255Brand {
+  readonly Min3String255: unique symbol
 }
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export type NonEmptyString3_255 = string & NonEmptyString3_255Brand
+export type Min3String255 = string & Min3String255Brand
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
 export const nonEmptyString2553FromString = pipe(
-  makeConstrainedFromString<NonEmptyString3_255>(3, 255),
+  makeConstrainedFromString<Min3String255>(3, 255),
   arbitrary((FC) =>
     FC
       .lorem({ mode: "words", maxCount: 2 })
       .filter((x) => x.length < 255 && x.length >= 3)
-      .map((x) => x as NonEmptyString3_255)
+      .map((x) => x as Min3String255)
   ),
   // arbitrary removes brand benefit
-  brand<NonEmptyString3_255>()
+  brand<Min3String255>()
 )
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export const NonEmptyString3_255 = extendWithUtils(
-  pipe(string[">>>"](nonEmptyString2553FromString), brand<NonEmptyString3_255>())
+export const Min3String255 = extendWithUtils(
+  pipe(string[">>>"](nonEmptyString2553FromString), brand<Min3String255>())
 )
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
  */
-export interface StringIdBrand extends NonEmptyString50Brand, NonEmptyString3_255Brand {
+export interface StringIdBrand extends NonEmptyString50Brand, Min3String255Brand {
   readonly StringId: unique symbol
 }
 
