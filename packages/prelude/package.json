@@ -118,14 +118,14 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
-    "./_ext/allLowerFirst": {
+    "./_ext/allLower": {
       "import": {
-        "types": "./dist/_ext/allLowerFirst.d.ts",
-        "default": "./dist/_ext/allLowerFirst.js"
+        "types": "./dist/_ext/allLower.d.ts",
+        "default": "./dist/_ext/allLower.js"
       },
       "require": {
-        "types": "./dist/_ext/allLowerFirst.d.ts",
-        "default": "./_cjs/_ext/allLowerFirst.cjs"
+        "types": "./dist/_ext/allLower.d.ts",
+        "default": "./_cjs/_ext/allLower.cjs"
       }
     },
     "./_ext/builtIn": {
@@ -156,16 +156,6 @@
       "require": {
         "types": "./dist/_ext/misc.d.ts",
         "default": "./_cjs/_ext/misc.cjs"
-      }
-    },
-    "./_ext/services": {
-      "import": {
-        "types": "./dist/_ext/services.d.ts",
-        "default": "./dist/_ext/services.js"
-      },
-      "require": {
-        "types": "./dist/_ext/services.d.ts",
-        "default": "./_cjs/_ext/services.cjs"
       }
     },
     "./_global": {
