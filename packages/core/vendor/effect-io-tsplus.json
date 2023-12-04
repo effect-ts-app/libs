@@ -3236,6 +3236,22 @@
       ]
     },
     {
+      "definitionName": "await",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/io/Deferred",
+          "name": "await"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/io/Deferred.Ops",
+          "name": "await"
+        }
+      ]
+    },
+    {
       "definitionName": "complete",
       "definitionKind": "const",
       "extensions": [
@@ -11467,8 +11483,8 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayer"
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effect"
         }
       ]
     },
@@ -11483,8 +11499,8 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerContext"
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effectContext"
         }
       ]
     },
@@ -11499,8 +11515,8 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerDiscard"
+          "typeName": "effect/io/Layer.Ops",
+          "name": "effectDiscard"
         }
       ]
     },
@@ -11515,8 +11531,8 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScoped"
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scoped"
         }
       ]
     },
@@ -11531,8 +11547,8 @@
         },
         {
           "kind": "static",
-          "typeName": "effect/io/Effect.Ops",
-          "name": "toLayerScopedDiscard"
+          "typeName": "effect/io/Layer.Ops",
+          "name": "scopedDiscard"
         }
       ]
     },

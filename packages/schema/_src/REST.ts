@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Erase } from "@effect-app/core/Effect"
 import { Path } from "path-parser"
 
 import { Void } from "./_api.js"
@@ -12,6 +11,8 @@ import { ClassSpecial, setSchema } from "./Class.js"
 import type { ReadMethods, WriteMethods } from "./Methods.js"
 
 import * as Methods from "./Methods.js"
+
+type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
 export type StringRecordSchema = S.Schema<unknown, any, any, StringRecord, any>
 
