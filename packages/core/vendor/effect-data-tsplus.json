@@ -7889,6 +7889,22 @@
       ]
     },
     {
+      "definitionName": "andThen",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/data/Option",
+          "name": "andThen"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/data/Option.Ops",
+          "name": "andThen"
+        }
+      ]
+    },
+    {
       "definitionName": "all",
       "definitionKind": "const",
       "extensions": [
