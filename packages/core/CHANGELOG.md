@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.81.1
+
+### Patch Changes
+
+- 7f946cb: remove obsolete helpers
+
 ## 0.81.0
 
 ### Minor Changes

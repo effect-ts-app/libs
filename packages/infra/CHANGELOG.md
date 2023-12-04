@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.113.2
+
+### Patch Changes
+
+- 7f946cb: remove obsolete helpers
+- Updated dependencies [7f946cb]
+  - @effect-app/prelude@0.88.2
+  - @effect-app/core@0.81.1
+  - @effect-app/infra-adapters@0.70.3
+  - @effect-app/schema@0.79.1
+
 ## 0.113.1
 
 ### Patch Changes
