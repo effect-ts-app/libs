@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.32.0
+
+### Minor Changes
+
+- align v
+
 ## 0.31.0
 
 ### Minor Changes

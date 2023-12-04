@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.30.0
+
+### Minor Changes
+
+- align v
+
 ## 0.29.0
 
 ### Minor Changes
