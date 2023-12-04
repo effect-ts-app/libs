@@ -4858,11 +4858,6 @@
           "name": "flatMap"
         },
         {
-          "typeName": "effect/data/Context/Tag",
-          "kind": "fluent",
-          "name": "accessWithEffect"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "flatMap"
@@ -4894,6 +4889,11 @@
       "definitionName": "andThen",
       "definitionKind": "const",
       "extensions": [
+        {
+          "typeName": "effect/data/Context/Tag",
+          "kind": "fluent",
+          "name": "andThen"
+        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
@@ -5644,11 +5644,6 @@
           "typeName": "effect/data/Context/Tag",
           "kind": "fluent",
           "name": "map"
-        },
-        {
-          "typeName": "effect/data/Context/Tag",
-          "kind": "fluent",
-          "name": "accessWith"
         },
         {
           "kind": "fluent",

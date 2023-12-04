@@ -11,8 +11,6 @@ import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
-import type { ServiceHelpers } from "@effect-app/prelude/service"
-import { TagClassBase } from "@effect-app/prelude/service"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
@@ -24,7 +22,7 @@ export abstract class RepositoryBaseC<
   PM extends { id: string },
   Evt,
   ItemType extends string
-> extends TagClassBase<unknown>() {
+> {
   abstract readonly itemType: ItemType
   abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
   abstract readonly all: Effect<never, never, T[]>
@@ -348,12 +346,11 @@ export function makeStore<
 }
 
 export interface Repos<
-  Service,
   T extends { id: string },
   PM extends { id: string; _etag: string | undefined },
   Evt,
   ItemType extends string
-> extends ServiceHelpers<Service> {
+> {
   make<R = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<R, E, readonly T[]>
@@ -413,7 +410,6 @@ export const RepositoryBaseImpl = <Service>() => {
     & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
     & Tag<Service, Service>
     & Repos<
-      Service,
       T,
       PM,
       Evt,
@@ -451,7 +447,6 @@ export const RepositoryDefaultImpl = <Service>() => {
     ) => RepositoryBaseC2<T, PM, Evt, ItemType>)
     & Tag<Service, Service>
     & Repos<
-      Service,
       T,
       PM,
       Evt,
