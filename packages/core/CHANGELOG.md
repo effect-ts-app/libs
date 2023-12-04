@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.82.0
+
+### Minor Changes
+
+- 4012f97: cleanup legacy
+
 ## 0.81.1
 
 ### Patch Changes

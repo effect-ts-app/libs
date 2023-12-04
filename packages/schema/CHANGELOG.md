@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.80.0
+
+### Minor Changes
+
+- 4012f97: cleanup legacy
+
+### Patch Changes
+
+- Updated dependencies [4012f97]
+  - @effect-app/core@0.82.0
+
 ## 0.79.1
 
 ### Patch Changes
