@@ -18,7 +18,7 @@
     "@types/validator": "^13.11.7",
     "fast-check": "~3.14.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
+    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231204",
     "vitest": "^1.0.1"
   },
   "scripts": {

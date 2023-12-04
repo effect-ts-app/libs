@@ -40,7 +40,7 @@ importers:
         version: /http-proxy-node16@1.0.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -104,10 +104,10 @@ importers:
         version: 20.10.3
       '@typescript-eslint/eslint-plugin':
         specifier: 6.13.2
-        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)
+        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)
       '@typescript-eslint/parser':
         specifier: 6.13.2
-        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       '@typescript-eslint/scope-manager':
         specifier: 6.13.2
         version: 6.13.2(patch_hash=nrjotwpevdhz7eyb6bwy6orwfq)
@@ -161,7 +161,7 @@ importers:
         version: 2.2.3
       madge:
         specifier: ^6.1.0
-        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20231204)
       module-alias:
         specifier: ^2.2.3
         version: 2.2.3
@@ -176,16 +176,16 @@ importers:
         version: 3.0.0
       tsc-watch:
         specifier: ^6.0.4
-        version: 6.0.4(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 6.0.4(@effect-app/typescript@5.4.0-tsplus.20231204)
       tsconfig-paths:
         specifier: ^4.2.0
         version: 4.2.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       typescript-transform-paths:
         specifier: ^3.4.6
-        version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.20231204)
       vite:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@20.10.3)
@@ -210,10 +210,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -238,10 +238,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -289,8 +289,8 @@ importers:
         specifier: ^9.6.0
         version: 9.6.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -308,7 +308,7 @@ importers:
         version: 7.23.5
       '@typescript-eslint/utils':
         specifier: 6.13.2
-        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+        version: 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       eslint-plugin-codegen:
         specifier: 0.17.0
         version: 0.17.0(patch_hash=3ogk7peuefdu45q3hbzcgdiuna)
@@ -345,13 +345,13 @@ importers:
         version: 4.14.202
       madge:
         specifier: 6.1.0
-        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20231204)
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
 
   packages/fluent-extensions:
     dependencies:
@@ -418,10 +418,10 @@ importers:
         version: 3.14.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -524,10 +524,10 @@ importers:
         version: 3.1.2
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -596,8 +596,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       winston:
         specifier: ^3.11.0
         version: 3.11.0
@@ -609,10 +609,10 @@ importers:
         version: 20.10.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -682,10 +682,10 @@ importers:
         version: 3.14.0
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -725,13 +725,13 @@ importers:
         version: 7.40.0(react@18.2.0)
       react-intl:
         specifier: ^6.5.5
-        version: 6.5.5(@effect-app/typescript@5.4.0-tsplus.202311222)(react@18.2.0)
+        version: 6.5.5(@effect-app/typescript@5.4.0-tsplus.20231204)(react@18.2.0)
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -776,8 +776,8 @@ importers:
         specifier: ^9.6.0
         version: 9.6.0
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vitest:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@20.10.3)
@@ -801,7 +801,7 @@ importers:
         version: 0.20.3(@effect/schema@0.51.1)(effect@2.0.0-next.58)
       '@formatjs/intl':
         specifier: ^2.9.9
-        version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.20231204)
       '@fp-ts/optic':
         specifier: ^0.17.0
         version: 0.17.0(patch_hash=ybg5rclpc63jenmzlpxbmrqkr4)(@effect/typeclass@0.16.0)(effect@2.0.0-next.58)
@@ -816,7 +816,7 @@ importers:
         version: 1.0.4(vue@3.3.10)
       vue:
         specifier: ^3.3.10
-        version: 3.3.10(@effect-app/typescript@5.4.0-tsplus.202311222)
+        version: 3.3.10(@effect-app/typescript@5.4.0-tsplus.20231204)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -835,10 +835,10 @@ importers:
         version: 2.2.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3)
+        version: 10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3)
       typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.20231204
+        version: /@effect-app/typescript@5.4.0-tsplus.20231204
       vite:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@20.10.3)
@@ -1594,8 +1594,8 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/typescript@5.4.0-tsplus.202311222:
-    resolution: {integrity: sha512-QZQC5/bU2uG4TUmgCVkEYZM8buFDisGgvuO6NUOXVWZXjQRPkOv4YHlMPBVNi+DmW3k1O7oNWmkHRm7MO+ddNg==}
+  /@effect-app/typescript@5.4.0-tsplus.20231204:
+    resolution: {integrity: sha512-nwxBgi9PKurGx3sxtTVqzlvH4y/UIKAAih0ce0i2lz2cuXW1mKy4QT46bZPMKYh1jfQCfA27QDzQQ6jpzCfjnw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1905,7 +1905,7 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@formatjs/intl@2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /@formatjs/intl@2.9.9(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-JI3CNgL2Zdg5lv9ncT2sYKqbAj2RGrCbdzaCckIxMPxn4QuHuOVvYUGmBAXVusBmfG/0sxLmMrnwnBioz+QKdA==}
     peerDependencies:
       typescript: '5'
@@ -1920,7 +1920,7 @@ packages:
       '@formatjs/intl-listformat': 7.5.3
       intl-messageformat: 10.5.8
       tslib: 2.5.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
 
   /@fp-ts/core@0.0.11:
     resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
@@ -2714,7 +2714,7 @@ packages:
     dependencies:
       '@types/yargs-parser': 21.0.0
 
-  /@typescript-eslint/eslint-plugin@6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0):
+  /@typescript-eslint/eslint-plugin@6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0):
     resolution: {integrity: sha512-3+9OGAWHhk4O1LlcwLBONbdXsAhLjyCFogJY/cWy2lxdVJ2JrcTF2pTGMaLl2AE7U1l31n8Py4a8bx5DLf/0dQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2726,10 +2726,10 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.8.1
-      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       '@typescript-eslint/scope-manager': 6.13.2(patch_hash=nrjotwpevdhz7eyb6bwy6orwfq)
-      '@typescript-eslint/type-utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
-      '@typescript-eslint/utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+      '@typescript-eslint/type-utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
+      '@typescript-eslint/utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       '@typescript-eslint/visitor-keys': 6.13.2
       debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.55.0
@@ -2737,13 +2737,13 @@ packages:
       ignore: 5.2.4
       natural-compare: 1.4.0
       semver: 7.5.4
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311222)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231204)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@typescript-eslint/parser@6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0):
+  /@typescript-eslint/parser@6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0):
     resolution: {integrity: sha512-MUkcC+7Wt/QOGeVlM8aGGJZy1XV5YKjTpq9jK6r6/iLsGXhBVaGP5N0UYvFsu9BFlSpwY9kMretzdBH01rkRXg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2755,11 +2755,11 @@ packages:
     dependencies:
       '@typescript-eslint/scope-manager': 6.13.2(patch_hash=nrjotwpevdhz7eyb6bwy6orwfq)
       '@typescript-eslint/types': 6.13.2
-      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)
+      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)
       '@typescript-eslint/visitor-keys': 6.13.2
       debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.55.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2772,7 +2772,7 @@ packages:
       '@typescript-eslint/visitor-keys': 6.13.2
     patched: true
 
-  /@typescript-eslint/type-utils@6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0):
+  /@typescript-eslint/type-utils@6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0):
     resolution: {integrity: sha512-Qr6ssS1GFongzH2qfnWKkAQmMUyZSyOr0W54nZNU1MDfo+U4Mv3XveeLZzadc/yq8iYhQZHYT+eoXJqnACM1tw==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2782,12 +2782,12 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)
-      '@typescript-eslint/utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)
+      '@typescript-eslint/utils': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.55.0
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311222)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231204)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2848,7 +2848,7 @@ packages:
       - supports-color
     dev: true
 
-  /@typescript-eslint/typescript-estree@6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /@typescript-eslint/typescript-estree@6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-SuD8YLQv6WHnOEtKv8D6HZUzOub855cfPnPMKvdM/Bh1plv1f7Q/0iFUDLKKlxHcEstQnaUU4QZskgQq74t+3w==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2863,12 +2863,12 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
-      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.202311222)
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      ts-api-utils: 1.0.3(@effect-app/typescript@5.4.0-tsplus.20231204)
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/utils@6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0):
+  /@typescript-eslint/utils@6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0):
     resolution: {integrity: sha512-b9Ptq4eAZUym4idijCRzl61oPCwwREcfDI8xGk751Vhzig5fFZR9CyzDz4Sp/nxSLBYxUPyh4QdIDqWykFhNmQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2879,7 +2879,7 @@ packages:
       '@types/semver': 7.5.2
       '@typescript-eslint/scope-manager': 6.13.2(patch_hash=nrjotwpevdhz7eyb6bwy6orwfq)
       '@typescript-eslint/types': 6.13.2
-      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)
+      '@typescript-eslint/typescript-estree': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)
       eslint: 8.55.0
       semver: 7.5.4
     transitivePeerDependencies:
@@ -3074,7 +3074,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.3.10
       '@vue/shared': 3.3.10
-      vue: 3.3.10(@effect-app/typescript@5.4.0-tsplus.202311222)
+      vue: 3.3.10(@effect-app/typescript@5.4.0-tsplus.20231204)
     dev: false
 
   /@vue/shared@3.3.10:
@@ -4731,7 +4731,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       debug: 3.2.7
       eslint: 8.55.0
       eslint-import-resolver-node: 0.3.9
@@ -4771,7 +4771,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(eslint@8.55.0)
+      '@typescript-eslint/parser': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(eslint@8.55.0)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -4835,7 +4835,7 @@ packages:
       '@typescript-eslint/eslint-plugin':
         optional: true
     dependencies:
-      '@typescript-eslint/eslint-plugin': 6.13.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)
+      '@typescript-eslint/eslint-plugin': 6.13.2(@effect-app/typescript@5.4.0-tsplus.20231204)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)
       eslint: 8.55.0
       eslint-rule-composer: 0.3.0
     dev: true
@@ -6543,7 +6543,7 @@ packages:
       lru-cache: 4.0.2
     dev: true
 
-  /madge@6.1.0(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /madge@6.1.0(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-irWhT5RpFOc6lkzGHKLihonCVgM0YtfNUh4IrFeW3EqHpnt/JHUG3z26j8PeJEktCGB4tmGOOOJi1Rl/ACWucQ==}
     engines: {node: '>=14'}
     hasBin: true
@@ -6574,7 +6574,7 @@ packages:
       rc: 1.2.8
       stream-to-array: 2.3.0
       ts-graphviz: 1.5.2
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
       walkdir: 0.4.1
     transitivePeerDependencies:
       - supports-color
@@ -7965,7 +7965,7 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-intl@6.5.5(@effect-app/typescript@5.4.0-tsplus.202311222)(react@18.2.0):
+  /react-intl@6.5.5(@effect-app/typescript@5.4.0-tsplus.20231204)(react@18.2.0):
     resolution: {integrity: sha512-cI5UKvBh4tc1zxLIziHBYGMX3dhYWDEFlvUDVN6NfT2i96zTXz/zH2AmM8+2waqgOhwkFUzd+7kK1G9q7fiC2g==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
@@ -7976,7 +7976,7 @@ packages:
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.0
       '@formatjs/icu-messageformat-parser': 2.7.3
-      '@formatjs/intl': 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
+      '@formatjs/intl': 2.9.9(@effect-app/typescript@5.4.0-tsplus.20231204)
       '@formatjs/intl-displaynames': 6.6.4
       '@formatjs/intl-listformat': 7.5.3
       '@types/hoist-non-react-statics': 3.3.1
@@ -7985,7 +7985,7 @@ packages:
       intl-messageformat: 10.5.8
       react: 18.2.0
       tslib: 2.5.0
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     dev: true
 
   /react-is@16.13.1:
@@ -8875,7 +8875,7 @@ packages:
     peerDependencies:
       vue: '>=3.2.26 < 4'
     dependencies:
-      vue: 3.3.10(@effect-app/typescript@5.4.0-tsplus.202311222)
+      vue: 3.3.10(@effect-app/typescript@5.4.0-tsplus.20231204)
     dev: false
 
   /synckit@0.8.5:
@@ -9035,20 +9035,20 @@ packages:
     resolution: {integrity: sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==}
     dev: true
 
-  /ts-api-utils@1.0.3(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /ts-api-utils@1.0.3(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
     engines: {node: '>=16.13.0'}
     peerDependencies:
       typescript: '>=4.2.0'
     dependencies:
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
 
   /ts-graphviz@1.5.2:
     resolution: {integrity: sha512-/V4N6wIvE+mcQicUfqSNxzFUX4xNccpwi3fGafEUSqGBSZYp9HVP8RZdjTfxCQvTjavxqUrEDB5ucEqKPLgp+w==}
     engines: {node: '>=14.16'}
     dev: true
 
-  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.3):
+  /ts-node@10.9.1(@effect-app/typescript@5.4.0-tsplus.20231204)(@types/node@20.10.3):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -9074,7 +9074,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
@@ -9090,7 +9090,7 @@ packages:
     resolution: {integrity: sha512-6zaET4Gz6/65Zia2jzQkh2v4WJA1NK3IvxXP0GlFkfWL9rwnInIMzQbjDunJb+m22L9S9I4XZVgW6xC+fZ2n6g==}
     dev: true
 
-  /tsc-watch@6.0.4(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /tsc-watch@6.0.4(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-cHvbvhjO86w2aGlaHgSCeQRl+Aqw6X6XN4sQMPZKF88GoP30O+oTuh5lRIJr5pgFWrRpF1AgXnJJ2DoFEIPHyg==}
     engines: {node: '>=12.12.0'}
     hasBin: true
@@ -9101,7 +9101,7 @@ packages:
       node-cleanup: 2.1.2
       ps-tree: 1.2.0
       string-argv: 0.3.1
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     dev: true
 
   /tsconfig-paths@3.14.2:
@@ -9266,13 +9266,13 @@ packages:
       is-typedarray: 1.0.0
     dev: true
 
-  /typescript-transform-paths@3.4.6(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /typescript-transform-paths@3.4.6(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-qdgpCk9oRHkIBhznxaHAapCFapJt5e4FbFik7Y4qdqtp6VyC3smAIPoDEIkjZ2eiF7x5+QxUPYNwJAtw0thsTw==}
     peerDependencies:
       typescript: '>=3.6.5'
     dependencies:
       minimatch: 3.1.2
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     dev: true
 
   /typescript@3.9.10:
@@ -9564,7 +9564,7 @@ packages:
       - terser
     dev: true
 
-  /vue@3.3.10(@effect-app/typescript@5.4.0-tsplus.202311222):
+  /vue@3.3.10(@effect-app/typescript@5.4.0-tsplus.20231204):
     resolution: {integrity: sha512-zg6SIXZdTBwiqCw/1p+m04VyHjLfwtjwz8N57sPaBhEex31ND0RYECVOC1YrRwMRmxFf5T1dabl6SGUbMKKuVw==}
     peerDependencies:
       typescript: '*'
@@ -9577,7 +9577,7 @@ packages:
       '@vue/runtime-dom': 3.3.10
       '@vue/server-renderer': 3.3.10(vue@3.3.10)
       '@vue/shared': 3.3.10
-      typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
+      typescript: /@effect-app/typescript@5.4.0-tsplus.20231204
     dev: false
 
   /walkdir@0.4.1:
