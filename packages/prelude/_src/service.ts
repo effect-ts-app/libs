@@ -51,24 +51,22 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
   }
 }
 
-abstract class TagClassBase {
-  static flatMap<R1, E1, B>(f: (a: unknown) => Effect<R1, E1, B>): Effect<unknown | R1, E1, B> {
-    return Effect.flatMap(this as unknown as Tag<unknown, unknown>, f)
+export const TagClassBase = <Id, Service = Id>() => {
+  abstract class TagClassBase {
+    static readonly andThen = (f: any): any => {
+      return Effect.andThen(this as Service as Tag<Service, Service>, f)
+    }
+    static readonly map = <B>(f: (a: Service) => B): Effect<Service, never, B> => {
+      return Effect.map(this as Service as Tag<Service, Service>, f)
+    }
+    static readonly makeLayer = (svc: Service) => {
+      return Layer.succeed(this as Service as Tag<Service, Service>, svc)
+    }
   }
-  static map<B>(f: (a: unknown) => B): Effect<unknown, never, B> {
-    return Effect.map(this as unknown as Tag<unknown, unknown>, f)
-  }
-  static makeLayer(svc: unknown) {
-    return Layer.succeed(this as unknown as Tag<unknown, unknown>, svc)
-  }
+  return TagClassBase
 }
 export function TagClass<Id, Service = Id>(key?: unknown) {
-  abstract class TagClass extends (TagClassBase as {
-    new(): {}
-    flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B>
-    map<B>(f: (a: Service) => B): Effect<Id, never, B>
-    makeLayer(svc: Service): Layer<never, never, Service>
-  }) {}
+  abstract class TagClass extends TagClassBase<Id, Service>() {}
 
   return assignTag<Id, Service>(key)(TagClass)
 }
@@ -76,18 +74,9 @@ export function TagClass<Id, Service = Id>(key?: unknown) {
 /** @deprecated use `Id` of TagClass for unique id */
 export function ServiceTaggedClass<Id, Service = Id>() {
   return <Key extends PropertyKey>(_: Key) => {
-    abstract class ServiceTaggedClassC {
-      static make(t: Omit<Service, Key>) {
+    abstract class ServiceTaggedClassC extends TagClassBase() {
+      static make = (t: Omit<Service, Key>) => {
         return t as Service
-      }
-      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Id | R1, E1, B> {
-        return Effect.flatMap(this as unknown as Tag<Id, Service>, f)
-      }
-      static map<B>(f: (a: Service) => B): Effect<Id, never, B> {
-        return Effect.map(this as unknown as Tag<Id, Service>, f)
-      }
-      static makeLayer(svc: Service) {
-        return Layer.succeed(this as unknown as Tag<Id, Service>, svc)
       }
     }
 

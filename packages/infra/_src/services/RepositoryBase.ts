@@ -11,6 +11,9 @@ import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
+import { TagClassBase } from "@effect-app/prelude/service"
+import type * as C from "effect/Cause"
+import type { NoInfer } from "effect/Types"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
@@ -22,7 +25,7 @@ export abstract class RepositoryBaseC<
   PM extends { id: string },
   Evt,
   ItemType extends string
-> {
+> extends TagClassBase<unknown>() {
   abstract readonly itemType: ItemType
   abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
   abstract readonly all: Effect<never, never, T[]>
@@ -345,13 +348,13 @@ export function makeStore<
   }
 }
 
-type Repos<
+export interface Repos<
   Service,
   T extends { id: string },
   PM extends { id: string; _etag: string | undefined },
   Evt,
   ItemType extends string
-> = {
+> {
   make<R = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<R, E, readonly T[]>
@@ -392,7 +395,16 @@ type Repos<
     Out
   >
   readonly where: ReturnType<typeof makeWhere<PM>>
-  readonly flatMap: <R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>) => Effect<Service | R1, E1, B>
+  readonly andThen: {
+    <A, X>(
+      f: (a: NoInfer<A>) => X
+    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
+      : Effect<Service, never, X>
+    <X>(f: X): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
+      : Effect<Service, never, X>
+  }
   readonly makeLayer: (svc: Service) => Layer<never, never, Service>
   readonly map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
   readonly type: Repository<T, PM, Evt, ItemType>
@@ -430,18 +442,9 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
-      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
-        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
-      }
-      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
-        return Effect.map(this as unknown as Tag<Service, Service>, f)
-      }
-      static makeLayer(svc: Service) {
-        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
-      }
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-    return assignTag<Service>()(Cls)
+    return assignTag<Service>()(Cls) as any
   }
 }
 
@@ -479,15 +482,6 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
-      static flatMap<R1, E1, B>(f: (a: Service) => Effect<R1, E1, B>): Effect<Service | R1, E1, B> {
-        return Effect.flatMap(this as unknown as Tag<Service, Service>, f)
-      }
-      static map<B>(f: (a: Service) => B): Effect<Service, never, B> {
-        return Effect.map(this as unknown as Tag<Service, Service>, f)
-      }
-      static makeLayer(svc: Service) {
-        return Layer.succeed(this as unknown as Tag<Service, Service>, svc)
-      }
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
