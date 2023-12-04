@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.83.1
+
+### Patch Changes
+
+- 8a81a8f: fix ext
+
 ## 0.83.0
 
 ### Minor Changes
