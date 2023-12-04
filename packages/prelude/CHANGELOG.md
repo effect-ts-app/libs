@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.88.1
+
+### Patch Changes
+
+- 65886f2: fix type sigs
+
 ## 0.88.0
 
 ### Minor Changes

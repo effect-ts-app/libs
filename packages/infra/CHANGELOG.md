@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.113.1
+
+### Patch Changes
+
+- 65886f2: fix type sigs
+- Updated dependencies [65886f2]
+  - @effect-app/prelude@0.88.1
+  - @effect-app/infra-adapters@0.70.2
+
 ## 0.113.0
 
 ### Minor Changes
