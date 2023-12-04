@@ -1,5 +1,12 @@
 # @effect-app/schema
 
+## 0.80.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.83.0
+
 ## 0.80.1
 
 ### Patch Changes
