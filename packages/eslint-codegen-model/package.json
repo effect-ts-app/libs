@@ -19,7 +19,7 @@
     "@typescript-eslint/utils": "6.12.0",
     "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
-    "io-ts": "2.2.20",
+    "io-ts": "2.2.21",
     "io-ts-extra": "0.11.6",
     "js-yaml": "4.1.0",
     "lodash": "4.17.21"

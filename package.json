@@ -71,7 +71,7 @@
         "@phaphoso/eslint-plugin-dprint": "^0.5.2",
         "@tsconfig/strictest": "^2.0.2",
         "@types/lodash": "^4.14.202",
-        "@types/node": "~20.10.2",
+        "@types/node": "~20.10.3",
         "@typescript-eslint/eslint-plugin": "6.12.0",
         "@typescript-eslint/parser": "6.12.0",
         "@typescript-eslint/scope-manager": "6.12.0",
@@ -100,7 +100,7 @@
         "tsconfig-paths": "^4.2.0",
         "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
         "typescript-transform-paths": "^3.4.6",
-        "vite": "^5.0.4",
+        "vite": "^5.0.5",
         "vitest": "^0.34.6"
     }
 }
