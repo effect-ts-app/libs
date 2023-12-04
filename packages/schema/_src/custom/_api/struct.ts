@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
-import { intersect, typedKeysOf } from "@effect-app/core/utils"
 import type { UnionToIntersection } from "@effect-app/core/utils"
+import { intersect, typedKeysOf } from "@effect-app/core/utils"
 import * as HashMap from "effect/HashMap"
 import type { Simplify } from "effect/Types"
 import type * as fc from "fast-check"
 import * as S from "../_schema.js"
+import type { To } from "../_schema.js"
 import type { Annotation } from "../_schema/annotation.js"
 import { augmentRecord } from "../_utils.js"
 import * as Arbitrary from "../Arbitrary.js"
@@ -248,15 +249,36 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   )
 }
 
-export type ToOptionalKeys<Fields extends FieldRecord> = {
+// export type ToOptionalKeys<Fields extends FieldRecord> = {
+//   [K in keyof Fields]: Fields[K] extends Field<any, "optional", any, any> ? K
+//     : never
+// }[keyof Fields]
+
+// export type FromOptionalKeys<Fields> = {
+//   [K in keyof Fields]: Fields[K] extends
+//     | PropertySignature<any, true, any, boolean>
+//     | PropertySignature<never, true, never, boolean> ? K
+//     : never
+// }[keyof Fields]
+
+/**
+ * @since 1.0.0
+ */
+export type ToOptionalKeys<Fields> = {
   [K in keyof Fields]: Fields[K] extends Field<any, "optional", any, any> ? K
     : never
 }[keyof Fields]
 
-export type ToStruct<Fields extends FieldRecord> = Simplify<
-  & { readonly [K in Exclude<keyof Fields, ToOptionalKeys<Fields>>]: S.To<FieldSchema<Fields[K]>> }
-  & { readonly [K in ToOptionalKeys<Fields>]?: S.From<FieldSchema<Fields[K]>> }
-> // UnionToIntersection<
+export type ToStruct<Fields extends FieldRecord> =
+  & { readonly [K in Exclude<keyof Fields, ToOptionalKeys<Fields>>]: To<Fields[K]["_schema"]> }
+  & { readonly [K in ToOptionalKeys<Fields>]?: To<Fields[K]["_schema"]> }
+
+export type DefaultKeys<Fields extends FieldRecord> = {
+  [K in keyof Fields]: Fields[K]["_def"] extends Some<["constructor" | "both", any]> ? K
+    : never
+}[keyof Fields]
+
+// UnionToIntersection<
 //   {
 //     [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
 //           readonly [h in k]?: S.To<Fields[k]["_schema"]>
@@ -268,21 +290,57 @@ export type ToStruct<Fields extends FieldRecord> = Simplify<
 //   }[keyof Fields]
 // >
 
-export type StructConstructor<Fields extends FieldRecord> = Simplify<
-  { readonly [K in keyof Fields]: S.To<FieldSchema<Fields[K]>> }
->
+export type StructConstructor<Fields extends FieldRecord> =
+  & {
+    readonly [K in Exclude<Exclude<keyof Fields, ToOptionalKeys<Fields>>, DefaultKeys<Fields>>]: To<
+      Fields[K]["_schema"]
+    >
+  }
+  & { readonly [K in DefaultKeys<Fields>]?: To<Fields[K]["_schema"]> }
+  & { readonly [K in ToOptionalKeys<Fields>]?: To<Fields[K]["_schema"]> }
+// UnionToIntersection<
+//   {
+//     [k in keyof Fields]: k extends TagsFields<Fields> ? never
+//       : Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
+//             readonly [h in k]?: S.To<Fields[k]["_schema"]>
+//           }
+//         : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
+//             readonly [h in k]?: S.To<Fields[k]["_schema"]>
+//           }
+//         : {
+//           readonly [h in k]: S.To<Fields[k]["_schema"]>
+//         }
+//       : never
+//   }[keyof Fields]
+// >
 
-type FieldSchema<A> = A extends Field<infer Self, any, any, any> ? Self : never
+// type FieldSchema<A> = A extends Field<infer Self, any, any, any> ? Self : never
 
 export type FromOptionalKeys<Fields extends FieldRecord> = {
   [K in keyof Fields]: Fields[K] extends Field<any, "optional", any, any> ? K
     : never
 }[keyof Fields]
 
-export type FromStruct<Fields extends FieldRecord> = Simplify<
-  & { readonly [K in Exclude<keyof Fields, FromOptionalKeys<Fields>>]: S.From<FieldSchema<Fields[K]>> }
-  & { readonly [K in FromOptionalKeys<Fields>]?: S.From<FieldSchema<Fields[K]>> }
-> // UnionToIntersection<
+export type FieldAs<Fields extends FieldRecord, K extends keyof FieldRecord> = Fields[K]["_as"] extends Some<any>
+  ? Fields[K]["_as"]["value"]
+  : K
+
+export type FromStruct<Fields extends FieldRecord> =
+  & {
+    readonly [
+      K in Exclude<keyof Fields, FromOptionalKeys<Fields>> as Fields[K]["_as"] extends Some<any>
+        ? Fields[K]["_as"]["value"]
+        : K
+    ]: To<Fields[K]["_schema"]>
+  }
+  & {
+    readonly [
+      K in FromOptionalKeys<Fields> as Fields[K]["_as"] extends Some<any> ? Fields[K]["_as"]["value"]
+        : K
+    ]?: To<Fields[K]["_schema"]>
+  }
+
+// UnionToIntersection<
 //   {
 //     [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
 //           readonly [
@@ -370,9 +428,9 @@ export const propertiesIdentifier = S.makeAnnotation<{ fields: FieldRecord }>()
 
 export type SchemaProperties<Fields extends FieldRecord> = DefaultSchema<
   unknown,
-  ToStruct<Fields>,
-  StructConstructor<Fields>,
-  FromStruct<Fields>,
+  Simplify<ToStruct<Fields>>,
+  Simplify<StructConstructor<Fields>>,
+  Simplify<FromStruct<Fields>>,
   { fields: Fields }
 >
 
@@ -459,7 +517,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
 
   const hasRequired = required.length > 0
 
-  function guard(_: unknown): _ is ToStruct<Fields> {
+  function guard(_: unknown): _ is Simplify<ToStruct<Fields>> {
     if (typeof _ !== "object" || _ === null) {
       return false
     }
@@ -485,7 +543,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   function parser(
     _: unknown,
     env?: ParserEnv
-  ): Th.These<ParserErrorSpecificStruct<Fields>, ToStruct<Fields>> {
+  ): Th.These<ParserErrorSpecificStruct<Fields>, Simplify<ToStruct<Fields>>> {
     if (typeof _ !== "object" || _ === null) {
       return Th.fail(
         S.compositionE(Chunk(S.prevE(S.leafE(S.unknownRecordE(_)))))
@@ -582,7 +640,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     }
 
     if (errors.isEmpty()) {
-      return Th.succeed(result as ToStruct<Fields>)
+      return Th.succeed(result as Simplify<ToStruct<Fields>>)
     }
 
     const error_ = S.compositionE(Chunk(S.nextE(S.structE(errors))))
@@ -597,11 +655,11 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return Th.warn(result, error)
   }
 
-  function encoder(_: ToStruct<Fields>): FromStruct<Fields> {
+  function encoder(_: Simplify<ToStruct<Fields>>): Simplify<FromStruct<Fields>> {
     const enc = {}
 
     for (const key of keys) {
-      if (key in _) {
+      if (key in (_ as any)) {
         const as = fields[key]._as as Option<string>
         const _as: string = as.getOrElse(() => key)
         enc[_as] = encoders[key](_[key])
@@ -611,7 +669,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     return enc
   }
 
-  function arb(_: typeof fc): fc.Arbitrary<ToStruct<Fields>> {
+  function arb(_: typeof fc): fc.Arbitrary<Simplify<ToStruct<Fields>>> {
     const req = Dictionary.map_(arbitrariesReq, (g) => g(_))
     const par = Dictionary.map_(arbitrariesPar, (g) => g(_))
 
@@ -627,10 +685,10 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
     S.encoder(encoder),
     S.arbitrary(arb),
     S.constructor((_) => {
-      const res = {} as ToStruct<Fields>
-      Object.assign(res, _, tags)
+      const res = {} as Simplify<ToStruct<Fields>>
+      Object.assign(res as any, _, tags)
       for (const [k, v] of defaults) {
-        if (!(k in res) || res[k] === undefined) {
+        if (!(k in (res as any)) || res[k] === undefined) {
           if (v[0] === "constructor" || v[0] === "both") {
             res[k] = v[1]()
           }

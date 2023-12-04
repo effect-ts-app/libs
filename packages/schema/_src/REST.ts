@@ -6,7 +6,7 @@ import { Path } from "path-parser"
 import { Void } from "./_api.js"
 import * as S from "./_schema.js"
 import { schemaField } from "./_schema.js"
-import type { AnyRecord, AnyRecordSchema, Class, GetClassProps, PropsExtensions, StringRecord } from "./Class.js"
+import type { AnyRecord, Class, GetClassProps, PropsExtensions, StringRecord } from "./Class.js"
 import { ClassSpecial, setSchema } from "./Class.js"
 import type { ReadMethods, WriteMethods } from "./Methods.js"
 
@@ -25,9 +25,9 @@ export const reqBrand = Symbol()
 // Actually GET + DELETE
 export interface QueryRequest<
   M,
-  Path extends StringRecordSchema | undefined,
-  Query extends StringRecordSchema | undefined,
-  Headers extends StringRecordSchema | undefined,
+  Path extends S.SchemaAny | undefined,
+  Query extends S.SchemaAny | undefined,
+  Headers extends S.SchemaAny | undefined,
   Self extends S.SchemaAny
 > extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Body: undefined
@@ -43,11 +43,11 @@ export interface QueryRequest<
 // Actually all other methods except GET + DELETE
 export interface BodyRequest<
   M,
-  Path extends StringRecordSchema | undefined,
-  Body extends AnyRecordSchema | undefined,
-  Query extends StringRecordSchema | undefined,
-  Headers extends StringRecordSchema | undefined,
-  Self extends AnyRecordSchema
+  Path extends S.SchemaAny | undefined,
+  Body extends S.SchemaAny | undefined,
+  Query extends S.SchemaAny | undefined,
+  Headers extends S.SchemaAny | undefined,
+  Self extends S.SchemaAny
 > extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Path: Path
   Body: Body
@@ -107,14 +107,14 @@ type OrAny<T> = T extends S.SchemaAny ? T : S.SchemaAny
 // TODO: Somehow ensure that Self and M are related..
 // type Ensure<M, Self extends S.SchemaAny> = M extends S.To<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
-  function a<Headers extends StringRecordSchema>(
+  function a<Headers extends S.SchemaAny>(
     method: ReadMethods,
     path: string,
     _: {
       headers?: Headers
     }
   ): QueryRequest<M, undefined, undefined, Headers, S.SchemaAny>
-  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
+  function a<Path extends S.SchemaAny, Headers extends S.SchemaAny>(
     method: ReadMethods,
     path: string,
     _: {
@@ -122,7 +122,7 @@ export function QueryRequest<M>(__name?: string) {
       path: Path
     }
   ): QueryRequest<M, Path, undefined, Headers, Path>
-  function a<Query extends StringRecordSchema, Headers extends StringRecordSchema>(
+  function a<Query extends S.SchemaAny, Headers extends S.SchemaAny>(
     method: ReadMethods,
     path: string,
     {
@@ -142,7 +142,7 @@ export function QueryRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends S.SchemaAny
   >(
     method: ReadMethods,
     path: string,
@@ -177,9 +177,9 @@ export function QueryRequest<M>(__name?: string) {
     >
   >
   function a<
-    Path extends StringRecordSchema,
-    Query extends StringRecordSchema,
-    Headers extends StringRecordSchema
+    Path extends S.SchemaAny,
+    Query extends S.SchemaAny,
+    Headers extends S.SchemaAny
   >(
     method: ReadMethods,
     path: string,
@@ -215,14 +215,14 @@ export function QueryRequest<M>(__name?: string) {
 }
 
 export function BodyRequest<M>(__name?: string) {
-  function a<Headers extends StringRecordSchema>(
+  function a<Headers extends S.SchemaAny>(
     method: WriteMethods,
     path: string,
     _: {
       headers?: Headers
     }
   ): BodyRequest<M, undefined, undefined, undefined, Headers, S.SchemaAny>
-  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
+  function a<Path extends S.SchemaAny, Headers extends S.SchemaAny>(
     method: WriteMethods,
     path: string,
     _: {
@@ -230,7 +230,7 @@ export function BodyRequest<M>(__name?: string) {
       path: Path
     }
   ): BodyRequest<M, Path, undefined, undefined, Headers, Path>
-  function a<Body extends AnyRecordSchema, Headers extends StringRecordSchema>(
+  function a<Body extends S.SchemaAny, Headers extends S.SchemaAny>(
     method: WriteMethods,
     path: string,
     _: {
@@ -247,7 +247,7 @@ export function BodyRequest<M>(__name?: string) {
     QueryConstructorInput,
     QueryFrom extends StringRecord,
     QueryApi,
-    Headers extends StringRecordSchema
+    Headers extends S.SchemaAny
   >(
     method: WriteMethods,
     path: string,
@@ -291,7 +291,7 @@ export function BodyRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends S.SchemaAny
   >(
     method: WriteMethods,
     path: string,
@@ -335,7 +335,7 @@ export function BodyRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends S.SchemaAny
   >(
     method: WriteMethods,
     path: string,
@@ -383,7 +383,7 @@ export function BodyRequest<M>(__name?: string) {
     QueryConstructorInput,
     QueryFrom extends StringRecord,
     QueryApi,
-    Headers extends StringRecordSchema
+    Headers extends S.SchemaAny
   >(
     method: WriteMethods,
     path: string,
@@ -426,10 +426,10 @@ export function BodyRequest<M>(__name?: string) {
     >
   >
   function a<
-    Path extends StringRecordSchema,
-    Body extends AnyRecordSchema,
-    Query extends StringRecordSchema,
-    Headers extends StringRecordSchema
+    Path extends S.SchemaAny,
+    Body extends S.SchemaAny,
+    Query extends S.SchemaAny,
+    Headers extends S.SchemaAny
   >(
     method: WriteMethods,
     path: string,
@@ -603,6 +603,11 @@ export function parsePathParams<Path extends string>(path: Path) {
   return params
 }
 
+type PP<A extends S.FieldRecord> = {
+  [K in keyof A as A[K] extends S.Schema<any, any, any, StringRecord, any> ? K : never]: A[K] extends
+    S.Schema<any, any, any, StringRecord, any> ? A[K] : never
+}
+
 type BuildRequest<
   Fields extends S.FieldRecord,
   Path extends string,
@@ -615,7 +620,7 @@ type BuildRequest<
   Method extends "GET" | "DELETE" ?
       & QueryRequest<
         M,
-        S.SchemaProperties<Pick<Fields, PathParams<Path>>>,
+        S.SchemaProperties<PP<Pick<Fields, PathParams<Path>>>>,
         S.SchemaProperties<Omit<Fields, PathParams<Path>>>,
         undefined,
         S.SchemaProperties<Fields>

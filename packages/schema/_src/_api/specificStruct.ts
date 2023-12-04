@@ -165,56 +165,50 @@ export type AnySpecificField = SpecificField<any, any, any, any>
 
 export type SpecificFieldRecord = Record<PropertyKey, AnySpecificField>
 
-export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
+export type ToSpecificStruct<Fields extends SpecificFieldRecord> = UnionToIntersection<
+  {
+    [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
+          readonly [h in k]?: S.To<Fields[k]["_schema"]>
+        }
+      : {
+        readonly [h in k]: S.To<Fields[k]["_schema"]>
+      }
+      : never
+  }[keyof Fields]
+>
+
+export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = UnionToIntersection<
+  {
+    [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
+      : Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
+            readonly [h in k]?: S.To<Fields[k]["_schema"]>
+          }
+        : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
             readonly [h in k]?: S.To<Fields[k]["_schema"]>
           }
         : {
           readonly [h in k]: S.To<Fields[k]["_schema"]>
         }
-        : never
-    }[keyof Fields]
-  >
+      : never
+  }[keyof Fields]
 >
 
-export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
-        : Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
-            }
-          : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
-            }
-          : {
-            readonly [h in k]: S.To<Fields[k]["_schema"]>
-          }
-        : never
-    }[keyof Fields]
-  >
->
-
-export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.From<Fields[k]["_schema"]>
-          }
-        : {
+export type FromSpecificStruct<Fields extends SpecificFieldRecord> = UnionToIntersection<
+  {
+    [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
           readonly [
             h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: S.From<Fields[k]["_schema"]>
+          ]?: S.From<Fields[k]["_schema"]>
         }
-        : never
-    }[keyof Fields]
-  >
+      : {
+        readonly [
+          h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+            : k
+        ]: S.From<Fields[k]["_schema"]>
+      }
+      : never
+  }[keyof Fields]
 >
 
 export type HasRequiredSpecificField<Fields extends SpecificFieldRecord> = unknown extends {
@@ -628,30 +622,28 @@ export function specificStructOmit<
   }
 }
 
-export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.To<Fields[k]["_schema"]>
-          }
-        : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.To<Fields[k]["_schema"]>
-          }
-        : {
+export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = UnionToIntersection<
+  {
+    [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
           readonly [
             h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: S.To<Fields[k]["_schema"]>
+          ]?: S.To<Fields[k]["_schema"]>
         }
-        : never
-    }[keyof Fields]
-  >
+      : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
+          readonly [
+            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+              : k
+          ]?: S.To<Fields[k]["_schema"]>
+        }
+      : {
+        readonly [
+          h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+            : k
+        ]: S.To<Fields[k]["_schema"]>
+      }
+      : never
+  }[keyof Fields]
 >
 
 type IsAnyOrUnknown<T> = any extends T ? never : T
@@ -659,39 +651,37 @@ type AorB<A, B> = IsAnyOrUnknown<A> extends never ? B : A
 
 export type ParserInputFromParserInputOrStructFrom<
   Fields extends SpecificFieldRecord
-> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: AorB<
-              S.ParserInputOf<Fields[k]["_schema"]>,
-              S.From<Fields[k]["_schema"]>
-            >
-          }
-        : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: AorB<
-              S.ParserInputOf<Fields[k]["_schema"]>,
-              S.From<Fields[k]["_schema"]>
-            >
-          }
-        : {
+> = UnionToIntersection<
+  {
+    [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
           readonly [
             h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: AorB<
+          ]?: AorB<
             S.ParserInputOf<Fields[k]["_schema"]>,
             S.From<Fields[k]["_schema"]>
           >
         }
-        : never
-    }[keyof Fields]
-  >
+      : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
+          readonly [
+            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+              : k
+          ]?: AorB<
+            S.ParserInputOf<Fields[k]["_schema"]>,
+            S.From<Fields[k]["_schema"]>
+          >
+        }
+      : {
+        readonly [
+          h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+            : k
+        ]: AorB<
+          S.ParserInputOf<Fields[k]["_schema"]>,
+          S.From<Fields[k]["_schema"]>
+        >
+      }
+      : never
+  }[keyof Fields]
 >
 
 export type ParserInputFromParserInputOrFromSchema<T> = T extends {
@@ -700,30 +690,28 @@ export type ParserInputFromParserInputOrFromSchema<T> = T extends {
   : never
   : never
 
-export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Simplify<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.From<Fields[k]["_schema"]>
-          }
-        : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.From<Fields[k]["_schema"]>
-          }
-        : {
+export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = UnionToIntersection<
+  {
+    [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
           readonly [
             h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
               : k
-          ]: S.From<Fields[k]["_schema"]>
+          ]?: S.From<Fields[k]["_schema"]>
         }
-        : never
-    }[keyof Fields]
-  >
+      : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
+          readonly [
+            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+              : k
+          ]?: S.From<Fields[k]["_schema"]>
+        }
+      : {
+        readonly [
+          h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+            : k
+        ]: S.From<Fields[k]["_schema"]>
+      }
+      : never
+  }[keyof Fields]
 >
 
 export type ParserInputFromFromSchema<T> = T extends {
