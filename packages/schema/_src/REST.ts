@@ -14,7 +14,12 @@ import * as Methods from "./Methods.js"
 
 type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
 
-export type StringRecordSchema = S.Schema<unknown, any, any, StringRecord, any>
+/**
+ * In later typescript versions constraining to StringRecord is a problem.
+ * It may actually expose an earlier bug, because the compiler can't actually verify the values of filtered keys being StringRecord.
+ * Should rethink this all when rebasing on latest effect/schema.
+ */
+export type StringRecordSchema = S.SchemaAny // S.Schema<unknown, any, any, StringRecord, any>
 
 const RequestTag = Tag<never, never>()
 
