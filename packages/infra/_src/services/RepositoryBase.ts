@@ -11,9 +11,8 @@ import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
+import type { ServiceHelpers } from "@effect-app/prelude/service"
 import { TagClassBase } from "@effect-app/prelude/service"
-import type * as C from "effect/Cause"
-import type { NoInfer } from "effect/Types"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 
@@ -354,7 +353,7 @@ export interface Repos<
   PM extends { id: string; _etag: string | undefined },
   Evt,
   ItemType extends string
-> {
+> extends ServiceHelpers<Service> {
   make<R = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<R, E, readonly T[]>
@@ -395,18 +394,6 @@ export interface Repos<
     Out
   >
   readonly where: ReturnType<typeof makeWhere<PM>>
-  readonly andThen: {
-    <A, X>(
-      f: (a: NoInfer<A>) => X
-    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
-      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
-      : Effect<Service, never, X>
-    <X>(f: X): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
-      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
-      : Effect<Service, never, X>
-  }
-  readonly makeLayer: (svc: Service) => Layer<never, never, Service>
-  readonly map: <B>(f: (a: Service) => B) => Effect<Service, never, B>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 

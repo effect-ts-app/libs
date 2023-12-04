@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
 /**
  * We're doing the long way around here with assignTag, TagBase & TagBaseTagged,
  * because there's a typescript compiler issue where it will complain about Equal.symbol, and Hash.symbol not being accessible.
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
+import type * as C from "effect/Cause"
 import type { TagTypeId as TagTypeIdOriginal } from "effect/Context"
 
 export const ServiceTag = Symbol()
@@ -51,6 +54,20 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
   }
 }
 
+export interface ServiceHelpers<Id, Service = Id> {
+  readonly andThen: {
+    <X>(
+      f: (a: Service) => X
+    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
+      : Effect<Service, never, X>
+    <X>(f: X): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<Service | R1, E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<Service, C.UnknownException, A1>
+      : Effect<Service, never, X>
+  }
+  readonly makeLayer: (svc: Service) => Layer<never, never, Service>
+}
+
 export const TagClassBase = <Id, Service = Id>() => {
   abstract class TagClassBase {
     static readonly andThen = (f: any): any => {
@@ -63,7 +80,7 @@ export const TagClassBase = <Id, Service = Id>() => {
       return Layer.succeed(this as Service as Tag<Service, Service>, svc)
     }
   }
-  return TagClassBase
+  return TagClassBase as ServiceHelpers<Id, Service> & (abstract new() => {})
 }
 export function TagClass<Id, Service = Id>(key?: unknown) {
   abstract class TagClass extends TagClassBase<Id, Service>() {}
