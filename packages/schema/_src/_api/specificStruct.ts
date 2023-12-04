@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
-import type { Compute, UnionToIntersection } from "@effect-app/core/utils"
+import type { UnionToIntersection } from "@effect-app/core/utils"
 import { intersect } from "@effect-app/core/utils"
 import * as HashMap from "effect/HashMap"
 import type * as fc from "fast-check"
 
+import type { Simplify } from "effect/Types"
 import * as S from "../custom.js"
 import type { Annotation } from "../custom/_schema/annotation.js"
 import { augmentRecord } from "../custom/_utils.js"
@@ -164,7 +165,7 @@ export type AnySpecificField = SpecificField<any, any, any, any>
 
 export type SpecificFieldRecord = Record<PropertyKey, AnySpecificField>
 
-export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
+export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
@@ -175,11 +176,10 @@ export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
-export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
+export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
@@ -194,11 +194,10 @@ export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Comp
           }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
-export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
+export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
@@ -215,8 +214,7 @@ export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
 export type HasRequiredSpecificField<Fields extends SpecificFieldRecord> = unknown extends {
@@ -588,13 +586,12 @@ export function specificStructPick<
 >(...ks: KS) {
   return (
     self: Fields
-  ): Compute<
+  ): Simplify<
     UnionToIntersection<
       {
         [k in keyof Fields]: k extends KS[number] ? { [h in k]: Fields[h] } : never
       }[keyof Fields]
-    >,
-    "flat"
+    >
   > => {
     const newProps = {}
     for (const k of Object.keys(self)) {
@@ -613,13 +610,12 @@ export function specificStructOmit<
 >(...ks: KS) {
   return (
     self: Fields
-  ): Compute<
+  ): Simplify<
     UnionToIntersection<
       {
         [k in keyof Fields]: k extends KS[number] ? never : { [h in k]: Fields[h] }
       }[keyof Fields]
-    >,
-    "flat"
+    >
   > => {
     const newProps = {}
     for (const k of Object.keys(self)) {
@@ -632,7 +628,7 @@ export function specificStructOmit<
   }
 }
 
-export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
+export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
@@ -655,8 +651,7 @@ export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = 
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
 type IsAnyOrUnknown<T> = any extends T ? never : T
@@ -664,7 +659,7 @@ type AorB<A, B> = IsAnyOrUnknown<A> extends never ? B : A
 
 export type ParserInputFromParserInputOrStructFrom<
   Fields extends SpecificFieldRecord
-> = Compute<
+> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
@@ -696,8 +691,7 @@ export type ParserInputFromParserInputOrStructFrom<
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
 export type ParserInputFromParserInputOrFromSchema<T> = T extends {
@@ -706,7 +700,7 @@ export type ParserInputFromParserInputOrFromSchema<T> = T extends {
   : never
   : never
 
-export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Compute<
+export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
@@ -729,8 +723,7 @@ export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Comp
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
 export type ParserInputFromFromSchema<T> = T extends {

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Dictionary from "@effect-app/core/Dictionary"
 import { pipe } from "@effect-app/core/Function"
 import { intersect, typedKeysOf } from "@effect-app/core/utils"
-import type { Compute, UnionToIntersection } from "@effect-app/core/utils"
+import type { UnionToIntersection } from "@effect-app/core/utils"
 import * as HashMap from "effect/HashMap"
+import type { Simplify } from "effect/Types"
 import type * as fc from "fast-check"
 import * as S from "../_schema.js"
 import type { Annotation } from "../_schema/annotation.js"
@@ -246,60 +248,57 @@ export function toProps<ProvidedProps extends PropertyOrSchemaRecord = {}>(props
   )
 }
 
-export type ToStruct<Fields extends FieldRecord> = Compute<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [h in k]?: S.To<Fields[k]["_schema"]>
-          }
-        : {
-          readonly [h in k]: S.To<Fields[k]["_schema"]>
-        }
-        : never
-    }[keyof Fields]
-  >,
-  "flat"
+export type ToOptionalKeys<Fields extends FieldRecord> = {
+  [K in keyof Fields]: Fields[K] extends Field<any, "optional", any, any> ? K
+    : never
+}[keyof Fields]
+
+export type ToStruct<Fields extends FieldRecord> = Simplify<
+  & { readonly [K in Exclude<keyof Fields, ToOptionalKeys<Fields>>]: S.To<FieldSchema<Fields[K]>> }
+  & { readonly [K in ToOptionalKeys<Fields>]?: S.From<FieldSchema<Fields[K]>> }
+> // UnionToIntersection<
+//   {
+//     [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
+//           readonly [h in k]?: S.To<Fields[k]["_schema"]>
+//         }
+//       : {
+//         readonly [h in k]: S.To<Fields[k]["_schema"]>
+//       }
+//       : never
+//   }[keyof Fields]
+// >
+
+export type StructConstructor<Fields extends FieldRecord> = Simplify<
+  { readonly [K in keyof Fields]: S.To<FieldSchema<Fields[K]>> }
 >
 
-export type StructConstructor<Fields extends FieldRecord> = Compute<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: k extends TagsFields<Fields> ? never
-        : Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
-            }
-          : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
-            }
-          : {
-            readonly [h in k]: S.To<Fields[k]["_schema"]>
-          }
-        : never
-    }[keyof Fields]
-  >,
-  "flat"
->
+type FieldSchema<A> = A extends Field<infer Self, any, any, any> ? Self : never
 
-export type FromStruct<Fields extends FieldRecord> = Compute<
-  UnionToIntersection<
-    {
-      [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [
-              h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-                : k
-            ]?: S.From<Fields[k]["_schema"]>
-          }
-        : {
-          readonly [
-            h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
-              : k
-          ]: S.From<Fields[k]["_schema"]>
-        }
-        : never
-    }[keyof Fields]
-  >,
-  "flat"
->
+export type FromOptionalKeys<Fields extends FieldRecord> = {
+  [K in keyof Fields]: Fields[K] extends Field<any, "optional", any, any> ? K
+    : never
+}[keyof Fields]
+
+export type FromStruct<Fields extends FieldRecord> = Simplify<
+  & { readonly [K in Exclude<keyof Fields, FromOptionalKeys<Fields>>]: S.From<FieldSchema<Fields[K]>> }
+  & { readonly [K in FromOptionalKeys<Fields>]?: S.From<FieldSchema<Fields[K]>> }
+> // UnionToIntersection<
+//   {
+//     [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
+//           readonly [
+//             h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+//               : k
+//           ]?: S.From<Fields[k]["_schema"]>
+//         }
+//       : {
+//         readonly [
+//           h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
+//             : k
+//         ]: S.From<Fields[k]["_schema"]>
+//       }
+//       : never
+//   }[keyof Fields]
+// >
 
 export type HasRequiredField<Fields extends FieldRecord> = unknown extends {
   [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "required" ? unknown
@@ -650,13 +649,12 @@ export function pickProps<Fields extends FieldRecord, KS extends (keyof Fields)[
 ) {
   return (
     self: Fields
-  ): Compute<
+  ): Simplify<
     UnionToIntersection<
       {
         [k in keyof Fields]: k extends KS[number] ? { [h in k]: Fields[h] } : never
       }[keyof Fields]
-    >,
-    "flat"
+    >
   > => {
     const newProps = {}
     for (const k of Object.keys(self)) {
@@ -674,13 +672,12 @@ export function omitProps<Fields extends FieldRecord, KS extends (keyof Fields)[
 ) {
   return (
     self: Fields
-  ): Compute<
+  ): Simplify<
     UnionToIntersection<
       {
         [k in keyof Fields]: k extends KS[number] ? never : { [h in k]: Fields[h] }
       }[keyof Fields]
-    >,
-    "flat"
+    >
   > => {
     const newProps = {}
     for (const k of Object.keys(self)) {
@@ -693,7 +690,7 @@ export function omitProps<Fields extends FieldRecord, KS extends (keyof Fields)[
   }
 }
 
-export type ParserInputSpecificStruct<Fields extends FieldRecord> = Compute<
+export type ParserInputSpecificStruct<Fields extends FieldRecord> = Simplify<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
@@ -716,8 +713,7 @@ export type ParserInputSpecificStruct<Fields extends FieldRecord> = Compute<
         }
         : never
     }[keyof Fields]
-  >,
-  "flat"
+  >
 >
 
 type Optionality = "parser" | "constructor" | "both"
