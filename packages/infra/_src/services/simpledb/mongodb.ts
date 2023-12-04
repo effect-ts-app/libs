@@ -80,7 +80,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                 Effect
                   .tryPromise(() =>
                     db.collection(type).replaceOne(
-                      { _id: record.id, version: currentVersion },
+                      { _id: record.id as any, version: currentVersion },
                       {
                         version,
                         timestamp: new Date(),
