@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.80.5
+
+### Patch Changes
+
+- f6e1e15: tsp upd
+
 ## 0.80.4
 
 ### Patch Changes
