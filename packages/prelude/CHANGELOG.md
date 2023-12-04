@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.88.0
+
+### Minor Changes
+
+- 16ffb5e: class service/repo support andThen, drop flatMap
+
 ## 0.87.0
 
 ### Minor Changes

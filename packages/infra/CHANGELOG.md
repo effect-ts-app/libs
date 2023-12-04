@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.113.0
+
+### Minor Changes
+
+- 16ffb5e: class service/repo support andThen, drop flatMap
+
+### Patch Changes
+
+- Updated dependencies [16ffb5e]
+  - @effect-app/prelude@0.88.0
+  - @effect-app/infra-adapters@0.70.1
+
 ## 0.112.0
 
 ### Minor Changes
