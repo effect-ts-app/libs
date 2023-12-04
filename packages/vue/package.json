@@ -23,7 +23,7 @@
     "@types/node": "~20.10.3",
     "json5": "^2.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20231204",
+    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
     "vite": "^5.0.5",
     "vitest": "^1.0.1"
   },
