@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.82.1
+
+### Patch Changes
+
+- fix typo
+
 ## 0.82.0
 
 ### Minor Changes

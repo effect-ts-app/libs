@@ -3240,7 +3240,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "getter",
           "typeName": "effect/io/Deferred",
           "name": "await"
         },
