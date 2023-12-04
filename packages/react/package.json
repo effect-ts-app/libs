@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/react",
-  "version": "0.58.7",
+  "version": "0.58.8",
   "license": "MIT",
   "type": "module",
   "scripts": {
