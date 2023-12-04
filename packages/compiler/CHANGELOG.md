@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.40.0
+
+### Minor Changes
+
+- align v
+
 ## 0.39.0
 
 ### Minor Changes

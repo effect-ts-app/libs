@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/vue",
-  "version": "0.71.16",
+  "version": "0.72.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {

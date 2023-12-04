@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.80.0
+
+### Minor Changes
+
+- align v
+
 ## 0.79.1
 
 ### Patch Changes

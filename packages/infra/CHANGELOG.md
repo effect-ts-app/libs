@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.111.0
+
+### Minor Changes
+
+- align v
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.80.0
+  - @effect-app/infra-adapters@0.69.0
+  - @effect-app/prelude@0.86.0
+  - @effect-app/schema@0.78.0
+
 ## 0.110.0
 
 ### Minor Changes
