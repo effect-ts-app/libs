@@ -2196,6 +2196,17 @@
       ]
     },
     {
+      "definitionName": "Class",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "static",
+          "typeName": "effect/data/Data.Ops",
+          "name": "Class"
+        }
+      ]
+    },
+    {
       "definitionName": "TaggedClass",
       "definitionKind": "const",
       "extensions": [
@@ -3846,7 +3857,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/Equal/symbol.Ops",
+          "typeName": "effect/data/Equal.Ops",
           "name": "symbol"
         }
       ]
@@ -4144,17 +4155,6 @@
           "kind": "static",
           "typeName": "effect/data/Equivalence.Ops",
           "name": "struct"
-        }
-      ]
-    },
-    {
-      "definitionName": "symbol",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "static",
-          "typeName": "effect/data/Equivalence.Ops",
-          "name": "symbol"
         }
       ]
     },
@@ -4648,7 +4648,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/data/Hash/symbol.Ops",
+          "typeName": "effect/data/Hash.Ops",
           "name": "symbol"
         }
       ]
