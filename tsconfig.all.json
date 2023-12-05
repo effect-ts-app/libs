@@ -32,9 +32,6 @@
       "path": "packages/vue"
     },
     {
-      "path": "packages/react"
-    },
-    {
       "path": "packages/fluent-extensions"
     },
   ]
