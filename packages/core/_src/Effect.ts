@@ -2,8 +2,8 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import * as Fiber from "effect/Fiber"
 import * as Def from "effect/Deferred"
+import * as Fiber from "effect/Fiber"
 import { Option } from "effect/Option"
 import { curry, pipe } from "./Function.js"
 
@@ -129,7 +129,6 @@ export function ifDiff<I, R, E, A>(n: I, orig: I) {
  * @tsplus getter effect/io/Deferred await
  */
 export const await_ = Def.await
-
 
 /**
  * Ref has atomic modify support if synchronous, for Effect we need a Semaphore.

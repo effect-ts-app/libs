@@ -1,8 +1,8 @@
 import * as Chunk from "effect/Chunk"
-import { SecretTypeId } from "effect/Secret"
 import * as EQ from "effect/Equal"
 import { pipe } from "effect/Function"
 import * as Hash from "effect/Hash"
+import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"
 
 /** @internal */
