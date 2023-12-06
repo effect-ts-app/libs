@@ -6,6 +6,7 @@ import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import type * as Option from "effect/Option"
+import type { Simplify } from "effect/Types"
 
 export type Id<A> = A
 export interface Constructor<in out A extends B.Brand<any>> {
@@ -41,8 +42,10 @@ export const fromBrand = <C extends Brand.Brand<string | symbol>>(
 }
 
 export type Brands2<P> = P extends B.Brand<any> ? {
-    readonly [B.BrandTypeId]: UnionToIntersection3<
-      Test<P>
+    readonly [B.BrandTypeId]: Simplify<
+      UnionToIntersection2<
+        Test<P>
+      >
     >
   }
   : never
@@ -64,7 +67,7 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
   A
 > => B.nominal<A>() as any
 
-// type GetKeys<U> = U extends Record<infer K, any> ? K : never
-// type UnionToIntersection2<U extends object> = {
-//   [K in GetKeys<U>]: U extends Record<K, infer T> ? T : never
-// }
+type GetKeys<U> = U extends Record<infer K, any> ? K : never
+type UnionToIntersection2<U extends object> = {
+  readonly [K in GetKeys<U>]: U extends Record<K, infer T> ? T : never
+}
