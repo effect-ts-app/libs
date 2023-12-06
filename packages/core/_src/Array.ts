@@ -19,19 +19,19 @@ export function toArray<A>(
 }
 
 /** @tsplus getter ReadonlyArray flatten */
-export const flane: <A>(self: NonEmptyReadonlyArray<NonEmptyReadonlyArray<A>>) => NonEmptyArray<A> =
-  ReadonlyArray.flatten
+export const flane: <A>(self: NonEmptyReadonlyArray<NonEmptyReadonlyArray<A>>) => NonEmptyArray<A> = ROArray.flatten
 
 /** @tsplus getter ReadonlyArray flatten */
-export const fla: <A>(self: ReadonlyArray<ReadonlyArray<A>>) => Array<A> = ReadonlyArray.flatten
+export const fla: <A>(self: ReadonlyArray<ReadonlyArray<A>>) => Array<A> = ROArray.flatten
 
 /** @tsplus pipeable ReadonlyArray sortBy */
 export const sortByne: <B>(
   ...orders: ReadonlyArray<Order<B>>
-) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ReadonlyArray.sortBy
+) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ROArray.sortBy as any
 
 /** @tsplus pipeable Iterable sortBy */
-export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ROArray.sortBy
+export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ROArray
+  .sortBy as any
 
 /**
  * Remove duplicates from an array, keeping the first occurrence of an element.

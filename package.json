@@ -7,8 +7,8 @@
       "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-      "@fp-ts/optic@0.17.0": "patches/@fp-ts__optic@0.17.0.patch",
-      "@typescript-eslint/scope-manager@6.13.2": "patches/@typescript-eslint__scope-manager@6.13.2.patch"
+      "@typescript-eslint/scope-manager@6.13.2": "patches/@typescript-eslint__scope-manager@6.13.2.patch",
+      "@fp-ts/optic@0.19.0": "patches/@fp-ts__optic@0.19.0.patch"
     }
   },
   "scripts": {
@@ -100,7 +100,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
     "typescript-transform-paths": "^3.4.6",
-    "vite": "^5.0.5",
+    "vite": "^5.0.6",
     "vitest": "^1.0.1"
   }
 }
