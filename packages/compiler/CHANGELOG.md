@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.42.0
+
+### Minor Changes
+
+- ac36723: update dependencies
+
 ## 0.41.0
 
 ### Minor Changes

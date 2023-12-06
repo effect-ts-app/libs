@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.84.0
+
+### Minor Changes
+
+- ac36723: update dependencies
+
 ## 0.83.3
 
 ### Patch Changes

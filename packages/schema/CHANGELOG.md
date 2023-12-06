@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.82.0
+
+### Minor Changes
+
+- ac36723: update dependencies
+
+### Patch Changes
+
+- Updated dependencies [ac36723]
+  - @effect-app/core@0.84.0
+
 ## 0.81.0
 
 ### Minor Changes

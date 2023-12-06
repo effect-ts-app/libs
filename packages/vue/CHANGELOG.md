@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.74.0
+
+### Minor Changes
+
+- ac36723: update dependencies
+
+### Patch Changes
+
+- Updated dependencies [ac36723]
+  - @effect-app/prelude@0.90.0
+  - @effect-app/schema@0.82.0
+  - @effect-app/core@0.84.0
+  - @effect-app/vue@0.74.0
+
 ## 0.73.11
 
 ### Patch Changes

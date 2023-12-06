@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/core",
-  "version": "0.83.3",
+  "version": "0.84.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
