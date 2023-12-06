@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.81.0
+
+### Minor Changes
+
+- da80c66: feat: add literalNumber
+
 ## 0.80.6
 
 ### Patch Changes

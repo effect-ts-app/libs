@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.89.0
+
+### Minor Changes
+
+- da80c66: feat: add literalNumber
+
+### Patch Changes
+
+- Updated dependencies [da80c66]
+  - @effect-app/schema@0.81.0
+
 ## 0.88.9
 
 ### Patch Changes
