@@ -288,11 +288,32 @@ export class LiteralE<KS extends readonly string[]> extends Data.TaggedError("Li
   }
 }
 
+export class LiteralNumberE<KS extends readonly number[]> extends Data.TaggedError("Literal")<{
+  readonly actual: unknown
+  readonly literals: KS
+}> implements HasDefaultLeafE, Actual<unknown> {
+  readonly [defaultLeafSymbol] = defaultLeafSymbol
+
+  get [toTreeSymbol]() {
+    return tree(
+      `cannot process ${JSON.stringify(this.actual)}, expected one of `
+        + this.literals.join(", ")
+    )
+  }
+}
+
 export function literalE<KS extends readonly string[]>(
   literals: KS,
   actual: unknown
 ): LiteralE<KS> {
   return new LiteralE({ literals, actual })
+}
+
+export function literalNumberE<KS extends readonly number[]>(
+  literals: KS,
+  actual: unknown
+): LiteralNumberE<KS> {
+  return new LiteralNumberE({ literals, actual })
 }
 
 export class InvalidIntegerE extends Data.TaggedError("NotInteger")<{

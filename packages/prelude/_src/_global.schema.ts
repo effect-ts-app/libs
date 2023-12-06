@@ -28,6 +28,7 @@ import {
   inputDate,
   json,
   literal,
+  literalNumber,
   named,
   nonEmptyArray,
   NonEmptyString255,

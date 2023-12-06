@@ -552,6 +552,16 @@
         "default": "./_cjs/custom/_api/literal.cjs"
       }
     },
+    "./custom/_api/literalNumber": {
+      "import": {
+        "types": "./dist/custom/_api/literalNumber.d.ts",
+        "default": "./dist/custom/_api/literalNumber.js"
+      },
+      "require": {
+        "types": "./dist/custom/_api/literalNumber.d.ts",
+        "default": "./_cjs/custom/_api/literalNumber.cjs"
+      }
+    },
     "./custom/_api/model": {
       "import": {
         "types": "./dist/custom/_api/model.d.ts",
