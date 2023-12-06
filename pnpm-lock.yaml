@@ -27,6 +27,9 @@ patchedDependencies:
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
+  fast-check@3.14.0:
+    hash: gmhutzas2jzobvkhr72gjyjori
+    path: patches/fast-check@3.14.0.patch
 
 importers:
 
@@ -777,7 +780,7 @@ importers:
         version: 13.11.7
       fast-check:
         specifier: ~3.14.0
-        version: 3.14.0
+        version: 3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-toolbelt:
         specifier: ^9.6.0
         version: 9.6.0
@@ -1664,7 +1667,7 @@ packages:
       fast-check: ^3.13.2
     dependencies:
       effect: 2.0.0-next.62
-      fast-check: 3.14.0
+      fast-check: 3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
   /@effect/schema@0.56.0(effect@2.0.0-next.62)(fast-check@3.15.0):
@@ -5146,11 +5149,12 @@ packages:
       tmp: 0.0.33
     dev: true
 
-  /fast-check@3.14.0:
+  /fast-check@3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori):
     resolution: {integrity: sha512-9Z0zqASzDNjXBox/ileV/fd+4P+V/f3o4shM6QawvcdLFh8yjPG4h5BrHUZ8yzY6amKGDTAmRMyb/JZqe+dCgw==}
     engines: {node: '>=8.0.0'}
     dependencies:
       pure-rand: 6.0.4
+    patched: true
 
   /fast-check@3.15.0:
     resolution: {integrity: sha512-iBz6c+EXL6+nI931x/sbZs1JYTZtLG6Cko0ouS8LRTikhDR7+wZk4TYzdRavlnByBs2G6+nuuJ7NYL9QplNt8Q==}
