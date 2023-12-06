@@ -15,7 +15,7 @@ export interface SendgridConfig {
   subjectPrefix: string
   realMail: boolean
   defaultFrom: Email | { name?: NonEmptyString255; email: Email }
-  apiKey: ConfigSecret
+  apiKey: Secret
 }
 export type EmailMsg = sgMail.MailDataRequired
 export type EmailTemplateMsg = MailData & { templateId: string }

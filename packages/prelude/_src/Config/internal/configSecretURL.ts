@@ -1,34 +1,34 @@
 import * as Chunk from "effect/Chunk"
-import { ConfigSecretTypeId } from "effect/ConfigSecret"
+import { SecretTypeId } from "effect/Secret"
 import * as EQ from "effect/Equal"
 import { pipe } from "effect/Function"
 import * as Hash from "effect/Hash"
-import type * as ConfigSecretURL from "../SecretURL.js"
+import type * as SecretURL from "../SecretURL.js"
 
 /** @internal */
-const ConfigSecretURLSymbolKey = "effect/ConfigSecret" // "@effect-app/prelude/COnfigSecretURL"
+const SecretURLSymbolKey = "effect/Secret" // "@effect-app/prelude/COnfigSecretURL"
 
 /** @internal */
 export const proto = {
-  [ConfigSecretTypeId]: ConfigSecretTypeId,
-  [Hash.symbol](this: ConfigSecretURL.ConfigSecretURL): number {
+  [SecretTypeId]: SecretTypeId,
+  [Hash.symbol](this: SecretURL.SecretURL): number {
     return pipe(
-      Hash.hash(ConfigSecretURLSymbolKey),
+      Hash.hash(SecretURLSymbolKey),
       Hash.combine(Hash.hash(this.raw))
     )
   },
-  [EQ.symbol](this: ConfigSecretURL.ConfigSecretURL, that: unknown): boolean {
-    return isConfigSecretURL(that) && Equal.equals(this.raw, that.raw)
+  [EQ.symbol](this: SecretURL.SecretURL, that: unknown): boolean {
+    return isSecretURL(that) && Equal.equals(this.raw, that.raw)
   }
 }
 
 /** @internal */
-export const isConfigSecretURL = (u: unknown): u is ConfigSecretURL.ConfigSecretURL => {
-  return typeof u === "object" && u != null && ConfigSecretTypeId in u
+export const isSecretURL = (u: unknown): u is SecretURL.SecretURL => {
+  return typeof u === "object" && u != null && SecretTypeId in u
 }
 
 /** @internal */
-export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
+export const make = (bytes: Array<number>): SecretURL.SecretURL => {
   const secret = Object.create(proto)
   let protocol = "unknown"
   try {
@@ -44,7 +44,7 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
     enumerable: false,
     value() {
       return ({
-        _tag: "ConfigSecretURL",
+        _tag: "SecretURL",
         protocol
       })
     }
@@ -52,7 +52,7 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
   Object.defineProperty(secret, "toString", {
     enumerable: false,
     value() {
-      return `ConfigSecretURL(${protocol}://<redacted>)`
+      return `SecretURL(${protocol}://<redacted>)`
     }
   })
   Object.defineProperty(secret, "raw", {
@@ -63,22 +63,22 @@ export const make = (bytes: Array<number>): ConfigSecretURL.ConfigSecretURL => {
 }
 
 /** @internal */
-export const fromChunk = (chunk: Chunk.Chunk<string>): ConfigSecretURL.ConfigSecretURL => {
+export const fromChunk = (chunk: Chunk.Chunk<string>): SecretURL.SecretURL => {
   return make(Chunk.toReadonlyArray(chunk).map((char) => char.charCodeAt(0)))
 }
 
 /** @internal */
-export const fromString = (text: string): ConfigSecretURL.ConfigSecretURL => {
+export const fromString = (text: string): SecretURL.SecretURL => {
   return make(text.split("").map((char) => char.charCodeAt(0)))
 }
 
 /** @internal */
-export const value = (self: ConfigSecretURL.ConfigSecretURL): string => {
+export const value = (self: SecretURL.SecretURL): string => {
   return self.raw.map((byte) => String.fromCharCode(byte)).join("")
 }
 
 /** @internal */
-export const unsafeWipe = (self: ConfigSecretURL.ConfigSecretURL): void => {
+export const unsafeWipe = (self: SecretURL.SecretURL): void => {
   for (let i = 0; i < self.raw.length; i++) {
     self.raw[i] = 0
   }

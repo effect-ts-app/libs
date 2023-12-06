@@ -17,12 +17,12 @@ import { Config } from "effect/Config"
 /**
  * @tsplus global
  */
-import { ConfigSecretURL } from "@effect-app/prelude/Config/SecretURL"
+import { SecretURL } from "@effect-app/prelude/Config/SecretURL"
 
 /**
  * @tsplus global
  */
-import { ConfigSecret } from "effect/ConfigSecret"
+import { Secret } from "effect/Secret"
 
 /**
  * @tsplus global

@@ -2750,43 +2750,43 @@
       ]
     }
   ],
-  "effect/ConfigSecret": [
+  "effect/Secret": [
     {
-      "definitionName": "ConfigSecret",
+      "definitionName": "Secret",
       "definitionKind": "interface",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/ConfigSecret"
+          "typeName": "effect/io/Secret"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/ConfigSecret.Ops"
+          "typeName": "effect/io/Secret.Ops"
         }
       ]
     },
     {
-      "definitionName": "ConfigSecretTypeId",
+      "definitionName": "SecretTypeId",
       "definitionKind": "type",
       "extensions": [
         {
           "kind": "type",
-          "typeName": "effect/io/ConfigSecret.TypeId"
+          "typeName": "effect/io/Secret.TypeId"
         },
         {
           "kind": "companion",
-          "typeName": "effect/io/ConfigSecret.TypeId.Ops"
+          "typeName": "effect/io/Secret.TypeId.Ops"
         }
       ]
     },
     {
-      "definitionName": "ConfigSecretTypeId",
+      "definitionName": "SecretTypeId",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.TypeId.Ops",
-          "name": "ConfigSecretTypeId"
+          "typeName": "effect/io/Secret.TypeId.Ops",
+          "name": "SecretTypeId"
         }
       ]
     },
@@ -2796,7 +2796,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
+          "typeName": "effect/io/Secret.Ops",
           "name": "fromChunk"
         }
       ]
@@ -2807,19 +2807,19 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
+          "typeName": "effect/io/Secret.Ops",
           "name": "fromString"
         }
       ]
     },
     {
-      "definitionName": "isConfigSecret",
+      "definitionName": "isSecret",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
-          "name": "isConfigSecret"
+          "typeName": "effect/io/Secret.Ops",
+          "name": "isSecret"
         }
       ]
     },
@@ -2829,7 +2829,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
+          "typeName": "effect/io/Secret.Ops",
           "name": "make"
         }
       ]
@@ -2840,12 +2840,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/ConfigSecret",
+          "typeName": "effect/io/Secret",
           "name": "unsafeWipe"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
+          "typeName": "effect/io/Secret.Ops",
           "name": "unsafeWipe"
         }
       ]
@@ -2856,12 +2856,12 @@
       "extensions": [
         {
           "kind": "getter",
-          "typeName": "effect/io/ConfigSecret",
+          "typeName": "effect/io/Secret",
           "name": "value"
         },
         {
           "kind": "static",
-          "typeName": "effect/io/ConfigSecret.Ops",
+          "typeName": "effect/io/Secret.Ops",
           "name": "value"
         }
       ]
