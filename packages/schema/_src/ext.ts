@@ -7,7 +7,7 @@ import type { None, Some } from "effect/Option"
 import { v4 } from "uuid"
 
 import type { SpecificField } from "./_api.js"
-import { EParserFor, set, setIdentifier } from "./_api.js"
+import { EParserFor, mapIdentifier, set, setIdentifier } from "./_api.js"
 import { nonEmptySet } from "./_api/nonEmptySet.js"
 import * as S from "./_schema.js"
 import type { UUID } from "./_schema.js"
@@ -267,6 +267,9 @@ export function withDefault<
   }
   if (findAnnotation(p._schema, S.arrayIdentifier)) {
     return propDef(p, () => [] as any, "constructor")
+  }
+  if (findAnnotation(p._schema, mapIdentifier)) {
+    return propDef(p, () => new Map() as any, "constructor")
   }
   if (findAnnotation(p._schema, setIdentifier)) {
     return propDef(p, () => new Set() as any, "constructor")
