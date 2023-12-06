@@ -7,7 +7,6 @@ import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import type * as Option from "effect/Option"
 
-export type Id<A> = A
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId
   /**
@@ -40,19 +39,10 @@ export const fromBrand = <C extends Brand.Brand<string | symbol>>(
   return S.fromBrand(constructor as any, options as any)(self as any) as any
 }
 
-export type Brands2<P> = P extends B.Brand<any> ? { readonly [B.BrandTypeId]: P[B.BrandTypeId] }
+export type Brands<P> = P extends B.Brand<any> ? { readonly [B.BrandTypeId]: P[B.BrandTypeId] }
   : never
 
-export type Test<P extends B.Brand<any>> = {
-  [K in keyof P[B.BrandTypeId]]: K extends string | symbol ? {
-      readonly [k in K]: k
-    }
-    : never
-}[keyof P[B.BrandTypeId]]
-export type UnionToIntersection3<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I
-  : never
-
-export type Unbranded<P> = P extends infer Q & Brands2<P> ? Q : P
+export type Unbranded<P> = P extends infer Q & Brands<P> ? Q : P
 
 export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
   A extends B.Brand<any>
@@ -60,7 +50,16 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
   A
 > => B.nominal<A>() as any
 
-type GetKeys<U> = U extends Record<infer K, any> ? K : never
-type UnionToIntersection2<U extends object> = {
-  readonly [K in GetKeys<U>]: U extends Record<K, infer T> ? T : never
-}
+// type GetKeys<U> = U extends Record<infer K, any> ? K : never
+// type UnionToIntersection2<U extends object> = {
+//   readonly [K in GetKeys<U>]: U extends Record<K, infer T> ? T : never
+// }
+
+// export type Test<P extends B.Brand<any>> = {
+//   [K in keyof P[B.BrandTypeId]]: K extends string | symbol ? {
+//       readonly [k in K]: k
+//     }
+//     : never
+// }[keyof P[B.BrandTypeId]]
+// export type UnionToIntersection3<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I
+//   : never

@@ -1,16 +1,12 @@
 import { isValidPhone } from "@effect-app/core/validation"
 import { Numbers } from "@effect-app/schema/FastCheck"
+import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./ext.js"
 import { S } from "./schema.js"
 import type { B } from "./schema.js"
+import type { NonEmptyStringBrand } from "./strings.js"
 
-export interface PhoneNumberBrand { //  extends Id<B.Brand<"PhoneNumber"> & NonEmptyStringBrand>
-  readonly [B.BrandTypeId]: {
-    readonly PhoneNumber: "PhoneNumber"
-  } & {
-    readonly NonEmptyString: "NonEmptyString"
-  }
-}
+export interface PhoneNumberBrand extends Simplify<B.Brand<"PhoneNumber"> & NonEmptyStringBrand> {}
 export type PhoneNumber = string & PhoneNumberBrand
 
 export const PhoneNumber = S.string.pipe(

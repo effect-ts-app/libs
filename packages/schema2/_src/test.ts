@@ -1,4 +1,4 @@
-import type { NonEmptyString, NonEmptyString255, NonEmptyString2k } from "./strings"
+import type { NonEmptyString, NonEmptyString255, NonEmptyString2k } from "./strings.js"
 
 declare let a: NonEmptyString
 a = "a" as NonEmptyString2k
@@ -11,6 +11,7 @@ b = "a" as NonEmptyString255
 declare let c: NonEmptyString255
 c = "a" as NonEmptyString
 c = "a" as NonEmptyString2k
+c = "a" as NonEmptyString255
 
 /*
 { // this is what we want to look for
