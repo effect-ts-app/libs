@@ -1,17 +1,14 @@
 import * as S from "@effect/schema/Schema"
-
 import type * as B from "effect/Brand"
 import { fromBrand, nominal } from "./ext.js"
 
-const nonEmptyString = S.string.pipe(
-  S.nonEmpty()
-)
+const nonEmptyString = S.string.pipe(S.nonEmpty())
 
 export type NonEmptyStringBrand = B.Brand<"NonEmptyString">
 export type NonEmptyString = string & NonEmptyStringBrand
 export const NonEmptyString = nonEmptyString.pipe(fromBrand(nominal<NonEmptyString>()))
 
-export interface NonEmptyString64kBrand { //  extends Id<B.Brand<"NonEmptyString64k">>
+export interface NonEmptyString64kBrand { //  extends Id<B.Brand<"NonEmptyString64k"> & NonEmptyStringBrand>
   readonly [B.BrandTypeId]: {
     readonly NonEmptyString64k: "NonEmptyString64k"
   } & {
@@ -24,7 +21,7 @@ export const NonEmptyString64k = nonEmptyString.pipe(
   fromBrand(nominal<NonEmptyString64k>())
 )
 
-export interface NonEmptyString2kBrand { //  extends Id<B.Brand<"NonEmptyString2k">>
+export interface NonEmptyString2kBrand { //  extends Id<B.Brand<"NonEmptyString2k"> & NonEmptyString64kBrand>
   readonly [B.BrandTypeId]: {
     readonly NonEmptyString2k: "NonEmptyString2k"
   } & {
@@ -39,7 +36,7 @@ export const NonEmptyString2k = nonEmptyString.pipe(
   fromBrand(nominal<NonEmptyString2k>())
 )
 
-export interface NonEmptyString255Brand //  extends Id<B.Brand<"NonEmptyString255"> & NonEmptyString64kBrand>
+export interface NonEmptyString255Brand //  extends Id<B.Brand<"NonEmptyString255"> & NonEmptyString2kBrand>
 {
   readonly [B.BrandTypeId]: {
     readonly NonEmptyString255: "NonEmptyString255"
