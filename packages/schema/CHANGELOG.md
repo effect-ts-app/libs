@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.82.2
+
+### Patch Changes
+
+- 3cf98d6: fix missing default for Map
+
 ## 0.82.1
 
 ### Patch Changes
