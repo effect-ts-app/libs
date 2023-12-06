@@ -6,7 +6,6 @@ import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import type * as Option from "effect/Option"
-import type { Simplify } from "effect/Types"
 
 export type Id<A> = A
 export interface Constructor<in out A extends B.Brand<any>> {
@@ -41,13 +40,7 @@ export const fromBrand = <C extends Brand.Brand<string | symbol>>(
   return S.fromBrand(constructor as any, options as any)(self as any) as any
 }
 
-export type Brands2<P> = P extends B.Brand<any> ? {
-    readonly [B.BrandTypeId]: Simplify<
-      UnionToIntersection2<
-        Test<P>
-      >
-    >
-  }
+export type Brands2<P> = P extends B.Brand<any> ? { readonly [B.BrandTypeId]: P[B.BrandTypeId] }
   : never
 
 export type Test<P extends B.Brand<any>> = {
