@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.85.0
+
+### Minor Changes
+
+- e0b2e24: fix: update for Secret
+
 ## 0.84.0
 
 ### Minor Changes

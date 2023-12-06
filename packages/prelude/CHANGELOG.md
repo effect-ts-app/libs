@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.91.0
+
+### Minor Changes
+
+- e0b2e24: fix: update for Secret
+
+### Patch Changes
+
+- Updated dependencies [e0b2e24]
+  - @effect-app/core@0.85.0
+  - @effect-app/schema@0.82.1
+
 ## 0.90.0
 
 ### Minor Changes

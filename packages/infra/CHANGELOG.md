@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.115.0
+
+### Minor Changes
+
+- e0b2e24: fix: update for Secret
+
+### Patch Changes
+
+- Updated dependencies [e0b2e24]
+  - @effect-app/prelude@0.91.0
+  - @effect-app/core@0.85.0
+  - @effect-app/infra-adapters@0.71.1
+  - @effect-app/schema@0.82.1
+
 ## 0.114.0
 
 ### Minor Changes
