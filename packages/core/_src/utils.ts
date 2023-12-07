@@ -27,7 +27,6 @@ export function toString(v: unknown) {
   return `${v}`
 }
 
-export const isTruthy = <T>(item: T | null | undefined): item is T => Boolean(item)
 export const typedKeysOf = <T extends {}>(obj: T) => Object.keys(obj) as (keyof T)[]
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 export const typedValuesOf = <T extends {}>(obj: T) => Object.values(obj) as ValueOf<T>[]

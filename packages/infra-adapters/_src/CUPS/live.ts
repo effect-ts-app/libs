@@ -2,7 +2,7 @@ import cp from "child_process"
 import util from "util"
 import { tempFile } from "../fileUtil.js"
 
-import { isTruthy, pretty } from "@effect-app/core/utils"
+import { pretty } from "@effect-app/core/utils"
 import { NonEmptyString255 } from "@effect-app/schema"
 import fs from "fs"
 import os from "os"
@@ -92,7 +92,7 @@ function getAvailablePrinters(host?: string) {
     const { stdout } = $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
-      .filter(isTruthy)
+      .filter(Predicate.isNotNullable)
       .map(NonEmptyString255)
   })
 }
