@@ -74,6 +74,7 @@ export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string 
   override changeFeed = this.impl.changeFeed
 }
 
+type Exact<A, B> = A extends B ? B extends A ? true : false : false
 /**
  * A base implementation to create a repository.
  */
@@ -401,22 +402,27 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
+  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
-    mapFrom: (pm: Omit<PM, "_etag">) => E,
-    mapTo: (e: E, etag: string | undefined) => PM
-  ):
-    & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
-    & Tag<Service, Service>
-    & Repos<
-      T,
-      PM,
-      Evt,
-      ItemType
-    > =>
+    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    jitM?: (pm: From) => From
+  ): Exact<PM, From & { _etag: string | undefined }> extends true ?
+      & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
+      & Tag<Service, Service>
+      & Repos<
+        T,
+        PM,
+        Evt,
+        ItemType
+      >
+    : never =>
   {
-    const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
+    const mkRepo = makeRepo<PM, Evt>()(
+      itemType,
+      schema,
+      jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
+      (e, _etag) => ({ ...e, _etag })
+    )
     abstract class Cls extends RepositoryBaseC1<T, PM, Evt, ItemType> {
       constructor() {
         super(itemType)
@@ -436,24 +442,29 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, E extends { id: string }>(
+  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
-    mapFrom: (pm: Omit<PM, "_etag">) => E,
-    mapTo: (e: E, etag: string | undefined) => PM
-  ):
-    & (abstract new(
-      impl: Repository<T, PM, Evt, ItemType>
-    ) => RepositoryBaseC2<T, PM, Evt, ItemType>)
-    & Tag<Service, Service>
-    & Repos<
-      T,
-      PM,
-      Evt,
-      ItemType
-    > =>
+    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    jitM?: (pm: From) => From
+  ): Exact<PM, From & { _etag: string | undefined }> extends true ?
+      & (abstract new(
+        impl: Repository<T, PM, Evt, ItemType>
+      ) => RepositoryBaseC2<T, PM, Evt, ItemType>)
+      & Tag<Service, Service>
+      & Repos<
+        T,
+        PM,
+        Evt,
+        ItemType
+      >
+    : never =>
   {
-    const mkRepo = makeRepo<PM, Evt>()(itemType, schema, mapFrom, mapTo)
+    const mkRepo = makeRepo<PM, Evt>()(
+      itemType,
+      schema,
+      jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
+      (e, _etag) => ({ ...e, _etag })
+    )
     abstract class Cls extends RepositoryBaseC2<T, PM, Evt, ItemType> {
       constructor(
         impl: Repository<T, PM, Evt, ItemType>
