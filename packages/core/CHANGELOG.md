@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.86.0
+
+### Minor Changes
+
+- 169ccb0: drop isTruthy; use Predicate module
+- a9e8b8f: update packages
+
 ## 0.85.0
 
 ### Minor Changes
