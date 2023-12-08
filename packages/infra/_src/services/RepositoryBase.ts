@@ -74,7 +74,7 @@ export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string 
   override changeFeed = this.impl.changeFeed
 }
 
-type Exact<A, B> = A extends B ? B extends A ? true : false : false
+type Exact<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false
 /**
  * A base implementation to create a repository.
  */
