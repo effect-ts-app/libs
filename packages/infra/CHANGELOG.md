@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.116.1
+
+### Patch Changes
+
+- b79b9ae: fix: support union
+
 ## 0.116.0
 
 ### Minor Changes
