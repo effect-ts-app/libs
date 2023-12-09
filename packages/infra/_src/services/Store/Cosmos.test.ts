@@ -1,5 +1,5 @@
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
-import { makeFilters } from "../../filter.js"
+import { Filters, makeFilters } from "../../filter.js"
 import { buildWhereCosmosQuery } from "./Cosmos.js"
 
 const f_ = makeFilters<Something>()
@@ -65,7 +65,7 @@ test("works", () => {
     })
 
   expect(buildWhereCosmosQuery(
-    somethingsWhere((_) => _("d.-1.a", (_) => _.$isnt("a2"))),
+    somethingsWhere((_) => _("d.-1.a", Filters.$isnt("a2"))),
     "Somethings",
     "importedMarkerId",
     undefined,

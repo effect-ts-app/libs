@@ -1,5 +1,5 @@
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
-import { makeFilters } from "../../filter.js"
+import { Filters, makeFilters } from "../../filter.js"
 import { codeFilter } from "./utils.js"
 
 const somethings = [
@@ -55,7 +55,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$contains("b")))
+        somethingsWhere((_) => _("b", Filters.$contains("b")))
       ))
       .toArray
   )
@@ -64,7 +64,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$contains("2")))
+        somethingsWhere((_) => _("b", Filters.$contains("2")))
       ))
       .toArray
   )
@@ -73,7 +73,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$endsWith("b")))
+        somethingsWhere((_) => _("b", Filters.$endsWith("b")))
       ))
       .toArray
   )
@@ -82,7 +82,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$endsWith("2")))
+        somethingsWhere((_) => _("b", Filters.$endsWith("2")))
       ))
       .toArray
   )
@@ -91,7 +91,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$startsWith("b")))
+        somethingsWhere((_) => _("b", Filters.$startsWith("b")))
       ))
       .toArray
   )
@@ -100,7 +100,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", (_) => _.$startsWith("2")))
+        somethingsWhere((_) => _("b", Filters.$startsWith("2")))
       ))
       .toArray
   )
@@ -118,7 +118,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("c", (_) => _.$includes("c")))
+        somethingsWhere((_) => _("c", Filters.$includes("c")))
       ))
       .toArray
   )
@@ -145,7 +145,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("d.-1.a", (_) => _.$isnt("a")))
+        somethingsWhere((_) => _("d.-1.a", Filters.$isnt("a")))
       ))
       .toArray
   )
