@@ -58,9 +58,8 @@ type Filter<TFieldValues extends FieldValues> = {
 } & Filts<TFieldValues>
 
 type FilterTest<TFieldValues extends FieldValues> = {
-  (fb: (f: Initial<TFieldValues>) => FilterBuilder<TFieldValues>): FilterBuilder<TFieldValues>
   (
-    fb: (f: Filts<TFieldValues>) => FilterBuilder<TFieldValues>
+    fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
 } & Filts<TFieldValues>
 
@@ -95,13 +94,11 @@ it("works", () => {
   const f = FilterBuilder
     .make<MyEntity>()
     .where("something.id", 1)
-    .and((_) =>
-      _
-        .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
+    .and((where) =>
+      where("something.name", "startsWith", "a") // or would we do "like", "a%"?
         .or("tag", "in", ["a", "b"])
-        .or((_) =>
-          _
-            .where("name", "!=", "Alfredo")
+        .or((where) =>
+          where("name", "!=", "Alfredo")
             .and("tag", "c")
         )
     )
@@ -115,43 +112,24 @@ it("works", () => {
 it("root-or", () => {
   const f = FilterBuilder
     .make<MyEntity>()
-    .where((_) =>
-      _("something.id", 1)
-        .and((_) =>
-          _
+    .where((q) =>
+      q("something.id", 1)
+        .and((where) =>
+          where
             .where((_) =>
               _("something.name", "startsWith", "a") // or would we do "like", "a%"?
                 .or("tag", "in", ["a", "b"])
-                .or((_) =>
-                  _
-                    .where("name", "!=", "Alfredo")
+                .or((where) =>
+                  where("name", "!=", "Alfredo")
                     .and("tag", "c")
                 )
             )
-            .and("isActive", true)
             .and("isActive", true)
         )
         .and("isActive", true)
         .and("age", ">=", 12)
     )
     .or("name", "startsWith", "C")
-  // const f = FilterBuilder
-  //   .make<MyEntity>()
-  //   .where("something.id", 1)
-  //   .and((_) =>
-  //     _
-  //       .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
-  //       .or("tag", "in", ["a", "b"])
-  //       .or((_) =>
-  //         _
-  //           .where("name", "!=", "Alfredo")
-  //           .and("tag", "c")
-  //       )
-  //   )
-  //   .and("isActive", true)
-  //   .and("age", ">=", 12)
-  //   // this is weird.
-  //   .or("name", "startsWith", "C")
 
   expect(f).toBe("TODO")
 })
