@@ -11,7 +11,133 @@ type Initial<TFieldValues extends FieldValues> = { where: Filter<TFieldValues> }
 
 type Filter<TFieldValues extends FieldValues> = {
   (
-    fb: (f: Initial<TFieldValues>) => FilterBuilder<TFieldValues>
+    fb: (f: {
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        value: V
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "!=",
+        value: V
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: ">" | ">=" | "<" | "<=",
+        value: V // only numbers?
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
+        value: V // only strings?
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "in" | "not-in",
+        value: readonly V[]
+      ): FilterBuilder<TFieldValues>
+    }) => FilterBuilder<TFieldValues>
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    value: V
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "!=",
+    value: V
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: ">" | ">=" | "<" | "<=",
+    value: V // only numbers?
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
+    value: V // only strings?
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "in" | "not-in",
+    value: readonly V[]
+  ): FilterBuilder<TFieldValues>
+}
+
+type FilterTest<TFieldValues extends FieldValues> = {
+  (fb: (f: Initial<TFieldValues>) => FilterBuilder<TFieldValues>): FilterBuilder<TFieldValues>
+  (
+    fb: (f: {
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        value: V
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "!=",
+        value: V
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: ">" | ">=" | "<" | "<=",
+        value: V // only numbers?
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
+        value: V // only strings?
+      ): FilterBuilder<TFieldValues>
+      <
+        TFieldName extends FieldPath<TFieldValues>,
+        V extends FieldPathValue<TFieldValues, TFieldName>
+      >(
+        path: TFieldName,
+        op: "in" | "not-in",
+        value: readonly V[]
+      ): FilterBuilder<TFieldValues>
+    }) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
@@ -62,8 +188,8 @@ type FilterGroup<TFieldValues extends FieldValues> = (
 
 interface FilterBuilder<TFieldValues extends FieldValues> {
   // TODO: as overloads?
-  and: Filter<TFieldValues>
-  or: Filter<TFieldValues>
+  and: FilterTest<TFieldValues>
+  or: FilterTest<TFieldValues>
   // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
 }
 
@@ -97,6 +223,51 @@ it("works", () => {
     )
     .and("isActive", true)
     .and("age", ">=", 12)
+
+  expect(f).toBe("TODO")
+})
+
+// ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
+it("root-or", () => {
+  const f = FilterBuilder
+    .make<MyEntity>()
+    .where((_) =>
+      _("something.id", 1)
+        .and((_) =>
+          _
+            .where((_) =>
+              _("something.name", "startsWith", "a") // or would we do "like", "a%"?
+                .or("tag", "in", ["a", "b"])
+                .or((_) =>
+                  _
+                    .where("name", "!=", "Alfredo")
+                    .and("tag", "c")
+                )
+            )
+            .and("isActive", true)
+            .and("isActive", true)
+        )
+        .and("isActive", true)
+        .and("age", ">=", 12)
+    )
+    .or("name", "startsWith", "C")
+  // const f = FilterBuilder
+  //   .make<MyEntity>()
+  //   .where("something.id", 1)
+  //   .and((_) =>
+  //     _
+  //       .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
+  //       .or("tag", "in", ["a", "b"])
+  //       .or((_) =>
+  //         _
+  //           .where("name", "!=", "Alfredo")
+  //           .and("tag", "c")
+  //       )
+  //   )
+  //   .and("isActive", true)
+  //   .and("age", ">=", 12)
+  //   // this is weird.
+  //   .or("name", "startsWith", "C")
 
   expect(f).toBe("TODO")
 })
