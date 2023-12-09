@@ -16,8 +16,11 @@ type Filter<TFieldValues extends FieldValues> = <
 ) => FilterBuilder<TFieldValues>
 
 interface FilterBuilder<TFieldValues extends FieldValues> {
-  and: ((fb: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>) | Filter<TFieldValues>
-  or: ((fb: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>) | Filter<TFieldValues>
+  // TODO: as overloads?
+  andGroup: (fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
+  orGroup: (fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
+  and: Filter<TFieldValues>
+  or: Filter<TFieldValues>
 
   where: Filter<TFieldValues>
   // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
@@ -40,7 +43,7 @@ it("works", () => {
   const filter = FilterBuilder.make<MyEntity>()
   filter
     .where("something.id", 1)
-    .and((_) => _.where("something.name", "a"))
+    .andGroup((_) => _.where("something.name", "a"))
     .and("isActive", true)
     .and("age", 12)
 })
