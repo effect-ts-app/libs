@@ -7,7 +7,7 @@ const FilterBuilder = {
   }
 }
 
-type Initial<TFieldValues extends FieldValues> = { where: Filter<TFieldValues> }
+type Initial<TFieldValues extends FieldValues> = { where: FilterTest<TFieldValues> }
 
 type Filts<TFieldValues extends FieldValues> = {
   <
@@ -59,7 +59,7 @@ type Filter<TFieldValues extends FieldValues> = {
 
 type FilterTest<TFieldValues extends FieldValues> = {
   (
-    fb: (f: Filts<TFieldValues> & Filter<TFieldValues>) => FilterBuilder<TFieldValues>
+    fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
 } & Filts<TFieldValues>
 
@@ -113,16 +113,20 @@ it("root-or", () => {
   const f = FilterBuilder
     .make<MyEntity>()
     .where((_) =>
-      _("something.id", 1)
-        .and((where) =>
-          where((_) =>
-            _("something.name", "startsWith", "a") // or would we do "like", "a%"?
-              .or("tag", "in", ["a", "b"])
-              .or((where) =>
-                where("name", "!=", "Alfredo")
-                  .and("tag", "c")
-              )
-          )
+      _
+        .where("something.id", 1)
+        .and((_) =>
+          _
+            .where((_) =>
+              _
+                .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
+                .or("tag", "in", ["a", "b"])
+                .or((_) =>
+                  _
+                    .where("name", "!=", "Alfredo")
+                    .and("tag", "c")
+                )
+            )
             .and("isActive", true)
         )
         .and("isActive", true)
