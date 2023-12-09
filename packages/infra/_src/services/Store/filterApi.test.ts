@@ -1,6 +1,74 @@
 import type { FieldValues } from "../../filter/types.js"
 import type { FieldPath, FieldPathValue } from "../../filter/types/path/eager.js"
 
+type FilterResult = {
+  t: "where"
+  type: string
+  path: string
+  value: string
+} | {
+  t: "or"
+  type: string
+  path: string
+  value: string
+} | {
+  t: "and"
+  type: string
+  path: string
+  value: string
+} | {
+  t: "or-scope"
+  result: FilterResult[]
+} | {
+  t: "and-scope"
+  result: FilterResult[]
+} | {
+  t: "where-scope"
+  result: FilterResult[]
+}
+
+const print = (state: readonly FilterResult[]) => {
+  let s = ""
+  let l = 0
+  const printN = (n: number) => {
+    console.log("n", n)
+    return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
+  }
+  for (const e of state) {
+    switch (e.t) {
+      case "where":
+        s += `${e.path} ${e.type} ${e.value}`
+        break
+      case "or":
+        s += ` OR ${e.path} ${e.type} ${e.value}`
+        break
+      case "and":
+        s += ` AND ${e.path} ${e.type} ${e.value}`
+        break
+      case "or-scope": {
+        ;++l
+        s += ` OR (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
+        ;--l
+        break
+      }
+      case "and-scope": {
+        ;++l
+        s += ` AND (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
+        ;--l
+
+        break
+      }
+      case "where-scope": {
+        // ;++l
+        s += `(\n${printN(l + 1)}${print(e.result)}\n)`
+        // ;--l
+        break
+      }
+    }
+  }
+  return s
+}
+
 const FilterBuilder = {
   make: <TFieldValues extends FieldValues>(): Initial<TFieldValues> => {
     // const recursive = {}
@@ -10,7 +78,7 @@ const FilterBuilder = {
     // recursive.and = and
     // recursive.or = or
     // recursive.where = where
-    const state: any[] = []
+    const state: FilterResult[] = []
     let current = state
     const where = (...args: any[]) => {
       if (typeof args[0] === "function") {
@@ -23,7 +91,7 @@ const FilterBuilder = {
         return r
       }
       current.push({
-        bin: "where",
+        t: "where",
         type: args.length === 2 ? "eq" : args[1],
         path: args[0],
         value: args[args.length - 1]
@@ -41,7 +109,7 @@ const FilterBuilder = {
         return r
       }
       current.push({
-        bin: "and",
+        t: "and",
         type: args.length === 2 ? "eq" : args[1],
         path: args[0],
         value: args[args.length - 1]
@@ -58,7 +126,7 @@ const FilterBuilder = {
         current.push({ t: "or-scope", result: mine })
         return r
       }
-      current.push({ bin: "or", type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+      current.push({ t: "or", type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
       return all
     }
     const all = {
@@ -174,7 +242,9 @@ it("works", () => {
     .and("isActive", true)
     .and("age", ">=", 12)
 
-  expect(f.build()).toBe("TODO")
+  const s = f.build()
+  console.log(JSON.stringify(s, undefined, 2))
+  expect(print(s)).toBe("TODO")
 })
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
@@ -200,5 +270,7 @@ it("root-or", () => {
     )
     .or("name", "startsWith", "C")
 
-  expect(f.build()).toBe("TODO")
+  const s = f.build()
+  console.log(JSON.stringify(s, undefined, 2))
+  expect(print(s)).toBe("TODO")
 })
