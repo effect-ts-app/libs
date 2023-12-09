@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.117.0
+
+### Minor Changes
+
+- af6b7ee: remove: primitive filter extensions
+
+### Patch Changes
+
+- 59de181: feat: support not- starts-with, contains and ends-with
+
 ## 0.116.1
 
 ### Patch Changes
