@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.118.0
+
+### Minor Changes
+
+- ff34c5b: refactor: remove $ prefix from Filters members
+
 ## 0.117.0
 
 ### Minor Changes
