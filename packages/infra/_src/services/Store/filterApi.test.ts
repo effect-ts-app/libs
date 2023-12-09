@@ -263,7 +263,36 @@ type Filter<T extends FieldValues> = {
     : [T[K]] extends [Record<any, any>] ? Filter<T[K]> & G<T, T[K]>
     : G<T, T[K]>
 }
-declare const n: Filter<MyEntity>
+const makeProxy = (parentProp?: string): any =>
+  new Proxy(
+    Object.assign(() => {}, {
+      _proxies: {} as Record<string, any>
+    }),
+    {
+      apply(_target, _thisArg, argArray) {
+        return ({ op: "eq", value: argArray[0], path: parentProp })
+      },
+      get(target, prop) {
+        if (typeof prop !== "string") return undefined
+        if (target._proxies[prop]) {
+          return target._proxies[prop]
+        }
+
+        if (["contains", "startsWith", "endsWith", "in", "notIn", "eq", "neq"].includes(prop)) {
+          return (value: any) => ({ op: prop, path: parentProp, value })
+        }
+        let fullProp = prop
+        if (parentProp) {
+          fullProp = `${parentProp}.${prop}`
+        }
+        const p = makeProxy(fullProp)
+        target._proxies[prop] = p
+        return p
+      }
+    }
+  )
+const n: Filter<MyEntity> = makeProxy()
+// declare const n: Filter<MyEntity>
 
 it("works", () => {
   const f = FilterBuilder
