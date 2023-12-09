@@ -59,7 +59,7 @@ type Filter<TFieldValues extends FieldValues> = {
 
 type FilterTest<TFieldValues extends FieldValues> = {
   (
-    fb: (f: Filts<TFieldValues> & { match: Filts<TFieldValues> } & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
+    fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
 } & Filts<TFieldValues>
 
@@ -114,12 +114,12 @@ it("root-or", () => {
     .make<MyEntity>()
     .where((_) =>
       _
-        .match("something.id", 1)
+        .where("something.id", 1)
         .and((_) =>
           _
             .where((_) =>
               _
-                .match("something.name", "startsWith", "a") // or would we do "like", "a%"?
+                .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
                 .or("tag", "in", ["a", "b"])
                 .or((_) =>
                   _
