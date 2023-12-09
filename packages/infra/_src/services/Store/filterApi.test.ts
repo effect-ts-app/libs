@@ -22,7 +22,12 @@ const FilterBuilder = {
         current.push({ t: "where-scope", result: mine })
         return r
       }
-      current.push("where", { type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+      current.push({
+        bin: "where",
+        type: args.length === 2 ? "eq" : args[1],
+        path: args[0],
+        value: args[args.length - 1]
+      })
       return all
     }
     const and = (...args: any[]) => {
@@ -35,7 +40,12 @@ const FilterBuilder = {
         current.push({ t: "and-scope", result: mine })
         return r
       }
-      current.push("and", { type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+      current.push({
+        bin: "and",
+        type: args.length === 2 ? "eq" : args[1],
+        path: args[0],
+        value: args[args.length - 1]
+      })
       return all
     }
     const or = (...args: any[]) => {
@@ -48,7 +58,7 @@ const FilterBuilder = {
         current.push({ t: "or-scope", result: mine })
         return r
       }
-      current.push("or", { type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+      current.push({ bin: "or", type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
       return all
     }
     const all = {
