@@ -25,10 +25,36 @@ type Filter<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    t: "in",
+    op: "!=",
+    value: V
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: ">" | ">=" | "<" | "<=",
+    value: V // only numbers?
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
+    value: V // only strings?
+  ): FilterBuilder<TFieldValues>
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "in" | "not-in",
     value: readonly V[]
   ): FilterBuilder<TFieldValues>
 }
+
+const not = <A extends string>(s: A) => `!${s}`
 
 type FilterGroup<TFieldValues extends FieldValues> = (
   fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
@@ -44,6 +70,7 @@ interface FilterBuilder<TFieldValues extends FieldValues> {
 interface MyEntity {
   id: string
   name: string
+  bio: string
   isActive: boolean
   roles: readonly string[]
   tag: "a" | "b" | "c"
@@ -55,14 +82,21 @@ interface MyEntity {
 }
 
 it("works", () => {
-  FilterBuilder
+  const f = FilterBuilder
     .make<MyEntity>()
     .where("something.id", 1)
     .and((_) =>
       _
-        .where("something.name", "a")
-        .or("name", "in", ["a", "b"])
+        .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
+        .or("tag", "in", ["a", "b"])
+        .or((_) =>
+          _
+            .where("name", "!=", "Alfredo")
+            .and("tag", "c")
+        )
     )
     .and("isActive", true)
-    .and("age", 12)
+    .and("age", ">=", 12)
+
+  expect(f).toBe("TODO")
 })
