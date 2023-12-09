@@ -65,7 +65,7 @@ test("works", () => {
     })
 
   expect(buildWhereCosmosQuery(
-    somethingsWhere((_) => _("d.-1.a", Filters.$isnt("a2"))),
+    somethingsWhere((_) => _("d.-1.a", Filters.isnt("a2"))),
     "Somethings",
     "importedMarkerId",
     undefined,

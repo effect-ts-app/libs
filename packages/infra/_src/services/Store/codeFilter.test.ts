@@ -55,7 +55,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$contains("b")))
+        somethingsWhere((_) => _("b", Filters.contains("b")))
       ))
       .toArray
   )
@@ -64,7 +64,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$contains("2")))
+        somethingsWhere((_) => _("b", Filters.contains("2")))
       ))
       .toArray
   )
@@ -73,7 +73,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$endsWith("b")))
+        somethingsWhere((_) => _("b", Filters.endsWith("b")))
       ))
       .toArray
   )
@@ -82,7 +82,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$endsWith("2")))
+        somethingsWhere((_) => _("b", Filters.endsWith("2")))
       ))
       .toArray
   )
@@ -91,7 +91,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$startsWith("b")))
+        somethingsWhere((_) => _("b", Filters.startsWith("b")))
       ))
       .toArray
   )
@@ -100,7 +100,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("b", Filters.$startsWith("2")))
+        somethingsWhere((_) => _("b", Filters.startsWith("2")))
       ))
       .toArray
   )
@@ -118,7 +118,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("c", Filters.$includes("c")))
+        somethingsWhere((_) => _("c", Filters.includes("c")))
       ))
       .toArray
   )
@@ -145,7 +145,7 @@ test("works", () => {
   expect(
     somethings
       .filterMap(codeFilter(
-        somethingsWhere((_) => _("d.-1.a", Filters.$isnt("a")))
+        somethingsWhere((_) => _("d.-1.a", Filters.isnt("a")))
       ))
       .toArray
   )

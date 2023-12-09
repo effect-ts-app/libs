@@ -237,19 +237,19 @@ function $contains__<V extends A, A extends string>(v: V) {
 }
 
 export const Filters = {
-  $is: $is__,
-  $isnt: $isnt__,
-  $in: $in__,
-  $notIn: $notIn__,
-  $gt: $gt__,
-  $gte: $gte__,
-  $lt: $lt__,
-  $lte: $lte__,
-  $contains: $contains__,
-  $endsWith: $endsWith__,
-  $startsWith: $startsWith__,
-  $includes: $includes__,
-  $notIncludes: $notIncludes__
+  is: $is__,
+  isnt: $isnt__,
+  in: $in__,
+  notIn: $notIn__,
+  gt: $gt__,
+  gte: $gte__,
+  lt: $lt__,
+  lte: $lte__,
+  contains: $contains__,
+  endsWith: $endsWith__,
+  startsWith: $startsWith__,
+  includes: $includes__,
+  notIncludes: $notIncludes__
 }
 
 export function $notStartsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"not-starts-with", A, V> {
