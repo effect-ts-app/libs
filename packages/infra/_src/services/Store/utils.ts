@@ -94,6 +94,12 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 return (k as string).toLowerCase().endsWith(p.value.toLowerCase())
               case "starts-with":
                 return (k as string).toLowerCase().startsWith(p.value.toLowerCase())
+              case "not-contains":
+                return !(k as string).toLowerCase().includes(p.value.toLowerCase())
+              case "not-ends-with":
+                return !(k as string).toLowerCase().endsWith(p.value.toLowerCase())
+              case "not-starts-with":
+                return !(k as string).toLowerCase().startsWith(p.value.toLowerCase())
               case "not-eq":
                 return !compareCaseInsensitive(k, p.value)
               case "eq":
@@ -130,6 +136,12 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 return (k as string).toLowerCase().endsWith(p.value.toLowerCase())
               case "starts-with":
                 return (k as string).toLowerCase().startsWith(p.value.toLowerCase())
+              case "not-contains":
+                return !(k as string).toLowerCase().includes(p.value.toLowerCase())
+              case "not-ends-with":
+                return !(k as string).toLowerCase().endsWith(p.value.toLowerCase())
+              case "not-starts-with":
+                return !(k as string).toLowerCase().startsWith(p.value.toLowerCase())
               case "not-eq":
                 return p.key.includes(".-1.")
                   ? (get(x, p.key.split(".-1.")[0]) as any[])

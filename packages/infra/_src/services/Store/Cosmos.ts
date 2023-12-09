@@ -531,8 +531,7 @@ export function buildWhereCosmosQuery(
                 return `ARRAY_CONTAINS(${v}, ${k})`
               case "not-in":
                 return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
-              case "ends-with":
-                return `ENDSWITH(${k}, ${v}, true)`
+
               case "includes":
                 return `ARRAY_CONTAINS(${k}, ${v})`
               case "not-includes":
@@ -541,6 +540,14 @@ export function buildWhereCosmosQuery(
                 return `CONTAINS(${k}, ${v}, true)`
               case "starts-with":
                 return `STARTSWITH(${k}, ${v}, true)`
+              case "ends-with":
+                return `ENDSWITH(${k}, ${v}, true)`
+              case "not-contains":
+                return `NOT(CONTAINS(${k}, ${v}, true))`
+              case "not-starts-with":
+                return `NOT(STARTSWITH(${k}, ${v}, true))`
+              case "not-ends-with":
+                return `NOT(ENDSWITH(${k}, ${v}, true))`
             }
 
             const lk = lowerIfNeeded(k, x.value)

@@ -115,6 +115,9 @@ export type WhereValue<
     | "starts-with"
     | "ends-with"
     | "contains"
+    | "not-starts-with"
+    | "not-ends-with"
+    | "not-contains"
     | "in"
     | "not-in"
     | "includes"
@@ -307,6 +310,27 @@ export const Filters = {
 }
 
 /**
+ * @tsplus fluent string $notStartsWith
+ */
+export function $notStartsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"not-starts-with", A, V> {
+  return $$notStartsWith(v)
+}
+
+/**
+ * @tsplus fluent string $notEndsWith
+ */
+export function $notEndsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"not-ends-with", A, V> {
+  return $$notEndsWith(v)
+}
+
+/**
+ * @tsplus fluent string $notContains
+ */
+export function $notContains<A extends string, V extends A>(_: A, v: V): WhereValue<"not-contains", A, V> {
+  return $$notContains(v)
+}
+
+/**
  * @tsplus fluent string $startsWith
  */
 export function $startsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"starts-with", A, V> {
@@ -370,6 +394,16 @@ function $$startsWith<A extends string>(v: A) {
 }
 function $$endsWith<A extends string>(v: A) {
   return { t: "ends-with" as const, v }
+}
+
+function $$notContains<A extends string>(v: A) {
+  return { t: "not-contains" as const, v }
+}
+function $$notStartsWith<A extends string>(v: A) {
+  return { t: "not-starts-with" as const, v }
+}
+function $$notEndsWith<A extends string>(v: A) {
+  return { t: "not-ends-with" as const, v }
 }
 
 type ValueType<V> = {
