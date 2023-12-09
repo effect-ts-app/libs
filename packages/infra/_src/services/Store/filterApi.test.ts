@@ -195,8 +195,15 @@ type FilterTest<TFieldValues extends FieldValues> = {
   (
     fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
-} & Filts<TFieldValues>
-
+  <
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(f: {
+    path: TFieldName
+    op: "startsWith" | "endsWith" | "contains" | "!contains" | "!startsWith" | "!endsWith"
+    value: V
+  }): FilterBuilder<TFieldValues>
+}
 // const not = <A extends string>(s: A) => `!${s}`
 
 // type FilterGroup<TFieldValues extends FieldValues> = (
@@ -225,22 +232,55 @@ interface MyEntity {
   }
 }
 
+type F<T extends FieldValues> = {
+  path: FieldPath<T>
+  op: "endsWith" | "startsWith" | "contains" // | "eq" | "neq" | "gt" | "gte" | "lt" | "lte"
+  value: string
+} /* | {
+  op: "in" | "notIn"
+  path: FieldPath<T>
+  value: readonly string[]
+}*/
+
+type G<T extends FieldValues, Val> = {
+  (value: Val): F<T>
+  startsWith: (value: string) => F<T>
+  endsWith: (value: string) => F<T>
+  contains: (value: string) => F<T>
+  notContains: (value: string) => F<T>
+  in: (...value: readonly string[]) => F<T>
+  notIn: (...value: readonly string[]) => F<T>
+  eq: (value: Val) => F<T>
+  neq: (value: Val) => F<T>
+  gt: (value: Val) => F<T>
+  gte: (value: Val) => F<T>
+  lt: (value: Val) => F<T>
+  lte: (value: Val) => F<T>
+}
+
+type Filter<T extends FieldValues> = {
+  [K in keyof T]-?: [T[K]] extends [Record<any, any> | undefined | null] ? Filter<T[K]> & G<T, T[K]>
+    : [T[K]] extends [Record<any, any>] ? Filter<T[K]> & G<T, T[K]>
+    : G<T, T[K]>
+}
+declare const n: Filter<MyEntity>
+
 it("works", () => {
   const f = FilterBuilder
     .make<MyEntity>()
-    .where("something.id", 1)
+    .where(n.something.id.contains("abc"))
     .and((_) =>
       _
-        .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
-        .or("tag", "in", ["a", "b"])
+        .where(n.something.name.startsWith("a")) // or would we do "like", "a%"?
+        .or(n.tag.in("a", "b"))
         .or((_) =>
           _
-            .where("name", "!=", "Alfredo")
-            .and("tag", "c")
+            .where(n.name.neq("Alfredo"))
+            .and(n.tag("c"))
         )
     )
-    .and("isActive", true)
-    .and("age", ">=", 12)
+    .and(n.isActive(true))
+    .and(n.age.gte(12))
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
@@ -253,22 +293,22 @@ it("root-or", () => {
     .make<MyEntity>()
     .where((_) =>
       _
-        .where("something.id", 1)
+        .where(n.something.id(1))
         .and((_) =>
           _
-            .where("something.name", "startsWith", "a") // or would we do "like", "a%"?
-            .or("tag", "in", ["a", "b"])
+            .where(n.something.name.startsWith("a")) // or would we do "like", "a%"?
+            .or(n.tag.in("a", "b"))
             .or((_) =>
               _
-                .where("name", "!=", "Alfredo")
-                .and("tag", "c")
+                .where(n.name.neq("Alfredo"))
+                .and(n.tag("c"))
             )
         )
-        .and("bio", "contains", "abc")
-        .and("isActive", true)
-        .and("age", ">=", 12)
+        .and(n.bio.contains("abc"))
+        .and(n.isActive(true))
+        .and(n.age.gte(12))
     )
-    .or("name", "startsWith", "C")
+    .or(n.name.startsWith("C"))
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
