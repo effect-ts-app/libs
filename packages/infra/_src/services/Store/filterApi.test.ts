@@ -9,50 +9,7 @@ const FilterBuilder = {
 
 type Initial<TFieldValues extends FieldValues> = { where: Filter<TFieldValues> }
 
-type Filter<TFieldValues extends FieldValues> = {
-  (
-    fb: (f: {
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        value: V
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "!=",
-        value: V
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: ">" | ">=" | "<" | "<=",
-        value: V // only numbers?
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
-        value: V // only strings?
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "in" | "not-in",
-        value: readonly V[]
-      ): FilterBuilder<TFieldValues>
-    }) => FilterBuilder<TFieldValues>
-  ): FilterBuilder<TFieldValues>
+type Filts<TFieldValues extends FieldValues> = {
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -93,98 +50,25 @@ type Filter<TFieldValues extends FieldValues> = {
     value: readonly V[]
   ): FilterBuilder<TFieldValues>
 }
+
+type Filter<TFieldValues extends FieldValues> = {
+  (
+    fb: (f: Filts<TFieldValues>) => FilterBuilder<TFieldValues>
+  ): FilterBuilder<TFieldValues>
+} & Filts<TFieldValues>
 
 type FilterTest<TFieldValues extends FieldValues> = {
   (fb: (f: Initial<TFieldValues>) => FilterBuilder<TFieldValues>): FilterBuilder<TFieldValues>
   (
-    fb: (f: {
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        value: V
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "!=",
-        value: V
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: ">" | ">=" | "<" | "<=",
-        value: V // only numbers?
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
-        value: V // only strings?
-      ): FilterBuilder<TFieldValues>
-      <
-        TFieldName extends FieldPath<TFieldValues>,
-        V extends FieldPathValue<TFieldValues, TFieldName>
-      >(
-        path: TFieldName,
-        op: "in" | "not-in",
-        value: readonly V[]
-      ): FilterBuilder<TFieldValues>
-    }) => FilterBuilder<TFieldValues>
+    fb: (f: Filts<TFieldValues>) => FilterBuilder<TFieldValues>
   ): FilterBuilder<TFieldValues>
-  <
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    value: V
-  ): FilterBuilder<TFieldValues>
-  <
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "!=",
-    value: V
-  ): FilterBuilder<TFieldValues>
-  <
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: ">" | ">=" | "<" | "<=",
-    value: V // only numbers?
-  ): FilterBuilder<TFieldValues>
-  <
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "startsWith" | "endsWith" | "!startsWith" | "!endsWith",
-    value: V // only strings?
-  ): FilterBuilder<TFieldValues>
-  <
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "in" | "not-in",
-    value: readonly V[]
-  ): FilterBuilder<TFieldValues>
-}
+} & Filts<TFieldValues>
 
-const not = <A extends string>(s: A) => `!${s}`
+// const not = <A extends string>(s: A) => `!${s}`
 
-type FilterGroup<TFieldValues extends FieldValues> = (
-  fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
-) => FilterBuilder<TFieldValues>
+// type FilterGroup<TFieldValues extends FieldValues> = (
+//   fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
+// ) => FilterBuilder<TFieldValues>
 
 interface FilterBuilder<TFieldValues extends FieldValues> {
   // TODO: as overloads?
