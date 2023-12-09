@@ -3,17 +3,17 @@ import type { FieldPath, FieldPathValue } from "../../filter/types/path/eager.js
 
 type FilterResult = {
   t: "where"
-  type: string
+  op: string
   path: string
   value: string
 } | {
   t: "or"
-  type: string
+  op: string
   path: string
   value: string
 } | {
   t: "and"
-  type: string
+  op: string
   path: string
   value: string
 } | {
@@ -37,13 +37,13 @@ const print = (state: readonly FilterResult[]) => {
   for (const e of state) {
     switch (e.t) {
       case "where":
-        s += `${e.path} ${e.type} ${e.value}`
+        s += `${e.path} ${e.op} ${e.value}`
         break
       case "or":
-        s += ` OR ${e.path} ${e.type} ${e.value}`
+        s += ` OR ${e.path} ${e.op} ${e.value}`
         break
       case "and":
-        s += ` AND ${e.path} ${e.type} ${e.value}`
+        s += ` AND ${e.path} ${e.op} ${e.value}`
         break
       case "or-scope": {
         ;++l
@@ -90,9 +90,13 @@ const FilterBuilder = {
         current.push({ t: "where-scope", result: mine })
         return r
       }
+      if (args.length === 1) {
+        current.push({ t: "where", ...args[0] })
+        return all
+      }
       current.push({
         t: "where",
-        type: args.length === 2 ? "eq" : args[1],
+        op: args.length === 2 ? "eq" : args[1],
         path: args[0],
         value: args[args.length - 1]
       })
@@ -108,9 +112,13 @@ const FilterBuilder = {
         current.push({ t: "and-scope", result: mine })
         return r
       }
+      if (args.length === 1) {
+        current.push({ t: "and", ...args[0] })
+        return all
+      }
       current.push({
         t: "and",
-        type: args.length === 2 ? "eq" : args[1],
+        op: args.length === 2 ? "eq" : args[1],
         path: args[0],
         value: args[args.length - 1]
       })
@@ -126,7 +134,11 @@ const FilterBuilder = {
         current.push({ t: "or-scope", result: mine })
         return r
       }
-      current.push({ t: "or", type: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+      if (args.length === 1) {
+        current.push({ t: "or", ...args[0] })
+        return all
+      }
+      current.push({ t: "or", op: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
       return all
     }
     const all = {
@@ -203,7 +215,7 @@ type FilterTest<TFieldValues extends FieldValues> = {
     op: "startsWith" | "endsWith" | "contains" | "!contains" | "!startsWith" | "!endsWith"
     value: V
   }): FilterBuilder<TFieldValues>
-}
+} & Filts<TFieldValues>
 // const not = <A extends string>(s: A) => `!${s}`
 
 // type FilterGroup<TFieldValues extends FieldValues> = (
@@ -221,15 +233,15 @@ interface FilterBuilder<TFieldValues extends FieldValues> {
 interface MyEntity {
   id: string
   name: string
-  bio: string
+  bio: string | null
   isActive: boolean
   roles: readonly string[]
   tag: "a" | "b" | "c"
   age?: number
-  something?: {
+  something: {
     id: number
     name: string
-  }
+  } | null
 }
 
 type F<T extends FieldValues> = {
@@ -258,10 +270,13 @@ type G<T extends FieldValues, Val> = {
   lte: (value: Val) => F<T>
 }
 
-type Filter<T extends FieldValues> = {
-  [K in keyof T]-?: [T[K]] extends [Record<any, any> | undefined | null] ? Filter<T[K]> & G<T, T[K]>
-    : [T[K]] extends [Record<any, any>] ? Filter<T[K]> & G<T, T[K]>
-    : G<T, T[K]>
+type NullOrUndefined<T, Fallback> = null extends T ? null : undefined extends T ? null : Fallback
+
+type Filter<T extends FieldValues, Ext = never> = {
+  [K in keyof T]-?: [T[K]] extends [Record<any, any> | undefined | null]
+    ? Filter<T[K], NullOrUndefined<T[K], Ext>> & G<T, T[K] | Ext>
+    : [T[K]] extends [Record<any, any>] ? Filter<T[K], NullOrUndefined<T[K], Ext>> & G<T, T[K] | Ext>
+    : G<T, T[K] | Ext>
 }
 const makeProxy = (parentProp?: string): any =>
   new Proxy(
@@ -278,7 +293,9 @@ const makeProxy = (parentProp?: string): any =>
           return target._proxies[prop]
         }
 
-        if (["contains", "startsWith", "endsWith", "in", "notIn", "eq", "neq"].includes(prop)) {
+        if (
+          ["contains", "startsWith", "endsWith", "in", "notIn", "eq", "neq", "gte", "gt", "lt", "lte"].includes(prop)
+        ) {
           return (value: any) => ({ op: prop, path: parentProp, value })
         }
         let fullProp = prop
@@ -313,7 +330,13 @@ it("works", () => {
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
-  expect(print(s)).toBe("TODO")
+  expect(print(s)).toBe(
+    `something.id contains abc AND (
+    something.name startsWith a OR tag in a OR (
+    name neq Alfredo AND tag eq c
+  )
+  ) AND isActive eq true AND age gte 12`
+  )
 })
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
@@ -341,5 +364,13 @@ it("root-or", () => {
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
-  expect(print(s)).toBe("TODO")
+  expect(print(s)).toBe(
+    `(
+  something.id eq 1 AND (
+    something.name startsWith a OR tag in a OR (
+    name neq Alfredo AND tag eq c
+  )
+  ) AND bio contains abc AND isActive eq true AND age gte 12
+) OR name startsWith C`
+  )
 })
