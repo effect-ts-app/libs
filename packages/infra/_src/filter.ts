@@ -131,11 +131,6 @@ export type WhereIn<T extends "in" | "not-in", V, Values extends readonly V[] = 
   v: Values
 }
 
-/**
- * @tsplus fluent string $in
- * @tsplus fluent boolean $in
- * @tsplus fluent number $in
- */
 export function $in<A extends SupportedValues, Values extends readonly A[]>(
   _: A,
   ...v: Values
@@ -143,11 +138,6 @@ export function $in<A extends SupportedValues, Values extends readonly A[]>(
   return $$in(v)
 }
 
-/**
- * @tsplus fluent string $notIn
- * @tsplus fluent boolean $notIn
- * @tsplus fluent number $notIn
- */
 export function $notIn<A extends SupportedValues, Values extends readonly A[]>(
   _: A,
   ...v: Values
@@ -155,84 +145,37 @@ export function $notIn<A extends SupportedValues, Values extends readonly A[]>(
   return $$notIn(v)
 }
 
-/**
- * @tsplus fluent string $is
- * @tsplus fluent Date $is
- * @tsplus fluent boolean $is
- * @tsplus fluent number $is
- * @tsplus fluent Object $is
- */
 export function $is<A, V extends A>(_: A, v: V): WhereValue<"eq", A, V> {
   return $$is(v)
 }
 
-/**
- * @tsplus fluent ReadonlyArray $includes
- */
 export function $includes<A extends readonly any[], V extends A[number]>(_: A, v: V): WhereValue<"includes", A, V> {
   return $$includes(v)
 }
 
-/**
- * @tsplus fluent ReadonlyArray $notIncludes
- */
 export function $notIncludes<A extends readonly any[], V extends A[number]>(
   _: A,
   v: V
 ): WhereValue<"not-includes", A, V> {
   return $$notIncludes(v)
 }
-/**
- * @tsplus fluent string $isnt
- * @tsplus fluent Date $isnt
- * @tsplus fluent boolean $isnt
- * @tsplus fluent number $isnt
- * @tsplus fluent Object $isnt
- */
+
 export function $isnt<A, V extends A>(_: A, v: V): WhereValue<"not-eq", A, V> {
   return $$isnt(v)
 }
 
-/**
- * @tsplus fluent string $gt
- * @tsplus fluent Date $gt
- * @tsplus fluent boolean $gt
- * @tsplus fluent number $gt
- * @tsplus fluent Object $gt
- */
 export function $gt<A, V extends A>(_: A, v: V): WhereValue<"gt", A, V> {
   return $$gt(v)
 }
 
-/**
- * @tsplus fluent string $gte
- * @tsplus fluent Date $gte
- * @tsplus fluent boolean $gte
- * @tsplus fluent number $gte
- * @tsplus fluent Object $gte
- */
 export function $gte<A, V extends A>(_: A, v: V): WhereValue<"gte", A, V> {
   return $$gte(v)
 }
 
-/**
- * @tsplus fluent string $lt
- * @tsplus fluent Date $lt
- * @tsplus fluent boolean $lt
- * @tsplus fluent number $lt
- * @tsplus fluent Object $lt
- */
 export function $lt<A, V extends A>(_: A, v: V): WhereValue<"lt", A, V> {
   return $$lt(v)
 }
 
-/**
- * @tsplus fluent string $lte
- * @tsplus fluent Date $lte
- * @tsplus fluent boolean $lte
- * @tsplus fluent number $lte
- * @tsplus fluent Object $lte
- */
 export function $lte<A, V extends A>(_: A, v: V): WhereValue<"lte", A, V> {
   return $$lte(v)
 }
@@ -309,44 +252,26 @@ export const Filters = {
   $notIncludes: $notIncludes__
 }
 
-/**
- * @tsplus fluent string $notStartsWith
- */
 export function $notStartsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"not-starts-with", A, V> {
   return $$notStartsWith(v)
 }
 
-/**
- * @tsplus fluent string $notEndsWith
- */
 export function $notEndsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"not-ends-with", A, V> {
   return $$notEndsWith(v)
 }
 
-/**
- * @tsplus fluent string $notContains
- */
 export function $notContains<A extends string, V extends A>(_: A, v: V): WhereValue<"not-contains", A, V> {
   return $$notContains(v)
 }
 
-/**
- * @tsplus fluent string $startsWith
- */
 export function $startsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"starts-with", A, V> {
   return $$startsWith(v)
 }
 
-/**
- * @tsplus fluent string $endsWith
- */
 export function $endsWith<A extends string, V extends A>(_: A, v: V): WhereValue<"ends-with", A, V> {
   return $$endsWith(v)
 }
 
-/**
- * @tsplus fluent string $contains
- */
 export function $contains<A extends string, V extends A>(_: A, v: V): WhereValue<"contains", A, V> {
   return $$contains(v)
 }
