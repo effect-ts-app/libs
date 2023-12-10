@@ -3,9 +3,25 @@ import type { FieldPath } from "../../../filter/types/path/eager.js"
 
 type NullOrUndefined<T, Fallback> = null extends T ? null : undefined extends T ? null : Fallback
 
+// TODO: includes | notIncludes
+export type Ops =
+  | "endsWith"
+  | "startsWith"
+  | "notEndsWith"
+  | "notStartsWith"
+  | "contains"
+  | "notContains"
+  | "in"
+  | "notIn"
+  | "eq"
+  | "neq"
+  | "gt"
+  | "gte"
+  | "lt"
+  | "lte"
 type F<T extends FieldValues> = {
   path: FieldPath<T>
-  op: "endsWith" | "startsWith" | "contains" // | "eq" | "neq" | "gt" | "gte" | "lt" | "lte"
+  op: Ops
   value: string
 } /* | {
   op: "in" | "notIn"
@@ -16,7 +32,9 @@ type F<T extends FieldValues> = {
 type G<T extends FieldValues, Val> = {
   (value: Val): F<T>
   startsWith: (value: string) => F<T>
+  notStartsWith: (value: string) => F<T>
   endsWith: (value: string) => F<T>
+  notEndsWith: (value: string) => F<T>
   contains: (value: string) => F<T>
   notContains: (value: string) => F<T>
   in: (...value: readonly string[]) => F<T>
@@ -35,6 +53,22 @@ export type Filter<T extends FieldValues, Ext = never> = {
     : [T[K]] extends [Record<any, any>] ? Filter<T[K], NullOrUndefined<T[K], Ext>> & G<T, T[K] | Ext>
     : G<T, T[K] | Ext>
 }
+const ops: Ops[] = [
+  "contains",
+  "startsWith",
+  "endsWith",
+  "notContains",
+  "notStartsWith",
+  "notEndsWith",
+  "in",
+  "notIn",
+  "eq",
+  "neq",
+  "gte",
+  "gt",
+  "lt",
+  "lte"
+]
 export const makeProxy = (parentProp?: string): any =>
   new Proxy(
     Object.assign(() => {}, {
@@ -50,9 +84,7 @@ export const makeProxy = (parentProp?: string): any =>
           return target._proxies[prop]
         }
 
-        if (
-          ["contains", "startsWith", "endsWith", "in", "notIn", "eq", "neq", "gte", "gt", "lt", "lte"].includes(prop)
-        ) {
+        if (ops.includes(prop as any)) {
           return (value: any) => ({ op: prop, path: parentProp, value })
         }
         let fullProp = prop

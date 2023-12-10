@@ -1,11 +1,5 @@
 import type { FilterR, FilterResult } from "../filterApi/query.js"
-import type {
-  FilterJoinSelect,
-  JoinFindFilter,
-  LegacyFilter,
-  StoreWhereFilter,
-  SupportedValues
-} from "../service.js"
+import type { FilterJoinSelect, JoinFindFilter, LegacyFilter, StoreWhereFilter, SupportedValues } from "../service.js"
 
 export function logQuery(q: {
   query: string
@@ -247,24 +241,26 @@ export function buildWhereCosmosQuery3(
     switch (x.op) {
       case "in":
         return `ARRAY_CONTAINS(${v}, ${k})`
-      case "not-in":
+      case "notIn":
         return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
 
-      case "includes":
-        return `ARRAY_CONTAINS(${k}, ${v})`
-      case "not-includes":
-        return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
+        // TODO
+      // case "includes":
+      //   return `ARRAY_CONTAINS(${k}, ${v})`
+      // case "notIncludes":
+      //   return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
       case "contains":
         return `CONTAINS(${k}, ${v}, true)`
-      case "starts-with":
+
+      case "startsWith":
         return `STARTSWITH(${k}, ${v}, true)`
-      case "ends-with":
+      case "endsWith":
         return `ENDSWITH(${k}, ${v}, true)`
-      case "not-contains":
+      case "notContains":
         return `NOT(CONTAINS(${k}, ${v}, true))`
-      case "not-starts-with":
+      case "notStartsWith":
         return `NOT(STARTSWITH(${k}, ${v}, true))`
-      case "not-ends-with":
+      case "notEndsWith":
         return `NOT(ENDSWITH(${k}, ${v}, true))`
     }
 
@@ -280,7 +276,7 @@ export function buildWhereCosmosQuery3(
         return `${lk} > ${lv}`
       case "gte":
         return `${lk} >= ${lv}`
-      case "not-eq":
+      case "neq":
         return x.value === null
           ? `IS_NULL(${k}) = false`
           : `${lk} <> ${lv}`
@@ -289,13 +285,17 @@ export function buildWhereCosmosQuery3(
         return x.value === null
           ? `IS_NULL(${k}) = true`
           : `${lk} = ${lv}`
+      default: {
+        throw new Error("unsupported op: " + x.op)
+      }
     }
   }
+
+  let i = 0
 
   const print = (state: readonly FilterResult[]) => {
     let s = ""
     let l = 0
-    let i = 0
     const printN = (n: number) => {
       return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
     }
@@ -371,7 +371,7 @@ export function buildWhereCosmosQuery3(
         .join("\n")
     }
 
-    WHERE f.id != @id AND (${print(filter)})
+    WHERE f.id != @id AND ${print(filter)}
     ${lm}`,
     parameters: [
       { name: "@id", value: importedMarkerId },

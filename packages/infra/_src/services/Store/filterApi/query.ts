@@ -1,6 +1,6 @@
 import type { FieldValues } from "../../../filter/types.js"
 import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager.js"
-import type { Filter } from "./proxy.js"
+import type { Filter, Ops } from "./proxy.js"
 import { makeProxy } from "./proxy.js"
 
 export type FilterScopes = {
@@ -15,23 +15,8 @@ export type FilterScopes = {
 }
 
 export type FilterR = {
-  op:
-    | "eq"
-    | "not-eq"
-    | "lt"
-    | "gt"
-    | "lte"
-    | "gte"
-    | "starts-with"
-    | "ends-with"
-    | "contains"
-    | "not-starts-with"
-    | "not-ends-with"
-    | "not-contains"
-    | "in"
-    | "not-in"
-    | "includes"
-    | "not-includes"
+  op: Ops
+
   path: string
   value: string // ToDO: Value[]
 }
@@ -203,7 +188,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "!=",
+    op: "neq",
     value: V
   ): FilterBuilder<TFieldValues>
   <
@@ -211,7 +196,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: ">" | ">=" | "<" | "<=",
+    op: "gt" | "gte" | "lt" | "lte",
     value: V // only numbers?
   ): FilterBuilder<TFieldValues>
   <
@@ -219,7 +204,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "startsWith" | "endsWith" | "contains" | "!contains" | "!startsWith" | "!endsWith",
+    op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
     value: V // only strings?
   ): FilterBuilder<TFieldValues>
   <
@@ -227,7 +212,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "in" | "not-in",
+    op: "in" | "!in",
     value: readonly V[]
   ): FilterBuilder<TFieldValues>
 }

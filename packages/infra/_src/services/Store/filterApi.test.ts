@@ -65,6 +65,8 @@ it("works", () => {
     something: { id: 1, name: "abc" }
   }]
   expect(values.filter(codeFilter3(s))).toStrictEqual([values[0]])
+
+  expect(buildWhereCosmosQuery3(s, "MyEntity", "marker")).toBe("")
 })
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
