@@ -3,22 +3,7 @@ import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager
 import type { Filter } from "./proxy.js"
 import { makeProxy } from "./proxy.js"
 
-export type FilterResult = {
-  t: "where"
-  op: string
-  path: string
-  value: string
-} | {
-  t: "or"
-  op: string
-  path: string
-  value: string
-} | {
-  t: "and"
-  op: string
-  path: string
-  value: string
-} | {
+export type FilterScopes = {
   t: "or-scope"
   result: FilterResult[]
 } | {
@@ -28,6 +13,40 @@ export type FilterResult = {
   t: "where-scope"
   result: FilterResult[]
 }
+
+export type FilterR = {
+  op:
+    | "eq"
+    | "not-eq"
+    | "lt"
+    | "gt"
+    | "lte"
+    | "gte"
+    | "starts-with"
+    | "ends-with"
+    | "contains"
+    | "not-starts-with"
+    | "not-ends-with"
+    | "not-contains"
+    | "in"
+    | "not-in"
+    | "includes"
+    | "not-includes"
+  path: string
+  value: string // ToDO: Value[]
+}
+
+export type FilterResult =
+  | {
+    t: "where"
+  } & FilterR
+  | {
+    t: "or"
+  } & FilterR
+  | {
+    t: "and"
+  } & FilterR
+  | FilterScopes
 
 export const print = (state: readonly FilterResult[]) => {
   let s = ""
@@ -169,7 +188,7 @@ export const FilterBuilder = {
   }
 }
 
-export type Initial<TFieldValues extends FieldValues> = { where: FilterTest<TFieldValues>; build(): any }
+export type Initial<TFieldValues extends FieldValues> = { where: FilterTest<TFieldValues>; build(): FilterResult[] }
 
 export type Filts<TFieldValues extends FieldValues> = {
   <
@@ -242,6 +261,6 @@ export interface FilterBuilder<TFieldValues extends FieldValues> {
   // TODO: as overloads?
   and: FilterTest<TFieldValues>
   or: FilterTest<TFieldValues>
-  build(): any
+  build(): FilterResult[]
   // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
 }

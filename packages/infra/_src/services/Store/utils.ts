@@ -184,38 +184,38 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
       .flatMap((_) => _)
 }
 
-function lowercaseIfString<T>(val: T) {
+export function lowercaseIfString<T>(val: T) {
   if (typeof val === "string") {
     return val.toLowerCase()
   }
   return val
 }
 
-function compareCaseInsensitive(valA: unknown, valB: unknown) {
+export function compareCaseInsensitive(valA: unknown, valB: unknown) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() === valB.toLowerCase()
     : valA === valB
 }
 
-function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() < valB.toLowerCase()
     : valA < valB
 }
 
-function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() <= valB.toLowerCase()
     : valA <= valB
 }
 
-function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() > valB.toLowerCase()
     : valA > valB
 }
 
-function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() >= valB.toLowerCase()
     : valA >= valB
