@@ -125,7 +125,7 @@ export function codeFilter3<E extends { id: string }>(filters: readonly FilterRe
           : result || (f.t === "or-scope"
             ? codeFilter3(f.result)(x)
             : test(f, x))
-        if (!result) return false
+        if (result) return true
         continue
       }
       if (f.t === "where-scope") {
@@ -133,12 +133,13 @@ export function codeFilter3<E extends { id: string }>(filters: readonly FilterRe
         // hmm, should we remember parent?
         if (op === "or") {
           result = result || codeFilter3(f.result)(x)
+          if (result) return true
         } else if (op === "and") {
           result = result && codeFilter3(f.result)(x)
+          if (!result) return false
         } else {
           result = codeFilter3(f.result)(x)
         }
-        if (!result) return false
         continue
       }
       if (op === "or") {
