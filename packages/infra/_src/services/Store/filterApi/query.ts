@@ -212,7 +212,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "in" | "!in",
+    op: "in" | "notIn",
     value: readonly V[]
   ): FilterBuilder<TFieldValues>
 }
@@ -232,7 +232,7 @@ export type FilterTest<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(f: {
     path: TFieldName
-    op: "startsWith" | "endsWith" | "contains" | "!contains" | "!startsWith" | "!endsWith"
+    op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith"
     value: V
   }): FilterBuilder<TFieldValues>
 } & Filts<TFieldValues>
