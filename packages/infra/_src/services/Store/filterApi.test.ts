@@ -7,6 +7,8 @@ const MyEntity = {
     .make<MyEntity>()
 }
 
+const removeWhitespace = (a: string) => a.replaceAll(/\s+/g, " ").replaceAll(/^\s+/g, "").replaceAll(/\s+$/g, "")
+
 interface MyEntity {
   id: string
   name: string
@@ -21,7 +23,7 @@ interface MyEntity {
   } | null
 }
 
-it("works", () => {
+describe("works", () => {
   const f = MyEntity.query((where, f) =>
     where(f.something.id.eq(1))
       .and(() =>
@@ -38,13 +40,14 @@ it("works", () => {
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
-  expect(print(s)).toBe(
-    `something.id eq 1 AND (
+  it("print", () =>
+    expect(print(s)).toBe(
+      `something.id eq 1 AND (
     something.name startsWith a OR tag in a OR (
     name neq Alfredo AND tag eq c
   )
   ) AND isActive eq true AND age gte 12`
-  )
+    ))
   const values: MyEntity[] = [{
     id: "1",
     name: "Patrick",
@@ -64,13 +67,85 @@ it("works", () => {
     tag: "a",
     something: { id: 1, name: "abc" }
   }]
-  expect(values.filter(codeFilter3(s))).toStrictEqual([values[0]])
 
-  expect(buildWhereCosmosQuery3(s, "MyEntity", "marker")).toBe("")
+  it("codeFilter1", () => {
+    expect(values.filter(codeFilter3(s))).toStrictEqual([values[0]])
+  })
+  it("codeFilter2", () => {
+    expect(values.filter(
+      codeFilter3(
+        MyEntity
+          .query((where, f) =>
+            where(f.something.id.eq(0))
+              .and(() =>
+                where(f.something.name.startsWith("a"))
+                  .or(f.tag.in("a", "b"))
+              )
+          )
+          .build()
+      )
+    ))
+      .toStrictEqual([])
+
+    expect(values.filter(
+      codeFilter3(
+        MyEntity
+          .query((where, f) => where(f.something.id.eq(0)))
+          .build()
+      )
+    ))
+      .toStrictEqual([])
+  })
+
+  it("cosmos", () => {
+    const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
+    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`
+        SELECT f
+    FROM MyEntity AS f
+    WHERE f.id != @id AND f.something.id = @v0 AND (
+    STARTSWITH(f.something.name, @v1, true) OR ARRAY_CONTAINS(@v2, f.tag) OR (
+    LOWER(f.name) <> LOWER(@v3) AND LOWER(f.tag) = LOWER(@v4)
+  )
+  ) AND f.isActive = @v5 AND f.age >= @v6`))
+    expect(r.parameters).toEqual([
+      {
+        "name": "@id",
+        "value": "marker"
+      },
+      {
+        "name": "@v0",
+        "value": 1
+      },
+      {
+        "name": "@v1",
+        "value": "a"
+      },
+      {
+        "name": "@v2",
+        "value": "a"
+      },
+      {
+        "name": "@v3",
+        "value": "Alfredo"
+      },
+      {
+        "name": "@v4",
+        "value": "c"
+      },
+      {
+        "name": "@v5",
+        "value": true
+      },
+      {
+        "name": "@v6",
+        "value": 12
+      }
+    ])
+  })
 })
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
-it("root-or", () => {
+describe("root-or", () => {
   const f = MyEntity.query((where, f) =>
     where(() =>
       where(f.something.id(1))
@@ -92,14 +167,70 @@ it("root-or", () => {
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
 
-  expect(print(s)).toBe(
-    `(
+  it("print", () => {
+    expect(print(s)).toBe(
+      `(
   something.id eq 1 AND (
     something.name startsWith a OR tag in a OR (
     name neq Alfredo AND tag eq c
   )
   ) AND bio contains abc AND isActive eq true AND age gte 12
 ) OR name startsWith C`
-  )
-  expect(buildWhereCosmosQuery3(s, "MyEntity", "marker")).toBe("")
+    )
+  })
+  it("cosmos", () => {
+    const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
+    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`    SELECT f
+       FROM MyEntity AS f
+          
+          WHERE f.id != @id AND (
+    f.something.id = @v0 AND (
+      STARTSWITH(f.something.name, @v1, true) OR ARRAY_CONTAINS(@v2, f.tag) OR (
+      LOWER(f.name) <> LOWER(@v3) AND LOWER(f.tag) = LOWER(@v4)
+    )
+    ) AND CONTAINS(f.bio, @v5, true) AND f.isActive = @v6 AND f.age >= @v7
+  ) OR STARTSWITH(f.name, @v8, true) `))
+    expect(r.parameters).toEqual([
+      {
+        "name": "@id",
+        "value": "marker"
+      },
+      {
+        "name": "@v0",
+        "value": 1
+      },
+      {
+        "name": "@v1",
+        "value": "a"
+      },
+      {
+        "name": "@v2",
+        "value": "a"
+      },
+      {
+        "name": "@v3",
+        "value": "Alfredo"
+      },
+      {
+        "name": "@v4",
+        "value": "c"
+      },
+      {
+        "name": "@v5",
+        "value": "abc"
+      },
+      {
+        "name": "@v6",
+        "value": true
+      },
+      {
+        "name": "@v7",
+        "value": 12
+      },
+      {
+        "name": "@v8",
+        "value": "C"
+      }
+    ])
+  })
 })
