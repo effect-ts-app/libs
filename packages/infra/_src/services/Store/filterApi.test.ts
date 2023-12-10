@@ -70,7 +70,7 @@ const print = (state: readonly FilterResult[]) => {
 }
 
 const FilterBuilder = {
-  make: <TFieldValues extends FieldValues>(): Initial<TFieldValues> => {
+  make: <TFieldValues extends FieldValues>(): Initial<TFieldValues> & { fields: Filter<MyEntity> } => {
     // const recursive = {}
     // const and = Object.assign(() => {}, recursive)
     // const or = Object.assign(() => {}, recursive)
@@ -142,6 +142,7 @@ const FilterBuilder = {
       return all
     }
     const all = {
+      fields: makeProxy() as Filter<MyEntity>,
       where,
       and,
       or,
@@ -311,22 +312,33 @@ const makeProxy = (parentProp?: string): any =>
 const n: Filter<MyEntity> = makeProxy()
 // declare const n: Filter<MyEntity>
 
-it("works", () => {
-  const f = FilterBuilder
+const MyEntity = {
+  query: FilterBuilder
+    .make<MyEntity>(),
+  $: FilterBuilder
     .make<MyEntity>()
-    .where(n.something.id.contains("abc"))
-    .and((_) =>
-      _
-        .where(n.something.name.startsWith("a")) // or would we do "like", "a%"?
-        .or(n.tag.in("a", "b"))
-        .or((_) =>
+    .fields
+}
+
+it("works", () => {
+  const f = pipe(
+    MyEntity.query,
+    (q) =>
+      q
+        .where(q.fields.something.id.contains("abc"))
+        .and((_) =>
           _
-            .where(n.name.neq("Alfredo"))
-            .and(n.tag("c"))
+            .where(q.fields.something.name.startsWith("a")) // or would we do "like", "a%"?
+            .or(q.fields.tag.in("a", "b"))
+            .or((_) =>
+              _
+                .where(q.fields.name.neq("Alfredo"))
+                .and(q.fields.tag("c"))
+            )
         )
-    )
-    .and(n.isActive(true))
-    .and(n.age.gte(12))
+        .and(q.fields.isActive(true))
+        .and(q.fields.age.gte(12))
+  )
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
