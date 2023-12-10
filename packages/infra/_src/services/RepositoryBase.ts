@@ -13,6 +13,7 @@ import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
+import { FilterBuilder } from "./Store/filterApi/query.js"
 
 /**
  * @tsplus type Repository
@@ -232,7 +233,8 @@ export function makeRepo<
 
     return {
       make,
-      where
+      where,
+      query: FilterBuilder.make<PM>()
     }
   }
 }
@@ -391,7 +393,8 @@ export interface Repos<
     E,
     Out
   >
-  readonly where: ReturnType<typeof makeWhere<PM>>
+  readonly where: ReturnType<typeof FilterBuilder.make<PM>>
+  readonly query: ReturnType<typeof makeWhere<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
