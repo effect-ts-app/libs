@@ -8,7 +8,7 @@ import {
   lteCaseInsensitive
 } from "./utils.js"
 
-const test = <E extends { id: string }>(p: FilterR, x: E) => {
+export const codeFilterStatement = <E extends { id: string }>(p: FilterR, x: E) => {
   const k = get(x, p.path)
   switch (p.op) {
     case "in":
@@ -70,7 +70,7 @@ const test = <E extends { id: string }>(p: FilterR, x: E) => {
 //         if (p.t === "where-scope") {
 //           return codeFilter2(filters)(x)
 //         }
-//         return test(p, x)
+//         return codeFilterStatement(p, x)
 //       })
 //     ? Option(x as unknown as NE)
 //     : Option.none
@@ -87,7 +87,7 @@ const test = <E extends { id: string }>(p: FilterR, x: E) => {
 //         if (p.t === "where-scope") {
 //           return codeFilter2(filters)(x)
 //         }
-//         return test(p, x)
+//         return codeFilterStatement(p, x)
 //       })
 //     ? Option(x as unknown as NE)
 //     : Option.none
@@ -113,20 +113,20 @@ export function codeFilter3<E extends { id: string }>(filters: readonly FilterRe
       if (f.t === "and" || f.t === "and-scope") {
         op = "and"
         result = result === null
-          ? (f.t === "and-scope" ? codeFilter3(f.result)(x) : test(f, x))
+          ? (f.t === "and-scope" ? codeFilter3(f.result)(x) : codeFilterStatement(f, x))
           : result && (f.t === "and-scope"
             ? codeFilter3(f.result)(x)
-            : test(f, x))
+            : codeFilterStatement(f, x))
         if (!result) return false
         continue
       }
       if (f.t === "or" || f.t === "or-scope") {
         op = "or"
         result = result === null
-          ? (f.t === "or-scope" ? codeFilter3(f.result)(x) : test(f, x))
+          ? (f.t === "or-scope" ? codeFilter3(f.result)(x) : codeFilterStatement(f, x))
           : result || (f.t === "or-scope"
             ? codeFilter3(f.result)(x)
-            : test(f, x))
+            : codeFilterStatement(f, x))
         if (result) return true
         continue
       }
@@ -145,11 +145,11 @@ export function codeFilter3<E extends { id: string }>(filters: readonly FilterRe
         continue
       }
       if (op === "or") {
-        result = result || test(f, x)
+        result = result || codeFilterStatement(f, x)
       } else if (op === "and") {
-        result = result && test(f, x)
+        result = result && codeFilterStatement(f, x)
       } else {
-        result = test(f, x)
+        result = codeFilterStatement(f, x)
       }
     }
     return !!result
