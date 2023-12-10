@@ -104,54 +104,47 @@ export const codeFilterStatement = <E extends { id: string }>(p: FilterR, x: E) 
 //   // or<E, NE>(filters, x)
 // }
 
-export function codeFilter3<E extends { id: string }>(filters: readonly FilterResult[]) {
-  // TODO: handle or, and, or-scope, and-scope, where-scope
-  return (x: E): boolean => {
-    let result: null | true | false = null
-    let op = "and"
-    for (const f of filters) {
-      if (f.t === "and" || f.t === "and-scope") {
-        op = "and"
-        result = result === null
-          ? (f.t === "and-scope" ? codeFilter3(f.result)(x) : codeFilterStatement(f, x))
-          : result && (f.t === "and-scope"
-            ? codeFilter3(f.result)(x)
-            : codeFilterStatement(f, x))
-        if (!result) return false
-        continue
+export const codeFilter3 = (state: readonly FilterResult[]) => (sut: any) => codeFilter3_(state, sut)
+export const codeFilter3_ = (state: readonly FilterResult[], sut: any) => {
+  let s = ""
+  let l = 0
+  const printN = (n: number) => {
+    return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
+  }
+  // TODO: path str updates
+
+  const process = (e: FilterR) => codeFilterStatement(e, sut)
+  for (const e of state) {
+    switch (e.t) {
+      case "where":
+        s += process(e)
+        break
+      case "or":
+        s += " || " + process(e)
+        break
+      case "and":
+        s += " && " + process(e)
+        break
+      case "or-scope": {
+        ;++l
+        s += ` || (\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n${printN(l)})`
+        ;--l
+        break
       }
-      if (f.t === "or" || f.t === "or-scope") {
-        op = "or"
-        result = result === null
-          ? (f.t === "or-scope" ? codeFilter3(f.result)(x) : codeFilterStatement(f, x))
-          : result || (f.t === "or-scope"
-            ? codeFilter3(f.result)(x)
-            : codeFilterStatement(f, x))
-        if (result) return true
-        continue
+      case "and-scope": {
+        ;++l
+        s += ` && (\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n${printN(l)})`
+        ;--l
+
+        break
       }
-      if (f.t === "where-scope") {
-        // TODO
-        // hmm, should we remember parent?
-        if (op === "or") {
-          result = result || codeFilter3(f.result)(x)
-          if (result) return true
-        } else if (op === "and") {
-          result = result && codeFilter3(f.result)(x)
-          if (!result) return false
-        } else {
-          result = codeFilter3(f.result)(x)
-        }
-        continue
-      }
-      if (op === "or") {
-        result = result || codeFilterStatement(f, x)
-      } else if (op === "and") {
-        result = result && codeFilterStatement(f, x)
-      } else {
-        result = codeFilterStatement(f, x)
+      case "where-scope": {
+        // ;++l
+        s += `(\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n)`
+        // ;--l
+        break
       }
     }
-    return !!result
   }
+  return eval(s)
 }

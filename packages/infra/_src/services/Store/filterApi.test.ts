@@ -1,6 +1,5 @@
-import { codeFilterStatement } from "./codeFilter.js"
+import { codeFilter3 } from "./codeFilter.js"
 import { buildWhereCosmosQuery3 } from "./Cosmos/query.js"
-import type { FilterR, FilterResult } from "./filterApi/query.js"
 import { FilterBuilder, print } from "./filterApi/query.js"
 
 const MyEntity = {
@@ -22,51 +21,6 @@ interface MyEntity {
     id: number
     name: string
   } | null
-}
-
-export const codePrintF2 = (state: readonly FilterResult[]) => (sut: any) => codePrintF(state, sut)
-export const codePrintF = (state: readonly FilterResult[], sut: any) => {
-  let s = ""
-  let l = 0
-  const printN = (n: number) => {
-    return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
-  }
-  // TODO: path str updates
-
-  const process = (e: FilterR) => codeFilterStatement(e, sut)
-  for (const e of state) {
-    switch (e.t) {
-      case "where":
-        s += process(e)
-        break
-      case "or":
-        s += " || " + process(e)
-        break
-      case "and":
-        s += " && " + process(e)
-        break
-      case "or-scope": {
-        ;++l
-        s += ` || (\n${printN(l + 1)}${codePrintF(e.result, sut)}\n${printN(l)})`
-        ;--l
-        break
-      }
-      case "and-scope": {
-        ;++l
-        s += ` && (\n${printN(l + 1)}${codePrintF(e.result, sut)}\n${printN(l)})`
-        ;--l
-
-        break
-      }
-      case "where-scope": {
-        // ;++l
-        s += `(\n${printN(l + 1)}${codePrintF(e.result, sut)}\n)`
-        // ;--l
-        break
-      }
-    }
-  }
-  return eval(s)
 }
 
 describe("works", () => {
@@ -115,15 +69,15 @@ describe("works", () => {
   }]
 
   it("print codef", () => {
-    expect(values.filter(codePrintF2(s))).toStrictEqual([values[0]])
+    expect(values.filter(codeFilter3(s))).toStrictEqual([values[0]])
   })
 
   it("codeFilter1", () => {
-    expect(values.filter(codePrintF2(s))).toStrictEqual([values[0]])
+    expect(values.filter(codeFilter3(s))).toStrictEqual([values[0]])
   })
   it("codeFilter2", () => {
     expect(values.filter(
-      codePrintF2(
+      codeFilter3(
         MyEntity
           .query((where, f) =>
             where(f.something.id.eq(0))
@@ -138,7 +92,7 @@ describe("works", () => {
       .toStrictEqual([])
 
     expect(values.filter(
-      codePrintF2(
+      codeFilter3(
         MyEntity
           .query((where, f) => where(f.something.id.eq(0)))
           .build()
@@ -147,7 +101,7 @@ describe("works", () => {
       .toStrictEqual([])
 
     expect(values.filter(
-      codePrintF2(
+      codeFilter3(
         MyEntity
           .query((where, f) => where(f.something.id.eq(1)))
           .build()
@@ -156,7 +110,7 @@ describe("works", () => {
       .toStrictEqual(values)
 
     expect(values.filter(
-      codePrintF2(
+      codeFilter3(
         MyEntity
           .query((where, f) => where(f.age.eq(11)))
           .build()
