@@ -5,6 +5,7 @@ import { OptimisticConcurrencyException } from "../../errors.js"
 import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
 
 import objectHash from "object-hash"
+import { codeFilter3_ } from "./codeFilter.js"
 
 export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
   { _etag, ...e }: E
@@ -38,7 +39,9 @@ export const makeUpdateETag =
 
 export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter<NE>) {
   return (x: E) =>
-    filter.type === "startsWith"
+    filter.type === "new-kid"
+      ? codeFilter3_(filter.filters, x) ? Option(x as unknown as NE) : Option.none
+      : filter.type === "startsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())
         ? Option(x as unknown as NE)

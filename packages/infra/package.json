@@ -532,6 +532,16 @@
         "default": "./_cjs/services/Store/Cosmos.cjs"
       }
     },
+    "./services/Store/Cosmos/query": {
+      "import": {
+        "types": "./dist/services/Store/Cosmos/query.d.ts",
+        "default": "./dist/services/Store/Cosmos/query.js"
+      },
+      "require": {
+        "types": "./dist/services/Store/Cosmos/query.d.ts",
+        "default": "./_cjs/services/Store/Cosmos/query.cjs"
+      }
+    },
     "./services/Store/Disk": {
       "import": {
         "types": "./dist/services/Store/Disk.d.ts",
@@ -560,6 +570,36 @@
       "require": {
         "types": "./dist/services/Store/Redis.d.ts",
         "default": "./_cjs/services/Store/Redis.cjs"
+      }
+    },
+    "./services/Store/codeFilter": {
+      "import": {
+        "types": "./dist/services/Store/codeFilter.d.ts",
+        "default": "./dist/services/Store/codeFilter.js"
+      },
+      "require": {
+        "types": "./dist/services/Store/codeFilter.d.ts",
+        "default": "./_cjs/services/Store/codeFilter.cjs"
+      }
+    },
+    "./services/Store/filterApi/proxy": {
+      "import": {
+        "types": "./dist/services/Store/filterApi/proxy.d.ts",
+        "default": "./dist/services/Store/filterApi/proxy.js"
+      },
+      "require": {
+        "types": "./dist/services/Store/filterApi/proxy.d.ts",
+        "default": "./_cjs/services/Store/filterApi/proxy.cjs"
+      }
+    },
+    "./services/Store/filterApi/query": {
+      "import": {
+        "types": "./dist/services/Store/filterApi/query.d.ts",
+        "default": "./dist/services/Store/filterApi/query.js"
+      },
+      "require": {
+        "types": "./dist/services/Store/filterApi/query.d.ts",
+        "default": "./_cjs/services/Store/filterApi/query.cjs"
       }
     },
     "./services/Store/index": {

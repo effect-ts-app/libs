@@ -4,6 +4,7 @@ import type { Parser, ParserEnv } from "@effect-app/schema/custom/Parser"
 
 import type { These } from "@effect-app/prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
+import type { FilterResult } from "./filterApi/query.js"
 
 export type StoreConfig<E> = {
   uniqueKeys?: UniqueKey[]
@@ -54,6 +55,7 @@ export type Filter<E> =
   | JoinFindFilter
   | StoreWhereFilter
   | LegacyFilter<E>
+  | { type: "new-kid"; filters: readonly FilterResult[] }
 
 export type FilterJoinSelect = {
   type: "filter_join_select"

@@ -8,7 +8,7 @@ import {
   lteCaseInsensitive
 } from "./utils.js"
 
-export const codeFilterStatement = <E extends { id: string }>(p: FilterR, x: E) => {
+export const codeFilterStatement = <E>(p: FilterR, x: E) => {
   const k = get(x, p.path)
   switch (p.op) {
     case "in":
@@ -104,8 +104,8 @@ export const codeFilterStatement = <E extends { id: string }>(p: FilterR, x: E) 
 //   // or<E, NE>(filters, x)
 // }
 
-export const codeFilter3 = (state: readonly FilterResult[]) => (sut: any) => codeFilter3_(state, sut)
-export const codeFilter3_ = (state: readonly FilterResult[], sut: any) => {
+export const codeFilter3 = <E>(state: readonly FilterResult[]) => (sut: E) => codeFilter3_(state, sut)
+export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E): boolean => {
   let s = ""
   let l = 0
   const printN = (n: number) => {

@@ -7,6 +7,7 @@ import {
   buildCosmosQuery,
   buildFilterJoinSelectCosmosQuery,
   buildFindJoinCosmosQuery,
+  buildWhereCosmosQuery3,
   logQuery
 } from "./Cosmos/query.js"
 import {
@@ -274,7 +275,11 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                   )
                   .map((_) => _.flatMap((_) => _))
-                : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                : Effect(
+                  filter.type === "new-kid"
+                    ? buildWhereCosmosQuery3(filter.filters, name, importedMarkerId, skip, limit)
+                    : buildCosmosQuery(filter, name, importedMarkerId, skip, limit)
+                )
                   .tap((q) => logQuery(q))
                   .flatMap((q) =>
                     Effect.promise(() =>
