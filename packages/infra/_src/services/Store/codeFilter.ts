@@ -8,7 +8,8 @@ import {
   lteCaseInsensitive
 } from "./utils.js"
 
-const test = <E extends { id: string }>(p: FilterR, k: E[any]) => {
+const test = <E extends { id: string }>(p: FilterR, x: E) => {
+  const k = get(x, p.path)
   switch (p.op) {
     case "in":
       return p.value.includes(k)
@@ -38,56 +39,116 @@ const test = <E extends { id: string }>(p: FilterR, k: E[any]) => {
       return !(k as string).toLowerCase().endsWith(p.value.toLowerCase())
     case "not-starts-with":
       return !(k as string).toLowerCase().startsWith(p.value.toLowerCase())
+
+    case "not-eq":
+      return p.path.includes(".-1.")
+        ? (get(x, p.path.split(".-1.")[0]) as any[])
+          // TODO: or vs and
+          .every((_) => !compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
+        : !compareCaseInsensitive(k, p.value)
+    case "eq":
+    case undefined:
+      return p.path.includes(".-1.")
+        ? (get(x, p.path.split(".-1.")[0]) as any[])
+          // TODO: or vs and
+          .some((_) => compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
+        : compareCaseInsensitive(k, p.value)
   }
 }
 
-const or = <E extends { id: string }, NE extends E>(filters: readonly FilterR[], x: E): Option<NE> =>
-  filters
-      .some((p) => {
-        const k = get(x, p.path)
-        switch (p.op) {
-          case "not-eq":
-            return !compareCaseInsensitive(k, p.value)
-          case "eq":
-          case undefined:
-            return compareCaseInsensitive(k, p.value)
-          default:
-            return test(p, k)
-        }
-      })
-    ? Option(x as unknown as NE)
-    : Option.none
+// const or = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
+//   filters
+//       .some((p) => {
+//         if (p.t === "and-scope") {
+//           return and(p.result, x)
+//         }
+//         if (p.t === "or-scope") {
+//           return or(p.result, x)
+//         }
+//         if (p.t === "where-scope") {
+//           return codeFilter2(filters)(x)
+//         }
+//         return test(p, x)
+//       })
+//     ? Option(x as unknown as NE)
+//     : Option.none
 
-export const and = <E extends { id: string }, NE extends E>(filters: readonly FilterR[], x: E): Option<NE> =>
-  filters
-      .every((p) => {
-        const k = get(x, p.path)
-        switch (p.op) {
-          case "not-eq":
-            return p.path.includes(".-1.")
-              ? (get(x, p.path.split(".-1.")[0]) as any[])
-                // TODO: or vs and
-                .every((_) => !compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
-              : !compareCaseInsensitive(k, p.value)
-          case "eq":
-          case undefined:
-            return p.path.includes(".-1.")
-              ? (get(x, p.path.split(".-1.")[0]) as any[])
-                // TODO: or vs and
-                .some((_) => compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
-              : compareCaseInsensitive(k, p.value)
-          default:
-            return test(p, k)
-        }
-      })
-    ? Option(x as unknown as NE)
-    : Option.none
+// export const and = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
+//   filters
+//       .every((p) => {
+//         if (p.t === "and-scope") {
+//           return and(p.result, x)
+//         }
+//         if (p.t === "or-scope") {
+//           return or(p.result, x)
+//         }
+//         if (p.t === "where-scope") {
+//           return codeFilter2(filters)(x)
+//         }
+//         return test(p, x)
+//       })
+//     ? Option(x as unknown as NE)
+//     : Option.none
 
-export function codeFilter2<E extends { id: string }, NE extends E>(filters: readonly FilterResult[]) {
+// // TODO: how to handle and/or outside scopes.
+// // TODO: the scopes are not about and every, or some.. they're about logical grouping. It's a logical group + and/or etc.
+// // TODO: how to convert this to code? would we compile an actual function body instead?!
+// export function codeFilter2<E extends { id: string }, NE extends E>(filters: readonly FilterResult[]) {
+//   // TODO: handle or, and, or-scope, and-scope, where-scope
+//   return (x: E) =>
+//     // AND
+//     and<E, NE>(filters, x)
+//   // OR
+//   // or<E, NE>(filters, x)
+// }
+
+export function codeFilter3<E extends { id: string }>(filters: readonly FilterResult[]) {
   // TODO: handle or, and, or-scope, and-scope, where-scope
-  return (x: E) =>
-    // OR
-    or<E, NE>(filters, x)
-  // AND
-  // and<E, NE>(filters, x)
+  return (x: E): boolean => {
+    let result: null | true | false = null
+    let op = "and"
+    for (const f of filters) {
+      if (f.t === "and" || f.t === "and-scope") {
+        op = "and"
+        result = result === null
+          ? (f.t === "and-scope" ? codeFilter3(f.result)(x) : test(f, x))
+          : result && (f.t === "and-scope"
+            ? codeFilter3(f.result)(x)
+            : test(f, x))
+        if (!result) return false
+        continue
+      }
+      if (f.t === "or" || f.t === "or-scope") {
+        op = "or"
+        result = result === null
+          ? (f.t === "or-scope" ? codeFilter3(f.result)(x) : test(f, x))
+          : result || (f.t === "or-scope"
+            ? codeFilter3(f.result)(x)
+            : test(f, x))
+        if (!result) return false
+        continue
+      }
+      if (f.t === "where-scope") {
+        // TODO
+        // hmm, should we remember parent?
+        if (op === "or") {
+          result = result || codeFilter3(f.result)(x)
+        } else if (op === "and") {
+          result = result && codeFilter3(f.result)(x)
+        } else {
+          result = codeFilter3(f.result)(x)
+        }
+        if (!result) return false
+        continue
+      }
+      if (op === "or") {
+        result = result || test(f, x)
+      } else if (op === "and") {
+        result = result && test(f, x)
+      } else {
+        result = test(f, x)
+      }
+    }
+    return !!result
+  }
 }
