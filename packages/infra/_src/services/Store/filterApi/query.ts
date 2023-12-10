@@ -147,10 +147,11 @@ export const makeFilter = <TFieldValues extends FieldValues>() => {
   }
   const fields = makeProxy() as Filter<TFieldValues>
   const all = Object.assign(where, {
+    type: "new-kid",
     and,
     or,
     build() {
-      return { _tag: "new-kid", filters: state }
+      return state
     }
   })
   return { all, fields }
@@ -175,7 +176,7 @@ export const FilterBuilder = {
 
 export type Initial<TFieldValues extends FieldValues> = {
   where: FilterTest<TFieldValues>
-  build(): { type: "new-kid"; filters: FilterResult[] }
+  build(): FilterResult[]
 }
 
 export type Filts<TFieldValues extends FieldValues> = {
@@ -246,9 +247,10 @@ export type FilterTest<TFieldValues extends FieldValues> = {
 // ) => FilterBuilder<TFieldValues>
 
 export interface FilterBuilder<TFieldValues extends FieldValues> {
+  type: "new-kid"
   // TODO: as overloads?
   and: FilterTest<TFieldValues>
   or: FilterTest<TFieldValues>
-  build(): { type: "new-kid"; filters: FilterResult[] }
+  build(): FilterResult[]
   // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
 }

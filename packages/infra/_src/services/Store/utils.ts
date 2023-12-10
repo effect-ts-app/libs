@@ -40,7 +40,7 @@ export const makeUpdateETag =
 export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter<NE>) {
   return (x: E) =>
     filter.type === "new-kid"
-      ? codeFilter3_(filter.filters, x) ? Option(x as unknown as NE) : Option.none
+      ? codeFilter3_(filter.build(), x) ? Option(x as unknown as NE) : Option.none
       : filter.type === "startsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())

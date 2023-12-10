@@ -277,7 +277,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   .map((_) => _.flatMap((_) => _))
                 : Effect(
                   filter.type === "new-kid"
-                    ? buildWhereCosmosQuery3(filter.filters, name, importedMarkerId, skip, limit)
+                    ? buildWhereCosmosQuery3(filter.build(), name, importedMarkerId, skip, limit)
                     : buildCosmosQuery(filter, name, importedMarkerId, skip, limit)
                 )
                   .tap((q) => logQuery(q))

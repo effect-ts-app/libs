@@ -434,6 +434,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
+      static readonly query = FilterBuilder.make<PM>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any

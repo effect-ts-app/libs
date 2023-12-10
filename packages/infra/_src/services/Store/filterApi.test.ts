@@ -14,6 +14,7 @@ interface MyEntity {
   name: string
   bio: string | null
   isActive: boolean
+  state: { _tag: "a"; val: number } | { _tag: "b"; val: string } | { _tag: "c"; noVal: boolean }
   roles: readonly string[]
   tag: "a" | "b" | "c"
   age?: number
@@ -34,11 +35,13 @@ describe("works", () => {
               .and(f.tag("c"))
           )
       )
+      // .and(f.state._tag("a"))
+      .and("state._tag", "a")
       .and(f.isActive(true))
       .and(f.age.gte(12))
   )
 
-  const s = f.build().filters
+  const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
   it("print", () =>
     expect(print(s)).toBe(
@@ -54,6 +57,7 @@ describe("works", () => {
     bio: "something",
     age: 13,
     isActive: true,
+    state: { _tag: "a", val: 1 },
     roles: ["admin"],
     tag: "c",
     something: { id: 1, name: "abc" }
@@ -63,6 +67,7 @@ describe("works", () => {
     bio: "something",
     age: 11,
     isActive: true,
+    state: { _tag: "b", val: "2" },
     roles: ["admin"],
     tag: "a",
     something: { id: 1, name: "abc" }
@@ -87,7 +92,6 @@ describe("works", () => {
               )
           )
           .build()
-          .filters
       )
     ))
       .toStrictEqual([])
@@ -97,7 +101,6 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.something.id.eq(0)))
           .build()
-          .filters
       )
     ))
       .toStrictEqual([])
@@ -107,7 +110,6 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.something.id.eq(1)))
           .build()
-          .filters
       )
     ))
       .toStrictEqual(values)
@@ -117,7 +119,6 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.age.eq(11)))
           .build()
-          .filters
       )
     ))
       .toStrictEqual([values[1]])
@@ -190,7 +191,7 @@ describe("root-or", () => {
       .or(f.name.startsWith("C"))
   )
 
-  const s = f.build().filters
+  const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
 
   it("print", () => {
