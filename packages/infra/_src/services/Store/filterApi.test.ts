@@ -31,7 +31,6 @@ const print = (state: readonly FilterResult[]) => {
   let s = ""
   let l = 0
   const printN = (n: number) => {
-    console.log("n", n)
     return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
   }
   for (const e of state) {
@@ -69,88 +68,103 @@ const print = (state: readonly FilterResult[]) => {
   return s
 }
 
-const FilterBuilder = {
-  make: <TFieldValues extends FieldValues>(): Initial<TFieldValues> & { fields: Filter<MyEntity> } => {
-    // const recursive = {}
-    // const and = Object.assign(() => {}, recursive)
-    // const or = Object.assign(() => {}, recursive)
-    // const where = Object.assign(() => {}, recursive)
-    // recursive.and = and
-    // recursive.or = or
-    // recursive.where = where
-    const state: FilterResult[] = []
-    let current = state
-    const where = (...args: any[]) => {
-      if (typeof args[0] === "function") {
-        const mine: any[] = []
-        const previous = current
-        current = mine
-        const r = args[0](all)
-        current = previous
-        current.push({ t: "where-scope", result: mine })
-        return r
-      }
-      if (args.length === 1) {
-        current.push({ t: "where", ...args[0] })
-        return all
-      }
-      current.push({
-        t: "where",
-        op: args.length === 2 ? "eq" : args[1],
-        path: args[0],
-        value: args[args.length - 1]
-      })
+const makeFilter = <TFieldValues extends FieldValues>() => {
+  // const recursive = {}
+  // const and = Object.assign(() => {}, recursive)
+  // const or = Object.assign(() => {}, recursive)
+  // const where = Object.assign(() => {}, recursive)
+  // recursive.and = and
+  // recursive.or = or
+  // recursive.where = where
+  const state: FilterResult[] = []
+  let current = state
+  const where = (...args: any[]) => {
+    if (typeof args[0] === "function") {
+      const mine: any[] = []
+      const previous = current
+      current = mine
+      const r = args[0](all)
+      current = previous
+      current.push({ t: "where-scope", result: mine })
+      return r
+    }
+    if (args.length === 1) {
+      current.push({ t: "where", ...args[0] })
       return all
     }
-    const and = (...args: any[]) => {
-      if (typeof args[0] === "function") {
-        const mine: any[] = []
-        const previous = current
-        current = mine
-        const r = args[0](all)
-        current = previous
-        current.push({ t: "and-scope", result: mine })
-        return r
-      }
-      if (args.length === 1) {
-        current.push({ t: "and", ...args[0] })
-        return all
-      }
-      current.push({
-        t: "and",
-        op: args.length === 2 ? "eq" : args[1],
-        path: args[0],
-        value: args[args.length - 1]
-      })
-      return all
-    }
-    const or = (...args: any[]) => {
-      if (typeof args[0] === "function") {
-        const mine: any[] = []
-        const previous = current
-        current = mine
-        const r = args[0](all)
-        current = previous
-        current.push({ t: "or-scope", result: mine })
-        return r
-      }
-      if (args.length === 1) {
-        current.push({ t: "or", ...args[0] })
-        return all
-      }
-      current.push({ t: "or", op: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
-      return all
-    }
-    const all = {
-      fields: makeProxy() as Filter<MyEntity>,
-      where,
-      and,
-      or,
-      build() {
-        return state
-      }
-    }
+    current.push({
+      t: "where",
+      op: args.length === 2 ? "eq" : args[1],
+      path: args[0],
+      value: args[args.length - 1]
+    })
     return all
+  }
+  const and = (...args: any[]) => {
+    if (typeof args[0] === "function") {
+      const mine: any[] = []
+      const previous = current
+      current = mine
+      const r = args[0](all)
+      current = previous
+      current.push({ t: "and-scope", result: mine })
+      return r
+    }
+    if (args.length === 1) {
+      current.push({ t: "and", ...args[0] })
+      return all
+    }
+    current.push({
+      t: "and",
+      op: args.length === 2 ? "eq" : args[1],
+      path: args[0],
+      value: args[args.length - 1]
+    })
+    return all
+  }
+  const or = (...args: any[]) => {
+    if (typeof args[0] === "function") {
+      const mine: any[] = []
+      const previous = current
+      current = mine
+      const r = args[0](all)
+      current = previous
+      current.push({ t: "or-scope", result: mine })
+      return r
+    }
+    if (args.length === 1) {
+      current.push({ t: "or", ...args[0] })
+      return all
+    }
+    current.push({ t: "or", op: args.length === 2 ? "eq" : args[1], path: args[0], value: args[args.length - 1] })
+    return all
+  }
+  const fields = makeProxy() as Filter<TFieldValues>
+  const all = {
+    where,
+    and,
+    or,
+    build() {
+      return state
+    }
+  }
+  return { all, fields }
+}
+
+const FilterBuilder = {
+  make: <TFieldValues extends FieldValues>(): (
+    fn: (f: Initial<TFieldValues>, fields: Filter<TFieldValues>) => FilterBuilder<TFieldValues>
+  ) => FilterBuilder<TFieldValues> => {
+    type F = ReturnType<typeof makeFilter<TFieldValues>>
+    return (
+      f: (
+        n: F["all"],
+        f: F["fields"]
+      ) => FilterBuilder<TFieldValues>
+    ) => {
+      const fil = makeFilter<TFieldValues>()
+      return f(fil.all, fil.fields)
+    }
   }
 }
 
@@ -309,35 +323,28 @@ const makeProxy = (parentProp?: string): any =>
       }
     }
   )
-const n: Filter<MyEntity> = makeProxy()
-// declare const n: Filter<MyEntity>
 
 const MyEntity = {
   query: FilterBuilder
-    .make<MyEntity>(),
-  $: FilterBuilder
     .make<MyEntity>()
-    .fields
 }
 
 it("works", () => {
-  const f = pipe(
-    MyEntity.query,
-    (q) =>
-      q
-        .where(q.fields.something.id.contains("abc"))
-        .and((_) =>
-          _
-            .where(q.fields.something.name.startsWith("a")) // or would we do "like", "a%"?
-            .or(q.fields.tag.in("a", "b"))
-            .or((_) =>
-              _
-                .where(q.fields.name.neq("Alfredo"))
-                .and(q.fields.tag("c"))
-            )
-        )
-        .and(q.fields.isActive(true))
-        .and(q.fields.age.gte(12))
+  const f = MyEntity.query((q, fields) =>
+    q
+      .where(fields.something.id.contains("abc"))
+      .and((_) =>
+        _
+          .where(fields.something.name.startsWith("a")) // or would we do "like", "a%"?
+          .or(fields.tag.in("a", "b"))
+          .or((_) =>
+            _
+              .where(fields.name.neq("Alfredo"))
+              .and(fields.tag("c"))
+          )
+      )
+      .and(fields.isActive(true))
+      .and(fields.age.gte(12))
   )
 
   const s = f.build()
@@ -353,26 +360,27 @@ it("works", () => {
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
 it("root-or", () => {
-  const f = FilterBuilder
-    .make<MyEntity>()
-    .where((_) =>
-      _
-        .where(n.something.id(1))
-        .and((_) =>
-          _
-            .where(n.something.name.startsWith("a")) // or would we do "like", "a%"?
-            .or(n.tag.in("a", "b"))
-            .or((_) =>
-              _
-                .where(n.name.neq("Alfredo"))
-                .and(n.tag("c"))
-            )
-        )
-        .and(n.bio.contains("abc"))
-        .and(n.isActive(true))
-        .and(n.age.gte(12))
-    )
-    .or(n.name.startsWith("C"))
+  const f = MyEntity.query((q, fields) =>
+    q
+      .where((_) =>
+        _
+          .where(fields.something.id(1))
+          .and((_) =>
+            _
+              .where(fields.something.name.startsWith("a")) // or would we do "like", "a%"?
+              .or(fields.tag.in("a", "b"))
+              .or((_) =>
+                _
+                  .where(fields.name.neq("Alfredo"))
+                  .and(fields.tag("c"))
+              )
+          )
+          .and(fields.bio.contains("abc"))
+          .and(fields.isActive(true))
+          .and(fields.age.gte(12))
+      )
+      .or(fields.name.startsWith("C"))
+  )
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
