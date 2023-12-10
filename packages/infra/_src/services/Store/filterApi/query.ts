@@ -232,7 +232,7 @@ export type FilterTest<TFieldValues extends FieldValues> = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(f: {
     path: TFieldName
-    op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith"
+    op: Ops
     value: V
   }): FilterBuilder<TFieldValues>
 } & Filts<TFieldValues>

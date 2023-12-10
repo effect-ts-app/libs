@@ -1,4 +1,4 @@
-import { get } from "@effect-app/prelude/utils"
+import { assertUnreachable, get } from "@effect-app/prelude/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
 import {
   compareCaseInsensitive,
@@ -13,7 +13,7 @@ const test = <E extends { id: string }>(p: FilterR, x: E) => {
   switch (p.op) {
     case "in":
       return p.value.includes(k)
-    case "not-in":
+    case "notIn":
       return !p.value.includes(k)
     case "lt":
       return ltCaseInsensitive(k, p.value)
@@ -25,22 +25,21 @@ const test = <E extends { id: string }>(p: FilterR, x: E) => {
       return gteCaseInsensitive(k, p.value)
     case "includes":
       return (k as Array<string>).includes(p.value)
-    case "not-includes":
+    case "notIncludes":
       return !(k as Array<string>).includes(p.value)
     case "contains":
       return (k as string).toLowerCase().includes(p.value.toLowerCase())
-    case "ends-with":
+    case "endsWith":
       return (k as string).toLowerCase().endsWith(p.value.toLowerCase())
-    case "starts-with":
+    case "startsWith":
       return (k as string).toLowerCase().startsWith(p.value.toLowerCase())
-    case "not-contains":
+    case "notContains":
       return !(k as string).toLowerCase().includes(p.value.toLowerCase())
-    case "not-ends-with":
+    case "notEndsWith":
       return !(k as string).toLowerCase().endsWith(p.value.toLowerCase())
-    case "not-starts-with":
+    case "notStartsWith":
       return !(k as string).toLowerCase().startsWith(p.value.toLowerCase())
-
-    case "not-eq":
+    case "neq":
       return p.path.includes(".-1.")
         ? (get(x, p.path.split(".-1.")[0]) as any[])
           // TODO: or vs and
@@ -53,6 +52,9 @@ const test = <E extends { id: string }>(p: FilterR, x: E) => {
           // TODO: or vs and
           .some((_) => compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
         : compareCaseInsensitive(k, p.value)
+    default: {
+      return assertUnreachable(p.op)
+    }
   }
 }
 

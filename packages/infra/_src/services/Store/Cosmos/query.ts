@@ -1,3 +1,4 @@
+import { assertUnreachable } from "@effect-app/prelude/utils"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
 import type { FilterJoinSelect, JoinFindFilter, LegacyFilter, StoreWhereFilter, SupportedValues } from "../service.js"
 
@@ -244,11 +245,10 @@ export function buildWhereCosmosQuery3(
       case "notIn":
         return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
 
-        // TODO
-      // case "includes":
-      //   return `ARRAY_CONTAINS(${k}, ${v})`
-      // case "notIncludes":
-      //   return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
+      case "includes":
+        return `ARRAY_CONTAINS(${k}, ${v})`
+      case "notIncludes":
+        return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
       case "contains":
         return `CONTAINS(${k}, ${v}, true)`
 
@@ -286,7 +286,7 @@ export function buildWhereCosmosQuery3(
           ? `IS_NULL(${k}) = true`
           : `${lk} = ${lv}`
       default: {
-        throw new Error("unsupported op: " + x.op)
+        return assertUnreachable(x.op)
       }
     }
   }

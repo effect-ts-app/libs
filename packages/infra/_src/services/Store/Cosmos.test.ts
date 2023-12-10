@@ -1,6 +1,6 @@
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
 import { Filters, makeFilters } from "../../filter.js"
-import { buildWhereCosmosQuery } from "./Cosmos.js"
+import { buildWhereCosmosQuery } from "./Cosmos/query.js"
 
 const f_ = makeFilters<Something>()
 export type SomethingWhereFilter = typeof f_

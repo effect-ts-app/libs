@@ -14,6 +14,8 @@ export type OtherOps =
   | "notStartsWith"
   | "contains"
   | "notContains"
+  | "includes"
+  | "notIncludes"
   | "eq"
   | "neq"
   | "gt"
@@ -27,7 +29,9 @@ type F<T extends FieldValues> = {
   path: FieldPath<T>
   op: OtherOps
   value: string
-} | {
+}
+
+type FIn<T extends FieldValues> = {
   op: InOps
   path: FieldPath<T>
   value: readonly string[]
@@ -41,8 +45,10 @@ type G<T extends FieldValues, Val> = {
   notEndsWith: (value: string) => F<T>
   contains: (value: string) => F<T>
   notContains: (value: string) => F<T>
-  in: (...value: readonly string[]) => F<T>
-  notIn: (...value: readonly string[]) => F<T>
+  includes: (value: string) => F<T>
+  notIncludes: (value: string) => F<T>
+  in: (...value: readonly string[]) => FIn<T>
+  notIn: (...value: readonly string[]) => FIn<T>
   eq: (value: Val) => F<T>
   neq: (value: Val) => F<T>
   gt: (value: Val) => F<T>
