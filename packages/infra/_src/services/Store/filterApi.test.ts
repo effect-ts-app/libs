@@ -330,21 +330,21 @@ const MyEntity = {
 }
 
 it("works", () => {
-  const f = MyEntity.query((q, fields) =>
+  const f = MyEntity.query((q, f) =>
     q
-      .where(fields.something.id.contains("abc"))
+      .where(f.something.id.contains("abc"))
       .and((_) =>
         _
-          .where(fields.something.name.startsWith("a")) // or would we do "like", "a%"?
-          .or(fields.tag.in("a", "b"))
+          .where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
+          .or(f.tag.in("a", "b"))
           .or((_) =>
             _
-              .where(fields.name.neq("Alfredo"))
-              .and(fields.tag("c"))
+              .where(f.name.neq("Alfredo"))
+              .and(f.tag("c"))
           )
       )
-      .and(fields.isActive(true))
-      .and(fields.age.gte(12))
+      .and(f.isActive(true))
+      .and(f.age.gte(12))
   )
 
   const s = f.build()
@@ -360,26 +360,26 @@ it("works", () => {
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
 it("root-or", () => {
-  const f = MyEntity.query((q, fields) =>
+  const f = MyEntity.query((q, f) =>
     q
       .where((_) =>
         _
-          .where(fields.something.id(1))
+          .where(f.something.id(1))
           .and((_) =>
             _
-              .where(fields.something.name.startsWith("a")) // or would we do "like", "a%"?
-              .or(fields.tag.in("a", "b"))
+              .where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
+              .or(f.tag.in("a", "b"))
               .or((_) =>
                 _
-                  .where(fields.name.neq("Alfredo"))
-                  .and(fields.tag("c"))
+                  .where(f.name.neq("Alfredo"))
+                  .and(f.tag("c"))
               )
           )
-          .and(fields.bio.contains("abc"))
-          .and(fields.isActive(true))
-          .and(fields.age.gte(12))
+          .and(f.bio.contains("abc"))
+          .and(f.isActive(true))
+          .and(f.age.gte(12))
       )
-      .or(fields.name.startsWith("C"))
+      .or(f.name.startsWith("C"))
   )
 
   const s = f.build()
