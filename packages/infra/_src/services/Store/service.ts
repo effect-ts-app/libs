@@ -5,7 +5,7 @@ import type { Parser, ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { These } from "@effect-app/prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 import type { FieldValues } from "../../filter/types.js"
-import type { FilterBuilder } from "./filterApi/query.js"
+import type { QueryBuilder } from "./filterApi/query.js"
 
 export type StoreConfig<E> = {
   uniqueKeys?: UniqueKey[]
@@ -56,7 +56,7 @@ export type Filter<E extends FieldValues> =
   | JoinFindFilter
   | StoreWhereFilter
   | LegacyFilter<E>
-  | FilterBuilder<E>
+  | QueryBuilder<E>
 
 export type FilterJoinSelect = {
   type: "filter_join_select"

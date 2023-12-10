@@ -157,16 +157,16 @@ export const makeFilter = <TFieldValues extends FieldValues>() => {
   return { all, fields }
 }
 
-export const FilterBuilder = {
+export const QueryBuilder = {
   make: <TFieldValues extends FieldValues>(): (
-    fn: (f: FilterTest<TFieldValues>, fields: Filter<TFieldValues>) => FilterBuilder<TFieldValues>
-  ) => FilterBuilder<TFieldValues> => {
+    fn: (f: FilterTest<TFieldValues>, fields: Filter<TFieldValues>) => QueryBuilder<TFieldValues>
+  ) => QueryBuilder<TFieldValues> => {
     type F = ReturnType<typeof makeFilter<TFieldValues>>
     return (
       f: (
         n: F["all"],
         f: F["fields"]
-      ) => FilterBuilder<TFieldValues>
+      ) => QueryBuilder<TFieldValues>
     ) => {
       const fil = makeFilter<TFieldValues>()
       return f(fil.all, fil.fields)
@@ -186,7 +186,7 @@ export type Filts<TFieldValues extends FieldValues> = {
   >(
     path: TFieldName,
     value: V
-  ): FilterBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -194,7 +194,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     path: TFieldName,
     op: "neq",
     value: V
-  ): FilterBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -202,7 +202,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     path: TFieldName,
     op: "gt" | "gte" | "lt" | "lte",
     value: V // only numbers?
-  ): FilterBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -210,7 +210,7 @@ export type Filts<TFieldValues extends FieldValues> = {
     path: TFieldName,
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
     value: V // only strings?
-  ): FilterBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -218,19 +218,19 @@ export type Filts<TFieldValues extends FieldValues> = {
     path: TFieldName,
     op: "in" | "notIn",
     value: readonly V[]
-  ): FilterBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
 }
 
 // type Filter<TFieldValues extends FieldValues> = {
 //   (
-//     fb: (f: Filts<TFieldValues>) => FilterBuilder<TFieldValues>
-//   ): FilterBuilder<TFieldValues>
+//     fb: (f: Filts<TFieldValues>) => QueryBuilder<TFieldValues>
+//   ): QueryBuilder<TFieldValues>
 // } & Filts<TFieldValues>
 
 export type FilterTest<TFieldValues extends FieldValues> = {
   (
-    fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => FilterBuilder<TFieldValues>
-  ): FilterBuilder<TFieldValues>
+    fb: (f: Filts<TFieldValues> & Initial<TFieldValues>) => QueryBuilder<TFieldValues>
+  ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
@@ -238,19 +238,19 @@ export type FilterTest<TFieldValues extends FieldValues> = {
     path: TFieldName
     op: Ops
     value: V
-  }): FilterBuilder<TFieldValues>
+  }): QueryBuilder<TFieldValues>
 } & Filts<TFieldValues>
 // const not = <A extends string>(s: A) => `!${s}`
 
 // type FilterGroup<TFieldValues extends FieldValues> = (
-//   fb: (f: FilterBuilder<TFieldValues>) => FilterBuilder<TFieldValues>
-// ) => FilterBuilder<TFieldValues>
+//   fb: (f: QueryBuilder<TFieldValues>) => QueryBuilder<TFieldValues>
+// ) => QueryBuilder<TFieldValues>
 
-export interface FilterBuilder<TFieldValues extends FieldValues> {
+export interface QueryBuilder<TFieldValues extends FieldValues> {
   type: "new-kid"
   // TODO: as overloads?
   and: FilterTest<TFieldValues>
   or: FilterTest<TFieldValues>
   build(): FilterResult[]
-  // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
+  // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => QueryBuilder<TFieldValues>
 }

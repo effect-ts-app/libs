@@ -1,9 +1,9 @@
 import { codeFilter3 } from "./codeFilter.js"
 import { buildWhereCosmosQuery3 } from "./Cosmos/query.js"
-import { FilterBuilder, print } from "./filterApi/query.js"
+import { print, QueryBuilder } from "./filterApi/query.js"
 
 const MyEntity = {
-  query: FilterBuilder
+  query: QueryBuilder
     .make<MyEntity>()
 }
 

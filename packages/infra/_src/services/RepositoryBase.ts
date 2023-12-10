@@ -13,7 +13,7 @@ import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import { FilterBuilder } from "./Store/filterApi/query.js"
+import { QueryBuilder } from "./Store/filterApi/query.js"
 
 /**
  * @tsplus type Repository
@@ -234,7 +234,7 @@ export function makeRepo<
     return {
       make,
       where,
-      query: FilterBuilder.make<PM>()
+      query: QueryBuilder.make<PM>()
     }
   }
 }
@@ -394,7 +394,7 @@ export interface Repos<
     Out
   >
   readonly where: ReturnType<typeof makeWhere<PM>>
-  readonly query: ReturnType<typeof FilterBuilder.make<PM>>
+  readonly query: ReturnType<typeof QueryBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
@@ -434,7 +434,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
-      static readonly query = FilterBuilder.make<PM>()
+      static readonly query = QueryBuilder.make<PM>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any
