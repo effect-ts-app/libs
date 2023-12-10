@@ -3,6 +3,7 @@
 import { CosmosClient } from "@effect-app/infra-adapters/cosmos-client"
 import { omit } from "@effect-app/prelude/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
+import type { FilterR, FilterResult } from "./filterApi/query.js"
 import type {
   Filter,
   FilterJoinSelect,
@@ -616,4 +617,104 @@ class CosmosDbOperationError {
 }
 export function CosmosStoreLive(config: Config<StorageConfig>) {
   return config.config.flatMap(makeCosmosStore).toLayer(StoreMaker)
+}
+
+export function buildWhereCosmosQuery3(
+  filter: readonly FilterResult[],
+  name: string,
+  importedMarkerId: string,
+  skip?: number,
+  limit?: number
+) {
+  const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
+
+  const statement = (x: FilterR, k: string, v: any) => {
+    switch (x.op) {
+      case "in":
+        return `ARRAY_CONTAINS(${v}, ${k})`
+      case "not-in":
+        return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
+
+      case "includes":
+        return `ARRAY_CONTAINS(${k}, ${v})`
+      case "not-includes":
+        return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
+      case "contains":
+        return `CONTAINS(${k}, ${v}, true)`
+      case "starts-with":
+        return `STARTSWITH(${k}, ${v}, true)`
+      case "ends-with":
+        return `ENDSWITH(${k}, ${v}, true)`
+      case "not-contains":
+        return `NOT(CONTAINS(${k}, ${v}, true))`
+      case "not-starts-with":
+        return `NOT(STARTSWITH(${k}, ${v}, true))`
+      case "not-ends-with":
+        return `NOT(ENDSWITH(${k}, ${v}, true))`
+    }
+
+    const lk = lowerIfNeeded(k, x.value)
+    const lv = lowerIfNeeded(v, x.value)
+
+    switch (x.op) {
+      case "lt":
+        return `${lk} < ${lv}`
+      case "lte":
+        return `${lk} <= ${lv}`
+      case "gt":
+        return `${lk} > ${lv}`
+      case "gte":
+        return `${lk} >= ${lv}`
+      case "not-eq":
+        return x.value === null
+          ? `IS_NULL(${k}) = false`
+          : `${lk} <> ${lv}`
+      case undefined:
+      case "eq":
+        return x.value === null
+          ? `IS_NULL(${k}) = true`
+          : `${lk} = ${lv}`
+    }
+  }
+
+  const fff = (filter: readonly FilterR[], mode: "AND" | "OR") =>
+    "(" + filter
+      .map((_) =>
+        _.path.includes(".-1.")
+          ? { ..._, f: _.path.split(".-1.")[0], key: _.path.split(".-1.")[1]! }
+          : { ..._, f: "f" }
+      )
+      .map(
+        (x, i) => {
+          const k = `${x.f}.${x.path}`
+          const v = `@v${i}`
+
+          return statement(x, k, v)
+        }
+      )
+      .join(mode === "OR" ? " OR " : " AND ") + ")"
+  return {
+    query: `
+    SELECT f
+    FROM ${name} AS f
+    ${
+      filter
+        .filter((_) => _.path.includes(".-1."))
+        .map((_) => _.path.split(".-1.")[0])
+        .map((_) => `JOIN ${_} IN f.${_}`)
+        .uniq(Equivalence.string)
+        .join("\n")
+    }
+    WHERE f.id != @id AND ${fff(filter, "AND")}
+    ${lm}`,
+    parameters: [
+      { name: "@id", value: importedMarkerId },
+      ...filter
+        .where
+        .map((x, i) => ({
+          name: `@v${i}`,
+          value: x.value
+        }))
+    ]
+  }
 }
