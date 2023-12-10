@@ -20,7 +20,7 @@ interface MyEntity {
 }
 
 it("works", () => {
-  const f = MyEntity.query(({ where }, f) =>
+  const f = MyEntity.query((where, f) =>
     where(f.something.id.contains("abc"))
       .and(() =>
         where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
@@ -47,7 +47,7 @@ it("works", () => {
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
 it("root-or", () => {
-  const f = MyEntity.query(({ where }, f) =>
+  const f = MyEntity.query((where, f) =>
     where(() =>
       where(f.something.id(1))
         .and(() =>

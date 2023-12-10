@@ -140,20 +140,19 @@ export const makeFilter = <TFieldValues extends FieldValues>() => {
     return all
   }
   const fields = makeProxy() as Filter<TFieldValues>
-  const all = {
-    where,
+  const all = Object.assign(where, {
     and,
     or,
     build() {
       return state
     }
-  }
+  })
   return { all, fields }
 }
 
 export const FilterBuilder = {
   make: <TFieldValues extends FieldValues>(): (
-    fn: (f: Initial<TFieldValues>, fields: Filter<TFieldValues>) => FilterBuilder<TFieldValues>
+    fn: (f: FilterTest<TFieldValues>, fields: Filter<TFieldValues>) => FilterBuilder<TFieldValues>
   ) => FilterBuilder<TFieldValues> => {
     type F = ReturnType<typeof makeFilter<TFieldValues>>
     return (
