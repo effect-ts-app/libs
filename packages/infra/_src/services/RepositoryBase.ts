@@ -393,8 +393,8 @@ export interface Repos<
     E,
     Out
   >
-  readonly where: ReturnType<typeof FilterBuilder.make<PM>>
-  readonly query: ReturnType<typeof makeWhere<PM>>
+  readonly where: ReturnType<typeof makeWhere<PM>>
+  readonly query: ReturnType<typeof FilterBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
