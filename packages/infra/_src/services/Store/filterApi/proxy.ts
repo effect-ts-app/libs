@@ -3,31 +3,35 @@ import type { FieldPath } from "../../../filter/types/path/eager.js"
 
 type NullOrUndefined<T, Fallback> = null extends T ? null : undefined extends T ? null : Fallback
 
-// TODO: includes | notIncludes
-export type Ops =
+export type InOps =
+  | "in"
+  | "notIn"
+
+export type OtherOps =
   | "endsWith"
   | "startsWith"
   | "notEndsWith"
   | "notStartsWith"
   | "contains"
   | "notContains"
-  | "in"
-  | "notIn"
   | "eq"
   | "neq"
   | "gt"
   | "gte"
   | "lt"
   | "lte"
+
+// TODO: includes | notIncludes
+export type Ops = OtherOps | InOps
 type F<T extends FieldValues> = {
   path: FieldPath<T>
-  op: Ops
+  op: OtherOps
   value: string
-} /* | {
-  op: "in" | "notIn"
+} | {
+  op: InOps
   path: FieldPath<T>
   value: readonly string[]
-}*/
+}
 
 type G<T extends FieldValues, Val> = {
   (value: Val): F<T>
