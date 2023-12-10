@@ -150,7 +150,7 @@ export const makeFilter = <TFieldValues extends FieldValues>() => {
     and,
     or,
     build() {
-      return state
+      return { _tag: "new-kid", filters: state }
     }
   })
   return { all, fields }
@@ -173,7 +173,10 @@ export const FilterBuilder = {
   }
 }
 
-export type Initial<TFieldValues extends FieldValues> = { where: FilterTest<TFieldValues>; build(): FilterResult[] }
+export type Initial<TFieldValues extends FieldValues> = {
+  where: FilterTest<TFieldValues>
+  build(): { type: "new-kid"; filters: FilterResult[] }
+}
 
 export type Filts<TFieldValues extends FieldValues> = {
   <
@@ -246,6 +249,6 @@ export interface FilterBuilder<TFieldValues extends FieldValues> {
   // TODO: as overloads?
   and: FilterTest<TFieldValues>
   or: FilterTest<TFieldValues>
-  build(): FilterResult[]
+  build(): { type: "new-kid"; filters: FilterResult[] }
   // where: <Filters extends Record<TFieldName extends FieldPath<TFieldValues>, V extends Value< FieldPathValue<TFieldValues, TFieldName>>>(filter: Filters) => FilterBuilder<TFieldValues>
 }

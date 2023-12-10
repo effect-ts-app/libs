@@ -38,7 +38,7 @@ describe("works", () => {
       .and(f.age.gte(12))
   )
 
-  const s = f.build()
+  const s = f.build().filters
   console.log(JSON.stringify(s, undefined, 2))
   it("print", () =>
     expect(print(s)).toBe(
@@ -87,6 +87,7 @@ describe("works", () => {
               )
           )
           .build()
+          .filters
       )
     ))
       .toStrictEqual([])
@@ -96,6 +97,7 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.something.id.eq(0)))
           .build()
+          .filters
       )
     ))
       .toStrictEqual([])
@@ -105,6 +107,7 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.something.id.eq(1)))
           .build()
+          .filters
       )
     ))
       .toStrictEqual(values)
@@ -114,6 +117,7 @@ describe("works", () => {
         MyEntity
           .query((where, f) => where(f.age.eq(11)))
           .build()
+          .filters
       )
     ))
       .toStrictEqual([values[1]])
@@ -186,7 +190,7 @@ describe("root-or", () => {
       .or(f.name.startsWith("C"))
   )
 
-  const s = f.build()
+  const s = f.build().filters
   console.log(JSON.stringify(s, undefined, 2))
 
   it("print", () => {
