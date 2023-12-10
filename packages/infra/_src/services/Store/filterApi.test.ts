@@ -1,4 +1,5 @@
 import { codeFilter3 } from "./codeFilter.js"
+import { buildWhereCosmosQuery3 } from "./Cosmos/query.js"
 import { FilterBuilder, print } from "./filterApi/query.js"
 
 const MyEntity = {
@@ -88,6 +89,7 @@ it("root-or", () => {
 
   const s = f.build()
   console.log(JSON.stringify(s, undefined, 2))
+
   expect(print(s)).toBe(
     `(
   something.id eq 1 AND (
@@ -97,4 +99,5 @@ it("root-or", () => {
   ) AND bio contains abc AND isActive eq true AND age gte 12
 ) OR name startsWith C`
   )
+  expect(buildWhereCosmosQuery3(s, "MyEntity", "marker")).toBe("")
 })
