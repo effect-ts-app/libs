@@ -330,16 +330,13 @@ const MyEntity = {
 }
 
 it("works", () => {
-  const f = MyEntity.query((q, f) =>
-    q
-      .where(f.something.id.contains("abc"))
-      .and((_) =>
-        _
-          .where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
+  const f = MyEntity.query(({ where }, f) =>
+    where(f.something.id.contains("abc"))
+      .and(() =>
+        where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
           .or(f.tag.in("a", "b"))
-          .or((_) =>
-            _
-              .where(f.name.neq("Alfredo"))
+          .or(() =>
+            where(f.name.neq("Alfredo"))
               .and(f.tag("c"))
           )
       )
@@ -360,25 +357,21 @@ it("works", () => {
 
 // ref https://stackoverflow.com/questions/1241142/sql-logic-operator-precedence-and-and-or
 it("root-or", () => {
-  const f = MyEntity.query((q, f) =>
-    q
-      .where((_) =>
-        _
-          .where(f.something.id(1))
-          .and((_) =>
-            _
-              .where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
-              .or(f.tag.in("a", "b"))
-              .or((_) =>
-                _
-                  .where(f.name.neq("Alfredo"))
-                  .and(f.tag("c"))
-              )
-          )
-          .and(f.bio.contains("abc"))
-          .and(f.isActive(true))
-          .and(f.age.gte(12))
-      )
+  const f = MyEntity.query(({ where }, f) =>
+    where(() =>
+      where(f.something.id(1))
+        .and(() =>
+          where(f.something.name.startsWith("a")) // or would we do "like", "a%"?
+            .or(f.tag.in("a", "b"))
+            .or(() =>
+              where(f.name.neq("Alfredo"))
+                .and(f.tag("c"))
+            )
+        )
+        .and(f.bio.contains("abc"))
+        .and(f.isActive(true))
+        .and(f.age.gte(12))
+    )
       .or(f.name.startsWith("C"))
   )
 
