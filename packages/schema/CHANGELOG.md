@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.84.0
+
+### Minor Changes
+
+- a681ab6: update packages
+
+### Patch Changes
+
+- Updated dependencies [a681ab6]
+  - @effect-app/core@0.87.0
+
 ## 0.83.0
 
 ### Minor Changes

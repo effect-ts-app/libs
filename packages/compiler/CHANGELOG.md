@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.44.0
+
+### Minor Changes
+
+- a681ab6: update packages
+
 ## 0.43.0
 
 ### Minor Changes

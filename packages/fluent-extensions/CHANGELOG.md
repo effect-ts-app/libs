@@ -1,5 +1,17 @@
 # @effect-app/fluent-extensions
 
+## 0.88.0
+
+### Minor Changes
+
+- a681ab6: update packages
+
+### Patch Changes
+
+- Updated dependencies [a681ab6]
+  - @effect-app/schema@0.84.0
+  - @effect-app/core@0.87.0
+
 ## 0.87.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.120.0
+
+### Minor Changes
+
+- a681ab6: update packages
+
+### Patch Changes
+
+- Updated dependencies [a681ab6]
+  - @effect-app/infra-adapters@0.73.0
+  - @effect-app/prelude@0.93.0
+  - @effect-app/schema@0.84.0
+  - @effect-app/core@0.87.0
+
 ## 0.119.0
 
 ### Minor Changes
