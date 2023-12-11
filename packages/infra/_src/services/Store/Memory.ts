@@ -6,13 +6,17 @@ import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreCo
 import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 
-export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = keyof T>(f: FilterArgs<T, U>) {
-  return ((c: T[]): Pick<T, U>[] => {
+export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
+  type M = U extends never ? T : Pick<T, U>
+  return ((c: T[]): M[] => {
+    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
     if (!skip && limit === 1) {
-      return c.findFirstMap(f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).map(ReadonlyArray.make).getOrElse(
-        () => []
+      return select(
+        c.findFirstMap(f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).map(ReadonlyArray.make).getOrElse(
+          () => []
+        )
       )
     }
     let r = f.filter ? c.filterMap(codeFilter(f.filter)) : c
@@ -23,7 +27,7 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
       r = r.take(limit)
     }
 
-    return f.select ? r.map((_) => pick(_, f.select!)) : r
+    return select(r)
   })
 }
 

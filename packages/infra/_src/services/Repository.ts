@@ -67,8 +67,8 @@ export function projectEffect<
   ItemType extends string,
   R,
   E,
-  U extends keyof PM,
-  S = Pick<PM, U>
+  U extends keyof PM = never,
+  S = U extends never ? PM : Pick<PM, U>
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<
@@ -77,7 +77,7 @@ export function projectEffect<
     {
       filter?: Filter<PM>
       select?: readonly U[]
-      collect?: (t: Pick<PM, U>) => Option<S>
+      collect?: (t: U extends never ? PM : Pick<PM, U>) => Option<S>
       limit?: number
       skip?: number
     }
@@ -85,7 +85,9 @@ export function projectEffect<
 ) {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap((f) =>
-    (f.filter ? self.utils.filter(f) : self.utils.all)
+    self
+      .utils
+      .filter(f)
       .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
   )
 }
@@ -99,14 +101,14 @@ export function project<
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
-  U extends keyof PM,
-  S = Pick<PM, U>
+  U extends keyof PM = never,
+  S = U extends never ? PM : Pick<PM, U>
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: {
     filter?: Filter<PM>
     select?: readonly U[]
-    collect?: (t: Pick<PM, U>) => Option<S>
+    collect?: (t: U extends never ? PM : Pick<PM, U>) => Option<S>
     limit?: number
     skip?: number
   }

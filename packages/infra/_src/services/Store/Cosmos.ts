@@ -10,13 +10,14 @@ import {
   buildWhereCosmosQuery3,
   logQuery
 } from "./Cosmos/query.js"
-import {
-  type FilterJoinSelect,
-  type PersistenceModelType,
-  type StorageConfig,
-  type Store,
-  type StoreConfig,
-  StoreMaker
+import { StoreMaker } from "./service.js"
+import type {
+  FilterArgs,
+  FilterJoinSelect,
+  PersistenceModelType,
+  StorageConfig,
+  Store,
+  StoreConfig
 } from "./service.js"
 
 export function CosmosStoreLive(config: Config<StorageConfig>) {
@@ -251,10 +252,13 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
-            filter: (f) => {
+            filter: <U extends keyof PM = never>(
+              f: FilterArgs<PM, U>
+            ) => {
               const skip = f?.skip
               const limit = f?.limit
               const filter = f.filter ?? { type: "new-kid", build: () => [] }
+              type M = U extends never ? PM : Pick<PM, U>
               return (filter.type === "join_find"
                 // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra
@@ -268,7 +272,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                         Effect.promise(() =>
                           container
                             .items
-                            .query<PM>(q)
+                            .query<M>(q)
                             .fetchAll()
                             .then(({ resources }) => resources)
                         )
@@ -292,7 +296,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     Effect.promise(() =>
                       container
                         .items
-                        .query<{ f: PM }>(
+                        .query<{ f: M }>(
                           q
                         )
                         .fetchAll()
