@@ -65,12 +65,21 @@ export type FilterJoinSelect = {
   value: any /* value path[valueKey] of E */
 }
 
+export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM> {
+  filter?: Filter<PM>
+  select?: readonly U[]
+  limit?: number
+  skip?: number
+}
+
+export type FilterFunc<PM extends PersistenceModelType<string>> = <U extends keyof PM = keyof PM>(
+  args: FilterArgs<PM, U>
+) => Effect<never, never, Pick<PM, U>[]>
+
 export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
   all: Effect<never, never, PM[]>
-  filter: (
-    filter: Filter<PM>,
-    cursor?: { limit?: number; skip?: number }
-  ) => Effect<never, never, PM[]>
+  filter: FilterFunc<PM>
+  /** @deprecated */
   filterJoinSelect: <T extends object>(
     filter: FilterJoinSelect
   ) => Effect<never, never, (T & { _rootId: string })[]>

@@ -11,7 +11,6 @@ import {
   logQuery
 } from "./Cosmos/query.js"
 import {
-  type Filter,
   type FilterJoinSelect,
   type PersistenceModelType,
   type StorageConfig,
@@ -252,9 +251,10 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
-            filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) => {
-              const skip = cursor?.skip
-              const limit = cursor?.limit
+            filter: (f) => {
+              const skip = f?.skip
+              const limit = f?.limit
+              const filter = f.filter ?? { type: "new-kid", build: () => [] }
               return (filter.type === "join_find"
                 // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra
@@ -277,7 +277,14 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                   .map((_) => _.flatMap((_) => _))
                 : Effect(
                   filter.type === "new-kid"
-                    ? buildWhereCosmosQuery3(filter.build(), name, importedMarkerId, skip, limit)
+                    ? buildWhereCosmosQuery3(
+                      filter.build(),
+                      name,
+                      importedMarkerId,
+                      f.select as string[] | undefined,
+                      skip,
+                      limit
+                    )
                     : buildCosmosQuery(filter, name, importedMarkerId, skip, limit)
                 )
                   .tap((q) => logQuery(q))

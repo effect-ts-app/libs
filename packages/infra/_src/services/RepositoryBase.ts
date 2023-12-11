@@ -3,7 +3,7 @@
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
-import type { Filter, StoreConfig, Where } from "./Store.js"
+import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
@@ -20,7 +20,7 @@ import { QueryBuilder } from "./Store/filterApi/query.js"
  */
 export abstract class RepositoryBaseC<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 > {
@@ -34,7 +34,7 @@ export abstract class RepositoryBaseC<
   abstract readonly utils: {
     parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
+    filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, PositiveInt>
   }
   abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
@@ -46,7 +46,7 @@ export abstract class RepositoryBaseC<
 
 export abstract class RepositoryBaseC1<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 > extends RepositoryBaseC<T, PM, Evt, ItemType> {
@@ -57,9 +57,12 @@ export abstract class RepositoryBaseC1<
   }
 }
 
-export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string }, Evt, ItemType extends string>
-  extends RepositoryBaseC1<T, PM, Evt, ItemType>
-{
+export class RepositoryBaseC2<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string
+> extends RepositoryBaseC1<T, PM, Evt, ItemType> {
   constructor(
     itemType: ItemType,
     protected readonly impl: Repository<T, PM, Evt, ItemType>
@@ -213,9 +216,14 @@ export function makeRepo<
            */
           utils: {
             parseMany: (items) => cms.get.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
-            filter: store
-              .filter
-              .flow((_) => _.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
+            filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+              store
+                .filter(args)
+                .tap((items) =>
+                  args.select
+                    ? Effect.unit
+                    : cms.get.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                ),
             all: store.all.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
           changeFeed,
@@ -245,7 +253,7 @@ export function makeRepo<
  */
 export function removeById<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(

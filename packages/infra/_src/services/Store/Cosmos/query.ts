@@ -227,6 +227,7 @@ export function buildWhereCosmosQuery3(
   filter: readonly FilterResult[],
   name: string,
   importedMarkerId: string,
+  select?: readonly string[],
   skip?: number,
   limit?: number
 ) {
@@ -359,7 +360,11 @@ export function buildWhereCosmosQuery3(
   const values = getValues(filter)
   return {
     query: `
-    SELECT f
+    SELECT ${
+      select
+        ? `VALUE {\n${select.map((_) => `${_}: f.${_}`).join(",\n")}\n}`
+        : "f"
+    }
     FROM ${name} AS f
 
     ${
@@ -371,7 +376,7 @@ export function buildWhereCosmosQuery3(
         .join("\n")
     }
 
-    WHERE f.id != @id AND ${print(filter)}
+    WHERE f.id != @id ${filter.length ? `AND ${print(filter)}` : ""}
     ${lm}`,
     parameters: [
       { name: "@id", value: importedMarkerId },
