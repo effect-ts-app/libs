@@ -67,8 +67,50 @@ export function projectEffect<
   ItemType extends string,
   R,
   E,
-  U extends keyof PM = never,
-  S = U extends never ? PM : Pick<PM, U>
+  S = PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: Effect<
+    R,
+    E,
+    {
+      filter?: Filter<PM>
+      collect?: (t: PM) => Option<S>
+      limit?: number
+      skip?: number
+    }
+  >
+): Effect<R, E, S[]>
+export function projectEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  U extends keyof PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: Effect<
+    R,
+    E,
+    {
+      filter?: Filter<PM>
+      select: readonly U[]
+      limit?: number
+      skip?: number
+    }
+  >
+): Effect<R, E, Pick<PM, U>[]>
+export function projectEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  U extends keyof PM,
+  S = Pick<PM, U>
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<
@@ -77,12 +119,12 @@ export function projectEffect<
     {
       filter?: Filter<PM>
       select?: readonly U[]
-      collect?: (t: U extends never ? PM : Pick<PM, U>) => Option<S>
+      collect?: (t: Pick<PM, U>) => Option<S>
       limit?: number
       skip?: number
     }
   >
-) {
+): Effect<R, E, S[]> {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap((f) =>
     self
@@ -101,18 +143,48 @@ export function project<
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
-  U extends keyof PM = never,
-  S = U extends never ? PM : Pick<PM, U>
+  S = PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: {
+    filter?: Filter<PM>
+    collect?: (t: PM) => Option<S>
+    limit?: number
+    skip?: number
+  }
+): Effect<never, never, S[]>
+export function project<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  U extends keyof PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: {
+    filter?: Filter<PM>
+    select: readonly U[]
+    limit?: number
+    skip?: number
+  }
+): Effect<never, never, Pick<PM, U>[]>
+export function project<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  U extends keyof PM,
+  S = Pick<PM, U>
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: {
     filter?: Filter<PM>
     select?: readonly U[]
-    collect?: (t: U extends never ? PM : Pick<PM, U>) => Option<S>
+    collect?: (t: Pick<PM, U>) => Option<S>
     limit?: number
     skip?: number
   }
-) {
+): Effect<never, never, S[]> {
   return self.projectEffect(Effect(map))
 }
 

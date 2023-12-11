@@ -7,7 +7,7 @@ import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
-  type M = U extends never ? T : Pick<T, U>
+  type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
     const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
     const skip = f?.skip

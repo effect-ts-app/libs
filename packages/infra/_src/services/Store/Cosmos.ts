@@ -258,7 +258,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
               const skip = f?.skip
               const limit = f?.limit
               const filter = f.filter ?? { type: "new-kid", build: () => [] }
-              type M = U extends never ? PM : Pick<PM, U>
+              type M = U extends undefined ? PM : Pick<PM, U>
               return (filter.type === "join_find"
                 // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra

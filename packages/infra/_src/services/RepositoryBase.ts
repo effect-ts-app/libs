@@ -401,6 +401,7 @@ export interface Repos<
     E,
     Out
   >
+  /** @deprecated use `query` instead */
   readonly where: ReturnType<typeof makeWhere<PM>>
   readonly query: ReturnType<typeof QueryBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
