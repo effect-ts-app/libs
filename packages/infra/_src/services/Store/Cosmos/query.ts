@@ -363,9 +363,9 @@ export function buildWhereCosmosQuery3(
     SELECT ${
       select
         ? `VALUE {\n${select.map((_) => `${_}: f.${_}`).join(",\n")}\n}`
-        : "f"
+        : "*"
     }
-    FROM ${name} AS f
+    FROM ${name} f
 
     ${
       values
