@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.121.0
+
+### Minor Changes
+
+- e0bd51b: improve: lock select to QueryBuilder filter.
+
 ## 0.120.0
 
 ### Minor Changes
