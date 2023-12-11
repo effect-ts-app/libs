@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.121.2
+
+### Patch Changes
+
+- 7953122: fix cosmos typo and log
+
 ## 0.121.1
 
 ### Patch Changes
