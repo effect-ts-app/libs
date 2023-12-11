@@ -296,11 +296,9 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     Effect.promise(() =>
                       container
                         .items
-                        .query<{ f: M }>(
-                          q
-                        )
+                        .query<M>(q)
                         .fetchAll()
-                        .then(({ resources }) => resources.map((_) => _.f))
+                        .then(({ resources }) => resources)
                     )
                   ))
                 .withSpan("Cosmos.filter [effect-app/infra/Store]", {

@@ -82,8 +82,8 @@ export function buildLegacyCosmosQuery<PM>(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-    SELECT f
-    FROM ${name} AS f
+    SELECT *
+    FROM ${name} f
     WHERE f.id != @id AND f.${
       String(
         filter.by
@@ -114,8 +114,8 @@ export function buildWhereCosmosQuery(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-    SELECT f
-    FROM ${name} AS f
+    SELECT *
+    FROM ${name} f
     ${
       filter
         .where

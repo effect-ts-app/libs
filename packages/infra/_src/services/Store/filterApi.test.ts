@@ -127,8 +127,8 @@ describe("works", () => {
   it("cosmos", () => {
     const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
     expect(removeWhitespace(r.query)).toBe(removeWhitespace(`
-        SELECT f
-    FROM MyEntity AS f
+        SELECT *
+    FROM MyEntity f
     WHERE f.id != @id AND f.something.id = @v0 AND (
     STARTSWITH(f.something.name, @v1, true) OR ARRAY_CONTAINS(@v2, f.tag) OR (
     LOWER(f.name) <> LOWER(@v3) AND LOWER(f.tag) = LOWER(@v4)
@@ -207,8 +207,8 @@ describe("root-or", () => {
   })
   it("cosmos", () => {
     const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
-    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`    SELECT f
-       FROM MyEntity AS f
+    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`    SELECT *
+       FROM MyEntity f
           
           WHERE f.id != @id AND (
     f.something.id = @v0 AND (
