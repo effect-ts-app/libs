@@ -6,6 +6,7 @@ import { Pure } from "@effect-app/prelude/Pure"
 import { NotFoundError } from "../errors.js"
 import type { Filter, PersistenceModelType } from "../services/Store.js"
 import type { RepositoryBaseC } from "./RepositoryBase.js"
+import type { QueryBuilder } from "./Store/filterApi/query.js"
 
 /**
  * @tsplus type Repository
@@ -95,7 +96,7 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: Filter<PM>
+      filter?: QueryBuilder<PM>
       select: readonly U[]
       limit?: number
       skip?: number
@@ -162,7 +163,7 @@ export function project<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: {
-    filter?: Filter<PM>
+    filter?: QueryBuilder<PM>
     select: readonly U[]
     limit?: number
     skip?: number
