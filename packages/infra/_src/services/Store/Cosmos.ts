@@ -288,6 +288,7 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                     skip,
                     limit
                   ))
+                    .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
                         f.select

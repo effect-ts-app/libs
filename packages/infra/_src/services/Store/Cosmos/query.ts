@@ -362,7 +362,7 @@ export function buildWhereCosmosQuery3(
     query: `
     SELECT ${
       select
-        ? `${select.map((_) => `f.${_}`).join(", ")}\n}`
+        ? `${select.map((_) => `f.${_}`).join(", ")}`
         : "f"
     }
     FROM ${name} f
