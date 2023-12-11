@@ -3,7 +3,7 @@ import { RedisClient } from "@effect-app/infra-adapters/redis-client"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
 
-import type { Filter, FilterJoinSelect, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
+import type { FilterJoinSelect, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
 
@@ -62,8 +62,7 @@ export function makeRedisStore({ prefix }: StorageConfig) {
               .provideService(RedisClient, redis)
           const s: Store<PM, Id> = {
             all,
-            filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
-              all.map(memFilter(filter, cursor)),
+            filter: (f) => all.map(memFilter(f)),
             filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
               all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
             find: (id) => asMap.map((_) => Option.fromNullable(_.get(id))),

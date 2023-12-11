@@ -4,7 +4,7 @@
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
 import { NotFoundError } from "../errors.js"
-import type { Filter } from "../services/Store.js"
+import type { Filter, PersistenceModelType } from "../services/Store.js"
 import type { RepositoryBaseC } from "./RepositoryBase.js"
 
 /**
@@ -12,7 +12,7 @@ import type { RepositoryBaseC } from "./RepositoryBase.js"
  */
 export interface Repository<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 > extends RepositoryBaseC<T, PM, Evt, ItemType> {}
@@ -34,7 +34,7 @@ export const AnyPureDSL: PureDSL<any, any, any> = {
  */
 export function get<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(
@@ -45,49 +45,11 @@ export function get<
 }
 
 /**
- * @tsplus fluent Repository filter
- */
-export function filter<
-  T extends { id: string },
-  PM extends { id: string },
-  Evt,
-  ItemType extends string
->(self: RepositoryBaseC<T, PM, Evt, ItemType>, filter: Predicate<T>) {
-  return self.all.map((_) => _.filter(filter))
-}
-
-/**
- * @tsplus fluent Repository filterAll
- */
-export function filterAll<
-  T extends { id: string },
-  PM extends { id: string },
-  Evt,
-  ItemType extends string,
-  S extends T
->(self: RepositoryBaseC<T, PM, Evt, ItemType>, map: (items: T[]) => S[]) {
-  return self.all.map(map)
-}
-
-/**
- * @tsplus fluent Repository collect
- */
-export function collect<
-  T extends { id: string },
-  PM extends { id: string },
-  Evt,
-  ItemType extends string,
-  S extends T
->(self: RepositoryBaseC<T, PM, Evt, ItemType>, collect: (item: T) => Option<S>) {
-  return self.all.map((_) => _.filterMap(collect))
-}
-
-/**
  * @tsplus getter Repository log
  */
 export function log<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(_: RepositoryBaseC<T, PM, Evt, ItemType>) {
@@ -100,7 +62,7 @@ export function log<
  */
 export function projectEffect<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
@@ -108,11 +70,66 @@ export function projectEffect<
   S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }>
-) {
+  map: Effect<
+    R,
+    E,
+    {
+      filter?: Filter<PM>
+      collect?: (t: PM) => Option<S>
+      limit?: number
+      skip?: number
+    }
+  >
+): Effect<R, E, S[]>
+export function projectEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  U extends keyof PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: Effect<
+    R,
+    E,
+    {
+      filter?: Filter<PM>
+      select: readonly U[]
+      limit?: number
+      skip?: number
+    }
+  >
+): Effect<R, E, Pick<PM, U>[]>
+export function projectEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  U extends keyof PM,
+  S = Pick<PM, U>
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: Effect<
+    R,
+    E,
+    {
+      filter?: Filter<PM>
+      select?: readonly U[]
+      collect?: (t: Pick<PM, U>) => Option<S>
+      limit?: number
+      skip?: number
+    }
+  >
+): Effect<R, E, S[]> {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap((f) =>
-    (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
+    self
+      .utils
+      .filter(f)
       .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
   )
 }
@@ -123,14 +140,51 @@ export function projectEffect<
  */
 export function project<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: { filter?: Filter<PM>; collect?: (t: PM) => Option<S>; limit?: number; skip?: number }
-) {
+  map: {
+    filter?: Filter<PM>
+    collect?: (t: PM) => Option<S>
+    limit?: number
+    skip?: number
+  }
+): Effect<never, never, S[]>
+export function project<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  U extends keyof PM
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: {
+    filter?: Filter<PM>
+    select: readonly U[]
+    limit?: number
+    skip?: number
+  }
+): Effect<never, never, Pick<PM, U>[]>
+export function project<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  U extends keyof PM,
+  S = Pick<PM, U>
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: {
+    filter?: Filter<PM>
+    select?: readonly U[]
+    collect?: (t: Pick<PM, U>) => Option<S>
+    limit?: number
+    skip?: number
+  }
+): Effect<never, never, S[]> {
   return self.projectEffect(Effect(map))
 }
 
@@ -140,7 +194,7 @@ export function project<
  */
 export function count<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(
@@ -157,7 +211,7 @@ export function count<
  */
 export function queryEffect<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
@@ -169,7 +223,7 @@ export function queryEffect<
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return map.flatMap((f) =>
-    (f.filter ? self.utils.filter(f.filter, { limit: f.limit, skip: f.skip }) : self.utils.all)
+    (f.filter ? self.utils.filter(f) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
       .map((_) => f.collect ? _.filterMap(f.collect) : _ as any as S[])
   )
@@ -180,7 +234,7 @@ export function queryEffect<
  */
 export function queryOneEffect<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
@@ -192,7 +246,7 @@ export function queryOneEffect<
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
 ) {
   return map.flatMap((f) =>
-    (f.filter ? self.utils.filter(f.filter, { limit: 1 }) : self.utils.all)
+    (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
       .flatMap((_) =>
         (f.collect ? _.filterMap(f.collect) : _ as any as S[])
@@ -208,7 +262,7 @@ export function queryOneEffect<
  */
 export function query<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   S = T
@@ -225,7 +279,7 @@ export function query<
  */
 export function queryOne<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   S = T
@@ -242,7 +296,7 @@ export function queryOne<
  */
 export function queryAndSavePureEffect<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
@@ -263,7 +317,7 @@ export function queryAndSavePureEffect<
  */
 export function queryAndSavePure<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   S extends T = T
@@ -280,7 +334,7 @@ export function queryAndSavePure<
  */
 export function saveManyWithPure<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
@@ -293,7 +347,7 @@ export function saveManyWithPure<
  */
 export function byIdAndSaveWithPure<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, id: T["id"]) {
@@ -307,7 +361,7 @@ export function byIdAndSaveWithPure<
  */
 export function handleByIdAndSaveWithPure<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
@@ -324,7 +378,7 @@ export function saveManyWithPure_<
   Id extends string,
   R,
   T extends { id: Id },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   A,
   E,
   Evt,
@@ -349,7 +403,7 @@ export function saveWithPure_<
   Id extends string,
   R,
   T extends { id: Id },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   A,
   E,
   Evt,
@@ -371,7 +425,7 @@ export function saveWithPure_<
 
 export function saveAllWithEffectInt<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   P extends T,
   Evt,
   ItemType extends string,
@@ -393,7 +447,7 @@ export function saveAllWithEffectInt<
  */
 export function queryAndSavePureEffectBatched<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
@@ -415,7 +469,7 @@ export function queryAndSavePureEffectBatched<
  */
 export function queryAndSavePureBatched<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   S extends T = T
@@ -433,7 +487,7 @@ export function queryAndSavePureBatched<
  */
 export function saveManyWithPureBatched<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, batchSize = 100) {
@@ -448,7 +502,7 @@ export function saveManyWithPureBatched_<
   Id extends string,
   R,
   T extends { id: Id },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   A,
   E,
   Evt,
@@ -600,7 +654,7 @@ export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReado
  */
 export function save<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(
@@ -614,7 +668,7 @@ export function save<
  */
 export function saveWithEvents<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(

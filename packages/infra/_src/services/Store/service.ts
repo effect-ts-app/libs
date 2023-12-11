@@ -4,6 +4,8 @@ import type { Parser, ParserEnv } from "@effect-app/schema/custom/Parser"
 
 import type { These } from "@effect-app/prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
+import type { FieldValues } from "../../filter/types.js"
+import type { QueryBuilder } from "./filterApi/query.js"
 
 export type StoreConfig<E> = {
   uniqueKeys?: UniqueKey[]
@@ -50,10 +52,11 @@ export type JoinFindFilter = {
   valueKey: string /* value paths of E[keys][valueKey] */
   value: any /* value path[valueKey] of E */
 }
-export type Filter<E> =
+export type Filter<E extends FieldValues> =
   | JoinFindFilter
   | StoreWhereFilter
   | LegacyFilter<E>
+  | QueryBuilder<E>
 
 export type FilterJoinSelect = {
   type: "filter_join_select"
@@ -62,12 +65,21 @@ export type FilterJoinSelect = {
   value: any /* value path[valueKey] of E */
 }
 
+export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM = never> {
+  filter?: Filter<PM>
+  select?: readonly U[]
+  limit?: number
+  skip?: number
+}
+
+export type FilterFunc<PM extends PersistenceModelType<string>> = <U extends keyof PM = never>(
+  args: FilterArgs<PM, U>
+) => Effect<never, never, (U extends undefined ? PM : Pick<PM, U>)[]>
+
 export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
   all: Effect<never, never, PM[]>
-  filter: (
-    filter: Filter<PM>,
-    cursor?: { limit?: number; skip?: number }
-  ) => Effect<never, never, PM[]>
+  filter: FilterFunc<PM>
+  /** @deprecated */
   filterJoinSelect: <T extends object>(
     filter: FilterJoinSelect
   ) => Effect<never, never, (T & { _rootId: string })[]>

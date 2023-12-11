@@ -1,6 +1,6 @@
 import type { StoreWhereFilter, Where } from "@effect-app/infra/services/Store"
 import { Filters, makeFilters } from "../../filter.js"
-import { buildWhereCosmosQuery } from "./Cosmos.js"
+import { buildWhereCosmosQuery } from "./Cosmos/query.js"
 
 const f_ = makeFilters<Something>()
 export type SomethingWhereFilter = typeof f_
@@ -57,8 +57,8 @@ test("works", () => {
         }
       ],
       "query": `
-    SELECT f
-    FROM Somethings AS f
+    SELECT *
+    FROM Somethings f
     
     WHERE f.id != @id AND LOWER(f.b) = LOWER(@v0)
     OFFSET 0 LIMIT 10`
@@ -83,8 +83,8 @@ test("works", () => {
         }
       ],
       "query": `
-    SELECT f
-    FROM Somethings AS f
+    SELECT *
+    FROM Somethings f
     JOIN d IN f.d
     WHERE f.id != @id AND LOWER(d.a) <> LOWER(@v0)
     OFFSET 0 LIMIT 10`

@@ -5,6 +5,7 @@ import { OptimisticConcurrencyException } from "../../errors.js"
 import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
 
 import objectHash from "object-hash"
+import { codeFilter3_ } from "./codeFilter.js"
 
 export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
   { _etag, ...e }: E
@@ -38,7 +39,9 @@ export const makeUpdateETag =
 
 export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter<NE>) {
   return (x: E) =>
-    filter.type === "startsWith"
+    filter.type === "new-kid"
+      ? codeFilter3_(filter.build(), x) ? Option(x as unknown as NE) : Option.none
+      : filter.type === "startsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())
         ? Option(x as unknown as NE)
@@ -184,38 +187,38 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
       .flatMap((_) => _)
 }
 
-function lowercaseIfString<T>(val: T) {
+export function lowercaseIfString<T>(val: T) {
   if (typeof val === "string") {
     return val.toLowerCase()
   }
   return val
 }
 
-function compareCaseInsensitive(valA: unknown, valB: unknown) {
+export function compareCaseInsensitive(valA: unknown, valB: unknown) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() === valB.toLowerCase()
     : valA === valB
 }
 
-function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() < valB.toLowerCase()
     : valA < valB
 }
 
-function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() <= valB.toLowerCase()
     : valA <= valB
 }
 
-function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() > valB.toLowerCase()
     : valA > valB
 }
 
-function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
+export function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
   return typeof valB === "string" && typeof valA === "string"
     ? valA.toLowerCase() >= valB.toLowerCase()
     : valA >= valB

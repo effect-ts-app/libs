@@ -3,7 +3,7 @@
 import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
-import type { Filter, StoreConfig, Where } from "./Store.js"
+import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
@@ -13,13 +13,14 @@ import type { Schema } from "@effect-app/prelude"
 import { EParserFor } from "@effect-app/prelude/schema"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
+import { QueryBuilder } from "./Store/filterApi/query.js"
 
 /**
  * @tsplus type Repository
  */
 export abstract class RepositoryBaseC<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 > {
@@ -33,7 +34,7 @@ export abstract class RepositoryBaseC<
   abstract readonly utils: {
     parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
-    filter: (filter: Filter<PM>, cursor?: { limit?: number; skip?: number }) => Effect<never, never, PM[]>
+    filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, PositiveInt>
   }
   abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
@@ -45,7 +46,7 @@ export abstract class RepositoryBaseC<
 
 export abstract class RepositoryBaseC1<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 > extends RepositoryBaseC<T, PM, Evt, ItemType> {
@@ -56,9 +57,12 @@ export abstract class RepositoryBaseC1<
   }
 }
 
-export class RepositoryBaseC2<T extends { id: string }, PM extends { id: string }, Evt, ItemType extends string>
-  extends RepositoryBaseC1<T, PM, Evt, ItemType>
-{
+export class RepositoryBaseC2<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string
+> extends RepositoryBaseC1<T, PM, Evt, ItemType> {
   constructor(
     itemType: ItemType,
     protected readonly impl: Repository<T, PM, Evt, ItemType>
@@ -212,9 +216,14 @@ export function makeRepo<
            */
           utils: {
             parseMany: (items) => cms.get.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
-            filter: store
-              .filter
-              .flow((_) => _.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))),
+            filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+              store
+                .filter(args)
+                .tap((items) =>
+                  args.select
+                    ? Effect.unit
+                    : cms.get.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                ),
             all: store.all.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
           changeFeed,
@@ -232,7 +241,8 @@ export function makeRepo<
 
     return {
       make,
-      where
+      where,
+      query: QueryBuilder.make<PM>()
     }
   }
 }
@@ -243,7 +253,7 @@ export function makeRepo<
  */
 export function removeById<
   T extends { id: string },
-  PM extends { id: string },
+  PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
 >(
@@ -391,7 +401,9 @@ export interface Repos<
     E,
     Out
   >
+  /** @deprecated use `query` instead */
   readonly where: ReturnType<typeof makeWhere<PM>>
+  readonly query: ReturnType<typeof QueryBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
@@ -431,6 +443,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
+      static readonly query = QueryBuilder.make<PM>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any
@@ -475,6 +488,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly where = makeWhere<PM>()
+      static readonly query = QueryBuilder.make<PM>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }

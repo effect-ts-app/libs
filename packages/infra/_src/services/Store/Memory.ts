@@ -1,25 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { pick } from "@effect-app/prelude/utils"
 import type { RequestContext } from "../../RequestContext.js"
-import type { Filter, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
+import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 
-export function memFilter<T extends { id: string }>(filter: Filter<T>, cursor?: { skip?: number; limit?: number }) {
-  return ((c: T[]): T[] => {
-    const skip = cursor?.skip
-    const limit = cursor?.limit
+export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
+  type M = U extends undefined ? T : Pick<T, U>
+  return ((c: T[]): M[] => {
+    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
+    const skip = f?.skip
+    const limit = f?.limit
     if (!skip && limit === 1) {
-      return c.findFirstMap(codeFilter(filter)).map(ReadonlyArray.make).getOrElse(() => [])
+      return select(
+        c.findFirstMap(f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).map(ReadonlyArray.make).getOrElse(
+          () => []
+        )
+      )
     }
-    let r = c.filterMap(codeFilter(filter))
+    let r = f.filter ? c.filterMap(codeFilter(f.filter)) : c
     if (skip) {
       r = r.drop(skip)
     }
     if (limit !== undefined) {
       r = r.take(limit)
     }
-    return r
+
+    return select(r)
   })
 }
 
@@ -30,16 +38,11 @@ export const storeId = FiberRef.unsafeMake("primary")
  */
 export const restoreFromRequestContext = (ctx: RequestContext) => storeId.set(ctx.namespace ?? "primary")
 
-function logQuery(filter: any, cursor: any) {
+function logQuery(f: FilterArgs<any, any>) {
   return Effect
     .logDebug("mem query")
     .pipe(Effect.annotateLogs({
-      query: JSON.stringify(filter, undefined, 2),
-      cursor: JSON.stringify(
-        cursor,
-        undefined,
-        2
-      )
+      query: f
     }))
 }
 
@@ -91,10 +94,10 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
               namespace
             }
           }),
-      filter: (filter: Filter<PM>, cursor?: { skip?: number; limit?: number }) =>
+      filter: (f) =>
         all
-          .tap(() => logQuery(filter, cursor))
-          .map(memFilter(filter, cursor))
+          .tap(() => logQuery(f))
+          .map(memFilter(f))
           .withSpan("Memory.filter [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           }),
