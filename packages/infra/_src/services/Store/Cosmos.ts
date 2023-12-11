@@ -21,7 +21,7 @@ import type {
 } from "./service.js"
 
 export function CosmosStoreLive(config: Config<StorageConfig>) {
-  return config.config.flatMap(makeCosmosStore).toLayer(StoreMaker)
+  return config.flatMap(makeCosmosStore).toLayer(StoreMaker)
 }
 
 class CosmosDbOperationError {

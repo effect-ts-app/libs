@@ -15,7 +15,6 @@ import { StoreMaker } from "./service.js"
  */
 export function StoreMakerLive(config: Config<StorageConfig>) {
   return config
-    .config
     .flatMap((cfg) => {
       const storageUrl = cfg.url.value
       if (storageUrl.startsWith("mem://")) {

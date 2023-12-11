@@ -138,7 +138,6 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
 
 export function DiskStoreLive(config: Config<StorageConfig>, dir: string) {
   return config
-    .config
     .flatMap((_) => makeDiskStore(_, dir))
     .toLayer(StoreMaker)
 }

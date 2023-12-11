@@ -91,5 +91,5 @@ export function makeRedisStore({ prefix }: StorageConfig) {
   })
 }
 export function RedisStoreLive(config: Config<StorageConfig>) {
-  return config.config.flatMap(makeRedisStore).toLayer(StoreMaker)
+  return config.flatMap(makeRedisStore).toLayer(StoreMaker)
 }

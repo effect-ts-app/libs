@@ -56,7 +56,6 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
  */
 export function LiveSendgrid(config: Config<SendgridConfig>) {
   return config
-    .config
     .flatMap(makeLiveSendgrid)
     .toLayer(Emailer)
 }
