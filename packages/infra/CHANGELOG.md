@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.119.0
+
+### Minor Changes
+
+- d70d1a5: feat: support more complex where queries with free AND/OR groups, as well as basic root level select projection
+
 ## 0.118.0
 
 ### Minor Changes
