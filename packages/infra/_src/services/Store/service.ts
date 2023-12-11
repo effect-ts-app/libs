@@ -67,7 +67,7 @@ export type FilterJoinSelect = {
 
 export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM = never> {
   filter?: Filter<PM>
-  select?: readonly U[]
+  select?: NonEmptyReadonlyArray<U>
   limit?: number
   skip?: number
 }

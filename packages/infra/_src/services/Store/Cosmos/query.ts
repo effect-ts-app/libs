@@ -82,7 +82,7 @@ export function buildLegacyCosmosQuery<PM>(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-    SELECT *
+    SELECT f
     FROM ${name} f
     WHERE f.id != @id AND f.${
       String(
@@ -114,7 +114,7 @@ export function buildWhereCosmosQuery(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
-    SELECT *
+    SELECT f
     FROM ${name} f
     ${
       filter
@@ -227,7 +227,7 @@ export function buildWhereCosmosQuery3(
   filter: readonly FilterResult[],
   name: string,
   importedMarkerId: string,
-  select?: readonly string[],
+  select?: NonEmptyReadonlyArray<string>,
   skip?: number,
   limit?: number
 ) {
@@ -362,8 +362,8 @@ export function buildWhereCosmosQuery3(
     query: `
     SELECT ${
       select
-        ? `VALUE {\n${select.map((_) => `${_}: f.${_}`).join(",\n")}\n}`
-        : "*"
+        ? `${select.map((_) => `f.${_}`).join(", ")}\n}`
+        : "f"
     }
     FROM ${name} f
 

@@ -279,28 +279,41 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                   )
                   .map((_) => _.flatMap((_) => _))
-                : Effect(
-                  filter.type === "new-kid"
-                    ? buildWhereCosmosQuery3(
-                      filter.build(),
-                      name,
-                      importedMarkerId,
-                      f.select as string[] | undefined,
-                      skip,
-                      limit
-                    )
-                    : buildCosmosQuery(filter, name, importedMarkerId, skip, limit)
-                )
-                  .tap((q) => logQuery(q))
-                  .flatMap((q) =>
-                    Effect.promise(() =>
-                      container
-                        .items
-                        .query<M>(q)
-                        .fetchAll()
-                        .then(({ resources }) => resources)
-                    )
+                : (filter.type === "new-kid"
+                  ? Effect(buildWhereCosmosQuery3(
+                    filter.build(),
+                    name,
+                    importedMarkerId,
+                    f.select as NonEmptyReadonlyArray<string> | undefined,
+                    skip,
+                    limit
                   ))
+                    .flatMap((q) =>
+                      Effect.promise(() =>
+                        f.select
+                          ? container
+                            .items
+                            .query<M>(q)
+                            .fetchAll()
+                            .then(({ resources }) => resources)
+                          : container
+                            .items
+                            .query<{ f: M }>(q)
+                            .fetchAll()
+                            .then(({ resources }) => resources.map((_) => _.f))
+                      )
+                    )
+                  : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                    .tap((q) => logQuery(q))
+                    .flatMap((q) =>
+                      Effect.promise(() =>
+                        container
+                          .items
+                          .query<{ f: M }>(q)
+                          .fetchAll()
+                          .then(({ resources }) => resources.map((_) => _.f))
+                      )
+                    )))
                 .withSpan("Cosmos.filter [effect-app/infra/Store]", {
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }
                 })

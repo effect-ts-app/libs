@@ -97,7 +97,7 @@ export function projectEffect<
     E,
     {
       filter?: QueryBuilder<PM>
-      select: readonly U[]
+      select: NonEmptyReadonlyArray<U>
       limit?: number
       skip?: number
     }
@@ -119,7 +119,7 @@ export function projectEffect<
     E,
     {
       filter?: Filter<PM>
-      select?: readonly U[]
+      select?: NonEmptyReadonlyArray<U>
       collect?: (t: Pick<PM, U>) => Option<S>
       limit?: number
       skip?: number
@@ -164,7 +164,7 @@ export function project<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: {
     filter?: QueryBuilder<PM>
-    select: readonly U[]
+    select: NonEmptyReadonlyArray<U>
     limit?: number
     skip?: number
   }
@@ -180,7 +180,7 @@ export function project<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: {
     filter?: Filter<PM>
-    select?: readonly U[]
+    select?: NonEmptyReadonlyArray<U>
     collect?: (t: Pick<PM, U>) => Option<S>
     limit?: number
     skip?: number
