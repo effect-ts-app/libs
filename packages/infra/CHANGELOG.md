@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.121.1
+
+### Patch Changes
+
+- e0a9587: fix: cosmos select query when using join
+
 ## 0.121.0
 
 ### Minor Changes
