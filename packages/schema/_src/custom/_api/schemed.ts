@@ -46,7 +46,7 @@ export type SchemaForSchemed<Self extends SchemedOut<S.SchemaAny>> = [
   : never
 
 export interface Copy {
-  copy(args: {} extends this ? void : Partial<Omit<this, "copy">>): this
+  copy(args: {} extends this ? void : Partial<Omit<this, "copy" | keyof Equal.Equal>>): this
 }
 
 export interface Schemed<Self extends S.SchemaAny> {
@@ -70,7 +70,7 @@ export function Schemed<Self extends S.Schema<any, any, any, any, any>>(
 ): Schemed<Self> {
   const of_ = Constructor.for(self) >= unsafe
   // @ts-expect-error
-  return class implements Hash.Hash, Equal.Equal {
+  return class implements Equal.Equal {
     static [schemaField] = self
     static [schemedBrand] = schemedBrand
     constructor(inp: S.ConstructorInputOf<Self> = {} as any) {

@@ -1,4 +1,6 @@
 import { pretty, typedKeysOf } from "@effect-app/core/utils"
+import type { Clone } from "@fp-ts/optic"
+import { cloneTrait } from "@fp-ts/optic"
 import get from "lodash/get.js"
 import omit_ from "lodash/omit.js"
 import pick from "lodash/pick.js"
@@ -82,6 +84,27 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
  */
 export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
   return self.tap((a) => Effect(console.log(name, a)))
+}
+
+/**
+ * @tsplus fluent Object.Ops clone
+ */
+export const clone = <A extends Object>({ subject: original }: ObjectOps<A>, copy: A) => {
+  if (cloneTrait in (original as any)) {
+    const originalWithClone = original as A & Clone
+    return originalWithClone[cloneTrait](copy)
+  }
+  return Object.setPrototypeOf(copy, Object.getPrototypeOf(original)) as A
+}
+
+/**
+ * @tsplus fluent Object.Ops copy
+ */
+export const copy = <A extends Object>(
+  { subject: original }: ObjectOps<A>,
+  copy: Partial<Omit<A, keyof Equal | keyof Clone>>
+) => {
+  return original.$$.clone({ ...original, ...copy })
 }
 
 /**

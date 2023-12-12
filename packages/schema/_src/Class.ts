@@ -3,12 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type ComputeFlat } from "@effect-app/core/utils"
 import * as Lens from "@fp-ts/optic"
-import omit from "lodash/omit.js"
-import pick from "lodash/pick.js"
-
 import * as Equal from "effect/Equal"
 import * as Hash from "effect/Hash"
-
+import omit from "lodash/omit.js"
+import pick from "lodash/pick.js"
 import type { EncSchemaForClass, EParserFor, SpecificFieldRecord } from "./_api.js"
 import { specificStruct } from "./_api.js"
 import * as S from "./_schema.js"
@@ -105,7 +103,7 @@ export interface MM<
   Fields,
   To2
 > extends S.Schema<unknown, To, ConstructorInput, From, { fields: Fields }> {
-  new(_: OptionalConstructor<ConstructorInput>): To2
+  new(_: OptionalConstructor<ConstructorInput>): To2 // & Equal.Equal & S.Copy // we leave them out so that we can still spread while adhering to the type, if we want to...
   [S.schemaField]: Self
   readonly to: S.To<Self>
   readonly from: S.From<Self>
@@ -338,14 +336,9 @@ export function ClassSpecialEnc<To, From>(__name?: string) {
 function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
   const schema = __name ? self >= S.named(__name) : self // TODO  ?? "Class(Anonymous)", but atm auto deriving openapiRef from this.
   const of_ = S.Constructor.for(schema) >= unsafe
-  const fromFields = (fields: any, target: any) => {
-    for (const k of Object.keys(fields)) {
-      target[k] = fields[k]
-    }
-  }
   const parser = S.Parser.for(schema)
 
-  return class implements Hash.Hash, Equal.Equal {
+  return class implements Equal.Equal, S.Copy {
     static [nClassBrand] = nClassBrand
 
     static [schemaField] = schema
@@ -371,44 +364,42 @@ function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
     static annotate = <Meta>(identifier: S.Annotation<Meta>, meta: Meta) =>
       new S.SchemaAnnotated(self, identifier, meta)
 
-    constructor(inp: S.ConstructorInputOf<any> = {}) {
-      // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
-      fromFields(of_(inp), this)
+    constructor(inp?: S.ConstructorInputOf<any>) {
+      if (inp) {
+        // ideally inp would be optional, and default to {}, but only if the constructor input has only optional inputs..
+        Object.assign(this, of_(inp))
+      }
+    }
+
+    [Lens.cloneTrait](a: any) {
+      // @ts-expect-error
+      const inst = new this.constructor()
+      Object.assign(inst, a)
+      return inst
+    }
+
+    copy(partial: any) {
+      // @ts-expect-error
+      const inst = new this.constructor()
+      Object.assign(inst, { ...this, ...partial })
+      return inst
     }
     [Hash.symbol](): number {
-      const ka = Object.keys(this).sort()
-      if (ka.length === 0) {
-        return 0
-      }
-      let hash = Hash.combine(Hash.hash(this[ka[0]!]))(Hash.string(ka[0]!))
-      let i = 1
-      while (hash && i < ka.length) {
-        hash = Hash.combine(
-          Hash.combine(Hash.hash(this[ka[i]!]))(Hash.string(ka[i]!))
-        )(hash)
-        i++
-      }
-      return hash
+      return Hash.structure(this)
     }
 
     [Equal.symbol](that: unknown): boolean {
-      if (!(that instanceof this.constructor)) {
+      const selfKeys = Object.keys(this)
+      const thatKeys = Object.keys(that as object)
+      if (selfKeys.length !== thatKeys.length) {
         return false
       }
-      const ka = Object.keys(this)
-      const kb = Object.keys(that)
-      if (ka.length !== kb.length) {
-        return false
+      for (const key of selfKeys) {
+        if (!(key in (that as object) && Equal.equals((this as any)[key], (that as any)[key]))) {
+          return false
+        }
       }
-      let eq = true
-      let i = 0
-      const ka_ = ka.sort()
-      const kb_ = kb.sort()
-      while (eq && i < ka.length) {
-        eq = ka_[i] === kb_[i] && Equal.equals(this[ka_[i]!], this[kb_[i]!])
-        i++
-      }
-      return eq
+      return true
     }
   }
 }
