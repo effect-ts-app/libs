@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.96.1
+
+### Patch Changes
+
+- a5b77fc: fix types
+
 ## 0.96.0
 
 ### Minor Changes
