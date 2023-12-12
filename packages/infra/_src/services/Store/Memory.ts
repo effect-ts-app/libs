@@ -42,7 +42,10 @@ function logQuery(f: FilterArgs<any, any>) {
   return Effect
     .logDebug("mem query")
     .pipe(Effect.annotateLogs({
-      query: f
+      filter: JSON.stringify(f.filter ?? null, undefined, 2),
+      select: JSON.stringify(f.select ?? null, undefined, 2),
+      skip: f.skip,
+      limit: f.limit
     }))
 }
 
