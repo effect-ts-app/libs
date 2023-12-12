@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.96.2
+
+### Patch Changes
+
+- c3c5877: extend refinements with copy and clone
+
 ## 0.96.1
 
 ### Patch Changes
