@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.122.2
+
+### Patch Changes
+
+- 93f51f3: fix memory query log
+
 ## 0.122.1
 
 ### Patch Changes
