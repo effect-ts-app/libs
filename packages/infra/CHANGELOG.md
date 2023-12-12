@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.122.4
+
+### Patch Changes
+
+- a4f9589: fup
+
 ## 0.122.3
 
 ### Patch Changes
