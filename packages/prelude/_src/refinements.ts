@@ -1,4 +1,6 @@
+import type { Clone } from "@fp-ts/optic"
 import { InvalidStateError } from "./client.js"
+import { clone, copy } from "./utils.js"
 
 /**
  * @tsplus getter function asCollectable
@@ -59,7 +61,7 @@ export function asOption<T, T2 extends T>(collect: Collect<T, T2>, name: string)
 /**
  * @tsplus fluent function refinements
  */
-export function makeAwesomeCollect<T, T2 extends T>(collect: Collect<T, T2>, name: string) {
+export function makeAwesomeCollect<T extends Object, T2 extends T>(collect: Collect<T, T2>, name: string) {
   const as = collect.as(name)
   function is(item: T): item is T2 {
     return collect(item).isSome()
@@ -68,7 +70,9 @@ export function makeAwesomeCollect<T, T2 extends T>(collect: Collect<T, T2>, nam
     collect,
     is,
     as,
-    lens: Optic.id<T2>()
+    lens: Optic.id<T2>(),
+    copy: (item: T2, _copy: Partial<Omit<T2, keyof Clone | keyof Equal>>) => copy(item, _copy),
+    clone: (item: T, cloned: T) => clone(item, cloned)
   }
   function validatei(item: T) {
     return {
