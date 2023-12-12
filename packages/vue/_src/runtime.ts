@@ -15,7 +15,10 @@ const DefaultApiConfig = Config.all({
 })
 
 export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
-  return HttpClientBrowser.client.layer + ApiConfig.Live(config)
+  return HttpClientBrowser
+    .client
+    .layer
+    .merge(ApiConfig.Live(config))
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {
