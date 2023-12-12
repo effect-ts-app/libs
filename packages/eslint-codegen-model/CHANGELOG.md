@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.34.0
+
+### Minor Changes
+
+- fb332b4: update packages
+
 ## 0.33.0
 
 ### Minor Changes

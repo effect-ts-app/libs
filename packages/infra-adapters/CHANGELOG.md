@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.75.0
+
+### Minor Changes
+
+- fb332b4: update packages
+
+### Patch Changes
+
+- Updated dependencies [fb332b4]
+  - @effect-app/prelude@0.95.0
+  - @effect-app/schema@0.85.0
+  - @effect-app/core@0.88.0
+
 ## 0.74.0
 
 ### Minor Changes

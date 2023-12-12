@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.45.0
+
+### Minor Changes
+
+- fb332b4: update packages
+
 ## 0.44.0
 
 ### Minor Changes

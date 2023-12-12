@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.88.0
+
+### Minor Changes
+
+- fb332b4: update packages
+
 ## 0.87.0
 
 ### Minor Changes

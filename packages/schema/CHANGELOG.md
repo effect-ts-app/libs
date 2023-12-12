@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.85.0
+
+### Minor Changes
+
+- fb332b4: update packages
+
+### Patch Changes
+
+- Updated dependencies [fb332b4]
+  - @effect-app/core@0.88.0
+
 ## 0.84.0
 
 ### Minor Changes
