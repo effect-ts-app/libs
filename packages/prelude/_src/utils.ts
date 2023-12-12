@@ -86,10 +86,7 @@ export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string)
   return self.tap((a) => Effect(console.log(name, a)))
 }
 
-/**
- * @tsplus fluent Object.Ops clone
- */
-export const clone = <A extends Object>({ subject: original }: ObjectOps<A>, copy: A) => {
+export const clone = <A extends Object>(original: A, copy: A) => {
   if (cloneTrait in (original as any)) {
     const originalWithClone = original as A & Clone
     return originalWithClone[cloneTrait](copy)
@@ -97,14 +94,28 @@ export const clone = <A extends Object>({ subject: original }: ObjectOps<A>, cop
   return Object.setPrototypeOf(copy, Object.getPrototypeOf(original)) as A
 }
 
+export const copy = <A extends Object>(
+  original: A,
+  copy: Partial<Omit<A, keyof Equal | keyof Clone>>
+): A => {
+  return clone(original, { ...original, ...copy })
+}
+
+/**
+ * @tsplus fluent Object.Ops clone
+ */
+export const $clone = <A extends Object>({ subject: original }: ObjectOps<A>, copy: A) => {
+  return clone(original, copy)
+}
+
 /**
  * @tsplus fluent Object.Ops copy
  */
-export const copy = <A extends Object>(
+export const $copy = <A extends Object>(
   { subject: original }: ObjectOps<A>,
-  copy: Partial<Omit<A, keyof Equal | keyof Clone>>
-) => {
-  return original.$$.clone({ ...original, ...copy })
+  _copy: Partial<Omit<A, keyof Equal | keyof Clone>>
+): A => {
+  return copy(original, _copy)
 }
 
 /**
