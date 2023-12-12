@@ -6,7 +6,7 @@ import * as HttpClientBrowser from "@effect/platform-browser/HttpClient"
 
 export { initRuntime } from "./internal.js"
 
-const DefaultApiConfig = Config.all({
+export const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").withDefault("/api"),
   headers: Config
     .string()
@@ -14,11 +14,11 @@ const DefaultApiConfig = Config.all({
     .option
 })
 
-export function makeApiLayers(config: Config<ApiConfig> = DefaultApiConfig) {
+export function makeApiLayers(config: ApiConfig) {
   return HttpClientBrowser
     .client
     .layer
-    .merge(ApiConfig.Live(config))
+    .merge(ApiConfig.layer(config))
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<R, E, A>) {

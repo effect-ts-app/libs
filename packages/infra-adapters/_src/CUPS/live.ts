@@ -11,9 +11,9 @@ import { CUPS } from "./service.js"
 import type { PrinterId } from "./service.js"
 
 /**
- * @tsplus static CUPS.Ops Live
+ * @tsplus static CUPS.Ops Layer
  */
-export function LiveCUPS(cupsServer?: URL) {
+export function CUPSLayer(cupsServer?: URL) {
   return makeCUPS(cupsServer).toLayer(CUPS)
 }
 

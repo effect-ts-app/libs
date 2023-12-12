@@ -4,7 +4,7 @@ import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
-const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
+const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
     sgMail.setApiKey(apiKey.value)
 
@@ -52,11 +52,10 @@ const makeLiveSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subje
   })
 
 /**
- * @tsplus static Emailer.Ops LiveSendgrid
+ * @tsplus static Emailer.Ops SendgridLayer
  */
-export function LiveSendgrid(config: Config<SendgridConfig>) {
-  return config
-    .flatMap(makeLiveSendgrid)
+export function Sendgrid(config: SendgridConfig) {
+  return makeSendgrid(config)
     .toLayer(Emailer)
 }
 

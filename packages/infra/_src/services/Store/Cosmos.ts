@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { CosmosClient } from "@effect-app/infra-adapters/cosmos-client"
+import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
 import { omit } from "@effect-app/prelude/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
@@ -20,14 +20,11 @@ import type {
   StoreConfig
 } from "./service.js"
 
-export function CosmosStoreLive(config: Config<StorageConfig>) {
-  return config.flatMap(makeCosmosStore).toLayer(StoreMaker)
-}
-
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
 } // TODO: Retry operation when running into RU limit.
-export function makeCosmosStore({ prefix }: StorageConfig) {
+
+function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient)
     return {
@@ -424,4 +421,10 @@ export function makeCosmosStore({ prefix }: StorageConfig) {
         })
     }
   })
+}
+
+export function CosmosStoreLayer(cfg: StorageConfig) {
+  return makeCosmosStore(cfg)
+    .toLayer(StoreMaker)
+    .provide(CosmosClientLayer(cfg.url.value, cfg.dbName))
 }

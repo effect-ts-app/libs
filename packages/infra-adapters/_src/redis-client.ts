@@ -94,7 +94,9 @@ export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisC
 
 export const RedisClient = Tag<RedisClient>()
 
-export const RedisClientLive = (makeClient: () => Client) => makeRedisClient(makeClient).toLayerScoped(RedisClient)
+export const RedisClientLayer = (storageUrl: string) =>
+  makeRedisClient(makeRedis(storageUrl))
+    .toLayerScoped(RedisClient)
 
 function createClient(makeClient: () => Client) {
   const client = makeClient()
@@ -102,4 +104,21 @@ function createClient(makeClient: () => Client) {
     console.error(error)
   })
   return client
+}
+
+function makeRedis(storageUrl: string) {
+  const url = new URL(storageUrl)
+  const hostname = url.hostname
+  const password = url.password
+  return () =>
+    createClient(
+      storageUrl === "redis://"
+        ? ({
+          host: hostname,
+          port: 6380,
+          auth_pass: password,
+          tls: { servername: hostname }
+        } as any)
+        : (storageUrl as any)
+    )
 }
