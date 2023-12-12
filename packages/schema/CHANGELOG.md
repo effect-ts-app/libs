@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.86.0
+
+### Minor Changes
+
+- 60ecffb: feat: copy/clone trait trial
+
 ## 0.85.0
 
 ### Minor Changes
