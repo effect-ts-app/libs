@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.94.0
+
+### Minor Changes
+
+- 0069d09: Cleanup layers
+
 ## 0.93.0
 
 ### Minor Changes

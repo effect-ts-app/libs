@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.122.0
+
+### Minor Changes
+
+- 0069d09: Cleanup layers
+
+### Patch Changes
+
+- Updated dependencies [0069d09]
+  - @effect-app/infra-adapters@0.74.0
+  - @effect-app/prelude@0.94.0
+
 ## 0.121.2
 
 ### Patch Changes

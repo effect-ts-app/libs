@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 0.77.0
+
+### Minor Changes
+
+- 0069d09: Cleanup layers
+
+### Patch Changes
+
+- Updated dependencies [0069d09]
+  - @effect-app/prelude@0.94.0
+  - @effect-app/vue@0.77.0
+
 ## 0.76.0
 
 ### Minor Changes
