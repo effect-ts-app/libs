@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.123.0
+
+### Minor Changes
+
+- 7e17126: feat: add queryAndSaveOnePure
+
 ## 0.122.10
 
 ### Patch Changes
