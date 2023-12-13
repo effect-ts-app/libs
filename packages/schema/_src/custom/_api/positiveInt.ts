@@ -5,7 +5,7 @@ import { pipe } from "@effect-app/core/Function"
 import * as S from "../_schema.js"
 import { brand } from "./brand.js"
 import type { Int } from "./int.js"
-import { intFromNumber } from "./int.js"
+import { intFromNumber, numberAsIntFromNumber } from "./int.js"
 import { number } from "./number.js"
 import type { Positive, PositiveExcludeZero } from "./positive.js"
 import { positive, positiveExcludeZero } from "./positive.js"
@@ -24,6 +24,30 @@ export const positiveIntFromNumber: DefaultSchema<
   intFromNumber,
   positive("int"),
   S.arbitrary((FC) => FC.integer({ min: 0 }).map((_) => _ as PositiveInt)),
+  brand<PositiveInt>()
+)
+
+export const positiveIntFromNumberAsInt: DefaultSchema<
+  number,
+  PositiveInt,
+  number,
+  number,
+  S.ApiSelfType<PositiveInt>
+> = pipe(
+  numberAsIntFromNumber,
+  positive("int"),
+  S.arbitrary((FC) => FC.integer({ min: 0 }).map((_) => _ as PositiveInt)),
+  brand<PositiveInt>()
+)
+
+export const positiveNumberAsInt: DefaultSchema<
+  unknown,
+  PositiveInt,
+  number,
+  number,
+  S.ApiSelfType<PositiveInt>
+> = pipe(
+  number[">>>"](positiveIntFromNumberAsInt),
   brand<PositiveInt>()
 )
 

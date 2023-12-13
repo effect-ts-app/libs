@@ -26,8 +26,15 @@ export const UUID = extendWithUtils(S.UUID)
 
 export const Int = extendWithUtils(S.int)
 export type Int = S.Int
+export const NumberAsInt = extendWithUtils(S.numberAsInt)
+export type NumberAsInt = S.Int
+
 export const PositiveInt = extendWithUtils(S.positiveInt)
 export type PositiveInt = S.PositiveInt
+
+/** converts numbers to positive ints */
+export const PositiveNumberAsInt = extendWithUtils(S.positiveNumberAsInt)
+export type PositiveNumberAsInt = S.PositiveInt
 
 export const NonEmptyString = extendWithUtils(S.nonEmptyString)
 export type NonEmptyString = S.NonEmptyString

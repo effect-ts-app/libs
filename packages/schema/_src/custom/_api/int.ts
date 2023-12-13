@@ -2,6 +2,7 @@
 
 import { pipe } from "@effect-app/core/Function"
 
+import { These } from "_src/vendor.js"
 import * as S from "../_schema.js"
 import { brand } from "./brand.js"
 import { fromNumber, number, stringNumberFromString } from "./number.js"
@@ -15,6 +16,22 @@ export interface IntBrand {
 export type Int = number & IntBrand
 
 export const intFromNumberIdentifier = S.makeAnnotation<{}>()
+
+export const numberAsIntFromNumber: DefaultSchema<number, Int, number, number, {}> = pipe(
+  fromNumber,
+  S.arbitrary((_) => _.integer()),
+  S.parser((n: number) => These.succeed(Math.round(n))),
+  S.refine(
+    (n): n is Int => Number.isInteger(n),
+    (n) => S.leafE(S.invalidIntegerE(n))
+  ),
+  S.encoder((_) => _ as number),
+  S.mapConstructorError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapParserError((_) => (((_ as any).errors) as Chunk<any>).unsafeHead.error),
+  S.mapApi(() => ({})),
+  brand<Int>(),
+  S.annotate(intFromNumberIdentifier, {})
+)
 
 export const intFromNumber: DefaultSchema<number, Int, number, number, {}> = pipe(
   fromNumber,
@@ -68,3 +85,11 @@ export const int: DefaultSchema<
   number,
   S.ApiSelfType<Int>
 > = pipe(number[">>>"](intFromNumber), brand<Int>(), S.annotate(intIdentifier, {}))
+
+export const numberAsInt: DefaultSchema<
+  unknown,
+  Int,
+  number,
+  number,
+  S.ApiSelfType<Int>
+> = pipe(number[">>>"](numberAsIntFromNumber), brand<Int>(), S.annotate(intIdentifier, {}))
