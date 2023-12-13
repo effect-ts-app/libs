@@ -333,8 +333,6 @@ export function ClassSpecialEnc<To, From>(__name?: string) {
   }
 }
 
-const special = Symbol()
-
 function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
   const schema = __name ? self >= S.named(__name) : self // TODO  ?? "Class(Anonymous)", but atm auto deriving openapiRef from this.
   const of_ = S.Constructor.for(schema) >= unsafe
@@ -366,15 +364,15 @@ function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
     static annotate = <Meta>(identifier: S.Annotation<Meta>, meta: Meta) =>
       new S.SchemaAnnotated(self, identifier, meta)
 
-    constructor(inp: S.ConstructorInputOf<any> = {}) {
-      if (inp !== special) {
-        Object.assign(this, of_(inp))
+    constructor(inp?: S.ConstructorInputOf<any>) {
+      if (inp !== null) {
+        Object.assign(this, of_(inp ?? {}))
       }
     }
 
     [Lens.cloneTrait](a: any) {
       // @ts-expect-error
-      const inst = new this.constructor(special)
+      const inst = new this.constructor(null)
       Object.assign(inst, a)
       return inst
     }
