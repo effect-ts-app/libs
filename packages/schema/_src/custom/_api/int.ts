@@ -1,9 +1,8 @@
 // tracing: off
 
 import { pipe } from "@effect-app/core/Function"
-
-import { These } from "_src/vendor.js"
 import * as S from "../_schema.js"
+import * as Th from "../These.js"
 import { brand } from "./brand.js"
 import { fromNumber, number, stringNumberFromString } from "./number.js"
 import { string } from "./string.js"
@@ -20,7 +19,7 @@ export const intFromNumberIdentifier = S.makeAnnotation<{}>()
 export const numberAsIntFromNumber: DefaultSchema<number, Int, number, number, {}> = pipe(
   fromNumber,
   S.arbitrary((_) => _.integer()),
-  S.parser((n: number) => These.succeed(Math.round(n))),
+  S.parser((n: number) => Th.succeed(Math.round(n))),
   S.refine(
     (n): n is Int => Number.isInteger(n),
     (n) => S.leafE(S.invalidIntegerE(n))
