@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.98.2
+
+### Patch Changes
+
+- Updated dependencies [fcfea25]
+  - @effect-app/schema@0.87.3
+
 ## 0.98.1
 
 ### Patch Changes

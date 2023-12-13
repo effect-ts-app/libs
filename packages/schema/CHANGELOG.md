@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.87.3
+
+### Patch Changes
+
+- fcfea25: fix constructor
+
 ## 0.87.2
 
 ### Patch Changes
