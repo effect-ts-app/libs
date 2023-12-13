@@ -293,6 +293,44 @@ export function queryOne<
 }
 
 /**
+ * @tsplus fluent Repository queryAndSaveOnePureEffect
+ */
+export function queryAndSaveOnePureEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  S extends T = T
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
+) {
+  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) =>
+    queryOneEffect(self, map)
+      .flatMap((_) => saveWithPure_(self, _, pure))
+}
+
+/**
+ * @tsplus fluent Repository queryAndSaveOnePure
+ */
+export function queryAndSaveOnePure<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  S extends T = T
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
+) {
+  return self.queryAndSaveOnePureEffect(Effect(map))
+}
+
+/**
  * @tsplus fluent Repository queryAndSavePureEffect
  */
 export function queryAndSavePureEffect<
