@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.87.0
+
+### Minor Changes
+
+- 8b90f25: feat: add NumberAsInt, PositiveNumberAsInt
+
 ## 0.86.0
 
 ### Minor Changes

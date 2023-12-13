@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.97.0
+
+### Minor Changes
+
+- 8b90f25: feat: add NumberAsInt, PositiveNumberAsInt
+
+### Patch Changes
+
+- Updated dependencies [8b90f25]
+  - @effect-app/schema@0.87.0
+
 ## 0.96.2
 
 ### Patch Changes
