@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.98.1
+
+### Patch Changes
+
+- Updated dependencies [e468bd0]
+  - @effect-app/schema@0.87.2
+
 ## 0.98.0
 
 ### Minor Changes

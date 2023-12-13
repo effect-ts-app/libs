@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.87.2
+
+### Patch Changes
+
+- e468bd0: fix path
+
 ## 0.87.1
 
 ### Patch Changes
