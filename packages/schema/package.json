@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/schema",
-  "version": "0.87.4",
+  "version": "0.87.5",
   "license": "MIT",
   "type": "module",
   "dependencies": {

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.90.0
+
+### Minor Changes
+
+- f20991e: update packages
+
 ## 0.89.0
 
 ### Minor Changes
