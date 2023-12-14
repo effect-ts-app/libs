@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.126.0
+
+### Minor Changes
+
+- 67017cb: feat: add support for basic default values
+
 ## 0.125.0
 
 ### Minor Changes
