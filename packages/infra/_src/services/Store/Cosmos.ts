@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { omit } from "@effect-app/prelude/utils"
+import { omit, pick } from "@effect-app/prelude/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
   buildCosmosQuery,
@@ -45,6 +45,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               })
             )
           )
+          const defaultValues = config?.defaultValues ?? {}
           const container = db.container(containerId)
           const bulk = container.items.bulk.bind(container.items)
           const execBatch = container.items.batch.bind(container.items)
@@ -228,7 +229,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           .items
                           .query<T>(q)
                           .fetchAll()
-                          .then(({ resources }) => resources)
+                          .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
                       )
                     )
                 )
@@ -271,7 +272,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .items
                             .query<M>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources)
+                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
                         )
                       )
                   )
@@ -281,6 +282,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     filter.build(),
                     name,
                     importedMarkerId,
+                    defaultValues,
                     f.select as NonEmptyReadonlyArray<string> | undefined,
                     skip,
                     limit
@@ -293,15 +295,17 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .items
                             .query<M>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources)
+                            .then(({ resources }) =>
+                              resources.map((_) => ({ ...pick(defaultValues, f.select!), ..._ }))
+                            )
                           : container
                             .items
                             .query<{ f: M }>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources.map((_) => _.f))
+                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
                       )
                     )
-                  : Effect(buildCosmosQuery(filter, name, importedMarkerId, skip, limit))
+                  : Effect(buildCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit))
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -309,7 +313,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           .items
                           .query<{ f: M }>(q)
                           .fetchAll()
-                          .then(({ resources }) => resources.map((_) => _.f))
+                          .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
                       )
                     )))
                 .withSpan("Cosmos.filter [effect-app/infra/Store]", {
@@ -322,7 +326,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   container
                     .item(id, config?.partitionValue({ id } as PM))
                     .read<PM>()
-                    .then(({ resource }) => Option.fromNullable(resource))
+                    .then(({ resource }) => Option.fromNullable(resource).map((_) => ({ ...defaultValues, ..._ })))
                 )
                 .withSpan("Cosmos.find [effect-app/infra/Store]", {
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }

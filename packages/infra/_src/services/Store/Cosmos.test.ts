@@ -42,6 +42,7 @@ test("works", () => {
     somethingsWhere((_) => _("b", (_) => "b2")),
     "Somethings",
     "importedMarkerId",
+    {},
     undefined,
     10
   ))
@@ -68,6 +69,7 @@ test("works", () => {
     somethingsWhere((_) => _("d.-1.a", Filters.isnt("a2"))),
     "Somethings",
     "importedMarkerId",
+    {},
     undefined,
     10
   ))

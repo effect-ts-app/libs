@@ -12,7 +12,8 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
   namespace: string,
   dir: string,
   name: string,
-  seed?: Effect<R, E, Iterable<PM>>
+  seed?: Effect<R, E, Iterable<PM>>,
+  defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
     const file = dir + "/" + prefix + name + (namespace === "primary" ? "" : "-" + namespace) + ".json"
@@ -44,7 +45,8 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
         namespace,
         !fs.existsSync(file)
           ? seed
-          : fsStore.get
+          : fsStore.get,
+        defaultValues
       )
     )
 
@@ -97,7 +99,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
       ) =>
         Effect.gen(function*($) {
           const storesSem = Semaphore.unsafeMake(1)
-          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed))
+          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
           const ctx = yield* $(Effect.context<R>())
           const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
@@ -112,7 +114,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
                 if (existing) return Effect(existing)
-                return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed)
+                return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
                   .orDie
                   .provide(ctx)
                   .tap((store) => Effect.sync(() => stores.set(namespace, store)))

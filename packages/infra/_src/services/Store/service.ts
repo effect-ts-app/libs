@@ -12,6 +12,7 @@ export type StoreConfig<E> = {
   maxBulkSize?: number
   partitionValue: (e: E) => string | undefined
   allowNamespace?: (namespace: string) => boolean
+  defaultValues?: Partial<E>
 }
 
 export type SupportedValues = string | boolean | number | null

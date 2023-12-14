@@ -76,9 +76,13 @@ export function buildLegacyCosmosQuery<PM>(
   filter: LegacyFilter<PM>,
   name: string,
   importedMarkerId: string,
+  defaultValues: Record<string, unknown>,
   skip?: number,
   limit?: number
 ) {
+  if (Object.keys(defaultValues).length) {
+    throw new Error("defaultValues not supported with legacy cosmos query: " + JSON.stringify(defaultValues))
+  }
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
   return {
     query: `
@@ -108,10 +112,12 @@ export function buildWhereCosmosQuery(
   filter: StoreWhereFilter,
   name: string,
   importedMarkerId: string,
+  defaultValues: Record<string, unknown>,
   skip?: number,
   limit?: number
 ) {
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
+
   return {
     query: `
     SELECT f
@@ -135,7 +141,8 @@ export function buildWhereCosmosQuery(
         )
         .map(
           (x, i) => {
-            const k = `${x.f}.${x.key}`
+            let k = `${x.f}.${x.key}`
+            k = x.key in defaultValues ? `(${k} ?? ${JSON.stringify(defaultValues[x.key])})` : k
             const v = `@v${i}`
 
             switch (x.t) {
@@ -206,20 +213,22 @@ export function buildCosmosQuery<PM>(
   filter: LegacyFilter<PM> | StoreWhereFilter,
   name: string,
   importedMarkerId: string,
+  defaultValues: Record<string, unknown>,
   skip?: number,
   limit?: number
 ) {
   return filter.type === "startsWith"
       || filter.type === "endsWith"
       || filter.type === "contains"
-    ? buildLegacyCosmosQuery(filter, name, importedMarkerId, skip, limit)
-    : buildWhereCosmosQuery(filter, name, importedMarkerId, skip, limit)
+    ? buildLegacyCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit)
+    : buildWhereCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit)
 }
 
 export function buildWhereCosmosQuery3(
   filter: readonly FilterResult[],
   name: string,
   importedMarkerId: string,
+  defaultValues: Record<string, unknown>,
   select?: NonEmptyReadonlyArray<string>,
   skip?: number,
   limit?: number
@@ -227,9 +236,11 @@ export function buildWhereCosmosQuery3(
   const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
 
   const statement = (x: FilterR, i: number) => {
-    const k = x.path.includes(".-1.")
+    let k = x.path.includes(".-1.")
       ? `${x.path.split(".-1.")[0]}.${x.path.split(".-1.")[1]!}`
       : `f.${x.path}`
+
+    k = x.path in defaultValues ? `(${k} ?? ${JSON.stringify(defaultValues[x.path])})` : k
 
     const v = "@v" + i
 

@@ -38,7 +38,7 @@ export const storeId = FiberRef.unsafeMake("primary")
  */
 export const restoreFromRequestContext = (ctx: RequestContext) => storeId.set(ctx.namespace ?? "primary")
 
-function logQuery(f: FilterArgs<any, any>) {
+function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
   return Effect
     .logDebug("mem query")
     .pipe(Effect.annotateLogs({
@@ -48,6 +48,7 @@ function logQuery(f: FilterArgs<any, any>) {
         2
       ),
       select: JSON.stringify(f.select, undefined, 2),
+      defaultValues: JSON.stringify(defaultValues, undefined, 2),
       skip: f.skip,
       limit: f.limit
     }))
@@ -56,12 +57,15 @@ function logQuery(f: FilterArgs<any, any>) {
 export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
   modelName: string,
   namespace: string,
-  seed?: Effect<R, E, Iterable<PM>>
+  seed?: Effect<R, E, Iterable<PM>>,
+  _defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(modelName)
     const items_ = yield* $(seed ?? Effect([]))
-    const items = new Map(items_.toChunk.map((_) => [_.id, _] as const))
+    const defaultValues = _defaultValues ?? {}
+
+    const items = new Map(items_.toChunk.map((_) => [_.id, { ...defaultValues, ..._ }] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
     const sem = Semaphore.unsafeMake(1)
     const withPermit = sem.withPermits(1)
@@ -103,7 +107,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           }),
       filter: (f) =>
         all
-          .tap(() => logQuery(f))
+          .tap(() => logQuery(f, defaultValues))
           .map(memFilter(f))
           .withSpan("Memory.filter [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
@@ -164,7 +168,7 @@ export const makeMemoryStore = () => ({
   ) =>
     Effect.gen(function*($) {
       const storesSem = Semaphore.unsafeMake(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed))
+      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
@@ -178,7 +182,7 @@ export const makeMemoryStore = () => ({
         return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
           if (store) return Effect(store)
-          return makeMemoryStoreInt(modelName, namespace, seed)
+          return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
             .orDie
             .provide(ctx)
             .tap((store) => Effect.sync(() => stores.set(namespace, store)))
