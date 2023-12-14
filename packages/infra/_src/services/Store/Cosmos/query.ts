@@ -40,7 +40,7 @@ export function buildFilterJoinSelectCosmosQuery(
 SELECT r, f.id as _rootId
 FROM ${name} f
 JOIN r IN f.${k}
-WHERE LOWER(r.${filter.valueKey}) = LOWER(@value)
+WHERE r.${filter.valueKey} = @value
 ${lm}
 `,
     parameters: [{ name: "@value", value: filter.value }]
@@ -63,7 +63,7 @@ export function buildFindJoinCosmosQuery(
 SELECT DISTINCT VALUE f
 FROM ${name} f
 JOIN r IN f.${k}
-WHERE LOWER(r.${filter.valueKey}) = LOWER(@value)
+WHERE r.${filter.valueKey} = @value
 ${lm}`,
     parameters: [{ name: "@value", value: filter.value }]
   }
@@ -162,27 +162,24 @@ export function buildWhereCosmosQuery(
                 return `NOT(ENDSWITH(${k}, ${v}, true))`
             }
 
-            const lk = lowerIfNeeded(k, x.value)
-            const lv = lowerIfNeeded(v, x.value)
-
             switch (x.t) {
               case "lt":
-                return `${lk} < ${lv}`
+                return `${k} < ${v}`
               case "lte":
-                return `${lk} <= ${lv}`
+                return `${k} <= ${v}`
               case "gt":
-                return `${lk} > ${lv}`
+                return `${k} > ${v}`
               case "gte":
-                return `${lk} >= ${lv}`
+                return `${k} >= ${v}`
               case "not-eq":
                 return x.value === null
                   ? `IS_NULL(${k}) = false`
-                  : `${lk} <> ${lv}`
+                  : `${k} <> ${v}`
               case undefined:
               case "eq":
                 return x.value === null
                   ? `IS_NULL(${k}) = true`
-                  : `${lk} = ${lv}`
+                  : `${k} = ${v}`
             }
           }
         )
@@ -204,10 +201,6 @@ export function buildWhereCosmosQuery(
 // function isArray(t: SupportedValues | readonly SupportedValues[]): t is readonly SupportedValues[] {
 //   return Array.isArray(t)
 // }
-
-function lowerIfNeeded(key: unknown, value: unknown) {
-  return typeof value === "string" ? `LOWER(${key})` : `${key}`
-}
 
 export function buildCosmosQuery<PM>(
   filter: LegacyFilter<PM> | StoreWhereFilter,
@@ -265,27 +258,24 @@ export function buildWhereCosmosQuery3(
         return `NOT(ENDSWITH(${k}, ${v}, true))`
     }
 
-    const lk = lowerIfNeeded(k, x.value)
-    const lv = lowerIfNeeded(v, x.value)
-
     switch (x.op) {
       case "lt":
-        return `${lk} < ${lv}`
+        return `${k} < ${v}`
       case "lte":
-        return `${lk} <= ${lv}`
+        return `${k} <= ${v}`
       case "gt":
-        return `${lk} > ${lv}`
+        return `${k} > ${v}`
       case "gte":
-        return `${lk} >= ${lv}`
+        return `${k} >= ${v}`
       case "neq":
         return x.value === null
           ? `IS_NULL(${k}) = false`
-          : `${lk} <> ${lv}`
+          : `${k} <> ${v}`
       case undefined:
       case "eq":
         return x.value === null
           ? `IS_NULL(${k}) = true`
-          : `${lk} = ${lv}`
+          : `${k} = ${v}`
       default: {
         return assertUnreachable(x.op)
       }

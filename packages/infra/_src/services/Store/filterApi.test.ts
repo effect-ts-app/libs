@@ -49,7 +49,7 @@ describe("works", () => {
     something.name startsWith a OR tag in a OR (
     name neq Alfredo AND tag eq c
   )
-  ) AND isActive eq true AND age gte 12`
+  ) AND state._tag eq a AND isActive eq true AND age gte 12`
     ))
   const values: MyEntity[] = [{
     id: "1",
@@ -127,13 +127,13 @@ describe("works", () => {
   it("cosmos", () => {
     const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
     expect(removeWhitespace(r.query)).toBe(removeWhitespace(`
-        SELECT *
+        SELECT f
     FROM MyEntity f
     WHERE f.id != @id AND f.something.id = @v0 AND (
     STARTSWITH(f.something.name, @v1, true) OR ARRAY_CONTAINS(@v2, f.tag) OR (
-    LOWER(f.name) <> LOWER(@v3) AND LOWER(f.tag) = LOWER(@v4)
+    f.name <> @v3 AND f.tag = @v4
   )
-  ) AND f.isActive = @v5 AND f.age >= @v6`))
+  ) AND f.state._tag = @v5 AND f.isActive = @v6 AND f.age >= @v7`))
     expect(r.parameters).toEqual([
       {
         "name": "@id",
@@ -161,10 +161,14 @@ describe("works", () => {
       },
       {
         "name": "@v5",
-        "value": true
+        "value": "a"
       },
       {
         "name": "@v6",
+        "value": true
+      },
+      {
+        "name": "@v7",
         "value": 12
       }
     ])
@@ -207,13 +211,13 @@ describe("root-or", () => {
   })
   it("cosmos", () => {
     const r = buildWhereCosmosQuery3(s, "MyEntity", "marker")
-    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`    SELECT *
+    expect(removeWhitespace(r.query)).toBe(removeWhitespace(`    SELECT f
        FROM MyEntity f
           
           WHERE f.id != @id AND (
     f.something.id = @v0 AND (
       STARTSWITH(f.something.name, @v1, true) OR ARRAY_CONTAINS(@v2, f.tag) OR (
-      LOWER(f.name) <> LOWER(@v3) AND LOWER(f.tag) = LOWER(@v4)
+      f.name <> @v3 AND f.tag = @v4
     )
     ) AND CONTAINS(f.bio, @v5, true) AND f.isActive = @v6 AND f.age >= @v7
   ) OR STARTSWITH(f.name, @v8, true) `))

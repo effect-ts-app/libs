@@ -63,7 +63,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
           // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
           return (
             value
-            && value.some((v) => compareCaseInsensitive(v[filter.valueKey], filter.value))
+            && value.some((v) => compare(v[filter.valueKey], filter.value))
           )
         })
         ? Option(x as unknown as NE)
@@ -80,13 +80,13 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               case "not-in":
                 return !p.value.includes(k)
               case "lt":
-                return ltCaseInsensitive(k, p.value)
+                return lowerThan(k, p.value)
               case "lte":
-                return lteCaseInsensitive(k, p.value)
+                return lowerThanExclusive(k, p.value)
               case "gt":
-                return gtCaseInsensitive(k, p.value)
+                return greaterThan(k, p.value)
               case "gte":
-                return gteCaseInsensitive(k, p.value)
+                return greaterThanExclusive(k, p.value)
               case "includes":
                 return (k as Array<string>).includes(p.value)
               case "not-includes":
@@ -104,10 +104,10 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               case "not-starts-with":
                 return !(k as string).toLowerCase().startsWith(p.value.toLowerCase())
               case "not-eq":
-                return !compareCaseInsensitive(k, p.value)
+                return !compare(k, p.value)
               case "eq":
               case undefined:
-                return compareCaseInsensitive(k, p.value)
+                return compare(k, p.value)
             }
           })
         ? Option(x as unknown as NE)
@@ -122,13 +122,13 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
               case "not-in":
                 return !p.value.includes(k)
               case "lt":
-                return ltCaseInsensitive(k, p.value)
+                return lowerThan(k, p.value)
               case "lte":
-                return lteCaseInsensitive(k, p.value)
+                return lowerThanExclusive(k, p.value)
               case "gt":
-                return gtCaseInsensitive(k, p.value)
+                return greaterThan(k, p.value)
               case "gte":
-                return gteCaseInsensitive(k, p.value)
+                return greaterThanExclusive(k, p.value)
               case "includes":
                 return (k as Array<string>).includes(p.value)
               case "not-includes":
@@ -149,15 +149,15 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
                 return p.key.includes(".-1.")
                   ? (get(x, p.key.split(".-1.")[0]) as any[])
                     // TODO: or vs and
-                    .every((_) => !compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-                  : !compareCaseInsensitive(k, p.value)
+                    .every((_) => !compare(get(_, p.key.split(".-1.")[1]!), p.value))
+                  : !compare(k, p.value)
               case "eq":
               case undefined:
                 return p.key.includes(".-1.")
                   ? (get(x, p.key.split(".-1.")[0]) as any[])
                     // TODO: or vs and
-                    .some((_) => compareCaseInsensitive(get(_, p.key.split(".-1.")[1]!), p.value))
-                  : compareCaseInsensitive(k, p.value)
+                    .some((_) => compare(get(_, p.key.split(".-1.")[1]!), p.value))
+                  : compare(k, p.value)
             }
           })
       ? Option(x as unknown as NE)
@@ -177,7 +177,7 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
           ? Option(
             (value as readonly NE[]).filterMap((v) =>
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              compareCaseInsensitive((v as any)[filter.valueKey], filter.value)
+              compare((v as any)[filter.valueKey], filter.value)
                 ? Option({ ...v, _rootId: x.id })
                 : Option.none
             )
@@ -194,32 +194,22 @@ export function lowercaseIfString<T>(val: T) {
   return val
 }
 
-export function compareCaseInsensitive(valA: unknown, valB: unknown) {
-  return typeof valB === "string" && typeof valA === "string"
-    ? valA.toLowerCase() === valB.toLowerCase()
-    : valA === valB
+export function compare(valA: unknown, valB: unknown) {
+  return valA === valB
 }
 
-export function ltCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
-  return typeof valB === "string" && typeof valA === "string"
-    ? valA.toLowerCase() < valB.toLowerCase()
-    : valA < valB
+export function lowerThan(valA: SupportedValues2, valB: SupportedValues2) {
+  return valA < valB
 }
 
-export function lteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
-  return typeof valB === "string" && typeof valA === "string"
-    ? valA.toLowerCase() <= valB.toLowerCase()
-    : valA <= valB
+export function lowerThanExclusive(valA: SupportedValues2, valB: SupportedValues2) {
+  return valA <= valB
 }
 
-export function gtCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
-  return typeof valB === "string" && typeof valA === "string"
-    ? valA.toLowerCase() > valB.toLowerCase()
-    : valA > valB
+export function greaterThan(valA: SupportedValues2, valB: SupportedValues2) {
+  return valA > valB
 }
 
-export function gteCaseInsensitive(valA: SupportedValues2, valB: SupportedValues2) {
-  return typeof valB === "string" && typeof valA === "string"
-    ? valA.toLowerCase() >= valB.toLowerCase()
-    : valA >= valB
+export function greaterThanExclusive(valA: SupportedValues2, valB: SupportedValues2) {
+  return valA >= valB
 }

@@ -1,12 +1,6 @@
 import { assertUnreachable, get } from "@effect-app/prelude/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
-import {
-  compareCaseInsensitive,
-  gtCaseInsensitive,
-  gteCaseInsensitive,
-  ltCaseInsensitive,
-  lteCaseInsensitive
-} from "./utils.js"
+import { compare, greaterThan, greaterThanExclusive, lowerThan, lowerThanExclusive } from "./utils.js"
 
 export const codeFilterStatement = <E>(p: FilterR, x: E) => {
   const k = get(x, p.path)
@@ -16,13 +10,13 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
     case "notIn":
       return !p.value.includes(k)
     case "lt":
-      return ltCaseInsensitive(k, p.value)
+      return lowerThan(k, p.value)
     case "lte":
-      return lteCaseInsensitive(k, p.value)
+      return lowerThanExclusive(k, p.value)
     case "gt":
-      return gtCaseInsensitive(k, p.value)
+      return greaterThan(k, p.value)
     case "gte":
-      return gteCaseInsensitive(k, p.value)
+      return greaterThanExclusive(k, p.value)
     case "includes":
       return (k as Array<string>).includes(p.value)
     case "notIncludes":
@@ -43,15 +37,15 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
       return p.path.includes(".-1.")
         ? (get(x, p.path.split(".-1.")[0]) as any[])
           // TODO: or vs and
-          .every((_) => !compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
-        : !compareCaseInsensitive(k, p.value)
+          .every((_) => !compare(get(_, p.path.split(".-1.")[1]!), p.value))
+        : !compare(k, p.value)
     case "eq":
     case undefined:
       return p.path.includes(".-1.")
         ? (get(x, p.path.split(".-1.")[0]) as any[])
           // TODO: or vs and
-          .some((_) => compareCaseInsensitive(get(_, p.path.split(".-1.")[1]!), p.value))
-        : compareCaseInsensitive(k, p.value)
+          .some((_) => compare(get(_, p.path.split(".-1.")[1]!), p.value))
+        : compare(k, p.value)
     default: {
       return assertUnreachable(p.op)
     }
