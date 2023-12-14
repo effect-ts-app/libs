@@ -16,7 +16,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
   defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
-    if (namespace) {
+    if (namespace !== "primary") {
       dir = dir + "/" + namespace
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
