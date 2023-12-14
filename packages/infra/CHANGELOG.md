@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.124.0
+
+### Minor Changes
+
+- 93b0fbc: feat: remove case insensitivity from all ops except `contains`, `ends-with`, `starts-with` and `not-` variants.
+
 ## 0.123.2
 
 ### Patch Changes
