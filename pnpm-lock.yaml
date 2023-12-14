@@ -169,8 +169,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       npm-check-updates:
-        specifier: ^16.14.11
-        version: 16.14.11
+        specifier: ^16.14.12
+        version: 16.14.12
       ts-transform-paths:
         specifier: ^3.0.0
         version: 3.0.0
@@ -249,8 +249,8 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.36.0
-        version: 0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+        specifier: ^0.37.0
+        version: 0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
       '@fp-ts/optic':
         specifier: ^0.20.0
         version: 0.20.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.19.1)(effect@2.0.0-next.60)
@@ -362,8 +362,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.36.0
-        version: 0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+        specifier: ^0.37.0
+        version: 0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
       '@fp-ts/optic':
         specifier: ^0.20.0
         version: 0.20.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.19.1)(effect@2.0.0-next.60)
@@ -490,8 +490,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.86.0
-        version: 7.86.0
+        specifier: ^7.87.0
+        version: 7.87.0
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -544,8 +544,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.36.0
-        version: 0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+        specifier: ^0.37.0
+        version: 0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
       '@fp-ts/optic':
         specifier: ^0.20.0
         version: 0.20.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.19.1)(effect@2.0.0-next.60)
@@ -626,8 +626,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.36.0
-        version: 0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+        specifier: ^0.37.0
+        version: 0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
       '@fp-ts/optic':
         specifier: ^0.20.0
         version: 0.20.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.19.1)(effect@2.0.0-next.60)
@@ -751,8 +751,8 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.22.2
-        version: 0.22.2(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+        specifier: ^0.23.0
+        version: 0.23.0(@effect/platform@0.37.0)(effect@2.0.0-next.60)
       '@formatjs/intl':
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
@@ -1582,26 +1582,25 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.22.2(@effect/schema@0.53.1)(effect@2.0.0-next.60):
-    resolution: {integrity: sha512-vZSr62KIILvMdN2yBTyhOAhiWk1KxHXvYdEvB3f6HljPGYkIMu0mDo5fB10qMs3O8w1LVFXW3TJrFQ222quWVA==}
+  /@effect/platform-browser@0.23.0(@effect/platform@0.37.0)(effect@2.0.0-next.60):
+    resolution: {integrity: sha512-Scq8DEtAzM2Z3xO4s8ubEzYIkDmylbSvxzhWOd5/VZNJY1WAbTwSJxyiNiVfGffBCzFZePz2o6argUAwG+sxgA==}
     peerDependencies:
+      '@effect/platform': 0.37.0
       effect: 2.0.0-next.60
     dependencies:
-      '@effect/platform': 0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
+      '@effect/platform': 0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60)
       effect: 2.0.0-next.60
-    transitivePeerDependencies:
-      - '@effect/schema'
     dev: false
 
-  /@effect/platform@0.36.0(@effect/schema@0.53.1)(effect@2.0.0-next.60):
-    resolution: {integrity: sha512-gKZdy7Bt1PZRDBLzieWChcqgdcT5c1sb4Abixte7bqlfyz4NNDdOS6XL3tOAizGjS7FiNtC1K9Ih3Cwv5/kRvw==}
+  /@effect/platform@0.37.0(@effect/schema@0.53.1)(effect@2.0.0-next.60):
+    resolution: {integrity: sha512-zYXyL9+3LFhVeNXqIOnwBs+/Ur6f8EWHVMh9DTim5HK1Y+Gxv9U4nomJskiR9u6J3fiwK5+hugfIbrzPXoy4ng==}
     peerDependencies:
       '@effect/schema': ^0.53.1
       effect: 2.0.0-next.60
     dependencies:
       '@effect/schema': 0.53.1(effect@2.0.0-next.60)(fast-check@3.14.0)
       effect: 2.0.0-next.60
-      find-my-way: 7.7.0
+      find-my-way-ts: 0.1.0
       multipasta: 0.1.19
       path-browserify: 1.0.1
     dev: false
@@ -2337,46 +2336,46 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.86.0:
-    resolution: {integrity: sha512-b4dUsNWlPWRwakGwR7bhOkqiFlqQszH1hhVFwrm/8s3kqEBZ+E4CeIfCvuHBHQ1cM/fx55xpXX/BU163cy+3iQ==}
+  /@sentry-internal/tracing@7.87.0:
+    resolution: {integrity: sha512-HYa0+rfFmYQ/DadXoiuarTSxrcnYDCd/fm0pFuOHjICtfja8IcLegVYP2/r3CgwB+IjquCtJ5kDcqS/NTgUcpA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.86.0
-      '@sentry/types': 7.86.0
-      '@sentry/utils': 7.86.0
+      '@sentry/core': 7.87.0
+      '@sentry/types': 7.87.0
+      '@sentry/utils': 7.87.0
     dev: true
 
-  /@sentry/core@7.86.0:
-    resolution: {integrity: sha512-SbLvqd1bRYzhDS42u7GMnmbDMfth/zRiLElQWbLK/shmuZzTcfQSwNNdF4Yj+VfjOkqPFgGmICHSHVUc9dh01g==}
+  /@sentry/core@7.87.0:
+    resolution: {integrity: sha512-jkoXqK/nuYh8DYS+n7uaSuSIdw4HJemyRkXsWjAEPtEgD7taGMafZGbP5pl+XE38SE59jTBxmKnkUEZOFMgZGA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.86.0
-      '@sentry/utils': 7.86.0
+      '@sentry/types': 7.87.0
+      '@sentry/utils': 7.87.0
     dev: true
 
-  /@sentry/node@7.86.0:
-    resolution: {integrity: sha512-cB1bn/LMn2Km97Y3hv63xwWxT50/G5ixGuSxTZ3dCQM6VDhmZoCuC5NGT3itVvaRd6upQXRZa5W0Zgyh0HXKig==}
+  /@sentry/node@7.87.0:
+    resolution: {integrity: sha512-mGcZMCL3/IMTLIRcWLF+H9z2Bb2d34gKmg2rhXqI8BqhhUA551jMRlZv/y4za2Osjy550KwVoNsA1qtEe5mYyQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.86.0
-      '@sentry/core': 7.86.0
-      '@sentry/types': 7.86.0
-      '@sentry/utils': 7.86.0
+      '@sentry-internal/tracing': 7.87.0
+      '@sentry/core': 7.87.0
+      '@sentry/types': 7.87.0
+      '@sentry/utils': 7.87.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sentry/types@7.86.0:
-    resolution: {integrity: sha512-pGAt0+bMfWgo0KG2epthfNV4Wae03tURpoxNjGo5Fr4cXxvLTSijSAQ6rmmO4bXBJ7+rErEjX30g30o/eEdP9g==}
+  /@sentry/types@7.87.0:
+    resolution: {integrity: sha512-w8jKFHq/Llupmr2FezmFgQsnm3y/CnqLjb7s6PstI78E409wrhH7p7oqX/OEuzccH1qNCNwes/3QKvPTRQDB4Q==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.86.0:
-    resolution: {integrity: sha512-6PejFtw9VTFFy5vu0ks+U7Ozkqz+eMt+HN8AZKBKErYzX5/xs0kpkOcSRpu3ETdTYcZf8VAmLVgFgE2BE+3WuQ==}
+  /@sentry/utils@7.87.0:
+    resolution: {integrity: sha512-7xgtPTnTNP/4IznFMFXxltuaXfLvzznrYCDMv9ny8EeUjJqlLX3CVA8Qq3YALsLCQCKcrGRARbAcd/EGG//w2w==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.86.0
+      '@sentry/types': 7.87.0
     dev: true
 
   /@sideway/address@4.1.4:
@@ -5195,13 +5194,10 @@ packages:
       - supports-color
     dev: true
 
-  /find-my-way@7.7.0:
-    resolution: {integrity: sha512-+SrHpvQ52Q6W9f3wJoJBbAQULJuNEEQwBvlvYwACDhBTLOTMiQ0HYWh4+vC3OivGP2ENcTI1oKlFA2OepJNjhQ==}
-    engines: {node: '>=14'}
+  /find-my-way-ts@0.1.0:
+    resolution: {integrity: sha512-7Zr/qrKyASGZ0Qrr8PiWFnSKVEAjPdipAXOxGczb7d6VfzpoiGc21VrS5cpg1QR5cQH5stxITsV9aB+f2TQ/XQ==}
     dependencies:
-      fast-deep-equal: 3.1.3
       fast-querystring: 1.1.2
-      safe-regex2: 2.0.0
     dev: false
 
   /find-root@1.1.0:
@@ -5268,7 +5264,7 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       cross-spawn: 7.0.3
-      signal-exit: 4.0.1
+      signal-exit: 4.1.0
     dev: true
 
   /form-data-encoder@2.1.4:
@@ -7103,8 +7099,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates@16.14.11:
-    resolution: {integrity: sha512-0MMWGbGci22Pu77bR9jRsy5qgxdQSJVqNtSyyFeubDPtbcU36z4gjEDITu26PMabFWPNkAoVfKF31M3uKUvzFg==}
+  /npm-check-updates@16.14.12:
+    resolution: {integrity: sha512-5FvqaDX8AqWWTDQFbBllgLwoRXTvzlqVIRSKl9Kg8bYZTfNwMnrp1Zlmb5e/ocf11UjPTc+ShBFjYQ7kg6FL0w==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -8149,11 +8145,6 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /ret@0.2.2:
-    resolution: {integrity: sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==}
-    engines: {node: '>=4'}
-    dev: false
-
   /retry@0.12.0:
     resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
     engines: {node: '>= 4'}
@@ -8241,12 +8232,6 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
       is-regex: 1.1.4
-
-  /safe-regex2@2.0.0:
-    resolution: {integrity: sha512-PaUSFsUaNNuKwkBijoAPHAK6/eM6VirvyPWlZ7BAQy4D+hCvh4B6lIG+nPdhbFfIbP+gTGBcrdsOaUs0F+ZBOQ==}
-    dependencies:
-      ret: 0.2.2
-    dev: false
 
   /safe-stable-stringify@2.4.1:
     resolution: {integrity: sha512-dVHE6bMtS/bnL2mwualjc6IxEv1F+OCUpA46pKUj6F8uDbUM0jCCulPqRNPSnWwGNKx5etqMjZYdXtrm5KJZGA==}
@@ -8402,11 +8387,6 @@ packages:
 
   /signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
-
-  /signal-exit@4.0.1:
-    resolution: {integrity: sha512-uUWsN4aOxJAS8KOuf3QMyFtgm1pkb6I+KRZbRF/ghdf5T7sM+B1lLLzPDxswUjkmHyxQAVzEgG35E3NzDM9GVw==}
-    engines: {node: '>=14'}
-    dev: true
 
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
