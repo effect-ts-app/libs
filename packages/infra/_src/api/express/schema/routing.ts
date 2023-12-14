@@ -14,10 +14,11 @@ export type Request<
   QueryA,
   BodyA,
   HeaderA,
-  ReqA extends PathA & QueryA & BodyA
+  ReqA extends PathA & QueryA & BodyA,
+  PPath extends `/${string}`
 > = S.ReqResSchemed<unknown, ReqA> & {
   method: Methods.Rest
-  path: string
+  path: PPath
   Cookie?: S.ReqRes<Record<string, string>, CookieA>
   Path?: S.ReqRes<Record<string, string>, PathA>
   Body?: S.ReqRes<unknown, BodyA>
@@ -34,9 +35,10 @@ export interface RouteRequestHandler<
   BodyA,
   HeaderA,
   ReqA extends PathA & QueryA & BodyA,
-  ResA
+  ResA,
+  PPath extends `/${string}`
 > {
-  Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA>
+  Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
   Response?: S.ReqRes<unknown, ResA> | S.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
 }
@@ -63,9 +65,9 @@ export interface RouteDescriptor<
   METHOD extends Methods.Rest = Methods.Rest
 > {
   _tag: "Schema"
-  path: string
+  path: `/${string}`
   method: METHOD
-  handler: RouteRequestHandler<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA>
+  handler: RouteRequestHandler<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, `/${string}`>
   info?: {
     tags: ReadonlyArray<string>
   }
@@ -93,7 +95,7 @@ export function makeRouteDescriptor<
   ResA = void,
   METHOD extends Methods.Rest = Methods.Rest
 >(
-  path: string,
+  path: `/${string}`,
   method: METHOD,
   handler: RouteRequestHandler<
     M,
@@ -103,7 +105,8 @@ export function makeRouteDescriptor<
     BodyA,
     HeaderA,
     ReqA,
-    ResA
+    ResA,
+    `/${string}`
   >
 ): RouteDescriptor<
   M,

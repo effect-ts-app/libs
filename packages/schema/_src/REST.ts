@@ -33,13 +33,14 @@ export interface QueryRequest<
   Path extends StringRecordSchema | undefined,
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
-  Self extends S.SchemaAny
+  Self extends S.SchemaAny,
+  PPath extends `/${string}`
 > extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Body: undefined
   Path: Path
   Query: Query
   Headers: Headers
-  path: string
+  path: PPath
   method: ReadMethods
   Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
@@ -52,13 +53,14 @@ export interface BodyRequest<
   Body extends AnyRecordSchema | undefined,
   Query extends StringRecordSchema | undefined,
   Headers extends StringRecordSchema | undefined,
-  Self extends AnyRecordSchema
+  Self extends AnyRecordSchema,
+  PPath extends `/${string}`
 > extends Class<M, Self>, PropsExtensions<GetClassProps<Self>> {
   Path: Path
   Body: Body
   Query: Query
   Headers: Headers
-  path: string
+  path: PPath
   method: WriteMethods
   Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
@@ -112,24 +114,24 @@ type OrAny<T> = T extends S.SchemaAny ? T : S.SchemaAny
 // TODO: Somehow ensure that Self and M are related..
 // type Ensure<M, Self extends S.SchemaAny> = M extends S.To<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
-  function a<Headers extends StringRecordSchema>(
+  function a<Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: ReadMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
     }
-  ): QueryRequest<M, undefined, undefined, Headers, S.SchemaAny>
-  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
+  ): QueryRequest<M, undefined, undefined, Headers, S.SchemaAny, PPath>
+  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: ReadMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: Path
     }
-  ): QueryRequest<M, Path, undefined, Headers, Path>
-  function a<Query extends StringRecordSchema, Headers extends StringRecordSchema>(
+  ): QueryRequest<M, Path, undefined, Headers, Path, PPath>
+  function a<Query extends StringRecordSchema, Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: ReadMethods,
-    path: string,
+    path: PPath,
     {
       headers,
       query
@@ -137,7 +139,7 @@ export function QueryRequest<M>(__name?: string) {
       headers?: Headers
       query: Query
     }
-  ): QueryRequest<M, undefined, Query, Headers, Query>
+  ): QueryRequest<M, undefined, Query, Headers, Query, PPath>
   function a<
     QueryTo extends AnyRecord,
     QueryConstructorInput,
@@ -147,10 +149,11 @@ export function QueryRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: ReadMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: S.Schema<
@@ -179,15 +182,17 @@ export function QueryRequest<M>(__name?: string) {
       QueryConstructorInput & PathConstructorInput,
       QueryFrom & PathFrom,
       {}
-    >
+    >,
+    PPath
   >
   function a<
     Path extends StringRecordSchema,
     Query extends StringRecordSchema,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: ReadMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path?: Path
@@ -198,7 +203,8 @@ export function QueryRequest<M>(__name?: string) {
     Path,
     Query,
     Headers,
-    OrAny<Erase<typeof _.path & typeof _.query, S.SchemaAny>>
+    OrAny<Erase<typeof _.path & typeof _.query, S.SchemaAny>>,
+    PPath
   > {
     const self: S.SchemaAny = S.struct({
       ..._.query?.Api.fields,
@@ -220,29 +226,29 @@ export function QueryRequest<M>(__name?: string) {
 }
 
 export function BodyRequest<M>(__name?: string) {
-  function a<Headers extends StringRecordSchema>(
+  function a<Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
     }
-  ): BodyRequest<M, undefined, undefined, undefined, Headers, S.SchemaAny>
-  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema>(
+  ): BodyRequest<M, undefined, undefined, undefined, Headers, S.SchemaAny, PPath>
+  function a<Path extends StringRecordSchema, Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: Path
     }
-  ): BodyRequest<M, Path, undefined, undefined, Headers, Path>
-  function a<Body extends AnyRecordSchema, Headers extends StringRecordSchema>(
+  ): BodyRequest<M, Path, undefined, undefined, Headers, Path, PPath>
+  function a<Body extends AnyRecordSchema, Headers extends StringRecordSchema, PPath extends `/${string}`>(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       body: Body
     }
-  ): BodyRequest<M, undefined, Body, undefined, Headers, Body>
+  ): BodyRequest<M, undefined, Body, undefined, Headers, Body, PPath>
   function a<
     BodyTo extends AnyRecord,
     BodyConstructorInput,
@@ -252,10 +258,11 @@ export function BodyRequest<M>(__name?: string) {
     QueryConstructorInput,
     QueryFrom extends StringRecord,
     QueryApi,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       body: S.Schema<
@@ -285,7 +292,8 @@ export function BodyRequest<M>(__name?: string) {
       BodyConstructorInput & QueryConstructorInput,
       BodyFrom & QueryFrom,
       {}
-    >
+    >,
+    PPath
   >
   function a<
     QueryTo extends AnyRecord,
@@ -296,10 +304,11 @@ export function BodyRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: S.Schema<
@@ -329,7 +338,8 @@ export function BodyRequest<M>(__name?: string) {
       QueryConstructorInput & PathConstructorInput,
       QueryFrom & PathFrom,
       {}
-    >
+    >,
+    PPath
   >
   function a<
     BodyTo extends AnyRecord,
@@ -340,10 +350,11 @@ export function BodyRequest<M>(__name?: string) {
     PathConstructorInput,
     PathFrom extends StringRecord,
     PathApi,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: S.Schema<
@@ -373,7 +384,8 @@ export function BodyRequest<M>(__name?: string) {
       BodyConstructorInput & PathConstructorInput,
       BodyFrom & PathFrom,
       {}
-    >
+    >,
+    PPath
   >
   function a<
     BodyTo extends AnyRecord,
@@ -388,10 +400,11 @@ export function BodyRequest<M>(__name?: string) {
     QueryConstructorInput,
     QueryFrom extends StringRecord,
     QueryApi,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path: S.Schema<
@@ -428,16 +441,18 @@ export function BodyRequest<M>(__name?: string) {
       BodyConstructorInput & PathConstructorInput & QueryConstructorInput,
       BodyFrom & PathFrom & QueryFrom,
       {}
-    >
+    >,
+    PPath
   >
   function a<
     Path extends StringRecordSchema,
     Body extends AnyRecordSchema,
     Query extends StringRecordSchema,
-    Headers extends StringRecordSchema
+    Headers extends StringRecordSchema,
+    PPath extends `/${string}`
   >(
     method: WriteMethods,
-    path: string,
+    path: PPath,
     _: {
       headers?: Headers
       path?: Path
@@ -450,7 +465,8 @@ export function BodyRequest<M>(__name?: string) {
     Body,
     Query,
     Headers,
-    OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, S.SchemaAny>>
+    OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, S.SchemaAny>>,
+    PPath
   > {
     const self: S.SchemaAny = S.struct({
       ..._.body?.Api.fields,
@@ -476,7 +492,7 @@ export function BodyRequest<M>(__name?: string) {
 export interface Request<
   M,
   Self extends S.SchemaAny,
-  Path extends string,
+  Path extends `/${string}`,
   Method extends Methods.Rest
 > extends Class<M, Self> {
   method: Method
@@ -502,7 +518,7 @@ export type IfPathPropsProvided<Path extends string, B extends S.FieldRecord, C>
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Delete<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+export function Delete<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("DELETE", path, config)
 }
 /**
@@ -510,7 +526,7 @@ export function Delete<Path extends string, Config extends object = {}>(path: Pa
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Put<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+export function Put<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("PUT", path, config)
 }
 
@@ -519,7 +535,7 @@ export function Put<Path extends string, Config extends object = {}>(path: Path,
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Get<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+export function Get<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("GET", path, config)
 }
 /**
@@ -527,7 +543,7 @@ export function Get<Path extends string, Config extends object = {}>(path: Path,
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Patch<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+export function Patch<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("PATCH", path, config)
 }
 /**
@@ -535,11 +551,11 @@ export function Patch<Path extends string, Config extends object = {}>(path: Pat
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Post<Path extends string, Config extends object = {}>(path: Path, config?: Config) {
+export function Post<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
   return MethodReqProps2_("POST", path, config)
 }
 
-function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Config extends object = {}>(
+function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`, Config extends object = {}>(
   method: Method,
   path: Path,
   config?: Config
@@ -570,12 +586,12 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends string, Conf
  */
 function Req<M>(__name?: string) {
   function a<
-    Path extends string,
+    Path extends `/${string}`,
     Method extends Methods.Rest,
     Config extends object = {}
   >(method: Method, path: Path, config?: Config): BuildRequest<never, Path, Method, M, Config>
   function a<
-    Path extends string,
+    Path extends `/${string}`,
     Method extends Methods.Rest,
     Fields extends S.FieldRecord,
     Config extends object = {}
@@ -586,7 +602,7 @@ function Req<M>(__name?: string) {
     config?: Config
   ): BuildRequest<Fields, Path, Method, M, Config>
   function a<
-    Path extends string,
+    Path extends `/${string}`,
     Method extends Methods.Rest,
     Fields extends S.FieldRecord,
     Config extends object = {}
@@ -602,7 +618,7 @@ function Req<M>(__name?: string) {
   return a
 }
 
-export function parsePathParams<Path extends string>(path: Path) {
+export function parsePathParams<Path extends `/${string}`>(path: Path) {
   const p = new Path(path)
   const params = p.urlParams as PathParams<Path>[]
   return params
@@ -610,7 +626,7 @@ export function parsePathParams<Path extends string>(path: Path) {
 
 type BuildRequest<
   Fields extends S.FieldRecord,
-  Path extends string,
+  Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
@@ -623,7 +639,8 @@ type BuildRequest<
         S.SchemaProperties<Pick<Fields, PathParams<Path>>>,
         S.SchemaProperties<Omit<Fields, PathParams<Path>>>,
         undefined,
-        S.SchemaProperties<Fields>
+        S.SchemaProperties<Fields>,
+        Path
       >
       & Config
     :
@@ -633,7 +650,8 @@ type BuildRequest<
         S.SchemaProperties<Omit<Fields, PathParams<Path>>>,
         undefined,
         undefined,
-        S.SchemaProperties<Fields>
+        S.SchemaProperties<Fields>,
+        Path
       >
       & Config
 >
@@ -641,7 +659,7 @@ type BuildRequest<
 // NOTE: This ignores the original schema after building the new
 export function makeRequest<
   Fields extends S.FieldRecord,
-  Path extends string,
+  Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
@@ -692,7 +710,7 @@ export function makeRequest<
 
 export function adaptRequest<
   Fields extends S.FieldRecord,
-  Path extends string,
+  Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
