@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.126.1
+
+### Patch Changes
+
+- f33d0a1: feat: change request path to extends from `/${string}` for platform alignment
+- Updated dependencies [f33d0a1]
+  - @effect-app/prelude@0.99.1
+  - @effect-app/schema@0.87.6
+  - @effect-app/infra-adapters@0.77.1
+
 ## 0.126.0
 
 ### Minor Changes

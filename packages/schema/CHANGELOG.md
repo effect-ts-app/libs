@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.87.6
+
+### Patch Changes
+
+- f33d0a1: feat: change request path to extends from `/${string}` for platform alignment
+
 ## 0.87.5
 
 ### Patch Changes
