@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.126.2
+
+### Patch Changes
+
+- 7f06f72: chore: use namespace as sub-directory
+
 ## 0.126.1
 
 ### Patch Changes
