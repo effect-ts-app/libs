@@ -16,7 +16,13 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
   defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
-    const file = dir + "/" + prefix + name + (namespace === "primary" ? "" : "-" + namespace) + ".json"
+    if (namespace) {
+      dir = dir + "/" + namespace
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir)
+      }
+    }
+    const file = dir + "/" + prefix + name + ".json"
     const fsStore = {
       get: fu
         .readTextFile(file)
