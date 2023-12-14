@@ -24,7 +24,7 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vite": "^5.0.8",
+    "vite": "^5.0.9",
     "vitest": "^1.0.4"
   },
   "typesVersions": {

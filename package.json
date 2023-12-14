@@ -100,7 +100,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
     "typescript-transform-paths": "^3.4.6",
-    "vite": "^5.0.8",
+    "vite": "^5.0.9",
     "vitest": "^1.0.4"
   }
 }
