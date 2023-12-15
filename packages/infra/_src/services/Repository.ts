@@ -3,6 +3,7 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
+import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
 import type { Filter, PersistenceModelType } from "../services/Store.js"
 import type { RepositoryBaseC } from "./RepositoryBase.js"
@@ -239,13 +240,38 @@ export function queryOneEffect<
   Evt,
   ItemType extends string,
   R,
+  E
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: Effect<R, E, { filter?: Filter<PM> }>
+): Effect<R, E | NotFoundError<ItemType>, T>
+export function queryOneEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
   E,
   S = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
-) {
+): Effect<R, E | NotFoundError<ItemType>, S>
+export function queryOneEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E,
+  S = T
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
+): Effect<R, E | NotFoundError<ItemType>, S> {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
@@ -288,6 +314,27 @@ export function queryOne<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
+): Effect<never, NotFoundError<ItemType>, S>
+export function queryOne<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: { filter?: Filter<PM> }
+): Effect<never, NotFoundError<ItemType>, T>
+export function queryOne<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  S = T
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  // TODO: think about collectPM, collectE, and collect(Parsed)
+  map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
   return self.queryOneEffect(Effect(map))
 }
@@ -305,10 +352,38 @@ export function queryAndSaveOnePureEffect<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
+): <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) => Effect<
+  | R
+  | Exclude<R2, {
+    env: PureEnv<Evt, S, S2>
+  }>,
+  InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
+  A
+>
+export function queryAndSaveOnePureEffect<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string,
+  R,
+  E
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: Effect<R, E, { filter: Filter<PM> }>
+): <R2, A, E2, T2 extends T>(pure: Effect<FixEnv<R2, Evt, T, T2>, E2, A>) => Effect<
+  | R
+  | Exclude<R2, {
+    env: PureEnv<Evt, T, T2>
+  }>,
+  InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
+  A
+>
+export function queryAndSaveOnePureEffect(
+  self: any,
+  map: any
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) =>
+  return (pure: any) =>
     queryOneEffect(self, map)
       .flatMap((_) => saveWithPure_(self, _, pure))
 }
@@ -316,6 +391,7 @@ export function queryAndSaveOnePureEffect<
 /**
  * @tsplus fluent Repository queryAndSaveOnePure
  */
+
 export function queryAndSaveOnePure<
   T extends { id: string },
   PM extends PersistenceModelType<string>,
@@ -324,8 +400,32 @@ export function queryAndSaveOnePure<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
+  map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
+): <R2, A, E2, S2>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) => Effect<
+  Exclude<R2, {
+    env: PureEnv<Evt, S, S2>
+  }>,
+  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
+  A
+>
+export function queryAndSaveOnePure<
+  T extends { id: string },
+  PM extends PersistenceModelType<string>,
+  Evt,
+  ItemType extends string
+>(
+  self: RepositoryBaseC<T, PM, Evt, ItemType>,
+  map: { filter: Filter<PM> }
+): <R2, A, E2, T2>(pure: Effect<FixEnv<R2, Evt, T, T2>, E2, A>) => Effect<
+  Exclude<R2, {
+    env: PureEnv<Evt, T, T2>
+  }>,
+  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
+  A
+>
+export function queryAndSaveOnePure(
+  self: any,
+  map: { filter: Filter<any>; collect?: any }
 ) {
   return self.queryAndSaveOnePureEffect(Effect(map))
 }
