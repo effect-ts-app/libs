@@ -257,7 +257,7 @@ export function queryOneEffect<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
+  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Option<S> }>
 ): Effect<R, E | NotFoundError<ItemType>, S>
 export function queryOneEffect<
   T extends { id: string },
@@ -312,8 +312,7 @@ export function queryOne<
   S = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
+  map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
 ): Effect<never, NotFoundError<ItemType>, S>
 export function queryOne<
   T extends { id: string },
@@ -322,7 +321,6 @@ export function queryOne<
   ItemType extends string
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM> }
 ): Effect<never, NotFoundError<ItemType>, T>
 export function queryOne<
@@ -333,7 +331,6 @@ export function queryOne<
   S = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
   return self.queryOneEffect(Effect(map))
@@ -443,7 +440,6 @@ export function queryAndSavePureEffect<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
@@ -462,7 +458,6 @@ export function queryAndSavePure<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
   return self.queryAndSavePureEffect(Effect(map))
