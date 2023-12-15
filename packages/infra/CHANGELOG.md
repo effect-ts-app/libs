@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.128.0
+
+### Minor Changes
+
+- a9e594b: improve: Memory Store will limit items to max 100 to mimic Cosmos.
+
 ## 0.127.0
 
 ### Minor Changes
