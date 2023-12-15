@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.128.2
+
+### Patch Changes
+
+- 4b35d59: query one fix
+
 ## 0.128.1
 
 ### Patch Changes
