@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.127.0
+
+### Minor Changes
+
+- ad8154a: update packages
+
+### Patch Changes
+
+- Updated dependencies [ad8154a]
+  - @effect-app/infra-adapters@0.78.0
+  - @effect-app/prelude@0.100.0
+  - @effect-app/core@0.91.0
+  - @effect-app/schema@0.87.7
+
 ## 0.126.3
 
 ### Patch Changes

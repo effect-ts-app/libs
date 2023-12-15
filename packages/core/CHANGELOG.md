@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.91.0
+
+### Minor Changes
+
+- ad8154a: update packages
+
 ## 0.90.0
 
 ### Minor Changes
