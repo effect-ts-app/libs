@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.91.1
+
+### Patch Changes
+
+- 7f447d3: update packages
+
 ## 0.91.0
 
 ### Minor Changes
