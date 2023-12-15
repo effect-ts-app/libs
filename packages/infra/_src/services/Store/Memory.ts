@@ -132,13 +132,16 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           .withSpan("Memory.set [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           }),
-      batchSet: flow(
-        batchSet,
-        (_) =>
-          _.withSpan("Memory.batchSet [effect-app/infra/Store]", {
-            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          })
-      ),
+      batchSet: (items: readonly [PM, ...PM[]]) =>
+        pipe(
+          Effect(items)
+            // align with CosmosDB
+            .filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items")
+            .andThen(batchSet)
+            .withSpan("Memory.batchSet [effect-app/infra/Store]", {
+              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+            })
+        ),
       bulkSet: flow(
         batchSet,
         (_) =>
