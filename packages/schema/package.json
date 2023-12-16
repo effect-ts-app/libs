@@ -902,6 +902,16 @@
         "default": "./_cjs/ext.cjs"
       }
     },
+    "./ext2": {
+      "import": {
+        "types": "./dist/ext2.d.ts",
+        "default": "./dist/ext2.js"
+      },
+      "require": {
+        "types": "./dist/ext2.d.ts",
+        "default": "./_cjs/ext2.cjs"
+      }
+    },
     "./pipe.ext": {
       "import": {
         "types": "./dist/pipe.ext.d.ts",

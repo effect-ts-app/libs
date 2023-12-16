@@ -13,7 +13,7 @@ import * as S from "./_schema.js"
 import { schemaField } from "./_schema.js"
 import type { AnyField, FieldRecord, To } from "./custom.js"
 import { unsafe } from "./custom/_api/condemn.js"
-import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "./ext.js"
+import { type CustomSchemaException, parseEither, parseFromEither, parseFromSync, parseSync } from "./ext2.js"
 import type { OptionalConstructor } from "./tools.js"
 import { include } from "./utils.js"
 
