@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.46.0
+
+### Minor Changes
+
+- 67eb741: update packages
+
 ## 0.45.0
 
 ### Minor Changes
