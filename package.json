@@ -79,7 +79,7 @@
     "concurrently": "^8.2.2",
     "dprint": "^0.43.2",
     "enhanced-resolve": "^5.15.0",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-import-resolver-webpack": "^0.13.8",
     "eslint-plugin-codegen": "0.17.0",
@@ -100,7 +100,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
     "typescript-transform-paths": "^3.4.6",
-    "vite": "^5.0.9",
+    "vite": "^5.0.10",
     "vitest": "^1.0.4"
   }
 }

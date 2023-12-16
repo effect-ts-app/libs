@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/platform-browser": "^0.23.5",
+    "@effect/platform-browser": "^0.23.6",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
@@ -14,7 +14,7 @@
     "effect": "^2.0.0-next.60",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
-    "vue": "^3.3.11"
+    "vue": "^3.3.12"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
@@ -24,7 +24,7 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vite": "^5.0.9",
+    "vite": "^5.0.10",
     "vitest": "^1.0.4"
   },
   "typesVersions": {
