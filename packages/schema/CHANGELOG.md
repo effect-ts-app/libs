@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.87.10
+
+### Patch Changes
+
+- fix circular
+
 ## 0.87.9
 
 ### Patch Changes

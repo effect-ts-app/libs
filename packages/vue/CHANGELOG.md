@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 0.82.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.87.10
+  - @effect-app/prelude@0.101.1
+  - @effect-app/vue@0.82.1
+
 ## 0.82.0
 
 ### Minor Changes
