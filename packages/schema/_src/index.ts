@@ -1,4 +1,5 @@
 export * from "./ext.js"
+export * from "./ext2.js"
 export * from "./utils.js"
 
 // customized Class
