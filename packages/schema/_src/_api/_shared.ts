@@ -11,7 +11,7 @@ import type {
   SchemaAny,
   SchemaUPI,
   To
-} from "_src/custom.js"
+} from "../custom.js"
 import { unsafe } from "../custom/_api/condemn.js"
 import * as Parser from "../custom/Parser.js"
 
