@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.94.2
+
+### Patch Changes
+
+- fix
+
 ## 0.94.1
 
 ### Patch Changes
