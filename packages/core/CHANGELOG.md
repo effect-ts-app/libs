@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.94.1
+
+### Patch Changes
+
+- fix http headers type
+
 ## 0.94.0
 
 ### Minor Changes

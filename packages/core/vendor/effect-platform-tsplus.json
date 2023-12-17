@@ -2575,7 +2575,7 @@
   "@effect/platform/Http/Headers": [
     {
       "definitionName": "Headers",
-      "definitionKind": "interface",
+      "definitionKind": "type",
       "extensions": [
         {
           "kind": "type",
