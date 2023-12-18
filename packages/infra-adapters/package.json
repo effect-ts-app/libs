@@ -5,10 +5,10 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/platform": "^0.37.7",
+    "@effect/platform": "^0.38.0",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.0-next.60",
+    "effect": "^2.0.0-next.61",
     "@fp-ts/optic": "^0.20.0",
     "query-string": "^8.1.0"
   },
