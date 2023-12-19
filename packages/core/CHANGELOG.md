@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.95.0
+
+### Minor Changes
+
+- 46bd7be: update packages
+
 ## 0.94.2
 
 ### Patch Changes
