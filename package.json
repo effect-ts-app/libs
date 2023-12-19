@@ -7,7 +7,7 @@
       "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-      "@typescript-eslint/scope-manager@6.14.0": "patches/@typescript-eslint__scope-manager@6.14.0.patch",
+      "@typescript-eslint/scope-manager@6.15.0": "patches/@typescript-eslint__scope-manager@6.15.0.patch",
       "@fp-ts/optic@0.20.0": "patches/@fp-ts__optic@0.20.0.patch"
     }
   },
@@ -72,9 +72,9 @@
     "@tsconfig/strictest": "^2.0.2",
     "@types/lodash": "^4.14.202",
     "@types/node": "~20.10.5",
-    "@typescript-eslint/eslint-plugin": "6.14.0",
-    "@typescript-eslint/parser": "6.14.0",
-    "@typescript-eslint/scope-manager": "6.14.0",
+    "@typescript-eslint/eslint-plugin": "6.15.0",
+    "@typescript-eslint/parser": "6.15.0",
+    "@typescript-eslint/scope-manager": "6.15.0",
     "babel-plugin-replace-import-extension": "^1.1.3",
     "concurrently": "^8.2.2",
     "dprint": "^0.44.0",
