@@ -1,5 +1,18 @@
 # @effect-app/vue
 
+## 0.85.1
+
+### Patch Changes
+
+- 1fe14dc: add locale to log
+- cf6ae3c: update packages
+- Updated dependencies [1fe14dc]
+- Updated dependencies [cf6ae3c]
+  - @effect-app/vue@0.85.1
+  - @effect-app/prelude@0.104.1
+  - @effect-app/schema@0.89.1
+  - @effect-app/core@0.95.1
+
 ## 0.85.0
 
 ### Minor Changes
