@@ -27,9 +27,9 @@ patchedDependencies:
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
-  fast-check@3.14.0:
+  fast-check@3.15.0:
     hash: gmhutzas2jzobvkhr72gjyjori
-    path: patches/fast-check@3.14.0.patch
+    path: patches/fast-check@3.15.0.patch
 
 importers:
 
@@ -418,7 +418,7 @@ importers:
         version: 13.11.7
       fast-check:
         specifier: ~3.15.0
-        version: 3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.5)
@@ -469,7 +469,7 @@ importers:
         version: 2.0.0-next.62
       fast-check:
         specifier: ~3.15.0
-        version: 3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
@@ -682,7 +682,7 @@ importers:
         version: 13.11.7
       fast-check:
         specifier: ~3.15.0
-        version: 3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.5)
@@ -728,7 +728,7 @@ importers:
         version: 13.11.7
       fast-check:
         specifier: ~3.15.0
-        version: 3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-toolbelt:
         specifier: ^9.6.0
         version: 9.6.0
@@ -748,16 +748,16 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/schema':
-        specifier: ^0.51.4
-        version: 0.51.5(effect@2.0.0-next.62)(fast-check@3.14.0)
+        specifier: ^0.55.0
+        version: 0.55.0(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
-        specifier: ^0.17.0
-        version: 0.17.0(@effect/typeclass@0.16.0)(effect@2.0.0-next.62)
+        specifier: ^0.20.0
+        version: 0.20.0(@effect/typeclass@0.19.1)(effect@2.0.0-next.62)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.58
+        specifier: ^2.0.0-next.61
         version: 2.0.0-next.62
       lodash:
         specifier: ^4.17.21
@@ -779,8 +779,8 @@ importers:
         specifier: ^13.11.7
         version: 13.11.7
       fast-check:
-        specifier: ~3.14.0
-        version: 3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+        specifier: ~3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-toolbelt:
         specifier: ^9.6.0
         version: 9.6.0
@@ -788,7 +788,7 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.0.1
+        specifier: ^1.1.0
         version: 1.1.0(@types/node@20.10.5)
 
   packages/vue:
@@ -1660,14 +1660,14 @@ packages:
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.51.5(effect@2.0.0-next.62)(fast-check@3.14.0):
-    resolution: {integrity: sha512-7JEhrzYEOwyTkPoOwtDNVAhZmy23V1KrS2Wl27xjsanBq38gTuuH6fzFWeWp4ZHCmfGRmjZgY81uyVRxC2axMQ==}
+  /@effect/schema@0.55.0(effect@2.0.0-next.62)(fast-check@3.15.0):
+    resolution: {integrity: sha512-CWP/EMrdnwwS1t1dfAo1Z0uBFzSNiUbloRoHZBdtuTVFf03RDUk5yccm8EZilbEnAHzL4SQwyoQYD1yN6RA6dQ==}
     peerDependencies:
-      effect: 2.0.0-next.58
+      effect: 2.0.0-next.61
       fast-check: ^3.13.2
     dependencies:
       effect: 2.0.0-next.62
-      fast-check: 3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+      fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
   /@effect/schema@0.56.0(effect@2.0.0-next.62)(fast-check@3.15.0):
@@ -1677,13 +1677,13 @@ packages:
       fast-check: ^3.13.2
     dependencies:
       effect: 2.0.0-next.62
-      fast-check: 3.15.0
+      fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
-  /@effect/typeclass@0.16.0(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-W7K9BucF+/rd2E6HdhWamDW/IbShwG1duhRk1N9/CiP0JacAqghvP8CA+P2UQLqU9k9d+vBW5Lka1F/LF00Wrw==}
+  /@effect/typeclass@0.19.1(effect@2.0.0-next.62):
+    resolution: {integrity: sha512-3FZpsDe76MIQqBBM3dyFSihvlkWqvGF4baxPLbsIuHJRLTeJyU7jGsuYP79aB78n96rRrRC4RQuMGmDKUkmanA==}
     peerDependencies:
-      effect: 2.0.0-next.56
+      effect: 2.0.0-next.60
     dependencies:
       effect: 2.0.0-next.62
     dev: false
@@ -1987,13 +1987,13 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.17.0(@effect/typeclass@0.16.0)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-iE7oaWUu7wG7GZI17jc0f896WADdYthOrB8zguRQCUywtgXNmDLNGvDa/Odhd4o5BYwa8ScqsVD2M8ht/15f+g==}
+  /@fp-ts/optic@0.20.0(@effect/typeclass@0.19.1)(effect@2.0.0-next.62):
+    resolution: {integrity: sha512-GnSRNOwGVjUyEMe+GURLKwtNNbRw0KX/GBsDST5l/UhzkNG7WUCxoEn1p5pjqkmRL9LepWuL2SaTmue+FXwSFA==}
     peerDependencies:
-      '@effect/typeclass': ^0.16.0
-      effect: 2.0.0-next.56
+      '@effect/typeclass': ^0.19.1
+      effect: 2.0.0-next.60
     dependencies:
-      '@effect/typeclass': 0.16.0(effect@2.0.0-next.62)
+      '@effect/typeclass': 0.19.1(effect@2.0.0-next.62)
       effect: 2.0.0-next.62
     dev: false
 
@@ -5149,18 +5149,12 @@ packages:
       tmp: 0.0.33
     dev: true
 
-  /fast-check@3.14.0(patch_hash=gmhutzas2jzobvkhr72gjyjori):
-    resolution: {integrity: sha512-9Z0zqASzDNjXBox/ileV/fd+4P+V/f3o4shM6QawvcdLFh8yjPG4h5BrHUZ8yzY6amKGDTAmRMyb/JZqe+dCgw==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      pure-rand: 6.0.4
-    patched: true
-
-  /fast-check@3.15.0:
+  /fast-check@3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori):
     resolution: {integrity: sha512-iBz6c+EXL6+nI931x/sbZs1JYTZtLG6Cko0ouS8LRTikhDR7+wZk4TYzdRavlnByBs2G6+nuuJ7NYL9QplNt8Q==}
     engines: {node: '>=8.0.0'}
     dependencies:
       pure-rand: 6.0.4
+    patched: true
 
   /fast-decode-uri-component@1.0.1:
     resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
