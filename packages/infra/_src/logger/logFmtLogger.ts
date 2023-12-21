@@ -13,6 +13,7 @@ export const logfmtLogger = Logger.make<unknown, void>(
           "request.id": requestContext.id,
           "request.name": requestContext.name,
           "request.namespace": requestContext.namespace,
+          "request.locale": requestContext.locale,
           ...requestContext.userProfile?.sub ? { "request.user.sub": requestContext.userProfile.sub } : {}
         }
           .$$
