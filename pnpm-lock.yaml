@@ -546,6 +546,9 @@ importers:
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
+      '@effect-app/schema2':
+        specifier: workspace:*
+        version: link:../schema2
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.0)(effect@2.0.0-next.62)
@@ -628,6 +631,9 @@ importers:
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
+      '@effect-app/schema2':
+        specifier: workspace:*
+        version: link:../schema2
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.0)(effect@2.0.0-next.62)
@@ -802,6 +808,9 @@ importers:
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
+      '@effect-app/schema2':
+        specifier: workspace:*
+        version: link:../schema2
       '@effect-app/vue':
         specifier: workspace:*
         version: 'link:'
