@@ -14,7 +14,7 @@
     "effect": "^2.0.0-next.61",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
-    "vue": "^3.3.12"
+    "vue": "^3.3.13"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
@@ -25,7 +25,7 @@
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
     "vite": "^5.0.10",
-    "vitest": "^1.0.4"
+    "vitest": "^1.1.0"
   },
   "typesVersions": {
     "*": {
