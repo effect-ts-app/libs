@@ -754,8 +754,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/schema':
-        specifier: ^0.55.0
-        version: 0.55.0(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: ^0.56.0
+        version: 0.56.0(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.20.0
         version: 0.20.0(@effect/typeclass@0.19.1)(effect@2.0.0-next.62)
@@ -763,7 +763,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.61
+        specifier: ^2.0.0-next.62
         version: 2.0.0-next.62
       lodash:
         specifier: ^4.17.21
@@ -1667,16 +1667,6 @@ packages:
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
-    dev: false
-
-  /@effect/schema@0.55.0(effect@2.0.0-next.62)(fast-check@3.15.0):
-    resolution: {integrity: sha512-CWP/EMrdnwwS1t1dfAo1Z0uBFzSNiUbloRoHZBdtuTVFf03RDUk5yccm8EZilbEnAHzL4SQwyoQYD1yN6RA6dQ==}
-    peerDependencies:
-      effect: 2.0.0-next.61
-      fast-check: ^3.13.2
-    dependencies:
-      effect: 2.0.0-next.62
-      fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
   /@effect/schema@0.56.0(effect@2.0.0-next.62)(fast-check@3.15.0):
