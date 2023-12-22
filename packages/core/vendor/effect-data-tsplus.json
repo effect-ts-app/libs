@@ -10969,11 +10969,6 @@
           "kind": "static",
           "typeName": "effect/data/ReadonlyArray.Ops",
           "name": "map"
-        },
-        {
-          "kind": "fluent",
-          "typeName": "ReadonlyArray",
-          "name": "mapNonEmpty"
         }
       ]
     },
