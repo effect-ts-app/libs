@@ -21,7 +21,6 @@ import {
   extendWithUtils,
   extendWithUtilsAnd,
   leafE,
-  literal,
   makeAnnotation,
   named,
   nonEmptyStringFromString,
@@ -47,10 +46,6 @@ import {
   withDefaults
 } from "./_schema.js"
 
-export function tag<K extends string>(tag: K) {
-  return literal(tag)
-}
-
 export const stringPositiveIntIdentifier = makeAnnotation<{}>()
 
 export const StringPositiveInt: DefaultSchema<unknown, PositiveInt, PositiveInt, string, {}> = pipe(
@@ -75,7 +70,7 @@ export type Min3String255 = string & Min3String255Brand
 /**
  * A string that is at least 3 character long and a maximum of 255.
  */
-export const nonEmptyString2553FromString = pipe(
+export const Min3String255FromString = pipe(
   makeConstrainedFromString<Min3String255>(3, 255),
   arbitrary((FC) =>
     FC
@@ -91,7 +86,7 @@ export const nonEmptyString2553FromString = pipe(
  * A string that is at least 3 character long and a maximum of 255.
  */
 export const Min3String255 = extendWithUtils(
-  pipe(string[">>>"](nonEmptyString2553FromString), brand<Min3String255>())
+  pipe(string[">>>"](Min3String255FromString), brand<Min3String255>())
 )
 
 /**

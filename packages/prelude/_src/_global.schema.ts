@@ -50,7 +50,6 @@ import {
   string,
   StringId,
   struct,
-  tag,
   To,
   union,
   UnionBrand,
