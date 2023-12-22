@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.90.0
+
+### Minor Changes
+
+- c6efdeb: update packages
+
+### Patch Changes
+
+- Updated dependencies [c6efdeb]
+  - @effect-app/core@0.96.0
+
 ## 0.89.1
 
 ### Patch Changes
