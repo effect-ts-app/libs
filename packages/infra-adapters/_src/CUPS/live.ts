@@ -39,7 +39,7 @@ const exec = (command: string) =>
     > Effect
       .tryPromise(() => exec_(command))
       .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
-type PrinterConfig = { url?: URL; id: string }
+type PrinterConfig = { url?: URL | undefined; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
   return (filePath: string) => printFile_(filePath, printer, options)
@@ -97,7 +97,7 @@ function getAvailablePrinters(host?: string) {
   })
 }
 
-function* buildListArgs(config?: { host?: string }) {
+function* buildListArgs(config?: { host?: string | undefined }) {
   if (config?.host) {
     yield `-h ${config.host}`
   }

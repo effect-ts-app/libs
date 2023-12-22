@@ -16,8 +16,6 @@
         "emitDecoratorMetadata": true,
         "noImplicitAny": true,
         "useUnknownInCatchVariables": true,
-        // This needs some more plumbing, especially with Schema
-        "exactOptionalPropertyTypes": false,
         // This is not desirable, as it's useful in generators.
         "noImplicitReturns": false,
         "noImplicitThis": true,

@@ -3,6 +3,7 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
+import type { S } from "vitest/dist/reporters-O4LBziQ_.js"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
 import type { Filter, PersistenceModelType } from "../services/Store.js"
@@ -76,10 +77,10 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: Filter<PM>
-      collect?: (t: PM) => Option<S>
-      limit?: number
-      skip?: number
+      filter?: Filter<PM> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, S[]>
@@ -97,10 +98,10 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: QueryBuilder<PM>
-      select: NonEmptyReadonlyArray<U>
-      limit?: number
-      skip?: number
+      filter?: QueryBuilder<PM> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, Pick<PM, U>[]>
@@ -119,11 +120,11 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: Filter<PM>
-      select?: NonEmptyReadonlyArray<U>
-      collect?: (t: Pick<PM, U>) => Option<S>
-      limit?: number
-      skip?: number
+      filter?: Filter<PM> | undefined
+      select?: NonEmptyReadonlyArray<U> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, S[]> {

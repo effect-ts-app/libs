@@ -1,3 +1,4 @@
+import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
 import { inspect } from "util"
@@ -11,11 +12,11 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
     return {
       sendMail(msg_: EmailMsgOptionalFrom) {
         return Effect.gen(function*($) {
-          const msg: EmailMsg = {
+          const msg: EmailMsg = dropUndefinedT({
             ...msg_,
             from: msg_.from ?? defaultFrom,
             replyTo: msg_.replyTo ?? (msg_.from ? undefined : defaultReplyTo)
-          }
+          })
           const render = renderMessage(!realMail)
 
           const renderedMsg_ = render(msg)
@@ -66,18 +67,20 @@ export function renderMessage(forceFake: boolean) {
   let i = 0
   const makeId = () => i++
   return forceFake
-    ? (msg: EmailMsg) => ({
-      ...msg,
-      to: msg.to && renderFake(msg.to, makeId),
-      cc: msg.cc && renderFake(msg.cc, makeId),
-      bcc: msg.bcc && renderFake(msg.bcc, makeId)
-    })
-    : (msg: EmailMsg) => ({
-      ...msg,
-      to: msg.to && renderFakeIfTest(msg.to, makeId),
-      cc: msg.cc && renderFakeIfTest(msg.cc, makeId),
-      bcc: msg.bcc && renderFakeIfTest(msg.bcc, makeId)
-    })
+    ? (msg: EmailMsg) =>
+      dropUndefinedT({
+        ...msg,
+        to: msg.to && renderFake(msg.to, makeId),
+        cc: msg.cc && renderFake(msg.cc, makeId),
+        bcc: msg.bcc && renderFake(msg.bcc, makeId)
+      })
+    : (msg: EmailMsg) =>
+      dropUndefinedT({
+        ...msg,
+        to: msg.to && renderFakeIfTest(msg.to, makeId),
+        cc: msg.cc && renderFakeIfTest(msg.cc, makeId),
+        bcc: msg.bcc && renderFakeIfTest(msg.bcc, makeId)
+      })
 }
 
 /**

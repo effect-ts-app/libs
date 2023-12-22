@@ -167,7 +167,7 @@ export type ToSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [h in k]?: S.To<Fields[k]["_schema"]>
+            readonly [h in k]?: S.To<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [h in k]: S.To<Fields[k]["_schema"]>
@@ -183,7 +183,7 @@ export type ConstructorSpecificStruct<Fields extends SpecificFieldRecord> = Comp
     {
       [k in keyof Fields]: k extends TagsFromFields<Fields> ? never
         : Fields[k] extends AnySpecificField ? Fields[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
+              readonly [h in k]?: S.To<Fields[k]["_schema"]> | undefined
             }
           : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
               readonly [h in k]?: S.To<Fields[k]["_schema"]>
@@ -204,7 +204,7 @@ export type FromSpecificStruct<Fields extends SpecificFieldRecord> = Compute<
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [
@@ -638,13 +638,13 @@ export type ParserInputFromSpecificStruct<Fields extends SpecificFieldRecord> = 
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.To<Fields[k]["_schema"]>
+            ]?: S.To<Fields[k]["_schema"]> | undefined
           }
         : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.To<Fields[k]["_schema"]>
+            ]?: S.To<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [
@@ -670,10 +670,12 @@ export type ParserInputFromParserInputOrStructFrom<
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: AorB<
-              S.ParserInputOf<Fields[k]["_schema"]>,
-              S.From<Fields[k]["_schema"]>
-            >
+            ]?:
+              | AorB<
+                S.ParserInputOf<Fields[k]["_schema"]>,
+                S.From<Fields[k]["_schema"]>
+              >
+              | undefined
           }
         : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
@@ -712,13 +714,13 @@ export type ParserInputFromStructFrom<Fields extends SpecificFieldRecord> = Comp
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [

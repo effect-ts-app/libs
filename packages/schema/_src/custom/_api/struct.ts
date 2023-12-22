@@ -250,7 +250,7 @@ export type ToStruct<Fields extends FieldRecord> = Compute<
   UnionToIntersection<
     {
       [k in keyof Fields]: Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
-            readonly [h in k]?: S.To<Fields[k]["_schema"]>
+            readonly [h in k]?: S.To<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [h in k]: S.To<Fields[k]["_schema"]>
@@ -266,10 +266,10 @@ export type StructConstructor<Fields extends FieldRecord> = Compute<
     {
       [k in keyof Fields]: k extends TagsFields<Fields> ? never
         : Fields[k] extends AnyField ? Fields[k]["_optional"] extends "optional" ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
+              readonly [h in k]?: S.To<Fields[k]["_schema"]> | undefined
             }
           : Fields[k]["_def"] extends Some<["constructor" | "both", any]> ? {
-              readonly [h in k]?: S.To<Fields[k]["_schema"]>
+              readonly [h in k]?: S.To<Fields[k]["_schema"]> | undefined
             }
           : {
             readonly [h in k]: S.To<Fields[k]["_schema"]>
@@ -287,7 +287,7 @@ export type FromStruct<Fields extends FieldRecord> = Compute<
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [
@@ -700,13 +700,13 @@ export type ParserInputSpecificStruct<Fields extends FieldRecord> = Compute<
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : Fields[k]["_def"] extends Some<["parser" | "both", any]> ? {
             readonly [
               h in Fields[k]["_as"] extends Some<any> ? Fields[k]["_as"]["value"]
                 : k
-            ]?: S.From<Fields[k]["_schema"]>
+            ]?: S.From<Fields[k]["_schema"]> | undefined
           }
         : {
           readonly [

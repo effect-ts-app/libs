@@ -36,8 +36,8 @@ export type Where =
 
 // default is where
 export type StoreWhereFilter = {
-  type?: "where"
-  mode?: "and" | "or" // default is and
+  type?: "where" | undefined
+  mode?: "and" | "or" | undefined // default is and
   where: readonly [
     Where,
     ...(Where[])
@@ -67,10 +67,10 @@ export type FilterJoinSelect = {
 }
 
 export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM = never> {
-  filter?: Filter<PM>
-  select?: NonEmptyReadonlyArray<U>
-  limit?: number
-  skip?: number
+  filter?: Filter<PM> | undefined
+  select?: NonEmptyReadonlyArray<U> | undefined
+  limit?: number | undefined
+  skip?: number | undefined
 }
 
 export type FilterFunc<PM extends PersistenceModelType<string>> = <U extends keyof PM = never>(

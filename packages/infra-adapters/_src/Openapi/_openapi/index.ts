@@ -306,7 +306,7 @@ function processId(schema: S.SchemaAny, meta: Meta = {}): any {
           return yield* $(
             noRef
               ? Effect(obj)
-              : referenced({ openapiRef: openapiRef || rest.title })(
+              : referenced({ openapiRef })(
                 Effect(obj)
               )
           )

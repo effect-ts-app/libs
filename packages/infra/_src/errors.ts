@@ -14,14 +14,14 @@ export class NotFoundError<T extends string = string>
 export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
 
 /** @tsplus type NotLoggedInError */
-export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string }> {
+export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string | undefined }> {
   constructor(message?: string) {
     super({ message })
   }
 }
 
 /** @tsplus type UnauthorizedError */
-export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{ message?: string }> {
+export class UnauthorizedError extends Data.TaggedError("UnauthorizedError")<{ message?: string | undefined }> {
   constructor(message?: string) {
     super({ message })
   }
@@ -54,7 +54,9 @@ export class CauseException<E> extends Error {
     const ff = makeFiberFailure(originalCause)
     this.name = ff.name
     this.message = ff.message
-    this.stack = ff.stack
+    if (ff.stack) {
+      this.stack = ff.stack
+    }
   }
   toJSON() {
     return {
@@ -76,10 +78,15 @@ export class CauseException<E> extends Error {
 
 /** @tsplus type OptimisticConcurrencyException */
 export class OptimisticConcurrencyException extends Data.TaggedError("OptimisticConcurrencyException")<
-  { type: string; id: string; current?: string; found?: string; message: string }
+  { type: string; id: string; current?: string | undefined; found?: string | undefined; message: string }
 > {
   constructor(
-    args: { readonly type: string; readonly id: string; readonly current?: string; readonly found?: string }
+    args: {
+      readonly type: string
+      readonly id: string
+      readonly current?: string | undefined
+      readonly found?: string | undefined
+    }
   ) {
     super({ ...args, message: `Existing ${args.type} ${args.id} record changed` })
   }
