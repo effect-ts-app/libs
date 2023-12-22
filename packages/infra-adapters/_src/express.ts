@@ -346,8 +346,9 @@ export function match(method: Methods): {
                   : (req as any)["___START_TIME"]
                   ? Effect
                     .currentSpan
+                    .orDie
                     // restore start time due to handler bs
-                    .map((_) => _.map((_) => _.status.startTime = (req as any)["___START_TIME"]))
+                    .map((_) => _.status.startTime = (req as any)["___START_TIME"])
                     .zipRight(
                       _(req, res, next)
                         .exit

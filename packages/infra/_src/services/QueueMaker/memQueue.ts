@@ -33,8 +33,8 @@ export function makeMemQueue<
       publish: (...messages) =>
         Effect.gen(function*($) {
           const requestContext = yield* $(rcc.requestContext)
-          const currentSpan = yield* $(Effect.currentSpan)
-          const span = currentSpan.map(Tracer.externalSpan).value
+          const currentSpan = yield* $(Effect.currentSpan.orDie)
+          const span = Tracer.externalSpan(currentSpan)
           return yield* $(
             messages
               .forEachEffect((m) =>
