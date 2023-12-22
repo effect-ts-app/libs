@@ -27,7 +27,7 @@ export function optionFromNull<
   From | null,
   Api
 > {
-  const guard = Guard.for(self)
+  const guard = Guard.is(self)
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)

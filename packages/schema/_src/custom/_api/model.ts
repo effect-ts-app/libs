@@ -130,7 +130,7 @@ export function Class<M>(__name?: string) {
     })
 
     Object.defineProperty(schemed, "is", {
-      value: Guard.for(schema)
+      value: Guard.is(schema)
     })
 
     Object.defineProperty(schemed, "Arbitrary", {

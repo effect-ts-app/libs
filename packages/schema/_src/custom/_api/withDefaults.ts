@@ -101,7 +101,7 @@ export function withDefaults<ParserInput, To, ConstructorInput, From, Api>(
   })
 
   Object.defineProperty(schemed, "is", {
-    value: Guard.for(self)
+    value: Guard.is(self)
   })
 
   Object.defineProperty(schemed, "Arbitrary", {

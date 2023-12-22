@@ -150,7 +150,7 @@ export function union<Fields extends Record<PropertyKey, S.SchemaUPI>>(
   fields: Fields & EnforceNonEmptyRecord<Fields>
 ): SchemaUnion<Fields> {
   const parsers = D.map_(fields, Parser.for)
-  const guards = D.map_(fields, Guard.for)
+  const guards = D.map_(fields, Guard.is)
   const encoders = D.map_(fields, Encoder.for)
   const arbitraries = D.map_(fields, Arbitrary.for)
 

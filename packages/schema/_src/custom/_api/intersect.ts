@@ -53,8 +53,8 @@ export function intersect_<
   From & ThatFrom,
   IntersectionApi<Api, ThatApi>
 > {
-  const guardSelf = Guard.for(self)
-  const guardThat = Guard.for(that)
+  const guardSelf = Guard.is(self)
+  const guardThat = Guard.is(that)
   const parseSelf = Parser.for(self)
   const parseThat = Parser.for(that)
   const constructSelf = Constructor.for(self)

@@ -7,7 +7,6 @@ import { pipe } from "@effect-app/core/Function"
 import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
@@ -42,12 +41,12 @@ export function fromTuple<
   readonly [KeyFrom, From],
   { self: Api }
 > {
-  const keyGuard = Guard.for(key)
+  const keyGuard = S.is(key)
   const keyArb = Arbitrary.for(key)
   const keyParse = Parser.for(key)
   const keyEncode = Encoder.for(key)
 
-  const guard = Guard.for(self)
+  const guard = S.is(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
   const encode = Encoder.for(self)

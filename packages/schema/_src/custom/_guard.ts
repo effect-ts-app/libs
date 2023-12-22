@@ -62,4 +62,4 @@ function guardFor<ParserInput, To, ConstructorInput, From, Api>(
   throw new Error(`Missing guard integration for: ${schema.constructor}`)
 }
 
-export { guardFor as for }
+export { guardFor as is }

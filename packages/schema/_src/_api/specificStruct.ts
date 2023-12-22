@@ -12,7 +12,6 @@ import type { Annotation } from "../custom/_schema/annotation.js"
 import { augmentRecord } from "../custom/_utils.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
@@ -376,7 +375,7 @@ export function specificStruct<Fields extends SpecificFieldRecord>(
   for (const key of keys) {
     parsers[key] = Parser.for(fields[key]._schema)
     encoders[key] = Encoder.for(fields[key]._schema)
-    guards[key] = Guard.for(fields[key]._schema)
+    guards[key] = S.is(fields[key]._schema)
 
     if (fields[key]._optional === "required") {
       const def = fields[key]._def as Option<

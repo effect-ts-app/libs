@@ -7,7 +7,6 @@ import { pipe } from "@effect-app/core/Function"
 import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
@@ -47,12 +46,12 @@ export function fromEither<
   Either<LeftFrom, From>,
   { left: LeftApi; right: Api }
 > {
-  const leftGuard = Guard.for(left)
+  const leftGuard = S.is(left)
   const leftArb = Arbitrary.for(left)
   const leftParse = Parser.for(left)
   const leftEncode = Encoder.for(left)
 
-  const guard = Guard.for(right)
+  const guard = S.is(right)
   const arb = Arbitrary.for(right)
   const parse = Parser.for(right)
   const encode = Encoder.for(right)

@@ -22,7 +22,7 @@ export function array<To, ConstructorInput, From, Api>(
   readonly From[],
   { self: Api }
 > {
-  const guardSelf = Guard.for(self)
+  const guardSelf = Guard.is(self)
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 

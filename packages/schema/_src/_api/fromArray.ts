@@ -5,7 +5,6 @@ import { pipe } from "@effect-app/core/Function"
 import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 
 export const fromArrayIdentifier = S.makeAnnotation<{ self: S.SchemaAny }>()
@@ -19,7 +18,7 @@ export function fromArray<ParserInput, To, ConstructorInput, From, Api>(
   readonly From[],
   { self: Api }
 > {
-  const guardSelf = Guard.for(self)
+  const guardSelf = S.is(self)
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 

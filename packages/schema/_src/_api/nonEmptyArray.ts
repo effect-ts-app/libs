@@ -6,7 +6,6 @@ import * as S from "../custom.js"
 import { customE, leafE } from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Th from "../custom/These.js"
 import { minLengthIdentifier } from "./length.js"
 
@@ -19,7 +18,7 @@ export function nonEmptyArray<To, ConstructorInput, From, Api>(
   readonly From[],
   { self: Api }
 > {
-  const guardSelf = Guard.for(self)
+  const guardSelf = S.is(self)
   const arbitrarySelf = Arbitrary.for(self)
   const encodeSelf = Encoder.for(self)
 

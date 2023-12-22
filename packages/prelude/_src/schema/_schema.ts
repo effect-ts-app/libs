@@ -25,7 +25,7 @@ export { matchTag } from "@effect-app/core/utils"
 export type Identity<T> = T
 
 export function fitIntoNonEmptyString255(str: string) {
-  if (Guard.for(NonEmptyString255)(str)) {
+  if (Guard.is(NonEmptyString255)(str)) {
     return str
   }
 
@@ -33,7 +33,7 @@ export function fitIntoNonEmptyString255(str: string) {
 }
 
 export function fitIntoNonEmptyString2k(str: string) {
-  if (Guard.for(NonEmptyString2k)(str)) {
+  if (Guard.is(NonEmptyString2k)(str)) {
     return str
   }
 

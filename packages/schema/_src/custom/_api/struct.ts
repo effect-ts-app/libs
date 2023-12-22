@@ -438,7 +438,7 @@ export function struct<ProvidedProps extends PropertyOrSchemaRecord>(
   for (const key of keys) {
     parsers[key] = Parser.for(fields[key]._schema)
     encoders[key] = Encoder.for(fields[key]._schema)
-    guards[key] = Guard.for(fields[key]._schema)
+    guards[key] = Guard.is(fields[key]._schema)
 
     if (fields[key]._optional === "required") {
       const def = fields[key]._def as Option<

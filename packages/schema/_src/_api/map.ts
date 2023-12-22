@@ -6,7 +6,6 @@ import { pipe } from "@effect-app/core/Function"
 import * as S from "../custom.js"
 import * as Arbitrary from "../custom/Arbitrary.js"
 import * as Encoder from "../custom/Encoder.js"
-import * as Guard from "../custom/Guard.js"
 import * as Parser from "../custom/Parser.js"
 import type { ParserEnv } from "../custom/Parser.js"
 import * as Th from "../custom/These.js"
@@ -33,9 +32,8 @@ export function map<
   readonly (readonly [KeyFrom, From])[],
   {}
 > {
-  const keyGuard = Guard.for(key)
-
-  const guard = Guard.for(self)
+  const keyGuard = S.is(key)
+  const guard = S.is(self)
 
   const maparr = S.array(tuple(key, self))
   const mapParse = Parser.for(maparr)

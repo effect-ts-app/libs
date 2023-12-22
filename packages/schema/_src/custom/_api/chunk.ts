@@ -31,7 +31,7 @@ export function fromChunk<
   readonly From[],
   { self: Api }
 > {
-  const guard = Guard.for(self)
+  const guard = Guard.is(self)
   const arb = Arbitrary.for(self)
   const parse = Parser.for(self)
   const refinement = (_: unknown): _ is Chunk<To> => Chunk.isChunk(_) && _.every(guard)

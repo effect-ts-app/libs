@@ -253,7 +253,7 @@ export function setSchema<Self extends S.SchemaProperties<any>>(
   })
 
   Object.defineProperty(schemed, "is", {
-    value: S.Guard.for(self),
+    value: S.is(self),
     configurable: true
   })
 
@@ -351,7 +351,7 @@ function makeSpecial<Self extends S.SchemaAny>(__name: any, self: Self): any {
     static EParser = parser
     static encodeSync = S.Encoder.for(schema)
     static Constructor = S.Constructor.for(schema)
-    static is = S.Guard.for(schema)
+    static is = S.is(schema)
     static Arbitrary = S.Arbitrary.for(schema)
 
     static lens = Lens.id<any>()

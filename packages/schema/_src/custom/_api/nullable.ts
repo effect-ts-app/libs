@@ -38,7 +38,7 @@ export function nullable<ParserInput, To, ConstructorInput, From, Api>(
   }
 {
   if (cache.has(self)) return cache.get(self)! as any
-  const guard = Guard.for(self)
+  const guard = Guard.is(self)
   const arb = Arbitrary.for(self)
   const create = Constructor.for(self)
   const parse = Parser.for(self)
