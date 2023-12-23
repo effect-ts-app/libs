@@ -34,7 +34,7 @@ export const live = Effect
   .sync(() => makeContextMap())
   .andThen(FiberRef.make<ContextMap>)
   .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.Make.flatMap((_) => ref.set(_)) }))
-  .toLayer(ContextMapContainer)
+  .toLayerScoped(ContextMapContainer)
 
 /** @tsplus static ContextMap.Ops Tag */
 export const RCTag = Tag<ContextMap>()

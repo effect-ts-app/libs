@@ -36,7 +36,7 @@ export const live = Effect
       ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
     start: (a: RequestContext) => ref.set(a) > a.restoreStoreId
   }))
-  .toLayer(RequestContextContainer)
+  .toLayerScoped(RequestContextContainer)
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = Tag<RequestContext>()
