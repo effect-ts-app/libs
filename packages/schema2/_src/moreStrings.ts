@@ -1,0 +1,267 @@
+import { pipe } from "@effect-app/core/Function"
+import type { Refinement } from "@effect-app/core/Function"
+import type {
+  ApiOf,
+  ApiSelfType,
+  DefaultSchema,
+  Field,
+  NonEmptyString,
+  NonEmptyString50Brand,
+  Parser,
+  SchemaDefaultSchema,
+  SchemaUPI,
+  Utils
+} from "@effect-app/schema"
+import {
+  annotate,
+  brand,
+  defaultProp,
+  EParserFor,
+  extendWithUtils,
+  extendWithUtilsAnd,
+  leafE,
+  makeAnnotation,
+  named,
+  refine
+} from "@effect-app/schema"
+import { Equivalence } from "effect"
+import type { None } from "effect/LogLevel"
+import type { Some } from "effect/Option"
+import type * as FC from "fast-check"
+import { customRandom, nanoid, urlAlphabet } from "nanoid"
+import validator from "validator"
+import type { NonEmptyString255Brand } from "./_schema.js"
+import {
+  Arbitrary,
+  arbitrary,
+  customE,
+  fakerArb,
+  fromString,
+  makeConstrainedFromString,
+  PositiveInt,
+  string,
+  stringNumber,
+  withDefaults
+} from "./_schema.js"
+
+export const stringPositiveIntIdentifier = makeAnnotation<{}>()
+
+export const StringPositiveInt: DefaultSchema<unknown, PositiveInt, PositiveInt, string, {}> = pipe(
+  stringNumber[">>>"](PositiveInt),
+  withDefaults,
+  annotate(stringPositiveIntIdentifier, {})
+)
+export type StringPositiveInt = PositiveInt
+
+/**
+ * A string that is at least 3 character long and a maximum of 255.
+ */
+export interface Min3String255Brand extends NonEmptyString255Brand {
+  readonly Min3String255: unique symbol
+}
+
+/**
+ * A string that is at least 3 character long and a maximum of 255.
+ */
+export type Min3String255 = string & Min3String255Brand
+
+/**
+ * A string that is at least 3 character long and a maximum of 255.
+ */
+export const Min3String255FromString = pipe(
+  makeConstrainedFromString<Min3String255>(3, 255),
+  arbitrary((FC) =>
+    FC
+      .lorem({ mode: "words", maxCount: 2 })
+      .filter((x) => x.length < 255 && x.length >= 3)
+      .map((x) => x as Min3String255)
+  ),
+  // arbitrary removes brand benefit
+  brand<Min3String255>()
+)
+
+/**
+ * A string that is at least 3 character long and a maximum of 255.
+ */
+export const Min3String255 = extendWithUtils(
+  pipe(string[">>>"](Min3String255FromString), brand<Min3String255>())
+)
+
+/**
+ * A string that is at least 6 characters long and a maximum of 50.
+ */
+export interface StringIdBrand extends NonEmptyString50Brand, Min3String255Brand {
+  readonly StringId: unique symbol
+}
+
+/**
+ * A string that is at least 6 characters long and a maximum of 50.
+ */
+export type StringId = string & StringIdBrand
+
+const MIN_LENGTH = 6
+const MAX_LENGTH = 50
+const size = 21
+const length = 10 * size
+export const stringIdFromString = pipe(
+  makeConstrainedFromString<StringId>(MIN_LENGTH, MAX_LENGTH),
+  arbitrary((FC) =>
+    FC
+      .uint8Array({ minLength: length, maxLength: length })
+      .map((_) => customRandom(urlAlphabet, size, (size) => _.subarray(0, size))() as StringId)
+  ),
+  // arbitrary removes the benefit of Brand,
+  brand<StringId>()
+)
+
+/**
+ * A string that is at least 6 characters long and a maximum of 50.
+ */
+export interface StringIdSchema extends
+  SchemaDefaultSchema<
+    unknown,
+    StringId,
+    string,
+    string,
+    ApiSelfType<StringId>
+  >
+{}
+const StringIdSchema: StringIdSchema = string[">>>"](stringIdFromString).pipe(
+  brand<StringId>()
+)
+const makeStringId = (): StringId => nanoid() as unknown as StringId
+export const StringId = extendWithUtilsAnd(StringIdSchema, () => ({
+  make: makeStringId,
+  withDefault: defaultProp(StringIdSchema, makeStringId)
+}))
+
+const stringIdArb = Arbitrary.for(StringId)
+
+export const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
+
+export const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
+
+export interface PrefixedStringIdSchema<
+  Brand extends StringId,
+  Prefix extends string,
+  Separator extends string
+> extends
+  SchemaWithUtils<
+    SchemaDefaultSchema<unknown, Brand, string, string, ApiSelfType<StringId>>
+  >,
+  PrefixedStringUtils<Brand, Prefix, Separator>
+{}
+
+export type SchemaWithUtils<Schema extends SchemaUPI> = Schema & Utils<Schema>
+
+export function prefixedStringId<Brand extends StringId>() {
+  return <Prefix extends string, Separator extends string = "-">(
+    prefix: Prefix,
+    name: string,
+    separator?: Separator
+  ): PrefixedStringIdSchema<Brand, Prefix, Separator> => {
+    type FullPrefix = `${Prefix}${Separator}`
+    // type PrefixedId = `${FullPrefix}${string}`
+
+    const pref = `${prefix}${separator ?? "-"}` as FullPrefix
+    const refinement = (x: StringId): x is Brand => x.startsWith(pref)
+    const fromString = pipe(
+      stringIdFromString,
+      refine(
+        refinement,
+        (n) => leafE(customE(n, `a StringId prefixed with '${pref}'`))
+      ),
+      arbitrary((FC) =>
+        stringIdArb(FC).map(
+          (x) => (pref + x.substring(0, MAX_LENGTH - pref.length)) as Brand
+        )
+      )
+    )
+
+    const schema = string[">>>"](fromString).pipe(named(name)).pipe(brand<Brand>())
+    const make = () => (pref + StringId.make()) as Brand
+
+    return extendWithUtilsAnd(
+      schema,
+      (ex): PrefixedStringUtils<Brand, Prefix, Separator> => ({
+        EParser: EParserFor(ex),
+        make,
+        /**
+         * Automatically adds the prefix.
+         */
+        unsafeFrom: (str: string) => ex(pref + str),
+        /**
+         * Must provide a literal string starting with prefix.
+         */
+        prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
+        prefix,
+        eq: Equivalence.string as Equivalence<Brand>,
+        withDefault: defaultProp(schema, make)
+      })
+    )
+  }
+}
+
+export const brandedStringId = <Brand extends StringId>() =>
+  extendWithUtilsAnd(StringId.pipe(brand<Brand>()), (s) => {
+    const make = (): Brand => StringId.make() as unknown as Brand
+
+    return ({
+      EParser: EParserFor(s),
+      make,
+      eq: Equivalence.string as Equivalence<Brand>,
+      withDefault: defaultProp(s, make)
+    })
+  })
+
+export interface PrefixedStringUtils<
+  Brand extends StringId,
+  Prefix extends string,
+  Separator extends string
+> {
+  readonly EParser: Parser.Parser<string, any, Brand>
+  readonly make: () => Brand
+  readonly unsafeFrom: (str: string) => Brand
+  prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
+  readonly prefix: Prefix
+  eq: Equivalence<Brand>
+  readonly withDefault: Field<
+    SchemaDefaultSchema<unknown, Brand, string, string, ApiOf<PrefixedStringIdSchema<Brand, Prefix, Separator>>>,
+    "required",
+    None<any>,
+    Some<["constructor", () => Brand]>
+  >
+}
+
+export interface UrlBrand {
+  readonly Url: unique symbol
+}
+
+export type Url = NonEmptyString & UrlBrand
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const UrlFromStringIdentifier = makeAnnotation<{}>()
+
+const isUrl: Refinement<string, Url> = (s: string): s is Url => {
+  return validator.default.isURL(s, { require_tld: false })
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const UrlFromString: DefaultSchema<string, Url, string, string, {}> = pipe(
+  fromString,
+  arbitrary((FC) => FC.webUrl()),
+  refine(isUrl, (n) => leafE(customE(n, "a valid Web URL according to | RFC 3986 and | WHATWG URL Standard"))),
+  brand<Url>(),
+  annotate(UrlFromStringIdentifier, {})
+)
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const UrlIdentifier = makeAnnotation<{}>()
+
+export const Url = extendWithUtils(
+  pipe(
+    string[">>>"](UrlFromString),
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    arbitrary((FC) => fakerArb((faker) => faker.internet.url)(FC) as FC.Arbitrary<Url>),
+    brand<Url>(),
+    annotate(UrlIdentifier, {})
+  )
+)
