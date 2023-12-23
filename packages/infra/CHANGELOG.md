@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.132.0
+
+### Minor Changes
+
+- 4330242: improve: TagClass
+
+### Patch Changes
+
+- Updated dependencies [4330242]
+  - @effect-app/infra-adapters@0.84.0
+  - @effect-app/prelude@0.106.0
+
 ## 0.131.0
 
 ### Minor Changes

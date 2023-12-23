@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.106.0
+
+### Minor Changes
+
+- 4330242: improve: TagClass
+
 ## 0.105.0
 
 ### Minor Changes
