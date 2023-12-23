@@ -8,7 +8,7 @@
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
       "@typescript-eslint/scope-manager@6.15.0": "patches/@typescript-eslint__scope-manager@6.15.0.patch",
-      "@fp-ts/optic@0.20.0": "patches/@fp-ts__optic@0.20.0.patch"
+      "@fp-ts/optic@0.21.0": "patches/@fp-ts__optic@0.21.0.patch"
     }
   },
   "scripts": {
