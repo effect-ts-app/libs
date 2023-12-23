@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.132.2
+
+### Patch Changes
+
+- 1d3a339: fix scope
+
 ## 0.132.1
 
 ### Patch Changes
