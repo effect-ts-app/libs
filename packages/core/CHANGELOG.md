@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.96.1
+
+### Patch Changes
+
+- efb854a: update packages
+
 ## 0.96.0
 
 ### Minor Changes

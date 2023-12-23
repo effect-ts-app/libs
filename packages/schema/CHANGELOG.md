@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.90.1
+
+### Patch Changes
+
+- efb854a: update packages
+- Updated dependencies [efb854a]
+  - @effect-app/core@0.96.1
+
 ## 0.90.0
 
 ### Minor Changes

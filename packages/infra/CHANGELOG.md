@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.132.1
+
+### Patch Changes
+
+- efb854a: update packages
+- Updated dependencies [efb854a]
+  - @effect-app/infra-adapters@0.84.1
+  - @effect-app/prelude@0.106.1
+  - @effect-app/schema@0.90.1
+  - @effect-app/core@0.96.1
+
 ## 0.132.0
 
 ### Minor Changes

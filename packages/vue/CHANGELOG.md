@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.86.2
+
+### Patch Changes
+
+- efb854a: update packages
+- Updated dependencies [efb854a]
+  - @effect-app/prelude@0.106.1
+  - @effect-app/schema@0.90.1
+  - @effect-app/core@0.96.1
+  - @effect-app/vue@0.86.2
+
 ## 0.86.1
 
 ### Patch Changes
