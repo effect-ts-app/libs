@@ -5,10 +5,11 @@ import { RequestContext } from "../RequestContext.js"
  * @tsplus type RequestContextContainer
  * @tsplus companion RequestContextContainer.Ops
  */
-export abstract class RequestContextContainer extends TagClass<RequestContextContainer>() {
-  abstract readonly requestContext: Effect<never, never, RequestContext>
-  abstract readonly update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, RequestContext>
-  abstract readonly start: (f: RequestContext) => Effect<never, never, void>
+export class RequestContextContainer extends TagClass<RequestContextContainer, {
+  requestContext: Effect<never, never, RequestContext>
+  update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, RequestContext>
+  start: (f: RequestContext) => Effect<never, never, void>
+}>() {
   static get get(): Effect<RequestContextContainer, never, RequestContext> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }
@@ -23,28 +24,19 @@ export abstract class RequestContextContainer extends TagClass<RequestContextCon
   }
 }
 
-export class RequestContextContainerImpl extends RequestContextContainer {
-  #ref: FiberRef<RequestContext>
-  constructor() {
-    super()
-    this.#ref = FiberRef.unsafeMake<RequestContext>(
-      new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" })
-    )
-  }
-
-  override get requestContext() {
-    return this.#ref.get
-  }
-
-  override update = (f: (a: RequestContext) => RequestContext) =>
-    this.#ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes))
-  override start = (a: RequestContext) => this.#ref.set(a) > a.restoreStoreId
-}
-
 /**
  * @tsplus static RequestContextContainer.Ops live
  */
-export const live = Effect.sync(() => new RequestContextContainerImpl()).toLayer(RequestContextContainer)
+export const live = Effect
+  .sync(() => new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" }))
+  .andThen(FiberRef.make<RequestContext>)
+  .map((ref) => ({
+    requestContext: ref.get,
+    update: (f: (a: RequestContext) => RequestContext) =>
+      ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
+    start: (a: RequestContext) => ref.set(a) > a.restoreStoreId
+  }))
+  .toLayer(RequestContextContainer)
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = Tag<RequestContext>()

@@ -1,19 +1,20 @@
 import type { Operation, OperationId, OperationProgress } from "@effect-app/prelude/Operations"
 import * as Scope from "effect/Scope"
 
-export interface OperationsId {
-  readonly _: unique symbol
-}
-
 /**
  * @tsplus type Operations
  * @tsplus companion Operations.Ops
  */
-export abstract class Operations extends TagClass<OperationsId, Operations>() {
-  abstract register: Effect<Scope.Scope, never, OperationId>
-  abstract update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
-  abstract find: (id: OperationId) => Effect<never, never, Option<Operation>>
-  abstract cleanup: Effect<never, never, void>
+export class Operations extends TagClass<Operations.Id, {
+  register: Effect<Scope.Scope, never, OperationId>
+  update: (id: OperationId, progress: OperationProgress) => Effect<never, never, void>
+  find: (id: OperationId) => Effect<never, never, Option<Operation>>
+  cleanup: Effect<never, never, void>
+}, Operations>() {}
+export namespace Operations {
+  export interface Id {
+    readonly _: unique symbol
+  }
 }
 
 /**

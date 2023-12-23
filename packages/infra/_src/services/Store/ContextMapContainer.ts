@@ -9,9 +9,10 @@ import { ContextMap, makeContextMap } from "./service.js"
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export abstract class ContextMapContainer extends TagClass<ContextMapContainer>() {
-  abstract readonly get: Effect<never, never, ContextMap>
-  abstract readonly start: Effect<never, never, void>
+export class ContextMapContainer extends TagClass<ContextMapContainer, {
+  get: Effect<never, never, ContextMap>
+  start: Effect<never, never, void>
+}>() {
   static get get(): Effect<ContextMapContainer, never, ContextMap> {
     return ContextMapContainer.flatMap((_) => _.get)
   }
@@ -26,24 +27,14 @@ export abstract class ContextMapContainer extends TagClass<ContextMapContainer>(
   }
 }
 
-export class ContextMapContainerImpl extends ContextMapContainer {
-  #ref: FiberRef<ContextMap>
-  constructor() {
-    super()
-    this.#ref = FiberRef.unsafeMake<ContextMap>(makeContextMap())
-  }
-
-  override get get() {
-    return this.#ref.get
-  }
-
-  override start = ContextMap.Make.flatMap((_) => this.#ref.set(_))
-}
-
 /**
  * @tsplus static ContextMapContainer.Ops live
  */
-export const live = Effect.sync(() => new ContextMapContainerImpl()).toLayer(ContextMapContainer)
+export const live = Effect
+  .sync(() => makeContextMap())
+  .andThen(FiberRef.make<ContextMap>)
+  .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.Make.flatMap((_) => ref.set(_)) }))
+  .toLayer(ContextMapContainer)
 
 /** @tsplus static ContextMap.Ops Tag */
 export const RCTag = Tag<ContextMap>()

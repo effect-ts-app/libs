@@ -17,7 +17,7 @@ export function CUPSLayer(cupsServer?: URL) {
   return makeCUPS(cupsServer).toLayer(CUPS)
 }
 
-function makeCUPS(cupsServer?: URL) {
+export function makeCUPS(cupsServer?: URL) {
   return Effect.sync(() => {
     function print_(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
       const print = printBuffer({

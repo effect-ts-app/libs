@@ -53,10 +53,21 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
   }
 }
 
-export function TagClass<Id, Service = Id>(key?: unknown) {
-  abstract class TagClass {}
+export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
+  const c: { new(service: ServiceImpl): Readonly<ServiceImpl> } = class {
+    constructor(service: ServiceImpl) {
+      Object.assign(this, service)
+    }
+    // static readonly Id: Id
+  } as any
 
-  return assignTag<Id, Service>(key)(TagClass)
+  return assignTag<Id, Service>(key)(c)
+}
+
+export function TagClassLegacy<Id, Service = Id>(key?: unknown) {
+  abstract class TagClassLegacy {}
+
+  return assignTag<Id, Service>(key)(TagClassLegacy)
 }
 
 /** @deprecated use `Id` of TagClass for unique id */
