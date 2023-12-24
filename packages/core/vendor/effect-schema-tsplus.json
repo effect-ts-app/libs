@@ -40,11 +40,6 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "eq"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/schema/Equivalence.Ops",
-          "name": "to"
         }
       ]
     }
@@ -58,11 +53,6 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "is"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/schema/Parser.Ops",
-          "name": "is"
         }
       ]
     },
@@ -73,11 +63,6 @@
         {
           "kind": "getter",
           "typeName": "effect/schema/Schema",
-          "name": "parse"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/schema/Parser.Ops",
           "name": "parse"
         }
       ]
@@ -90,11 +75,6 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "encodeSync"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/schema/Parser.Ops",
-          "name": "encodeSync"
         }
       ]
     },
@@ -105,11 +85,6 @@
         {
           "kind": "getter",
           "typeName": "effect/schema/Schema",
-          "name": "parseSync"
-        },
-        {
-          "kind": "static",
-          "typeName": "effect/schema/Parser.Ops",
           "name": "parseSync"
         }
       ]
