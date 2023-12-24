@@ -1,7 +1,8 @@
 import type { Arbitrary } from "@effect/schema/Arbitrary"
+import type { ParseOptions } from "@effect/schema/AST"
+import type { Schema } from "@effect/schema/Schema"
 import * as fc from "fast-check"
-import type { S } from "./schema.js"
-import { A } from "./schema.js"
+import { A, S } from "./schema.js"
 
 /**
  * @tsplus getter effect/schema/Arbitrary generate
@@ -16,3 +17,9 @@ export function sampleFromArb<T>(arb: Arbitrary<T>) {
  * @tsplus getter effect/schema/Schema Arbitrary
  */
 export const Arb = <From, To>(s: S.Schema<From, To>): Arbitrary<To> => A.to(s)
+
+/**
+ * @tsplus fluent effect/schema/Schema __call
+ */
+export const parseSync = <I, A>(self: Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
+  S.parseSync(self)(u, options)

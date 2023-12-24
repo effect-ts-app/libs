@@ -58,6 +58,27 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "is"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Parser.Ops",
+          "name": "is"
+        }
+      ]
+    },
+    {
+      "definitionName": "parseSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "parseSync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Parser.Ops",
+          "name": "parseSync"
         }
       ]
     }

@@ -56,8 +56,8 @@ const maxLength = 50
 export const StringId = extendM(
   pipe(
     S.string,
-    S.minLength(3),
-    S.maxLength(50),
+    S.minLength(minLength),
+    S.maxLength(maxLength),
     S.annotations({
       [A.ArbitraryHookId]: (): Arbitrary<string> => (fc) =>
         fc
@@ -72,22 +72,9 @@ export const StringId = extendM(
   })
 )
 
-// export const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
+const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
 
-// export const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
-
-// export interface PrefixedStringIdSchema<
-//   Brand extends StringId,
-//   Prefix extends string,
-//   Separator extends string
-// > extends
-//   SchemaWithUtils<
-//     SchemaDefaultSchema<unknown, Brand, string, string, ApiSelfType<StringId>>
-//   >,
-//   PrefixedStringUtils<Brand, Prefix, Separator>
-// {}
-
-// export type SchemaWithUtils<Schema extends SchemaUPI> = Schema & Utils<Schema>
+const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
 
 // export function prefixedStringId<Brand extends StringId>() {
 //   return <Prefix extends string, Separator extends string = "-">(
