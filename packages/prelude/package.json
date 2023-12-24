@@ -339,6 +339,16 @@
         "default": "./_cjs/schema/shared.cjs"
       }
     },
+    "./schema2": {
+      "import": {
+        "types": "./dist/schema2.d.ts",
+        "default": "./dist/schema2.js"
+      },
+      "require": {
+        "types": "./dist/schema2.d.ts",
+        "default": "./_cjs/schema2.cjs"
+      }
+    },
     "./service": {
       "import": {
         "types": "./dist/service.d.ts",
