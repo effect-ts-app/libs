@@ -67,6 +67,38 @@
       ]
     },
     {
+      "definitionName": "parse",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "parse"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Parser.Ops",
+          "name": "parse"
+        }
+      ]
+    },
+    {
+      "definitionName": "encodeSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "encodeSync"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Parser.Ops",
+          "name": "encodeSync"
+        }
+      ]
+    },
+    {
       "definitionName": "parseSync",
       "definitionKind": "const",
       "extensions": [

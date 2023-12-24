@@ -54,6 +54,76 @@
     }
   },
   "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./_cjs/index.cjs"
+      }
+    },
+    "./FastCheck": {
+      "import": {
+        "types": "./dist/FastCheck.d.ts",
+        "default": "./dist/FastCheck.js"
+      },
+      "require": {
+        "types": "./dist/FastCheck.d.ts",
+        "default": "./_cjs/FastCheck.cjs"
+      }
+    },
+    "./Methods": {
+      "import": {
+        "types": "./dist/Methods.d.ts",
+        "default": "./dist/Methods.js"
+      },
+      "require": {
+        "types": "./dist/Methods.d.ts",
+        "default": "./_cjs/Methods.cjs"
+      }
+    },
+    "./REST": {
+      "import": {
+        "types": "./dist/REST.d.ts",
+        "default": "./dist/REST.js"
+      },
+      "require": {
+        "types": "./dist/REST.d.ts",
+        "default": "./_cjs/REST.cjs"
+      }
+    },
+    "./_global": {
+      "import": {
+        "types": "./dist/_global.d.ts",
+        "default": "./dist/_global.js"
+      },
+      "require": {
+        "types": "./dist/_global.d.ts",
+        "default": "./_cjs/_global.cjs"
+      }
+    },
+    "./_global.ext": {
+      "import": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./dist/_global.ext.js"
+      },
+      "require": {
+        "types": "./dist/_global.ext.d.ts",
+        "default": "./_cjs/_global.ext.cjs"
+      }
+    },
+    "./arbitrary": {
+      "import": {
+        "types": "./dist/arbitrary.d.ts",
+        "default": "./dist/arbitrary.js"
+      },
+      "require": {
+        "types": "./dist/arbitrary.d.ts",
+        "default": "./_cjs/arbitrary.cjs"
+      }
+    },
     "./email": {
       "import": {
         "types": "./dist/email.d.ts",
@@ -72,6 +142,16 @@
       "require": {
         "types": "./dist/ext.d.ts",
         "default": "./_cjs/ext.cjs"
+      }
+    },
+    "./moreStrings": {
+      "import": {
+        "types": "./dist/moreStrings.d.ts",
+        "default": "./dist/moreStrings.js"
+      },
+      "require": {
+        "types": "./dist/moreStrings.d.ts",
+        "default": "./_cjs/moreStrings.cjs"
       }
     },
     "./phoneNumber": {

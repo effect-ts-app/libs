@@ -7,5 +7,6 @@ export * as Utils from "./utils.js"
 export * from "@effect-app/core/Prelude"
 
 export * as Schema from "@effect-app/schema"
+export * as Schema2 from "@effect-app/schema2"
 
 export { Set as ROSet } from "@effect-app/core/Prelude"

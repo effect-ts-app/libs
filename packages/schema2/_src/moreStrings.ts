@@ -83,9 +83,9 @@ export const StringId = extendM(
   })
 )
 
-const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
+// const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
 
-const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
+// const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
 
 export function prefixedStringId<Brand extends StringId>() {
   return <Prefix extends string, Separator extends string = "-">(

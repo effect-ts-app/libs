@@ -1,7 +1,7 @@
 import { isValidPhone } from "@effect-app/core/validation"
-import { Numbers } from "@effect-app/schema/FastCheck"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./ext.js"
+import { Numbers } from "./FastCheck.js"
 import { S } from "./schema.js"
 import type { B } from "./schema.js"
 import type { NonEmptyStringBrand } from "./strings.js"

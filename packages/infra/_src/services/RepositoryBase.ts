@@ -9,8 +9,7 @@ import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { Schema } from "@effect-app/prelude"
-import { EParserFor } from "@effect-app/prelude/schema"
+import type { Schema2 } from "@effect-app/prelude"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import { QueryBuilder } from "./Store/filterApi/query.js"
@@ -89,12 +88,10 @@ export function makeRepo<
   return <
     ItemType extends string,
     T extends { id: string },
-    ConstructorInput,
-    Api,
     From extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: Schema2.Schema<From, T>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -146,7 +143,7 @@ export function makeRepo<
           })
         )
 
-        const parse = EParserFor(schema).condemnDie
+        const parse = (e: From) => schema.parse(e).orDie
 
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
@@ -162,7 +159,7 @@ export function makeRepo<
         }
 
         function find(id: T["id"]) {
-          return findE(id).flatMapOpt(EParserFor(schema).condemnDie)
+          return findE(id).flatMapOpt(parse)
         }
 
         const saveAllE = (a: Iterable<From>) =>
@@ -175,7 +172,7 @@ export function makeRepo<
                 ret.forEach((_) => set(_.id, _._etag))
               })
             )
-        const encode = Encoder.for(schema)
+        const encode = (i: T) => schema.encodeSync(i)
 
         const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
 
@@ -208,7 +205,7 @@ export function makeRepo<
           })
         }
 
-        const p = Parser.for(schema).unsafe
+        const p = schema.parseSync
 
         const r: Repository<T, PM, Evt, ItemType> = {
           /**
@@ -301,18 +298,16 @@ export function makeStore<
   return <
     ItemType extends string,
     T extends { id: string },
-    ConstructorInput,
-    Api,
     E extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
+    schema: Schema2.Schema<E, T>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
     const [_dec, encode] = makeCodec(schema)
     function encodeToPM() {
       const getEtag = () => undefined
-      return flow(encode, (v) => mapToPersistenceModel(v, getEtag))
+      return (t: T) => mapToPersistenceModel(encode(t), getEtag)
     }
 
     function mapToPersistenceModel(
@@ -414,9 +409,9 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
+  <ItemType extends string, T extends { id: string }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: Schema2.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -455,9 +450,9 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
+  <ItemType extends string, T extends { id: string }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: Schema2.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
