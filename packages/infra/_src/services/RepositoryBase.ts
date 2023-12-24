@@ -495,21 +495,3 @@ export const RepositoryDefaultImpl = <Service>() => {
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
   }
 }
-
-// @useClassFeaturesForSchema
-// export class Shop extends Class<Shop>()({ id: string }) {}
-
-// /**
-//  * @tsplus type ShopRepo
-//  * @tsplus companion ShopRepo.Ops
-//  */
-// export class ShopRepo extends RepositoryDefaultImpl<ShopRepo>()<Shop & { _etag: string | undefined }>()(
-//   "Shop",
-//   Shop,
-//   (pm) => pm,
-//   (e, _etag) => ({ ...e, _etag })
-// ) {
-//   override saveAndPublish = (items: Iterable<Shop>, events?: Iterable<unknown> | undefined) => {
-//     return this.impl.saveAndPublish(items, events)
-//   }
-// }
