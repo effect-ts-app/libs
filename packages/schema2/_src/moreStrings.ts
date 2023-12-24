@@ -1,13 +1,12 @@
 import type { Refinement } from "@effect-app/core/Function"
 import { extendM } from "@effect-app/core/utils"
 import type { Arbitrary } from "@effect/schema/Arbitrary"
-import { TitleAnnotationId } from "@effect/schema/AST"
 import { pipe } from "effect"
 import type { Simplify } from "effect/Types"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { fromBrand, nominal } from "./ext.js"
-import { A, type B, S } from "./schema.js"
+import { type B, S } from "./schema.js"
 import { NonEmptyString } from "./strings.js"
 import type { NonEmptyString255Brand, NonEmptyString2k, NonEmptyStringBrand } from "./strings.js"
 
@@ -20,6 +19,15 @@ export interface NonEmptyString50Brand extends Simplify<B.Brand<"NonEmptyString5
  * A string that is at least 1 character long and a maximum of 50.
  */
 export type NonEmptyString50 = string & NonEmptyString50Brand
+
+/**
+ * A string that is at least 1 character long and a maximum of 50.
+ */
+export const NonEmptyString50 = pipe(
+  NonEmptyString,
+  S.maxLength(50, { title: "NonEmptyString50" }),
+  fromBrand(nominal<NonEmptyString2k>())
+)
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
@@ -37,8 +45,7 @@ export type Min3String255 = string & Min3String255Brand
 export const Min3String255 = pipe(
   S.string,
   S.minLength(3),
-  S.maxLength(255),
-  S.annotations({ [TitleAnnotationId]: "Min3String255" }),
+  S.maxLength(255, { title: "Min3String255" }),
   fromBrand(nominal<NonEmptyString2k>())
 )
 
@@ -67,11 +74,7 @@ export const StringId = extendM(
   pipe(
     S.string,
     S.minLength(minLength),
-    S.maxLength(maxLength),
-    S.annotations({
-      [TitleAnnotationId]: "StringId",
-      [A.ArbitraryHookId]: StringIdArb
-    }),
+    S.maxLength(maxLength, { title: "StringId", arbitrary: StringIdArb }),
     fromBrand(nominal<StringIdBrand>())
   ),
   (s) => ({
@@ -165,7 +168,6 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
 }
 
 export const Url = NonEmptyString.pipe(
-  S.annotations({ [A.ArbitraryHookId]: (): Arbitrary<string> => (fc) => fc.webUrl() }),
-  S.filter(isUrl),
+  S.filter(isUrl, { arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(), title: "Url" }),
   fromBrand(nominal<UrlBrand>())
 )
