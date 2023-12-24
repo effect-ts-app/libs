@@ -1,7 +1,7 @@
 import type { Arbitrary } from "@effect/schema/Arbitrary"
 import * as fc from "fast-check"
-import { A } from "./schema.js"
 import type { S } from "./schema.js"
+import { A } from "./schema.js"
 
 /**
  * @tsplus getter effect/schema/Arbitrary generate
@@ -11,6 +11,7 @@ export function sampleFromArb<T>(arb: Arbitrary<T>) {
   return fc.sample(arb(fc), 1)[0] // TODO: whats the difference with generate?
 }
 
+// because A.to is not typed with the Arbitrary interface atm
 /**
  * @tsplus getter effect/schema/Schema Arbitrary
  */

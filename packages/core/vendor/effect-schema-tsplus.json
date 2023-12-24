@@ -13,6 +13,53 @@
           "typeName": "effect/schema/Arbitrary.Ops"
         }
       ]
+    },
+    {
+      "definitionName": "to",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "Arbitrary"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Arbitrary.Ops",
+          "name": "to"
+        }
+      ]
+    }
+  ],
+  "@effect/schema/Equivalence": [
+    {
+      "definitionName": "to",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "eq"
+        },
+        {
+          "kind": "static",
+          "typeName": "effect/schema/Equivalence.Ops",
+          "name": "to"
+        }
+      ]
+    }
+  ],
+  "@effect/schema/Parser": [
+    {
+      "definitionName": "is",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "is"
+        }
+      ]
     }
   ],
   "@effect/schema/Schema": [
