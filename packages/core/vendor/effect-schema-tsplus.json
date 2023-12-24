@@ -1,0 +1,34 @@
+{
+  "@effect/schema/Arbitrary": [
+    {
+      "definitionName": "Arbitrary",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/schema/Arbitrary"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/schema/Arbitrary.Ops"
+        }
+      ]
+    }
+  ],
+  "@effect/schema/Schema": [
+    {
+      "definitionName": "Schema",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/schema/Schema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/schema/Schema.Ops"
+        }
+      ]
+    }
+  ]
+}
