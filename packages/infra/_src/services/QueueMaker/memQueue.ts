@@ -28,7 +28,7 @@ export function makeMemQueue<
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
-    const parseDrain = flow(drainW.parse, _ => _.orDie)
+    const parseDrain = flow(drainW.parse, (_) => _.orDie)
 
     return {
       publish: (...messages) =>

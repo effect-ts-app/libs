@@ -104,6 +104,28 @@
           "typeName": "effect/schema/Schema.Ops"
         }
       ]
+    },
+    {
+      "definitionName": "optional",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "optional"
+        }
+      ]
+    },
+    {
+      "definitionName": "nullable",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "nullable"
+        }
+      ]
     }
   ]
 }

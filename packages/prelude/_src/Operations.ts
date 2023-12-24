@@ -1,4 +1,6 @@
-import { NonEmptyString2k } from "./schema.js"
+import { Schema2 } from "./index.js"
+import type { ConstructorInputApi, FieldsClass, To } from "./schema.js"
+import { ExtendedClass, FromClass, NonEmptyString2k, PositiveInt, union, useClassFeaturesForSchema } from "./schema.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -35,8 +37,8 @@ export class Operation
     id: OperationId,
     progress: OperationProgress.optional,
     result: OperationResult.optional,
-    createdAt: date.withDefault,
-    updatedAt: date.nullable.withDefault
+    createdAt: Schema2.Date.withDefault,
+    updatedAt: Schema2.Date.nullable.withDefault
   })
 {}
 

@@ -1,10 +1,7 @@
-import {
-  brandedStringId,
-  extendWithUtils,
-  nonEmptyString255FromString,
-  NonEmptyString50,
-  type StringIdBrand
-} from "@effect-app/prelude/schema"
+import { type StringIdBrand } from "@effect-app/prelude/schema2"
+import { fromBrand, nominal } from "@effect-app/schema2/ext"
+import { type B } from "@effect-app/schema2/schema"
+import type { Simplify } from "effect/Types"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol
@@ -13,22 +10,12 @@ export interface RequestIdBrand extends StringIdBrand {
 /**
  * @tsplus type RequestId
  */
-export type RequestId = NonEmptyString50
-export const RequestId = Object.assign(
-  extendWithUtils(
-    pipe(Schema.string[">>>"](nonEmptyString255FromString), Schema.brand<NonEmptyString50>())
-  ),
-  {
-    withDefault: defaultProp(NonEmptyString50, StringId.make),
-    make: StringId.make
-  }
-)
+export type RequestId = StringId
+export const RequestId = StringId
 
-export interface UserProfileIdBrand extends StringIdBrand {
-  readonly UserProfileId: unique symbol
-}
+export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
 /**
  * @tsplus type UserProfileId
  */
 export type UserProfileId = StringId & UserProfileIdBrand
-export const UserProfileId = brandedStringId<UserProfileId>()
+export const UserProfileId = StringId.pipe(fromBrand(nominal<UserProfileIdBrand>()))

@@ -4,6 +4,8 @@
  * @tsplus global
  */
 import {
+  boolean,
+  Date,
   Email,
   // nonEmptyArray,
   NonEmptyString255,
@@ -11,10 +13,11 @@ import {
   NonEmptyString50,
   NonEmptyString64k,
   PhoneNumber,
+  string,
   StringId,
   struct,
   unknown,
-  void
+  void_ as Void
   // Arbitrary,
   // arbitrary,
   // array,

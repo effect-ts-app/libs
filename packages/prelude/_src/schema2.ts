@@ -11,6 +11,8 @@ export * from "@effect-app/schema2/moreStrings"
 export * from "@effect-app/schema2/phoneNumber"
 export * from "@effect-app/schema2/strings"
 
+export { void as void_ } from "@effect-app/schema2"
+
 /**
  * Allow anonymous access
  */

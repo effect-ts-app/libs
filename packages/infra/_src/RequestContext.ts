@@ -1,18 +1,18 @@
+import { Schema2 } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
+import type { ConstructorInputApi, FieldsClass } from "@effect-app/schema"
+import { Class, FromClass, literal, useClassFeaturesForSchema } from "@effect-app/schema2"
 
 @useClassFeaturesForSchema
-export class RequestContextParent extends ExtendedClass<
-  RequestContextParent,
-  RequestContextParent.ConstructorInput,
-  RequestContextParent.From,
-  RequestContextParent.Fields
+export class RequestContextParent extends Class<
+  RequestContextParent
 >()({
   _tag: literal("RequestContext"),
   id: RequestId,
   name: NonEmptyString255,
-  userProfile: struct({ sub: UserProfileId }).optional,
+  userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: date.withDefault
+  createdAt: Schema2.Date.withDefault
 }) {}
 
 /**
@@ -20,17 +20,14 @@ export class RequestContextParent extends ExtendedClass<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends ExtendedClass<
-  RequestContext,
-  RequestContext.ConstructorInput,
-  RequestContext.From,
-  RequestContext.Fields
+export class RequestContext extends Schema2.Class<
+  RequestContext
 >()({
   ...RequestContextParent.omit("id"),
   id: RequestId.withDefault,
   rootId: RequestId,
-  parent: RequestContextParent.optional,
-  namespace: NonEmptyString255.optional
+  parent: RequestContextParent.optional(),
+  namespace: NonEmptyString255.optional()
 }) {
   static inherit(
     this: void,

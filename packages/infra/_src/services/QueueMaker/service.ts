@@ -22,7 +22,7 @@ export const QueueMeta = struct({
   span: struct({
     spanId: string,
     traceId: string,
-    sampled: bool.optional
+    sampled: boolean.optional()
   })
-    .optional
+    .optional()
 })
