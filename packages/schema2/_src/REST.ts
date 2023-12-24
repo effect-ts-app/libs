@@ -7,10 +7,9 @@ import type { ReadMethods, WriteMethods } from "./Methods.js"
 import type * as Methods from "./Methods.js"
 
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
-import { pipe } from "effect"
 import { Tag } from "effect/Context"
-import type { Class } from "effect/Effectable"
 import type { Simplify } from "effect/Types"
+import type { P } from "./schema.js"
 import { S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
@@ -18,15 +17,6 @@ export type StringRecord = Record<string, string>
 export type AnyRecord = Record<string, any>
 
 export type AnyRecordSchema = S.Schema<AnyRecord, AnyRecord>
-
-type Erase<R, K> = R & K extends K & infer R1 ? R1 : R
-
-/**
- * In later typescript versions constraining to StringRecord is a problem.
- * It may actually expose an earlier bug, because the compiler can't actually verify the values of filtered keys being StringRecord.
- * Should rethink this all when rebasing on latest effect/schema.
- */
-export type StructFields = S.Schema<any, any> // S.Schema<unknown, any, any, StringRecord, any>
 
 const RequestTag = Tag<never, never>()
 
@@ -115,7 +105,7 @@ export function extractResponse<TModule extends Record<string, any>>(
 
 // export const reqId = S.makeAnnotation()
 
-type OrAny<T> = T extends S.Schema<any, any> ? T : S.Schema<any, any>
+type OrAny<T> = Exclude<T, undefined>
 // type OrUndefined<T> = T extends S.Schema<any, any> ? undefined : S.Schema<any, any>
 
 // TODO: Somehow ensure that Self and M are related..
@@ -344,7 +334,7 @@ export function BodyRequest<M>(__name?: string) {
     Body,
     Query,
     Headers,
-    OrAny<Erase<typeof _.path & typeof _.body & typeof _.query, S.Schema<any, any>>>,
+    OrAny<typeof _.path & typeof _.body & typeof _.query>,
     PPath
   > {
     const self: S.Schema<any, any> = S.struct({
@@ -371,10 +361,10 @@ export function BodyRequest<M>(__name?: string) {
 
 export interface Request<
   M,
-  Self extends S.Schema<any, any>,
+  Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest
-> extends Class<M, Self> {
+> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M> {
   method: Method
   path: Path
 }
@@ -387,7 +377,7 @@ export type PathParams<Path extends string> = Path extends `:${infer Param}${Sep
   : Path extends `${infer _Prefix}:${infer Rest}` ? PathParams<`:${Rest}`>
   : never
 
-export type IfPathPropsProvided<Path extends string, B extends S.FieldRecord, C> =
+export type IfPathPropsProvided<Path extends string, B extends StructFields, C> =
   // Must test the PathParams inside here, as when they evaluate to never, the whole type would otherwise automatically resolve to never
   PathParams<Path> extends never ? C
     : PathParams<Path> extends keyof B ? C
@@ -448,10 +438,10 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
       M,
       Config
     >
-    function a<ProvidedProps extends S.PropertyOrSchemaRecord>(
-      fields: ProvidedProps
-    ): BuildRequest<S.ToProps<ProvidedProps>, Path, Method, M, Config>
-    function a<Fields extends S.PropertyOrSchemaRecord>(fields?: Fields) {
+    function a<Fields extends StructFields>(
+      fields: Fields
+    ): BuildRequest<Fields, Path, Method, M, Config>
+    function a<Fields extends StructFields>(fields?: Fields) {
       const req = Req<M>(__name)
       const r = fields ? req(method, path, S.struct(fields), config) : req(method, path, config)
       return r
@@ -473,20 +463,25 @@ function Req<M>(__name?: string) {
   function a<
     Path extends `/${string}`,
     Method extends Methods.Rest,
-    Fields extends S.FieldRecord,
+    Fields extends StructFields,
     Config extends object = {}
   >(
     method: Method,
     path: Path,
-    self: S.SchemaProperties<Fields>,
+    self: S.Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>>,
     config?: Config
   ): BuildRequest<Fields, Path, Method, M, Config>
   function a<
     Path extends `/${string}`,
     Method extends Methods.Rest,
-    Fields extends S.FieldRecord,
+    Fields extends StructFields,
     Config extends object = {}
-  >(method: Method, path: Path, self?: S.SchemaProperties<Fields>, config?: Config) {
+  >(
+    method: Method,
+    path: Path,
+    self?: S.Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>>,
+    config?: Config
+  ) {
     return makeRequest<Fields, Path, Method, M, Config>(
       method,
       path,
@@ -505,7 +500,7 @@ export function parsePathParams<Path extends `/${string}`>(path: Path) {
 }
 
 type BuildRequest<
-  Fields extends S.FieldRecord,
+  Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
@@ -516,21 +511,21 @@ type BuildRequest<
   Method extends "GET" | "DELETE" ?
       & QueryRequest<
         M,
-        S.SchemaProperties<Pick<Fields, PathParams<Path>>>,
-        S.SchemaProperties<Omit<Fields, PathParams<Path>>>,
+        Pick<Fields, PathParams<Path>>,
+        Omit<Fields, PathParams<Path>>,
         undefined,
-        S.SchemaProperties<Fields>,
+        Fields,
         Path
       >
       & Config
     :
       & BodyRequest<
         M,
-        S.SchemaProperties<Pick<Fields, PathParams<Path>>>,
-        S.SchemaProperties<Omit<Fields, PathParams<Path>>>,
+        Pick<Fields, PathParams<Path>>,
+        Omit<Fields, PathParams<Path>>,
         undefined,
         undefined,
-        S.SchemaProperties<Fields>,
+        Fields,
         Path
       >
       & Config
@@ -538,7 +533,7 @@ type BuildRequest<
 
 // NOTE: This ignores the original schema after building the new
 export function makeRequest<
-  Fields extends S.FieldRecord,
+  Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
@@ -546,27 +541,23 @@ export function makeRequest<
 >(
   method: Method,
   path: Path,
-  self: S.SchemaProperties<Fields>,
+  self: S.Schema<Simplify<FromStruct<Fields>>, M>,
   __name?: string,
   config?: Config
 ): BuildRequest<Fields, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
   // TODO: path struct must be parsed "from string"
-  const remainProps = { ...self.Api.fields }
-  const pathProps = pathParams.length
-    ? pathParams.reduce<Record<PathParams<Path>, any>>((prev, cur) => {
-      prev[cur] = self.Api.fields[cur]
-      delete remainProps[cur]
-      return prev
-    }, {} as Record<PathParams<Path>, any>)
+  const remainSchema = pathParams.length ? self.pipe(S.omit(...pathParams as any)) : self
+  const pathSchema = pathParams.length
+    ? self.pipe(S.pick(...pathParams as any))
     : null
 
   const dest = method === "GET" || method === "DELETE" ? "query" : "body"
   const newSchema = {
-    path: pathProps ? S.struct(pathProps) : undefined,
+    path: pathSchema ? pathSchema : undefined,
     // TODO: query fields must be parsed "from string"
 
-    [dest]: S.struct(remainProps)
+    [dest]: remainSchema
   }
   if (method === "GET" || method === "DELETE") {
     return class extends Object.assign(
@@ -589,39 +580,33 @@ export function makeRequest<
 }
 
 export function adaptRequest<
-  Fields extends S.FieldRecord,
+  Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest,
   M,
   Config extends object = {}
->(req: Request<M, S.SchemaProperties<Fields>, Path, Method>, config?: Config) {
-  return makeRequest<Fields, Path, Method, M, Config>(req.method, req.path, req[S.schemaField], undefined, config)
+>(req: Request<M, Fields, Path, Method>, config?: Config) {
+  return makeRequest<Fields, Path, Method, M, Config>(req.method, req.path, req, undefined, config)
 }
 
-export type Meta = { description?: string; summary?: string; openapiRef?: string }
-export const metaIdentifier = S.makeAnnotation<Meta>()
-export function meta<ParserInput, To, ConstructorInput, From, Api>(
-  meta: Meta
-) {
-  return (self: S.Schema<ParserInput, To, ConstructorInput, From, Api>) => self.annotate(metaIdentifier, meta)
-}
-export const metaC = (m: Meta) => {
-  return function(cls: any) {
-    setSchema(cls, pipe(cls[schemaField], meta(m)) as any)
-    return cls
-  }
-}
+// export type Meta = { description?: string; summary?: string; openapiRef?: string }
+// export const metaIdentifier = S.makeAnnotation<Meta>()
+// export function meta<ParserInput, To, ConstructorInput, From, Api>(
+//   meta: Meta
+// ) {
+//   return (self: S.Schema<ParserInput, To, ConstructorInput, From, Api>) => self.annotate(metaIdentifier, meta)
+// }
+// export const metaC = (m: Meta) => {
+//   return function(cls: any) {
+//     setSchema(cls, pipe(cls[schemaField], meta(m)) as any)
+//     return cls
+//   }
+// }
 
-export type ReqRes<E, A> = S.Schema<
-  unknown, // ParserInput,
-  A, // To,
-  any, // ConstructorInput,
-  E, // From,
-  any // Api
->
+export type ReqRes<From, To> = S.Schema<From, To>
 export type ReqResSchemed<E, A> = {
   new(...args: any[]): any
-  encodeSync: S.Encoder.Encoder<A, E>
+  encodeSync: ReturnType<typeof P.parseSync>
   Model: ReqRes<E, A>
 }
 
@@ -634,8 +619,8 @@ export function extractSchema<ResE, ResA>(
   Res_: ReqRes<ResE, ResA> | ReqResSchemed<ResE, ResA>
 ) {
   const res_ = Res_
-  const Res = res_[schemaField]
-    ? (res_.Model as ReqRes<ResE, ResA>)
+  const Res = res_["struct"]
+    ? (res_["struct"] as ReqRes<ResE, ResA>)
     : (res_ as ReqRes<ResE, ResA>)
   return Res
 }
