@@ -4,10 +4,16 @@ import type { S } from "./schema.js"
 import { A } from "./schema.js"
 
 /**
- * @tsplus getter effect/schema/Arbitrary generate
- * @tsplus getter effect/schema/Arbitrary sample
+ * @tsplus fluent effect/schema/Arbitrary sample
  */
-export function sampleFromArb<T>(arb: Arbitrary<T>) {
+export function sampleFromArb<T>(arb: Arbitrary<T>, params?: number | fc.Parameters<T> | undefined) {
+  return fc.sample(arb(fc), params)
+}
+
+/**
+ * @tsplus getter effect/schema/Arbitrary generate
+ */
+export function generateFromArb<T>(arb: Arbitrary<T>) {
   return fc.sample(arb(fc), 1)[0]! // TODO: whats the difference with generate?
 }
 
