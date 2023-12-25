@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as utils from "@effect-app/prelude/utils"
+import { AST, REST } from "@effect-app/schema"
 import { Path } from "path-parser"
-import { AST, REST } from "../schema.js"
 import type { ApiConfig } from "./config.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
 import {

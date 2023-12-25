@@ -1,4 +1,4 @@
-import * as S from "@effect-app/prelude/schema"
+import * as S from "@effect-app/schema"
 
 export class CouldNotAquireDbLockException
   extends Data.TaggedError("CouldNotAquireDbLockException")<{ type: string; id: string; error: Error; message: string }>

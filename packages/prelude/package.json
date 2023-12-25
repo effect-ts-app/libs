@@ -279,16 +279,6 @@
         "default": "./_cjs/refinements.cjs"
       }
     },
-    "./schema": {
-      "import": {
-        "types": "./dist/schema.d.ts",
-        "default": "./dist/schema.js"
-      },
-      "require": {
-        "types": "./dist/schema.d.ts",
-        "default": "./_cjs/schema.cjs"
-      }
-    },
     "./service": {
       "import": {
         "types": "./dist/service.d.ts",

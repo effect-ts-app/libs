@@ -1,6 +1,6 @@
+import { brandedStringId, type StringIdBrand } from "@effect-app/schema"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
-import { brandedStringId, type StringIdBrand } from "./schema.js"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol

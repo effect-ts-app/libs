@@ -1,5 +1,5 @@
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255, S } from "@effect-app/prelude/schema"
+import { NonEmptyString255, S } from "@effect-app/schema"
 import type { ParseOptions } from "@effect/schema/AST"
 import cp from "child_process"
 import fs from "fs"

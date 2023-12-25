@@ -1,4 +1,4 @@
-import type { REST, Schema } from "@effect-app/prelude/schema"
+import type { REST, Schema } from "@effect-app/schema"
 import type { ParsedQuery } from "query-string"
 
 export function getQueryParam(search: ParsedQuery, param: string) {

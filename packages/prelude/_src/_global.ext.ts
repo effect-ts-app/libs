@@ -3,8 +3,8 @@ import "./_ext/builtIn.js"
 import "./_ext/date.js"
 import "./_ext/misc.js"
 import "./_ext/allLower.js"
+import { S } from "@effect-app/schema"
 import type { ParseOptions } from "@effect/schema/AST"
-import { S } from "./schema.js"
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault

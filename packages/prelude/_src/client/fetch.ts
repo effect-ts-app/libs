@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
+import type { REST } from "@effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
-import type { REST } from "../schema.js"
 import { ApiConfig } from "./config.js"
 
 export type FetchError = HttpError<string>
