@@ -1,5 +1,5 @@
 import { Schema2 } from "./index.js"
-import { FromClass, useClassFeaturesForSchema } from "./schema.js"
+import { useClassFeaturesForSchema } from "./schema2.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -24,7 +24,7 @@ export class Failure extends ExtendedTaggedClass<Failure.From, Failure>()("Failu
 }) {}
 
 export const OperationResult = Schema2.union(Success, Failure)
-export type OperationResult = Schema2.To<typeof OperationResult>
+export type OperationResult = Schema.To<typeof OperationResult>
 
 @useClassFeaturesForSchema
 export class Operation extends ExtendedClass<Operation.From, Operation>()({

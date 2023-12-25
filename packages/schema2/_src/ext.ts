@@ -7,19 +7,20 @@ import type * as Either from "effect/Either"
 import { S } from "./schema.js"
 
 /**
- * @tsplus type effect/Schema/Schema withDefault
+ * @tsplus getter effect/schema/Schema withDefault
  */
-export const defaultDate = <From>(s: S.Schema<From, Date>) => S.withDefaultConstructor(s, () => new Date())
+export const defaultDate = (s: S.Schema<string, Date>) => S.withDefaultConstructor(s, () => new Date())
 
 /**
- * @tsplus type effect/Schema/Schema withDefault
+ * @tsplus getter effect/schema/Schema withDefault
  */
 export const defaultNullable = <From>(s: S.Schema<From, null>) => S.withDefaultConstructor(s, () => null)
 
 /**
- * @tsplus type effect/Schema/Schema withDefault
+ * @tsplus getter effect/schema/Schema withDefault
  */
-export const defaultArray = <From, A>(s: S.Schema<From, Array<A>>) => S.withDefaultConstructor(s, () => [])
+export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])
+
 
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId

@@ -11,6 +11,7 @@ import {
   Email,
   ExtendedClass,
   ExtendedTaggedClass,
+  FromClass,
   literal,
   nonEmptyArray,
   // nonEmptyArray,
@@ -27,6 +28,7 @@ import {
   TaggedClass,
   union,
   unknown,
+  useClassNameForSchema,
   void_ as Void
   // Arbitrary,
   // arbitrary,
