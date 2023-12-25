@@ -16,6 +16,7 @@
     "@effect-app/vue": "0.86.2"
   },
   "changesets": [
-    "silly-cobras-hunt"
+    "silly-cobras-hunt",
+    "two-pillows-care"
   ]
 }
