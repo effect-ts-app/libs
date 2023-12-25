@@ -1,18 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type {
-  ConstructorInputOf,
-  From,
-  GetResponse,
-  Methods,
-  QueryRequest,
-  RequestSchemed,
-  To
-} from "@effect-app/prelude/schema"
-import { condemnCustom, Constructor, SchemaNamed, unsafeCstr } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
+import { AST } from "@effect-app/schema2/schema"
 import { Path } from "path-parser"
+import { REST } from "../schema2.js"
 import type { ApiConfig } from "./config.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
 import {
@@ -28,9 +20,9 @@ import {
 export * from "./config.js"
 
 type Requests = Record<string, Record<string, any>>
-type AnyRequest = Omit<QueryRequest<any, any, any, any, any, any>, "method"> & {
-  method: Methods.Rest
-} & RequestSchemed<any, any>
+type AnyRequest = Omit<REST.QueryRequest<any, any, any, any, any, any>, "method"> & {
+  method: REST.Methods.Rest
+} & REST.RequestSchemed<any, any>
 
 const cache = new Map<any, Client<any>>()
 
@@ -59,8 +51,8 @@ function clientFor_<M extends Requests>(models: M) {
         (prev, cur) => {
           const h = models[cur]
 
-          const Request = Schema.extractRequest(h) as AnyRequest
-          const Response = Schema.extractResponse(h)
+          const Request = REST.extractRequest(h) as AnyRequest
+          const Response = REST.extractResponse(h)
 
           const b = Object.assign({}, h, { Request, Response })
 
@@ -72,7 +64,7 @@ function clientFor_<M extends Requests>(models: M) {
 
           const wm = new WeakMap()
 
-          const cstri = Constructor.for(Request.Model).pipe(unsafeCstr)
+          const cstri = (a: any) => (new (Request as any)(a)) // TODO
 
           // we need to have the same constructed value for fetch aswell as mapPath
           const cstr = (req: any) => {
@@ -84,7 +76,7 @@ function clientFor_<M extends Requests>(models: M) {
           }
 
           const parseResponse = flow(
-            Schema.Parser.for(Response).pipe(condemnCustom),
+            Response.parse,
             (_) => _.mapError((err) => new ResponseError(err))
           )
 
@@ -95,7 +87,7 @@ function clientFor_<M extends Requests>(models: M) {
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
           const requestName = NonEmptyString255(
-            Request.Model instanceof SchemaNamed ? Request.Model.name : Request.name
+            AST.getTitleAnnotation(Request.ast) ?? "TODO"
           )
 
           // if we don't need fields, then also dont require an argument.
@@ -193,70 +185,74 @@ function clientFor_<M extends Requests>(models: M) {
   )
 }
 
-export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? To<T["Model"]>
-  : T extends Schema.SchemaAny ? To<T>
+export type ExtractResponse<T> = T extends { Model: Schema<any, any> } ? Schema.To<T["Model"]>
+  : T extends Schema<any, any> ? Schema.To<T>
   : T extends unknown ? void
   : never
 
-export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? From<T["Model"]>
-  : T extends Schema.SchemaAny ? From<T>
+export type ExtractEResponse<T> = T extends { Model: Schema<any, any> } ? Schema.From<T["Model"]>
+  : T extends Schema<any, any> ? Schema.From<T>
   : T extends unknown ? void
   : never
 
 type RequestHandlers<R, E, M extends Requests> = {
-  [K in keyof M & string as Uncapitalize<K>]: keyof Schema.GetRequest<
-    M[K]
-  >[Schema.schemaField]["Api"]["fields"] extends never
-    ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
-      Request: Schema.GetRequest<M[K]>
-      Reponse: ExtractResponse<GetResponse<M[K]>>
+  [K in keyof M & string as Uncapitalize<K>]: keyof Schema.To<
+    REST.GetRequest<
+      M[K]
+    >
+  > extends never ? Effect<R, E, FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>> & {
+      Request: REST.GetRequest<M[K]>
+      Reponse: ExtractResponse<REST.GetResponse<M[K]>>
       mapPath: string
     }
-    : keyof Schema.GetRequest<
-      M[K]
-    >[Schema.schemaField]["Api"]["fields"] extends Record<any, never>
-      ? Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>> & {
-        Request: Schema.GetRequest<M[K]>
-        Reponse: ExtractResponse<GetResponse<M[K]>>
+    : keyof Schema.To<
+      REST.GetRequest<
+        M[K]
+      >
+    > extends Record<any, never> ? Effect<R, E, FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>> & {
+        Request: REST.GetRequest<M[K]>
+        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
         mapPath: string
       }
     :
       & ((
-        req: ConstructorInputOf<Schema.GetRequest<M[K]>>
-      ) => Effect<R, E, FetchResponse<ExtractResponse<GetResponse<M[K]>>>>)
+        req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+      ) => Effect<R, E, FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>>)
       & {
-        Request: Schema.GetRequest<M[K]>
-        Reponse: ExtractResponse<GetResponse<M[K]>>
+        Request: REST.GetRequest<M[K]>
+        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
         // we use a weakmap as cache for converting constructor input to constructed.
-        mapPath: (req?: ConstructorInputOf<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]) => string
       }
 }
 
 type RequestHandlersE<R, E, M extends Requests> = {
-  [K in keyof M & string as `${Uncapitalize<K>}E`]: keyof Schema.GetRequest<
-    M[K]
-  >[Schema.schemaField]["Api"]["fields"] extends never
-    ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
-      Request: Schema.GetRequest<M[K]>
-      Reponse: ExtractResponse<GetResponse<M[K]>>
+  [K in keyof M & string as `${Uncapitalize<K>}E`]: keyof Schema.To<
+    REST.GetRequest<
+      M[K]
+    >
+  > extends never ? Effect<R, E, FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>> & {
+      Request: REST.GetRequest<M[K]>
+      Reponse: ExtractResponse<REST.GetResponse<M[K]>>
       mapPath: string
     }
-    : keyof Schema.GetRequest<
-      M[K]
-    >[Schema.schemaField]["Api"]["fields"] extends Record<any, never>
-      ? Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>> & {
-        Request: Schema.GetRequest<M[K]>
-        Reponse: ExtractResponse<GetResponse<M[K]>>
+    : keyof Schema.To<
+      REST.GetRequest<
+        M[K]
+      >
+    > extends Record<any, never> ? Effect<R, E, FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>> & {
+        Request: REST.GetRequest<M[K]>
+        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
         mapPath: string
       }
     :
       & ((
-        req: ConstructorInputOf<Schema.GetRequest<M[K]>>
-      ) => Effect<R, E, FetchResponse<ExtractEResponse<GetResponse<M[K]>>>>)
+        req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+      ) => Effect<R, E, FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>>)
       & {
-        Request: Schema.GetRequest<M[K]>
-        Reponse: ExtractResponse<GetResponse<M[K]>>
+        Request: REST.GetRequest<M[K]>
+        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
         // we use a weakmap as cache for converting constructor input to constructed.
-        mapPath: (req?: ConstructorInputOf<Schema.GetRequest<M[K]>>) => string
+        mapPath: (req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]) => string
       }
 }

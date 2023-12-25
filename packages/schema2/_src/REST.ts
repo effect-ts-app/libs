@@ -9,7 +9,6 @@ import type * as Methods from "./Methods.js"
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
-import type { P } from "./schema.js"
 import { S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
@@ -604,23 +603,20 @@ export function adaptRequest<
 // }
 
 export type ReqRes<From, To> = S.Schema<From, To>
-export type ReqResSchemed<E, A> = {
-  new(...args: any[]): any
-  encodeSync: ReturnType<typeof P.parseSync>
-  Model: ReqRes<E, A>
-}
+// export type ReqResSchemed<E, A> = {
+//   new(...args: any[]): any
+//   encodeSync: ReturnType<typeof P.parseSync>
+//   Model: ReqRes<E, A>
+// }
 
-export type RequestSchemed<E, A> = ReqResSchemed<E, A> & {
+export type RequestSchemed<E, A> = ReqRes<E, A> & { // ReqResSchemed<E, A> & {
   method: Methods.Rest
   path: string
 }
 
+/** @deprecated No-Op */
 export function extractSchema<ResE, ResA>(
-  Res_: ReqRes<ResE, ResA> | ReqResSchemed<ResE, ResA>
+  Res: ReqRes<ResE, ResA> // | ReqResSchemed<ResE, ResA>
 ) {
-  const res_ = Res_
-  const Res = res_["struct"]
-    ? (res_["struct"] as ReqRes<ResE, ResA>)
-    : (res_ as ReqRes<ResE, ResA>)
   return Res
 }

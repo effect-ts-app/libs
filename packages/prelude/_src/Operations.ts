@@ -1,5 +1,4 @@
 import { Schema2 } from "./index.js"
-import type { ConstructorInputApi, FieldsClass } from "./schema.js"
 import { FromClass, useClassFeaturesForSchema } from "./schema.js"
 
 export type OperationId = StringId
@@ -45,9 +44,6 @@ export namespace OperationProgress {
    * @tsplus companion OperationProgress.From/Ops
    */
   export class From extends FromClass<typeof OperationProgress>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof OperationProgress> {}
-  export interface Fields extends FieldsClass<typeof OperationProgress> {}
 }
 export namespace Success {
   /**
@@ -55,9 +51,6 @@ export namespace Success {
    * @tsplus companion Success.From/Ops
    */
   export class From extends FromClass<typeof Success>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof Success> {}
-  export interface Fields extends FieldsClass<typeof Success> {}
 }
 export namespace Failure {
   /**
@@ -65,9 +58,6 @@ export namespace Failure {
    * @tsplus companion Failure.From/Ops
    */
   export class From extends FromClass<typeof Failure>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof Failure> {}
-  export interface Fields extends FieldsClass<typeof Failure> {}
 }
 export namespace Operation {
   /**
@@ -75,9 +65,6 @@ export namespace Operation {
    * @tsplus companion Operation.From/Ops
    */
   export class From extends FromClass<typeof Operation>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof Operation> {}
-  export interface Fields extends FieldsClass<typeof Operation> {}
 }
 /* eslint-enable */
 //

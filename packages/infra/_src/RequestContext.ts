@@ -1,6 +1,5 @@
 import { Schema2 } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
-import type { ConstructorInputApi, FieldsClass } from "@effect-app/schema"
 import { Class, FromClass, literal, useClassFeaturesForSchema } from "@effect-app/schema2"
 
 @useClassFeaturesForSchema
@@ -62,9 +61,6 @@ export namespace RequestContextParent {
    * @tsplus companion RequestContextParent.From/Ops
    */
   export class From extends FromClass<typeof RequestContextParent>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof RequestContextParent> {}
-  export interface Fields extends FieldsClass<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
@@ -72,9 +68,6 @@ export namespace RequestContext {
    * @tsplus companion RequestContext.From/Ops
    */
   export class From extends FromClass<typeof RequestContext>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof RequestContext> {}
-  export interface Fields extends FieldsClass<typeof RequestContext> {}
 }
 /* eslint-enable */
 //

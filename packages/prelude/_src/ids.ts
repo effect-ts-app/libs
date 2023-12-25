@@ -1,7 +1,7 @@
-import { type StringIdBrand } from "@effect-app/prelude/schema2"
 import { fromBrand, nominal } from "@effect-app/schema2/ext"
-import { type B } from "@effect-app/schema2/schema"
+import type { B } from "@effect-app/schema2/schema"
 import type { Simplify } from "effect/Types"
+import type { StringIdBrand } from "./schema2.js"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol

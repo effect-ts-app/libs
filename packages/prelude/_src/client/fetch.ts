@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
-import { condemnCustom, Parser, type ReqRes, type RequestSchemed } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
+import type { REST } from "../schema2.js"
 import { ApiConfig } from "./config.js"
 
 export type FetchError = HttpError<string>
@@ -105,12 +105,12 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   Response
 }: {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Request: RequestSchemed<RequestE, RequestA>
+  Request: REST.RequestSchemed<RequestE, RequestA>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: ReqRes<ResponseE, ResponseA>
+  Response: REST.ReqRes<ResponseE, ResponseA>
 }) {
   const encodeRequest = Request.encodeSync
-  const decodeResponse = Parser.for(Response).pipe(condemnCustom)
+  const decodeResponse = Response.parse
   return fetchApi2S(encodeRequest, decodeResponse)(
     Request.method,
     new Path(Request.path)
@@ -122,9 +122,9 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
   Response
 }: {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Request: RequestSchemed<RequestE, RequestA>
+  Request: REST.RequestSchemed<RequestE, RequestA>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: ReqRes<ResponseE, ResponseA>
+  Response: REST.ReqRes<ResponseE, ResponseA>
 }) {
   const encodeResponse = Response.encodeSync
   const decodeResponse = flow(Response.parse, (x) => x.map(encodeResponse))
