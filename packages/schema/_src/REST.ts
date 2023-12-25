@@ -182,10 +182,10 @@ export function QueryRequest<M>(__name?: string) {
       // ..._.query,
       // ..._.path
     }) {
-      static Body = {}
-      static Path = _.path ?? {}
-      static Query = _.query ?? {}
-      static Headers = _.headers ?? {}
+      static Body = undefined
+      static Path = _.path
+      static Query = _.query
+      static Headers = _.headers
       static path = path
       static method = method
       static Tag = RequestTag
@@ -343,10 +343,10 @@ export function BodyRequest<M>(__name?: string) {
       // ..._.query,
       // ..._.path
     }) {
-      static Path = _.path ?? {}
-      static Body = _.body ?? {}
-      static Query = _.query ?? {}
-      static Headers = _.headers ?? {}
+      static Path = _.path
+      static Body = _.body
+      static Query = _.query
+      static Headers = _.headers
       static path = path
       static method = method
       static Tag = RequestTag
