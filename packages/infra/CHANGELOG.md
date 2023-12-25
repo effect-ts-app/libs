@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.7
+
+### Patch Changes
+
+- 1e8ce37: arbs
+
 ## 0.133.0-next.6
 
 ### Patch Changes
