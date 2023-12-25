@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Path } from "path-parser"
 
-import type { ReadMethods, WriteMethods } from "./Methods.js"
 import type * as Methods from "./Methods.js"
 
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
@@ -37,7 +36,7 @@ export interface QueryRequest<
   Query: Query
   Headers: Headers
   path: PPath
-  method: ReadMethods
+  method: Methods.ReadMethods
   Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
@@ -57,7 +56,7 @@ export interface BodyRequest<
   Query: Query
   Headers: Headers
   path: PPath
-  method: WriteMethods
+  method: Methods.WriteMethods
   Tag: Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
@@ -111,14 +110,14 @@ type OrAny<T> = Exclude<T, undefined>
 // type Ensure<M, Self extends S.Schema<any, any>> = M extends S.Schema.To<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
-    method: ReadMethods,
+    method: Methods.ReadMethods,
     path: PPath,
     _: {
       headers?: Headers
     }
   ): QueryRequest<M, undefined, undefined, Headers, StructFields, PPath>
   function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
-    method: ReadMethods,
+    method: Methods.ReadMethods,
     path: PPath,
     _: {
       headers?: Headers
@@ -126,7 +125,7 @@ export function QueryRequest<M>(__name?: string) {
     }
   ): QueryRequest<M, Path, undefined, Headers, Path, PPath>
   function a<Query extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
-    method: ReadMethods,
+    method: Methods.ReadMethods,
     path: PPath,
     {
       headers,
@@ -142,7 +141,7 @@ export function QueryRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: ReadMethods,
+    method: Methods.ReadMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -163,7 +162,7 @@ export function QueryRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: ReadMethods,
+    method: Methods.ReadMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -200,14 +199,14 @@ export function QueryRequest<M>(__name?: string) {
 
 export function BodyRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: Headers
     }
   ): BodyRequest<M, undefined, undefined, undefined, Headers, {}, PPath>
   function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: Headers
@@ -215,7 +214,7 @@ export function BodyRequest<M>(__name?: string) {
     }
   ): BodyRequest<M, Path, undefined, undefined, Headers, Path, PPath>
   function a<Body extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: Headers
@@ -228,7 +227,7 @@ export function BodyRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -250,7 +249,7 @@ export function BodyRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -272,7 +271,7 @@ export function BodyRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -295,7 +294,7 @@ export function BodyRequest<M>(__name?: string) {
     HeadersFields extends StructFields,
     PPath extends `/${string}`
   >(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: HeadersFields
@@ -319,7 +318,7 @@ export function BodyRequest<M>(__name?: string) {
     Headers extends StructFields,
     PPath extends `/${string}`
   >(
-    method: WriteMethods,
+    method: Methods.WriteMethods,
     path: PPath,
     _: {
       headers?: Headers
@@ -561,7 +560,7 @@ export function makeRequest<
   if (method === "GET" || method === "DELETE") {
     return class extends Object.assign(
       QueryRequest<M>(__name)(
-        method as ReadMethods,
+        method as Methods.ReadMethods,
         path,
         newSchema as any
       ),
@@ -570,7 +569,7 @@ export function makeRequest<
   }
   return class extends Object.assign(
     BodyRequest<M>(__name)(
-      method as WriteMethods,
+      method as Methods.WriteMethods,
       path,
       newSchema as any
     ),
