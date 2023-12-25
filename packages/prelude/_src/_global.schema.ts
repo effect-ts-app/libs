@@ -88,4 +88,4 @@ import {
   // UUID,
   // Void,
   // withDefaults
-} from "@effect-app/prelude/schema2"
+} from "@effect-app/prelude/schema"

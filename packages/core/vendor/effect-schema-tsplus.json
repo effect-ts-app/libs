@@ -57,6 +57,17 @@
       ]
     },
     {
+      "definitionName": "parseEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "parseEither"
+        }
+      ]
+    },
+    {
       "definitionName": "parse",
       "definitionKind": "const",
       "extensions": [
@@ -113,6 +124,28 @@
           "kind": "fluent",
           "typeName": "effect/schema/Schema",
           "name": "optional"
+        }
+      ]
+    },
+    {
+      "definitionName": "omit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "omit"
+        }
+      ]
+    },
+    {
+      "definitionName": "pick",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "pick"
         }
       ]
     },

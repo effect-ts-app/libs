@@ -1,6 +1,9 @@
-import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
-import type { AnyField, Field, FieldRecord, From, SchemaAny, To } from "@effect-app/prelude/schema"
+import { type drawError, type Field, getMetadataFromSchemaOrProp } from "@effect-app/prelude/schema"
+import type { AnyField, To } from "@effect-app/schema"
+import type { FromStruct, Schema, StructFields, ToStruct } from "@effect-app/schema2"
+import { AST } from "@effect-app/schema2/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
+import type { Simplify } from "effect/Types"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
 
@@ -18,7 +21,7 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromFields<Fields extends FieldRecord>(
+export function buildFieldInfoFromFields<Fields extends StructFields>(
   fields: Fields
 ) {
   return fields.$$.keys.reduce(
@@ -28,8 +31,8 @@ export function buildFieldInfoFromFields<Fields extends FieldRecord>(
     },
     {} as {
       [K in keyof Fields]: FieldInfo<
-        From<GetSchemaFromProp<Fields[K]>>,
-        To<GetSchemaFromProp<Fields[K]>>
+        Schema.From<GetSchemaFromProp<Fields[K]>>,
+        Schema.To<GetSchemaFromProp<Fields[K]>>
       >
     }
   )
@@ -61,17 +64,19 @@ type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
 
 const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
-export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown, v: unknown) => string>>(new Map())
+export const customSchemaErrors = ref<Map<Schema<any, any>, (message: string, e: unknown, v: unknown) => string>>(
+  new Map()
+)
 
 function buildFieldInfo(
-  propOrSchema: AnyField | SchemaAny,
+  propOrSchema: Schema<any, any>,
   fieldKey: PropertyKey
 ): FieldInfo<any, any> {
-  const metadata = getMetadataFromSchemaOrProp(propOrSchema)
-  const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
-  const parse = Parser.for(schema)
+  const metadata = getMetadataFromSchemaOrProp(propOrSchema) // TODO
+  const schema = propOrSchema
+  const parse = schema.parseEither
 
-  const nullable = Schema.findAnnotation(schema, Schema.nullableIdentifier)
+  const nullable = AST.isUnion(schema.ast) && schema.ast.types.includes(Schema2.null.ast)
 
   function renderError(e: any, v: unknown) {
     const err = drawError(e)
@@ -136,7 +141,6 @@ function buildFieldInfo(
   const parseRule = (v: unknown) =>
     pipe(
       parse(v),
-      These.result,
       (_) =>
         _.match(
           {
@@ -184,24 +188,18 @@ function buildFieldInfo(
 }
 
 export const buildFormFromSchema = <
-  To,
-  From,
-  ConstructorInput,
-  Fields extends FieldRecord,
+  Fields extends StructFields,
   OnSubmitA
 >(
-  s: Schema.Schema<
-    unknown,
-    To,
-    ConstructorInput,
-    From,
-    { fields: Fields }
+  s: Schema<
+    Simplify<FromStruct<Fields>>,
+    Simplify<ToStruct<Fields>>
   >,
-  state: Ref<From>,
-  onSubmit: (a: To) => Promise<OnSubmitA>
+  state: Ref<FromStruct<Fields>>,
+  onSubmit: (a: ToStruct<Fields>) => Promise<OnSubmitA>
 ) => {
   const fields = buildFieldInfoFromFields(s.Api.fields)
-  const parse = unsafe(Schema.Parser.for(s))
+  const parse = s.parseSync
   const isDirty = ref(false)
   const isValid = ref(true)
 

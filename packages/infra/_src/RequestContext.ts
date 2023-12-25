@@ -1,12 +1,11 @@
 import { Schema2 } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
-import { Class, FromClass, literal, useClassFeaturesForSchema } from "@effect-app/schema2"
+import { useClassFeaturesForSchema } from "@effect-app/schema2"
 
 @useClassFeaturesForSchema
-export class RequestContextParent extends Class<
+export class RequestContextParent extends TaggedClass<
   RequestContextParent
->()({
-  _tag: literal("RequestContext"),
+>()("RequestContext", {
   id: RequestId,
   name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional(),
@@ -19,9 +18,9 @@ export class RequestContextParent extends Class<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends Schema2.Class<
+export class RequestContext extends Schema2.TaggedClass<
   RequestContext
->()({
+>()("RequestContext", {
   ...RequestContextParent.omit("id"),
   id: RequestId.withDefault(),
   rootId: RequestId,
@@ -31,7 +30,7 @@ export class RequestContext extends Schema2.Class<
   static inherit(
     this: void,
     parent: RequestContext,
-    newSelf: RequestContextParent.ConstructorInput
+    newSelf: ConstructorParameters<typeof RequestContextParent>[0]
   ) {
     return new RequestContext({
       namespace: parent?.namespace,

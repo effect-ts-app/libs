@@ -3,7 +3,7 @@ import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } 
 import { constant, flow } from "@effect-app/prelude/Function"
 import { Path } from "path-parser"
 import qs from "query-string"
-import type { REST } from "../schema2.js"
+import type { REST } from "../schema.js"
 import { ApiConfig } from "./config.js"
 
 export type FetchError = HttpError<string>
