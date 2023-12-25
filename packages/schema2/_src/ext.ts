@@ -30,6 +30,7 @@ export type DefaultProperty = SpecificField<any, any, any, any>
 
 export type DefaultFieldRecord = Record<PropertyKey, DefaultProperty>
 
+// TODO: new PropertyDesc for constructor default.
 export type WithDefault<
   From,
   To extends SupportedDefaults,

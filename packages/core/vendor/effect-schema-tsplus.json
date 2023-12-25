@@ -126,6 +126,17 @@
           "name": "nullable"
         }
       ]
+    },
+    {
+      "definitionName": "withDefaultConstructor",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "withDefaultMake"
+        }
+      ]
     }
   ]
 }

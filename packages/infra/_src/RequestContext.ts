@@ -12,7 +12,7 @@ export class RequestContextParent extends Class<
   name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: Schema2.Date.withDefault
+  createdAt: Schema2.Date.withDefaultMake(() => new Date())
 }) {}
 
 /**
