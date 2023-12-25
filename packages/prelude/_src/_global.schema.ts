@@ -28,6 +28,7 @@ import {
   TaggedClass,
   union,
   unknown,
+  useClassFeaturesForSchema,
   useClassNameForSchema,
   void_ as Void
   // Arbitrary,
