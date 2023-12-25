@@ -68,7 +68,7 @@ importers:
         version: 0.88.7
       '@effect-app/cli':
         specifier: ^0.33.1
-        version: 0.33.1
+        version: link:packages/cli
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -96,6 +96,9 @@ importers:
       '@phaphoso/eslint-plugin-dprint':
         specifier: ^0.5.2
         version: 0.5.2(patch_hash=5r3oafqkulzxdb6awceadivssy)(eslint@8.56.0)
+      '@rollup/pluginutils':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@tsconfig/strictest':
         specifier: ^2.0.2
         version: 2.0.2
@@ -192,6 +195,31 @@ importers:
       vite:
         specifier: ^5.0.10
         version: 5.0.10(@types/node@20.10.5)
+      vitest:
+        specifier: ^1.1.0
+        version: 1.1.0(@types/node@20.10.5)
+
+  packages/cli:
+    dependencies:
+      node-watch:
+        specifier: ^0.7.4
+        version: 0.7.4
+    devDependencies:
+      '@babel/cli':
+        specifier: ^7.23.4
+        version: 7.23.4(@babel/core@7.23.6)
+      '@types/node':
+        specifier: ~20.10.5
+        version: 20.10.5
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.202311222)(@types/node@20.10.5)
+      typescript:
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
+        version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
         specifier: ^1.1.0
         version: 1.1.0(@types/node@20.10.5)
@@ -1382,13 +1410,6 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/cli@0.33.1:
-    resolution: {integrity: sha512-RDO99mEs6Ihkh0uU6ymaR4UbbBwopS52LvVpuIi+REFPprYeyvJOGomh3CJSdB5PDg0eZfY3YaoXNpOK64NnqA==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
-
   /@effect-app/typescript@5.4.0-tsplus.202311222:
     resolution: {integrity: sha512-QZQC5/bU2uG4TUmgCVkEYZM8buFDisGgvuO6NUOXVWZXjQRPkOv4YHlMPBVNi+DmW3k1O7oNWmkHRm7MO+ddNg==}
     engines: {node: '>=14.17'}
@@ -1975,6 +1996,20 @@ packages:
     dependencies:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
+    dev: true
+
+  /@rollup/pluginutils@5.1.0:
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.0
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
     dev: true
 
   /@rollup/rollup-android-arm-eabi@4.4.1:
@@ -6696,7 +6731,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: true
+    dev: false
 
   /nodemon@3.0.2:
     resolution: {integrity: sha512-9qIN2LNTrEzpOPBaWHTm4Asy1LxXLSickZStAQ4IZe7zsoIpD/A7LWxhZV3t4Zu352uBcqVnRsDXSMR2Sc3lTA==}

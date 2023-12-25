@@ -11,13 +11,7 @@
   ],
   "references": [
     {
-      "path": "packages/compiler"
-    },
-    {
       "path": "packages/infra-adapters"
-    },
-    {
-      "path": "packages/schema"
     },
     {
       "path": "packages/schema2"
@@ -30,12 +24,6 @@
     },
     {
       "path": "packages/infra"
-    },
-    {
-      "path": "packages/vue"
-    },
-    {
-      "path": "packages/fluent-extensions"
-    },
+    }
   ]
 }

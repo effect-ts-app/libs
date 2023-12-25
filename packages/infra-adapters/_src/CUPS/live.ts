@@ -3,7 +3,7 @@ import util from "util"
 import { tempFile } from "../fileUtil.js"
 
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255 } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema2/strings"
 import fs from "fs"
 import os from "os"
 import path from "path"

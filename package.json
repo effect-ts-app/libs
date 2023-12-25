@@ -96,6 +96,7 @@
     "module-alias": "^2.2.3",
     "nodemon": "^3.0.2",
     "npm-check-updates": "^16.14.12",
+    "@rollup/pluginutils": "^5.1.0",
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.0.4",
     "tsconfig-paths": "^4.2.0",
