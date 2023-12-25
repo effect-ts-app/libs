@@ -1,5 +1,3 @@
-import { Predicate } from "@effect-app/core/Function.js"
-import { Do } from "@effect-app/core/Option.js"
 import { pretty } from "@effect-app/core/utils"
 import { NonEmptyString255 } from "@effect-app/prelude/schema"
 import cp from "child_process"
@@ -89,8 +87,8 @@ function printBuffer(printer: PrinterConfig, options: string[]) {
 }
 
 function getAvailablePrinters(host?: string) {
-  return Do(($) => {
-    const { stdout } = $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
+  return Effect.gen(function*($) {
+    const { stdout } = yield* $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
