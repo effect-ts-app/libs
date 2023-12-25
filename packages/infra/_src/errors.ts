@@ -11,7 +11,11 @@ export class NotFoundError<T extends string = string>
 }
 
 /** @tsplus type ValidationError */
-export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {}
+export class ValidationError extends Data.TaggedError("ValidationError")<{ errors: ReadonlyArray<unknown> }> {
+  override get message() {
+    return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
+  }
+}
 
 /** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends Data.TaggedError("NotLoggedInError")<{ message?: string | undefined }> {
