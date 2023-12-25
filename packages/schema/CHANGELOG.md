@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.6
+
+### Patch Changes
+
+- 8897586: fix ext
+
 ## 0.150.0-next.5
 
 ### Patch Changes
