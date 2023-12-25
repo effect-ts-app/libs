@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.7
+
+### Patch Changes
+
+- 82b3ca0: mm
+
 ## 0.107.0-next.6
 
 ### Patch Changes
