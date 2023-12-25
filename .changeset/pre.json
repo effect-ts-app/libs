@@ -12,7 +12,8 @@
     "@effect-app/pnpm-singleton": "0.37.1",
     "@effect-app/prelude": "0.106.1",
     "@effect-app/schema": "0.90.1",
-    "@effect-app/vue": "0.86.2"
+    "@effect-app/vue": "0.86.2",
+    "@effect-app/schema-legacy": "0.90.1"
   },
   "changesets": [
     "silly-cobras-hunt",
