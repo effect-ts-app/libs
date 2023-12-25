@@ -67,9 +67,6 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           // `   * @tsplus type ${modelName}.From/Aspects`,
           // `   */`,
           // `  export interface FromAspects {}`,
-          "  export interface ConstructorInput",
-          `    extends ConstructorInputApi<typeof ${modelName}> {}`,
-          `  export interface Fields extends FieldsClass<typeof ${modelName}> {}`,
           "}",
         ]
       }
@@ -262,9 +259,6 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
         `   * @tsplus type ${modelName}.From/Ops`,
         `   */`,
         `  export interface FromOps {}`,
-        "  export interface ConstructorInput",
-        `    extends ConstructorInputApi<typeof ${modelName}> {}`,
-        `  export interface Fields extends FieldsClass<typeof ${modelName}> {}`,
         "}",
       ]
     }
