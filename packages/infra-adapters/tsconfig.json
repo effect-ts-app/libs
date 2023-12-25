@@ -28,9 +28,6 @@
             "path": "../core"
         },
         {
-            "path": "../schema2"
-        },
-        {
             "path": "../schema"
         },
         {

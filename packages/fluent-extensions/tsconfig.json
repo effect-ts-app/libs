@@ -35,9 +35,6 @@
     },
     "references": [
         {
-            "path": "../schema2"
-        },
-        {
             "path": "../schema"
         },
         {

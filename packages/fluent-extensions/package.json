@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect-app/schema2": "workspace:*",
+    "@effect-app/schema": "workspace:*",
     "@effect/platform": "^0.39.0",
     "@fp-ts/optic": "^0.21.0",
     "date-fns": "^3.0.6",

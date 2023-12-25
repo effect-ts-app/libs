@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type * as fc from "fast-check"
 
 export type { Arbitrary } from "fast-check"

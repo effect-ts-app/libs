@@ -36,7 +36,7 @@ import type {} from "@effect-app/infra/api/setupRequest"
  * @tsplus global
  */
 import {} from "@effect-app/infra/api/reportError"
-import { S } from "@effect-app/schema2/schema"
+import { S } from "@effect-app/schema/schema"
 import type { ParseOptions } from "@effect/schema/AST"
 
 /**

@@ -90,9 +90,9 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:packages/prelude
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:packages/schema2
+        version: link:packages/schema
       '@effect/language-service':
         specifier: 0.0.19
         version: 0.0.19(patch_hash=izp2ue34jjv4swyrhg2ux4ha3e)
@@ -364,9 +364,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:../schema2
+        version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
@@ -449,9 +449,9 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:../schema2
+        version: link:../schema
       '@effect/schema':
         specifier: ^0.56.1
         version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
@@ -549,9 +549,9 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:../schema2
+        version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
@@ -634,9 +634,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:../schema2
+        version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
@@ -710,52 +710,6 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
-      '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
-      cross-fetch:
-        specifier: ^4.0.0
-        version: 4.0.0
-      effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      path-parser:
-        specifier: ^6.1.0
-        version: 6.1.0
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-      validator:
-        specifier: ^13.11.0
-        version: 13.11.0
-    devDependencies:
-      '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
-      '@types/validator':
-        specifier: ^13.11.7
-        version: 13.11.7
-      fast-check:
-        specifier: ~3.15.0
-        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
-      ts-toolbelt:
-        specifier: ^9.6.0
-        version: 9.6.0
-      typescript:
-        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
-        version: /@effect-app/typescript@5.4.0-tsplus.202311222
-      vitest:
-        specifier: ^1.1.0
-        version: 1.1.0(@types/node@20.10.5)
-
-  packages/schema2:
-    dependencies:
-      '@effect-app/core':
-        specifier: workspace:*
-        version: link:../core
       '@effect/schema':
         specifier: ^0.56.1
         version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
@@ -803,6 +757,52 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@types/node@20.10.5)
 
+  packages/schema-legacy:
+    dependencies:
+      '@effect-app/core':
+        specifier: workspace:*
+        version: link:../core
+      '@fp-ts/optic':
+        specifier: ^0.21.0
+        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+      cross-fetch:
+        specifier: ^4.0.0
+        version: 4.0.0
+      effect:
+        specifier: ^2.0.0-next.62
+        version: 2.0.0-next.62
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      path-parser:
+        specifier: ^6.1.0
+        version: 6.1.0
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+      validator:
+        specifier: ^13.11.0
+        version: 13.11.0
+    devDependencies:
+      '@types/uuid':
+        specifier: ^9.0.7
+        version: 9.0.7
+      '@types/validator':
+        specifier: ^13.11.7
+        version: 13.11.7
+      fast-check:
+        specifier: ~3.15.0
+        version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+      ts-toolbelt:
+        specifier: ^9.6.0
+        version: 9.6.0
+      typescript:
+        specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
+        version: /@effect-app/typescript@5.4.0-tsplus.202311222
+      vitest:
+        specifier: ^1.1.0
+        version: 1.1.0(@types/node@20.10.5)
+
   packages/vue:
     dependencies:
       '@effect-app/core':
@@ -811,9 +811,9 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
-      '@effect-app/schema2':
+      '@effect-app/schema':
         specifier: workspace:*
-        version: link:../schema2
+        version: link:../schema
       '@effect-app/vue':
         specifier: workspace:*
         version: 'link:'

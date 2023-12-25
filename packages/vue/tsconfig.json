@@ -26,9 +26,6 @@
             "path": "../prelude"
         },
         {
-            "path": "../schema2"
-        },
-        {
             "path": "../schema"
         },
         {

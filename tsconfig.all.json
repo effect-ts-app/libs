@@ -20,9 +20,6 @@
       "path": "packages/schema"
     },
     {
-      "path": "packages/schema2"
-    },
-    {
       "path": "packages/core"
     },
     {

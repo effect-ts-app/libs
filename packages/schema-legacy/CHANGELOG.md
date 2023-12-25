@@ -1,12 +1,5 @@
 # @effect-app/schema
 
-## 0.150.0
-
-### Minor Changes
-
-- switch to @effect/schema
-
-
 ## 0.90.1
 
 ### Patch Changes

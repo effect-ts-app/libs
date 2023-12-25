@@ -5,11 +5,11 @@
 // // codegen:end
 
 // export { Email, PhoneNumber } from "./schema/shared.js"
-export * from "@effect-app/schema2"
-export * from "@effect-app/schema2/email"
-export * from "@effect-app/schema2/moreStrings"
-export * from "@effect-app/schema2/phoneNumber"
-export * from "@effect-app/schema2/schema"
-export * from "@effect-app/schema2/strings"
+export * from "@effect-app/schema"
+export * from "@effect-app/schema/email"
+export * from "@effect-app/schema/moreStrings"
+export * from "@effect-app/schema/phoneNumber"
+export * from "@effect-app/schema/schema"
+export * from "@effect-app/schema/strings"
 
-export { void as void_ } from "@effect-app/schema2"
+export { void as void_ } from "@effect-app/schema"

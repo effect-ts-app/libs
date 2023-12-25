@@ -8,6 +8,6 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@effect-app/schema"
+    "@effect-app/schema-legacy"
   ]
 }

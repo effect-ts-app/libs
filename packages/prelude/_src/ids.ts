@@ -1,5 +1,5 @@
-import { fromBrand, nominal } from "@effect-app/schema2/ext"
-import type { B } from "@effect-app/schema2/schema"
+import { fromBrand, nominal } from "@effect-app/schema/ext"
+import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
 import type { StringIdBrand } from "./schema.js"
 

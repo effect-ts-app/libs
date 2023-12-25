@@ -3,7 +3,7 @@
 
 import { ROSet } from "@effect-app/core/Prelude"
 import { arbitrary, type PositiveBrand, positiveExcludeZero, type PositiveExcludeZeroBrand } from "@effect-app/schema"
-import { brand, positive } from "@effect-app/schema2"
+import { brand, positive } from "@effect-app/schema"
 import { number } from "effect/Equivalence"
 import { Arbitrary } from "fast-check"
 
