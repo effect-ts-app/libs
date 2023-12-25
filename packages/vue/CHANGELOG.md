@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.0-next.5
+
+### Patch Changes
+
+- 52da734: mini form
+- Updated dependencies [52da734]
+  - @effect-app/vue@0.87.0-next.5
+
 ## 0.87.0-next.4
 
 ### Patch Changes
