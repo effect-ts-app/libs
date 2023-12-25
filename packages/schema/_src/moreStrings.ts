@@ -65,10 +65,12 @@ export type StringId = string & StringIdBrand
 const makeStringId = (): StringId => nanoid() as unknown as StringId
 const minLength = 6
 const maxLength = 50
+const size = 21
+const length = 10 * size
 const StringIdArb = (): Arbitrary<string> => (fc) =>
   fc
-    .uint8Array({ minLength, maxLength })
-    .map((_) => customRandom(urlAlphabet, maxLength, (size) => _.subarray(0, size))())
+    .uint8Array({ minLength: length, maxLength: length })
+    .map((_) => customRandom(urlAlphabet, size, (size) => _.subarray(0, size))())
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
@@ -143,7 +145,7 @@ export function prefixedStringId<Brand extends StringId>() {
   }
 }
 
-export const brandedStringId = <Brand extends StringIdBrand>() => (StringId as S.Schema<string, string & Brand> & {
+export const brandedStringId = <Brand extends StringIdBrand>() => (Object.assign({}, StringId) as S.Schema<string, string & Brand> & {
   make: () => string & Brand
   withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
 } & WithDefaults<S.Schema<string, string & Brand>>)
