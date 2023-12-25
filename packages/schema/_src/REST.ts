@@ -177,22 +177,20 @@ export function QueryRequest<M>(__name?: string) {
     PathFields & QueryFields,
     PPath
   > {
-    const self: S.Schema<any, any> = S.struct({
+    class Self extends S.Class<Self>()({
       ..._.query,
       ..._.path
-    })
-    // const schema = self >= S.annotate(reqId, {})
-    const schema = self // TODO: reqId annotation
-    // @ts-expect-error the following is correct
-    return class extends ClassSpecial<M>(__name)(schema) {
-      static Path = _.path
-      static Query = _.query
-      static Headers = _.headers
+    }) {
+      static Body = {}
+      static Path = _.path ?? {}
+      static Query = _.query ?? {}
+      static Headers = _.headers ?? {}
       static path = path
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
     }
+    return Self as any
   }
   return a
 }
@@ -335,24 +333,21 @@ export function BodyRequest<M>(__name?: string) {
     OrAny<typeof _.path & typeof _.body & typeof _.query>,
     PPath
   > {
-    const self: S.Schema<any, any> = S.struct({
+    class Self extends S.Class<Self>()({
       ..._.body,
       ..._.query,
       ..._.path
-    })
-    // const schema = self >= S.annotate(reqId, {})
-    const schema = self // TODO: noRef
-    // @ts-expect-error the following is correct
-    return class extends ClassSpecial<M>(__name)(schema) {
-      static Path = _.path
-      static Body = _.body
-      static Query = _.query
-      static Headers = _.headers
+    }) {
+      static Path = _.path ?? {}
+      static Body = _.body ?? {}
+      static Query = _.query ?? {}
+      static Headers = _.headers ?? {}
       static path = path
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
     }
+    return Self as any
   }
   return a
 }
