@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.4
+
+### Patch Changes
+
+- ace7afb: cleanup rest
+
 ## 0.150.0-next.3
 
 ### Patch Changes
