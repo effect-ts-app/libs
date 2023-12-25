@@ -114,36 +114,6 @@
         "default": "./_cjs/CUPS/service.cjs"
       }
     },
-    "./Openapi/_openapi/index": {
-      "import": {
-        "types": "./dist/Openapi/_openapi/index.d.ts",
-        "default": "./dist/Openapi/_openapi/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/_openapi/index.d.ts",
-        "default": "./_cjs/Openapi/_openapi/index.cjs"
-      }
-    },
-    "./Openapi/_schema": {
-      "import": {
-        "types": "./dist/Openapi/_schema.d.ts",
-        "default": "./dist/Openapi/_schema.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/_schema.d.ts",
-        "default": "./_cjs/Openapi/_schema.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus.d.ts",
-        "default": "./dist/Openapi/atlas-plutus.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus.cjs"
-      }
-    },
     "./Openapi/atlas-plutus/JsonSchema/index": {
       "import": {
         "types": "./dist/Openapi/atlas-plutus/JsonSchema/index.d.ts",
@@ -192,16 +162,6 @@
       "require": {
         "types": "./dist/Openapi/atlas-plutus/Spec/index.d.ts",
         "default": "./_cjs/Openapi/atlas-plutus/Spec/index.cjs"
-      }
-    },
-    "./Openapi/index": {
-      "import": {
-        "types": "./dist/Openapi/index.d.ts",
-        "default": "./dist/Openapi/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/index.d.ts",
-        "default": "./_cjs/Openapi/index.cjs"
       }
     },
     "./ServiceBus": {

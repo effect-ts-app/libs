@@ -59,12 +59,12 @@ export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {
 }
 
 export function isSchema(
-  p: S.SchemaAny | S.AnyField
-): p is S.SchemaAny {
+  p: Schema<any, any> | S.AnyField
+): p is Schema<any, any> {
   return !!(p as any)[S.SchemaSym]
 }
 
-export function getMetadataFromSchemaOrProp(p: S.SchemaAny | S.AnyField) {
+export function getMetadataFromSchemaOrProp(p: Schema<any, any> | S.AnyField) {
   if (isSchema(p)) {
     return getMetadataFromSchema(p)
   }
@@ -104,7 +104,7 @@ const rangeNumberIds = [
   S.maxIdentifier
 ]
 
-export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
+export function getMetadataFromSchema<Self extends Schema<any, any>>(self: Self) {
   const nullable = S.findAnnotation(self, nullableIdentifier)
   const realSelf = nullable?.self ?? self
   const minLength = S.findAnnotation(realSelf, minLengthIdentifier)
@@ -131,7 +131,7 @@ export function getMetadataFromSchema<Self extends S.SchemaAny>(self: Self) {
   }
 }
 
-export function getRegisterFromSchemaOrProp(p: S.SchemaAny | S.AnyField) {
+export function getRegisterFromSchemaOrProp(p: Schema<any, any> | S.AnyField) {
   if (isSchema(p)) {
     return getRegisterFromSchema(p)
   }
@@ -160,7 +160,7 @@ export function getRegisterFromProp<Field extends S.AnyField>(p: Field) {
   }
 }
 
-export function getRegisterFromSchema<Self extends S.SchemaAny>(self: Self) {
+export function getRegisterFromSchema<Self extends Schema<any, any>>(self: Self) {
   // or take from openapi = number type?
   const metadata = getMetadataFromSchema(self)
   const nullable = S.findAnnotation(self, nullableIdentifier)

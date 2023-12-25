@@ -55,8 +55,8 @@ import {
 
 export type Gen = Effect<never, never, JSONSchema>
 
-export const interpreters: ((schema: S.SchemaAny) => Option<Gen>)[] = [
-  Option.partial((_miss) => (schema: S.SchemaAny): Gen => {
+export const interpreters: ((schema: Schema<any, any>) => Option<Gen>)[] = [
+  Option.partial((_miss) => (schema: Schema<any, any>): Gen => {
     // if (schema instanceof S.SchemaOpenApi) {
     //   const cfg = schema.jsonSchema()
     //   return processId(schema, cfg)
@@ -93,7 +93,7 @@ type Meta = S.Meta & {
   maxLength?: number
 }
 
-function processId(schema: S.SchemaAny, meta: Meta = {}): any {
+function processId(schema: Schema<any, any>, meta: Meta = {}): any {
   if (!schema) {
     throw new Error("schema undefined")
   }
