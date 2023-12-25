@@ -56,16 +56,6 @@
         "default": "./_cjs/_global.cjs"
       }
     },
-    "./form": {
-      "import": {
-        "types": "./dist/form.d.ts",
-        "default": "./dist/form.js"
-      },
-      "require": {
-        "types": "./dist/form.d.ts",
-        "default": "./_cjs/form.cjs"
-      }
-    },
     "./hooks": {
       "import": {
         "types": "./dist/hooks.d.ts",
