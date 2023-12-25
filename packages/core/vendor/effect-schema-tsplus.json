@@ -117,6 +117,17 @@
       ]
     },
     {
+      "definitionName": "annotations",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
+          "typeName": "effect/schema/Schema",
+          "name": "annotations"
+        }
+      ]
+    },
+    {
       "definitionName": "optional",
       "definitionKind": "const",
       "extensions": [
