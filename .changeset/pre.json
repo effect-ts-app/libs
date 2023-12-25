@@ -1,0 +1,21 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@effect-app/cli": "0.33.1",
+    "@effect-app/compiler": "0.47.1",
+    "@effect-app/core": "0.96.1",
+    "@effect-app/eslint-codegen-model": "0.35.1",
+    "@effect-app/fluent-extensions": "0.96.1",
+    "@effect-app/infra": "0.132.2",
+    "@effect-app/infra-adapters": "0.84.1",
+    "@effect-app/pnpm-singleton": "0.37.1",
+    "@effect-app/prelude": "0.106.1",
+    "@effect-app/schema": "0.90.1",
+    "@effect-app/schema2": "0.0.1",
+    "@effect-app/vue": "0.86.2"
+  },
+  "changesets": [
+    "silly-cobras-hunt"
+  ]
+}
