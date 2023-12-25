@@ -9,11 +9,14 @@ import type { NonEmptyStringBrand } from "./strings.js"
 export interface PhoneNumberBrand extends Simplify<B.Brand<"PhoneNumber"> & NonEmptyStringBrand> {}
 export type PhoneNumber = string & PhoneNumberBrand
 
-export const PhoneNumber = S.string.pipe(
-  S.filter(isValidPhone, {
-    title: "PhoneNumber",
-    description: "a phone number with at least 7 digits",
-    arbitrary: () => Numbers(7, 10)
-  }),
-  fromBrand(nominal<PhoneNumber>())
-)
+export const PhoneNumber = S
+  .string
+  .pipe(
+    S.filter(isValidPhone, {
+      title: "PhoneNumber",
+      description: "a phone number with at least 7 digits",
+      arbitrary: () => Numbers(7, 10)
+    }),
+    fromBrand(nominal<PhoneNumber>())
+  )
+  .withDefaults

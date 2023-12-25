@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core/Prelude"
-import type { ParseOptions } from "@effect/schema/AST"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
+import type { AST } from "./schema.js"
 import { S } from "./schema.js"
 
 /**
@@ -23,10 +23,20 @@ export const defaultNullable = <From, To>(s: S.Schema<From, To | null>) => S.wit
 export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])
 
 /**
- * @tsplus fluent effect/schema/Schema __call
+ * @tsplus getter effect/schema/Schema withDefaults
  */
-export const parseSync = <I, A>(self: S.Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
-  S.parseSync(self)(u, options)
+export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {
+  const a = Object.assign(S.parseSync(s) as WithDefaults<Self>, s)
+  Object.setPrototypeOf(a, Object.getPrototypeOf(s))
+  return a
+
+  // return s as Self & WithDefaults<Self>
+}
+
+export type WithDefaults<Self extends S.Schema<any, any>> = (
+  i: S.Schema.From<Self>,
+  options?: AST.ParseOptions
+) => S.Schema.To<Self>
 
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId

@@ -4,7 +4,6 @@ import "./_ext/date.js"
 import "./_ext/misc.js"
 import "./_ext/allLower.js"
 import { S } from "@effect-app/schema"
-import type { ParseOptions } from "@effect/schema/AST"
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
@@ -20,9 +19,3 @@ export const defaultNullable = <From, To>(s: S.Schema<From, To | null>) => S.wit
  * @tsplus fluent effect/schema/Schema withDefault
  */
 export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])
-
-/**
- * @tsplus fluent effect/schema/Schema __call
- */
-export const parseSync = <I, A>(self: S.Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
-  S.parseSync(self)(u, options)

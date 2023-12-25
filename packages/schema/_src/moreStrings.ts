@@ -5,6 +5,7 @@ import { pipe } from "effect"
 import type { Simplify } from "effect/Types"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
+import type { WithDefaults } from "./ext.js"
 import { fromBrand, nominal } from "./ext.js"
 import { type B, S } from "./schema.js"
 import { NonEmptyString } from "./strings.js"
@@ -28,6 +29,7 @@ export const NonEmptyString50 = pipe(
   S.maxLength(50, { title: "NonEmptyString50" }),
   fromBrand(nominal<NonEmptyString2k>())
 )
+  .withDefaults
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
@@ -48,6 +50,7 @@ export const Min3String255 = pipe(
   S.maxLength(255, { title: "Min3String255" }),
   fromBrand(nominal<NonEmptyString2k>())
 )
+  .withDefaults
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
@@ -82,6 +85,7 @@ export const StringId = extendM(
     withDefault: () => S.withDefaultConstructor(s, makeStringId)
   })
 )
+  .withDefaults
 
 // const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
 
@@ -113,9 +117,11 @@ export function prefixedStringId<Brand extends StringId>() {
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
-    const schema = StringId.pipe(
-      S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
-    )
+    const schema = StringId
+      .pipe(
+        S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
+      )
+      .withDefaults
     const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
 
     return extendM(
@@ -140,7 +146,7 @@ export function prefixedStringId<Brand extends StringId>() {
 export const brandedStringId = <Brand extends StringIdBrand>() => (StringId as S.Schema<string, string & Brand> & {
   make: () => string & Brand
   withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
-})
+} & WithDefaults<S.Schema<string, string & Brand>>)
 
 export interface PrefixedStringUtils<
   Brand extends StringId,
@@ -162,10 +168,12 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
   return validator.default.isURL(s, { require_tld: false })
 }
 
-export const Url = NonEmptyString.pipe(
-  S.filter(isUrl, { arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(), title: "Url" }),
-  fromBrand(nominal<UrlBrand>())
-)
+export const Url = NonEmptyString
+  .pipe(
+    S.filter(isUrl, { arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(), title: "Url" }),
+    fromBrand(nominal<UrlBrand>())
+  )
+  .withDefaults
 
-export const PositiveInt = S.Int.pipe(S.positive())
+export const PositiveInt = S.Int.pipe(S.positive()).withDefaults
 export type PositiveInt = S.Schema.To<typeof PositiveInt>

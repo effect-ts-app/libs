@@ -9,11 +9,14 @@ export interface EmailBrand extends Simplify<NonEmptyStringBrand & B.Brand<"Emai
 
 export type Email = string & EmailBrand
 
-export const Email = S.string.pipe(
-  S.filter(isValidEmail, {
-    title: "Email",
-    description: "an email according to RFC 5322",
-    arbitrary: () => (fc) => fc.emailAddress()
-  }),
-  fromBrand(nominal<Email>())
-)
+export const Email = S
+  .string
+  .pipe(
+    S.filter(isValidEmail, {
+      title: "Email",
+      description: "an email according to RFC 5322",
+      arbitrary: () => (fc) => fc.emailAddress()
+    }),
+    fromBrand(nominal<Email>())
+  )
+  .withDefaults
