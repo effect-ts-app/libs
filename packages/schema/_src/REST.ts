@@ -8,7 +8,7 @@ import type * as Methods from "./Methods.js"
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
-import { S } from "./schema.js"
+import { AST, S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
 
@@ -190,6 +190,9 @@ export function QueryRequest<M>(__name?: string) {
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
+      static override get ast() {
+        return AST.setAnnotation(super.ast, AST.TitleAnnotationId, this.name)
+      }
     }
     return Self as any
   }
@@ -348,6 +351,9 @@ export function BodyRequest<M>(__name?: string) {
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
+      static override get ast() {
+        return AST.setAnnotation(super.ast, AST.TitleAnnotationId, this.name)
+      }
     }
     return Self as any
   }
