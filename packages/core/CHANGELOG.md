@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.97.0-next.2
+
+### Patch Changes
+
+- c550ee5: updates
+
 ## 0.97.0-next.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @effect-app/infra-adapters
 
+## 0.85.0-next.8
+
+### Patch Changes
+
+- c550ee5: updates
+- Updated dependencies [c550ee5]
+  - @effect-app/prelude@0.107.0-next.8
+  - @effect-app/schema@0.150.0-next.5
+  - @effect-app/core@0.97.0-next.2
+
 ## 0.85.0-next.7
 
 ### Patch Changes
