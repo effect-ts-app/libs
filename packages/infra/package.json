@@ -132,26 +132,6 @@
         "default": "./_cjs/api/defaultErrorHandler.cjs"
       }
     },
-    "./api/express/makeJsonSchema": {
-      "import": {
-        "types": "./dist/api/express/makeJsonSchema.d.ts",
-        "default": "./dist/api/express/makeJsonSchema.js"
-      },
-      "require": {
-        "types": "./dist/api/express/makeJsonSchema.d.ts",
-        "default": "./_cjs/api/express/makeJsonSchema.cjs"
-      }
-    },
-    "./api/express/makeOpenApiSpecs": {
-      "import": {
-        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./dist/api/express/makeOpenApiSpecs.js"
-      },
-      "require": {
-        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./_cjs/api/express/makeOpenApiSpecs.cjs"
-      }
-    },
     "./api/express/schema/jwt": {
       "import": {
         "types": "./dist/api/express/schema/jwt.d.ts",
@@ -160,16 +140,6 @@
       "require": {
         "types": "./dist/api/express/schema/jwt.d.ts",
         "default": "./_cjs/api/express/schema/jwt.cjs"
-      }
-    },
-    "./api/express/schema/routing": {
-      "import": {
-        "types": "./dist/api/express/schema/routing.d.ts",
-        "default": "./dist/api/express/schema/routing.js"
-      },
-      "require": {
-        "types": "./dist/api/express/schema/routing.d.ts",
-        "default": "./_cjs/api/express/schema/routing.cjs"
       }
     },
     "./api/reportError": {
