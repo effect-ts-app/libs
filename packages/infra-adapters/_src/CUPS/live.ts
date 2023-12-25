@@ -1,12 +1,13 @@
-import cp from "child_process"
-import util from "util"
-import { tempFile } from "../fileUtil.js"
-
+import { Predicate } from "@effect-app/core/Function.js"
+import { Do } from "@effect-app/core/Option.js"
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255 } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/prelude/schema"
+import cp from "child_process"
 import fs from "fs"
 import os from "os"
 import path from "path"
+import util from "util"
+import { tempFile } from "../fileUtil.js"
 import { CUPS } from "./service.js"
 import type { PrinterId } from "./service.js"
 
@@ -93,7 +94,7 @@ function getAvailablePrinters(host?: string) {
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
-      .map(NonEmptyString255)
+      .map((_) => NonEmptyString255(_))
   })
 }
 
