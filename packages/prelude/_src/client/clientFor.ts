@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { ConstructorInputOf, GetResponse, Methods, QueryRequest, RequestSchemed } from "@effect-app/prelude/schema"
+import type {
+  ConstructorInputOf,
+  From,
+  GetResponse,
+  Methods,
+  QueryRequest,
+  RequestSchemed,
+  To
+} from "@effect-app/prelude/schema"
 import { condemnCustom, Constructor, SchemaNamed, unsafeCstr } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
@@ -80,7 +88,7 @@ function clientFor_<M extends Requests>(models: M) {
             (_) => _.mapError((err) => new ResponseError(err))
           )
 
-          const parseResponseE = flow(parseResponse, (x) => x.map(Schema.Encoder.for(Response)))
+          const parseResponseE = flow(parseResponse, (x) => x.map(Response.encodeSync))
 
           const path = new Path(Request.path)
 
@@ -187,12 +195,12 @@ function clientFor_<M extends Requests>(models: M) {
 
 export type ExtractResponse<T> = T extends { Model: Schema.SchemaAny } ? To<T["Model"]>
   : T extends Schema.SchemaAny ? To<T>
-  : T extends unknown ? Schema.Void
+  : T extends unknown ? void
   : never
 
 export type ExtractEResponse<T> = T extends { Model: Schema.SchemaAny } ? From<T["Model"]>
   : T extends Schema.SchemaAny ? From<T>
-  : T extends unknown ? Schema.Void
+  : T extends unknown ? void
   : never
 
 type RequestHandlers<R, E, M extends Requests> = {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
-import type { ReqRes, RequestSchemed } from "@effect-app/prelude/schema"
+import { condemnCustom, Parser, type ReqRes, type RequestSchemed } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"
@@ -126,8 +126,8 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
   // eslint-disable-next-line @typescript-eslint/ban-types
   Response: ReqRes<ResponseE, ResponseA>
 }) {
-  const encodeResponse = Encoder.for(Response)
-  const decodeResponse = flow(Parser.for(Response).pipe(condemnCustom), (x) => x.map(encodeResponse))
+  const encodeResponse = Response.encodeSync
+  const decodeResponse = flow(Response.parse, (x) => x.map(encodeResponse))
   return fetchApi2S(Request.encodeSync, decodeResponse)(
     Request.method,
     new Path(Request.path)

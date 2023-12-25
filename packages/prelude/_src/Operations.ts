@@ -1,6 +1,6 @@
 import { Schema2 } from "./index.js"
 import type { ConstructorInputApi, FieldsClass } from "./schema.js"
-import { FromClass, literal, NonEmptyString2k, PositiveInt, useClassFeaturesForSchema } from "./schema.js"
+import { FromClass, useClassFeaturesForSchema } from "./schema.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -15,14 +15,12 @@ export class OperationProgress extends ExtendedClass<
 }) {}
 
 @useClassFeaturesForSchema
-export class Success extends ExtendedClass<Success.From, Success>()({
-  _tag: literal("Success"),
+export class Success extends ExtendedTaggedClass<Success.From, Success>()("Success", {
   message: NonEmptyString2k.nullable.withDefault
 }) {}
 
 @useClassFeaturesForSchema
-export class Failure extends ExtendedClass<Failure.From, Failure>()({
-  _tag: literal("Failure"),
+export class Failure extends ExtendedTaggedClass<Failure.From, Failure>()("Failure", {
   message: NonEmptyString2k.nullable.withDefault
 }) {}
 
@@ -30,15 +28,13 @@ export const OperationResult = Schema2.union(Success, Failure)
 export type OperationResult = Schema2.To<typeof OperationResult>
 
 @useClassFeaturesForSchema
-export class Operation
-  extends ExtendedClass<Operation, Operation.ConstructorInput, Operation.From, Operation.Fields>()({
-    id: OperationId,
-    progress: OperationProgress.optional(),
-    result: OperationResult.optional(),
-    createdAt: Schema2.Date.withDefault,
-    updatedAt: Schema2.Date.nullable.withDefault()
-  })
-{}
+export class Operation extends ExtendedClass<Operation.From, Operation>()({
+  id: OperationId,
+  progress: OperationProgress.optional(),
+  result: OperationResult.optional(),
+  createdAt: Schema2.Date.withDefault,
+  updatedAt: Schema2.Date.nullable.withDefault()
+}) {}
 
 // codegen:start {preset: model}
 //
