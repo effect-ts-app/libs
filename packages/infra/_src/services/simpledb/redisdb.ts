@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { flow, pipe } from "@effect-app/core/Function"
+import { flow } from "@effect-app/core/Function"
 import { RedisClient } from "@effect-app/infra-adapters/redis-client"
 import * as S from "@effect-app/prelude/schema"
 import type { Lock } from "redlock"
@@ -29,10 +29,8 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
       return RedisClient
         .flatMap((_) => _.hmgetAll(getKey(id)))
         .flatMapOpt((v) =>
-          pipe(
-            RedisSerializedDBRecord.Parser,
-            S.condemnFail
-          )(v)
+          RedisSerializedDBRecord
+            .parse(v)
             .map(({ data, version }) => ({
               data: JSON.parse(data) as EA,
               version
@@ -57,11 +55,14 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
                   .zipRight(getData(record))
                   // TODO: instead use MULTI & EXEC to make it in one command?
                   .flatMap((data) =>
-                    hmSetRec(getKey(record.id), {
-                      version,
-                      timestamp: new Date(),
-                      data
-                    })
+                    hmSetRec(
+                      getKey(record.id),
+                      new RedisSerializedDBRecord({
+                        version,
+                        timestamp: new Date(),
+                        data
+                      })
+                    )
                   )
                   .zipRight(setIndex(record))
                   .orDie
@@ -71,11 +72,14 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           onSome: () =>
             getData(record)
               .flatMap((data) =>
-                hmSetRec(getKey(record.id), {
-                  version,
-                  timestamp: new Date(),
-                  data
-                })
+                hmSetRec(
+                  getKey(record.id),
+                  new RedisSerializedDBRecord({
+                    version,
+                    timestamp: new Date(),
+                    data
+                  })
+                )
               )
               .orDie
               .map(() => ({ version, data: record } as CachedRecord<A>))
@@ -190,6 +194,6 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
 
 export class RedisSerializedDBRecord extends S.Class<RedisSerializedDBRecord>()({
   version: S.string,
-  timestamp: S.date,
+  timestamp: S.Date,
   data: S.string
 }) {}

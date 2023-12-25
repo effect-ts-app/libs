@@ -1,4 +1,4 @@
-import type { ReqRes, SchemaAny, To } from "@effect-app/prelude/schema"
+import type { ReqRes, Schema } from "@effect-app/prelude/schema"
 import { EParserFor, Parser, unsafe } from "@effect-app/prelude/schema"
 import type { ParsedQuery } from "query-string"
 
@@ -32,11 +32,11 @@ export const parseOptUnknown = <E, A>(t: ReqRes<E, A>) => {
   return dec
 }
 
-export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
+export function parseRouteParamsOption<NER extends Record<string, Schema<any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: Option<To<NER[K]>>
+  [K in keyof NER]: Option<Schema.To<NER[K]>>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -46,16 +46,16 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: Option<To<NER[K]>>
+      [K in keyof NER]: Option<Schema.To<NER[K]>>
     }
   )
 }
 
-export function parseRouteParams<NER extends Record<string, SchemaAny>>(
+export function parseRouteParams<NER extends Record<string, Schema<any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: To<NER[K]>
+  [K in keyof NER]: Schema.To<NER[K]>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -65,7 +65,7 @@ export function parseRouteParams<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: To<NER[K]>
+      [K in keyof NER]: Schema.To<NER[K]>
     }
   )
 }

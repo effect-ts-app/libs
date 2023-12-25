@@ -1,5 +1,4 @@
 import { flow } from "@effect-app/core/Function"
-import * as S from "@effect-app/prelude/schema"
 
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { getRecordName, makeMap, SerializedDBRecord } from "./shared.js"
@@ -10,7 +9,7 @@ import type { Version } from "./simpledb.js"
 // Do not try this at home.
 const storage = makeMap<string, string>()
 
-const parseSDB = SerializedDBRecord.Parser >= S.condemnFail
+const parseSDB = SerializedDBRecord.parse
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(

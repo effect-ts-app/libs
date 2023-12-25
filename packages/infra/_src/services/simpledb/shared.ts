@@ -1,5 +1,4 @@
 import * as S from "@effect-app/prelude/schema"
-import type { SchemaAny } from "@effect-app/schema"
 
 export class CouldNotAquireDbLockException
   extends Data.TaggedError("CouldNotAquireDbLockException")<{ type: string; id: string; error: Error; message: string }>
@@ -30,15 +29,15 @@ export interface DBRecord<TKey extends string> {
 
 export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
   version: S.string,
-  timestamp: S.date,
+  timestamp: S.Date,
   data: S.string
 }) {}
 
 // unknown -> string -> SDB?
-export function makeSerialisedDBRecord(s: SchemaAny) {
+export function makeSerialisedDBRecord(s: Schema<any, any>) {
   return S.struct({
     version: S.number,
-    timestamp: S.date,
+    timestamp: S.Date,
     data: s
   })
 }
