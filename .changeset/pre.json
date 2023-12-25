@@ -16,6 +16,7 @@
     "@effect-app/schema-legacy": "0.90.1"
   },
   "changesets": [
+    "bright-snakes-decide",
     "calm-walls-kiss",
     "chilly-comics-kneel",
     "clean-islands-attack",
