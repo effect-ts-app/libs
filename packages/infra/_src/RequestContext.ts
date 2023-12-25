@@ -1,6 +1,5 @@
 import { Schema2 } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
-import { useClassFeaturesForSchema } from "@effect-app/schema"
 
 const fields = {
   name: NonEmptyString255,

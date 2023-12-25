@@ -1,5 +1,4 @@
 import { Schema2 } from "./index.js"
-import { useClassFeaturesForSchema } from "./schema.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
