@@ -1,5 +1,14 @@
 # @effect-app/infra-adapters
 
+## 0.85.0-next.5
+
+### Patch Changes
+
+- 3320864: cleanup schema ext
+- Updated dependencies [3320864]
+  - @effect-app/prelude@0.107.0-next.5
+  - @effect-app/schema@0.150.0-next.3
+
 ## 0.85.0-next.4
 
 ### Patch Changes
