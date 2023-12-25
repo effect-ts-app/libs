@@ -11,7 +11,7 @@ export class RequestContextParent extends Class<
   name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: Schema2.Date.withDefault
+  createdAt: Schema2.Date.withDefault()
 }) {}
 
 /**
@@ -23,7 +23,7 @@ export class RequestContext extends Schema2.Class<
   RequestContext
 >()({
   ...RequestContextParent.omit("id"),
-  id: RequestId.withDefault,
+  id: RequestId.withDefault(),
   rootId: RequestId,
   parent: RequestContextParent.optional(),
   namespace: NonEmptyString255.optional()

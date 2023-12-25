@@ -1,26 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core/Prelude"
+import type { ParseOptions } from "@effect/schema/AST"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import { S } from "./schema.js"
 
 /**
- * @tsplus getter effect/schema/Schema withDefault
+ * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultDate = (s: S.Schema<string, Date>) => S.withDefaultConstructor(s, () => new Date())
+export const defaultDate = <From>(s: S.Schema<From, Date>) => S.withDefaultConstructor(s, () => new Date())
 
 /**
- * @tsplus getter effect/schema/Schema withDefault
+ * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultNullable = <From>(s: S.Schema<From, null>) => S.withDefaultConstructor(s, () => null)
+export const defaultNullable = <From, To>(s: S.Schema<From, To | null>) => S.withDefaultConstructor(s, () => null)
 
 /**
- * @tsplus getter effect/schema/Schema withDefault
+ * @tsplus fluent effect/schema/Schema withDefault
  */
 export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])
 
+/**
+ * @tsplus fluent effect/schema/Schema __call
+ */
+export const parseSync = <I, A>(self: S.Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
+  S.parseSync(self)(u, options)
 
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId

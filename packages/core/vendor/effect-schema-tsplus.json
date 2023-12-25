@@ -121,7 +121,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "nullable"
         }
@@ -134,7 +134,7 @@
         {
           "kind": "fluent",
           "typeName": "effect/schema/Schema",
-          "name": "withDefaultMake"
+          "name": "withDefault"
         }
       ]
     }

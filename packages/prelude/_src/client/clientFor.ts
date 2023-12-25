@@ -75,19 +75,20 @@ function clientFor_<M extends Requests>(models: M) {
             return v
           }
 
+          const res = Response as Schema<any, any>
           const parseResponse = flow(
-            Response.parse,
+            res.parse,
             (_) => _.mapError((err) => new ResponseError(err))
           )
 
-          const parseResponseE = flow(parseResponse, (x) => x.map(Response.encodeSync))
+          const parseResponseE = flow(parseResponse, (x) => x.map(res.encodeSync))
 
           const path = new Path(Request.path)
 
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
           const requestName = NonEmptyString255(
-            AST.getTitleAnnotation(Request.ast) ?? "TODO"
+            AST.getTitleAnnotation(Request.ast).value ?? "TODO"
           )
 
           // if we don't need fields, then also dont require an argument.
