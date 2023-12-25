@@ -4,12 +4,14 @@
  * @tsplus global
  */
 import {
+  array,
   boolean,
   Class,
   Date,
   Email,
   ExtendedClass,
   literal,
+  nonEmptyArray,
   // nonEmptyArray,
   NonEmptyString255,
   NonEmptyString2k,
@@ -17,9 +19,11 @@ import {
   NonEmptyString64k,
   PhoneNumber,
   PositiveInt,
+  Schema,
   string,
   StringId,
   struct,
+  TaggedClass,
   union,
   unknown,
   void_ as Void

@@ -95,7 +95,7 @@ import {
   // Ref,
   ROSet,
   // Schedule,
-  Schema,
+  Schema2,
   // Semaphore,
   Utils
   // XPure,
