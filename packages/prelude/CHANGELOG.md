@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.0-next.1
+
+### Patch Changes
+
+- bd2130b: cleanup
+- Updated dependencies [bd2130b]
+  - @effect-app/schema@0.150.0-next.1
+
 ## 0.107.0-next.0
 
 ### Minor Changes

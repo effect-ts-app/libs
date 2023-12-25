@@ -1,11 +1,16 @@
 # @effect-app/schema
 
+## 0.150.0-next.1
+
+### Patch Changes
+
+- bd2130b: cleanup
+
 ## 0.150.0
 
 ### Minor Changes
 
 - switch to @effect/schema
-
 
 ## 0.90.1
 
