@@ -1,6 +1,0 @@
-export * as disk from "./diskdb.js"
-export * as mem from "./memdb.js"
-export * as mongo from "./mongodb.js"
-export * as redis from "./redisdb.js"
-export * from "./shared.js"
-export * as SDB from "./simpledb.js"
