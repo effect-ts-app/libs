@@ -93,7 +93,7 @@ function getAvailablePrinters(host?: string) {
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
-      .map(NonEmptyString255)
+      .map((_) => NonEmptyString255.parseSync(_))
   })
 }
 
