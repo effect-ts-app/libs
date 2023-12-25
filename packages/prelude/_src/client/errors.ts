@@ -1,5 +1,4 @@
 import { useClassFeaturesForSchema } from "@effect-app/schema"
-import { array } from "fast-check"
 
 @useClassFeaturesForSchema
 export class NotFoundError extends TaggedClass<NotFoundError>()("NotFoundError", {
