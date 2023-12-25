@@ -137,15 +137,10 @@ export function prefixedStringId<Brand extends StringId>() {
   }
 }
 
-// export const brandedStringId = <Brand extends StringId>() =>
-//   extendM(StringId.pipe(S.brand<Brand>()), (s) => {
-//     const make = (): Brand => StringId.make() as unknown as Brand
-
-//     return ({
-//       make,
-//       withDefault: S.optional(s, { default: make })
-//     })
-//   })
+export const brandedStringId = <Brand extends StringIdBrand>() => (StringId as S.Schema<string, string & Brand> & {
+  make: () => string & Brand
+  withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
+})
 
 export interface PrefixedStringUtils<
   Brand extends StringId,

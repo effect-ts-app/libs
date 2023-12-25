@@ -1,7 +1,6 @@
-import { fromBrand, nominal } from "@effect-app/schema/ext"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
-import type { StringIdBrand } from "./schema.js"
+import { brandedStringId, type StringIdBrand } from "./schema.js"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol
@@ -18,4 +17,4 @@ export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & 
  * @tsplus type UserProfileId
  */
 export type UserProfileId = StringId & UserProfileIdBrand
-export const UserProfileId = StringId.pipe(fromBrand(nominal<UserProfileIdBrand>()))
+export const UserProfileId = brandedStringId<UserProfileIdBrand>()
