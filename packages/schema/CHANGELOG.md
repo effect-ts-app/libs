@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.150.0-next.2
+
+### Patch Changes
+
+- fde3e90: improve
+- Updated dependencies [fde3e90]
+  - @effect-app/core@0.97.0-next.1
+
 ## 0.150.0-next.1
 
 ### Patch Changes
