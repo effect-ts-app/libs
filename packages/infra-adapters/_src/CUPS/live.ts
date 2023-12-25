@@ -1,5 +1,6 @@
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255 } from "@effect-app/prelude/schema"
+import { NonEmptyString255, S } from "@effect-app/prelude/schema"
+import type { ParseOptions } from "@effect/schema/AST"
 import cp from "child_process"
 import fs from "fs"
 import os from "os"
@@ -101,3 +102,9 @@ function* buildListArgs(config?: { host?: string | undefined }) {
     yield `-h ${config.host}`
   }
 }
+
+/**
+ * @tsplus fluent effect/schema/Schema __call
+ */
+export const parseSync = <I, A>(self: S.Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
+  S.parseSync(self)(u, options)

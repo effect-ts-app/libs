@@ -36,3 +36,11 @@ import type {} from "@effect-app/infra/api/setupRequest"
  * @tsplus global
  */
 import {} from "@effect-app/infra/api/reportError"
+import { S } from "@effect-app/schema2/schema"
+import type { ParseOptions } from "@effect/schema/AST"
+
+/**
+ * @tsplus fluent effect/schema/Schema __call
+ */
+export const parseSync = <I, A>(self: S.Schema<I, A>, u: I, options?: ParseOptions | undefined) =>
+  S.parseSync(self)(u, options)
