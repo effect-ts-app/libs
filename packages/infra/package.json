@@ -143,6 +143,16 @@
         "default": "./_cjs/api/express/schema/jwt.cjs"
       }
     },
+    "./api/express/schema/routing": {
+      "import": {
+        "types": "./dist/api/express/schema/routing.d.ts",
+        "default": "./dist/api/express/schema/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/express/schema/routing.d.ts",
+        "default": "./_cjs/api/express/schema/routing.cjs"
+      }
+    },
     "./api/reportError": {
       "import": {
         "types": "./dist/api/reportError.d.ts",
