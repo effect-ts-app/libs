@@ -88,8 +88,8 @@ function printBuffer(printer: PrinterConfig, options: string[]) {
 }
 
 function getAvailablePrinters(host?: string) {
-  return Do(($) => {
-    const { stdout } = $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
+  return Effect.gen(function*($) {
+    const { stdout } = yield* $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
