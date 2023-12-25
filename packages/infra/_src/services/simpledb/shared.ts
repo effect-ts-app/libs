@@ -1,4 +1,4 @@
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 import type { SchemaAny } from "@effect-app/schema"
 
 export class CouldNotAquireDbLockException

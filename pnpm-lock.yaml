@@ -13,7 +13,7 @@ patchedDependencies:
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
   '@effect/schema@0.56.1':
-    hash: rcsreclz2azqo6sfbj5vdct5im
+    hash: 3zbehe3tb3nsvjov5h26sspqxu
     path: patches/@effect__schema@0.56.1.patch
   '@fp-ts/optic@0.21.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
@@ -90,9 +90,9 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:packages/prelude
-      '@effect-app/schema':
+      '@effect-app/schema2':
         specifier: workspace:*
-        version: link:packages/schema
+        version: link:packages/schema2
       '@effect/language-service':
         specifier: 0.0.19
         version: 0.0.19(patch_hash=izp2ue34jjv4swyrhg2ux4ha3e)
@@ -364,9 +364,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
-      '@effect-app/schema':
+      '@effect-app/schema2':
         specifier: workspace:*
-        version: link:../schema
+        version: link:../schema2
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
@@ -449,9 +449,6 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
-      '@effect-app/schema':
-        specifier: workspace:*
-        version: link:../schema
       '@effect-app/schema2':
         specifier: workspace:*
         version: link:../schema2
@@ -634,9 +631,6 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
-      '@effect-app/schema':
-        specifier: workspace:*
-        version: link:../schema
       '@effect-app/schema2':
         specifier: workspace:*
         version: link:../schema2
@@ -758,7 +752,7 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.56.1
-        version: 0.56.1(patch_hash=rcsreclz2azqo6sfbj5vdct5im)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -811,9 +805,6 @@ importers:
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
-      '@effect-app/schema':
-        specifier: workspace:*
-        version: link:../schema
       '@effect-app/schema2':
         specifier: workspace:*
         version: link:../schema2
@@ -1668,14 +1659,14 @@ packages:
       '@effect/schema': ^0.56.0
       effect: 2.0.0-next.62
     dependencies:
-      '@effect/schema': 0.56.1(patch_hash=rcsreclz2azqo6sfbj5vdct5im)(effect@2.0.0-next.62)(fast-check@3.15.0)
+      '@effect/schema': 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
       effect: 2.0.0-next.62
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.56.1(patch_hash=rcsreclz2azqo6sfbj5vdct5im)(effect@2.0.0-next.62)(fast-check@3.15.0):
+  /@effect/schema@0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0):
     resolution: {integrity: sha512-cfEyHLXPdzSKzJU/yYrPjFd0iVHPydh+NT0sgTe4bzXbcvOsKZuvQ86cAAwXN7lxY0N5cPes9ACxUxTdkEaNlw==}
     peerDependencies:
       effect: 2.0.0-next.62

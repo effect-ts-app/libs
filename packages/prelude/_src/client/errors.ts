@@ -1,4 +1,4 @@
-import { useClassFeaturesForSchema } from "@effect-app/schema"
+import { useClassFeaturesForSchema } from "@effect-app/schema2"
 
 @useClassFeaturesForSchema
 export class NotFoundError extends TaggedClass<NotFoundError>()("NotFoundError", {

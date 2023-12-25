@@ -9,7 +9,6 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/prelude": "workspace:*",
-    "@effect-app/schema": "workspace:*",
     "@effect-app/schema2": "workspace:*",
     "effect": "^2.0.0-next.62",
     "@faker-js/faker": "^8.3.1",

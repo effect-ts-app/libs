@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 import type { Methods } from "@effect-app/schema"
 
 import type { JSONSchema, ParameterLocation, SubSchema } from "@effect-app/infra-adapters/Openapi/atlas-plutus"

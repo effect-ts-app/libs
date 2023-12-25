@@ -1,5 +1,5 @@
 import { flow } from "@effect-app/core/Function"
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { getRecordName, makeMap, SerializedDBRecord } from "./shared.js"

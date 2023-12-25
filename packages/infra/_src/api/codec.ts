@@ -1,4 +1,4 @@
-import * as S from "@effect-app/schema2"
+import * as S from "@effect-app/prelude/schema"
 
 export function makeCodec<
   To extends { id: Id },

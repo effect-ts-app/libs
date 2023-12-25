@@ -12,7 +12,7 @@ import {
   NonEmptyString2k,
   nullableIdentifier
 } from "@effect-app/schema"
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 import type { Faker } from "@faker-js/faker"
 import { fakerToArb, getFaker } from "../faker.js"
 
