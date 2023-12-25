@@ -64,6 +64,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Class": {
+      "import": {
+        "types": "./dist/Class.d.ts",
+        "default": "./dist/Class.js"
+      },
+      "require": {
+        "types": "./dist/Class.d.ts",
+        "default": "./_cjs/Class.cjs"
+      }
+    },
     "./FastCheck": {
       "import": {
         "types": "./dist/FastCheck.d.ts",

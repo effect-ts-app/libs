@@ -1,44 +1,42 @@
 import { Schema2 } from "./index.js"
-import type { ConstructorInputApi, FieldsClass, To } from "./schema.js"
-import { ExtendedClass, FromClass, NonEmptyString2k, PositiveInt, union, useClassFeaturesForSchema } from "./schema.js"
+import type { ConstructorInputApi, FieldsClass } from "./schema.js"
+import { FromClass, literal, NonEmptyString2k, PositiveInt, useClassFeaturesForSchema } from "./schema.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
 
 @useClassFeaturesForSchema
 export class OperationProgress extends ExtendedClass<
-  OperationProgress,
-  OperationProgress.ConstructorInput,
   OperationProgress.From,
-  OperationProgress.Fields
+  OperationProgress
 >()({
   completed: PositiveInt,
   total: PositiveInt
 }) {}
 
 @useClassFeaturesForSchema
-export class Success extends ExtendedClass<Success, Success.ConstructorInput, Success.From, Success.Fields>()({
+export class Success extends ExtendedClass<Success.From, Success>()({
   _tag: literal("Success"),
   message: NonEmptyString2k.nullable.withDefault
 }) {}
 
 @useClassFeaturesForSchema
-export class Failure extends ExtendedClass<Failure, Failure.ConstructorInput, Failure.From, Failure.Fields>()({
+export class Failure extends ExtendedClass<Failure.From, Failure>()({
   _tag: literal("Failure"),
   message: NonEmptyString2k.nullable.withDefault
 }) {}
 
-export const OperationResult = union({ Success, Failure })
-export type OperationResult = To<typeof OperationResult>
+export const OperationResult = Schema2.union(Success, Failure)
+export type OperationResult = Schema2.To<typeof OperationResult>
 
 @useClassFeaturesForSchema
 export class Operation
   extends ExtendedClass<Operation, Operation.ConstructorInput, Operation.From, Operation.Fields>()({
     id: OperationId,
-    progress: OperationProgress.optional,
-    result: OperationResult.optional,
+    progress: OperationProgress.optional(),
+    result: OperationResult.optional(),
     createdAt: Schema2.Date.withDefault,
-    updatedAt: Schema2.Date.nullable.withDefault
+    updatedAt: Schema2.Date.nullable.withDefault()
   })
 {}
 

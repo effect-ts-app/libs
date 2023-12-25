@@ -171,3 +171,6 @@ export const Url = NonEmptyString.pipe(
   S.filter(isUrl, { arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(), title: "Url" }),
   fromBrand(nominal<UrlBrand>())
 )
+
+export const PositiveInt = S.Int.pipe(S.positive())
+export type PositiveInt = S.Schema.To<typeof PositiveInt>

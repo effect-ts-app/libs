@@ -109,7 +109,7 @@ type OrAny<T> = Exclude<T, undefined>
 // type OrUndefined<T> = T extends S.Schema<any, any> ? undefined : S.Schema<any, any>
 
 // TODO: Somehow ensure that Self and M are related..
-// type Ensure<M, Self extends S.Schema<any, any>> = M extends S.To<Self> ? M : never
+// type Ensure<M, Self extends S.Schema<any, any>> = M extends S.Schema.To<Self> ? M : never
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
     method: ReadMethods,

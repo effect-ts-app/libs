@@ -5,17 +5,22 @@
  */
 import {
   boolean,
+  Class,
   Date,
   Email,
+  ExtendedClass,
+  literal,
   // nonEmptyArray,
   NonEmptyString255,
   NonEmptyString2k,
   NonEmptyString50,
   NonEmptyString64k,
   PhoneNumber,
+  PositiveInt,
   string,
   StringId,
   struct,
+  union,
   unknown,
   void_ as Void
   // Arbitrary,
