@@ -16,8 +16,10 @@
     "@effect-app/schema-legacy": "0.90.1"
   },
   "changesets": [
+    "chilly-comics-kneel",
     "clean-islands-attack",
     "cool-kiwis-provide",
+    "curvy-suns-admire",
     "silly-cobras-hunt",
     "two-pillows-care"
   ]
