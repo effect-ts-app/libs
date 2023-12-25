@@ -113,7 +113,6 @@ import { match, Pattern } from "ts-pattern"
 
 import "@effect-app/core/_global"
 import "@effect-app/core/Prelude"
-import "@effect-app/schema/_global"
 import "@effect-app/schema2/_global"
 
 import "./_global.ext.js"

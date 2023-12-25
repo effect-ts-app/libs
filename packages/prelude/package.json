@@ -289,56 +289,6 @@
         "default": "./_cjs/schema.cjs"
       }
     },
-    "./schema/_schema": {
-      "import": {
-        "types": "./dist/schema/_schema.d.ts",
-        "default": "./dist/schema/_schema.js"
-      },
-      "require": {
-        "types": "./dist/schema/_schema.d.ts",
-        "default": "./_cjs/schema/_schema.cjs"
-      }
-    },
-    "./schema/api": {
-      "import": {
-        "types": "./dist/schema/api.d.ts",
-        "default": "./dist/schema/api.js"
-      },
-      "require": {
-        "types": "./dist/schema/api.d.ts",
-        "default": "./_cjs/schema/api.cjs"
-      }
-    },
-    "./schema/api/date": {
-      "import": {
-        "types": "./dist/schema/api/date.d.ts",
-        "default": "./dist/schema/api/date.js"
-      },
-      "require": {
-        "types": "./dist/schema/api/date.d.ts",
-        "default": "./_cjs/schema/api/date.cjs"
-      }
-    },
-    "./schema/overrides": {
-      "import": {
-        "types": "./dist/schema/overrides.d.ts",
-        "default": "./dist/schema/overrides.js"
-      },
-      "require": {
-        "types": "./dist/schema/overrides.d.ts",
-        "default": "./_cjs/schema/overrides.cjs"
-      }
-    },
-    "./schema/shared": {
-      "import": {
-        "types": "./dist/schema/shared.d.ts",
-        "default": "./dist/schema/shared.js"
-      },
-      "require": {
-        "types": "./dist/schema/shared.d.ts",
-        "default": "./_cjs/schema/shared.cjs"
-      }
-    },
     "./service": {
       "import": {
         "types": "./dist/service.d.ts",

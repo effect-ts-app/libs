@@ -1,20 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 
-import type { PositiveBrand, PositiveExcludeZeroBrand, Schema } from "@effect-app/schema"
-import {
-  Arbitrary,
-  arbitrary,
-  array as arrayOriginal,
-  brand,
-  nonEmptyArray as nonEmptyArrayOriginal,
-  number,
-  positive,
-  positiveExcludeZero,
-  set as setOriginal
-} from "@effect-app/schema"
-
 import { ROSet } from "@effect-app/core/Prelude"
+import { arbitrary, type PositiveBrand, positiveExcludeZero, type PositiveExcludeZeroBrand } from "@effect-app/schema"
+import { brand, positive } from "@effect-app/schema2"
+import { number } from "effect/Equivalence"
+import { Arbitrary } from "fast-check"
 
 export const PositiveNumber = positive("float")(number).pipe(brand<PositiveNumber>())
 export type PositiveNumber = number & PositiveBrand

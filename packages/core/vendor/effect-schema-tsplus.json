@@ -128,11 +128,22 @@
       ]
     },
     {
-      "definitionName": "omit",
+      "definitionName": "extend",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "extend"
+        }
+      ]
+    },
+    {
+      "definitionName": "omit",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "pipeable",
           "typeName": "effect/schema/Schema",
           "name": "omit"
         }
@@ -143,7 +154,7 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "kind": "fluent",
+          "kind": "pipeable",
           "typeName": "effect/schema/Schema",
           "name": "pick"
         }
@@ -167,7 +178,7 @@
         {
           "kind": "fluent",
           "typeName": "effect/schema/Schema",
-          "name": "withDefault"
+          "name": "withDefaultMake"
         }
       ]
     }

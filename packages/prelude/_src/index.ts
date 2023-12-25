@@ -6,6 +6,6 @@ export * as Utils from "./utils.js"
 // for app land, it may make sense to create an app/prelude?
 export * from "@effect-app/core/Prelude"
 
-export * as Schema2 from "@effect-app/schema2"
+export * as Schema2 from "./schema.js"
 
 export { Set as ROSet } from "@effect-app/core/Prelude"
