@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.4
+
+### Minor Changes
+
+- eb3bbc2: re-add basic routing
+
 ## 0.133.0-next.3
 
 ### Patch Changes
