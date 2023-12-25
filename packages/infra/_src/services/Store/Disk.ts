@@ -38,10 +38,12 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
             (json) =>
               fu
                 .writeTextFile(file, json)
-                .withSpan("Disk.write.writeFile [effect-app/infra/Store]")
+                .withSpan("Disk.write.writeFile [effect-app/infra/Store]", {
+                  attributes: { "disk.file_size": json.length }
+                })
           )
           .withSpan("Disk.write [effect-app/infra/Store]", {
-            attributes: { "disk.file": file, "disk.file_size": json.length }
+            attributes: { "disk.file": file }
           })
     }
 

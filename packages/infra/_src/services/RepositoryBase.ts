@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import type { ParserEnv } from "@effect-app/schema/custom/Parser"
+// import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
 import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
@@ -31,7 +31,7 @@ export abstract class RepositoryBaseC<
     events?: Iterable<Evt>
   ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
   abstract readonly utils: {
-    parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
+    parseMany: (a: readonly PM[]) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, PositiveInt>

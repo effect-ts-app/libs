@@ -172,16 +172,6 @@
         "default": "./_cjs/api/util.cjs"
       }
     },
-    "./api/writeDocs": {
-      "import": {
-        "types": "./dist/api/writeDocs.d.ts",
-        "default": "./dist/api/writeDocs.js"
-      },
-      "require": {
-        "types": "./dist/api/writeDocs.d.ts",
-        "default": "./_cjs/api/writeDocs.cjs"
-      }
-    },
     "./errorReporter": {
       "import": {
         "types": "./dist/errorReporter.d.ts",
