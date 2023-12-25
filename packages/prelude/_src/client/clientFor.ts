@@ -86,9 +86,7 @@ function clientFor_<M extends Requests>(models: M) {
 
           // @ts-expect-error doc
           const actionName = utils.uncapitalize(cur)
-          const requestName = NonEmptyString255(
-            AST.getTitleAnnotation(Request.ast).value ?? "TODO"
-          )
+          const requestName = AST.getTitleAnnotation(Request.ast).value ?? "TODO"
 
           // if we don't need fields, then also dont require an argument.
           const fields = [Request.Body, Request.Query, Request.Path]

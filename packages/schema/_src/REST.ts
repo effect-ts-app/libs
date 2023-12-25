@@ -178,8 +178,9 @@ export function QueryRequest<M>(__name?: string) {
     PPath
   > {
     class Self extends S.Class<Self>()({
-      ..._.query,
-      ..._.path
+      // TODO
+      // ..._.query,
+      // ..._.path
     }) {
       static Body = {}
       static Path = _.path ?? {}
@@ -334,9 +335,10 @@ export function BodyRequest<M>(__name?: string) {
     PPath
   > {
     class Self extends S.Class<Self>()({
-      ..._.body,
-      ..._.query,
-      ..._.path
+      // TODO
+      // ..._.body,
+      // ..._.query,
+      // ..._.path
     }) {
       static Path = _.path ?? {}
       static Body = _.body ?? {}
