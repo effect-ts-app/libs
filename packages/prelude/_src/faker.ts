@@ -26,3 +26,7 @@ export const fakerToArb = (fakerGen: () => string) => (fc: typeof FC) => {
       return fakerGen() // call it
     })
 }
+
+export const fakerArb = (
+  gen: (fake: Faker) => () => string
+): (a: any) => FC.Arbitrary<string> => fakerToArb(gen(getFaker()))
