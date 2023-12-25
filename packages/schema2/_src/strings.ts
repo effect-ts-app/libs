@@ -33,3 +33,5 @@ export const NonEmptyString255 = nonEmptyString.pipe(
   S.maxLength(255, { title: "NonEmptyString255" }),
   fromBrand(nominal<NonEmptyString255>())
 )
+
+export const a = NonEmptyString255("abc")

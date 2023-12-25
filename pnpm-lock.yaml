@@ -342,6 +342,9 @@ importers:
       '@effect/platform':
         specifier: ^0.39.0
         version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+      '@effect/schema':
+        specifier: ^0.56.1
+        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
