@@ -12,11 +12,12 @@ export type PhoneNumber = string & PhoneNumberBrand
 export const PhoneNumber = S
   .string
   .pipe(
+    fromBrand(nominal<PhoneNumber>()),
     S.filter(isValidPhone, {
       title: "PhoneNumber",
       description: "a phone number with at least 7 digits",
-      arbitrary: () => Numbers(7, 10)
-    }),
-    fromBrand(nominal<PhoneNumber>())
+      arbitrary: () => Numbers(7, 10),
+      jsonSchema: { format: "phone" }
+    })
   )
   .withDefaults

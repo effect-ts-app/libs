@@ -89,7 +89,7 @@ function buildFieldInfo(
           defaultMessage: capitalize(propertyKey.toString()),
           id: `fieldNames.${String(propertyKey)}`
         }),
-        message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
+        message: err // TODO err.slice(err.indexOf("expected")) // TODO: this is not translated.
       }
     )
   }
@@ -239,7 +239,13 @@ export function getMetadataFromSchema(
     ? ast.types.filter((_) => _ !== Schema2.null.ast)[0]!
     : ast
 
-  const jschema = JSONSchema.to(S.make(realSelf)) as any
+  let jschema: any
+  try {
+    jschema = JSONSchema.to(S.make(realSelf)) as any
+  } catch (err) {
+    jschema = {}
+    console.warn("error getting jsonschema from ", err, ast)
+  }
 
   const isNumber = jschema.type === "number" || jschema.type === "integer"
   const isInt = jschema.type === "integer"
