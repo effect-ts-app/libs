@@ -1,5 +1,14 @@
 # @effect-app/infra-adapters
 
+## 0.85.0-next.11
+
+### Patch Changes
+
+- ac35466: use schema fork
+- Updated dependencies [ac35466]
+  - @effect-app/prelude@0.107.0-next.11
+  - @effect-app/schema@0.150.0-next.8
+
 ## 0.85.0-next.10
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.8
+
+### Patch Changes
+
+- ac35466: use schema fork
+
 ## 0.150.0-next.7
 
 ### Patch Changes

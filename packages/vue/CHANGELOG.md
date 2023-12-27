@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.87.0-next.12
+
+### Patch Changes
+
+- ac35466: use schema fork
+- Updated dependencies [ac35466]
+  - @effect-app/prelude@0.107.0-next.11
+  - @effect-app/schema@0.150.0-next.8
+  - @effect-app/vue@0.87.0-next.12
+
 ## 0.87.0-next.11
 
 ### Patch Changes
