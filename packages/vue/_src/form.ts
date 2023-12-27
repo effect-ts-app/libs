@@ -89,7 +89,7 @@ function buildFieldInfo(
           defaultMessage: capitalize(propertyKey.toString()),
           id: `fieldNames.${String(propertyKey)}`
         }),
-        message: err // TODO err.slice(err.indexOf("expected")) // TODO: this is not translated.
+        message: err.slice(err.indexOf("Expected")) // TODO: this is not translated.
       }
     )
   }
