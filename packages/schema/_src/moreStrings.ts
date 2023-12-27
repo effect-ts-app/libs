@@ -119,11 +119,11 @@ export function prefixedStringId<Brand extends StringId>() {
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
-    const schema = StringId
+    const s: S.Schema<string, string & Brand> = StringId
       .pipe(
         S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
       )
-      .withDefaults
+    const schema = s.withDefaults
     const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
 
     return extendM(
