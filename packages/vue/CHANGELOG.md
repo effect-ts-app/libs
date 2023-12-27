@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.0-next.15
+
+### Patch Changes
+
+- 5f76678: reimplement vue form
+- Updated dependencies [5f76678]
+  - @effect-app/vue@0.87.0-next.15
+
 ## 0.87.0-next.14
 
 ### Patch Changes
