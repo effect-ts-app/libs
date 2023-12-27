@@ -12,9 +12,6 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@effect/schema@0.56.1':
-    hash: 3zbehe3tb3nsvjov5h26sspqxu
-    path: patches/@effect__schema@0.56.1.patch
   '@fp-ts/optic@0.21.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
     path: patches/@fp-ts__optic@0.21.0.patch
@@ -453,8 +450,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/schema':
-        specifier: ^0.56.1
-        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.56.1
+        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@faker-js/faker':
         specifier: ^8.3.1
         version: 8.3.1
@@ -554,10 +551,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: ^0.56.1
-        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.56.1
+        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -639,10 +636,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: ^0.56.1
-        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.56.1
+        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -711,8 +708,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect/schema':
-        specifier: ^0.56.1
-        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.56.1
+        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -821,8 +818,8 @@ importers:
         specifier: ^0.25.0
         version: 0.25.0(@effect/platform@0.39.0)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: ^0.56.1
-        version: 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.56.1
+        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@formatjs/intl':
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
@@ -1639,6 +1636,16 @@ packages:
     dev: true
     optional: true
 
+  /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
+    resolution: {integrity: sha512-hx30V1xBu8lvuhFf3K93boAYo32nCnmo3CBnxsJVLw7YmxMXXNxF7ODyINtDaQ0ustDLHfTUbXuN7JUbAxghkQ==}
+    peerDependencies:
+      effect: 2.0.0-next.62
+      fast-check: ^3.13.2
+    dependencies:
+      effect: 2.0.0-next.62
+      fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+    dev: false
+
   /@effect-app/typescript@5.4.0-tsplus.202311222:
     resolution: {integrity: sha512-QZQC5/bU2uG4TUmgCVkEYZM8buFDisGgvuO6NUOXVWZXjQRPkOv4YHlMPBVNi+DmW3k1O7oNWmkHRm7MO+ddNg==}
     engines: {node: '>=14.17'}
@@ -1658,8 +1665,21 @@ packages:
       '@effect/platform': ^0.39.0
       effect: 2.0.0-next.62
     dependencies:
-      '@effect/platform': 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+      '@effect/platform': 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
       effect: 2.0.0-next.62
+    dev: false
+
+  /@effect/platform@0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62):
+    resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
+    peerDependencies:
+      '@effect/schema': ^0.56.0
+      effect: 2.0.0-next.62
+    dependencies:
+      '@effect/schema': /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+      effect: 2.0.0-next.62
+      find-my-way-ts: 0.1.1
+      multipasta: 0.1.21
+      path-browserify: 1.0.1
     dev: false
 
   /@effect/platform@0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62):
@@ -1668,14 +1688,14 @@ packages:
       '@effect/schema': ^0.56.0
       effect: 2.0.0-next.62
     dependencies:
-      '@effect/schema': 0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0)
+      '@effect/schema': 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       effect: 2.0.0-next.62
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.56.1(patch_hash=3zbehe3tb3nsvjov5h26sspqxu)(effect@2.0.0-next.62)(fast-check@3.15.0):
+  /@effect/schema@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
     resolution: {integrity: sha512-cfEyHLXPdzSKzJU/yYrPjFd0iVHPydh+NT0sgTe4bzXbcvOsKZuvQ86cAAwXN7lxY0N5cPes9ACxUxTdkEaNlw==}
     peerDependencies:
       effect: 2.0.0-next.62
@@ -1684,7 +1704,6 @@ packages:
       effect: 2.0.0-next.62
       fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
-    patched: true
 
   /@effect/typeclass@0.21.0(effect@2.0.0-next.62):
     resolution: {integrity: sha512-J0UU0lZqILcjt/6x1a7ykf608NlO45Mg3rajgjifMRONTc4ANDPBTLE6/e2eknwS/unIVX6LJFEZEPotfQIe6Q==}
