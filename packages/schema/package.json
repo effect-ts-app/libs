@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231227111019",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231227181939",
     "@fp-ts/optic": "^0.21.0",
     "effect": "^2.0.0-next.62",
     "cross-fetch": "^4.0.0",
