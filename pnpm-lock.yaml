@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20231227102807
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
 
@@ -121,8 +122,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       dprint:
-        specifier: ^0.44.0
-        version: 0.44.0
+        specifier: ^0.45.0
+        version: 0.45.0
       enhanced-resolve:
         specifier: ^5.15.0
         version: 5.15.0
@@ -253,7 +254,7 @@ importers:
     dependencies:
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -366,7 +367,7 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -450,8 +451,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.56.1
-        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20231227102807
+        version: /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@faker-js/faker':
         specifier: ^8.3.1
         version: 8.3.1
@@ -551,10 +552,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.56.1
-        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20231227102807
+        version: /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -636,10 +637,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
+        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.56.1
-        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20231227102807
+        version: /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -708,8 +709,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.56.1
-        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20231227102807
+        version: /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.21.0
         version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
@@ -818,8 +819,8 @@ importers:
         specifier: ^0.25.0
         version: 0.25.0(@effect/platform@0.39.0)(effect@2.0.0-next.62)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.56.1
-        version: /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20231227102807
+        version: /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       '@formatjs/intl':
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
@@ -1576,48 +1577,48 @@ packages:
       kuler: 2.0.0
     dev: true
 
-  /@dprint/darwin-arm64@0.44.0:
-    resolution: {integrity: sha512-6MlycQuH1rojgssK6D8CzaEC+rTZCfoHh/QHyZJcjJqIoj1KXGTL+UUTvJ+iGuMMJ1gchsyl0UCVDJ5UE/BBdA==}
+  /@dprint/darwin-arm64@0.45.0:
+    resolution: {integrity: sha512-pkSSmixIKXr5t32bhXIUbpIBm8F8uhsJcUUvfkFNsRbQvNwRp71ribZpE8dKl0ZFOlAFeWD6WLE8smp/QtiGUA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/darwin-x64@0.44.0:
-    resolution: {integrity: sha512-TKt/qCCVlf2imq1HDSrdpyWFfzySPlSBmaWAg5qADftQWMp2/egQWzqhw92U2x62aoZ0CRcP5BZE8aVIigPELg==}
+  /@dprint/darwin-x64@0.45.0:
+    resolution: {integrity: sha512-PHcXSrRO53KH9N+YPbPtr40NnDo2t7hO7KLMfl2ktRNLjrmKg6F8XDDsr2C7Z11k3jyEEU2Jq8hhpaKHwNapmQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-arm64-glibc@0.44.0:
-    resolution: {integrity: sha512-CgGuIFlytPzGMg7trFUtAJm0U7i3dBsp2OZbH2jHNBNC6vODHv1GgZFq4tQpMNPBiJRK+9eVlwHifWoEaVIRXg==}
+  /@dprint/linux-arm64-glibc@0.45.0:
+    resolution: {integrity: sha512-NgIpvZHpiQaY4DxSygxknxBtvKE2KLK9dEbUNKNE098yTHhGq7ouPsoM7RtsO34RHJ3tEZLLJEuBHn20XP8LMg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-arm64-musl@0.44.0:
-    resolution: {integrity: sha512-rvs8jDYRqszjoabbycEd32Iob0R6jLjLpnN35e/jOGrguvJj0/TAumWp85O3viB7DVC7qxahgZft0XlhPEHrUQ==}
+  /@dprint/linux-arm64-musl@0.45.0:
+    resolution: {integrity: sha512-Y8p+FC0RNyKCGQjy99Uh1LSPrlQtUTvo4brdvU1THF3pyWu6Bg1p6NiP5a6SjE/6t9CMKZJz39zPreQtnDkSDA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-x64-glibc@0.44.0:
-    resolution: {integrity: sha512-/3y4FsYcS+W25/o5yYjO0A9800woZ93b+Htlp7aIHdM53G0canw2306SoyvIZ+tNSaVegbSU9i21i4FLhNMN6g==}
+  /@dprint/linux-x64-glibc@0.45.0:
+    resolution: {integrity: sha512-u03NCZIpJhE5gIl9Q7jNL4sOPBFd/8BLVBiuLoLtbiTZQ+NNudHKgGNATJBU67q1MKpqKnt8/gQm139cJkHhrw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@dprint/linux-x64-musl@0.44.0:
-    resolution: {integrity: sha512-XWclrKFozgNoeFZ4ULuwgUh+6tN7zn2tH8SmY8VwwaBsCX3FjCwk2Qx11rRqMmD9oJmu8KqWexSW6kY3Fxjh/g==}
+  /@dprint/linux-x64-musl@0.45.0:
+    resolution: {integrity: sha512-DQN8LPtxismkeU1X+sQywa80kWwCBcpQh9fXoJcvTEHrgzHBqbG2SEsUZpM12oKEua1KE/iBh+vgZ+4I3TdI2A==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -1628,16 +1629,16 @@ packages:
     resolution: {integrity: sha512-z560hPla4SeWTRCRIp94WMm7M4lZ1h1pM7i0xuG2ve/RavSOWbt4PBPhsxjHELVNA0hch39vKuu1G94npeCfuw==}
     dev: true
 
-  /@dprint/win32-x64@0.44.0:
-    resolution: {integrity: sha512-od8W35aAwC1Ah3Zqw5q4w8aNHfABIiKssURF03IlFljAS5xZ4yt7JDkUwaFeLB/Xsh6Jka4YmbOWDrtEUoXY9Q==}
+  /@dprint/win32-x64@0.45.0:
+    resolution: {integrity: sha512-aZHIWG2jIlEp4BER1QG6YYqPd6TxT9S77AeUkWJixNiMEo+33mPRVCBcugRWI/WJWveX8yWFVXkToORtnSFeEA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
-    resolution: {integrity: sha512-hx30V1xBu8lvuhFf3K93boAYo32nCnmo3CBnxsJVLw7YmxMXXNxF7ODyINtDaQ0ustDLHfTUbXuN7JUbAxghkQ==}
+  /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0):
+    resolution: {integrity: sha512-CJckCHswCDgATHS4/xIVuqG5VJ5W26JdvW99q2XgOnBJBykJCAJFyuuBlYS3eTR8Rcy20wujeVMUhNO4mH9zUA==}
     peerDependencies:
       effect: 2.0.0-next.62
       fast-check: ^3.13.2
@@ -1665,44 +1666,21 @@ packages:
       '@effect/platform': ^0.39.0
       effect: 2.0.0-next.62
     dependencies:
-      '@effect/platform': 0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62)
+      '@effect/platform': 0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62)
       effect: 2.0.0-next.62
     dev: false
 
-  /@effect/platform@0.39.0(@effect-app/schema-fork@0.56.1)(effect@2.0.0-next.62):
+  /@effect/platform@0.39.0(@effect-app/schema-fork@0.0.0-20231227102807)(effect@2.0.0-next.62):
     resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
     peerDependencies:
-      '@effect/schema': ^0.56.0
+      '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20231227102807
       effect: 2.0.0-next.62
     dependencies:
-      '@effect/schema': /@effect-app/schema-fork@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+      '@effect/schema': /@effect-app/schema-fork@0.0.0-20231227102807(effect@2.0.0-next.62)(fast-check@3.15.0)
       effect: 2.0.0-next.62
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
-    dev: false
-
-  /@effect/platform@0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
-    peerDependencies:
-      '@effect/schema': ^0.56.0
-      effect: 2.0.0-next.62
-    dependencies:
-      '@effect/schema': 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
-      effect: 2.0.0-next.62
-      find-my-way-ts: 0.1.1
-      multipasta: 0.1.21
-      path-browserify: 1.0.1
-    dev: false
-
-  /@effect/schema@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
-    resolution: {integrity: sha512-cfEyHLXPdzSKzJU/yYrPjFd0iVHPydh+NT0sgTe4bzXbcvOsKZuvQ86cAAwXN7lxY0N5cPes9ACxUxTdkEaNlw==}
-    peerDependencies:
-      effect: 2.0.0-next.62
-      fast-check: ^3.13.2
-    dependencies:
-      effect: 2.0.0-next.62
-      fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
   /@effect/typeclass@0.21.0(effect@2.0.0-next.62):
@@ -4478,18 +4456,18 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dprint@0.44.0:
-    resolution: {integrity: sha512-35gviJKVxK6x48EMBZq3/oBLDRoBF9nDXTxYbl+T/lgCUaW3dccccZfuvIJ1rvq1pFlHt8wVyw8ZDZA9ALMfhA==}
+  /dprint@0.45.0:
+    resolution: {integrity: sha512-3444h7V47XoA16qgIWjw3CV/Eo/rQbT/XTGlbJ/6vJ+apQyuo0+M3Ai0GS3wu7X9HBUDcA0zIHA3mOxWNz6toA==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@dprint/darwin-arm64': 0.44.0
-      '@dprint/darwin-x64': 0.44.0
-      '@dprint/linux-arm64-glibc': 0.44.0
-      '@dprint/linux-arm64-musl': 0.44.0
-      '@dprint/linux-x64-glibc': 0.44.0
-      '@dprint/linux-x64-musl': 0.44.0
-      '@dprint/win32-x64': 0.44.0
+      '@dprint/darwin-arm64': 0.45.0
+      '@dprint/darwin-x64': 0.45.0
+      '@dprint/linux-arm64-glibc': 0.45.0
+      '@dprint/linux-arm64-musl': 0.45.0
+      '@dprint/linux-x64-glibc': 0.45.0
+      '@dprint/linux-x64-musl': 0.45.0
+      '@dprint/win32-x64': 0.45.0
     dev: true
 
   /duplexer@0.1.2:
