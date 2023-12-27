@@ -18,6 +18,8 @@ import {
   NonEmptyString2k,
   NonEmptyString50,
   NonEmptyString64k,
+  nullable,
+  number,
   PhoneNumber,
   PositiveInt,
   Schema,
