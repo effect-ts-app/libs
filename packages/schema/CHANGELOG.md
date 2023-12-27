@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.10
+
+### Patch Changes
+
+- 20076e0: update
+
 ## 0.150.0-next.9
 
 ### Patch Changes
