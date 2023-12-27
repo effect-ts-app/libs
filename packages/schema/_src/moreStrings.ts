@@ -147,7 +147,7 @@ export function prefixedStringId<Brand extends StringId>() {
 
 export const brandedStringId = <
   Brand extends StringIdBrand
->() => (Object.assign({}, StringId) as S.Schema<string, string & Brand> & {
+>() => (Object.assign(Object.create(StringId), StringId).withDefaults as S.Schema<string, string & Brand> & {
   make: () => string & Brand
   withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
 } & WithDefaults<S.Schema<string, string & Brand>>)
