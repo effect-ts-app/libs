@@ -30,7 +30,7 @@ export interface QueryRequest<
   Headers extends StructFields | undefined,
   Fields extends StructFields,
   PPath extends `/${string}`
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M> { // , PropsExtensions<GetClassProps<Fields>>
+> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> { // , PropsExtensions<GetClassProps<Fields>>
   Body: undefined
   Path: Path
   Query: Query
@@ -50,7 +50,7 @@ export interface BodyRequest<
   Headers extends StructFields | undefined,
   Fields extends StructFields,
   PPath extends `/${string}`
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M> { // , PropsExtensions<GetClassProps<Self>>
+> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> { // , PropsExtensions<GetClassProps<Self>>
   Path: Path
   Body: Body
   Query: Query
@@ -365,7 +365,7 @@ export interface Request<
   Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M> {
+> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> {
   method: Method
   path: Path
 }

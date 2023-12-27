@@ -14,6 +14,7 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
     Simplify<ToStruct<Fields>>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
+    Fields,
     Data.Case
   > = S.Class as any
 
@@ -27,6 +28,7 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
     Simplify<ToStruct<Fields>>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
+    Fields,
     Data.Case
   > = S.TaggedClass as any
 
