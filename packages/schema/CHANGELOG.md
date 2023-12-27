@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.19
+
+### Patch Changes
+
+- ca927a5: f
+
 ## 0.150.0-next.18
 
 ### Patch Changes
