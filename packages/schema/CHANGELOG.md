@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.17
+
+### Patch Changes
+
+- 53d4b3e: fields in class
+
 ## 0.150.0-next.16
 
 ### Patch Changes
