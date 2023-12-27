@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.0-next.19
+
+### Patch Changes
+
+- fd785c2: improve error
+- Updated dependencies [fd785c2]
+  - @effect-app/vue@0.87.0-next.19
+
 ## 0.87.0-next.18
 
 ### Patch Changes
