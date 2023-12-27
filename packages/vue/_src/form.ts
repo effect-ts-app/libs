@@ -25,8 +25,11 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   fields: Schema<From, To>
 ) {
   let ast = fields.ast
+  // todo: or look at from?
   if (AST.isTransform(ast)) {
-    ast = ast.to
+    if (AST.isDeclaration(ast.to)) {
+      ast = ast.to.type
+    }
   }
   if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
