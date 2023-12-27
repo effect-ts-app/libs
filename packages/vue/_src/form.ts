@@ -128,7 +128,7 @@ function buildFieldInfo(
         id: "validation.number.min"
       }, {
         isExclusive: metadata.exclusiveMinimum !== undefined,
-        minimum: metadata.exclusiveMinimum ?? metadata.maximum
+        minimum: metadata.exclusiveMinimum ?? metadata.minimum
       }),
     (v: number | null) =>
       v === null
