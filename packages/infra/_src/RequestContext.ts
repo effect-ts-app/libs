@@ -1,11 +1,11 @@
-import { Schema2 } from "@effect-app/prelude"
+import { S } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 
 const fields = {
   name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: Schema2.Date.withDefaultMake(() => new Date()) // TODO
+  createdAt: S.Date.withDefaultMake(() => new Date()) // TODO
 } as const
 
 @useClassFeaturesForSchema
@@ -21,7 +21,7 @@ export class RequestContextParent extends TaggedClass<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends Schema2.TaggedClass<
+export class RequestContext extends S.TaggedClass<
   RequestContext
 >()("RequestContext", {
   id: RequestId.withDefault(),

@@ -9,7 +9,7 @@ import {
 import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
-import type { Schema2 } from "@effect-app/prelude"
+import type { S } from "@effect-app/prelude"
 import { RequestId } from "@effect-app/prelude/ids"
 import { struct } from "@effect-app/schema"
 import { Tracer } from "effect"
@@ -27,8 +27,8 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  schema: Schema2.Schema<EvtE, Evt>,
-  drainSchema: Schema2.Schema<unknown, DrainEvt>
+  schema: S.Schema<EvtE, Evt>,
+  drainSchema: S.Schema<unknown, DrainEvt>
 ) {
   const wireSchema = struct({
     body: schema,

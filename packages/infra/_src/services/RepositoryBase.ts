@@ -9,7 +9,7 @@ import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { Schema2 } from "@effect-app/prelude"
+import type { S } from "@effect-app/prelude"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import { QueryBuilder } from "./Store/filterApi/query.js"
@@ -91,7 +91,7 @@ export function makeRepo<
     From extends { id: string }
   >(
     name: ItemType,
-    schema: Schema2.Schema<From, T>,
+    schema: S.Schema<From, T>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -301,7 +301,7 @@ export function makeStore<
     E extends { id: string }
   >(
     name: ItemType,
-    schema: Schema2.Schema<E, T>,
+    schema: S.Schema<E, T>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
     const [_dec, encode] = makeCodec(schema)
@@ -411,7 +411,7 @@ export const RepositoryBaseImpl = <Service>() => {
   >() =>
   <ItemType extends string, T extends { id: string }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema2.Schema<From, T>,
+    schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -452,7 +452,7 @@ export const RepositoryDefaultImpl = <Service>() => {
   >() =>
   <ItemType extends string, T extends { id: string }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema2.Schema<From, T>,
+    schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(

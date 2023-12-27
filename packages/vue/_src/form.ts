@@ -74,9 +74,9 @@ function buildFieldInfo(
   const metadata = getMetadataFromSchema(property.type) // TODO
   const parse = schema.parseEither
 
-  const nullable = AST.isUnion(property.type) && property.type.types.includes(Schema2.null.ast)
+  const nullable = AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
   const realSelf = nullable && AST.isUnion(property.type)
-    ? property.type.types.filter((_) => _ !== Schema2.null.ast)[0]!
+    ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
     : property.type
 
   function renderError(e: ParseError, v: unknown) {
@@ -241,9 +241,9 @@ export function getMetadataFromSchema(
   required: boolean
   description?: string
 } {
-  const nullable = AST.isUnion(ast) && ast.types.includes(Schema2.null.ast)
+  const nullable = AST.isUnion(ast) && ast.types.includes(S.null.ast)
   const realSelf = nullable && AST.isUnion(ast)
-    ? ast.types.filter((_) => _ !== Schema2.null.ast)[0]!
+    ? ast.types.filter((_) => _ !== S.null.ast)[0]!
     : ast
 
   let jschema: any

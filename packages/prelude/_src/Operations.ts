@@ -1,4 +1,4 @@
-import { Schema2 } from "./index.js"
+import { S } from "./index.js"
 
 export type OperationId = StringId
 export const OperationId = StringId
@@ -22,7 +22,7 @@ export class Failure extends ExtendedTaggedClass<Failure.From, Failure>()("Failu
   message: NonEmptyString2k.nullable.withDefault()
 }) {}
 
-export const OperationResult = Schema2.union(Success, Failure)
+export const OperationResult = S.union(Success, Failure)
 export type OperationResult = Schema.To<typeof OperationResult>
 
 @useClassFeaturesForSchema
@@ -30,8 +30,8 @@ export class Operation extends ExtendedClass<Operation.From, Operation>()({
   id: OperationId,
   progress: OperationProgress.optional(),
   result: OperationResult.optional(),
-  createdAt: Schema2.Date.withDefault(),
-  updatedAt: Schema2.Date.nullable.withDefault()
+  createdAt: S.Date.withDefault(),
+  updatedAt: S.Date.nullable.withDefault()
 }) {}
 
 // codegen:start {preset: model}
