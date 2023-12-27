@@ -1,5 +1,12 @@
 # @effect-app/infra-adapters
 
+## 0.85.0-next.19
+
+### Patch Changes
+
+- Updated dependencies [b19ce70]
+  - @effect-app/prelude@0.107.0-next.19
+
 ## 0.85.0-next.18
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.19
+
+### Patch Changes
+
+- b19ce70: S
+
 ## 0.107.0-next.18
 
 ### Patch Changes
