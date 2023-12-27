@@ -6,7 +6,7 @@ import type { Simplify } from "effect/Types"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import type { WithDefaults } from "./ext.js"
-import { fromBrand, nominal } from "./ext.js"
+import { fromBrand, nominal, withDefaults } from "./ext.js"
 import { type B, S } from "./schema.js"
 import { NonEmptyString } from "./strings.js"
 import type { NonEmptyString255Brand, NonEmptyString2k, NonEmptyStringBrand } from "./strings.js"
@@ -147,10 +147,13 @@ export function prefixedStringId<Brand extends StringId>() {
 
 export const brandedStringId = <
   Brand extends StringIdBrand
->() => (Object.assign(Object.create(StringId), StringId).withDefaults as S.Schema<string, string & Brand> & {
-  make: () => string & Brand
-  withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
-} & WithDefaults<S.Schema<string, string & Brand>>)
+>() =>
+  withDefaults(
+    Object.assign(Object.create(StringId), StringId) as S.Schema<string, string & Brand> & {
+      make: () => string & Brand
+      withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
+    } & WithDefaults<S.Schema<string, string & Brand>>
+  )
 
 export interface PrefixedStringUtils<
   Brand extends StringId,
