@@ -1,5 +1,12 @@
 # @effect-app/fluent-extensions
 
+## 0.97.0-next.15
+
+### Patch Changes
+
+- Updated dependencies [92ff6b9]
+  - @effect-app/schema@0.150.0-next.15
+
 ## 0.97.0-next.14
 
 ### Patch Changes
