@@ -1,5 +1,5 @@
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255, S } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema"
 import cp from "child_process"
 import fs from "fs"
 import os from "os"
@@ -101,18 +101,3 @@ function* buildListArgs(config?: { host?: string | undefined }) {
     yield `-h ${config.host}`
   }
 }
-
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
-export const defaultDate = <From>(s: S.Schema<From, Date>) => S.withDefaultConstructor(s, () => new Date())
-
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
-export const defaultNullable = <From, To>(s: S.Schema<From, To | null>) => S.withDefaultConstructor(s, () => null)
-
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
-export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])

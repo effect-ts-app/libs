@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core/Prelude"
+import type { Schema } from "@effect/schema/Schema"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
@@ -10,17 +11,18 @@ import { S } from "./schema.js"
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultDate = <From>(s: S.Schema<From, Date>) => S.withDefaultConstructor(s, () => new Date())
+export const defaultDate = <S extends Schema<any, Date>>(s: S) => S.withDefaultConstructor(s, () => new Date())
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultNullable = <From, To>(s: S.Schema<From, To | null>) => S.withDefaultConstructor(s, () => null)
+export const defaultNullable = <S extends Schema<any, any>, From, To>(s: S & Schema<From, To | null>) =>
+  S.withDefaultConstructor(s, () => null)
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultArray = <From, T>(s: S.Schema<From, ReadonlyArray<T>>) => S.withDefaultConstructor(s, () => [])
+export const defaultArray = <S extends Schema<any, ReadonlyArray<any>>>(s: S) => S.withDefaultConstructor(s, () => [])
 
 /**
  * @tsplus getter effect/schema/Schema withDefaults
