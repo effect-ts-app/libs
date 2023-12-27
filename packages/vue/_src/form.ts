@@ -24,8 +24,12 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   fields: Schema<From, To>
 ) {
-  if (!AST.isTypeLiteral(fields.ast)) throw new Error("not a struct type")
-  return fields.ast.propertySignatures.reduce(
+  let ast = fields.ast
+  if (AST.isTransform(ast)) {
+    ast = ast.to
+  }
+  if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
+  return ast.propertySignatures.reduce(
     (prev, cur) => {
       ;(prev as any)[cur.name] = buildFieldInfo(cur)
       return prev
