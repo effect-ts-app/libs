@@ -12,12 +12,12 @@ export type Email = string & EmailBrand
 export const Email = S
   .string
   .pipe(
-    fromBrand(nominal<Email>()),
     S.filter(isValidEmail, {
       title: "Email",
       description: "an email according to RFC 5322",
       jsonSchema: { format: "email" },
       arbitrary: () => (fc) => fc.emailAddress()
-    })
+    }),
+    fromBrand(nominal<Email>(), { jsonSchema: {} })
   )
   .withDefaults

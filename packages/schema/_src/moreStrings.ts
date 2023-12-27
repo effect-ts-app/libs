@@ -26,8 +26,8 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
  */
 export const NonEmptyString50 = pipe(
   NonEmptyString,
-  fromBrand(nominal<NonEmptyString2k>()),
-  S.maxLength(50, { title: "NonEmptyString50" })
+  S.maxLength(50, { title: "NonEmptyString50" }),
+  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} })
 )
   .withDefaults
 
@@ -46,9 +46,9 @@ export type Min3String255 = string & Min3String255Brand
  */
 export const Min3String255 = pipe(
   S.string,
-  fromBrand(nominal<NonEmptyString2k>()),
   S.minLength(3),
-  S.maxLength(255, { title: "Min3String255" })
+  S.maxLength(255, { title: "Min3String255" }),
+  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} })
 )
   .withDefaults
 
@@ -78,9 +78,9 @@ const StringIdArb = (): Arbitrary<string> => (fc) =>
 export const StringId = extendM(
   pipe(
     S.string,
-    fromBrand(nominal<StringIdBrand>()),
     S.minLength(minLength),
-    S.maxLength(maxLength, { title: "StringId", arbitrary: StringIdArb })
+    S.maxLength(maxLength, { title: "StringId", arbitrary: StringIdArb }),
+    fromBrand(nominal<StringIdBrand>(), { jsonSchema: {} })
   ),
   (s) => ({
     make: makeStringId,
@@ -174,12 +174,12 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
 
 export const Url = NonEmptyString
   .pipe(
-    fromBrand(nominal<UrlBrand>()),
     S.filter(isUrl, {
       arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(),
       title: "Url",
       jsonSchema: { format: "uri" }
-    })
+    }),
+    fromBrand(nominal<UrlBrand>(), { jsonSchema: {} })
   )
   .withDefaults
 
