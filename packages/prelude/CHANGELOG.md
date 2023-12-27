@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.107.0-next.17
+
+### Patch Changes
+
+- Updated dependencies [c234016]
+  - @effect-app/schema@0.150.0-next.14
+
 ## 0.107.0-next.16
 
 ### Patch Changes
