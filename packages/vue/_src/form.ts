@@ -89,7 +89,7 @@ function buildFieldInfo(
           defaultMessage: capitalize(propertyKey.toString()),
           id: `fieldNames.${String(propertyKey)}`
         }),
-        message: err.slice(err.indexOf("Expected")) // TODO: this is not translated.
+        message: metadata.description ? "expected " + metadata.description : err.slice(err.indexOf("Expected")) // TODO: this is not translated.
       }
     )
   }
@@ -233,6 +233,7 @@ export function getMetadataFromSchema(
   minLength?: number
   maxLength?: number
   required: boolean
+  description?: string
 } {
   const nullable = AST.isUnion(ast) && ast.types.includes(Schema2.null.ast)
   const realSelf = nullable && AST.isUnion(ast)
@@ -257,6 +258,7 @@ export function getMetadataFromSchema(
     maximumExclusive: jschema.exclusiveMaximum,
     minLength: jschema.minLength,
     maxLength: jschema.maxLength,
+    description: jschema.description,
     required: !nullable
   }
 }
