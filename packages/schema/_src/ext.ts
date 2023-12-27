@@ -16,6 +16,11 @@ export const defaultDate = <S extends Schema<any, Date>>(s: S) => S.withDefaultC
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
+export const defaultBool = <S extends Schema<any, boolean>>(s: S) => S.withDefaultConstructor(s, () => false)
+
+/**
+ * @tsplus fluent effect/schema/Schema withDefault
+ */
 export const defaultNullable = <S extends Schema<any, any>, From, To>(s: S & Schema<From, To | null>) =>
   S.withDefaultConstructor(s, () => null)
 
