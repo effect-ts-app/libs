@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.16
+
+### Patch Changes
+
+- 63d4549: cleanup prefixed stringid brand
+
 ## 0.150.0-next.15
 
 ### Patch Changes
