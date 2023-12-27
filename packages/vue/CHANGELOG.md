@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.0-next.18
+
+### Patch Changes
+
+- 99310c3: fix error message
+- Updated dependencies [99310c3]
+  - @effect-app/vue@0.87.0-next.18
+
 ## 0.87.0-next.17
 
 ### Patch Changes
