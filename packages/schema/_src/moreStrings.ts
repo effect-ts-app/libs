@@ -182,6 +182,3 @@ export const Url = NonEmptyString
     fromBrand(nominal<UrlBrand>(), { jsonSchema: {} })
   )
   .withDefaults
-
-export const PositiveInt = S.Int.pipe(S.positive()).withDefaults
-export type PositiveInt = S.Schema.To<typeof PositiveInt>

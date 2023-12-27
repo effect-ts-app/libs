@@ -70,9 +70,9 @@ export class NumberSchema extends Base<
   DescriptionSchema & {
     multipleOf?: number
     minimum?: number
-    exclusiveMinimum?: boolean
+    exclusiveMinimum?: number
     maximum?: number
-    exclusiveMaximum?: boolean
+    exclusiveMaximum?: number
   }
 > {
   readonly type = "number"

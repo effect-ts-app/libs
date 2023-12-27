@@ -120,22 +120,28 @@ function buildFieldInfo(
   const numberRules = [
     (v: number | null) =>
       v === null
-      || metadata.minimum === undefined
-      || metadata.minimumExclusive && v > metadata.minimum
-      || !metadata.minimumExclusive && v >= metadata.minimum
+      || (metadata.minimum === undefined && metadata.exclusiveMinimum === undefined)
+      || metadata.exclusiveMinimum !== undefined && v > metadata.exclusiveMinimum
+      || metadata.minimum !== undefined && v >= metadata.minimum
       || translate.value({
         defaultMessage: "The value should be {isExclusive, select, true {larger than} other {at least}} {minimum}",
         id: "validation.number.min"
-      }, { isExclusive: metadata.minimumExclusive, minimum: metadata.minimum }),
+      }, {
+        isExclusive: metadata.exclusiveMinimum !== undefined,
+        minimum: metadata.exclusiveMinimum ?? metadata.maximum
+      }),
     (v: number | null) =>
       v === null
-      || metadata.maximum === undefined
-      || metadata.maximumExclusive && v < metadata.maximum
-      || !metadata.maximumExclusive && v <= metadata.maximum
+      || (metadata.maximum === undefined && metadata.exclusiveMaximum === undefined)
+      || metadata.exclusiveMaximum !== undefined && v < metadata.exclusiveMaximum
+      || metadata.maximum !== undefined && v <= metadata.maximum
       || translate.value({
         defaultMessage: "The value should be {isExclusive, select, true {smaller than} other {at most}} {maximum}",
         id: "validation.number.max"
-      }, { isExclusive: metadata.maximumExclusive, maximum: metadata.maximum })
+      }, {
+        isExclusive: metadata.exclusiveMaximum !== undefined,
+        maximum: metadata.exclusiveMaximum ?? metadata.maximum
+      })
   ]
 
   const parseRule = (v: unknown) =>
@@ -228,8 +234,8 @@ export function getMetadataFromSchema(
   type: "int" | "float" | "text"
   minimum?: number
   maximum?: number
-  minimumExclusive?: boolean
-  maximumExclusive?: boolean
+  exclusiveMinimum?: number
+  exclusiveMaximum?: number
   minLength?: number
   maxLength?: number
   required: boolean
@@ -253,9 +259,9 @@ export function getMetadataFromSchema(
   return {
     type: isInt ? "int" as const : isNumber ? "float" as const : "text" as const,
     minimum: jschema.minimum,
-    minimumExclusive: jschema.exclusiveMinimum,
+    exclusiveMinimum: jschema.exclusiveMinimum,
     maximum: jschema.maximum,
-    maximumExclusive: jschema.exclusiveMaximum,
+    exclusiveMaximum: jschema.exclusiveMaximum,
     minLength: jschema.minLength,
     maxLength: jschema.maxLength,
     description: jschema.description,

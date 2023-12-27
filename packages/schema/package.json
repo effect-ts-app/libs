@@ -164,6 +164,16 @@
         "default": "./_cjs/moreStrings.cjs"
       }
     },
+    "./numbers": {
+      "import": {
+        "types": "./dist/numbers.d.ts",
+        "default": "./dist/numbers.js"
+      },
+      "require": {
+        "types": "./dist/numbers.d.ts",
+        "default": "./_cjs/numbers.cjs"
+      }
+    },
     "./phoneNumber": {
       "import": {
         "types": "./dist/phoneNumber.d.ts",
