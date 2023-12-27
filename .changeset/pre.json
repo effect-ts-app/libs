@@ -16,6 +16,7 @@
     "@effect-app/schema-legacy": "0.90.1"
   },
   "changesets": [
+    "beige-eyes-burn",
     "bright-snakes-decide",
     "calm-walls-kiss",
     "chilly-comics-kneel",

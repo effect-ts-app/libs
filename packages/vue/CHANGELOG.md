@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.87.0-next.20
+
+### Patch Changes
+
+- 5d53b26: fix exclusive min/max
+- Updated dependencies [5d53b26]
+  - @effect-app/schema@0.150.0-next.13
+  - @effect-app/vue@0.87.0-next.20
+  - @effect-app/prelude@0.107.0-next.16
+
 ## 0.87.0-next.19
 
 ### Patch Changes

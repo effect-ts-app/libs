@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.13
+
+### Patch Changes
+
+- 5d53b26: fix exclusive min/max
+
 ## 0.150.0-next.12
 
 ### Patch Changes
