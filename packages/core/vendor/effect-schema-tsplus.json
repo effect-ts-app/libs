@@ -194,6 +194,17 @@
       ]
     },
     {
+      "definitionName": "mapFrom",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "fluent",
+          "typeName": "effect/schema/Schema",
+          "name": "mapFrom"
+        }
+      ]
+    },
+    {
       "definitionName": "withDefaultConstructor",
       "definitionKind": "const",
       "extensions": [
