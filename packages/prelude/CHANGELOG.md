@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.25
+
+### Patch Changes
+
+- 0776693: fix stringid and clientfor
+
 ## 0.107.0-next.24
 
 ### Patch Changes
