@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.0-next.26
+
+### Patch Changes
+
+- 777162f: improve
+- Updated dependencies [777162f]
+  - @effect-app/schema@0.150.0-next.20
+
 ## 0.107.0-next.25
 
 ### Patch Changes
