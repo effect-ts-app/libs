@@ -44,13 +44,13 @@
     "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
   },
   "resolutions": {
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231228122817",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231228152439",
     "date-fns": "^2.29.3",
     "http-proxy": "npm:http-proxy-node16@1.0.0"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "http-proxy": "npm:http-proxy-node16@^1.0.2",
+    "http-proxy": "npm:http-proxy-node16@^1.0.3",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
