@@ -2,7 +2,7 @@ export * from "./Class.js"
 export * as REST from "./REST.js"
 export { Delete, Get, Patch, Post, Put } from "./REST.js"
 
-export { fromBrand, literal } from "./ext.js"
+export { fromBrand, literal, void } from "./ext.js"
 export { Int } from "./numbers.js"
 
 export * from "./email.js"
