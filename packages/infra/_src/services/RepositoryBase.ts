@@ -21,7 +21,8 @@ export abstract class RepositoryBaseC<
   T extends { id: string },
   PM extends PersistenceModelType<string>,
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  R2
 > {
   abstract readonly itemType: ItemType
   abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
@@ -29,7 +30,7 @@ export abstract class RepositoryBaseC<
   abstract readonly saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<R2, InvalidStateError | OptimisticConcurrencyException, void>
   abstract readonly utils: {
     parseMany: (a: readonly PM[]) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
@@ -40,15 +41,16 @@ export abstract class RepositoryBaseC<
   abstract readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<never, never, void>
+  ) => Effect<R2, never, void>
 }
 
 export abstract class RepositoryBaseC1<
   T extends { id: string },
   PM extends PersistenceModelType<string>,
   Evt,
-  ItemType extends string
-> extends RepositoryBaseC<T, PM, Evt, ItemType> {
+  ItemType extends string,
+  R2
+> extends RepositoryBaseC<T, PM, Evt, ItemType, R2> {
   constructor(
     public readonly itemType: ItemType
   ) {
@@ -60,11 +62,12 @@ export class RepositoryBaseC2<
   T extends { id: string },
   PM extends PersistenceModelType<string>,
   Evt,
-  ItemType extends string
-> extends RepositoryBaseC1<T, PM, Evt, ItemType> {
+  ItemType extends string,
+  R2
+> extends RepositoryBaseC1<T, PM, Evt, ItemType, R2> {
   constructor(
     itemType: ItemType,
-    protected readonly impl: Repository<T, PM, Evt, ItemType>
+    protected readonly impl: Repository<T, PM, Evt, ItemType, R2>
   ) {
     super(itemType)
   }
@@ -132,8 +135,7 @@ export function makeRepo<
       return Do(($) => {
         const store = $(mkStore(args.makeInitial, args.config))
         const cms = $(ContextMapContainer)
-        const pubCfg = $(Effect.context<R2>())
-        const pub = "publishEvents" in args ? flow(args.publishEvents, (_) => _.provide(pubCfg)) : () => Effect.unit
+        const pub = "publishEvents" in args ? args.publishEvents : () => Effect.unit
         const changeFeed = $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
         const allE = store.all.flatMap((items) =>
@@ -207,7 +209,7 @@ export function makeRepo<
 
         const p = schema.parseSync
 
-        const r: Repository<T, PM, Evt, ItemType> = {
+        const r: Repository<T, PM, Evt, ItemType, R2> = {
           /**
            * @internal
            */
@@ -252,9 +254,10 @@ export function removeById<
   T extends { id: string },
   PM extends PersistenceModelType<string>,
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  R2
 >(
-  self: Repository<T, PM, Evt, ItemType>,
+  self: Repository<T, PM, Evt, ItemType, R2>,
   id: T["id"]
 ) {
   return self.get(id).flatMap((_) => self.removeAndPublish([_]))
@@ -372,9 +375,9 @@ export interface Repos<
         }
       }
   ): Effect<
-    StoreMaker | ContextMapContainer | R | R2,
+    StoreMaker | ContextMapContainer | R,
     E,
-    Repository<T, PM, Evt, ItemType>
+    Repository<T, PM, Evt, ItemType, R2>
   >
   makeWith<Out, R = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
@@ -390,7 +393,7 @@ export interface Repos<
           partitionValue?: (a: PM) => string
         }
       },
-    f: (r: Repository<T, PM, Evt, ItemType>) => Out
+    f: (r: Repository<T, PM, Evt, ItemType, R2>) => Out
   ): Effect<
     StoreMaker | ContextMapContainer | R | R2,
     E,
@@ -399,7 +402,7 @@ export interface Repos<
   /** @deprecated use `query` instead */
   readonly where: ReturnType<typeof makeWhere<PM>>
   readonly query: ReturnType<typeof QueryBuilder.make<PM>>
-  readonly type: Repository<T, PM, Evt, ItemType>
+  readonly type: Repository<T, PM, Evt, ItemType, R2>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
@@ -414,7 +417,7 @@ export const RepositoryBaseImpl = <Service>() => {
     schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
-      & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
+      & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType, R2>)
       & Tag<Service, Service>
       & Repos<
         T,
@@ -430,7 +433,7 @@ export const RepositoryBaseImpl = <Service>() => {
       jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC1<T, PM, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC1<T, PM, Evt, ItemType, R2> {
       constructor() {
         super(itemType)
       }
@@ -439,7 +442,7 @@ export const RepositoryBaseImpl = <Service>() => {
 
       static readonly where = makeWhere<PM>()
       static readonly query = QueryBuilder.make<PM>()
-      static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, PM, Evt, ItemType, R2> = undefined as any
     }
     return assignTag<Service>()(Cls) as any
   }
@@ -456,8 +459,8 @@ export const RepositoryDefaultImpl = <Service>() => {
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
-        impl: Repository<T, PM, Evt, ItemType>
-      ) => RepositoryBaseC2<T, PM, Evt, ItemType>)
+        impl: Repository<T, PM, Evt, ItemType, R2>
+      ) => RepositoryBaseC2<T, PM, Evt, ItemType, R2>)
       & Tag<Service, Service>
       & Repos<
         T,
@@ -473,9 +476,9 @@ export const RepositoryDefaultImpl = <Service>() => {
       jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC2<T, PM, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC2<T, PM, Evt, ItemType, R2> {
       constructor(
-        impl: Repository<T, PM, Evt, ItemType>
+        impl: Repository<T, PM, Evt, ItemType, R2>
       ) {
         super(itemType, impl)
       }
@@ -485,7 +488,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly where = makeWhere<PM>()
       static readonly query = QueryBuilder.make<PM>()
 
-      static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, PM, Evt, ItemType, R2> = undefined as any
     }
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
   }
