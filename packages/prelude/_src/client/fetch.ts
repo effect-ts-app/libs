@@ -75,7 +75,6 @@ export function fetchApi(
         ))
         .withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
     )
-    .map((x) => ({ ...x, body: x.body ?? null }))
 }
 
 export function fetchApi2S<RequestA, RequestE, ResponseA>(

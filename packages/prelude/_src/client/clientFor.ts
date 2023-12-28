@@ -105,7 +105,6 @@ function clientFor_<M extends Requests>(models: M) {
           .filter((x) => x)
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           .flatMap((x) => x.ast.propertySignatures)
-        console.log("fields", fields)
         // @ts-expect-error doc
         prev[actionName] = Request.method === "GET"
           ? fields.length === 0
