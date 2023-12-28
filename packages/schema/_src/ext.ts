@@ -49,11 +49,6 @@ export type WithDefaults<Self extends S.Schema<any, any>> = (
   options?: AST.ParseOptions
 ) => S.Schema.To<Self>
 
-// a more permissive void, mimicing previous void implementation helping null body.
-const void_: S.Schema<void, void> = S.transform(S.unknown, S.void, (_) => undefined, (_) => _) as any
-
-export { void_ as void }
-
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId
   /**
