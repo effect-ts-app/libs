@@ -9,8 +9,12 @@ export interface RequestIdBrand extends StringIdBrand {
 /**
  * @tsplus type RequestId
  */
-export type RequestId = StringId
-export const RequestId = StringId
+export type RequestId = NonEmptyString255
+// a request id may be made from a span id, which does not comply with StringId schema.
+export const RequestId = Object
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255, { make: StringId.make })
+  .withDefaultMake(() => StringId.make())
 
 export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
 /**
