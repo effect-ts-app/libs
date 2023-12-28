@@ -18,6 +18,7 @@ import {
   NonEmptyString2k,
   NonEmptyString50,
   NonEmptyString64k,
+  NonNegativeInt,
   nullable,
   number,
   PhoneNumber,
