@@ -35,7 +35,11 @@ const getClient = HttpClient.flatMap((defaultClient) =>
             .annotateLogs("body", r.body._tag === "Uint8Array" ? new TextDecoder().decode(r.body.body) : r.body._tag)
             .annotateLogs("headers", r.headers)
         )
-        .mapEffect((_) => _.json.map((body) => ({ status: _.status, body, headers: _.headers })))
+        .mapEffect((_) =>
+          _.status === 204
+            ? Effect({ status: _.status, body: void 0, headers: _.headers })
+            : _.json.map((body) => ({ status: _.status, body, headers: _.headers }))
+        )
         .catchTags({
           "ResponseError": (err) =>
             err
