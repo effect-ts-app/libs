@@ -1,19 +1,15 @@
 import { S } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 
-const fields = {
-  name: NonEmptyString255,
-  userProfile: struct({ sub: UserProfileId }).optional(),
-  locale: literal("en", "de"),
-  createdAt: S.Date.withDefaultMake(() => new Date()) // TODO
-} as const
-
 @useClassFeaturesForSchema
 export class RequestContextParent extends TaggedClass<
   RequestContextParent
 >()("RequestContext", {
   id: RequestId,
-  ...fields
+  name: NonEmptyString255,
+  userProfile: struct({ sub: UserProfileId }).optional(),
+  locale: literal("en", "de"),
+  createdAt: S.Date.withDefaultMake(() => new Date()) // TODO
 }) {}
 
 /**
@@ -24,11 +20,11 @@ export class RequestContextParent extends TaggedClass<
 export class RequestContext extends S.TaggedClass<
   RequestContext
 >()("RequestContext", {
+  ...RequestContextParent.fields.$$.omit("id"),
   id: RequestId.withDefault(),
   rootId: RequestId,
   parent: RequestContextParent.optional(),
-  namespace: NonEmptyString255.optional(),
-  ...fields
+  namespace: NonEmptyString255.optional()
   // ...RequestContextParent.omit("id").extend({
   //   id: RequestId.withDefault(),
   //   rootId: RequestId,

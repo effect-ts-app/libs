@@ -40,6 +40,10 @@ export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {
   // return s as Self & WithDefaults<Self>
 }
 
+export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
+  ...literals: Literals
+) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
+
 export type WithDefaults<Self extends S.Schema<any, any>> = (
   i: S.Schema.From<Self>,
   options?: AST.ParseOptions
