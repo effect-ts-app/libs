@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.28
+
+### Patch Changes
+
+- eb31797: fix empty body
+
 ## 0.107.0-next.27
 
 ### Patch Changes
