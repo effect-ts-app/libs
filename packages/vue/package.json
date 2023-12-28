@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect/platform-browser": "^0.25.0",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231227181939",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231227184201",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
