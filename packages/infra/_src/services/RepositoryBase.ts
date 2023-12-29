@@ -172,6 +172,7 @@ export function makeRepo<
                 ret.forEach((_) => set(_.id, _._etag))
               })
             )
+            .asUnit
         const encode = (i: T) => schema.encodeSync(i)
 
         const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
@@ -179,10 +180,12 @@ export function makeRepo<
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
           return saveAll(it)
-            > Effect(events.toNonEmptyArray)
-              // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-              .flatMapOpt(pub)
-            > changeFeed.publish([it.toArray, "save"])
+            .andThen(Effect(events.toNonEmptyArray))
+            // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+            .flatMapOpt(pub)
+            .andThen(changeFeed
+              .publish([it.toArray, "save"]))
+            .asUnit
         }
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
