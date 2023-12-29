@@ -20,25 +20,7 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
     .get
     .andThen((ctx) =>
       f
-        .withSpan("request", {
-          attributes: {
-            "request.id": ctx.id,
-            "request.name": ctx.name,
-            "request.locale": ctx.locale,
-            "request.namespace": ctx.namespace,
-            ...ctx.userProfile?.sub
-              ? {
-                "request.user.sub": ctx
-                  .userProfile
-                  .sub,
-                "request.user.roles": "roles" in ctx
-                    .userProfile
-                  ? ctx.userProfile.roles
-                  : undefined
-              }
-              : {}
-          }
-        })
+        .withSpan("request", { attributes: ctx.spanAttributes })
         // request context info is picked up directly in the logger for annotations.
         .withLogSpan("request")
     )
