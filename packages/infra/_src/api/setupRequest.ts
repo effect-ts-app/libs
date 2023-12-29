@@ -28,19 +28,24 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
 const setupContextMap = ContextMapContainer.andThen((_) => _.start).toLayerDiscard
 
 const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
+  RequestContext.Tag.makeLayer(requestContext)
+// memoization problem
+// const RequestContextLive = RequestContextContainer.get.toLayer(RequestContext.Tag)
+const RequestContextStartLiveFromRequestContext = (requestContext: RequestContext) =>
   setupContextMap
+    .provideMerge(RequestContextLiveFromRequestContext(requestContext))
     .provideMerge(
       RequestContextContainer
         .andThen((_) => _.start(requestContext))
         .toLayerDiscard
     )
 
-const RequestContextLive = (requestContext: RequestContext | string) =>
+const RequestContextStartLive = (requestContext: RequestContext | string) =>
   typeof requestContext === "string"
     ? makeInternalRequestContext(requestContext)
-      .andThen(RequestContextLiveFromRequestContext)
+      .andThen(RequestContextStartLiveFromRequestContext)
       .unwrapLayer
-    : RequestContextLiveFromRequestContext(requestContext)
+    : RequestContextStartLiveFromRequestContext(requestContext)
 
 /**
  * @tsplus fluent effect/io/Effect setupRequestContext
@@ -48,5 +53,17 @@ const RequestContextLive = (requestContext: RequestContext | string) =>
 export function setupRequestContext<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext | string) {
   return self
     .pipe(withRequestSpan)
-    .provide(RequestContextLive(requestContext))
+    .provide(RequestContextStartLive(requestContext))
+}
+
+const UpdateRequestContextLive = (f: (rc: RequestContext) => RequestContext) =>
+  RequestContextContainer.andThen((rcc) => rcc.update(f)).toLayerDiscard
+
+/**
+ * @tsplus fluent effect/io/Effect updateRequestContext
+ */
+export function updateRequestContext<R, E, A>(self: Effect<R, E, A>, f: (rc: RequestContext) => RequestContext) {
+  return self
+    .provideServiceEffect(RequestContext.Tag, RequestContextContainer.get)
+    .provide(UpdateRequestContextLive(f))
 }

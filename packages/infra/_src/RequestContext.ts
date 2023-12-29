@@ -32,6 +32,7 @@ export class RequestContext extends S.TaggedClass<
   //   namespace: NonEmptyString255.optional()
   // })
 }) {
+  static Tag = Context.Tag<RequestContext>()
   static inherit(
     this: void,
     parent: RequestContext,
