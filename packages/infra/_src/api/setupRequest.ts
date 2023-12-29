@@ -27,13 +27,13 @@ const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
 
 const setupContextMap = ContextMapContainer.andThen((_) => _.start).toLayerDiscard
 
-const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
-  RequestContext.Tag.makeLayer(requestContext)
+// const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
+//   RequestContext.Tag.makeLayer(requestContext)
 // memoization problem
 // const RequestContextLive = RequestContextContainer.get.toLayer(RequestContext.Tag)
 const RequestContextStartLiveFromRequestContext = (requestContext: RequestContext) =>
   setupContextMap
-    .provideMerge(RequestContextLiveFromRequestContext(requestContext))
+    // .provideMerge(RequestContextLiveFromRequestContext(requestContext))
     .provideMerge(
       RequestContextContainer
         .andThen((_) => _.start(requestContext))
@@ -64,6 +64,6 @@ const UpdateRequestContextLive = (f: (rc: RequestContext) => RequestContext) =>
  */
 export function updateRequestContext<R, E, A>(self: Effect<R, E, A>, f: (rc: RequestContext) => RequestContext) {
   return self
-    .provideServiceEffect(RequestContext.Tag, RequestContextContainer.get)
+    // .provideServiceEffect(RequestContext.Tag, RequestContextContainer.get)
     .provide(UpdateRequestContextLive(f))
 }
