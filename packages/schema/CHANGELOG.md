@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.21
+
+### Patch Changes
+
+- c57bb66: Add inputDate
+
 ## 0.150.0-next.20
 
 ### Patch Changes
