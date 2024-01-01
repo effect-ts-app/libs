@@ -22,13 +22,13 @@
     "@babel/cli": "^7.23.4",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.3.1",
-    "@types/node": "~20.10.5",
+    "@types/node": "~20.10.6",
     "@types/uuid": "^9.0.7",
     "@types/validator": "^13.11.7",
     "fast-check": "~3.15.0",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vitest": "^1.1.0"
+    "vitest": "^1.1.1"
   },
   "typesVersions": {
     "*": {
