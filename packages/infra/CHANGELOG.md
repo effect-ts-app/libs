@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.133.0-next.34
+
+### Patch Changes
+
+- 735dea9: improve rc
+- Updated dependencies [735dea9]
+  - @effect-app/prelude@0.107.0-next.32
+  - @effect-app/infra-adapters@0.85.0-next.32
+
 ## 0.133.0-next.33
 
 ### Patch Changes
