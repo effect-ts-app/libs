@@ -12,6 +12,7 @@ import {
   ExtendedClass,
   ExtendedTaggedClass,
   FromClass,
+  inputDate,
   literal,
   nonEmptyArray,
   NonEmptyString255,
