@@ -105,3 +105,5 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
 // }[keyof P[B.BrandTypeId]]
 // export type UnionToIntersection3<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I
 //   : never
+
+export const inputDate = S.union(S.ValidDateFromSelf, S.Date)
