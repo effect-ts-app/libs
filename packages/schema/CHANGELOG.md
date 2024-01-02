@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.22
+
+### Patch Changes
+
+- 169c159: expose ParseResult
+
 ## 0.150.0-next.21
 
 ### Patch Changes
