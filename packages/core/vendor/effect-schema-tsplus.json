@@ -79,6 +79,28 @@
       ]
     },
     {
+      "definitionName": "decodeEither",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "decodeEither"
+        }
+      ]
+    },
+    {
+      "definitionName": "decode",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "decode"
+        }
+      ]
+    },
+    {
       "definitionName": "encodeSync",
       "definitionKind": "const",
       "extensions": [
@@ -86,6 +108,17 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "encodeSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "decodeSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "decodeSync"
         }
       ]
     },
