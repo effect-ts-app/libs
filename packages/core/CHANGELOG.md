@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.97.0-next.5
+
+### Patch Changes
+
+- 6b89c27: add decode\* ext
+
 ## 0.97.0-next.4
 
 ### Patch Changes
