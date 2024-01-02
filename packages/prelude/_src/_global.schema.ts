@@ -22,6 +22,7 @@ import {
   NonNegativeInt,
   nullable,
   number,
+  ParseResult,
   PhoneNumber,
   PositiveInt,
   Schema,

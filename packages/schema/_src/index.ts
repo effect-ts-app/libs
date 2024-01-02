@@ -13,5 +13,7 @@ export * from "./phoneNumber.js"
 export * from "./schema.js"
 export * from "./strings.js"
 
+export * as ParseResult from "@effect/schema/ParseResult"
+
 export { void as void_ } from "@effect/schema/Schema"
 export * from "@effect/schema/Schema"
