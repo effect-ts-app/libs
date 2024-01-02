@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.36.0-next.2
+
+### Patch Changes
+
+- 2597bfd: codegen update
+
 ## 0.36.0-next.1
 
 ### Patch Changes
