@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.97.0-next.6
+
+### Patch Changes
+
+- 9e151ed: update packages
+
 ## 0.97.0-next.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.133.0-next.40
+
+### Patch Changes
+
+- c51842b: improve: use equals in getFirstById, in case Id is a complex type.
+- 9e151ed: update packages
+- Updated dependencies [9e151ed]
+  - @effect-app/infra-adapters@0.85.0-next.37
+  - @effect-app/prelude@0.107.0-next.37
+  - @effect-app/schema@0.150.0-next.24
+  - @effect-app/core@0.97.0-next.6
+
 ## 0.133.0-next.39
 
 ### Patch Changes
