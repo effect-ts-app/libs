@@ -9,14 +9,14 @@ import { NotFoundError } from "../errors.js"
  * @tsplus fluent Array getFirstById
  * @tsplus fluent ReadonlyArray getFirstById
  */
-export function getFirstById_<A extends { id: Id }, Id extends string, Type extends string>(
+export function getFirstById_<A extends { id: unknown }, Type extends string>(
   a: Iterable<A>,
-  id: Id,
+  id: A["id"],
   type: Type
 ) {
   return Chunk
     .fromIterable(a)
-    .findFirst((_) => _.id === id)
+    .findFirst((_) => Equal.equals(_.id, id))
     .encaseInEffect(() => new NotFoundError({ type, id }))
 }
 
