@@ -112,6 +112,7 @@ export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
     }
@@ -119,6 +120,7 @@ export function QueryRequest<M>(__name?: string) {
   function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
       path: Path
@@ -127,6 +129,7 @@ export function QueryRequest<M>(__name?: string) {
   function a<Query extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
+    s: StructFields,
     {
       headers,
       query
@@ -143,6 +146,7 @@ export function QueryRequest<M>(__name?: string) {
   >(
     method: Methods.ReadMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -164,6 +168,7 @@ export function QueryRequest<M>(__name?: string) {
   >(
     method: Methods.ReadMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       path?: PathFields
@@ -177,11 +182,7 @@ export function QueryRequest<M>(__name?: string) {
     PathFields & QueryFields,
     PPath
   > {
-    class Self extends S.Class<Self>()({
-      // TODO
-      // ..._.query,
-      // ..._.path
-    }) {
+    class Self extends S.Class<Self>()(s) {
       static Body = undefined
       static Path = _.path
       static Query = _.query
@@ -203,6 +204,7 @@ export function BodyRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
     }
@@ -210,6 +212,7 @@ export function BodyRequest<M>(__name?: string) {
   function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
       path: Path
@@ -218,6 +221,7 @@ export function BodyRequest<M>(__name?: string) {
   function a<Body extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
       body: Body
@@ -231,6 +235,7 @@ export function BodyRequest<M>(__name?: string) {
   >(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       body: BodyFields
@@ -253,6 +258,7 @@ export function BodyRequest<M>(__name?: string) {
   >(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -275,6 +281,7 @@ export function BodyRequest<M>(__name?: string) {
   >(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -298,6 +305,7 @@ export function BodyRequest<M>(__name?: string) {
   >(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -322,6 +330,7 @@ export function BodyRequest<M>(__name?: string) {
   >(
     method: Methods.WriteMethods,
     path: PPath,
+    s: StructFields,
     _: {
       headers?: Headers
       path?: Path
@@ -337,12 +346,7 @@ export function BodyRequest<M>(__name?: string) {
     OrAny<typeof _.path & typeof _.body & typeof _.query>,
     PPath
   > {
-    class Self extends S.Class<Self>()({
-      // TODO
-      // ..._.body,
-      // ..._.query,
-      // ..._.path
-    }) {
+    class Self extends S.Class<Self>()(s) {
       static Path = _.path
       static Body = _.body
       static Query = _.query
@@ -433,7 +437,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
 ) {
   return <M>(__name?: string) => {
     function a(): BuildRequest<
-      never,
+      {},
       Path,
       Method,
       M,
@@ -444,7 +448,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
     ): BuildRequest<Fields, Path, Method, M, Config>
     function a<Fields extends StructFields>(fields?: Fields) {
       const req = Req<M>(__name)
-      const r = fields ? req(method, path, S.struct(fields), config) : req(method, path, config)
+      const r = fields ? req(method, path, fields, config) : req(method, path, {}, config)
       return r
     }
 
@@ -455,12 +459,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
 /**
  * Automatically picks path, query and body, based on Path params and Request Method.
  */
-function Req<M>(__name?: string) {
-  function a<
-    Path extends `/${string}`,
-    Method extends Methods.Rest,
-    Config extends object = {}
-  >(method: Method, path: Path, config?: Config): BuildRequest<never, Path, Method, M, Config>
+function Req<M>(name?: string) {
   function a<
     Path extends `/${string}`,
     Method extends Methods.Rest,
@@ -469,25 +468,14 @@ function Req<M>(__name?: string) {
   >(
     method: Method,
     path: Path,
-    self: S.Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>>,
-    config?: Config
-  ): BuildRequest<Fields, Path, Method, M, Config>
-  function a<
-    Path extends `/${string}`,
-    Method extends Methods.Rest,
-    Fields extends StructFields,
-    Config extends object = {}
-  >(
-    method: Method,
-    path: Path,
-    self?: S.Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>>,
+    self: StructFields,
     config?: Config
   ) {
     return makeRequest<Fields, Path, Method, M, Config>(
       method,
       path,
-      self ?? (S.struct({}) as any),
-      undefined,
+      self,
+      name,
       config
     )
   }
@@ -542,11 +530,12 @@ export function makeRequest<
 >(
   method: Method,
   path: Path,
-  self: S.Schema<Simplify<FromStruct<Fields>>, M>,
+  s: StructFields,
   __name?: string,
   config?: Config
 ): BuildRequest<Fields, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
+  const self = S.struct(s)
   // TODO: path struct must be parsed "from string"
   const remainSchema = pathParams.length ? self.pipe(S.omit(...pathParams as any)) : self
   const pathSchema = pathParams.length
@@ -565,6 +554,7 @@ export function makeRequest<
       QueryRequest<M>(__name)(
         method as Methods.ReadMethods,
         path,
+        s,
         newSchema as any
       ),
       config ?? {}
@@ -574,21 +564,22 @@ export function makeRequest<
     BodyRequest<M>(__name)(
       method as Methods.WriteMethods,
       path,
+      s,
       newSchema as any
     ),
     config ?? {}
   ) {} as any
 }
 
-export function adaptRequest<
-  Fields extends StructFields,
-  Path extends `/${string}`,
-  Method extends Methods.Rest,
-  M,
-  Config extends object = {}
->(req: Request<M, Fields, Path, Method>, config?: Config) {
-  return makeRequest<Fields, Path, Method, M, Config>(req.method, req.path, req, undefined, config)
-}
+// export function adaptRequest<
+//   Fields extends StructFields,
+//   Path extends `/${string}`,
+//   Method extends Methods.Rest,
+//   M,
+//   Config extends object = {}
+// >(req: Request<M, Fields, Path, Method>, config?: Config) {
+//   return makeRequest<Fields, Path, Method, M, Config>(req.method, req.path, req, undefined, config)
+// }
 
 // export type Meta = { description?: string; summary?: string; openapiRef?: string }
 // export const metaIdentifier = S.makeAnnotation<Meta>()
