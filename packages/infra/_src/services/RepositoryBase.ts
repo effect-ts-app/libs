@@ -44,7 +44,7 @@ export abstract class RepositoryBaseC<
 }
 
 export abstract class RepositoryBaseC1<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -57,7 +57,7 @@ export abstract class RepositoryBaseC1<
 }
 
 export class RepositoryBaseC2<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -254,7 +254,7 @@ export function makeRepo<
  * @tsplus fluent Repository removeById
  */
 export function removeById<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -357,7 +357,7 @@ export function makeStore<
 }
 
 export interface Repos<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends { id: string; _etag: string | undefined },
   Evt,
   ItemType extends string
@@ -414,7 +414,7 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, From extends { id: string }>(
+  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
     itemType: ItemType,
     schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
@@ -455,7 +455,7 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, From extends { id: string }>(
+  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
     itemType: ItemType,
     schema: S.Schema<From, T>,
     jitM?: (pm: From) => From

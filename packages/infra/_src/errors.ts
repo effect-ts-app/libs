@@ -2,11 +2,11 @@
 import { makeFiberFailure } from "effect/Runtime"
 
 /** @tsplus type NotFoundError */
-export class NotFoundError<T extends string = string>
-  extends Data.TaggedError("NotFoundError")<{ message: string; type: T; id: string }>
+export class NotFoundError<Id, T extends string = string>
+  extends Data.TaggedError("NotFoundError")<{ message: string; type: T; id: Id }>
 {
-  constructor(args: { readonly type: T; readonly id: string }) {
-    super({ ...args, message: `Didn't find ${args.type}#${args.id}` })
+  constructor(args: { readonly type: T; readonly id: Id }) {
+    super({ ...args, message: `Didn't find ${args.type}#${JSON.stringify(args.id)}` })
   }
 }
 
