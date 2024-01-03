@@ -86,14 +86,15 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
   decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
 ) {
   const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
-  return (method: Method, path: Path) => (req: RequestA) =>
-    fetchApi(
+  return (method: Method, path: Path) => (req: RequestA) => {
+    const encoded = encodeRequest(req)
+    return fetchApi(
       method,
       method === "DELETE"
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        ? makePathWithQuery(path, req as any)
-        : makePathWithBody(path, req as any),
-      encodeRequest(req)
+        ? makePathWithQuery(path, encoded as any)
+        : makePathWithBody(path, encoded as any),
+      encoded
     )
       .flatMap(mapResponseM(decodeRes))
       .map((i) => ({
@@ -101,6 +102,7 @@ export function fetchApi2S<RequestA, RequestE, ResponseA>(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         body: i.body as ResponseA
       }))
+  }
 }
 
 export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = void>({

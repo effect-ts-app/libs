@@ -118,14 +118,14 @@ function clientFor_<M extends Requests>(models: M) {
             )
             : Object.assign(
               (req: any) =>
-                fetchApi(Request.method, makePathWithQuery(path, cstr(req)))
+                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
                   .flatMap(mapResponseM(parseResponse))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
               {
                 ...meta,
-                mapPath: (req: any) => req ? makePathWithQuery(path, cstr(req)) : Request.path
+                mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
               }
             )
           : fields.length === 0
@@ -145,8 +145,8 @@ function clientFor_<M extends Requests>(models: M) {
               mapPath: (req: any) =>
                 req
                   ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, cstr(req))
-                    : makePathWithBody(path, cstr(req))
+                    ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
+                    : makePathWithBody(path, Request.encodeSync(cstr(req)))
                   : Request.path
             }
           )
@@ -165,14 +165,14 @@ function clientFor_<M extends Requests>(models: M) {
             )
             : Object.assign(
               (req: any) =>
-                fetchApi(Request.method, makePathWithQuery(path, cstr(req)))
+                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
                   .flatMap(mapResponseM(parseResponseE))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
               {
                 ...meta,
-                mapPath: (req: any) => req ? makePathWithQuery(path, cstr(req)) : Request.path
+                mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
               }
             )
           : fields.length === 0
@@ -192,8 +192,8 @@ function clientFor_<M extends Requests>(models: M) {
               mapPath: (req: any) =>
                 req
                   ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, cstr(req))
-                    : makePathWithBody(path, cstr(req))
+                    ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
+                    : makePathWithBody(path, Request.encodeSync(cstr(req)))
                   : Request.path
             }
           ) // generate handler
