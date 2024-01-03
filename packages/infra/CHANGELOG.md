@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.39
+
+### Patch Changes
+
+- 96bb18f: unconstrain T["id"] from string
+
 ## 0.133.0-next.38
 
 ### Patch Changes
