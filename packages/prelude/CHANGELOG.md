@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.38
+
+### Patch Changes
+
+- 64793a8: fix mapPath should use From
+
 ## 0.107.0-next.37
 
 ### Patch Changes
