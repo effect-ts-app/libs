@@ -63,18 +63,18 @@ export type FilterJoinSelect = {
   value: any /* value path[valueKey] of E */
 }
 
-export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM = never> {
+export interface FilterArgs<PM extends PersistenceModelType<unknown>, U extends keyof PM = never> {
   filter?: Filter<PM> | undefined
   select?: NonEmptyReadonlyArray<U> | undefined
   limit?: number | undefined
   skip?: number | undefined
 }
 
-export type FilterFunc<PM extends PersistenceModelType<string>> = <U extends keyof PM = never>(
+export type FilterFunc<PM extends PersistenceModelType<unknown>> = <U extends keyof PM = never>(
   args: FilterArgs<PM, U>
 ) => Effect<never, never, (U extends undefined ? PM : Pick<PM, U>)[]>
 
-export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
+export interface Store<PM extends PersistenceModelType<Id>, Id> {
   all: Effect<never, never, PM[]>
   filter: FilterFunc<PM>
   /** @deprecated */
@@ -189,7 +189,7 @@ export class ContextMap extends TagClass<ContextMap, {
 }>() {
 }
 
-export interface PersistenceModelType<Id extends string> {
+export interface PersistenceModelType<Id> {
   id: Id
   _etag: string | undefined
 }

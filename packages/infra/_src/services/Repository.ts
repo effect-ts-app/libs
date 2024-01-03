@@ -14,7 +14,7 @@ import type { QueryBuilder } from "./Store/filterApi/query.js"
  * @tsplus type Repository
  */
 export interface Repository<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string

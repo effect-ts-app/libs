@@ -9,7 +9,7 @@ import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { S } from "@effect-app/prelude"
+import { S } from "@effect-app/prelude"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import { QueryBuilder } from "./Store/filterApi/query.js"
@@ -18,7 +18,7 @@ import { QueryBuilder } from "./Store/filterApi/query.js"
  * @tsplus type Repository
  */
 export abstract class RepositoryBaseC<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -87,7 +87,7 @@ export function makeRepo<
 >() {
   return <
     ItemType extends string,
-    T extends { id: string },
+    T extends { id: unknown },
     From extends { id: string }
   >(
     name: ItemType,
@@ -147,7 +147,9 @@ export function makeRepo<
 
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
-        function findE(id: T["id"]) {
+        const i = schema.pipe(S.pick("id"))
+        function findE(_id: T["id"]) {
+          const { id } = i.encodeSync({ id: _id })
           return store
             .find(id)
             .flatMap((items) =>
@@ -300,7 +302,7 @@ export function makeStore<
 >() {
   return <
     ItemType extends string,
-    T extends { id: string },
+    T extends { id: unknown },
     E extends { id: string }
   >(
     name: ItemType,
