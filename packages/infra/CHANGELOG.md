@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.41
+
+### Patch Changes
+
+- bdda76c: fix struct schema
+
 ## 0.133.0-next.40
 
 ### Patch Changes
