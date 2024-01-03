@@ -13,9 +13,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@fp-ts/optic@0.21.0':
+  '@fp-ts/optic@0.22.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
-    path: patches/@fp-ts__optic@0.21.0.patch
+    path: patches/@fp-ts__optic@0.22.0.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
@@ -253,17 +253,17 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62)
+        specifier: ^0.40.0
+        version: 0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -366,17 +366,17 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62)
+        specifier: ^0.40.0
+        version: 0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -452,7 +452,7 @@ importers:
         version: link:../schema
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
-        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
       '@faker-js/faker':
         specifier: ^8.3.1
         version: 8.3.1
@@ -469,8 +469,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       fast-check:
         specifier: ~3.15.0
         version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
@@ -551,17 +551,17 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62)
+        specifier: ^0.40.0
+        version: 0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
-        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -636,20 +636,20 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.39.0
-        version: 0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62)
+        specifier: ^0.40.0
+        version: 0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
-        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -710,16 +710,16 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
-        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -761,14 +761,14 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -816,29 +816,29 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.25.0
-        version: 0.25.0(@effect/platform@0.39.0)(effect@2.0.0-next.62)
+        specifier: ^0.26.0
+        version: 0.26.0(@effect/platform@0.40.0)(effect@2.0.0)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
-        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
       '@formatjs/intl':
         specifier: ^2.9.9
         version: 2.9.9(@effect-app/typescript@5.4.0-tsplus.202311222)
       '@fp-ts/optic':
-        specifier: ^0.21.0
-        version: 0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62)
+        specifier: ^0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0)
       effect:
-        specifier: ^2.0.0-next.62
-        version: 2.0.0-next.62
+        specifier: ^2.0.0
+        version: 2.0.0
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
       swrv:
         specifier: ^1.0.4
-        version: 1.0.4(vue@3.4.3)
+        version: 1.0.4(vue@3.4.4)
       vue:
-        specifier: ^3.4.3
-        version: 3.4.3(@effect-app/typescript@5.4.0-tsplus.202311222)
+        specifier: ^3.4.4
+        version: 3.4.4(@effect-app/typescript@5.4.0-tsplus.202311222)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -1637,13 +1637,13 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0):
+  /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0):
     resolution: {integrity: sha512-uufF/YXO+Xf2k4Gq4HRGG1oDxefZdXvt7nMNT2h9DemKC3QdvlOsiTwNjAMYDOsDUhcaJIqBC7HMGtZbG/1s/Q==}
     peerDependencies:
       effect: 2.0.0-next.62
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.0.0-next.62
+      effect: 2.0.0
       fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
@@ -1660,35 +1660,35 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.25.0(@effect/platform@0.39.0)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-It9LJ9k7JnLz9oT20hfenAM1YT2w2KfJDbIrMrueCehePfDTn3qKwXJV6jY3om4P0eEx+pyLlNsYwP8ArBjWJg==}
+  /@effect/platform-browser@0.26.0(@effect/platform@0.40.0)(effect@2.0.0):
+    resolution: {integrity: sha512-fHpspbAWcZ8ueOGyzqoHHYDyW3Q1vSg8E0hlDeSTJf1e73ClHnyQcPEBjqabiBnMfrqqyz3AyhiFuY7YzVNeiA==}
     peerDependencies:
-      '@effect/platform': ^0.39.0
-      effect: 2.0.0-next.62
+      '@effect/platform': ^0.40.0
+      effect: ^2.0.0
     dependencies:
-      '@effect/platform': 0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62)
-      effect: 2.0.0-next.62
+      '@effect/platform': 0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0)
+      effect: 2.0.0
     dev: false
 
-  /@effect/platform@0.39.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
+  /@effect/platform@0.40.0(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.0):
+    resolution: {integrity: sha512-cL4U1U6CUF4AVCoTevb5EyJ9vHJUAoamOiIzCtimMT2iosRLRUOqM3cpVBXyfia5sTB/E88ih+r4vJDfCDutjg==}
     peerDependencies:
       '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20231228152439
-      effect: 2.0.0-next.62
+      effect: ^2.0.0
     dependencies:
-      '@effect/schema': /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0-next.62)(fast-check@3.15.0)
-      effect: 2.0.0-next.62
+      '@effect/schema': /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.0)(fast-check@3.15.0)
+      effect: 2.0.0
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/typeclass@0.21.0(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-J0UU0lZqILcjt/6x1a7ykf608NlO45Mg3rajgjifMRONTc4ANDPBTLE6/e2eknwS/unIVX6LJFEZEPotfQIe6Q==}
+  /@effect/typeclass@0.22.0(effect@2.0.0):
+    resolution: {integrity: sha512-1++hmUh/ODupG6Xh4GdQ9XlpD8+PB0beWypbb+bmvKLCWrRTfSZt6r4ueqxxa0k+yzyEIs7PXBxUL9FXKaLSDQ==}
     peerDependencies:
-      effect: 2.0.0-next.62
+      effect: ^2.0.0
     dependencies:
-      effect: 2.0.0-next.62
+      effect: 2.0.0
     dev: false
 
   /@esbuild/android-arm64@0.19.5:
@@ -1982,14 +1982,14 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.21.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.21.0)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-INzxI8AxItH4Ts/AQhEV7qp5SO1o9hTHTgZDwYD6my2NupgSj+ix47YzBJALA/2t5G/KRCWg9Mfg5SgZCWYtsw==}
+  /@fp-ts/optic@0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.0.0):
+    resolution: {integrity: sha512-Kpg9bdA+q3d1I+ulENsax4iV6ge5TzRH6nj2/kdPPg42wtTmlir42oBlpbiwp3l3uNDja9rBWmuya0Q6GAmakQ==}
     peerDependencies:
-      '@effect/typeclass': ^0.21.0
-      effect: 2.0.0-next.62
+      '@effect/typeclass': ^0.22.0
+      effect: ^2.0.0
     dependencies:
-      '@effect/typeclass': 0.21.0(effect@2.0.0-next.62)
-      effect: 2.0.0-next.62
+      '@effect/typeclass': 0.22.0(effect@2.0.0)
+      effect: 2.0.0
     dev: false
     patched: true
 
@@ -2987,11 +2987,11 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /@vue/compiler-core@3.4.3:
-    resolution: {integrity: sha512-u8jzgFg0EDtSrb/hG53Wwh1bAOQFtc1ZCegBpA/glyvTlgHl+tq13o1zvRfLbegYUw/E4mSTGOiCnAJ9SJ+lsg==}
+  /@vue/compiler-core@3.4.4:
+    resolution: {integrity: sha512-U5AdCN+6skzh2bSJrkMj2KZsVkUpgK8/XlxjSRYQZhNPcvt9/kmgIMpFEiTyK+Dz5E1J+8o8//BEIX+bakgVSw==}
     dependencies:
       '@babel/parser': 7.23.6
-      '@vue/shared': 3.4.3
+      '@vue/shared': 3.4.4
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.0.2
@@ -3004,11 +3004,11 @@ packages:
       '@vue/shared': 3.3.4
     dev: true
 
-  /@vue/compiler-dom@3.4.3:
-    resolution: {integrity: sha512-oGF1E9/htI6JWj/lTJgr6UgxNCtNHbM6xKVreBWeZL9QhRGABRVoWGAzxmtBfSOd+w0Zi5BY0Es/tlJrN6WgEg==}
+  /@vue/compiler-dom@3.4.4:
+    resolution: {integrity: sha512-iSwkdDULCN+Vr8z6uwdlL044GJ/nUmECxP9vu7MzEs4Qma0FwDLYvnvRcyO0ZITuu3Os4FptGUDnhi1kOLSaGw==}
     dependencies:
-      '@vue/compiler-core': 3.4.3
-      '@vue/shared': 3.4.3
+      '@vue/compiler-core': 3.4.4
+      '@vue/shared': 3.4.4
     dev: false
 
   /@vue/compiler-sfc@3.3.4:
@@ -3026,14 +3026,14 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /@vue/compiler-sfc@3.4.3:
-    resolution: {integrity: sha512-NuJqb5is9I4uzv316VRUDYgIlPZCG8D+ARt5P4t5UDShIHKL25J3TGZAUryY/Aiy0DsY7srJnZL5ryB6DD63Zw==}
+  /@vue/compiler-sfc@3.4.4:
+    resolution: {integrity: sha512-OTFcU6vUxUNHBcarzkp4g6d25nvcmDvFDzPRvSrIsByFFPRYN+y3b+j9HxYwt6nlWvGyFCe0roeJdJlfYxbCBg==}
     dependencies:
       '@babel/parser': 7.23.6
-      '@vue/compiler-core': 3.4.3
-      '@vue/compiler-dom': 3.4.3
-      '@vue/compiler-ssr': 3.4.3
-      '@vue/shared': 3.4.3
+      '@vue/compiler-core': 3.4.4
+      '@vue/compiler-dom': 3.4.4
+      '@vue/compiler-ssr': 3.4.4
+      '@vue/shared': 3.4.4
       estree-walker: 2.0.2
       magic-string: 0.30.5
       postcss: 8.4.32
@@ -3047,11 +3047,11 @@ packages:
       '@vue/shared': 3.3.4
     dev: true
 
-  /@vue/compiler-ssr@3.4.3:
-    resolution: {integrity: sha512-wnYQtMBkeFSxgSSQbYGQeXPhQacQiog2c6AlvMldQH6DB+gSXK/0F6DVXAJfEiuBSgBhUc8dwrrG5JQcqwalsA==}
+  /@vue/compiler-ssr@3.4.4:
+    resolution: {integrity: sha512-1DU9DflSSQlx/M61GEBN+NbT/anUki2ooDo9IXfTckCeKA/2IKNhY8KbG3x6zkd3KGrxzteC7de6QL88vEb41Q==}
     dependencies:
-      '@vue/compiler-dom': 3.4.3
-      '@vue/shared': 3.4.3
+      '@vue/compiler-dom': 3.4.4
+      '@vue/shared': 3.4.4
     dev: false
 
   /@vue/reactivity-transform@3.3.4:
@@ -3064,43 +3064,43 @@ packages:
       magic-string: 0.30.5
     dev: true
 
-  /@vue/reactivity@3.4.3:
-    resolution: {integrity: sha512-q5f9HLDU+5aBKizXHAx0w4whkIANs1Muiq9R5YXm0HtorSlflqv9u/ohaMxuuhHWCji4xqpQ1eL04WvmAmGnFg==}
+  /@vue/reactivity@3.4.4:
+    resolution: {integrity: sha512-DFsuJBf6sfhd5SYzJmcBTUG9+EKqjF31Gsk1NJtnpJm9liSZ806XwGJUeNBVQIanax7ODV7Lmk/k17BgxXNuTg==}
     dependencies:
-      '@vue/shared': 3.4.3
+      '@vue/shared': 3.4.4
     dev: false
 
-  /@vue/runtime-core@3.4.3:
-    resolution: {integrity: sha512-C1r6QhB1qY7D591RCSFhMULyzL9CuyrGc+3PpB0h7dU4Qqw6GNyo4BNFjHZVvsWncrUlKX3DIKg0Y7rNNr06NQ==}
+  /@vue/runtime-core@3.4.4:
+    resolution: {integrity: sha512-zWWwNQAj5JdxrmOA1xegJm+c4VtyIbDEKgQjSb4va5v7gGTCh0ZjvLI+htGFdVXaO9bs2J3C81p5p+6jrPK8Bw==}
     dependencies:
-      '@vue/reactivity': 3.4.3
-      '@vue/shared': 3.4.3
+      '@vue/reactivity': 3.4.4
+      '@vue/shared': 3.4.4
     dev: false
 
-  /@vue/runtime-dom@3.4.3:
-    resolution: {integrity: sha512-wrsprg7An5Ec+EhPngWdPuzkp0BEUxAKaQtN9dPU/iZctPyD9aaXmVtehPJerdQxQale6gEnhpnfywNw3zOv2A==}
+  /@vue/runtime-dom@3.4.4:
+    resolution: {integrity: sha512-Nlh2ap1J/eJQ6R0g+AIRyGNwpTJQACN0dk8I8FRLH8Ev11DSvfcPOpn4+Kbg5xAMcuq0cHB8zFYxVrOgETrrvg==}
     dependencies:
-      '@vue/runtime-core': 3.4.3
-      '@vue/shared': 3.4.3
+      '@vue/runtime-core': 3.4.4
+      '@vue/shared': 3.4.4
       csstype: 3.1.3
     dev: false
 
-  /@vue/server-renderer@3.4.3(vue@3.4.3):
-    resolution: {integrity: sha512-BUxt8oVGMKKsqSkM1uU3d3Houyfy4WAc2SpSQRebNd+XJGATVkW/rO129jkyL+kpB/2VRKzE63zwf5RtJ3XuZw==}
+  /@vue/server-renderer@3.4.4(vue@3.4.4):
+    resolution: {integrity: sha512-+AjoiKcC41k7SMJBYkDO9xs79/Of8DiThS9mH5l2MK+EY0to3psI0k+sElvVqQvsoZTjHMEuMz0AEgvm2T+CwA==}
     peerDependencies:
-      vue: 3.4.3
+      vue: 3.4.4
     dependencies:
-      '@vue/compiler-ssr': 3.4.3
-      '@vue/shared': 3.4.3
-      vue: 3.4.3(@effect-app/typescript@5.4.0-tsplus.202311222)
+      '@vue/compiler-ssr': 3.4.4
+      '@vue/shared': 3.4.4
+      vue: 3.4.4(@effect-app/typescript@5.4.0-tsplus.202311222)
     dev: false
 
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
     dev: true
 
-  /@vue/shared@3.4.3:
-    resolution: {integrity: sha512-rIwlkkP1n4uKrRzivAKPZIEkHiuwY5mmhMJ2nZKCBLz8lTUlE73rQh4n1OnnMurXt1vcUNyH4ZPfdh8QweTjpQ==}
+  /@vue/shared@3.4.4:
+    resolution: {integrity: sha512-abSgiVRhfjfl3JALR/cSuBl74hGJ3SePgf1mKzodf1eMWLwHZbfEGxT2cNJSsNiw44jEgrO7bNkhchaWA7RwNw==}
     dev: false
 
   /@webassemblyjs/ast@1.11.1:
@@ -4472,8 +4472,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.0.0-next.62:
-    resolution: {integrity: sha512-fJhLzf5oouL4WZP314ZJgZz5Bel7OHTY+YFxO06sW1mSvqJz0s28y7jDHr5zhtTNM1YRvzbeLYUYfNaJYKqx1A==}
+  /effect@2.0.0:
+    resolution: {integrity: sha512-yYYNf91dlk7dEl+U1QzeSiMHIM9zz1/NqSJ5hNRZ6GrFwctaCQcdxmAhll6mQRCgXFIAMhMEawmATlGLWtU5qQ==}
     dev: false
 
   /electron-to-chromium@1.4.525:
@@ -8825,12 +8825,12 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /swrv@1.0.4(vue@3.4.3):
+  /swrv@1.0.4(vue@3.4.4):
     resolution: {integrity: sha512-zjEkcP8Ywmj+xOJW3lIT65ciY/4AL4e/Or7Gj0MzU3zBJNMdJiT8geVZhINavnlHRMMCcJLHhraLTAiDOTmQ9g==}
     peerDependencies:
       vue: '>=3.2.26 < 4'
     dependencies:
-      vue: 3.4.3(@effect-app/typescript@5.4.0-tsplus.202311222)
+      vue: 3.4.4(@effect-app/typescript@5.4.0-tsplus.202311222)
     dev: false
 
   /synckit@0.8.5:
@@ -9539,19 +9539,19 @@ packages:
       - terser
     dev: true
 
-  /vue@3.4.3(@effect-app/typescript@5.4.0-tsplus.202311222):
-    resolution: {integrity: sha512-GjN+culMAGv/mUbkIv8zMKItno8npcj5gWlXkSxf1SPTQf8eJ4A+YfHIvQFyL1IfuJcMl3soA7SmN1fRxbf/wA==}
+  /vue@3.4.4(@effect-app/typescript@5.4.0-tsplus.202311222):
+    resolution: {integrity: sha512-suZXgDVT8lRNhKmxdkwOsR0oyUi8is7mtqI18qW97JLoyorEbE9B2Sb4Ws/mR/+0AgA/JUtsv1ytlRSH3/pDIA==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@vue/compiler-dom': 3.4.3
-      '@vue/compiler-sfc': 3.4.3
-      '@vue/runtime-dom': 3.4.3
-      '@vue/server-renderer': 3.4.3(vue@3.4.3)
-      '@vue/shared': 3.4.3
+      '@vue/compiler-dom': 3.4.4
+      '@vue/compiler-sfc': 3.4.4
+      '@vue/runtime-dom': 3.4.4
+      '@vue/server-renderer': 3.4.4(vue@3.4.4)
+      '@vue/shared': 3.4.4
       typescript: /@effect-app/typescript@5.4.0-tsplus.202311222
     dev: false
 
