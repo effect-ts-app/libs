@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.25
+
+### Patch Changes
+
+- aa1b654: fix encoding request
+
 ## 0.150.0-next.24
 
 ### Patch Changes
