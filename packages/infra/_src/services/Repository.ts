@@ -44,7 +44,7 @@ export function get<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError({ type: self.itemType, id })))
+  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
 }
 
 /**
@@ -279,7 +279,7 @@ export function queryOneEffect<
       .flatMap((_) =>
         (f.collect ? _.filterMap(f.collect) : _ as any as S[])
           .toNonEmpty
-          .encaseInEffect(() => new NotFoundError({ type: self.itemType, id: f.filter }))
+          .encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
           .map((_) => _[0])
       )
   )
