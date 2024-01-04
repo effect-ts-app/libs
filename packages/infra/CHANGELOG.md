@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.46
+
+### Patch Changes
+
+- d2027ce: err
+
 ## 0.133.0-next.45
 
 ### Patch Changes
