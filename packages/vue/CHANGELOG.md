@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.0-next.47
+
+### Patch Changes
+
+- 8a75cac: update vue
+- Updated dependencies [8a75cac]
+  - @effect-app/vue@0.87.0-next.47
+
 ## 0.87.0-next.46
 
 ### Patch Changes
