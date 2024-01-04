@@ -15,7 +15,7 @@
     "effect": "^2.0.0",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
-    "vue": "^3.4.4"
+    "vue": "^3.4.5"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
