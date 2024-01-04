@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.0-next.40
+
+### Patch Changes
+
+- 14b33a9: cleanup errors and use decodeSyc over parseSync
+- Updated dependencies [14b33a9]
+  - @effect-app/schema@0.150.0-next.26
+
 ## 0.107.0-next.39
 
 ### Patch Changes

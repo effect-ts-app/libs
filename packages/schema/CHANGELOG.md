@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.26
+
+### Patch Changes
+
+- 14b33a9: cleanup errors and use decodeSyc over parseSync
+
 ## 0.150.0-next.25
 
 ### Patch Changes

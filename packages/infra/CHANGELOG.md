@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.133.0-next.44
+
+### Patch Changes
+
+- 14b33a9: cleanup errors and use decodeSyc over parseSync
+- Updated dependencies [14b33a9]
+  - @effect-app/prelude@0.107.0-next.40
+  - @effect-app/schema@0.150.0-next.26
+  - @effect-app/infra-adapters@0.85.0-next.40
+
 ## 0.133.0-next.43
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.87.0-next.46
+
+### Patch Changes
+
+- 14b33a9: cleanup errors and use decodeSyc over parseSync
+- Updated dependencies [14b33a9]
+  - @effect-app/prelude@0.107.0-next.40
+  - @effect-app/schema@0.150.0-next.26
+  - @effect-app/vue@0.87.0-next.46
+
 ## 0.87.0-next.45
 
 ### Patch Changes
