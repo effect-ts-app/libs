@@ -5,5 +5,5 @@ export function makeCodec<
   From,
   Id
 >(self: S.Schema<From, To>) {
-  return [S.parseSync(self), S.encodeSync(self)] as const
+  return [S.decodeSync(self), S.encodeSync(self)] as const
 }

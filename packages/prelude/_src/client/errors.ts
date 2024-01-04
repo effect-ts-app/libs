@@ -1,33 +1,95 @@
-@useClassFeaturesForSchema
-export class NotFoundError extends TaggedClass<NotFoundError>()("NotFoundError", {
-  message: string
-}) {}
+import { TaggedError } from "@effect-app/schema"
 
+/** @tsplus type NotFoundError */
 @useClassFeaturesForSchema
-export class InvalidStateError extends TaggedClass<InvalidStateError>()("InvalidStateError", {
-  message: string
-}) {}
+// eslint-disable-next-line unused-imports/no-unused-vars
+// @ts-expect-error type not used
+export class NotFoundError<ItemType> extends TaggedError<NotFoundError<any>>()("NotFoundError", {
+  type: string,
+  id: unknown
+}) {
+  override get message() {
+    return `Didn't find ${this.type}#${JSON.stringify(this.id)}`
+  }
+}
 
+/** @tsplus type InvalidStateError */
 @useClassFeaturesForSchema
-export class ValidationError extends TaggedClass<ValidationError>()("ValidationError", {
+export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
+  message: string
+}) {
+  constructor(messageOrObject: string | { message: string }, disableValidation = false) {
+    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  }
+}
+
+/** @tsplus type ValidationError */
+@useClassFeaturesForSchema
+export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
   errors: array(unknown) // meh
-}) {}
+}) {
+  override get message() {
+    return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
+  }
+}
 
+/** @tsplus type NotLoggedInError */
 @useClassFeaturesForSchema
-export class NotLoggedInError extends TaggedClass<NotLoggedInError>()("NotLoggedInError", {
+export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
   message: string.optional()
-}) {}
+}) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  }
+}
 
+/**
+ * The user carries a valid Userprofile, but there is a problem with the login none the less.
+ */
+/** @tsplus type LoginError */
 @useClassFeaturesForSchema
-export class UnauthorizedError extends TaggedClass<UnauthorizedError>()("UnauthorizedError", {
+export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   message: string.optional()
-}) {}
+}) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  }
+}
 
+/** @tsplus type UnauthorizedError */
 @useClassFeaturesForSchema
-export class OptimisticConcurrencyException extends TaggedClass<OptimisticConcurrencyException>()(
+export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
+  message: string.optional()
+}) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  }
+}
+
+type OptimisticConcurrencyDetails = {
+  readonly type: string
+  readonly id: string
+  readonly current?: string | undefined
+  readonly found?: string | undefined
+}
+
+/** @tsplus type OptimisticConcurrencyException */
+@useClassFeaturesForSchema
+export class OptimisticConcurrencyException extends TaggedError<OptimisticConcurrencyException>()(
   "OptimisticConcurrencyException",
-  {}
-) {}
+  { message: string }
+) {
+  readonly details?: OptimisticConcurrencyDetails
+  constructor(
+    args: OptimisticConcurrencyDetails | { message: string },
+    disableValidation = false
+  ) {
+    super("message" in args ? args : { message: `Existing ${args.type} ${args.id} record changed` }, disableValidation)
+    if (!("message" in args)) {
+      this.details = args
+    }
+  }
+}
 
 const MutationOnlyErrors = [
   InvalidStateError,
@@ -37,6 +99,7 @@ const MutationOnlyErrors = [
 const GeneralErrors = [
   NotFoundError,
   NotLoggedInError,
+  LoginError,
   UnauthorizedError,
   ValidationError
 ] as const

@@ -33,7 +33,7 @@ export const defaultArray = <S extends Schema<any, ReadonlyArray<any>>>(s: S) =>
  * @tsplus getter effect/schema/Schema withDefaults
  */
 export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {
-  const a = Object.assign(S.parseSync(s) as WithDefaults<Self>, s)
+  const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
   Object.setPrototypeOf(a, Object.getPrototypeOf(s))
   return a
 

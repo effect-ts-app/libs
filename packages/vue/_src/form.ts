@@ -210,7 +210,7 @@ export const buildFormFromSchema = <
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
   const fields = buildFieldInfoFromFields(s)
-  const parse = s.parseSync
+  const parse = s.decodeSync
   const isDirty = ref(false)
   const isValid = ref(true)
 

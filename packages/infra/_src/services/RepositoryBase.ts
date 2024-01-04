@@ -211,7 +211,7 @@ export function makeRepo<
           })
         }
 
-        const p = schema.parseSync
+        const p = schema.decodeSync
 
         const r: Repository<T, PM, Evt, ItemType> = {
           /**

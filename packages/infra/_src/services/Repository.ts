@@ -272,14 +272,14 @@ export function queryOneEffect<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
-): Effect<R, E | NotFoundError<T["id"], ItemType>, S> {
+): Effect<R, E | NotFoundError<ItemType>, S> {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
       .flatMap((_) =>
         (f.collect ? _.filterMap(f.collect) : _ as any as S[])
           .toNonEmpty
-          .encaseInEffect(() => new NotFoundError({ type: self.itemType, id: JSON.stringify(f.filter) }))
+          .encaseInEffect(() => new NotFoundError({ type: self.itemType, id: f.filter }))
           .map((_) => _[0])
       )
   )
