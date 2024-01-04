@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.45
+
+### Patch Changes
+
+- 2d4313e: fix type
+
 ## 0.133.0-next.44
 
 ### Patch Changes
