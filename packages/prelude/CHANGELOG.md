@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.107.0-next.42
+
+### Patch Changes
+
+- 09ed839: dynamic faker arb
+
 ## 0.107.0-next.41
 
 ### Patch Changes
