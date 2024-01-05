@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.48
+
+### Patch Changes
+
+- 2234388: typo
+
 ## 0.133.0-next.47
 
 ### Patch Changes
