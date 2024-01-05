@@ -3,7 +3,6 @@
 // Modify = Must `set` updated items, and can return anything.
 import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
 import { Pure } from "@effect-app/prelude/Pure"
-import type { S } from "vitest/dist/reporters-O4LBziQ_.js"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { NotFoundError } from "../errors.js"
 import type { Filter, PersistenceModelType } from "../services/Store.js"
@@ -91,7 +90,8 @@ export function projectEffect<
   ItemType extends string,
   R,
   E,
-  U extends keyof PM
+  U extends keyof PM,
+  S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<
