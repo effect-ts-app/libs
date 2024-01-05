@@ -21,7 +21,6 @@ export function generate<T>(arb: fc.Arbitrary<T>) {
 /**
  * @tsplus getter effect/Schema/Arbitrary generate
  */
-
 export function generateFromArbitrary<T>(arb: A.Arbitrary<T>) {
   return generate(arb(fc))
 }
