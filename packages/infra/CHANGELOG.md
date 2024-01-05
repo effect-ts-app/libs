@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.133.0-next.47
+
+### Patch Changes
+
+- 0bc4207: arb gen
+- b6d4272: update packages
+- Updated dependencies [0bc4207]
+- Updated dependencies [b6d4272]
+  - @effect-app/schema@0.150.0-next.27
+  - @effect-app/infra-adapters@0.85.0-next.41
+  - @effect-app/prelude@0.107.0-next.41
+  - @effect-app/core@0.97.0-next.7
+
 ## 0.133.0-next.46
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @effect-app/schema
 
+## 0.150.0-next.27
+
+### Patch Changes
+
+- 0bc4207: arb gen
+- b6d4272: update packages
+- Updated dependencies [b6d4272]
+  - @effect-app/core@0.97.0-next.7
+
 ## 0.150.0-next.26
 
 ### Patch Changes
