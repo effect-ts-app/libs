@@ -1,23 +1,27 @@
 // Do not import to frontend
 
 import { setFaker } from "@effect-app/prelude/faker"
+import type { A } from "@effect-app/schema"
 import { faker } from "@faker-js/faker"
+import { Random } from "fast-check"
+import * as fc from "fast-check"
+import * as rand from "pure-rand"
 
-// const rnd = new Random(rand.congruential32(5))
+const rnd = new Random(rand.congruential32(5))
 
 setFaker(faker)
 
-// /**
-//  * @tsplus getter FastCheck generate
-//  */
-// export function generate<T>(arb: fc.Arbitrary<T>) {
-//   return arb.generate(rnd, undefined)
-// }
+/**
+ * @tsplus getter FastCheck generate
+ */
+export function generate<T>(arb: fc.Arbitrary<T>) {
+  return arb.generate(rnd, undefined)
+}
 
-// /**
-//  * @tsplus getter ets/Schema/Arbitrary/Gen generate
-//  */
+/**
+ * @tsplus getter effect/Schema/Arbitrary generate
+ */
 
-// export function generateFromArbitrary<T>(arb: Arbitrary.Gen<T>) {
-//   return generate(arb(fc))
-// }
+export function generateFromArbitrary<T>(arb: A.Arbitrary<T>) {
+  return generate(arb(fc))
+}

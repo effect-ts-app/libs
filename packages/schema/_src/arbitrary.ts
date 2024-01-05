@@ -10,13 +10,6 @@ export function sampleFromArb<T>(arb: Arbitrary<T>, params?: number | fc.Paramet
   return fc.sample(arb(fc), params)
 }
 
-/**
- * @tsplus getter effect/schema/Arbitrary generate
- */
-export function generateFromArb<T>(arb: Arbitrary<T>) {
-  return fc.sample(arb(fc), 1)[0]! // TODO: whats the difference with generate?
-}
-
 // because A.to is not typed with the Arbitrary interface atm
 /**
  * @tsplus getter effect/schema/Schema Arbitrary
