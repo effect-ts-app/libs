@@ -7,7 +7,7 @@
       "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "date-fns@2.29.3": "patches/date-fns@2.29.3.patch",
-      "@typescript-eslint/scope-manager@6.17.0": "patches/@typescript-eslint__scope-manager@6.17.0.patch",
+      "@typescript-eslint/scope-manager@6.18.0": "patches/@typescript-eslint__scope-manager@6.18.0.patch",
       "fast-check@3.15.0": "patches/fast-check@3.15.0.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch"
     }
