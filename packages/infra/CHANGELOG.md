@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.0-next.51
+
+### Patch Changes
+
+- 6208553: re-add routing
+
 ## 0.133.0-next.50
 
 ### Patch Changes
