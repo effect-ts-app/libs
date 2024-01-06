@@ -116,8 +116,8 @@ importers:
         specifier: 6.17.0
         version: 6.17.0(patch_hash=nrjotwpevdhz7eyb6bwy6orwfq)
       babel-plugin-replace-import-extension:
-        specifier: ^1.1.3
-        version: 1.1.3
+        specifier: ^1.1.4
+        version: 1.1.4
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
@@ -450,6 +450,9 @@ importers:
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
+      '@effect/platform':
+        specifier: ^0.40.1
+        version: 0.40.1(@effect-app/schema-fork@0.0.0-20231228152439)(effect@2.0.1)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20231228152439
         version: /@effect-app/schema-fork@0.0.0-20231228152439(effect@2.0.1)(fast-check@3.15.0)
@@ -471,6 +474,9 @@ importers:
       effect:
         specifier: ^2.0.1
         version: 2.0.1
+      express-oauth2-jwt-bearer:
+        specifier: ^1.6.0
+        version: 1.6.0
       fast-check:
         specifier: ~3.15.0
         version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
@@ -3500,8 +3506,8 @@ packages:
       - debug
     dev: false
 
-  /babel-plugin-replace-import-extension@1.1.3:
-    resolution: {integrity: sha512-NmHOpGOLqSnZgefu/rmCviGIlp51WLGk8OY9CiQmp9qrpBy6jFVNvxIP4jR9WXZlNOPfBdGpuhPJe8upV4DTGw==}
+  /babel-plugin-replace-import-extension@1.1.4:
+    resolution: {integrity: sha512-UJi5YV31JxoaHHxhytRhQqOQN3+ZsaoXVia7e58yc35pe4tNjNr7BdznnDvIPbEG/4u5kf+lLDk9peaxsOPxGw==}
     dev: true
 
   /balanced-match@1.0.2:
@@ -5090,6 +5096,13 @@ packages:
       jest-message-util: 26.6.2
       jest-regex-util: 26.0.0
 
+  /express-oauth2-jwt-bearer@1.6.0:
+    resolution: {integrity: sha512-HXnez7vocYlOqlfF3ozPcf/WE3zxT7zfUNfeg5FHJnvNwhBYlNXiPOvuCtBalis8xcigvwtInzEKhBuH87+9ug==}
+    engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0 || ^20.2.0}
+    dependencies:
+      jose: 4.15.4
+    dev: false
+
   /express@4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
     engines: {node: '>= 0.10.0'}
@@ -6279,6 +6292,10 @@ packages:
     dependencies:
       '@panva/asn1.js': 1.0.0
     dev: true
+
+  /jose@4.15.4:
+    resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}

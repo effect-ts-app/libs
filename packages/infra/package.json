@@ -6,17 +6,19 @@
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.3",
+    "@effect/platform": "^0.40.1",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231228152439",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.1",
+    "express-oauth2-jwt-bearer": "^1.6.0",
     "@faker-js/faker": "^8.3.1",
     "@sendgrid/helpers": "^8.0.0",
     "@sendgrid/mail": "^8.1.0",
     "change-case": "^5.3.0",
     "cross-fetch": "^4.0.0",
+    "effect": "^2.0.1",
     "fast-check": "~3.15.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
@@ -153,6 +155,16 @@
         "default": "./_cjs/api/express/schema/routing.cjs"
       }
     },
+    "./api/http": {
+      "import": {
+        "types": "./dist/api/http.d.ts",
+        "default": "./dist/api/http.js"
+      },
+      "require": {
+        "types": "./dist/api/http.d.ts",
+        "default": "./_cjs/api/http.cjs"
+      }
+    },
     "./api/reportError": {
       "import": {
         "types": "./dist/api/reportError.d.ts",
@@ -161,6 +173,56 @@
       "require": {
         "types": "./dist/api/reportError.d.ts",
         "default": "./_cjs/api/reportError.cjs"
+      }
+    },
+    "./api/routing": {
+      "import": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./dist/api/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./_cjs/api/routing.cjs"
+      }
+    },
+    "./api/routing/base": {
+      "import": {
+        "types": "./dist/api/routing/base.d.ts",
+        "default": "./dist/api/routing/base.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/base.d.ts",
+        "default": "./_cjs/api/routing/base.cjs"
+      }
+    },
+    "./api/routing/defaultErrorHandler": {
+      "import": {
+        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
+        "default": "./dist/api/routing/defaultErrorHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
+        "default": "./_cjs/api/routing/defaultErrorHandler.cjs"
+      }
+    },
+    "./api/routing/makeRequestHandler": {
+      "import": {
+        "types": "./dist/api/routing/makeRequestHandler.d.ts",
+        "default": "./dist/api/routing/makeRequestHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/makeRequestHandler.d.ts",
+        "default": "./_cjs/api/routing/makeRequestHandler.cjs"
+      }
+    },
+    "./api/routing/match": {
+      "import": {
+        "types": "./dist/api/routing/match.d.ts",
+        "default": "./dist/api/routing/match.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/match.d.ts",
+        "default": "./_cjs/api/routing/match.cjs"
       }
     },
     "./api/setupRequest": {
