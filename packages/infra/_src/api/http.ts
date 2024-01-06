@@ -11,6 +11,7 @@ export { RequestError as HttpRequestError } from "@effect/platform/Http/ServerEr
 export { ServerRequest as HttpServerRequest } from "@effect/platform/Http/ServerRequest"
 export type { ServerResponse as HttpServerResponse } from "@effect/platform/Http/ServerResponse"
 export type { HttpRoute, HttpRouter }
+export * as HttpServer from "@effect/platform/Http/Server"
 
 /**
  * @tsplus unify effect/platform/Http/Router/Route

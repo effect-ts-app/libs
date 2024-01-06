@@ -30,6 +30,18 @@ export const defaultNullable = <S extends Schema<any, any>, From, To>(s: S & Sch
 export const defaultArray = <S extends Schema<any, ReadonlyArray<any>>>(s: S) => S.withDefaultConstructor(s, () => [])
 
 /**
+ * @tsplus fluent effect/schema/Schema withDefault
+ */
+export const defaultMap = <S extends Schema<any, ReadonlyMap<any, any>>>(s: S) =>
+  S.withDefaultConstructor(s, () => new Map())
+
+/**
+ * @tsplus fluent effect/schema/Schema withDefault
+ */
+export const defaultSet = <S extends Schema<any, ReadonlySet<any>>>(s: S) =>
+  S.withDefaultConstructor(s, () => new Set())
+
+/**
  * @tsplus getter effect/schema/Schema withDefaults
  */
 export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {

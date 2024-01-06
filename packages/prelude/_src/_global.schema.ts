@@ -25,6 +25,8 @@ import {
   ParseResult,
   PhoneNumber,
   PositiveInt,
+  readonlyMap,
+  readonlySet,
   Schema,
   string,
   StringId,
