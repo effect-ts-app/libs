@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.0-next.43
+
+### Patch Changes
+
+- 19dc3b1: ext
+- Updated dependencies [19dc3b1]
+  - @effect-app/schema@0.150.0-next.28
+
 ## 0.107.0-next.42
 
 ### Patch Changes
