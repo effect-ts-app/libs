@@ -1,5 +1,52 @@
 # @effect-app/schema
 
+## 0.150.0
+
+### Minor Changes
+
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: fix exclusive min/max
+- 640d24a: cleanup
+- 640d24a: update
+- 640d24a: cleanup schema ext
+- 640d24a: f
+- 640d24a: updates
+- 640d24a: improve
+- 640d24a: arb gen
+- 640d24a: cleanup prefixed stringid brand
+- 640d24a: cleanup rest
+- 640d24a: improve
+- 640d24a: update schema
+- 640d24a: update packages
+- 640d24a: ext
+- 640d24a: upd
+- 640d24a: up;ld
+- 640d24a: exports
+- 640d24a: fix ext
+- 640d24a: use schema fork
+- 640d24a: fix encoding request
+- 640d24a: cleanup errors and use decodeSyc over parseSync
+- 640d24a: fix brands
+- 640d24a: update packages
+- 640d24a: fields in class
+- 640d24a: expose ParseResult
+- 640d24a: update packages
+- 640d24a: Add inputDate
+- 640d24a: upd
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+  - @effect-app/core@0.97.0
+
 ## 0.150.0-next.30
 
 ### Patch Changes

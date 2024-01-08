@@ -1,5 +1,80 @@
 # @effect-app/prelude
 
+## 0.107.0
+
+### Minor Changes
+
+- 640d24a: reference schema2
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: mm
+- 640d24a: clean
+- 640d24a: cleanup
+- 640d24a: f
+- 640d24a: update
+- 640d24a: faker
+- 640d24a: cleanup schema ext
+- 640d24a: fix stringid and clientfor
+- 640d24a: updates
+- 640d24a: S
+- 640d24a: fix things
+- 640d24a: improve
+- 640d24a: update schema
+- 640d24a: upd
+- 640d24a: cl
+- 640d24a: form and client fixes
+- 640d24a: update packages
+- 640d24a: ext
+- 640d24a: improve rc
+- 640d24a: fix RequestId
+- 640d24a: dynamic faker arb
+- 640d24a: fix empty body
+- 640d24a: fix mapPath should use From
+- 640d24a: exports
+- 640d24a: use schema fork
+- 640d24a: cleanup errors and use decodeSyc over parseSync
+- 640d24a: update packages
+- 640d24a: expose ParseResult
+- 640d24a: update packages
+- 640d24a: fup
+- 640d24a: upd
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+  - @effect-app/schema@0.150.0
+  - @effect-app/core@0.97.0
+
 ## 0.107.0-next.45
 
 ### Patch Changes

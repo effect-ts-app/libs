@@ -1,5 +1,17 @@
 # @effect-app/eslint-codegen-model
 
+## 0.36.0
+
+### Minor Changes
+
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: update package
+- 640d24a: codegen update
+- 640d24a: update packages
+
 ## 0.36.0-next.3
 
 ### Patch Changes

@@ -1,5 +1,50 @@
 # @effect-app/fluent-extensions
 
+## 0.97.0
+
+### Minor Changes
+
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: update packages
+- 640d24a: update packages
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+  - @effect-app/schema@0.150.0
+  - @effect-app/core@0.97.0
+
 ## 0.97.0-next.30
 
 ### Patch Changes

@@ -1,5 +1,97 @@
 # @effect-app/vue
 
+## 0.87.0
+
+### Minor Changes
+
+- 640d24a: reference schema2
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: fix exclusive min/max
+- 640d24a: update
+- 640d24a: cleanup schema ext
+- 640d24a: updates
+- 640d24a: update vue
+- 640d24a: f
+- 640d24a: fix error message
+- 640d24a: S
+- 640d24a: mini form
+- 640d24a: update schema
+- 640d24a: improve error
+- 640d24a: form and client fixes
+- 640d24a: update packages
+- 640d24a: reimplement vue form
+- 640d24a: upd
+- 640d24a: use schema fork
+- 640d24a: update packages
+- 640d24a: cleanup errors and use decodeSyc over parseSync
+- 640d24a: d
+- 640d24a: update packages
+- 640d24a: update packages
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+  - @effect-app/schema@0.150.0
+  - @effect-app/vue@0.87.0
+  - @effect-app/prelude@0.107.0
+  - @effect-app/core@0.97.0
+
 ## 0.87.0-next.52
 
 ### Patch Changes

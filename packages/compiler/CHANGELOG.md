@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.48.0
+
+### Minor Changes
+
+- 640d24a: update packages
+
 ## 0.48.0-next.0
 
 ### Minor Changes

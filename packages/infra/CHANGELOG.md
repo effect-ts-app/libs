@@ -1,5 +1,95 @@
 # @effect-app/infra
 
+## 0.133.0
+
+### Minor Changes
+
+- 640d24a: re-add basic routing
+- 640d24a: update packages
+
+### Patch Changes
+
+- 640d24a: mm
+- 640d24a: clean
+- 640d24a: cleanup
+- 640d24a: fix type
+- 640d24a: update
+- 640d24a: cleanup schema ext
+- 640d24a: improve: use equals in getFirstById, in case Id is a complex type.
+- 640d24a: updates
+- 640d24a: S
+- 640d24a: re-add routing
+- 640d24a: arb gen
+- 640d24a: err
+- 640d24a: improve
+- 640d24a: update schema
+- 640d24a: cl
+- 640d24a: update packages
+- 640d24a: ext
+- 640d24a: improve rc
+- 640d24a: typo
+- 640d24a: arbs
+- 640d24a: use schema fork
+- 640d24a: cleanup errors and use decodeSyc over parseSync
+- 640d24a: update packages
+- 640d24a: typo
+- 640d24a: unconstrain T["id"] from string
+- 640d24a: update packages
+- 640d24a: fix struct schema
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+- Updated dependencies [640d24a]
+  - @effect-app/infra-adapters@0.85.0
+  - @effect-app/schema@0.150.0
+  - @effect-app/prelude@0.107.0
+  - @effect-app/core@0.97.0
+
 ## 0.133.0-next.54
 
 ### Patch Changes
