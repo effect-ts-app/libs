@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.87.0-next.52
+
+### Patch Changes
+
+- d2bc3ac: update schema
+- Updated dependencies [d2bc3ac]
+  - @effect-app/prelude@0.107.0-next.45
+  - @effect-app/schema@0.150.0-next.30
+  - @effect-app/vue@0.87.0-next.52
+
 ## 0.87.0-next.51
 
 ### Patch Changes

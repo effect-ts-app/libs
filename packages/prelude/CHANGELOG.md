@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.0-next.45
+
+### Patch Changes
+
+- d2bc3ac: update schema
+- Updated dependencies [d2bc3ac]
+  - @effect-app/schema@0.150.0-next.30
+
 ## 0.107.0-next.44
 
 ### Patch Changes

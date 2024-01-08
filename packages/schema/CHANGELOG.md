@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.0-next.30
+
+### Patch Changes
+
+- d2bc3ac: update schema
+
 ## 0.150.0-next.29
 
 ### Patch Changes
