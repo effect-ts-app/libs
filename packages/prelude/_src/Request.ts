@@ -45,7 +45,7 @@ export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
   schema: Schema<From, To>
 ) => {
-  return client.mapEffect((_) => _.json.flatMap(schema.parse))
+  return client.mapEffect((_) => _.json.map(schema.parseSync))
 }
 
 /**
