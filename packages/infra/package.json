@@ -7,7 +7,7 @@
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.3",
     "@effect/platform": "^0.40.2",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231228152439",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240108102209",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/prelude": "workspace:*",
