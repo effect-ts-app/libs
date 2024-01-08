@@ -5,11 +5,11 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/platform": "^0.40.1",
+    "@effect/platform": "^0.40.2",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20231228152439",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.1",
+    "effect": "^2.0.2",
     "@fp-ts/optic": "^0.22.0",
     "query-string": "^8.1.0"
   },
