@@ -16,8 +16,6 @@
         "emitDecoratorMetadata": true,
         "noImplicitAny": true,
         "useUnknownInCatchVariables": true,
-        // This needs some more plumbing, especially with Schema
-        "exactOptionalPropertyTypes": false,
         // This is not desirable, as it's useful in generators.
         "noImplicitReturns": false,
         "noImplicitThis": true,
@@ -35,7 +33,8 @@
             "./node_modules/@effect-app/core/vendor/effect-stm-tsplus.json",
             "./node_modules/@effect-app/core/vendor/effect-stream-tsplus.json",
             "./node_modules/@effect-app/core/vendor/fp-ts-optic-tsplus.json",
-            "./node_modules/@effect-app/core/vendor/effect-platform-tsplus.json"
+            "./node_modules/@effect-app/core/vendor/effect-schema-tsplus.json",
+            "./node_modules/@effect-app/core/vendor/effect-platform-tsplus.json",
         ],
         //"preserveSymlinks": true
         "plugins": [

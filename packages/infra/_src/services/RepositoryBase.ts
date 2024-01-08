@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import type { ParserEnv } from "@effect-app/schema/custom/Parser"
+// import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import type { Repository } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
 import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
@@ -9,8 +9,7 @@ import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
 import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
-import type { Schema } from "@effect-app/prelude"
-import { EParserFor } from "@effect-app/prelude/schema"
+import { S } from "@effect-app/prelude"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import { QueryBuilder } from "./Store/filterApi/query.js"
@@ -19,7 +18,7 @@ import { QueryBuilder } from "./Store/filterApi/query.js"
  * @tsplus type Repository
  */
 export abstract class RepositoryBaseC<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -32,7 +31,7 @@ export abstract class RepositoryBaseC<
     events?: Iterable<Evt>
   ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
   abstract readonly utils: {
-    parseMany: (a: readonly PM[], env?: ParserEnv | undefined) => Effect<never, never, readonly T[]>
+    parseMany: (a: readonly PM[]) => Effect<never, never, readonly T[]>
     all: Effect<never, never, PM[]>
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, PositiveInt>
@@ -45,7 +44,7 @@ export abstract class RepositoryBaseC<
 }
 
 export abstract class RepositoryBaseC1<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -58,7 +57,7 @@ export abstract class RepositoryBaseC1<
 }
 
 export class RepositoryBaseC2<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -88,13 +87,11 @@ export function makeRepo<
 >() {
   return <
     ItemType extends string,
-    T extends { id: string },
-    ConstructorInput,
-    Api,
+    T extends { id: unknown },
     From extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: S.Schema<From, T>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -146,11 +143,14 @@ export function makeRepo<
           })
         )
 
-        const parse = EParserFor(schema).condemnDie
+        const parse = (e: From) => schema.parse(e).orDie
 
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
-        function findE(id: T["id"]) {
+        const structSchema = schema as unknown as { struct: typeof schema }
+        const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe(S.pick("id"))
+        function findE(_id: T["id"]) {
+          const { id } = i.encodeSync({ id: _id })
           return store
             .find(id)
             .flatMap((items) =>
@@ -162,7 +162,7 @@ export function makeRepo<
         }
 
         function find(id: T["id"]) {
-          return findE(id).flatMapOpt(EParserFor(schema).condemnDie)
+          return findE(id).flatMapOpt(parse)
         }
 
         const saveAllE = (a: Iterable<From>) =>
@@ -175,17 +175,20 @@ export function makeRepo<
                 ret.forEach((_) => set(_.id, _._etag))
               })
             )
-        const encode = Encoder.for(schema)
+            .asUnit
+        const encode = (i: T) => schema.encodeSync(i)
 
         const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
           return saveAll(it)
-            > Effect(events.toNonEmptyArray)
-              // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-              .flatMapOpt(pub)
-            > changeFeed.publish([it.toArray, "save"])
+            .andThen(Effect(events.toNonEmptyArray))
+            // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+            .flatMapOpt(pub)
+            .andThen(changeFeed
+              .publish([it.toArray, "save"]))
+            .asUnit
         }
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
@@ -208,7 +211,7 @@ export function makeRepo<
           })
         }
 
-        const p = Parser.for(schema).unsafe
+        const p = schema.decodeSync
 
         const r: Repository<T, PM, Evt, ItemType> = {
           /**
@@ -252,7 +255,7 @@ export function makeRepo<
  * @tsplus fluent Repository removeById
  */
 export function removeById<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -300,19 +303,17 @@ export function makeStore<
 >() {
   return <
     ItemType extends string,
-    T extends { id: string },
-    ConstructorInput,
-    Api,
+    T extends { id: unknown },
     E extends { id: string }
   >(
     name: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, E, Api>,
+    schema: S.Schema<E, T>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
     const [_dec, encode] = makeCodec(schema)
     function encodeToPM() {
       const getEtag = () => undefined
-      return flow(encode, (v) => mapToPersistenceModel(v, getEtag))
+      return (t: T) => mapToPersistenceModel(encode(t), getEtag)
     }
 
     function mapToPersistenceModel(
@@ -357,7 +358,7 @@ export function makeStore<
 }
 
 export interface Repos<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends { id: string; _etag: string | undefined },
   Evt,
   ItemType extends string
@@ -414,9 +415,9 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
+  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -455,9 +456,9 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: string }, ConstructorInput, Api, From extends { id: string }>(
+  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
     itemType: ItemType,
-    schema: Schema.Schema<unknown, T, ConstructorInput, From, Api>,
+    schema: S.Schema<From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
@@ -495,21 +496,3 @@ export const RepositoryDefaultImpl = <Service>() => {
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
   }
 }
-
-// @useClassFeaturesForSchema
-// export class Shop extends Class<Shop>()({ id: string }) {}
-
-// /**
-//  * @tsplus type ShopRepo
-//  * @tsplus companion ShopRepo.Ops
-//  */
-// export class ShopRepo extends RepositoryDefaultImpl<ShopRepo>()<Shop & { _etag: string | undefined }>()(
-//   "Shop",
-//   Shop,
-//   (pm) => pm,
-//   (e, _etag) => ({ ...e, _etag })
-// ) {
-//   override saveAndPublish = (items: Iterable<Shop>, events?: Iterable<unknown> | undefined) => {
-//     return this.impl.saveAndPublish(items, events)
-//   }
-// }

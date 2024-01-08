@@ -37,6 +37,17 @@ export type ThenArg<T> = T extends Promise<infer U> ? U
   : T extends (...args: any[]) => Promise<infer V> ? V
   : T
 
+type NoUndefinedField<T> = { [P in keyof T]: Exclude<T[P], undefined> }
+export function dropUndefinedT<A extends Record<string, any>>(
+  input: A
+): NoUndefinedField<A> {
+  const newR = pipe(
+    input,
+    D.filter((x): x is A => x !== undefined)
+  )
+  return newR as any
+}
+
 export function dropUndefined<A>(
   input: Dictionary<A | undefined>
 ): Dictionary<A> {

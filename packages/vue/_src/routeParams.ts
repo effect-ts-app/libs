@@ -1,5 +1,4 @@
-import type { ReqRes, SchemaAny, To } from "@effect-app/prelude/schema"
-import { EParserFor, Parser, unsafe } from "@effect-app/prelude/schema"
+import type { REST, Schema } from "@effect-app/schema"
 import type { ParsedQuery } from "query-string"
 
 export function getQueryParam(search: ParsedQuery, param: string) {
@@ -12,31 +11,27 @@ export function getQueryParam(search: ParsedQuery, param: string) {
 
 export const getQueryParamO = flow(getQueryParam, Option.fromNullable)
 
-export const parseOpt = <E, A>(t: ReqRes<E, A>) => {
-  const dec = flow(EParserFor(t), (x) =>
-    x.effect._tag === "Right"
-      ? x.effect.right[1]._tag === "None"
-        ? Option(x.effect.right[0])
-        : Option.none
+export const parseOpt = <E, A>(t: REST.ReqRes<E, A>) => {
+  const dec = flow(t.parseEither, (x) =>
+    x._tag === "Right"
+      ? Option(x.right)
       : Option.none)
   return dec
 }
 
-export const parseOptUnknown = <E, A>(t: ReqRes<E, A>) => {
-  const dec = flow(Parser.for(t), (x) =>
-    x.effect._tag === "Right"
-      ? x.effect.right[1]._tag === "None"
-        ? Option(x.effect.right[0])
-        : Option.none
+export const parseOptUnknown = <E, A>(t: REST.ReqRes<E, A>) => {
+  const dec = flow(t.parseEither, (x) =>
+    x._tag === "Right"
+      ? Option(x.right)
       : Option.none)
   return dec
 }
 
-export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
+export function parseRouteParamsOption<NER extends Record<string, Schema<any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: Option<To<NER[K]>>
+  [K in keyof NER]: Option<Schema.To<NER[K]>>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
@@ -46,26 +41,26 @@ export function parseRouteParamsOption<NER extends Record<string, SchemaAny>>(
       return prev
     },
     {} as {
-      [K in keyof NER]: Option<To<NER[K]>>
+      [K in keyof NER]: Option<Schema.To<NER[K]>>
     }
   )
 }
 
-export function parseRouteParams<NER extends Record<string, SchemaAny>>(
+export function parseRouteParams<NER extends Record<string, Schema<any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
-  [K in keyof NER]: To<NER[K]>
+  [K in keyof NER]: Schema.To<NER[K]>
 } {
   return t.$$.keys.reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      prev[cur] = unsafe(EParserFor(t[cur]!))(query[cur as any])
+      prev[cur] = t[cur]!.parseSync(query[cur as any])
 
       return prev
     },
     {} as {
-      [K in keyof NER]: To<NER[K]>
+      [K in keyof NER]: Schema.To<NER[K]>
     }
   )
 }

@@ -15,7 +15,7 @@ export function asCollectable<T, T2 extends T>(refinement: Refinement<T, T2>) {
 export function as<T, T2 extends T>(refinement: Refinement<T, T2>, name: string) {
   return flow(
     asCollectable(refinement),
-    (_) => _.encaseInEither(() => new InvalidStateError({ message: `Cannot be ${name}` }))
+    (_) => _.encaseInEither(() => new InvalidStateError(`Cannot be ${name}`))
   )
 }
 

@@ -1,21 +1,24 @@
 {
   "name": "@effect-app/infra",
-  "version": "0.132.2",
+  "version": "0.133.0-next.54",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.3",
+    "@effect/platform": "^0.40.2",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240108102209",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.0-next.62",
+    "express-oauth2-jwt-bearer": "^1.6.0",
     "@faker-js/faker": "^8.3.1",
     "@sendgrid/helpers": "^8.0.0",
     "@sendgrid/mail": "^8.1.0",
     "change-case": "^5.3.0",
     "cross-fetch": "^4.0.0",
+    "effect": "^2.0.2",
     "fast-check": "~3.15.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
@@ -26,9 +29,9 @@
   "devDependencies": {
     "@babel/cli": "^7.23.4",
     "@effect-app/compiler": "workspace:*",
-    "@sentry/node": "^7.91.0",
+    "@sentry/node": "^7.92.0",
     "@types/express": "^4.17.21",
-    "@types/node": "~20.10.5",
+    "@types/node": "~20.10.7",
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
@@ -39,7 +42,7 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vitest": "^1.1.0"
+    "vitest": "^1.1.3"
   },
   "peerDependencies": {
     "express": "^4.18.2"
@@ -132,26 +135,6 @@
         "default": "./_cjs/api/defaultErrorHandler.cjs"
       }
     },
-    "./api/express/makeJsonSchema": {
-      "import": {
-        "types": "./dist/api/express/makeJsonSchema.d.ts",
-        "default": "./dist/api/express/makeJsonSchema.js"
-      },
-      "require": {
-        "types": "./dist/api/express/makeJsonSchema.d.ts",
-        "default": "./_cjs/api/express/makeJsonSchema.cjs"
-      }
-    },
-    "./api/express/makeOpenApiSpecs": {
-      "import": {
-        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./dist/api/express/makeOpenApiSpecs.js"
-      },
-      "require": {
-        "types": "./dist/api/express/makeOpenApiSpecs.d.ts",
-        "default": "./_cjs/api/express/makeOpenApiSpecs.cjs"
-      }
-    },
     "./api/express/schema/jwt": {
       "import": {
         "types": "./dist/api/express/schema/jwt.d.ts",
@@ -172,6 +155,16 @@
         "default": "./_cjs/api/express/schema/routing.cjs"
       }
     },
+    "./api/http": {
+      "import": {
+        "types": "./dist/api/http.d.ts",
+        "default": "./dist/api/http.js"
+      },
+      "require": {
+        "types": "./dist/api/http.d.ts",
+        "default": "./_cjs/api/http.cjs"
+      }
+    },
     "./api/reportError": {
       "import": {
         "types": "./dist/api/reportError.d.ts",
@@ -180,6 +173,56 @@
       "require": {
         "types": "./dist/api/reportError.d.ts",
         "default": "./_cjs/api/reportError.cjs"
+      }
+    },
+    "./api/routing": {
+      "import": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./dist/api/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.d.ts",
+        "default": "./_cjs/api/routing.cjs"
+      }
+    },
+    "./api/routing/base": {
+      "import": {
+        "types": "./dist/api/routing/base.d.ts",
+        "default": "./dist/api/routing/base.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/base.d.ts",
+        "default": "./_cjs/api/routing/base.cjs"
+      }
+    },
+    "./api/routing/defaultErrorHandler": {
+      "import": {
+        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
+        "default": "./dist/api/routing/defaultErrorHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
+        "default": "./_cjs/api/routing/defaultErrorHandler.cjs"
+      }
+    },
+    "./api/routing/makeRequestHandler": {
+      "import": {
+        "types": "./dist/api/routing/makeRequestHandler.d.ts",
+        "default": "./dist/api/routing/makeRequestHandler.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/makeRequestHandler.d.ts",
+        "default": "./_cjs/api/routing/makeRequestHandler.cjs"
+      }
+    },
+    "./api/routing/match": {
+      "import": {
+        "types": "./dist/api/routing/match.d.ts",
+        "default": "./dist/api/routing/match.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/match.d.ts",
+        "default": "./_cjs/api/routing/match.cjs"
       }
     },
     "./api/setupRequest": {
@@ -200,16 +243,6 @@
       "require": {
         "types": "./dist/api/util.d.ts",
         "default": "./_cjs/api/util.cjs"
-      }
-    },
-    "./api/writeDocs": {
-      "import": {
-        "types": "./dist/api/writeDocs.d.ts",
-        "default": "./dist/api/writeDocs.js"
-      },
-      "require": {
-        "types": "./dist/api/writeDocs.d.ts",
-        "default": "./_cjs/api/writeDocs.cjs"
       }
     },
     "./errorReporter": {

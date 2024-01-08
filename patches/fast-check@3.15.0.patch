@@ -1,0 +1,16 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index f272c80981f45dc84797c50af97fe5d2348fd188..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 8accb7fb8662a36944083994c78e65a2e3f32a53..7f3548d14423de586bf8e1bdc99a5ad77bb05a3e 100644
+--- a/package.json
++++ b/package.json
+@@ -12,7 +12,7 @@
+         "default": "./lib/fast-check.js"
+       },
+       "import": {
+-        "types": "./lib/esm/types/fast-check.d.ts",
++        "types": "./lib/types/fast-check.d.ts",
+         "default": "./lib/esm/fast-check.js"
+       }
+     }

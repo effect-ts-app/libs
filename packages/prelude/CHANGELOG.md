@@ -1,5 +1,342 @@
 # @effect-app/prelude
 
+## 0.107.0-next.45
+
+### Patch Changes
+
+- d2bc3ac: update schema
+- Updated dependencies [d2bc3ac]
+  - @effect-app/schema@0.150.0-next.30
+
+## 0.107.0-next.44
+
+### Patch Changes
+
+- update packages
+- Updated dependencies
+  - @effect-app/schema@0.150.0-next.29
+  - @effect-app/core@0.97.0-next.8
+
+## 0.107.0-next.43
+
+### Patch Changes
+
+- 19dc3b1: ext
+- Updated dependencies [19dc3b1]
+  - @effect-app/schema@0.150.0-next.28
+
+## 0.107.0-next.42
+
+### Patch Changes
+
+- 09ed839: dynamic faker arb
+
+## 0.107.0-next.41
+
+### Patch Changes
+
+- b6d4272: update packages
+- Updated dependencies [0bc4207]
+- Updated dependencies [b6d4272]
+  - @effect-app/schema@0.150.0-next.27
+  - @effect-app/core@0.97.0-next.7
+
+## 0.107.0-next.40
+
+### Patch Changes
+
+- 14b33a9: cleanup errors and use decodeSyc over parseSync
+- Updated dependencies [14b33a9]
+  - @effect-app/schema@0.150.0-next.26
+
+## 0.107.0-next.39
+
+### Patch Changes
+
+- Updated dependencies [aa1b654]
+  - @effect-app/schema@0.150.0-next.25
+
+## 0.107.0-next.38
+
+### Patch Changes
+
+- 64793a8: fix mapPath should use From
+
+## 0.107.0-next.37
+
+### Patch Changes
+
+- 9e151ed: update packages
+- Updated dependencies [9e151ed]
+  - @effect-app/schema@0.150.0-next.24
+  - @effect-app/core@0.97.0-next.6
+
+## 0.107.0-next.36
+
+### Patch Changes
+
+- Updated dependencies [6b89c27]
+  - @effect-app/core@0.97.0-next.5
+  - @effect-app/schema@0.150.0-next.23
+
+## 0.107.0-next.35
+
+### Patch Changes
+
+- 169c159: expose ParseResult
+- Updated dependencies [169c159]
+  - @effect-app/schema@0.150.0-next.22
+
+## 0.107.0-next.34
+
+### Patch Changes
+
+- b46e30d: fup
+
+## 0.107.0-next.33
+
+### Patch Changes
+
+- Updated dependencies [c57bb66]
+  - @effect-app/schema@0.150.0-next.21
+
+## 0.107.0-next.32
+
+### Patch Changes
+
+- 735dea9: improve rc
+
+## 0.107.0-next.31
+
+### Patch Changes
+
+- 21482c6: cl
+
+## 0.107.0-next.30
+
+### Patch Changes
+
+- eab24be: upd
+
+## 0.107.0-next.29
+
+### Patch Changes
+
+- def06a7: fix things
+
+## 0.107.0-next.28
+
+### Patch Changes
+
+- eb31797: fix empty body
+
+## 0.107.0-next.27
+
+### Patch Changes
+
+- 65696a6: fix RequestId
+
+## 0.107.0-next.26
+
+### Patch Changes
+
+- 777162f: improve
+- Updated dependencies [777162f]
+  - @effect-app/schema@0.150.0-next.20
+
+## 0.107.0-next.25
+
+### Patch Changes
+
+- 0776693: fix stringid and clientfor
+
+## 0.107.0-next.24
+
+### Patch Changes
+
+- 68eaf52: form and client fixes
+
+## 0.107.0-next.23
+
+### Patch Changes
+
+- Updated dependencies [ca927a5]
+  - @effect-app/schema@0.150.0-next.19
+
+## 0.107.0-next.22
+
+### Patch Changes
+
+- 5f62f5a: upd
+- Updated dependencies [5f62f5a]
+  - @effect-app/schema@0.150.0-next.18
+
+## 0.107.0-next.21
+
+### Patch Changes
+
+- Updated dependencies [53d4b3e]
+  - @effect-app/schema@0.150.0-next.17
+
+## 0.107.0-next.20
+
+### Patch Changes
+
+- Updated dependencies [63d4549]
+  - @effect-app/schema@0.150.0-next.16
+
+## 0.107.0-next.19
+
+### Patch Changes
+
+- b19ce70: S
+
+## 0.107.0-next.18
+
+### Patch Changes
+
+- 92ff6b9: exports
+- Updated dependencies [92ff6b9]
+  - @effect-app/schema@0.150.0-next.15
+
+## 0.107.0-next.17
+
+### Patch Changes
+
+- Updated dependencies [c234016]
+  - @effect-app/schema@0.150.0-next.14
+
+## 0.107.0-next.16
+
+### Patch Changes
+
+- Updated dependencies [5d53b26]
+  - @effect-app/schema@0.150.0-next.13
+
+## 0.107.0-next.15
+
+### Patch Changes
+
+- Updated dependencies [147bc14]
+  - @effect-app/schema@0.150.0-next.12
+
+## 0.107.0-next.14
+
+### Patch Changes
+
+- Updated dependencies [660d57a]
+  - @effect-app/schema@0.150.0-next.11
+
+## 0.107.0-next.13
+
+### Patch Changes
+
+- 20076e0: update
+- Updated dependencies [20076e0]
+  - @effect-app/schema@0.150.0-next.10
+
+## 0.107.0-next.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.97.0-next.4
+  - @effect-app/schema@0.150.0-next.9
+
+## 0.107.0-next.11
+
+### Patch Changes
+
+- ac35466: use schema fork
+- Updated dependencies [ac35466]
+  - @effect-app/schema@0.150.0-next.8
+
+## 0.107.0-next.10
+
+### Patch Changes
+
+- Updated dependencies [4f8ade3]
+  - @effect-app/core@0.97.0-next.3
+  - @effect-app/schema@0.150.0-next.7
+
+## 0.107.0-next.9
+
+### Patch Changes
+
+- Updated dependencies [8897586]
+  - @effect-app/schema@0.150.0-next.6
+
+## 0.107.0-next.8
+
+### Patch Changes
+
+- c550ee5: updates
+- Updated dependencies [c550ee5]
+  - @effect-app/schema@0.150.0-next.5
+  - @effect-app/core@0.97.0-next.2
+
+## 0.107.0-next.7
+
+### Patch Changes
+
+- 82b3ca0: mm
+
+## 0.107.0-next.6
+
+### Patch Changes
+
+- Updated dependencies [ace7afb]
+  - @effect-app/schema@0.150.0-next.4
+
+## 0.107.0-next.5
+
+### Patch Changes
+
+- 3320864: cleanup schema ext
+- Updated dependencies [3320864]
+  - @effect-app/schema@0.150.0-next.3
+
+## 0.107.0-next.4
+
+### Patch Changes
+
+- Updated dependencies [fde3e90]
+  - @effect-app/schema@0.150.0-next.2
+  - @effect-app/core@0.97.0-next.1
+
+## 0.107.0-next.3
+
+### Patch Changes
+
+- 3d9e1ab: clean
+- 47d0151: faker
+
+## 0.107.0-next.2
+
+### Patch Changes
+
+- c3de47e: f
+
+## 0.107.0-next.1
+
+### Patch Changes
+
+- bd2130b: cleanup
+- Updated dependencies [bd2130b]
+  - @effect-app/schema@0.150.0-next.1
+
+## 0.107.0-next.0
+
+### Minor Changes
+
+- 87a6ac2: update packages
+
+### Patch Changes
+
+- Updated dependencies [87a6ac2]
+  - @effect-app/schema2@0.1.0-next.0
+  - @effect-app/core@0.97.0-next.0
+
 ## 0.106.1
 
 ### Patch Changes

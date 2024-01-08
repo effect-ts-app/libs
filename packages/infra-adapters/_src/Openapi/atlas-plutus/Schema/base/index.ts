@@ -15,7 +15,7 @@ export class UnsupportedOperation {
 }
 
 export interface ConfigExtensionRef {
-  openapiRef?: string
+  openapiRef?: string | undefined
 }
 
 export interface ConfigExtensionMeta {

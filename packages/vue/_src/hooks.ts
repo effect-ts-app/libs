@@ -3,7 +3,7 @@ import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
-import type { Ref } from "vue"
+import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
 
@@ -64,10 +64,12 @@ export function useMutateWithArg<Arg, E, A>(
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
 }
 
+export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
+
 // TODO: same trick with mutations/actions
 export function useSafeQueryWithArg<Arg, E, A>(
   self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string },
-  arg: Arg,
+  arg: Arg | WatchSource<Arg>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   return useSafeQueryWithArg_(self, self.mapPath, arg, config)
@@ -77,21 +79,29 @@ export function useSafeQuery<E, A>(
   self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string },
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
-  return useSafeQuery_(self.mapPath, self, config)
+  return useSafeQuery_(self.mapPath, () => self, config)
 }
 
 export function useSafeQueryWithArg_<Arg, E, A>(
   self: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
   mapPath: (arg: Arg) => string,
-  arg: Arg,
+  arg: Arg | WatchSource<Arg>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
-  return useSafeQuery_(mapPath(arg), self(arg), config)
+  const arr = arg
+  const r: { value: Arg } = typeof arr === "function"
+    ? {
+      get value() {
+        return (arr as any)()
+      }
+    } as any
+    : ref(arg)
+  return useSafeQuery_(computed(() => mapPath(r.value)), () => self(r.value), config)
 }
 
 export function useSafeQuery_<E, A>(
-  key: string,
-  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
+  key: string | WatchSource<string>,
+  self: () => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   // const [result, latestSuccess, execute] = make(self)
@@ -125,7 +135,7 @@ export function useSafeQuery_<E, A>(
   // }
 
   // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provide(Layers))
-  const swr = useSWRV<A, E>(key, () => run.value(self).then((_) => _.body), config)
+  const swr = useSWRV<A, E>(key, () => run.value(self()).then((_) => _.body), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
   ) // ref<QueryResult<E, A>>()

@@ -1,15 +1,16 @@
 {
   "name": "@effect-app/infra-adapters",
-  "version": "0.84.1",
+  "version": "0.85.0-next.45",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/platform": "^0.39.0",
+    "@effect/platform": "^0.40.2",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240108102209",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.0.0-next.62",
-    "@fp-ts/optic": "^0.21.0",
+    "effect": "^2.0.2",
+    "@fp-ts/optic": "^0.22.0",
     "query-string": "^8.1.0"
   },
   "devDependencies": {
@@ -113,36 +114,6 @@
         "default": "./_cjs/CUPS/service.cjs"
       }
     },
-    "./Openapi/_openapi/index": {
-      "import": {
-        "types": "./dist/Openapi/_openapi/index.d.ts",
-        "default": "./dist/Openapi/_openapi/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/_openapi/index.d.ts",
-        "default": "./_cjs/Openapi/_openapi/index.cjs"
-      }
-    },
-    "./Openapi/_schema": {
-      "import": {
-        "types": "./dist/Openapi/_schema.d.ts",
-        "default": "./dist/Openapi/_schema.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/_schema.d.ts",
-        "default": "./_cjs/Openapi/_schema.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus.d.ts",
-        "default": "./dist/Openapi/atlas-plutus.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus.cjs"
-      }
-    },
     "./Openapi/atlas-plutus/JsonSchema/index": {
       "import": {
         "types": "./dist/Openapi/atlas-plutus/JsonSchema/index.d.ts",
@@ -191,16 +162,6 @@
       "require": {
         "types": "./dist/Openapi/atlas-plutus/Spec/index.d.ts",
         "default": "./_cjs/Openapi/atlas-plutus/Spec/index.cjs"
-      }
-    },
-    "./Openapi/index": {
-      "import": {
-        "types": "./dist/Openapi/index.d.ts",
-        "default": "./dist/Openapi/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/index.d.ts",
-        "default": "./_cjs/Openapi/index.cjs"
       }
     },
     "./ServiceBus": {

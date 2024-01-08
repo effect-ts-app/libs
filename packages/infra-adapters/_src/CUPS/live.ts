@@ -1,12 +1,11 @@
-import cp from "child_process"
-import util from "util"
-import { tempFile } from "../fileUtil.js"
-
 import { pretty } from "@effect-app/core/utils"
 import { NonEmptyString255 } from "@effect-app/schema"
+import cp from "child_process"
 import fs from "fs"
 import os from "os"
 import path from "path"
+import util from "util"
+import { tempFile } from "../fileUtil.js"
 import { CUPS } from "./service.js"
 import type { PrinterId } from "./service.js"
 
@@ -39,7 +38,7 @@ const exec = (command: string) =>
     > Effect
       .tryPromise(() => exec_(command))
       .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
-type PrinterConfig = { url?: URL; id: string }
+type PrinterConfig = { url?: URL | undefined; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
   return (filePath: string) => printFile_(filePath, printer, options)
@@ -88,16 +87,16 @@ function printBuffer(printer: PrinterConfig, options: string[]) {
 }
 
 function getAvailablePrinters(host?: string) {
-  return Do(($) => {
-    const { stdout } = $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
+  return Effect.gen(function*($) {
+    const { stdout } = yield* $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
-      .map(NonEmptyString255)
+      .map((_) => NonEmptyString255(_))
   })
 }
 
-function* buildListArgs(config?: { host?: string }) {
+function* buildListArgs(config?: { host?: string | undefined }) {
   if (config?.host) {
     yield `-h ${config.host}`
   }

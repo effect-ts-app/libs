@@ -1,13 +1,19 @@
-export * from "./ext.js"
-export * from "./ext2.js"
-export * from "./utils.js"
-
-// customized Class
-export * from "./_api.js"
-export * from "./adapt.js"
-export { Class } from "./Class.js"
 export * from "./Class.js"
-export * from "./REST.js"
-// workaround conflicting star-exports warning
-export { UUID } from "./_api.js"
-export * from "./_schema.js"
+export * as REST from "./REST.js"
+export { Delete, Get, Patch, Post, Put } from "./REST.js"
+
+export { fromBrand, literal } from "./ext.js"
+export { Int } from "./numbers.js"
+
+export * from "./email.js"
+export * from "./ext.js"
+export * from "./moreStrings.js"
+export * from "./numbers.js"
+export * from "./phoneNumber.js"
+export * from "./schema.js"
+export * from "./strings.js"
+
+export * as ParseResult from "@effect/schema/ParseResult"
+
+export { void as void_ } from "@effect/schema/Schema"
+export * from "@effect/schema/Schema"

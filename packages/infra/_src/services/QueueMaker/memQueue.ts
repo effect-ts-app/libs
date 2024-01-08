@@ -1,5 +1,6 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
+import type { S } from "@effect-app/prelude"
 import { RequestId } from "@effect-app/prelude/ids"
 import { Tracer } from "effect"
 import { RequestContextContainer } from "../RequestContextContainer.js"
@@ -16,8 +17,8 @@ export function makeMemQueue<
 >(
   queueName: string,
   queueDrainName: string,
-  schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
-  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>
+  schema: S.Schema<EvtE, Evt>,
+  drainSchema: S.Schema<unknown, DrainEvt>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)
@@ -27,7 +28,7 @@ export function makeMemQueue<
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
-    const parseDrain = drainW.parseCondemnDie
+    const parseDrain = flow(drainW.parse, (_) => _.orDie)
 
     return {
       publish: (...messages) =>

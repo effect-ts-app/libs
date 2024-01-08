@@ -1,18 +1,15 @@
+import { S } from "@effect-app/prelude"
 import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
 
 @useClassFeaturesForSchema
-export class RequestContextParent extends ExtendedClass<
-  RequestContextParent,
-  RequestContextParent.ConstructorInput,
-  RequestContextParent.From,
-  RequestContextParent.Fields
->()({
-  _tag: literal("RequestContext"),
+export class RequestContextParent extends TaggedClass<
+  RequestContextParent
+>()("RequestContext", {
   id: RequestId,
   name: NonEmptyString255,
-  userProfile: struct({ sub: UserProfileId }).optional,
+  userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: date.withDefault
+  createdAt: S.Date.withDefaultMake(() => new Date()) // TODO
 }) {}
 
 /**
@@ -20,22 +17,26 @@ export class RequestContextParent extends ExtendedClass<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends ExtendedClass<
-  RequestContext,
-  RequestContext.ConstructorInput,
-  RequestContext.From,
-  RequestContext.Fields
->()({
-  ...RequestContextParent.omit("id"),
-  id: RequestId.withDefault,
+export class RequestContext extends S.TaggedClass<
+  RequestContext
+>()("RequestContext", {
+  ...RequestContextParent.fields.$$.omit("id"),
+  id: RequestId.withDefault(),
   rootId: RequestId,
-  parent: RequestContextParent.optional,
-  namespace: NonEmptyString255.optional
+  parent: RequestContextParent.optional(),
+  namespace: NonEmptyString255.optional()
+  // ...RequestContextParent.omit("id").extend({
+  //   id: RequestId.withDefault(),
+  //   rootId: RequestId,
+  //   parent: RequestContextParent.optional(),
+  //   namespace: NonEmptyString255.optional()
+  // })
 }) {
+  // static Tag = Context.Tag<RequestContext>()
   static inherit(
     this: void,
     parent: RequestContext,
-    newSelf: RequestContextParent.ConstructorInput
+    newSelf: ConstructorParameters<typeof RequestContextParent>[0]
   ) {
     return new RequestContext({
       namespace: parent?.namespace,
@@ -65,9 +66,6 @@ export namespace RequestContextParent {
    * @tsplus companion RequestContextParent.From/Ops
    */
   export class From extends FromClass<typeof RequestContextParent>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof RequestContextParent> {}
-  export interface Fields extends FieldsClass<typeof RequestContextParent> {}
 }
 export namespace RequestContext {
   /**
@@ -75,9 +73,6 @@ export namespace RequestContext {
    * @tsplus companion RequestContext.From/Ops
    */
   export class From extends FromClass<typeof RequestContext>() {}
-  export interface ConstructorInput
-    extends ConstructorInputApi<typeof RequestContext> {}
-  export interface Fields extends FieldsClass<typeof RequestContext> {}
 }
 /* eslint-enable */
 //

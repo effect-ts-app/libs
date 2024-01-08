@@ -16,7 +16,7 @@ export function getFaker() {
   return faker
 }
 
-export const fakerToArb = (fakerGen: () => string) => (fc: typeof FC) => {
+export const fakerToArb = <T>(fakerGen: () => T) => (fc: typeof FC) => {
   return fc
     .integer()
     .noBias() // same probability to generate each of the allowed integers
@@ -26,3 +26,7 @@ export const fakerToArb = (fakerGen: () => string) => (fc: typeof FC) => {
       return fakerGen() // call it
     })
 }
+
+export const fakerArb = <T>(
+  gen: (fake: Faker) => () => T
+): (a: any) => FC.Arbitrary<T> => fakerToArb(gen(getFaker()))

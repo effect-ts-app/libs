@@ -1,8 +1,11 @@
-import { drawError, getMetadataFromSchemaOrProp, isSchema, Parser, These, unsafe } from "@effect-app/prelude/schema"
-import type { AnyField, Field, FieldRecord, From, SchemaAny, To } from "@effect-app/prelude/schema"
+import { AST, S } from "@effect-app/schema"
+import type { Schema } from "@effect-app/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
+
+import * as JSONSchema from "@effect/schema/JSONSchema"
+import type { ParseError } from "@effect/schema/ParseResult"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -18,19 +21,24 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export function buildFieldInfoFromFields<Fields extends FieldRecord>(
-  fields: Fields
+export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
+  fields: Schema<From, To>
 ) {
-  return fields.$$.keys.reduce(
+  let ast = fields.ast
+  // todo: or look at from?
+  if (AST.isTransform(ast)) {
+    if (AST.isDeclaration(ast.to)) {
+      ast = ast.to.type
+    }
+  }
+  if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
+  return ast.propertySignatures.reduce(
     (prev, cur) => {
-      prev[cur] = buildFieldInfo(fields[cur] as AnyField, cur)
+      ;(prev as any)[cur.name] = buildFieldInfo(cur)
       return prev
     },
     {} as {
-      [K in keyof Fields]: FieldInfo<
-        From<GetSchemaFromProp<Fields[K]>>,
-        To<GetSchemaFromProp<Fields[K]>>
-      >
+      [K in keyof To]: FieldInfo<To[K]>
     }
   )
 }
@@ -50,41 +58,45 @@ abstract class PhantomTypeParameter<
     readonly [NameP in Identifier]: (_: InstantiatedType) => InstantiatedType
   }
 }
-export interface FieldInfo<Tin, Tout> extends PhantomTypeParameter<typeof f, { in: Tin; out: Tout }> {
+export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: Tout }> {
   rules: ((v: string) => boolean | string)[]
   metadata: FieldMetadata
   type: "text" | "float" | "int" // todo; multi-line vs single line text
 }
 
-type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
-  : never
+// type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
+//   : never
 
 const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
-export const customSchemaErrors = ref<Map<SchemaAny, (message: string, e: unknown, v: unknown) => string>>(new Map())
+export const customSchemaErrors = ref<Map<AST.AST, (message: string, e: unknown, v: unknown) => string>>(
+  new Map()
+)
 
 function buildFieldInfo(
-  propOrSchema: AnyField | SchemaAny,
-  fieldKey: PropertyKey
-): FieldInfo<any, any> {
-  const metadata = getMetadataFromSchemaOrProp(propOrSchema)
-  const schema = isSchema(propOrSchema) ? propOrSchema : propOrSchema._schema
-  const parse = Parser.for(schema)
+  property: AST.PropertySignature
+): FieldInfo<any> {
+  const propertyKey = property.name
+  const schema = S.make(property.type)
+  const metadata = getMetadataFromSchema(property.type) // TODO
+  const parse = schema.parseEither
 
-  const nullable = Schema.findAnnotation(schema, Schema.nullableIdentifier)
+  const nullable = AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
+  const realSelf = nullable && AST.isUnion(property.type)
+    ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
+    : property.type
 
-  function renderError(e: any, v: unknown) {
-    const err = drawError(e)
-    const custom = customSchemaErrors.value.get(schema)
-      ?? (nullable?.self ? customSchemaErrors.value.get(nullable.self) : undefined)
+  function renderError(e: ParseError, v: unknown) {
+    const err = e.toString()
+    const custom = customSchemaErrors.value.get(realSelf)
     return custom ? custom(err, e, v) : translate.value(
       { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
       {
         type: translate.value({
-          defaultMessage: capitalize(fieldKey.toString()),
-          id: `fieldNames.${String(fieldKey)}`
+          defaultMessage: capitalize(propertyKey.toString()),
+          id: `fieldNames.${String(propertyKey)}`
         }),
-        message: err.slice(err.indexOf("expected")) // TODO: this is not translated.
+        message: metadata.description ? "expected " + metadata.description : err.slice(err.indexOf("Expected")) // TODO: this is not translated.
       }
     )
   }
@@ -115,36 +127,38 @@ function buildFieldInfo(
   const numberRules = [
     (v: number | null) =>
       v === null
-      || metadata.minimum === undefined
-      || metadata.minimumExclusive && v > metadata.minimum
-      || !metadata.minimumExclusive && v >= metadata.minimum
+      || (metadata.minimum === undefined && metadata.exclusiveMinimum === undefined)
+      || metadata.exclusiveMinimum !== undefined && v > metadata.exclusiveMinimum
+      || metadata.minimum !== undefined && v >= metadata.minimum
       || translate.value({
         defaultMessage: "The value should be {isExclusive, select, true {larger than} other {at least}} {minimum}",
         id: "validation.number.min"
-      }, { isExclusive: metadata.minimumExclusive, minimum: metadata.minimum }),
+      }, {
+        isExclusive: metadata.exclusiveMinimum !== undefined,
+        minimum: metadata.exclusiveMinimum ?? metadata.minimum
+      }),
     (v: number | null) =>
       v === null
-      || metadata.maximum === undefined
-      || metadata.maximumExclusive && v < metadata.maximum
-      || !metadata.maximumExclusive && v <= metadata.maximum
+      || (metadata.maximum === undefined && metadata.exclusiveMaximum === undefined)
+      || metadata.exclusiveMaximum !== undefined && v < metadata.exclusiveMaximum
+      || metadata.maximum !== undefined && v <= metadata.maximum
       || translate.value({
         defaultMessage: "The value should be {isExclusive, select, true {smaller than} other {at most}} {maximum}",
         id: "validation.number.max"
-      }, { isExclusive: metadata.maximumExclusive, maximum: metadata.maximum })
+      }, {
+        isExclusive: metadata.exclusiveMaximum !== undefined,
+        maximum: metadata.exclusiveMaximum ?? metadata.maximum
+      })
   ]
 
   const parseRule = (v: unknown) =>
     pipe(
       parse(v),
-      These.result,
       (_) =>
         _.match(
           {
             onLeft: (_) => renderError(_, v),
-            onRight: ([_, optErr]) =>
-              optErr.isSome()
-                ? renderError(optErr.value, v)
-                : true
+            onRight: () => true
           }
         )
     )
@@ -184,24 +198,19 @@ function buildFieldInfo(
 }
 
 export const buildFormFromSchema = <
-  To,
-  From,
-  ConstructorInput,
-  Fields extends FieldRecord,
+  From extends Record<PropertyKey, any>,
+  To extends Record<PropertyKey, any>,
   OnSubmitA
 >(
-  s: Schema.Schema<
-    unknown,
-    To,
-    ConstructorInput,
+  s: Schema<
     From,
-    { fields: Fields }
+    To
   >,
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromFields(s.Api.fields)
-  const parse = unsafe(Schema.Parser.for(s))
+  const fields = buildFieldInfoFromFields(s)
+  const parse = s.decodeSync
   const isDirty = ref(false)
   const isValid = ref(true)
 
@@ -224,4 +233,45 @@ export const buildFormFromSchema = <
   const submitFromState = () => submit(Promise.resolve({ valid: isValid.value }))
 
   return { fields, submit, submitFromState, isDirty, isValid }
+}
+
+export function getMetadataFromSchema(
+  ast: AST.AST
+): {
+  type: "int" | "float" | "text"
+  minimum?: number
+  maximum?: number
+  exclusiveMinimum?: number
+  exclusiveMaximum?: number
+  minLength?: number
+  maxLength?: number
+  required: boolean
+  description?: string
+} {
+  const nullable = AST.isUnion(ast) && ast.types.includes(S.null.ast)
+  const realSelf = nullable && AST.isUnion(ast)
+    ? ast.types.filter((_) => _ !== S.null.ast)[0]!
+    : ast
+
+  let jschema: any
+  try {
+    jschema = JSONSchema.to(S.make(realSelf)) as any
+  } catch (err) {
+    jschema = {}
+    console.warn("error getting jsonschema from ", err, ast)
+  }
+
+  const isNumber = jschema.type === "number" || jschema.type === "integer"
+  const isInt = jschema.type === "integer"
+  return {
+    type: isInt ? "int" as const : isNumber ? "float" as const : "text" as const,
+    minimum: jschema.minimum,
+    exclusiveMinimum: jschema.exclusiveMinimum,
+    maximum: jschema.maximum,
+    exclusiveMaximum: jschema.exclusiveMaximum,
+    minLength: jschema.minLength,
+    maxLength: jschema.maxLength,
+    description: jschema.description,
+    required: !nullable
+  }
 }

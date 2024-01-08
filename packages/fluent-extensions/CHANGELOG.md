@@ -1,5 +1,238 @@
 # @effect-app/fluent-extensions
 
+## 0.97.0-next.30
+
+### Patch Changes
+
+- Updated dependencies [d2bc3ac]
+  - @effect-app/schema@0.150.0-next.30
+
+## 0.97.0-next.29
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.150.0-next.29
+  - @effect-app/core@0.97.0-next.8
+
+## 0.97.0-next.28
+
+### Patch Changes
+
+- Updated dependencies [19dc3b1]
+  - @effect-app/schema@0.150.0-next.28
+
+## 0.97.0-next.27
+
+### Patch Changes
+
+- b6d4272: update packages
+- Updated dependencies [0bc4207]
+- Updated dependencies [b6d4272]
+  - @effect-app/schema@0.150.0-next.27
+  - @effect-app/core@0.97.0-next.7
+
+## 0.97.0-next.26
+
+### Patch Changes
+
+- Updated dependencies [14b33a9]
+  - @effect-app/schema@0.150.0-next.26
+
+## 0.97.0-next.25
+
+### Patch Changes
+
+- Updated dependencies [aa1b654]
+  - @effect-app/schema@0.150.0-next.25
+
+## 0.97.0-next.24
+
+### Patch Changes
+
+- 9e151ed: update packages
+- Updated dependencies [9e151ed]
+  - @effect-app/schema@0.150.0-next.24
+  - @effect-app/core@0.97.0-next.6
+
+## 0.97.0-next.23
+
+### Patch Changes
+
+- Updated dependencies [6b89c27]
+  - @effect-app/core@0.97.0-next.5
+  - @effect-app/schema@0.150.0-next.23
+
+## 0.97.0-next.22
+
+### Patch Changes
+
+- Updated dependencies [169c159]
+  - @effect-app/schema@0.150.0-next.22
+
+## 0.97.0-next.21
+
+### Patch Changes
+
+- Updated dependencies [c57bb66]
+  - @effect-app/schema@0.150.0-next.21
+
+## 0.97.0-next.20
+
+### Patch Changes
+
+- Updated dependencies [777162f]
+  - @effect-app/schema@0.150.0-next.20
+
+## 0.97.0-next.19
+
+### Patch Changes
+
+- Updated dependencies [ca927a5]
+  - @effect-app/schema@0.150.0-next.19
+
+## 0.97.0-next.18
+
+### Patch Changes
+
+- Updated dependencies [5f62f5a]
+  - @effect-app/schema@0.150.0-next.18
+
+## 0.97.0-next.17
+
+### Patch Changes
+
+- Updated dependencies [53d4b3e]
+  - @effect-app/schema@0.150.0-next.17
+
+## 0.97.0-next.16
+
+### Patch Changes
+
+- Updated dependencies [63d4549]
+  - @effect-app/schema@0.150.0-next.16
+
+## 0.97.0-next.15
+
+### Patch Changes
+
+- Updated dependencies [92ff6b9]
+  - @effect-app/schema@0.150.0-next.15
+
+## 0.97.0-next.14
+
+### Patch Changes
+
+- Updated dependencies [c234016]
+  - @effect-app/schema@0.150.0-next.14
+
+## 0.97.0-next.13
+
+### Patch Changes
+
+- Updated dependencies [5d53b26]
+  - @effect-app/schema@0.150.0-next.13
+
+## 0.97.0-next.12
+
+### Patch Changes
+
+- Updated dependencies [147bc14]
+  - @effect-app/schema@0.150.0-next.12
+
+## 0.97.0-next.11
+
+### Patch Changes
+
+- Updated dependencies [660d57a]
+  - @effect-app/schema@0.150.0-next.11
+
+## 0.97.0-next.10
+
+### Patch Changes
+
+- Updated dependencies [20076e0]
+  - @effect-app/schema@0.150.0-next.10
+
+## 0.97.0-next.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.97.0-next.4
+  - @effect-app/schema@0.150.0-next.9
+
+## 0.97.0-next.8
+
+### Patch Changes
+
+- Updated dependencies [ac35466]
+  - @effect-app/schema@0.150.0-next.8
+
+## 0.97.0-next.7
+
+### Patch Changes
+
+- Updated dependencies [4f8ade3]
+  - @effect-app/core@0.97.0-next.3
+  - @effect-app/schema@0.150.0-next.7
+
+## 0.97.0-next.6
+
+### Patch Changes
+
+- Updated dependencies [8897586]
+  - @effect-app/schema@0.150.0-next.6
+
+## 0.97.0-next.5
+
+### Patch Changes
+
+- Updated dependencies [c550ee5]
+  - @effect-app/schema@0.150.0-next.5
+  - @effect-app/core@0.97.0-next.2
+
+## 0.97.0-next.4
+
+### Patch Changes
+
+- Updated dependencies [ace7afb]
+  - @effect-app/schema@0.150.0-next.4
+
+## 0.97.0-next.3
+
+### Patch Changes
+
+- Updated dependencies [3320864]
+  - @effect-app/schema@0.150.0-next.3
+
+## 0.97.0-next.2
+
+### Patch Changes
+
+- Updated dependencies [fde3e90]
+  - @effect-app/schema@0.150.0-next.2
+  - @effect-app/core@0.97.0-next.1
+
+## 0.97.0-next.1
+
+### Patch Changes
+
+- Updated dependencies [bd2130b]
+  - @effect-app/schema@0.150.0-next.1
+
+## 0.97.0-next.0
+
+### Minor Changes
+
+- 87a6ac2: update packages
+
+### Patch Changes
+
+- Updated dependencies [87a6ac2]
+  - @effect-app/schema2@0.1.0-next.0
+  - @effect-app/core@0.97.0-next.0
+
 ## 0.96.1
 
 ### Patch Changes

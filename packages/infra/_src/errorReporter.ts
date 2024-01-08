@@ -13,12 +13,13 @@ export function reportError(
         return
       }
       yield* $(reportSentry(cause, name, extras))
+      const error = new CauseException(cause, name)
       yield* $(
         Effect
           .logError("Reporting error", cause)
           .annotateLogs(dropUndefined({
             extras,
-            // __cause__: error.toJSON(), // logs too much garbage
+            __cause__: error.toJSON(),
             __error_name__: name
           }))
       )
@@ -50,12 +51,13 @@ export function logError<E>(
         yield* $(Effect.logDebug("Interrupted").annotateLogs(dropUndefined({ extras })))
         return
       }
+      const error = new CauseException(cause, name)
       yield* $(
         Effect
           .logWarning("Logging error", cause)
           .annotateLogs(dropUndefined({
             extras,
-            // __cause__: error.toJSON(), // logs too much garbage
+            __cause__: error.toJSON(),
             __error_name__: name
           }))
       )

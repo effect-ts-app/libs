@@ -1,7 +1,7 @@
 // Do not import to frontend
 
 import { setFaker } from "@effect-app/prelude/faker"
-import type { Arbitrary } from "@effect-app/prelude/schema"
+import type { A } from "@effect-app/schema"
 import { faker } from "@faker-js/faker"
 import { Random } from "fast-check"
 import * as fc from "fast-check"
@@ -19,9 +19,8 @@ export function generate<T>(arb: fc.Arbitrary<T>) {
 }
 
 /**
- * @tsplus getter ets/Schema/Arbitrary/Gen generate
+ * @tsplus getter effect/schema/Arbitrary generate
  */
-
-export function generateFromArbitrary<T>(arb: Arbitrary.Gen<T>) {
+export function generateFromArbitrary<T>(arb: A.Arbitrary<T>) {
   return generate(arb(fc))
 }

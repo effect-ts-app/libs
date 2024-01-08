@@ -33,10 +33,9 @@ export const responseWithJsonBody = (
  */
 export const schemaJsonBody = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, To, any, From, any>
+  schema: Schema<From, To>
 ) => {
-  const parse = Parser.for(schema).condemnCustom
-  return client.mapEffect((_) => _.json.flatMap(parse))
+  return client.mapEffect((_) => _.json.flatMap(schema.parse))
 }
 
 /**
@@ -44,11 +43,9 @@ export const schemaJsonBody = <To, From, A, B>(
  */
 export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, To, any, From, any>
+  schema: Schema<From, To>
 ) => {
-  const _parse = Parser.for(schema).condemnCustom
-  const parse = flow(_parse, Effect.orDie)
-  return client.mapEffect((_) => _.json.flatMap(parse))
+  return client.mapEffect((_) => _.json.flatMap(schema.parse))
 }
 
 /**
@@ -65,10 +62,9 @@ export const schemaJson = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, To, any, From, any>
+  schema: Schema<From, To>
 ) => {
-  const parse = Parser.for(schema).condemnFail
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(parse))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.parse))
 }
 
 /**
@@ -85,10 +81,9 @@ export const schemaJsonUnsafe = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema.Schema<unknown, To, any, From, any>
+  schema: Schema<From, To>
 ) => {
-  const parse = Parser.for(schema).condemnDie
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap((_) => parse(_)))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.parse))
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */

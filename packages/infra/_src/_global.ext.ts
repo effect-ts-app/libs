@@ -14,10 +14,8 @@ import type {} from "@effect-app/infra/services/Operations/live"
  * @tsplus global
  */
 import type {} from "@effect-app/infra/services/QueueMaker/errors"
-/**
- * @tsplus global
- */
-import type {} from "@effect-app/infra/test.arbs"
+
+import "@effect-app/infra/test.arbs"
 /**
  * @tsplus global
  */

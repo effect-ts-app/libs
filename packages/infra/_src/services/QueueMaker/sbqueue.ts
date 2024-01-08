@@ -9,6 +9,7 @@ import {
 import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
+import type { S } from "@effect-app/prelude"
 import { RequestId } from "@effect-app/prelude/ids"
 import { struct } from "@effect-app/schema"
 import { Tracer } from "effect"
@@ -26,15 +27,15 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  schema: Schema.Schema<unknown, Evt, any, EvtE, any>,
-  drainSchema: Schema.Schema<unknown, DrainEvt, any, any, any>
+  schema: S.Schema<EvtE, Evt>,
+  drainSchema: S.Schema<unknown, DrainEvt>
 ) {
   const wireSchema = struct({
     body: schema,
     meta: QueueMeta
   })
   const drainW = struct({ body: drainSchema, meta: QueueMeta })
-  const parseDrain = drainW.parseCondemnDie
+  const parseDrain = flow(drainW.parse, (_) => _.orDie)
 
   return Effect.gen(function*($) {
     const s = yield* $(Sender)

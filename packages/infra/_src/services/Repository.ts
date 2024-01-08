@@ -13,7 +13,7 @@ import type { QueryBuilder } from "./Store/filterApi/query.js"
  * @tsplus type Repository
  */
 export interface Repository<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -35,7 +35,7 @@ export const AnyPureDSL: PureDSL<any, any, any> = {
  * @tsplus fluent Repository get
  */
 export function get<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -43,14 +43,14 @@ export function get<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError({ type: self.itemType, id })))
+  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
 }
 
 /**
  * @tsplus getter Repository log
  */
 export function log<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -63,7 +63,7 @@ export function log<
  * @tsplus fluent Repository projectEffect
  */
 export function projectEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -76,36 +76,37 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: Filter<PM>
-      collect?: (t: PM) => Option<S>
-      limit?: number
-      skip?: number
+      filter?: Filter<PM> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, S[]>
 export function projectEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
   R,
   E,
-  U extends keyof PM
+  U extends keyof PM,
+  S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<
     R,
     E,
     {
-      filter?: QueryBuilder<PM>
-      select: NonEmptyReadonlyArray<U>
-      limit?: number
-      skip?: number
+      filter?: QueryBuilder<PM> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, Pick<PM, U>[]>
 export function projectEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -119,11 +120,11 @@ export function projectEffect<
     R,
     E,
     {
-      filter?: Filter<PM>
-      select?: NonEmptyReadonlyArray<U>
-      collect?: (t: Pick<PM, U>) => Option<S>
-      limit?: number
-      skip?: number
+      filter?: Filter<PM> | undefined
+      select?: NonEmptyReadonlyArray<U> | undefined
+      collect?: ((t: PM) => Option<S>) | undefined
+      limit?: number | undefined
+      skip?: number | undefined
     }
   >
 ): Effect<R, E, S[]> {
@@ -141,7 +142,7 @@ export function projectEffect<
  * @tsplus fluent Repository project
  */
 export function project<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -156,7 +157,7 @@ export function project<
   }
 ): Effect<never, never, S[]>
 export function project<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -171,7 +172,7 @@ export function project<
   }
 ): Effect<never, never, Pick<PM, U>[]>
 export function project<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -195,7 +196,7 @@ export function project<
  * @tsplus fluent Repository project
  */
 export function count<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -212,7 +213,7 @@ export function count<
  * @tsplus fluent Repository queryEffect
  */
 export function queryEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -235,7 +236,7 @@ export function queryEffect<
  * @tsplus fluent Repository queryOneEffect
  */
 export function queryOneEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -247,7 +248,7 @@ export function queryOneEffect<
   map: Effect<R, E, { filter?: Filter<PM> }>
 ): Effect<R, E | NotFoundError<ItemType>, T>
 export function queryOneEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -260,7 +261,7 @@ export function queryOneEffect<
   map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Option<S> }>
 ): Effect<R, E | NotFoundError<ItemType>, S>
 export function queryOneEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -278,7 +279,7 @@ export function queryOneEffect<
       .flatMap((_) =>
         (f.collect ? _.filterMap(f.collect) : _ as any as S[])
           .toNonEmpty
-          .encaseInEffect(() => new NotFoundError({ type: self.itemType, id: JSON.stringify(f.filter) }))
+          .encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
           .map((_) => _[0])
       )
   )
@@ -288,7 +289,7 @@ export function queryOneEffect<
  * @tsplus fluent Repository query
  */
 export function query<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -305,7 +306,7 @@ export function query<
  * @tsplus fluent Repository queryOne
  */
 export function queryOne<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -315,7 +316,7 @@ export function queryOne<
   map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
 ): Effect<never, NotFoundError<ItemType>, S>
 export function queryOne<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -324,7 +325,7 @@ export function queryOne<
   map: { filter?: Filter<PM> }
 ): Effect<never, NotFoundError<ItemType>, T>
 export function queryOne<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -340,7 +341,7 @@ export function queryOne<
  * @tsplus fluent Repository queryAndSaveOnePureEffect
  */
 export function queryAndSaveOnePureEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -359,7 +360,7 @@ export function queryAndSaveOnePureEffect<
   A
 >
 export function queryAndSaveOnePureEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -390,7 +391,7 @@ export function queryAndSaveOnePureEffect(
  */
 
 export function queryAndSaveOnePure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -406,7 +407,7 @@ export function queryAndSaveOnePure<
   A
 >
 export function queryAndSaveOnePure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -431,7 +432,7 @@ export function queryAndSaveOnePure(
  * @tsplus fluent Repository queryAndSavePureEffect
  */
 export function queryAndSavePureEffect<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -451,7 +452,7 @@ export function queryAndSavePureEffect<
  * @tsplus fluent Repository queryAndSavePure
  */
 export function queryAndSavePure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -467,7 +468,7 @@ export function queryAndSavePure<
  * @tsplus getter Repository saveManyWithPure
  */
 export function saveManyWithPure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -480,7 +481,7 @@ export function saveManyWithPure<
  * @tsplus fluent Repository byIdAndSaveWithPure
  */
 export function byIdAndSaveWithPure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -494,7 +495,7 @@ export function byIdAndSaveWithPure<
  * @tsplus getter Repository handleByIdAndSaveWithPure
  */
 export function handleByIdAndSaveWithPure<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -509,9 +510,8 @@ export function handleByIdAndSaveWithPure<
  * @tsplus fluent Repository saveManyWithPure_
  */
 export function saveManyWithPure_<
-  Id extends string,
   R,
-  T extends { id: Id },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   A,
   E,
@@ -534,9 +534,8 @@ export function saveManyWithPure_<
  * @tsplus fluent Repository saveWithPure_
  */
 export function saveWithPure_<
-  Id extends string,
   R,
-  T extends { id: Id },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   A,
   E,
@@ -558,7 +557,7 @@ export function saveWithPure_<
 }
 
 export function saveAllWithEffectInt<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   P extends T,
   Evt,
@@ -580,7 +579,7 @@ export function saveAllWithEffectInt<
  * @tsplus fluent Repository queryAndSavePureEffectBatched
  */
 export function queryAndSavePureEffectBatched<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -602,7 +601,7 @@ export function queryAndSavePureEffectBatched<
  * @tsplus fluent Repository queryAndSavePureBatched
  */
 export function queryAndSavePureBatched<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string,
@@ -620,7 +619,7 @@ export function queryAndSavePureBatched<
  * @tsplus fluent Repository saveManyWithPureBatched
  */
 export function saveManyWithPureBatched<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -633,9 +632,8 @@ export function saveManyWithPureBatched<
  * @tsplus fluent Repository saveManyWithPureBatched_
  */
 export function saveManyWithPureBatched_<
-  Id extends string,
   R,
-  T extends { id: Id },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   A,
   E,
@@ -787,7 +785,7 @@ export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReado
  * @tsplus getter Repository save
  */
 export function save<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string
@@ -801,7 +799,7 @@ export function save<
  * @tsplus getter Repository saveWithEvents
  */
 export function saveWithEvents<
-  T extends { id: string },
+  T extends { id: unknown },
   PM extends PersistenceModelType<string>,
   Evt,
   ItemType extends string

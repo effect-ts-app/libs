@@ -3,13 +3,6 @@ import { RequestContext } from "../RequestContext.js"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 
-/**
- * @tsplus fluent effect/io/Effect setupRequestContextFromName
- */
-export function setupRequestContextFromName<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return makeInternalRequestContext(name).flatMap((rc) => setupRequestContext(self, rc))
-}
-
 function makeInternalRequestContext(name: string) {
   return Effect.sync(() => {
     const id = RequestId.make()
@@ -25,40 +18,52 @@ function makeInternalRequestContext(name: string) {
 const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
   RequestContextContainer
     .get
-    .flatMap((ctx) =>
+    .andThen((ctx) =>
       f
-        .withSpan("request", {
-          attributes: {
-            "request.id": ctx.id,
-            "request.name": ctx.name,
-            "request.locale": ctx.locale,
-            "request.namespace": ctx.namespace,
-            ...ctx.userProfile?.sub
-              ? {
-                "request.user.sub": ctx
-                  .userProfile
-                  .sub,
-                "request.user.roles": "roles" in ctx
-                    .userProfile
-                  ? ctx.userProfile.roles
-                  : undefined
-              }
-              : {}
-          }
-        })
+        .withSpan("request", { attributes: ctx.spanAttributes })
         // request context info is picked up directly in the logger for annotations.
         .withLogSpan("request")
     )
 
-function setupContextMap<R, E, A>(self: Effect<R, E, A>) {
-  return (ContextMapContainer.flatMap((_) => _.start)
-    > self)
-}
+const setupContextMap = ContextMapContainer.andThen((_) => _.start).toLayerDiscard
+
+// const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
+//   RequestContext.Tag.makeLayer(requestContext)
+// memoization problem
+// const RequestContextLive = RequestContextContainer.get.toLayer(RequestContext.Tag)
+const RequestContextStartLiveFromRequestContext = (requestContext: RequestContext) =>
+  setupContextMap
+    // .provideMerge(RequestContextLiveFromRequestContext(requestContext))
+    .provideMerge(
+      RequestContextContainer
+        .andThen((_) => _.start(requestContext))
+        .toLayerDiscard
+    )
+
+const RequestContextStartLive = (requestContext: RequestContext | string) =>
+  typeof requestContext === "string"
+    ? makeInternalRequestContext(requestContext)
+      .andThen(RequestContextStartLiveFromRequestContext)
+      .unwrapLayer
+    : RequestContextStartLiveFromRequestContext(requestContext)
 
 /**
  * @tsplus fluent effect/io/Effect setupRequestContext
  */
-export function setupRequestContext<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext) {
-  return RequestContextContainer.flatMap((_) => _.start(requestContext))
-    > withRequestSpan(setupContextMap(self))
+export function setupRequestContext<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext | string) {
+  return self
+    .pipe(withRequestSpan)
+    .provide(RequestContextStartLive(requestContext))
+}
+
+const UpdateRequestContextLive = (f: (rc: RequestContext) => RequestContext) =>
+  RequestContextContainer.andThen((rcc) => rcc.update(f)).toLayerDiscard
+
+/**
+ * @tsplus fluent effect/io/Effect updateRequestContext
+ */
+export function updateRequestContext<R, E, A>(self: Effect<R, E, A>, f: (rc: RequestContext) => RequestContext) {
+  return self
+    // .provideServiceEffect(RequestContext.Tag, RequestContextContainer.get)
+    .provide(UpdateRequestContextLive(f))
 }

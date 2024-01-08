@@ -70,9 +70,9 @@ export class NumberSchema extends Base<
   DescriptionSchema & {
     multipleOf?: number
     minimum?: number
-    exclusiveMinimum?: boolean
+    exclusiveMinimum?: number
     maximum?: number
-    exclusiveMaximum?: boolean
+    exclusiveMaximum?: number
   }
 > {
   readonly type = "number"
@@ -102,9 +102,9 @@ export const Ref = ($ref: string): Ref => ({ $ref })
 
 export class ObjectSchema extends Base<
   DescriptionSchema & {
-    required?: ReadonlyArray<string>
-    properties?: Record<string, SubSchema>
-    additionalProperties?: SubSchema
+    required?: ReadonlyArray<string> | undefined
+    properties?: Record<string, SubSchema> | undefined
+    additionalProperties?: SubSchema | undefined
   }
 > {
   readonly type = "object"
@@ -126,7 +126,7 @@ export class OneOfSchema extends Base<
     oneOf: ReadonlyArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
-    }
+    } | undefined
   }
 > {}
 
@@ -135,7 +135,7 @@ export class AllOfSchema extends Base<
     allOf: ReadonlyArray<JSONSchema | SubSchema>
     discriminator?: {
       propertyName: string
-    }
+    } | undefined
   }
 > {}
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { omit, pick } from "@effect-app/prelude/utils"
+import { dropUndefinedT, omit, pick } from "@effect-app/prelude/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
   buildCosmosQuery,
@@ -37,12 +37,12 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           const containerId = `${prefix}${name}`
           yield* $(
             Effect.promise(() =>
-              db.containers.createIfNotExists({
+              db.containers.createIfNotExists(dropUndefinedT({
                 id: containerId,
                 uniqueKeyPolicy: config?.uniqueKeys
                   ? { uniqueKeys: config.uniqueKeys }
                   : undefined
-              })
+              }))
             )
           )
           const defaultValues = config?.defaultValues ?? {}
@@ -61,24 +61,26 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     [
                       x,
                       Option.fromNullable(x._etag).match({
-                        onNone: () => ({
-                          operationType: "Create" as const,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          partitionKey: config?.partitionValue(x)
-                        }),
-                        onSome: (eTag) => ({
-                          operationType: "Replace" as const,
-                          id: x.id,
-                          resourceBody: {
-                            ...omit(x, "_etag"),
-                            _partitionKey: config?.partitionValue(x)
-                          } as any,
-                          ifMatch: eTag,
-                          partitionKey: config?.partitionValue(x)
-                        })
+                        onNone: () =>
+                          dropUndefinedT({
+                            operationType: "Create" as const,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            },
+                            partitionKey: config?.partitionValue(x)
+                          }),
+                        onSome: (eTag) =>
+                          dropUndefinedT({
+                            operationType: "Replace" as const,
+                            id: x.id,
+                            resourceBody: {
+                              ...omit(x, "_etag"),
+                              _partitionKey: config?.partitionValue(x)
+                            },
+                            ifMatch: eTag,
+                            partitionKey: config?.partitionValue(x)
+                          })
                       })
                     ] as const
                 )

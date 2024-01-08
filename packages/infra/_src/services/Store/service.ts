@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
-import type { Parser, ParserEnv } from "@effect-app/schema/custom/Parser"
-
-import type { These } from "@effect-app/prelude/schema"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 import type { FieldValues } from "../../filter/types.js"
 import type { QueryBuilder } from "./filterApi/query.js"
@@ -36,8 +33,8 @@ export type Where =
 
 // default is where
 export type StoreWhereFilter = {
-  type?: "where"
-  mode?: "and" | "or" // default is and
+  type?: "where" | undefined
+  mode?: "and" | "or" | undefined // default is and
   where: readonly [
     Where,
     ...(Where[])
@@ -66,18 +63,18 @@ export type FilterJoinSelect = {
   value: any /* value path[valueKey] of E */
 }
 
-export interface FilterArgs<PM extends PersistenceModelType<string>, U extends keyof PM = never> {
-  filter?: Filter<PM>
-  select?: NonEmptyReadonlyArray<U>
-  limit?: number
-  skip?: number
+export interface FilterArgs<PM extends PersistenceModelType<unknown>, U extends keyof PM = never> {
+  filter?: Filter<PM> | undefined
+  select?: NonEmptyReadonlyArray<U> | undefined
+  limit?: number | undefined
+  skip?: number | undefined
 }
 
-export type FilterFunc<PM extends PersistenceModelType<string>> = <U extends keyof PM = never>(
+export type FilterFunc<PM extends PersistenceModelType<unknown>> = <U extends keyof PM = never>(
   args: FilterArgs<PM, U>
 ) => Effect<never, never, (U extends undefined ? PM : Pick<PM, U>)[]>
 
-export interface Store<PM extends PersistenceModelType<Id>, Id extends string> {
+export interface Store<PM extends PersistenceModelType<Id>, Id> {
   all: Effect<never, never, PM[]>
   filter: FilterFunc<PM>
   /** @deprecated */
@@ -118,61 +115,61 @@ export const makeContextMap = (): ContextMap => {
     eTag === undefined ? etags.delete(id) : etags.set(id, eTag)
   }
 
-  const parsedCache = new Map<
-    Parser<any, any, any>,
-    Map<unknown, These.These<unknown, unknown>>
-  >()
+  // const parsedCache = new Map<
+  //   Parser<any, any, any>,
+  //   Map<unknown, These.These<unknown, unknown>>
+  // >()
 
-  const parserCache = new Map<
-    Parser<any, any, any>,
-    (i: any) => These.These<any, any>
-  >()
+  // const parserCache = new Map<
+  //   Parser<any, any, any>,
+  //   (i: any) => These.These<any, any>
+  // >()
 
-  const setAndReturn = <I, E, A>(
-    p: Parser<I, E, A>,
-    np: (i: I) => These.These<E, A>
-  ) => {
-    parserCache.set(p, np)
-    return np
-  }
+  // const setAndReturn = <I, E, A>(
+  //   p: Parser<I, E, A>,
+  //   np: (i: I) => These.These<E, A>
+  // ) => {
+  //   parserCache.set(p, np)
+  //   return np
+  // }
 
-  const parserEnv: ParserEnv = {
-    // TODO: lax: true would turn off refinement checks, may help on large payloads
-    // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
-    lax: false,
-    cache: {
-      getOrSetParser: (p) => parserCache.get(p) ?? setAndReturn(p, (i) => parserEnv.cache!.getOrSet(i, p)),
-      getOrSetParsers: (parsers) => {
-        return Object.entries(parsers).reduce((prev, [k, v]) => {
-          prev[k] = parserEnv.cache!.getOrSetParser(v)
-          return prev
-        }, {} as any)
-      },
-      getOrSet: (i, parse): any => {
-        const c = parsedCache.get(parse)
-        if (c) {
-          const f = c.get(i)
-          if (f) {
-            // console.log("$$$ cache hit", i)
-            return f
-          } else {
-            const nf = parse(i, parserEnv)
-            c.set(i, nf)
-            return nf
-          }
-        } else {
-          const nf = parse(i, parserEnv)
-          parsedCache.set(parse, new Map([[i, nf]]))
-          return nf
-        }
-      }
-    }
-  }
+  // const parserEnv: ParserEnv = {
+  //   // TODO: lax: true would turn off refinement checks, may help on large payloads
+  //   // but of course removes confirming of validation rules (which may be okay for a database owned by the app, as we write safely)
+  //   lax: false,
+  //   cache: {
+  //     getOrSetParser: (p) => parserCache.get(p) ?? setAndReturn(p, (i) => parserEnv.cache!.getOrSet(i, p)),
+  //     getOrSetParsers: (parsers) => {
+  //       return Object.entries(parsers).reduce((prev, [k, v]) => {
+  //         prev[k] = parserEnv.cache!.getOrSetParser(v)
+  //         return prev
+  //       }, {} as any)
+  //     },
+  //     getOrSet: (i, parse): any => {
+  //       const c = parsedCache.get(parse)
+  //       if (c) {
+  //         const f = c.get(i)
+  //         if (f) {
+  //           // console.log("$$$ cache hit", i)
+  //           return f
+  //         } else {
+  //           const nf = parse(i, parserEnv)
+  //           c.set(i, nf)
+  //           return nf
+  //         }
+  //       } else {
+  //         const nf = parse(i, parserEnv)
+  //         parsedCache.set(parse, new Map([[i, nf]]))
+  //         return nf
+  //       }
+  //     }
+  //   }
+  // }
 
   return {
     get: getEtag,
-    set: setEtag,
-    parserEnv
+    set: setEtag
+    // parserEnv
   }
 }
 
@@ -188,11 +185,11 @@ export const makeMap = Effect.sync(() => makeContextMap())
 export class ContextMap extends TagClass<ContextMap, {
   get: (id: string) => string | undefined
   set: (id: string, eTag: string | undefined) => void
-  parserEnv: ParserEnv
+  // parserEnv: ParserEnv
 }>() {
 }
 
-export interface PersistenceModelType<Id extends string> {
+export interface PersistenceModelType<Id> {
   id: Id
   _etag: string | undefined
 }
