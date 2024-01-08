@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.3
+
+### Patch Changes
+
+- 6a5591a: fix missing tag in ExtendedTaggedClass
+
 ## 0.150.2
 
 ### Patch Changes
