@@ -126,7 +126,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "defined"
         }
       ]
@@ -137,7 +137,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "discriminator"
         }
       ]
@@ -148,7 +148,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "discriminators"
         }
       ]
@@ -159,7 +159,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "discriminatorsExhaustive"
         }
       ]
@@ -170,7 +170,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "discriminatorStartsWith"
         }
       ]
@@ -213,7 +213,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "instanceOf"
         }
       ]
@@ -224,7 +224,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "instanceOfUnsafe"
         }
       ]
@@ -235,7 +235,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "is"
         }
       ]
@@ -257,7 +257,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "not"
         }
       ]
@@ -380,7 +380,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "type"
         }
       ]
@@ -391,7 +391,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "typeTags"
         }
       ]
@@ -402,7 +402,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "value"
         }
       ]
@@ -413,7 +413,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "valueTags"
         }
       ]
@@ -424,7 +424,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "when"
         }
       ]
@@ -435,7 +435,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "whenAnd"
         }
       ]
@@ -446,7 +446,7 @@
       "extensions": [
         {
           "kind": "static",
-          "typeName": "effect/match.Ops",
+          "typeName": "effect/match/Matcher.Ops",
           "name": "whenOr"
         }
       ]
