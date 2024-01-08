@@ -119,3 +119,5 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
 //   : never
 
 export const inputDate = S.union(S.ValidDateFromSelf, S.Date)
+
+export interface UnionBrand {}

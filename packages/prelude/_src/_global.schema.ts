@@ -33,6 +33,7 @@ import {
   struct,
   TaggedClass,
   union,
+  UnionBrand,
   unknown,
   useClassFeaturesForSchema,
   useClassNameForSchema,
