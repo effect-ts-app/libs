@@ -22,21 +22,25 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
   tag: Tag,
   fields: Fields
 ) =>
-  & { readonly structFrom: Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>> }
+  & {
+    readonly structFrom: Schema<
+      Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
+      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
+    >
+  }
   & S.Class<
     SelfFrom,
-    Simplify<ToStruct<Fields>>,
+    Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
-    Fields,
-    Data.Case
+    Fields
   > = S.TaggedClass as any
 
 /**
  * Automatically assign the name of the Class to the S.
  */
 export function useClassNameForSchema(cls: any) {
-  const newCls =  class extends cls {
+  const newCls = class extends cls {
     static get ast() {
       return AST.setAnnotation(cls.ast, AST.TitleAnnotationId, this.name)
     }
