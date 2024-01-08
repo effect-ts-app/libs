@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.1
+
+### Patch Changes
+
+- fd520f7: chore: restore UnionBrand
+- Updated dependencies [fd520f7]
+  - @effect-app/schema@0.150.1
+
 ## 0.107.0
 
 ### Minor Changes

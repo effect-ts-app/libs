@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.1
+
+### Patch Changes
+
+- fd520f7: chore: restore UnionBrand
+
 ## 0.150.0
 
 ### Minor Changes
