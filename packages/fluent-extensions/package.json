@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/platform": "^0.40.2",
+    "@effect/platform": "^0.40.3",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.1.0",
     "effect": "^2.0.2",
