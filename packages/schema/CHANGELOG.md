@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.10
+
+### Patch Changes
+
+- cf69a10: update for schema
+
 ## 0.150.9
 
 ### Patch Changes

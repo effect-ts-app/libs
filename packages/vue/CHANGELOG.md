@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.87.12
+
+### Patch Changes
+
+- cf69a10: update for schema
+- Updated dependencies [cf69a10]
+  - @effect-app/schema@0.150.10
+  - @effect-app/vue@0.87.12
+  - @effect-app/prelude@0.107.11
+
 ## 0.87.11
 
 ### Patch Changes
