@@ -38,7 +38,7 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
       return prev
     },
     {} as {
-      [K in keyof To]: FieldInfo<To[K]>
+      [K in keyof Omit<To, keyof Equal>]-?: FieldInfo<To[K]>
     }
   )
 }
