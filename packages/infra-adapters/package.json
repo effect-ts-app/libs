@@ -5,8 +5,8 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/platform": "^0.40.3",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240108102209",
+    "@effect/platform": "^0.40.4",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240109124241",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "effect": "^2.0.2",
