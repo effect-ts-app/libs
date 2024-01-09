@@ -32,3 +32,8 @@ export type NonNegativeNumber = S.Schema.To<typeof NonNegativeNumber>
 export const NonNegativeDecimal = NonNegativeNumber
 /** @deprecated Not an actual decimal */
 export type NonNegativeDecimal = NonNegativeNumber
+
+/** @deprecated Not an actual decimal */
+export const PositiveDecimal = PositiveNumber
+/** @deprecated Not an actual decimal */
+export type PositiveDecimal = PositiveNumber
