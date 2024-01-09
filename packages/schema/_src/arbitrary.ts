@@ -14,4 +14,4 @@ export function sampleFromArb<T>(arb: Arbitrary<T>, params?: number | fc.Paramet
 /**
  * @tsplus getter effect/schema/Schema Arbitrary
  */
-export const Arb = <From, To>(s: S.Schema<From, To>): Arbitrary<To> => A.to(s)
+export const Arb = <From, To>(s: S.Schema<From, To>): Arbitrary<To> => A.make(s)

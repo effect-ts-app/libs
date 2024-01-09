@@ -11,7 +11,7 @@ export const jwt = S.transformOrFail(
   (s, __, ast) =>
     ParseResult.try({
       try: () => jwtDecode(s),
-      catch: (e: any) => ParseResult.parseError([ParseResult.type(ast, s, e.message)])
+      catch: (e: any) => ParseResult.parseError(ParseResult.type(ast, s, e.message))
     }),
   (_): ParseResult.ParseResult<string> => {
     throw new Error("not implemented")

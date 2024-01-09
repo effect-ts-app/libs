@@ -255,7 +255,7 @@ export function getMetadataFromSchema(
 
   let jschema: any
   try {
-    jschema = JSONSchema.to(S.make(realSelf)) as any
+    jschema = JSONSchema.make(S.make(realSelf)) as any
   } catch (err) {
     jschema = {}
     console.warn("error getting jsonschema from ", err, ast)
