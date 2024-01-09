@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.8
+
+### Patch Changes
+
+- f8b45b9: export numbers
+
 ## 0.150.7
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.107.9
+
+### Patch Changes
+
+- f8b45b9: export numbers
+- Updated dependencies [f8b45b9]
+  - @effect-app/schema@0.150.8
+
 ## 0.107.8
 
 ### Patch Changes
