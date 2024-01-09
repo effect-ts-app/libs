@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.133.10
+
+### Patch Changes
+
+- aaf2203: fix: jwt can fail
+
 ## 0.133.9
 
 ### Patch Changes
