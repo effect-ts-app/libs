@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.4
+
+### Patch Changes
+
+- d9034fe: feat: add makeOptional
+
 ## 0.150.3
 
 ### Patch Changes
