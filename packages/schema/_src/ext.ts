@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core/Prelude"
-import type { Schema } from "@effect/schema/Schema"
+import { typedKeysOf } from "@effect-app/core/utils"
+import type { Schema, StructFields } from "@effect/schema/Schema"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
@@ -121,3 +122,19 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
 export const inputDate = S.union(S.ValidDateFromSelf, S.Date)
 
 export interface UnionBrand {}
+
+export function makeOptional<NER extends StructFields>(
+  t: NER // TODO: enforce non empty
+): {
+  [K in keyof NER]: S.PropertySignature<
+    Schema.From<NER[K]> | undefined,
+    true,
+    Schema.From<NER[K]> | undefined,
+    true
+  >
+} {
+  return typedKeysOf(t).reduce((prev, cur) => {
+    prev[cur] = S.optional(t[cur] as any)
+    return prev
+  }, {} as any)
+}
