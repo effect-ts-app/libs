@@ -9,9 +9,26 @@ export type PositiveInt = S.Schema.To<typeof PositiveInt>
 
 export interface NonNegativeIntBrand extends Simplify<B.Brand<"NonNegativeInt"> & IntBrand> {}
 export const NonNegativeInt =
-  S.Int.pipe(S.greaterThanOrEqualTo(0), fromBrand(nominal<NonNegativeIntBrand>(), { jsonSchema: {} })).withDefaults
+  S.Int.pipe(S.nonNegative(), fromBrand(nominal<NonNegativeIntBrand>(), { jsonSchema: {} })).withDefaults
 export type NonNegativeInt = S.Schema.To<typeof NonNegativeInt>
 
 export interface IntBrand extends Simplify<B.Brand<"Int">> {}
 export const Int = S.Int.pipe(fromBrand(nominal<IntBrand>(), { jsonSchema: {} })).withDefaults
 export type Int = S.Schema.To<typeof Int>
+
+export interface PositiveNumberBrand extends Simplify<B.Brand<"PositiveNumber"> & NonNegativeNumberBrand> {}
+export const PositiveNumber =
+  S.number.pipe(S.positive(), fromBrand(nominal<PositiveNumberBrand>(), { jsonSchema: {} })).withDefaults
+export type PositiveNumber = S.Schema.To<typeof PositiveNumber>
+
+export interface NonNegativeNumberBrand extends Simplify<B.Brand<"NonNegativeNumber">> {}
+export const NonNegativeNumber = S
+  .number
+  .pipe(S.nonNegative(), fromBrand(nominal<NonNegativeNumberBrand>(), { jsonSchema: {} }))
+  .withDefaults
+export type NonNegativeNumber = S.Schema.To<typeof NonNegativeNumber>
+
+/** @deprecated Not an actual decimal */
+export const NonNegativeDecimal = NonNegativeNumber
+/** @deprecated Not an actual decimal */
+export type NonNegativeDecimal = NonNegativeNumber
