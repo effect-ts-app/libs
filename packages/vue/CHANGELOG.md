@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.87.8
+
+### Patch Changes
+
+- d8be46c: fix form type
+- Updated dependencies [d8be46c]
+  - @effect-app/vue@0.87.8
+
 ## 0.87.7
 
 ### Patch Changes
