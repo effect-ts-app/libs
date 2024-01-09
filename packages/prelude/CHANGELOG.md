@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.107.6
+
+### Patch Changes
+
+- c615f35: update packages
+- Updated dependencies [c615f35]
+  - @effect-app/core@0.97.2
+  - @effect-app/schema@0.150.5
+
 ## 0.107.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.97.2
+
+### Patch Changes
+
+- c615f35: update packages
+
 ## 0.97.1
 
 ### Patch Changes
