@@ -129,12 +129,28 @@ export function makeOptional<NER extends StructFields>(
   [K in keyof NER]: S.PropertySignature<
     Schema.From<NER[K]> | undefined,
     true,
-    Schema.From<NER[K]> | undefined,
+    Schema.To<NER[K]> | undefined,
     true
   >
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
     prev[cur] = S.optional(t[cur] as any)
+    return prev
+  }, {} as any)
+}
+
+export function makeExactOptional<NER extends StructFields>(
+  t: NER // TODO: enforce non empty
+): {
+  [K in keyof NER]: S.PropertySignature<
+    Schema.From<NER[K]>,
+    true,
+    Schema.To<NER[K]>,
+    true
+  >
+} {
+  return typedKeysOf(t).reduce((prev, cur) => {
+    prev[cur] = S.optional(t[cur] as any, { exact: true })
     return prev
   }, {} as any)
 }
