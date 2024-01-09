@@ -5,6 +5,15 @@ import * as S from "@effect-app/schema"
 
 import { jwtDecode } from "jwt-decode"
 
-export const jwt = S.transform(S.string, S.unknown, (_) => jwtDecode(_), (_): string => {
-  throw new Error("not implemented")
-})
+export const jwt = S.transformOrFail(
+  S.string,
+  S.unknown,
+  (s, __, ast) =>
+    ParseResult.try({
+      try: () => jwtDecode(s),
+      catch: (e: any) => ParseResult.parseError([ParseResult.type(ast, s, e.message)])
+    }),
+  (_): ParseResult.ParseResult<string> => {
+    throw new Error("not implemented")
+  }
+)
