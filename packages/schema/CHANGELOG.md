@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.150.6
+
+### Patch Changes
+
+- a72f796: fup
+
 ## 0.150.5
 
 ### Patch Changes
