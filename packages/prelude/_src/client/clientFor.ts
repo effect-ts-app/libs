@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as utils from "@effect-app/prelude/utils"
-import { AST, REST } from "@effect-app/schema"
+import { REST } from "@effect-app/schema"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
@@ -18,7 +18,7 @@ import {
 
 export * from "./config.js"
 
-type Requests = Record<string, Record<string, any>>
+type Requests = Record<string, any>
 type AnyRequest =
   & Omit<
     REST.QueryRequest<any, any, any, any, any, any>,
@@ -43,7 +43,9 @@ export type Client<M extends Requests> =
     M
   >
 
-export function clientFor<M extends Requests>(models: M): Client<M> {
+export function clientFor<M extends Requests>(
+  models: M
+): Client<Omit<M, "meta">> {
   const found = cache.get(models)
   if (found) {
     return found
@@ -59,7 +61,7 @@ function clientFor_<M extends Requests>(models: M) {
       .$$
       .keys
       // ignore module interop with automatic default exports..
-      .filter((x) => x !== "default")
+      .filter((x) => x !== "default" && x !== "meta")
       .reduce((prev, cur) => {
         const h = models[cur]
 
@@ -96,7 +98,11 @@ function clientFor_<M extends Requests>(models: M) {
 
         // @ts-expect-error doc
         const actionName = utils.uncapitalize(cur)
-        const requestName = AST.getTitleAnnotation(Request.ast).value ?? "TODO"
+        const m = (models as any).meta as string
+        const mm = m
+          ? m.substring(m.indexOf("_src/") > -1 ? m.indexOf("_src/") + 5 : m.indexOf("dist/") + 5, m.length - 3)
+          : "Unknown"
+        const requestName = `${mm.indexOf("?") > -1 ? mm.substring(0, mm.indexOf("?")) : mm}.${cur as string}`
 
         // TODO: look into ast, look for propertySignatures, etc.
         // TODO: and fix type wise

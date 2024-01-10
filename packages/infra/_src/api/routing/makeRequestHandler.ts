@@ -8,7 +8,6 @@ import type { ValidationError } from "@effect-app/infra/errors"
 import type { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
 import type { REST, StructFields } from "@effect-app/schema"
-import { AST } from "@effect-app/schema"
 import type { HttpRequestError } from "../http.js"
 import { HttpBody, HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
@@ -271,7 +270,7 @@ export function makeRequestHandler<
     .updateRequestContext((_) =>
       _.$$.copy({
         name: NonEmptyString255(
-          AST.getTitleAnnotation(Request.ast).value ?? "TODO"
+          handler.name
         )
       })
     )

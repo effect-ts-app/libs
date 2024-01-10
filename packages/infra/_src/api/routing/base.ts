@@ -71,6 +71,7 @@ export interface ReqHandler<
   Request: ReqSchema
   Response: ResSchema
   ResponseOpenApi: any
+  name: string
   CTX: CTX
   Context: Context
 }
@@ -428,6 +429,7 @@ export interface RequestHandlerBase<
   Response: REST.ReqRes<any, any>
   ResponseOpenApi?: any
   config: Config
+  name: string
 }
 
 export interface RequestHandler<
@@ -451,6 +453,7 @@ export interface RequestHandler<
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath> & Config
   Response: REST.ReqRes<any, any>
   ResponseOpenApi?: any
+  name: string
   CTX: CTX
   Context: Context
 }
@@ -472,5 +475,6 @@ export interface RequestHandlerOrig<
   h: (i: PathA & QueryA & BodyA & {}) => Effect<R, ResE, ResA>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
   Response: REST.ReqRes<any, any>
+  name: string
   ResponseOpenApi?: any
 }
