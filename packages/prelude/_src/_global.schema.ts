@@ -4,6 +4,7 @@
  * @tsplus global
  */
 import {
+  annotate,
   array,
   boolean,
   Class,

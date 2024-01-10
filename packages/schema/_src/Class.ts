@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ArbitraryHookId } from "@effect/schema/Arbitrary"
+import { EquivalenceHookId } from "@effect/schema/Equivalence"
+import { PrettyHookId } from "@effect/schema/Pretty"
+import type { FilterAnnotations, FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import type { Data } from "effect"
-
-import type { Simplify } from "effect/Types"
-import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "./index.js"
+import type { Mutable, Simplify } from "effect/Types"
 import { AST, S } from "./schema.js"
 
 export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
@@ -55,6 +57,65 @@ export function useClassNameForSchema(cls: any) {
  */
 export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(cls) // useClassConstructorForSchema(
+}
+
+const toAnnotations = <A>(
+  options?: S.FilterAnnotations<A>
+): Mutable<AST.Annotations> => {
+  if (!options) {
+    return {}
+  }
+  const out: Mutable<AST.Annotations> = {}
+
+  // symbols are reserved for custom annotations
+  const custom = Object.getOwnPropertySymbols(options)
+  for (const sym of custom) {
+    out[sym] = options[sym]
+  }
+
+  // string keys are reserved as /schema namespace
+  if (options.typeId !== undefined) {
+    const typeId = options.typeId
+    if (typeof typeId === "object") {
+      out[AST.TypeAnnotationId] = typeId.id
+      out[typeId.id] = typeId.params
+    } else {
+      out[AST.TypeAnnotationId] = typeId
+    }
+  }
+  const move = (from: keyof FilterAnnotations<A>, to: symbol) => {
+    if (options[from] !== undefined) {
+      out[to] = options[from]
+    }
+  }
+  move("message", AST.MessageAnnotationId)
+  move("identifier", AST.IdentifierAnnotationId)
+  move("title", AST.TitleAnnotationId)
+  move("description", AST.DescriptionAnnotationId)
+  move("examples", AST.ExamplesAnnotationId)
+  move("default", AST.DefaultAnnotationId)
+  move("documentation", AST.DocumentationAnnotationId)
+  move("jsonSchema", AST.JSONSchemaAnnotationId)
+  move("arbitrary", ArbitraryHookId)
+  move("pretty", PrettyHookId)
+  move("equivalence", EquivalenceHookId)
+
+  return out
+}
+
+export function annotate(annotations: S.DocAnnotations) {
+  return (cls: any) => {
+    const newCls = class extends cls {
+      static get ast() {
+        return AST.mergeAnnotations(
+          cls.ast,
+          toAnnotations(annotations)
+        )
+      }
+    } as any
+    Object.defineProperty(newCls, "name", { value: cls.name })
+    return newCls
+  }
 }
 
 export interface FromClass<T> {
