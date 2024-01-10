@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.151.1
+
+### Patch Changes
+
+- 0f8297a: feat: add class annotate decorator
+
 ## 0.151.0
 
 ### Minor Changes

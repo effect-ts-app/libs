@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 0.108.1
+
+### Patch Changes
+
+- 26e8e9f: improve: use meta info for request name
+- 0f8297a: feat: add class annotate decorator
+- Updated dependencies [0f8297a]
+  - @effect-app/schema@0.151.1
+
 ## 0.108.0
 
 ### Minor Changes
