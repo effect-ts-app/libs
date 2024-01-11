@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.88.4
+
+### Patch Changes
+
+- add7110: bump vue
+- Updated dependencies [add7110]
+  - @effect-app/vue@0.88.4
+
 ## 0.88.3
 
 ### Patch Changes
