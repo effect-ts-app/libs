@@ -43,10 +43,15 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
     const tag = Tag<Id, Service>(key)
     const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
-    // TODO: this is probably useless, as we need to get it at the source instead of here
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 4 // TODO
+    const creationError = new Error()
+    Error.stackTraceLimit = limit
+    // the stack is used to get the location of the tag definition, if a service is not found in the registry
     Object.defineProperty(t, "stack", {
       get() {
-        return tag.stack
+        // remove one line as assignTag is generally used inside a class constructor function
+        return creationError.stack?.split("\n").slice(1).join("\n")
       }
     })
     return t
