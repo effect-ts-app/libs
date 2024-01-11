@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.108.2
+
+### Patch Changes
+
+- c8e7d1d: improve: stack error helper on assign.tag
+
 ## 0.108.1
 
 ### Patch Changes
