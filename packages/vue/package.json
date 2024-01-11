@@ -16,13 +16,13 @@
     "effect": "^2.0.3",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
-    "vue": "^3.4.7"
+    "vue": "^3.4.8"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.1.0",
     "@babel/cli": "^7.23.4",
-    "@types/node": "~20.10.8",
+    "@types/node": "~20.11.0",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
