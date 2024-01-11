@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.134.2
+
+### Patch Changes
+
+- 2d93be2: update infra
+
 ## 0.134.1
 
 ### Patch Changes

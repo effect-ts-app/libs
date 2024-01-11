@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.88.2
+
+### Patch Changes
+
+- d8ae415: fix form
+- Updated dependencies [d8ae415]
+  - @effect-app/vue@0.88.2
+
 ## 0.88.1
 
 ### Patch Changes
