@@ -43,7 +43,9 @@ export function get<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.find(id).flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
+  return self
+    .find(id)
+    .flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
 }
 
 /**
