@@ -90,26 +90,24 @@ export const { isArray } = Array
 /**
  * @tsplus static effect/data/ReadonlyArray.Ops findFirstMap
  * @tsplus static Array.Ops findFirstMap
- * @tsplus pipeable Array findFirstMap
- * @tsplus pipeable effect/data/ReadonlyArray findFirstMap
- * @tsplus pipeable ReadonlyArray findFirstMap
- * @tsplus pipeable NonEmptyArray findFirstMap
- * @tsplus pipeable NonEmptyArrayReadonlyArray findFirstMap
+ * @tsplus fluent Array findFirstMap
+ * @tsplus fluent effect/data/ReadonlyArray findFirstMap
+ * @tsplus fluent ReadonlyArray findFirstMap
+ * @tsplus fluent NonEmptyArray findFirstMap
+ * @tsplus fluent NonEmptyArrayReadonlyArray findFirstMap
  */
-export function findFirstMap<A, B>(
-  f: (a: A) => Option.Option<B>
-) {
-  return (as: ReadonlyArray<A>) => {
-    const len = as.length
-    for (let i = 0; i < len; i++) {
-      const v = f(as[i]!)
-      if (v.isSome()) {
-        return v
-      }
-    }
-    return Option.none
-  }
-}
+export const findFirstMap = ROArray.findFirst
+
+/**
+ * @tsplus static effect/data/ReadonlyArray.Ops findLastMap
+ * @tsplus static Array.Ops findLastMap
+ * @tsplus fluent Array findLastMap
+ * @tsplus fluent effect/data/ReadonlyArray findLastMap
+ * @tsplus fluent ReadonlyArray findLastMap
+ * @tsplus fluent NonEmptyArray findLastMap
+ * @tsplus fluent NonEmptyArrayReadonlyArray findLastMap
+ */
+export const findLastMap = ROArray.findLast
 
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
