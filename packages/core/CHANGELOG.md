@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.98.1
+
+### Patch Changes
+
+- 153a19f: feat: find last
+
 ## 0.98.0
 
 ### Minor Changes
