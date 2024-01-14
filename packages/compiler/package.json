@@ -13,7 +13,7 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vitest": "^1.1.3"
+    "vitest": "^1.2.0"
   },
   "typesVersions": {
     "*": {
