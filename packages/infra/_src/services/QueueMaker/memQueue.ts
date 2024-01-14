@@ -13,12 +13,13 @@ import { type QueueBase, QueueMeta } from "./service.js"
 export function makeMemQueue<
   Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
-  EvtE
+  EvtE,
+  DrainEvtE
 >(
   queueName: string,
   queueDrainName: string,
   schema: S.Schema<EvtE, Evt>,
-  drainSchema: S.Schema<unknown, DrainEvt>
+  drainSchema: S.Schema<DrainEvtE, DrainEvt>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)

@@ -23,12 +23,13 @@ import { type QueueBase, QueueMeta } from "./service.js"
 export function makeServiceBusQueue<
   Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
-  EvtE
+  EvtE,
+  DrainEvtE
 >(
   _queueName: string,
   queueDrainName: string,
   schema: S.Schema<EvtE, Evt>,
-  drainSchema: S.Schema<unknown, DrainEvt>
+  drainSchema: S.Schema<DrainEvtE, DrainEvt>
 ) {
   const wireSchema = struct({
     body: schema,
