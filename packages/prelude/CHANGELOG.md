@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.109.2
+
+### Patch Changes
+
+- 4464df4: missing ext
+
 ## 0.109.1
 
 ### Patch Changes
