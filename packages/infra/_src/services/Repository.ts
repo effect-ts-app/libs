@@ -426,7 +426,7 @@ export function queryAndSaveOnePure(
   self: any,
   map: { filter: Filter<any>; collect?: any }
 ) {
-  return self.queryAndSaveOnePureEffect(Effect(map))
+  return queryAndSaveOnePureEffect(self, Effect(map))
 }
 
 /**
