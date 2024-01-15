@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.135.1
+
+### Patch Changes
+
+- Updated dependencies [fd85bed]
+  - @effect-app/schema@0.152.1
+  - @effect-app/infra-adapters@0.87.1
+  - @effect-app/prelude@0.109.1
+
 ## 0.135.0
 
 ### Minor Changes

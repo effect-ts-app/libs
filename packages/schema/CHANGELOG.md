@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.152.1
+
+### Patch Changes
+
+- fd85bed: Int inheritance
+
 ## 0.152.0
 
 ### Minor Changes
