@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.135.5
+
+### Patch Changes
+
+- fix Positive->NonNegative
+- Updated dependencies
+  - @effect-app/prelude@0.109.3
+  - @effect-app/infra-adapters@0.87.3
+
 ## 0.135.4
 
 ### Patch Changes

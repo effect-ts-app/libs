@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.109.3
+
+### Patch Changes
+
+- fix Positive->NonNegative
+
 ## 0.109.2
 
 ### Patch Changes
