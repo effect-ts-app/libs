@@ -148,7 +148,12 @@ export function makeRepo<
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
         const structSchema = schema as unknown as { struct: typeof schema }
-        const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe(S.pick("id"))
+        const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
+          _.ast._tag === "Union"
+            // grab id from the first type for now
+            ? (S.make(_.ast.types[0]) as unknown as Schema<From, T>).pipe(S.pick("id"))
+            : _.pipe(S.pick("id"))
+        )
         function findE(_id: T["id"]) {
           const { id } = i.encodeSync({ id: _id })
           return store
