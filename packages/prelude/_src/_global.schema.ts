@@ -16,6 +16,7 @@ import {
   inputDate,
   literal,
   nonEmptyArray,
+  NonEmptyString,
   NonEmptyString255,
   NonEmptyString2k,
   NonEmptyString50,
