@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.135.0
+
+### Minor Changes
+
+- 82f0f0d: update packages
+
+### Patch Changes
+
+- 285a889: fix drain schema type
+- Updated dependencies [82f0f0d]
+  - @effect-app/infra-adapters@0.87.0
+  - @effect-app/prelude@0.109.0
+  - @effect-app/schema@0.152.0
+  - @effect-app/core@0.99.0
+
 ## 0.134.4
 
 ### Patch Changes

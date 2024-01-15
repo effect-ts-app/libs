@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.99.0
+
+### Minor Changes
+
+- 82f0f0d: update packages
+
 ## 0.98.1
 
 ### Patch Changes
