@@ -391,7 +391,6 @@ export function queryAndSaveOnePureEffect(
 /**
  * @tsplus fluent Repository queryAndSaveOnePure
  */
-
 export function queryAndSaveOnePure<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
