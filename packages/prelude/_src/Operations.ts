@@ -8,8 +8,8 @@ export class OperationProgress extends ExtendedClass<
   OperationProgress.From,
   OperationProgress
 >()({
-  completed: PositiveInt,
-  total: PositiveInt
+  completed: NonNegativeInt,
+  total: NonNegativeInt
 }) {}
 
 @useClassFeaturesForSchema

@@ -208,7 +208,7 @@ export function count<
 ) {
   return self
     .projectEffect(Effect({ filter }))
-    .map((_) => PositiveInt(_.length))
+    .map((_) => NonNegativeInt(_.length))
 }
 
 /**
