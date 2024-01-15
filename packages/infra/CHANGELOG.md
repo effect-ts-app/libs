@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.135.3
+
+### Patch Changes
+
+- 028d0ea: pick id from first union type
+
 ## 0.135.2
 
 ### Patch Changes
