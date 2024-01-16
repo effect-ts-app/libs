@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.154.0
+
+### Minor Changes
+
+- 067274a: Update packages
+
 ## 0.153.0
 
 ### Minor Changes
