@@ -74,48 +74,21 @@ export const TagClassMake = <Id, Service = Id>() =>
   make: Effect<R, E, ServiceImpl>,
   key?: unknown
 ) => {
-  const c: { new(service: ServiceImpl): Readonly<ServiceImpl>; Live: Layer<R, E, Service> } = class {
+  const c: {
+    new(service: ServiceImpl): Readonly<ServiceImpl>
+    toLayer: () => Layer<R, E, Service>
+    toLayerScoped: () => Layer<Exclude<R, Scope>, E, Service>
+  } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
     }
-    // works around an issue where defining Live on the class messes up and causes the Tag to infer to `any, any` :/
-    static get Live() {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const self = this as any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const a = self["$$Live"]
-      if (a) return a
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newA = make.toLayer(this as any)
-      self["$$Live"] = newA
-      return newA
+    // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
+    static toLayer() {
+      return make.toLayer(this as any)
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any
 
-  return assignTag<Id, Service>(key)(c)
-}
-
-export const TagClassMakeScoped = <Id, Service = Id>() =>
-<ServiceImpl, R, E>(
-  make: Effect<R, E, ServiceImpl>,
-  key?: unknown
-) => {
-  const c: { new(service: ServiceImpl): Readonly<ServiceImpl>; Live: Layer<Exclude<R, Scope>, E, Service> } = class {
-    constructor(service: ServiceImpl) {
-      Object.assign(this, service)
-    }
-    // works around an issue where defining Live on the class messes up and causes the Tag to infer to `any, any` :/
-    static get Live() {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const self = this as any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const a = self["$$Live"]
-      if (a) return a
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newA = make.toLayerScoped(this as any)
-      self["$$Live"] = newA
-      return newA
+    static toLayerScoped() {
+      return make.toLayerScoped(this as any)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
