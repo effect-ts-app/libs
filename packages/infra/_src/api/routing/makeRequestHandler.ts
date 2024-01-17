@@ -250,7 +250,7 @@ export function makeRequestHandler<
               )
               .tapErrorCause((cause) => Effect(console.error("Error occurred while reporting error", cause)))
           )
-          .tap(
+          .tap((res) =>
             Effect
               .logInfo("Finished request")
               .annotateLogs({
