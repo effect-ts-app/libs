@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.112.0
+
+### Minor Changes
+
+- 7945f38: update packages
+
+### Patch Changes
+
+- bc5f735: add `TagClassMake`
+- Updated dependencies [7945f38]
+  - @effect-app/schema@0.155.0
+  - @effect-app/core@0.101.0
+
 ## 0.111.0
 
 ### Minor Changes
