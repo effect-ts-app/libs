@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.138.3
+
+### Patch Changes
+
+- d9ef5c7: fix wrong res ref
+
 ## 0.138.2
 
 ### Patch Changes
