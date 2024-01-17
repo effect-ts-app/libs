@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.112.1
+
+### Patch Changes
+
+- 59077e8: feat: add `TagClassMakeScoped`
+
 ## 0.112.0
 
 ### Minor Changes
