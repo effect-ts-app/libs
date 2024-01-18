@@ -193,6 +193,11 @@ import { NonEmptyArray, NonEmptyReadonlyArray } from "effect/ReadonlyArray"
 /**
  * @tsplus global
  */
+import { ReadonlyRecord } from "effect/ReadonlyRecord"
+
+/**
+ * @tsplus global
+ */
 import { Duration, Duration as DUR } from "effect/Duration"
 
 /**

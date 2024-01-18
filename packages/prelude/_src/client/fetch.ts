@@ -154,7 +154,9 @@ export function makePathWithQuery(
 ) {
   return (
     path.build(pars, { ignoreSearch: true, ignoreConstraints: true })
-    + (Object.keys(pars).length ? "?" + qs.stringify(pars) : "")
+    + (Object.keys(pars).length
+      ? "?" + qs.stringify(ReadonlyRecord.filter(pars, (_, k) => !path.params.includes(k)))
+      : "")
   )
 }
 
