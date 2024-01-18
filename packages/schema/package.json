@@ -7,7 +7,7 @@
     "@effect-app/core": "workspace:*",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240116133250",
     "@fp-ts/optic": "^0.22.0",
-    "effect": "^2.1.0",
+    "effect": "^2.1.1",
     "cross-fetch": "^4.0.0",
     "nanoid": "^5.0.4",
     "lodash": "^4.17.21",
@@ -21,7 +21,7 @@
     "fast-check": "~3.15.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
-    "vitest": "^1.2.0"
+    "vitest": "^1.2.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

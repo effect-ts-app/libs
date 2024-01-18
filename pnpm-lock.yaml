@@ -65,7 +65,7 @@ importers:
         specifier: ^0.88.9
         version: 0.88.9
       '@effect-app/cli':
-        specifier: ^0.35.0
+        specifier: ^0.36.0
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -194,8 +194,8 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@20.11.5)
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/cli:
     dependencies:
@@ -219,8 +219,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/compiler:
     dependencies:
@@ -247,23 +247,23 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.42.3
-        version: 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
+        specifier: ^0.42.4
+        version: 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -296,8 +296,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
       winston:
         specifier: ^3.11.0
         version: 3.11.0
@@ -366,17 +366,17 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.42.3
-        version: 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
+        specifier: ^0.42.4
+        version: 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -427,8 +427,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/infra:
     dependencies:
@@ -451,11 +451,11 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.42.3
-        version: 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
+        specifier: ^0.42.4
+        version: 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240116133250
-        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
       '@faker-js/faker':
         specifier: ^8.3.1
         version: 8.3.1
@@ -472,8 +472,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       express-oauth2-jwt-bearer:
         specifier: ^1.6.0
         version: 1.6.0
@@ -542,8 +542,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/infra-adapters:
     dependencies:
@@ -557,17 +557,17 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.42.3
-        version: 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
+        specifier: ^0.42.4
+        version: 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240116133250
-        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -630,8 +630,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/prelude:
     dependencies:
@@ -642,20 +642,20 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.42.3
-        version: 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
+        specifier: ^0.42.4
+        version: 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240116133250
-        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -706,8 +706,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/schema:
     dependencies:
@@ -716,16 +716,16 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240116133250
-        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -758,8 +758,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/schema-legacy:
     dependencies:
@@ -768,13 +768,13 @@ importers:
         version: link:../core
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -804,8 +804,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.202311222
         version: /@effect-app/typescript@5.4.0-tsplus.202311222
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
   packages/vue:
     dependencies:
@@ -822,20 +822,20 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.27.4
-        version: 0.27.4(@effect/platform@0.42.3)(effect@2.1.0)
+        specifier: ^0.27.5
+        version: 0.27.5(@effect/platform@0.42.4)(effect@2.1.1)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240116133250
-        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
+        version: /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
       '@formatjs/intl':
         specifier: ^2.9.11
         version: 2.9.11(@effect-app/typescript@5.4.0-tsplus.202311222)
       '@fp-ts/optic':
         specifier: ^0.22.0
-        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0)
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1)
       effect:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.1
+        version: 2.1.1
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -871,8 +871,8 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@20.11.5)
       vitest:
-        specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.5)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.11.5)
 
 packages:
 
@@ -1643,13 +1643,13 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0):
+  /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0):
     resolution: {integrity: sha512-gnJB3oJI7idoyOOewy0yqE0zW5zAE6umtudhh6/fUL+Faiycc8DUQzozrUvI0gLtoF7833ZyuRHh1PMV0ANR7g==}
     peerDependencies:
       effect: workspace:^
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.1.0
+      effect: 2.1.1
       fast-check: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
@@ -1666,35 +1666,35 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.27.4(@effect/platform@0.42.3)(effect@2.1.0):
-    resolution: {integrity: sha512-YbRj3eim3MiF5h9QiyzonfAaRq2/f3AWE4aGkmdiHxpotwNlZJyXzBbscVz0vRZMLukZ90yoTmus311aub4Dkw==}
+  /@effect/platform-browser@0.27.5(@effect/platform@0.42.4)(effect@2.1.1):
+    resolution: {integrity: sha512-rlFQS+oV14jwpJSJzJHb7/7H3gQ4E2RiFfRTl1lB2JlKx9S7fcRjwdJmWOhvEcwrKNaxRl5HS7cZ12oRYt8FhA==}
     peerDependencies:
-      '@effect/platform': ^0.42.3
-      effect: ^2.1.0
+      '@effect/platform': ^0.42.4
+      effect: ^2.1.1
     dependencies:
-      '@effect/platform': 0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0)
-      effect: 2.1.0
+      '@effect/platform': 0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1)
+      effect: 2.1.1
     dev: false
 
-  /@effect/platform@0.42.3(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.0):
-    resolution: {integrity: sha512-oj0WiKxjXoyoRqSYtvBH7s/1JXJJ6cmrFi49v4GLvSDfM74X6xRbYYNW0xQ7vboSCXH3Domio2gYx6MJBqAgZQ==}
+  /@effect/platform@0.42.4(@effect-app/schema-fork@0.0.0-20240116133250)(effect@2.1.1):
+    resolution: {integrity: sha512-fL8n0ZBuarDA3vD4v3VhMwx/6tj2DHEfjSeCnaX8H1vz5TJK88mDBICs8uWsp8AF/sEAdjaNhAAtYrfYyVrUFw==}
     peerDependencies:
       '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240116133250
-      effect: ^2.1.0
+      effect: ^2.1.1
     dependencies:
-      '@effect/schema': /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.0)(fast-check@3.15.0)
-      effect: 2.1.0
+      '@effect/schema': /@effect-app/schema-fork@0.0.0-20240116133250(effect@2.1.1)(fast-check@3.15.0)
+      effect: 2.1.1
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/typeclass@0.22.0(effect@2.1.0):
+  /@effect/typeclass@0.22.0(effect@2.1.1):
     resolution: {integrity: sha512-1++hmUh/ODupG6Xh4GdQ9XlpD8+PB0beWypbb+bmvKLCWrRTfSZt6r4ueqxxa0k+yzyEIs7PXBxUL9FXKaLSDQ==}
     peerDependencies:
       effect: ^2.0.0
     dependencies:
-      effect: 2.1.0
+      effect: 2.1.1
     dev: false
 
   /@esbuild/android-arm64@0.19.5:
@@ -1988,14 +1988,14 @@ packages:
       '@fp-ts/core': 0.0.11
     dev: true
 
-  /@fp-ts/optic@0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.0):
+  /@fp-ts/optic@0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.1.1):
     resolution: {integrity: sha512-Kpg9bdA+q3d1I+ulENsax4iV6ge5TzRH6nj2/kdPPg42wtTmlir42oBlpbiwp3l3uNDja9rBWmuya0Q6GAmakQ==}
     peerDependencies:
       '@effect/typeclass': ^0.22.0
       effect: ^2.0.0
     dependencies:
-      '@effect/typeclass': 0.22.0(effect@2.1.0)
-      effect: 2.1.0
+      '@effect/typeclass': 0.22.0(effect@2.1.1)
+      effect: 2.1.1
     dev: false
     patched: true
 
@@ -2946,38 +2946,38 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/expect@1.2.0:
-    resolution: {integrity: sha512-H+2bHzhyvgp32o7Pgj2h9RTHN0pgYaoi26Oo3mE+dCi1PAqV31kIIVfTbqMO3Bvshd5mIrJLc73EwSRrbol9Lw==}
+  /@vitest/expect@1.2.1:
+    resolution: {integrity: sha512-/bqGXcHfyKgFWYwIgFr1QYDaR9e64pRKxgBNWNXPefPFRhgm+K3+a/dS0cUGEreWngets3dlr8w8SBRw2fCfFQ==}
     dependencies:
-      '@vitest/spy': 1.2.0
-      '@vitest/utils': 1.2.0
+      '@vitest/spy': 1.2.1
+      '@vitest/utils': 1.2.1
       chai: 4.3.10
     dev: true
 
-  /@vitest/runner@1.2.0:
-    resolution: {integrity: sha512-vaJkDoQaNUTroT70OhM0NPznP7H3WyRwt4LvGwCVYs/llLaqhoSLnlIhUClZpbF5RgAee29KRcNz0FEhYcgxqA==}
+  /@vitest/runner@1.2.1:
+    resolution: {integrity: sha512-zc2dP5LQpzNzbpaBt7OeYAvmIsRS1KpZQw4G3WM/yqSV1cQKNKwLGmnm79GyZZjMhQGlRcSFMImLjZaUQvNVZQ==}
     dependencies:
-      '@vitest/utils': 1.2.0
+      '@vitest/utils': 1.2.1
       p-limit: 5.0.0
       pathe: 1.1.1
     dev: true
 
-  /@vitest/snapshot@1.2.0:
-    resolution: {integrity: sha512-P33EE7TrVgB3HDLllrjK/GG6WSnmUtWohbwcQqmm7TAk9AVHpdgf7M3F3qRHKm6vhr7x3eGIln7VH052Smo6Kw==}
+  /@vitest/snapshot@1.2.1:
+    resolution: {integrity: sha512-Tmp/IcYEemKaqAYCS08sh0vORLJkMr0NRV76Gl8sHGxXT5151cITJCET20063wk0Yr/1koQ6dnmP6eEqezmd/Q==}
     dependencies:
       magic-string: 0.30.5
       pathe: 1.1.1
       pretty-format: 29.7.0
     dev: true
 
-  /@vitest/spy@1.2.0:
-    resolution: {integrity: sha512-MNxSAfxUaCeowqyyGwC293yZgk7cECZU9wGb8N1pYQ0yOn/SIr8t0l9XnGRdQZvNV/ZHBYu6GO/W3tj5K3VN1Q==}
+  /@vitest/spy@1.2.1:
+    resolution: {integrity: sha512-vG3a/b7INKH7L49Lbp0IWrG6sw9j4waWAucwnksPB1r1FTJgV7nkBByd9ufzu6VWya/QTvQW4V9FShZbZIB2UQ==}
     dependencies:
       tinyspy: 2.2.0
     dev: true
 
-  /@vitest/utils@1.2.0:
-    resolution: {integrity: sha512-FyD5bpugsXlwVpTcGLDf3wSPYy8g541fQt14qtzo8mJ4LdEpDKZ9mQy2+qdJm2TZRpjY5JLXihXCgIxiRJgi5g==}
+  /@vitest/utils@1.2.1:
+    resolution: {integrity: sha512-bsH6WVZYe/J2v3+81M5LDU8kW76xWObKIURpPrOXm2pjBniBu2MERI/XP60GpS4PHU3jyK50LUutOwrx4CyHUg==}
     dependencies:
       diff-sequences: 29.6.3
       estree-walker: 3.0.3
@@ -3255,8 +3255,8 @@ packages:
     resolution: {integrity: sha512-FS7hV565M5l1R08MXqo8odwMTB02C2UqzB17RVgu9EyuYFBqJZ3/ZY97sQD5FewVu1UyDFc1yztUDrAwT0EypA==}
     engines: {node: '>=0.4.0'}
 
-  /acorn-walk@8.3.1:
-    resolution: {integrity: sha512-TgUZgYvqZprrl7YldZNoa9OciCAyZR+Ejm9eXzKCmjsF5IKp/wgQ7Z/ZpjpGTIUPwrHQIcYeI8qDh4PsEwxMbw==}
+  /acorn-walk@8.3.2:
+    resolution: {integrity: sha512-cjkyv4OtNCIeqhHrfS81QWXoCBPExR/J62oyEqepVw8WaQeSqpW2uhuLPh1m9eWhDuOo/jUXVTlifvesOWp/4A==}
     engines: {node: '>=0.4.0'}
     dev: true
 
@@ -4484,8 +4484,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.1.0:
-    resolution: {integrity: sha512-fZfyDtlw5RSUA5oQTBu+LOjXwcQb2lGfW7XKKCd34aELjoUKeIxm8HVo6bkpPLlPARqyyT5DfrlIhjrg2RiZCQ==}
+  /effect@2.1.1:
+    resolution: {integrity: sha512-VA9t/HDs14TdJA7j+VroaPrKxmf0YLA4HMQ0eSxA/P2hv8Gre+vKGk3gxpR45OBR0KK7QOq3gMyCbVr/pW2F/g==}
     dev: false
 
   /electron-to-chromium@1.4.525:
@@ -7721,6 +7721,7 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
 
   /postcss@8.4.33:
     resolution: {integrity: sha512-Kkpbhhdjw2qQs2O2DGX+8m5OVqEcbB9HRBvuYM9pgrjEFUg30A9LmXNlTAUj4S9kgtGyrMbTzVjH7E+s5Re2yg==}
@@ -7729,7 +7730,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: false
 
   /precinct@8.3.1:
     resolution: {integrity: sha512-pVppfMWLp2wF68rwHqBIpPBYY8Kd12lDhk8LVQzOwqllifVR15qNFyod43YLyFpurKRZQKnE7E4pofAagDOm2Q==}
@@ -9464,8 +9464,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node@1.2.0(@types/node@20.11.5):
-    resolution: {integrity: sha512-ETnQTHeAbbOxl7/pyBck9oAPZZZo+kYnFt1uQDD+hPReOc+wCjXw4r4jHriBRuVDB5isHmPXxrfc1yJnfBERqg==}
+  /vite-node@1.2.1(@types/node@20.11.5):
+    resolution: {integrity: sha512-fNzHmQUSOY+y30naohBvSW7pPn/xn3Ib/uqm+5wAJQJiqQsU0NBR78XdRJb04l4bOFKjpTWld0XAfkKlrDbySg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     dependencies:
@@ -9515,13 +9515,13 @@ packages:
     dependencies:
       '@types/node': 20.11.5
       esbuild: 0.19.5
-      postcss: 8.4.32
+      postcss: 8.4.33
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.2.0(@types/node@20.11.5):
-    resolution: {integrity: sha512-Ixs5m7BjqvLHXcibkzKRQUvD/XLw0E3rvqaCMlrm/0LMsA0309ZqYvTlPzkhh81VlEyVZXFlwWnkhb6/UMtcaQ==}
+  /vitest@1.2.1(@types/node@20.11.5):
+    resolution: {integrity: sha512-TRph8N8rnSDa5M2wKWJCMnztCZS9cDcgVTQ6tsTFTG/odHJ4l5yNVqvbeDJYJRZ6is3uxaEpFs8LL6QM+YFSdA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -9546,12 +9546,12 @@ packages:
         optional: true
     dependencies:
       '@types/node': 20.11.5
-      '@vitest/expect': 1.2.0
-      '@vitest/runner': 1.2.0
-      '@vitest/snapshot': 1.2.0
-      '@vitest/spy': 1.2.0
-      '@vitest/utils': 1.2.0
-      acorn-walk: 8.3.1
+      '@vitest/expect': 1.2.1
+      '@vitest/runner': 1.2.1
+      '@vitest/snapshot': 1.2.1
+      '@vitest/spy': 1.2.1
+      '@vitest/utils': 1.2.1
+      acorn-walk: 8.3.2
       cac: 6.7.14
       chai: 4.3.10
       debug: 4.3.4(supports-color@5.5.0)
@@ -9565,7 +9565,7 @@ packages:
       tinybench: 2.5.1
       tinypool: 0.8.1
       vite: 5.0.11(@types/node@20.11.5)
-      vite-node: 1.2.0(@types/node@20.11.5)
+      vite-node: 1.2.1(@types/node@20.11.5)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
