@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.115.0
+
+### Minor Changes
+
+- 9049ccd: filter path params from qs
+
+### Patch Changes
+
+- Updated dependencies [9049ccd]
+  - @effect-app/core@0.103.0
+  - @effect-app/schema@0.156.1
+
 ## 0.114.0
 
 ### Minor Changes
