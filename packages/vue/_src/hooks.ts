@@ -1,7 +1,7 @@
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
-import { isFiberFailure } from "effect/Runtime"
+import { FiberFailureCauseId, isFiberFailure } from "effect/Runtime"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { ComputedRef, Ref } from "vue"
@@ -57,7 +57,7 @@ export function useMutate<E, A>(
   const fn = () =>
     run.value(self).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
-      const cause = _.cause as Cause<unknown>
+      const cause = _[FiberFailureCauseId]
       throw cause.squash
     })
   return () => mutate(self.mapPath, fn)
@@ -69,7 +69,7 @@ export function useMutateWithArg<Arg, E, A>(
   const fn = (arg: Arg) =>
     run.value(self(arg)).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
-      const cause = _.cause as Cause<unknown>
+      const cause = _[FiberFailureCauseId]
       throw cause.squash
     })
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
@@ -152,7 +152,7 @@ export function useSafeQuery_<E, A>(
       .then((_) => _.body)
       .catch((_) => {
         if (!isFiberFailure(_)) throw _
-        const cause = _.cause as Cause<unknown>
+        const cause = _[FiberFailureCauseId]
         throw cause.squash
       }), config)
   const result = computed(() =>
