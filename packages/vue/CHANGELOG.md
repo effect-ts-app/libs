@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.95.1
+
+### Patch Changes
+
+- 342e95d: fix cause hook
+- Updated dependencies [342e95d]
+  - @effect-app/vue@0.95.1
+
 ## 0.95.0
 
 ### Minor Changes
