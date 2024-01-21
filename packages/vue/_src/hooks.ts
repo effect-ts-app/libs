@@ -1,6 +1,7 @@
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
+import { isFiberFailure } from "effect/Runtime"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
 import type { ComputedRef, Ref } from "vue"
@@ -53,14 +54,24 @@ function swrToQuery<E, A>(
 export function useMutate<E, A>(
   self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string }
 ) {
-  const fn = () => run.value(self).then((_) => _.body)
+  const fn = () =>
+    run.value(self).then((_) => _.body).catch((_) => {
+      if (!isFiberFailure(_)) throw _
+      const cause = _.cause as Cause<unknown>
+      throw cause.squash
+    })
   return () => mutate(self.mapPath, fn)
 }
 
 export function useMutateWithArg<Arg, E, A>(
   self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
 ) {
-  const fn = (arg: Arg) => run.value(self(arg)).then((_) => _.body)
+  const fn = (arg: Arg) =>
+    run.value(self(arg)).then((_) => _.body).catch((_) => {
+      if (!isFiberFailure(_)) throw _
+      const cause = _.cause as Cause<unknown>
+      throw cause.squash
+    })
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
 }
 
@@ -135,7 +146,15 @@ export function useSafeQuery_<E, A>(
   // }
 
   // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provide(Layers))
-  const swr = useSWRV<A, E>(key, () => run.value(self()).then((_) => _.body), config)
+  const swr = useSWRV<A, E>(key, () =>
+    run
+      .value(self())
+      .then((_) => _.body)
+      .catch((_) => {
+        if (!isFiberFailure(_)) throw _
+        const cause = _.cause as Cause<unknown>
+        throw cause.squash
+      }), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
   ) // ref<QueryResult<E, A>>()
@@ -151,41 +170,6 @@ export function useSafeQuery_<E, A>(
   })
 
   return tuple(result, latestSuccess, () => swr.mutate(), swr)
-}
-
-export function useSafeQueryLegacy<E, A>(self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) {
-  const [result, latestSuccess, execute] = make(self)
-
-  const sem = Semaphore.unsafeMake(1)
-  const withPermit = sem.withPermits(1)
-  let fib: Fiber.Runtime<unknown, unknown> | undefined = undefined
-  const runNew = execute
-    .fork
-    .tap((newFiber) =>
-      Effect.sync(() => {
-        fib = newFiber
-      })
-    )
-
-  const ex = Effect
-    .suspend(() => {
-      return fib
-        ? fib.interrupt.zipRight(runNew)
-        : runNew
-    })
-    .pipe(withPermit)
-    .flatMap((_) => _.await)
-
-  function exec() {
-    return run
-      .value(ex)
-      .catch((err) => {
-        // TODO
-        if (!JSON.stringify(err).includes("InterruptedException")) throw err
-      })
-  }
-
-  return tuple(result, latestSuccess, exec)
 }
 
 export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
