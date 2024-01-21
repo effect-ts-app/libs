@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.95.0
+
+### Minor Changes
+
+- f7d6826: fix: query and mutation error unwrapping
+
+### Patch Changes
+
+- Updated dependencies [f7d6826]
+  - @effect-app/vue@0.95.0
+
 ## 0.94.0
 
 ### Minor Changes
