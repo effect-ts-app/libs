@@ -62,8 +62,9 @@ export function tempFile_(
 export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
   return (
-    Effect.tryPromise(() => fs.writeFile(tmp, content, "utf-8"))
-      > Effect.tryPromise(() => fs.rename(tmp, fileName))
+    Effect
+      .tryPromise(() => fs.writeFile(tmp, content, "utf-8"))
+      .andThen(Effect.tryPromise(() => fs.rename(tmp, fileName)))
   )
     .orDie
 }

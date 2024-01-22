@@ -34,7 +34,7 @@ export const live = Effect
     requestContext: ref.get,
     update: (f: (a: RequestContext) => RequestContext) =>
       ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
-    start: (a: RequestContext) => ref.set(a) > a.restoreStoreId
+    start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
   }))
   .toLayerScoped(RequestContextContainer)
 

@@ -601,11 +601,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Chunk",
-          "kind": "pipeable-operator",
-          "name": "<<"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/data/Chunk",
           "name": "append"
@@ -1331,11 +1326,6 @@
       "definitionName": "prepend",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/Chunk",
-          "kind": "pipeable-operator",
-          "name": ">>"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/data/Chunk",
@@ -3798,31 +3788,6 @@
       "definitionKind": "function",
       "extensions": [
         {
-          "typeName": "effect/data/Equal",
-          "kind": "operator",
-          "name": "=="
-        },
-        {
-          "typeName": "ReadonlyArray",
-          "kind": "operator",
-          "name": "=="
-        },
-        {
-          "typeName": "effect/data/Duration",
-          "kind": "operator",
-          "name": "=="
-        },
-        {
-          "typeName": "effect/data/Either",
-          "kind": "operator",
-          "name": "=="
-        },
-        {
-          "typeName": "effect/data/Option",
-          "kind": "operator",
-          "name": "=="
-        },
-        {
           "kind": "static",
           "typeName": "effect/data/Equal.Ops",
           "name": "equals"
@@ -6183,11 +6148,6 @@
       "definitionName": "prepend",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/List",
-          "kind": "pipeable-operator",
-          "name": ">>"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/data/List",

@@ -40,7 +40,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
 
   function replace_(set: NonEmptySet<A>, a: A) {
     return (filter_(set, (x) => !eq(x, a))
-      >= insert__(a)) as NonEmptySet<A>
+      .pipe(insert__(a)) as NonEmptySet<A>)
   }
 
   const toArray__ = toArrayOriginal(ord)

@@ -6036,11 +6036,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "|"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "orElse"
@@ -8138,11 +8133,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "+"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "zip"
@@ -8159,11 +8149,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": "<"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
           "name": "zipLeft"
@@ -8179,11 +8164,6 @@
       "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Effect",
-          "kind": "pipeable-operator",
-          "name": ">"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Effect",
@@ -11988,11 +11968,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": "+"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Layer",
           "name": "merge"
@@ -12035,11 +12010,6 @@
       "definitionName": "orElse",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": "|"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Layer",
@@ -12089,11 +12059,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": ">>"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Layer",
           "name": "provide"
@@ -12109,11 +12074,6 @@
       "definitionName": "provideMerge",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Layer",
-          "kind": "pipeable-operator",
-          "name": ">"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Layer",
@@ -18106,11 +18066,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "/"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
           "name": "andThen"
@@ -18126,11 +18081,6 @@
       "definitionName": "andThenEither",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "%"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
@@ -18179,11 +18129,6 @@
       "definitionName": "bothInOut",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "**"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
@@ -18303,11 +18248,6 @@
       "definitionName": "compose",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": ">>"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
@@ -18606,11 +18546,6 @@
       "definitionName": "intersect",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "&&"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
@@ -19210,11 +19145,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "||"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
           "name": "union"
@@ -19402,11 +19332,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": "<"
-        },
-        {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",
           "name": "zipLeft"
@@ -19422,11 +19347,6 @@
       "definitionName": "zipRight",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/io/Schedule",
-          "kind": "pipeable-operator",
-          "name": ">"
-        },
         {
           "kind": "fluent",
           "typeName": "effect/io/Schedule",

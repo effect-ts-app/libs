@@ -519,7 +519,7 @@ export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A
     const r = new Set<A>()
     const has = elem_(E)
     for (let i = 0; i < len; i++) {
-      const a = as[i]!
+      const a = as[i]
       if (!has(r, a)) {
         r.add(a)
       }
@@ -632,7 +632,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const insert__ = insert(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, (x) => !eq(x, a)) >= insert__(a)
+    return filter_(set, (x) => !eq(x, a)).pipe(insert__(a))
   }
 
   return {

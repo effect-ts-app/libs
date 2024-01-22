@@ -47,7 +47,7 @@ export function uniq<A>(E: Equivalence<A>) {
     const length = self.length
     let i = 0
     for (; i < length; i = i + 1) {
-      const a = self[i]!
+      const a = self[i]
       if (!includes(result, a)) {
         result.push(a)
       }
@@ -59,7 +59,7 @@ export function uniq<A>(E: Equivalence<A>) {
 function arrayIncludes<A>(E: Equivalence<A>) {
   return (array: Array<A>, value: A): boolean => {
     for (let i = 0; i < array.length; i = i + 1) {
-      const element = array[i]!
+      const element = array[i]
       if (E(element, value)) {
         return true
       }
@@ -150,95 +150,13 @@ export function groupByT<A, Key extends PropertyKey>(
     const k = f(a)
     // eslint-disable-next-line no-prototype-builtins
     if (r.hasOwnProperty(k)) {
-      r[k]!.push(a)
+      r[k].push(a)
     } else {
       r[k] = [a]
     }
   }
   return Object.entries(r).map(([k, items]) => tuple(k as unknown as Key, items as NonEmptyReadonlyArray<A>))
 }
-
-// /**
-//  * @tsplus fluent ReadonlyArray collect
-//  */
-// export function arrayCollect<A, B>(ar: readonly A[], collector: (a: A) => Option<B>): readonly B[] {
-//   return Chunk.fromIterable(ar).filterMap(collector).toArray
-// }
-
-/**
- * @tsplus operator ReadonlyArray &
- * @tsplus fluent ReadonlyArray concat
- */
-export function concat_<A, B>(
-  self: ReadonlyArray<A>,
-  that: ReadonlyArray<B>
-): ReadonlyArray<A | B> {
-  return [...self, ...that]
-}
-
-/**
- * Concatenates two ReadonlyArray together
- *
- * @tsplus operator ReadonlyArray +
- */
-export const concatOperator: <A>(
-  self: ReadonlyArray<A>,
-  that: ReadonlyArray<A>
-) => ReadonlyArray<A> = concat_
-
-/**
- * Prepends `a` to ReadonlyArray<A>
- *
- * @tsplus operator ReadonlyArray + 1.0
- */
-export function prependOperatorStrict<A>(a: A, self: ReadonlyArray<A>): ReadonlyArray<A> {
-  return ROArray.prepend(a)(self)
-}
-
-/**
- * Prepends `a` to ReadonlyArray<A>
- *
- * @tsplus operator ReadonlyArray >
- */
-export function prependOperator<A, B>(a: A, self: ReadonlyArray<B>): ReadonlyArray<A | B> {
-  return prepend_(self, a)
-}
-
-/**
- * Prepends `a` to ReadonlyArray<A>
- *
- * @tsplus fluent ReadonlyArray prepend
- */
-export function prepend_<A, B>(tail: ReadonlyArray<A>, head: B): ReadonlyArray<A | B> {
-  const len = tail.length
-  const r = Array(len + 1)
-  for (let i = 0; i < len; i++) {
-    r[i + 1] = tail[i]
-  }
-  r[0] = head
-  return r as unknown as ReadonlyArray<A | B>
-}
-
-/**
- * Appends `a` to ReadonlyArray<A>
- *
- * @tsplus fluent ReadonlyArray append
- * @tsplus operator ReadonlyArray <
- */
-export function append_<A, B>(init: ReadonlyArray<A>, end: B): ReadonlyArray<A | B> {
-  const len = init.length
-  const r = Array(len + 1)
-  for (let i = 0; i < len; i++) {
-    r[i] = init[i]
-  }
-  r[len] = end
-  return r as unknown as ReadonlyArray<A | B>
-}
-
-/**
- * @tsplus operator ReadonlyArray + 1.0
- */
-export const appendOperator: <A>(self: ReadonlyArray<A>, a: A) => ReadonlyArray<A> = append_
 
 // A getter would be nice, but we need it fluent to manage the priority vs nonEmpty etc
 /**

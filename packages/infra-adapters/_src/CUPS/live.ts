@@ -34,10 +34,13 @@ export function makeCUPS(cupsServer?: URL) {
 
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
-  Effect.logDebug(`Executing: ${command}`)
-    > Effect
-      .tryPromise(() => exec_(command))
-      .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
+  Effect
+    .logDebug(`Executing: ${command}`)
+    .andThen(
+      Effect
+        .tryPromise(() => exec_(command))
+        .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
+    )
 type PrinterConfig = { url?: URL | undefined; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {

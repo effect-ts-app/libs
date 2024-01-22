@@ -38,12 +38,14 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
       Effect.uninterruptibleMask(
         (restore) =>
           restore(self.take(permits))
-            > restore(effect)
-              .ensuring(
-                self
-                  .release(permits)
-                  .delay(duration)
-              )
+            .andThen(
+              restore(effect)
+                .ensuring(
+                  self
+                    .release(permits)
+                    .delay(duration)
+                )
+            )
       )
   }
 }

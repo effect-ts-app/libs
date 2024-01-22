@@ -353,8 +353,9 @@ export function match(method: Methods): {
                       _(req, res, next)
                         .exit
                         .flatMap((exit) =>
-                          Effect.annotateCurrentSpan("http.status", res.statusCode)
-                            > exit
+                          Effect
+                            .annotateCurrentSpan("http.status", res.statusCode)
+                            .andThen(exit)
                         )
                     )
                     .withSpan(
