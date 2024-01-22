@@ -6,8 +6,5 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": [
-    "@effect-app/schema-legacy"
-  ]
+  "updateInternalDependencies": "patch"
 }
