@@ -511,7 +511,7 @@ export function toggle_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
 
 /**
  * Create a set from an array
- * @tsplus static ets/Set __call
+ * @tsplus static ets/Set.Ops __call
  */
 export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A> {
   return (as) => {

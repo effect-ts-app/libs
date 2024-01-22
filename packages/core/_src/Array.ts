@@ -175,7 +175,7 @@ export function randomElementNA<A>(a: NonEmptyReadonlyArray<A>): A {
 }
 
 /**
- * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray __call
+ * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray.Ops __call
  */
 export const makeNA = ROArray.make
 
