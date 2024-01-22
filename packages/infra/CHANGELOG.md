@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 0.141.0
+
+### Minor Changes
+
+- 5fe664e: remove: tsplus operators
+
+### Patch Changes
+
+- Updated dependencies [5fe664e]
+- Updated dependencies [fd233aa]
+- Updated dependencies [afa98cf]
+  - @effect-app/infra-adapters@0.93.0
+  - @effect-app/core@0.105.0
+  - @effect-app/prelude@0.116.1
+  - @effect-app/schema@0.157.1
+
 ## 0.140.0
 
 ### Minor Changes

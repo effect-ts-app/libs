@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.105.0
+
+### Minor Changes
+
+- 5fe664e: remove: tsplus operators
+- afa98cf: remove: tsplus instance \_\_call extensions
+
 ## 0.104.0
 
 ### Minor Changes
