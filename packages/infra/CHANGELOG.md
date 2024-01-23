@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.142.1
+
+### Patch Changes
+
+- f09ee62: fix: namespace context map, to prevent overlapping ids to collide.
+
 ## 0.142.0
 
 ### Minor Changes
