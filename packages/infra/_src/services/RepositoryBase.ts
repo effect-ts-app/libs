@@ -131,14 +131,18 @@ export function makeRepo<
     ) {
       return Do(($) => {
         const store = $(mkStore(args.makeInitial, args.config))
-        const cms = $(ContextMapContainer)
+        const { get } = $(ContextMapContainer)
+        const cms = get.andThen((_) => ({
+          get: (id: string) => _.get(`${name}.${id}`),
+          set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
+        }))
         const pubCfg = $(Effect.context<R2>())
         const pub = "publishEvents" in args ? flow(args.publishEvents, (_) => _.provide(pubCfg)) : () => Effect.unit
         const changeFeed = $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
         const allE = store.all.flatMap((items) =>
           Do(($) => {
-            const { set } = $(cms.get)
+            const { set } = $(cms)
             return items.map((_) => mapReverse(_, set))
           })
         )
@@ -165,7 +169,7 @@ export function makeRepo<
             .find(id)
             .flatMap((items) =>
               Do(($) => {
-                const { set } = $(cms.get)
+                const { set } = $(cms)
                 return items.map((_) => mapReverse(_, set))
               })
             )
@@ -179,7 +183,7 @@ export function makeRepo<
           Effect(a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
-                const { get, set } = $(cms.get)
+                const { get, set } = $(cms)
                 const items = a.map((_) => mapToPersistenceModel(_, get))
                 const ret = $(store.batchSet(items))
                 ret.forEach((_) => set(_.id, _._etag))
@@ -203,7 +207,7 @@ export function makeRepo<
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
-            const { get, set } = yield* $(cms.get)
+            const { get, set } = yield* $(cms)
             const it = a.toChunk
             const items = it.map(encode)
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
@@ -228,16 +232,16 @@ export function makeRepo<
            * @internal
            */
           utils: {
-            parseMany: (items) => cms.get.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
+            parseMany: (items) => cms.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
             filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
               store
                 .filter(args)
                 .tap((items) =>
                   args.select
                     ? Effect.unit
-                    : cms.get.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                    : cms.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
                 ),
-            all: store.all.tap((items) => cms.get.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
+            all: store.all.tap((items) => cms.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
           changeFeed,
           itemType: name,
