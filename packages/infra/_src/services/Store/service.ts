@@ -108,7 +108,7 @@ export class StoreMaker extends TagClass<StoreMaker, {
 }>() {
 }
 
-export const makeContextMap = (): ContextMap => {
+export const makeContextMap = () => {
   const etags = new Map<string, string>()
   const getEtag = (id: string) => etags.get(id)
   const setEtag = (id: string, eTag: string | undefined) => {
@@ -182,11 +182,7 @@ export const makeMap = Effect.sync(() => makeContextMap())
  * @tsplus type ContextMap
  * @tsplus companion ContextMap.Ops
  */
-export class ContextMap extends TagClass<ContextMap, {
-  get: (id: string) => string | undefined
-  set: (id: string, eTag: string | undefined) => void
-  // parserEnv: ParserEnv
-}>() {
+export class ContextMap extends TagClassMake<ContextMap>()(makeMap) {
 }
 
 export interface PersistenceModelType<Id> {
