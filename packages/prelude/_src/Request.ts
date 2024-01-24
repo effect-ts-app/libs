@@ -31,11 +31,11 @@ export const responseWithJsonBody = (
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonBody
  */
-export const schemaJsonBody = <To, From, A, B>(
+export const schemaJsonBody = <R, To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<From, To>
+  schema: Schema<R, From, To>
 ) => {
-  return client.mapEffect((_) => _.json.flatMap(schema.parse))
+  return client.mapEffect((_) => _.json.flatMap(schema.decodeUnknown))
 }
 
 /**
@@ -43,15 +43,16 @@ export const schemaJsonBody = <To, From, A, B>(
  */
 export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<From, To>
+  schema: Schema<never, From, To>
 ) => {
-  return client.mapEffect((_) => _.json.map(schema.parseSync))
+  return client.mapEffect((_) => _.json.map(schema.decodeUnknownSync))
 }
 
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJson
  */
 export const schemaJson = <
+  R,
   From extends {
     readonly status?: number
     readonly headers?: Headers
@@ -62,15 +63,16 @@ export const schemaJson = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<From, To>
+  schema: Schema<R, From, To>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.parse))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
 }
 
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonUnsafe
  */
 export const schemaJsonUnsafe = <
+  R,
   From extends {
     readonly status?: number
     readonly headers?: Headers
@@ -81,9 +83,9 @@ export const schemaJsonUnsafe = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<From, To>
+  schema: Schema<R, From, To>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.parse))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */

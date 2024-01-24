@@ -30,7 +30,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap((_) => _.hmgetAll(getKey(id)))
         .flatMapOpt((v) =>
           RedisSerializedDBRecord
-            .parse(v)
+            .decodeUnknown(v)
             .map(({ data, version }) => ({
               data: JSON.parse(data) as EA,
               version

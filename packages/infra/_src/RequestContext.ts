@@ -17,7 +17,7 @@ export class RequestContextParent extends TaggedClass<
  * @tsplus companion RequestContext.Ops
  */
 @useClassFeaturesForSchema
-export class RequestContext extends S.TaggedClass<
+export class RequestContext extends TaggedClass<
   RequestContext
 >()("RequestContext", {
   ...RequestContextParent.fields.$$.omit("id"),

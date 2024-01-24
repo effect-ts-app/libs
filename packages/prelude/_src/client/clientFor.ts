@@ -89,10 +89,10 @@ function clientFor_<M extends Requests>(models: M) {
           return v
         }
 
-        const res = Response as Schema<any, any>
-        const parseResponse = flow(res.parse, (_) => _.mapError((err) => new ResponseError(err)))
+        const res = Response as Schema<never, any, any>
+        const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResponseError(err)))
 
-        const parseResponseE = flow(parseResponse, (x) => x.map(res.encodeSync))
+        const parseResponseE = flow(parseResponse, (x) => x.andThen(res.encode))
 
         const path = new Path(Request.path)
 

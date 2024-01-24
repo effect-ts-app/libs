@@ -12,40 +12,44 @@ import { S } from "./schema.js"
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultDate = <S extends Schema<any, Date>>(s: S) => S.withDefaultConstructor(s, () => new Date())
+export const defaultDate = <S extends Schema<any, any, Date>>(s: S) =>
+  S.withDefaultConstructor(s, () => new Date() as any) // TODO
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultBool = <S extends Schema<any, boolean>>(s: S) => S.withDefaultConstructor(s, () => false)
+export const defaultBool = <S extends Schema<any, any, boolean>>(s: S) =>
+  S.withDefaultConstructor(s, () => false as any) // TODO
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultNullable = <S extends Schema<any, any>, From, To>(s: S & Schema<From, To | null>) =>
-  S.withDefaultConstructor(s, () => null)
+export const defaultNullable = <S extends Schema<any, any, any>, From, To>(
+  s: S & Schema<Schema.Context<S>, From, To | null>
+) => S.withDefaultConstructor(s, () => null as any) // TODO
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultArray = <S extends Schema<any, ReadonlyArray<any>>>(s: S) => S.withDefaultConstructor(s, () => [])
+export const defaultArray = <S extends Schema<any, any, ReadonlyArray<any>>>(s: S) =>
+  S.withDefaultConstructor(s, () => [] as any) // TODO
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultMap = <S extends Schema<any, ReadonlyMap<any, any>>>(s: S) =>
-  S.withDefaultConstructor(s, () => new Map())
+export const defaultMap = <S extends Schema<any, any, ReadonlyMap<any, any>>>(s: S) =>
+  S.withDefaultConstructor(s, () => new Map() as any) // TODO
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault
  */
-export const defaultSet = <S extends Schema<any, ReadonlySet<any>>>(s: S) =>
-  S.withDefaultConstructor(s, () => new Set())
+export const defaultSet = <S extends Schema<any, any, ReadonlySet<any>>>(s: S) =>
+  S.withDefaultConstructor(s, () => new Set() as any) // TODO
 
 /**
  * @tsplus getter effect/schema/Schema withDefaults
  */
-export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {
+export const withDefaults = <Self extends S.Schema<never, any, any>>(s: Self) => {
   const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
   Object.setPrototypeOf(a, Object.getPrototypeOf(s))
   return a
@@ -55,7 +59,7 @@ export const withDefaults = <Self extends S.Schema<any, any>>(s: Self) => {
 
 export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
   ...literals: Literals
-) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
+) => Object.assign(S.literal(...literals) as Schema<never, Literals[number]>, { literals })
 
 export type WithDefaults<Self extends S.Schema<any, any>> = (
   i: S.Schema.From<Self>,
@@ -90,7 +94,7 @@ export const fromBrand = <C extends Brand.Brand<string | symbol>>(
   constructor: Constructor<C>,
   options?: S.FilterAnnotations<Unbranded<C>>
 ) =>
-<I, A extends Unbranded<C>>(self: S.Schema<I, A>): S.Schema<I, A & C> => {
+<R, I, A extends Unbranded<C>>(self: S.Schema<R, I, A>): S.Schema<R, I, A & C> => {
   return S.fromBrand(constructor as any, options as any)(self as any) as any
 }
 
@@ -127,6 +131,7 @@ export function makeOptional<NER extends StructFields>(
   t: NER // TODO: enforce non empty
 ): {
   [K in keyof NER]: S.PropertySignature<
+    Schema.Context<NER[K]>,
     Schema.From<NER[K]> | undefined,
     true,
     Schema.To<NER[K]> | undefined,
@@ -143,6 +148,7 @@ export function makeExactOptional<NER extends StructFields>(
   t: NER // TODO: enforce non empty
 ): {
   [K in keyof NER]: S.PropertySignature<
+    Schema.Context<NER[K]>,
     Schema.From<NER[K]>,
     true,
     Schema.To<NER[K]>,

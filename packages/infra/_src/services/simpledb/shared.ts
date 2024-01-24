@@ -34,7 +34,7 @@ export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
 }) {}
 
 // unknown -> string -> SDB?
-export function makeSerialisedDBRecord(s: Schema<any, any>) {
+export function makeSerialisedDBRecord(s: Schema<never, any>) {
   return S.struct({
     version: S.number,
     timestamp: S.Date,

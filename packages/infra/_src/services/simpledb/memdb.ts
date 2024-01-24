@@ -9,7 +9,7 @@ import type { Version } from "./simpledb.js"
 // Do not try this at home.
 const storage = makeMap<string, string>()
 
-const parseSDB = SerializedDBRecord.parse
+const parseSDB = SerializedDBRecord.decodeUnknown
 
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(

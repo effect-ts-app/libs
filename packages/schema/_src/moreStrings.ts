@@ -115,11 +115,11 @@ export function prefixedStringId<Brand extends StringId>() {
     //     )
     //   )
     // )
-    const arb = (): Arbitrary<string> => (fc) =>
+    const arb = (): Arbitrary<StringId> => (fc) =>
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
-    const s: S.Schema<string, string & Brand> = StringId
+    const s: S.Schema<never, string, string & Brand> = StringId
       .pipe(
         S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
       )
@@ -149,10 +149,10 @@ export const brandedStringId = <
   Brand extends StringIdBrand
 >() =>
   withDefaults(
-    Object.assign(Object.create(StringId), StringId) as S.Schema<string, string & Brand> & {
+    Object.assign(Object.create(StringId), StringId) as S.Schema<never, string, string & Brand> & {
       make: () => string & Brand
-      withDefault: () => S.ConstructorPropertyDescriptor<string, string & Brand>
-    } & WithDefaults<S.Schema<string, string & Brand>>
+      withDefault: () => S.ConstructorPropertyDescriptor<never, string, string & Brand>
+    } & WithDefaults<S.Schema<never, string, string & Brand>>
   )
 
 export interface PrefixedStringUtils<
@@ -164,7 +164,7 @@ export interface PrefixedStringUtils<
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly prefix: Prefix
-  readonly withDefault: () => S.ConstructorPropertyDescriptor<string, Brand>
+  readonly withDefault: () => S.ConstructorPropertyDescriptor<never, string, Brand>
 }
 
 export interface UrlBrand extends Simplify<B.Brand<"Url"> & NonEmptyStringBrand> {}

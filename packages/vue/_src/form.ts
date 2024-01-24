@@ -5,7 +5,7 @@ import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
 
 import * as JSONSchema from "@effect/schema/JSONSchema"
-import type { ParseError } from "@effect/schema/ParseResult"
+import type { ParseIssue } from "@effect/schema/ParseResult"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -22,13 +22,13 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 }
 
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
-  fields: Schema<From, To>
+  fields: Schema<never, From, To>
 ) {
   let ast = fields.ast
   // todo: or look at from?
   if (AST.isTransform(ast)) {
     if (AST.isDeclaration(ast.to)) {
-      ast = ast.to.type
+      ast = ast.to
     }
   }
   if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
@@ -77,16 +77,16 @@ function buildFieldInfo(
   property: AST.PropertySignature
 ): FieldInfo<any> {
   const propertyKey = property.name
-  const schema = S.make(property.type)
+  const schema = S.make<never, unknown, unknown>(property.type)
   const metadata = getMetadataFromSchema(property.type) // TODO
-  const parse = schema.parseEither
+  const parse = schema.decodeUnknownEither
 
   const nullable = AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
   const realSelf = nullable && AST.isUnion(property.type)
     ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
     : property.type
 
-  function renderError(e: ParseError, v: unknown) {
+  function renderError(e: ParseIssue, v: unknown) {
     const err = e.toString()
     const custom = customSchemaErrors.value.get(realSelf)
     return custom ? custom(err, e, v) : translate.value(
@@ -203,6 +203,7 @@ export const buildFormFromSchema = <
   OnSubmitA
 >(
   s: Schema<
+    never,
     From,
     To
   >,

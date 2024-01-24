@@ -57,24 +57,24 @@
       ]
     },
     {
-      "definitionName": "parseEither",
+      "definitionName": "decodeUnknownEither",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/schema/Schema",
-          "name": "parseEither"
+          "name": "decodeUnknownEither"
         }
       ]
     },
     {
-      "definitionName": "parse",
+      "definitionName": "decodeUnknown",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/schema/Schema",
-          "name": "parse"
+          "name": "decodeUnknown"
         }
       ]
     },
@@ -101,6 +101,17 @@
       ]
     },
     {
+      "definitionName": "encode",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "encode"
+        }
+      ]
+    },
+    {
       "definitionName": "encodeSync",
       "definitionKind": "const",
       "extensions": [
@@ -123,13 +134,13 @@
       ]
     },
     {
-      "definitionName": "parseSync",
+      "definitionName": "decodeUnknownSync",
       "definitionKind": "const",
       "extensions": [
         {
           "kind": "getter",
           "typeName": "effect/schema/Schema",
-          "name": "parseSync"
+          "name": "decodeUnknownSync"
         }
       ]
     }

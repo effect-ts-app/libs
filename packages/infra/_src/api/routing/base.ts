@@ -62,8 +62,8 @@ export interface ReqHandler<
   R,
   E,
   Res,
-  ReqSchema extends S.Schema<any, any>,
-  ResSchema extends S.Schema<any, any>,
+  ReqSchema extends S.Schema<any, any, any>,
+  ResSchema extends S.Schema<any, any, any>,
   CTX = any,
   Context = any
 > {
@@ -76,10 +76,10 @@ export interface ReqHandler<
   Context: Context
 }
 
-export type ReqFromSchema<ReqSchema extends S.Schema<any, any>> = S.Schema.To<ReqSchema>
+export type ReqFromSchema<ReqSchema extends S.Schema<any, any, any>> = S.Schema.To<ReqSchema>
 
-export type Extr<T> = T extends { Model: S.Schema<any, any> } ? T["Model"]
-  : T extends S.Schema<any, any> ? T
+export type Extr<T> = T extends { Model: S.Schema<any, any, any> } ? T["Model"]
+  : T extends S.Schema<any, any, any> ? T
   : never
 
 export type ResFromSchema<ResSchema> = S.Schema.To<Extr<ResSchema>>
@@ -322,40 +322,40 @@ export function makeRequestParsers<
   const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
-      .map((s) => s as unknown as Schema<any, any>)
-      .map(S.parse)
+      .map((s) => s as unknown as Schema<never, any, any>)
+      .map(S.decodeUnknown)
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
 
   const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
-      .map((s) => s as unknown as Schema<any, any>)
-      .map(S.parse)
+      .map((s) => s as unknown as Schema<never, any, any>)
+      .map(S.decodeUnknown)
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
 
   const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
-      .map((s) => s as unknown as Schema<any, any>)
-      .map(S.parse)
+      .map((s) => s as unknown as Schema<never, any, any>)
+      .map(S.decodeUnknown)
   )
   const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
 
   const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
-      .map((s) => s as unknown as Schema<any, any>)
-      .map(S.parse)
+      .map((s) => s as unknown as Schema<never, any, any>)
+      .map(S.decodeUnknown)
   )
   const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
 
   const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
-      .map((s) => s as unknown as Schema<any, any>)
-      .map(S.parse)
+      .map((s) => s as unknown as Schema<never, any, any>)
+      .map(S.decodeUnknown)
   )
   const parseCookie = (u: unknown) => pc.flatMapOpt((d) => d(u))
 

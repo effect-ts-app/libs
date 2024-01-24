@@ -28,15 +28,15 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  schema: S.Schema<EvtE, Evt>,
-  drainSchema: S.Schema<DrainEvtE, DrainEvt>
+  schema: S.Schema<never, EvtE, Evt>,
+  drainSchema: S.Schema<never, DrainEvtE, DrainEvt>
 ) {
   const wireSchema = struct({
     body: schema,
     meta: QueueMeta
   })
   const drainW = struct({ body: drainSchema, meta: QueueMeta })
-  const parseDrain = flow(drainW.parse, (_) => _.orDie)
+  const parseDrain = flow(drainW.decodeUnknown, (_) => _.orDie)
 
   return Effect.gen(function*($) {
     const s = yield* $(Sender)

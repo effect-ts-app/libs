@@ -2,7 +2,7 @@
 import { ArbitraryHookId } from "@effect/schema/Arbitrary"
 import { EquivalenceHookId } from "@effect/schema/Equivalence"
 import { PrettyHookId } from "@effect/schema/Pretty"
-import type { FilterAnnotations, FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
+import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import type { Data } from "effect"
 import type { Mutable, Simplify } from "effect/Types"
 import { AST, S } from "./schema.js"
@@ -12,6 +12,7 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
 ) =>
   & { readonly structFrom: Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>> }
   & S.Class<
+    Schema.Context<Fields[keyof Fields]>,
     SelfFrom,
     Simplify<ToStruct<Fields>>,
     Simplify<ToStructConstructor<Fields>>,
@@ -31,11 +32,13 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
     >
   }
   & S.Class<
+    Schema.Context<Fields[keyof Fields]>,
     SelfFrom,
     Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
-    Fields
+    Fields,
+    Data.Case
   > = S.TaggedClass as any
 
 /**
@@ -59,8 +62,8 @@ export function useClassFeaturesForSchema(cls: any) {
   return useClassNameForSchema(cls) // useClassConstructorForSchema(
 }
 
-const toAnnotations = <A>(
-  options?: S.FilterAnnotations<A>
+const toAnnotations = (
+  options?: Record<string | symbol, any>
 ): Mutable<AST.Annotations> => {
   if (!options) {
     return {}
@@ -78,12 +81,12 @@ const toAnnotations = <A>(
     const typeId = options.typeId
     if (typeof typeId === "object") {
       out[AST.TypeAnnotationId] = typeId.id
-      out[typeId.id] = typeId.params
+      out[typeId.id] = typeId.annotation
     } else {
       out[AST.TypeAnnotationId] = typeId
     }
   }
-  const move = (from: keyof FilterAnnotations<A>, to: symbol) => {
+  const move = (from: keyof typeof options, to: symbol) => {
     if (options[from] !== undefined) {
       out[to] = options[from]
     }

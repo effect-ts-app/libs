@@ -12,7 +12,7 @@ export function getQueryParam(search: ParsedQuery, param: string) {
 export const getQueryParamO = flow(getQueryParam, Option.fromNullable)
 
 export const parseOpt = <E, A>(t: REST.ReqRes<E, A>) => {
-  const dec = flow(t.parseEither, (x) =>
+  const dec = flow(t.decodeUnknownEither, (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
       : Option.none)
@@ -20,14 +20,14 @@ export const parseOpt = <E, A>(t: REST.ReqRes<E, A>) => {
 }
 
 export const parseOptUnknown = <E, A>(t: REST.ReqRes<E, A>) => {
-  const dec = flow(t.parseEither, (x) =>
+  const dec = flow(t.decodeUnknownEither, (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
       : Option.none)
   return dec
 }
 
-export function parseRouteParamsOption<NER extends Record<string, Schema<any, any>>>(
+export function parseRouteParamsOption<NER extends Record<string, Schema<never, any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
@@ -46,7 +46,7 @@ export function parseRouteParamsOption<NER extends Record<string, Schema<any, an
   )
 }
 
-export function parseRouteParams<NER extends Record<string, Schema<any, any>>>(
+export function parseRouteParams<NER extends Record<string, Schema<never, any, any>>>(
   query: Record<string, any>,
   t: NER // enforce non empty
 ): {
@@ -55,7 +55,7 @@ export function parseRouteParams<NER extends Record<string, Schema<any, any>>>(
   return t.$$.keys.reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      prev[cur] = t[cur]!.parseSync(query[cur as any])
+      prev[cur] = t[cur]!.decodeUnknownSync(query[cur as any])
 
       return prev
     },

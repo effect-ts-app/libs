@@ -1,9 +1,9 @@
 import * as S from "@effect-app/schema"
 
 export function makeCodec<
-  To extends { id: Id },
   From,
+  To extends { id: Id },
   Id
->(self: S.Schema<From, To>) {
+>(self: S.Schema<never, From, To>) {
   return [S.decodeSync(self), S.encodeSync(self)] as const
 }

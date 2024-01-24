@@ -18,8 +18,8 @@ export function makeMemQueue<
 >(
   queueName: string,
   queueDrainName: string,
-  schema: S.Schema<EvtE, Evt>,
-  drainSchema: S.Schema<DrainEvtE, DrainEvt>
+  schema: S.Schema<never, EvtE, Evt>,
+  drainSchema: S.Schema<never, DrainEvtE, DrainEvt>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)
@@ -29,7 +29,7 @@ export function makeMemQueue<
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
-    const parseDrain = flow(drainW.parse, (_) => _.orDie)
+    const parseDrain = flow(drainW.decodeUnknown, (_) => _.orDie)
 
     return {
       publish: (...messages) =>
@@ -41,11 +41,10 @@ export function makeMemQueue<
             messages
               .forEachEffect((m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                Effect.sync(() => 
-                  JSON.stringify(
-                    wireSchema.encodeSync({ body: m, meta: { requestContext, span } })
-                  )
-                )
+                wireSchema
+                  .encode({ body: m, meta: { requestContext, span } })
+                  .orDie
+                  .andThen(JSON.stringify)
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
                   .flatMap((_) => q.offer(_))
                   .asUnit
@@ -60,7 +59,8 @@ export function makeMemQueue<
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
           const processMessage = (msg: string) =>
             // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-            Effect.sync(() => JSON.parse(msg))
+            Effect
+              .sync(() => JSON.parse(msg))
               .flatMap(parseDrain)
               .orDie
               .flatMap(({ body, meta }) =>

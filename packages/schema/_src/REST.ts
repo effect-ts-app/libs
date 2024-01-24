@@ -6,6 +6,7 @@ import { Path } from "path-parser"
 import type * as Methods from "./Methods.js"
 
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
+import type { Data } from "effect"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
 import { AST, S } from "./schema.js"
@@ -30,7 +31,17 @@ export interface QueryRequest<
   Headers extends StructFields | undefined,
   Fields extends StructFields,
   PPath extends `/${string}`
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> { // , PropsExtensions<GetClassProps<Fields>>
+> extends
+  S.Class<
+    never,
+    Simplify<FromStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    M,
+    Fields,
+    Data.Case
+  >
+{ // , PropsExtensions<GetClassProps<Fields>>
   Body: undefined
   Path: Path
   Query: Query
@@ -50,7 +61,17 @@ export interface BodyRequest<
   Headers extends StructFields | undefined,
   Fields extends StructFields,
   PPath extends `/${string}`
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> { // , PropsExtensions<GetClassProps<Self>>
+> extends
+  S.Class<
+    never,
+    Simplify<FromStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    M,
+    Fields,
+    Data.Case
+  >
+{ // , PropsExtensions<GetClassProps<Self>>
   Path: Path
   Body: Body
   Query: Query
@@ -369,7 +390,17 @@ export interface Request<
   Fields extends StructFields,
   Path extends `/${string}`,
   Method extends Methods.Rest
-> extends S.Class<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>, Simplify<ToStruct<Fields>>, M, Fields> {
+> extends
+  S.Class<
+    never,
+    Simplify<FromStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    Simplify<ToStruct<Fields>>,
+    M,
+    Fields,
+    Data.Case
+  >
+{
   method: Method
   path: Path
 }
@@ -595,10 +626,10 @@ export function makeRequest<
 //   }
 // }
 
-export type ReqRes<From, To> = S.Schema<From, To>
+export type ReqRes<From, To> = S.Schema<never, From, To>
 // export type ReqResSchemed<E, A> = {
 //   new(...args: any[]): any
-//   encodeSync: ReturnType<typeof P.parseSync>
+//   encodeSync: ReturnType<typeof P.decodeUnknownSync>
 //   Model: ReqRes<E, A>
 // }
 

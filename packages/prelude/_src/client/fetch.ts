@@ -115,7 +115,7 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   Response: REST.ReqRes<ResponseE, ResponseA>
 }) {
   const encodeRequest = Request.encodeSync
-  const decodeResponse = Response.parse
+  const decodeResponse = Response.decodeUnknown
   return fetchApi2S(encodeRequest, decodeResponse)(
     Request.method,
     new Path(Request.path)
@@ -132,7 +132,7 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
   Response: REST.ReqRes<ResponseE, ResponseA>
 }) {
   const encodeResponse = Response.encodeSync
-  const decodeResponse = flow(Response.parse, (x) => x.map(encodeResponse))
+  const decodeResponse = flow(Response.decodeUnknown, (x) => x.map(encodeResponse))
   return fetchApi2S(Request.encodeSync, decodeResponse)(
     Request.method,
     new Path(Request.path)

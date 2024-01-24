@@ -87,11 +87,11 @@ export function makeRepo<
 >() {
   return <
     ItemType extends string,
-    T extends { id: unknown },
-    From extends { id: string }
+    From extends { id: string },
+    T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<From, T>,
+    schema: S.Schema<never, From, T>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -147,7 +147,7 @@ export function makeRepo<
           })
         )
 
-        const parse = (e: From) => schema.parse(e).orDie
+        const parse = (e: From) => schema.decodeUnknown(e).orDie
 
         const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
 
@@ -157,6 +157,7 @@ export function makeRepo<
             // grab id from the first type for now
             // we need to get the TypeLiteral, incase of class it's behind a transform...
             ? (S.make(_.ast.types[0]._tag === "Transform" ? _.ast.types[0].from : _.ast.types[0]) as unknown as Schema<
+              never,
               From,
               T
             >)
@@ -164,9 +165,13 @@ export function makeRepo<
             : _.pipe(S.pick("id"))
         )
         function findE(_id: T["id"]) {
-          const { id } = i.encodeSync({ id: _id })
-          return store
-            .find(id)
+          return S
+            .encode(i)({ id: _id })
+            .orDie
+            .andThen((id) =>
+              store
+                .find(id as unknown as string)
+            )
             .flatMap((items) =>
               Do(($) => {
                 const { set } = $(cms)
@@ -180,7 +185,8 @@ export function makeRepo<
         }
 
         const saveAllE = (a: Iterable<From>) =>
-          Effect.sync(() => a.toNonEmptyArray)
+          Effect
+            .sync(() => a.toNonEmptyArray)
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(cms)
@@ -216,7 +222,8 @@ export function makeRepo<
               set(e.id, undefined)
             }
             yield* $(
-              Effect.sync(() => events.toNonEmptyArray)
+              Effect
+                .sync(() => events.toNonEmptyArray)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(pub)
             )
@@ -317,11 +324,11 @@ export function makeStore<
 >() {
   return <
     ItemType extends string,
-    T extends { id: unknown },
-    E extends { id: string }
+    E extends { id: string },
+    T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<E, T>,
+    schema: S.Schema<never, E, T>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
     const [_dec, encode] = makeCodec(schema)
@@ -429,9 +436,9 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
+  <ItemType extends string, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<From, T>,
+    schema: S.Schema<never, From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -470,9 +477,9 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, T extends { id: unknown }, From extends { id: string }>(
+  <ItemType extends string, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<From, T>,
+    schema: S.Schema<never, From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
