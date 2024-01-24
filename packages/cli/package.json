@@ -14,7 +14,7 @@
     "@types/node": "~20.11.6",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.202311222",
+    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
     "vitest": "^1.2.1"
   },
   "typesVersions": {
