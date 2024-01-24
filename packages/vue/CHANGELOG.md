@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.97.0
+
+### Minor Changes
+
+- 3ee1505: refactor: remove \_\_call extensions
+
+### Patch Changes
+
+- Updated dependencies [3ee1505]
+  - @effect-app/prelude@0.118.0
+  - @effect-app/core@0.107.0
+  - @effect-app/vue@0.97.0
+  - @effect-app/schema@0.158.1
+
 ## 0.96.0
 
 ### Minor Changes

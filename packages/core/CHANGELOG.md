@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.107.0
+
+### Minor Changes
+
+- 3ee1505: refactor: remove \_\_call extensions
+
 ## 0.106.0
 
 ### Minor Changes
