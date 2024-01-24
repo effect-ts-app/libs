@@ -5,10 +5,10 @@ import { Path } from "path-parser"
 
 import type * as Methods from "./Methods.js"
 
-import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
 import type { Data } from "effect"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
+import type { FromStruct, StructFields, ToStruct } from "./overrides.js"
 import { AST, S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
