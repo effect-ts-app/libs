@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.146.0
+
+### Minor Changes
+
+- e2b5df8: revert workaround
+
+### Patch Changes
+
+- Updated dependencies [e2b5df8]
+  - @effect-app/infra-adapters@0.98.0
+  - @effect-app/prelude@0.121.0
+  - @effect-app/schema@0.161.0
+  - @effect-app/core@0.110.0
+
 ## 0.145.0
 
 ### Minor Changes

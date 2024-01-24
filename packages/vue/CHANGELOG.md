@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.100.0
+
+### Minor Changes
+
+- e2b5df8: revert workaround
+
+### Patch Changes
+
+- Updated dependencies [e2b5df8]
+  - @effect-app/prelude@0.121.0
+  - @effect-app/schema@0.161.0
+  - @effect-app/core@0.110.0
+  - @effect-app/vue@0.100.0
+
 ## 0.99.0
 
 ### Minor Changes

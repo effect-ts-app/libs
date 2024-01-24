@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.110.0
+
+### Minor Changes
+
+- e2b5df8: revert workaround
+
 ## 0.109.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.161.0
+
+### Minor Changes
+
+- e2b5df8: revert workaround
+
+### Patch Changes
+
+- Updated dependencies [e2b5df8]
+  - @effect-app/core@0.110.0
+
 ## 0.160.0
 
 ### Minor Changes
