@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.108.0
+
+### Minor Changes
+
+- 4aaa360: update packages
+- a64728d: update to latest Schema
+
 ## 0.107.0
 
 ### Minor Changes
