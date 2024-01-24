@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.119.2
+
+### Patch Changes
+
+- d3bc95b: fix lazy arb
+
 ## 0.119.1
 
 ### Patch Changes
