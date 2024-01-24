@@ -1,94 +1,4 @@
 {
-  "@effect-app/schema/overrides": [
-    {
-      "definitionName": "encode",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encode"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeEither"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodePromise",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodePromise"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeSync"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeUnknown",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeUnknown"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeUnknownEither",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeUnknownEither"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeUnknownPromise",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeUnknownPromise"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeUnknownSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeUnknownSync"
-        }
-      ]
-    }
-  ],
   "@effect/schema/Arbitrary": [
     {
       "definitionName": "Arbitrary",
@@ -187,6 +97,28 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "decode"
+        }
+      ]
+    },
+    {
+      "definitionName": "encode",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "encode"
+        }
+      ]
+    },
+    {
+      "definitionName": "encodeSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "encodeSync"
         }
       ]
     },
