@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.111.0
+
+### Minor Changes
+
+- fix exts
+
 ## 0.110.0
 
 ### Minor Changes
