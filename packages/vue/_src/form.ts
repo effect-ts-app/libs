@@ -24,13 +24,13 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   fields: Schema<never, From, To>
 ) {
-  let ast = fields.ast
-  // todo: or look at from?
-  if (AST.isTransform(ast)) {
-    if (AST.isDeclaration(ast.to)) {
-      ast = ast.to
-    }
-  }
+  const ast = "struct" in fields ? (fields.struct as typeof fields).ast : fields.ast
+  // // todo: or look at from?
+  // if (AST.isTransform(ast)) {
+  //   if (AST.isDeclaration(ast.to)) {
+  //     ast = ast.to.type //no longer eists
+  //   }
+  // }
   if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (prev, cur) => {
