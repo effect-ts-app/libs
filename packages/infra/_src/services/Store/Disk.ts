@@ -64,7 +64,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const withPermit = sem.withPermits(1)
     const flushToDisk = store.all.flatMap(fsStore.setRaw).pipe(withPermit)
     const flushToDiskInBackground = flushToDisk
-      .tapErrorCause((err) => Effect(console.error(err)))
+      .tapErrorCause((err) => Effect.sync(() => console.error(err)))
       .uninterruptible
       .forkDaemon
 
@@ -121,7 +121,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
             return storesSem.withPermits(1)(
               Effect.suspend(() => {
                 const existing = stores.get(namespace)
-                if (existing) return Effect(existing)
+                if (existing) return Effect.sync(() => existing)
                 return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
                   .orDie
                   .provide(ctx)

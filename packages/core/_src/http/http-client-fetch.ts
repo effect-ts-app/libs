@@ -28,7 +28,7 @@ function getBody(
   )
 }
 
-const makeAbort = Effect(new AbortController())
+const makeAbort = Effect.sync(() => new AbortController())
 
 export const Client = (fetchApi: typeof fetch) =>
   H.Http.makeLayer({

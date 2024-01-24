@@ -33,7 +33,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
                 void sgMail.send(renderedMsg, false, (err, result) =>
                   err
                     ? cb(Effect.fail(err))
-                    : cb(Effect(result)))
+                    : cb(Effect.sync(() => result)))
             )
           )
 

@@ -248,7 +248,7 @@ export function makeRequestHandler<
                     })
                   ], { concurrency: "inherit" })
               )
-              .tapErrorCause((cause) => Effect(console.error("Error occurred while reporting error", cause)))
+              .tapErrorCause((cause) => Effect.sync(() => console.error("Error occurred while reporting error", cause)))
           )
           .tap((res) =>
             Effect

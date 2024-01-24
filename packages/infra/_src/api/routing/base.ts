@@ -152,7 +152,7 @@ export function parseRequestParams<
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
               ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-              : Effect(
+              : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
                   : { _tag: "Failure", errors: _.cause.failures }
@@ -164,7 +164,7 @@ export function parseRequestParams<
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
               ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-              : Effect(
+              : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
                   : { _tag: "Failure", errors: _.cause.failures }
@@ -176,7 +176,7 @@ export function parseRequestParams<
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
               ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-              : Effect(
+              : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
                   : { _tag: "Failure", errors: _.cause.failures }
@@ -188,7 +188,7 @@ export function parseRequestParams<
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
               ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-              : Effect(
+              : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
                   : { _tag: "Failure", errors: _.cause.failures }
@@ -200,7 +200,7 @@ export function parseRequestParams<
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
               ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
-              : Effect(
+              : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
                   : { _tag: "Failure", errors: _.cause.failures }
@@ -227,13 +227,13 @@ export function parseRequestParams<
         if (errors.length) {
           return new ValidationError({ errors })
         }
-        return Effect({
+        return Effect.sync(() => ({
           body: body.value!,
           cookie: cookie.value!,
           headers: headers.value!,
           path: path.value!,
           query: query.value!
-        })
+        }))
       })
 }
 
@@ -319,7 +319,7 @@ export function makeRequestParsers<
     Config
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
-  const ph = Effect(
+  const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
       .map((s) => s as unknown as Schema<any, any>)
@@ -327,7 +327,7 @@ export function makeRequestParsers<
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
 
-  const pq = Effect(
+  const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
       .map((s) => s as unknown as Schema<any, any>)
@@ -335,7 +335,7 @@ export function makeRequestParsers<
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
 
-  const pb = Effect(
+  const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
       .map((s) => s as unknown as Schema<any, any>)
@@ -343,7 +343,7 @@ export function makeRequestParsers<
   )
   const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
 
-  const pp = Effect(
+  const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
       .map((s) => s as unknown as Schema<any, any>)
@@ -351,7 +351,7 @@ export function makeRequestParsers<
   )
   const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
 
-  const pc = Effect(
+  const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
       .map((s) => s as unknown as Schema<any, any>)

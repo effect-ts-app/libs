@@ -83,7 +83,7 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
  * @tsplus fluent effect/io/Effect debugUnsafe
  */
 export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
-  return self.tap((a) => Effect(console.log(name, a)))
+  return self.tap((a) => Effect.sync(() => console.log(name, a)))
 }
 
 export const clone = <A extends Object>(original: A, copy: A) => {
@@ -300,7 +300,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
     if (index === -1) {
       return Option.none
     }
-    return Option(arrayMoveDropUndefined(ar, index, newIndex))
+    return Option.some(arrayMoveDropUndefined(ar, index, newIndex))
   }
 }
 

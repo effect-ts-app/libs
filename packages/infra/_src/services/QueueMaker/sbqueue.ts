@@ -84,7 +84,7 @@ export function makeServiceBusQueue<
           return yield* $(
             subscribe({
               processMessage: (x) => processMessage(x.body).uninterruptible,
-              processError: (err) => Effect(captureException(err.error))
+              processError: (err) => Effect.sync(() => captureException(err.error))
             })
               .provide(receiverLayer)
           )

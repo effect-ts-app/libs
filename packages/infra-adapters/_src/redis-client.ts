@@ -19,7 +19,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
             client.get(key, (err, v) =>
               err
                 ? res(new ConnectionException(err))
-                : res(Effect(Option.fromNullable(v))))
+                : res(Effect.sync(() => Option.fromNullable(v))))
           })
           .uninterruptible
       }
@@ -30,7 +30,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
             client.set(key, val, (err) =>
               err
                 ? res(new ConnectionException(err))
-                : res(Effect(void 0)))
+                : res(Effect.sync(() => void 0)))
           })
           .uninterruptible
       }
@@ -41,7 +41,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
             client.hset(key, field, value, (err) =>
               err
                 ? res(new ConnectionException(err))
-                : res(Effect(void 0)))
+                : res(Effect.sync(() => void 0)))
           })
           .uninterruptible
       }
@@ -52,7 +52,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
             client.hget(key, field, (err, v) =>
               err
                 ? res(new ConnectionException(err))
-                : res(Effect(Option.fromNullable(v))))
+                : res(Effect.sync(() => Option.fromNullable(v))))
           })
           .uninterruptible
       }
@@ -63,7 +63,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
               client.hgetall(key, (err, v) =>
                 err
                   ? res(new ConnectionException(err))
-                  : res(Effect(Option.fromNullable(v))))
+                  : res(Effect.sync(() => Option.fromNullable(v))))
             }
           )
           .uninterruptible

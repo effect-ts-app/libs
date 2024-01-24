@@ -96,7 +96,7 @@ export const unsafeWipe: (self: SecretURL) => void = internal.unsafeWipe
 export const secretURL = (name?: string): Config<SecretURL> => {
   const config = Config.primitive(
     "a secret property",
-    (text) => Either(fromString(text))
+    (text) => Either.right(fromString(text))
   )
   return name === undefined ? config : config.nested(name)
 }

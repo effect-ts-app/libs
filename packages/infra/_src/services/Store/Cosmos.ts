@@ -199,10 +199,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           const s: Store<PM, Id> = {
-            all: Effect({
-              query: `SELECT * FROM ${name} f WHERE f.id != @id`,
-              parameters: [{ name: "@id", value: importedMarkerId }]
-            })
+            all: Effect
+              .sync(() => ({
+                query: `SELECT * FROM ${name} f WHERE f.id != @id`,
+                parameters: [{ name: "@id", value: importedMarkerId }]
+              }))
               .tap((q) => logQuery(q))
               .flatMap((q) =>
                 Effect.promise(() =>
@@ -223,7 +224,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               filter
                 .keys
                 .forEachEffect((k) =>
-                  Effect(buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                  Effect
+                    .sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -266,7 +268,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 ? filter
                   .keys
                   .forEachEffect((k) =>
-                    Effect(buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                    Effect
+                      .sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
                       .tap((q) => logQuery(q))
                       .flatMap((q) =>
                         Effect.promise(() =>
@@ -280,15 +283,18 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   )
                   .map((_) => _.flatMap((_) => _))
                 : (filter.type === "new-kid"
-                  ? Effect(buildWhereCosmosQuery3(
-                    filter.build(),
-                    name,
-                    importedMarkerId,
-                    defaultValues,
-                    f.select as NonEmptyReadonlyArray<string> | undefined,
-                    skip,
-                    limit
-                  ))
+                  ? Effect
+                    .sync(() =>
+                      buildWhereCosmosQuery3(
+                        filter.build(),
+                        name,
+                        importedMarkerId,
+                        defaultValues,
+                        f.select as NonEmptyReadonlyArray<string> | undefined,
+                        skip,
+                        limit
+                      )
+                    )
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -307,7 +313,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
                       )
                     )
-                  : Effect(buildCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit))
+                  : Effect
+                    .sync(() => buildCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit))
                     .tap((q) => logQuery(q))
                     .flatMap((q) =>
                       Effect.promise(() =>
@@ -370,10 +377,10 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                     )
                   }
-                  return Effect({
+                  return Effect.sync(() => ({
                     ...e,
                     _etag: x.etag
-                  })
+                  }))
                 })
                 .withSpan("Cosmos.set [effect-app/infra/Store]", {
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }
@@ -403,7 +410,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             if (seed) {
               const m = yield* $(seed)
               yield* $(
-                Effect(m.toNonEmptyArray)
+                Effect
+                  .succeed(m.toNonEmptyArray)
                   .flatMapOpt((a) =>
                     s
                       .bulkSet(a)

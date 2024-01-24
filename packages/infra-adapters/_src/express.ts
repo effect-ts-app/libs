@@ -105,11 +105,11 @@ export const makeExpressApp = Effect.gen(function*(_) {
     Ref
       .make(true)
       .acquireRelease(
-        (a) => Effect(a.set(false))
+        (a) => Effect.sync(() => a.set(false))
       )
   )
 
-  const app = yield* _(Effect(express))
+  const app = yield* _(Effect.sync(() => express()))
 
   const { exitHandler, host, port } = yield* _(ExpressAppConfig)
 
@@ -435,14 +435,14 @@ export function use(...args: any[]) {
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
-        .flatMap((expressHandlers) => Effect(() => app.use(...expressHandlers)))
+        .flatMap((expressHandlers) => Effect.sync(() => () => app.use(...expressHandlers)))
     } else {
       return expressRuntime(
         args.slice(1) as unknown as NonEmptyArray<
           EffectRequestHandler<any, any, any, any, any, any>
         >
       )
-        .flatMap((expressHandlers) => Effect(() => app.use(args[0], ...expressHandlers)))
+        .flatMap((expressHandlers) => Effect.sync(() => () => app.use(args[0], ...expressHandlers)))
     }
   })
 }
@@ -484,7 +484,7 @@ export function classic(_: RequestHandler): EffectRequestHandler<never>
 export function classic(
   _: RequestHandler | NextHandleFunction
 ): EffectRequestHandler<never> {
-  return (req, res, next) => Effect(_(req, res, next))
+  return (req, res, next) => Effect.sync(() => _(req, res, next))
 }
 
 /**

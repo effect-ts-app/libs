@@ -22,7 +22,7 @@ export class ContextMapContainer extends TagClass<ContextMapContainer, {
       .flatMap((ctx) =>
         ctx.isSome()
           ? ctx.value.get.map(Option.some)
-          : Effect(Option.none)
+          : Effect.sync(() => Option.none)
       )
   }
 }

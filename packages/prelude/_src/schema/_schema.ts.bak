@@ -54,7 +54,7 @@ export function tryParse<X, A>(self: Parser.Parser<X, AnyError, A>) {
     if (warn._tag === "Some") {
       return Option.none
     }
-    return Option(res.right[0])
+    return Option.some(res.right[0])
   }
 }
 

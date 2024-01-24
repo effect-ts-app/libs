@@ -62,7 +62,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 ) {
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(modelName)
-    const items_ = yield* $(seed ?? Effect([]))
+    const items_ = yield* $(seed ?? Effect.sync(() => []))
     const defaultValues = _defaultValues ?? {}
 
     const items = new Map(items_.toChunk.map((_) => [_.id, { ...defaultValues, ..._ }] as const))
@@ -134,7 +134,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           }),
       batchSet: (items: readonly [PM, ...PM[]]) =>
         pipe(
-          Effect(items)
+          Effect.sync(() => items)
             // align with CosmosDB
             .filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items")
             .andThen(batchSet)
@@ -184,7 +184,7 @@ export const makeMemoryStore = () => ({
         }
         return storesSem.withPermits(1)(Effect.suspend(() => {
           const store = stores.get(namespace)
-          if (store) return Effect(store)
+          if (store) return Effect.sync(() => store)
           return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
             .orDie
             .provide(ctx)

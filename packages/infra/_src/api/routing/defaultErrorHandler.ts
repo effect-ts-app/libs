@@ -24,7 +24,7 @@ export function defaultBasicErrorHandler<R>(
   res: HttpServerResponse,
   r2: Effect<R, ValidationError, HttpServerResponse>
 ) {
-  const sendError = (code: number) => (body: unknown) => Effect(res.setBody(HttpBody.unsafeJson(body)).setStatus(code))
+  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.setBody(HttpBody.unsafeJson(body)).setStatus(code))
   return r2
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", (err) => sendError(400)(err.errors))
@@ -50,7 +50,7 @@ export function defaultErrorHandler<R>(
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
-  const sendError = (code: number) => (body: unknown) => Effect(res.setStatus(code).setBody(HttpBody.unsafeJson(body)))
+  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.setStatus(code).setBody(HttpBody.unsafeJson(body)))
   return r3
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTags({

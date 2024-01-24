@@ -37,7 +37,7 @@ const getClient = HttpClient.flatMap((defaultClient) =>
         )
         .mapEffect((_) =>
           _.status === 204
-            ? Effect({ status: _.status, body: void 0, headers: _.headers })
+            ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
             : _.json.map((body) => ({ status: _.status, body, headers: _.headers }))
         )
         .catchTags({
@@ -186,15 +186,15 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
   return (r: FetchResponse<T>): Effect<R, E, FetchResponse<A>> => {
     return Effect.all({
       body: map(r.body),
-      headers: Effect(r.headers),
-      status: Effect(r.status)
+      headers: Effect.sync(() => r.headers),
+      status: Effect.sync(() => r.status)
     })
   }
 }
 export type FetchResponse<T> = { body: T; headers: Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
-export const EmptyResponseM = Effect(EmptyResponse)
+export const EmptyResponseM = Effect.sync(() => EmptyResponse)
 const EmptyResponseMThunk_ = constant(EmptyResponseM)
 export function EmptyResponseMThunk<T>(): Effect<
   unknown,
@@ -210,5 +210,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<R, E, FetchResponse<A | null>>) {
-  return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect(r.body))
+  return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
 }

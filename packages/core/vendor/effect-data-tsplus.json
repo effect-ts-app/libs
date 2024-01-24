@@ -1193,11 +1193,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Chunk.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
-        {
           "kind": "static",
           "typeName": "effect/data/Chunk.Ops",
           "name": "make"
@@ -3594,11 +3589,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/Either.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
-        {
           "kind": "static",
           "typeName": "effect/data/Either.Ops",
           "name": "right"
@@ -3997,11 +3987,6 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/Equivalence.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/Equivalence.Ops",
@@ -4926,11 +4911,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/HashMap.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
-        {
           "kind": "static",
           "typeName": "effect/data/HashMap.Ops",
           "name": "make"
@@ -5388,11 +5368,6 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/HashSet.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/HashSet.Ops",
@@ -6505,11 +6480,6 @@
       "definitionKind": "const",
       "extensions": [
         {
-          "typeName": "effect/data/MutableHashMap.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
-        {
           "kind": "static",
           "typeName": "effect/data/MutableHashMap.Ops",
           "name": "make"
@@ -6684,11 +6654,6 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/MutableHashSet.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/MutableHashSet.Ops",
@@ -7336,11 +7301,6 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/MutableRef.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/MutableRef.Ops",
@@ -8556,11 +8516,6 @@
       "definitionName": "some",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/Option.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/Option.Ops",
@@ -12877,11 +12832,6 @@
       "definitionName": "make",
       "definitionKind": "const",
       "extensions": [
-        {
-          "typeName": "effect/data/SortedMap.Ops",
-          "kind": "static",
-          "name": "__call"
-        },
         {
           "kind": "static",
           "typeName": "effect/data/SortedMap.Ops",

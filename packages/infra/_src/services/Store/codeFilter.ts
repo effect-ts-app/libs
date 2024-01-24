@@ -66,7 +66,7 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
 //         }
 //         return codeFilterStatement(p, x)
 //       })
-//     ? Option(x as unknown as NE)
+//     ? Option.some(x as unknown as NE)
 //     : Option.none
 
 // export const and = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
@@ -83,7 +83,7 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
 //         }
 //         return codeFilterStatement(p, x)
 //       })
-//     ? Option(x as unknown as NE)
+//     ? Option.some(x as unknown as NE)
 //     : Option.none
 
 // // TODO: how to handle and/or outside scopes.

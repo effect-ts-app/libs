@@ -19,7 +19,7 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A2>> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
+      onNone: () => Effect.sync(() => Option.none),
       onSome: (_) => fm(_).map(Option.some)
     })
   )
@@ -35,8 +35,8 @@ export function tapOption<R, E, A, R2, E2, A2>(
 ): Effect<R | R2, E | E2, Option<A>> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
-      onSome: (_) => fm(_).map(() => Option(_))
+      onNone: () => Effect.sync(() => Option.none),
+      onSome: (_) => fm(_).map(() => Option.some(_))
     })
   )
 }
@@ -51,8 +51,8 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect(Option.none),
-      onSome: (_) => fm.map(() => Option(_))
+      onNone: () => Effect.sync(() => Option.none),
+      onSome: (_) => fm.map(() => Option.some(_))
     })
   )
 }
@@ -68,7 +68,7 @@ export function mapOption<R, E, A, A2>(
   return self.map((d) =>
     d.match({
       onNone: () => Option.none,
-      onSome: (_) => Option(fm(_))
+      onSome: (_) => Option.some(fm(_))
     })
   )
 }
@@ -96,7 +96,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
 export function tupleTap<A, B, R, E, C>(
   f: (b: B) => (a: A) => Effect<R, E, C>
 ) {
-  return (t: readonly [A, B]) => Effect(t[0]).tap(f(t[1]))
+  return (t: readonly [A, B]) => Effect.sync(() => t[0]).tap(f(t[1]))
 }
 
 /**

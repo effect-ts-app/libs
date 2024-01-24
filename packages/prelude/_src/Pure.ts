@@ -164,12 +164,12 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
     .flatMap((x) =>
       castTag<W3, S1, S3>()
         .flatMap(
-          ({ env: _ }) => Effect({ log: _.log, state: _.state }) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
+          ({ env: _ }) => Effect.sync(() => ({ log: _.log, state: _.state })) //            Ref.get(_.log).flatMap(log => Ref.get(_.state).map(state => ({ log, state })))
         )
         .map(
           (
             { log, state }
-          ) => tuple(log, Either(tuple(state, x)) as Either<E, readonly [S3, A]>)
+          ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
         )
     )
     .catchAll(
@@ -233,7 +233,7 @@ export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
 export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<{ env: PureEnv<never, S2, S3> }, never, A> {
   return castTag<never, S3, S2>().map(
     (_) =>
-      Effect(mod(_.env.state)).map(([s, a]) => {
+      Effect.sync(() => mod(_.env.state)).map(([s, a]) => {
         _.env.state = s as any
         return a
       })
@@ -380,7 +380,7 @@ export const Pure: PureOps = {
 //       ).map(
 //         (
 //           { log, state }
-//         ) => tuple(log, Either(tuple(state, x)) as Either<E, readonly [S3, A]>)
+//         ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
 //       )
 //     ).catchAll(
 //       err =>

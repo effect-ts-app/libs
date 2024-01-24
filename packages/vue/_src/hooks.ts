@@ -182,7 +182,7 @@ export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
         : new Refreshing(result.value)
     })
     .zipRight(self.map((_) => _.body).asQueryResult)
-    .flatMap((r) => Effect(result.value = r))
+    .flatMap((r) => Effect.sync(() => result.value = r))
 
   const latestSuccess = computed(() => {
     const value = result.value
@@ -245,7 +245,7 @@ export const useMutation: {
     return Effect.sync(() => {
       if (exit.isSuccess()) {
         state.value = { _tag: "Success", data: exit.value }
-        return Either(exit.value)
+        return Either.right(exit.value)
       }
 
       const err = exit.cause.failureOption

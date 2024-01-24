@@ -184,7 +184,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
             (err) =>
               err
                 ? res(new ConnectionException(err))
-                : res(Effect(void 0))
+                : res(Effect.sync(() => void 0))
           )
         })
         .uninterruptible

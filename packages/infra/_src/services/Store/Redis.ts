@@ -21,7 +21,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const key = `${prefix}${name}`
           const current = yield* $(redis.get(key).orDie)
           if (!current.isSome()) {
-            const m = yield* $(seed ?? Effect([]))
+            const m = yield* $(seed ?? Effect.sync(() => []))
             yield* $(
               redis
                 .set(key, JSON.stringify({ data: [...m].map((e) => makeETag(e)) }))
