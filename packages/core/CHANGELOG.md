@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.109.0
+
+### Minor Changes
+
+- efa846c: improve: class workaround
+
 ## 0.108.0
 
 ### Minor Changes

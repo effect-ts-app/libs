@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.97.0
+
+### Minor Changes
+
+- efa846c: improve: class workaround
+
+### Patch Changes
+
+- Updated dependencies [efa846c]
+  - @effect-app/prelude@0.120.0
+  - @effect-app/schema@0.160.0
+  - @effect-app/core@0.109.0
+
 ## 0.96.2
 
 ### Patch Changes

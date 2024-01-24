@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.160.0
+
+### Minor Changes
+
+- efa846c: improve: class workaround
+
+### Patch Changes
+
+- Updated dependencies [efa846c]
+  - @effect-app/core@0.109.0
+
 ## 0.159.1
 
 ### Patch Changes
