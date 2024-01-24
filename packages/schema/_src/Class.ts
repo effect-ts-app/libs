@@ -10,7 +10,13 @@ import { AST, S } from "./schema.js"
 export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
   fields: Fields
 ) =>
-  & { readonly structFrom: Schema<Simplify<FromStruct<Fields>>, Simplify<ToStruct<Fields>>> }
+  & {
+    readonly structFrom: Schema<
+      Schema.Context<Fields[keyof Fields]>,
+      Simplify<FromStruct<Fields>>,
+      Simplify<ToStruct<Fields>>
+    >
+  }
   & S.Class<
     Schema.Context<Fields[keyof Fields]>,
     SelfFrom,
@@ -27,6 +33,7 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
 ) =>
   & {
     readonly structFrom: Schema<
+      Schema.Context<Fields[keyof Fields]>,
       Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
       Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
     >
