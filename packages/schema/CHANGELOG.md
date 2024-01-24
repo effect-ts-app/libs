@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.159.1
+
+### Patch Changes
+
+- 3936865: fix cls
+
 ## 0.159.0
 
 ### Minor Changes
