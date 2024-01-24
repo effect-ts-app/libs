@@ -29,4 +29,4 @@ export const fakerToArb = <T>(fakerGen: () => T) => (fc: typeof FC) => {
 
 export const fakerArb = <T>(
   gen: (fake: Faker) => () => T
-): (a: any) => FC.Arbitrary<T> => fakerToArb(gen(getFaker()))
+): (a: any) => FC.Arbitrary<T> => fakerToArb(() => gen(getFaker())())
