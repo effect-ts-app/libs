@@ -167,6 +167,7 @@ export function makeRepo<
         function findE(_id: T["id"]) {
           return S
             .encode(i)({ id: _id })
+            .map((_) => _.id)
             .orDie
             .andThen((id) =>
               store
