@@ -6,11 +6,11 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/platform": "^0.42.7",
+    "@effect/platform": "^0.43.0",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240124151611",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.3.1",
-    "effect": "^2.2.0",
+    "effect": "^2.2.1",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.4",
     "path-parser": "^6.1.0",

@@ -6,7 +6,7 @@
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.3",
-    "@effect/platform": "^0.42.7",
+    "@effect/platform": "^0.43.0",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240124151611",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
@@ -18,7 +18,7 @@
     "@sendgrid/mail": "^8.1.0",
     "change-case": "^5.4.2",
     "cross-fetch": "^4.0.0",
-    "effect": "^2.2.0",
+    "effect": "^2.2.1",
     "fast-check": "~3.15.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
