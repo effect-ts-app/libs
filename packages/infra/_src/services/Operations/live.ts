@@ -76,9 +76,12 @@ const make = Effect.sync((): Operations => {
     cleanup,
     register: makeOp
       .tap((id) =>
-        Effect.annotateLogscoped("operationId", id)
-          > addOp(id).acquireRelease(
-            (_, exit) => finishOp(id, exit)
+        Effect
+          .annotateLogscoped("operationId", id)
+          .andThen(
+            addOp(id).acquireRelease(
+              (_, exit) => finishOp(id, exit)
+            )
           )
       ),
 
