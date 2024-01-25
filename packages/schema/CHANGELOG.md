@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.162.1
+
+### Patch Changes
+
+- e356144: add number defaults
+
 ## 0.162.0
 
 ### Minor Changes
