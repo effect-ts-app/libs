@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.148.0
+
+### Minor Changes
+
+- b3ef760: improve jwt
+
+### Patch Changes
+
+- 8614727: parseJwt
+
 ## 0.147.0
 
 ### Minor Changes
