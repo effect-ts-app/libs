@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.148.2
+
+### Patch Changes
+
+- 2d255ca: fix Operations
+
 ## 0.148.1
 
 ### Patch Changes
