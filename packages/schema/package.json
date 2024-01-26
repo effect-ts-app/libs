@@ -16,7 +16,7 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.7",
+    "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.8",
     "fast-check": "~3.15.0",
     "ts-toolbelt": "^9.6.0",

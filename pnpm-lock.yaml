@@ -44,7 +44,7 @@ importers:
         version: /http-proxy-node16@1.0.0
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.9
@@ -65,7 +65,7 @@ importers:
         specifier: ^0.88.10
         version: 0.88.10
       '@effect-app/cli':
-        specifier: ^0.37.0
+        specifier: ^0.38.0
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -104,8 +104,8 @@ importers:
         specifier: ^4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       '@typescript-eslint/eslint-plugin':
         specifier: 6.19.1
         version: 6.19.1(@effect-app/typescript@5.4.0-tsplus.20240124)(@typescript-eslint/parser@6.19.1)(eslint@8.56.0)
@@ -173,8 +173,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       npm-check-updates:
-        specifier: ^16.14.12
-        version: 16.14.12
+        specifier: ^16.14.13
+        version: 16.14.13
       ts-transform-paths:
         specifier: ^3.0.0
         version: 3.0.0
@@ -192,10 +192,10 @@ importers:
         version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.20240124)
       vite:
         specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.6)
+        version: 5.0.12(@types/node@20.11.7)
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/cli:
     dependencies:
@@ -207,20 +207,20 @@ importers:
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/compiler:
     dependencies:
@@ -229,32 +229,32 @@ importers:
         version: 5.1.0
       vite:
         specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.6)
+        version: 5.0.12(@types/node@20.11.7)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.43.1
-        version: 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+        specifier: ^0.43.2
+        version: 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -284,8 +284,8 @@ importers:
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
+        specifier: ^9.0.8
+        version: 9.0.8
       '@types/validator':
         specifier: ^13.11.8
         version: 13.11.8
@@ -297,7 +297,7 @@ importers:
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
       winston:
         specifier: ^3.11.0
         version: 3.11.0
@@ -352,7 +352,7 @@ importers:
         version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20240124)
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
@@ -366,8 +366,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.43.1
-        version: 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+        specifier: ^0.43.2
+        version: 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -409,11 +409,11 @@ importers:
         specifier: ^8.4.0
         version: 8.4.0
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
+        specifier: ^9.0.8
+        version: 9.0.8
       '@types/validator':
         specifier: ^13.11.8
         version: 13.11.8
@@ -422,13 +422,13 @@ importers:
         version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/infra:
     dependencies:
@@ -451,8 +451,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.43.1
-        version: 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+        specifier: ^0.43.2
+        version: 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240125190035
         version: /@effect-app/schema-fork@0.0.0-20240125190035(effect@2.2.2)(fast-check@3.15.0)
@@ -509,8 +509,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       '@types/proper-lockfile':
         specifier: ^4.1.4
         version: 4.1.4
@@ -537,13 +537,13 @@ importers:
         version: 3.1.2
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/infra-adapters:
     dependencies:
@@ -557,8 +557,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.43.1
-        version: 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+        specifier: ^0.43.2
+        version: 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240125190035
         version: /@effect-app/schema-fork@0.0.0-20240125190035(effect@2.2.2)(fast-check@3.15.0)
@@ -621,17 +621,17 @@ importers:
   packages/pnpm-singleton:
     devDependencies:
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/prelude:
     dependencies:
@@ -642,8 +642,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.43.1
-        version: 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+        specifier: ^0.43.2
+        version: 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240125190035
         version: /@effect-app/schema-fork@0.0.0-20240125190035(effect@2.2.2)(fast-check@3.15.0)
@@ -688,11 +688,11 @@ importers:
         specifier: ^8.4.0
         version: 8.4.0
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
+        specifier: ^9.0.8
+        version: 9.0.8
       '@types/validator':
         specifier: ^13.11.8
         version: 13.11.8
@@ -701,13 +701,13 @@ importers:
         version: 3.15.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/schema:
     dependencies:
@@ -743,8 +743,8 @@ importers:
         version: 13.11.0
     devDependencies:
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
+        specifier: ^9.0.8
+        version: 9.0.8
       '@types/validator':
         specifier: ^13.11.8
         version: 13.11.8
@@ -759,7 +759,7 @@ importers:
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
   packages/vue:
     dependencies:
@@ -776,14 +776,14 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform-browser':
-        specifier: ^0.28.1
-        version: 0.28.1(@effect/platform@0.43.1)(effect@2.2.2)
+        specifier: ^0.28.2
+        version: 0.28.2(@effect/platform@0.43.2)(effect@2.2.2)
       '@effect/schema':
         specifier: npm:@effect-app/schema-fork@0.0.0-20240125190035
         version: /@effect-app/schema-fork@0.0.0-20240125190035(effect@2.2.2)(fast-check@3.15.0)
       '@formatjs/intl':
-        specifier: ^2.9.11
-        version: 2.9.11(@effect-app/typescript@5.4.0-tsplus.20240124)
+        specifier: ^2.10.0
+        version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -810,23 +810,23 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       '@types/node':
-        specifier: ~20.11.6
-        version: 20.11.6
+        specifier: ~20.11.7
+        version: 20.11.7
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vite:
         specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.6)
+        version: 5.0.12(@types/node@20.11.7)
       vitest:
         specifier: ^1.2.1
-        version: 1.2.1(@types/node@20.11.6)
+        version: 1.2.1(@types/node@20.11.7)
 
 packages:
 
@@ -1646,18 +1646,18 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.28.1(@effect/platform@0.43.1)(effect@2.2.2):
-    resolution: {integrity: sha512-ZXbqjPfDLwH5tswVOIhyUQWRQyCCc7tM57CicYt5TDTSrNP9ZlfQ/I5f1JtH7ZTHYzOW5DoXCvF8+bvfiwHONA==}
+  /@effect/platform-browser@0.28.2(@effect/platform@0.43.2)(effect@2.2.2):
+    resolution: {integrity: sha512-iNRflP+dJaqTL3n3P/zUNZKrpiTKo9qkr/ylwueMU7BrDthhsJ6VSb+Q8uKUhMBM5bgBkQA6OFatHx03VNLtjA==}
     peerDependencies:
-      '@effect/platform': ^0.43.1
+      '@effect/platform': ^0.43.2
       effect: ^2.2.2
     dependencies:
-      '@effect/platform': 0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
+      '@effect/platform': 0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2)
       effect: 2.2.2
     dev: false
 
-  /@effect/platform@0.43.1(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2):
-    resolution: {integrity: sha512-ebHMWu5jYYRFmkLZZnh78Dxy2qylwlQeeMgLS/J9xQmnXMJyLYPme+GnpIle1Sg7cds62h+BmaupXTMboFzBHg==}
+  /@effect/platform@0.43.2(@effect-app/schema-fork@0.0.0-20240125190035)(effect@2.2.2):
+    resolution: {integrity: sha512-imbBO/i0JZVGR6X4NT/VWaeOXUNCsBNLHPbo4v0eVuvHqQBT/DOKm1Tdyr2u40Q6wfyWhgZ9cYrcaOvOLwKBiQ==}
     peerDependencies:
       '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240125190035
       effect: ^2.2.2
@@ -1903,16 +1903,16 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@formatjs/icu-messageformat-parser@2.7.5:
-    resolution: {integrity: sha512-zCB53HdGDibh6/2ISEN3TGsFQruQ6gGKMFV94qHNyVrs0tNO6ncKhV0vq0n3Ydz8ipIQ2GaYAvfCoimNOVvKqA==}
+  /@formatjs/icu-messageformat-parser@2.7.6:
+    resolution: {integrity: sha512-etVau26po9+eewJKYoiBKP6743I1br0/Ie00Pb/S/PtmYfmjTcOn2YCh2yNkSZI12h6Rg+BOgQYborXk46BvkA==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
-      '@formatjs/icu-skeleton-parser': 1.7.2
+      '@formatjs/icu-skeleton-parser': 1.8.0
       tslib: 2.5.0
     dev: false
 
-  /@formatjs/icu-skeleton-parser@1.7.2:
-    resolution: {integrity: sha512-nlIXVv280bjGW3ail5Np1+xgGKBnMhwQQIivgbk9xX0af8ESQO+y2VW9TOY7mCrs3WH786uVpZlLimXAlXH7SA==}
+  /@formatjs/icu-skeleton-parser@1.8.0:
+    resolution: {integrity: sha512-QWLAYvM0n8hv7Nq5BEs4LKIjevpVpbGLAJgOaYzg9wABEoX1j0JO1q2/jVkO6CVlq0dbsxZCngS5aXbysYueqA==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
       tslib: 2.5.0
@@ -1940,8 +1940,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@formatjs/intl@2.9.11(@effect-app/typescript@5.4.0-tsplus.20240124):
-    resolution: {integrity: sha512-wJF5GKuopgeKy75e11JPjueC/XKAxrOndqVEZqg5zDrGuxALUD6Vo/x+oDTQwVZYf2zJnEzqZlUGtv5gSi/ChQ==}
+  /@formatjs/intl@2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124):
+    resolution: {integrity: sha512-X3xT9guVkKDS86EKV80lS0KxoazUglkJTGZO66sKY7otgl0VeStPA8B3u8UkKT47PexVV98fUzjpkchYmbe9nw==}
     peerDependencies:
       typescript: ^4.7 || 5
     peerDependenciesMeta:
@@ -1950,10 +1950,10 @@ packages:
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
       '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.5
+      '@formatjs/icu-messageformat-parser': 2.7.6
       '@formatjs/intl-displaynames': 6.6.6
       '@formatjs/intl-listformat': 7.5.5
-      intl-messageformat: 10.5.10
+      intl-messageformat: 10.5.11
       tslib: 2.5.0
       typescript: /@effect-app/typescript@5.4.0-tsplus.20240124
     dev: false
@@ -2035,7 +2035,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       '@types/yargs': 15.0.14
       chalk: 4.1.2
 
@@ -2517,19 +2517,19 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/bunyan@1.8.8:
     resolution: {integrity: sha512-Cblq+Yydg3u+sGiz2mjHjC5MPmdjY+No4qvHrF+BUhblsmSfMvsHLbOG62tPbonsqBj6sbWv1LHcsoe5Jw+/Ow==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/dynamodb@1.3.7:
@@ -2563,7 +2563,7 @@ packages:
   /@types/express-serve-static-core@4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: true
@@ -2581,7 +2581,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -2591,13 +2591,13 @@ packages:
   /@types/ioredis@4.28.10:
     resolution: {integrity: sha512-69LyhUgrXdgcNDv7ogs1qXZomnfOEnSmrmMFqKgt1XMJxmoOSG/u3wYy13yACIfKuMJ8IhKgHafDO3sx19zVQQ==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/is-buffer@2.0.0:
     resolution: {integrity: sha512-0f7N/e3BAz32qDYvgB4d2cqv1DqUwvGxHkXsrucICn8la1Vb6Yl6Eg8mPScGwUiqHJeE7diXlzaK+QMA9m4Gxw==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
 
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -2622,7 +2622,7 @@ packages:
   /@types/jsonwebtoken@8.5.9:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/lodash@4.14.202:
@@ -2645,8 +2645,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node@20.11.6:
-    resolution: {integrity: sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==}
+  /@types/node@20.11.7:
+    resolution: {integrity: sha512-GPmeN1C3XAyV5uybAf4cMLWT9fDWcmQhZVtMFu7OR32WjrqGG+Wnk2V1d0bmtUyE/Zy1QJ9BxyiTih9z8Oks8A==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2670,7 +2670,7 @@ packages:
   /@types/redis@2.8.32:
     resolution: {integrity: sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/redlock@4.0.7:
@@ -2692,14 +2692,14 @@ packages:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
     dev: true
 
   /@types/stack-utils@2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
 
-  /@types/uuid@9.0.7:
-    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
+  /@types/uuid@9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
     dev: true
 
   /@types/validator@13.11.8:
@@ -5902,12 +5902,12 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /intl-messageformat@10.5.10:
-    resolution: {integrity: sha512-3yzwX6t/my9WRtNiqP05r+/UkpWxwstQiwaHAiuHmDRt7ykzWJ+nceOVjNLZYYWGiSltY+C+Likd8OIVkASepw==}
+  /intl-messageformat@10.5.11:
+    resolution: {integrity: sha512-eYq5fkFBVxc7GIFDzpFQkDOZgNayNTQn4Oufe8jw6YY6OHVw70/4pA3FyCsQ0Gb2DnvEJEMmN2tOaXUGByM+kg==}
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
       '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.5
+      '@formatjs/icu-messageformat-parser': 2.7.6
       tslib: 2.5.0
     dev: false
 
@@ -6244,7 +6244,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -7161,8 +7161,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates@16.14.12:
-    resolution: {integrity: sha512-5FvqaDX8AqWWTDQFbBllgLwoRXTvzlqVIRSKl9Kg8bYZTfNwMnrp1Zlmb5e/ocf11UjPTc+ShBFjYQ7kg6FL0w==}
+  /npm-check-updates@16.14.13:
+    resolution: {integrity: sha512-vuRTJUoOElBDQ1Z5/UqqgNfExteSdrmwKNV6xuZtiyuKENFduYsy+IhDvCIC9fI1F+MD4zWtq9WCBwfOGfxy7Q==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -9018,7 +9018,7 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /ts-node@10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.6):
+  /ts-node@10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.7):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -9037,7 +9037,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       acorn: 8.10.0
       acorn-walk: 8.3.0
       arg: 4.1.3
@@ -9441,7 +9441,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node@1.2.1(@types/node@20.11.6):
+  /vite-node@1.2.1(@types/node@20.11.7):
     resolution: {integrity: sha512-fNzHmQUSOY+y30naohBvSW7pPn/xn3Ib/uqm+5wAJQJiqQsU0NBR78XdRJb04l4bOFKjpTWld0XAfkKlrDbySg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9450,7 +9450,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.12(@types/node@20.11.6)
+      vite: 5.0.12(@types/node@20.11.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9462,7 +9462,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.11(@types/node@20.11.6):
+  /vite@5.0.11(@types/node@20.11.7):
     resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9490,7 +9490,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       esbuild: 0.19.5
       postcss: 8.4.33
       rollup: 4.4.1
@@ -9498,7 +9498,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.12(@types/node@20.11.6):
+  /vite@5.0.12(@types/node@20.11.7):
     resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9526,14 +9526,14 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       esbuild: 0.19.5
       postcss: 8.4.33
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.2.1(@types/node@20.11.6):
+  /vitest@1.2.1(@types/node@20.11.7):
     resolution: {integrity: sha512-TRph8N8rnSDa5M2wKWJCMnztCZS9cDcgVTQ6tsTFTG/odHJ4l5yNVqvbeDJYJRZ6is3uxaEpFs8LL6QM+YFSdA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9558,7 +9558,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       '@vitest/expect': 1.2.1
       '@vitest/runner': 1.2.1
       '@vitest/snapshot': 1.2.1
@@ -9577,8 +9577,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.11(@types/node@20.11.6)
-      vite-node: 1.2.1(@types/node@20.11.6)
+      vite: 5.0.11(@types/node@20.11.7)
+      vite-node: 1.2.1(@types/node@20.11.7)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
