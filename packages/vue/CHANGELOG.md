@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.104.0
+
+### Minor Changes
+
+- 3eb4057: update packages
+
+### Patch Changes
+
+- Updated dependencies [3eb4057]
+  - @effect-app/prelude@0.125.0
+  - @effect-app/schema@0.164.0
+  - @effect-app/core@0.114.0
+  - @effect-app/vue@0.104.0
+
 ## 0.103.0
 
 ### Minor Changes

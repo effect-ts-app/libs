@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 0.151.0
+
+### Minor Changes
+
+- 3eb4057: update packages
+
+### Patch Changes
+
+- Updated dependencies [3eb4057]
+  - @effect-app/infra-adapters@0.102.0
+  - @effect-app/prelude@0.125.0
+  - @effect-app/schema@0.164.0
+  - @effect-app/core@0.114.0
+
 ## 0.150.0
 
 ### Minor Changes
