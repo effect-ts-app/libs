@@ -12,7 +12,7 @@ const rnd = new Random(rand.congruential32(5))
 setFaker(faker)
 
 /**
- * @tsplus getter FastCheck generate
+ * @tsplus getter FastCheck generateRandom
  */
 export function generate<T>(arb: fc.Arbitrary<T>) {
   return arb.generate(rnd, undefined)
