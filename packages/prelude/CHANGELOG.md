@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.126.0
+
+### Minor Changes
+
+- ed813b4: update packages
+
+### Patch Changes
+
+- Updated dependencies [ed813b4]
+  - @effect-app/schema@0.165.0
+
 ## 0.125.0
 
 ### Minor Changes
