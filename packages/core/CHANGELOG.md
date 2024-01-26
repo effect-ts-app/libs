@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.113.0
+
+### Minor Changes
+
+- 051bad7: override reasonable Email/PhoneNumber
+
 ## 0.112.0
 
 ### Minor Changes

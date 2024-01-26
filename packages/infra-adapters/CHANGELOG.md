@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.101.0
+
+### Minor Changes
+
+- 051bad7: override reasonable Email/PhoneNumber
+
+### Patch Changes
+
+- Updated dependencies [051bad7]
+  - @effect-app/prelude@0.124.0
+  - @effect-app/core@0.113.0
+  - @effect-app/schema@0.163.1
+
 ## 0.100.0
 
 ### Minor Changes
