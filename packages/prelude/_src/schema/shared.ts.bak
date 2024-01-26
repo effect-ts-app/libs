@@ -12,7 +12,7 @@ import type {
   SchemaDefaultSchema,
   SchemaUPI,
   Utils
-} from "@effect-app/schema"
+} from "@effect-app/prelude/schema"
 import {
   annotate,
   brand,
@@ -25,7 +25,7 @@ import {
   named,
   nonEmptyStringFromString,
   refine
-} from "@effect-app/schema"
+} from "@effect-app/prelude/schema"
 import type * as FC from "fast-check"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"

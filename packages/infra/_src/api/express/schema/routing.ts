@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { REST } from "@effect-app/schema"
+import type { REST } from "@effect-app/prelude/schema"
 
 export type Request<
   M,

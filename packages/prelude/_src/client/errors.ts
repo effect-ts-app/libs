@@ -1,4 +1,4 @@
-import { TaggedError } from "@effect-app/schema"
+import { TaggedError } from "@effect-app/prelude/schema"
 
 /** @tsplus type NotFoundError */
 @useClassFeaturesForSchema

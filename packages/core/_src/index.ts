@@ -10,7 +10,7 @@ export {} from "@effect-app/core/Effect"
 // export * as EffectOption from "@effect-app/core/EffectOption"
 export * as NonEmptySet from "@effect-app/core/NonEmptySet"
 export {} from "@effect-app/core/Option"
-// export * as Schema from "@effect-app/schema"
+// export * as Schema from "@effect-app/prelude/schema"
 export * as Set from "@effect-app/core/Set"
 export * as ROSet from "@effect-app/core/Set"
 

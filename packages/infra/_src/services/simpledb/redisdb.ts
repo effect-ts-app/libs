@@ -2,7 +2,7 @@
 
 import { flow } from "@effect-app/core/Function"
 import { RedisClient } from "@effect-app/infra-adapters/redis-client"
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 import type { Lock } from "redlock"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"

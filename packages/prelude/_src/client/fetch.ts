@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
-import type { REST } from "@effect-app/schema"
+import type { REST } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"

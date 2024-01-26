@@ -37,8 +37,8 @@ import {
   unionIdentifier,
   unknownIdentifier,
   UUIDFromStringIdentifier
-} from "@effect-app/schema"
-import * as S from "@effect-app/schema"
+} from "@effect-app/prelude/schema"
+import * as S from "@effect-app/prelude/schema"
 
 import type { JSONSchema } from "../atlas-plutus.js"
 import {

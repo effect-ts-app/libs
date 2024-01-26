@@ -1,5 +1,5 @@
-import { AST, S } from "@effect-app/schema"
-import type { Schema } from "@effect-app/schema"
+import { AST, S } from "@effect-app/prelude/schema"
+import type { Schema } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"

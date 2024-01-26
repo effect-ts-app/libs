@@ -1,5 +1,5 @@
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255 } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/prelude/schema"
 import cp from "child_process"
 import fs from "fs"
 import os from "os"

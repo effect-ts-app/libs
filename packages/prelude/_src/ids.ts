@@ -1,5 +1,5 @@
-import { brandedStringId } from "@effect-app/schema"
-import type { ConstructorPropertyDescriptor, StringIdBrand } from "@effect-app/schema"
+import { brandedStringId } from "@effect-app/prelude/schema"
+import type { ConstructorPropertyDescriptor, StringIdBrand } from "@effect-app/prelude/schema"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
 

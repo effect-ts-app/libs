@@ -5,6 +5,6 @@
 /**
  * @tsplus global
  */
-import { Delete, Get, Patch, Post, Put } from "@effect-app/schema"
+import { Delete, Get, Patch, Post, Put } from "@effect-app/prelude/schema"
 
 import "@effect-app/prelude/_global.schema"

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { type RouteDescriptorAny } from "@effect-app/infra/api/express/schema/routing"
 import type { ValidationError } from "@effect-app/infra/errors"
-import type { StructFields } from "@effect-app/schema"
+import type { StructFields } from "@effect-app/prelude/schema"
 import { HttpRouter, type HttpServerRequest, type HttpServerResponse } from "../http.js"
 import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"

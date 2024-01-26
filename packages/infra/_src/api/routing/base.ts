@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/ban-types */
-import * as S from "@effect-app/schema"
+import * as S from "@effect-app/prelude/schema"
 
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
-import type { REST, StructFields } from "@effect-app/schema"
+import type { REST, StructFields } from "@effect-app/prelude/schema"
 import type { Simplify } from "effect/Types"
 import type express from "express"
 import type { HttpRequestError, HttpRoute } from "../http.js"
