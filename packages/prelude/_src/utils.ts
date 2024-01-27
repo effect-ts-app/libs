@@ -248,6 +248,27 @@ export function AnyPretty<TT>(o: AnyOps<TT>) {
   return pretty(o.subject)
 }
 
+/** @tsplus getter Object.Ops matcher */
+export function matchValue<TT extends object>(o: ObjectOps<TT>) {
+  return Matcher.value(o.subject)
+}
+
+// TODO
+// /** @tsplus getter Object.Ops matchTags */
+// export function matchValueTags<
+//   const I,
+//   P extends
+//     & {
+//       readonly [Tag in Types.Tags<"_tag", I> & string]: (
+//         _: Extract<I, { readonly _tag: Tag }>
+//         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//       ) => any
+//     }
+//     & { readonly [Tag in Exclude<keyof P, Types.Tags<"_tag", I>>]: never }
+// >(o: ObjectOps<P>) {
+//   return Matcher.valueTags(o.subject)
+// }
+
 /**
  * @tsplus getter Object.Ops pretty
  */

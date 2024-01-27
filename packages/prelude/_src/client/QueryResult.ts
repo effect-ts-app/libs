@@ -2,8 +2,6 @@
 
 /* eslint-disable @typescript-eslint/ban-types */
 
-export { matchTag } from "@effect-app/core/utils"
-
 export class Initial extends Data.TaggedClass("Initial")<{}> {}
 
 export class Loading extends Data.TaggedClass("Loading")<{}> {}
