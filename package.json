@@ -96,13 +96,13 @@
     "madge": "^6.1.0",
     "module-alias": "^2.2.3",
     "nodemon": "^3.0.3",
-    "npm-check-updates": "^16.14.13",
+    "npm-check-updates": "^16.14.14",
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.0.4",
     "tsconfig-paths": "^4.2.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
     "typescript-transform-paths": "^3.4.6",
     "vite": "^5.0.12",
-    "vitest": "^1.2.1"
+    "vitest": "^1.2.2"
   }
 }

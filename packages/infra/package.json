@@ -6,7 +6,7 @@
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.3",
-    "@effect/platform": "^0.43.2",
+    "@effect/platform": "^0.43.3",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240126154023",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
@@ -42,7 +42,7 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
-    "vitest": "^1.2.1"
+    "vitest": "^1.2.2"
   },
   "peerDependencies": {
     "express": "^4.18.2"

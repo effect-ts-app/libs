@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect/platform-browser": "^0.28.2",
+    "@effect/platform-browser": "^0.28.3",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240126154023",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
@@ -27,7 +27,7 @@
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
     "vite": "^5.0.12",
-    "vitest": "^1.2.1"
+    "vitest": "^1.2.2"
   },
   "typesVersions": {
     "*": {
