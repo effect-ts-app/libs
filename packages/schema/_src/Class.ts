@@ -3,9 +3,33 @@ import { ArbitraryHookId } from "@effect/schema/Arbitrary"
 import { EquivalenceHookId } from "@effect/schema/Equivalence"
 import { PrettyHookId } from "@effect/schema/Pretty"
 import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
-import type { Data } from "effect"
+import { symbol as EqualSymbol } from "effect/Equal"
+import { symbol as HashSymbol } from "effect/Hash"
 import type { Mutable, Simplify } from "effect/Types"
 import { AST, S } from "./schema.js"
+
+export abstract class CasePrototype {
+  [EqualSymbol](_: any): boolean {
+    throw new Error("not implemented ")
+  }
+  [HashSymbol](): number {
+    throw new Error("not implemented ")
+  }
+}
+
+// export type Class<R, I, A, C, Self, Fields, Inherited> = S.Class<R, I, A, C, Self, Fields, Inherited>
+
+// export const Class: <Self>() => <Fields extends S.StructFields>(
+//   fields: Fields
+// ) => S.Class<
+//   Schema.Context<Fields[keyof Fields]>,
+//   Simplify<FromStruct<Fields>>,
+//   Simplify<ToStruct<Fields>>,
+//   Simplify<ToStructConstructor<Fields>>,
+//   Self,
+//   Fields,
+//   CasePrototype
+// > = S.Class as any
 
 export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
   fields: Fields
@@ -24,7 +48,7 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
-    Data.Case
+    CasePrototype
   > = S.Class as any
 
 export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fields extends S.StructFields>(
@@ -45,7 +69,7 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
-    Data.Case
+    CasePrototype
   > = S.TaggedClass as any
 
 /**
