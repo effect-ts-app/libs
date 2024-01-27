@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.127.1
+
+### Patch Changes
+
+- 9780ef0: fup
+
 ## 0.127.0
 
 ### Minor Changes
