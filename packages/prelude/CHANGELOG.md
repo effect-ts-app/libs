@@ -1,5 +1,19 @@
 # @effect-app/prelude
 
+## 0.127.0
+
+### Minor Changes
+
+- a30db88: update packages
+- b454cd7: embrace Matcher
+
+### Patch Changes
+
+- Updated dependencies [a30db88]
+- Updated dependencies [b454cd7]
+  - @effect-app/schema@0.166.0
+  - @effect-app/core@0.115.0
+
 ## 0.126.0
 
 ### Minor Changes

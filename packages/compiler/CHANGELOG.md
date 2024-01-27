@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.55.0
+
+### Minor Changes
+
+- a30db88: update packages
+
 ## 0.54.0
 
 ### Minor Changes

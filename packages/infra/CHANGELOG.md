@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.153.0
+
+### Minor Changes
+
+- a30db88: update packages
+
+### Patch Changes
+
+- Updated dependencies [a30db88]
+- Updated dependencies [b454cd7]
+  - @effect-app/infra-adapters@0.104.0
+  - @effect-app/prelude@0.127.0
+  - @effect-app/schema@0.166.0
+  - @effect-app/core@0.115.0
+
 ## 0.152.0
 
 ### Minor Changes

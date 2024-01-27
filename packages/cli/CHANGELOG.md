@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.40.0
+
+### Minor Changes
+
+- a30db88: update packages
+
 ## 0.39.0
 
 ### Minor Changes

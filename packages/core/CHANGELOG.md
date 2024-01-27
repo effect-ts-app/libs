@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.115.0
+
+### Minor Changes
+
+- a30db88: update packages
+- b454cd7: embrace Matcher
+
 ## 0.114.0
 
 ### Minor Changes
