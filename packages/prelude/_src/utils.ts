@@ -1,6 +1,7 @@
 import { pretty, typedKeysOf } from "@effect-app/core/utils"
 import type { Clone } from "@fp-ts/optic"
 import { cloneTrait } from "@fp-ts/optic"
+import type { Types } from "effect/Match"
 import get from "lodash/get.js"
 import omit_ from "lodash/omit.js"
 import pick from "lodash/pick.js"
@@ -253,21 +254,21 @@ export function matchValue<TT extends object>(o: ObjectOps<TT>) {
   return Matcher.value(o.subject)
 }
 
-// TODO
-// /** @tsplus getter Object.Ops matchTags */
-// export function matchValueTags<
-//   const I,
-//   P extends
-//     & {
-//       readonly [Tag in Types.Tags<"_tag", I> & string]: (
-//         _: Extract<I, { readonly _tag: Tag }>
-//         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       ) => any
-//     }
-//     & { readonly [Tag in Exclude<keyof P, Types.Tags<"_tag", I>>]: never }
-// >(o: ObjectOps<P>) {
-//   return Matcher.valueTags(o.subject)
-// }
+/** @tsplus pipeable Object.Ops matchTags */
+export function matchValueTags<
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const I extends Object,
+  P extends
+    & {
+      readonly [Tag in Types.Tags<"_tag", I> & string]: (
+        _: Extract<I, { readonly _tag: Tag }>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ) => any
+    }
+    & { readonly [Tag in Exclude<keyof P, Types.Tags<"_tag", I>>]: never }
+>(m: P) {
+  return (o: ObjectOps<I>) => Matcher.valueTags(m)(o.subject)
+}
 
 /**
  * @tsplus getter Object.Ops pretty
