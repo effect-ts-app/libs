@@ -6,7 +6,6 @@ import { Path } from "path-parser"
 import type * as Methods from "./Methods.js"
 
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
-import type { Data } from "effect"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
 import { AST, S } from "./schema.js"
@@ -39,7 +38,7 @@ export interface QueryRequest<
     Simplify<ToStruct<Fields>>,
     M,
     Fields,
-    Data.Case
+    {}
   >
 { // , PropsExtensions<GetClassProps<Fields>>
   Body: undefined
@@ -69,7 +68,7 @@ export interface BodyRequest<
     Simplify<ToStruct<Fields>>,
     M,
     Fields,
-    Data.Case
+    {}
   >
 { // , PropsExtensions<GetClassProps<Self>>
   Path: Path
@@ -398,7 +397,7 @@ export interface Request<
     Simplify<ToStruct<Fields>>,
     M,
     Fields,
-    Data.Case
+    {}
   >
 {
   method: Method
