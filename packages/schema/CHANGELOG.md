@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.167.0
+
+### Minor Changes
+
+- 690624e: Make Data.Case (Equal) implicit
+
 ## 0.166.0
 
 ### Minor Changes
