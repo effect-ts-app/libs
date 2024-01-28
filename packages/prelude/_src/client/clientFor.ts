@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import * as utils from "@effect-app/prelude/utils"
 import { REST } from "@effect-app/prelude/schema"
+import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
@@ -65,8 +65,21 @@ function clientFor_<M extends Requests>(models: M) {
       .reduce((prev, cur) => {
         const h = models[cur]
 
-        const Request = REST.extractRequest(h) as AnyRequest
+        const Request_ = REST.extractRequest(h) as AnyRequest
         const Response = REST.extractResponse(h)
+
+        // @ts-expect-error doc
+        const actionName = utils.uncapitalize(cur)
+        const m = (models as any).meta as string
+        if (!m) throw new Error("No meta defined in Resource!")
+        const mm = m
+          ? m.substring(m.indexOf("_src/") > -1 ? m.indexOf("_src/") + 5 : m.indexOf("dist/") + 5, m.length - 3)
+          : "Unknown"
+        const requestName = `${mm.indexOf("?") > -1 ? mm.substring(0, mm.indexOf("?")) : mm}.${cur as string}`
+
+        const Request = class extends (Request_ as any) {
+          static path = "/" + requestName + (Request_.path === "/" ? "" : Request_.path)
+        } as unknown as AnyRequest
 
         const b = Object.assign({}, h, { Request, Response })
 
@@ -95,14 +108,6 @@ function clientFor_<M extends Requests>(models: M) {
         const parseResponseE = flow(parseResponse, (x) => x.andThen(res.encode))
 
         const path = new Path(Request.path)
-
-        // @ts-expect-error doc
-        const actionName = utils.uncapitalize(cur)
-        const m = (models as any).meta as string
-        const mm = m
-          ? m.substring(m.indexOf("_src/") > -1 ? m.indexOf("_src/") + 5 : m.indexOf("dist/") + 5, m.length - 3)
-          : "Unknown"
-        const requestName = `${mm.indexOf("?") > -1 ? mm.substring(0, mm.indexOf("?")) : mm}.${cur as string}`
 
         // TODO: look into ast, look for propertySignatures, etc.
         // TODO: and fix type wise
