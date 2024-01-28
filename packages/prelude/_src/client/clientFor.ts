@@ -76,6 +76,7 @@ function clientFor_<M extends Requests>(models: M) {
           ? m.substring(m.indexOf("_src/") > -1 ? m.indexOf("_src/") + 5 : m.indexOf("dist/") + 5, m.length - 3)
           : "Unknown"
         const requestName = `${mm.indexOf("?") > -1 ? mm.substring(0, mm.indexOf("?")) : mm}.${cur as string}`
+          .replaceAll(".js", "")
 
         const Request = class extends (Request_ as any) {
           static path = "/" + requestName + (Request_.path === "/" ? "" : Request_.path)
