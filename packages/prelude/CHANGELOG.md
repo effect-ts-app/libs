@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.128.1
+
+### Patch Changes
+
+- f725d15: fix js
+
 ## 0.128.0
 
 ### Minor Changes
