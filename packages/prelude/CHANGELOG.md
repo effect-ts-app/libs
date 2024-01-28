@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.128.0
+
+### Minor Changes
+
+- 5786fb6: prefix path with request name
+
 ## 0.127.2
 
 ### Patch Changes
