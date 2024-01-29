@@ -23,7 +23,7 @@
     "@babel/cli": "^7.23.9",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.4.0",
-    "@types/node": "~20.11.9",
+    "@types/node": "~20.11.10",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.8",
     "fast-check": "~3.15.0",
