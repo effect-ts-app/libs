@@ -154,14 +154,15 @@ export function makeRepo<
         const structSchema = schema as unknown as { struct: typeof schema }
         const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
           _.ast._tag === "Union"
-            // grab id from the first type for now
             // we need to get the TypeLiteral, incase of class it's behind a transform...
-            ? (S.make(_.ast.types[0]._tag === "Transform" ? _.ast.types[0].from : _.ast.types[0]) as unknown as Schema<
-              never,
-              From,
-              T
-            >)
-              .pipe(S.pick("id"))
+            ? S.union(..._.ast.types.map((_) =>
+              (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<
+                never,
+                From,
+                T
+              >)
+                .pipe(S.pick("id"))
+            ))
             : _.pipe(S.pick("id"))
         )
         function findE(_id: T["id"]) {
