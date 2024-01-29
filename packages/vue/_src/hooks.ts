@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
@@ -52,10 +53,10 @@ function swrToQuery<E, A>(
 }
 
 export function useMutate<E, A>(
-  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string }
+  self: { handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>; mapPath: string }
 ) {
   const fn = () =>
-    run.value(self).then((_) => _.body).catch((_) => {
+    run.value(self.handler).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
       const cause = _[FiberFailureCauseId]
       throw cause.squash
@@ -64,10 +65,13 @@ export function useMutate<E, A>(
 }
 
 export function useMutateWithArg<Arg, E, A>(
-  self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string }
+  self: {
+    handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    mapPath: (arg: Arg) => string
+  }
 ) {
   const fn = (arg: Arg) =>
-    run.value(self(arg)).then((_) => _.body).catch((_) => {
+    run.value(self.handler(arg)).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
       const cause = _[FiberFailureCauseId]
       throw cause.squash
@@ -77,20 +81,35 @@ export function useMutateWithArg<Arg, E, A>(
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 
-// TODO: same trick with mutations/actions
-export function useSafeQueryWithArg<Arg, E, A>(
-  self: ((arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>) & { mapPath: (arg: Arg) => string },
+export function useSafeQuery<E, A>(
+  self: {
+    handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    mapPath: string
+  },
+  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
+export function useSafeQuery<Arg, E, A>(
+  self: {
+    handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    mapPath: (arg: Arg) => string
+  },
   arg: Arg | WatchSource<Arg>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
+export function useSafeQuery(
+  self: any, // {
+  //   handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+  //   mapPath: (arg: Arg) => string
+  // } | {
+  //   handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+  //   mapPath: string
+  // },
+  arg?: any, // Arg | WatchSource<Arg> | swrv.IConfig<A, fetcherFn<A>> | undefined,
+  config?: any // swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
-  return useSafeQueryWithArg_(self, self.mapPath, arg, config)
-}
-
-export function useSafeQuery<E, A>(
-  self: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>> & { mapPath: string },
-  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
-) {
-  return useSafeQuery_(self.mapPath, () => self, config)
+  return Effect.isEffect(self.handler)
+    ? useSafeQuery_(self.mapPath, () => self.handler, arg)
+    : useSafeQueryWithArg_(self.handler, self.mapPath, arg, config)
 }
 
 export function useSafeQueryWithArg_<Arg, E, A>(

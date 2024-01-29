@@ -123,95 +123,92 @@ function clientFor_<M extends Requests>(models: M) {
         // @ts-expect-error doc
         prev[actionName] = Request.method === "GET"
           ? fields.length === 0
-            ? Object.assign(
-              fetchApi(Request.method, Request.path)
+            ? {
+              handler: fetchApi(Request.method, Request.path)
                 .flatMap(mapResponseM(parseResponse))
                 .withSpan("client.request", {
                   attributes: { "request.name": requestName }
                 }),
-              meta
-            )
-            : Object.assign(
-              (req: any) =>
+              ...meta
+            }
+            : {
+              handler: (req: any) =>
                 fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
                   .flatMap(mapResponseM(parseResponse))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
-              {
-                ...meta,
-                mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
-              }
-            )
+              ...meta,
+              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
+            }
           : fields.length === 0
-          ? Object.assign(
-            fetchApi3S(b)({}).withSpan("client.request", {
+          ? {
+            handler: fetchApi3S(b)({}).withSpan("client.request", {
               attributes: { "request.name": requestName }
             }),
-            meta
-          )
-          : Object.assign(
-            (req: any) =>
+            ...meta
+          }
+          : {
+            handler: (req: any) =>
               fetchApi3S(b)(cstr(req)).withSpan("client.request", {
                 attributes: { "request.name": requestName }
               }),
-            {
-              ...meta,
-              mapPath: (req: any) =>
-                req
-                  ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
-                    : makePathWithBody(path, Request.encodeSync(cstr(req)))
-                  : Request.path
-            }
-          )
+
+            ...meta,
+            mapPath: (req: any) =>
+              req
+                ? Request.method === "DELETE"
+                  ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
+                  : makePathWithBody(path, Request.encodeSync(cstr(req)))
+                : Request.path
+          }
+
         // generate handler
 
         // @ts-expect-error doc
         prev[`${actionName}E`] = Request.method === "GET"
           ? fields.length === 0
-            ? Object.assign(
-              fetchApi(Request.method, Request.path)
+            ? {
+              handler: fetchApi(Request.method, Request.path)
                 .flatMap(mapResponseM(parseResponseE))
                 .withSpan("client.request", {
                   attributes: { "request.name": requestName }
                 }),
-              meta
-            )
-            : Object.assign(
-              (req: any) =>
+              ...meta
+            }
+            : {
+              handler: (req: any) =>
                 fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
                   .flatMap(mapResponseM(parseResponseE))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
-              {
-                ...meta,
-                mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
-              }
-            )
+
+              ...meta,
+              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
+            }
           : fields.length === 0
-          ? Object.assign(
-            fetchApi3SE(b)({}).withSpan("client.request", {
+          ? {
+            handler: fetchApi3SE(b)({}).withSpan("client.request", {
               attributes: { "request.name": requestName }
             }),
-            meta
-          )
-          : Object.assign(
-            (req: any) =>
+            ...meta
+          }
+          : {
+            handler: (req: any) =>
               fetchApi3SE(b)(cstr(req)).withSpan("client.request", {
                 attributes: { "request.name": requestName }
               }),
-            {
-              ...meta,
-              mapPath: (req: any) =>
-                req
-                  ? Request.method === "DELETE"
-                    ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
-                    : makePathWithBody(path, Request.encodeSync(cstr(req)))
-                  : Request.path
-            }
-          ) // generate handler
+
+            ...meta,
+            mapPath: (req: any) =>
+              req
+                ? Request.method === "DELETE"
+                  ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
+                  : makePathWithBody(path, Request.encodeSync(cstr(req)))
+                : Request.path
+          }
+        // generate handler
 
         return prev
       }, {} as Client<M>)
@@ -231,56 +228,53 @@ type HasEmptyTo<T extends Schema<any, any>> = T extends { struct: Schema<any, an
   : false
 
 type RequestHandlers<R, E, M extends Requests> = {
-  [K in keyof M & string as Uncapitalize<K>]: HasEmptyTo<REST.GetRequest<M[K]>> extends true
-    ? Effect<R, E, FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>> & {
+  [K in keyof M & string as Uncapitalize<K>]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
+      handler: Effect<R, E, FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>>
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
       mapPath: string
     }
-    :
-      & ((
+    : {
+      handler: (
         req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
       ) => Effect<
         R,
         E,
         FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>
-      >)
-      & {
-        Request: REST.GetRequest<M[K]>
-        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-        // we use a weakmap as cache for converting constructor input to constructed.
-        mapPath: (
-          req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
-        ) => string
-      }
+      >
+      Request: REST.GetRequest<M[K]>
+      Reponse: ExtractResponse<REST.GetResponse<M[K]>>
+      // we use a weakmap as cache for converting constructor input to constructed.
+      mapPath: (
+        req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+      ) => string
+    }
 }
 
 type RequestHandlersE<R, E, M extends Requests> = {
-  [K in keyof M & string as `${Uncapitalize<K>}E`]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ?
-      & Effect<
+  [K in keyof M & string as `${Uncapitalize<K>}E`]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
+      handler: Effect<
         R,
         E,
         FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>
       >
-      & {
-        Request: REST.GetRequest<M[K]>
-        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-        mapPath: string
-      }
-    :
-      & ((
+      Request: REST.GetRequest<M[K]>
+      Reponse: ExtractResponse<REST.GetResponse<M[K]>>
+      mapPath: string
+    }
+    : {
+      handler: (
         req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
       ) => Effect<
         R,
         E,
         FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>
-      >)
-      & {
-        Request: REST.GetRequest<M[K]>
-        Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-        // we use a weakmap as cache for converting constructor input to constructed.
-        mapPath: (
-          req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
-        ) => string
-      }
+      >
+      Request: REST.GetRequest<M[K]>
+      Reponse: ExtractResponse<REST.GetResponse<M[K]>>
+      // we use a weakmap as cache for converting constructor input to constructed.
+      mapPath: (
+        req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+      ) => string
+    }
 }
