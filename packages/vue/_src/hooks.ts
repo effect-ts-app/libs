@@ -290,12 +290,12 @@ export const useMutation: {
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
     let effect: Effect<ApiConfig | HttpClient.Default, E, A>
     let abortSignal: AbortSignal | undefined
-    if (typeof self.handler === "function") {
-      effect = self.handler(fst as I)
-      abortSignal = snd
-    } else {
+    if (Effect.isEffect(self.handler)) {
       effect = self.handler
       abortSignal = fst as AbortSignal | undefined
+    } else {
+      effect = self.handler(fst as I)
+      abortSignal = snd
     }
 
     return run.value(
