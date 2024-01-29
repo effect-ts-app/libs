@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.129.0
+
+### Minor Changes
+
+- default paths to /
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@0.168.0
+
 ## 0.128.2
 
 ### Patch Changes

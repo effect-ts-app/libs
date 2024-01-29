@@ -423,16 +423,16 @@ export type IfPathPropsProvided<Path extends string, B extends StructFields, C> 
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Delete<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("DELETE", path, config)
+export function Delete<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("DELETE", "/", config)
 }
 /**
  * PUT http method.
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Put<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("PUT", path, config)
+export function Put<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("PUT", "/", config)
 }
 
 /**
@@ -440,24 +440,24 @@ export function Put<Path extends `/${string}`, Config extends object = {}>(path:
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Get<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("GET", path, config)
+export function Get<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("GET", "/", config)
 }
 /**
  * PATCH http method.
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Patch<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("PATCH", path, config)
+export function Patch<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("PATCH", "/", config)
 }
 /**
  * POST http method.
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Post<Path extends `/${string}`, Config extends object = {}>(path: Path, config?: Config) {
-  return MethodReqProps2_("POST", path, config)
+export function Post<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("POST", "/", config)
 }
 
 function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`, Config extends object = {}>(

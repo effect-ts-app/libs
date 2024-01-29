@@ -152,10 +152,12 @@ export function makePathWithQuery(
     | null
   >
 ) {
+  const forQs = ReadonlyRecord.filter(pars, (_, k) => !path.params.includes(k))
+  const q = forQs // { ...forQs, _: JSON.stringify(forQs) } // TODO: drop completely individual keys from query?, sticking to json only
   return (
     path.build(pars, { ignoreSearch: true, ignoreConstraints: true })
-    + (Object.keys(pars).length
-      ? "?" + qs.stringify(ReadonlyRecord.filter(pars, (_, k) => !path.params.includes(k)))
+    + (Object.keys(q).length
+      ? "?" + qs.stringify(q)
       : "")
   )
 }

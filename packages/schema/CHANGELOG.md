@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.168.0
+
+### Minor Changes
+
+- default paths to /
+
 ## 0.167.0
 
 ### Minor Changes
