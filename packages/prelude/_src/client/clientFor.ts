@@ -75,7 +75,7 @@ function clientFor_<M extends Requests>(models: M) {
         const Request = class extends (Request_ as any) {
           static path = "/" + requestName + (Request_.path === "/" ? "" : Request_.path)
           static method = Request_.method as REST.SupportedMethods === "AUTO"
-            ? REST.determineMethod(cur as string)
+            ? REST.determineMethod(cur as string, Request_)
             : Request_.method
         } as unknown as AnyRequest
 

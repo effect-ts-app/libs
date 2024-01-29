@@ -5,9 +5,10 @@ import { Path } from "path-parser"
 
 import type * as Methods from "./Methods.js"
 
-import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
+import type { FromStruct, Schema, StructFields, ToStruct } from "@effect/schema/Schema"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
+import type { AST } from "./schema.js"
 import { S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
@@ -24,9 +25,32 @@ const get = ["Get", "Index", "List", "All"]
 const del = ["Delete", "Remove", "Destroy"]
 const patch = ["Patch", "Update", "Edit"]
 
-export const determineMethod = (actionName: string) => {
-  if (get.some((_) => actionName.startsWith(_))) return "GET" as const
-  if (del.some((_) => actionName.startsWith(_))) return "DELETE" as const
+const astAssignableToString = (ast: AST.AST): boolean => {
+  if (ast._tag === "StringKeyword") return true
+  if (ast._tag === "Union" && ast.types.every(astAssignableToString)) {
+    return true
+  }
+  if (ast._tag === "Refinement") {
+    return astAssignableToString(ast.from)
+  }
+
+  return false
+}
+
+const onlyStringsAst = (ast: AST.AST): boolean => {
+  if (ast._tag === "Union") return ast.types.every(onlyStringsAst)
+  if (ast._tag !== "TypeLiteral") return false
+  return ast.propertySignatures.every((_) => astAssignableToString(_.type))
+}
+
+const onlyStrings = (schema: S.Schema<any, any, any>): boolean => {
+  if ("struct" in schema) return onlyStrings(schema.struct as any)
+  return onlyStringsAst(schema.ast)
+}
+
+export const determineMethod = (actionName: string, schema: Schema<any, any, any>) => {
+  if (get.some((_) => actionName.startsWith(_))) return onlyStrings(schema) ? "GET" as const : "POST" as const
+  if (del.some((_) => actionName.startsWith(_))) return onlyStrings(schema) ? "DELETE" as const : "POST" as const
   if (patch.some((_) => actionName.startsWith(_))) return "PATCH" as const
   return "POST" as const
 }
