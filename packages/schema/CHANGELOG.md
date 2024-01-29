@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.169.1
+
+### Patch Changes
+
+- cb62aaa: fix auto
+
 ## 0.169.0
 
 ### Minor Changes
