@@ -291,7 +291,7 @@ export const useMutation: {
     let effect: Effect<ApiConfig | HttpClient.Default, E, A>
     let abortSignal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
-      effect = self.handler
+      effect = self.handler as any
       abortSignal = fst as AbortSignal | undefined
     } else {
       effect = self.handler(fst as I)
