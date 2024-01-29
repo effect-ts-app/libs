@@ -70,12 +70,9 @@ function clientFor_<M extends Requests>(models: M) {
 
         // @ts-expect-error doc
         const actionName = utils.uncapitalize(cur)
-        const m = (models as any).meta as string
+        const m = (models as any).meta as { moduleName: string }
         if (!m) throw new Error("No meta defined in Resource!")
-        const mm = m
-          ? m.substring(m.indexOf("_src/") > -1 ? m.indexOf("_src/") + 5 : m.indexOf("dist/") + 5, m.length - 3)
-          : "Unknown"
-        const requestName = `${mm.indexOf("?") > -1 ? mm.substring(0, mm.indexOf("?")) : mm}.${cur as string}`
+        const requestName = `${m.moduleName}.${cur as string}`
           .replaceAll(".js", "")
 
         const Request = class extends (Request_ as any) {
