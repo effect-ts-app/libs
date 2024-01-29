@@ -81,7 +81,7 @@ function clientFor_<M extends Requests>(models: M) {
 
         if ((Request_ as any).method === "AUTO") {
           Object.assign(Request, {
-            [Request.method === "GET" || Request.method === "DELETE" ? "Query" : "Body"]: (Request_ as any).AUTO
+            [Request.method === "GET" || Request.method === "DELETE" ? "Query" : "Body"]: (Request_ as any).Auto
           })
         }
 
