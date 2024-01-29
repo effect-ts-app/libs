@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.169.2
+
+### Patch Changes
+
+- 578e25c: pick POST for query/delete when not all members assignable to string
+
 ## 0.169.1
 
 ### Patch Changes

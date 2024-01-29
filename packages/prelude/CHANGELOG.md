@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.130.4
+
+### Patch Changes
+
+- 578e25c: pick POST for query/delete when not all members assignable to string
+- Updated dependencies [578e25c]
+  - @effect-app/schema@0.169.2
+
 ## 0.130.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @effect-app/infra-adapters
 
+## 0.104.11
+
+### Patch Changes
+
+- Updated dependencies [578e25c]
+  - @effect-app/prelude@0.130.4
+  - @effect-app/schema@0.169.2
+
 ## 0.104.10
 
 ### Patch Changes

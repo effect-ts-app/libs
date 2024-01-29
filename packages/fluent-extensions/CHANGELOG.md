@@ -1,5 +1,12 @@
 # @effect-app/fluent-extensions
 
+## 0.108.5
+
+### Patch Changes
+
+- Updated dependencies [578e25c]
+  - @effect-app/schema@0.169.2
+
 ## 0.108.4
 
 ### Patch Changes
