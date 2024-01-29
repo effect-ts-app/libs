@@ -242,21 +242,23 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useMutation: {
-  <I, E, A>(self: (i: I) => Effect<ApiConfig | HttpClient.Default, E, A>): readonly [
+  <I, E, A>(self: { handler: (i: I) => Effect<ApiConfig | HttpClient.Default, E, A> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
-  <E, A>(self: Effect<ApiConfig | HttpClient.Default, E, A>): readonly [
+  <E, A>(self: { handler: Effect<ApiConfig | HttpClient.Default, E, A> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
     ) => Promise<Either<E, A>>
   ]
 } = <I, E, A>(
-  self: ((i: I) => Effect<ApiConfig | HttpClient.Default, E, A>) | Effect<ApiConfig | HttpClient.Default, E, A>
+  self: {
+    handler: ((i: I) => Effect<ApiConfig | HttpClient.Default, E, A>) | Effect<ApiConfig | HttpClient.Default, E, A>
+  }
 ) => {
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
@@ -288,11 +290,11 @@ export const useMutation: {
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
     let effect: Effect<ApiConfig | HttpClient.Default, E, A>
     let abortSignal: AbortSignal | undefined
-    if (typeof self === "function") {
-      effect = self(fst as I)
+    if (typeof self.handler === "function") {
+      effect = self.handler(fst as I)
       abortSignal = snd
     } else {
-      effect = self
+      effect = self.handler
       abortSignal = fst as AbortSignal | undefined
     }
 
