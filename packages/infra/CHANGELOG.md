@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.154.7
+
+### Patch Changes
+
+- 2161203: fix union id encode
+
 ## 0.154.6
 
 ### Patch Changes
