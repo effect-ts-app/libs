@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240127162054
+  '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240129113320
   date-fns: ^2.29.3
   http-proxy: npm:http-proxy-node16@1.0.0
 
@@ -254,7 +254,7 @@ importers:
     dependencies:
       '@effect/platform':
         specifier: ^0.43.3
-        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -367,7 +367,7 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.43.3
-        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -452,10 +452,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.43.3
-        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.0.0-20240127162054
-        version: /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20240129113320
+        version: /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       '@faker-js/faker':
         specifier: ^8.4.0
         version: 8.4.0
@@ -558,10 +558,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.43.3
-        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.0.0-20240127162054
-        version: /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20240129113320
+        version: /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -643,10 +643,10 @@ importers:
         version: link:../schema
       '@effect/platform':
         specifier: ^0.43.3
-        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+        version: 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.0.0-20240127162054
-        version: /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20240129113320
+        version: /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -715,8 +715,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.0.0-20240127162054
-        version: /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20240129113320
+        version: /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.2)
@@ -779,8 +779,8 @@ importers:
         specifier: ^0.28.3
         version: 0.28.3(@effect/platform@0.43.3)(effect@2.2.2)
       '@effect/schema':
-        specifier: npm:@effect-app/schema-fork@0.0.0-20240127162054
-        version: /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+        specifier: npm:@effect-app/schema-fork@0.0.0-20240129113320
+        version: /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
@@ -1623,8 +1623,8 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0):
-    resolution: {integrity: sha512-UIXNOFsb96eb7EVQ8cCYj2yJo2G+4oMtG/LHt+YG8dRefe48zk+nYxy2CeXD9B/cQaS3fdPEh2/K1R5C1raNcg==}
+  /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0):
+    resolution: {integrity: sha512-3o1ie5m3tnWfWx8afduYsJn29voIZ+VCNz+g0PA0YypemAtFFzuiA0q9j4AJmD8rLc38+5DVTy2GyMnxHvwPnw==}
     peerDependencies:
       effect: workspace:^
       fast-check: ^3.13.2
@@ -1652,17 +1652,17 @@ packages:
       '@effect/platform': ^0.43.3
       effect: ^2.2.2
     dependencies:
-      '@effect/platform': 0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2)
+      '@effect/platform': 0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2)
       effect: 2.2.2
     dev: false
 
-  /@effect/platform@0.43.3(@effect-app/schema-fork@0.0.0-20240127162054)(effect@2.2.2):
+  /@effect/platform@0.43.3(@effect-app/schema-fork@0.0.0-20240129113320)(effect@2.2.2):
     resolution: {integrity: sha512-yBZLm+eYseTKXu9RidYZM+kUoYNd9j+1iNOZjGHRT250Q4kNwRI6EQspi9nhNrqtL27umzrDWYGAxUOjR7SZiQ==}
     peerDependencies:
-      '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240127162054
+      '@effect/schema': npm:@effect-app/schema-fork@0.0.0-20240129113320
       effect: ^2.2.2
     dependencies:
-      '@effect/schema': /@effect-app/schema-fork@0.0.0-20240127162054(effect@2.2.2)(fast-check@3.15.0)
+      '@effect/schema': /@effect-app/schema-fork@0.0.0-20240129113320(effect@2.2.2)(fast-check@3.15.0)
       effect: 2.2.2
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
