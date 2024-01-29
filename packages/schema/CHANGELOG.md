@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.169.3
+
+### Patch Changes
+
+- 17dbbff: improve GET detection
+
 ## 0.169.2
 
 ### Patch Changes
