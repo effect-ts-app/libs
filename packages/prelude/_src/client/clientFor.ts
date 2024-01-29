@@ -79,6 +79,12 @@ function clientFor_<M extends Requests>(models: M) {
             : Request_.method
         } as unknown as AnyRequest
 
+        if ((Request_ as any).method === "AUTO") {
+          Object.assign(Request, {
+            [Request.method === "GET" || Request.method === "DELETE" ? "Query" : "Body"]: (Request_ as any).AUTO
+          })
+        }
+
         const b = Object.assign({}, h, { Request, Response })
 
         const meta = {
