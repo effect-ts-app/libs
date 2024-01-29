@@ -8,7 +8,7 @@ import type * as Methods from "./Methods.js"
 import type { FromStruct, StructFields, ToStruct } from "@effect/schema/Schema"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
-import { AST, S } from "./schema.js"
+import { S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
 
@@ -139,6 +139,96 @@ type OrAny<T> = Exclude<T, undefined>
 
 // TODO: Somehow ensure that Self and M are related..
 // type Ensure<M, Self extends S.Schema<any, any>> = M extends S.Schema.To<Self> ? M : never
+
+export function AutoRequest<M>(__name?: string) {
+  function a<Headers extends StructFields, PPath extends `/${string}`>(
+    method: Methods.ReadMethods,
+    path: PPath,
+    s: StructFields,
+    _: {
+      headers?: Headers
+    }
+  ): QueryRequest<M, undefined, undefined, Headers, StructFields, PPath>
+  function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+    method: Methods.ReadMethods,
+    path: PPath,
+    s: StructFields,
+    _: {
+      headers?: Headers
+      path: Path
+    }
+  ): QueryRequest<M, Path, undefined, Headers, Path, PPath>
+  function a<Query extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+    method: Methods.ReadMethods,
+    path: PPath,
+    s: StructFields,
+    {
+      headers,
+      query
+    }: {
+      headers?: Headers
+      query: Query
+    }
+  ): QueryRequest<M, undefined, Query, Headers, Query, PPath>
+  function a<
+    QueryFields extends StructFields,
+    PathFields extends StructFields,
+    HeadersFields extends StructFields,
+    PPath extends `/${string}`
+  >(
+    method: Methods.ReadMethods,
+    path: PPath,
+    s: StructFields,
+    _: {
+      headers?: HeadersFields
+      path: PathFields
+      query: QueryFields
+    }
+  ): QueryRequest<
+    M,
+    PathFields,
+    QueryFields,
+    HeadersFields,
+    QueryFields,
+    PPath
+  >
+  function a<
+    PathFields extends StructFields,
+    QueryFields extends StructFields,
+    HeadersFields extends StructFields,
+    PPath extends `/${string}`
+  >(
+    method: Methods.ReadMethods,
+    path: PPath,
+    s: StructFields,
+    _: {
+      headers?: HeadersFields
+      path?: PathFields
+      query?: QueryFields
+    }
+  ): QueryRequest<
+    M,
+    PathFields,
+    QueryFields,
+    HeadersFields,
+    PathFields & QueryFields,
+    PPath
+  > {
+    class Self extends S.Class<Self>()(s) {
+      static Body = undefined
+      static Path = _.path
+      static Auto: any = (_ as any).auto
+      static Headers = _.headers
+      static path = path
+      static method = method
+      static Tag = RequestTag
+      static [reqBrand] = reqBrand
+    }
+    return Self as any
+  }
+  return a
+}
+
 export function QueryRequest<M>(__name?: string) {
   function a<Headers extends StructFields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
@@ -222,9 +312,6 @@ export function QueryRequest<M>(__name?: string) {
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
-      static override get ast() {
-        return AST.setAnnotation(super.ast, AST.TitleAnnotationId, this.name)
-      }
     }
     return Self as any
   }
@@ -386,9 +473,6 @@ export function BodyRequest<M>(__name?: string) {
       static method = method
       static Tag = RequestTag
       static [reqBrand] = reqBrand
-      static override get ast() {
-        return AST.setAnnotation(super.ast, AST.TitleAnnotationId, this.name)
-      }
     }
     return Self as any
   }
@@ -589,12 +673,23 @@ export function makeRequest<
     ? self.pipe(S.pick(...pathParams as any))
     : null
 
-  const dest = method === "GET" || method === "DELETE" ? "query" : "body"
+  const dest = method === "GET" || method === "DELETE" ? "query" : method === "AUTO" ? "auto" : "body"
   const newSchema = {
     path: pathSchema ? pathSchema : undefined,
     // TODO: query fields must be parsed "from string"
 
     [dest]: remainSchema
+  }
+  if (method === "AUTO") {
+    return class extends Object.assign(
+      AutoRequest<M>(__name)(
+        method as Methods.ReadMethods,
+        path,
+        s,
+        newSchema as any
+      ),
+      config ?? {}
+    ) {} as any
   }
   if (method === "GET" || method === "DELETE") {
     return class extends Object.assign(

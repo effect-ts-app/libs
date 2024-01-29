@@ -65,7 +65,7 @@ export function useClassNameForSchema(cls: any) {
  * composes @link useClassNameForSchema and @link useClassConstructorForSchema
  */
 export function useClassFeaturesForSchema(cls: any) {
-  return useClassNameForSchema(cls) // useClassConstructorForSchema(
+  return cls // built-in now useClassNameForSchema(cls) // useClassConstructorForSchema(
 }
 
 const toAnnotations = (
