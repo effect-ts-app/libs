@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 0.107.0
+
+### Minor Changes
+
+- 352d57c: cleanup query/mutations.
+
+### Patch Changes
+
+- Updated dependencies [352d57c]
+  - @effect-app/prelude@0.131.0
+  - @effect-app/vue@0.107.0
+
 ## 0.106.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.131.0
+
+### Minor Changes
+
+- 352d57c: cleanup query/mutations.
+
 ## 0.130.5
 
 ### Patch Changes
