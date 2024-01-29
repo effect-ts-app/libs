@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.40.1
+
+### Patch Changes
+
+- dd60aca: fix
+
 ## 0.40.0
 
 ### Minor Changes
