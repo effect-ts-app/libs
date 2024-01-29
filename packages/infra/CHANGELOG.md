@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.154.0
+
+### Minor Changes
+
+- 1832f49: add auto method support
+
+### Patch Changes
+
+- Updated dependencies [1832f49]
+  - @effect-app/prelude@0.130.0
+  - @effect-app/schema@0.169.0
+  - @effect-app/infra-adapters@0.104.7
+
 ## 0.153.6
 
 ### Patch Changes

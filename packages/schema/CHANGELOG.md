@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.169.0
+
+### Minor Changes
+
+- 1832f49: add auto method support
+
 ## 0.168.0
 
 ### Minor Changes

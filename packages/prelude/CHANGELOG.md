@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.130.0
+
+### Minor Changes
+
+- 1832f49: add auto method support
+
+### Patch Changes
+
+- Updated dependencies [1832f49]
+  - @effect-app/schema@0.169.0
+
 ## 0.129.0
 
 ### Minor Changes
