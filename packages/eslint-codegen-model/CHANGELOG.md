@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.40.0
+
+### Minor Changes
+
+- a5c50bb: feat: add meta codegen
+
 ## 0.39.0
 
 ### Minor Changes
