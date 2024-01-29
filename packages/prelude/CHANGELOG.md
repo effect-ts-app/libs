@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.128.2
+
+### Patch Changes
+
+- 7db2745: meta
+
 ## 0.128.1
 
 ### Patch Changes
