@@ -20,6 +20,17 @@ const RequestTag = Tag<never, never>()
 
 export { Methods }
 
+const get = ["Get", "Index", "List", "All"]
+const del = ["Delete", "Remove", "Destroy"]
+const patch = ["Patch", "Update", "Edit"]
+
+export const determineMethod = (actionName: string) => {
+  if (get.some((_) => actionName.startsWith(_))) return "GET" as const
+  if (del.some((_) => actionName.startsWith(_))) return "DELETE" as const
+  if (patch.some((_) => actionName.startsWith(_))) return "PATCH" as const
+  return "POST" as const
+}
+
 export const reqBrand = Symbol()
 
 // Actually GET + DELETE
@@ -388,7 +399,7 @@ export interface Request<
   M,
   Fields extends StructFields,
   Path extends `/${string}`,
-  Method extends Methods.Rest
+  Method extends SupportedMethods
 > extends
   S.Class<
     never,
@@ -460,7 +471,13 @@ export function Post<Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("POST", "/", config)
 }
 
-function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`, Config extends object = {}>(
+export function Req<Config extends object = {}>(config?: Config) {
+  return MethodReqProps2_("AUTO", "/", config)
+}
+
+export type SupportedMethods = "AUTO" | Methods.Rest
+
+function MethodReqProps2_<Method extends SupportedMethods, Path extends `/${string}`, Config extends object = {}>(
   method: Method,
   path: Path,
   config?: Config
@@ -477,7 +494,7 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
       fields: Fields
     ): BuildRequest<Fields, Path, Method, M, Config>
     function a<Fields extends StructFields>(fields?: Fields) {
-      const req = Req<M>(__name)
+      const req = buildReq<M>(__name)
       const r = fields ? req(method, path, fields, config) : req(method, path, {}, config)
       return r
     }
@@ -489,10 +506,10 @@ function MethodReqProps2_<Method extends Methods.Rest, Path extends `/${string}`
 /**
  * Automatically picks path, query and body, based on Path params and Request Method.
  */
-function Req<M>(name?: string) {
+function buildReq<M>(name?: string) {
   function a<
     Path extends `/${string}`,
-    Method extends Methods.Rest,
+    Method extends SupportedMethods,
     Fields extends StructFields,
     Config extends object = {}
   >(
@@ -521,7 +538,7 @@ export function parsePathParams<Path extends `/${string}`>(path: Path) {
 type BuildRequest<
   Fields extends StructFields,
   Path extends `/${string}`,
-  Method extends Methods.Rest,
+  Method extends SupportedMethods,
   M,
   Config extends object = {}
 > = IfPathPropsProvided<
@@ -554,7 +571,7 @@ type BuildRequest<
 export function makeRequest<
   Fields extends StructFields,
   Path extends `/${string}`,
-  Method extends Methods.Rest,
+  Method extends SupportedMethods,
   M,
   Config extends object = {}
 >(
@@ -604,7 +621,7 @@ export function makeRequest<
 // export function adaptRequest<
 //   Fields extends StructFields,
 //   Path extends `/${string}`,
-//   Method extends Methods.Rest,
+//   Method extends SupportedMethods,
 //   M,
 //   Config extends object = {}
 // >(req: Request<M, Fields, Path, Method>, config?: Config) {

@@ -12,7 +12,7 @@ export type Request<
   ReqA extends PathA & QueryA & BodyA,
   PPath extends `/${string}`
 > = REST.ReqRes<unknown, ReqA> & {
-  method: REST.Methods.Rest
+  method: REST.SupportedMethods
   path: PPath
   Cookie?: REST.ReqRes<Record<string, string>, CookieA>
   Path?: REST.ReqRes<Record<string, string>, PathA>

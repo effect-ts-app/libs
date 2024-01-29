@@ -24,9 +24,6 @@ type AnyRequest =
     REST.QueryRequest<any, any, any, any, any, any>,
     "method"
   >
-  & {
-    method: REST.Methods.Rest
-  }
   & REST.RequestSchemed<any, any>
 
 const cache = new Map<any, Client<any>>()
@@ -77,6 +74,9 @@ function clientFor_<M extends Requests>(models: M) {
 
         const Request = class extends (Request_ as any) {
           static path = "/" + requestName + (Request_.path === "/" ? "" : Request_.path)
+          static method = Request_.method as REST.SupportedMethods === "AUTO"
+            ? REST.determineMethod(cur as string)
+            : Request_.method
         } as unknown as AnyRequest
 
         const b = Object.assign({}, h, { Request, Response })

@@ -94,15 +94,6 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
 ] ? E
   : never
 
-export type Request2<
-  Path extends string,
-  Method extends S.REST.Methods.Rest,
-  ReqA extends StructFields
-> = S.REST.ReqRes<{}, S.ToStruct<ReqA>> & {
-  method: Method
-  path: Path
-}
-
 export type Encode<A, E> = (a: A) => E
 
 // function getErrorMessage(current: ContextEntry) {
@@ -271,19 +262,6 @@ export function respondSuccess<ReqA, A, E>(
             : res.status(200).send(JSON.stringify(r))
         })
       ))
-}
-
-export interface RequestHandler2<
-  R,
-  Path extends string,
-  Method extends S.REST.Methods.Rest,
-  ReqA extends StructFields,
-  ResA extends StructFields,
-  ResE
-> {
-  h: (i: ReqA) => Effect<R, ResE, ResA>
-  Request: Request2<Path, Method, ReqA>
-  Response: S.REST.ReqRes<any, any>
 }
 
 export function makeRequestParsers<
