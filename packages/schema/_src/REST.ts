@@ -21,7 +21,7 @@ const RequestTag = Tag<never, never>()
 
 export { Methods }
 
-const get = ["Get", "Index", "List", "All"]
+const get = ["Get", "Index", "List", "All", "Find", "Search"]
 const del = ["Delete", "Remove", "Destroy"]
 const patch = ["Patch", "Update", "Edit"]
 
@@ -30,7 +30,7 @@ const astAssignableToString = (ast: AST.AST): boolean => {
   if (ast._tag === "Union" && ast.types.every(astAssignableToString)) {
     return true
   }
-  if (ast._tag === "Refinement") {
+  if (ast._tag === "Refinement" || ast._tag === "Transform") {
     return astAssignableToString(ast.from)
   }
 
