@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { constant, flow } from "@effect-app/prelude/Function"
-import type { REST } from "@effect-app/prelude/schema"
+import { type REST } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"
+import {
+  InvalidStateError,
+  NotFoundError,
+  NotLoggedInError,
+  OptimisticConcurrencyException,
+  UnauthorizedError,
+  ValidationError
+} from "./errors.js"
 
 export type FetchError = HttpError<string>
 
@@ -39,6 +47,34 @@ const getClient = HttpClient.flatMap((defaultClient) =>
           _.status === 204
             ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
             : _.json.map((body) => ({ status: _.status, body, headers: _.headers }))
+        )
+        .catchTag(
+          "ResponseError",
+          (err) => {
+            const toError = <R, From, To>(s: Schema<R, From, To>) =>
+              err.response.json.flatMap((_) => s.decodeUnknown(_).catchAll(() => Effect.fail(err))).flatMap(Effect.fail)
+
+            // opposite of api's `defaultErrorHandler`
+            if (err.response.status === 404) {
+              return toError(NotFoundError)
+            }
+            if (err.response.status === 400) {
+              return toError(ValidationError)
+            }
+            if (err.response.status === 401) {
+              return toError(NotLoggedInError)
+            }
+            if (err.response.status === 422) {
+              return toError(InvalidStateError)
+            }
+            if (err.response.status === 403) {
+              return toError(UnauthorizedError)
+            }
+            if (err.response.status === 412) {
+              return toError(OptimisticConcurrencyException)
+            }
+            return Effect.fail(err)
+          }
         )
         .catchTags({
           "ResponseError": (err) =>

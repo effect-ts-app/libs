@@ -1,5 +1,13 @@
 import { logError } from "@effect-app/infra/errorReporter"
-import type { SupportedErrors, ValidationError } from "@effect-app/prelude/client/errors"
+import type { SupportedErrors } from "@effect-app/prelude/client/errors"
+import {
+  InvalidStateError,
+  NotFoundError,
+  NotLoggedInError,
+  OptimisticConcurrencyException,
+  UnauthorizedError,
+  ValidationError
+} from "@effect-app/prelude/client/errors"
 import { HttpBody, HttpHeaders, type HttpServerRequest, type HttpServerResponse } from "../http.js"
 
 import type {
@@ -24,7 +32,8 @@ export function defaultBasicErrorHandler<R>(
   res: HttpServerResponse,
   r2: Effect<R, ValidationError, HttpServerResponse>
 ) {
-  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.setBody(HttpBody.unsafeJson(body)).setStatus(code))
+  const sendError = (code: number) => (body: unknown) =>
+    Effect.sync(() => res.setBody(HttpBody.unsafeJson(body)).setStatus(code))
   return r2
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTag("ValidationError", (err) => sendError(400)(err.errors))
@@ -50,7 +59,15 @@ export function defaultErrorHandler<R>(
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
-  const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.setStatus(code).setBody(HttpBody.unsafeJson(body)))
+  const sendError = <R, From, To>(code: number, schema: Schema<R, From, To>) => (body: To) =>
+    schema
+      .encode(body)
+      .orDie
+      .andThen((body) =>
+        res
+          .setStatus(code)
+          .setBody(HttpBody.unsafeJson(body))
+      )
   return r3
     .tapErrorCause((cause) => cause.isFailure() ? logRequestError(cause) : Effect.unit)
     .catchTags({
@@ -63,13 +80,13 @@ export function defaultErrorHandler<R>(
             headers: HttpHeaders.fromInput(err.error.headers)
           })
         ),
-      "ValidationError": (err) => sendError(400)(err.errors),
-      "NotFoundError": sendError(404),
-      "NotLoggedInError": sendError(401),
-      "UnauthorizedError": sendError(403),
-      "InvalidStateError": sendError(422),
+      "ValidationError": sendError(400, ValidationError),
+      "NotFoundError": sendError(404, NotFoundError),
+      "NotLoggedInError": sendError(401, NotLoggedInError),
+      "UnauthorizedError": sendError(403, UnauthorizedError),
+      "InvalidStateError": sendError(422, InvalidStateError),
       // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
-      "OptimisticConcurrencyException": sendError(412)
+      "OptimisticConcurrencyException": sendError(412, OptimisticConcurrencyException)
     })
     // final catch all; expecting never so that unhandled known errors will show up
     .catchAll((err: never) =>

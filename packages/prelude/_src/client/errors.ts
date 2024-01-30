@@ -4,7 +4,7 @@ import { TaggedError } from "@effect-app/prelude/schema"
 @useClassFeaturesForSchema
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
-export class NotFoundError<ItemType> extends TaggedError<NotFoundError<any>>()("NotFoundError", {
+export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<ItemType>>()("NotFoundError", {
   type: string,
   id: unknown
 }) {
