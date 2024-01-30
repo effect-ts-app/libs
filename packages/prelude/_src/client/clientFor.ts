@@ -5,6 +5,7 @@ import { REST } from "@effect-app/prelude/schema"
 import * as utils from "@effect-app/prelude/utils"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
+import type { SupportedErrors } from "./errors.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
 import {
   fetchApi,
@@ -31,12 +32,12 @@ const cache = new Map<any, Client<any>>()
 export type Client<M extends Requests> =
   & RequestHandlers<
     ApiConfig | HttpClient.Default,
-    FetchError | ResponseError,
+    SupportedErrors | FetchError | ResponseError,
     M
   >
   & RequestHandlersE<
     ApiConfig | HttpClient.Default,
-    FetchError | ResponseError,
+    SupportedErrors | FetchError | ResponseError,
     M
   >
 
