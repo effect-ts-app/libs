@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 0.155.0
+
+### Minor Changes
+
+- 99f79ab: update packages
+- cd25b5f: improve: typed error handling
+
+### Patch Changes
+
+- Updated dependencies [99f79ab]
+- Updated dependencies [cd25b5f]
+  - @effect-app/infra-adapters@0.105.0
+  - @effect-app/prelude@0.132.0
+  - @effect-app/schema@0.170.0
+  - @effect-app/core@0.116.0
+
 ## 0.154.7
 
 ### Patch Changes

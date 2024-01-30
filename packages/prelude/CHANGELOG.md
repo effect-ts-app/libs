@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.132.0
+
+### Minor Changes
+
+- 99f79ab: update packages
+- cd25b5f: improve: typed error handling
+
+### Patch Changes
+
+- Updated dependencies [99f79ab]
+  - @effect-app/schema@0.170.0
+  - @effect-app/core@0.116.0
+
 ## 0.131.0
 
 ### Minor Changes
