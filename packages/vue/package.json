@@ -5,15 +5,15 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect/platform-browser": "^0.28.3",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240127162054",
+    "@effect/platform-browser": "^0.28.4",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240129113320",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@fp-ts/optic": "^0.22.0",
     "@formatjs/intl": "^2.10.0",
-    "effect": "^2.2.2",
+    "effect": "^2.2.3",
     "query-string": "^8.1.0",
     "swrv": "^1.0.4",
     "vue": "^3.4.15"

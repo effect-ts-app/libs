@@ -6,8 +6,8 @@
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
   "dependencies": {
     "@fp-ts/optic": "^0.22.0",
-    "@effect/platform": "^0.43.3",
-    "effect": "^2.2.2",
+    "@effect/platform": "^0.43.4",
+    "effect": "^2.2.3",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
