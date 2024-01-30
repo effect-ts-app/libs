@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.132.1
+
+### Patch Changes
+
+- c80a6bb: fix type
+
 ## 0.132.0
 
 ### Minor Changes
