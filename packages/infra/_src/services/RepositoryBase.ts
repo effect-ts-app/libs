@@ -114,16 +114,16 @@ export function makeRepo<
 
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
-    function make<RMake = never, E = never, R2 = never>(
+    function make<RInitial = never, E = never, R2 = never>(
       args: [Evt] extends [never] ? {
-          makeInitial?: Effect<RMake, E, readonly T[]>
+          makeInitial?: Effect<RInitial, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<RMake, E, readonly T[]>
+          makeInitial?: Effect<RInitial, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
@@ -412,7 +412,7 @@ export interface Repos<
   >
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
-        makeInitial?: Effect<R, E, readonly T[]>
+        makeInitial?: Effect<RInitial, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
