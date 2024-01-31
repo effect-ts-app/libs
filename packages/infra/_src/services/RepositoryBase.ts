@@ -152,7 +152,9 @@ export function makeRepo<
           })
         )
 
-        const all = allE.flatMap((_) => _.forEachEffect((_) => decode(_)).orDie)
+        const all = allE.flatMap((_) =>
+          _.forEachEffect((_) => decode(_), { concurrency: "inherit", batching: true }).orDie
+        )
 
         const structSchema = schema as unknown as { struct: typeof schema }
         const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
@@ -202,7 +204,8 @@ export function makeRepo<
             )
             .asUnit
 
-        const saveAll = (a: Iterable<T>) => a.toChunk.forEachEffect((_) => encode(_)).orDie.andThen(saveAllE)
+        const saveAll = (a: Iterable<T>) =>
+          a.toChunk.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie.andThen(saveAllE)
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
@@ -219,7 +222,7 @@ export function makeRepo<
           return Effect.gen(function*($) {
             const { get, set } = yield* $(cms)
             const it = a.toChunk
-            const items = yield* $(it.forEachEffect((_) => encode(_)).orDie)
+            const items = yield* $(it.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie)
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
               yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -241,7 +244,12 @@ export function makeRepo<
            * @internal
            */
           utils: {
-            parseMany: (items) => cms.flatMap((cm) => items.forEachEffect((_) => decode(mapReverse(_, cm.set))).orDie),
+            parseMany: (items) =>
+              cms.flatMap((cm) =>
+                items
+                  .forEachEffect((_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                  .orDie
+              ),
             filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
               store
                 .filter(args)
