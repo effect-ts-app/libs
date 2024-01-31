@@ -7,7 +7,6 @@ import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig,
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { Opt } from "@effect-app/core/Option"
-import { makeCodec } from "@effect-app/infra/api/codec"
 import { makeFilters } from "@effect-app/infra/filter"
 import { S } from "@effect-app/prelude"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../errors.js"
@@ -87,11 +86,12 @@ export function makeRepo<
 >() {
   return <
     ItemType extends string,
+    R,
     From extends { id: string },
     T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<never, From, T>,
+    schema: S.Schema<R, From, T>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -114,28 +114,33 @@ export function makeRepo<
 
     const mkStore = makeStore<PM>()(name, schema, mapTo)
 
-    function make<R = never, E = never, R2 = never>(
+    function make<RMake = never, E = never, R2 = never>(
       args: [Evt] extends [never] ? {
-          makeInitial?: Effect<R, E, readonly T[]>
+          makeInitial?: Effect<RMake, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<R, E, readonly T[]>
+          makeInitial?: Effect<RMake, E, readonly T[]>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
     ) {
       return Do(($) => {
+        const rctx = $(Effect.context<R>())
+        const encode = flow(schema.encode, Effect.provide(rctx))
+        const decode = flow(schema.decode, Effect.provide(rctx))
+
         const store = $(mkStore(args.makeInitial, args.config))
         const { get } = $(ContextMapContainer)
         const cms = get.andThen((_) => ({
           get: (id: string) => _.get(`${name}.${id}`),
           set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
         }))
+
         const pubCfg = $(Effect.context<R2>())
         const pub = "publishEvents" in args ? flow(args.publishEvents, (_) => _.provide(pubCfg)) : () => Effect.unit
         const changeFeed = $(PubSub.unbounded<[T[], "save" | "remove"]>())
@@ -147,9 +152,7 @@ export function makeRepo<
           })
         )
 
-        const parse = (e: From) => schema.decodeUnknown(e).orDie
-
-        const all = allE.flatMap((_) => _.forEachEffect((_) => parse(_)))
+        const all = allE.flatMap((_) => _.forEachEffect((_) => decode(_)).orDie)
 
         const structSchema = schema as unknown as { struct: typeof schema }
         const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
@@ -165,9 +168,9 @@ export function makeRepo<
             ))
             : _.pipe(S.pick("id"))
         )
+        const encodeId = flow(i.encode, Effect.provide(rctx))
         function findE(_id: T["id"]) {
-          return S
-            .encode(i)({ id: _id })
+          return encodeId({ id: _id })
             .map((_) => _.id)
             .orDie
             .andThen((id) =>
@@ -183,7 +186,7 @@ export function makeRepo<
         }
 
         function find(id: T["id"]) {
-          return findE(id).flatMapOpt(parse)
+          return findE(id).flatMapOpt((_) => decode(_).orDie)
         }
 
         const saveAllE = (a: Iterable<From>) =>
@@ -198,9 +201,8 @@ export function makeRepo<
               })
             )
             .asUnit
-        const encode = (i: T) => schema.encodeSync(i)
 
-        const saveAll = (a: Iterable<T>) => saveAllE(a.toChunk.map(encode))
+        const saveAll = (a: Iterable<T>) => a.toChunk.forEachEffect((_) => encode(_)).orDie.andThen(saveAllE)
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
@@ -217,7 +219,7 @@ export function makeRepo<
           return Effect.gen(function*($) {
             const { get, set } = yield* $(cms)
             const it = a.toChunk
-            const items = it.map(encode)
+            const items = yield* $(it.forEachEffect((_) => encode(_)).orDie)
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
               yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -234,14 +236,12 @@ export function makeRepo<
           })
         }
 
-        const p = schema.decodeSync
-
         const r: Repository<T, PM, Evt, ItemType> = {
           /**
            * @internal
            */
           utils: {
-            parseMany: (items) => cms.map((cm) => items.map((_) => p(mapReverse(_, cm.set)))),
+            parseMany: (items) => cms.flatMap((cm) => items.forEachEffect((_) => decode(mapReverse(_, cm.set))).orDie),
             filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
               store
                 .filter(args)
@@ -326,17 +326,21 @@ export function makeStore<
 >() {
   return <
     ItemType extends string,
+    R,
     E extends { id: string },
     T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<never, E, T>,
+    schema: S.Schema<R, E, T>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
-    const [_dec, encode] = makeCodec(schema)
     function encodeToPM() {
       const getEtag = () => undefined
-      return (t: T) => mapToPersistenceModel(encode(t), getEtag)
+      return (t: T) =>
+        schema
+          .encode(t)
+          .orDie
+          .map((_) => mapToPersistenceModel(_, getEtag))
     }
 
     function mapToPersistenceModel(
@@ -346,8 +350,8 @@ export function makeStore<
       return mapTo(e, getEtag(e.id))
     }
 
-    function makeStore<R = never, E = never>(
-      makeInitial?: Effect<R, E, readonly T[]>,
+    function makeStore<RInitial = never, EInitial = never>(
+      makeInitial?: Effect<RInitial, EInitial, readonly T[]>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
@@ -356,11 +360,11 @@ export function makeStore<
         const { make } = $(StoreMaker)
 
         const store = $(
-          make<PM, string, R, E>(
+          make<PM, string, R | RInitial, EInitial>(
             pluralize(name),
             makeInitial
               ? (makeInitial
-                .map((_) => _.map(encodeToPM())))
+                .flatMap((_) => _.forEachEffect(encodeToPM())))
                 .withSpan("Repository.makeInitial [effect-app/infra]", {
                   attributes: { "repository.model_name": name }
                 })
@@ -383,29 +387,30 @@ export function makeStore<
 export interface Repos<
   T extends { id: unknown },
   PM extends { id: string; _etag: string | undefined },
+  R,
   Evt,
   ItemType extends string
 > {
-  make<R = never, E = never, R2 = never>(
+  make<RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
-        makeInitial?: Effect<R, E, readonly T[]>
+        makeInitial?: Effect<RInitial, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
       : {
         publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-        makeInitial?: Effect<R, E, readonly T[]>
+        makeInitial?: Effect<RInitial, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
   ): Effect<
-    StoreMaker | ContextMapContainer | R | R2,
+    StoreMaker | ContextMapContainer | R | RInitial | R2,
     E,
     Repository<T, PM, Evt, ItemType>
   >
-  makeWith<Out, R = never, E = never, R2 = never>(
+  makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<R, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
@@ -414,14 +419,14 @@ export interface Repos<
       }
       : {
         publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-        makeInitial?: Effect<R, E, readonly T[]>
+        makeInitial?: Effect<RInitial, E, readonly T[]>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<
-    StoreMaker | ContextMapContainer | R | R2,
+    StoreMaker | ContextMapContainer | R | RInitial | R2,
     E,
     Out
   >
@@ -438,9 +443,9 @@ export const RepositoryBaseImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, From extends { id: string }, T extends { id: unknown }>(
+  <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<never, From, T>,
+    schema: S.Schema<R, From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -448,6 +453,7 @@ export const RepositoryBaseImpl = <Service>() => {
       & Repos<
         T,
         PM,
+        R,
         Evt,
         ItemType
       >
@@ -479,9 +485,9 @@ export const RepositoryDefaultImpl = <Service>() => {
     PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, From extends { id: string }, T extends { id: unknown }>(
+  <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<never, From, T>,
+    schema: S.Schema<R, From, T>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
@@ -491,6 +497,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       & Repos<
         T,
         PM,
+        R,
         Evt,
         ItemType
       >
