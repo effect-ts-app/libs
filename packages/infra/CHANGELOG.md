@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.157.2
+
+### Patch Changes
+
+- 86d4995: enable concurrency
+
 ## 0.157.1
 
 ### Patch Changes
