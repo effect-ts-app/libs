@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.157.0
+
+### Minor Changes
+
+- e087ee5: feat: allow schemas with R in Repositories, when context provided at creation.
+
 ## 0.156.0
 
 ### Minor Changes
