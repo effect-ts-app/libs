@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/platform": "^0.43.4",
+    "@effect/platform": "^0.43.7",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240129113320",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.3.1",
@@ -23,10 +23,10 @@
     "@babel/cli": "^7.23.9",
     "@effect-app/compiler": "workspace:*",
     "@faker-js/faker": "^8.4.0",
-    "@types/node": "~20.11.10",
+    "@types/node": "~20.11.13",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.8",
-    "fast-check": "~3.15.0",
+    "fast-check": "~3.15.1",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
     "vitest": "^1.2.2"
