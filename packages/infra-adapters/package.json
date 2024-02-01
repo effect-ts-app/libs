@@ -6,7 +6,7 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect/platform": "^0.43.7",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240129113320",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240131131609",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "effect": "^2.2.3",
