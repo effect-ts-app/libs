@@ -94,19 +94,6 @@ function clientFor_<M extends Requests>(models: M) {
           mapPath: Request.path
         }
 
-        const wm = new WeakMap()
-
-        const cstri = (a: any) => new (Request as any)(a) // TODO
-
-        // we need to have the same constructed value for fetch aswell as mapPath
-        const cstr = (req: any) => {
-          const e = wm.get(req)
-          if (e) return e
-          const v = cstri(req)
-          wm.set(req, v)
-          return v
-        }
-
         const res = Response as Schema<never, any, any>
         const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResponseError(err)))
 
@@ -134,13 +121,13 @@ function clientFor_<M extends Requests>(models: M) {
             }
             : {
               handler: (req: any) =>
-                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
+                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
                   .flatMap(mapResponseM(parseResponse))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
               ...meta,
-              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
+              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
             }
           : fields.length === 0
           ? {
@@ -151,7 +138,7 @@ function clientFor_<M extends Requests>(models: M) {
           }
           : {
             handler: (req: any) =>
-              fetchApi3S(b)(cstr(req)).withSpan("client.request", {
+              fetchApi3S(b)(req).withSpan("client.request", {
                 attributes: { "request.name": requestName }
               }),
 
@@ -159,8 +146,8 @@ function clientFor_<M extends Requests>(models: M) {
             mapPath: (req: any) =>
               req
                 ? Request.method === "DELETE"
-                  ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
-                  : makePathWithBody(path, Request.encodeSync(cstr(req)))
+                  ? makePathWithQuery(path, Request.encodeSync(req))
+                  : makePathWithBody(path, Request.encodeSync(req))
                 : Request.path
           }
 
@@ -179,14 +166,14 @@ function clientFor_<M extends Requests>(models: M) {
             }
             : {
               handler: (req: any) =>
-                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(cstr(req))))
+                fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
                   .flatMap(mapResponseM(parseResponseE))
                   .withSpan("client.request", {
                     attributes: { "request.name": requestName }
                   }),
 
               ...meta,
-              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(cstr(req))) : Request.path
+              mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
             }
           : fields.length === 0
           ? {
@@ -197,7 +184,7 @@ function clientFor_<M extends Requests>(models: M) {
           }
           : {
             handler: (req: any) =>
-              fetchApi3SE(b)(cstr(req)).withSpan("client.request", {
+              fetchApi3SE(b)(req).withSpan("client.request", {
                 attributes: { "request.name": requestName }
               }),
 
@@ -205,8 +192,8 @@ function clientFor_<M extends Requests>(models: M) {
             mapPath: (req: any) =>
               req
                 ? Request.method === "DELETE"
-                  ? makePathWithQuery(path, Request.encodeSync(cstr(req)))
-                  : makePathWithBody(path, Request.encodeSync(cstr(req)))
+                  ? makePathWithQuery(path, Request.encodeSync(req))
+                  : makePathWithBody(path, Request.encodeSync(req))
                 : Request.path
           }
         // generate handler
@@ -237,7 +224,7 @@ type RequestHandlers<R, E, M extends Requests> = {
     }
     : {
       handler: (
-        req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+        req: InstanceType<REST.GetRequest<M[K]>>
       ) => Effect<
         R,
         E,
@@ -245,10 +232,7 @@ type RequestHandlers<R, E, M extends Requests> = {
       >
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-      // we use a weakmap as cache for converting constructor input to constructed.
-      mapPath: (
-        req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
-      ) => string
+      mapPath: (req: InstanceType<REST.GetRequest<M[K]>>) => string
     }
 }
 
@@ -265,7 +249,7 @@ type RequestHandlersE<R, E, M extends Requests> = {
     }
     : {
       handler: (
-        req: ConstructorParameters<REST.GetRequest<M[K]>>[0]
+        req: InstanceType<REST.GetRequest<M[K]>>
       ) => Effect<
         R,
         E,
@@ -273,9 +257,6 @@ type RequestHandlersE<R, E, M extends Requests> = {
       >
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-      // we use a weakmap as cache for converting constructor input to constructed.
-      mapPath: (
-        req?: ConstructorParameters<REST.GetRequest<M[K]>>[0]
-      ) => string
+      mapPath: (req: InstanceType<REST.GetRequest<M[K]>>) => string
     }
 }
