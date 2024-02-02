@@ -1,5 +1,20 @@
 # @effect-app/prelude
 
+## 0.136.0
+
+### Minor Changes
+
+- f01680a: update packages
+- 349d358: improve support for schemas with R.
+
+### Patch Changes
+
+- ebcd0dc: update packages
+- Updated dependencies [ebcd0dc]
+- Updated dependencies [f01680a]
+- Updated dependencies [349d358]
+  - @effect-app/schema@0.173.0
+
 ## 0.135.0
 
 ### Minor Changes

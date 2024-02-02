@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.173.0
+
+### Minor Changes
+
+- f01680a: update packages
+- 349d358: improve support for schemas with R.
+
+### Patch Changes
+
+- ebcd0dc: update packages
+
 ## 0.172.1
 
 ### Patch Changes

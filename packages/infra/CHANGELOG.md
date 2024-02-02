@@ -1,5 +1,22 @@
 # @effect-app/infra
 
+## 0.159.0
+
+### Minor Changes
+
+- f01680a: update packages
+- 349d358: improve support for schemas with R.
+
+### Patch Changes
+
+- ebcd0dc: update packages
+- Updated dependencies [ebcd0dc]
+- Updated dependencies [f01680a]
+- Updated dependencies [349d358]
+  - @effect-app/infra-adapters@0.108.0
+  - @effect-app/prelude@0.136.0
+  - @effect-app/schema@0.173.0
+
 ## 0.158.1
 
 ### Patch Changes
