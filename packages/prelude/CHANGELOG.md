@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.135.0
+
+### Minor Changes
+
+- 744e5fc: disable auto constructor call
+
+### Patch Changes
+
+- 0a898f8: update packages
+- Updated dependencies [0a898f8]
+  - @effect-app/schema@0.172.1
+
 ## 0.134.0
 
 ### Minor Changes

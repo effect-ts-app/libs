@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.172.1
+
+### Patch Changes
+
+- 0a898f8: update packages
+
 ## 0.172.0
 
 ### Minor Changes
