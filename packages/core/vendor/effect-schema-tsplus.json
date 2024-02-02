@@ -57,6 +57,55 @@
       ]
     },
     {
+      "definitionName": "encodeSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "encodeSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "decodeSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "decodeSync"
+        }
+      ]
+    },
+    {
+      "definitionName": "decodeUnknownSync",
+      "definitionKind": "const",
+      "extensions": [
+        {
+          "kind": "getter",
+          "typeName": "effect/schema/Schema",
+          "name": "decodeUnknownSync"
+        }
+      ]
+    }
+  ],
+  "@effect/schema/Schema": [
+    {
+      "definitionName": "Schema",
+      "definitionKind": "interface",
+      "extensions": [
+        {
+          "kind": "type",
+          "typeName": "effect/schema/Schema"
+        },
+        {
+          "kind": "companion",
+          "typeName": "effect/schema/Schema.Ops"
+        }
+      ]
+    },
+    {
       "definitionName": "decodeUnknownEither",
       "definitionKind": "const",
       "extensions": [
@@ -108,55 +157,6 @@
           "kind": "getter",
           "typeName": "effect/schema/Schema",
           "name": "encode"
-        }
-      ]
-    },
-    {
-      "definitionName": "encodeSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "encodeSync"
-        }
-      ]
-    },
-    {
-      "definitionName": "decodeSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "decodeSync"
-        }
-      ]
-    },
-    {
-      "definitionName": "decodeUnknownSync",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "decodeUnknownSync"
-        }
-      ]
-    }
-  ],
-  "@effect/schema/Schema": [
-    {
-      "definitionName": "Schema",
-      "definitionKind": "interface",
-      "extensions": [
-        {
-          "kind": "type",
-          "typeName": "effect/schema/Schema"
-        },
-        {
-          "kind": "companion",
-          "typeName": "effect/schema/Schema.Ops"
         }
       ]
     },

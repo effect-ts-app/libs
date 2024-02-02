@@ -5,7 +5,7 @@ import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
 
 import * as JSONSchema from "@effect/schema/JSONSchema"
-import type { ParseIssue } from "@effect/schema/ParseResult"
+import type { ParseError } from "@effect/schema/ParseResult"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -86,7 +86,7 @@ function buildFieldInfo(
     ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
     : property.type
 
-  function renderError(e: ParseIssue, v: unknown) {
+  function renderError(e: ParseError, v: unknown) {
     const err = e.toString()
     const custom = customSchemaErrors.value.get(realSelf)
     return custom ? custom(err, e, v) : translate.value(
