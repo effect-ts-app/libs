@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.118.0
+
+### Minor Changes
+
+- 465afb5: fix: Schema functions should use ParseError variants
+
 ## 0.117.0
 
 ### Minor Changes

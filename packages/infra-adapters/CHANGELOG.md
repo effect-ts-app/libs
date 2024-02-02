@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.109.0
+
+### Minor Changes
+
+- 465afb5: fix: Schema functions should use ParseError variants
+
+### Patch Changes
+
+- Updated dependencies [465afb5]
+  - @effect-app/core@0.118.0
+  - @effect-app/prelude@0.137.0
+  - @effect-app/schema@0.174.0
+
 ## 0.108.0
 
 ### Minor Changes
