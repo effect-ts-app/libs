@@ -1,5 +1,15 @@
 # @effect-app/schema
 
+## 0.172.0
+
+### Minor Changes
+
+- 449b343: update packages
+
+### Patch Changes
+
+- d103a32: fix optional constructor args
+
 ## 0.171.0
 
 ### Minor Changes
