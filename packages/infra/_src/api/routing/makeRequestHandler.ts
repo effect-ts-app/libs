@@ -108,16 +108,16 @@ export function makeRequestHandler<
 > {
   const { Request, Response, h: handle } = handler
 
-  const response: REST.ReqRes<any, any> = Response ? Response : Void
-  const resp = response as typeof response & { struct?: Schema<never, any, any> }
+  const response: REST.ReqRes<any, any, any> = Response ? Response : Void
+  const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
   const encoder = "struct" in resp && resp.struct
-    ? resp.struct.encodeSync
+    ? resp.struct.encode
     // ? (i: any) => {
     //   if (i instanceof (response as any)) return response.encodeSync(i)
     //   else return response.encodeSync(new (response as any)(i))
     // }
-    : resp.encodeSync
+    : resp.encode
   // const encodeResponse = adaptResponse
   //   ? (req: ReqA) => Encoder.for(adaptResponse(req))
   //   : () => encoder
@@ -182,7 +182,7 @@ export function makeRequestHandler<
                 .flatMap((parsedReq) =>
                   handle(parsedReq as any)
                     .provideService(handler.Request.Tag, parsedReq as any)
-                    .map(encoder)
+                    .flatMap(encoder)
                     .map((r) =>
                       res
                         .setBody(HttpBody.unsafeJson(r))

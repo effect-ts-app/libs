@@ -761,21 +761,21 @@ export function makeRequest<
 //   }
 // }
 
-export type ReqRes<From, To> = S.Schema<never, From, To>
+export type ReqRes<R, From, To> = S.Schema<R, From, To>
 // export type ReqResSchemed<E, A> = {
 //   new(...args: any[]): any
 //   encodeSync: ReturnType<typeof P.decodeUnknownSync>
-//   Model: ReqRes<E, A>
+//   Model: ReqRes<any, E, A>
 // }
 
-export type RequestSchemed<E, A> = ReqRes<E, A> & { // ReqResSchemed<E, A> & {
+export type RequestSchemed<E, A> = ReqRes<any, E, A> & { // ReqResSchemed<E, A> & {
   method: Methods.Rest
   path: string
 }
 
 /** @deprecated No-Op */
 export function extractSchema<ResE, ResA>(
-  Res: ReqRes<ResE, ResA> // | ReqResSchemed<ResE, ResA>
+  Res: ReqRes<any, ResE, ResA> // | ReqResSchemed<ResE, ResA>
 ) {
   return Res
 }

@@ -168,6 +168,13 @@ export function makeRepo<
               >)
                 .pipe(S.pick("id"))
             ))
+            : _.ast._tag === "Transform"
+            ? (S.make(_.ast.from) as unknown as Schema<
+              never,
+              From,
+              T
+            >)
+              .pipe(S.pick("id"))
             : _.pipe(S.pick("id"))
         )
         const encodeId = flow(i.encode, Effect.provide(rctx))

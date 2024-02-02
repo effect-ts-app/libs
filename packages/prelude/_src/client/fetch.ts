@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
-import { constant, flow } from "@effect-app/prelude/Function"
+import { constant } from "@effect-app/prelude/Function"
 import type { REST } from "@effect-app/prelude/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
@@ -117,27 +117,30 @@ export function fetchApi(
     )
 }
 
-export function fetchApi2S<RequestA, RequestE, ResponseA>(
-  encodeRequest: (a: RequestA) => RequestE,
-  decodeResponse: (u: unknown) => Effect<never, unknown, ResponseA>
+export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
+  request: Schema<RequestR, RequestFrom, RequestTo>,
+  response: Schema<ResponseR, ResponseFrom, ResponseTo>
 ) {
-  const decodeRes = (u: unknown) => decodeResponse(u).mapError((err) => new ResponseError(err))
-  return (method: Method, path: Path) => (req: RequestA) => {
-    const encoded = encodeRequest(req)
-    return fetchApi(
-      method,
-      method === "DELETE"
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        ? makePathWithQuery(path, encoded as any)
-        : makePathWithBody(path, encoded as any),
-      encoded
+  const encodeRequest = request.encode
+  const decRes = response.decodeUnknown
+  const decodeRes = (u: unknown) => decRes(u).mapError((err) => new ResponseError(err))
+  return (method: Method, path: Path) => (req: RequestTo) => {
+    return encodeRequest(req).andThen((encoded) =>
+      fetchApi(
+        method,
+        method === "DELETE"
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          ? makePathWithQuery(path, encoded as any)
+          : makePathWithBody(path, encoded as any),
+        encoded
+      )
+        .flatMap(mapResponseM(decodeRes))
+        .map((i) => ({
+          ...i,
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          body: i.body as ResponseTo
+        }))
     )
-      .flatMap(mapResponseM(decodeRes))
-      .map((i) => ({
-        ...i,
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        body: i.body as ResponseA
-      }))
   }
 }
 
@@ -148,11 +151,9 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   // eslint-disable-next-line @typescript-eslint/ban-types
   Request: REST.RequestSchemed<RequestE, RequestA>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: REST.ReqRes<ResponseE, ResponseA>
+  Response: REST.ReqRes<any, ResponseE, ResponseA>
 }) {
-  const encodeRequest = Request.encodeSync
-  const decodeResponse = Response.decodeUnknown
-  return fetchApi2S(encodeRequest, decodeResponse)(
+  return fetchApi2S(Request, Response)(
     Request.method,
     new Path(Request.path)
   )
@@ -165,14 +166,13 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
   // eslint-disable-next-line @typescript-eslint/ban-types
   Request: REST.RequestSchemed<RequestE, RequestA>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: REST.ReqRes<ResponseE, ResponseA>
+  Response: REST.ReqRes<any, ResponseE, ResponseA>
 }) {
-  const encodeResponse = Response.encodeSync
-  const decodeResponse = flow(Response.decodeUnknown, (x) => x.map(encodeResponse))
-  return fetchApi2S(Request.encodeSync, decodeResponse)(
+  const a = fetchApi2S(Request, Response)(
     Request.method,
     new Path(Request.path)
   )
+  return (req: RequestA) => a(req).flatMap(mapResponseM((_) => Response.encode(_)))
 }
 
 export function makePathWithQuery(

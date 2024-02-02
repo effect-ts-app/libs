@@ -375,7 +375,7 @@ export type Request<
   HeaderA extends StructFields,
   ReqA extends PathA & QueryA & BodyA,
   PPath extends `/${string}`
-> = REST.ReqRes<any, any> & {
+> = REST.ReqRes<any, any, any> & {
   method: REST.Methods.Rest
   path: PPath
   Cookie?: CookieA
@@ -404,7 +404,7 @@ export interface RequestHandlerBase<
   adaptResponse?: any
   h: (i: PathA & QueryA & BodyA & {}) => Effect<R, ResE, ResA>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
-  Response: REST.ReqRes<any, any>
+  Response: REST.ReqRes<any, any, any>
   ResponseOpenApi?: any
   config: Config
   name: string
@@ -429,7 +429,7 @@ export interface RequestHandler<
   adaptResponse?: any
   h: (i: PathA & QueryA & BodyA & {}, ctx: any /* TODO */) => Effect<R, ResE, ResA>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath> & Config
-  Response: REST.ReqRes<any, any>
+  Response: REST.ReqRes<any, any, any>
   ResponseOpenApi?: any
   name: string
   CTX: CTX
@@ -452,7 +452,7 @@ export interface RequestHandlerOrig<
   adaptResponse?: any
   h: (i: PathA & QueryA & BodyA & {}) => Effect<R, ResE, ResA>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
-  Response: REST.ReqRes<any, any>
+  Response: REST.ReqRes<any, any, any>
   name: string
   ResponseOpenApi?: any
 }

@@ -11,7 +11,7 @@ export function getQueryParam(search: ParsedQuery, param: string) {
 
 export const getQueryParamO = flow(getQueryParam, Option.fromNullable)
 
-export const parseOpt = <E, A>(t: REST.ReqRes<E, A>) => {
+export const parseOpt = <E, A>(t: REST.ReqRes<never, E, A>) => {
   const dec = flow(t.decodeUnknownEither, (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
@@ -19,7 +19,7 @@ export const parseOpt = <E, A>(t: REST.ReqRes<E, A>) => {
   return dec
 }
 
-export const parseOptUnknown = <E, A>(t: REST.ReqRes<E, A>) => {
+export const parseOptUnknown = <E, A>(t: REST.ReqRes<never, E, A>) => {
   const dec = flow(t.decodeUnknownEither, (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
