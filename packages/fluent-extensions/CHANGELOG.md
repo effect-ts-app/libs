@@ -1,5 +1,13 @@
 # @effect-app/fluent-extensions
 
+## 0.113.12
+
+### Patch Changes
+
+- 6677889: fix type and use const
+- Updated dependencies [6677889]
+  - @effect-app/schema@0.177.1
+
 ## 0.113.11
 
 ### Patch Changes

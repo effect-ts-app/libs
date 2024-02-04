@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.177.1
+
+### Patch Changes
+
+- 6677889: fix type and use const
+
 ## 0.177.0
 
 ### Minor Changes
