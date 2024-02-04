@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.161.0
+
+### Minor Changes
+
+- 2ccca0f: update exts
+
+### Patch Changes
+
+- Updated dependencies [ad46a20]
+- Updated dependencies [40d51e4]
+- Updated dependencies [2ccca0f]
+  - @effect-app/schema@0.175.0
+  - @effect-app/prelude@0.139.0
+  - @effect-app/infra-adapters@0.109.2
+
 ## 0.160.1
 
 ### Patch Changes

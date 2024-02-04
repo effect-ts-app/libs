@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 0.113.0
+
+### Minor Changes
+
+- 40d51e4: improve schema
+
+### Patch Changes
+
+- Updated dependencies [ad46a20]
+- Updated dependencies [40d51e4]
+- Updated dependencies [2ccca0f]
+  - @effect-app/schema@0.175.0
+  - @effect-app/vue@0.113.0
+  - @effect-app/prelude@0.139.0
+
 ## 0.112.1
 
 ### Patch Changes

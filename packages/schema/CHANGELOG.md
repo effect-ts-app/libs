@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.175.0
+
+### Minor Changes
+
+- ad46a20: add `withDefault` to nullable, array, readonlySet/Map and Date.
+- 40d51e4: improve schema
+- 2ccca0f: update exts
+
 ## 0.174.0
 
 ### Minor Changes
