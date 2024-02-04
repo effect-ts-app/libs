@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.112.0
+
+### Minor Changes
+
+- 9c87a13: separate runtime from other extensions
+
 ## 0.111.4
 
 ### Patch Changes
