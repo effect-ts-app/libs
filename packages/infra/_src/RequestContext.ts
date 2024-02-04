@@ -20,7 +20,7 @@ export class RequestContextParent extends TaggedClass<
 export class RequestContext extends TaggedClass<
   RequestContext
 >()("RequestContext", {
-  ...RequestContextParent.fields.$$.omit("id"),
+  ...RequestContextParent.omit("id"),
   id: RequestId.withDefault,
   rootId: RequestId,
   parent: RequestContextParent.optional(),
@@ -60,20 +60,6 @@ export class RequestContext extends TaggedClass<
 // codegen:start {preset: model}
 //
 /* eslint-disable */
-export namespace RequestContextParent {
-  /**
-   * @tsplus type RequestContextParent.From
-   * @tsplus companion RequestContextParent.From/Ops
-   */
-  export class From extends FromClass<typeof RequestContextParent>() {}
-}
-export namespace RequestContext {
-  /**
-   * @tsplus type RequestContext.From
-   * @tsplus companion RequestContext.From/Ops
-   */
-  export class From extends FromClass<typeof RequestContext>() {}
-}
 /* eslint-enable */
 //
 // codegen:end

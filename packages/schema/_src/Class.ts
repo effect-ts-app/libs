@@ -5,19 +5,79 @@ import { PrettyHookId } from "@effect/schema/Pretty"
 import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import type { Mutable, Simplify } from "effect/Types"
+import omit from "lodash/omit.js"
+import pick from "lodash/pick.js"
 import { AST } from "./schema.js"
+
+export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
+  extends S.Class<R, I, A, C, Self, Fields, Inherited>, PropsExtensions<Fields>
+{
+}
+
+export interface PropsExtensions<Fields> {
+  include: <NewProps extends S.StructFields>(
+    fnc: (fields: Fields) => NewProps
+  ) => NewProps
+  pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
+  omit: <P extends keyof Fields>(...keys: readonly P[]) => Omit<Fields, P>
+}
+
+export function include<Fields extends S.StructFields>(fields: Fields) {
+  return <NewProps extends S.StructFields>(
+    fnc: (fields: Fields) => NewProps
+  ) => include_(fields, fnc)
+}
+
+export function include_<
+  Fields extends S.StructFields,
+  NewProps extends S.StructFields
+>(fields: Fields, fnc: (fields: Fields) => NewProps) {
+  return fnc(fields)
+}
+
+export const Class: <Self>() => <Fields extends S.StructFields>(
+  fields: Fields
+) => EnhancedClass<
+  Schema.Context<Fields[keyof Fields]>,
+  Simplify<FromStruct<Fields>>,
+  Simplify<ToStruct<Fields>>,
+  Simplify<ToStructConstructor<Fields>>,
+  Self,
+  Fields,
+  {}
+> = () => (fields) => {
+  const cls = S.Class as any
+  return class extends cls()(fields) {
+    static readonly include = include(fields)
+    static readonly pick = (...selection: any[]) => pick(fields, selection)
+    static readonly omit = (...selection: any[]) => omit(fields, selection)
+  } as any
+}
+
+export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.StructFields>(
+  tag: Tag,
+  fields: Fields
+) => EnhancedClass<
+  Schema.Context<Fields[keyof Fields]>,
+  Simplify<FromStruct<Fields>>,
+  Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+  Simplify<ToStructConstructor<Fields>>,
+  Self,
+  Fields,
+  {}
+> = () => (tag, fields) => {
+  const cls = S.TaggedClass as any
+  return class extends cls()(tag, fields) {
+    static readonly include = include(fields)
+    static readonly pick = (...selection: any[]) => pick(fields, selection)
+    static readonly omit = (...selection: any[]) => omit(fields, selection)
+  } as any
+}
 
 export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
   fields: Fields
 ) =>
-  & {
-    readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
-      Simplify<FromStruct<Fields>>,
-      Simplify<ToStruct<Fields>>
-    >
-  }
-  & S.Class<
+  & EnhancedClass<
     Schema.Context<Fields[keyof Fields]>,
     SelfFrom,
     Simplify<ToStruct<Fields>>,
@@ -25,20 +85,20 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
     Self,
     Fields,
     {}
-  > = S.Class as any
+  >
+  & {
+    readonly structFrom: Schema<
+      Schema.Context<Fields[keyof Fields]>,
+      Simplify<FromStruct<Fields>>,
+      Simplify<ToStruct<Fields>>
+    >
+  } = Class as any
 
 export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fields extends S.StructFields>(
   tag: Tag,
   fields: Fields
 ) =>
-  & {
-    readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
-      Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
-      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
-    >
-  }
-  & S.Class<
+  & EnhancedClass<
     Schema.Context<Fields[keyof Fields]>,
     SelfFrom,
     Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
@@ -46,7 +106,14 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
     Self,
     Fields,
     {}
-  > = S.TaggedClass as any
+  >
+  & {
+    readonly structFrom: Schema<
+      Schema.Context<Fields[keyof Fields]>,
+      Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
+      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
+    >
+  } = TaggedClass as any
 
 /**
  * Automatically assign the name of the Class to the S.
