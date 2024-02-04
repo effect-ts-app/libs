@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 0.162.0
+
+### Minor Changes
+
+- 76c89b8: cleanup exts
+
+### Patch Changes
+
+- Updated dependencies [76c89b8]
+- Updated dependencies [76c89b8]
+  - @effect-app/schema@0.176.0
+  - @effect-app/infra-adapters@0.110.0
+  - @effect-app/prelude@0.140.0
+  - @effect-app/core@0.119.0
+  - @effect-app/fluent-extensions@0.113.5
+
 ## 0.161.0
 
 ### Minor Changes
