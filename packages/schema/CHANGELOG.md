@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.177.0
+
+### Minor Changes
+
+- 287c4e6: feat: include omit/pick on class.
+
 ## 0.176.2
 
 ### Patch Changes
