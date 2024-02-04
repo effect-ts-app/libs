@@ -32,14 +32,10 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
   return (n: ts.Node) => {
     if (/*ts.isClassDeclaration(n) || ts.isTypeAliasDeclaration(n)*/ true) {
       
-      let modelName = null
-      if (ts.canHaveDecorators(n)) {
-        const decor = ts.getDecorators(n)
-        if (decor?.some(_ => (_.expression as any).escapedText === "useClassFeaturesForSchema")) {
-          //useClassFeaturesForSchema
-          //console.log("$$ decors", ts.getDecorators(n))
+      let modelName = null 
+      if (ts.isClassDeclaration(n)) {
+        if (n.getText().match(/(Extended(Tagged)?Class)|ExtendedTaggedRequest/)) {
           modelName = (n.name as any)?.escapedText
-          //console.log("$$$ modelName", modelName)
         }
       }
       if (!modelName) {
@@ -61,7 +57,7 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
           `   * @tsplus type ${modelName}.From`,
           `   * @tsplus companion ${modelName}.From/Ops`,
           `   */`,
-          `  export class From extends FromClass<typeof ${modelName}>() {}`,
+          `  export class From extends S.FromClass<typeof ${modelName}>() {}`,
           // `  export const From: FromOps = { $: {} }`,
           // `  /**`,
           // `   * @tsplus type ${modelName}.From/Aspects`,
