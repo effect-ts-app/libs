@@ -638,6 +638,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
+      '@effect-app/fluent-extensions':
+        specifier: ^0.112.0
+        version: link:../fluent-extensions
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema

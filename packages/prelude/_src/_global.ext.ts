@@ -1,5 +1,5 @@
 // import "./EffectOption.ext.js"
-import "./_ext/builtIn.js"
+import "@effect-app/fluent-extensions/builtin"
 import "./_ext/date.js"
 import "./_ext/misc.js"
 import "./_ext/allLower.js"

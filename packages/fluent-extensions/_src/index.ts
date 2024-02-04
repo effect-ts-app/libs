@@ -1,9 +1,13 @@
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import type * as Cause from "effect/Cause"
 import * as Effect from "effect/Effect"
-import type { Option } from "effect/Option"
+import * as Opt from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
 import type { NoInfer } from "effect/Types"
+import "./builtin.js"
+import { Either } from "effect"
+import type { LazyArg } from "effect/Function"
+import type { Option } from "effect/Option"
 
 /**
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
@@ -13,14 +17,28 @@ const installFluentExtensions = () => {
     enumerable: false,
     configurable: true,
     value(arg: any) {
-      return Effect.andThen(this, arg)
+      return Effect.isEffect(this)
+        ? Effect.andThen(this, arg)
+        : Opt.isOption(this)
+        ? Opt.andThen(this, arg)
+        : Either.andThen(this, arg)
     }
   })
   Object.defineProperty(Object.prototype, "tap", {
     enumerable: false,
     configurable: true,
     value(arg: any) {
-      return Effect.tap(this, arg)
+      return Effect.isEffect(this)
+        ? Effect.tap(this, arg)
+        : Opt.tap(this, arg)
+    }
+  })
+
+  Object.defineProperty(Object.prototype, "orElse", {
+    enumerable: false,
+    configurable: true,
+    value(arg: () => any) {
+      return Opt.orElse(this, arg)
     }
   })
 
@@ -38,6 +56,29 @@ installFluentExtensions()
 declare module "effect/Option" {
   export interface None<out A> {
     get value(): A | undefined
+    andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
+    andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
+    tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
+    orElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+  }
+  export interface Some<out A> {
+    andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
+    andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
+    tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
+    orElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+  }
+}
+
+declare module "effect/Either" {
+  export interface Left<out E, out A> {
+    andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
+    andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
+    get right(): A | undefined
+  }
+  export interface Right<out E, out A> {
+    andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
+    andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
+    get left(): E | undefined
   }
 }
 

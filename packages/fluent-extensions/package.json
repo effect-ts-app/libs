@@ -48,6 +48,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./builtin": {
+      "import": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./dist/builtin.js"
+      },
+      "require": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./_cjs/builtin.cjs"
+      }
+    },
     "./runtime": {
       "import": {
         "types": "./dist/runtime.d.ts",
@@ -84,11 +94,7 @@
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": [
-    "./dist/faker.js",
-    "./faker",
-    "./_src/faker",
-    "./dist/faker",
-    "./dist/src/faker.js",
-    "./dist/faker.js"
+    "./index.js",
+    "./"
   ]
 }

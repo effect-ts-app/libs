@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
+    "@effect-app/fluent-extensions": "^0.112.0",
     "@effect-app/schema": "workspace:*",
     "@effect/platform": "^0.43.7",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240202090758",
@@ -127,16 +128,6 @@
       "require": {
         "types": "./dist/_ext/allLower.d.ts",
         "default": "./_cjs/_ext/allLower.cjs"
-      }
-    },
-    "./_ext/builtIn": {
-      "import": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./dist/_ext/builtIn.js"
-      },
-      "require": {
-        "types": "./dist/_ext/builtIn.d.ts",
-        "default": "./_cjs/_ext/builtIn.cjs"
       }
     },
     "./_ext/date": {
