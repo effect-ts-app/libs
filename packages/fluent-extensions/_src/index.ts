@@ -34,11 +34,11 @@ const installFluentExtensions = () => {
     }
   })
 
-  Object.defineProperty(Object.prototype, "orElse", {
+  Object.defineProperty(Object.prototype, "getOrElse", {
     enumerable: false,
     configurable: true,
     value(arg: () => any) {
-      return Opt.orElse(this, arg)
+      return Opt.getOrElse(this, arg)
     }
   })
 
@@ -59,13 +59,13 @@ declare module "effect/Option" {
     andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
     andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
-    orElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+    getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
   }
   export interface Some<out A> {
     andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
     andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
-    orElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+    getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
   }
 }
 
