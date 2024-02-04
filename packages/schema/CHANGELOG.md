@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.176.1
+
+### Patch Changes
+
+- f7da591: add defaults
+
 ## 0.176.0
 
 ### Minor Changes

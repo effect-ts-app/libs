@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.114.1
+
+### Patch Changes
+
+- Updated dependencies [f7da591]
+  - @effect-app/schema@0.176.1
+  - @effect-app/fluent-extensions@0.113.6
+  - @effect-app/prelude@0.140.1
+  - @effect-app/vue@0.114.1
+
 ## 0.114.0
 
 ### Minor Changes
