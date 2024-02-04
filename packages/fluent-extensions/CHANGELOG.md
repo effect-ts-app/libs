@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.3
+
+### Patch Changes
+
+- f441d6e: forEachEffect
+
 ## 0.113.2
 
 ### Patch Changes
