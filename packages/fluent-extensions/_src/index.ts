@@ -6,7 +6,7 @@ import type { NonEmptyArray } from "effect/ReadonlyArray"
 import type { Concurrency, NoInfer } from "effect/Types"
 import "./builtin.js"
 import { Either } from "effect"
-import { Effect } from "effect/Effect"
+import type { Effect } from "effect/Effect"
 import type { LazyArg } from "effect/Function"
 import type { Option } from "effect/Option"
 
@@ -59,7 +59,7 @@ const installFluentExtensions = () => {
     enumerable: false,
     configurable: true,
     value(arg: () => any) {
-      return Effect.forEach(this, arg)
+      return Eff.forEach(this, arg)
     }
   })
 
