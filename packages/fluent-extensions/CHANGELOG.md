@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.9
+
+### Patch Changes
+
+- 2ab1f78: fix writable
+
 ## 0.113.8
 
 ### Patch Changes
