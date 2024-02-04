@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core/Prelude"
-import { typedKeysOf } from "@effect-app/core/utils"
+import { extendM, typedKeysOf } from "@effect-app/core/utils"
 import type { Schema, StructFields } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import { flow } from "effect"
@@ -126,7 +126,10 @@ export const nominal: <A extends B.Brand<any>>() => Constructor<A> = <
 // export type UnionToIntersection3<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I
 //   : never
 
-export const inputDate = S.union(S.ValidDateFromSelf, S.Date)
+export const inputDate = extendM(
+  S.union(S.ValidDateFromSelf, S.Date),
+  (s) => ({ withDefault: S.withDefaultConstructor(s, () => new global.Date()) })
+)
 
 export interface UnionBrand {}
 
