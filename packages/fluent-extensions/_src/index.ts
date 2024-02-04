@@ -1,5 +1,8 @@
+import { toNonEmptyArray } from "@effect-app/core/Array"
 import type * as Cause from "effect/Cause"
 import * as Effect from "effect/Effect"
+import type { Option } from "effect/Option"
+import type { NonEmptyArray } from "effect/ReadonlyArray"
 import * as RT from "effect/Runtime"
 import type { Runtime } from "effect/Runtime"
 import type { NoInfer } from "effect/Types"
@@ -46,6 +49,14 @@ export const installFluentExtensions = <R>(runtime: Runtime<R>) => {
       return Effect.tap(this, arg)
     }
   })
+
+  Object.defineProperty(Array.prototype, "toNonEmpty", {
+    enumerable: false,
+    configurable: true,
+    get() {
+      return toNonEmptyArray(this)
+    }
+  })
 }
 
 // Put the following in the project, where RT is the default runtime context available
@@ -69,6 +80,15 @@ declare module "effect/Effect" {
 declare module "effect/Option" {
   export interface None<out A> {
     get value(): A | undefined
+  }
+}
+
+declare global {
+  interface Array<T> {
+    get toNonEmpty(): Option<NonEmptyArray<T>>
+  }
+  interface ReadonlyArray<T> {
+    get toNonEmpty(): Option<NonEmptyArray<T>>
   }
 }
 
