@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.42.0
+
+### Minor Changes
+
+- fa729da: detect instead the Extended Class, instead of the decorator
+
 ## 0.41.0
 
 ### Minor Changes
