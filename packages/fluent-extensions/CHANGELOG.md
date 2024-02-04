@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.10
+
+### Patch Changes
+
+- 928dfc8: fup
+
 ## 0.113.9
 
 ### Patch Changes
