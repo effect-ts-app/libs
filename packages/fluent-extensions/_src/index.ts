@@ -64,7 +64,8 @@ const installFluentExtensions = () => {
   })
 
   Object.defineProperty(Array.prototype, "toNonEmpty", {
-    ...settings,
+    enumerable: false,
+    configurable: true,
     get() {
       return toNonEmptyArray(this)
     }
