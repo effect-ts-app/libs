@@ -21,12 +21,12 @@ export class RequestContext extends TaggedClass<
   RequestContext
 >()("RequestContext", {
   ...RequestContextParent.fields.$$.omit("id"),
-  id: RequestId.withDefault(),
+  id: RequestId.withDefault,
   rootId: RequestId,
   parent: RequestContextParent.optional(),
   namespace: NonEmptyString255.optional()
   // ...RequestContextParent.omit("id").extend({
-  //   id: RequestId.withDefault(),
+  //   id: RequestId.withDefault,
   //   rootId: RequestId,
   //   parent: RequestContextParent.optional(),
   //   namespace: NonEmptyString255.optional()

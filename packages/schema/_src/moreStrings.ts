@@ -84,7 +84,7 @@ export const StringId = extendM(
   ),
   (s) => ({
     make: makeStringId,
-    withDefault: () => S.withDefaultConstructor(s, makeStringId)
+    withDefault: S.withDefaultConstructor(s, makeStringId)
   })
 )
   .withDefaults
@@ -139,7 +139,7 @@ export function prefixedStringId<Brand extends StringId>() {
          */
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         prefix,
-        withDefault: () => S.withDefaultConstructor(schema, make)
+        withDefault: S.withDefaultConstructor(schema, make)
       })
     )
   }
@@ -151,7 +151,7 @@ export const brandedStringId = <
   withDefaults(
     Object.assign(Object.create(StringId), StringId) as S.Schema<never, string, string & Brand> & {
       make: () => string & Brand
-      withDefault: () => S.ConstructorPropertyDescriptor<never, string, string & Brand>
+      withDefault: S.ConstructorPropertyDescriptor<never, string, string & Brand>
     } & WithDefaults<S.Schema<never, string, string & Brand>>
   )
 
@@ -164,7 +164,7 @@ export interface PrefixedStringUtils<
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly prefix: Prefix
-  readonly withDefault: () => S.ConstructorPropertyDescriptor<never, string, Brand>
+  readonly withDefault: S.ConstructorPropertyDescriptor<never, string, Brand>
 }
 
 export interface UrlBrand extends Simplify<B.Brand<"Url"> & NonEmptyStringBrand> {}

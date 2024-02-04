@@ -16,10 +16,9 @@ export const RequestId = Object
   // eslint-disable-next-line @typescript-eslint/ban-types
   .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<never, string, NonEmptyString255>, {
     make: StringId.make as () => NonEmptyString255,
-    withDefault: () =>
-      StringId.withDefault() as unknown as
-        & Schema<never, string, NonEmptyString255>
-        & ConstructorPropertyDescriptor<never, string, NonEmptyString255>
+    withDefault: StringId.withDefault as unknown as
+      & Schema<never, string, NonEmptyString255>
+      & ConstructorPropertyDescriptor<never, string, NonEmptyString255>
   })
   .withDefaults
 
