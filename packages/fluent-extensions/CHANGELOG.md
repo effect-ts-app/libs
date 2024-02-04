@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.2
+
+### Patch Changes
+
+- ad12e1b: map
+
 ## 0.113.1
 
 ### Patch Changes
