@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import type * as Cause from "effect/Cause"
 import * as Eff from "effect/Effect"
@@ -22,30 +23,28 @@ const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "andThen", {
     ...settings,
     value(arg: any) {
-      return Eff.isEffect(this)
-        ? Eff.andThen(this, arg)
-        : Opt.isOption(this)
+      return Opt.isOption(this)
         ? Opt.andThen(this, arg)
-        : Either.andThen(this, arg)
+        : Either.isEither(this)
+        ? Either.andThen(this, arg)
+        : Eff.andThen(this, arg)
     }
   })
   Object.defineProperty(Object.prototype, "tap", {
     ...settings,
     value(arg: any) {
-      return Eff.isEffect(this)
-        ? Eff.tap(this, arg)
-        : Opt.tap(this, arg)
+      return Opt.isOption(this) ? Opt.tap(this, arg) : Eff.tap(this, arg)
     }
   })
 
   Object.defineProperty(Object.prototype, "map", {
     ...settings,
     value(arg: any) {
-      return Eff.isEffect(this)
-        ? Eff.map(this, arg)
-        : Opt.isOption(this)
+      return Opt.isOption(this)
         ? Opt.map(this, arg)
-        : Either.map(this, arg)
+        : Either.isEither(this)
+        ? Either.map(this, arg)
+        : Eff.map(this, arg)
     }
   })
 
