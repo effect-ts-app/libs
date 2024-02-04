@@ -4,45 +4,46 @@ import type { Option } from "@effect-app/core/Prelude"
 import { typedKeysOf } from "@effect-app/core/utils"
 import type { Schema, StructFields } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
+import { flow } from "effect"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import type { AST } from "./schema.js"
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
-export const defaultDate = <S extends Schema<any, any, Date>>(s: S) =>
-  S.withDefaultConstructor(s, () => new Date() as any) // TODO
+export const Date = Object.assign(S.Date, { withDefault: S.withDefaultConstructor(S.Date, () => new global.Date()) })
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
+export const array = flow(S.array, (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) }))
+export const readonlySet = flow(
+  S.readonlySet,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Set()) })
+)
+export const readonlyMap = flow(
+  S.readonlyMap,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Map()) })
+)
+
+/** @tsplus fluent effect/Schema/Schema nullable */
+export const nullable = flow(
+  S.nullable,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => null) })
+)
+
+export const defaultDate = <S extends Schema<any, any, Date>>(s: S) =>
+  S.withDefaultConstructor(s, () => new global.Date() as any) // TODO
+
 export const defaultBool = <S extends Schema<any, any, boolean>>(s: S) =>
   S.withDefaultConstructor(s, () => false as any) // TODO
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
 export const defaultNullable = <S extends Schema<any, any, any>, From, To>(
   s: S & Schema<Schema.Context<S>, From, To | null>
 ) => S.withDefaultConstructor(s, () => null as any) // TODO
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
 export const defaultArray = <S extends Schema<any, any, ReadonlyArray<any>>>(s: S) =>
   S.withDefaultConstructor(s, () => [] as any) // TODO
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
 export const defaultMap = <S extends Schema<any, any, ReadonlyMap<any, any>>>(s: S) =>
   S.withDefaultConstructor(s, () => new Map() as any) // TODO
 
-/**
- * @tsplus fluent effect/schema/Schema withDefault
- */
 export const defaultSet = <S extends Schema<any, any, ReadonlySet<any>>>(s: S) =>
   S.withDefaultConstructor(s, () => new Set() as any) // TODO
 

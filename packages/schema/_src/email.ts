@@ -1,7 +1,7 @@
 import { isValidEmail } from "@effect-app/core/validation"
 import * as S from "@effect/schema/Schema"
 import type { Simplify } from "effect/Types"
-import { fromBrand, nominal } from "./ext.js"
+import { fromBrand, nominal, withDefaults } from "./ext.js"
 import type { B } from "./schema.js"
 import type { NonEmptyStringBrand } from "./strings.js"
 
@@ -18,6 +18,6 @@ export const Email = S
       jsonSchema: { format: "email" },
       arbitrary: () => (fc) => fc.emailAddress()
     }),
-    fromBrand(nominal<Email>(), { jsonSchema: {} })
+    fromBrand(nominal<Email>(), { jsonSchema: {} }),
+    withDefaults
   )
-  .withDefaults

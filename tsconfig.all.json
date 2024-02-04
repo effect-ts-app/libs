@@ -14,6 +14,9 @@
       "path": "packages/compiler"
     },
     {
+      "path": "packages/fluent-extensions"
+    },
+    {
       "path": "packages/infra-adapters"
     },
     {
@@ -30,9 +33,6 @@
     },
     {
       "path": "packages/vue"
-    },
-    {
-      "path": "packages/fluent-extensions"
-    },
+    }
   ]
 }

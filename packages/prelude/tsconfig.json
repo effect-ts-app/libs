@@ -35,6 +35,9 @@
     },
     "references": [
         {
+            "path": "../fluent-extensions"
+        },
+        {
             "path": "../schema"
         },
         {

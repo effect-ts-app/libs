@@ -9,7 +9,7 @@ export class RequestContextParent extends TaggedClass<
   name: NonEmptyString255,
   userProfile: struct({ sub: UserProfileId }).optional(),
   locale: literal("en", "de"),
-  createdAt: S.Date.withDefaultMake(() => new Date()) // TODO
+  createdAt: S.Date.withDefault
 }) {}
 
 /**

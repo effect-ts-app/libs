@@ -441,6 +441,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
+      '@effect-app/fluent-extensions':
+        specifier: ^0.113.4
+        version: link:../fluent-extensions
       '@effect-app/infra-adapters':
         specifier: workspace:*
         version: link:../infra-adapters
@@ -550,6 +553,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
+      '@effect-app/fluent-extensions':
+        specifier: ^0.113.4
+        version: link:../fluent-extensions
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude
@@ -639,7 +645,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect-app/fluent-extensions':
-        specifier: ^0.113.0
+        specifier: ^0.113.4
         version: link:../fluent-extensions
       '@effect-app/schema':
         specifier: workspace:*
@@ -769,6 +775,9 @@ importers:
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
+      '@effect-app/fluent-extensions':
+        specifier: ^0.113.4
+        version: link:../fluent-extensions
       '@effect-app/prelude':
         specifier: workspace:*
         version: link:../prelude

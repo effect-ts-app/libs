@@ -227,17 +227,6 @@
       ]
     },
     {
-      "definitionName": "nullable",
-      "definitionKind": "const",
-      "extensions": [
-        {
-          "kind": "getter",
-          "typeName": "effect/schema/Schema",
-          "name": "nullable"
-        }
-      ]
-    },
-    {
       "definitionName": "mapFrom",
       "definitionKind": "const",
       "extensions": [

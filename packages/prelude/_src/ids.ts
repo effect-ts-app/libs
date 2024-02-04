@@ -1,4 +1,4 @@
-import { brandedStringId } from "@effect-app/prelude/schema"
+import { brandedStringId, withDefaults } from "@effect-app/prelude/schema"
 import type { ConstructorPropertyDescriptor, StringIdBrand } from "@effect-app/prelude/schema"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
@@ -20,7 +20,7 @@ export const RequestId = Object
       & Schema<never, string, NonEmptyString255>
       & ConstructorPropertyDescriptor<never, string, NonEmptyString255>
   })
-  .withDefaults
+  .pipe(withDefaults)
 
 export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
 /**

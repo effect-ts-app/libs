@@ -25,12 +25,11 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
 /**
  * A string that is at least 1 character long and a maximum of 50.
  */
-export const NonEmptyString50 = pipe(
-  NonEmptyString,
+export const NonEmptyString50 = NonEmptyString.pipe(
   S.maxLength(50, { title: "NonEmptyString50" }),
-  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} })
+  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
+  withDefaults
 )
-  .withDefaults
 
 /**
  * A string that is at least 3 character long and a maximum of 255.
@@ -49,9 +48,9 @@ export const Min3String255 = pipe(
   S.string,
   S.minLength(3),
   S.maxLength(255, { title: "Min3String255" }),
-  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} })
+  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
+  withDefaults
 )
-  .withDefaults
 
 /**
  * A string that is at least 6 characters long and a maximum of 50.
@@ -88,7 +87,7 @@ export const StringId = extendM(
     withDefault: S.withDefaultConstructor(s, makeStringId)
   })
 )
-  .withDefaults
+  .pipe(withDefaults)
 
 // const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
 
@@ -124,7 +123,7 @@ export function prefixedStringId<Brand extends StringId>() {
       .pipe(
         S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
       )
-    const schema = s.withDefaults
+    const schema = s.pipe(withDefaults)
     const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
 
     return extendM(
@@ -183,6 +182,6 @@ export const Url = NonEmptyString
       title: "Url",
       jsonSchema: { format: "uri" }
     }),
-    fromBrand(nominal<UrlBrand>(), { jsonSchema: {} })
+    fromBrand(nominal<UrlBrand>(), { jsonSchema: {} }),
+    withDefaults
   )
-  .withDefaults

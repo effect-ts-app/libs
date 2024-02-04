@@ -7,10 +7,11 @@
   "dependencies": {
     "@effect/platform-browser": "^0.28.7",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240203192555",
-    "@effect-app/prelude": "workspace:*",
-    "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
+    "@effect-app/prelude": "workspace:*",
+    "@effect-app/fluent-extensions": "^0.113.4",
     "@effect-app/schema": "workspace:*",
+    "@effect-app/vue": "workspace:*",
     "@fp-ts/optic": "^0.22.0",
     "@formatjs/intl": "^2.10.0",
     "effect": "^2.2.3",

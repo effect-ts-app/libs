@@ -12,9 +12,9 @@ export const Email = S
       // eslint-disable-next-line @typescript-eslint/unbound-method
       arbitrary: (): A.Arbitrary<string> => fakerArb((faker) => faker.internet.exampleEmail)
     }),
-    fromBrand(nominal<Email>(), { jsonSchema: {} })
+    fromBrand(nominal<Email>(), { jsonSchema: {} }),
+    S.withDefaults
   )
-  .withDefaults
 
 export type Email = EmailT
 
@@ -28,9 +28,9 @@ export const PhoneNumber = S
       // eslint-disable-next-line @typescript-eslint/unbound-method
       arbitrary: (): A.Arbitrary<string> => fakerArb((faker) => faker.phone.number)
     }),
-    fromBrand(nominal<PhoneNumber>(), { jsonSchema: {} })
+    fromBrand(nominal<PhoneNumber>(), { jsonSchema: {} }),
+    S.withDefaults
   )
-  .withDefaults
 
 export type PhoneNumber = PhoneNumberT
 
