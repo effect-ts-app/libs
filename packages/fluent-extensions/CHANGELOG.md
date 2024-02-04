@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.1
+
+### Patch Changes
+
+- eef4261: fix
+
 ## 0.113.0
 
 ### Minor Changes
