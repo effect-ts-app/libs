@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.0
+
+### Minor Changes
+
+- b487764: improve extensions
+
 ## 0.112.0
 
 ### Minor Changes
