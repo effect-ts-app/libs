@@ -1,11 +1,12 @@
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import type * as Cause from "effect/Cause"
-import * as Effect from "effect/Effect"
+import * as Eff from "effect/Effect"
 import * as Opt from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
-import type { NoInfer } from "effect/Types"
+import type { Concurrency, NoInfer } from "effect/Types"
 import "./builtin.js"
 import { Either } from "effect"
+import { Effect } from "effect/Effect"
 import type { LazyArg } from "effect/Function"
 import type { Option } from "effect/Option"
 
@@ -17,8 +18,8 @@ const installFluentExtensions = () => {
     enumerable: false,
     configurable: true,
     value(arg: any) {
-      return Effect.isEffect(this)
-        ? Effect.andThen(this, arg)
+      return Eff.isEffect(this)
+        ? Eff.andThen(this, arg)
         : Opt.isOption(this)
         ? Opt.andThen(this, arg)
         : Either.andThen(this, arg)
@@ -28,8 +29,8 @@ const installFluentExtensions = () => {
     enumerable: false,
     configurable: true,
     value(arg: any) {
-      return Effect.isEffect(this)
-        ? Effect.tap(this, arg)
+      return Eff.isEffect(this)
+        ? Eff.tap(this, arg)
         : Opt.tap(this, arg)
     }
   })
@@ -38,8 +39,8 @@ const installFluentExtensions = () => {
     enumerable: false,
     configurable: true,
     value(arg: any) {
-      return Effect.isEffect(this)
-        ? Effect.map(this, arg)
+      return Eff.isEffect(this)
+        ? Eff.map(this, arg)
         : Opt.isOption(this)
         ? Opt.map(this, arg)
         : Either.map(this, arg)
@@ -51,6 +52,14 @@ const installFluentExtensions = () => {
     configurable: true,
     value(arg: () => any) {
       return Opt.getOrElse(this, arg)
+    }
+  })
+
+  Object.defineProperty(Object.prototype, "forEachEffect", {
+    enumerable: false,
+    configurable: true,
+    value(arg: () => any) {
+      return Effect.forEach(this, arg)
     }
   })
 
@@ -99,11 +108,148 @@ declare module "effect/Either" {
 }
 
 declare global {
+  interface Iterable<T> {
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+  }
+
   interface Array<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+  }
+  interface Set<T> {
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+  }
+  interface ReadonlySet<T> {
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+  }
+  interface Map<K, V> {
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+  }
+  interface ReadonlyMap<K, V> {
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
   }
   interface ReadonlyArray<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
   }
 }
 
