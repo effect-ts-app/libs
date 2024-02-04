@@ -252,6 +252,36 @@ declare global {
   }
 }
 
+declare module "effect/Cause" {
+  export interface YieldableError {
+    andThen<A, R, E, X>(
+      this: Effect<R, E, A>,
+      f: (a: NoInfer<A>) => X
+    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<R | R1, E | E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<R, UnknownException | E, A1>
+      : Effect<R, E, X>
+
+    andThen<A, R, E, X>(
+      this: Effect<R, E, A>,
+      f: X
+    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<R | R1, E | E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect<R, UnknownException | E, A1>
+      : Effect<R, E, X>
+    tap<A, R, E, X>(
+      this: Effect<R, E, A>,
+      f: (a: NoInfer<A>) => X
+    ): [X] extends [Effect<infer R1, infer E1, infer _A1>] ? Effect<R | R1, E | E1, A>
+      : [X] extends [Promise<infer _A1>] ? Effect<R, UnknownException | E, A>
+      : Effect<R, E, A>
+    tap<A, R, E, X>(
+      this: Effect<R, E, A>,
+      f: X
+    ): [X] extends [Effect<infer R1, infer E1, infer _A1>] ? Effect<R | R1, E | E1, A>
+      : [X] extends [Promise<infer _A1>] ? Effect<R, UnknownException | E, A>
+      : Effect<R, E, A>
+  }
+}
+
 declare module "effect/Effect" {
   export interface Effect<R, E, A> {
     andThen<A, R, E, X>(

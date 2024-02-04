@@ -542,7 +542,7 @@ export type IfPathPropsProvided<Path extends string, B extends StructFields, C> 
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Delete<Config extends object = {}>(config?: Config) {
+export function Delete<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("DELETE", "/", config)
 }
 /**
@@ -550,7 +550,7 @@ export function Delete<Config extends object = {}>(config?: Config) {
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Put<Config extends object = {}>(config?: Config) {
+export function Put<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("PUT", "/", config)
 }
 
@@ -559,7 +559,7 @@ export function Put<Config extends object = {}>(config?: Config) {
  * Input parameters other than Path, will be sent as QueryString.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Get<Config extends object = {}>(config?: Config) {
+export function Get<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("GET", "/", config)
 }
 /**
@@ -567,7 +567,7 @@ export function Get<Config extends object = {}>(config?: Config) {
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Patch<Config extends object = {}>(config?: Config) {
+export function Patch<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("PATCH", "/", config)
 }
 /**
@@ -575,11 +575,11 @@ export function Patch<Config extends object = {}>(config?: Config) {
  * Input parameters other than Path, will be sent as Body.
  * Path parameters (specified with `:param_name`) must be present in the provided Schema.
  */
-export function Post<Config extends object = {}>(config?: Config) {
+export function Post<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("POST", "/", config)
 }
 
-export function Req<Config extends object = {}>(config?: Config) {
+export function Req<const Config extends object = {}>(config?: Config) {
   return MethodReqProps2_("AUTO", "/", config)
 }
 
