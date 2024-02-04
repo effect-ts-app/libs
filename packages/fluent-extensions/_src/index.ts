@@ -34,6 +34,18 @@ const installFluentExtensions = () => {
     }
   })
 
+  Object.defineProperty(Object.prototype, "map", {
+    enumerable: false,
+    configurable: true,
+    value(arg: any) {
+      return Effect.isEffect(this)
+        ? Effect.map(this, arg)
+        : Opt.isOption(this)
+        ? Opt.map(this, arg)
+        : Either.map(this, arg)
+    }
+  })
+
   Object.defineProperty(Object.prototype, "getOrElse", {
     enumerable: false,
     configurable: true,
@@ -60,12 +72,14 @@ declare module "effect/Option" {
     andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
     getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+    map<A, B>(this: Option<A>, f: (a: A) => B): Option<B>
   }
   export interface Some<out A> {
     andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
     andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
     getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
+    map<A, B>(this: Option<A>, f: (a: A) => B): Option<B>
   }
 }
 
@@ -73,11 +87,13 @@ declare module "effect/Either" {
   export interface Left<out E, out A> {
     andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
     andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
+    map<E, A, B>(this: Either<E, A>, f: (a: A) => B): Either<E, B>
     get right(): A | undefined
   }
   export interface Right<out E, out A> {
     andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
     andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
+    map<E, A, B>(this: Either<E, A>, f: (a: A) => B): Either<E, B>
     get left(): E | undefined
   }
 }
