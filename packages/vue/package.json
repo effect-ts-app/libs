@@ -6,7 +6,7 @@
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
     "@effect/platform-browser": "^0.28.7",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240203192555",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240204124243",
     "@effect-app/core": "workspace:*",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",

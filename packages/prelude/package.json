@@ -8,7 +8,7 @@
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect/platform": "^0.43.7",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240203192555",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240204124243",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.3.1",
     "effect": "^2.2.3",
