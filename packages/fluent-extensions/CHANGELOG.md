@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.111.4
+
+### Patch Changes
+
+- f7965d0: add extension
+
 ## 0.111.3
 
 ### Patch Changes
