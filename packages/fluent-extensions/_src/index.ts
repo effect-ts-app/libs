@@ -10,13 +10,17 @@ import type { Effect } from "effect/Effect"
 import type { LazyArg } from "effect/Function"
 import type { Option } from "effect/Option"
 
+const settings = {
+  enumerable: false,
+  configurable: true,
+  writable: true
+}
 /**
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
  */
 const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "andThen", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     value(arg: any) {
       return Eff.isEffect(this)
         ? Eff.andThen(this, arg)
@@ -26,8 +30,7 @@ const installFluentExtensions = () => {
     }
   })
   Object.defineProperty(Object.prototype, "tap", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     value(arg: any) {
       return Eff.isEffect(this)
         ? Eff.tap(this, arg)
@@ -36,8 +39,7 @@ const installFluentExtensions = () => {
   })
 
   Object.defineProperty(Object.prototype, "map", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     value(arg: any) {
       return Eff.isEffect(this)
         ? Eff.map(this, arg)
@@ -48,24 +50,21 @@ const installFluentExtensions = () => {
   })
 
   Object.defineProperty(Object.prototype, "getOrElse", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     value(arg: () => any) {
       return Opt.getOrElse(this, arg)
     }
   })
 
   Object.defineProperty(Object.prototype, "forEachEffect", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     value(arg: () => any) {
       return Eff.forEach(this, arg)
     }
   })
 
   Object.defineProperty(Array.prototype, "toNonEmpty", {
-    enumerable: false,
-    configurable: true,
+    ...settings,
     get() {
       return toNonEmptyArray(this)
     }
