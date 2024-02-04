@@ -6,12 +6,12 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect/platform": "^0.43.7",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240202090758",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240203192555",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "effect": "^2.2.3",
     "@fp-ts/optic": "^0.22.0",
-    "query-string": "^8.1.0"
+    "query-string": "^8.2.0"
   },
   "devDependencies": {
     "@azure/cosmos": "^4.0.0",

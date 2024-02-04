@@ -6,7 +6,7 @@
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
     "@effect/platform-browser": "^0.28.7",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240202090758",
+    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240203192555",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@effect-app/core": "workspace:*",
@@ -14,7 +14,7 @@
     "@fp-ts/optic": "^0.22.0",
     "@formatjs/intl": "^2.10.0",
     "effect": "^2.2.3",
-    "query-string": "^8.1.0",
+    "query-string": "^8.2.0",
     "swrv": "^1.0.4",
     "vue": "^3.4.15"
   },

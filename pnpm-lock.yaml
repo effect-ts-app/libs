@@ -271,8 +271,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0
       query-string:
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -387,8 +387,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0
       query-string:
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       ts-pattern:
         specifier: ^5.0.6
         version: 5.0.6
@@ -569,8 +569,8 @@ importers:
         specifier: ^2.2.3
         version: 2.2.3
       query-string:
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
     devDependencies:
       '@azure/cosmos':
         specifier: ^4.0.0
@@ -639,7 +639,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect-app/fluent-extensions':
-        specifier: ^0.112.0
+        specifier: ^0.113.0
         version: link:../fluent-extensions
       '@effect-app/schema':
         specifier: workspace:*
@@ -669,8 +669,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0
       query-string:
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       ts-pattern:
         specifier: ^5.0.6
         version: 5.0.6
@@ -794,8 +794,8 @@ importers:
         specifier: ^2.2.3
         version: 2.2.3
       query-string:
-        specifier: ^8.1.0
-        version: 8.1.0
+        specifier: ^8.2.0
+        version: 8.2.0
       swrv:
         specifier: ^1.0.4
         version: 1.0.4(vue@3.4.15)
@@ -7920,8 +7920,8 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /query-string@8.1.0:
-    resolution: {integrity: sha512-BFQeWxJOZxZGix7y+SByG3F36dA0AbTy9o6pSmKFcFz7DAj0re9Frkty3saBn3nHo3D0oZJ/+rx3r8H8r8Jbpw==}
+  /query-string@8.2.0:
+    resolution: {integrity: sha512-tUZIw8J0CawM5wyGBiDOAp7ObdRQh4uBor/fUR9ZjmbZVvw95OD9If4w3MQxr99rg0DJZ/9CIORcpEqU5hQG7g==}
     engines: {node: '>=14.16'}
     dependencies:
       decode-uri-component: 0.4.1

@@ -11,7 +11,7 @@
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
-    "query-string": "^8.1.0",
+    "query-string": "^8.2.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"
   },
