@@ -11,6 +11,8 @@ import type * as Either from "effect/Either"
 import type { AST } from "./schema.js"
 
 export const Date = Object.assign(S.Date, { withDefault: S.withDefaultConstructor(S.Date, () => new global.Date()) })
+export const boolean = Object.assign(S.boolean, { withDefault: S.withDefaultConstructor(S.boolean, () => false) })
+export const number = Object.assign(S.number, { withDefault: S.withDefaultConstructor(S.number, () => 0) })
 
 export const array = flow(S.array, (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) }))
 export const readonlySet = flow(
