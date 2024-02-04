@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.11
+
+### Patch Changes
+
+- 78982c7: fix opt.
+
 ## 0.113.10
 
 ### Patch Changes
