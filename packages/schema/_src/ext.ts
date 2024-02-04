@@ -3,11 +3,11 @@
 import type { Option } from "@effect-app/core/Prelude"
 import { typedKeysOf } from "@effect-app/core/utils"
 import type { Schema, StructFields } from "@effect/schema/Schema"
+import * as S from "@effect/schema/Schema"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
 import type { AST } from "./schema.js"
-import { S } from "./schema.js"
 
 /**
  * @tsplus fluent effect/schema/Schema withDefault

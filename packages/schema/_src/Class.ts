@@ -3,8 +3,9 @@ import { ArbitraryHookId } from "@effect/schema/Arbitrary"
 import { EquivalenceHookId } from "@effect/schema/Equivalence"
 import { PrettyHookId } from "@effect/schema/Pretty"
 import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
+import * as S from "@effect/schema/Schema"
 import type { Mutable, Simplify } from "effect/Types"
-import { AST, S } from "./schema.js"
+import { AST } from "./schema.js"
 
 export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
   fields: Fields

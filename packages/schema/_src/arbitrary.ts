@@ -1,6 +1,6 @@
 import type { Arbitrary } from "@effect/schema/Arbitrary"
+import type * as S from "@effect/schema/Schema"
 import * as fc from "fast-check"
-import type { S } from "./schema.js"
 import { A } from "./schema.js"
 
 /**

@@ -6,10 +6,10 @@ import { Path } from "path-parser"
 import type * as Methods from "./Methods.js"
 
 import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
+import * as S from "@effect/schema/Schema"
 import { Tag } from "effect/Context"
 import type { Simplify } from "effect/Types"
 import type { AST } from "./schema.js"
-import { S } from "./schema.js"
 
 export type StringRecord = Record<string, string>
 

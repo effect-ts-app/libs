@@ -1,4 +1,3 @@
-import { AST, S } from "@effect-app/prelude/schema"
 import type { Schema } from "@effect-app/prelude/schema"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type { Ref } from "vue"
@@ -26,12 +25,12 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
 ) {
   const ast = "struct" in fields ? (fields.struct as typeof fields).ast : fields.ast
   // // todo: or look at from?
-  // if (AST.isTransform(ast)) {
-  //   if (AST.isDeclaration(ast.to)) {
+  // if (S.AST.isTransform(ast)) {
+  //   if (S.AST.isDeclaration(ast.to)) {
   //     ast = ast.to.type //no longer eists
   //   }
   // }
-  if (!AST.isTypeLiteral(ast)) throw new Error("not a struct type")
+  if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (prev, cur) => {
       ;(prev as any)[cur.name] = buildFieldInfo(cur)
@@ -69,20 +68,20 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
 
 const defaultIntl = createIntl({ locale: "en" })
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
-export const customSchemaErrors = ref<Map<AST.AST, (message: string, e: unknown, v: unknown) => string>>(
+export const customSchemaErrors = ref<Map<S.AST.AST, (message: string, e: unknown, v: unknown) => string>>(
   new Map()
 )
 
 function buildFieldInfo(
-  property: AST.PropertySignature
+  property: S.AST.PropertySignature
 ): FieldInfo<any> {
   const propertyKey = property.name
   const schema = S.make<never, unknown, unknown>(property.type)
   const metadata = getMetadataFromSchema(property.type) // TODO
   const parse = schema.decodeUnknownEither
 
-  const nullable = AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
-  const realSelf = nullable && AST.isUnion(property.type)
+  const nullable = S.AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
+  const realSelf = nullable && S.AST.isUnion(property.type)
     ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
     : property.type
 
@@ -237,7 +236,7 @@ export const buildFormFromSchema = <
 }
 
 export function getMetadataFromSchema(
-  ast: AST.AST
+  ast: S.AST.AST
 ): {
   type: "int" | "float" | "text"
   minimum?: number
@@ -249,8 +248,8 @@ export function getMetadataFromSchema(
   required: boolean
   description?: string
 } {
-  const nullable = AST.isUnion(ast) && ast.types.includes(S.null.ast)
-  const realSelf = nullable && AST.isUnion(ast)
+  const nullable = S.AST.isUnion(ast) && ast.types.includes(S.null.ast)
+  const realSelf = nullable && S.AST.isUnion(ast)
     ? ast.types.filter((_) => _ !== S.null.ast)[0]!
     : ast
 

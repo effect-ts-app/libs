@@ -1,7 +1,8 @@
 import { extendM } from "@effect-app/core/utils"
+import * as S from "@effect/schema/Schema"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./ext.js"
-import { type B, S } from "./schema.js"
+import { type B } from "./schema.js"
 
 export interface PositiveIntBrand
   extends Simplify<B.Brand<"PositiveInt"> & NonNegativeIntBrand & PositiveNumberBrand>
