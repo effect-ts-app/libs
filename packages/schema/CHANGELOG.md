@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.176.2
+
+### Patch Changes
+
+- bff7d58: add ext
+
 ## 0.176.1
 
 ### Patch Changes
