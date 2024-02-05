@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.143.3
+
+### Patch Changes
+
+- Updated dependencies [34b8449]
+  - @effect-app/fluent-extensions@0.116.3
+
 ## 0.143.2
 
 ### Patch Changes

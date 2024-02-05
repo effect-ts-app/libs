@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.116.3
+
+### Patch Changes
+
+- 34b8449: proto
+
 ## 0.116.2
 
 ### Patch Changes
