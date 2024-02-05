@@ -94,7 +94,12 @@
   },
   "gitHead": "bd8e27eea3eff97db8739d577d67e7336c078d28",
   "sideEffects": [
+    "./dist/index.js",
+    "./dist/runtime.js",
+    "./_cjs/index.cjs",
+    "./_cjs/runtime.cjs",
     "./index.js",
+    "./runtime.js",
     "./"
   ]
 }
